@@ -2,9 +2,9 @@
 namespace Aws\Test;
 
 use Aws\Common\Api\Service;
-use Aws\AwsClient;
+use Aws\Common\AwsClient;
 use Aws\Common\Credentials\Credentials;
-use Aws\AwsException;
+use Aws\Common\Exception\AwsException;
 use Aws\Common\Signature\SignatureV4;
 use Aws\Sqs\SqsClient;
 use Aws\Sts\StsClient;
@@ -15,7 +15,7 @@ use GuzzleHttp\Message\Response;
 use GuzzleHttp\Subscriber\Mock;
 
 /**
- * @covers Aws\AwsClient
+ * @covers Aws\Common\AwsClient
  */
 class AwsClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -76,7 +76,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
     public function errorProvider()
     {
         return [
-            [null, 'Aws\AwsException'],
+            [null, 'Aws\Common\Exception\AwsException'],
             ['Aws\Ec2\Exception\Ec2Exception', 'Aws\Ec2\Exception\Ec2Exception']
         ];
     }
@@ -138,8 +138,8 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Aws\AwsException
-     * @expectedExceptionMessage Uncaught exception while executing Aws\AwsClient::foo - Baz Bar!
+     * @expectedException \Aws\Common\Exception\AwsException
+     * @expectedExceptionMessage Uncaught exception while executing Aws\Common\AwsClient::foo - Baz Bar!
      */
     public function testWrapsUncaughtExceptions()
     {
@@ -154,8 +154,8 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Aws\AwsException
-     * @expectedExceptionMessage Error executing Aws\AwsClient::foo() on "http://foo.com"; Baz Bar!
+     * @expectedException \Aws\Common\Exception\AwsException
+     * @expectedExceptionMessage Error executing Aws\Common\AwsClient::foo() on "http://foo.com"; Baz Bar!
      */
     public function testHandlesNetworkingErrorsGracefully()
     {

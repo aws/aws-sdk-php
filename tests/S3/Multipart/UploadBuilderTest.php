@@ -17,7 +17,7 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
     public function testCanCreateBuilder()
     {
         $uploader = (new UploadBuilder)
-            ->setClient($this->getMock('Aws\AwsClientInterface'))
+            ->setClient($this->getMock('Aws\Common\AwsClientInterface'))
             ->setSource(__FILE__)
             ->setBucket('foo')
             ->setKey('bar')

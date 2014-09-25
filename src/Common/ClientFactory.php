@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Common;
 
-use Aws\AwsClientInterface;
+use Aws\Common\AwsClientInterface;
 use Aws\Common\Api\ApiProviderInterface;
 use Aws\Common\Api\FilesystemApiProvider;
 use Aws\Common\Api\Service;
@@ -66,7 +66,7 @@ class ClientFactory
      *
      * @param array $args
      *
-     * @return \Aws\AwsClientInterface
+     * @return \Aws\Common\AwsClientInterface
      * @throws \InvalidArgumentException
      * @see Aws\Sdk::getClient() for a list of available options.
      */
@@ -299,7 +299,7 @@ class ClientFactory
         // default client class.
         $args['client_class'] = "Aws\\{$value}\\{$value}Client";
         if (!class_exists($args['client_class'])) {
-            $args['client_class'] = 'Aws\AwsClient';
+            $args['client_class'] = 'Aws\Common\AwsClient';
         }
 
         $args['class_name'] = $value;
@@ -345,7 +345,7 @@ class ClientFactory
         // If the dynamically created exception cannot be found, then use the
         // default exception class.
         if (!class_exists($value)) {
-            $value = 'Aws\AwsException';
+            $value = 'Aws\Common\Exception\AwsException';
         }
 
         $args['exception_class'] = $value;

@@ -1,5 +1,5 @@
 <?php
-namespace Aws;
+namespace Aws\Common\Exception;
 
 use GuzzleHttp\Command\Exception\CommandException;
 
@@ -11,7 +11,7 @@ class AwsException extends CommandException
     /**
      * Gets the client that executed the command.
      *
-     * @return AwsClientInterface
+     * @return \Aws\Common\AwsClientInterface
      */
     public function getClient()
     {

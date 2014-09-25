@@ -100,7 +100,7 @@ class ResourceWaiterTest extends \PHPUnit_Framework_TestCase
             // Non ignored exception is thrown
             ['TableExists', [
                 $this->createMockAwsException('ValidationException'),
-            ], 'Aws\AwsException'],
+            ], 'Aws\Common\Exception\AwsException'],
             // Waiter enters invalid state
             ['TableFail', [
                 new Result([]),

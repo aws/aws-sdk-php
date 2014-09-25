@@ -36,7 +36,7 @@ class QuerySerializerTest extends \PHPUnit_Framework_TestCase
 
         $http = new Client();
 
-        $aws = $this->getMockBuilder('Aws\AwsClient')
+        $aws = $this->getMockBuilder('Aws\Common\AwsClient')
             ->setMethods(['getHttpClient'])
             ->disableOriginalConstructor()
             ->getMock();

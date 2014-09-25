@@ -172,7 +172,7 @@ class Sdk
      * @param string $name Client name
      * @param array  $args Custom arguments to provide to the client.
      *
-     * @return \Aws\AwsClientInterface
+     * @return \Aws\Common\AwsClientInterface
      * @throws \InvalidArgumentException
      */
     public function getClient($name, array $args = [])

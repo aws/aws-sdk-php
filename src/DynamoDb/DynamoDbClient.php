@@ -1,7 +1,7 @@
 <?php
 namespace Aws\DynamoDb;
 
-use Aws\AwsClient;
+use Aws\Common\AwsClient;
 use Aws\DynamoDb\Session\SessionHandler;
 
 /**

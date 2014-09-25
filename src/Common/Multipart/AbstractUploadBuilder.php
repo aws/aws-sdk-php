@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Common\Multipart;
 
-use Aws\AwsClientInterface;
+use Aws\Common\AwsClientInterface;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Stream\StreamInterface;
 

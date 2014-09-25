@@ -66,7 +66,7 @@ class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
         $service = $this->getTestService();
         $command = new Command($commandName, $input);
         $j = new RestJsonSerializer($service, 'http://foo.com');
-        $aws = $this->getMockBuilder('Aws\AwsClient')
+        $aws = $this->getMockBuilder('Aws\Common\AwsClient')
             ->setMethods(['getHttpClient'])
             ->disableOriginalConstructor()
             ->getMock();

@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Test;
 
-use Aws\AwsClientInterface;
+use Aws\Common\AwsClientInterface;
 use Aws\Common\Result;
 use Aws\Sdk;
 use Aws\Common\Api\Service;
@@ -119,10 +119,10 @@ trait UsesServiceTrait
      */
     private function createMockAwsException(
         $code = 'ERROR',
-        $type = 'Aws\AwsException',
+        $type = 'Aws\Common\Exception\AwsException',
         $message = null
     ) {
-        $client = $this->getMockBuilder('Aws\AwsClientInterface')
+        $client = $this->getMockBuilder('Aws\Common\AwsClientInterface')
             ->setMethods(['getApi'])
             ->getMockForAbstractClass();
 

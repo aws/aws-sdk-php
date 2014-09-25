@@ -1,7 +1,7 @@
 <?php
 namespace Aws\S3;
 
-use Aws\AwsClient;
+use Aws\Common\AwsClient;
 use Aws\Common\Result;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\Multipart\UploadBuilder;

@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Sts;
 
-use Aws\AwsClient;
+use Aws\Common\AwsClient;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Result;
 

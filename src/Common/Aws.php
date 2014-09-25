@@ -2,7 +2,6 @@
 namespace Aws\Common;
 
 use Aws\Sdk;
-use Aws\AwsClientInterface;
 
 /**
  * The Aws class is here for backwards compatibility with Version 2.x of the

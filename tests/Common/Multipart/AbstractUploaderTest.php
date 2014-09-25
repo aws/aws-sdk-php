@@ -100,9 +100,9 @@ class AbstractUploaderTest extends \PHPUnit_Framework_TestCase
         $uploader = $this->getMockUploader(
             [
                 new Result([]), // Initiate
-                $this->createMockAwsException('ERROR', 'Aws\AwsException', '1'),
-                $this->createMockAwsException('ERROR', 'Aws\AwsException', '2'),
-                $this->createMockAwsException('ERROR', 'Aws\AwsException', '3'),
+                $this->createMockAwsException('ERROR', 'Aws\Common\Exception\AwsException', '1'),
+                $this->createMockAwsException('ERROR', 'Aws\Common\Exception\AwsException', '2'),
+                $this->createMockAwsException('ERROR', 'Aws\Common\Exception\AwsException', '3'),
             ],
             null,
             [

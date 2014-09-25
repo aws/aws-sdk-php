@@ -12,7 +12,7 @@ class UploaderTest extends \PHPUnit_Framework_TestCase
 {
     public function getUploader(array $parts = [])
     {
-        $client = $this->getMockBuilder('Aws\AwsClientInterface')
+        $client = $this->getMockBuilder('Aws\Common\AwsClientInterface')
             ->setMethods(['getCommand'])
             ->getMockForAbstractClass();
         $client->expects($this->any())

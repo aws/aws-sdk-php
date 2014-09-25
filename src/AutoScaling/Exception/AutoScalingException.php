@@ -1,7 +1,7 @@
 <?php
 namespace Aws\AutoScaling\Exception;
 
-use Aws\AwsException;
+use Aws\Common\Exception\AwsException;
 
 /**
  * Represents an error while interacting with the Auto Scaling service.

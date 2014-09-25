@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Common\Paginator;
 
-use Aws\AwsClientInterface;
+use Aws\Common\AwsClientInterface;
 use Aws\Common\Result;
 use GuzzleHttp\Event\ListenerAttacherTrait;
 

@@ -1,7 +1,7 @@
 <?php
 namespace Aws\CloudFront;
 
-use Aws\AwsClient;
+use Aws\Common\AwsClient;
 use GuzzleHttp\Collection;
 
 /**

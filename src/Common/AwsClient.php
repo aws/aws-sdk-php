@@ -1,15 +1,15 @@
 <?php
-namespace Aws;
+namespace Aws\Common;
 
+use Aws\Common\Exception\AwsException;
+use Aws\Sdk;
 use Aws\Common\Api\Service;
-use Aws\Common\Compat;
 use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Paginator\ResourceIterator;
 use Aws\Common\Paginator\ResultPaginator;
 use Aws\Common\Signature\SignatureInterface;
 use Aws\Common\Waiter\ResourceWaiter;
 use Aws\Common\Waiter\Waiter;
-use Aws\Common\FutureResult;
 use GuzzleHttp\Command\AbstractClient;
 use GuzzleHttp\Command\Command;
 use GuzzleHttp\Command\CommandInterface;
@@ -58,7 +58,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
      * - region: (optional) Region used to interact with the service
      * - error_parser: A callable that parses response exceptions
      * - exception_class: (optional) A specific exception class to throw that
-     *   extends from {@see Aws\AwsException}.
+     *   extends from {@see Aws\Common\Exception\AwsException}.
      * - serializer: callable used to serialize a request for a provided
      *   CommandTransaction argument. The callable must return a
      *   RequestInterface object.
@@ -88,7 +88,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         $this->defaults = isset($config['defaults']) ? $config['defaults'] : [];
         $this->commandException = isset($config['exception_class'])
             ? $config['exception_class']
-            : 'Aws\AwsException';
+            : 'Aws\Common\Exception\AwsException';
 
         parent::__construct($config['client']);
     }

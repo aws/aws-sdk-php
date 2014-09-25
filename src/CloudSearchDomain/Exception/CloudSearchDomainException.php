@@ -1,7 +1,7 @@
 <?php
 namespace Aws\CloudSearchDomain\Exception;
 
-use Aws\AwsException;
+use Aws\Common\Exception\AwsException;
 
 /**
  * Represents an error interacting with an Amazon CloudSearch Domain.

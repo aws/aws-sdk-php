@@ -1,13 +1,13 @@
 <?php
 namespace Aws\Test;
 
-use Aws\AwsException;
+use Aws\Common\Exception\AwsException;
 use GuzzleHttp\Command\Command;
 use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Message\Response;
 
 /**
- * @covers Aws\AwsException
+ * @covers Aws\Common\Exception\AwsException
  */
 class AwsExceptionTest extends \PHPUnit_Framework_TestCase
 {

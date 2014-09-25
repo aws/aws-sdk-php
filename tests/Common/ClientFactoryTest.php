@@ -2,7 +2,7 @@
 namespace Aws\Test\Common;
 
 use Aws\Common\Credentials\NullCredentials;
-use Aws\AwsException;
+use Aws\Common\Exception\AwsException;
 use Aws\Common\ClientFactory;
 use Aws\Test\SdkTest;
 use Aws\Test\UsesServiceTrait;
@@ -19,7 +19,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $f = new ClientFactory();
         $args = ['service' => 'sqs', 'region' => 'us-west-2'];
         $c = $f->create($args);
-        $this->assertInstanceOf('Aws\AwsClientInterface', $c);
+        $this->assertInstanceOf('Aws\Common\AwsClientInterface', $c);
         $this->assertNotSame($c, $f->create($args));
     }
 
@@ -68,7 +68,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Aws\AwsException
+     * @expectedException \Aws\Common\Exception\AwsException
      * @expectedExceptionMessage Throwing!
      */
     public function testCanDisableValidation()
@@ -118,7 +118,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $f->create([
             'service'         => 'dynamodb',
             'region'          => 'x',
-            'exception_class' => 'Aws\AwsException'
+            'exception_class' => 'Aws\Common\Exception\AwsException'
         ]);
     }
 

@@ -37,7 +37,7 @@ class AbstractUploadBuilderTest extends \PHPUnit_Framework_TestCase
 {
     public function testCanSetOptionsInChainableWay()
     {
-        $client = $this->getMockForAbstractClass('Aws\\AwsClientInterface');
+        $client = $this->getMockForAbstractClass('Aws\\Common\\AwsClientInterface');
         $state = new UploadState([]);
         $source = Stream::factory();
 

@@ -1,7 +1,6 @@
 <?php
-namespace Aws;
+namespace Aws\Common;
 
-use Aws\Common\ResultInterface;
 use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Command\ServiceClientInterface;
 

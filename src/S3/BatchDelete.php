@@ -1,7 +1,7 @@
 <?php
 namespace Aws\S3;
 
-use Aws\AwsClientInterface;
+use Aws\Common\AwsClientInterface;
 use Aws\Common\Result;
 use Aws\S3\Exception\DeleteMultipleObjectsException;
 use GuzzleHttp\Command\Event\PreparedEvent;

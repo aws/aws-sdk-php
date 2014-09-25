@@ -2,7 +2,7 @@
 namespace Aws\Test\Common\Api\Serializer;
 
 use Aws\Common\Api\Service;
-use Aws\AwsClient;
+use Aws\Common\AwsClient;
 use Aws\Common\ClientFactory;
 use Aws\Common\Credentials\NullCredentials;
 use Aws\Test\UsesServiceTrait;

@@ -66,7 +66,7 @@ class SourceFileTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Aws\AwsException
+     * @expectedException \Aws\Common\Exception\AwsException
      * @expectedExceptionMessage Unable to open /tmp/foo/baz/bar/_doesNotExist.txt using mode r
      */
     public function testEnsuresSourceParamExists()

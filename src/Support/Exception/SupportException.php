@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Support\Exception;
 
-use Aws\AwsException;
+use Aws\Common\Exception\AwsException;
 
 /**
  * Represents an error interacting with the AWS Support service.

@@ -1,7 +1,7 @@
 <?php
 namespace Aws\CloudSearch;
 
-use Aws\AwsClient;
+use Aws\Common\AwsClient;
 use Aws\CloudSearchDomain\CloudSearchDomainClient;
 
 /**

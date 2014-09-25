@@ -1,8 +1,8 @@
 <?php
 namespace Aws\Common\Multipart;
 
-use Aws\AwsClientInterface;
-use Aws\AwsException;
+use Aws\Common\AwsClientInterface;
+use Aws\Common\Exception\AwsException;
 use Aws\Common\Exception\MultipartUploadException;
 use Aws\Common\MapIterator;
 use Aws\Common\Result;

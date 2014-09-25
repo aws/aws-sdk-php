@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Sqs;
 
-use Aws\AwsClient;
+use Aws\Common\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Simple Queue Service (Amazon SQS)**.
