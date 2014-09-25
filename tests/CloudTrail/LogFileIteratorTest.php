@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Tests\CloudTrail;
+namespace Aws\Test\CloudTrail;
 
 use Aws\CloudTrail\CloudTrailClient;
 use Aws\CloudTrail\LogFileIterator;

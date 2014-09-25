@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Tests\Common\Signature;
+namespace Aws\Test\Common\Signature;
 
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Signature\SignatureV4;

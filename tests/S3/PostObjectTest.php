@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Tests\S3;
+namespace Aws\Test\S3;
 
 use Aws\S3\PostObject;
 use Aws\S3\S3Client;
