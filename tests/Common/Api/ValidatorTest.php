@@ -310,7 +310,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $validator = new Validator();
 
         try {
-            $validator->validate('Foo', $shape, $input);
+            call_user_func($validator, 'Foo', $shape, $input);
             if ($result !== true) {
                 $this->fail('Should have failed with ' . $result);
             }

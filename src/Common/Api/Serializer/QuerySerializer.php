@@ -26,14 +26,12 @@ class QuerySerializer
 
     public function __invoke(CommandTransaction $trans)
     {
-        /** @var \Aws\AwsCommandInterface $command */
         $command =  $trans->command;
-        $api = $command->getApi();
-        $operation = $api->getOperation($command->getName());
+        $operation = $this->api->getOperation($command->getName());
 
         $body = [
             'Action'  => $command->getName(),
-            'Version' => $api->getMetadata('apiVersion')
+            'Version' => $this->api->getMetadata('apiVersion')
         ];
 
         $params = $command->toArray();

@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Test\Common\Api\Serializer;
 
-use Aws\AwsCommand;
+use GuzzleHttp\Command\Command;
 use Aws\Common\Api\Serializer\RestJsonSerializer;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Client;
@@ -64,7 +64,7 @@ class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
     {
         $http = new Client();
         $service = $this->getTestService();
-        $command = new AwsCommand($commandName, $service, $input);
+        $command = new Command($commandName, $input);
         $j = new RestJsonSerializer($service, 'http://foo.com');
         $aws = $this->getMockBuilder('Aws\AwsClient')
             ->setMethods(['getHttpClient'])

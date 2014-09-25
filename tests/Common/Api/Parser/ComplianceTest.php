@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Test\Common\Api\Parser;
 
-use Aws\AwsCommand;
+use GuzzleHttp\Command\Command;
 use Aws\Common\Api\Service;
 use Aws\Common\Api\Shape;
 use Aws\Test\UsesServiceTrait;
@@ -64,7 +64,7 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
         $res
     ) {
         $parser = Service::createParser($service);
-        $command = new AwsCommand($name, $service);
+        $command = new Command($name);
 
         // Create a response based on the serialized property of the test.
         $response = new Response(
@@ -74,7 +74,7 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
         );
 
         $result = $parser($command, $response)->toArray();
-        $this->fixTimestamps($result, $command->getOperation()->getOutput());
+        $this->fixTimestamps($result, $service->getOperation($name)->getOutput());
         $this->assertEquals($expectedResult, $result);
     }
 

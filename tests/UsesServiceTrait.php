@@ -134,7 +134,7 @@ trait UsesServiceTrait
 
         $trans = new CommandTransaction(
             $client,
-            $this->getMock('Aws\AwsCommandInterface'),
+            $this->getMock('GuzzleHttp\Command\CommandInterface'),
             [
                 'aws_error' => [
                     'message' => $message ?: 'Test error',

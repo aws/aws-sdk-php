@@ -1,10 +1,10 @@
 <?php
 namespace Aws\Glacier\Multipart;
 
-use Aws\AwsCommandInterface;
 use Aws\Common\Multipart\AbstractUploader;
 use Aws\Glacier\TreeHash;
 use Aws\Common\Result;
+use GuzzleHttp\Command\CommandInterface;
 
 class Uploader extends AbstractUploader
 {
@@ -29,7 +29,7 @@ class Uploader extends AbstractUploader
         ]);
     }
 
-    protected function handleResult(AwsCommandInterface $command, Result $result)
+    protected function handleResult(CommandInterface $command, Result $result)
     {
         // Get data from the range.
         $rangeData = self::parseRange($command['range'], $this->state->getPartSize());

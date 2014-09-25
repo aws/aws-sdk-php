@@ -242,8 +242,7 @@ class ClientFactory
             return;
         }
 
-        $validator = new Validator();
-        $client->getEmitter()->attach(new Validation($validator));
+        $client->getEmitter()->attach(new Validation($args['api'], new Validator()));
     }
 
     protected function handle_debug(

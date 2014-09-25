@@ -40,7 +40,6 @@ class JsonRpcSerializer
 
     public function __invoke(CommandTransaction $trans)
     {
-        /** @var \Aws\AwsCommandInterface $command */
         $command = $trans->command;
         $name = $command->getName();
         $operation = $this->api->getOperation($name);

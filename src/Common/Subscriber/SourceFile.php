@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Common\Subscriber;
 
+use Aws\Common\Api\Service;
 use GuzzleHttp\Command\Event\InitEvent;
 use GuzzleHttp\Event\SubscriberInterface;
 use GuzzleHttp\Stream;
@@ -12,6 +13,9 @@ use GuzzleHttp\Stream\LazyOpenStream;
  */
 class SourceFile implements SubscriberInterface
 {
+    /** @var Service */
+    private $api;
+
     /** @var string The key for the upload body parameter */
     private $bodyParameter;
 
@@ -19,13 +23,16 @@ class SourceFile implements SubscriberInterface
     private $sourceParameter;
 
     /**
-     * @param string $bodyParameter   The key for the body parameter
-     * @param string $sourceParameter The key for the source file parameter
+     * @param Service $api             API being accessed.
+     * @param string  $bodyParameter   The key for the body parameter
+     * @param string  $sourceParameter The key for the source file parameter
      */
     public function __construct(
+        Service $api,
         $bodyParameter = 'Body',
         $sourceParameter = 'SourceFile'
     ) {
+        $this->api = $api;
         $this->bodyParameter = (string) $bodyParameter;
         $this->sourceParameter = (string) $sourceParameter;
     }
@@ -37,17 +44,15 @@ class SourceFile implements SubscriberInterface
 
     public function onInit(InitEvent $event)
     {
-        /** @var $c \Aws\AwsCommandInterface $command */
         $c = $event->getCommand();
+        $operation = $this->api->getOperation($c->getName());
         $source = $c[$this->sourceParameter];
 
-        if ($source === null ||
-            !$c->getOperation()->getInput()->hasMember($this->bodyParameter)
+        if ($source !== null
+            && $operation->getInput()->hasMember($this->bodyParameter)
         ) {
-            return;
+            $c[$this->bodyParameter] = new LazyOpenStream($source, 'r');
+            unset($c[$this->sourceParameter]);
         }
-
-        $c[$this->bodyParameter] = new LazyOpenStream($source, 'r');
-        unset($c[$this->sourceParameter]);
     }
 }

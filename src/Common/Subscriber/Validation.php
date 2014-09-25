@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Common\Subscriber;
 
-use Aws\Common\Api\Validator;
+use Aws\Common\Api\Service;
 use GuzzleHttp\Command\Event\InitEvent;
 use GuzzleHttp\Event\SubscriberInterface;
 
@@ -13,12 +13,27 @@ class Validation implements SubscriberInterface
     /** @var \Aws\Common\Api\Validator */
     private $validator;
 
+    /** @var Service */
+    private $api;
+
     /**
-     * @param Validator $validator Validator used to validate input
+     * The provided validator function is a callable that accepts the
+     * following positional arguments:
+     *
+     * - string, name of the operation
+     * - Aws\Common\Api\Shape, shape being validated against
+     * - array, input data being validated
+     *
+     * The callable is expected to throw an \InvalidArgumentException when the
+     * provided input data does not match the shape.
+     *
+     * @param Service  $api       API being hit.
+     * @param callable $validator Function used to validate input.
      */
-    public function __construct(Validator $validator)
+    public function __construct(Service $api, callable $validator)
     {
         $this->validator = $validator;
+        $this->api = $api;
     }
 
     public function getEvents()
@@ -28,13 +43,9 @@ class Validation implements SubscriberInterface
 
     public function onInit(InitEvent $event)
     {
-        /** @var \Aws\AwsCommandInterface $command */
         $command = $event->getCommand();
-        $operation = $command->getOperation();
-        $this->validator->validate(
-            $command->getName(),
-            $operation->getInput(),
-            $command->toArray()
-        );
+        $operation = $this->api->getOperation($command->getName());
+        $fn = $this->validator;
+        $fn($command->getName(), $operation->getInput(), $command->toArray());
     }
 }

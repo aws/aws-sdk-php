@@ -40,10 +40,8 @@ abstract class RestSerializer
 
     public function __invoke(CommandTransaction $trans)
     {
-        /** @var \Aws\AwsCommandInterface $command */
         $command = $trans->command;
-        $api = $command->getApi();
-        $operation = $api->getOperation($command->getName());
+        $operation = $this->api->getOperation($command->getName());
         $args = $command->toArray();
 
         $request = $trans->client->createRequest(

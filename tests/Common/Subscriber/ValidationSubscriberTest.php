@@ -1,9 +1,9 @@
 <?php
 namespace Aws\Test\Common\Subscriber;
 
-use Aws\Common\Api\Operation;
-use Aws\Common\Api\ShapeMap;
+use Aws\Common\Api\Validator;
 use Aws\Common\Subscriber\Validation;
+use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Event\InitEvent;
 
@@ -12,42 +12,21 @@ use GuzzleHttp\Command\Event\InitEvent;
  */
 class ValidationTest extends \PHPUnit_Framework_TestCase
 {
+    use UsesServiceTrait;
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Found 2 errors while validating the input provided for the GetObject operation:
+     */
     public function testValdiatesBeforeSerialization()
     {
-        $operation = new Operation([
-            'name' => 'Test',
-            'input' => [
-                'type' => 'structure',
-                'members' => ['foo' => ['type' => 'string']]
-            ]
-        ], new ShapeMap([]));
-
-        $command = $this->getMockBuilder('Aws\AwsCommandInterface')
-            ->setMethods(['getName', 'getOperation', 'toArray'])
-            ->getMockForAbstractClass();
-        $command->expects($this->once())
-            ->method('toArray')
-            ->will($this->returnValue(['foo' => 'bar']));
-        $command->expects($this->once())
-            ->method('getName')
-            ->will($this->returnValue('Test'));
-        $command->expects($this->once())
-            ->method('getOperation')
-            ->will($this->returnValue($operation));
-
-        $client = $this->getMockBuilder('Aws\AwsClientInterface')
-            ->getMockForAbstractClass();
-
-        $validator = $this->getMockBuilder('Aws\Common\Api\Validator')
-            ->setMethods(['validate'])
-            ->getMock();
-        $validator->expects($this->once())
-            ->method('validate')
-            ->will($this->returnValue(true));
-
-        $trans = new CommandTransaction($client, $command);
+        $s3 = $this->getTestClient('s3');
+        $api = $s3->getApi();
+        $command = $s3->getCommand('GetObject');
+        $trans = new CommandTransaction($s3, $command);
         $event = new InitEvent($trans);
-        $validation = new Validation($validator);
+        $validator = new Validator();
+        $validation = new Validation($api, $validator);
         $this->assertNotEmpty($validation->getEvents());
         $validation->onInit($event);
     }

@@ -26,12 +26,12 @@ class GlacierFactory extends ClientFactory
             $client->getApi()->getMetadata('apiVersion')
         );
 
-        $emitter = $client->getEmitter();
+        $em = $client->getEmitter();
         // Allow for specifying bodies with file paths and file handles.
-        $emitter->attach(new SourceFile('body', 'sourceFile'));
+        $em->attach(new SourceFile($client->getApi(), 'body', 'sourceFile'));
         // Listen for upload operations and make sure the required hash headers
         // are added.
-        $emitter->attach(new ApplyChecksums);
+        $em->attach(new ApplyChecksums);
 
         return $client;
     }

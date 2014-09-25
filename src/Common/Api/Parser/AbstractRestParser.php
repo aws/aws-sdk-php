@@ -1,10 +1,10 @@
 <?php
 namespace Aws\Common\Api\Parser;
 
-use Aws\AwsCommandInterface;
 use Aws\Common\Api\Shape;
 use Aws\Common\Api\StructureShape;
 use Aws\Common\Result;
+use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Message\ResponseInterface;
 
 /**
@@ -28,7 +28,7 @@ abstract class AbstractRestParser extends AbstractParser
     );
 
     public function __invoke(
-        AwsCommandInterface $command,
+        CommandInterface $command,
         ResponseInterface $response
     ) {
         $output = $this->api->getOperation($command->getName())->getOutput();

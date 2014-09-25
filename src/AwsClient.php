@@ -11,6 +11,7 @@ use Aws\Common\Waiter\ResourceWaiter;
 use Aws\Common\Waiter\Waiter;
 use Aws\Common\FutureResult;
 use GuzzleHttp\Command\AbstractClient;
+use GuzzleHttp\Command\Command;
 use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Exception\RequestException;
@@ -167,18 +168,12 @@ class AwsClient extends AbstractClient implements AwsClientInterface
 
     public function getCommand($name, array $args = [])
     {
-        $command = null;
-        if (isset($this->api['operations'][$name])) {
-            $command = $this->api['operations'][$name];
-        } else {
+        // Fail fast if the command cannot be found in the description.
+        if (!isset($this->api['operations'][$name])) {
             $name = ucfirst($name);
-            if (isset($this->api['operations'][$name])) {
-                $command = $this->api['operations'][$name];
+            if (!isset($this->api['operations'][$name])) {
+                throw new \InvalidArgumentException("Operation not found: $name");
             }
-        }
-
-        if (!$command) {
-            throw new \InvalidArgumentException("Operation not found: $name");
         }
 
         if (isset($args['@future'])) {
@@ -188,12 +183,10 @@ class AwsClient extends AbstractClient implements AwsClientInterface
             $future = false;
         }
 
-        return new AwsCommand(
-            $name,
-            $this->api,
-            $args + $this->defaults,
-            ['emitter' => clone $this->getEmitter(), 'future' => $future]
-        );
+        return new Command($name, $args + $this->defaults, [
+            'emitter' => clone $this->getEmitter(),
+            'future' => $future
+        ]);
     }
 
     public function getIterator($name, array $args = [], array $config = [])

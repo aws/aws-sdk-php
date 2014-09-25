@@ -68,7 +68,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         ]]]);
 
         $this->assertInstanceOf(
-            'Aws\AwsCommandInterface',
+            'GuzzleHttp\Command\CommandInterface',
             $client->getCommand('foo')
         );
     }
@@ -180,7 +180,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         ]]]);
 
         $this->assertInstanceOf(
-            'Aws\AwsCommandInterface',
+            'GuzzleHttp\Command\CommandInterface',
             $client->getCommand('foo')
         );
     }

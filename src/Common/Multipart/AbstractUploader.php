@@ -2,11 +2,11 @@
 namespace Aws\Common\Multipart;
 
 use Aws\AwsClientInterface;
-use Aws\AwsCommandInterface;
 use Aws\AwsException;
 use Aws\Common\Exception\MultipartUploadException;
 use Aws\Common\MapIterator;
 use Aws\Common\Result;
+use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Command\Event\ProcessEvent;
 
 /**
@@ -175,7 +175,6 @@ abstract class AbstractUploader
             'prepared'  => $before,
             'process'   => [
                 'fn' => function (ProcessEvent $event) use (&$errors) {
-                    /** @var AwsCommandInterface $command */
                     $command = $event->getCommand();
                     if ($ex = $event->getException()) {
                         $key = $event->getCommand()[static::$partNumberParam];
@@ -203,7 +202,7 @@ abstract class AbstractUploader
      * @param string $operation        Name of the operation (e.g., UploadPart).
      * @param array  $additionalParams Extra params not stored in the Uploader.
      *
-     * @return AwsCommandInterface
+     * @return CommandInterface
      */
     protected function createCommand($operation, array $additionalParams = [])
     {
@@ -218,7 +217,7 @@ abstract class AbstractUploader
     /**
      * Get the command for completing the multipart upload.
      *
-     * @return AwsCommandInterface
+     * @return CommandInterface
      */
     abstract protected function getCompleteCommand();
 
@@ -227,7 +226,7 @@ abstract class AbstractUploader
      * uploaded and mark it as such.
      */
     abstract protected function handleResult(
-        AwsCommandInterface $command,
+        CommandInterface $command,
         Result $result
     );
 }

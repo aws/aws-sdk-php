@@ -3,7 +3,7 @@ namespace Aws\Common\Api\Parser;
 
 use Aws\Common\Api\Service;
 use Aws\Common\Result;
-use Aws\AwsCommandInterface;
+use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Message\ResponseInterface;
 
 /**
@@ -24,7 +24,7 @@ class JsonRpcParser extends AbstractParser
     }
 
     public function __invoke(
-        AwsCommandInterface $command,
+        CommandInterface $command,
         ResponseInterface $response
     ) {
         $operation = $this->api->getOperation($command->getName());

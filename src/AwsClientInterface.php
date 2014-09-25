@@ -114,25 +114,6 @@ interface AwsClientInterface extends ServiceClientInterface
     public function __call($name, array $arguments);
 
     /**
-     * Create a command for an operation name.
-     *
-     * Special keys may be set on the command to control how it behaves.
-     * Implementations SHOULD be able to utilize the following keys or throw
-     * an exception if unable.
-     *
-     * - @future: Set to true to create a future if possible. When processed,
-     *   the "@future" key value pair can be removed from the input data before
-     *   serializing the command.
-     *
-     * @param string $name   Name of the operation to use in the command
-     * @param array  $args   Arguments to pass to the command
-     *
-     * @return AwsCommandInterface
-     * @throws \InvalidArgumentException if no command can be found by name
-     */
-    public function getCommand($name, array $args = []);
-
-    /**
      * Execute a single command.
      *
      * @param CommandInterface $command Command to execute

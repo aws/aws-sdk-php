@@ -20,7 +20,7 @@ class Validator
      *
      * @throws \InvalidArgumentException if the input is invalid.
      */
-    public function validate($name, Shape $shape, array $input)
+    public function __invoke($name, Shape $shape, array $input)
     {
         $this->dispatch($shape, $input);
 

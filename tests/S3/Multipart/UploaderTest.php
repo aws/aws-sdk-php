@@ -57,7 +57,7 @@ class UploaderTest extends \PHPUnit_Framework_TestCase
         $method->setAccessible(true);
 
         // Mock arguments.
-        $command = $this->getMockBuilder('Aws\AwsCommand')
+        $command = $this->getMockBuilder('GuzzleHttp\Command\Command')
             ->disableOriginalConstructor()
             ->getMock();
         $command->expects($this->any())->method('offsetGet')

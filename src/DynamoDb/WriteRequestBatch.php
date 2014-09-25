@@ -2,7 +2,7 @@
 
 namespace Aws\DynamoDb;
 
-use Aws\AwsCommand;
+use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Command\Event\ProcessEvent;
 
 /**
@@ -176,7 +176,7 @@ class WriteRequestBatch
     /**
      * Creates BatchWriteItem commands from the items in the queue.
      *
-     * @return AwsCommand[]
+     * @return CommandInterface[]
      */
     private function prepareCommands()
     {
