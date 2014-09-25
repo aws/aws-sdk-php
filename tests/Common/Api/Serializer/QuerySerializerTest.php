@@ -2,13 +2,10 @@
 namespace Aws\Test\Common\Api\Serializer;
 
 use Aws\Common\Api\Serializer\QuerySerializer;
-use Aws\Common\Api\Service;
 use Aws\AwsCommand;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Client;
-use GuzzleHttp\Command\Command;
 use GuzzleHttp\Command\CommandTransaction;
-use GuzzleHttp\Command\Event\PrepareEvent;
 
 /**
  * @covers Aws\Common\Api\Serializer\QuerySerializer
@@ -51,11 +48,9 @@ class QuerySerializerTest extends \PHPUnit_Framework_TestCase
         $q = new QuerySerializer($service, 'http://foo.com');
         $trans = new CommandTransaction(
             $aws,
-            new AwsCommand('foo', ['baz' => []], $service)
+            new AwsCommand('foo', $service, ['baz' => []])
         );
-        $event = new PrepareEvent($trans);
-        $q->onPrepare($event);
-        $request = $event->getRequest();
+        $request = $q($trans);
         $this->assertEquals('POST', $request->getMethod());
         $this->assertEquals('http://foo.com', $request->getUrl());
         $this->assertEquals('Action=foo&Version=1&baz=', (string) $request->getBody());

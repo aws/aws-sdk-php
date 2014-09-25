@@ -3,9 +3,9 @@
 namespace Aws\Test\Glacier;
 
 use Aws\Glacier\Exception\GlacierException;
-use Aws\Result;
+use Aws\Common\Result;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Command\Event\PrepareEvent;
+use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Stream\NoSeekStream;
@@ -45,8 +45,8 @@ class ApplyChecksumsTest extends \PHPUnit_Framework_TestCase
             'body'      => 'bar',
         ]);
 
-        $command->getEmitter()->on('prepare', function (PrepareEvent $event) {
-            $event->setResult(new Result([]));
+        $command->getEmitter()->on('prepared', function (PreparedEvent $event) {
+            $event->intercept(new Result([]));
             $expectedHash = hash('sha256', 'bar');
             $this->assertEquals(
                 $expectedHash,

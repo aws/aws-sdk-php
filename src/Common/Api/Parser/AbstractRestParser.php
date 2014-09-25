@@ -1,12 +1,11 @@
 <?php
 namespace Aws\Common\Api\Parser;
 
+use Aws\AwsCommandInterface;
 use Aws\Common\Api\Shape;
 use Aws\Common\Api\StructureShape;
-use Aws\Common\Api\Service;
-use GuzzleHttp\Command\Event\ProcessEvent;
+use Aws\Common\Result;
 use GuzzleHttp\Message\ResponseInterface;
-use GuzzleHttp\Model\Model;
 
 /**
  * @internal
@@ -28,11 +27,11 @@ abstract class AbstractRestParser extends AbstractParser
         array &$result
     );
 
-    protected function createResult(Service $api, ProcessEvent $event)
-    {
-        $response = $event->getResponse();
-        $command = $event->getCommand();
-        $output = $api->getOperation($command->getName())->getOutput();
+    public function __invoke(
+        AwsCommandInterface $command,
+        ResponseInterface $response
+    ) {
+        $output = $this->api->getOperation($command->getName())->getOutput();
         $result = [];
 
         if ($payload = $output['payload']) {
@@ -58,7 +57,7 @@ abstract class AbstractRestParser extends AbstractParser
             $this->payload($response, $output, $result);
         }
 
-        return new Model($result);
+        return new Result($result);
     }
 
     private function extractPayload(

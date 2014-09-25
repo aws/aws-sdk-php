@@ -35,7 +35,7 @@ class SourceFile implements SubscriberInterface
         return ['init' => ['onInit']];
     }
 
-    public function onPrepare(InitEvent $event)
+    public function onInit(InitEvent $event)
     {
         /** @var $c \Aws\AwsCommandInterface $command */
         $c = $event->getCommand();

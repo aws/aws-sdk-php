@@ -1,10 +1,9 @@
 <?php
 namespace Aws\Test\Common\Api\Serializer;
 
+use Aws\Common\Api\Serializer\RestXmlSerializer;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Client;
 use GuzzleHttp\Command\CommandTransaction;
-use GuzzleHttp\Command\Event\PrepareEvent;
 
 /**
  * @covers Aws\Common\Api\Serializer\RestXmlSerializer
@@ -17,10 +16,10 @@ class RestXmlSerializerTest extends \PHPUnit_Framework_TestCase
     {
         $client = $this->getTestClient('s3', ['region' => 'us-east-1']);
         $command = $client->getCommand($commandName, $input);
-        $event = new PrepareEvent(new CommandTransaction($client, $command));
-        $command->getEmitter()->emit('prepare', $event);
+        $xml = new RestXmlSerializer($client->getApi(), $client->getEndpoint());
+        $trans = new CommandTransaction($client, $command);
 
-        return $event->getRequest();
+        return $xml($trans);
     }
 
     public function testPreparesRequestsWithContentType()

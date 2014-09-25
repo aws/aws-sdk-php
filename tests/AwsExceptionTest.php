@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Test;
 
-use GuzzleHttp\Collection;
 use Aws\AwsException;
 use GuzzleHttp\Command\Command;
 use GuzzleHttp\Command\CommandTransaction;

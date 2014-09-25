@@ -2,7 +2,7 @@
 namespace Aws\Common\Paginator;
 
 use Aws\AwsClientInterface;
-use Aws\Result;
+use Aws\Common\Result;
 use GuzzleHttp\Event\ListenerAttacherTrait;
 
 class ResultPaginator implements \Iterator
@@ -51,7 +51,7 @@ class ResultPaginator implements \Iterator
         $this->config = $config;
         $this->listeners = $this->prepareListeners(
             $config,
-            ['prepare', 'process', 'error']
+            ['prepared', 'process', 'error']
         );
     }
 

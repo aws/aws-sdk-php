@@ -2,8 +2,9 @@
 namespace Aws\Common\Api\Parser;
 
 use Aws\Common\Api\Service;
-use GuzzleHttp\Model\Model;
-use GuzzleHttp\Command\Event\ProcessEvent;
+use Aws\Common\Result;
+use Aws\AwsCommandInterface;
+use GuzzleHttp\Message\ResponseInterface;
 
 /**
  * @internal Parses query (XML) responses (e.g., EC2, SQS, and many others)
@@ -33,16 +34,17 @@ class QueryParser extends AbstractParser
         $this->honorResultWrapper = $honorResultWrapper;
     }
 
-    protected function createResult(Service $api, ProcessEvent $event)
-    {
-        $command = $event->getCommand();
-        $output = $api->getOperation($command->getName())->getOutput();
-        $xml = $event->getResponse()->xml();
+    public function __invoke(
+        AwsCommandInterface $command,
+        ResponseInterface $response
+    ) {
+        $output = $this->api->getOperation($command->getName())->getOutput();
+        $xml = $response->xml();
 
         if ($this->honorResultWrapper && $output['resultWrapper']) {
             $xml = $xml->{$output['resultWrapper']};
         }
 
-        return new Model($this->xmlParser->parse($output, $xml));
+        return new Result($this->xmlParser->parse($output, $xml));
     }
 }

@@ -1,6 +1,10 @@
 <?php
 namespace Aws\Common\Api;
 
+use Aws\Common\Api\Serializer\QuerySerializer;
+use Aws\Common\Api\Serializer\Ec2ParamBuilder;
+use Aws\Common\Api\Parser\QueryParser;
+
 /**
  * Represents a web service API model.
  */
@@ -60,6 +64,90 @@ class Service extends AbstractModel
         }
 
         parent::__construct($definition, $options['shape_map']);
+    }
+
+    /**
+     * Creates a request serializer for the provided API object.
+     *
+     * @param Service $api      API that contains a protocol.
+     * @param string  $endpoint Endpoint to send requests to.
+     *
+     * @return callable
+     * @throws \UnexpectedValueException
+     */
+    public static function createSerializer(Service $api, $endpoint)
+    {
+        static $mapping = [
+            'json'      => 'Aws\Common\Api\Serializer\JsonRpcSerializer',
+            'query'     => 'Aws\Common\Api\Serializer\QuerySerializer',
+            'rest-json' => 'Aws\Common\Api\Serializer\RestJsonSerializer',
+            'rest-xml'  => 'Aws\Common\Api\Serializer\RestXmlSerializer'
+        ];
+
+        $proto = $api->getProtocol();
+
+        if (isset($mapping[$proto])) {
+            return new $mapping[$proto]($api, $endpoint);
+        } elseif ($proto == 'ec2') {
+            return new QuerySerializer($api, $endpoint, new Ec2ParamBuilder());
+        } else {
+            throw new \UnexpectedValueException(
+                'Unknown protocol: ' . $api->getProtocol()
+            );
+        }
+    }
+
+    /**
+     * Creates an error parser for the given protocol.
+     *
+     * @param string $protocol Protocol to parse (e.g., query, json, etc.)
+     *
+     * @return callable
+     * @throws \UnexpectedValueException
+     */
+    public static function createErrorParser($protocol)
+    {
+        static $mapping = [
+            'json'      => 'Aws\Common\Api\ErrorParser\JsonRpcErrorParser',
+            'query'     => 'Aws\Common\Api\ErrorParser\XmlErrorParser',
+            'rest-json' => 'Aws\Common\Api\ErrorParser\RestJsonErrorParser',
+            'rest-xml'  => 'Aws\Common\Api\ErrorParser\XmlErrorParser',
+            'ec2'       => 'Aws\Common\Api\ErrorParser\XmlErrorParser'
+        ];
+
+        if (!isset($mapping[$protocol])) {
+            throw new \UnexpectedValueException("Unknown protocol: $protocol");
+        }
+
+        return new $mapping[$protocol]();
+    }
+
+    /**
+     * Applies the listeners needed to parse client models.
+     *
+     * @param Service $api API to create a parser for
+     * @return callable
+     * @throws \UnexpectedValueException
+     */
+    public static function createParser(Service $api)
+    {
+        static $mapping = [
+            'json'      => 'Aws\Common\Api\Parser\JsonRpcParser',
+            'query'     => 'Aws\Common\Api\Parser\QueryParser',
+            'rest-json' => 'Aws\Common\Api\Parser\RestJsonParser',
+            'rest-xml'  => 'Aws\Common\Api\Parser\RestXmlParser'
+        ];
+
+        $proto = $api->getProtocol();
+        if (isset($mapping[$proto])) {
+            return new $mapping[$proto]($api);
+        } elseif ($proto == 'ec2') {
+            return new QueryParser($api, null, false);
+        } else {
+            throw new \UnexpectedValueException(
+                'Unknown protocol: ' . $api->getProtocol()
+            );
+        }
     }
 
     /**

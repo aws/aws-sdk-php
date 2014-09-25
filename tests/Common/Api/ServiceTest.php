@@ -175,4 +175,60 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals($name, $actual['waiter_name']);
         }
     }
+
+    public function errorParserProvider()
+    {
+        return [
+            ['json', 'Aws\Common\Api\ErrorParser\JsonRpcErrorParser'],
+            ['rest-json', 'Aws\Common\Api\ErrorParser\RestJsonErrorParser'],
+            ['query', 'Aws\Common\Api\ErrorParser\XmlErrorParser'],
+            ['rest-xml', 'Aws\Common\Api\ErrorParser\XmlErrorParser']
+        ];
+    }
+
+    /**
+     * @dataProvider errorParserProvider
+     */
+    public function testCreatesRelevantErrorParsers($p, $cl)
+    {
+        $this->assertInstanceOf($cl, Service::createErrorParser($p));
+    }
+
+    public function serializerDataProvider()
+    {
+        return [
+            ['json', 'Aws\Common\Api\Serializer\JsonRpcSerializer'],
+            ['rest-json', 'Aws\Common\Api\Serializer\RestJsonSerializer'],
+            ['rest-xml', 'Aws\Common\Api\Serializer\RestXmlSerializer'],
+            ['query', 'Aws\Common\Api\Serializer\QuerySerializer'],
+            ['ec2', 'Aws\Common\Api\Serializer\QuerySerializer'],
+        ];
+    }
+
+    /**
+     * @dataProvider serializerDataProvider
+     */
+    public function testCreatesSerializer($type, $parser)
+    {
+
+    }
+
+    public function parserDataProvider()
+    {
+        return [
+            ['json', 'Aws\Common\Api\Parser\JsonRpcParser'],
+            ['rest-json', 'Aws\Common\Api\Parser\RestJsonParser'],
+            ['rest-xml', 'Aws\Common\Api\Parser\RestXmlParser'],
+            ['query', 'Aws\Common\Api\Parser\XmlParser'],
+            ['ec2', 'Aws\Common\Api\Parser\XmlParser'],
+        ];
+    }
+
+    /**
+     * @dataProvider parserDataProvider
+     */
+    public function testCreatesParsers($type, $parser)
+    {
+
+    }
 }

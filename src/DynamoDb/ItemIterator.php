@@ -1,7 +1,7 @@
 <?php
 namespace Aws\DynamoDb;
 
-use Aws\Result;
+use Aws\Common\Result;
 use GuzzleHttp\Collection;
 use GuzzleHttp\ToArrayInterface;
 

@@ -9,13 +9,11 @@ use Aws\Common\Paginator\ResultPaginator;
 use Aws\Common\Signature\SignatureInterface;
 use Aws\Common\Waiter\ResourceWaiter;
 use Aws\Common\Waiter\Waiter;
+use Aws\Common\FutureResult;
 use GuzzleHttp\Command\AbstractClient;
 use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Command\CommandTransaction;
-use GuzzleHttp\Model\FutureModel;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Ring\FutureInterface;
-use GuzzleHttp\Ring\Core;
 
 /**
  * Default AWS client implementation
@@ -192,8 +190,8 @@ class AwsClient extends AbstractClient implements AwsClientInterface
 
         return new AwsCommand(
             $name,
-            $args + $this->defaults,
             $this->api,
+            $args + $this->defaults,
             ['emitter' => clone $this->getEmitter(), 'future' => $future]
         );
     }
@@ -255,26 +253,34 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         }
 
         $exceptionClass = $this->commandException;
-        $response = $transaction->exception instanceof RequestException
-            ? $transaction->exception->getResponse()
-            : null;
 
-        if (!$response) {
+        if ($transaction->exception instanceof RequestException) {
+            $url = $transaction->exception->getRequest()->getUrl();
+            $parser = $this->errorParser;
+            // Add the parsed response error to the exception.
+            $transaction->context['aws_error'] = $parser(
+                $transaction->exception->getResponse()
+            );
+            // Only use the AWS error code if the parser could parse resposne.
+            if (empty($transaction->context['aws_error']['type'])) {
+                $serviceError = $transaction->exception->getMessage();
+            } else {
+                // Create an easy to read error message.
+                $serviceError = trim($transaction->context->getPath('aws_error/code')
+                    . ' (' . $transaction->context->getPath('aws_error/type')
+                    . ' error): ' . $transaction->context->getPath('aws_error/message'));
+            }
+        } else {
+            $url = null;
             $transaction->context->set('aws_error', []);
             $serviceError = $transaction->exception->getMessage();
-        } else {
-            $parser = $this->errorParser;
-            $transaction->context['aws_error'] = $parser($response);
-            $serviceError =  $transaction->context->getPath('aws_error/code')
-                . ' (' . $transaction->context->getPath('aws_error/type') . ' error): '
-                . $transaction->context->getPath('aws_error/message');
         }
 
         return new $exceptionClass(
             sprintf('Error executing %s::%s() on "%s"; %s',
                 get_class($this),
                 lcfirst($transaction->command->getName()),
-                $transaction->exception->getRequest()->getUrl(),
+                $url,
                 $serviceError),
             $transaction,
             $transaction->exception
@@ -283,12 +289,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
 
     protected function createFutureResult(CommandTransaction $transaction)
     {
-        if (!($transaction->response instanceof FutureInterface)) {
-            throw new \RuntimeException('Must be a FutureInterface. Found '
-                . Core::describeType($transaction->response));
-        }
-
-        return new FutureModel(
+        return new FutureResult(
             // Deref function derefs the response which populates the result.
             function () use ($transaction) {
                 $transaction->response = $transaction->response->deref();

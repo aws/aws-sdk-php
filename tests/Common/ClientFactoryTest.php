@@ -1,13 +1,11 @@
 <?php
 namespace Aws\Test\Common;
 
-use Aws\AwsClient;
 use Aws\Common\Credentials\NullCredentials;
 use Aws\AwsException;
 use Aws\Common\ClientFactory;
 use Aws\Test\SdkTest;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Client;
 
 /**
  * @covers Aws\Common\ClientFactory
@@ -81,17 +79,16 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
             'region'   => 'x',
             'validate' => false
         ]);
-
-        $c->getHttpClient()->getEmitter()->on('before', function() {
+        $command = $c->getCommand('CreateTable');
+        $command->getEmitter()->on('prepared', function () {
             throw new \Exception('Throwing!');
         });
-
-        $c->createTable([]);
+        $c->execute($command);
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Unknown service type foo
+     * @expectedException \UnexpectedValueException
+     * @expectedExceptionMessage Unknown protocol: foo
      */
     public function testValidatesErrorParser()
     {
@@ -194,7 +191,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage endpoint_provider must be an instance of Aws\Common\Api\EndpointProviderInterface
+     * @expectedExceptionMessage endpoint_provider must be a callable
      */
     public function testValidatesEndpointProvider()
     {
@@ -227,30 +224,6 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $c->getHttpClient()->getEmitter()->listeners('error'));
         $c = $f->create(['service' => 'dynamodb', 'region' => 'x', 'retries' => false]);
         $this->assertCount(0, $c->getHttpClient()->getEmitter()->listeners('error'));
-    }
-
-    public function errorParserProvider()
-    {
-        return [
-            ['json', 'Aws\Common\Api\ErrorParser\JsonRpcErrorParser'],
-            ['rest-json', 'Aws\Common\Api\ErrorParser\RestJsonErrorParser'],
-            ['query', 'Aws\Common\Api\ErrorParser\XmlErrorParser'],
-            ['rest-xml', 'Aws\Common\Api\ErrorParser\XmlErrorParser']
-        ];
-    }
-
-    /**
-     * @dataProvider errorParserProvider
-     */
-    public function testCreatesRelevantErrorParsers($p, $cl)
-    {
-        $f = new ClientFactory();
-
-        $r = new \ReflectionMethod($f, 'createErrorParser');
-        $r->setAccessible(true);
-
-        $api = $this->createServiceApi(['metadata' => ['protocol' => $p]]);
-        $this->assertInstanceOf($cl, $r->invoke($f, $api));
     }
 
     /**
@@ -295,15 +268,12 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCanUseCustomEndpointProviderWithExtraData()
     {
-        $p = $this->getMockBuilder('Aws\Common\EndpointProviderInterface')
-            ->setMethods(['getEndpoint'])
-            ->getMockForAbstractClass();
-        $p->expects($this->once())
-            ->method('getEndpoint')
-            ->will($this->returnValue([
+        $p = function () {
+            return [
                 'endpoint' => 'http://foo.com',
                 'signatureVersion' => 'v2'
-            ]));
+            ];
+        };
         $f = new ClientFactory();
         $c = $f->create([
             'service' => 'sqs',
@@ -374,7 +344,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(SdkTest::hasListener(
             $c->getEmitter(),
             'GuzzleHttp\Command\Subscriber\Debug',
-            'prepare'
+            'prepared'
         ));
 
         $c = $f->create([
@@ -422,63 +392,35 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function protocolDataProvider()
+    public function testDoesNotMessWithExistingResults()
     {
-        return [
-            ['json', 'Aws\Common\Api\Serializer\JsonRpcSerializer', 'Aws\Common\Api\Parser\JsonRpcParser'],
-            ['rest-json', 'Aws\Common\Api\Serializer\RestJsonSerializer'],
-            ['rest-xml', 'Aws\Common\Api\Serializer\RestXmlSerializer'],
-            ['query', 'Aws\Common\Api\Serializer\QuerySerializer'],
-            ['foo', 'UnexpectedValueException'],
-        ];
+        $c = (new ClientFactory())->create([
+            'service'  => 'dynamodb',
+            'region'   => 'x',
+            'validate' => false
+        ]);
+        $command = $c->getCommand('ListTables');
+        $command->getEmitter()->on('prepared', function ($e) {
+            $e->intercept(['foo' => 'bar']);
+        });
+        $this->assertEquals(['foo' => 'bar'], $c->execute($command));
     }
 
     /**
-     * @dataProvider protocolDataProvider
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage No response was received.
      */
-    public function testAttachesProtocols($type, $serializer, $parser = null)
+    public function testThrowsWhenNoResultOrResponseIsPresent()
     {
-        $factory = new ClientFactory();
-        $method = new \ReflectionMethod($factory, 'applyProtocol');
-        $method->setAccessible(true);
-        $service = $this->createServiceApi([
-            'metadata' => ['protocol' => $type]
+        $c = (new ClientFactory())->create([
+            'service'  => 'dynamodb',
+            'region'   => 'x',
+            'validate' => false
         ]);
-
-        $client = new AwsClient([
-            'api' => $service,
-            'credentials' => $this->getMock('Aws\Common\Credentials\CredentialsInterface'),
-            'signature' => $this->getMock('Aws\Common\Signature\SignatureInterface'),
-            'client' => new Client(),
-            'endpoint' => 'http://us-east-1.foo.amazonaws.com',
-            'error_parser' => function () {}
-        ]);
-
-        try {
-            $method->invoke($factory, $client, 'http://foo.com');
-        } catch (\Exception $e) {
-            $this->assertInstanceOf($serializer, $e);
-            return;
-        }
-
-        $hasSerializer = false;
-        foreach ($client->getEmitter()->listeners('prepare') as $listener) {
-            if ($listener[0] instanceof $serializer) {
-                $hasSerializer = true;
-                break;
-            }
-        }
-        $this->assertTrue($hasSerializer);
-
-        if ($parser) {
-            $hasParser = false;
-            foreach ($client->getEmitter()->listeners('process') as $listener) {
-                if ($listener[0] instanceof $parser) {
-                    $hasParser = true;
-                    break;
-                }
-            }
-            $this->assertTrue($hasParser);
-        }
+        $command = $c->getCommand('ListTables');
+        $command->getEmitter()->on('prepared', function ($e) {
+            $e->intercept(false);
+        });
+        $c->execute($command);
     }
 }

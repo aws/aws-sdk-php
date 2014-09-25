@@ -5,7 +5,7 @@ namespace Aws\Test\Glacier\Multipart;
 use Aws\Common\Multipart\UploadState;
 use Aws\Glacier\Multipart\UploadBuilder;
 use Aws\Glacier\Multipart\Uploader;
-use Aws\Result;
+use Aws\Common\Result;
 use Aws\Test\UsesServiceTrait;
 
 /**

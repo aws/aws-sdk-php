@@ -2,7 +2,7 @@
 namespace Aws\S3;
 
 use Aws\AwsClient;
-use Aws\Result;
+use Aws\Common\Result;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\Multipart\UploadBuilder;
 use GuzzleHttp\Message\RequestInterface;
@@ -84,7 +84,8 @@ class S3Client extends AwsClient
     ) {
         $args = ['Bucket' => $bucket, 'Key' => $key] + $args;
         $command = $this->getCommand('GetObject', $args);
-        $request = $command::createRequest($this, $command);
+        $trans = $this->initTransaction($command);
+        $request = $trans->request;
 
         if (isset($command['Scheme'])) {
             $request->setScheme($command['Scheme']);

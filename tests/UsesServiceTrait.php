@@ -2,13 +2,13 @@
 namespace Aws\Test;
 
 use Aws\AwsClientInterface;
-use Aws\Result;
+use Aws\Common\Result;
 use Aws\Sdk;
 use Aws\Common\Api\Service;
 use GuzzleHttp\Ring\Client\MockAdapter;
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\CommandTransaction;
-use GuzzleHttp\Command\Event\PrepareEvent;
+use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Command\Exception\CommandException;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Subscriber\Mock;
@@ -67,13 +67,13 @@ trait UsesServiceTrait
      */
     private function addMockResults(AwsClientInterface $client, array $results)
     {
-        $client->getEmitter()->on('prepare',
-            function (PrepareEvent $event) use (&$results) {
+        $client->getEmitter()->on('prepared',
+            function (PreparedEvent $event) use (&$results) {
                 $result = array_shift($results);
                 if (is_array($result)) {
-                    $event->setResult(new Result($result));
+                    $event->intercept(new Result($result));
                 } elseif ($result instanceof Result) {
-                    $event->setResult($result);
+                    $event->intercept($result);
                 } elseif ($result instanceof CommandException) {
                     throw $result;
                 } else {

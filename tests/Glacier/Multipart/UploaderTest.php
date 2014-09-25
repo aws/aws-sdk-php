@@ -75,7 +75,7 @@ class UploaderTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $command->expects($this->any())->method('offsetGet')
             ->willReturnOnConsecutiveCalls('0-2097151', 'foo');
-        $result = $this->getMockBuilder('Aws\Result')
+        $result = $this->getMockBuilder('Aws\Common\Result')
             ->disableOriginalConstructor()
             ->getMock();
 

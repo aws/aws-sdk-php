@@ -54,7 +54,9 @@ class S3FactoryTest extends \PHPUnit_Framework_TestCase
         $found = [];
         foreach ($l as $value) {
             foreach ($value as $val) {
-                $found[] = get_class($val[0]);
+                $found[] = is_array($val)
+                    ? get_class($val[0])
+                    : get_class($val);
             }
         }
 

@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Test\S3;
 
-use Aws\Result;
+use Aws\Common\Result;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Stream\FnStream;

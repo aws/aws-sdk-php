@@ -1,9 +1,9 @@
 <?php
 namespace Aws;
 
+use Aws\Common\ResultInterface;
 use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Command\ServiceClientInterface;
-use GuzzleHttp\Model\ModelInterface;
 
 /**
  * Represents an AWS client.
@@ -107,7 +107,7 @@ interface AwsClientInterface extends ServiceClientInterface
      * @param string $name      Name of the command to execute.
      * @param array  $arguments Arguments to pass to the getCommand method.
      *
-     * @return ModelInterface
+     * @return ResultInterface
      * @throws \Exception
      * @see \GuzzleHttp\Command\ServiceClientInterface::getCommand
      */
@@ -137,7 +137,7 @@ interface AwsClientInterface extends ServiceClientInterface
      *
      * @param CommandInterface $command Command to execute
      *
-     * @return ModelInterface
+     * @return ResultInterface
      * @throws \Exception
      */
     public function execute(CommandInterface $command);

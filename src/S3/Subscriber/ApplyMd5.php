@@ -2,7 +2,7 @@
 namespace Aws\S3\Subscriber;
 
 use Aws\Common\Exception\CouldNotCreateChecksumException;
-use GuzzleHttp\Command\Event\PrepareEvent;
+use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Event\SubscriberInterface;
 use GuzzleHttp\Stream\Utils;
 
@@ -23,10 +23,10 @@ class ApplyMd5 implements SubscriberInterface
 
     public function getEvents()
     {
-        return ['prepare' => ['setMd5', 'last']];
+        return ['prepared' => ['setMd5', 'last']];
     }
 
-    public function setMd5(PrepareEvent $event)
+    public function setMd5(PreparedEvent $event)
     {
         $client = $event->getClient();
         $command = $event->getCommand();

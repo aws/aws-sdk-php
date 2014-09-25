@@ -8,7 +8,7 @@ use GuzzleHttp\Message\Response;
 use GuzzleHttp\Stream\NoSeekStream;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Subscriber\History;
-use GuzzleHttp\Command\Event\PrepareEvent;
+use GuzzleHttp\Command\Event\PreparedEvent;
 
 /**
  * @covers Aws\S3\StreamWrapper
@@ -718,7 +718,7 @@ EOT;
 
         $this->addMockResults($this->client, array_merge($results, $results));
 
-        $this->client->getEmitter()->on('prepare', function (PrepareEvent $e) {
+        $this->client->getEmitter()->on('prepared', function (PreparedEvent $e) {
             $c = $e->getCommand();
             $this->assertEquals('bucket', $c['Bucket']);
             $this->assertEquals('/', $c['Delimiter']);
@@ -750,7 +750,7 @@ EOT;
 
     public function testCanSetDelimiterStreamContext()
     {
-        $this->client->getEmitter()->on('prepare', function (PrepareEvent $e) {
+        $this->client->getEmitter()->on('prepared', function (PreparedEvent $e) {
             $c = $e->getCommand();
             $this->assertEquals('bucket', $c['Bucket']);
             $this->assertEquals('', $c['Delimiter']);

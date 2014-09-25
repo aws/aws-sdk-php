@@ -6,7 +6,7 @@ use Aws\AwsCommandInterface;
 use Aws\AwsException;
 use Aws\Common\Exception\MultipartUploadException;
 use Aws\Common\MapIterator;
-use Aws\Result;
+use Aws\Common\Result;
 use GuzzleHttp\Command\Event\ProcessEvent;
 
 /**
@@ -136,11 +136,11 @@ abstract class AbstractUploader
     /**
      * Upload the source to S3 using multipart upload operations.
      *
-     * @param int           $concurrency Number of parts that the Uploader will
-     *     upload concurrently (in parallel). This defaults to 1. You may need
-     *     to do some experimenting to find the most optimum concurrency value
+     * @param int $concurrency Number of parts that the Uploader will upload
+     *     concurrently (in parallel). This defaults to 1. You may need to do
+     *     some experimenting to find the most optimum concurrency value
      *     for your system, but using 20-25 usually yields decent results.
-     * @param callable|null $before      Callback to execute before each upload.
+     * @param callable|null $before Callback to execute before each upload.
      *     This callback will receive a PreparedEvent object as its argument.
      *
      * @return Result The result of the CompleteMultipartUpload operation.
@@ -172,7 +172,7 @@ abstract class AbstractUploader
         $errors = [];
         $this->client->executeAll($commands, [
             'pool_size' => $concurrency,
-            'prepared'   => $before,
+            'prepared'  => $before,
             'process'   => [
                 'fn' => function (ProcessEvent $event) use (&$errors) {
                     /** @var AwsCommandInterface $command */

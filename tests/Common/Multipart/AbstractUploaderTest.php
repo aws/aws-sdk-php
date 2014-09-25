@@ -4,7 +4,7 @@ namespace Aws\Test\Common\Multipart;
 use Aws\Common\Exception\MultipartUploadException;
 use Aws\Common\Multipart\AbstractUploader;
 use Aws\Common\Multipart\UploadState;
-use Aws\Result;
+use Aws\Common\Result;
 use Aws\Test\UsesServiceTrait;
 
 /**

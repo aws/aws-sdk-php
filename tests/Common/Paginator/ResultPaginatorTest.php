@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Test\Common\Paginator;
 
-use Aws\Result;
+use Aws\Common\Result;
 use Aws\Test\UsesServiceTrait;
 
 /**
@@ -38,7 +38,7 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
         }
 
         // Make sure the paginator yields the expected results
-        $this->assertInstanceOf('Aws\\Result', $result);
+        $this->assertInstanceOf('Aws\\Common\\Result', $result);
         $this->assertEquals($expectedRequestCount, $requestCount);
         $this->assertEquals($expectedRequestCount - 1, $lastKey);
         $this->assertEquals($expectedTableNames, $tableNames);

@@ -22,8 +22,8 @@ class AwsCommandTest extends \PHPUnit_Framework_TestCase
 
         $command = new AwsCommand(
             'foo',
-            ['baz' => 'bar'],
             $api,
+            ['baz' => 'bar'],
             ['emitter' => $emitter]
         );
 

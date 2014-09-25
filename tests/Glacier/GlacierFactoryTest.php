@@ -2,8 +2,8 @@
 namespace Aws\Test\Glacier;
 
 use Aws\Glacier\GlacierFactory;
-use Aws\Result;
-use GuzzleHttp\Command\Event\PrepareEvent;
+use Aws\Common\Result;
+use GuzzleHttp\Command\Event\PreparedEvent;
 
 /**
  * @covers Aws\Glacier\GlacierFactory
@@ -20,7 +20,7 @@ class GlacierFactoryTest extends \PHPUnit_Framework_TestCase
         $command = $client->getCommand('ListVaults');
         $this->assertEquals('-', $command['accountId']);
 
-        $command->getEmitter()->on('prepare', function (PrepareEvent $event) {
+        $command->getEmitter()->on('prepared', function (PreparedEvent $event) {
             $event->setResult(new Result([]));
             $this->assertEquals(
                 $event->getClient()->getApi()->getMetadata('apiVersion'),
@@ -39,7 +39,9 @@ class GlacierFactoryTest extends \PHPUnit_Framework_TestCase
         $found = [];
         foreach ($client->getEmitter()->listeners() as $value) {
             foreach ($value as $val) {
-                $found[] = get_class($val[0]);
+                $found[] = is_array($val)
+                    ? get_class($val[0])
+                    : get_class($val);
             }
         }
 

@@ -18,6 +18,10 @@ class PutObjectUrl implements SubscriberInterface
 
     public function addObjectUrl(ProcessEvent $e)
     {
+        if ($e->getException()) {
+            return;
+        }
+
         $name = $e->getCommand()->getName();
 
         if ($name === 'PutObject') {

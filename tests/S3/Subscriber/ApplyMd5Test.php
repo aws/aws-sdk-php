@@ -4,7 +4,7 @@ namespace Aws\Test\S3\Subscriber;
 
 use Aws\S3\Exception\S3Exception;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Command\Event\PrepareEvent;
+use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Stream\NoSeekStream;
@@ -44,7 +44,7 @@ class ApplyMd5Test extends \PHPUnit_Framework_TestCase
         $this->addMockResponses($s3, [new Response(200)]);
 
         $command = $s3->getCommand($operation, $args);
-        $command->getEmitter()->on('prepare', function (PrepareEvent $e) use ($md5Added, $md5Value) {
+        $command->getEmitter()->on('prepared', function (PreparedEvent $e) use ($md5Added, $md5Value) {
             $this->assertSame($md5Added, $e->getRequest()->hasHeader('Content-MD5'));
             if ($md5Value !== 'SKIP') {
                 $this->assertEquals($md5Value, $e->getRequest()->getHeader('Content-MD5'));

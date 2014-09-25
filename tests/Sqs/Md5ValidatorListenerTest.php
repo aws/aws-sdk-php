@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Test\Sqs;
 
-use Aws\Result;
+use Aws\Common\Result;
 use Aws\Sqs\Md5ValidatorListener;
 use Aws\Sqs\SqsClient;
 use GuzzleHttp\Command\CommandTransaction;

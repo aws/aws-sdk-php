@@ -2,7 +2,7 @@
 namespace Aws\Test\DynamoDb\Session;
 
 use Aws\DynamoDb\Session\LockingSessionConnection;
-use Aws\Result;
+use Aws\Common\Result;
 use Aws\Test\UsesServiceTrait;
 
 /**

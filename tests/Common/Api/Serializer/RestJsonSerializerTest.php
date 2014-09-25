@@ -6,7 +6,6 @@ use Aws\Common\Api\Serializer\RestJsonSerializer;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\CommandTransaction;
-use GuzzleHttp\Command\Event\PrepareEvent;
 
 /**
  * @covers Aws\Common\Api\Serializer\RestJsonSerializer
@@ -65,7 +64,7 @@ class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
     {
         $http = new Client();
         $service = $this->getTestService();
-        $command = new AwsCommand($commandName, $input, $service);
+        $command = new AwsCommand($commandName, $service, $input);
         $j = new RestJsonSerializer($service, 'http://foo.com');
         $aws = $this->getMockBuilder('Aws\AwsClient')
             ->setMethods(['getHttpClient'])
@@ -74,10 +73,9 @@ class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
         $aws->expects($this->once())
             ->method('getHttpClient')
             ->will($this->returnValue($http));
-        $event = new PrepareEvent(new CommandTransaction($aws, $command));
-        $j->onPrepare($event);
+        $trans = new CommandTransaction($aws, $command);
 
-        return $event->getRequest();
+        return $j($trans);
     }
 
     public function testPreparesRequestsWithContentType()

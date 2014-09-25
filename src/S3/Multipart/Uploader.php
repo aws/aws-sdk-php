@@ -3,7 +3,7 @@ namespace Aws\S3\Multipart;
 
 use Aws\AwsCommandInterface;
 use Aws\Common\Multipart\AbstractUploader;
-use Aws\Result;
+use Aws\Common\Result;
 
 /**
  * Abstract class for transfer commonalities

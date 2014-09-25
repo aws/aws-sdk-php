@@ -20,7 +20,7 @@ class SqsFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(SdkTest::hasListener(
             $client->getEmitter(),
             'Aws\Sqs\QueueUrlListener',
-            'prepare'
+            'prepared'
         ));
 
         $this->assertTrue(SdkTest::hasListener(

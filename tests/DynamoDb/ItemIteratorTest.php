@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Test\DynamoDb;
 
-use Aws\Result;
+use Aws\Common\Result;
 use Aws\DynamoDb\ItemIterator;
 use GuzzleHttp\Collection;
 

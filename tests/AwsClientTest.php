@@ -9,7 +9,7 @@ use Aws\Common\Signature\SignatureV4;
 use Aws\Sqs\SqsClient;
 use Aws\Sts\StsClient;
 use GuzzleHttp\Client;
-use GuzzleHttp\Command\Event\PrepareEvent;
+use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Message\Request;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Subscriber\Mock;
@@ -30,6 +30,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'signature'    => new SignatureV4('foo', 'bar'),
             'region'       => 'foo',
             'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
+            'serializer'   => function () {},
             'api'          => new Service($apiProvider, 'foo', 'bar'),
             'error_parser' => function () {}
         ];
@@ -93,14 +94,18 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             ]]]);
         $service = new Service($apiProvider, 'foo', 'bar');
 
+        $c = new Client();
         $client = new AwsClient([
-            'client'          => new Client(),
+            'client'          => $c,
             'credentials'     => new Credentials('foo', 'bar'),
             'signature'       => new SignatureV4('foo', 'bar'),
             'endpoint'        => 'http://us-east-1.foo.amazonaws.com',
             'region'          => 'foo',
             'exception_class' => $value,
             'api'             => $service,
+            'serializer'   => function () use ($c) {
+                return $c->createRequest('GET', 'http://httpbin.org');
+            },
             'error_parser'    => function () {
                 return [
                     'code' => 'foo',
@@ -113,13 +118,6 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         $client->getHttpClient()->getEmitter()->attach(new Mock([
             new Response(404)
         ]));
-
-        $client->getEmitter()->on('prepare', function (PrepareEvent $e) {
-            $e->setRequest($e->getTransaction()
-                ->client
-                ->getHttpClient()
-                ->createRequest('GET', 'http://httpbin.org'));
-        });
 
         try {
             $client->foo();
@@ -145,11 +143,11 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testWrapsUncaughtExceptions()
     {
-        $client = $this->createClient(['operations' => ['foo' => [
-            'http' => ['method' => 'POST']
-        ]]]);
+        $client = $this->createClient(
+            ['operations' => ['foo' => ['http' => ['method' => 'POST']]]]
+        );
         $command = $client->getCommand('foo');
-        $command->getEmitter()->on('prepare', function () {
+        $command->getEmitter()->on('init', function () {
             throw new \RuntimeException('Baz Bar!');
         });
         $client->execute($command);
@@ -157,20 +155,20 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Aws\AwsException
-     * @expectedExceptionMessage Error executing Aws\AwsClient::foo() on "http://localhost:12399"; Baz Bar!
+     * @expectedExceptionMessage Error executing Aws\AwsClient::foo() on "http://foo.com"; Baz Bar!
      */
     public function testHandlesNetworkingErrorsGracefully()
     {
-        $client = $this->createClient(['operations' => ['foo' => [
-            'http' => ['method' => 'POST']
-        ]]]);
+        $r = new Request('GET', 'http://foo.com');
+        $client = $this->createClient(
+            ['operations' => ['foo' => ['http' => ['method' => 'POST']]]],
+            ['serializer' => function () use ($r) { return $r; }]
+        );
         $command = $client->getCommand('foo');
-        $command->getEmitter()->on('prepare', function (PrepareEvent $e) {
-            $request = new Request('GET', 'http://localhost:12399');
-            $request->getEmitter()->on('before', function () {
+        $command->getEmitter()->on('prepared', function (PreparedEvent $e) {
+            $e->getRequest()->getEmitter()->on('before', function () {
                 throw new \RuntimeException('Baz Bar!');
             });
-            $e->setRequest($request);
         });
         $client->execute($command);
     }
@@ -319,6 +317,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
             'region'       => 'foo',
             'api'          => $api,
+            'serializer'   => function () {},
             'error_parser' => function () {}
         ]);
     }

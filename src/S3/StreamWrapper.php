@@ -3,7 +3,7 @@ namespace Aws\S3;
 
 use Aws\Common\Paginator\ResourceIterator;
 use Aws\S3\Exception\S3Exception;
-use GuzzleHttp\Command\Event\PrepareEvent;
+use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Stream\StreamInterface;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Mimetypes;
@@ -585,7 +585,7 @@ class StreamWrapper
         $command = $client->getCommand('GetObject', $this->getOptions());
 
         // Ensure that a streaming adapter is utilized
-        $command->getEmitter()->on('prepare', function (PrepareEvent $e) {
+        $command->getEmitter()->on('prepared', function (PreparedEvent $e) {
             $e->getRequest()->getConfig()->set('stream', true);
         });
 

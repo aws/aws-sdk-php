@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Test\Sts;
 
-use Aws\Result;
+use Aws\Common\Result;
 use Aws\Sts\StsClient;
 
 /**

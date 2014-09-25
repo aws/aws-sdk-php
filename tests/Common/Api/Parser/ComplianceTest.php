@@ -1,15 +1,10 @@
 <?php
 namespace Aws\Test\Common\Api\Parser;
 
+use Aws\AwsCommand;
 use Aws\Common\Api\Service;
-use Aws\AwsClient;
 use Aws\Common\Api\Shape;
-use Aws\Common\ClientFactory;
-use Aws\Common\Credentials\NullCredentials;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Client;
-use GuzzleHttp\Command\CommandTransaction;
-use GuzzleHttp\Command\Event\ProcessEvent;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Stream\Stream;
 
@@ -68,23 +63,8 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
         array $expectedResult,
         $res
     ) {
-        $client = new AwsClient([
-            'api'          => $service,
-            'credentials'  => new NullCredentials(),
-            'client'       => new Client(),
-            'signature'    => $this->getMock('Aws\Commom\Signature\SignatureInterface'),
-            'region'       => 'us-west-2',
-            'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
-            'error_parser' => function () {}
-        ]);
-
-        $cf = new ClientFactory();
-        $rc = new \ReflectionClass($cf);
-        $rm = $rc->getMethod('applyProtocol');
-        $rm->setAccessible(true);
-
-        $rm->invoke($cf, $client, 'http://foo.com');
-        $command = $client->getCommand($name, []);
+        $parser = Service::createParser($service);
+        $command = new AwsCommand($name, $service);
 
         // Create a response based on the serialized property of the test.
         $response = new Response(
@@ -93,11 +73,7 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
             Stream::factory($res['body'])
         );
 
-        $trans = new CommandTransaction($client, $command);
-        $trans->response = $response;
-        $event = new ProcessEvent($trans);
-        $command->getEmitter()->emit('process', $event);
-        $result = $event->getResult()->toArray();
+        $result = $parser($command, $response)->toArray();
         $this->fixTimestamps($result, $command->getOperation()->getOutput());
         $this->assertEquals($expectedResult, $result);
     }

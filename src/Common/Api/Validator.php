@@ -1,6 +1,8 @@
 <?php
 namespace Aws\Common\Api;
 
+use GuzzleHttp\Ring\Core;
+
 /**
  * Validates a schema against a hash of input.
  */
@@ -89,7 +91,7 @@ class Validator
     private function check_list(ListShape $shape, $value)
     {
         if (!is_array($value)) {
-            $this->addError('must be an array. ' . gettype($value) . ' given');
+            $this->addError('must be an array. Found ' . Core::describeType($value));
             return;
         }
 
@@ -129,7 +131,7 @@ class Validator
             if ($type != 'object' || !method_exists($value, '__toString')) {
                 $this->addError('must be an fopen resource, a '
                     . 'GuzzleHttp\Stream\StreamInterface object, or something '
-                    . 'that can be cast to a string. ' . $type . ' given');
+                    . 'that can be cast to a string. Found ' . Core::describeType($value));
             }
         }
     }
@@ -137,14 +139,14 @@ class Validator
     private function check_numeric(Shape $shape, $value)
     {
         if (!is_numeric($value)) {
-            $this->addError('must be numeric. ' . gettype($value) . ' given');
+            $this->addError('must be numeric. Found ' . Core::describeType($value));
         }
     }
 
     private function check_boolean(Shape $shape, $value)
     {
         if (!is_bool($value)) {
-            $this->addError('must be a boolean. ' . gettype($value) . ' given');
+            $this->addError('must be a boolean. Found ' . Core::describeType($value));
         }
     }
 
@@ -152,7 +154,7 @@ class Validator
     {
         if (!$this->checkCanString($value)) {
             $this->addError('must be a string or an object that implements '
-                . '__toString(). ' . gettype($value) . ' given');
+                . '__toString(). Found ' . Core::describeType($value));
         }
     }
 
@@ -173,8 +175,8 @@ class Validator
     private function checkAssociativeArray($value)
     {
         if (!is_array($value) || isset($value[0])) {
-            $this->addError('must be an associative array. '
-                . gettype($value) . ' given');
+            $this->addError('must be an associative array. Found '
+                . Core::describeType($value));
             return false;
         }
 

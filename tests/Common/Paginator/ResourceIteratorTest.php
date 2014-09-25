@@ -3,7 +3,7 @@ namespace Aws\Test\Common\Paginator;
 
 use Aws\Common\Paginator\ResourceIterator;
 use Aws\Common\Paginator\ResultPaginator;
-use Aws\Result;
+use Aws\Common\Result;
 
 /**
  * @covers Aws\Common\Paginator\ResourceIterator

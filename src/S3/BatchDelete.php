@@ -2,9 +2,9 @@
 namespace Aws\S3;
 
 use Aws\AwsClientInterface;
-use Aws\Result;
+use Aws\Common\Result;
 use Aws\S3\Exception\DeleteMultipleObjectsException;
-use GuzzleHttp\Command\Event\PrepareEvent;
+use GuzzleHttp\Command\Event\PreparedEvent;
 
 /**
  * Implements a queue for deleting objects from an Amazon S3 bucket.
@@ -130,7 +130,7 @@ class BatchDelete implements \Countable
         ]);
 
         if ($this->mfa) {
-            $command->getEmitter()->on('prepare', function (PrepareEvent $e) {
+            $command->getEmitter()->on('prepared', function (PreparedEvent $e) {
                 $e->getRequest()->setHeader('x-amz-mfa', $this->mfa);
             });
         }

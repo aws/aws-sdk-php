@@ -3,19 +3,7 @@ namespace Aws\Common;
 
 use Aws\AwsClientInterface;
 use Aws\Common\Api\ApiProviderInterface;
-use Aws\Common\Api\ErrorParser\RestJsonErrorParser;
-use Aws\Common\Api\ErrorParser\JsonRpcErrorParser;
-use Aws\Common\Api\ErrorParser\XmlErrorParser;
 use Aws\Common\Api\FilesystemApiProvider;
-use Aws\Common\Api\Parser\JsonRpcParser;
-use Aws\Common\Api\Parser\QueryParser;
-use Aws\Common\Api\Parser\RestJsonParser;
-use Aws\Common\Api\Parser\RestXmlParser;
-use Aws\Common\Api\Serializer\Ec2ParamBuilder;
-use Aws\Common\Api\Serializer\JsonRpcSerializer;
-use Aws\Common\Api\Serializer\QuerySerializer;
-use Aws\Common\Api\Serializer\RestJsonSerializer;
-use Aws\Common\Api\Serializer\RestXmlSerializer;
 use Aws\Common\Api\Service;
 use Aws\Common\Api\Validator;
 use Aws\Common\Credentials\Credentials;
@@ -31,6 +19,7 @@ use Aws\Common\Subscriber\Validation;
 use Aws\Sdk;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Command\Event\ProcessEvent;
 use GuzzleHttp\Subscriber\Log\SimpleLogger;
 use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
 use GuzzleHttp\Command\Subscriber\Debug;
@@ -272,29 +261,25 @@ class ClientFactory
     }
 
     /**
-     * Creates an appropriate error parser for the given API.
+     * Validates the provided "retries" key and returns a number.
      *
-     * This may be extended in subclasses.
+     * @param mixed $value Value to validate and coerce
      *
-     * @param Service $api API to parse
-     *
-     * @return RestJsonErrorParser|JsonRpcErrorParser|XmlErrorParser
-     * @throws \InvalidArgumentException if the service type is unknown
+     * @return bool|int Returns false to disable, or a number of retries.
+     * @throws \InvalidArgumentException if the setting is invalid.
      */
-    protected function createErrorParser(Service $api)
+    protected function validateRetries($value)
     {
-        switch ($api->getMetadata('protocol')) {
-            case 'json':
-                return new JsonRpcErrorParser();
-            case 'rest-json':
-                return new RestJsonErrorParser($api);
-            case 'rest-xml':
-            case 'query':
-                return new XmlErrorParser($api);
+        if ($value === true) {
+            $value = static::DEFAULT_MAX_RETRIES;
+        } elseif (!$value) {
+            return false;
+        } elseif (!is_integer($value)) {
+            throw new \InvalidArgumentException('retries must be a boolean or'
+                . ' an integer');
         }
 
-        throw new \InvalidArgumentException('Unknown service type '
-            . $api->getMetadata('protocol'));
+        return $value;
     }
 
     private function handle_class_name($value, array &$args)
@@ -407,8 +392,9 @@ class ClientFactory
         }
 
         $api = new Service($value, $args['service'], $args['version']);
-        $args['error_parser'] = $this->createErrorParser($api);
         $args['api'] = $api;
+        $args['error_parser'] = Service::createErrorParser($api->getProtocol());
+        $args['serializer'] = Service::createSerializer($api, $args['endpoint']);
     }
 
     private function handle_endpoint_provider($value, array &$args)
@@ -476,9 +462,11 @@ class ClientFactory
     protected function postCreate(AwsClientInterface $client, array $args)
     {
         // Apply the protocol of the service description to the client.
-        $this->applyProtocol($client, $args['endpoint']);
+        $this->applyParser($client);
         // Attach a signer to the client.
         $credentials = $client->getCredentials();
+
+        // Null credentials don't sign requests.
         if (!($credentials instanceof NullCredentials)) {
             $client->getHttpClient()->getEmitter()->attach(
                 new Signature($credentials, $client->getSignature())
@@ -487,46 +475,33 @@ class ClientFactory
     }
 
     /**
-     * Creates and attaches serializers and parsers to the given client based
-     * on the protocol of the description.
+     * Creates and attaches parsers given client based on the protocol of the
+     * description.
      *
-     * @param AwsClientInterface $client   AWS client to update
-     * @param string             $endpoint Service endpoint to connect to.
+     * @param AwsClientInterface $client AWS client to update
      *
      * @throws \UnexpectedValueException if the protocol doesn't exist
      */
-    protected function applyProtocol(AwsClientInterface $client, $endpoint)
+    protected function applyParser(AwsClientInterface $client)
     {
-        $em = $client->getEmitter();
-        $api = $client->getApi();
+        $parser = Service::createParser($client->getApi());
 
-        switch ($api->getProtocol()) {
-            case 'json':
-                $em->attach(new JsonRpcSerializer($api, $endpoint));
-                $em->attach(new JsonRpcParser($api));
-                break;
-            case 'query':
-                $em->attach(new QuerySerializer($api, $endpoint));
-                $em->attach(new QueryParser($api));
-                break;
-            case 'rest-json':
-                $em->attach(new RestJsonSerializer($api, $endpoint));
-                $em->attach(new RestJsonParser($api));
-                break;
-            case 'rest-xml':
-                $em->attach(new RestXmlSerializer($api, $endpoint));
-                $em->attach(new RestXmlParser($api));
-                break;
-            case 'ec2':
-                $em->attach(
-                    new QuerySerializer($api, $endpoint, new Ec2ParamBuilder())
-                );
-                $em->attach(new QueryParser($api, null, false));
-                break;
-            default:
-                throw new \UnexpectedValueException(
-                    'Unknown protocol: ' . $api->getProtocol()
-                );
-        }
+        $client->getEmitter()->on(
+            'process',
+            function (ProcessEvent $e) use ($parser) {
+                // Guard against exceptions and injected results.
+                if ($e->getException() || $e->getResult()) {
+                    return;
+                }
+
+                // Ensure a response exists in order to parse.
+                $response = $e->getResponse();
+                if (!$response) {
+                    throw new \RuntimeException('No response was received.');
+                }
+
+                $e->setResult($parser($e->getCommand(), $response));
+            }
+        );
     }
 }

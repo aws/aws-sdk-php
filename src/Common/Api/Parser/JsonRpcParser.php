@@ -2,8 +2,9 @@
 namespace Aws\Common\Api\Parser;
 
 use Aws\Common\Api\Service;
-use GuzzleHttp\Model\Model;
-use GuzzleHttp\Command\Event\ProcessEvent;
+use Aws\Common\Result;
+use Aws\AwsCommandInterface;
+use GuzzleHttp\Message\ResponseInterface;
 
 /**
  * @internal Implements JSON-RPC parsing (e.g., DynamoDB)
@@ -22,13 +23,15 @@ class JsonRpcParser extends AbstractParser
         $this->parser = $parser ?: new JsonParser();
     }
 
-    public function createResult(Service $api, ProcessEvent $event)
-    {
-        $operation = $api->getOperation($event->getCommand()->getName());
+    public function __invoke(
+        AwsCommandInterface $command,
+        ResponseInterface $response
+    ) {
+        $operation = $this->api->getOperation($command->getName());
 
-        return new Model($this->parser->parse(
+        return new Result($this->parser->parse(
             $operation->getOutput(),
-            $event->getResponse()->json()
+            $response->json()
         ));
     }
 }

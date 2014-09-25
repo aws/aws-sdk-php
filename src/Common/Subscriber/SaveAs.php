@@ -28,7 +28,7 @@ class SaveAs implements SubscriberInterface
         return ['prepared' => ['onPrepared', RequestEvents::LATE]];
     }
 
-    public function onPrepare(PreparedEvent $event)
+    public function onPrepared(PreparedEvent $event)
     {
         $command = $event->getCommand();
 

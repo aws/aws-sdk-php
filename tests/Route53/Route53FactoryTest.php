@@ -20,7 +20,7 @@ class Route53FactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(SdkTest::hasListener(
             $client->getEmitter(),
             'Aws\Route53\CleanIdListener',
-            'prepare'
+            'init'
         ));
     }
 }

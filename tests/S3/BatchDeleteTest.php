@@ -5,7 +5,7 @@ use Aws\S3\S3Client;
 use Aws\S3\BatchDelete;
 use Aws\S3\Exception\DeleteMultipleObjectsException;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Command\Event\PrepareEvent;
+use GuzzleHttp\Command\Event\PreparedEvent;
 
 /**
  * @covers Aws\S3\BatchDelete
@@ -47,8 +47,8 @@ class BatchDeleteTest extends \PHPUnit_Framework_TestCase
 
         $called = 0;
         $this->client->getEmitter()->on(
-            'prepare',
-            function (PrepareEvent $e) use (&$called, $batches) {
+            'prepared',
+            function (PreparedEvent $e) use (&$called, $batches) {
                 $this->assertSame(
                     $batches[$called],
                     $e->getCommand()['Delete']['Objects']
@@ -72,8 +72,8 @@ class BatchDeleteTest extends \PHPUnit_Framework_TestCase
         $deleted = [['Key' => 'foo', 'VersionId' => 'bar']];
 
         $this->client->getEmitter()->on(
-            'prepare',
-            function (PrepareEvent $e) {
+            'prepared',
+            function (PreparedEvent $e) {
                 $this->assertEquals(
                     [['Key' => 'foo', 'VersionId' => 'bar']],
                     $e->getCommand()['Delete']['Objects']
@@ -115,8 +115,8 @@ class BatchDeleteTest extends \PHPUnit_Framework_TestCase
         $b->addObject('foo', 'bar');
 
         $this->client->getEmitter()->on(
-            'prepare',
-            function (PrepareEvent $e) {
+            'prepared',
+            function (PreparedEvent $e) {
                 $this->assertEquals(
                     'mfa!',
                     $e->getRequest()->getHeader('x-amz-mfa')

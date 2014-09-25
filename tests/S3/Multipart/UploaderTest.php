@@ -62,7 +62,7 @@ class UploaderTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $command->expects($this->any())->method('offsetGet')
             ->willReturn(2);
-        $result = $this->getMockBuilder('Aws\Result')
+        $result = $this->getMockBuilder('Aws\Common\Result')
             ->disableOriginalConstructor()
             ->getMock();
         $result->expects($this->any())->method('offsetGet')

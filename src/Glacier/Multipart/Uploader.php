@@ -4,7 +4,7 @@ namespace Aws\Glacier\Multipart;
 use Aws\AwsCommandInterface;
 use Aws\Common\Multipart\AbstractUploader;
 use Aws\Glacier\TreeHash;
-use Aws\Result;
+use Aws\Common\Result;
 
 class Uploader extends AbstractUploader
 {

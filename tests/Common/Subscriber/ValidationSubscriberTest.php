@@ -5,7 +5,7 @@ use Aws\Common\Api\Operation;
 use Aws\Common\Api\ShapeMap;
 use Aws\Common\Subscriber\Validation;
 use GuzzleHttp\Command\CommandTransaction;
-use GuzzleHttp\Command\Event\PrepareEvent;
+use GuzzleHttp\Command\Event\InitEvent;
 
 /**
  * @covers Aws\Common\Subscriber\Validation
@@ -46,9 +46,9 @@ class ValidationTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(true));
 
         $trans = new CommandTransaction($client, $command);
-        $event = new PrepareEvent($trans);
+        $event = new InitEvent($trans);
         $validation = new Validation($validator);
         $this->assertNotEmpty($validation->getEvents());
-        $validation->onPrepare($event);
+        $validation->onInit($event);
     }
 }

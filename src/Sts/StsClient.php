@@ -3,7 +3,7 @@ namespace Aws\Sts;
 
 use Aws\AwsClient;
 use Aws\Common\Credentials\Credentials;
-use Aws\Result;
+use Aws\Common\Result;
 
 /**
  * This client is used to interact with the **AWS Security Token Service (AWS STS)**.

@@ -1,7 +1,7 @@
 <?php
 namespace Aws\S3;
 
-use Aws\Result;
+use Aws\Common\Result;
 use GuzzleHttp\Collection;
 use GuzzleHttp\Stream\LimitStream;
 use GuzzleHttp\Stream\Stream;
@@ -20,7 +20,7 @@ class ResumableDownload
     /** @var S3Client */
     private $client;
 
-    /** @var \Aws\Result HeadObject operation result */
+    /** @var \Aws\Common\Result HeadObject operation result */
     private $meta;
 
     /** @var array Array of parameters to pass to a GetObject operation */

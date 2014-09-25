@@ -4,7 +4,7 @@ namespace Aws\Test\S3\Multipart;
 use Aws\Common\Multipart\UploadState;
 use Aws\S3\Multipart\UploadBuilder;
 use Aws\S3\Multipart\Uploader;
-use Aws\Result;
+use Aws\Common\Result;
 use Aws\Test\UsesServiceTrait;
 
 /**

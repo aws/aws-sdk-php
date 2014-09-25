@@ -3,7 +3,7 @@ namespace Aws\Test\Common\Waiter;
 
 require_once 'wait_hack.php';
 
-use Aws\Result;
+use Aws\Common\Result;
 use Aws\Test\UsesServiceTrait;
 
 /**

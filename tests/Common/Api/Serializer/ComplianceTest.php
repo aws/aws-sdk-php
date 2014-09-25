@@ -8,7 +8,6 @@ use Aws\Common\Credentials\NullCredentials;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\CommandTransaction;
-use GuzzleHttp\Command\Event\PrepareEvent;
 
 /**
  * @covers Aws\Common\Api\Serializer\QuerySerializer
@@ -66,30 +65,29 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
         array $args,
         $serialized
     ) {
+        $ep = 'http://us-east-1.foo.amazonaws.com';
         $client = new AwsClient([
             'api' => $service,
             'credentials' => new NullCredentials(),
             'client' => new Client(),
             'signature' => $this->getMock('Aws\Commom\Signature\SignatureInterface'),
             'region' => 'us-west-2',
-            'endpoint' => 'http://us-east-1.foo.amazonaws.com',
-            'error_parser' => function () {}
+            'endpoint' => $ep,
+            'error_parser' => Service::createErrorParser($service->getProtocol()),
+            'serializer'   => Service::createSerializer($service, $ep)
         ]);
 
         $cf = new ClientFactory();
         $rc = new \ReflectionClass($cf);
-        $rm = $rc->getMethod('applyProtocol');
+        $rm = $rc->getMethod('applyParser');
         $rm->setAccessible(true);
 
         $rm->invoke($cf, $client, 'http://foo.com');
         $command = $client->getCommand($name, $args);
         $trans = new CommandTransaction($client, $command);
-        $event = $command->getEmitter()->emit(
-            'prepare',
-            new PrepareEvent($trans)
-        );
-
-        $request = $event->getRequest();
+        /** @var callable $serializer */
+        $serializer = $this->readAttribute($client, 'serializer');
+        $request = $serializer($trans);
         $this->assertEquals($serialized['uri'], $request->getResource());
 
         $body = (string) $request->getBody();

@@ -3,7 +3,8 @@ namespace Aws\Test\Sqs;
 
 use Aws\Sqs\SqsClient;
 use GuzzleHttp\Command\CommandTransaction;
-use GuzzleHttp\Command\Event\PrepareEvent;
+use GuzzleHttp\Command\Event\PreparedEvent;
+use GuzzleHttp\Message\Request;
 
 /**
  * @covers Aws\Sqs\QueueUrlListener
@@ -15,11 +16,12 @@ class QueueUrlListenerTest extends \PHPUnit_Framework_TestCase
         // Setup state of command/request
         $newUrl = 'https://queue.amazonaws.com/stuff/in/the/path';
         $client = SqsClient::factory(['region' => 'us-east-1']);
-
         $command = $client->getCommand('ReceiveMessage');
         $command['QueueUrl'] = $newUrl;
-        $event = new PrepareEvent(new CommandTransaction($client, $command));
-        $command->getEmitter()->emit('prepare', $event);
-        $this->assertEquals($newUrl, $event->getRequest()->getUrl());
+        $ct = new CommandTransaction($client, $command);
+        $ct->request = new Request('GET', 'https://sqs.amazonaws.com');
+        $event = new PreparedEvent($ct);
+        $command->getEmitter()->emit('prepared', $event);
+        $this->assertEquals($newUrl, $ct->request->getUrl());
     }
 }

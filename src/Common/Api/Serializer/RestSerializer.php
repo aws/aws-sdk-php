@@ -35,7 +35,7 @@ abstract class RestSerializer
 
     public function getEvents()
     {
-        return ['prepare' => ['onPrepare']];
+        return ['prepared' => ['onPrepare']];
     }
 
     public function __invoke(CommandTransaction $trans)

@@ -14,16 +14,16 @@ class AwsCommand extends Command implements AwsCommandInterface
 
     /**
      * @param string           $name    Name of the command
-     * @param array            $args    Arguments of the command
      * @param Service          $api     Service description
+     * @param array            $args    Arguments of the command
      * @param array            $options Array of options:
      *                                  - emitter: Emitter to use
      *                                  - future: True or false.
      */
     public function __construct(
         $name,
-        array $args = [],
         Service $api,
+        array $args = [],
         array $options = []
     ) {
         $this->api = $api;

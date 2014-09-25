@@ -3,7 +3,7 @@
 namespace Aws\S3\Subscriber;
 
 use Aws\S3\S3Client;
-use GuzzleHttp\Command\Event\PrepareEvent;
+use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Event\SubscriberInterface;
 
 /**
@@ -16,15 +16,15 @@ class BucketStyle implements SubscriberInterface
 {
     public function getEvents()
     {
-        return ['prepare' => ['setBucketStyle', 'last']];
+        return ['prepared' => ['setBucketStyle', 'last']];
     }
 
     /**
      * Changes how buckets are referenced in the HTTP request
      *
-     * @param PrepareEvent $event Event emitted
+     * @param PreparedEvent $event Event emitted
      */
-    public function setBucketStyle(PrepareEvent $event)
+    public function setBucketStyle(PreparedEvent $event)
     {
         $command = $event->getCommand();
         $request = $event->getRequest();

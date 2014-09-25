@@ -2,9 +2,9 @@
 namespace Aws\Test\DynamoDb\Session;
 
 use Aws\DynamoDb\Session\StandardSessionConnection;
-use Aws\Result;
+use Aws\Common\Result;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Command\Event\PrepareEvent;
+use GuzzleHttp\Command\Event\PreparedEvent;
 
 /**
  * @covers Aws\DynamoDb\Session\StandardSessionConnection
@@ -22,7 +22,7 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
                 'otherkey'  => ['S' => 'foo'],
             ]]),
         ]);
-        $client->getEmitter()->on('prepare', function (PrepareEvent $e) {
+        $client->getEmitter()->on('prepared', function (PreparedEvent $e) {
             $this->assertEquals(
                 ['sessionid' => ['S' => 'session1']],
                 $e->getCommand()['Key']
@@ -56,7 +56,7 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
     {
         $client = $this->getTestSdk()->getDynamoDb();
         $this->addMockResults($client, [new Result([])]);
-        $client->getEmitter()->on('prepare', function (PrepareEvent $e) {
+        $client->getEmitter()->on('prepared', function (PreparedEvent $e) {
             $updates = $e->getCommand()['AttributeUpdates'];
             $this->assertArrayHasKey('expires', $updates);
             $this->assertArrayHasKey('lock', $updates);
@@ -75,7 +75,7 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
         $this->addMockResults($client, [
             $this->createMockAwsException('ERROR', 'Aws\DynamoDb\Exception\DynamoDbException')
         ]);
-        $client->getEmitter()->on('prepare', function (PrepareEvent $e) {
+        $client->getEmitter()->on('prepared', function (PreparedEvent $e) {
             $this->assertEquals(
                 ['Action' => 'DELETE'],
                 $e->getCommand()['AttributeUpdates']['data']
@@ -110,15 +110,15 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
         $client = $this->getTestSdk()->getDynamoDb();
         $this->addMockResults($client, [
             new Result(['Items' => [
-                ['id' => 'foo'],
-                ['id' => 'bar'],
-                ['id' => 'baz'],
+                ['id' => ['S' => 'foo']],
+                ['id' => ['S' => 'bar']],
+                ['id' => ['S' => 'baz']],
             ]]),
             new Result([]),
         ]);
 
         $called = 0;
-        $client->getEmitter()->on('prepare', function (PrepareEvent $e) use (&$called) {
+        $client->getEmitter()->on('prepared', function (PreparedEvent $e) use (&$called) {
             $called++;
             if ($called === 1) {
                 $this->assertEquals('Scan', $e->getCommand()->getName());

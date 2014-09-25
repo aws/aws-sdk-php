@@ -37,7 +37,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'members' => ['foo' => ['type' => 'string']]
                 ],
                 ['foo' => [1]],
-                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be a string or an object that implements __toString(). array given"
+                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be a string or an object that implements __toString(). Found array(1)"
             ],
             [
                 [
@@ -45,7 +45,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'members' => ['foo' => ['type' => 'string']]
                 ],
                 ['foo' => false],
-                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be a string or an object that implements __toString(). boolean given"
+                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be a string or an object that implements __toString(). Found bool(false)"
             ],
             [
                 [
@@ -69,7 +69,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'members' => ['foo' => ['type' => 'boolean']]
                 ],
                 ['foo' => 1],
-                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be a boolean. integer given"
+                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be a boolean. Found int(1)"
             ],
             // must be lax when validating numbers
             [
@@ -94,7 +94,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'members' => ['foo' => ['type' => 'integer']]
                 ],
                 ['foo' => 'abc'],
-                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be numeric. string given"
+                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be numeric. Found string(3) \"abc\""
             ],
             [
                 [
@@ -134,7 +134,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'members' => ['foo' => ['type' => 'structure']]
                 ],
                 ['foo' => false],
-                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be an associative array. boolean given"
+                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be an associative array. Found bool(false)"
             ],
             // Ensures the array is associative
             [
@@ -143,7 +143,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'members' => ['foo' => ['type' => 'structure']]
                 ],
                 ['foo' => [1, 3]],
-                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be an associative array. array given"
+                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be an associative array. Found array(2)"
             ],
             [
                 [
@@ -182,7 +182,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     ]
                 ],
                 ['foo' => 'abc'],
-                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be an array. string given"
+                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be an array. Found string(3) \"abc\""
             ],
             [
                 [
@@ -196,7 +196,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     ]
                 ],
                 ['foo' => 'abc'],
-                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be an associative array. string given"
+                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be an associative array. Found string(3) \"abc\""
             ],
             [
                 [
@@ -210,7 +210,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     ]
                 ],
                 ['foo' => ['abc']],
-                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be an associative array. array given"
+                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be an associative array. Found array(1)"
             ],
             [
                 [
@@ -244,7 +244,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     ]
                 ],
                 ['foo' => ['abc' => '123']],
-                "Found 1 error while validating the input provided for the Foo operation:\n[foo][abc] must be an associative array. string given"
+                "Found 1 error while validating the input provided for the Foo operation:\n[foo][abc] must be an associative array. Found string(3) \"123\""
             ],
             [
                 [
@@ -272,7 +272,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'members' => ['foo' => ['type' => 'blob']]
                 ],
                 ['foo' => []],
-                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be an fopen resource, a GuzzleHttp\\Stream\\StreamInterface object, or something that can be cast to a string. array given"
+                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be an fopen resource, a GuzzleHttp\\Stream\\StreamInterface object, or something that can be cast to a string. Found array(0)"
             ],
             [
                 [
@@ -280,7 +280,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'members' => ['foo' => ['type' => 'blob']]
                 ],
                 ['foo' => true],
-                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be an fopen resource, a GuzzleHttp\\Stream\\StreamInterface object, or something that can be cast to a string. boolean given"
+                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be an fopen resource, a GuzzleHttp\\Stream\\StreamInterface object, or something that can be cast to a string. Found bool(true)"
             ],
             [
                 [

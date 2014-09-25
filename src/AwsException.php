@@ -15,7 +15,7 @@ class AwsException extends CommandException
      */
     public function getClient()
     {
-        return $this->getTransaction()->client;
+        return $this->getTransaction()->serviceClient;
     }
 
     /**

@@ -3,7 +3,7 @@ namespace Aws\Common\Waiter;
 
 use Aws\AwsClientInterface;
 use Aws\AwsException;
-use Aws\Result;
+use Aws\Common\Result;
 
 class ResourceWaiter extends Waiter
 {
