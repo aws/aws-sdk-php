@@ -3,7 +3,6 @@ namespace Aws\DynamoDb;
 
 use Aws\AwsClient;
 use Aws\DynamoDb\Session\SessionHandler;
-use GuzzleHttp\Stream\Stream;
 
 /**
  * This client is used to interact with the **Amazon DynamoDB** service.

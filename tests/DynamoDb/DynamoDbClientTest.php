@@ -73,26 +73,4 @@ class DynamoDbClientTest extends \PHPUnit_Framework_TestCase
             [ $stream,       '{"B":"bar"}' ],
         ];
     }
-
-    public function testCanFormatValuesIntoVariousFormats()
-    {
-        $client = $this->getTestSdk()->getDynamoDb();
-
-        $this->assertEquals('foo', $client->formatValue('foo', null));
-        $this->assertEquals(['S' => 'foo'], $client->formatValue('foo', 'put'));
-        $this->assertEquals(['Value' => ['S' => 'foo']], $client->formatValue('foo', 'update'));
-    }
-
-    public function testCanFormatArraysOfData()
-    {
-        $client = $this->getTestSdk()->getDynamoDb();
-
-        $original = ['letter' => 'C', 'number' => 3];
-        $expected = [
-            'letter' => ['S' => 'C'],
-            'number' => ['N' => '3'],
-        ];
-
-        $this->assertSame($expected, $client->formatAttributes($original));
-    }
 }
