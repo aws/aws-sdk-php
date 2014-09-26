@@ -32,7 +32,7 @@ abstract class AbstractUploader
     /** @var UploadState State used to manage the upload. */
     protected $state;
 
-    /** @var AbstractPartGenerator Generator that yields upload parts data. */
+    /** @var PartGenerator Generator that yields upload parts data. */
     protected $parts;
 
     /** @var array Associative Array of parameters for executed commands. */
@@ -177,10 +177,10 @@ abstract class AbstractUploader
                 'fn' => function (ProcessEvent $event) use (&$errors) {
                     $command = $event->getCommand();
                     if ($ex = $event->getException()) {
-                        $key = $event->getCommand()[static::$partNumberParam];
-                        $errors[$key] = $event->getException()->getMessage();
+                        $key = $command[static::$partNumberParam];
+                        $errors[$key] = $ex->getMessage();
                     } else {
-                        unset($errors[$command[static::$partNumberParam]]);
+                        //unset($errors[$command[static::$partNumberParam]]);
                         $this->handleResult($command, $event->getResult());
                     }
                 },

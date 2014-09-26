@@ -1,17 +1,23 @@
 all: clean coverage docs
 
+clean:
+	rm -rf build/artifacts/*
+	cd docs && make clean
+
 test:
-	vendor/bin/phpunit
+	vendor/bin/phpunit --testsuite=unit
+
+travis:
+	vendor/bin/phpunit --colors --testsuite=unit --coverage-text
 
 coverage:
-	vendor/bin/phpunit --coverage-html=build/artifacts/coverage
+	vendor/bin/phpunit --testsuite=unit --coverage-html=build/artifacts/coverage
 
 view-coverage:
 	open build/artifacts/coverage/index.html
 
-clean:
-	rm -rf build/artifacts/*
-	cd docs && make clean
+integ:
+	vendor/bin/phpunit --testsuite=integ
 
 guide:
 	cd docs && make html

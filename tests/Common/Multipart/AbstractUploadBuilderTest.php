@@ -2,6 +2,7 @@
 namespace Aws\Test\Common\Multipart;
 
 use Aws\Common\Multipart\AbstractUploadBuilder;
+use Aws\Common\Multipart\PartGenerator;
 use Aws\Common\Multipart\UploadState;
 use GuzzleHttp\Stream\Stream;
 
@@ -24,9 +25,24 @@ class TestUploadBuilder extends AbstractUploadBuilder
 
     protected function createUploader()
     {
-        $class = new \ReflectionClass('Aws\S3\Multipart\Uploader');
+        // CC on limitPartStream
+        $this->source = Stream::factory();
+        $this->partSize = 5;
+        $this->limitPartStream($this->source);
 
+        // Mock Uploader
+        $class = new \ReflectionClass('Aws\S3\Multipart\Uploader');
         return $class->newInstanceWithoutConstructor();
+    }
+
+    protected function determinePartSize()
+    {
+        return 5;
+    }
+
+    protected function getCreatePartFn()
+    {
+        return function() {};
     }
 }
 

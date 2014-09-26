@@ -11,10 +11,15 @@
     </php>
 
     <testsuites>
-        <testsuite name="Aws">
-            <directory>tests</directory>
+        <testsuite name="unit">
+            <directory suffix="Test.php">tests/</directory>
+            <exclude>tests/Integ</exclude>
         </testsuite>
+        <testsuite name="integ">
+            <directory suffix="Test.php">tests/Integ</directory>
+            ]        </testsuite>
     </testsuites>
+
     <filter>
         <whitelist>
             <directory suffix=".php">src</directory>
@@ -23,4 +28,5 @@
             </exclude>
         </whitelist>
     </filter>
+
 </phpunit>

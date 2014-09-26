@@ -2,6 +2,7 @@
 namespace Aws\Common\Multipart;
 
 use Aws\Common\AwsClientInterface;
+use GuzzleHttp\Stream\LimitStream;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Stream\StreamInterface;
 
@@ -154,12 +155,31 @@ abstract class AbstractUploadBuilder
      *
      * @return AbstractUploader
      */
-     public function build()
-     {
-         $this->determineUploadState();
+    public function build()
+    {
+        // Determine the state
+        $this->determineUploadState();
 
-         return $this->createUploader();
-     }
+        // Determine the partSize
+        $this->partSize = $this->state->getPartSize() ?: $this->determinePartSize();
+        $this->state->setPartSize($this->partSize);
+
+        return $this->createUploader();
+    }
+
+    /**
+     * Create a stream for a part that starts at the current position and
+     * has a length of the upload part size (or less with the final part).
+     *
+     * @param StreamInterface $stream
+     *
+     * @return LimitStream
+     */
+    protected function limitPartStream(StreamInterface $stream)
+    {
+        // Limit what is read from the stream to the part size.
+        return new LimitStream($stream, $this->partSize, $this->source->tell());
+    }
 
     /**
      * Creates an upload state by listing existing parts to assemble a state.
@@ -171,11 +191,32 @@ abstract class AbstractUploadBuilder
     abstract protected function loadStateFromParams(array $params = []);
 
     /**
-     * Creates the service-specific Uploader object.
-     *
-     * @return AbstractUploader
+     * Performs service-specific logic to create the uploader.
      */
     abstract protected function createUploader();
+
+    /**
+     * Determines the part size to use for upload parts.
+     *
+     * Examines the provided partSize value and the source to determine the
+     * best possible part size.
+     *
+     * @throws \InvalidArgumentException if the part size is invalid.
+     */
+    abstract protected function determinePartSize();
+
+    /**
+     * Creates a function used to generate an upload part's parameters.
+     *
+     * This function callable passed into PartGenerator and must analyze a range
+     * of the source starting from the current offset up to the part size to
+     * create a set of parameters that will be required to create an upload part
+     * command. This should include a seekable stream, representing the analyzed
+     * range, that will will be sent as the body.
+     *
+     * @return callable
+     */
+    abstract protected function getCreatePartFn();
 
     /**
      * Determines the upload state using the provided upload params.
@@ -200,7 +241,6 @@ abstract class AbstractUploadBuilder
             // Create a state from the upload params.
             if (isset($this->uploadParams[$uploadIdParam])) {
                 $this->state = $this->loadStateFromParams($this->uploadParams);
-                $this->partSize = $this->state->getPartSize();
             } else {
                 unset($this->uploadParams[$uploadIdParam]);
                 $this->state = new UploadState($this->uploadParams);

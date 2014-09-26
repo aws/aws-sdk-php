@@ -6,6 +6,7 @@ use Aws\S3\Multipart\UploadBuilder;
 use Aws\S3\Multipart\Uploader;
 use Aws\Common\Result;
 use Aws\Test\UsesServiceTrait;
+use GuzzleHttp\Stream\Stream;
 
 /**
  * @covers Aws\S3\Multipart\UploadBuilder
@@ -13,6 +14,8 @@ use Aws\Test\UsesServiceTrait;
 class UploadBuilderTest extends \PHPUnit_Framework_TestCase
 {
     use UsesServiceTrait;
+
+    const MB = 1048576;
 
     public function testCanCreateBuilder()
     {
@@ -25,9 +28,24 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
 
         $params = $this->readAttribute($uploader, 'params');
         $this->assertArrayHasKey(Uploader::INITIATE, $params);
-        $iparams = $params[Uploader::INITIATE];
+        $initParams = $params[Uploader::INITIATE];
+        $this->assertArrayHasKey('ContentType', $initParams);
+        $parts = $this->readAttribute($uploader, 'parts');
+        $this->assertInstanceOf('Aws\Common\Multipart\PartGenerator', $parts);
         $this->assertInstanceOf('Aws\S3\Multipart\Uploader', $uploader);
-        $this->assertArrayHasKey('ContentType', $iparams);
+    }
+
+    public function testThrowsExceptionOnBadPartSize()
+    {
+        $uploader = (new UploadBuilder)
+            ->setClient($this->getMock('Aws\Common\AwsClientInterface'))
+            ->setSource(__FILE__)
+            ->setBucket('foo')
+            ->setKey('bar')
+            ->setPartSize(1024);
+
+        $this->setExpectedException('InvalidArgumentException');
+        $uploader->build();
     }
 
     public function testCanLoadStateFromUploadId()
@@ -57,5 +75,73 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
         $part = $state->getUploadedParts()[3];
         $this->assertEquals(3, $part['PartNumber']);
         $this->assertEquals('baz', $part['ETag']);
+    }
+
+    /**
+     * @dataProvider checksumTestProvider
+     */
+    public function testKnowsWhenToCalculateChecksums($client, $expected)
+    {
+        $uploader = (new UploadBuilder)->setClient($client);
+        $stream = Stream::factory('foo');
+
+        $method = (new \ReflectionClass('Aws\S3\Multipart\UploadBuilder'))
+            ->getMethod('decorateWithHashes');
+        $method->setAccessible(true);
+
+        $actual = null;
+        $stream = $method->invoke($uploader, $stream, function ($result, $type) use (&$actual) {
+            $actual = [$type, $result];
+        });
+        $stream->getContents();
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function checksumTestProvider()
+    {
+        $hasher = function ($type, $value) {
+            return base64_encode(hash($type, $value, true));
+        };
+
+        return [
+            [
+                $this->getTestClient('s3'),
+                ['md5', $hasher('md5', 'foo')]
+            ],
+            [
+                $this->getTestClient('s3', ['calculate_md5' => false]),
+                null
+            ],
+            [
+                $this->getTestClient('s3', ['signature' => 'v4']),
+                ['sha256', $hasher('sha256', 'foo')]
+            ]
+        ];
+    }
+
+    public function testCanCreatePartGeneratorCallback()
+    {
+        $source = Stream::factory('foo');
+        $uploader = (new UploadBuilder)
+            ->setClient($this->getTestClient('s3'))
+            ->setPartSize(5)
+            ->setSource($source);
+
+        $method = (new \ReflectionClass('Aws\S3\Multipart\UploadBuilder'))
+            ->getMethod('getCreatePartFn');
+        $method->setAccessible(true);
+        /** @var callable $createPart */
+        $createPart = $method->invoke($uploader);
+
+        $data = $createPart(true, 2);
+        $this->assertEquals(2, $data['PartNumber']);
+        $this->assertInstanceOf('GuzzleHttp\Stream\LimitStream', $data['Body']);
+
+        $source->seek(0);
+        $data = $createPart(false, 2);
+        $this->assertEquals(2, $data['PartNumber']);
+        $this->assertInstanceOf('GuzzleHttp\Stream\Stream', $data['Body']);
+        $this->assertArrayHasKey('ContentLength', $data);
+        $this->assertArrayHasKey('ContentMD5', $data);
     }
 }
