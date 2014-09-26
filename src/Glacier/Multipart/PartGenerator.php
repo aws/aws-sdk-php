@@ -85,9 +85,6 @@ class PartGenerator extends AbstractPartGenerator
 
     private function addHashingDecorators(StreamInterface $stream, array &$data)
     {
-        // Limit what is read from the source to the part size.
-        $stream = new LimitStream($stream, $this->partSize, $this->getOffset());
-
         // Make sure that a tree hash is calculated.
         $stream = new HashingStream(
             $stream,
