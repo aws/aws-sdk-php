@@ -3,9 +3,6 @@ namespace Aws\Common\Api\Serializer;
 
 use Aws\Common\Api\Service;
 use Aws\Common\Api\Shape;
-use Aws\Common\Api\StructureShape;
-use Aws\Common\Api\ListShape;
-use Aws\Common\Api\MapShape;
 use Aws\Common\Api\TimestampShape;
 
 /**
@@ -51,64 +48,42 @@ class JsonBody
 
     private function format(Shape $shape, $value)
     {
-        static $methods = [
-            'format_structure' => true,
-            'format_list'      => true,
-            'format_map'       => true,
-            'format_blob'      => true,
-            'format_timestamp' => true
-        ];
+        switch ($shape['type']) {
+            case 'structure':
+                $data = [];
+                foreach ($value as $k => $v) {
+                    if ($v !== null && $shape->hasMember($k)) {
+                        $data[$shape['locationName'] ?: $k] = $this->format(
+                            $shape->getMember($k),
+                            $v
+                        );
+                    }
+                }
+                return $data;
 
-        $type = 'format_' . $shape['type'];
-        if (isset($methods[$type])) {
-            return $this->{$type}($shape, $value);
+            case 'list':
+                $items = $shape->getMember();
+                foreach ($value as &$v) {
+                    $data[] = $this->format($items, $v);
+                }
+                return $value;
+
+            case 'map':
+                $values = $shape->getValue();
+                foreach ($value as &$v) {
+                    $v = $this->format($values, $v);
+                }
+
+                return $value;
+
+            case 'blob':
+                return base64_encode($value);
+
+            case 'timestamp':
+                return TimestampShape::format($value, 'unixTimestamp');
+
+            default:
+                return $value;
         }
-
-        return $value;
-    }
-
-    private function format_structure(StructureShape $shape, array $value)
-    {
-        $data = [];
-        foreach ($value as $k => $v) {
-            if ($v !== null && $shape->hasMember($k)) {
-                $data[$shape['locationName'] ?: $k] = $this->format(
-                    $shape->getMember($k),
-                    $v
-                );
-            }
-        }
-
-        return $data;
-    }
-
-    private function format_list(ListShape $shape, array $value)
-    {
-        $items = $shape->getMember();
-        foreach ($value as &$v) {
-            $data[] = $this->format($items, $v);
-        }
-
-        return $value;
-    }
-
-    private function format_map(MapShape $shape, array $value)
-    {
-        $values = $shape->getValue();
-        foreach ($value as &$v) {
-            $v = $this->format($values, $v);
-        }
-
-        return $value;
-    }
-
-    private function format_blob(Shape $shape, $value)
-    {
-        return base64_encode($value);
-    }
-
-    private function format_timestamp(TimestampShape $shape, $value)
-    {
-        return TimestampShape::format($value, 'unixTimestamp');
     }
 }
