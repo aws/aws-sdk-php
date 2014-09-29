@@ -32,6 +32,6 @@ package: burgomaster
 # Downloads a copy of Burgomaster
 burgomaster:
 	mkdir -p build/artifacts
-	curl -s https://raw.githubusercontent.com/mtdowling/Burgomaster/0.0.1/src/Burgomaster.php > build/artifacts/Burgomaster.php
+	curl -s https://raw.githubusercontent.com/mtdowling/Burgomaster/0.0.2/src/Burgomaster.php > build/artifacts/Burgomaster.php
 
 .PHONY: docs
