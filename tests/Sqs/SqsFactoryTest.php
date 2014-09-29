@@ -14,7 +14,8 @@ class SqsFactoryTest extends \PHPUnit_Framework_TestCase
         $f = new SqsFactory();
         $client = $f->create([
             'service' => 'sqs',
-            'region'  => 'us-west-2'
+            'region'  => 'us-west-2',
+            'version' => 'latest'
         ]);
 
         $this->assertTrue(SdkTest::hasListener(

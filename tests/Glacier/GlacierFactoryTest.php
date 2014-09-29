@@ -15,6 +15,7 @@ class GlacierFactoryTest extends \PHPUnit_Framework_TestCase
         $client = (new GlacierFactory)->create([
             'service' => 'glacier',
             'region'  => 'us-west-2',
+            'version' => 'latest'
         ]);
 
         $command = $client->getCommand('ListVaults');
@@ -34,6 +35,7 @@ class GlacierFactoryTest extends \PHPUnit_Framework_TestCase
         $client = (new GlacierFactory)->create([
             'service' => 'glacier',
             'region'  => 'us-west-2',
+            'version' => 'latest'
         ]);
 
         $found = [];

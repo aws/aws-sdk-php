@@ -11,8 +11,9 @@ class S3FactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreatesS3Signature()
     {
         $c = (new S3Factory())->create([
-            'service' => 's3',
-            'signature' => 's3'
+            'service'   => 's3',
+            'signature' => 's3',
+            'version'   => 'latest'
         ]);
 
         $this->assertInstanceOf(
@@ -25,7 +26,8 @@ class S3FactoryTest extends \PHPUnit_Framework_TestCase
     {
         $c = (new S3Factory())->create([
             'service'   => 's3',
-            'signature' => 'v4'
+            'signature' => 'v4',
+            'version'   => 'latest'
         ]);
 
         $this->assertInstanceOf(
@@ -42,13 +44,17 @@ class S3FactoryTest extends \PHPUnit_Framework_TestCase
     {
         (new S3Factory())->create([
             'service'   => 's3',
-            'signature' => 'foo'
+            'signature' => 'foo',
+            'version'   => 'latest'
         ]);
     }
 
     public function testCreatesClientWithSubscribers()
     {
-        $c = (new S3Factory())->create(['service' => 's3']);
+        $c = (new S3Factory())->create([
+            'service' => 's3',
+            'version' => 'latest'
+        ]);
         $l = $c->getEmitter()->listeners();
 
         $found = [];

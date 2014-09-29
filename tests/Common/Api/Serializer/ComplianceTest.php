@@ -74,7 +74,8 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
             'region' => 'us-west-2',
             'endpoint' => $ep,
             'error_parser' => Service::createErrorParser($service->getProtocol()),
-            'serializer'   => Service::createSerializer($service, $ep)
+            'serializer'   => Service::createSerializer($service, $ep),
+            'version'      => 'latest'
         ]);
 
         $cf = new ClientFactory();

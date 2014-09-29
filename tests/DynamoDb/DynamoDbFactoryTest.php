@@ -15,7 +15,8 @@ class DynamoDbFactoryTest extends \PHPUnit_Framework_TestCase
         $f = new DynamoDbFactory();
         $client = $f->create([
             'service' => 'dynamodb',
-            'region'  => 'us-west-2'
+            'region'  => 'us-west-2',
+            'version' => 'latest'
         ]);
         $this->assertFalse($client->getHttpClient()->getDefaultOption('allow_redirects'));
     }
@@ -25,7 +26,8 @@ class DynamoDbFactoryTest extends \PHPUnit_Framework_TestCase
         $f = new DynamoDbFactory();
         $client = $f->create([
             'service' => 'dynamodb',
-            'region'  => 'us-west-2'
+            'region'  => 'us-west-2',
+            'version' => 'latest'
         ]);
         $c = $client->getHttpClient();
         $found = false;
@@ -55,7 +57,8 @@ class DynamoDbFactoryTest extends \PHPUnit_Framework_TestCase
         $client = $f->create([
             'service' => 'dynamodb',
             'region'  => 'us-west-2',
-            'retries' => false
+            'retries' => false,
+            'version' => 'latest'
         ]);
         $c = $client->getHttpClient();
         $this->assertFalse(SdkTest::hasListener(

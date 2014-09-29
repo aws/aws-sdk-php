@@ -15,7 +15,10 @@ class QueueUrlListenerTest extends \PHPUnit_Framework_TestCase
     {
         // Setup state of command/request
         $newUrl = 'https://queue.amazonaws.com/stuff/in/the/path';
-        $client = SqsClient::factory(['region' => 'us-east-1']);
+        $client = SqsClient::factory([
+            'region'  => 'us-east-1',
+            'version' => 'latest'
+        ]);
         $command = $client->getCommand('ReceiveMessage');
         $command['QueueUrl'] = $newUrl;
         $ct = new CommandTransaction($client, $command);

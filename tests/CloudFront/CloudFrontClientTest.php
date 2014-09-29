@@ -12,7 +12,10 @@ class CloudFrontClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testEnsuresKeysArePassed()
     {
-        $c = CloudFrontClient::factory(['region' => 'us-west-2']);
+        $c = CloudFrontClient::factory([
+            'region'  => 'us-west-2',
+            'version' => 'latest'
+        ]);
         $c->getSignedUrl([]);
     }
 
@@ -25,7 +28,10 @@ class CloudFrontClientTest extends \PHPUnit_Framework_TestCase
             }
         }
 
-        $c = CloudFrontClient::factory(['region' => 'us-west-2']);
+        $c = CloudFrontClient::factory([
+            'region'  => 'us-west-2',
+            'version' => 'latest'
+        ]);
 
         $c->getSignedUrl([
             'private_key' => $_SERVER['CF_PRIVATE_KEY'],

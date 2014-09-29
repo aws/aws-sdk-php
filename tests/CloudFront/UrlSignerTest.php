@@ -23,7 +23,10 @@ class UrlSignerTest extends \PHPUnit_Framework_TestCase
     public function testCreatesUrlSignersForHttp()
     {
         /** @var $client \Aws\CloudFront\CloudFrontClient */
-        $client = CloudFrontClient::factory(['region' => 'us-west-2']);
+        $client = CloudFrontClient::factory([
+            'region'  => 'us-west-2',
+            'version' => 'latest'
+        ]);
         $ts = time() + 1000;
         $key = $_SERVER['CF_PRIVATE_KEY'];
         $kp = $_SERVER['CF_KEY_PAIR_ID'];
@@ -52,7 +55,10 @@ class UrlSignerTest extends \PHPUnit_Framework_TestCase
     public function testCreatesUrlSignersWithCustomPolicy()
     {
         /** @var $client \Aws\CloudFront\CloudFrontClient */
-        $client = CloudFrontClient::factory(['region' => 'us-west-2']);
+        $client = CloudFrontClient::factory([
+            'region'  => 'us-west-2',
+            'version' => 'latest'
+        ]);
         $url = $client->getSignedUrl(array(
             'url'    => 'http://abc.cloudfront.net/images/image.jpg',
             'policy' => '{}',
@@ -66,7 +72,10 @@ class UrlSignerTest extends \PHPUnit_Framework_TestCase
     public function testCreatesUrlSignersForRtmp()
     {
         /** @var $client \Aws\CloudFront\CloudFrontClient */
-        $client = CloudFrontClient::factory(['region' => 'us-west-2']);
+        $client = CloudFrontClient::factory([
+            'region'  => 'us-west-2',
+            'version' => 'latest'
+        ]);
         $ts = time() + 1000;
         $kp = $_SERVER['CF_KEY_PAIR_ID'];
         $url = $client->getSignedUrl(array(

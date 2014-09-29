@@ -14,7 +14,8 @@ class Route53FactoryTest extends \PHPUnit_Framework_TestCase
         $f = new Route53Factory();
         $client = $f->create([
             'service' => 'route53',
-            'region'  => 'us-west-2'
+            'region'  => 'us-west-2',
+            'version' => 'latest'
         ]);
 
         $this->assertTrue(SdkTest::hasListener(

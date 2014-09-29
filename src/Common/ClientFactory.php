@@ -76,7 +76,8 @@ class ClientFactory
             'service',
             'region',
             'api_provider',
-            'endpoint_provider'
+            'endpoint_provider',
+            'version'
         ];
 
         static $defaultArgs = [
@@ -85,7 +86,6 @@ class ClientFactory
             'retries'           => true,
             'scheme'            => 'https',
             'signature'         => false,
-            'version'           => 'latest',
             'exception_class'   => true,
             'validate'          => true,
             'class_name'        => false

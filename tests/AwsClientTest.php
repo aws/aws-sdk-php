@@ -32,7 +32,8 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
             'serializer'   => function () {},
             'api'          => new Service($apiProvider, 'foo', 'bar'),
-            'error_parser' => function () {}
+            'error_parser' => function () {},
+            'version'      => 'latest'
         ];
 
         $client = new AwsClient($config);
@@ -103,6 +104,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'region'          => 'foo',
             'exception_class' => $value,
             'api'             => $service,
+            'version'         => 'latest',
             'serializer'   => function () use ($c) {
                 return $c->createRequest('GET', 'http://httpbin.org');
             },
@@ -274,11 +276,17 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatesClientsFromFactoryMethod()
     {
-        $client = SqsClient::factory(['region' => 'us-west-2']);
+        $client = SqsClient::factory([
+            'region'  => 'us-west-2',
+            'version' => 'latest'
+        ]);
         $this->assertInstanceOf('Aws\Sqs\SqsClient', $client);
         $this->assertEquals('us-west-2', $client->getRegion());
 
-        $client = StsClient::factory(['region' => 'us-west-2']);
+        $client = StsClient::factory([
+            'region'  => 'us-west-2',
+            'version' => 'latest'
+        ]);
         $this->assertInstanceOf('Aws\Sts\StsClient', $client);
         $this->assertEquals('us-west-2', $client->getRegion());
     }
@@ -318,7 +326,8 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'region'       => 'foo',
             'api'          => $api,
             'serializer'   => function () {},
-            'error_parser' => function () {}
+            'error_parser' => function () {},
+            'version'      => 'latest'
         ]);
     }
 }

@@ -30,7 +30,7 @@ class AwsTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatesClientsAndSavesThem()
     {
-        $aws = Aws::factory();
+        $aws = Aws::factory(['version' => 'latest']);
         $client1 = $aws->get('s3');
         $client2 = $aws->get('s3');
 

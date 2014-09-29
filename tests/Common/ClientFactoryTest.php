@@ -17,7 +17,11 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreatesNewClientInstances()
     {
         $f = new ClientFactory();
-        $args = ['service' => 'sqs', 'region' => 'us-west-2'];
+        $args = [
+            'service' => 'sqs',
+            'region'  => 'us-west-2',
+            'version' => 'latest'
+        ];
         $c = $f->create($args);
         $this->assertInstanceOf('Aws\Common\AwsClientInterface', $c);
         $this->assertNotSame($c, $f->create($args));
@@ -43,6 +47,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
             'service'    => 'sqs',
             'region'     => 'x',
             'class_name' => 'Foo',
+            'version'    => 'latest'
         ]);
     }
 
@@ -53,13 +58,19 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
             'service'    => 'sqs',
             'region'     => 'x',
             'class_name' => 'Sqs',
+            'version'    => 'latest'
         ]));
     }
 
     public function testValidatesInput()
     {
         $f = new ClientFactory();
-        $c = $f->create(['service' => 'dynamodb', 'region' => 'x']);
+        $c = $f->create([
+            'service' => 'dynamodb',
+            'region'  => 'x',
+            'version' => 'latest'
+        ]);
+
         try {
             // CreateTable requires actual input parameters.
             $c->createTable([]);
@@ -77,7 +88,8 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $c = (new ClientFactory())->create([
             'service'  => 'dynamodb',
             'region'   => 'x',
-            'validate' => false
+            'validate' => false,
+            'version'  => 'latest'
         ]);
         $command = $c->getCommand('CreateTable');
         $command->getEmitter()->on('prepared', function () {
@@ -99,7 +111,12 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $p->expects($this->once())
             ->method('getService')
             ->will($this->returnValue(['metadata' => ['protocol' => 'foo']]));
-        $f->create(['service' => 'dynamodb', 'region' => 'x', 'api_provider' => $p]);
+        $f->create([
+            'service'      => 'dynamodb',
+            'region'       => 'x',
+            'api_provider' => $p,
+            'version'      => 'latest'
+        ]);
     }
 
     /**
@@ -109,7 +126,12 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
     public function testValidatesRetries()
     {
         $f = new ClientFactory();
-        $f->create(['service' => 'dynamodb', 'region' => 'x', 'retries' => 'a']);
+        $f->create([
+            'service' => 'dynamodb',
+            'region'  => 'x',
+            'retries' => 'a',
+            'version' => 'latest'
+        ]);
     }
 
     public function testCanSpecifyValidExceptionClass()
@@ -118,7 +140,8 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $f->create([
             'service'         => 'dynamodb',
             'region'          => 'x',
-            'exception_class' => 'Aws\Common\Exception\AwsException'
+            'exception_class' => 'Aws\Common\Exception\AwsException',
+            'version' => 'latest'
         ]);
     }
 
@@ -132,7 +155,8 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $f->create([
             'service' => 'dynamodb',
             'region' => 'x',
-            'exception_class' => 'MissingFoo'
+            'exception_class' => 'MissingFoo',
+            'version' => 'latest'
         ]);
     }
 
@@ -146,14 +170,20 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $f->create([
             'service'   => 'dynamodb',
             'region'    => 'x',
-            'signature' => [0, 2, 3]
+            'signature' => [0, 2, 3],
+            'version'   => 'latest'
         ]);
     }
 
     public function testCanSetSignatureVersionString()
     {
         $f = new ClientFactory();
-        $args = ['service' => 'sqs', 'region' => 'foo', 'signature' => 'v2'];
+        $args = [
+            'service'   => 'sqs',
+            'region'    => 'foo',
+            'signature' => 'v2',
+            'version'   => 'latest'
+        ];
         $c = $f->create($args);
         $this->assertInstanceOf(
             'Aws\Common\Signature\SignatureV2',
@@ -171,7 +201,8 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $f->create([
             'service' => 'dynamodb',
             'region'  => 'x',
-            'client'  => [0, 1, 2]
+            'client'  => [0, 1, 2],
+            'version' => 'latest'
         ]);
     }
 
@@ -185,7 +216,8 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $f->create([
             'service' => 'dynamodb',
             'region' => 'x',
-            'api_provider' => [0, 1, 2]
+            'api_provider' => [0, 1, 2],
+            'version' => 'latest'
         ]);
     }
 
@@ -199,7 +231,8 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $f->create([
             'service' => 'dynamodb',
             'region' => 'x',
-            'endpoint_provider' => [0, 1, 2]
+            'endpoint_provider' => [0, 1, 2],
+            'version' => 'latest'
         ]);
     }
 
@@ -213,16 +246,26 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $f->create([
             'service' => 'dynamodb',
             'region' => 'x',
-            'credentials' => new \stdClass()
+            'credentials' => new \stdClass(),
+            'version' => 'latest'
         ]);
     }
 
     public function testCanDisableRetries()
     {
         $f = new ClientFactory();
-        $c = $f->create(['service' => 'dynamodb', 'region' => 'x']);
+        $c = $f->create([
+            'service' => 'dynamodb',
+            'region'  => 'x',
+            'version' => 'latest'
+        ]);
         $this->assertCount(1, $c->getHttpClient()->getEmitter()->listeners('error'));
-        $c = $f->create(['service' => 'dynamodb', 'region' => 'x', 'retries' => false]);
+        $c = $f->create([
+            'service' => 'dynamodb',
+            'region'  => 'x',
+            'retries' => false,
+            'version' => 'latest'
+        ]);
         $this->assertCount(0, $c->getHttpClient()->getEmitter()->listeners('error'));
     }
 
@@ -236,7 +279,8 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $f->create([
             'service' => 'sqs',
             'region' => 'x',
-            'profile' => uniqid('profile_')
+            'profile' => uniqid('profile_'),
+            'version' => 'latest'
         ]);
     }
 
@@ -246,7 +290,8 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $c = $f->create([
             'service' => 'sqs',
             'region' => 'x',
-            'credentials' => false
+            'credentials' => false,
+            'version' => 'latest'
         ]);
         $this->assertInstanceOf(
             'Aws\Common\Credentials\NullCredentials',
@@ -261,7 +306,8 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $c = $f->create([
             'service' => 'sqs',
             'region' => 'x',
-            'credentials' => $creds
+            'credentials' => $creds,
+            'version' => 'latest'
         ]);
         $this->assertSame($creds, $c->getCredentials());
     }
@@ -278,7 +324,8 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $c = $f->create([
             'service' => 'sqs',
             'region' => 'x',
-            'endpoint_provider' => $p
+            'endpoint_provider' => $p,
+            'version' => 'latest'
         ]);
         $this->assertInstanceOf(
             'Aws\Common\Signature\SignatureV2',
@@ -293,6 +340,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
             'service'  => 'sdb',
             'region'   => 'x',
             'endpoint' => 'http://us-east-1.foo.amazonaws.com',
+            'version' => 'latest'
         ]);
         $this->assertInstanceOf('Aws\SimpleDb\SimpleDbClient', $c);
     }
@@ -308,6 +356,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
             'retries'      => 2,
             'retry_logger' => $logger,
             'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
+            'version'      => 'latest'
         ]);
         $this->assertTrue(SdkTest::hasListener(
             $c->getHttpClient()->getEmitter(),
@@ -324,6 +373,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
             'region'       => 'x',
             'retry_logger' => 'debug',
             'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
+            'version'      => 'latest'
         ]);
         $this->assertTrue(SdkTest::hasListener(
             $c->getHttpClient()->getEmitter(),
@@ -340,6 +390,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
             'region'   => 'x',
             'debug'    => true,
             'endpoint' => 'http://us-east-1.foo.amazonaws.com',
+            'version'  => 'latest'
         ]);
         $this->assertTrue(SdkTest::hasListener(
             $c->getEmitter(),
@@ -352,6 +403,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
             'region'   => 'x',
             'debug'    => false,
             'endpoint' => 'http://us-east-1.foo.amazonaws.com',
+            'version'  => 'latest'
         ]);
         $this->assertFalse(SdkTest::hasListener(
             $c->getEmitter(),
@@ -397,7 +449,8 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $c = (new ClientFactory())->create([
             'service'  => 'dynamodb',
             'region'   => 'x',
-            'validate' => false
+            'validate' => false,
+            'version'  => 'latest'
         ]);
         $command = $c->getCommand('ListTables');
         $command->getEmitter()->on('prepared', function ($e) {
@@ -415,7 +468,8 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $c = (new ClientFactory())->create([
             'service'  => 'dynamodb',
             'region'   => 'x',
-            'validate' => false
+            'validate' => false,
+            'version'  => 'latest'
         ]);
         $command = $c->getCommand('ListTables');
         $command->getEmitter()->on('prepared', function ($e) {

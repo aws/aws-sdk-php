@@ -73,9 +73,10 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
     public function testCreatesPresignedUrlsWithSpecialCharacters()
     {
         $client = S3Client::factory([
-            'region' => 'us-east-1',
-            'key'    => 'foo',
-            'secret' => 'bar'
+            'region'  => 'us-east-1',
+            'key'     => 'foo',
+            'secret'  => 'bar',
+            'version' => 'latest'
         ]);
         $request = $client->getHttpClient()->createRequest(
             'GET',

@@ -20,7 +20,10 @@ class Md5ValidatorListenerTest extends \PHPUnit_Framework_TestCase
         $model  = new Result([
             'Messages' => [['MD5OfBody' => 'foo', 'Body' => 'Bar']]
         ]);
-        $client = SqsClient::factory(['region' => 'us-west-2']);
+        $client = SqsClient::factory([
+            'region'  => 'us-west-2',
+            'version' => 'latest'
+        ]);
         $command = $client->getCommand('ReceiveMessage');
         $event = new ProcessEvent(new CommandTransaction($client, $command));
         $event->setResult($model);
@@ -39,7 +42,10 @@ class Md5ValidatorListenerTest extends \PHPUnit_Framework_TestCase
             ]
         ]);
 
-        $client = SqsClient::factory(['region' => 'us-west-2']);
+        $client = SqsClient::factory([
+            'region'  => 'us-west-2',
+            'version' => 'latest'
+        ]);
         $command = $client->getCommand('ReceiveMessage');
         $event = new ProcessEvent(new CommandTransaction($client, $command));
         $event->setResult($model);
@@ -50,7 +56,10 @@ class Md5ValidatorListenerTest extends \PHPUnit_Framework_TestCase
     public function testIgnoresIrrelevantCommands()
     {
         $model  = new Result([]);
-        $client = SqsClient::factory(['region' => 'us-west-2']);
+        $client = SqsClient::factory([
+            'region'  => 'us-west-2',
+            'version' => 'latest'
+        ]);
         $command = $client->getCommand('ListQueues');
         $event = new ProcessEvent(new CommandTransaction($client, $command));
         $event->setResult($model);

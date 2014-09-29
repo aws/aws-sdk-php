@@ -13,7 +13,10 @@ class CleanIdListenerTest extends \PHPUnit_Framework_TestCase
 {
     public function testCleansIds()
     {
-        $client = Route53Client::factory(['region' => 'us-west-2']);
+        $client = Route53Client::factory([
+            'region'  => 'us-west-2',
+            'version' => 'latest'
+        ]);
         $command = $client->getCommand('ChangeResourceRecordSets', [
             'HostedZoneId' => '/hostedzone/foo'
         ]);

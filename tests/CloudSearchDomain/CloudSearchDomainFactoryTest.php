@@ -22,6 +22,7 @@ class CloudSearchDomainFactoryTest extends \PHPUnit_Framework_TestCase
             'service'   => 'cloudsearchdomain',
             'endpoint'  => 'search-foo.us-west-2.cloudsearch.amazon.com',
             'signature' => 'v4',
+            'version'   => 'latest'
         ]);
         $this->assertEquals('us-west-2', $client->getRegion());
     }
