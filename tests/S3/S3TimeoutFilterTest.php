@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Test\Common\Retry;
+namespace Aws\Test\S3;
 
-use Aws\Common\Retry\S3TimeoutFilter;
+use Aws\S3\S3TimeoutFilter;
 use GuzzleHttp\Transaction;
 use GuzzleHttp\Client;
 use GuzzleHttp\Event\CompleteEvent;
@@ -11,7 +11,7 @@ use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
 
 /**
- * @covers \Aws\Common\Retry\S3TimeoutFilter
+ * @covers \Aws\S3\S3TimeoutFilter
  */
 class S3TimeoutFilterTest extends \PHPUnit_Framework_TestCase
 {

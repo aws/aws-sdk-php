@@ -12,6 +12,7 @@ use Aws\S3\Subscriber\BucketStyle;
 use Aws\S3\Subscriber\PermanentRedirect;
 use Aws\S3\Subscriber\PutObjectUrl;
 use GuzzleHttp\Message\ResponseInterface;
+use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
 
 /**
  * @internal
@@ -66,6 +67,19 @@ class S3Factory extends ClientFactory
 
         throw new \InvalidArgumentException('Amazon S3 supports signature '
             . 'version "s3" or "v4"');
+    }
+
+    protected function getRetryOptions(array $args)
+    {
+        $options = parent::getRetryOptions($args);
+
+        // Add the S3 socket timeout filter to the retry chain.
+        $options['filter'] = RetrySubscriber::createChainFilter([
+            new S3TimeoutFilter(),
+            $options['filter']
+        ]);
+
+        return $options;
     }
 
     private function enableErrorParserToHandleHeadRequests(array &$args)

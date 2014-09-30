@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\S3;
 
+use Aws\Common\Credentials\NullCredentials;
 use Aws\Common\Result;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
@@ -54,17 +55,14 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
             'key'    => 'foo',
             'secret' => 'bar'
         ]);
-        $request = $client->getHttpClient()
-            ->createRequest('GET', 'https://s3.amazonaws.com/foo/bar');
-        $original = (string) $request;
-        $url = $client->createPresignedUrl($request, 1342138769);
+        $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
+        $url = $client->createPresignedUrl($command, 1342138769);
         $this->assertContains(
-            'https://s3.amazonaws.com/foo/bar?AWSAccessKeyId=',
+            'https://foo.s3.amazonaws.com/bar?AWSAccessKeyId=',
             $url
         );
         $this->assertContains('Expires=', $url);
         $this->assertContains('Signature=', $url);
-        $this->assertSame($original, (string) $request);
     }
 
     /**
@@ -78,13 +76,13 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
             'secret'  => 'bar',
             'version' => 'latest'
         ]);
-        $request = $client->getHttpClient()->createRequest(
-            'GET',
-            'https://foo.s3.amazonaws.com/foobar test: abc/+%.a'
-        );
-        $url = $client->createPresignedUrl($request, 1342138769);
+        $command = $client->getCommand('GetObject', [
+            'Bucket' => 'foobar test: abc',
+            'Key'    => '+%.a'
+        ]);
+        $url = $client->createPresignedUrl($command, 1342138769);
         $this->assertContains(
-            'https://foo.s3.amazonaws.com/foobar%20test%3A%20abc/%2B%25.a?AWSAccessKeyId=',
+            'https://s3.amazonaws.com/foobar%20test%3A%20abc/%2B%25.a?AWSAccessKeyId=',
             $url
         );
     }
@@ -168,27 +166,25 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function getObjectUrlProvider()
-    {
-        return [
-            ['https://foo.s3.amazonaws.com/bar', ['foo', 'bar']],
-            ['http://foo.s3.amazonaws.com/bar', ['foo', 'bar', null, ['Scheme' => 'http']]],
-            ['https://foo.s3.amazonaws.com/bar?versionId=123', ['foo', 'bar', null, ['VersionId' => '123']]],
-            ['https://foo.s3.amazonaws.com/bar?AWSAccessKeyId=K&Expires=492220800&Signature=NolgeXY%2FxxM9ttapuXZgeSSqmzM%3D', ['foo', 'bar', 'August 7, 1985']],
-        ];
-    }
-
-    /**
-     * @dataProvider getObjectUrlProvider
-     */
-    public function testReturnsObjectUrl($url, $args)
+    public function testReturnsObjectUrl()
     {
         $s3 = $this->getTestClient('s3', [
-            'region' => 'us-east-1',
-            'credentials' => ['key' => 'K', 'secret' => 'S']
+            'region'      => 'us-east-1',
+            'credentials' => new NullCredentials()
         ]);
-        $result = call_user_func_array([$s3, 'getObjectUrl'], $args);
-        $this->assertSame($url, $result);
+        $this->assertEquals('https://foo.s3.amazonaws.com/bar', $s3->getObjectUrl('foo', 'bar'));
+    }
+
+    public function testReturnsObjectUrlViaPath()
+    {
+        $s3 = $this->getTestClient('s3', [
+            'region'      => 'us-east-1',
+            'credentials' => new NullCredentials()
+        ]);
+        $this->assertEquals(
+            'https://s3.amazonaws.com/foo.baz/bar',
+            $s3->getObjectUrl('foo.baz', 'bar')
+        );
     }
 
     /**

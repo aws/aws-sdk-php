@@ -5,7 +5,6 @@ use Aws\Common\AwsClient;
 use Aws\Common\Result;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\Multipart\UploadBuilder;
-use GuzzleHttp\Message\RequestInterface;
 use GuzzleHttp\Stream\AppendStream;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Command\CommandInterface;
@@ -39,11 +38,10 @@ class S3Client extends AwsClient
     }
 
     /**
-     * Create a pre-signed URL for a request.
+     * Create a pre-signed URL for the given S3 command object.
      *
-     * @param RequestInterface $request     Request to generate the URL for.
-     *                                      Use the factory methods of the
-     *                                      client to create this request object
+     * @param CommandInterface $command     Command to create a pre-signed
+     *                                      URL for.
      * @param int|string|\DateTime $expires The time at which the URL should
      *                                      expire. This can be a Unix
      *                                      timestamp, a PHP DateTime object,
@@ -51,10 +49,10 @@ class S3Client extends AwsClient
      *                                      by strtotime
      * @return string
      */
-    public function createPresignedUrl(RequestInterface $request, $expires)
+    public function createPresignedUrl(CommandInterface $command, $expires)
     {
         return $this->getSignature()->createPresignedUrl(
-            $request,
+            $this->initTransaction($command)->request,
             $this->getCredentials(),
             $expires
         );
@@ -68,32 +66,20 @@ class S3Client extends AwsClient
      *
      * @param string $bucket  The name of the bucket where the object is located
      * @param string $key     The key of the object
-     * @param mixed  $expires The time at which the URL should expire
-     * @param array  $args    Arguments to the GetObject command. Additionally
-     *                        you can specify a "Scheme" if you would like the
-     *                        URL to use a different scheme than what the
-     *                        client is configured to use
+     * @param mixed  $expires The time at which the URL should expire.
+     * @param array  $args    Associative array of additional arguments found
+     *                        in the GetObject API operation.
      *
      * @return string The URL to the object
      */
-    public function getObjectUrl(
-        $bucket,
-        $key,
-        $expires = null,
-        array $args = []
-    ) {
+    public function getObjectUrl($bucket, $key, $expires = null, array $args = [])
+    {
         $args = ['Bucket' => $bucket, 'Key' => $key] + $args;
         $command = $this->getCommand('GetObject', $args);
-        $trans = $this->initTransaction($command);
-        $request = $trans->request;
-
-        if (isset($command['Scheme'])) {
-            $request->setScheme($command['Scheme']);
-        }
 
         return $expires
-            ? $this->createPresignedUrl($request, $expires)
-            : $request->getUrl();
+            ? $this->createPresignedUrl($command, $expires)
+            : $this->initTransaction($command)->request->getUrl();
     }
 
     /**
