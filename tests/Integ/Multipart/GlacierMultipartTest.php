@@ -12,20 +12,13 @@ class GlacierMultipart extends \PHPUnit_Framework_TestCase
     use IntegUtils;
 
     const MB = 1048576;
-    const VAULT = 'php-integ-s3multipart';
+    const VAULT = 'php-integ-glacier-multipart';
 
     public static function setUpBeforeClass()
     {
         $client = self::getSdk()->getGlacier();
         $client->createVault(['vaultName' => self::VAULT]);
         $client->waitUntil('VaultExists', ['vaultName' => self::VAULT]);
-    }
-
-    public static function tearDownAfterClass()
-    {
-        $client = self::getSdk()->getGlacier();
-        $client->deleteVault(['vaultName' => self::VAULT]);
-//        $client->waitUntil('VaultNotExists', ['vaultName' => self::VAULT]);
     }
 
     public function useCasesProvider()

@@ -29,7 +29,7 @@ class S3Multipart extends \PHPUnit_Framework_TestCase
         $client = self::getSdk()->getS3();
         (new ClearBucket($client, self::BUCKET))->clear();
         $client->deleteBucket(['Bucket' => self::BUCKET]);
-        //self::$client->waitUntil('BucketNotExists', ['Bucket' => self::BUCKET]);
+        $client->waitUntil('BucketNotExists', ['Bucket' => self::BUCKET]);
     }
 
     public function useCasesProvider()

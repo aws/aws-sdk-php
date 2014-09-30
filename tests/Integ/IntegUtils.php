@@ -8,6 +8,7 @@ trait IntegUtils
         return new \Aws\Sdk([
             'region'  => 'us-east-1',
             'profile' => 'integ',
+            'version' => 'latest',
         ]);
     }
 }

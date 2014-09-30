@@ -11,6 +11,7 @@ use Aws\S3\Subscriber\ApplyMd5;
 use Aws\S3\Subscriber\BucketStyle;
 use Aws\S3\Subscriber\PermanentRedirect;
 use Aws\S3\Subscriber\PutObjectUrl;
+use GuzzleHttp\Message\ResponseInterface;
 
 /**
  * @internal
@@ -33,6 +34,8 @@ class S3Factory extends ClientFactory
 
     protected function createClient(array $args)
     {
+        $this->enableErrorParserToHandleHeadRequests($args);
+
         $client = parent::createClient($args);
 
         // S3Client should calculate MD5 checksums for uploads unless explicitly
@@ -63,5 +66,28 @@ class S3Factory extends ClientFactory
 
         throw new \InvalidArgumentException('Amazon S3 supports signature '
             . 'version "s3" or "v4"');
+    }
+
+    private function enableErrorParserToHandleHeadRequests(array &$args)
+    {
+        $originalErrorParser = $args['error_parser'];
+        $args['error_parser'] = function (ResponseInterface $response) use (
+            $originalErrorParser
+        ) {
+            // Call the original parser.
+            $errorData = $originalErrorParser($response);
+
+            // Handle 404 responses where the code was not parsed.
+            if (!isset($errorData['code']) && $response->getStatusCode() == 404) {
+                $url = (new S3UriParser)->parse($response->getEffectiveUrl());
+                if (isset($url['key'])) {
+                    $errorData['code'] = 'NoSuchKey';
+                } elseif ($url['bucket']) {
+                    $errorData['code'] = 'NoSuchBucket';
+                }
+            }
+
+            return $errorData;
+        };
     }
 }

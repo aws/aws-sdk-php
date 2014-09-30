@@ -153,7 +153,7 @@ class WriteRequestBatch
                 'parallel' => $this->config['parallel'],
                 'process' => function (ProcessEvent $e) {
                     if ($e->getException()) {
-                        if ($e->getContext()['aws_error']['code'] === 'ProvisionedThroughputExceededException') {
+                        if ($e->getContext()->getPath('aws_error/code') === 'ProvisionedThroughputExceededException') {
                             $this->retryUnprocessed($e->getCommand()['RequestItems']);
                         } elseif (is_callable($this->config['error'])) {
                             $this->config['error']($e);
