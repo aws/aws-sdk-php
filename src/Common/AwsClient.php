@@ -245,30 +245,30 @@ class AwsClient extends AbstractClient implements AwsClientInterface
             return $transaction->exception;
         }
 
-        $exceptionClass = $this->commandException;
+        // Set default values (e.g., for non-RequestException)
+        $url = null;
+        $transaction->context['aws_error'] = [];
+        $serviceError = $transaction->exception->getMessage();
 
         if ($transaction->exception instanceof RequestException) {
             $url = $transaction->exception->getRequest()->getUrl();
-            $parser = $this->errorParser;
-            // Add the parsed response error to the exception.
-            $transaction->context['aws_error'] = $parser(
-                $transaction->exception->getResponse()
-            );
-            // Only use the AWS error code if the parser could parse resposne.
-            if (empty($transaction->context['aws_error']['type'])) {
-                $serviceError = $transaction->exception->getMessage();
-            } else {
-                // Create an easy to read error message.
-                $serviceError = trim($transaction->context->getPath('aws_error/code')
-                    . ' (' . $transaction->context->getPath('aws_error/type')
-                    . ' error): ' . $transaction->context->getPath('aws_error/message'));
+            if ($response = $transaction->exception->getResponse()) {
+                $parser = $this->errorParser;
+                // Add the parsed response error to the exception.
+                $transaction->context['aws_error'] = $parser($response);
+                // Only use the AWS error code if the parser could parse response.
+                if (!$transaction->context->getPath('aws_error/type')) {
+                    $serviceError = $transaction->exception->getMessage();
+                } else {
+                    // Create an easy to read error message.
+                    $serviceError = trim($transaction->context->getPath('aws_error/code')
+                        . ' (' . $transaction->context->getPath('aws_error/type')
+                        . ' error): ' . $transaction->context->getPath('aws_error/message'));
+                }
             }
-        } else {
-            $url = null;
-            $transaction->context->set('aws_error', []);
-            $serviceError = $transaction->exception->getMessage();
         }
 
+        $exceptionClass = $this->commandException;
         return new $exceptionClass(
             sprintf('Error executing %s::%s() on "%s"; %s',
                 get_class($this),
