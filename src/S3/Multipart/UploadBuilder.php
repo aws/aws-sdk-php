@@ -117,7 +117,6 @@ class UploadBuilder extends AbstractUploadBuilder
             // Initialize the array of part data that will be returned.
             $data = ['PartNumber' => $number];
 
-
             // Read from the source to create the body stream.
             if ($seekable) {
                 // Case 1: Source is seekable, use lazy stream to defer work.

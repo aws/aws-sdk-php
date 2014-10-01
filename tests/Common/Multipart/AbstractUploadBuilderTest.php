@@ -2,7 +2,6 @@
 namespace Aws\Test\Common\Multipart;
 
 use Aws\Common\Multipart\AbstractUploadBuilder;
-use Aws\Common\Multipart\PartGenerator;
 use Aws\Common\Multipart\UploadState;
 use GuzzleHttp\Stream\Stream;
 

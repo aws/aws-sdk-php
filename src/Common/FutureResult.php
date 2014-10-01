@@ -4,7 +4,6 @@ namespace Aws\Common;
 use GuzzleHttp\Ring\FutureInterface;
 use GuzzleHttp\Ring\MagicFutureTrait;
 use GuzzleHttp\Ring\Core;
-use GuzzleHttp\HasDataTrait;
 
 /**
  * Future result that may not have finished.

@@ -4,7 +4,6 @@ namespace Aws\Common\Subscriber;
 use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Event\RequestEvents;
 use GuzzleHttp\Event\SubscriberInterface;
-use GuzzleHttp\Stream;
 
 /**
  * Changes the location to which a REST web service downloads the body of a

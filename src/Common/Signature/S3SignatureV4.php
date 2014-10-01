@@ -3,7 +3,6 @@ namespace Aws\Common\Signature;
 
 use Aws\Common\Credentials\CredentialsInterface;
 use GuzzleHttp\Message\RequestInterface;
-use GuzzleHttp\Stream;
 
 /**
  * Amazon S3 signature version 4 support.

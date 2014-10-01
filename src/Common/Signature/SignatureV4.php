@@ -5,7 +5,6 @@ use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Exception\CouldNotCreateChecksumException;
 use GuzzleHttp\Message\RequestInterface;
 use GuzzleHttp\Post\PostBodyInterface;
-use GuzzleHttp\Stream;
 
 /**
  * Signature Version 4

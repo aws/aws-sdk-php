@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Glacier;
 
-use GuzzleHttp\Stream;
 use GuzzleHttp\Subscriber\MessageIntegrity\HashInterface;
 
 /**
