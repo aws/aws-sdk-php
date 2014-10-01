@@ -32,7 +32,11 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             $result = $client->execute($client->getCommand($operation, $params));
             if (!$succeed) $this->fail("The {$operation} operation of the "
                 . "{$service} service was supposed to fail.");
-            $this->assertArrayHasKey($value, $result);
+            if ($value) {
+                $this->assertArrayHasKey($value, $result);
+            } else {
+                $this->assertEquals([], $result->toArray());
+            }
         } catch (AwsException $e) {
             if ($succeed) $this->fail("The {$operation} operation of the "
                 . "{$service} service was supposed to succeed.");
@@ -49,7 +53,8 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
                 $e->getMessage()
             );
         } catch (\Exception $e) {
-            $this->fail('An unexpected exception occurred: ' . get_class($e));
+            $this->fail('An unexpected exception occurred: ' . get_class($e)
+                . ' - ' . $e->getMessage());
         }
 
         // Make sure the request's host value is correct no matter the outcome.
@@ -131,6 +136,48 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
                 'TrailNotFoundException'
             ],
             [
+                'cloudwatch',
+                'Aws\\CloudWatch\\CloudWatchClient',
+                [],
+                'monitoring.us-east-1.amazonaws.com',
+                'DescribeAlarms',
+                [],
+                true,
+                'MetricAlarms'
+            ],
+////////////////////////////////////////////////////////////////////////////////
+//            [
+//                'cloudwatchlogs',
+//                'Aws\\CloudWatchLogs\\CloudWatchLogsClient',
+//                [],
+//                'logs.us-east-1.amazonaws.com',
+//                'xx',
+//                [],
+//                true,
+//                'xx'
+//            ],
+//            [
+//                'cognitoidentity',
+//                'Aws\\CognitoIdentity\\CognitoIdentityClient',
+//                [],
+//                'cognito-identity.us-east-1.amazonaws.com',
+//                'xx',
+//                [],
+//                true,
+//                'xx'
+//            ],
+//            [
+//                'cognitosync',
+//                'Aws\\CognitoSync\\CognitoSyncClient',
+//                [],
+//                'cognito-sync.us-east-1.amazonaws.com',
+//                'xx',
+//                [],
+//                true,
+//                'xx'
+//            ],
+////////////////////////////////////////////////////////////////////////////////
+            [
                 'datapipeline',
                 'Aws\\DataPipeline\\DataPipelineClient',
                 [],
@@ -160,9 +207,158 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
                 true,
                 'TableNames'
             ],
-
-            // @TODO ec2-route53
-
+            [
+                'ec2',
+                'Aws\\Ec2\\Ec2Client',
+                [],
+                'ec2.us-east-1.amazonaws.com',
+                'DescribeInstances',
+                [],
+                true,
+                'Reservations'
+            ],
+            [
+                'elasticache',
+                'Aws\\ElastiCache\\ElastiCacheClient',
+                [],
+                'elasticache.us-east-1.amazonaws.com',
+                'DescribeCacheClusters',
+                [],
+                true,
+                'CacheClusters'
+            ],
+            [
+                'elasticbeanstalk',
+                'Aws\\ElasticBeanstalk\\ElasticBeanstalkClient',
+                [],
+                'elasticbeanstalk.us-east-1.amazonaws.com',
+                'DescribeApplications',
+                [],
+                true,
+                'Applications'
+            ],
+            [
+                'elastictranscoder',
+                'Aws\\ElasticTranscoder\\ElasticTranscoderClient',
+                [],
+                'elastictranscoder.us-east-1.amazonaws.com',
+                'CancelJob',
+                ['Id' => '1111111111111-aaaaaa'],
+                false,
+                'ResourceNotFoundException'
+            ],
+            [
+                'elb',
+                'Aws\\ElasticLoadBalancing\\ElasticLoadBalancingClient',
+                [],
+                'elasticloadbalancing.us-east-1.amazonaws.com',
+                'DescribeLoadBalancers',
+                [],
+                true,
+                'LoadBalancerDescriptions'
+            ],
+            [
+                'emr',
+                'Aws\\Emr\\EmrClient',
+                [],
+                'elasticmapreduce.us-east-1.amazonaws.com',
+                'ListClusters',
+                [],
+                true,
+                'Clusters'
+            ],
+            [
+                'glacier',
+                'Aws\\Glacier\\GlacierClient',
+                [],
+                'glacier.us-east-1.amazonaws.com',
+                'DescribeJob',
+                ['vaultName' => 'foo', 'jobId' => 'bar'],
+                false,
+                'ResourceNotFoundException'
+            ],
+            [
+                'iam',
+                'Aws\\Iam\\IamClient',
+                [],
+                'iam.amazonaws.com',
+                'ListGroups',
+                [],
+                true,
+                'Groups'
+            ],
+            [
+                'importexport',
+                'Aws\\ImportExport\\ImportExportClient',
+                [],
+                'importexport.amazonaws.com',
+                'GetStatus',
+                ['JobId' => 'foo'],
+                false,
+                'InvalidJobIdException'
+            ],
+            [
+                'kinesis',
+                'Aws\\Kinesis\\KinesisClient',
+                [],
+                'kinesis.us-east-1.amazonaws.com',
+                'ListStreams',
+                [],
+                true,
+                'StreamNames'
+            ],
+            [
+                'opsworks',
+                'Aws\\OpsWorks\\OpsWorksClient',
+                [],
+                'opsworks.us-east-1.amazonaws.com',
+                'DescribeStacks',
+                [],
+                true,
+                'Stacks'
+            ],
+            [
+                'rds',
+                'Aws\\Rds\\RdsClient',
+                [],
+                'rds.us-east-1.amazonaws.com',
+                'DescribeDBInstances',
+                [],
+                true,
+                'DBInstances'
+            ],
+            [
+                'redshift',
+                'Aws\\Redshift\\RedshiftClient',
+                [],
+                'redshift.us-east-1.amazonaws.com',
+                'DescribeClusters',
+                [],
+                true,
+                'Clusters'
+            ],
+            [
+                'route53',
+                'Aws\\Route53\\Route53Client',
+                [],
+                'route53.amazonaws.com',
+                'ListHostedZones',
+                [],
+                true,
+                'HostedZones'
+            ],
+////////////////////////////////////////////////////////////////////////////////
+//            [
+//                'route53domains',
+//                'Aws\\Route53Domains\\Route53DomainsClient',
+//                [],
+//                'route53domains.us-east-1.amazonaws.com',
+//                'xx',
+//                [],
+//                true,
+//                'xx'
+//            ],
+////////////////////////////////////////////////////////////////////////////////
             [
                 's3',
                 'Aws\\S3\\S3Client',
@@ -173,8 +369,86 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
                 false,
                 'NoSuchBucket'
             ],
-
-            // @TODO sdb-swf
+            [
+                'sdb',
+                'Aws\\SimpleDb\\SimpleDbClient',
+                [],
+                'sdb.amazonaws.com',
+                'ListDomains',
+                ['MaxNumberOfDomains' => 1],
+                true,
+                null
+            ],
+            [
+                'ses',
+                'Aws\\Ses\\SesClient',
+                [],
+                'email.us-east-1.amazonaws.com',
+                'ListIdentities',
+                [],
+                true,
+                'Identities'
+            ],
+            [
+                'sns',
+                'Aws\\Sns\\snsClient',
+                [],
+                'sns.us-east-1.amazonaws.com',
+                'ListTopics',
+                [],
+                true,
+                'Topics'
+            ],
+            [
+                'sqs',
+                'Aws\\Sqs\\SqsClient',
+                [],
+                'sqs.us-east-1.amazonaws.com',
+                'ListQueues',
+                [],
+                true,
+                'QueueUrls'
+            ],
+            [
+                'storagegateway',
+                'Aws\\StorageGateway\\StorageGatewayClient',
+                [],
+                'storagegateway.us-east-1.amazonaws.com',
+                'DeleteVolume',
+                ['VolumeARN' => 'foo'],
+                false,
+                'ValidationException'
+            ],
+            [
+                'sts',
+                'Aws\\Sts\\StsClient',
+                [],
+                'sts.amazonaws.com',
+                'GetSessionToken',
+                [],
+                true,
+                'Credentials'
+            ],
+            [
+                'support',
+                'Aws\\Support\\SupportClient',
+                [],
+                'support.us-east-1.amazonaws.com',
+                'DescribeCases',
+                [],
+                false,
+                'SubscriptionRequiredException'
+            ],
+            [
+                'swf',
+                'Aws\\Swf\\SwfClient',
+                [],
+                'swf.us-east-1.amazonaws.com',
+                'DescribeDomain',
+                ['name' => 'foo'],
+                false,
+                'UnknownResourceFault'
+            ],
         ];
     }
 }
