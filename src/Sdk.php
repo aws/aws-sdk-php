@@ -139,9 +139,8 @@ class Sdk
     /**
      * Get a client by name using an array of constructor options.
      *
-     * - region: The region to use of the service
-     * - version: Optional API version of the service. If not specified, the
-     *   latest version of the API will be used.
+     * - region: The region to use of the service.
+     * - version: API version of the service.
      * - credentials: An {@see Aws\Common\Credentials\CredentialsInterface}
      *   object to use with each client OR an associative array of 'key',
      *   'secret', and 'token' key value pairs. If no credentials are provided,
