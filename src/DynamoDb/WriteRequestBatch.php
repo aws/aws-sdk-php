@@ -31,20 +31,22 @@ class WriteRequestBatch
      * @param array          $config Batch configuration options.
      *     - table: DynamoDB table used by the batch, this can be overridden for
      *       each individual put() or delete() call.
-     *     - size: The size of each batch (default: 25). The batch size must be
-     *       between 2 and 25. If you are sending batches of large items, you
-     *       may consider lowering the batch size, otherwise, you should use 25.
-     *     - parallel: This number dictates how many BatchWriteItem requests you
-     *       would like to do in parallel. For example, if the "size" is 25, and
-     *       "parallel" is 3, then you would send 3 BatchWriteItem requests at a
-     *       time, each with 25 items. Please keep your provisioned throughput
-     *       in mind when increasing the "parallel" option.
+     *     - batch_size: The size of each batch (default: 25). The batch size
+     *       must be between 2 and 25. If you are sending batches of large
+     *       items, you may consider lowering the batch size, otherwise, you
+     *       should use 25.
+     *     - pool_size: This number dictates how many BatchWriteItem requests
+     *       you would like to do in parallel. For example, if the "batch_size"
+     *       is 25, and "pool_size" is 3, then you would send 3 BatchWriteItem
+     *       requests at a time, each with 25 items. Please keep your
+     *       throughput in mind when choosing the "pool_size" option.
      *     - autoflush: This option allows the batch to automatically flush once
-     *       there are enough items (i.e., "size" * "parallel"). This defaults
-     *       to true, so you must set this to false to stop autoflush.
+     *       there are enough items (i.e., "batch_size" * "pool_size") in the
+     *       queue. This defaults to true, so you must set this to false to
+     *       stop autoflush.
      *     - error: Set this to a callback to handle errors from the commands
      *       executed by the batch, otherwise errors are ignored. The callback
-     *       should accept a \GuzzleHttp\Command\Event\CommandErrorEvent as its
+     *       should accept a \GuzzleHttp\Command\Event\ProcessEvent as its
      *       argument.
      *     - flush: Set this to a callback to perform an action after the batch
      *       has been autoflushed. The callback will not be triggered on manual
@@ -56,22 +58,22 @@ class WriteRequestBatch
     {
         // Apply defaults
         $config += [
-            'table'     => null,
-            'size'      => 25,
-            'parallel'  => 1,
-            'autoflush' => true,
-            'error'     => null,
-            'flush'     => null
+            'table'      => null,
+            'batch_size' => 25,
+            'pool_size'  => 1,
+            'autoflush'  => true,
+            'error'      => null,
+            'flush'      => null
         ];
 
         // Ensure the batch size is valid
-        if ($config['size'] > 25 || $config['size'] < 2) {
-            throw new \DomainException('Batch size must be between 2 and 25.');
+        if ($config['batch_size'] > 25 || $config['batch_size'] < 2) {
+            throw new \DomainException('batch_size must be between 2 and 25.');
         }
 
         // If autoflush is enabled, set the threshold
         if ($config['autoflush']) {
-            $config['threshold'] = $config['size'] * $config['parallel'];
+            $config['threshold'] = $config['batch_size'] * $config['pool_size'];
         }
 
         $this->client = $client;
@@ -150,10 +152,11 @@ class WriteRequestBatch
         while ($this->queue && $keepFlushing) {
             $commands = $this->prepareCommands();
             $this->client->executeAll($commands, [
-                'parallel' => $this->config['parallel'],
+                'pool_size' => $this->config['pool_size'],
                 'process' => function (ProcessEvent $e) {
                     if ($e->getException()) {
-                        if ($e->getContext()->getPath('aws_error/code') === 'ProvisionedThroughputExceededException') {
+                        $code = $e->getContext()->getPath('aws_error/code');
+                        if ($code === 'ProvisionedThroughputExceededException') {
                             $this->retryUnprocessed($e->getCommand()['RequestItems']);
                         } elseif (is_callable($this->config['error'])) {
                             $this->config['error']($e);
@@ -181,7 +184,7 @@ class WriteRequestBatch
     private function prepareCommands()
     {
         // Chunk the queue into batches
-        $batches = array_chunk($this->queue, $this->config['size']);
+        $batches = array_chunk($this->queue, $this->config['batch_size']);
         $this->queue = [];
 
         // Create BatchWriteItem commands for each batch

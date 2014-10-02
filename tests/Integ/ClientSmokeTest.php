@@ -29,22 +29,35 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
 
         // Execute the request and check if it behaved as intended.
         try {
+            // Execute the operation.
             $result = $client->execute($client->getCommand($operation, $params));
-            if (!$succeed) $this->fail("The {$operation} operation of the "
-                . "{$service} service was supposed to fail.");
+            if (!$succeed) {
+                $this->fail("The {$operation} operation of the {$service} "
+                    . "service was supposed to fail.");
+            }
+
+            // Examine the result.
             if ($value) {
+                // Ensure the presence of the specified key.
                 $this->assertArrayHasKey($value, $result);
             } else {
+                // OR... Ensure that the result is empty.
                 $this->assertEquals([], $result->toArray());
             }
         } catch (AwsException $e) {
-            if ($succeed) $this->fail("The {$operation} operation of the "
-                . "{$service} service was supposed to succeed.");
+            if ($succeed) {
+                $this->fail("The {$operation} operation of the {$service} "
+                    . "service was supposed to succeed.");
+            }
+
+            // The exception class should have the same namespace as the client.
             $this->assertStringStartsWith(
                 substr($class, 0, strrpos($class, '\\')),
                 get_class($e)
             );
-            // Look at the error code first, then the root exception class.
+
+            // Look at the error code first, then the root exception class, to
+            // see if it matches the value.
             $error = $e;
             while ($error->getPrevious()) $error = $error->getPrevious();
             $this->assertEquals(
@@ -53,11 +66,13 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
                 $e->getMessage()
             );
         } catch (\Exception $e) {
+            // If something other than an AwsException was thrown, then
+            // something really went wrong.
             $this->fail('An unexpected exception occurred: ' . get_class($e)
                 . ' - ' . $e->getMessage());
         }
 
-        // Make sure the request's host value is correct no matter the outcome.
+        // Ensure the request's host is correct no matter the outcome.
         $this->assertEquals($endpoint, $host);
     }
 
@@ -65,15 +80,15 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
     {
         return [
             /*[
-                service (used with Sdk::getClient())
-                class (actual class name of client)
-                options (client options, besides region, version, & credentials)
-                endpoint (the request host)
-                operation (service operation name)
-                params (parameters for the operation)
+                service (client to create `Sdk::getClient()`)
+                class (expected class name of instantiated client)
+                options (client options; besides region, version, & credentials)
+                endpoint (expected host of the request)
+                operation (service operation to execute)
+                params (parameters to use for the operation)
                 succeeds (bool - whether or not the request should succeed)
                 value (a key that should be present in the result
-                       OR... the error code in the case of failure)
+                       OR... the error code, in the case of failure)
             ],*/
             [
                 'autoscaling',

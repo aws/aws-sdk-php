@@ -17,7 +17,7 @@ class WriteRequestBatchTest extends \PHPUnit_Framework_TestCase
     public function testInstantiateWriteRequestBatch()
     {
         // Ensure threshold is correctly calculated
-        $batch = new WriteRequestBatch($this->getMockClient(), ['parallel' => 2]);
+        $batch = new WriteRequestBatch($this->getMockClient(), ['pool_size' => 2]);
         $this->assertEquals(
             50,
             $this->readAttribute($batch, 'config')['threshold']
@@ -25,7 +25,7 @@ class WriteRequestBatchTest extends \PHPUnit_Framework_TestCase
 
         // Ensure exception is thrown if batch size is invalid
         $this->setExpectedException('DomainException');
-        $batch = new WriteRequestBatch($this->getMockClient(), ['size' => 1]);
+        $batch = new WriteRequestBatch($this->getMockClient(), ['batch_size' => 1]);
     }
 
     public function testAddItems()
@@ -77,12 +77,10 @@ class WriteRequestBatchTest extends \PHPUnit_Framework_TestCase
         // Configure batch such so autoflush will happen for every 4 items.
         // The flush callback will keep track of how many flushed happen.
         $batch = new WriteRequestBatch($client, [
-            'size'     => 2,
-            'parallel' => 2,
-            'table'    => 'foo',
-            'flush'    => function() use (&$flushCount) {
-                $flushCount++;
-            }
+            'batch_size' => 2,
+            'pool_size'  => 2,
+            'table'      => 'foo',
+            'flush'      => function() use (&$flushCount) {$flushCount++;}
         ]);
 
         // Adding 5 items (Note: only 4 should be flushed)
