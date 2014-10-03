@@ -49,6 +49,7 @@ class S3Factory extends ClientFactory
         $emitter = $client->getEmitter();
         $emitter->attach(new BucketStyle());
         $emitter->attach(new PermanentRedirect());
+        $emitter->attach(new SSECListener());
         $emitter->attach(new PutObjectUrl());
         $emitter->attach(new SourceFile($client->getApi()));
         $emitter->attach(new ApplyMd5());
