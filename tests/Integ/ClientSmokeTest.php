@@ -160,38 +160,36 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
                 true,
                 'MetricAlarms'
             ],
-////////////////////////////////////////////////////////////////////////////////
-//            [
-//                'cloudwatchlogs',
-//                'Aws\\CloudWatchLogs\\CloudWatchLogsClient',
-//                [],
-//                'logs.us-east-1.amazonaws.com',
-//                'xx',
-//                [],
-//                true,
-//                'xx'
-//            ],
-//            [
-//                'cognitoidentity',
-//                'Aws\\CognitoIdentity\\CognitoIdentityClient',
-//                [],
-//                'cognito-identity.us-east-1.amazonaws.com',
-//                'xx',
-//                [],
-//                true,
-//                'xx'
-//            ],
-//            [
-//                'cognitosync',
-//                'Aws\\CognitoSync\\CognitoSyncClient',
-//                [],
-//                'cognito-sync.us-east-1.amazonaws.com',
-//                'xx',
-//                [],
-//                true,
-//                'xx'
-//            ],
-////////////////////////////////////////////////////////////////////////////////
+            [
+                'cloudwatchlogs',
+                'Aws\\CloudWatchLogs\\CloudWatchLogsClient',
+                [],
+                'logs.us-east-1.amazonaws.com',
+                'DescribeLogGroups',
+                [],
+                true,
+                'logGroups'
+            ],
+            [
+                'cognitoidentity',
+                'Aws\\CognitoIdentity\\CognitoIdentityClient',
+                [],
+                'cognito-identity.us-east-1.amazonaws.com',
+                'ListIdentityPools',
+                ['MaxResults' => 1],
+                true,
+                'IdentityPools'
+            ],
+            [
+                'cognitosync',
+                'Aws\\CognitoSync\\CognitoSyncClient',
+                [],
+                'cognito-sync.us-east-1.amazonaws.com',
+                'ListIdentityPoolUsage',
+                [],
+                true,
+                'IdentityPoolUsages'
+            ],
             [
                 'datapipeline',
                 'Aws\\DataPipeline\\DataPipelineClient',
@@ -362,18 +360,16 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
                 true,
                 'HostedZones'
             ],
-////////////////////////////////////////////////////////////////////////////////
-//            [
-//                'route53domains',
-//                'Aws\\Route53Domains\\Route53DomainsClient',
-//                [],
-//                'route53domains.us-east-1.amazonaws.com',
-//                'xx',
-//                [],
-//                true,
-//                'xx'
-//            ],
-////////////////////////////////////////////////////////////////////////////////
+            [
+                'route53domains',
+                'Aws\\Route53Domains\\Route53DomainsClient',
+                [],
+                'route53domains.us-east-1.amazonaws.com',
+                'ListDomains',
+                [],
+                true,
+                'Domains'
+            ],
             [
                 's3',
                 'Aws\\S3\\S3Client',

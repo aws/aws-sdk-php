@@ -10,8 +10,12 @@ use Aws\Common\ClientFactory;
  * @method \Aws\CloudFormation\CloudFormationClient getCloudFormation(array $args = [])
  * @method \Aws\CloudFront\CloudFrontClient getCloudFront(array $args = [])
  * @method \Aws\CloudSearch\CloudSearchClient getCloudSearch(array $args = [])
+ * @method \Aws\CloudSearchDomain\CloudSearchDomainClient getCloudSearchDomain(array $args = [])
  * @method \Aws\CloudTrail\CloudTrailClient getCloudTrail(array $args = [])
  * @method \Aws\CloudWatch\CloudWatchClient getCloudWatch(array $args = [])
+ * @method \Aws\CloudWatchLogs\CloudWatchLogsClient getCloudWatchLogs(array $args = [])
+ * @method \Aws\CognitoIdentity\CognitoIdentityClient getCognitoIdentity(array $args = [])
+ * @method \Aws\CognitoSync\CognitoSyncClient getCognitoSync(array $args = [])
  * @method \Aws\DataPipeline\DataPipelineClient getDataPipeline(array $args = [])
  * @method \Aws\DirectConnect\DirectConnectClient getDirectConnect(array $args = [])
  * @method \Aws\DynamoDb\DynamoDbClient getDynamoDb(array $args = [])
@@ -29,6 +33,7 @@ use Aws\Common\ClientFactory;
  * @method \Aws\Rds\RdsClient getRds(array $args = [])
  * @method \Aws\Redshift\RedshiftClient getRedshift(array $args = [])
  * @method \Aws\Route53\Route53Client getRoute53(array $args = [])
+ * @method \Aws\Route53Domains\Route53DomainsClient getRoute53Domains(array $args = [])
  * @method \Aws\S3\S3Client getS3(array $args = [])
  * @method \Aws\Ses\SesClient getSes(array $args = [])
  * @method \Aws\SimpleDb\SimpleDbClient getSimpleDb(array $args = [])
@@ -49,11 +54,14 @@ class Sdk
      * @var array
      */
     private static $aliases = [
-        'cloudwatch' => 'monitoring',
-        'elb'        => 'elasticloadbalancing',
-        'emr'        => 'elasticmapreduce',
-        'simpledb'   => 'sdb',
-        'ses'        => 'email',
+        'cloudwatch'      => 'monitoring',
+        'cloudwatchlogs'  => 'logs',
+        'cognitoidentity' => 'cognito-identity',
+        'cognitosync'     => 'cognito-sync',
+        'elb'             => 'elasticloadbalancing',
+        'emr'             => 'elasticmapreduce',
+        'simpledb'        => 'sdb',
+        'ses'             => 'email',
     ];
 
     /**
@@ -68,6 +76,8 @@ class Sdk
         'cloudsearch'          => 'CloudSearch',
         'cloudsearchdomain'    => 'CloudSearchDomain',
         'cloudtrail'           => 'CloudTrail',
+        'cognito-identity'     => 'CognitoIdentity',
+        'cognito-sync'         => 'CognitoSync',
         'datapipeline'         => 'DataPipeline',
         'directconnect'        => 'DirectConnect',
         'dynamodb'             => 'DynamoDb',
@@ -82,11 +92,13 @@ class Sdk
         'iam'                  => 'Iam',
         'importexport'         => 'ImportExport',
         'kinesis'              => 'Kinesis',
+        'logs'                 => 'CloudWatchLogs',
         'monitoring'           => 'CloudWatch',
         'opsworks'             => 'OpsWorks',
         'rds'                  => 'Rds',
         'redshift'             => 'Redshift',
         'route53'              => 'Route53',
+        'route53domains'       => 'Route53Domains',
         's3'                   => 'S3',
         'sdb'                  => 'SimpleDb',
         'sns'                  => 'Sns',

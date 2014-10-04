@@ -50,7 +50,7 @@ class FilesystemApiProvider implements ApiProviderInterface
         $results = [];
 
         foreach ($files as $f) {
-            $results[explode('-', str_replace($search, '', $f))[0]] = true;
+            $results[substr(str_replace($search, '', $f), 0, -11)] = true;
         }
 
         return array_keys($results);
@@ -65,7 +65,7 @@ class FilesystemApiProvider implements ApiProviderInterface
 
         foreach ($files as $f) {
             if (strpos($f, $needle) === 0) {
-                $results[] = explode('-', str_replace($search, '', $f), 2)[1];
+                $results[] = substr(str_replace($search, '', $f), strlen($needle));
             }
         }
 
