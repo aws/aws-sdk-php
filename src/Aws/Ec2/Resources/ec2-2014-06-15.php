@@ -20,7 +20,7 @@ return array (
     'serviceFullName' => 'Amazon Elastic Compute Cloud',
     'serviceAbbreviation' => 'Amazon EC2',
     'serviceType' => 'query',
-    'signatureVersion' => 'v2',
+    'signatureVersion' => 'v4',
     'namespace' => 'Ec2',
     'regions' => array(
         'us-east-1' => array(
@@ -10785,6 +10785,26 @@ return array (
                         'Value' => array(
                             'type' => 'boolean',
                             'sentAs' => 'value',
+                        ),
+                    ),
+                ),
+                'Groups' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'sentAs' => 'groupSet',
+                    'items' => array(
+                        'name' => 'item',
+                        'type' => 'object',
+                        'sentAs' => 'item',
+                        'properties' => array(
+                            'GroupName' => array(
+                                'type' => 'string',
+                                'sentAs' => 'groupName',
+                            ),
+                            'GroupId' => array(
+                                'type' => 'string',
+                                'sentAs' => 'groupId',
+                            ),
                         ),
                     ),
                 ),

@@ -25,7 +25,6 @@ use Guzzle\Service\Resource\Model;
  * @method Model putLogEvents(array $args = array()) {@command CloudWatchLogs PutLogEvents}
  * @method Model putMetricFilter(array $args = array()) {@command CloudWatchLogs PutMetricFilter}
  * @method Model putRetentionPolicy(array $args = array()) {@command CloudWatchLogs PutRetentionPolicy}
- * @method Model setRetention(array $args = array()) {@command CloudWatchLogs SetRetention}
  * @method Model testMetricFilter(array $args = array()) {@command CloudWatchLogs TestMetricFilter}
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-cloudwatchlogs.html User guide

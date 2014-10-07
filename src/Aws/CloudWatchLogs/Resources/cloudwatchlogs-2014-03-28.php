@@ -812,59 +812,6 @@ return array (
                 ),
             ),
         ),
-        'SetRetention' => array(
-            'httpMethod' => 'POST',
-            'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'EmptyOutput',
-            'responseType' => 'model',
-            'parameters' => array(
-                'Content-Type' => array(
-                    'static' => true,
-                    'location' => 'header',
-                    'default' => 'application/x-amz-json-1.1',
-                ),
-                'command.expects' => array(
-                    'static' => true,
-                    'default' => 'application/json',
-                ),
-                'X-Amz-Target' => array(
-                    'static' => true,
-                    'location' => 'header',
-                    'default' => 'Logs_20140328.SetRetention',
-                ),
-                'logGroupName' => array(
-                    'required' => true,
-                    'type' => 'string',
-                    'location' => 'json',
-                    'minLength' => 1,
-                    'maxLength' => 512,
-                ),
-                'retentionInDays' => array(
-                    'required' => true,
-                    'type' => 'numeric',
-                    'location' => 'json',
-                ),
-            ),
-            'errorResponses' => array(
-                array(
-                    'reason' => 'Returned if a parameter of the request is incorrectly specified.',
-                    'class' => 'InvalidParameterException',
-                ),
-                array(
-                    'reason' => 'Returned if the specified resource does not exist.',
-                    'class' => 'ResourceNotFoundException',
-                ),
-                array(
-                    'reason' => 'Returned if multiple requests to update the same resource were in conflict.',
-                    'class' => 'OperationAbortedException',
-                ),
-                array(
-                    'reason' => 'Returned if the service cannot complete the request.',
-                    'class' => 'ServiceUnavailableException',
-                ),
-            ),
-        ),
         'TestMetricFilter' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
