@@ -283,15 +283,11 @@ class AwsClient extends AbstractClient implements AwsClientInterface
     protected function createFutureResult(CommandTransaction $transaction)
     {
         return new FutureResult(
-            // Deref function derefs the response which populates the result.
-            function () use ($transaction) {
-                $transaction->response = $transaction->response->deref();
+            $transaction->response->then(function () use ($transaction) {
                 return $transaction->result;
-            },
-            // Cancel function just proxies to the response's cancel function.
-            function () use ($transaction) {
-                return $transaction->response->cancel();
-            }
+            }),
+            [$transaction->response, 'deref'],
+            [$transaction->response, 'cancel']
         );
     }
 

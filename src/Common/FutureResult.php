@@ -1,9 +1,8 @@
 <?php
 namespace Aws\Common;
 
-use GuzzleHttp\Ring\FutureInterface;
-use GuzzleHttp\Ring\MagicFutureTrait;
-use GuzzleHttp\Ring\Core;
+use GuzzleHttp\Ring\Future\FutureInterface;
+use GuzzleHttp\Ring\Future\MagicFutureTrait;
 
 /**
  * Future result that may not have finished.
@@ -14,84 +13,71 @@ class FutureResult implements ResultInterface, FutureInterface
 
     public function hasKey($name)
     {
-        return $this->result->hasKey($name);
+        return $this->_value->hasKey($name);
     }
 
     public function get($name)
     {
-        return $this->result->get($name);
+        return $this->_value->get($name);
     }
 
     public function getIterator()
     {
-        return $this->result->getIterator();
+        return $this->_value->getIterator();
     }
 
     public function offsetGet($offset)
     {
-        return $this->result->offsetGet($offset);
+        return $this->_value->offsetGet($offset);
     }
 
     public function offsetSet($offset, $value)
     {
-        $this->result->offsetSet($offset, $value);
+        $this->_value->offsetSet($offset, $value);
     }
 
     public function offsetExists($offset)
     {
-        return $this->result->offsetExists($offset);
+        return $this->_value->offsetExists($offset);
     }
 
     public function offsetUnset($offset)
     {
-        $this->result->offsetUnset($offset);
+        $this->_value->offsetUnset($offset);
     }
 
     public function toArray()
     {
-        return $this->result->toArray();
+        return $this->_value->toArray();
     }
 
     public function count()
     {
-        return $this->result->count();
+        return $this->_value->count();
     }
 
     public function getPath($path)
     {
-        return $this->result->getPath($path);
+        return $this->_value->getPath($path);
     }
 
     public function setPath($path, $value)
     {
-        $this->result->setPath($path, $value);
+        $this->_value->setPath($path, $value);
     }
 
     public function search($expression)
     {
-        return $this->result->search($expression);
+        return $this->_value->search($expression);
     }
 
     public function __toString()
     {
         try {
-            return (string) $this->result;
+            return (string) $this->_value;
         } catch (\Exception $e) {
             trigger_error($e->getMessage(), E_USER_WARNING);
             return '';
         }
-    }
-
-    protected function processResult($result)
-    {
-        if ($result instanceof ResultInterface) {
-            return $result;
-        } elseif (is_array($result)) {
-            return new Result($result);
-        }
-
-        throw new \RuntimeException('Future result must be an array. or '
-            . 'instance of GuzzleHttp\ToArrayInterface. Found '
-            . Core::describeType($result));
     }
 }
