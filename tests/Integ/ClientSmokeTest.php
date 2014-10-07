@@ -37,13 +37,11 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             }
 
             // Examine the result.
-            if ($value) {
+            if ($value !== null) {
                 // Ensure the presence of the specified key.
                 $this->assertArrayHasKey($value, $result);
-            } else {
-                // OR... Ensure that the result is empty.
-                $this->assertEquals([], $result->toArray());
             }
+
         } catch (AwsException $e) {
             if ($succeed) {
                 $this->fail("The {$operation} operation of the {$service} "
