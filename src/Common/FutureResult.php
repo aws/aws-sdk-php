@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Common;
 
+use GuzzleHttp\Ring\Core;
 use GuzzleHttp\Ring\Future\FutureInterface;
 use GuzzleHttp\Ring\Future\MagicFutureTrait;
 
@@ -9,7 +10,21 @@ use GuzzleHttp\Ring\Future\MagicFutureTrait;
  */
 class FutureResult implements ResultInterface, FutureInterface
 {
-    use MagicFutureTrait;
+    use MagicFutureTrait {
+        MagicFutureTrait::wait as parentWait;
+    }
+
+    public function wait()
+    {
+        $result = $this->parentWait();
+
+        if (!$result instanceof ResultInterface) {
+            throw new \RuntimeException('Expected a ResultInterface. Found '
+                . Core::describeType($result));
+        }
+
+        return $result;
+    }
 
     public function hasKey($name)
     {

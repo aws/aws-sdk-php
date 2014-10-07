@@ -286,7 +286,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
             $transaction->response->then(function () use ($transaction) {
                 return $transaction->result;
             }),
-            [$transaction->response, 'deref'],
+            [$transaction->response, 'wait'],
             [$transaction->response, 'cancel']
         );
     }

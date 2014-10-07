@@ -3,6 +3,7 @@ namespace Aws\Test\Common;
 
 use Aws\Common\FutureResult;
 use Aws\Common\Result;
+use React\Promise\FulfilledPromise;
 
 /**
  * @covers Aws\Common\FutureResult
@@ -11,45 +12,25 @@ class ResultModelTest extends \PHPUnit_Framework_TestCase
 {
     public function testHasData()
     {
-        $called = false;
-        $c = new FutureResult(function () use (&$called) {
-            $called = true;
-            return ['a' => 1];
-        });
-        $this->assertFalse($called);
-        $this->assertEquals(['a' => 1], $c->deref()->toArray());
-        $this->assertTrue($called);
-    }
-
-    public function testCatchesExceptionInToString()
-    {
-        $c = new FutureResult(function () use (&$called) {
-            return null;
-        });
-        $output = '';
-        set_error_handler(function () use (&$output) {
-            $output = func_get_args()[1];
-        });
-        echo $c;
-        restore_error_handler();
-        $this->assertContains('Found NULL', $output);
+        $c = new FutureResult(new FulfilledPromise(new Result(['a' => 1])));
+        $this->assertEquals(['a' => 1], $c->wait()->toArray());
     }
 
     public function testResultCanBeToArray()
     {
-        $c = new FutureResult(function () use (&$called) {
-            return new Result(['foo' => 'bar']);
-        });
-        $c->deref();
+        $c = new FutureResult(new FulfilledPromise(new Result(['foo' => 'bar'])));
+        $c->wait();
         $this->assertEquals('bar', $c['foo']);
         $this->assertEquals(1, count($c));
     }
 
     public function testResultCanBeSearched()
     {
-        $c = new FutureResult(function () {
-            return new Result(['foo' => ['bar' => 'baz']]);
-        });
+        $c = new FutureResult(
+            new FulfilledPromise(
+                new Result(['foo' => ['bar' => 'baz']])
+            )
+        );
         $this->assertEquals('baz', $c->search('foo.bar'));
     }
 
@@ -58,15 +39,13 @@ class ResultModelTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidatesResult()
     {
-        $c = new FutureResult(function () use (&$called) {
-            return true;
-        });
-        $c->deref();
+        $c = new FutureResult(new FulfilledPromise('foo'));
+        $c->wait();
     }
 
     public function testProxiesToUnderlyingData()
     {
-        $c = new FutureResult(function () { return ['a' => 1]; });
+        $c = new FutureResult(new FulfilledPromise(new Result(['a' => 1])));
         $this->assertEquals(1, count($c));
         $this->assertEquals(['a' => 1], $c->toArray());
         $this->assertEquals(['a' => 1], $c->getIterator()->getArrayCopy());
@@ -89,7 +68,7 @@ class ResultModelTest extends \PHPUnit_Framework_TestCase
      */
     public function testThrowsWhenPropertyInvalid()
     {
-        $c = new FutureResult(function () { return ['a' => 1]; });
+        $c = new FutureResult(new FulfilledPromise(new Result(['a' => 1])));
         $c->notThere;
     }
 
@@ -98,7 +77,7 @@ class ResultModelTest extends \PHPUnit_Framework_TestCase
      */
     public function testThrowsWhenAccessingCancelledFuture()
     {
-        $c = new FutureResult(function () {});
+        $c = new FutureResult(new FulfilledPromise(new Result([])));
         $c->cancel();
         $c['foo'];
     }
