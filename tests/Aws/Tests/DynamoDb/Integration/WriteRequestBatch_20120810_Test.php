@@ -98,11 +98,10 @@ class WriteRequestBatch_20120810_Test extends \Aws\Tests\IntegrationTestCase
         $putBatch = WriteRequestBatch::factory($client);
         for ($i = 0; $i < 55; $i++) {
             $itemIds[] = $itemId = uniqid();
-            $item = Item::fromArray(array(
-                'id'        => $itemId,
-                'timestamp' => time(),
-            ));
-            $putBatch->add(new PutRequest($item, $tableName));
+            $putBatch->add(new PutRequest(array(
+                'id'        => array('S' => $itemId),
+                'timestamp' => array('N' => (string) time()),
+            ), $tableName));
         }
         $putBatch->flush();
         // @end

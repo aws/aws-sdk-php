@@ -21,8 +21,12 @@ use Guzzle\Common\Collection;
 use Guzzle\Common\ToArrayInterface;
 
 /**
- * Converts items to a simple associative array form with type information removed. Also performs base64_decode on
- * values specified as binary. Each item is yielded as an array-accessible Collection object
+ * Converts items to a simple associative array form with type information
+ * removed. Also performs base64_decode on values specified as binary. Each item
+ * is yielded as an array-accessible Collection object.
+ *
+ * @deprecated The new DynamoDB document model, including the new types (L, M,
+ *             BOOL, NULL), is not supported by this class.
  */
 class ItemIterator extends \IteratorIterator implements \Countable, ToArrayInterface
 {

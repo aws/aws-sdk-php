@@ -20,33 +20,32 @@ use Aws\DynamoDb\Model\BatchRequest\PutRequest;
 use Aws\DynamoDb\Model\Item;
 
 /**
- * @covers Aws\DynamoDb\Model\BatchRequest\PutRequest
+ * @covers \Aws\DynamoDb\Model\BatchRequest\PutRequest
  */
 class PutRequestTest extends \Guzzle\Tests\GuzzleTestCase
 {
     public function testConstructorSetsValues()
     {
-        $item = $this->getMock('Aws\DynamoDb\Model\Item');
-
+        // Instantiate with Item object.
+        $item = new Item(['id' => ['S' => 'foo']]);
         $putRequest = new PutRequest($item, 'table');
+        $this->assertEquals($item->toArray(), $putRequest->getItem()->toArray());
 
-        $this->assertSame($item, $putRequest->getItem());
+        // Instantiate with item array.
+        $item = ['id' => ['S' => 'foo']];
+        $putRequest = new PutRequest(['id' => ['S' => 'foo']], 'table');
+        $this->assertEquals($item, $putRequest->getItem()->toArray());
     }
 
     public function testConstructorSetsValuesWhenItemContainsTable()
     {
-        $item = $this->getMock('Aws\DynamoDb\Model\Item');
-        $item->expects($this->any())
-            ->method('getTableName')
-            ->will($this->returnValue('table'));
-
+        $item = new Item(['id' => ['S' => 'foo']], 'table');
         $putRequest = new PutRequest($item);
-
-        $this->assertSame($item, $putRequest->getItem());
+        $this->assertSame($item->toArray(), $putRequest->getItem()->toArray());
     }
 
     /**
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
      */
     public function testConstructorThrowsExceptionWithoutTable()
     {

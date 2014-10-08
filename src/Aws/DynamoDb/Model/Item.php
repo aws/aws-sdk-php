@@ -20,6 +20,9 @@ use Guzzle\Common\ToArrayInterface;
 
 /**
  * Amazon DynamoDB item model
+ *
+ * @deprecated The new DynamoDB document model, including the new types (L, M,
+ *             BOOL, NULL), is not supported by this class.
  */
 class Item implements \ArrayAccess, \IteratorAggregate, ToArrayInterface, \Countable
 {

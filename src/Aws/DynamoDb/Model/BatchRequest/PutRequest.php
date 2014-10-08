@@ -26,7 +26,7 @@ use Guzzle\Service\Command\AbstractCommand;
 class PutRequest extends AbstractWriteRequest
 {
     /**
-     * @var Item The item to be inserted into the DynamoDB table
+     * @var array The item to be inserted into the DynamoDB table
      */
     protected $item;
 
@@ -49,11 +49,6 @@ class PutRequest extends AbstractWriteRequest
         $table = $command->get('TableName');
         $item  = $command->get('Item');
 
-        // Create an Item object from the 'item' command data
-        if (!($item instanceof Item)) {
-            $item = new Item($item, $table);
-        }
-
         // Return an instantiated PutRequest object
         return new PutRequest($item, $table);
     }
@@ -61,15 +56,22 @@ class PutRequest extends AbstractWriteRequest
     /**
      * Constructs a new put request
      *
-     * @param Item   $item      The item to put into DynamoDB
-     * @param string $tableName The name of the table which has the item
+     * @param array|Item $item      The item to put into DynamoDB
+     * @param string     $tableName The name of the table which has the item
      *
      * @throw InvalidArgumentException if the table name is not provided
      */
-    public function __construct(Item $item, $tableName = null)
+    public function __construct($item, $tableName = null)
     {
-        $this->item      = $item;
-        $this->tableName = $tableName ?: $item->getTableName();
+        if ($item instanceof Item) {
+            $this->item = $item->toArray();
+            $this->tableName = $tableName ?: $item->getTableName();
+        } elseif (is_array($item)) {
+            $this->item = $item;
+            $this->tableName = $tableName;
+        } else {
+            throw new InvalidArgumentException('The item must be an array or an Item object.');
+        }
 
         if (!$this->tableName) {
             throw new InvalidArgumentException('A table name is required to create a PutRequest.');
@@ -83,7 +85,7 @@ class PutRequest extends AbstractWriteRequest
      */
     public function toArray()
     {
-        return array('PutRequest' => array('Item' => $this->item->toArray()));
+        return array('PutRequest' => array('Item' => $this->item));
     }
 
     /**
@@ -93,6 +95,6 @@ class PutRequest extends AbstractWriteRequest
      */
     public function getItem()
     {
-        return $this->item;
+        return new Item($this->item);
     }
 }

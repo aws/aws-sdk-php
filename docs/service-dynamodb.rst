@@ -73,11 +73,6 @@ You can add an item to our *errors* table using the
 `putItem() <http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.DynamoDb.DynamoDbClient.html#_putItem>`_
 method of the client.
 
-.. example:: DynamoDb/Integration/DynamoDb_20120810_Test.php testAddItem
-
-As you can see, the ``formatAttributes()`` method of the client can be used to more easily format the attributes of the
-item. Alternatively, you can provide the item attributes without using the helper method:
-
 .. example:: DynamoDb/Integration/DynamoDb_20120810_Test.php testAddItemWithoutHelperMethod
 
 You can also add items in batches of up to 25 items using the `BatchWriteItem()

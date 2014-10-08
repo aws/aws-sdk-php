@@ -134,6 +134,8 @@ class DynamoDbClient extends AbstractClient
      * @param string $format The type of format (e.g. put, update).
      *
      * @return array The formatted value.
+     * @deprecated The new DynamoDB document model, including the new types
+     *             (L, M, BOOL, NULL), is not supported by this method.
      */
     public function formatValue($value, $format = Attribute::FORMAT_PUT)
     {
@@ -147,6 +149,8 @@ class DynamoDbClient extends AbstractClient
      * @param string $format The type of format (e.g. put, update).
      *
      * @return array The formatted values.
+     * @deprecated The new DynamoDB document model, including the new types
+     *             (L, M, BOOL, NULL), is not supported by this method.
      */
     public function formatAttributes(array $values, $format = Attribute::FORMAT_PUT)
     {

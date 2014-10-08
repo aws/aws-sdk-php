@@ -256,6 +256,9 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
             )
         ));
 
+        // The result will always contain ConsumedCapacityUnits
+        echo $result->getPath('ConsumedCapacity/CapacityUnits') . "\n";
+
         // @end
         return $time;
     }

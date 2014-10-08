@@ -23,6 +23,9 @@ use Guzzle\Common\ToArrayInterface;
 /**
  * Class representing a DynamoDB item attribute. Contains helpers for building
  * attributes and arrays of attributes.
+ *
+ * @deprecated The new DynamoDB document model, including the new types (L, M,
+ *             BOOL, NULL), is not supported by this class.
  */
 class Attribute implements ToArrayInterface
 {
