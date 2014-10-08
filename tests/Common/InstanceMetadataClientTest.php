@@ -67,37 +67,4 @@ class InstanceMetadataClientTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(2, $history);
         $this->assertCount(0, $mock);
     }
-
-    /**
-     * @expectedException \RuntimeException
-     */
-    public function testWaitsUntilRunningWithError()
-    {
-        $client = $this->getMockBuilder('GuzzleHttp\ClientInterface')
-            ->setMethods(['get'])
-            ->getMockForAbstractClass();
-
-        $client->expects($this->exactly(1))
-            ->method('get')
-            ->with('')
-            ->will($this->throwException(new \Exception('Error')));
-
-        $c = new InstanceMetadataClient($client);
-        $c->waitUntilRunning(1);
-    }
-
-    public function testWaitsUntilRunning()
-    {
-        $client = $this->getMockBuilder('GuzzleHttp\ClientInterface')
-            ->setMethods(['get'])
-            ->getMockForAbstractClass();
-
-        $client->expects($this->exactly(1))
-            ->method('get')
-            ->with('')
-            ->will($this->returnValue(new Response(200)));
-
-        $c = new InstanceMetadataClient($client);
-        $c->waitUntilRunning(1);
-    }
 }

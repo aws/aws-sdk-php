@@ -31,31 +31,6 @@ class InstanceMetadataClient
     }
 
     /**
-     * Wait until the instance metadata server is responding to requests.
-     *
-     * @param int $maxWait Approximate maximum number of seconds to wait
-     */
-    public function waitUntilRunning($maxWait = 120)
-    {
-        // Calculate the approximate amount of max retries.
-        $maxAttempts = max(1, (max(1, $maxWait) / 11));
-
-        $waiter = new Waiter(function () {
-            try {
-                $this->client->get('', [
-                    'timeout'         => 10,
-                    'connect_timeout' => 10
-                ]);
-                return true;
-            } catch (\Exception $e) {
-                return false;
-            }
-        }, ['interval' => 0, 'max_attempts' => $maxAttempts]);
-
-        $waiter->wait();
-    }
-
-    /**
      * Get a specific data point from the instance metadata server.
      *
      * @param string $path Instance metadata path to retrieve
