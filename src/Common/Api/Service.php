@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Common\Api;
 
-use Aws\Common\Api\Provider\ApiProviderInterface;
 use Aws\Common\Api\Serializer\QuerySerializer;
 use Aws\Common\Api\Serializer\Ec2ParamBuilder;
 use Aws\Common\Api\Parser\QueryParser;
@@ -11,7 +10,7 @@ use Aws\Common\Api\Parser\QueryParser;
  */
 class Service extends AbstractModel
 {
-    /** @var ApiProviderInterface */
+    /** @var callable */
     private $apiProvider;
 
     /** @var string */
@@ -30,27 +29,23 @@ class Service extends AbstractModel
     private $waiters = [];
 
     /**
-     * @param ApiProviderInterface $apiProvider
-     * @param string               $serviceName
-     * @param string               $apiVersion
-     * @param array                $options Hash of options
+     * @param callable $apiProvider
+     * @param string   $serviceName
+     * @param string   $apiVersion
+     * @param array    $options     Hash of options
      *
      * @internal param array $definition Service description
      */
     public function __construct(
-        ApiProviderInterface $apiProvider,
+        callable $apiProvider,
         $serviceName,
         $apiVersion,
         array $options = []
     ) {
+        $definition = $apiProvider('api', $serviceName, $apiVersion);
         $this->apiProvider = $apiProvider;
         $this->serviceName = $serviceName;
         $this->apiVersion = $apiVersion;
-
-        $definition = $this->apiProvider->getService(
-            $this->serviceName,
-            $this->apiVersion
-        );
 
         if (!isset($definition['operations'])) {
             $definition['operations'] = [];
@@ -289,7 +284,9 @@ class Service extends AbstractModel
         ];
 
         if (!$this->paginators) {
-            $this->paginators = $this->apiProvider->getServicePaginatorConfig(
+            $this->paginators = call_user_func(
+                $this->apiProvider,
+                'paginator',
                 $this->serviceName,
                 $this->apiVersion
             )['pagination'];
@@ -306,7 +303,9 @@ class Service extends AbstractModel
     public function getWaiterConfig($name)
     {
         if (!$this->waiters) {
-            $this->waiters = $this->apiProvider->getServiceWaiterConfig(
+            $this->waiters = call_user_func(
+                $this->apiProvider,
+                'waiter',
                 $this->serviceName,
                 $this->apiVersion
             )['waiters'];

@@ -13,17 +13,13 @@ class CachingApiProviderTest extends \PHPUnit_Framework_TestCase
     {
         $p = new FilesystemApiProvider(__DIR__ . '/api_provider_fixtures');
         $c = new CachingApiProvider($p);
-        $this->assertEquals($p->getServiceNames(), $c->getServiceNames());
-        $this->assertEquals(
-            $p->getServiceVersions('ec2'),
-            $c->getServiceVersions('ec2')
-        );
+        $this->assertSame($c('api', 'ec2', 'latest'), $c('api', 'ec2', 'latest'));
     }
 
     /**
      * @expectedException \InvalidArgumentException
      */
-    public function testEnsuresCacheDirectoryIsValide()
+    public function testEnsuresCacheDirectoryIsValid()
     {
         $p = new FilesystemApiProvider(__DIR__ . '/api_provider_fixtures');
         new CachingApiProvider($p, false);
@@ -36,41 +32,26 @@ class CachingApiProviderTest extends \PHPUnit_Framework_TestCase
         $c = new CachingApiProvider($p, $d);
         $this->assertTrue(is_dir($d));
 
-        $this->assertInternalType(
-            'array',
-            $c->getService('dynamodb', 'latest')
-        );
-        $this->assertTrue(file_exists($d . '/getservice_dynamodb_latest.php'));
-
+        $this->assertInternalType('array', $c('api', 'dynamodb', 'latest'));
+        $this->assertTrue(file_exists($d . '/api_dynamodb_latest.php'));
         // Get from cache
-        $this->assertInternalType(
-            'array',
-            $c->getService('dynamodb', 'latest')
-        );
-
-        $this->assertInternalType(
-            'array',
-            $c->getServicePaginatorConfig('dynamodb', 'latest')
-        );
+        $this->assertInternalType('array', $c('api', 'dynamodb', 'latest'));
+        $this->assertInternalType('array', $c('paginator', 'dynamodb', 'latest'));
         $this->assertTrue(
-            file_exists($d . '/getservicepaginatorconfig_dynamodb_latest.php')
+            file_exists($d . '/paginator_dynamodb_latest.php')
         );
-
-        $this->assertInternalType(
-            'array',
-            $c->getServiceWaiterConfig('dynamodb', 'latest')
-        );
+        $this->assertInternalType('array', $c('waiter', 'dynamodb', 'latest'));
         $this->assertTrue(
-            file_exists($d . '/getservicewaiterconfig_dynamodb_latest.php')
+            file_exists($d . '/waiter_dynamodb_latest.php')
         );
 
         $c->clearCache();
-        $this->assertFalse(file_exists($d . '/getservice_dynamodb_latest.php'));
+        $this->assertFalse(file_exists($d . '/api_dynamodb_latest.php'));
         $this->assertFalse(
-            file_exists($d . '/getservicepaginatorconfig_dynamodb_latest.php')
+            file_exists($d . '/paginator_dynamodb_latest.php')
         );
         $this->assertFalse(
-            file_exists($d . '/getservicewaiter_dynamodb_latest.php')
+            file_exists($d . '/api_dynamodb_latest.php')
         );
 
         rmdir($d);

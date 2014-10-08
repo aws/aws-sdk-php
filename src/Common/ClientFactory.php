@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Common;
 
-use Aws\Common\Api\Provider\ApiProviderInterface;
 use Aws\Common\Api\Provider\FilesystemApiProvider;
 use Aws\Common\Api\Service;
 use Aws\Common\Api\Validator;
@@ -384,9 +383,8 @@ class ClientFactory
 
     private function handle_api_provider($value, array &$args)
     {
-        if (!($value instanceof ApiProviderInterface)) {
-            throw new \InvalidArgumentException('api_provider must be an '
-                . 'instance of Aws\Common\Api\Provider\ApiProviderInterface');
+        if (!is_callable($value)) {
+            throw new \InvalidArgumentException('api_provider must be callable');
         }
 
         $api = new Service($value, $args['service'], $args['version']);

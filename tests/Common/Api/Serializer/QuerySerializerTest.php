@@ -2,6 +2,7 @@
 namespace Aws\Test\Common\Api\Serializer;
 
 use Aws\Common\Api\Serializer\QuerySerializer;
+use Aws\Common\Api\Service;
 use GuzzleHttp\Command\Command;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Client;
@@ -16,23 +17,25 @@ class QuerySerializerTest extends \PHPUnit_Framework_TestCase
 
     public function testSerializesEmptyLists()
     {
-        $service = $this->createServiceApi([
-            'metadata'=> ['protocol' => 'query', 'apiVersion' => '1'],
-            'operations' => [
-                'foo' => [
-                    'http' => ['httpMethod' => 'POST'],
-                    'input' => [
-                        'type' => 'structure',
-                        'members' => [
-                            'baz' => [
-                                'type' => 'list',
-                                'member' => ['type' => 'string']
+        $service = new Service(function () {
+            return [
+                'metadata'=> ['protocol' => 'query', 'apiVersion' => '1'],
+                'operations' => [
+                    'foo' => [
+                        'http' => ['httpMethod' => 'POST'],
+                        'input' => [
+                            'type' => 'structure',
+                            'members' => [
+                                'baz' => [
+                                    'type' => 'list',
+                                    'member' => ['type' => 'string']
+                                ]
                             ]
                         ]
                     ]
                 ]
-            ]
-        ]);
+            ];
+        }, 'service', 'region');
 
         $http = new Client();
 

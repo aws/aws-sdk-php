@@ -105,16 +105,13 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
     public function testValidatesErrorParser()
     {
         $f = new ClientFactory();
-        $p = $this->getMockBuilder('Aws\Common\Api\Provider\ApiProviderInterface')
-            ->setMethods(['getService'])
-            ->getMockForAbstractClass();
-        $p->expects($this->once())
-            ->method('getService')
-            ->will($this->returnValue(['metadata' => ['protocol' => 'foo']]));
+        $provider = function () {
+            return ['metadata' => ['protocol' => 'foo']];
+        };
         $f->create([
             'service'      => 'dynamodb',
             'region'       => 'x',
-            'api_provider' => $p,
+            'api_provider' => $provider,
             'version'      => 'latest'
         ]);
     }
@@ -208,7 +205,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage api_provider must be an instance of Aws\Common\Api\Provider\ApiProviderInterface
+     * @expectedExceptionMessage api_provider must be callable
      */
     public function testValidatesApiProvider()
     {

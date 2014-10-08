@@ -129,9 +129,14 @@ trait UsesServiceTrait
 
         $client->expects($this->any())
             ->method('getApi')
-            ->will($this->returnValue($this->createServiceApi(['metadata' => [
-                'endpointPrefix' => 'foo'
-            ]])));
+            ->will($this->returnValue(
+                new Service(
+                    function () {
+                        return ['metadata' => ['endpointPrefix' => 'foo']];
+                    },
+                    'service',
+                    'version'
+                )));
 
         $trans = new CommandTransaction(
             $client,
@@ -145,15 +150,5 @@ trait UsesServiceTrait
         );
 
         return new $type($message ?: 'Test error', $trans);
-    }
-
-    private function createServiceApi(array $serviceData = [], &$api = null)
-    {
-        $api = $this->getMock('Aws\Common\Api\Provider\ApiProviderInterface');
-        $api->expects($this->any())
-            ->method('getService')
-            ->willReturn($serviceData);
-
-        return new Service($api, 'service', 'region');
     }
 }

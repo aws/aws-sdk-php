@@ -9,28 +9,26 @@ namespace Aws\Common\Api\Provider;
  * on disk. This allows PHP applications using an OPcode cache to store the
  * data in memory and not need to cache the script on each request.
  */
-class CachingApiProvider implements ApiProviderInterface
+class CachingApiProvider
 {
     /** @var string */
     private $cacheDir;
 
-    /** @var ApiProviderInterface */
+    /** @var callable */
     private $provider;
 
     /**
-     * @param ApiProviderInterface $provider Provider to wrap
-     * @param string|bool          $cacheDir Path to where the compiled PHP
-     *                                       scripts are stored on disk. Pass
-     *                                       true to store the files in the
-     *                                       system's temp directory.
+     * @param callable    $provider Provider to wrap
+     * @param string|bool $cacheDir Path to where the compiled PHP scripts are
+     *                              stored on disk. Pass true to store the
+     *                              files in the system's temp directory.
+     *
      * @throws \RuntimeException if the cache directory cannot be found and
      *                           it cannot be created.
      * @throws \InvalidArgumentException
      */
-    public function __construct(
-        ApiProviderInterface $provider,
-        $cacheDir = true
-    ) {
+    public function __construct(callable $provider, $cacheDir = true)
+    {
         $this->provider = $provider;
 
         if ($cacheDir === true) {
@@ -46,29 +44,20 @@ class CachingApiProvider implements ApiProviderInterface
         }
     }
 
-    public function getServiceNames()
+    public function __invoke($type, $service, $version)
     {
-        return $this->provider->getServiceNames();
-    }
+        $filename = $this->cacheDir . '/'
+            . strtolower($type) . '_' . $service . '_' . $version . '.php';
 
-    public function getServiceVersions($service)
-    {
-        return $this->provider->getServiceVersions($service);
-    }
+        if (file_exists($filename)) {
+            return require $filename;
+        }
 
-    public function getService($service, $version)
-    {
-        return $this->getCache('getService', $service, $version);
-    }
+        $data = call_user_func($this->provider, $type, $service, $version);
+        // Save the file to the cache directory as PHP code
+        file_put_contents($filename, '<?php return ' . var_export($data, true) . ';');
 
-    public function getServicePaginatorConfig($service, $version)
-    {
-        return $this->getCache('getServicePaginatorConfig', $service, $version);
-    }
-
-    public function getServiceWaiterConfig($service, $version)
-    {
-        return $this->getCache('getServiceWaiterConfig', $service, $version);
+        return $data;
     }
 
     /**
@@ -89,25 +78,5 @@ class CachingApiProvider implements ApiProviderInterface
                 throw new \RuntimeException("Unable to delete file: {$file}");
             }
         }
-    }
-
-    private function getCache($method, $service, $version)
-    {
-        $filename = $this->cacheDir . '/'
-            . strtolower($method) . '_' . $service . '_' . $version . '.php';
-
-        if (file_exists($filename)) {
-            return require $filename;
-        }
-
-        $data = $this->provider->{$method}($service, $version);
-
-        // Save the file to the cache directory as PHP code
-        file_put_contents(
-            $filename,
-            '<?php return ' . var_export($data, true) . ';'
-        );
-
-        return $data;
     }
 }

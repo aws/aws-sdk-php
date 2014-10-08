@@ -21,52 +21,54 @@ class ResourceWaiterTest extends \PHPUnit_Framework_TestCase
         \Aws\Common\Waiter\usleep(0);
 
         // Mock the API provider
-        $apiProvider = $this->getMock('Aws\Common\Api\Provider\ApiProviderInterface');
-        $apiProvider->expects($this->any())
-            ->method('getService')
-            ->will($this->returnValue([
-                'operations' => [
-                    'DescribeTable' => ['input' => []],
-                ],
-                'metadata' => [
-                    'protocol' => 'json',
-                    'signatureVersion' => 'v4'
-                ],
-            ]));
-        $apiProvider->expects($this->any())
-            ->method('getServiceWaiterConfig')
-            ->will($this->returnValue(['waiters' => [
-                'TableExists' => [
-                    'interval'      => 1,
-                    'max_attempts'  => 5,
-                    'operation'     => 'DescribeTable',
-                    'ignore_errors' => ['ResourceNotFoundException'],
-                    'success_type'  => 'output',
-                    'success_path'  => 'Table.TableStatus',
-                    'success_value' => 'ACTIVE',
-                ],
-                'TableNotExists' => [
-                    'interval'      => 1,
-                    'max_attempts'  => 5,
-                    'operation'     => 'DescribeTable',
-                    'success_type'  => 'error',
-                    'success_value' => 'ResourceNotFoundException',
-                ],
-                'TableOutput' => [
-                    'interval'      => 1,
-                    'max_attempts'  => 5,
-                    'operation'     => 'DescribeTable',
-                    'success_type'  => 'output',
-                ],
-                'TableFail' => [
-                    'interval'      => 1,
-                    'max_attempts'  => 5,
-                    'operation'     => 'DescribeTable',
-                    'failure_type'  => 'output',
-                    'failure_path'  => 'Table.TableStatus',
-                    'failure_value' => 'DELETING',
-                ]
-            ]]));
+        $apiProvider = function ($type) {
+            if ($type == 'api') {
+                return [
+                    'operations' => [
+                        'DescribeTable' => ['input' => []],
+                    ],
+                    'metadata' => [
+                        'protocol' => 'json',
+                        'signatureVersion' => 'v4'
+                    ],
+                ];
+            } else {
+                return [
+                    'waiters' => [
+                        'TableExists' => [
+                            'interval'      => 1,
+                            'max_attempts'  => 5,
+                            'operation'     => 'DescribeTable',
+                            'ignore_errors' => ['ResourceNotFoundException'],
+                            'success_type'  => 'output',
+                            'success_path'  => 'Table.TableStatus',
+                            'success_value' => 'ACTIVE',
+                        ],
+                        'TableNotExists' => [
+                            'interval'      => 1,
+                            'max_attempts'  => 5,
+                            'operation'     => 'DescribeTable',
+                            'success_type'  => 'error',
+                            'success_value' => 'ResourceNotFoundException',
+                        ],
+                        'TableOutput' => [
+                            'interval'      => 1,
+                            'max_attempts'  => 5,
+                            'operation'     => 'DescribeTable',
+                            'success_type'  => 'output',
+                        ],
+                        'TableFail' => [
+                            'interval'      => 1,
+                            'max_attempts'  => 5,
+                            'operation'     => 'DescribeTable',
+                            'failure_type'  => 'output',
+                            'failure_path'  => 'Table.TableStatus',
+                            'failure_value' => 'DELETING',
+                        ]
+                    ]
+                ];
+            }
+        };
 
         // Prepare a client
         $client = $this->getTestClient('dynamodb', ['api_provider' => $apiProvider]);

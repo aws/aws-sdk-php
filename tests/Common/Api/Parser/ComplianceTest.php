@@ -32,13 +32,15 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
             foreach ($data as $suite) {
                 $suite['metadata']['type'] = $suite['metadata']['protocol'];
                 foreach ($suite['cases'] as $case) {
-                    $description = $this->createServiceApi([
-                        'metadata'   => $suite['metadata'],
-                        'shapes'     => $suite['shapes'],
-                        'operations' => [
-                            $case['given']['name'] => $case['given']
-                        ]
-                    ]);
+                    $description = new Service(function () use ($suite, $case) {
+                        return [
+                            'metadata'   => $suite['metadata'],
+                            'shapes'     => $suite['shapes'],
+                            'operations' => [
+                                $case['given']['name'] => $case['given']
+                            ]
+                        ];
+                    }, 'service', 'version');
                     $cases[] = [
                         $file . ': ' . $suite['description'],
                         $description,

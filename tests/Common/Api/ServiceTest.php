@@ -13,14 +13,16 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testSetsDefaultValues()
     {
-        $s = $this->createServiceApi();
+        $s = new Service(function () {}, '', '');
         $this->assertSame([], $s['operations']);
         $this->assertSame([], $s['shapes']);
     }
 
     public function testImplementsArrayAccess()
     {
-        $s = $this->createServiceApi(['metadata' => ['foo' => 'bar']]);
+        $s = new Service(function () {
+            return ['metadata' => ['foo' => 'bar']];
+        }, '', '');
         $this->assertSame(['foo' => 'bar'], $s['metadata']);
         $this->assertNull($s['missing']);
         $s['abc'] = '123';
@@ -30,13 +32,15 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testReturnsApiData()
     {
-        $s = $this->createServiceApi(['metadata' => [
-            'serviceFullName' => 'foo',
-            'endpointPrefix' => 'bar',
-            'apiVersion' => 'baz',
-            'signingName' => 'qux',
-            'protocol' => 'yak',
-        ]]);
+        $s = new Service(function () {
+            return ['metadata' => [
+                'serviceFullName' => 'foo',
+                'endpointPrefix' => 'bar',
+                'apiVersion' => 'baz',
+                'signingName' => 'qux',
+                'protocol' => 'yak',
+            ]];
+        }, '', '');
         $this->assertEquals('foo', $s->getServiceFullName());
         $this->assertEquals('bar', $s->getEndpointPrefix());
         $this->assertEquals('baz', $s->getApiVersion());
@@ -46,7 +50,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testReturnsMetadata()
     {
-        $s = $this->createServiceApi();
+        $s = new Service(function () {}, '', '');
         $this->assertSame([], $s->getMetadata());
         $s['metadata'] = [
             'serviceFullName' => 'foo',
@@ -59,7 +63,9 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testReturnsIfOperationExists()
     {
-        $s = $this->createServiceApi(['operations' => ['foo' => ['input' => []]]]);
+        $s = new Service(function () {
+            return ['operations' => ['foo' => ['input' => []]]];
+        }, '', '');
         $this->assertTrue($s->hasOperation('foo'));
         $this->assertInstanceOf('Aws\Common\Api\Operation', $s->getOperation('foo'));
         $this->assertArrayHasKey('foo', $s->getOperations());
@@ -70,7 +76,8 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testEnsuresOperationExists()
     {
-        $this->createServiceApi()->getOperation('foo');
+        $s = new Service(function () {}, '', '');
+        $s->getOperation('foo');
     }
 
     public function testCanRetrievePaginationConfig()
@@ -84,11 +91,9 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         ];
 
         // Stub out the API provider
-        $service = $this->createServiceApi([], $apiProvider);
-        $apiProvider->expects($this->any())
-            ->method('getServicePaginatorConfig')
-            ->will($this->returnValue(['pagination' => ['foo' => $expected]]));
-
+        $service = new Service(function () use ($expected) {
+            return ['pagination' => ['foo' => $expected]];
+        }, '', '');
         $actual = $service->getPaginatorConfig('foo');
         $this->assertSame($expected, $actual);
     }
@@ -136,31 +141,35 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testLoadAndResolvesWaiterConfigs($name, $expected)
     {
-        $api = $this->createServiceApi([], $apiProvider);
-        $apiProvider->expects($this->any())
-            ->method('getServiceWaiterConfig')
-            ->will($this->returnValue(['waiters' => [
-                '__default__' => [
-                    'acceptor_path' => 'Foo/Baz',
-                    'acceptor_type' => 'output',
-                    'max_attempts' => 10,
-                ],
-                'Test' => [
-                    'success_value' => 'foo',
-                    'ignore_errors' => ['1', '2'],
-                ],
-                'Extending' => [
-                    'extends' => 'Test',
-                    'failure_value' => 'fail',
-                ],
-                'Overwrite' => [
-                    'extends' => 'Test',
-                    'max_attempts' => 20,
-                    'success_value' => 'abc',
-                    'failure_type' => 'baz',
-                ]
-            ]
-        ]));
+        $api = new Service(
+            function () {
+                return [
+                    'waiters' => [
+                        '__default__' => [
+                            'acceptor_path' => 'Foo/Baz',
+                            'acceptor_type' => 'output',
+                            'max_attempts' => 10,
+                        ],
+                        'Test' => [
+                            'success_value' => 'foo',
+                            'ignore_errors' => ['1', '2'],
+                        ],
+                        'Extending' => [
+                            'extends' => 'Test',
+                            'failure_value' => 'fail',
+                        ],
+                        'Overwrite' => [
+                            'extends' => 'Test',
+                            'max_attempts' => 20,
+                            'success_value' => 'abc',
+                            'failure_type' => 'baz',
+                        ]
+                    ]
+                ];
+            },
+            '',
+            ''
+        );
 
         // Handle exception test cases
         if (is_string($expected)) {

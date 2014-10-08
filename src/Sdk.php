@@ -172,7 +172,9 @@ class Sdk
      *   each command created by the client.
      * - client: Optional {@see GuzzleHttp\ClientInterface} used to transfer
      *   requests over the wire.
-     * - api_provider: Optional service description API provider.
+     * - api_provider: Optional service description API provider as a callable
+     *   that accepts a type, service name, and version and returns an
+     *   associative array of configuration data.
      * - endpoint: An optional custom endpoint to use when interacting with a
      *   service.
      * - endpoint_provider: Optional endpoint provider used when creating

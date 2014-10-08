@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\Common\Api\Serializer;
 
+use Aws\Common\Api\Service;
 use GuzzleHttp\Command\Command;
 use Aws\Common\Api\Serializer\RestJsonSerializer;
 use Aws\Test\UsesServiceTrait;
@@ -16,48 +17,50 @@ class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
 
     private function getTestService()
     {
-        return $this->createServiceApi([
-            'metadata'=> [
-                'targetPrefix' => 'test',
-                'jsonVersion' => '1.1'
-            ],
-            'operations' => [
-                'foo' => [
-                    'http' => ['httpMethod' => 'POST'],
-                    'input' => ['shape' => 'FooInput'],
+        return new Service(function () {
+            return [
+                'metadata'=> [
+                    'targetPrefix' => 'test',
+                    'jsonVersion' => '1.1'
                 ],
-                'bar' => [
-                    'http' => ['httpMethod' => 'POST'],
-                    'input' => ['shape' => 'BarInput'],
-                ],
-                'baz' => [
-                    'http' => ['httpMethod' => 'POST'],
-                    'input' => ['shape' => 'BazInput']
-                ]
-            ],
-            'shapes' => [
-                'FooInput' => [
-                    'type' => 'structure',
-                    'members' => [
-                        'baz' => ['shape' => 'BazShape']
+                'operations' => [
+                    'foo' => [
+                        'http' => ['httpMethod' => 'POST'],
+                        'input' => ['shape' => 'FooInput'],
+                    ],
+                    'bar' => [
+                        'http' => ['httpMethod' => 'POST'],
+                        'input' => ['shape' => 'BarInput'],
+                    ],
+                    'baz' => [
+                        'http' => ['httpMethod' => 'POST'],
+                        'input' => ['shape' => 'BazInput']
                     ]
                 ],
-                'BarInput' => [
-                    'type' => 'structure',
-                    'members' => [
-                        'baz' => ['shape' => 'BlobShape']
+                'shapes' => [
+                    'FooInput' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'baz' => ['shape' => 'BazShape']
+                        ]
                     ],
-                    'payload' => 'baz'
-                ],
-                'BazInput' => [
-                    'type' => 'structure',
-                    'members' => ['baz' => ['shape' => 'FooInput']],
-                    'payload' => 'baz'
-                ],
-                'BlobShape' => ['type' => 'blob'],
-                'BazShape'  => ['type' => 'string']
-            ]
-        ]);
+                    'BarInput' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'baz' => ['shape' => 'BlobShape']
+                        ],
+                        'payload' => 'baz'
+                    ],
+                    'BazInput' => [
+                        'type' => 'structure',
+                        'members' => ['baz' => ['shape' => 'FooInput']],
+                        'payload' => 'baz'
+                    ],
+                    'BlobShape' => ['type' => 'blob'],
+                    'BazShape'  => ['type' => 'string']
+                ]
+            ];
+        }, 'service', 'region');
     }
 
     private function getRequest($commandName, $input)

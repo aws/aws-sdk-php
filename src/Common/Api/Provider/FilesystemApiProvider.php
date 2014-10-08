@@ -4,9 +4,9 @@ namespace Aws\Common\Api\Provider;
 use GuzzleHttp\Utils;
 
 /**
- * Provides service descriptions from a directory structure.
+ * Provides service descriptions data from a directory structure.
  */
-class FilesystemApiProvider implements ApiProviderInterface
+class FilesystemApiProvider
 {
     /** @var string */
     private $path;
@@ -32,7 +32,33 @@ class FilesystemApiProvider implements ApiProviderInterface
         }
     }
 
-    public function getService($service, $version)
+    /**
+     * Gets description data for the given type, service, and version as a
+     * JSON decoded associative array structure.
+     *
+     * @param string $type    Type of document to retrieve. For example: api,
+     *                        waiter, paginator, etc.
+     * @param string $service Service to retrieve.
+     * @param string $version Version of the document to retrieve.
+     *
+     * @return array
+     * @throws \InvalidArgumentException when the type is unknown.
+     */
+    public function __invoke($type, $service, $version)
+    {
+        switch ($type) {
+            case 'api':
+                return $this->getService($service, $version);
+            case 'paginator':
+                return $this->getServicePaginatorConfig($service, $version);
+            case 'waiter':
+                return $this->getServiceWaiterConfig($service, $version);
+            default:
+                throw new \InvalidArgumentException('Unknown type: ' . $type);
+        }
+    }
+
+    private function getService($service, $version)
     {
         if ($version == 'latest') {
             $version = $this->determineLatestVersion($service);
@@ -43,17 +69,26 @@ class FilesystemApiProvider implements ApiProviderInterface
         return Utils::jsonDecode(file_get_contents($path), true);
     }
 
-    public function getServiceNames()
+    private function getServicePaginatorConfig($service, $version)
     {
-        $files = $this->getServiceFiles($this->apiSuffix);
-        $search = [$this->path, $this->apiSuffix];
-        $results = [];
-
-        foreach ($files as $f) {
-            $results[substr(str_replace($search, '', $f), 0, -11)] = true;
+        if ($version == 'latest') {
+            $version = $this->determineLatestVersion($service);
         }
 
-        return array_keys($results);
+        $path = $this->getPath($service, $version, '.paginators.json');
+
+        return Utils::jsonDecode(file_get_contents($path), true);
+    }
+
+    private function getServiceWaiterConfig($service, $version)
+    {
+        if ($version == 'latest') {
+            $version = $this->determineLatestVersion($service);
+        }
+
+        $path = $this->getPath($service, $version, '.waiters.json');
+
+        return Utils::jsonDecode(file_get_contents($path), true);
     }
 
     public function getServiceVersions($service)
@@ -70,28 +105,6 @@ class FilesystemApiProvider implements ApiProviderInterface
         }
 
         return $results;
-    }
-
-    public function getServicePaginatorConfig($service, $version)
-    {
-        if ($version == 'latest') {
-            $version = $this->determineLatestVersion($service);
-        }
-
-        $path = $this->getPath($service, $version, '.paginators.json');
-
-        return Utils::jsonDecode(file_get_contents($path), true);
-    }
-
-    public function getServiceWaiterConfig($service, $version)
-    {
-        if ($version == 'latest') {
-            $version = $this->determineLatestVersion($service);
-        }
-
-        $path = $this->getPath($service, $version, '.waiters.json');
-
-        return Utils::jsonDecode(file_get_contents($path), true);
     }
 
     private function getPath($service, $version, $extension)

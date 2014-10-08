@@ -2,6 +2,7 @@
 namespace Aws\Test\Common\Api\Serializer;
 
 use Aws\Common\Api\Serializer\JsonBody;
+use Aws\Common\Api\Service;
 use Aws\Common\Api\Shape;
 use Aws\Common\Api\ShapeMap;
 use Aws\Test\UsesServiceTrait;
@@ -15,7 +16,7 @@ class JsonBodyTest extends \PHPUnit_Framework_TestCase
 
     public function testUsesEmptyHashByDefault()
     {
-        $j = new JsonBody($this->createServiceApi());
+        $j = new JsonBody(new Service(function() {}, 'service', 'region'));
         $this->assertEquals(
             '{}',
             $j->build(new Shape([], new ShapeMap([])), [])
@@ -123,7 +124,7 @@ class JsonBodyTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormatsJson($def, $args, $result)
     {
-        $j = new JsonBody($this->createServiceApi());
+        $j = new JsonBody(new Service(function () {}, 'service', 'region'));
         $shape = Shape::create($def, new ShapeMap([]));
         $this->assertEquals($result, $j->build($shape, $args));
     }

@@ -1,6 +1,7 @@
 <?php
-namespace Aws\Test;
+namespace Aws\Test\Common;
 
+use Aws\Test\UsesServiceTrait;
 use Aws\Common\Api\Service;
 use Aws\Common\AwsClient;
 use Aws\Common\Credentials\Credentials;
@@ -23,7 +24,6 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
 
     public function testHasGetters()
     {
-        $apiProvider = $this->getMock('Aws\Common\Api\Provider\ApiProviderInterface');
         $config = [
             'client'       => new Client(),
             'credentials'  => new Credentials('foo', 'bar'),
@@ -31,7 +31,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'region'       => 'foo',
             'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
             'serializer'   => function () {},
-            'api'          => new Service($apiProvider, 'foo', 'bar'),
+            'api'          => new Service(function () {}, 'foo', 'bar'),
             'error_parser' => function () {},
             'version'      => 'latest'
         ];
@@ -87,12 +87,11 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testThrowsSpecificErrors($value, $type)
     {
-        $apiProvider = $this->getMock('Aws\Common\Api\Provider\ApiProviderInterface');
-        $apiProvider->expects($this->any())
-            ->method('getService')
-            ->willReturn(['operations' => ['foo' => [
+        $apiProvider = function () {
+            return ['operations' => ['foo' => [
                 'http' => ['method' => 'POST']
-            ]]]);
+            ]]];
+        };
         $service = new Service($apiProvider, 'foo', 'bar');
 
         $c = new Client();
@@ -302,21 +301,21 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
 
     private function createClient(array $service = [], array $config = [])
     {
-        $api = $this->createServiceApi($service, $apiProvider);
+        $apiProvider = function ($type) use ($service, $config) {
+            if ($type == 'paginator') {
+                return isset($service['pagination'])
+                    ? ['pagination' => $service['pagination']]
+                    : ['pagination' => []];
+            } elseif ($type == 'waiter') {
+                return isset($service['waiters'])
+                    ? ['waiters' => $service['waiters']]
+                    : ['waiters' => []];
+            } else {
+                return $service;
+            }
+        };
 
-        if (isset($service['pagination'])) {
-            $apiProvider->expects($this->any())
-                ->method('getServicePaginatorConfig')
-                ->willReturn(['pagination' => $service['pagination']]);
-            unset($service['pagination']);
-        }
-
-        if (isset($service['waiters'])) {
-            $apiProvider->expects($this->any())
-                ->method('getServiceWaiterConfig')
-                ->willReturn(['waiters' => $service['waiters']]);
-            unset($service['waiters']);
-        }
+        $api = new Service($apiProvider, 'service', 'region');
 
         return new AwsClient($config + [
             'client'       => new Client(),

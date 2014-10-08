@@ -32,26 +32,11 @@ class FilesystemApiProviderTest extends \PHPUnit_Framework_TestCase
         file_put_contents($path, 'foo, bar');
         $p = new FilesystemApiProvider(sys_get_temp_dir());
         try {
-            $p->getService('invalid', '2010-12-05');
+            call_user_func($p, 'api', 'invalid', '2010-12-05');
             $this->fail('Did not throw');
         } catch (\InvalidArgumentException $e) {
             unlink($path);
         }
-    }
-
-    public function testReturnsServiceNames()
-    {
-        $p = new FilesystemApiProvider(__DIR__ . '/api_provider_fixtures');
-        $this->assertEquals(['dynamodb', 'ec2'], $p->getServiceNames());
-    }
-
-    public function testRetrievesServiceVersions()
-    {
-        $p = new FilesystemApiProvider(__DIR__ . '/api_provider_fixtures');
-        $this->assertEquals(
-            ['2011-12-05', '2012-08-10'],
-            $p->getServiceVersions('dynamodb')
-        );
     }
 
     public function testReturnsLatestServiceData()
@@ -59,7 +44,7 @@ class FilesystemApiProviderTest extends \PHPUnit_Framework_TestCase
         $p = new FilesystemApiProvider(__DIR__ . '/api_provider_fixtures');
         $this->assertEquals(
             ['foo' => 'bar'],
-            $p->getService('dynamodb', 'latest')
+            call_user_func($p, 'api', 'dynamodb', 'latest')
         );
     }
 
@@ -70,24 +55,24 @@ class FilesystemApiProviderTest extends \PHPUnit_Framework_TestCase
     public function testThrowsWhenNoLatestVersionIsAvailable()
     {
         $p = new FilesystemApiProvider(__DIR__ . '/api_provider_fixtures');
-        $p->getService('dodo', 'latest');
+        call_user_func($p, 'api', 'dodo', 'latest');
     }
 
     public function testReturnsPaginatorConfigs()
     {
         $p = new FilesystemApiProvider(__DIR__ . '/api_provider_fixtures');
-        $result = $p->getServicePaginatorConfig('dynamodb', 'latest');
+        $result = call_user_func($p, 'paginator', 'dynamodb', 'latest');
         $this->assertEquals(['abc' => '123'], $result);
-        $result = $p->getServicePaginatorConfig('dynamodb', '2011-12-05');
+        $result = call_user_func($p, 'paginator', 'dynamodb', '2011-12-05');
         $this->assertEquals([], $result);
     }
 
     public function testReturnsWaiterConfigs()
     {
         $p = new FilesystemApiProvider(__DIR__ . '/api_provider_fixtures');
-        $result = $p->getServiceWaiterConfig('dynamodb', 'latest');
+        $result = call_user_func($p, 'waiter', 'dynamodb', 'latest');
         $this->assertEquals(['abc' => '456'], $result);
-        $result = $p->getServiceWaiterConfig('dynamodb', '2011-12-05');
+        $result = call_user_func($p, 'waiter', 'dynamodb', '2011-12-05');
         $this->assertEquals([], $result);
     }
 }
