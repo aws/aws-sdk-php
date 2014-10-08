@@ -6,6 +6,21 @@ namespace Aws\Common;
  */
 class Compat
 {
+    /** @var array Mapping of old option names to a conversion function. */
+    private static $mapping = [
+        'key' => 'convert_key',
+        'secret' => 'convert_secret',
+        'token' => 'convert_token',
+        'credentials.client' => 'convert_credentials_client',
+        'credentials.cache.key' => 'convert_credentials_cache_key',
+        'base_url' => 'convert_base_url',
+        'ssl.certificate_authority' => 'convert_ssl_certificate_authority',
+        'curl.options' => 'convert_curl_options',
+        'client.backoff.logger' => 'convert_client_backoff_logger',
+        'command.params' => 'convert_command_params',
+        'command.disable_validation' => 'convert_command_disable_validation'
+    ];
+
     /**
      * Converts SDKv2 configuration options to SDKv3 configuration options.
      *
@@ -13,23 +28,9 @@ class Compat
      */
     public function convertConfig(array &$config)
     {
-        static $map = [
-            'key' => 'convert_key',
-            'secret' => 'convert_secret',
-            'token' => 'convert_token',
-            'credentials.client' => 'convert_credentials_client',
-            'credentials.cache.key' => 'convert_credentials_cache_key',
-            'base_url' => 'convert_base_url',
-            'ssl.certificate_authority' => 'convert_ssl_certificate_authority',
-            'curl.options' => 'convert_curl_options',
-            'client.backoff.logger' => 'convert_client_backoff_logger',
-            'command.params' => 'convert_command_params',
-            'command.disable_validation' => 'convert_command_disable_validation',
-        ];
-
         foreach (array_keys($config) as $key) {
-            if (isset($map[$key])) {
-                $this->{$map[$key]}($config[$key], $config);
+            if (isset(self::$mapping[$key])) {
+                $this->{self::$mapping[$key]}($config[$key], $config);
             }
         }
     }
