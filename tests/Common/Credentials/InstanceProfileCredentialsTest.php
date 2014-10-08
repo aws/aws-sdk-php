@@ -1,7 +1,12 @@
 <?php
 namespace Aws\Test\Common\Credentials;
-
 use Aws\Common\Credentials\InstanceProfileCredentials;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Message\Request;
+use GuzzleHttp\Message\Response;
+use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\Subscriber\Mock;
 
 /**
  * @covers Aws\Common\Credentials\InstanceProfileCredentials
@@ -20,19 +25,35 @@ class InstanceProfileCredentialsTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
+    private function getTestCreds($result, $profile = null, Response $more = null)
+    {
+        $client = new Client([
+            'base_url' => 'http://169.254.169.254/latest/'
+        ]);
+
+        $responses = [];
+        if (!$profile) {
+            $responses[] = new Response(200, [], Stream::factory($profile));
+        }
+        $responses[] = new Response(200, [], Stream::factory(json_encode($result)));
+        if ($more) {
+            $responses[] = $more;
+        }
+        $client->getEmitter()->attach(new Mock($responses));
+
+        $args = ['profile' => $profile];
+        $args['client'] = $client;
+
+        return new InstanceProfileCredentials($args);
+    }
+
     public function testSeedsInitialCredentials()
     {
         $t = time() + 1000;
-        $creds = $this->getCredentialArray('foo', 'baz', null, "@{$t}");
-
-        $client = $this->getMockBuilder('Aws\Common\InstanceMetadataClient')
-            ->setMethods(['getInstanceProfileCredentials'])
-            ->getMock();
-        $client->expects($this->once())
-            ->method('getInstanceProfileCredentials')
-            ->will($this->returnValue($creds));
-
-        $c = new InstanceProfileCredentials($client);
+        $c = $this->getTestCreds(
+            $this->getCredentialArray('foo', 'baz', null, "@{$t}"),
+            'foo'
+        );
         $this->assertEquals('foo', $c->getAccessKeyId());
         $this->assertEquals('baz', $c->getSecretKey());
         $this->assertEquals(null, $c->getSecurityToken());
@@ -41,28 +62,18 @@ class InstanceProfileCredentialsTest extends \PHPUnit_Framework_TestCase
 
     public function testRefreshesCredentials()
     {
-        $t = time() + 1000;
-        $creds1 = $this->getMockBuilder('Aws\Common\Credentials\Credentials')
-            ->setConstructorArgs(['foo1', 'baz1'])
-            ->setMethods(['isExpired'])
-            ->getMock();
-        $creds1->expects($this->once())
-            ->method('isExpired')
-            ->will($this->returnValue(true));
-        $creds2 = $this->getCredentialArray('foo2', 'baz2', 't2', "@{$t}");
-
-        $client = $this->getMockBuilder('Aws\Common\InstanceMetadataClient')
-            ->setMethods(['getInstanceProfileCredentials'])
-            ->getMock();
-        $client->expects($this->once())
-            ->method('getInstanceProfileCredentials')
-            ->will($this->returnValue($creds2));
-
-        $c = new InstanceProfileCredentials($client, $creds1);
-        $this->assertEquals('foo2', $c->getAccessKeyId());
-        $this->assertEquals('baz2', $c->getSecretKey());
-        $this->assertEquals('t2', $c->getSecurityToken());
-        $this->assertEquals($t, $c->getExpiration());
+        $t = time() - 1000;
+        $t2 = time() + 1000;
+        $c = $this->getTestCreds(
+            $this->getCredentialArray('foo', 'baz', null, "@{$t}"),
+            'foo',
+            new Response(200, [], Stream::factory(json_encode(
+                $this->getCredentialArray('abc', '123', null, '@' . $t2)
+            )))
+        );
+        $this->assertEquals('abc', $c->getAccessKeyId());
+        $this->assertEquals('123', $c->getSecretKey());
+        $this->assertEquals($t2, $c->getExpiration());
     }
 
     /**
@@ -71,14 +82,14 @@ class InstanceProfileCredentialsTest extends \PHPUnit_Framework_TestCase
      */
     public function testThrowsExceptionIfCredentialsNotAvailable()
     {
-        $client = $this->getMockBuilder('Aws\Common\InstanceMetadataClient')
-            ->setMethods(['getInstanceProfileCredentials'])
-            ->getMock();
-        $client->expects($this->once())
-            ->method('getInstanceProfileCredentials')
-            ->will($this->throwException(new \Exception));
-
-        $c = new InstanceProfileCredentials($client);
+        $client = new Client(['base_url' => 'http://169.254.169.254/latest/']);
+        $client->getEmitter()->attach(
+            new Mock([
+                new RequestException('foo', new Request('GET', 'http://foo'))
+            ])
+        );
+        $args['client'] = $client;
+        new InstanceProfileCredentials($args);
     }
 
     /**
@@ -87,14 +98,9 @@ class InstanceProfileCredentialsTest extends \PHPUnit_Framework_TestCase
      */
     public function testThrowsExceptionOnInvalidMetadata()
     {
-        $creds = $this->getCredentialArray('foo', 'baz', null, null, false);
-        $client = $this->getMockBuilder('Aws\Common\InstanceMetadataClient')
-            ->setMethods(['getInstanceProfileCredentials'])
-            ->getMock();
-        $client->expects($this->once())
-            ->method('getInstanceProfileCredentials')
-            ->will($this->returnValue($creds));
-
-        $c = new InstanceProfileCredentials($client);
+        $this->getTestCreds(
+            $this->getCredentialArray(null, null, null, null, false),
+            'foo'
+        );
     }
 }

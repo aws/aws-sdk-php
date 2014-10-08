@@ -2,12 +2,45 @@
 namespace Aws\Test\Common\Credentials;
 
 use Aws\Common\Credentials\Credentials;
+use GuzzleHttp\Client;
+use GuzzleHttp\Message\Response;
+use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\Subscriber\Mock;
 
 /**
  * @covers Aws\Common\Credentials\Credentials
  */
 class CredentialsTest extends \PHPUnit_Framework_TestCase
 {
+    private $home, $homedrive, $homepath, $key, $secret, $profile;
+
+    private function clearEnv()
+    {
+        putenv(Credentials::ENV_KEY . '=');
+        putenv(Credentials::ENV_SECRET . '=');
+        putenv(Credentials::ENV_PROFILE . '=');
+    }
+
+    public function setUp()
+    {
+        $this->home = getenv('HOME');
+        $this->homedrive = getenv('HOMEDRIVE');
+        $this->homepath = getenv('HOMEPATH');
+        $this->key = getenv(Credentials::ENV_KEY);
+        $this->secret = getenv(Credentials::ENV_SECRET);
+        $this->profile = getenv(Credentials::ENV_PROFILE);
+    }
+
+    public function tearDown()
+    {
+        putenv('HOME=' . $this->home);
+        putenv('HOMEDRIVE=' . $this->homedrive);
+        putenv('HOMEPATH=' . $this->homepath);
+        putenv(Credentials::ENV_KEY . '=' . $this->key);
+        putenv(Credentials::ENV_SECRET . '=' . $this->secret);
+        putenv(Credentials::ENV_PROFILE . '=' . $this->profile);
+    }
+
     public function testHasGetters()
     {
         $exp = time() + 500;
@@ -52,8 +85,9 @@ class CredentialsTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatesFromEnvironmentVariables()
     {
-        $_SERVER[Credentials::ENV_KEY] = 'abc';
-        $_SERVER[Credentials::ENV_SECRET] = '123';
+        $this->clearEnv();
+        putenv(Credentials::ENV_KEY . '=abc');
+        putenv(Credentials::ENV_SECRET . '=123');
         $creds = Credentials::factory();
         $this->assertEquals('abc', $creds->getAccessKeyId());
         $this->assertEquals('abc', $creds->getAccessKeyId());
@@ -61,8 +95,8 @@ class CredentialsTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatesFromIniFile()
     {
-        unset($_SERVER[Credentials::ENV_KEY],
-            $_SERVER[Credentials::ENV_SECRET]);
+        $this->clearEnv();
+
         $dir = sys_get_temp_dir() . '/.aws';
         if (!is_dir($dir)) {
             mkdir($dir, 0777, true);
@@ -74,7 +108,7 @@ aws_secret_access_key = baz
 aws_security_token = tok
 EOT;
         file_put_contents($dir . '/credentials', $ini);
-        $_SERVER['HOME'] = dirname($dir);
+        putenv('HOME=' . dirname($dir));
         $creds = Credentials::factory();
         $this->assertEquals('foo', $creds->getAccessKeyId());
         $this->assertEquals('baz', $creds->getSecretKey());
@@ -88,14 +122,16 @@ EOT;
      */
     public function testEnsuresIniFileIsValid()
     {
-        unset($_SERVER[Credentials::ENV_KEY],
-        $_SERVER[Credentials::ENV_SECRET]);
+        $this->clearEnv();
         $dir = sys_get_temp_dir() . '/.aws';
+
         if (!is_dir($dir)) {
             mkdir($dir, 0777, true);
         }
+
         file_put_contents($dir . '/credentials', "wef \n=\nwef");
-        $_SERVER['HOME'] = dirname($dir);
+        putenv('HOME=' . dirname($dir));
+
         try {
             @Credentials::fromIni();
         } catch (\Exception $e) {
@@ -110,9 +146,8 @@ EOT;
      */
     public function testEnsuresIniFileExists()
     {
-        unset($_SERVER[Credentials::ENV_KEY],
-            $_SERVER[Credentials::ENV_SECRET]);
-        $_SERVER['HOME'] = '/does/not/exist';
+        $this->clearEnv();
+        putenv('HOME=/does/not/exist');
         Credentials::fromIni();
     }
 
@@ -122,8 +157,7 @@ EOT;
      */
     public function testEnsuresProfileIsNotEmpty()
     {
-        unset($_SERVER[Credentials::ENV_KEY],
-        $_SERVER[Credentials::ENV_SECRET]);
+        $this->clearEnv();
         $dir = sys_get_temp_dir() . '/.aws';
         if (!is_dir($dir)) {
             mkdir($dir, 0777, true);
@@ -131,7 +165,8 @@ EOT;
         $ini = "[default]\naws_access_key_id = foo\n"
             . "aws_secret_access_key = baz\n[foo]";
         file_put_contents($dir . '/credentials', $ini);
-        $_SERVER['HOME'] = dirname($dir);
+        putenv('HOME=' . dirname($dir));
+
         try {
             Credentials::fromIni('foo');
         } catch (\Exception $e) {
@@ -140,22 +175,29 @@ EOT;
         }
     }
 
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Unexpected instance profile response code:
+     */
     public function testCreatesFromInstanceProfileCredentials()
     {
+        $this->clearEnv();
         putenv('HOME=');
-        unset($_SERVER['HOME']);
+        $client = new Client();
+        $client->getEmitter()->attach(new Mock([
+            new Response(200, [], Stream::factory(''))
+        ]));
         $this->assertInstanceOf(
             'Aws\Common\Credentials\InstanceProfileCredentials',
-            Credentials::factory()
+            Credentials::factory(['profile' => 'foo', 'client' => $client])
         );
     }
 
     public function testGetsHomeDirectoryForWindowsUsers()
     {
         putenv('HOME=');
-        unset($_SERVER['HOME']);
-        $_SERVER['HOMEDRIVE'] = 'C:';
-        $_SERVER['HOMEPATH'] = '\\Michael\\Home';
+        putenv('HOMEDRIVE=C:');
+        putenv('HOMEPATH=\\Michael\\Home');
         $ref = new \ReflectionClass('Aws\Common\Credentials\Credentials');
         $meth = $ref->getMethod('getHomeDir');
         $meth->setAccessible(true);

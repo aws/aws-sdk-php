@@ -1,8 +1,6 @@
 <?php
 namespace Aws\Common\Credentials;
 
-use Aws\Common\InstanceMetadataClient;
-
 /**
  * Basic implementation of the AWS Credentials interface that allows callers to
  * pass in the AWS Access Key and AWS Secret Access Key in the constructor.
@@ -37,7 +35,7 @@ class Credentials implements CredentialsInterface
      *
      * @param array $config Options to use when instantiating the credentials
      *
-     * @return self
+     * @return CredentialsInterface
      */
     public static function factory(array $config = [])
     {
@@ -52,8 +50,9 @@ class Credentials implements CredentialsInterface
         }
 
         // Use credentials from environment variables, if available
-        $key = self::getEnvVar(self::ENV_KEY);
-        $secret = self::getEnvVar(self::ENV_SECRET);
+        $key = getenv(self::ENV_KEY);
+        $secret = getenv(self::ENV_SECRET);
+
         if ($key & $secret) {
             return new self($key, $secret);
         }
@@ -65,10 +64,7 @@ class Credentials implements CredentialsInterface
         }
 
         // Use IAM Instance Profile credentials, if hosted on Amazon EC2
-        return new InstanceProfileCredentials(
-            new InstanceMetadataClient(),
-            new self('', '', '', 1)
-        );
+        return new InstanceProfileCredentials($config);
     }
 
     /**
@@ -105,8 +101,9 @@ class Credentials implements CredentialsInterface
 
         // Determine the profile name and make sure it contains correct data
         if (!$profile) {
-            $profile = self::getEnvVar(self::ENV_PROFILE) ?: 'default';
+            $profile = getenv(self::ENV_PROFILE) ?: 'default';
         }
+
         if (empty($data[$profile])
             || !isset($data[$profile]['aws_access_key_id'])
             || !isset($data[$profile]['aws_secret_access_key'])
@@ -186,26 +183,14 @@ class Credentials implements CredentialsInterface
     private static function getHomeDir()
     {
         // On Linux/Unix-like systems, use the HOME environment variable
-        if ($homeDir = self::getEnvVar('HOME')) {
+        if ($homeDir = getenv('HOME')) {
             return $homeDir;
         }
 
         // Get the HOMEDRIVE and HOMEPATH values for Windows hosts
-        $homeDrive = self::getEnvVar('HOMEDRIVE');
-        $homePath = self::getEnvVar('HOMEPATH');
+        $homeDrive = getenv('HOMEDRIVE');
+        $homePath = getenv('HOMEPATH');
 
         return ($homeDrive && $homePath) ? $homeDrive . $homePath : null;
-    }
-
-    /**
-     * Fetches the value of an environment variable by checking $_SERVER and getenv().
-     *
-     * @param string $var Name of the environment variable
-     *
-     * @return mixed|null
-     */
-    private static function getEnvVar($var)
-    {
-        return isset($_SERVER[$var]) ? $_SERVER[$var] : getenv($var);
     }
 }
