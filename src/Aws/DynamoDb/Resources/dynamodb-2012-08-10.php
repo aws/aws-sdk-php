@@ -440,14 +440,14 @@ return array (
             ),
         ),
     ),
-    'models' => [
-        'JsonOutput' => [
+    'models' => array(
+        'JsonOutput' => array(
             'type' => 'object',
-            'additionalProperties' => [
+            'additionalProperties' => array(
                 'location' => 'json',
-            ]
-        ],
-    ],
+            )
+        ),
+    ),
     'iterators' => array(
         'BatchGetItem' => array(
             'input_token' => 'RequestItems',
