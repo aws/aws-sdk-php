@@ -1,11 +1,11 @@
 <?php
-namespace Aws\Test\Common\Api;
+namespace Aws\Test\Common\Api\Provider;
 
-use Aws\Common\Api\CachingApiProvider;
-use Aws\Common\Api\FilesystemApiProvider;
+use Aws\Common\Api\Provider\CachingApiProvider;
+use Aws\Common\Api\Provider\FilesystemApiProvider;
 
 /**
- * @covers Aws\Common\Api\CachingApiProvider
+ * @covers Aws\Common\Api\Provider\CachingApiProvider
  */
 class CachingApiProviderTest extends \PHPUnit_Framework_TestCase
 {

@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Common\Api;
+namespace Aws\Common\Api\Provider;
 
 /**
  * Provides service descriptions.

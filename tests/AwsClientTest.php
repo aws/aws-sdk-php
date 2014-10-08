@@ -23,7 +23,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
 
     public function testHasGetters()
     {
-        $apiProvider = $this->getMock('Aws\Common\Api\ApiProviderInterface');
+        $apiProvider = $this->getMock('Aws\Common\Api\Provider\ApiProviderInterface');
         $config = [
             'client'       => new Client(),
             'credentials'  => new Credentials('foo', 'bar'),
@@ -87,7 +87,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testThrowsSpecificErrors($value, $type)
     {
-        $apiProvider = $this->getMock('Aws\Common\Api\ApiProviderInterface');
+        $apiProvider = $this->getMock('Aws\Common\Api\Provider\ApiProviderInterface');
         $apiProvider->expects($this->any())
             ->method('getService')
             ->willReturn(['operations' => ['foo' => [

@@ -149,7 +149,7 @@ trait UsesServiceTrait
 
     private function createServiceApi(array $serviceData = [], &$api = null)
     {
-        $api = $this->getMock('Aws\Common\Api\ApiProviderInterface');
+        $api = $this->getMock('Aws\Common\Api\Provider\ApiProviderInterface');
         $api->expects($this->any())
             ->method('getService')
             ->willReturn($serviceData);

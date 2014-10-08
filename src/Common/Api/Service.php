@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Common\Api;
 
+use Aws\Common\Api\Provider\ApiProviderInterface;
 use Aws\Common\Api\Serializer\QuerySerializer;
 use Aws\Common\Api\Serializer\Ec2ParamBuilder;
 use Aws\Common\Api\Parser\QueryParser;

@@ -1,10 +1,10 @@
 <?php
-namespace Aws\Test\Common\Api;
+namespace Aws\Test\Common\Api\Provider;
 
-use Aws\Common\Api\FilesystemApiProvider;
+use Aws\Common\Api\Provider\FilesystemApiProvider;
 
 /**
- * @covers Aws\Common\Api\FilesystemApiProvider
+ * @covers Aws\Common\Api\Provider\FilesystemApiProvider
  */
 class FilesystemApiProviderTest extends \PHPUnit_Framework_TestCase
 {

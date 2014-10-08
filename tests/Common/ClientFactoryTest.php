@@ -105,7 +105,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
     public function testValidatesErrorParser()
     {
         $f = new ClientFactory();
-        $p = $this->getMockBuilder('Aws\Common\Api\ApiProviderInterface')
+        $p = $this->getMockBuilder('Aws\Common\Api\Provider\ApiProviderInterface')
             ->setMethods(['getService'])
             ->getMockForAbstractClass();
         $p->expects($this->once())
@@ -208,7 +208,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage api_provider must be an instance of Aws\Common\Api\ApiProviderInterface
+     * @expectedExceptionMessage api_provider must be an instance of Aws\Common\Api\Provider\ApiProviderInterface
      */
     public function testValidatesApiProvider()
     {

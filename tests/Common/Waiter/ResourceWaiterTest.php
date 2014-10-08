@@ -21,7 +21,7 @@ class ResourceWaiterTest extends \PHPUnit_Framework_TestCase
         \Aws\Common\Waiter\usleep(0);
 
         // Mock the API provider
-        $apiProvider = $this->getMock('Aws\Common\Api\ApiProviderInterface');
+        $apiProvider = $this->getMock('Aws\Common\Api\Provider\ApiProviderInterface');
         $apiProvider->expects($this->any())
             ->method('getService')
             ->will($this->returnValue([

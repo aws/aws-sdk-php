@@ -1,9 +1,8 @@
 <?php
 namespace Aws\Common;
 
-use Aws\Common\AwsClientInterface;
-use Aws\Common\Api\ApiProviderInterface;
-use Aws\Common\Api\FilesystemApiProvider;
+use Aws\Common\Api\Provider\ApiProviderInterface;
+use Aws\Common\Api\Provider\FilesystemApiProvider;
 use Aws\Common\Api\Service;
 use Aws\Common\Api\Validator;
 use Aws\Common\Credentials\Credentials;
@@ -387,7 +386,7 @@ class ClientFactory
     {
         if (!($value instanceof ApiProviderInterface)) {
             throw new \InvalidArgumentException('api_provider must be an '
-                . 'instance of Aws\Common\Api\ApiProviderInterface');
+                . 'instance of Aws\Common\Api\Provider\ApiProviderInterface');
         }
 
         $api = new Service($value, $args['service'], $args['version']);
