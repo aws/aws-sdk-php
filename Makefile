@@ -5,7 +5,7 @@ clean:
 	cd docs && make clean
 
 test:
-	vendor/bin/phpunit --testsuite=unit
+	vendor/bin/phpunit --testsuite=unit $(TEST)
 
 travis:
 	vendor/bin/phpunit --colors --testsuite=unit --coverage-text
@@ -17,7 +17,7 @@ view-coverage:
 	open build/artifacts/coverage/index.html
 
 integ:
-	vendor/bin/phpunit --testsuite=integ
+	vendor/bin/phpunit --debug --testsuite=integ $(TEST)
 
 guide:
 	cd docs && make html

@@ -589,7 +589,12 @@ class StreamWrapper
             $e->getRequest()->getConfig()->set('stream', true);
         });
 
-        $this->body = $client->execute($command)['Body'];
+        $result = $client->execute($command);
+        $this->body = $result['Body'];
+
+        if ($result['ContentLength']) {
+            $this->body->setSize($result['ContentLength']);
+        }
 
         // Wrap the body in a caching entity body if seeking is allowed
         if ($this->getOption('seekable') && !$this->body->isSeekable()) {
