@@ -3,7 +3,7 @@
 [![Latest Stable Version](https://poser.pugx.org/aws/aws-sdk-php/version.svg)](https://packagist.org/packages/aws/aws-sdk-php)
 [![Total Downloads](https://poser.pugx.org/aws/aws-sdk-php/d/total.svg)](https://packagist.org/packages/aws/aws-sdk-php)
 [![Build Status](https://travis-ci.org/aws/aws-sdk-php.png)](https://travis-ci.org/aws/aws-sdk-php)
-[![Code Coverage](https://scrutinizer-ci.com/g/aws/aws-sdk-php/badges/coverage.png?s=a5e380fe64b957af62cc52a999e77c0641c6bc91)](https://scrutinizer-ci.com/g/aws/aws-sdk-php/)
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/aws/aws-sdk-php?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 The **AWS SDK for PHP** enables PHP developers to use [Amazon Web Services][aws]
 in their PHP code, and build robust applications and software using services
