@@ -19,8 +19,8 @@ class DynamoDbCommandTest extends \Guzzle\Tests\GuzzleTestCase
         $encoded = array('N' => array('N' => '5'));
         $this->assertSame($encoded, DynamoDbCommand::marshalAttributes($decoded));
 
-        $decoded = array('NS' => array('NS' => [5, 10]));
-        $encoded = array('NS' => array('NS' => ['5', '10']));
+        $decoded = array('NS' => array('NS' => array(5, 10)));
+        $encoded = array('NS' => array('NS' => array('5', '10')));
         $this->assertSame($encoded, DynamoDbCommand::marshalAttributes($decoded));
     }
 
