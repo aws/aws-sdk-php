@@ -27,13 +27,13 @@ class PutRequestTest extends \Guzzle\Tests\GuzzleTestCase
     public function testConstructorSetsValues()
     {
         // Instantiate with Item object.
-        $item = new Item(['id' => ['S' => 'foo']]);
+        $item = new Item(array('id' => array('S' => 'foo')));
         $putRequest = new PutRequest($item, 'table');
         $this->assertEquals($item->toArray(), $putRequest->getItem()->toArray());
 
         // Instantiate with item array.
-        $item = ['id' => ['S' => 'foo']];
-        $putRequest = new PutRequest(array('id' => array('S' => 'foo')), 'table');
+        $item = array('id' => array('S' => 'foo'));
+        $putRequest = new PutRequest($item, 'table');
         $this->assertEquals($item, $putRequest->getItem()->toArray());
     }
 
