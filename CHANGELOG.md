@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+Next Release:
+-------------
+
+* Updated the Amazon EC2 client to sign requests with Signature V4.
+* Fixed an issue in the S3 service description to make the `VersionId`
+  work in `S3Client::restoreObject`.
+
 2.6.16 (2014-09-11)
 -------------------
 

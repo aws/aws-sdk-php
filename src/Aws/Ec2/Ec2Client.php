@@ -250,10 +250,6 @@ class Ec2Client extends AbstractClient
      */
     public static function factory($config = array())
     {
-        if (isset($config['region']) && substr($config['region'], 0, 3) == 'cn-') {
-            $config[Options::SIGNATURE] = new SignatureV4();
-        }
-
         $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
