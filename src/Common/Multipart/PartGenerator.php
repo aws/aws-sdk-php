@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Common\Multipart;
 
-use Aws\Common\Multipart\UploadState;
 use GuzzleHttp\Stream\StreamInterface;
 
 /**
