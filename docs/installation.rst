@@ -19,7 +19,7 @@ your project. In order to use the SDK with Composer, you must do the following:
            }
        }
 
-   Consider tightening your dependencies to a known version (e.g., ``2.5.*``).
+   Consider tightening your dependencies to a known version (e.g., ``~2.7.0``).
 
 #. Download and install Composer.
 
