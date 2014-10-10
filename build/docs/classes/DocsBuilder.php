@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Build\Docs;
 
-use Aws\Common\Api\FilesystemApiProvider;
+use Aws\Common\Api\Provider\FilesystemApiProvider;
 use Aws\Common\Api\Operation;
 use Aws\Common\Api\Service as Api;
 
@@ -14,17 +14,20 @@ class DocsBuilder
     private $themeSource;
 
     /** @var string */
-    private $docsDirs;
+    private $docModelsDir;
+
+    /** @var string */
+    private $apiModelsDir;
 
     /** @var string */
     private $outputDir;
 
-    public function __construct(FilesystemApiProvider $apiProvider, $docsDirs, $outputDir)
+    public function __construct($apiModelsDir, $docModelsDir, $outputDir)
     {
-        $this->apiProvider = $apiProvider;
-        $this->themeSource = realpath(__DIR__ . '/../theme');
-        $this->docsDirs = $docsDirs;
+        $this->apiModelsDir = $apiModelsDir;
+        $this->docModelsDir = $docModelsDir;
         $this->outputDir = $outputDir;
+        $this->themeSource = realpath(__DIR__ . '/../theme');
     }
 
     public function getSami($sourceDir)
@@ -51,12 +54,16 @@ class DocsBuilder
         $services = [];
         $manifest = '';
         $indexes = '';
-        foreach ($this->apiProvider->getServiceNames() as $name) {
-            foreach ($this->apiProvider->getServiceVersions($name) as $version) {
+
+        foreach (glob($this->apiModelsDir . '/*.api.json') as $file) {
+            $file = basename($file, '.api.json');
+            if (preg_match('/([a-z0-9-]+?)-([0-9-]+)/', $file, $matches)) {
+                list(/*skip*/, $name, $version) = $matches;
+                $apiProvider = new FilesystemApiProvider($this->apiModelsDir);
                 $service = new Service(
                     $name,
-                    new Api($this->apiProvider, $name, $version),
-                    new DocModel($this->docsDirs, $name, $version)
+                    new Api($apiProvider, $name, $version),
+                    new DocModel($this->docModelsDir, $name, $version)
                 );
 
                 $indexes .= $this->createIndexEntryForService($service);

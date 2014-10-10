@@ -2,6 +2,7 @@
 namespace Aws\Build\Docs;
 
 use GuzzleHttp\Collection;
+use GuzzleHttp\Utils;
 
 /**
  * Encapsulates the documentation strings for a given service-version and
@@ -44,7 +45,7 @@ class DocModel
         }
 
         $this->docs = new Collection(
-            \GuzzleHttp\json_decode(file_get_contents($docModel), true)
+            Utils::jsonDecode(file_get_contents($docModel), true)
         );
     }
 

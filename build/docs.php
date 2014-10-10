@@ -1,22 +1,19 @@
 <?php
 
 use Aws\Build\Docs\DocsBuilder;
-use Aws\Common\Api\FilesystemApiProvider;
+use Aws\Common\Api\Provider\FilesystemApiProvider;
 
 // Setup autoloading for SDK and build classes.
 $loader = require __DIR__ . '/../vendor/autoload.php';
 $loader->addPsr4('Aws\\Build\\Docs\\', __DIR__ . '/docs/classes');
 
-// Setup API provider for service models.
-$apiProvider = new FilesystemApiProvider(
-    __DIR__ . '/../src/Common/Resources/api'
-);
-
 // Setup directories.
 $sourceDir = __DIR__ . '/artifacts/staging';
-$docsDir = __DIR__ . '/artifacts/doc-models';
+$docModelsDir = __DIR__ . '/artifacts/docs/models';
+$apiModelsDir = realpath(__DIR__ . '/../src/Common/Resources/api');
 $outputDir = __DIR__ . '/artifacts/docs';
-foreach ([$outputDir, $outputDir . '/theme', $outputDir . '/theme/layout', $outputDir . '/theme/img'] as $dir) {
+$themeDir = $outputDir . '/theme';
+foreach ([$outputDir, $themeDir, $themeDir . '/layout', $themeDir . '/img'] as $dir) {
     if (!is_dir($dir)) {
         if (!mkdir($dir, 0755)) {
             fwrite(STDERR, "Could not create directory: {$dir}.");
@@ -26,7 +23,7 @@ foreach ([$outputDir, $outputDir . '/theme', $outputDir . '/theme/layout', $outp
 }
 
 // Generate API docs
-$builder = new DocsBuilder($apiProvider, $docsDir, $outputDir);
+$builder = new DocsBuilder($apiModelsDir, $docModelsDir, $outputDir);
 return $builder->getSami($sourceDir);
 
 /**
@@ -35,4 +32,5 @@ return $builder->getSami($sourceDir);
  * - Sourcing the doc models.
  * - Ordering/tweaking search.
  * - Visual tweaks to API pages.
+ * - Get theme updates into official Sami phar.
  */

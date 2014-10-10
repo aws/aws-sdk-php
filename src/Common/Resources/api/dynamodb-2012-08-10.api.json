@@ -398,7 +398,11 @@
         "B":{"shape":"BinaryAttributeValue"},
         "SS":{"shape":"StringSetAttributeValue"},
         "NS":{"shape":"NumberSetAttributeValue"},
-        "BS":{"shape":"BinarySetAttributeValue"}
+        "BS":{"shape":"BinarySetAttributeValue"},
+        "M":{"shape":"MapAttributeValue"},
+        "L":{"shape":"ListAttributeValue"},
+        "NULL":{"shape":"NullAttributeValue"},
+        "BOOL":{"shape":"BooleanAttributeValue"}
       }
     },
     "AttributeValueList":{
@@ -469,6 +473,7 @@
       "type":"list",
       "member":{"shape":"BinaryAttributeValue"}
     },
+    "BooleanAttributeValue":{"type":"boolean"},
     "BooleanObject":{"type":"boolean"},
     "Capacity":{
       "type":"structure",
@@ -502,6 +507,7 @@
         "ComparisonOperator":{"shape":"ComparisonOperator"}
       }
     },
+    "ConditionExpression":{"type":"string"},
     "ConditionalCheckFailedException":{
       "type":"structure",
       "members":{
@@ -569,7 +575,10 @@
         "ConditionalOperator":{"shape":"ConditionalOperator"},
         "ReturnValues":{"shape":"ReturnValue"},
         "ReturnConsumedCapacity":{"shape":"ReturnConsumedCapacity"},
-        "ReturnItemCollectionMetrics":{"shape":"ReturnItemCollectionMetrics"}
+        "ReturnItemCollectionMetrics":{"shape":"ReturnItemCollectionMetrics"},
+        "ConditionExpression":{"shape":"ConditionExpression"},
+        "ExpressionAttributeNames":{"shape":"ExpressionAttributeNameMap"},
+        "ExpressionAttributeValues":{"shape":"ExpressionAttributeValueMap"}
       }
     },
     "DeleteItemOutput":{
@@ -628,6 +637,18 @@
         "AttributeValueList":{"shape":"AttributeValueList"}
       }
     },
+    "ExpressionAttributeNameMap":{
+      "type":"map",
+      "key":{"shape":"ExpressionAttributeNameVariable"},
+      "value":{"shape":"AttributeName"}
+    },
+    "ExpressionAttributeNameVariable":{"type":"string"},
+    "ExpressionAttributeValueMap":{
+      "type":"map",
+      "key":{"shape":"ExpressionAttributeValueVariable"},
+      "value":{"shape":"AttributeValue"}
+    },
+    "ExpressionAttributeValueVariable":{"type":"string"},
     "FilterConditionMap":{
       "type":"map",
       "key":{"shape":"AttributeName"},
@@ -644,7 +665,9 @@
         "Key":{"shape":"Key"},
         "AttributesToGet":{"shape":"AttributeNameList"},
         "ConsistentRead":{"shape":"ConsistentRead"},
-        "ReturnConsumedCapacity":{"shape":"ReturnConsumedCapacity"}
+        "ReturnConsumedCapacity":{"shape":"ReturnConsumedCapacity"},
+        "ProjectionExpression":{"shape":"ProjectionExpression"},
+        "ExpressionAttributeNames":{"shape":"ExpressionAttributeNameMap"}
       }
     },
     "GetItemOutput":{
@@ -811,7 +834,9 @@
       "members":{
         "Keys":{"shape":"KeyList"},
         "AttributesToGet":{"shape":"AttributeNameList"},
-        "ConsistentRead":{"shape":"ConsistentRead"}
+        "ConsistentRead":{"shape":"ConsistentRead"},
+        "ProjectionExpression":{"shape":"ProjectionExpression"},
+        "ExpressionAttributeNames":{"shape":"ExpressionAttributeNameMap"}
       }
     },
     "LimitExceededException":{
@@ -820,6 +845,10 @@
         "message":{"shape":"ErrorMessage"}
       },
       "exception":true
+    },
+    "ListAttributeValue":{
+      "type":"list",
+      "member":{"shape":"AttributeValue"}
     },
     "ListTablesInput":{
       "type":"structure",
@@ -872,6 +901,11 @@
       "member":{"shape":"LocalSecondaryIndex"}
     },
     "Long":{"type":"long"},
+    "MapAttributeValue":{
+      "type":"map",
+      "key":{"shape":"AttributeName"},
+      "value":{"shape":"AttributeValue"}
+    },
     "NonKeyAttributeName":{
       "type":"string",
       "min":1,
@@ -883,6 +917,7 @@
       "min":1,
       "max":20
     },
+    "NullAttributeValue":{"type":"boolean"},
     "NumberAttributeValue":{"type":"string"},
     "NumberSetAttributeValue":{
       "type":"list",
@@ -903,6 +938,7 @@
         "NonKeyAttributes":{"shape":"NonKeyAttributeNameList"}
       }
     },
+    "ProjectionExpression":{"type":"string"},
     "ProjectionType":{
       "type":"string",
       "enum":[
@@ -952,7 +988,10 @@
         "ReturnValues":{"shape":"ReturnValue"},
         "ReturnConsumedCapacity":{"shape":"ReturnConsumedCapacity"},
         "ReturnItemCollectionMetrics":{"shape":"ReturnItemCollectionMetrics"},
-        "ConditionalOperator":{"shape":"ConditionalOperator"}
+        "ConditionalOperator":{"shape":"ConditionalOperator"},
+        "ConditionExpression":{"shape":"ConditionExpression"},
+        "ExpressionAttributeNames":{"shape":"ExpressionAttributeNameMap"},
+        "ExpressionAttributeValues":{"shape":"ExpressionAttributeValueMap"}
       }
     },
     "PutItemInputAttributeMap":{
@@ -993,7 +1032,11 @@
         "ConditionalOperator":{"shape":"ConditionalOperator"},
         "ScanIndexForward":{"shape":"BooleanObject"},
         "ExclusiveStartKey":{"shape":"Key"},
-        "ReturnConsumedCapacity":{"shape":"ReturnConsumedCapacity"}
+        "ReturnConsumedCapacity":{"shape":"ReturnConsumedCapacity"},
+        "ProjectionExpression":{"shape":"ProjectionExpression"},
+        "FilterExpression":{"shape":"ConditionExpression"},
+        "ExpressionAttributeNames":{"shape":"ExpressionAttributeNameMap"},
+        "ExpressionAttributeValues":{"shape":"ExpressionAttributeValueMap"}
       }
     },
     "QueryOutput":{
@@ -1066,7 +1109,11 @@
         "ExclusiveStartKey":{"shape":"Key"},
         "ReturnConsumedCapacity":{"shape":"ReturnConsumedCapacity"},
         "TotalSegments":{"shape":"ScanTotalSegments"},
-        "Segment":{"shape":"ScanSegment"}
+        "Segment":{"shape":"ScanSegment"},
+        "ProjectionExpression":{"shape":"ProjectionExpression"},
+        "FilterExpression":{"shape":"ConditionExpression"},
+        "ExpressionAttributeNames":{"shape":"ExpressionAttributeNameMap"},
+        "ExpressionAttributeValues":{"shape":"ExpressionAttributeValueMap"}
       }
     },
     "ScanOutput":{
@@ -1142,6 +1189,7 @@
         "ACTIVE"
       ]
     },
+    "UpdateExpression":{"type":"string"},
     "UpdateGlobalSecondaryIndexAction":{
       "type":"structure",
       "required":[
@@ -1167,7 +1215,11 @@
         "ConditionalOperator":{"shape":"ConditionalOperator"},
         "ReturnValues":{"shape":"ReturnValue"},
         "ReturnConsumedCapacity":{"shape":"ReturnConsumedCapacity"},
-        "ReturnItemCollectionMetrics":{"shape":"ReturnItemCollectionMetrics"}
+        "ReturnItemCollectionMetrics":{"shape":"ReturnItemCollectionMetrics"},
+        "UpdateExpression":{"shape":"UpdateExpression"},
+        "ConditionExpression":{"shape":"ConditionExpression"},
+        "ExpressionAttributeNames":{"shape":"ExpressionAttributeNameMap"},
+        "ExpressionAttributeValues":{"shape":"ExpressionAttributeValueMap"}
       }
     },
     "UpdateItemOutput":{
