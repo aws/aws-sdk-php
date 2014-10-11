@@ -1,10 +1,10 @@
 <?php
-namespace Aws\Test\Common\Api\Provider;
+namespace Aws\Test\Common\Api;
 
-use Aws\Common\Api\Provider\FilesystemApiProvider;
+use Aws\Common\Api\FilesystemApiProvider;
 
 /**
- * @covers Aws\Common\Api\Provider\FilesystemApiProvider
+ * @covers Aws\Common\Api\FilesystemApiProvider
  */
 class FilesystemApiProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,10 +20,6 @@ class FilesystemApiProviderTest extends \PHPUnit_Framework_TestCase
     {
         $p1 = new FilesystemApiProvider(__DIR__ . '/');
         $this->assertEquals(__DIR__, $this->readAttribute($p1, 'path'));
-        $this->assertEquals(
-            '.api.json',
-            $this->readAttribute($p1, 'apiSuffix')
-        );
     }
 
     public function testEnsuresValidJson()
@@ -37,6 +33,15 @@ class FilesystemApiProviderTest extends \PHPUnit_Framework_TestCase
         } catch (\InvalidArgumentException $e) {
             unlink($path);
         }
+    }
+
+    public function testCanLoadPhpFiles()
+    {
+        $p = new FilesystemApiProvider(__DIR__ . '/api_provider_fixtures');
+        $this->assertEquals(
+            [],
+            $p('api', 'dynamodb', '2010-02-04')
+        );
     }
 
     public function testReturnsLatestServiceData()

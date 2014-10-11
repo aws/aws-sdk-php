@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Common\Api\Provider;
+namespace Aws\Common\Api;
 
 use GuzzleHttp\Utils;
 
@@ -11,21 +11,16 @@ class FilesystemApiProvider
     /** @var string */
     private $path;
 
-    /** @var string */
-    private $apiSuffix;
-
     /** @var array */
     private $latestVersions = [];
 
     /**
-     * @param string $path      Path to the service description files
-     * @param string $apiSuffix Determines which file type to load.
+     * @param string $path     Path to the service description files on disk.
      * @throws \InvalidArgumentException if the path is not found.
      */
-    public function __construct($path, $apiSuffix = '.api.json')
+    public function __construct($path)
     {
         $this->path = rtrim($path, '/\\');
-        $this->apiSuffix = $apiSuffix;
 
         if (!is_dir($path)) {
             throw new \InvalidArgumentException("Path not found: $path");
@@ -64,9 +59,7 @@ class FilesystemApiProvider
             $version = $this->determineLatestVersion($service);
         }
 
-        $path = $this->getPath($service, $version, $this->apiSuffix);
-
-        return Utils::jsonDecode(file_get_contents($path), true);
+        return $this->load($service, $version, 'api');
     }
 
     private function getServicePaginatorConfig($service, $version)
@@ -75,9 +68,7 @@ class FilesystemApiProvider
             $version = $this->determineLatestVersion($service);
         }
 
-        $path = $this->getPath($service, $version, '.paginators.json');
-
-        return Utils::jsonDecode(file_get_contents($path), true);
+        return $this->load($service, $version, 'paginators');
     }
 
     private function getServiceWaiterConfig($service, $version)
@@ -86,39 +77,49 @@ class FilesystemApiProvider
             $version = $this->determineLatestVersion($service);
         }
 
-        $path = $this->getPath($service, $version, '.waiters.json');
-
-        return Utils::jsonDecode(file_get_contents($path), true);
+        return $this->load($service, $version, 'waiters');
     }
 
     public function getServiceVersions($service)
     {
-        $files = $this->getServiceFiles($this->apiSuffix);
-        $search = [$this->path, $this->apiSuffix];
+        $files = $this->getServiceFiles('.api.');
+        $search = [$this->path, '.api.php', '.api.json'];
         $results = [];
         $needle = $service . '-';
+        $len = strlen($needle);
 
         foreach ($files as $f) {
             if (strpos($f, $needle) === 0) {
-                $results[] = substr(str_replace($search, '', $f), strlen($needle));
+                $results[] = substr(str_replace($search, '', $f), $len);
             }
         }
 
         return $results;
     }
 
-    private function getPath($service, $version, $extension)
+    private function load($service, $version, $type)
     {
-        return "{$this->path}/{$service}-{$version}{$extension}";
+        // First check for PHP files, then fall back to JSON.
+        $path = "{$this->path}/{$service}-{$version}.{$type}.php";
+
+        if (file_exists($path)) {
+            return require $path;
+        }
+
+        $path = "{$this->path}/{$service}-{$version}.{$type}.json";
+        if (file_exists($path)) {
+            return Utils::jsonDecode(file_get_contents($path), true);
+        }
+
+        throw new \RuntimeException('Cannot load file: ' . $path);
     }
 
-    private function getServiceFiles($suffix)
+    private function getServiceFiles($substr)
     {
         $services = [];
-        $len = -1 * strlen($suffix);
 
         foreach (scandir($this->path) as $file) {
-            if (substr($file, $len) == $suffix) {
+            if (strpos($file, $substr)) {
                 $services[] = $file;
             }
         }

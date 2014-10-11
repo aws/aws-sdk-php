@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Common;
 
-use Aws\Common\Api\Provider\FilesystemApiProvider;
+use Aws\Common\Api\FilesystemApiProvider;
 use Aws\Common\Api\Service;
 use Aws\Common\Api\Validator;
 use Aws\Common\Credentials\Credentials;
