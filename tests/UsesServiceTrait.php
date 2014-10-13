@@ -5,7 +5,7 @@ use Aws\Common\AwsClientInterface;
 use Aws\Common\Result;
 use Aws\Sdk;
 use Aws\Common\Api\Service;
-use GuzzleHttp\Ring\Client\MockAdapter;
+use GuzzleHttp\Ring\Client\MockHandler;
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Event\PreparedEvent;
@@ -49,7 +49,7 @@ trait UsesServiceTrait
         // disabling is not done.
         if (!isset($args['client']) && !isset($_SERVER['INTEGRATION'])) {
             $args['client'] = new Client([
-                'adapter' => new MockAdapter(function () {
+                'adapter' => new MockHandler(function () {
                     return ['error' => new \RuntimeException('No network access')];
                 })
             ]);
