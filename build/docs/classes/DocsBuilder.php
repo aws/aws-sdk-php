@@ -1,15 +1,12 @@
 <?php
 namespace Aws\Build\Docs;
 
-use Aws\Common\Api\Provider\FilesystemApiProvider;
+use Aws\Common\Api\FilesystemApiProvider;
 use Aws\Common\Api\Operation;
 use Aws\Common\Api\Service as Api;
 
 class DocsBuilder
 {
-    /** @var FilesystemApiProvider */
-    private $apiProvider;
-
     /** @var string */
     private $themeSource;
 
@@ -55,8 +52,8 @@ class DocsBuilder
         $manifest = '';
         $indexes = '';
 
-        foreach (glob($this->apiModelsDir . '/*.api.json') as $file) {
-            $file = basename($file, '.api.json');
+        foreach (glob($this->apiModelsDir . '/*.api.php') as $file) {
+            $file = basename($file, '.api.php');
             if (preg_match('/([a-z0-9-]+?)-([0-9-]+)/', $file, $matches)) {
                 list(/*skip*/, $name, $version) = $matches;
                 $apiProvider = new FilesystemApiProvider($this->apiModelsDir);
