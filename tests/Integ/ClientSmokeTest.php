@@ -136,7 +136,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
                 'Search',
                 ['query' => 'foo'],
                 false,
-                'GuzzleHttp\Ring\Exception\RingException'
+                'GuzzleHttp\Ring\Exception\ConnectException'
             ],
             [
                 'cloudtrail',

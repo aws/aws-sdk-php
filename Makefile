@@ -48,4 +48,7 @@ api-package:
 
 api-all: api-clean api api-package api-show
 
-.PHONY: docs
+build-apis:
+	php build/api.php $(SRC)
+
+.PHONY: docs build-apis
