@@ -266,21 +266,6 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(0, $c->getHttpClient()->getEmitter()->listeners('error'));
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Invalid AWS credentials profile "profile_
-     */
-    public function testCanCreateCredentialsWithProfileName()
-    {
-        $f = new ClientFactory();
-        $f->create([
-            'service' => 'sqs',
-            'region' => 'x',
-            'profile' => uniqid('profile_'),
-            'version' => 'latest'
-        ]);
-    }
-
     public function testCanCreateNullCredentials()
     {
         $f = new ClientFactory();

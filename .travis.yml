@@ -7,6 +7,8 @@ php:
   - hhvm
 
 before_script:
+- export AWS_ACCESS_KEY_ID=foo
+- export AWS_SECRET_ACCESS_KEY=bar
 - composer self-update
 - composer install --no-interaction --prefer-source
 
