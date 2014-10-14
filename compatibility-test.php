@@ -119,9 +119,9 @@ class CompatibilityTest
 $c = new CompatibilityTest();
 $c->title('System requirements');
 $c->addRequire(
-    'Ensuring that the version of PHP is >= 5.3.3',
-    function () { return version_compare(phpversion(), '5.3.3', '>='); },
-    'You must update your version of PHP to 5.3.3 to run the AWS SDK for PHP'
+    'Ensuring that the version of PHP is >= 5.4.0',
+    function () { return version_compare(phpversion(), '5.4.0', '>='); },
+    'You must update your version of PHP to 5.4.0 to run the AWS SDK for PHP'
 );
 
 $c->iniCheck('Ensuring that detect_unicode is disabled', 'detect_unicode', false, true, 'Enabling detect_unicode may cause errors when using phar files. See https://bugs.php.net/bug.php?id=42396');
