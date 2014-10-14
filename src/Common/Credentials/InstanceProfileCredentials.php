@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Common\Credentials;
 
+use Aws\Common\Exception\InstanceProfileCredentialsException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Utils;
 
@@ -89,7 +90,7 @@ class InstanceProfileCredentials extends AbstractRefreshableCredentials
             } catch (\Exception $e) {
                 if (++$retryCount > $this->retries) {
                     $message = $this->createErrorMessage($e->getMessage());
-                    throw new \RuntimeException($message, $e->getCode());
+                    throw new InstanceProfileCredentialsException($message, $e->getCode());
                 }
             }
         } while (1);
