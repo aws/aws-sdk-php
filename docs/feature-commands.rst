@@ -2,10 +2,11 @@
 Command Objects
 ===============
 
-Command objects are fundamental to how the SDK works. In normal usage of the SDK, you may never interact with command
-objects. However, if you are :ref:`performing operations in parallel <parallel_commands>`,
-:ref:`inspecting data from the request or response <requests_and_responses>`, or writing custom plugins, you will need
-to understand how they work.
+Command objects are fundamental to how the SDK works. In normal usage of the
+SDK, you may never interact with command objects. However, if you are
+:ref:`performing operations concurrently <concurrent_commands>`,
+:ref:`inspecting data from the request or response <requests_and_responses>`,
+or writing custom plugins, you will need to understand how they work.
 
 Typical SDK usage
 -----------------
@@ -15,190 +16,194 @@ Typical SDK usage
 A peek under the hood
 ---------------------
 
-If you examine a client class, you will see that the methods corresponding to the operations do not actually exist. They
-are implemented using the ``__call()`` magic method behavior. These pseudo-methods are actually shortcuts that
-encapsulate the SDK's — and the underlying Guzzle library's — use of command objects.
+If you examine a client class, you will see that the methods corresponding to
+the operations do not actually exist. They are implemented using the
+``__call()`` magic method behavior. These pseudo-methods are actually shortcuts
+that encapsulate the SDK's — and the underlying Guzzle library's — use of
+command objects.
 
-For example, you could perform the same ``DescribeTable`` operation from the preceding section using command objects:
+For example, you could perform the same ``DescribeTable`` operation from the
+preceding section using command objects:
 
 .. code-block:: php
 
-    $command = $dynamoDbClient->getCommand('DescribeTable', array(
+    $command = $dynamoDbClient->getCommand('DescribeTable', [
         'TableName' => 'YourTableName',
-    ));
-    $result = $command->getResult();
+    ]);
 
-A **Command** is an object that represents the execution of a service operation. Command objects are an abstraction of
-the process of formatting a request to a service, executing the request, receiving the response, and formatting the
-results. Commands are created and executed by the client and contain references to **Request** and **Response** objects.
-The **Result** object is a what we refer to as a :doc:`"modeled response" <feature-models>`.
+    $result = $dynamoDbClient->execute($command);
+
+A **Command** is an object that represents the execution of a service
+operation. Command objects are an abstraction of the process of formatting a
+request to a service, executing the request, receiving the response, and
+formatting the results. Commands are created and executed by the client and
+contain references to **Request** and **Response** objects. The **Result**
+object is a what we refer to as a :doc:`"result model" <feature-models>`.
 
 Using command objects
 ---------------------
 
-Using the pseudo-methods for performing operations is shorter and preferred for typical use cases, but command objects
-provide greater flexibility and access to additional data.
+Using the magic-methods for performing operations is preferred for typical use
+cases, but command objects provide greater flexibility and access to additional
+data.
 
 Manipulating command objects before execution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When you create a command using a client's ``getCommand()`` method, it does not immediately execute. Because commands
-are lazily executed, it is possible to pass the command object around and add or modify the parameters. The following
+When you create a command using a client's ``getCommand()`` method, it does not
+immediately execute. Because commands are lazily executed, it is possible to
+pass the command object around and add or modify the parameters. The following
 examples show how to work with command objects:
 
 .. code-block:: php
 
     // You can add parameters after instantiation
     $command = $s3Client->getCommand('ListObjects');
-    $command->set('MaxKeys', 50);
-    $command->set('Prefix', 'foo/baz/');
-    $result = $command->getResult();
+    $command[MaxKeys'] = 50;
+    $command['Prefix'] = 'foo/baz/';
+    $result = $s3Client->execute($command);
 
     // You can also modify parameters
-    $command = $s3Client->getCommand('ListObjects', array(
+    $command = $s3Client->getCommand('ListObjects', [
         'MaxKeys' => 50,
         'Prefix'  => 'foo/baz/',
-    ));
-    $command->set('MaxKeys', 100);
-    $result = $command->getResult();
+    ]);
+    $command['MaxKeys'] = 100;
+    $result = $s3Client->execute($command);
 
-    // The set method is chainable
-    $result = $s3Client->getCommand('ListObjects')
-        ->set('MaxKeys', 50);
-        ->set('Prefix', 'foo/baz/');
-        ->getResult();
-
-    // You can also use array access
-    $command = $s3Client->getCommand('ListObjects');
-    $command['MaxKeys'] = 50;
-    $command['Prefix'] = 'foo/baz/';
-    $result = $command->getResult();
-
-Also, see the `API docs for commands
-<http://docs.aws.amazon.com/aws-sdk-php/latest/class-Guzzle.Service.Command.AbstractCommand.html>`_.
+Take a look at the `API docs for commands
+<http://docs.aws.amazon.com/aws-sdk-php/v3/api/GuzzleHttp/Command/Command.html>`_.
+for more information on the PHP API.
 
 .. _requests_and_responses:
 
 Request and response objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-From the command object, you can access the request, response, and result objects. The availability of these objects
-depend on the state of the command object.
-
-Managing command state
-^^^^^^^^^^^^^^^^^^^^^^
-
-Commands must be prepared before the request object is available, and commands must executed before the response and
-result objects are available.
-
-.. code-block:: php
-
-    // 1. Create
-    $command = $client->getCommand('OperationName');
-
-    // 2. Prepare
-    $command->prepare();
-    $request = $command->getRequest();
-    // Note: `prepare()` also returns the request object
-
-    // 3. Execute
-    $command->execute();
-    $response = $command->getResponse();
-    $result = $command->getResult();
-    // Note: `execute()` also returns the result object
-
-This is nice, because it gives you a chance to modify the request before it is actually sent.
-
-.. code-block:: php
-
-    $command = $client->getCommand('OperationName');
-    $request = $command->prepare();
-    $request->addHeader('foo', 'bar');
-    $result = $command->execute();
-
-You don't have to manage each aspect of the state though, calling ``execute()`` will also prepare the command, and
-calling ``getResult()`` will prepare and execute the command.
+From the command object, you can access the request, response, and result
+objects. The availability of these objects depend on the state of the command
+object.
 
 Using requests and responses
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Request and response objects contain data about the actual requests and responses to the service.
+Request and response objects contain data about the actual requests and
+responses to the service. You can get access to the request a command will send
+and the response received while sending a request using the event system.
 
 .. code-block:: php
 
+    use GuzzleHttp\Command\Event\PreparedEvent;
+    use GuzzleHttp\Command\Event\ProcessEvent;
+
     $command = $client->getCommand('OperationName');
+
+    $request = null;
+    $response = null;
+
+    $emitter = $command->getEmitter();
+
+    // Get the request when it is prepared.
+    $emitter->on('prepared', function (PreparedEvent $e) use (&$request) {
+        $request = $e->getRequest();
+    });
+
+    // Get the response when it has been received.
+    $emitter->on('process', function (ProcessEvent $e) use (&$response) {
+        $response = $e->getResponse();
+    });
+
+    // Get the result object, a parsed representation of the response.
+    $result = $client->execute($command);
+
     $command->execute();
 
-    // Get and use the request object
-    $request = $command->getRequest();
+    // Inspect the request object.
     $contentLength = $request->getHeader('Content-Length');
     $url = $request->getUrl();
 
-    // Get and use the response object
-    $response = $command->getResponse();
+    // Inspect the response object.
     $success = $response->isSuccessful();
     $status = $response->getStatusCode();
 
-You can also take advantage of the ``__toString`` behavior of the request and response objects. If you print them
-(e.g., ``echo $request;``), you can see the raw request and response data that was sent over the wire.
+.. important::
 
-To learn more, read the API docs for the `Request
-<http://docs.aws.amazon.com/aws-sdk-php/latest/class-Guzzle.Http.Message.Request.html>`_ and `Response
-<http://docs.aws.amazon.com/aws-sdk-php/latest/class-Guzzle.Http.Message.Response.html>`_ classes.
+    The HTTP request and response message that is sent over the wire should be
+    considered an implementation detail of the SDK and the web service you are
+    using. Inspecting the request and response should usually only be employed
+    when troubleshooting.
 
-.. _parallel_commands:
+.. _concurrent_commands:
 
-Executing commands in parallel
-------------------------------
+Executing commands concurrently
+-------------------------------
 
-The AWS SDK for PHP allows you to execute multiple operations in parallel when you use command objects. This can reduce
-the total time (sometimes drastically) it takes to perform a set of operations, since you can do them at the same time
-instead of one after another. The following shows an example of how you could upload two files to Amazon S3 at the same
-time.
-
-.. code-block:: php
-
-    $commands = array();
-    $commands[] = $s3Client->getCommand('PutObject', array(
-        'Bucket' => 'SOME_BUCKET',
-        'Key'    => 'photos/photo01.jpg',
-        'Body'   => fopen('/tmp/photo01.jpg', 'r'),
-    ));
-    $commands[] = $s3Client->getCommand('PutObject', array(
-        'Bucket' => 'SOME_BUCKET',
-        'Key'    => 'photos/photo02.jpg',
-        'Body'   => fopen('/tmp/photo02.jpg', 'r'),
-    ));
-
-    // Execute an array of command objects to do them in parallel
-    $s3Client->execute($commands);
-
-    // Loop over the commands, which have now all been executed
-    foreach ($commands as $command) {
-        $result = $command->getResult();
-        // Do something with result
-    }
-
-Error handling with parallel commands
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-When executing commands in parallel, error handling becomes a bit trickier. If an exception is thrown, then the SDK (via
-Guzzle) will aggregate the exceptions together and throw a single ``Guzzle\Service\Exception\CommandTransferException``
-(`see the API docs
-<http://docs.aws.amazon.com/aws-sdk-php/latest/class-Guzzle.Service.Exception.CommandTransferException.html>`_) once all
-of the commands have completed execution. This exception class keeps track of which commands succeeded and which failed
-and also allows you to fetch the original exceptions thrown for failed commands.
+You can send commands concurrently using the asynchronous features of Guzzle.
+Setting the ``@future`` option of a command to true will create a futue result
+object that is completed asynchronously. This allows you to create multiple
+futures and have them send HTTP request concurrently when the underlying HTTP
+handler transfers the requests.
 
 .. code-block:: php
 
-    use Guzzle\Service\Exception\CommandTransferException;
+    use Aws\S3\Exception\S3Exception;
 
+    // Create a future result. This call returns almost immediately.
+    $futureResult = $s3Client->listBuckets(['@future' => true]);
+
+    // Do other stuff...
+    // ...
+
+    // Block until the result is ready.
     try {
-        $succeeded = $client->execute($commands);
-    } catch (CommandTransferException $e) {
-        $succeeded = $e->getSuccessfulCommands();
-        echo "Failed Commands:\n";
-        foreach ($e->getFailedCommands() as $failedCommand) {
-            echo $e->getExceptionForFailedCommand($failedCommand)->getMessage() . "\n";
-        }
+        $result = $futureResult->wait();
+    } catch (S3Exception $e) {
+        echo $e->getMessage();
     }
+
+When a future result is used in a blocking manner (whether by accessing the
+result as a normal result object or explicitly calling the ``wait()`` method),
+the result will complete and an exception could be raised if an error was
+encountered while completing the request.
+
+When using the SDK with an event loop library, you will not want to block on
+results, but rather use the ``then()`` method of a result to access a promise
+that is resolved or rejected when the operation completes.
+
+.. code-block:: php
+
+    $futureResult = $s3Client->listBuckets(['@future' => true]);
+    $futureResult->then(
+        function ($result) {
+            echo 'Got a result: ' . var_export($result, true);
+        },
+        function ($error) {
+            echo 'Got an error: ' . $error->getMessage();
+        }
+    );
+
+If you want to send a large number of requests concurrently and wait until all
+of the requests have completed, then you should use the ``executeAll`` method
+of a client. The ``executeAll`` method takes an iterator or array that contains
+command object and sends them concurrently using a fixed pool size. As commands
+complete, more are added to the pool of requests.
+
+.. code-block:: php
+
+    use GuzzleHttp\Command\Event\ProcessEvent;
+
+    $generator = function ($total) use ($s3Client) {
+        while ($i-- > 0) {
+            yield $s3Client->getCommand('ListBuckets');
+        }
+    };
+
+    $s3Client->executeAll($generator(10), [
+        'process' => function (ProcessEvent $e) {
+            if ($e->getException()) {
+                echo 'Got error: ' . $e->getException()->getMessage();
+            } else {
+                echo 'Got result: ' . var_export($e->getResult(), true);
+            }
+        }
+    ]);
