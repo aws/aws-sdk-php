@@ -1,11 +1,229 @@
 CHANGELOG
 =========
 
-Next Release
-------------
+3.0.0-beta.1 (2014-10-14)
+-------------------------
 
+* New requirements on Guzzle 5 and PHP 5.4.
+* Event system now uses Guzzle 5 events and no longer utilizes Symfony2.
+* `version` is a required parameter for each client constructor. You can
+  op-into using the latest version of a service by setting `version` to
+  `latest`.
+* Removed `Aws\S3\ResumableDownload`.
+* More information to follow.
+
+**Known Issues**
+
+* `Aws\S3\S3Client::uploadDirectory()` and `downloadBucket()` have been removed
+  for now while we rewrite this functionality to be more generic.
+
+2.7.0 (2014-10-08)
+------------------
+
+* Added document model support to the Amazon DynamoDB client, including support
+  for the new data types (`L`, `M`, `BOOL`, and `NULL`), nested attributes, and
+  expressions.
+* Deprecated the `Aws\DynamoDb\Model\Attribute`, `Aws\DynamoDb\Model\Item`,
+  and `Aws\DynamoDb\Iterator\ItemIterator` classes, and the
+  `Aws\DynamoDb\DynamoDbClient::formatValue` and
+  `Aws\DynamoDb\DynamoDbClient::formatAttribute` methods, since they do not
+  support the new types in the DynamoDB document model. These deprecated classes
+  and methods still work reliably with `S`, `N`, `B`, `SS`, `NS`, and `BS`
+  attributes.
+* Updated the Amazon DynamoDB client to permanently disable client-side
+  parameter validation. This needed to be done in order to support the new
+  document model features.
+* Updated the Amazon EC2 client to sign requests with Signature V4.
+* Fixed an issue in the S3 service description to make the `VersionId`
+  work in `S3Client::restoreObject`.
+
+2.6.16 (2014-09-11)
+-------------------
+
+* Added support for tagging to the Amazon Kinesis client.
+* Added support for setting environment variables to the AWS OpsWorks client.
+* Fixed issue #334 to allow the `before_upload` callback to work in the
+  `S3Client::upload` method.
+* Fixed an issue in the Signature V4 signer that was causing an issue with some
+  CloudSearch Domain operations.
+
+2.6.15 (2014-08-14)
+-------------------
+
+* Added support for signing requests to the Amazon CloudSearch Domain client.
+* Added support for creating anonymous clients.
+
+2.6.14 (2014-08-11)
+-------------------
+
+* Added support for tagging to the Elastic Load Balancing client.
+
+2.6.13 (2014-07-31)
+-------------------
+
+* Added support for configurable idle timeouts to the Elastic Load Balancing
+  client.
+* Added support for Lifecycle Hooks, Detach Instances, and Standby to the
+  AutoScaling client.
+* Added support for creating Amazon ElastiCache for Memcached clusters with
+  nodes in multiple availability zones.
+* Added minor fixes to the Amazon EC2 model for ImportVolume,
+  DescribeNetworkInterfaceAttribute, and DeleteVpcPeeringConnection
+* Added support for getGeoLocation and listGeoLocations to the
+  Amazon Route 53 client.
+* Added support for Amazon Route 53 Domains.
+* Fixed an issue with deleting nested folders in the Amazon S3 stream wrapper.
+* Fixed an issue with the Amazon S3 sync abstraction to ensure that S3->S3
+  communication works correctly.
+* Added stricter validation to the Amazon SNS MessageValidator.
+
+2.6.12 (2014-07-16)
+-------------------
+
+* Added support for adding attachments to support case communications to the
+  AWS Support API client.
+* Added support for credential reports and password rotation features to the
+  AWS IAM client.
+* Added the `ap-northeast-1`, `ap-southeast-1`, and `ap-southeast-2` regions to
+  the Amazon Kinesis client.
+* Added a `listFilter` stream context option that can be used when using
+  `opendir()` and the Amazon S3 stream wrapper. This option is used to filter
+  out specific objects from the files yielded from the stream wrapper.
+* Fixed #322 so that the download sync builder ignores objects that have a
+  `GLACIER` storage class.
+* Fixed an issue with the S3 SSE-C logic so that HTTPS is only required when
+  the SSE-C parameters are provided.
+* Updated the Travis configuration to include running HHVM tests.
+
+2.6.11 (2014-07-09)
+-------------------
+
+* Added support for **Amazon Cognito Identity**.
+* Added support for **Amazon Cognito Sync**.
+* Added support for **Amazon CloudWatch Logs**.
+* Added support for editing existing health checks and associating health checks
+  with tags to the Amazon Route 53 client.
+* Added the ModifySubnetAttribute operation to the Amazon EC2 client.
+
+2.6.10 (2014-07-02)
+-------------------
+
+* Added the `ap-northeast-1`, `ap-southeast-1`, and `sa-east-1` regions to the
+  Amazon CloudTrail client.
+* Added the `eu-west-1` and `us-west-2` regions to the Amazon Kinesis client.
+* Fixed an issue with the SignatureV4 implementation when used with Amazon S3.
+* Fixed an issue with a test that was causing failures when run on EC2 instances
+  that have associated Instance Metadata credentials.
+
+2.6.9 (2014-06-26)
+------------------
+
+* Added support for the CloudSearchDomain client, which allows you to search and
+  upload documents to your CloudSearch domains.
+* Added support for delivery notifications to the Amazon SES client.
+* Updated the CloudFront client to support the 2014-05-31 API.
+* Merged PR #316 as a better solution for issue #309.
+
+2.6.8 (2014-06-20)
+------------------
+
+* Added support for closed captions to the Elastic Transcoder client.
+* Added support for IAM roles to the Elastic MapReduce client.
+* Updated the S3 PostObject to ease customization.
+* Fixed an issue in some EC2 waiters by merging PR #306.
+* Fixed an issue with the DynamoDB `WriteRequestBatch` by merging PR #310.
+* Fixed issue #309, where the `url_stat()` logic in the S3 Stream Wrapper was
+  affected by a change in PHP 5.5.13.
+
+2.6.7 (2014-06-12)
+------------------
+
+* Added support for Amazon S3 server-side encryption using customer-provided
+  encryption keys.
+* Updated Amazon SNS to support message attributes.
+* Updated the Amazon Redshift model to support new cluster parameters.
+* Updated PHPUnit dev dependency to 4.* to work around a PHP serializing bug.
+
+2.6.6 (2014-05-29)
+------------------
+
+* Added support for the [Desired Partition Count scaling
+  option](http://aws.amazon.com/releasenotes/2440176739861815) to the
+  CloudSearch client. Hebrew is also now a supported language.
+* Updated the STS service description to the latest version.
+* [Docs] Updated some of the documentation about credential profiles.
+* Fixed an issue with the regular expression in the `S3Client::isValidBucketName`
+  method. See #298.
+
+2.6.5 (2014-05-22)
+------------------
+
+* Added cross-region support for the Amazon EC2 CopySnapshot operation.
+* Added AWS Relational Database (RDS) support to the AWS OpsWorks client.
+* Added support for tagging environments to the AWS Elastic Beanstalk client.
+* Refactored the signature version 4 implementation to be able to pre-sign
+  most operations.
+
+2.6.4 (2014-05-20)
+------------------
+
+* Added support for lifecycles on versioning enabled buckets to the Amazon S3
+  client.
+* Fixed an Amazon S3 sync issue which resulted in unnecessary transfers when no
+  `$keyPrefix` argument was utilized.
+* Corrected the `CopySourceIfMatch` and `CopySourceIfNoneMatch` parameter for
+  Amazon S3 to not use a timestamp shape.
+* Corrected the sending of Amazon S3 PutBucketVersioning requests that utilize
+  the `MFADelete` parameter.
+
+2.6.3 (2014-05-14)
+------------------
+
+* Added the ability to modify Amazon SNS topic settings to the UpdateStack
+  operation of the AWS CloudFormation client.
+* Added support for the us-west-1, ap-southeast-2, and eu-west-1 regions to the
+  AWS CloudTrail client.
+* Removed no longer utilized AWS CloudTrail shapes from the model.
+
+2.6.2 (2014-05-06)
+------------------
+
+* Added support for Amazon SQS message attributes.
+* Fixed Amazon S3 multi-part uploads so that manually set ContentType values are not overwritten.
+* No longer recalculating file sizes when an Amazon S3 socket timeout occurs because this was causing issues with
+  multi-part uploads and it is very unlikely ever the culprit of a socket timeout.
+* Added better environment variable detection.
+
+2.6.1 (2014-04-25)
+------------------
+
+* Added support for the `~/.aws/credentials` INI file and credential profiles (via the `profile` option) as a safer
+  alternative to using explicit credentials with the `key` and `secret` options.
+* Added support for query filters and improved conditional expressions to the Amazon DynamoDB client.
+* Added support for the `ChefConfiguration` parameter to a few operations on the AWS OpsWorks Client.
+* Added support for Redis cache cluster snapshots to the Amazon ElastiCache client.
+* Added support for the `PlacementTenancy` parameter to the `CreateLaunchConfiguration` operation of the Auto Scaling
+  client.
+* Added support for the new R3 instance types to the Amazon EC2 client.
+* Added the `SpotInstanceRequestFulfilled` waiter to the Amazon EC2 client (see #241).
+* Improved the S3 Stream Wrapper by adding support for deleting pseudo directories (#264), updating error handling
+  (#276), and fixing `is_link()` for non-existent keys (#268).
+* Fixed #252 and updated the DynamoDB `WriteRequestBatch` abstraction to handle batches that were completely rejected
+  due to exceeding provisioned throughput.
+* Updated the SDK to support Guzzle 3.9.x
+
+2.6.0 (2014-03-25)
+------------------
+
+* [BC] Updated the Amazon CloudSearch client to use the new 2013-01-01 API version (see [their release
+  notes](http://aws.amazon.com/releasenotes/6125075708216342)). This API version of CloudSearch is significantly
+  different than the previous one, and is not backwards compatible. See the
+  [Upgrading Guide](https://github.com/aws/aws-sdk-php/blob/master/UPGRADING.md) for more details.
+* Added support for the VPC peering features to the Amazon EC2 client.
+* Updated the Amazon EC2 client to use the new 2014-02-01 API version.
 * Added support for [resize progress data and the Cluster Revision Number
   parameter](http://aws.amazon.com/releasenotes/0485739709714318) to the Amazon Redshift client.
+* Added the `ap-northeast-1`, `ap-southeast-2`, and `sa-east-1` regions to the Amazon CloudSearch client.
 
 2.5.4 (2014-03-20)
 ------------------
