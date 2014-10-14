@@ -49,7 +49,7 @@ trait UsesServiceTrait
         // disabling is not done.
         if (!isset($args['client']) && !isset($_SERVER['INTEGRATION'])) {
             $args['client'] = new Client([
-                'adapter' => new MockHandler(function () {
+                'handler' => new MockHandler(function () {
                     return ['error' => new \RuntimeException('No network access')];
                 })
             ]);
