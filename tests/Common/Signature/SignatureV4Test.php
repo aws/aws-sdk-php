@@ -60,13 +60,13 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         $s = new SignatureV4('foo', 'bar');
         $c = new Credentials('a', 'b');
         $r = new Request('GET', 'http://httpbin.org', [
-            'Foo' => ['baz', '  bar ']
+            'X-amz-Foo' => ['baz', '  bar ']
         ]);
         $s->signRequest($r, $c);
-        $this->assertContains('SignedHeaders=date;foo;host', (string) $r);
+        $this->assertContains('SignedHeaders=date;host;x-amz-foo', (string) $r);
         $ctx = $r->getConfig()->get('aws.signature');
-        $this->assertContains('foo:bar,baz', $ctx['creq']);
-        $this->assertContains('date;foo;host', $ctx['creq']);
+        $this->assertContains('x-amz-foo:bar,baz', $ctx['creq']);
+        $this->assertContains('date;host;x-amz-foo', $ctx['creq']);
         $this->assertNotContains('x-amz-security-token', $ctx['headers']);
     }
 
