@@ -179,37 +179,42 @@ class SignatureV4 extends AbstractSignature
      * @param string           $payload Hash of the request payload
      * @return array Returns an array of context information
      */
-    protected function createContext(RequestInterface $request, $payload)
+    private function createContext(RequestInterface $request, $payload)
     {
         // Normalize the path as required by SigV4 and ensure it's absolute
         $canon = $request->getMethod() . "\n"
             . '/' . ltrim($request->getPath(), '/') . "\n"
             . $this->getCanonicalizedQuery($request) . "\n";
 
-        // Create the canonical headers
-        $headers = array_change_key_case($request->getHeaders());
-        unset($headers['user-agent']);
-        ksort($headers);
+        $canonHeaders = [];
 
-        foreach ($headers as $key => $values) {
-            // Combine multi-value headers into a comma separated list
-            if (count($values) == 1) {
-                $values = $values[0];
-            } else {
-                sort($values);
-                $values = implode(',', $values);
+        // Always include the "host", "date", and "x-amz-" headers.
+        foreach ($request->getHeaders() as $key => $values) {
+            $key = strtolower($key);
+            if ($key == 'host'
+                || $key == 'date'
+                || substr($key, 0, 6) === 'x-amz-'
+            ) {
+                if (count($values) == 1) {
+                    $values = $values[0];
+                } else {
+                    sort($values);
+                    $values = implode(',', $values);
+                }
+                $canonHeaders[$key] = $key . ':' . preg_replace('/\s+/', ' ', $values);
             }
-            $canon .= $key . ':' . preg_replace('/\s+/', ' ', $values) . "\n";
         }
 
-        // Create the signed headers
-        $signedHeaders = implode(';', array_keys($headers));
-        $canon .= "\n{$signedHeaders}\n{$payload}";
+        ksort($canonHeaders);
+        $signedHeadersString = implode(';', array_keys($canonHeaders));
+        $canon .= implode("\n", $canonHeaders) . "\n\n"
+            . $signedHeadersString . "\n"
+            . $payload;
 
-        return ['creq' => $canon, 'headers' => $signedHeaders];
+        return ['creq' => $canon, 'headers' => $signedHeadersString];
     }
 
-    protected function getSigningKey($shortDate, $region, $service, $secretKey)
+    private function getSigningKey($shortDate, $region, $service, $secretKey)
     {
         $k = $shortDate . '_' . $region . '_' . $service . '_' . $secretKey;
 
@@ -276,9 +281,9 @@ class SignatureV4 extends AbstractSignature
     private function createScope($shortDate, $region, $service)
     {
         return $shortDate
-        . '/' . $region
-        . '/' . $service
-        . '/aws4_request';
+            . '/' . $region
+            . '/' . $service
+            . '/aws4_request';
     }
 
     private function addQueryValues(
