@@ -1,10 +1,18 @@
 Upgrading Guide
 ===============
 
+Upgrade from 2.6 to 2.7
+-----------------------
+
+Version 2.7 is backward-compatible with version 2.6. The version bump was
+necessary in order to mark some things in the DynamoDb namespace as deprecated.
+See the [CHANGELOG entry for 2.7.0](https://github.com/aws/aws-sdk-php/blob/v3/CHANGELOG.md#270-2014-10-08)
+for more details.
+
 Upgrade from 2.5 to 2.6
 -----------------------
 
-**IMPORTANT:** Version 2.6 *is* backwards compatible with version 2.5, *unless* you are using the Amazon CloudSearch
+**IMPORTANT:** Version 2.6 *is* backward-compatible with version 2.5, *unless* you are using the Amazon CloudSearch
 client. If you are using CloudSearch, please read the next section carefully.
 
 ### Amazon CloudSearch
