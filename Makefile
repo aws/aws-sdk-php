@@ -21,7 +21,7 @@ integ:
 
 # Packages the phar and zip
 package: burgomaster
-	time php build/packager.php
+	time php build/packager.php $(SERVICE)
 
 # Downloads a copy of Burgomaster
 burgomaster:
