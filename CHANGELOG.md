@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+2.7.1 (2014-10-16)
+------------------
+
+* Updated the Amazon RDS client to the 2014-09-01 API version.
+* Added support for advanced Japanese language processing to the Amazon
+  CloudSearch client.
+
 2.7.0 (2014-10-08)
 ------------------
 

@@ -15,7 +15,7 @@
  */
 
 return array (
-    'apiVersion' => '2013-09-09',
+    'apiVersion' => '2014-09-01',
     'endpointPrefix' => 'rds',
     'serviceFullName' => 'Amazon Relational Database Service',
     'serviceAbbreviation' => 'Amazon RDS',
@@ -91,7 +91,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -130,7 +130,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'ResourceName' => array(
                     'required' => true,
@@ -182,7 +182,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBSecurityGroupName' => array(
                     'required' => true,
@@ -225,6 +225,71 @@ return array (
                 ),
             ),
         ),
+        'CopyDBParameterGroup' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DBParameterGroupWrapper',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'CopyDBParameterGroup',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-09-01',
+                ),
+                'SourceDBParameterGroupIdentifier' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'TargetDBParameterGroupIdentifier' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'TargetDBParameterGroupDescription' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'DBParameterGroupName does not refer to an existing DB parameter group.',
+                    'class' => 'DBParameterGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'A DB parameter group with the same name exists.',
+                    'class' => 'DBParameterGroupAlreadyExistsException',
+                ),
+                array(
+                    'reason' => 'Request would result in user exceeding the allowed number of DB parameter groups.',
+                    'class' => 'DBParameterGroupQuotaExceededException',
+                ),
+            ),
+        ),
         'CopyDBSnapshot' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -240,7 +305,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'SourceDBSnapshotIdentifier' => array(
                     'required' => true,
@@ -289,6 +354,71 @@ return array (
                 ),
             ),
         ),
+        'CopyOptionGroup' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'OptionGroupWrapper',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'CopyOptionGroup',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-09-01',
+                ),
+                'SourceOptionGroupIdentifier' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'TargetOptionGroupIdentifier' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'TargetOptionGroupDescription' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The option group you are trying to create already exists.',
+                    'class' => 'OptionGroupAlreadyExistsException',
+                ),
+                array(
+                    'reason' => 'The specified option group could not be found.',
+                    'class' => 'OptionGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'The quota of 20 option groups was exceeded for this AWS account.',
+                    'class' => 'OptionGroupQuotaExceededException',
+                ),
+            ),
+        ),
         'CreateDBInstance' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -304,7 +434,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBName' => array(
                     'type' => 'string',
@@ -438,6 +568,18 @@ return array (
                         ),
                     ),
                 ),
+                'StorageType' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'TdeCredentialArn' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'TdeCredentialPassword' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -469,7 +611,7 @@ return array (
                     'class' => 'DBSubnetGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'Subnets in the DB subnet group should cover at least 2 Availability Zones unless there is only 1 availablility zone.',
+                    'reason' => 'Subnets in the DB subnet group should cover at least two Availability Zones unless there is only one Availability Zone.',
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
@@ -488,6 +630,14 @@ return array (
                     'reason' => 'The specified option group could not be found.',
                     'class' => 'OptionGroupNotFoundException',
                 ),
+                array(
+                    'reason' => 'StorageType specified cannot be associated with the DB Instance.',
+                    'class' => 'StorageTypeNotSupportedException',
+                ),
+                array(
+                    'reason' => 'Specified CIDRIP or EC2 security group is not authorized for the specified DB security group.    RDS may not also be authorized via IAM to perform necessary actions on your behalf.',
+                    'class' => 'AuthorizationNotFoundException',
+                ),
             ),
         ),
         'CreateDBInstanceReadReplica' => array(
@@ -505,7 +655,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -568,6 +718,10 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'StorageType' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -607,7 +761,7 @@ return array (
                     'class' => 'DBSubnetGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'Subnets in the DB subnet group should cover at least 2 Availability Zones unless there is only 1 availablility zone.',
+                    'reason' => 'Subnets in the DB subnet group should cover at least two Availability Zones unless there is only one Availability Zone.',
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
@@ -634,6 +788,10 @@ return array (
                     'reason' => 'Indicates the DBSubnetGroup does not belong to the same VPC as that of an existing cross region read replica of the same source instance.',
                     'class' => 'InvalidDBSubnetGroupException',
                 ),
+                array(
+                    'reason' => 'StorageType specified cannot be associated with the DB Instance.',
+                    'class' => 'StorageTypeNotSupportedException',
+                ),
             ),
         ),
         'CreateDBParameterGroup' => array(
@@ -651,7 +809,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -712,7 +870,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBSecurityGroupName' => array(
                     'required' => true,
@@ -772,7 +930,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBSnapshotIdentifier' => array(
                     'required' => true,
@@ -836,7 +994,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBSubnetGroupName' => array(
                     'required' => true,
@@ -890,7 +1048,7 @@ return array (
                     'class' => 'DBSubnetQuotaExceededException',
                 ),
                 array(
-                    'reason' => 'Subnets in the DB subnet group should cover at least 2 Availability Zones unless there is only 1 availablility zone.',
+                    'reason' => 'Subnets in the DB subnet group should cover at least two Availability Zones unless there is only one Availability Zone.',
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
@@ -914,7 +1072,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -1017,7 +1175,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'OptionGroupName' => array(
                     'required' => true,
@@ -1083,7 +1241,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -1134,7 +1292,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -1168,7 +1326,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBSecurityGroupName' => array(
                     'required' => true,
@@ -1202,7 +1360,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBSnapshotIdentifier' => array(
                     'required' => true,
@@ -1236,7 +1394,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBSubnetGroupName' => array(
                     'required' => true,
@@ -1274,7 +1432,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -1308,7 +1466,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'OptionGroupName' => array(
                     'required' => true,
@@ -1342,7 +1500,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'Engine' => array(
                     'type' => 'string',
@@ -1355,6 +1513,30 @@ return array (
                 'DBParameterGroupFamily' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
+                ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Name' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'Values' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'Values.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
                 ),
                 'MaxRecords' => array(
                     'type' => 'numeric',
@@ -1391,7 +1573,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBInstanceIdentifier' => array(
                     'type' => 'string',
@@ -1405,14 +1587,14 @@ return array (
                         'name' => 'Filter',
                         'type' => 'object',
                         'properties' => array(
-                            'FilterName' => array(
+                            'Name' => array(
                                 'required' => true,
                                 'type' => 'string',
                             ),
-                            'FilterValue' => array(
+                            'Values' => array(
                                 'required' => true,
                                 'type' => 'array',
-                                'sentAs' => 'FilterValue.member',
+                                'sentAs' => 'Values.member',
                                 'items' => array(
                                     'name' => 'Value',
                                     'type' => 'string',
@@ -1452,7 +1634,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -1470,6 +1652,30 @@ return array (
                 'FileSize' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
+                ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Name' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'Values' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'Values.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
                 ),
                 'MaxRecords' => array(
                     'type' => 'numeric',
@@ -1502,7 +1708,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBParameterGroupName' => array(
                     'type' => 'string',
@@ -1516,14 +1722,14 @@ return array (
                         'name' => 'Filter',
                         'type' => 'object',
                         'properties' => array(
-                            'FilterName' => array(
+                            'Name' => array(
                                 'required' => true,
                                 'type' => 'string',
                             ),
-                            'FilterValue' => array(
+                            'Values' => array(
                                 'required' => true,
                                 'type' => 'array',
-                                'sentAs' => 'FilterValue.member',
+                                'sentAs' => 'Values.member',
                                 'items' => array(
                                     'name' => 'Value',
                                     'type' => 'string',
@@ -1563,7 +1769,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -1573,6 +1779,30 @@ return array (
                 'Source' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
+                ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Name' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'Values' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'Values.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
                 ),
                 'MaxRecords' => array(
                     'type' => 'numeric',
@@ -1605,7 +1835,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBSecurityGroupName' => array(
                     'type' => 'string',
@@ -1619,14 +1849,14 @@ return array (
                         'name' => 'Filter',
                         'type' => 'object',
                         'properties' => array(
-                            'FilterName' => array(
+                            'Name' => array(
                                 'required' => true,
                                 'type' => 'string',
                             ),
-                            'FilterValue' => array(
+                            'Values' => array(
                                 'required' => true,
                                 'type' => 'array',
-                                'sentAs' => 'FilterValue.member',
+                                'sentAs' => 'Values.member',
                                 'items' => array(
                                     'name' => 'Value',
                                     'type' => 'string',
@@ -1666,7 +1896,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBInstanceIdentifier' => array(
                     'type' => 'string',
@@ -1688,14 +1918,14 @@ return array (
                         'name' => 'Filter',
                         'type' => 'object',
                         'properties' => array(
-                            'FilterName' => array(
+                            'Name' => array(
                                 'required' => true,
                                 'type' => 'string',
                             ),
-                            'FilterValue' => array(
+                            'Values' => array(
                                 'required' => true,
                                 'type' => 'array',
-                                'sentAs' => 'FilterValue.member',
+                                'sentAs' => 'Values.member',
                                 'items' => array(
                                     'name' => 'Value',
                                     'type' => 'string',
@@ -1735,7 +1965,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBSubnetGroupName' => array(
                     'type' => 'string',
@@ -1749,14 +1979,14 @@ return array (
                         'name' => 'Filter',
                         'type' => 'object',
                         'properties' => array(
-                            'FilterName' => array(
+                            'Name' => array(
                                 'required' => true,
                                 'type' => 'string',
                             ),
-                            'FilterValue' => array(
+                            'Values' => array(
                                 'required' => true,
                                 'type' => 'array',
-                                'sentAs' => 'FilterValue.member',
+                                'sentAs' => 'Values.member',
                                 'items' => array(
                                     'name' => 'Value',
                                     'type' => 'string',
@@ -1796,12 +2026,36 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBParameterGroupFamily' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
+                ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Name' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'Values' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'Values.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
                 ),
                 'MaxRecords' => array(
                     'type' => 'numeric',
@@ -1828,11 +2082,35 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'SourceType' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
+                ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Name' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'Values' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'Values.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
                 ),
             ),
         ),
@@ -1851,7 +2129,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'SubscriptionName' => array(
                     'type' => 'string',
@@ -1865,14 +2143,14 @@ return array (
                         'name' => 'Filter',
                         'type' => 'object',
                         'properties' => array(
-                            'FilterName' => array(
+                            'Name' => array(
                                 'required' => true,
                                 'type' => 'string',
                             ),
-                            'FilterValue' => array(
+                            'Values' => array(
                                 'required' => true,
                                 'type' => 'array',
-                                'sentAs' => 'FilterValue.member',
+                                'sentAs' => 'Values.member',
                                 'items' => array(
                                     'name' => 'Value',
                                     'type' => 'string',
@@ -1912,7 +2190,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'SourceIdentifier' => array(
                     'type' => 'string',
@@ -1953,6 +2231,30 @@ return array (
                         'type' => 'string',
                     ),
                 ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Name' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'Values' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'Values.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
                 'MaxRecords' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
@@ -1978,7 +2280,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'EngineName' => array(
                     'required' => true,
@@ -1988,6 +2290,30 @@ return array (
                 'MajorEngineVersion' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
+                ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Name' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'Values' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'Values.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
                 ),
                 'MaxRecords' => array(
                     'type' => 'numeric',
@@ -2014,7 +2340,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'OptionGroupName' => array(
                     'type' => 'string',
@@ -2028,14 +2354,14 @@ return array (
                         'name' => 'Filter',
                         'type' => 'object',
                         'properties' => array(
-                            'FilterName' => array(
+                            'Name' => array(
                                 'required' => true,
                                 'type' => 'string',
                             ),
-                            'FilterValue' => array(
+                            'Values' => array(
                                 'required' => true,
                                 'type' => 'array',
-                                'sentAs' => 'FilterValue.member',
+                                'sentAs' => 'Values.member',
                                 'items' => array(
                                     'name' => 'Value',
                                     'type' => 'string',
@@ -2083,7 +2409,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'Engine' => array(
                     'required' => true,
@@ -2106,6 +2432,30 @@ return array (
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
+                ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Name' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'Values' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'Values.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
                 ),
                 'MaxRecords' => array(
                     'type' => 'numeric',
@@ -2132,7 +2482,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'ReservedDBInstanceId' => array(
                     'type' => 'string',
@@ -2171,14 +2521,14 @@ return array (
                         'name' => 'Filter',
                         'type' => 'object',
                         'properties' => array(
-                            'FilterName' => array(
+                            'Name' => array(
                                 'required' => true,
                                 'type' => 'string',
                             ),
-                            'FilterValue' => array(
+                            'Values' => array(
                                 'required' => true,
                                 'type' => 'array',
-                                'sentAs' => 'FilterValue.member',
+                                'sentAs' => 'Values.member',
                                 'items' => array(
                                     'name' => 'Value',
                                     'type' => 'string',
@@ -2218,7 +2568,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'ReservedDBInstancesOfferingId' => array(
                     'type' => 'string',
@@ -2244,6 +2594,30 @@ return array (
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
+                ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Name' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'Values' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'Values.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
                 ),
                 'MaxRecords' => array(
                     'type' => 'numeric',
@@ -2276,7 +2650,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -2319,12 +2693,36 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'ResourceName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
+                ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Name' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'Values' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'Values.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -2353,7 +2751,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -2442,6 +2840,18 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'StorageType' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'TdeCredentialArn' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'TdeCredentialPassword' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -2492,6 +2902,14 @@ return array (
                     'reason' => 'The DB upgrade failed because a resource the DB depends on could not be modified.',
                     'class' => 'DBUpgradeDependencyFailureException',
                 ),
+                array(
+                    'reason' => 'StorageType specified cannot be associated with the DB Instance.',
+                    'class' => 'StorageTypeNotSupportedException',
+                ),
+                array(
+                    'reason' => 'Specified CIDRIP or EC2 security group is not authorized for the specified DB security group.    RDS may not also be authorized via IAM to perform necessary actions on your behalf.',
+                    'class' => 'AuthorizationNotFoundException',
+                ),
             ),
         ),
         'ModifyDBParameterGroup' => array(
@@ -2509,7 +2927,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -2586,7 +3004,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBSubnetGroupName' => array(
                     'required' => true,
@@ -2622,7 +3040,7 @@ return array (
                     'class' => 'SubnetAlreadyInUseException',
                 ),
                 array(
-                    'reason' => 'Subnets in the DB subnet group should cover at least 2 Availability Zones unless there is only 1 availablility zone.',
+                    'reason' => 'Subnets in the DB subnet group should cover at least two Availability Zones unless there is only one Availability Zone.',
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
@@ -2646,7 +3064,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -2718,7 +3136,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'OptionGroupName' => array(
                     'required' => true,
@@ -2839,7 +3257,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -2881,7 +3299,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'ReservedDBInstancesOfferingId' => array(
                     'required' => true,
@@ -2944,7 +3362,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -2983,7 +3401,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -3022,7 +3440,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'ResourceName' => array(
                     'required' => true,
@@ -3066,7 +3484,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -3147,7 +3565,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -3227,6 +3645,18 @@ return array (
                         ),
                     ),
                 ),
+                'StorageType' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'TdeCredentialArn' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'TdeCredentialPassword' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -3266,7 +3696,7 @@ return array (
                     'class' => 'DBSubnetGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'Subnets in the DB subnet group should cover at least 2 Availability Zones unless there is only 1 availablility zone.',
+                    'reason' => 'Subnets in the DB subnet group should cover at least two Availability Zones unless there is only one Availability Zone.',
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
@@ -3280,6 +3710,14 @@ return array (
                 array(
                     'reason' => 'The specified option group could not be found.',
                     'class' => 'OptionGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'StorageType specified cannot be associated with the DB Instance.',
+                    'class' => 'StorageTypeNotSupportedException',
+                ),
+                array(
+                    'reason' => 'Specified CIDRIP or EC2 security group is not authorized for the specified DB security group.    RDS may not also be authorized via IAM to perform necessary actions on your behalf.',
+                    'class' => 'AuthorizationNotFoundException',
                 ),
             ),
         ),
@@ -3298,7 +3736,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'SourceDBInstanceIdentifier' => array(
                     'required' => true,
@@ -3392,6 +3830,18 @@ return array (
                         ),
                     ),
                 ),
+                'StorageType' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'TdeCredentialArn' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'TdeCredentialPassword' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -3435,7 +3885,7 @@ return array (
                     'class' => 'DBSubnetGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'Subnets in the DB subnet group should cover at least 2 Availability Zones unless there is only 1 availablility zone.',
+                    'reason' => 'Subnets in the DB subnet group should cover at least two Availability Zones unless there is only one Availability Zone.',
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
@@ -3449,6 +3899,14 @@ return array (
                 array(
                     'reason' => 'The specified option group could not be found.',
                     'class' => 'OptionGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'StorageType specified cannot be associated with the DB Instance.',
+                    'class' => 'StorageTypeNotSupportedException',
+                ),
+                array(
+                    'reason' => 'Specified CIDRIP or EC2 security group is not authorized for the specified DB security group.    RDS may not also be authorized via IAM to perform necessary actions on your behalf.',
+                    'class' => 'AuthorizationNotFoundException',
                 ),
             ),
         ),
@@ -3467,7 +3925,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-09-09',
+                    'default' => '2014-09-01',
                 ),
                 'DBSecurityGroupName' => array(
                     'required' => true,
@@ -3497,7 +3955,7 @@ return array (
                     'class' => 'DBSecurityGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'Specified CIDRIP or EC2 security group is not authorized for the specified DB security group.',
+                    'reason' => 'Specified CIDRIP or EC2 security group is not authorized for the specified DB security group.    RDS may not also be authorized via IAM to perform necessary actions on your behalf.',
                     'class' => 'AuthorizationNotFoundException',
                 ),
                 array(
@@ -3629,6 +4087,30 @@ return array (
                 ),
             ),
         ),
+        'DBParameterGroupWrapper' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'DBParameterGroup' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'data' => array(
+                        'wrapper' => true,
+                    ),
+                    'properties' => array(
+                        'DBParameterGroupName' => array(
+                            'type' => 'string',
+                        ),
+                        'DBParameterGroupFamily' => array(
+                            'type' => 'string',
+                        ),
+                        'Description' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+            ),
+        ),
         'DBSnapshotWrapper' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -3692,6 +4174,139 @@ return array (
                             'type' => 'numeric',
                         ),
                         'SourceRegion' => array(
+                            'type' => 'string',
+                        ),
+                        'StorageType' => array(
+                            'type' => 'string',
+                        ),
+                        'TdeCredentialArn' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'OptionGroupWrapper' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'OptionGroup' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'data' => array(
+                        'wrapper' => true,
+                    ),
+                    'properties' => array(
+                        'OptionGroupName' => array(
+                            'type' => 'string',
+                        ),
+                        'OptionGroupDescription' => array(
+                            'type' => 'string',
+                        ),
+                        'EngineName' => array(
+                            'type' => 'string',
+                        ),
+                        'MajorEngineVersion' => array(
+                            'type' => 'string',
+                        ),
+                        'Options' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Option',
+                                'type' => 'object',
+                                'sentAs' => 'Option',
+                                'properties' => array(
+                                    'OptionName' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'OptionDescription' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Persistent' => array(
+                                        'type' => 'boolean',
+                                    ),
+                                    'Permanent' => array(
+                                        'type' => 'boolean',
+                                    ),
+                                    'Port' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'OptionSettings' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'OptionSetting',
+                                            'type' => 'object',
+                                            'sentAs' => 'OptionSetting',
+                                            'properties' => array(
+                                                'Name' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Value' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'DefaultValue' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Description' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'ApplyType' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'DataType' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'AllowedValues' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'IsModifiable' => array(
+                                                    'type' => 'boolean',
+                                                ),
+                                                'IsCollection' => array(
+                                                    'type' => 'boolean',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'DBSecurityGroupMemberships' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'DBSecurityGroup',
+                                            'type' => 'object',
+                                            'sentAs' => 'DBSecurityGroup',
+                                            'properties' => array(
+                                                'DBSecurityGroupName' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Status' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'VpcSecurityGroupMemberships' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'VpcSecurityGroupMembership',
+                                            'type' => 'object',
+                                            'sentAs' => 'VpcSecurityGroupMembership',
+                                            'properties' => array(
+                                                'VpcSecurityGroupId' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Status' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'AllowsVpcAndNonVpcInstanceMemberships' => array(
+                            'type' => 'boolean',
+                        ),
+                        'VpcId' => array(
                             'type' => 'string',
                         ),
                     ),
@@ -3832,9 +4447,6 @@ return array (
                                                     'Name' => array(
                                                         'type' => 'string',
                                                     ),
-                                                    'ProvisionedIopsCapable' => array(
-                                                        'type' => 'boolean',
-                                                    ),
                                                 ),
                                             ),
                                             'SubnetStatus' => array(
@@ -3876,6 +4488,9 @@ return array (
                                     'type' => 'numeric',
                                 ),
                                 'DBInstanceIdentifier' => array(
+                                    'type' => 'string',
+                                ),
+                                'StorageType' => array(
                                     'type' => 'string',
                                 ),
                             ),
@@ -3956,28 +4571,10 @@ return array (
                                 ),
                             ),
                         ),
-                    ),
-                ),
-            ),
-        ),
-        'DBParameterGroupWrapper' => array(
-            'type' => 'object',
-            'additionalProperties' => true,
-            'properties' => array(
-                'DBParameterGroup' => array(
-                    'type' => 'object',
-                    'location' => 'xml',
-                    'data' => array(
-                        'wrapper' => true,
-                    ),
-                    'properties' => array(
-                        'DBParameterGroupName' => array(
+                        'StorageType' => array(
                             'type' => 'string',
                         ),
-                        'DBParameterGroupFamily' => array(
-                            'type' => 'string',
-                        ),
-                        'Description' => array(
+                        'TdeCredentialArn' => array(
                             'type' => 'string',
                         ),
                     ),
@@ -4023,9 +4620,6 @@ return array (
                                             'Name' => array(
                                                 'type' => 'string',
                                             ),
-                                            'ProvisionedIopsCapable' => array(
-                                                'type' => 'boolean',
-                                            ),
                                         ),
                                     ),
                                     'SubnetStatus' => array(
@@ -4033,133 +4627,6 @@ return array (
                                     ),
                                 ),
                             ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-        'OptionGroupWrapper' => array(
-            'type' => 'object',
-            'additionalProperties' => true,
-            'properties' => array(
-                'OptionGroup' => array(
-                    'type' => 'object',
-                    'location' => 'xml',
-                    'data' => array(
-                        'wrapper' => true,
-                    ),
-                    'properties' => array(
-                        'OptionGroupName' => array(
-                            'type' => 'string',
-                        ),
-                        'OptionGroupDescription' => array(
-                            'type' => 'string',
-                        ),
-                        'EngineName' => array(
-                            'type' => 'string',
-                        ),
-                        'MajorEngineVersion' => array(
-                            'type' => 'string',
-                        ),
-                        'Options' => array(
-                            'type' => 'array',
-                            'items' => array(
-                                'name' => 'Option',
-                                'type' => 'object',
-                                'sentAs' => 'Option',
-                                'properties' => array(
-                                    'OptionName' => array(
-                                        'type' => 'string',
-                                    ),
-                                    'OptionDescription' => array(
-                                        'type' => 'string',
-                                    ),
-                                    'Persistent' => array(
-                                        'type' => 'boolean',
-                                    ),
-                                    'Permanent' => array(
-                                        'type' => 'boolean',
-                                    ),
-                                    'Port' => array(
-                                        'type' => 'numeric',
-                                    ),
-                                    'OptionSettings' => array(
-                                        'type' => 'array',
-                                        'items' => array(
-                                            'name' => 'OptionSetting',
-                                            'type' => 'object',
-                                            'sentAs' => 'OptionSetting',
-                                            'properties' => array(
-                                                'Name' => array(
-                                                    'type' => 'string',
-                                                ),
-                                                'Value' => array(
-                                                    'type' => 'string',
-                                                ),
-                                                'DefaultValue' => array(
-                                                    'type' => 'string',
-                                                ),
-                                                'Description' => array(
-                                                    'type' => 'string',
-                                                ),
-                                                'ApplyType' => array(
-                                                    'type' => 'string',
-                                                ),
-                                                'DataType' => array(
-                                                    'type' => 'string',
-                                                ),
-                                                'AllowedValues' => array(
-                                                    'type' => 'string',
-                                                ),
-                                                'IsModifiable' => array(
-                                                    'type' => 'boolean',
-                                                ),
-                                                'IsCollection' => array(
-                                                    'type' => 'boolean',
-                                                ),
-                                            ),
-                                        ),
-                                    ),
-                                    'DBSecurityGroupMemberships' => array(
-                                        'type' => 'array',
-                                        'items' => array(
-                                            'name' => 'DBSecurityGroup',
-                                            'type' => 'object',
-                                            'sentAs' => 'DBSecurityGroup',
-                                            'properties' => array(
-                                                'DBSecurityGroupName' => array(
-                                                    'type' => 'string',
-                                                ),
-                                                'Status' => array(
-                                                    'type' => 'string',
-                                                ),
-                                            ),
-                                        ),
-                                    ),
-                                    'VpcSecurityGroupMemberships' => array(
-                                        'type' => 'array',
-                                        'items' => array(
-                                            'name' => 'VpcSecurityGroupMembership',
-                                            'type' => 'object',
-                                            'sentAs' => 'VpcSecurityGroupMembership',
-                                            'properties' => array(
-                                                'VpcSecurityGroupId' => array(
-                                                    'type' => 'string',
-                                                ),
-                                                'Status' => array(
-                                                    'type' => 'string',
-                                                ),
-                                            ),
-                                        ),
-                                    ),
-                                ),
-                            ),
-                        ),
-                        'AllowsVpcAndNonVpcInstanceMemberships' => array(
-                            'type' => 'boolean',
-                        ),
-                        'VpcId' => array(
-                            'type' => 'string',
                         ),
                     ),
                 ),
@@ -4367,9 +4834,6 @@ return array (
                                                         'Name' => array(
                                                             'type' => 'string',
                                                         ),
-                                                        'ProvisionedIopsCapable' => array(
-                                                            'type' => 'boolean',
-                                                        ),
                                                     ),
                                                 ),
                                                 'SubnetStatus' => array(
@@ -4411,6 +4875,9 @@ return array (
                                         'type' => 'numeric',
                                     ),
                                     'DBInstanceIdentifier' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'StorageType' => array(
                                         'type' => 'string',
                                     ),
                                 ),
@@ -4490,6 +4957,12 @@ return array (
                                         ),
                                     ),
                                 ),
+                            ),
+                            'StorageType' => array(
+                                'type' => 'string',
+                            ),
+                            'TdeCredentialArn' => array(
+                                'type' => 'string',
                             ),
                         ),
                     ),
@@ -4748,6 +5221,12 @@ return array (
                             'SourceRegion' => array(
                                 'type' => 'string',
                             ),
+                            'StorageType' => array(
+                                'type' => 'string',
+                            ),
+                            'TdeCredentialArn' => array(
+                                'type' => 'string',
+                            ),
                         ),
                     ),
                 ),
@@ -4796,9 +5275,6 @@ return array (
                                             'properties' => array(
                                                 'Name' => array(
                                                     'type' => 'string',
-                                                ),
-                                                'ProvisionedIopsCapable' => array(
-                                                    'type' => 'boolean',
                                                 ),
                                             ),
                                         ),
@@ -5252,9 +5728,6 @@ return array (
                                         'Name' => array(
                                             'type' => 'string',
                                         ),
-                                        'ProvisionedIopsCapable' => array(
-                                            'type' => 'boolean',
-                                        ),
                                     ),
                                 ),
                             ),
@@ -5265,6 +5738,12 @@ return array (
                                 'type' => 'boolean',
                             ),
                             'Vpc' => array(
+                                'type' => 'boolean',
+                            ),
+                            'StorageType' => array(
+                                'type' => 'string',
+                            ),
+                            'SupportsIops' => array(
                                 'type' => 'boolean',
                             ),
                         ),

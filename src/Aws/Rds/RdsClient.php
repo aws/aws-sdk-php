@@ -29,7 +29,9 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model addSourceIdentifierToSubscription(array $args = array()) {@command Rds AddSourceIdentifierToSubscription}
  * @method Model addTagsToResource(array $args = array()) {@command Rds AddTagsToResource}
  * @method Model authorizeDBSecurityGroupIngress(array $args = array()) {@command Rds AuthorizeDBSecurityGroupIngress}
+ * @method Model copyDBParameterGroup(array $args = array()) {@command Rds CopyDBParameterGroup}
  * @method Model copyDBSnapshot(array $args = array()) {@command Rds CopyDBSnapshot}
+ * @method Model copyOptionGroup(array $args = array()) {@command Rds CopyOptionGroup}
  * @method Model createDBInstance(array $args = array()) {@command Rds CreateDBInstance}
  * @method Model createDBInstanceReadReplica(array $args = array()) {@command Rds CreateDBInstanceReadReplica}
  * @method Model createDBParameterGroup(array $args = array()) {@command Rds CreateDBParameterGroup}
@@ -103,7 +105,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  */
 class RdsClient extends AbstractClient
 {
-    const LATEST_API_VERSION = '2013-09-09';
+    const LATEST_API_VERSION = '2014-09-01';
 
     /**
      * Factory method to create a new Amazon Relational Database Service client using an array of configuration options.
