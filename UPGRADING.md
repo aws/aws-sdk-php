@@ -4,7 +4,188 @@ Upgrading Guide
 Upgrade from 2.x to 3.x
 -----------------------
 
-_Work in progress_.
+Version 3 is a new major version of the SDK that represents a lot of new work
+and refactoring. While the fundamental way the you use the SDK has not changed,
+there are changes in several parts to accomplish our goals of:
+
+- Adding new functionality
+- Improving performance
+- Simplifying interfaces
+- Reducing bloat
+- Protecting against future breaking changes
+
+The following sections describe these changes.
+
+### Dependencies
+
+* **PHP 5.4+** - PHP version 5.4 or higher is now required, because the SDK and
+  its dependencies use various PHP 5.4 features including traits, short array
+  syntax, `callable` typehints, and the auto-binding of `$this` in closures.
+* **[Guzzle 5](http://guzzlephp.org/)** - The underlying HTTP library for the
+  SDK. The update from Guzzle 3 to Guzzle 5 provides many of the new features of
+  the SDK, including async requests, the new event system, the "debug" client
+  option, and more.
+* **[RingPHP](http://ringphp.readthedocs.org)** - The foundation of Guzzle 5.
+  It performs the low-level request handling for Guzzle, and is based on a
+  [similarly named library from Clojure](https://github.com/ring-clojure/ring).
+* **[React/Promise](https://github.com/reactphp/promise)** - A PHP
+  implementation of the [Promises/A+ specification](https://promisesaplus.com/).
+  Used by RingPHP to the promise API for asynchronous requests.
+* **[jmespath.php](https://github.com/mtdowling/jmespath.php)** - Provides the
+  ability to query Result data, especially deeply nested results. It implements
+  the [JMESPath specification](http://jmespath.org/), which is also supported
+  by the [AWS CLI](https://github.com/aws/aws-cli).
+
+### SDK instantiation and configuration
+
+Version 3 of the SDK introduces the `Aws\Sdk` class to replace `Aws\Common\Aws`.
+The `Sdk` class does extend from Guzzle and does not act as a service locator.
+It does act as a client factory though, and you can use it to create a service
+client.
+
+```php
+$aws = new \Aws\Sdk();
+
+// Use the getClient method to instantiate a client.
+$aws->getClient('s3', [
+    // Provide client options.
+    'region' => 'us-west-2',
+    'version' => 'latest',
+]);
+// OR... you can use the magic methods.
+$aws->getS3([
+    // Provide client options.
+    'region' => 'us-west-2',
+    'version' => 'latest',
+]);
+```
+
+The client options are a little different from the Version 2 options. Please see
+the [API docs for `Aws\Sdk::getClient()`](http://docs.aws.amazon.com/aws-sdk-php/v3/api/Aws/Sdk.html#method_getClient)
+for a list of the client options.
+
+You can also, pass client options to the constructor of `Aws\Sdk`. These options
+will be global options to all clients created with this instance of the `Sdk`
+object. They can be overwritten when calling the `getClient()` method as above.
+
+```php
+$aws = new \Aws\Sdk([
+    'region' => 'us-west-2',
+    'version' => 'latest',
+]);
+
+// Will use global client options.
+$dynamoDb = $aws->getDynamoDb();
+
+// Will use global client options, but will overwrite the region.
+$dynamoDb = $aws->getDynamoDb([
+    'region' => 'ap-northeast-1',
+]);
+```
+
+You can add service-specific global options by using the service name as a key
+in the options.
+
+```php
+$aws = new \Aws\Sdk([
+    'region' => 'us-west-2',
+    'version' => 'latest',
+    'dynamodb' => [
+        'region' => 'ap-northeast-1',
+    ]
+]);
+```
+
+#### The `version` client option
+
+You are required to provide the API version when you instantiate a client. This
+is important, because it allows you to lock-in to the API versions of the
+services you are using. This helps the SDK and you maintain backward
+compatibility between future SDK releases, because you will be in control of
+which API versions you are using. Your code will never be impacted by new
+service API versions until you update your version setting. If this is not a
+concern for you, you can default to the latest API version by setting
+`'version'` to `'latest'` (this is essentially the default behavior of V2).
+
+### Removal of Enum classes
+
+Enums in Version 2 of the SDK (e.g., `Aws\S3\Enum\CannedAcl`) were concrete
+classes within the public API of the SDK that contained constants representing
+groups of valid parameter values to use when making calls to various service
+operations. We thought at the time, that these would be helpful to customers,
+but we quickly ran into issues.
+
+1. **Enum values change over time** - Services add and remove enum values from
+   their APIs over time. Sometimes services make backward-incompatible changes
+   to their API (they change their API version, and the SDK has to support both
+   versions). We have to make sure the Enum classes are backward-compatible,
+   even if the services' APIs change. Because of this, many Enum classes in
+   Version 2 contain constants that may or may not be valid, depending on which
+   version of the API you are using.
+
+2. **Some Enum values are reserved words in PHP** - Some service APIs end up
+   declaring Enum values that are named the same as a reserved word in PHP. In
+   those cases, we have to change the name to something else in order to put it
+   in an enum class. This makes some of the Version 2 enum classes inconsistent
+   with the actual service's API.
+
+3. **Enum classes add bloat to the SDK** - There are over 150 Enum classes in
+   Version 2.
+
+4. **Statically generated enum classes conflict with our dynamically driven API
+   model approach.** - The SDK currently supports multiple API versions based on
+   a user-supplied "version" parameter. By statically generating enum classes,
+   we are locking those enum classes to a specific API version, while at the
+   same time, promising that you can change the API version of a client at
+   runtime. These two things are not compatible with one another.
+
+5. **Enum classes provide little to no value**
+
+    1. Enum classes required you to know about and import (via use) them before
+       you could actually use them.
+    2. They provided autocomplete support, but only for IDE-using customers, and
+       only in the case where you know which enum to use for nested API
+       parameters.
+    3. There is no way to indicate which Enums are used with each operation and
+       to which parameters.
+    4. Writing out an Enum value is longer than writing the actual value (e.g.,
+       `CannedAcl::PUBLIC_READ` vs. ``'public-read'``).
+    5. The constant name is basically the same as the literal string value, so
+       the constant isn't actually abstracting anything.
+
+Because of these issues, we decided that we needed to remove Enums. For V2, we
+stopped updating them and stopped documenting them, and in V3, we have
+removed them completely.
+
+### Removal of fine-grained Exception classes
+
+We have removed the fine-grained exception classes that lived in the each of the
+services namespaces (e.g., `Aws\Rds\Exception\{SpecificErrorCase}Exception`) for
+very similar reasons that we removed Enums. The exceptions thrown by a
+service/operation are dependent on which API version (i.e, they can change from
+version to version) is used. Also, we are not technically able to provide the
+complete list of what exceptions can be thrown by a given operation (long
+story). This makes the fine-grained exception classes fairly useless.
+
+Similarly to Enums, we have not been updating these classes in V2 for several
+months, and have already removed them from our documentation.
+
+You should handle errors by catching the root exception class for each service
+(e.g. `Aws\Rds\Exception\RdsException`). You can use the `getAwsErrorCode()`
+method (formerly called `getExceptionCode()` in V2) of the exception to check
+for specific error codes. This is functionally equivalent to catching different
+exception classes, but provides that function without adding bloat to the SDK or
+setting false expectations.
+
+### @TODO
+
+More will be added to the UPGRADING guide soon about:
+
+- Client objects
+- Waiters and Iterators
+- Service descriptions
+- Result objects
+- Service-specific changes
 
 Upgrade from 2.6 to 2.7
 -----------------------
