@@ -2,12 +2,12 @@
 return [
   'metadata' =>
   [
-    'apiVersion' => '2013-09-09',
+    'apiVersion' => '2014-09-01',
     'endpointPrefix' => 'rds',
     'serviceAbbreviation' => 'Amazon RDS',
     'serviceFullName' => 'Amazon Relational Database Service',
     'signatureVersion' => 'v4',
-    'xmlNamespace' => 'http://rds.amazonaws.com/doc/2013-09-09/',
+    'xmlNamespace' => 'http://rds.amazonaws.com/doc/2014-09-01/',
     'protocol' => 'query',
   ],
   'operations' =>
@@ -160,6 +160,61 @@ return [
         ],
       ],
     ],
+    'CopyDBParameterGroup' =>
+    [
+      'name' => 'CopyDBParameterGroup',
+      'http' =>
+      [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' =>
+      [
+        'shape' => 'CopyDBParameterGroupMessage',
+      ],
+      'output' =>
+      [
+        'shape' => 'CopyDBParameterGroupResult',
+        'wrapper' => true,
+        'resultWrapper' => 'CopyDBParameterGroupResult',
+      ],
+      'errors' =>
+      [
+        0 =>
+        [
+          'shape' => 'DBParameterGroupNotFoundFault',
+          'error' =>
+          [
+            'code' => 'DBParameterGroupNotFound',
+            'httpStatusCode' => 404,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        1 =>
+        [
+          'shape' => 'DBParameterGroupAlreadyExistsFault',
+          'error' =>
+          [
+            'code' => 'DBParameterGroupAlreadyExists',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        2 =>
+        [
+          'shape' => 'DBParameterGroupQuotaExceededFault',
+          'error' =>
+          [
+            'code' => 'DBParameterGroupQuotaExceeded',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
     'CopyDBSnapshot' =>
     [
       'name' => 'CopyDBSnapshot',
@@ -219,6 +274,61 @@ return [
           'error' =>
           [
             'code' => 'SnapshotQuotaExceeded',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
+    'CopyOptionGroup' =>
+    [
+      'name' => 'CopyOptionGroup',
+      'http' =>
+      [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' =>
+      [
+        'shape' => 'CopyOptionGroupMessage',
+      ],
+      'output' =>
+      [
+        'shape' => 'CopyOptionGroupResult',
+        'wrapper' => true,
+        'resultWrapper' => 'CopyOptionGroupResult',
+      ],
+      'errors' =>
+      [
+        0 =>
+        [
+          'shape' => 'OptionGroupAlreadyExistsFault',
+          'error' =>
+          [
+            'code' => 'OptionGroupAlreadyExistsFault',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        1 =>
+        [
+          'shape' => 'OptionGroupNotFoundFault',
+          'error' =>
+          [
+            'code' => 'OptionGroupNotFoundFault',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        2 =>
+        [
+          'shape' => 'OptionGroupQuotaExceededFault',
+          'error' =>
+          [
+            'code' => 'OptionGroupQuotaExceededFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
@@ -374,6 +484,28 @@ return [
           [
             'code' => 'OptionGroupNotFoundFault',
             'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        12 =>
+        [
+          'shape' => 'StorageTypeNotSupportedFault',
+          'error' =>
+          [
+            'code' => 'StorageTypeNotSupported',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        13 =>
+        [
+          'shape' => 'AuthorizationNotFoundFault',
+          'error' =>
+          [
+            'code' => 'AuthorizationNotFound',
+            'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -571,6 +703,17 @@ return [
           'error' =>
           [
             'code' => 'InvalidDBSubnetGroupFault',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        16 =>
+        [
+          'shape' => 'StorageTypeNotSupportedFault',
+          'error' =>
+          [
+            'code' => 'StorageTypeNotSupported',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
@@ -1968,6 +2111,28 @@ return [
           ],
           'exception' => true,
         ],
+        12 =>
+        [
+          'shape' => 'StorageTypeNotSupportedFault',
+          'error' =>
+          [
+            'code' => 'StorageTypeNotSupported',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        13 =>
+        [
+          'shape' => 'AuthorizationNotFoundFault',
+          'error' =>
+          [
+            'code' => 'AuthorizationNotFound',
+            'httpStatusCode' => 404,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
       ],
     ],
     'ModifyDBParameterGroup' =>
@@ -2653,6 +2818,28 @@ return [
           ],
           'exception' => true,
         ],
+        13 =>
+        [
+          'shape' => 'StorageTypeNotSupportedFault',
+          'error' =>
+          [
+            'code' => 'StorageTypeNotSupported',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        14 =>
+        [
+          'shape' => 'AuthorizationNotFoundFault',
+          'error' =>
+          [
+            'code' => 'AuthorizationNotFound',
+            'httpStatusCode' => 404,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
       ],
     ],
     'RestoreDBInstanceToPointInTime' =>
@@ -2825,6 +3012,28 @@ return [
           [
             'code' => 'OptionGroupNotFoundFault',
             'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        14 =>
+        [
+          'shape' => 'StorageTypeNotSupportedFault',
+          'error' =>
+          [
+            'code' => 'StorageTypeNotSupported',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        15 =>
+        [
+          'shape' => 'AuthorizationNotFoundFault',
+          'error' =>
+          [
+            'code' => 'AuthorizationNotFound',
+            'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -3020,10 +3229,6 @@ return [
         [
           'shape' => 'String',
         ],
-        'ProvisionedIopsCapable' =>
-        [
-          'shape' => 'Boolean',
-        ],
       ],
       'wrapper' => true,
     ],
@@ -3059,6 +3264,35 @@ return [
         ],
       ],
     ],
+    'CopyDBParameterGroupMessage' =>
+    [
+      'type' => 'structure',
+      'required' =>
+      [
+        0 => 'SourceDBParameterGroupIdentifier',
+        1 => 'TargetDBParameterGroupIdentifier',
+        2 => 'TargetDBParameterGroupDescription',
+      ],
+      'members' =>
+      [
+        'SourceDBParameterGroupIdentifier' =>
+        [
+          'shape' => 'String',
+        ],
+        'TargetDBParameterGroupIdentifier' =>
+        [
+          'shape' => 'String',
+        ],
+        'TargetDBParameterGroupDescription' =>
+        [
+          'shape' => 'String',
+        ],
+        'Tags' =>
+        [
+          'shape' => 'TagList',
+        ],
+      ],
+    ],
     'CopyDBSnapshotMessage' =>
     [
       'type' => 'structure',
@@ -3074,6 +3308,35 @@ return [
           'shape' => 'String',
         ],
         'TargetDBSnapshotIdentifier' =>
+        [
+          'shape' => 'String',
+        ],
+        'Tags' =>
+        [
+          'shape' => 'TagList',
+        ],
+      ],
+    ],
+    'CopyOptionGroupMessage' =>
+    [
+      'type' => 'structure',
+      'required' =>
+      [
+        0 => 'SourceOptionGroupIdentifier',
+        1 => 'TargetOptionGroupIdentifier',
+        2 => 'TargetOptionGroupDescription',
+      ],
+      'members' =>
+      [
+        'SourceOptionGroupIdentifier' =>
+        [
+          'shape' => 'String',
+        ],
+        'TargetOptionGroupIdentifier' =>
+        [
+          'shape' => 'String',
+        ],
+        'TargetOptionGroupDescription' =>
         [
           'shape' => 'String',
         ],
@@ -3197,6 +3460,18 @@ return [
         [
           'shape' => 'TagList',
         ],
+        'StorageType' =>
+        [
+          'shape' => 'String',
+        ],
+        'TdeCredentialArn' =>
+        [
+          'shape' => 'String',
+        ],
+        'TdeCredentialPassword' =>
+        [
+          'shape' => 'String',
+        ],
       ],
     ],
     'CreateDBInstanceReadReplicaMessage' =>
@@ -3250,6 +3525,10 @@ return [
           'shape' => 'TagList',
         ],
         'DBSubnetGroupName' =>
+        [
+          'shape' => 'String',
+        ],
+        'StorageType' =>
         [
           'shape' => 'String',
         ],
@@ -3622,6 +3901,14 @@ return [
         'StatusInfos' =>
         [
           'shape' => 'DBInstanceStatusInfoList',
+        ],
+        'StorageType' =>
+        [
+          'shape' => 'String',
+        ],
+        'TdeCredentialArn' =>
+        [
+          'shape' => 'String',
         ],
       ],
       'wrapper' => true,
@@ -4068,6 +4355,14 @@ return [
         [
           'shape' => 'String',
         ],
+        'StorageType' =>
+        [
+          'shape' => 'String',
+        ],
+        'TdeCredentialArn' =>
+        [
+          'shape' => 'String',
+        ],
       ],
       'wrapper' => true,
     ],
@@ -4403,6 +4698,10 @@ return [
         [
           'shape' => 'String',
         ],
+        'Filters' =>
+        [
+          'shape' => 'FilterList',
+        ],
         'MaxRecords' =>
         [
           'shape' => 'IntegerOptional',
@@ -4497,6 +4796,10 @@ return [
         [
           'shape' => 'Long',
         ],
+        'Filters' =>
+        [
+          'shape' => 'FilterList',
+        ],
         'MaxRecords' =>
         [
           'shape' => 'IntegerOptional',
@@ -4561,6 +4864,10 @@ return [
         'Source' =>
         [
           'shape' => 'String',
+        ],
+        'Filters' =>
+        [
+          'shape' => 'FilterList',
         ],
         'MaxRecords' =>
         [
@@ -4662,6 +4969,10 @@ return [
         [
           'shape' => 'String',
         ],
+        'Filters' =>
+        [
+          'shape' => 'FilterList',
+        ],
         'MaxRecords' =>
         [
           'shape' => 'IntegerOptional',
@@ -4680,6 +4991,10 @@ return [
         'SourceType' =>
         [
           'shape' => 'String',
+        ],
+        'Filters' =>
+        [
+          'shape' => 'FilterList',
         ],
       ],
     ],
@@ -4735,6 +5050,10 @@ return [
         [
           'shape' => 'EventCategoriesList',
         ],
+        'Filters' =>
+        [
+          'shape' => 'FilterList',
+        ],
         'MaxRecords' =>
         [
           'shape' => 'IntegerOptional',
@@ -4761,6 +5080,10 @@ return [
         'MajorEngineVersion' =>
         [
           'shape' => 'String',
+        ],
+        'Filters' =>
+        [
+          'shape' => 'FilterList',
         ],
         'MaxRecords' =>
         [
@@ -4831,6 +5154,10 @@ return [
         'Vpc' =>
         [
           'shape' => 'BooleanOptional',
+        ],
+        'Filters' =>
+        [
+          'shape' => 'FilterList',
         ],
         'MaxRecords' =>
         [
@@ -4917,6 +5244,10 @@ return [
         'MultiAZ' =>
         [
           'shape' => 'BooleanOptional',
+        ],
+        'Filters' =>
+        [
+          'shape' => 'FilterList',
         ],
         'MaxRecords' =>
         [
@@ -5229,16 +5560,16 @@ return [
       'type' => 'structure',
       'required' =>
       [
-        0 => 'FilterName',
-        1 => 'FilterValue',
+        0 => 'Name',
+        1 => 'Values',
       ],
       'members' =>
       [
-        'FilterName' =>
+        'Name' =>
         [
           'shape' => 'String',
         ],
-        'FilterValue' =>
+        'Values' =>
         [
           'shape' => 'FilterValueList',
         ],
@@ -5511,6 +5842,10 @@ return [
         [
           'shape' => 'String',
         ],
+        'Filters' =>
+        [
+          'shape' => 'FilterList',
+        ],
       ],
     ],
     'Long' =>
@@ -5595,6 +5930,18 @@ return [
           'shape' => 'String',
         ],
         'NewDBInstanceIdentifier' =>
+        [
+          'shape' => 'String',
+        ],
+        'StorageType' =>
+        [
+          'shape' => 'String',
+        ],
+        'TdeCredentialArn' =>
+        [
+          'shape' => 'String',
+        ],
+        'TdeCredentialPassword' =>
         [
           'shape' => 'String',
         ],
@@ -6146,6 +6493,14 @@ return [
         [
           'shape' => 'Boolean',
         ],
+        'StorageType' =>
+        [
+          'shape' => 'String',
+        ],
+        'SupportsIops' =>
+        [
+          'shape' => 'Boolean',
+        ],
       ],
       'wrapper' => true,
     ],
@@ -6267,6 +6622,10 @@ return [
           'shape' => 'IntegerOptional',
         ],
         'DBInstanceIdentifier' =>
+        [
+          'shape' => 'String',
+        ],
+        'StorageType' =>
         [
           'shape' => 'String',
         ],
@@ -6752,6 +7111,18 @@ return [
         [
           'shape' => 'TagList',
         ],
+        'StorageType' =>
+        [
+          'shape' => 'String',
+        ],
+        'TdeCredentialArn' =>
+        [
+          'shape' => 'String',
+        ],
+        'TdeCredentialPassword' =>
+        [
+          'shape' => 'String',
+        ],
       ],
     ],
     'RestoreDBInstanceToPointInTimeMessage' =>
@@ -6831,6 +7202,18 @@ return [
         'Tags' =>
         [
           'shape' => 'TagList',
+        ],
+        'StorageType' =>
+        [
+          'shape' => 'String',
+        ],
+        'TdeCredentialArn' =>
+        [
+          'shape' => 'String',
+        ],
+        'TdeCredentialPassword' =>
+        [
+          'shape' => 'String',
         ],
       ],
     ],
@@ -6964,6 +7347,20 @@ return [
       'error' =>
       [
         'code' => 'StorageQuotaExceeded',
+        'httpStatusCode' => 400,
+        'senderFault' => true,
+      ],
+      'exception' => true,
+    ],
+    'StorageTypeNotSupportedFault' =>
+    [
+      'type' => 'structure',
+      'members' =>
+      [
+      ],
+      'error' =>
+      [
+        'code' => 'StorageTypeNotSupported',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
@@ -7169,6 +7566,17 @@ return [
         ],
       ],
     ],
+    'CopyDBParameterGroupResult' =>
+    [
+      'type' => 'structure',
+      'members' =>
+      [
+        'DBParameterGroup' =>
+        [
+          'shape' => 'DBParameterGroup',
+        ],
+      ],
+    ],
     'CopyDBSnapshotResult' =>
     [
       'type' => 'structure',
@@ -7177,6 +7585,17 @@ return [
         'DBSnapshot' =>
         [
           'shape' => 'DBSnapshot',
+        ],
+      ],
+    ],
+    'CopyOptionGroupResult' =>
+    [
+      'type' => 'structure',
+      'members' =>
+      [
+        'OptionGroup' =>
+        [
+          'shape' => 'OptionGroup',
         ],
       ],
     ],

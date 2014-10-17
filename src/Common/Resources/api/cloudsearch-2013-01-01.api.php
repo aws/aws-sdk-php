@@ -1393,6 +1393,10 @@ return [
         [
           'shape' => 'String',
         ],
+        'JapaneseTokenizationDictionary' =>
+        [
+          'shape' => 'String',
+        ],
         'AlgorithmicStemming' =>
         [
           'shape' => 'AlgorithmicStemming',
@@ -2350,6 +2354,10 @@ return [
         [
           'shape' => 'InstanceCount',
         ],
+        'Limits' =>
+        [
+          'shape' => 'Limits',
+        ],
       ],
     ],
     'DomainStatusList' =>
@@ -2781,6 +2789,26 @@ return [
       ],
       'exception' => true,
     ],
+    'Limits' =>
+    [
+      'type' => 'structure',
+      'required' =>
+      [
+        0 => 'MaximumReplicationCount',
+        1 => 'MaximumPartitionCount',
+      ],
+      'members' =>
+      [
+        'MaximumReplicationCount' =>
+        [
+          'shape' => 'MaximumReplicationCount',
+        ],
+        'MaximumPartitionCount' =>
+        [
+          'shape' => 'MaximumPartitionCount',
+        ],
+      ],
+    ],
     'ListDomainNamesResponse' =>
     [
       'type' => 'structure',
@@ -2853,6 +2881,16 @@ return [
     'Long' =>
     [
       'type' => 'long',
+    ],
+    'MaximumPartitionCount' =>
+    [
+      'type' => 'integer',
+      'min' => 1,
+    ],
+    'MaximumReplicationCount' =>
+    [
+      'type' => 'integer',
+      'min' => 1,
     ],
     'MultiAZ' =>
     [
