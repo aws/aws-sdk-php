@@ -1,6 +1,52 @@
 Upgrading Guide
 ===============
 
+Upgrade from 2.x to 3.x
+-----------------------
+
+_Work in progress_.
+
+Upgrade from 2.6 to 2.7
+-----------------------
+
+Version 2.7 is backward-compatible with version 2.6. The version bump was
+necessary in order to mark some things in the DynamoDb namespace as deprecated.
+See the [CHANGELOG entry for 2.7.0](https://github.com/aws/aws-sdk-php/blob/v3/CHANGELOG.md#270-2014-10-08)
+for more details.
+
+Upgrade from 2.5 to 2.6
+-----------------------
+
+**IMPORTANT:** Version 2.6 *is* backward-compatible with version 2.5, *unless* you are using the Amazon CloudSearch
+client. If you are using CloudSearch, please read the next section carefully.
+
+### Amazon CloudSearch
+
+Version 2.6 of the AWS SDK for PHP has been updated to use the 2013-01-01 API version of Amazon CloudSearch by default.
+
+The 2013-01-01 API marks a significant upgrade of Amazon CloudSearch, but includes numerous breaking changes to the API.
+CloudSearch now supports 33 languages, highlighting, autocomplete suggestions, geospatial search, AWS IAM integration to
+control access to domain configuration actions, and user configurable scaling and availability options. These new
+features are reflected in the changes to the method and parameters of the CloudSearch client.
+
+For details about the new API and how to update your usage of CloudSearch, please consult the [Configuration API
+Reference for Amazon CloudSearch](http://docs.aws.amazon.com/cloudsearch/latest/developerguide/configuration-api.html)
+and the guide for [Migrating to the Amazon CloudSearch 2013-01-01 API](http://docs.aws.amazon.com/cloudsearch/latest/developerguide/migrating.html).
+
+If you would like to continue using the older 2011-02-01 API, you can configure this when you instantiate the
+`CloudSearchClient`:
+
+```php
+use Aws\CloudSearch\CloudSearchClient;
+
+$client = CloudSearchClient::factory(array(
+    'key'     => '<aws access key>',
+    'secret'  => '<aws secret key>',
+    'region'  => '<region name>',
+    'version' => '2011-02-01',
+));
+```
+
 Upgrade from 2.4 to 2.5
 -----------------------
 
