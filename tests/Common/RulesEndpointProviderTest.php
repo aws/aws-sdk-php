@@ -10,7 +10,6 @@ class RulesEndpointProviderTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @expectedException \Aws\Common\Exception\UnresolvedEndpointException
-     * @expectedExceptionMessage Unable to resolve an endpoint for the "foo" service based on the provided configuration values: service=foo, region=bar, scheme=https
      */
     public function testThrowsWhenEndpointIsNotResolved()
     {
@@ -46,12 +45,12 @@ class RulesEndpointProviderTest extends \PHPUnit_Framework_TestCase
                 ['endpoint' => 'https://foo.bar.amazonaws.com']
             ],
             [
-                ['region' => 'us-gov-baz', 'service' => 'iam'],
+                ['region' => 'us-gov-west-3', 'service' => 'iam'],
                 ['endpoint' => 'https://iam.us-gov.amazonaws.com']
             ],
             [
-                ['region' => 'us-gov-baz', 'service' => 's3'],
-                ['endpoint' => 'https://s3-us-gov-baz.amazonaws.com']
+                ['region' => 'us-gov-west-10', 'service' => 's3'],
+                ['endpoint' => 'https://s3-us-gov-west-10.amazonaws.com']
             ],
             [
                 ['region' => 'us-gov-baz', 'service' => 'foo'],

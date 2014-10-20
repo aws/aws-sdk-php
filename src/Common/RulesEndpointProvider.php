@@ -5,19 +5,20 @@ use Aws\Common\Exception\UnresolvedEndpointException;
 use GuzzleHttp\Utils;
 
 /**
- * Provides endpoints for services based on a directory of rules files.
+ * Provides endpoints based on a rules configuration file.
  */
 class RulesEndpointProvider
 {
     /** @var array */
-    private $ruleSets;
+    private $patterns;
 
     /**
-     * @param array $ruleSets Rule sets to utilize
+     * @param array $patterns Hash of endpoint patterns mapping to endpoint
+     *                        configurations.
      */
-    public function __construct(array $ruleSets)
+    public function __construct(array $patterns)
     {
-        $this->ruleSets = $ruleSets;
+        $this->patterns = $patterns;
     }
 
     /**
@@ -50,48 +51,6 @@ class RulesEndpointProvider
 
     public function __invoke(array $args = [])
     {
-        $this->prepareArguments($args);
-
-        foreach ($this->ruleSets as $ruleSet) {
-
-            // Ensure the region matches
-            if (!empty($ruleSet['regionPrefix']) &&
-                strpos($args['region'], $ruleSet['regionPrefix']) !== 0
-            ) {
-                continue;
-            }
-
-            foreach ($ruleSet['rules'] as $rule) {
-                if (isset($rule['services']) &&
-                    !in_array($args['service'], $rule['services'])
-                ) {
-                    continue;
-                }
-
-                $rule['config']['endpoint'] = Utils::uriTemplate(
-                    $rule['config']['endpoint'], $args
-                );
-
-                return $rule['config'];
-            }
-        }
-
-        throw $this->getUnresolvedException($args);
-    }
-
-    /**
-     * Prepare and validate arguments to resolve an endpoint
-     *
-     * @param array $args Arguments passed by reference
-     *
-     * @throws \InvalidArgumentException if region or service are missing
-     */
-    private function prepareArguments(array &$args)
-    {
-        if (!isset($args['scheme'])) {
-            $args['scheme'] = 'https';
-        }
-
         if (!isset($args['service'])) {
             throw new \InvalidArgumentException('Requires a "service" value');
         }
@@ -99,21 +58,53 @@ class RulesEndpointProvider
         if (!isset($args['region'])) {
             throw new \InvalidArgumentException('Requires a "region" value');
         }
+
+        foreach ($this->getKeys($args['region'], $args['service']) as $key) {
+            if (isset($this->patterns[$key])) {
+                return $this->expand($this->patterns[$key], $args);
+            }
+        }
+
+        throw new UnresolvedEndpointException();
     }
 
-    /**
-     * Creates an unresolved endpoint exception and attempts to format a useful
-     * error message based on the constrains of the matching service.
-     */
-    private function getUnresolvedException(array $args)
+    private function expand(array $config, array $args)
     {
-        $message = sprintf(
-            'Unable to resolve an endpoint for the "%s" service based on the'
-            . ' provided configuration values: %s.',
-            $args['service'],
-            str_replace('&', ', ', http_build_query($args))
-        );
+        $scheme = isset($args['scheme']) ? $args['scheme'] : 'https';
+        $config['endpoint'] = $scheme . '://' . Utils::uriTemplate($config['endpoint'], $args);
 
-        return new UnresolvedEndpointException($message);
+        return $config;
+    }
+
+    private function getKeys($region, $service)
+    {
+        $regionPrefix = $this->regionPrefix($region);
+
+        return $regionPrefix
+            ? [
+                "$region/$service",
+                "$regionPrefix/$service",
+                "$region/*",
+                "$regionPrefix/*",
+                "*/$service",
+                "*/*"
+            ] : [
+                "$region/$service",
+                "$region/*",
+                "*/$service",
+                "*/*"
+            ];
+    }
+
+    private function regionPrefix($region)
+    {
+        $parts = explode('-', $region);
+        if (count($parts) < 2) {
+            return null;
+        }
+
+        array_pop($parts);
+
+        return implode('-', $parts) . '-*';
     }
 }
