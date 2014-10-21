@@ -77,7 +77,7 @@ class FilesystemApiProvider
             $version = $this->determineLatestVersion($service);
         }
 
-        return $this->load($service, $version, 'waiters');
+        return $this->load($service, $version, 'waiters2');
     }
 
     public function getServiceVersions($service)

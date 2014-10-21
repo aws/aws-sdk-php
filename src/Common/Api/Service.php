@@ -303,8 +303,8 @@ class Service extends AbstractModel
     public function getWaiterConfig($name)
     {
         if (!$this->waiters) {
-            $this->waiters = call_user_func(
-                $this->apiProvider,
+            $provider = $this->apiProvider;
+            $this->waiters = $provider(
                 'waiter',
                 $this->serviceName,
                 $this->apiVersion
@@ -317,57 +317,6 @@ class Service extends AbstractModel
                 . " defined for the {$this->serviceName} service.");
         }
 
-        // Resolve the configuration for the named waiter
-        if (!isset($this->waiters[$name]['waiter_name'])) {
-            $this->resolveWaiterConfig($name);
-        }
-
         return $this->waiters[$name];
-    }
-
-    private function resolveWaiterConfig($name)
-    {
-        static $defaults = [
-            'operation'     => null,
-            'ignore_errors' => [],
-            'description'   => null,
-            'success_type'  => null,
-            'success_path'  => null,
-            'success_value' => null,
-            'failure_type'  => null,
-            'failure_path'  => null,
-            'failure_value' => null,
-        ];
-
-        $config = $this->waiters[$name];
-
-        // Resolve extensions and defaults
-        if (isset($config['extends'])) {
-            $config += $this->waiters[$config['extends']];
-        }
-        if (isset($this->waiters['__default__'])) {
-            $config += $this->waiters['__default__'];
-        }
-        $config += $defaults;
-
-        // Merge acceptor settings into success/failure settings
-        foreach ($config as $cfgKey => $cfgVal) {
-            if (substr($cfgKey, 0, 9) == 'acceptor_') {
-                $option = substr($cfgKey, 9);
-                if (!isset($config["success_{$option}"])) {
-                    $config["success_{$option}"] = $cfgVal;
-                }
-                if (!isset($config["failure_{$option}"])) {
-                    $config["failure_{$option}"] = $cfgVal;
-                }
-                unset($config[$cfgKey]);
-            }
-        }
-
-        // Add the waiter name and remove description
-        $config['waiter_name'] = $name;
-        unset($config['description']);
-
-        $this->waiters[$name] = $config;
     }
 }

@@ -68,30 +68,17 @@ interface AwsClientInterface extends ServiceClientInterface
     public function getPaginator($name, array $args = [], array $config = []);
 
     /**
-     * Get a service waiter object by name.
+     * Wait until a resource is in a particular state.
      *
-     * @param string|callable $name Name of the service waiter that defines the
-     *                              wait conditions.
-     * @param array  $args          Command args to be used with each command.
-     * @param array  $config        Hash of options.
+     * @param string|callable $name Name of the waiter that defines the wait
+     *                              configuration and conditions.
+     * @param array  $args          Args to be used with each command executed
+     *                              by the waiter. Use `'@future' => true` to
+     *                              make the waiter work asynchronously.
+     * @param array  $config        Waiter configuration. Use this to override
+     *                              the defaults for the specified waiter.
      *
-     * @return \Aws\Common\Waiter\ResourceWaiter
-     * @throws \UnexpectedValueException if the waiter is invalid.
-     */
-    public function getWaiter($name, array $args = [], array $config = []);
-
-    /**
-     * Wait until a particular condition is true.
-     *
-     * @param string|callable $name Name of the service waiter that defines the
-     *                              wait conditions -OR- if a callable is
-     *                              provided, then the callable acts as the wait
-     *                              condition (return `true` to stop waiting).
-     * @param array  $args          Command args to be used with each command.
-     *                              If a callable was provided for $name, this
-     *                              array will act as $config instead.
-     * @param array  $config        Hash of options.
-     *
+     * @return \Aws\Common\Waiter|void
      * @throws \UnexpectedValueException if the waiter is invalid.
      */
     public function waitUntil($name, array $args = [], array $config = []);
