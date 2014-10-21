@@ -22,7 +22,7 @@ if (is_file($dir)) {
 
 function copyJson($file) {
     if ($file[0] == '.') {
-        continue;
+        return;
     }
     $phpFile = __DIR__ . '/../src/Common/Resources/api/'
         . str_replace('.json', '.php', basename($file));

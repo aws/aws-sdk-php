@@ -1,5 +1,4 @@
 <?php
-
 require __DIR__ . '/artifacts/Burgomaster.php';
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -61,7 +60,7 @@ $burgomaster->recursiveCopy('vendor/guzzlehttp/retry-subscriber/src', 'GuzzleHtt
 $burgomaster->recursiveCopy('vendor/guzzlehttp/log-subscriber/src', 'GuzzleHttp/Subscriber/Log');
 $burgomaster->recursiveCopy('vendor/mtdowling/jmespath.php/src', 'JmesPath');
 $burgomaster->recursiveCopy('vendor/psr/log/Psr/Log', 'Psr/Log');
-$burgomaster->recursiveCopy('vendor/react/promise/src/React/Promise', 'React/Promise');
+$burgomaster->recursiveCopy('vendor/react/promise/src', 'React/Promise');
 
 $burgomaster->createAutoloader(['React/Promise/functions.php'], $autoloaderFilename);
 $burgomaster->createZip(__DIR__ . "/artifacts/{$packageName}.zip");
