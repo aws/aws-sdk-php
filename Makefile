@@ -57,12 +57,12 @@ tag: check_tag
 # "make release" to push a release. This task requires that the
 # OAUTH_TOKEN environment variable is available and the token has permission
 # to push to the repository.
-release: package
-	@echo "Pushing code to master"
+release: check_tag package
 	git push origin master
-	@echo "Pushing latest tag to Github"
-	git push origin `git describe --abbrev=0 --tags`
-	echo "Creating a Github release"
-	php build/gh-release.php
+	git push origin $(TAG)
+	php build/gh-release.php $(TAG)
+
+# Tags the repo and publishes a release.
+full_release: tag release
 
 .PHONY: docs burgomaster
