@@ -6,6 +6,7 @@ CHANGELOG
 
 * Updated AWS Identity and Access Management (IAM) to the latest version.
 * Updated Amazon Cognito Identity client to the latest version.
+* Added auto-renew support to the Amazon Route 53 Domains client.
 
 2.7.1 (2014-10-16)
 ------------------

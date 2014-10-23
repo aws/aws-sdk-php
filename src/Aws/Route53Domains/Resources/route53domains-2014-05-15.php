@@ -1,4 +1,18 @@
 <?php
+/**
+ * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ * http://aws.amazon.com/apache2.0
+ *
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
 
 return array (
     'apiVersion' => '2014-05-15',
@@ -61,6 +75,41 @@ return array (
                 ),
             ),
         ),
+        'DisableDomainAutoRenew' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'Route53Domains_v20140515.DisableDomainAutoRenew',
+                ),
+                'DomainName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'maxLength' => 255,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The requested item is not acceptable. For example, for an OperationId it may refer to the ID of an operation that is already completed. For a domain name, it may not be a valid domain name or belong to the requester account.',
+                    'class' => 'InvalidInputException',
+                ),
+            ),
+        ),
         'DisableDomainTransferLock' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -105,6 +154,41 @@ return array (
                 array(
                     'reason' => 'The number of operations or jobs running exceeded the allowed threshold for the account.',
                     'class' => 'OperationLimitExceededException',
+                ),
+            ),
+        ),
+        'EnableDomainAutoRenew' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'Route53Domains_v20140515.EnableDomainAutoRenew',
+                ),
+                'DomainName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'maxLength' => 255,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The requested item is not acceptable. For example, for an OperationId it may refer to the ID of an operation that is already completed. For a domain name, it may not be a valid domain name or belong to the requester account.',
+                    'class' => 'InvalidInputException',
                 ),
             ),
         ),
@@ -1404,6 +1488,10 @@ return array (
                     'location' => 'json',
                 ),
             ),
+        ),
+        'EmptyOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
         ),
         'DisableDomainTransferLockResponse' => array(
             'type' => 'object',
