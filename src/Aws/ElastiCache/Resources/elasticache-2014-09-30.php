@@ -15,7 +15,7 @@
  */
 
 return array (
-    'apiVersion' => '2014-07-15',
+    'apiVersion' => '2014-09-30',
     'endpointPrefix' => 'elasticache',
     'serviceFullName' => 'Amazon ElastiCache',
     'serviceType' => 'query',
@@ -85,7 +85,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'CacheSecurityGroupName' => array(
                     'required' => true,
@@ -141,7 +141,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'SourceSnapshotName' => array(
                     'required' => true,
@@ -196,7 +196,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'CacheClusterId' => array(
                     'required' => true,
@@ -206,6 +206,23 @@ return array (
                 'ReplicationGroupId' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
+                ),
+                'AZMode' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'PreferredAvailabilityZone' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'PreferredAvailabilityZones' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'PreferredAvailabilityZones.member',
+                    'items' => array(
+                        'name' => 'PreferredAvailabilityZone',
+                        'type' => 'string',
+                    ),
                 ),
                 'NumCacheNodes' => array(
                     'type' => 'numeric',
@@ -261,23 +278,6 @@ return array (
                 'SnapshotName' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                ),
-                'AZMode' => array(
-                    'type' => 'string',
-                    'location' => 'aws.query',
-                ),
-                'PreferredAvailabilityZone' => array(
-                    'type' => 'string',
-                    'location' => 'aws.query',
-                ),
-                'PreferredAvailabilityZones' => array(
-                    'type' => 'array',
-                    'location' => 'aws.query',
-                    'sentAs' => 'PreferredAvailabilityZones.member',
-                    'items' => array(
-                        'name' => 'PreferredAvailabilityZone',
-                        'type' => 'string',
-                    ),
                 ),
                 'PreferredMaintenanceWindow' => array(
                     'type' => 'string',
@@ -375,7 +375,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'CacheParameterGroupName' => array(
                     'required' => true,
@@ -431,7 +431,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'CacheSecurityGroupName' => array(
                     'required' => true,
@@ -478,7 +478,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'CacheSubnetGroupName' => array(
                     'required' => true,
@@ -535,20 +535,113 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'ReplicationGroupId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'PrimaryClusterId' => array(
+                'ReplicationGroupDescription' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'ReplicationGroupDescription' => array(
-                    'required' => true,
+                'PrimaryClusterId' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'AutomaticFailoverEnabled' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
+                'NumCacheClusters' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'PreferredCacheClusterAZs' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'PreferredCacheClusterAZs.member',
+                    'items' => array(
+                        'name' => 'AvailabilityZone',
+                        'type' => 'string',
+                    ),
+                ),
+                'CacheNodeType' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Engine' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'EngineVersion' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'CacheParameterGroupName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'CacheSubnetGroupName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'CacheSecurityGroupNames' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'CacheSecurityGroupNames.member',
+                    'items' => array(
+                        'name' => 'CacheSecurityGroupName',
+                        'type' => 'string',
+                    ),
+                ),
+                'SecurityGroupIds' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'SecurityGroupIds.member',
+                    'items' => array(
+                        'name' => 'SecurityGroupId',
+                        'type' => 'string',
+                    ),
+                ),
+                'SnapshotArns' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'SnapshotArns.member',
+                    'items' => array(
+                        'name' => 'SnapshotArn',
+                        'type' => 'string',
+                    ),
+                ),
+                'SnapshotName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'PreferredMaintenanceWindow' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Port' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'NotificationTopicArn' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'AutoMinorVersionUpgrade' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
+                'SnapshotRetentionLimit' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'SnapshotWindow' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -565,6 +658,38 @@ return array (
                 array(
                     'reason' => 'The specified replication group already exists.',
                     'class' => 'ReplicationGroupAlreadyExistsException',
+                ),
+                array(
+                    'reason' => 'The requested cache node type is not available in the specified Availability Zone.',
+                    'class' => 'InsufficientCacheClusterCapacityException',
+                ),
+                array(
+                    'reason' => 'The requested cache security group name does not refer to an existing cache security group.',
+                    'class' => 'CacheSecurityGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'The requested cache subnet group name does not refer to an existing cache subnet group.',
+                    'class' => 'CacheSubnetGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'The request cannot be processed because it would exceed the allowed number of cache clusters per customer.',
+                    'class' => 'ClusterQuotaForCustomerExceededException',
+                ),
+                array(
+                    'reason' => 'The request cannot be processed because it would exceed the allowed number of cache nodes in a single cache cluster.',
+                    'class' => 'NodeQuotaForClusterExceededException',
+                ),
+                array(
+                    'reason' => 'The request cannot be processed because it would exceed the allowed number of cache nodes per customer.',
+                    'class' => 'NodeQuotaForCustomerExceededException',
+                ),
+                array(
+                    'reason' => 'The requested cache parameter group name does not refer to an existing cache parameter group.',
+                    'class' => 'CacheParameterGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'The VPC network is in an invalid state.',
+                    'class' => 'InvalidVPCNetworkStateException',
                 ),
                 array(
                     'reason' => 'The value for a parameter is invalid.',
@@ -591,7 +716,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'CacheClusterId' => array(
                     'required' => true,
@@ -622,7 +747,7 @@ return array (
                     'class' => 'SnapshotQuotaExceededException',
                 ),
                 array(
-                    'reason' => 'You attempted one of the following actions:     Creating a snapshot of a Redis cache cluster running on a a t1.micro cache node.     Creating a snapshot of a cache cluster that is running Memcached rather than Redis.     Neither of these are supported by ElastiCache.',
+                    'reason' => 'You attempted one of the following actions:     Creating a snapshot of a Redis cache cluster running on a t1.micro cache node.     Creating a snapshot of a cache cluster that is running Memcached rather than Redis.     Neither of these are supported by ElastiCache.',
                     'class' => 'SnapshotFeatureNotSupportedException',
                 ),
                 array(
@@ -650,7 +775,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'CacheClusterId' => array(
                     'required' => true,
@@ -676,7 +801,7 @@ return array (
                     'class' => 'SnapshotAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'You attempted one of the following actions:     Creating a snapshot of a Redis cache cluster running on a a t1.micro cache node.     Creating a snapshot of a cache cluster that is running Memcached rather than Redis.     Neither of these are supported by ElastiCache.',
+                    'reason' => 'You attempted one of the following actions:     Creating a snapshot of a Redis cache cluster running on a t1.micro cache node.     Creating a snapshot of a cache cluster that is running Memcached rather than Redis.     Neither of these are supported by ElastiCache.',
                     'class' => 'SnapshotFeatureNotSupportedException',
                 ),
                 array(
@@ -708,7 +833,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'CacheParameterGroupName' => array(
                     'required' => true,
@@ -750,7 +875,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'CacheSecurityGroupName' => array(
                     'required' => true,
@@ -792,7 +917,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'CacheSubnetGroupName' => array(
                     'required' => true,
@@ -826,7 +951,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'ReplicationGroupId' => array(
                     'required' => true,
@@ -857,7 +982,7 @@ return array (
                     'class' => 'SnapshotAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'You attempted one of the following actions:     Creating a snapshot of a Redis cache cluster running on a a t1.micro cache node.     Creating a snapshot of a cache cluster that is running Memcached rather than Redis.     Neither of these are supported by ElastiCache.',
+                    'reason' => 'You attempted one of the following actions:     Creating a snapshot of a Redis cache cluster running on a t1.micro cache node.     Creating a snapshot of a cache cluster that is running Memcached rather than Redis.     Neither of these are supported by ElastiCache.',
                     'class' => 'SnapshotFeatureNotSupportedException',
                 ),
                 array(
@@ -889,7 +1014,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'SnapshotName' => array(
                     'required' => true,
@@ -931,7 +1056,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'CacheClusterId' => array(
                     'type' => 'string',
@@ -981,7 +1106,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'Engine' => array(
                     'type' => 'string',
@@ -1025,7 +1150,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'CacheParameterGroupName' => array(
                     'type' => 'string',
@@ -1070,7 +1195,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'CacheParameterGroupName' => array(
                     'required' => true,
@@ -1120,7 +1245,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'CacheSecurityGroupName' => array(
                     'type' => 'string',
@@ -1165,7 +1290,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'CacheSubnetGroupName' => array(
                     'type' => 'string',
@@ -1202,7 +1327,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'CacheParameterGroupFamily' => array(
                     'required' => true,
@@ -1244,7 +1369,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'SourceIdentifier' => array(
                     'type' => 'string',
@@ -1311,7 +1436,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'ReplicationGroupId' => array(
                     'type' => 'string',
@@ -1356,7 +1481,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'ReservedCacheNodeId' => array(
                     'type' => 'string',
@@ -1421,7 +1546,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'ReservedCacheNodesOfferingId' => array(
                     'type' => 'string',
@@ -1482,7 +1607,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'CacheClusterId' => array(
                     'type' => 'string',
@@ -1539,7 +1664,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'CacheClusterId' => array(
                     'required' => true,
@@ -1556,6 +1681,19 @@ return array (
                     'sentAs' => 'CacheNodeIdsToRemove.member',
                     'items' => array(
                         'name' => 'CacheNodeId',
+                        'type' => 'string',
+                    ),
+                ),
+                'AZMode' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'NewAvailabilityZones' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'NewAvailabilityZones.member',
+                    'items' => array(
+                        'name' => 'PreferredAvailabilityZone',
                         'type' => 'string',
                     ),
                 ),
@@ -1614,19 +1752,6 @@ return array (
                 'SnapshotWindow' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                ),
-                'AZMode' => array(
-                    'type' => 'string',
-                    'location' => 'aws.query',
-                ),
-                'NewAvailabilityZones' => array(
-                    'type' => 'array',
-                    'location' => 'aws.query',
-                    'sentAs' => 'NewAvailabilityZones.member',
-                    'items' => array(
-                        'name' => 'PreferredAvailabilityZone',
-                        'type' => 'string',
-                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -1691,7 +1816,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'CacheParameterGroupName' => array(
                     'required' => true,
@@ -1751,7 +1876,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'CacheSubnetGroupName' => array(
                     'required' => true,
@@ -1806,7 +1931,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'ReplicationGroupId' => array(
                     'required' => true,
@@ -1815,6 +1940,19 @@ return array (
                 ),
                 'ReplicationGroupDescription' => array(
                     'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'PrimaryClusterId' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'SnapshottingClusterId' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'AutomaticFailoverEnabled' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
                 'CacheSecurityGroupNames' => array(
@@ -1865,19 +2003,11 @@ return array (
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
-                'PrimaryClusterId' => array(
-                    'type' => 'string',
-                    'location' => 'aws.query',
-                ),
                 'SnapshotRetentionLimit' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
                 'SnapshotWindow' => array(
-                    'type' => 'string',
-                    'location' => 'aws.query',
-                ),
-                'SnapshottingClusterId' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1900,8 +2030,20 @@ return array (
                     'class' => 'InvalidCacheSecurityGroupStateException',
                 ),
                 array(
+                    'reason' => 'The requested cache node type is not available in the specified Availability Zone.',
+                    'class' => 'InsufficientCacheClusterCapacityException',
+                ),
+                array(
                     'reason' => 'The requested cache cluster ID does not refer to an existing cache cluster.',
                     'class' => 'CacheClusterNotFoundException',
+                ),
+                array(
+                    'reason' => 'The request cannot be processed because it would exceed the allowed number of cache nodes in a single cache cluster.',
+                    'class' => 'NodeQuotaForClusterExceededException',
+                ),
+                array(
+                    'reason' => 'The request cannot be processed because it would exceed the allowed number of cache nodes per customer.',
+                    'class' => 'NodeQuotaForCustomerExceededException',
                 ),
                 array(
                     'reason' => 'The requested cache security group name does not refer to an existing cache security group.',
@@ -1940,7 +2082,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'ReservedCacheNodesOfferingId' => array(
                     'required' => true,
@@ -1994,7 +2136,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'CacheClusterId' => array(
                     'required' => true,
@@ -2038,7 +2180,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'CacheParameterGroupName' => array(
                     'required' => true,
@@ -2103,7 +2245,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-07-15',
+                    'default' => '2014-09-30',
                 ),
                 'CacheSecurityGroupName' => array(
                     'required' => true,
@@ -2569,6 +2711,9 @@ return array (
                                 'PrimaryClusterId' => array(
                                     'type' => 'string',
                                 ),
+                                'AutomaticFailoverStatus' => array(
+                                    'type' => 'string',
+                                ),
                             ),
                         ),
                         'MemberClusters' => array(
@@ -2640,6 +2785,9 @@ return array (
                             ),
                         ),
                         'SnapshottingClusterId' => array(
+                            'type' => 'string',
+                        ),
+                        'AutomaticFailover' => array(
                             'type' => 'string',
                         ),
                     ),
@@ -3272,6 +3420,9 @@ return array (
                                     'PrimaryClusterId' => array(
                                         'type' => 'string',
                                     ),
+                                    'AutomaticFailoverStatus' => array(
+                                        'type' => 'string',
+                                    ),
                                 ),
                             ),
                             'MemberClusters' => array(
@@ -3343,6 +3494,9 @@ return array (
                                 ),
                             ),
                             'SnapshottingClusterId' => array(
+                                'type' => 'string',
+                            ),
+                            'AutomaticFailover' => array(
                                 'type' => 'string',
                             ),
                         ),
