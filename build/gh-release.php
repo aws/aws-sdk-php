@@ -24,7 +24,7 @@ assert(file_exists(__DIR__ . '/artifacts/aws.zip'));
 assert(file_exists(__DIR__ . '/artifacts/aws.phar'));
 
 // Grab and validate the tag annotation
-chdir("..");
+chdir(dirname(__DIR__));
 $message = `chag contents -t "$tag"` or die('Chag could not find or parse the tag');
 
 // Create a GitHub client.
