@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2010-03-31',
     'endpointPrefix' => 'sns',
     'serviceAbbreviation' => 'Amazon SNS',
@@ -10,60 +8,47 @@ return [
     'xmlNamespace' => 'http://sns.amazonaws.com/doc/2010-03-31/',
     'protocol' => 'query',
   ],
-  'operations' =>
-  [
-    'AddPermission' =>
-    [
+  'operations' => [
+    'AddPermission' => [
       'name' => 'AddPermission',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AddPermissionInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        2 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'NotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -72,74 +57,59 @@ return [
         ],
       ],
     ],
-    'ConfirmSubscription' =>
-    [
+    'ConfirmSubscription' => [
       'name' => 'ConfirmSubscription',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ConfirmSubscriptionInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ConfirmSubscriptionResponse',
         'resultWrapper' => 'ConfirmSubscriptionResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'SubscriptionLimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubscriptionLimitExceeded',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'NotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        4 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -148,52 +118,41 @@ return [
         ],
       ],
     ],
-    'CreatePlatformApplication' =>
-    [
+    'CreatePlatformApplication' => [
       'name' => 'CreatePlatformApplication',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreatePlatformApplicationInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreatePlatformApplicationResponse',
         'resultWrapper' => 'CreatePlatformApplicationResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        2 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -202,63 +161,50 @@ return [
         ],
       ],
     ],
-    'CreatePlatformEndpoint' =>
-    [
+    'CreatePlatformEndpoint' => [
       'name' => 'CreatePlatformEndpoint',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreatePlatformEndpointInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateEndpointResponse',
         'resultWrapper' => 'CreatePlatformEndpointResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        2 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'NotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -267,63 +213,50 @@ return [
         ],
       ],
     ],
-    'CreateTopic' =>
-    [
+    'CreateTopic' => [
       'name' => 'CreateTopic',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateTopicInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateTopicResponse',
         'resultWrapper' => 'CreateTopicResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'TopicLimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'TopicLimitExceeded',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        3 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -332,47 +265,37 @@ return [
         ],
       ],
     ],
-    'DeleteEndpoint' =>
-    [
+    'DeleteEndpoint' => [
       'name' => 'DeleteEndpoint',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteEndpointInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        2 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -381,47 +304,37 @@ return [
         ],
       ],
     ],
-    'DeletePlatformApplication' =>
-    [
+    'DeletePlatformApplication' => [
       'name' => 'DeletePlatformApplication',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeletePlatformApplicationInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        2 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -430,58 +343,46 @@ return [
         ],
       ],
     ],
-    'DeleteTopic' =>
-    [
+    'DeleteTopic' => [
       'name' => 'DeleteTopic',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteTopicInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        2 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'NotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -490,63 +391,50 @@ return [
         ],
       ],
     ],
-    'GetEndpointAttributes' =>
-    [
+    'GetEndpointAttributes' => [
       'name' => 'GetEndpointAttributes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetEndpointAttributesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetEndpointAttributesResponse',
         'resultWrapper' => 'GetEndpointAttributesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        2 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'NotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -555,63 +443,50 @@ return [
         ],
       ],
     ],
-    'GetPlatformApplicationAttributes' =>
-    [
+    'GetPlatformApplicationAttributes' => [
       'name' => 'GetPlatformApplicationAttributes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetPlatformApplicationAttributesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetPlatformApplicationAttributesResponse',
         'resultWrapper' => 'GetPlatformApplicationAttributesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        2 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'NotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -620,63 +495,50 @@ return [
         ],
       ],
     ],
-    'GetSubscriptionAttributes' =>
-    [
+    'GetSubscriptionAttributes' => [
       'name' => 'GetSubscriptionAttributes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetSubscriptionAttributesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetSubscriptionAttributesResponse',
         'resultWrapper' => 'GetSubscriptionAttributesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        2 =>
         [
           'shape' => 'NotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -685,63 +547,50 @@ return [
         ],
       ],
     ],
-    'GetTopicAttributes' =>
-    [
+    'GetTopicAttributes' => [
       'name' => 'GetTopicAttributes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetTopicAttributesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetTopicAttributesResponse',
         'resultWrapper' => 'GetTopicAttributesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        2 =>
         [
           'shape' => 'NotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -750,63 +599,50 @@ return [
         ],
       ],
     ],
-    'ListEndpointsByPlatformApplication' =>
-    [
+    'ListEndpointsByPlatformApplication' => [
       'name' => 'ListEndpointsByPlatformApplication',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListEndpointsByPlatformApplicationInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListEndpointsByPlatformApplicationResponse',
         'resultWrapper' => 'ListEndpointsByPlatformApplicationResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        2 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'NotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -815,52 +651,41 @@ return [
         ],
       ],
     ],
-    'ListPlatformApplications' =>
-    [
+    'ListPlatformApplications' => [
       'name' => 'ListPlatformApplications',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListPlatformApplicationsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListPlatformApplicationsResponse',
         'resultWrapper' => 'ListPlatformApplicationsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        2 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -869,52 +694,41 @@ return [
         ],
       ],
     ],
-    'ListSubscriptions' =>
-    [
+    'ListSubscriptions' => [
       'name' => 'ListSubscriptions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListSubscriptionsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListSubscriptionsResponse',
         'resultWrapper' => 'ListSubscriptionsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        2 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -923,63 +737,50 @@ return [
         ],
       ],
     ],
-    'ListSubscriptionsByTopic' =>
-    [
+    'ListSubscriptionsByTopic' => [
       'name' => 'ListSubscriptionsByTopic',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListSubscriptionsByTopicInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListSubscriptionsByTopicResponse',
         'resultWrapper' => 'ListSubscriptionsByTopicResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        2 =>
         [
           'shape' => 'NotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -988,52 +789,41 @@ return [
         ],
       ],
     ],
-    'ListTopics' =>
-    [
+    'ListTopics' => [
       'name' => 'ListTopics',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListTopicsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListTopicsResponse',
         'resultWrapper' => 'ListTopicsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        2 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -1042,96 +832,77 @@ return [
         ],
       ],
     ],
-    'Publish' =>
-    [
+    'Publish' => [
       'name' => 'Publish',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PublishInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'PublishResponse',
         'resultWrapper' => 'PublishResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ParameterValueInvalid',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        3 =>
         [
           'shape' => 'NotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'EndpointDisabledException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EndpointDisabled',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'PlatformApplicationDisabledException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'PlatformApplicationDisabled',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -1140,58 +911,46 @@ return [
         ],
       ],
     ],
-    'RemovePermission' =>
-    [
+    'RemovePermission' => [
       'name' => 'RemovePermission',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RemovePermissionInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        2 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'NotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1200,58 +959,46 @@ return [
         ],
       ],
     ],
-    'SetEndpointAttributes' =>
-    [
+    'SetEndpointAttributes' => [
       'name' => 'SetEndpointAttributes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SetEndpointAttributesInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        2 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'NotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1260,58 +1007,46 @@ return [
         ],
       ],
     ],
-    'SetPlatformApplicationAttributes' =>
-    [
+    'SetPlatformApplicationAttributes' => [
       'name' => 'SetPlatformApplicationAttributes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SetPlatformApplicationAttributesInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        2 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'NotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1320,58 +1055,46 @@ return [
         ],
       ],
     ],
-    'SetSubscriptionAttributes' =>
-    [
+    'SetSubscriptionAttributes' => [
       'name' => 'SetSubscriptionAttributes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SetSubscriptionAttributesInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        2 =>
         [
           'shape' => 'NotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -1380,58 +1103,46 @@ return [
         ],
       ],
     ],
-    'SetTopicAttributes' =>
-    [
+    'SetTopicAttributes' => [
       'name' => 'SetTopicAttributes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SetTopicAttributesInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        2 =>
         [
           'shape' => 'NotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -1440,74 +1151,59 @@ return [
         ],
       ],
     ],
-    'Subscribe' =>
-    [
+    'Subscribe' => [
       'name' => 'Subscribe',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SubscribeInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'SubscribeResponse',
         'resultWrapper' => 'SubscribeResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'SubscriptionLimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubscriptionLimitExceeded',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        3 =>
         [
           'shape' => 'NotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -1516,58 +1212,46 @@ return [
         ],
       ],
     ],
-    'Unsubscribe' =>
-    [
+    'Unsubscribe' => [
       'name' => 'Unsubscribe',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UnsubscribeInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
           'fault' => true,
         ],
-        2 =>
         [
           'shape' => 'AuthorizationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationError',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'NotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1577,1106 +1261,827 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'ActionsList' =>
-    [
+  'shapes' => [
+    'ActionsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'action',
       ],
     ],
-    'AddPermissionInput' =>
-    [
+    'AddPermissionInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TopicArn',
-        1 => 'Label',
-        2 => 'AWSAccountId',
-        3 => 'ActionName',
+      'required' => [
+        'TopicArn',
+        'Label',
+        'AWSAccountId',
+        'ActionName',
       ],
-      'members' =>
-      [
-        'TopicArn' =>
-        [
+      'members' => [
+        'TopicArn' => [
           'shape' => 'topicARN',
         ],
-        'Label' =>
-        [
+        'Label' => [
           'shape' => 'label',
         ],
-        'AWSAccountId' =>
-        [
+        'AWSAccountId' => [
           'shape' => 'DelegatesList',
         ],
-        'ActionName' =>
-        [
+        'ActionName' => [
           'shape' => 'ActionsList',
         ],
       ],
     ],
-    'AuthorizationErrorException' =>
-    [
+    'AuthorizationErrorException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'AuthorizationError',
         'httpStatusCode' => 403,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'Binary' =>
-    [
+    'Binary' => [
       'type' => 'blob',
     ],
-    'ConfirmSubscriptionInput' =>
-    [
+    'ConfirmSubscriptionInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TopicArn',
-        1 => 'Token',
+      'required' => [
+        'TopicArn',
+        'Token',
       ],
-      'members' =>
-      [
-        'TopicArn' =>
-        [
+      'members' => [
+        'TopicArn' => [
           'shape' => 'topicARN',
         ],
-        'Token' =>
-        [
+        'Token' => [
           'shape' => 'token',
         ],
-        'AuthenticateOnUnsubscribe' =>
-        [
+        'AuthenticateOnUnsubscribe' => [
           'shape' => 'authenticateOnUnsubscribe',
         ],
       ],
     ],
-    'ConfirmSubscriptionResponse' =>
-    [
+    'ConfirmSubscriptionResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SubscriptionArn' =>
-        [
+      'members' => [
+        'SubscriptionArn' => [
           'shape' => 'subscriptionARN',
         ],
       ],
     ],
-    'CreateEndpointResponse' =>
-    [
+    'CreateEndpointResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EndpointArn' =>
-        [
+      'members' => [
+        'EndpointArn' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreatePlatformApplicationInput' =>
-    [
+    'CreatePlatformApplicationInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
-        1 => 'Platform',
-        2 => 'Attributes',
+      'required' => [
+        'Name',
+        'Platform',
+        'Attributes',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Platform' =>
-        [
+        'Platform' => [
           'shape' => 'String',
         ],
-        'Attributes' =>
-        [
+        'Attributes' => [
           'shape' => 'MapStringToString',
         ],
       ],
     ],
-    'CreatePlatformApplicationResponse' =>
-    [
+    'CreatePlatformApplicationResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PlatformApplicationArn' =>
-        [
+      'members' => [
+        'PlatformApplicationArn' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreatePlatformEndpointInput' =>
-    [
+    'CreatePlatformEndpointInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'PlatformApplicationArn',
-        1 => 'Token',
+      'required' => [
+        'PlatformApplicationArn',
+        'Token',
       ],
-      'members' =>
-      [
-        'PlatformApplicationArn' =>
-        [
+      'members' => [
+        'PlatformApplicationArn' => [
           'shape' => 'String',
         ],
-        'Token' =>
-        [
+        'Token' => [
           'shape' => 'String',
         ],
-        'CustomUserData' =>
-        [
+        'CustomUserData' => [
           'shape' => 'String',
         ],
-        'Attributes' =>
-        [
+        'Attributes' => [
           'shape' => 'MapStringToString',
         ],
       ],
     ],
-    'CreateTopicInput' =>
-    [
+    'CreateTopicInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
+      'required' => [
+        'Name',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'topicName',
         ],
       ],
     ],
-    'CreateTopicResponse' =>
-    [
+    'CreateTopicResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TopicArn' =>
-        [
+      'members' => [
+        'TopicArn' => [
           'shape' => 'topicARN',
         ],
       ],
     ],
-    'DelegatesList' =>
-    [
+    'DelegatesList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'delegate',
       ],
     ],
-    'DeleteEndpointInput' =>
-    [
+    'DeleteEndpointInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'EndpointArn',
+      'required' => [
+        'EndpointArn',
       ],
-      'members' =>
-      [
-        'EndpointArn' =>
-        [
+      'members' => [
+        'EndpointArn' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeletePlatformApplicationInput' =>
-    [
+    'DeletePlatformApplicationInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'PlatformApplicationArn',
+      'required' => [
+        'PlatformApplicationArn',
       ],
-      'members' =>
-      [
-        'PlatformApplicationArn' =>
-        [
+      'members' => [
+        'PlatformApplicationArn' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteTopicInput' =>
-    [
+    'DeleteTopicInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TopicArn',
+      'required' => [
+        'TopicArn',
       ],
-      'members' =>
-      [
-        'TopicArn' =>
-        [
+      'members' => [
+        'TopicArn' => [
           'shape' => 'topicARN',
         ],
       ],
     ],
-    'Endpoint' =>
-    [
+    'Endpoint' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EndpointArn' =>
-        [
+      'members' => [
+        'EndpointArn' => [
           'shape' => 'String',
         ],
-        'Attributes' =>
-        [
+        'Attributes' => [
           'shape' => 'MapStringToString',
         ],
       ],
     ],
-    'EndpointDisabledException' =>
-    [
+    'EndpointDisabledException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'EndpointDisabled',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'GetEndpointAttributesInput' =>
-    [
+    'GetEndpointAttributesInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'EndpointArn',
+      'required' => [
+        'EndpointArn',
       ],
-      'members' =>
-      [
-        'EndpointArn' =>
-        [
+      'members' => [
+        'EndpointArn' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'GetEndpointAttributesResponse' =>
-    [
+    'GetEndpointAttributesResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Attributes' =>
-        [
+      'members' => [
+        'Attributes' => [
           'shape' => 'MapStringToString',
         ],
       ],
     ],
-    'GetPlatformApplicationAttributesInput' =>
-    [
+    'GetPlatformApplicationAttributesInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'PlatformApplicationArn',
+      'required' => [
+        'PlatformApplicationArn',
       ],
-      'members' =>
-      [
-        'PlatformApplicationArn' =>
-        [
+      'members' => [
+        'PlatformApplicationArn' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'GetPlatformApplicationAttributesResponse' =>
-    [
+    'GetPlatformApplicationAttributesResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Attributes' =>
-        [
+      'members' => [
+        'Attributes' => [
           'shape' => 'MapStringToString',
         ],
       ],
     ],
-    'GetSubscriptionAttributesInput' =>
-    [
+    'GetSubscriptionAttributesInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SubscriptionArn',
+      'required' => [
+        'SubscriptionArn',
       ],
-      'members' =>
-      [
-        'SubscriptionArn' =>
-        [
+      'members' => [
+        'SubscriptionArn' => [
           'shape' => 'subscriptionARN',
         ],
       ],
     ],
-    'GetSubscriptionAttributesResponse' =>
-    [
+    'GetSubscriptionAttributesResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Attributes' =>
-        [
+      'members' => [
+        'Attributes' => [
           'shape' => 'SubscriptionAttributesMap',
         ],
       ],
     ],
-    'GetTopicAttributesInput' =>
-    [
+    'GetTopicAttributesInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TopicArn',
+      'required' => [
+        'TopicArn',
       ],
-      'members' =>
-      [
-        'TopicArn' =>
-        [
+      'members' => [
+        'TopicArn' => [
           'shape' => 'topicARN',
         ],
       ],
     ],
-    'GetTopicAttributesResponse' =>
-    [
+    'GetTopicAttributesResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Attributes' =>
-        [
+      'members' => [
+        'Attributes' => [
           'shape' => 'TopicAttributesMap',
         ],
       ],
     ],
-    'InternalErrorException' =>
-    [
+    'InternalErrorException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InternalError',
         'httpStatusCode' => 500,
       ],
       'exception' => true,
       'fault' => true,
     ],
-    'InvalidParameterException' =>
-    [
+    'InvalidParameterException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidParameter',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidParameterValueException' =>
-    [
+    'InvalidParameterValueException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ParameterValueInvalid',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ListEndpointsByPlatformApplicationInput' =>
-    [
+    'ListEndpointsByPlatformApplicationInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'PlatformApplicationArn',
+      'required' => [
+        'PlatformApplicationArn',
       ],
-      'members' =>
-      [
-        'PlatformApplicationArn' =>
-        [
+      'members' => [
+        'PlatformApplicationArn' => [
           'shape' => 'String',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ListEndpointsByPlatformApplicationResponse' =>
-    [
+    'ListEndpointsByPlatformApplicationResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Endpoints' =>
-        [
+      'members' => [
+        'Endpoints' => [
           'shape' => 'ListOfEndpoints',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ListOfEndpoints' =>
-    [
+    'ListOfEndpoints' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Endpoint',
       ],
     ],
-    'ListOfPlatformApplications' =>
-    [
+    'ListOfPlatformApplications' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'PlatformApplication',
       ],
     ],
-    'ListPlatformApplicationsInput' =>
-    [
+    'ListPlatformApplicationsInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'NextToken' =>
-        [
+      'members' => [
+        'NextToken' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ListPlatformApplicationsResponse' =>
-    [
+    'ListPlatformApplicationsResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PlatformApplications' =>
-        [
+      'members' => [
+        'PlatformApplications' => [
           'shape' => 'ListOfPlatformApplications',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ListSubscriptionsByTopicInput' =>
-    [
+    'ListSubscriptionsByTopicInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TopicArn',
+      'required' => [
+        'TopicArn',
       ],
-      'members' =>
-      [
-        'TopicArn' =>
-        [
+      'members' => [
+        'TopicArn' => [
           'shape' => 'topicARN',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'nextToken',
         ],
       ],
     ],
-    'ListSubscriptionsByTopicResponse' =>
-    [
+    'ListSubscriptionsByTopicResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Subscriptions' =>
-        [
+      'members' => [
+        'Subscriptions' => [
           'shape' => 'SubscriptionsList',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'nextToken',
         ],
       ],
     ],
-    'ListSubscriptionsInput' =>
-    [
+    'ListSubscriptionsInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'NextToken' =>
-        [
+      'members' => [
+        'NextToken' => [
           'shape' => 'nextToken',
         ],
       ],
     ],
-    'ListSubscriptionsResponse' =>
-    [
+    'ListSubscriptionsResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Subscriptions' =>
-        [
+      'members' => [
+        'Subscriptions' => [
           'shape' => 'SubscriptionsList',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'nextToken',
         ],
       ],
     ],
-    'ListTopicsInput' =>
-    [
+    'ListTopicsInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'NextToken' =>
-        [
+      'members' => [
+        'NextToken' => [
           'shape' => 'nextToken',
         ],
       ],
     ],
-    'ListTopicsResponse' =>
-    [
+    'ListTopicsResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Topics' =>
-        [
+      'members' => [
+        'Topics' => [
           'shape' => 'TopicsList',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'nextToken',
         ],
       ],
     ],
-    'MapStringToString' =>
-    [
+    'MapStringToString' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'String',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'String',
       ],
     ],
-    'MessageAttributeMap' =>
-    [
+    'MessageAttributeMap' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'String',
         'locationName' => 'Name',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'MessageAttributeValue',
         'locationName' => 'Value',
       ],
     ],
-    'MessageAttributeValue' =>
-    [
+    'MessageAttributeValue' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DataType',
+      'required' => [
+        'DataType',
       ],
-      'members' =>
-      [
-        'DataType' =>
-        [
+      'members' => [
+        'DataType' => [
           'shape' => 'String',
         ],
-        'StringValue' =>
-        [
+        'StringValue' => [
           'shape' => 'String',
         ],
-        'BinaryValue' =>
-        [
+        'BinaryValue' => [
           'shape' => 'Binary',
         ],
       ],
     ],
-    'NotFoundException' =>
-    [
+    'NotFoundException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'NotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'PlatformApplication' =>
-    [
+    'PlatformApplication' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PlatformApplicationArn' =>
-        [
+      'members' => [
+        'PlatformApplicationArn' => [
           'shape' => 'String',
         ],
-        'Attributes' =>
-        [
+        'Attributes' => [
           'shape' => 'MapStringToString',
         ],
       ],
     ],
-    'PlatformApplicationDisabledException' =>
-    [
+    'PlatformApplicationDisabledException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'PlatformApplicationDisabled',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'PublishInput' =>
-    [
+    'PublishInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Message',
+      'required' => [
+        'Message',
       ],
-      'members' =>
-      [
-        'TopicArn' =>
-        [
+      'members' => [
+        'TopicArn' => [
           'shape' => 'topicARN',
         ],
-        'TargetArn' =>
-        [
+        'TargetArn' => [
           'shape' => 'String',
         ],
-        'Message' =>
-        [
+        'Message' => [
           'shape' => 'message',
         ],
-        'Subject' =>
-        [
+        'Subject' => [
           'shape' => 'subject',
         ],
-        'MessageStructure' =>
-        [
+        'MessageStructure' => [
           'shape' => 'messageStructure',
         ],
-        'MessageAttributes' =>
-        [
+        'MessageAttributes' => [
           'shape' => 'MessageAttributeMap',
         ],
       ],
     ],
-    'PublishResponse' =>
-    [
+    'PublishResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'MessageId' =>
-        [
+      'members' => [
+        'MessageId' => [
           'shape' => 'messageId',
         ],
       ],
     ],
-    'RemovePermissionInput' =>
-    [
+    'RemovePermissionInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TopicArn',
-        1 => 'Label',
+      'required' => [
+        'TopicArn',
+        'Label',
       ],
-      'members' =>
-      [
-        'TopicArn' =>
-        [
+      'members' => [
+        'TopicArn' => [
           'shape' => 'topicARN',
         ],
-        'Label' =>
-        [
+        'Label' => [
           'shape' => 'label',
         ],
       ],
     ],
-    'SetEndpointAttributesInput' =>
-    [
+    'SetEndpointAttributesInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'EndpointArn',
-        1 => 'Attributes',
+      'required' => [
+        'EndpointArn',
+        'Attributes',
       ],
-      'members' =>
-      [
-        'EndpointArn' =>
-        [
+      'members' => [
+        'EndpointArn' => [
           'shape' => 'String',
         ],
-        'Attributes' =>
-        [
+        'Attributes' => [
           'shape' => 'MapStringToString',
         ],
       ],
     ],
-    'SetPlatformApplicationAttributesInput' =>
-    [
+    'SetPlatformApplicationAttributesInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'PlatformApplicationArn',
-        1 => 'Attributes',
+      'required' => [
+        'PlatformApplicationArn',
+        'Attributes',
       ],
-      'members' =>
-      [
-        'PlatformApplicationArn' =>
-        [
+      'members' => [
+        'PlatformApplicationArn' => [
           'shape' => 'String',
         ],
-        'Attributes' =>
-        [
+        'Attributes' => [
           'shape' => 'MapStringToString',
         ],
       ],
     ],
-    'SetSubscriptionAttributesInput' =>
-    [
+    'SetSubscriptionAttributesInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SubscriptionArn',
-        1 => 'AttributeName',
+      'required' => [
+        'SubscriptionArn',
+        'AttributeName',
       ],
-      'members' =>
-      [
-        'SubscriptionArn' =>
-        [
+      'members' => [
+        'SubscriptionArn' => [
           'shape' => 'subscriptionARN',
         ],
-        'AttributeName' =>
-        [
+        'AttributeName' => [
           'shape' => 'attributeName',
         ],
-        'AttributeValue' =>
-        [
+        'AttributeValue' => [
           'shape' => 'attributeValue',
         ],
       ],
     ],
-    'SetTopicAttributesInput' =>
-    [
+    'SetTopicAttributesInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TopicArn',
-        1 => 'AttributeName',
+      'required' => [
+        'TopicArn',
+        'AttributeName',
       ],
-      'members' =>
-      [
-        'TopicArn' =>
-        [
+      'members' => [
+        'TopicArn' => [
           'shape' => 'topicARN',
         ],
-        'AttributeName' =>
-        [
+        'AttributeName' => [
           'shape' => 'attributeName',
         ],
-        'AttributeValue' =>
-        [
+        'AttributeValue' => [
           'shape' => 'attributeValue',
         ],
       ],
     ],
-    'String' =>
-    [
+    'String' => [
       'type' => 'string',
     ],
-    'SubscribeInput' =>
-    [
+    'SubscribeInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TopicArn',
-        1 => 'Protocol',
+      'required' => [
+        'TopicArn',
+        'Protocol',
       ],
-      'members' =>
-      [
-        'TopicArn' =>
-        [
+      'members' => [
+        'TopicArn' => [
           'shape' => 'topicARN',
         ],
-        'Protocol' =>
-        [
+        'Protocol' => [
           'shape' => 'protocol',
         ],
-        'Endpoint' =>
-        [
+        'Endpoint' => [
           'shape' => 'endpoint',
         ],
       ],
     ],
-    'SubscribeResponse' =>
-    [
+    'SubscribeResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SubscriptionArn' =>
-        [
+      'members' => [
+        'SubscriptionArn' => [
           'shape' => 'subscriptionARN',
         ],
       ],
     ],
-    'Subscription' =>
-    [
+    'Subscription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SubscriptionArn' =>
-        [
+      'members' => [
+        'SubscriptionArn' => [
           'shape' => 'subscriptionARN',
         ],
-        'Owner' =>
-        [
+        'Owner' => [
           'shape' => 'account',
         ],
-        'Protocol' =>
-        [
+        'Protocol' => [
           'shape' => 'protocol',
         ],
-        'Endpoint' =>
-        [
+        'Endpoint' => [
           'shape' => 'endpoint',
         ],
-        'TopicArn' =>
-        [
+        'TopicArn' => [
           'shape' => 'topicARN',
         ],
       ],
     ],
-    'SubscriptionAttributesMap' =>
-    [
+    'SubscriptionAttributesMap' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'attributeName',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'attributeValue',
       ],
     ],
-    'SubscriptionLimitExceededException' =>
-    [
+    'SubscriptionLimitExceededException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SubscriptionLimitExceeded',
         'httpStatusCode' => 403,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SubscriptionsList' =>
-    [
+    'SubscriptionsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Subscription',
       ],
     ],
-    'Topic' =>
-    [
+    'Topic' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TopicArn' =>
-        [
+      'members' => [
+        'TopicArn' => [
           'shape' => 'topicARN',
         ],
       ],
     ],
-    'TopicAttributesMap' =>
-    [
+    'TopicAttributesMap' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'attributeName',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'attributeValue',
       ],
     ],
-    'TopicLimitExceededException' =>
-    [
+    'TopicLimitExceededException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'TopicLimitExceeded',
         'httpStatusCode' => 403,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'TopicsList' =>
-    [
+    'TopicsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Topic',
       ],
     ],
-    'UnsubscribeInput' =>
-    [
+    'UnsubscribeInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SubscriptionArn',
+      'required' => [
+        'SubscriptionArn',
       ],
-      'members' =>
-      [
-        'SubscriptionArn' =>
-        [
+      'members' => [
+        'SubscriptionArn' => [
           'shape' => 'subscriptionARN',
         ],
       ],
     ],
-    'account' =>
-    [
+    'account' => [
       'type' => 'string',
     ],
-    'action' =>
-    [
+    'action' => [
       'type' => 'string',
     ],
-    'attributeName' =>
-    [
+    'attributeName' => [
       'type' => 'string',
     ],
-    'attributeValue' =>
-    [
+    'attributeValue' => [
       'type' => 'string',
     ],
-    'authenticateOnUnsubscribe' =>
-    [
+    'authenticateOnUnsubscribe' => [
       'type' => 'string',
     ],
-    'delegate' =>
-    [
+    'delegate' => [
       'type' => 'string',
     ],
-    'endpoint' =>
-    [
+    'endpoint' => [
       'type' => 'string',
     ],
-    'label' =>
-    [
+    'label' => [
       'type' => 'string',
     ],
-    'message' =>
-    [
+    'message' => [
       'type' => 'string',
     ],
-    'messageId' =>
-    [
+    'messageId' => [
       'type' => 'string',
     ],
-    'messageStructure' =>
-    [
+    'messageStructure' => [
       'type' => 'string',
     ],
-    'nextToken' =>
-    [
+    'nextToken' => [
       'type' => 'string',
     ],
-    'protocol' =>
-    [
+    'protocol' => [
       'type' => 'string',
     ],
-    'string' =>
-    [
+    'string' => [
       'type' => 'string',
     ],
-    'subject' =>
-    [
+    'subject' => [
       'type' => 'string',
     ],
-    'subscriptionARN' =>
-    [
+    'subscriptionARN' => [
       'type' => 'string',
     ],
-    'token' =>
-    [
+    'token' => [
       'type' => 'string',
     ],
-    'topicARN' =>
-    [
+    'topicARN' => [
       'type' => 'string',
     ],
-    'topicName' =>
-    [
+    'topicName' => [
       'type' => 'string',
     ],
   ],

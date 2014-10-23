@@ -1,107 +1,90 @@
-<?php
-return [
-  'pagination' =>
-  [
-    'DescribeClusterParameterGroups' =>
-    [
+<?php return [
+  'pagination' => [
+    'DescribeClusterParameterGroups' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'ParameterGroups',
     ],
-    'DescribeClusterParameters' =>
-    [
+    'DescribeClusterParameters' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'Parameters',
     ],
-    'DescribeClusterSecurityGroups' =>
-    [
+    'DescribeClusterSecurityGroups' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'ClusterSecurityGroups',
     ],
-    'DescribeClusterSnapshots' =>
-    [
+    'DescribeClusterSnapshots' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'Snapshots',
     ],
-    'DescribeClusterSubnetGroups' =>
-    [
+    'DescribeClusterSubnetGroups' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'ClusterSubnetGroups',
     ],
-    'DescribeClusterVersions' =>
-    [
+    'DescribeClusterVersions' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'ClusterVersions',
     ],
-    'DescribeClusters' =>
-    [
+    'DescribeClusters' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'Clusters',
     ],
-    'DescribeDefaultClusterParameters' =>
-    [
+    'DescribeDefaultClusterParameters' => [
       'input_token' => 'Marker',
       'output_token' => 'DefaultClusterParameters.Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'DefaultClusterParameters.Parameters',
     ],
-    'DescribeEventSubscriptions' =>
-    [
+    'DescribeEventSubscriptions' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'EventSubscriptionsList',
     ],
-    'DescribeEvents' =>
-    [
+    'DescribeEvents' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'Events',
     ],
-    'DescribeHsmClientCertificates' =>
-    [
+    'DescribeHsmClientCertificates' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'HsmClientCertificates',
     ],
-    'DescribeHsmConfigurations' =>
-    [
+    'DescribeHsmConfigurations' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'HsmConfigurations',
     ],
-    'DescribeOrderableClusterOptions' =>
-    [
+    'DescribeOrderableClusterOptions' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'OrderableClusterOptions',
     ],
-    'DescribeReservedNodeOfferings' =>
-    [
+    'DescribeReservedNodeOfferings' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'ReservedNodeOfferings',
     ],
-    'DescribeReservedNodes' =>
-    [
+    'DescribeReservedNodes' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',

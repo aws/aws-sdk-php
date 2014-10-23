@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2014-05-15',
     'endpointPrefix' => 'route53domains',
     'jsonVersion' => '1.1',
@@ -10,613 +8,469 @@ return [
     'targetPrefix' => 'Route53Domains_v20140515',
     'protocol' => 'json',
   ],
-  'operations' =>
-  [
-    'CheckDomainAvailability' =>
-    [
+  'operations' => [
+    'CheckDomainAvailability' => [
       'name' => 'CheckDomainAvailability',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CheckDomainAvailabilityRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CheckDomainAvailabilityResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'UnsupportedTLD',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DisableDomainTransferLock' =>
-    [
+    'DisableDomainTransferLock' => [
       'name' => 'DisableDomainTransferLock',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DisableDomainTransferLockRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DisableDomainTransferLockResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DuplicateRequest',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'TLDRulesViolation',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'OperationLimitExceeded',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'EnableDomainTransferLock' =>
-    [
+    'EnableDomainTransferLock' => [
       'name' => 'EnableDomainTransferLock',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'EnableDomainTransferLockRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'EnableDomainTransferLockResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DuplicateRequest',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'TLDRulesViolation',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'OperationLimitExceeded',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'GetDomainDetail' =>
-    [
+    'GetDomainDetail' => [
       'name' => 'GetDomainDetail',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetDomainDetailRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetDomainDetailResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'GetOperationDetail' =>
-    [
+    'GetOperationDetail' => [
       'name' => 'GetOperationDetail',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetOperationDetailRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetOperationDetailResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ListDomains' =>
-    [
+    'ListDomains' => [
       'name' => 'ListDomains',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListDomainsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListDomainsResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ListOperations' =>
-    [
+    'ListOperations' => [
       'name' => 'ListOperations',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListOperationsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListOperationsResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'RegisterDomain' =>
-    [
+    'RegisterDomain' => [
       'name' => 'RegisterDomain',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RegisterDomainRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RegisterDomainResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'UnsupportedTLD',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'DuplicateRequest',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'TLDRulesViolation',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'DomainLimitExceeded',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'OperationLimitExceeded',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'RetrieveDomainAuthCode' =>
-    [
+    'RetrieveDomainAuthCode' => [
       'name' => 'RetrieveDomainAuthCode',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RetrieveDomainAuthCodeRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RetrieveDomainAuthCodeResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'TransferDomain' =>
-    [
+    'TransferDomain' => [
       'name' => 'TransferDomain',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'TransferDomainRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'TransferDomainResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'UnsupportedTLD',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'DuplicateRequest',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'TLDRulesViolation',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'DomainLimitExceeded',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'OperationLimitExceeded',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'UpdateDomainContact' =>
-    [
+    'UpdateDomainContact' => [
       'name' => 'UpdateDomainContact',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateDomainContactRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdateDomainContactResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DuplicateRequest',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'TLDRulesViolation',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'OperationLimitExceeded',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'UpdateDomainContactPrivacy' =>
-    [
+    'UpdateDomainContactPrivacy' => [
       'name' => 'UpdateDomainContactPrivacy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateDomainContactPrivacyRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdateDomainContactPrivacyResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DuplicateRequest',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'TLDRulesViolation',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'OperationLimitExceeded',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'UpdateDomainNameservers' =>
-    [
+    'UpdateDomainNameservers' => [
       'name' => 'UpdateDomainNameservers',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateDomainNameserversRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdateDomainNameserversResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DuplicateRequest',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'TLDRulesViolation',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'OperationLimitExceeded',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
@@ -624,1370 +478,1096 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'AddressLine' =>
-    [
+  'shapes' => [
+    'AddressLine' => [
       'type' => 'string',
       'max' => 255,
     ],
-    'Boolean' =>
-    [
+    'Boolean' => [
       'type' => 'boolean',
     ],
-    'CheckDomainAvailabilityRequest' =>
-    [
+    'CheckDomainAvailabilityRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
+      'required' => [
+        'DomainName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'IdnLangCode' =>
-        [
+        'IdnLangCode' => [
           'shape' => 'LangCode',
         ],
       ],
     ],
-    'CheckDomainAvailabilityResponse' =>
-    [
+    'CheckDomainAvailabilityResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Availability',
+      'required' => [
+        'Availability',
       ],
-      'members' =>
-      [
-        'Availability' =>
-        [
+      'members' => [
+        'Availability' => [
           'shape' => 'DomainAvailability',
         ],
       ],
     ],
-    'City' =>
-    [
+    'City' => [
       'type' => 'string',
       'max' => 255,
     ],
-    'ContactDetail' =>
-    [
+    'ContactDetail' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'FirstName' =>
-        [
+      'members' => [
+        'FirstName' => [
           'shape' => 'ContactName',
         ],
-        'LastName' =>
-        [
+        'LastName' => [
           'shape' => 'ContactName',
         ],
-        'ContactType' =>
-        [
+        'ContactType' => [
           'shape' => 'ContactType',
         ],
-        'OrganizationName' =>
-        [
+        'OrganizationName' => [
           'shape' => 'ContactName',
         ],
-        'AddressLine1' =>
-        [
+        'AddressLine1' => [
           'shape' => 'AddressLine',
         ],
-        'AddressLine2' =>
-        [
+        'AddressLine2' => [
           'shape' => 'AddressLine',
         ],
-        'City' =>
-        [
+        'City' => [
           'shape' => 'City',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'State',
         ],
-        'CountryCode' =>
-        [
+        'CountryCode' => [
           'shape' => 'CountryCode',
         ],
-        'ZipCode' =>
-        [
+        'ZipCode' => [
           'shape' => 'ZipCode',
         ],
-        'PhoneNumber' =>
-        [
+        'PhoneNumber' => [
           'shape' => 'ContactNumber',
         ],
-        'Email' =>
-        [
+        'Email' => [
           'shape' => 'Email',
         ],
-        'Fax' =>
-        [
+        'Fax' => [
           'shape' => 'ContactNumber',
         ],
-        'ExtraParams' =>
-        [
+        'ExtraParams' => [
           'shape' => 'ExtraParamList',
         ],
       ],
       'sensitive' => true,
     ],
-    'ContactName' =>
-    [
+    'ContactName' => [
       'type' => 'string',
       'max' => 255,
     ],
-    'ContactNumber' =>
-    [
+    'ContactNumber' => [
       'type' => 'string',
       'max' => 30,
     ],
-    'ContactType' =>
-    [
+    'ContactType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'PERSON',
-        1 => 'COMPANY',
-        2 => 'ASSOCIATION',
-        3 => 'PUBLIC_BODY',
-        4 => 'RESELLER',
+      'enum' => [
+        'PERSON',
+        'COMPANY',
+        'ASSOCIATION',
+        'PUBLIC_BODY',
+        'RESELLER',
       ],
     ],
-    'CountryCode' =>
-    [
+    'CountryCode' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'AD',
-        1 => 'AE',
-        2 => 'AF',
-        3 => 'AG',
-        4 => 'AI',
-        5 => 'AL',
-        6 => 'AM',
-        7 => 'AN',
-        8 => 'AO',
-        9 => 'AQ',
-        10 => 'AR',
-        11 => 'AS',
-        12 => 'AT',
-        13 => 'AU',
-        14 => 'AW',
-        15 => 'AZ',
-        16 => 'BA',
-        17 => 'BB',
-        18 => 'BD',
-        19 => 'BE',
-        20 => 'BF',
-        21 => 'BG',
-        22 => 'BH',
-        23 => 'BI',
-        24 => 'BJ',
-        25 => 'BL',
-        26 => 'BM',
-        27 => 'BN',
-        28 => 'BO',
-        29 => 'BR',
-        30 => 'BS',
-        31 => 'BT',
-        32 => 'BW',
-        33 => 'BY',
-        34 => 'BZ',
-        35 => 'CA',
-        36 => 'CC',
-        37 => 'CD',
-        38 => 'CF',
-        39 => 'CG',
-        40 => 'CH',
-        41 => 'CI',
-        42 => 'CK',
-        43 => 'CL',
-        44 => 'CM',
-        45 => 'CN',
-        46 => 'CO',
-        47 => 'CR',
-        48 => 'CU',
-        49 => 'CV',
-        50 => 'CX',
-        51 => 'CY',
-        52 => 'CZ',
-        53 => 'DE',
-        54 => 'DJ',
-        55 => 'DK',
-        56 => 'DM',
-        57 => 'DO',
-        58 => 'DZ',
-        59 => 'EC',
-        60 => 'EE',
-        61 => 'EG',
-        62 => 'ER',
-        63 => 'ES',
-        64 => 'ET',
-        65 => 'FI',
-        66 => 'FJ',
-        67 => 'FK',
-        68 => 'FM',
-        69 => 'FO',
-        70 => 'FR',
-        71 => 'GA',
-        72 => 'GB',
-        73 => 'GD',
-        74 => 'GE',
-        75 => 'GH',
-        76 => 'GI',
-        77 => 'GL',
-        78 => 'GM',
-        79 => 'GN',
-        80 => 'GQ',
-        81 => 'GR',
-        82 => 'GT',
-        83 => 'GU',
-        84 => 'GW',
-        85 => 'GY',
-        86 => 'HK',
-        87 => 'HN',
-        88 => 'HR',
-        89 => 'HT',
-        90 => 'HU',
-        91 => 'ID',
-        92 => 'IE',
-        93 => 'IL',
-        94 => 'IM',
-        95 => 'IN',
-        96 => 'IQ',
-        97 => 'IR',
-        98 => 'IS',
-        99 => 'IT',
-        100 => 'JM',
-        101 => 'JO',
-        102 => 'JP',
-        103 => 'KE',
-        104 => 'KG',
-        105 => 'KH',
-        106 => 'KI',
-        107 => 'KM',
-        108 => 'KN',
-        109 => 'KP',
-        110 => 'KR',
-        111 => 'KW',
-        112 => 'KY',
-        113 => 'KZ',
-        114 => 'LA',
-        115 => 'LB',
-        116 => 'LC',
-        117 => 'LI',
-        118 => 'LK',
-        119 => 'LR',
-        120 => 'LS',
-        121 => 'LT',
-        122 => 'LU',
-        123 => 'LV',
-        124 => 'LY',
-        125 => 'MA',
-        126 => 'MC',
-        127 => 'MD',
-        128 => 'ME',
-        129 => 'MF',
-        130 => 'MG',
-        131 => 'MH',
-        132 => 'MK',
-        133 => 'ML',
-        134 => 'MM',
-        135 => 'MN',
-        136 => 'MO',
-        137 => 'MP',
-        138 => 'MR',
-        139 => 'MS',
-        140 => 'MT',
-        141 => 'MU',
-        142 => 'MV',
-        143 => 'MW',
-        144 => 'MX',
-        145 => 'MY',
-        146 => 'MZ',
-        147 => 'NA',
-        148 => 'NC',
-        149 => 'NE',
-        150 => 'NG',
-        151 => 'NI',
-        152 => 'NL',
-        153 => 'NO',
-        154 => 'NP',
-        155 => 'NR',
-        156 => 'NU',
-        157 => 'NZ',
-        158 => 'OM',
-        159 => 'PA',
-        160 => 'PE',
-        161 => 'PF',
-        162 => 'PG',
-        163 => 'PH',
-        164 => 'PK',
-        165 => 'PL',
-        166 => 'PM',
-        167 => 'PN',
-        168 => 'PR',
-        169 => 'PT',
-        170 => 'PW',
-        171 => 'PY',
-        172 => 'QA',
-        173 => 'RO',
-        174 => 'RS',
-        175 => 'RU',
-        176 => 'RW',
-        177 => 'SA',
-        178 => 'SB',
-        179 => 'SC',
-        180 => 'SD',
-        181 => 'SE',
-        182 => 'SG',
-        183 => 'SH',
-        184 => 'SI',
-        185 => 'SK',
-        186 => 'SL',
-        187 => 'SM',
-        188 => 'SN',
-        189 => 'SO',
-        190 => 'SR',
-        191 => 'ST',
-        192 => 'SV',
-        193 => 'SY',
-        194 => 'SZ',
-        195 => 'TC',
-        196 => 'TD',
-        197 => 'TG',
-        198 => 'TH',
-        199 => 'TJ',
-        200 => 'TK',
-        201 => 'TL',
-        202 => 'TM',
-        203 => 'TN',
-        204 => 'TO',
-        205 => 'TR',
-        206 => 'TT',
-        207 => 'TV',
-        208 => 'TW',
-        209 => 'TZ',
-        210 => 'UA',
-        211 => 'UG',
-        212 => 'US',
-        213 => 'UY',
-        214 => 'UZ',
-        215 => 'VA',
-        216 => 'VC',
-        217 => 'VE',
-        218 => 'VG',
-        219 => 'VI',
-        220 => 'VN',
-        221 => 'VU',
-        222 => 'WF',
-        223 => 'WS',
-        224 => 'YE',
-        225 => 'YT',
-        226 => 'ZA',
-        227 => 'ZM',
-        228 => 'ZW',
+      'enum' => [
+        'AD',
+        'AE',
+        'AF',
+        'AG',
+        'AI',
+        'AL',
+        'AM',
+        'AN',
+        'AO',
+        'AQ',
+        'AR',
+        'AS',
+        'AT',
+        'AU',
+        'AW',
+        'AZ',
+        'BA',
+        'BB',
+        'BD',
+        'BE',
+        'BF',
+        'BG',
+        'BH',
+        'BI',
+        'BJ',
+        'BL',
+        'BM',
+        'BN',
+        'BO',
+        'BR',
+        'BS',
+        'BT',
+        'BW',
+        'BY',
+        'BZ',
+        'CA',
+        'CC',
+        'CD',
+        'CF',
+        'CG',
+        'CH',
+        'CI',
+        'CK',
+        'CL',
+        'CM',
+        'CN',
+        'CO',
+        'CR',
+        'CU',
+        'CV',
+        'CX',
+        'CY',
+        'CZ',
+        'DE',
+        'DJ',
+        'DK',
+        'DM',
+        'DO',
+        'DZ',
+        'EC',
+        'EE',
+        'EG',
+        'ER',
+        'ES',
+        'ET',
+        'FI',
+        'FJ',
+        'FK',
+        'FM',
+        'FO',
+        'FR',
+        'GA',
+        'GB',
+        'GD',
+        'GE',
+        'GH',
+        'GI',
+        'GL',
+        'GM',
+        'GN',
+        'GQ',
+        'GR',
+        'GT',
+        'GU',
+        'GW',
+        'GY',
+        'HK',
+        'HN',
+        'HR',
+        'HT',
+        'HU',
+        'ID',
+        'IE',
+        'IL',
+        'IM',
+        'IN',
+        'IQ',
+        'IR',
+        'IS',
+        'IT',
+        'JM',
+        'JO',
+        'JP',
+        'KE',
+        'KG',
+        'KH',
+        'KI',
+        'KM',
+        'KN',
+        'KP',
+        'KR',
+        'KW',
+        'KY',
+        'KZ',
+        'LA',
+        'LB',
+        'LC',
+        'LI',
+        'LK',
+        'LR',
+        'LS',
+        'LT',
+        'LU',
+        'LV',
+        'LY',
+        'MA',
+        'MC',
+        'MD',
+        'ME',
+        'MF',
+        'MG',
+        'MH',
+        'MK',
+        'ML',
+        'MM',
+        'MN',
+        'MO',
+        'MP',
+        'MR',
+        'MS',
+        'MT',
+        'MU',
+        'MV',
+        'MW',
+        'MX',
+        'MY',
+        'MZ',
+        'NA',
+        'NC',
+        'NE',
+        'NG',
+        'NI',
+        'NL',
+        'NO',
+        'NP',
+        'NR',
+        'NU',
+        'NZ',
+        'OM',
+        'PA',
+        'PE',
+        'PF',
+        'PG',
+        'PH',
+        'PK',
+        'PL',
+        'PM',
+        'PN',
+        'PR',
+        'PT',
+        'PW',
+        'PY',
+        'QA',
+        'RO',
+        'RS',
+        'RU',
+        'RW',
+        'SA',
+        'SB',
+        'SC',
+        'SD',
+        'SE',
+        'SG',
+        'SH',
+        'SI',
+        'SK',
+        'SL',
+        'SM',
+        'SN',
+        'SO',
+        'SR',
+        'ST',
+        'SV',
+        'SY',
+        'SZ',
+        'TC',
+        'TD',
+        'TG',
+        'TH',
+        'TJ',
+        'TK',
+        'TL',
+        'TM',
+        'TN',
+        'TO',
+        'TR',
+        'TT',
+        'TV',
+        'TW',
+        'TZ',
+        'UA',
+        'UG',
+        'US',
+        'UY',
+        'UZ',
+        'VA',
+        'VC',
+        'VE',
+        'VG',
+        'VI',
+        'VN',
+        'VU',
+        'WF',
+        'WS',
+        'YE',
+        'YT',
+        'ZA',
+        'ZM',
+        'ZW',
       ],
     ],
-    'DNSSec' =>
-    [
+    'DNSSec' => [
       'type' => 'string',
     ],
-    'DisableDomainTransferLockRequest' =>
-    [
+    'DisableDomainTransferLockRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
+      'required' => [
+        'DomainName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
       ],
     ],
-    'DisableDomainTransferLockResponse' =>
-    [
+    'DisableDomainTransferLockResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'OperationId',
+      'required' => [
+        'OperationId',
       ],
-      'members' =>
-      [
-        'OperationId' =>
-        [
+      'members' => [
+        'OperationId' => [
           'shape' => 'OperationId',
         ],
       ],
     ],
-    'DomainAuthCode' =>
-    [
+    'DomainAuthCode' => [
       'type' => 'string',
       'max' => 1024,
       'sensitive' => true,
     ],
-    'DomainAvailability' =>
-    [
+    'DomainAvailability' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'AVAILABLE',
-        1 => 'AVAILABLE_RESERVED',
-        2 => 'AVAILABLE_PREORDER',
-        3 => 'UNAVAILABLE',
-        4 => 'UNAVAILABLE_PREMIUM',
-        5 => 'UNAVAILABLE_RESTRICTED',
-        6 => 'RESERVED',
+      'enum' => [
+        'AVAILABLE',
+        'AVAILABLE_RESERVED',
+        'AVAILABLE_PREORDER',
+        'UNAVAILABLE',
+        'UNAVAILABLE_PREMIUM',
+        'UNAVAILABLE_RESTRICTED',
+        'RESERVED',
       ],
     ],
-    'DomainLimitExceeded' =>
-    [
+    'DomainLimitExceeded' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'DomainName' =>
-    [
+    'DomainName' => [
       'type' => 'string',
       'max' => 255,
       'pattern' => '[a-zA-Z0-9_\\-.]*',
     ],
-    'DomainStatus' =>
-    [
+    'DomainStatus' => [
       'type' => 'string',
     ],
-    'DomainStatusList' =>
-    [
+    'DomainStatusList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DomainStatus',
       ],
     ],
-    'DomainSummary' =>
-    [
+    'DomainSummary' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
+      'required' => [
+        'DomainName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'AutoRenew' =>
-        [
+        'AutoRenew' => [
           'shape' => 'Boolean',
         ],
-        'TransferLock' =>
-        [
+        'TransferLock' => [
           'shape' => 'Boolean',
         ],
-        'Expiry' =>
-        [
+        'Expiry' => [
           'shape' => 'Timestamp',
         ],
       ],
     ],
-    'DomainSummaryList' =>
-    [
+    'DomainSummaryList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DomainSummary',
       ],
     ],
-    'DuplicateRequest' =>
-    [
+    'DuplicateRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'DurationInYears' =>
-    [
+    'DurationInYears' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 10,
     ],
-    'Email' =>
-    [
+    'Email' => [
       'type' => 'string',
       'max' => 254,
     ],
-    'EnableDomainTransferLockRequest' =>
-    [
+    'EnableDomainTransferLockRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
+      'required' => [
+        'DomainName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
       ],
     ],
-    'EnableDomainTransferLockResponse' =>
-    [
+    'EnableDomainTransferLockResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'OperationId',
+      'required' => [
+        'OperationId',
       ],
-      'members' =>
-      [
-        'OperationId' =>
-        [
+      'members' => [
+        'OperationId' => [
           'shape' => 'OperationId',
         ],
       ],
     ],
-    'ErrorMessage' =>
-    [
+    'ErrorMessage' => [
       'type' => 'string',
     ],
-    'ExtraParam' =>
-    [
+    'ExtraParam' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
-        1 => 'Value',
+      'required' => [
+        'Name',
+        'Value',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'ExtraParamName',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'ExtraParamValue',
         ],
       ],
     ],
-    'ExtraParamList' =>
-    [
+    'ExtraParamList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ExtraParam',
       ],
     ],
-    'ExtraParamName' =>
-    [
+    'ExtraParamName' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'DUNS_NUMBER',
-        1 => 'BRAND_NUMBER',
-        2 => 'BIRTH_DEPARTMENT',
-        3 => 'BIRTH_DATE_IN_YYYY_MM_DD',
-        4 => 'BIRTH_COUNTRY',
-        5 => 'BIRTH_CITY',
-        6 => 'DOCUMENT_NUMBER',
-        7 => 'AU_ID_NUMBER',
-        8 => 'AU_ID_TYPE',
-        9 => 'CA_LEGAL_TYPE',
-        10 => 'FI_BUSINESS_NUMBER',
-        11 => 'FI_ID_NUMBER',
-        12 => 'IT_PIN',
-        13 => 'RU_PASSPORT_DATA',
-        14 => 'SE_ID_NUMBER',
-        15 => 'SG_ID_NUMBER',
-        16 => 'VAT_NUMBER',
+      'enum' => [
+        'DUNS_NUMBER',
+        'BRAND_NUMBER',
+        'BIRTH_DEPARTMENT',
+        'BIRTH_DATE_IN_YYYY_MM_DD',
+        'BIRTH_COUNTRY',
+        'BIRTH_CITY',
+        'DOCUMENT_NUMBER',
+        'AU_ID_NUMBER',
+        'AU_ID_TYPE',
+        'CA_LEGAL_TYPE',
+        'FI_BUSINESS_NUMBER',
+        'FI_ID_NUMBER',
+        'IT_PIN',
+        'RU_PASSPORT_DATA',
+        'SE_ID_NUMBER',
+        'SG_ID_NUMBER',
+        'VAT_NUMBER',
       ],
     ],
-    'ExtraParamValue' =>
-    [
+    'ExtraParamValue' => [
       'type' => 'string',
       'max' => 2048,
     ],
-    'GetDomainDetailRequest' =>
-    [
+    'GetDomainDetailRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
+      'required' => [
+        'DomainName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
       ],
     ],
-    'GetDomainDetailResponse' =>
-    [
+    'GetDomainDetailResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
-        1 => 'Nameservers',
-        2 => 'AdminContact',
-        3 => 'RegistrantContact',
-        4 => 'TechContact',
+      'required' => [
+        'DomainName',
+        'Nameservers',
+        'AdminContact',
+        'RegistrantContact',
+        'TechContact',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'Nameservers' =>
-        [
+        'Nameservers' => [
           'shape' => 'NameserverList',
         ],
-        'AutoRenew' =>
-        [
+        'AutoRenew' => [
           'shape' => 'Boolean',
         ],
-        'AdminContact' =>
-        [
+        'AdminContact' => [
           'shape' => 'ContactDetail',
         ],
-        'RegistrantContact' =>
-        [
+        'RegistrantContact' => [
           'shape' => 'ContactDetail',
         ],
-        'TechContact' =>
-        [
+        'TechContact' => [
           'shape' => 'ContactDetail',
         ],
-        'AdminPrivacy' =>
-        [
+        'AdminPrivacy' => [
           'shape' => 'Boolean',
         ],
-        'RegistrantPrivacy' =>
-        [
+        'RegistrantPrivacy' => [
           'shape' => 'Boolean',
         ],
-        'TechPrivacy' =>
-        [
+        'TechPrivacy' => [
           'shape' => 'Boolean',
         ],
-        'RegistrarName' =>
-        [
+        'RegistrarName' => [
           'shape' => 'RegistrarName',
         ],
-        'WhoIsServer' =>
-        [
+        'WhoIsServer' => [
           'shape' => 'RegistrarWhoIsServer',
         ],
-        'RegistrarUrl' =>
-        [
+        'RegistrarUrl' => [
           'shape' => 'RegistrarUrl',
         ],
-        'AbuseContactEmail' =>
-        [
+        'AbuseContactEmail' => [
           'shape' => 'Email',
         ],
-        'AbuseContactPhone' =>
-        [
+        'AbuseContactPhone' => [
           'shape' => 'ContactNumber',
         ],
-        'RegistryDomainId' =>
-        [
+        'RegistryDomainId' => [
           'shape' => 'RegistryDomainId',
         ],
-        'CreationDate' =>
-        [
+        'CreationDate' => [
           'shape' => 'Timestamp',
         ],
-        'UpdatedDate' =>
-        [
+        'UpdatedDate' => [
           'shape' => 'Timestamp',
         ],
-        'ExpirationDate' =>
-        [
+        'ExpirationDate' => [
           'shape' => 'Timestamp',
         ],
-        'Reseller' =>
-        [
+        'Reseller' => [
           'shape' => 'Reseller',
         ],
-        'DnsSec' =>
-        [
+        'DnsSec' => [
           'shape' => 'DNSSec',
         ],
-        'StatusList' =>
-        [
+        'StatusList' => [
           'shape' => 'DomainStatusList',
         ],
       ],
     ],
-    'GetOperationDetailRequest' =>
-    [
+    'GetOperationDetailRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'OperationId',
+      'required' => [
+        'OperationId',
       ],
-      'members' =>
-      [
-        'OperationId' =>
-        [
+      'members' => [
+        'OperationId' => [
           'shape' => 'OperationId',
         ],
       ],
     ],
-    'GetOperationDetailResponse' =>
-    [
+    'GetOperationDetailResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'OperationId' =>
-        [
+      'members' => [
+        'OperationId' => [
           'shape' => 'OperationId',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'OperationStatus',
         ],
-        'Message' =>
-        [
+        'Message' => [
           'shape' => 'ErrorMessage',
         ],
-        'DomainName' =>
-        [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'Type' =>
-        [
+        'Type' => [
           'shape' => 'OperationType',
         ],
-        'SubmittedDate' =>
-        [
+        'SubmittedDate' => [
           'shape' => 'Timestamp',
         ],
       ],
     ],
-    'GlueIp' =>
-    [
+    'GlueIp' => [
       'type' => 'string',
       'max' => 45,
     ],
-    'GlueIpList' =>
-    [
+    'GlueIpList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'GlueIp',
       ],
     ],
-    'HostName' =>
-    [
+    'HostName' => [
       'type' => 'string',
       'max' => 255,
       'pattern' => '[a-zA-Z0-9_\\-.]*',
     ],
-    'InvalidInput' =>
-    [
+    'InvalidInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'LangCode' =>
-    [
+    'LangCode' => [
       'type' => 'string',
       'max' => 3,
     ],
-    'ListDomainsRequest' =>
-    [
+    'ListDomainsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'PageMarker',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'PageMaxItems',
         ],
       ],
     ],
-    'ListDomainsResponse' =>
-    [
+    'ListDomainsResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Domains',
+      'required' => [
+        'Domains',
       ],
-      'members' =>
-      [
-        'Domains' =>
-        [
+      'members' => [
+        'Domains' => [
           'shape' => 'DomainSummaryList',
         ],
-        'NextPageMarker' =>
-        [
+        'NextPageMarker' => [
           'shape' => 'PageMarker',
         ],
       ],
     ],
-    'ListOperationsRequest' =>
-    [
+    'ListOperationsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'PageMarker',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'PageMaxItems',
         ],
       ],
     ],
-    'ListOperationsResponse' =>
-    [
+    'ListOperationsResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Operations',
+      'required' => [
+        'Operations',
       ],
-      'members' =>
-      [
-        'Operations' =>
-        [
+      'members' => [
+        'Operations' => [
           'shape' => 'OperationSummaryList',
         ],
-        'NextPageMarker' =>
-        [
+        'NextPageMarker' => [
           'shape' => 'PageMarker',
         ],
       ],
     ],
-    'Nameserver' =>
-    [
+    'Nameserver' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
+      'required' => [
+        'Name',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'HostName',
         ],
-        'GlueIps' =>
-        [
+        'GlueIps' => [
           'shape' => 'GlueIpList',
         ],
       ],
     ],
-    'NameserverList' =>
-    [
+    'NameserverList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Nameserver',
       ],
     ],
-    'OperationId' =>
-    [
+    'OperationId' => [
       'type' => 'string',
       'max' => 255,
     ],
-    'OperationLimitExceeded' =>
-    [
+    'OperationLimitExceeded' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'OperationStatus' =>
-    [
+    'OperationStatus' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'SUBMITTED',
-        1 => 'IN_PROGRESS',
-        2 => 'ERROR',
-        3 => 'SUCCESSFUL',
-        4 => 'FAILED',
+      'enum' => [
+        'SUBMITTED',
+        'IN_PROGRESS',
+        'ERROR',
+        'SUCCESSFUL',
+        'FAILED',
       ],
     ],
-    'OperationSummary' =>
-    [
+    'OperationSummary' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'OperationId',
-        1 => 'Status',
-        2 => 'Type',
-        3 => 'SubmittedDate',
+      'required' => [
+        'OperationId',
+        'Status',
+        'Type',
+        'SubmittedDate',
       ],
-      'members' =>
-      [
-        'OperationId' =>
-        [
+      'members' => [
+        'OperationId' => [
           'shape' => 'OperationId',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'OperationStatus',
         ],
-        'Type' =>
-        [
+        'Type' => [
           'shape' => 'OperationType',
         ],
-        'SubmittedDate' =>
-        [
+        'SubmittedDate' => [
           'shape' => 'Timestamp',
         ],
       ],
     ],
-    'OperationSummaryList' =>
-    [
+    'OperationSummaryList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'OperationSummary',
       ],
     ],
-    'OperationType' =>
-    [
+    'OperationType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'REGISTER_DOMAIN',
-        1 => 'DELETE_DOMAIN',
-        2 => 'TRANSFER_IN_DOMAIN',
-        3 => 'UPDATE_DOMAIN_CONTACT',
-        4 => 'UPDATE_NAMESERVER',
-        5 => 'CHANGE_PRIVACY_PROTECTION',
-        6 => 'DOMAIN_LOCK',
+      'enum' => [
+        'REGISTER_DOMAIN',
+        'DELETE_DOMAIN',
+        'TRANSFER_IN_DOMAIN',
+        'UPDATE_DOMAIN_CONTACT',
+        'UPDATE_NAMESERVER',
+        'CHANGE_PRIVACY_PROTECTION',
+        'DOMAIN_LOCK',
       ],
     ],
-    'PageMarker' =>
-    [
+    'PageMarker' => [
       'type' => 'string',
       'max' => 4096,
     ],
-    'PageMaxItems' =>
-    [
+    'PageMaxItems' => [
       'type' => 'integer',
       'max' => 100,
     ],
-    'RegisterDomainRequest' =>
-    [
+    'RegisterDomainRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
-        1 => 'DurationInYears',
-        2 => 'AdminContact',
-        3 => 'RegistrantContact',
-        4 => 'TechContact',
+      'required' => [
+        'DomainName',
+        'DurationInYears',
+        'AdminContact',
+        'RegistrantContact',
+        'TechContact',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'IdnLangCode' =>
-        [
+        'IdnLangCode' => [
           'shape' => 'LangCode',
         ],
-        'DurationInYears' =>
-        [
+        'DurationInYears' => [
           'shape' => 'DurationInYears',
         ],
-        'AutoRenew' =>
-        [
+        'AutoRenew' => [
           'shape' => 'Boolean',
         ],
-        'AdminContact' =>
-        [
+        'AdminContact' => [
           'shape' => 'ContactDetail',
         ],
-        'RegistrantContact' =>
-        [
+        'RegistrantContact' => [
           'shape' => 'ContactDetail',
         ],
-        'TechContact' =>
-        [
+        'TechContact' => [
           'shape' => 'ContactDetail',
         ],
-        'PrivacyProtectAdminContact' =>
-        [
+        'PrivacyProtectAdminContact' => [
           'shape' => 'Boolean',
         ],
-        'PrivacyProtectRegistrantContact' =>
-        [
+        'PrivacyProtectRegistrantContact' => [
           'shape' => 'Boolean',
         ],
-        'PrivacyProtectTechContact' =>
-        [
+        'PrivacyProtectTechContact' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'RegisterDomainResponse' =>
-    [
+    'RegisterDomainResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'OperationId',
+      'required' => [
+        'OperationId',
       ],
-      'members' =>
-      [
-        'OperationId' =>
-        [
+      'members' => [
+        'OperationId' => [
           'shape' => 'OperationId',
         ],
       ],
     ],
-    'RegistrarName' =>
-    [
+    'RegistrarName' => [
       'type' => 'string',
     ],
-    'RegistrarUrl' =>
-    [
+    'RegistrarUrl' => [
       'type' => 'string',
     ],
-    'RegistrarWhoIsServer' =>
-    [
+    'RegistrarWhoIsServer' => [
       'type' => 'string',
     ],
-    'RegistryDomainId' =>
-    [
+    'RegistryDomainId' => [
       'type' => 'string',
     ],
-    'Reseller' =>
-    [
+    'Reseller' => [
       'type' => 'string',
     ],
-    'RetrieveDomainAuthCodeRequest' =>
-    [
+    'RetrieveDomainAuthCodeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
+      'required' => [
+        'DomainName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
       ],
     ],
-    'RetrieveDomainAuthCodeResponse' =>
-    [
+    'RetrieveDomainAuthCodeResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AuthCode',
+      'required' => [
+        'AuthCode',
       ],
-      'members' =>
-      [
-        'AuthCode' =>
-        [
+      'members' => [
+        'AuthCode' => [
           'shape' => 'DomainAuthCode',
         ],
       ],
     ],
-    'State' =>
-    [
+    'State' => [
       'type' => 'string',
       'max' => 255,
     ],
-    'TLDRulesViolation' =>
-    [
+    'TLDRulesViolation' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'Timestamp' =>
-    [
+    'Timestamp' => [
       'type' => 'timestamp',
     ],
-    'TransferDomainRequest' =>
-    [
+    'TransferDomainRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
-        1 => 'DurationInYears',
-        2 => 'Nameservers',
-        3 => 'AdminContact',
-        4 => 'RegistrantContact',
-        5 => 'TechContact',
+      'required' => [
+        'DomainName',
+        'DurationInYears',
+        'Nameservers',
+        'AdminContact',
+        'RegistrantContact',
+        'TechContact',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'IdnLangCode' =>
-        [
+        'IdnLangCode' => [
           'shape' => 'LangCode',
         ],
-        'DurationInYears' =>
-        [
+        'DurationInYears' => [
           'shape' => 'DurationInYears',
         ],
-        'Nameservers' =>
-        [
+        'Nameservers' => [
           'shape' => 'NameserverList',
         ],
-        'AuthCode' =>
-        [
+        'AuthCode' => [
           'shape' => 'DomainAuthCode',
         ],
-        'AutoRenew' =>
-        [
+        'AutoRenew' => [
           'shape' => 'Boolean',
         ],
-        'AdminContact' =>
-        [
+        'AdminContact' => [
           'shape' => 'ContactDetail',
         ],
-        'RegistrantContact' =>
-        [
+        'RegistrantContact' => [
           'shape' => 'ContactDetail',
         ],
-        'TechContact' =>
-        [
+        'TechContact' => [
           'shape' => 'ContactDetail',
         ],
-        'PrivacyProtectAdminContact' =>
-        [
+        'PrivacyProtectAdminContact' => [
           'shape' => 'Boolean',
         ],
-        'PrivacyProtectRegistrantContact' =>
-        [
+        'PrivacyProtectRegistrantContact' => [
           'shape' => 'Boolean',
         ],
-        'PrivacyProtectTechContact' =>
-        [
+        'PrivacyProtectTechContact' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'TransferDomainResponse' =>
-    [
+    'TransferDomainResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'OperationId',
+      'required' => [
+        'OperationId',
       ],
-      'members' =>
-      [
-        'OperationId' =>
-        [
+      'members' => [
+        'OperationId' => [
           'shape' => 'OperationId',
         ],
       ],
     ],
-    'UnsupportedTLD' =>
-    [
+    'UnsupportedTLD' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'UpdateDomainContactPrivacyRequest' =>
-    [
+    'UpdateDomainContactPrivacyRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
+      'required' => [
+        'DomainName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'AdminPrivacy' =>
-        [
+        'AdminPrivacy' => [
           'shape' => 'Boolean',
         ],
-        'RegistrantPrivacy' =>
-        [
+        'RegistrantPrivacy' => [
           'shape' => 'Boolean',
         ],
-        'TechPrivacy' =>
-        [
+        'TechPrivacy' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'UpdateDomainContactPrivacyResponse' =>
-    [
+    'UpdateDomainContactPrivacyResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'OperationId',
+      'required' => [
+        'OperationId',
       ],
-      'members' =>
-      [
-        'OperationId' =>
-        [
+      'members' => [
+        'OperationId' => [
           'shape' => 'OperationId',
         ],
       ],
     ],
-    'UpdateDomainContactRequest' =>
-    [
+    'UpdateDomainContactRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
+      'required' => [
+        'DomainName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'AdminContact' =>
-        [
+        'AdminContact' => [
           'shape' => 'ContactDetail',
         ],
-        'RegistrantContact' =>
-        [
+        'RegistrantContact' => [
           'shape' => 'ContactDetail',
         ],
-        'TechContact' =>
-        [
+        'TechContact' => [
           'shape' => 'ContactDetail',
         ],
       ],
     ],
-    'UpdateDomainContactResponse' =>
-    [
+    'UpdateDomainContactResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'OperationId',
+      'required' => [
+        'OperationId',
       ],
-      'members' =>
-      [
-        'OperationId' =>
-        [
+      'members' => [
+        'OperationId' => [
           'shape' => 'OperationId',
         ],
       ],
     ],
-    'UpdateDomainNameserversRequest' =>
-    [
+    'UpdateDomainNameserversRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
-        1 => 'Nameservers',
+      'required' => [
+        'DomainName',
+        'Nameservers',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'Nameservers' =>
-        [
+        'Nameservers' => [
           'shape' => 'NameserverList',
         ],
       ],
     ],
-    'UpdateDomainNameserversResponse' =>
-    [
+    'UpdateDomainNameserversResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'OperationId',
+      'required' => [
+        'OperationId',
       ],
-      'members' =>
-      [
-        'OperationId' =>
-        [
+      'members' => [
+        'OperationId' => [
           'shape' => 'OperationId',
         ],
       ],
     ],
-    'ZipCode' =>
-    [
+    'ZipCode' => [
       'type' => 'string',
       'max' => 255,
     ],

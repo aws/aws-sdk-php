@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2012-10-29',
     'endpointPrefix' => 'datapipeline',
     'jsonVersion' => '1.1',
@@ -10,625 +8,487 @@ return [
     'targetPrefix' => 'DataPipeline',
     'protocol' => 'json',
   ],
-  'operations' =>
-  [
-    'ActivatePipeline' =>
-    [
+  'operations' => [
+    'ActivatePipeline' => [
       'name' => 'ActivatePipeline',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ActivatePipelineInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ActivatePipelineOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'PipelineNotFoundException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'PipelineDeletedException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InternalServiceError',
           'exception' => true,
           'fault' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
       ],
     ],
-    'CreatePipeline' =>
-    [
+    'CreatePipeline' => [
       'name' => 'CreatePipeline',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreatePipelineInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreatePipelineOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServiceError',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
       ],
     ],
-    'DeletePipeline' =>
-    [
+    'DeletePipeline' => [
       'name' => 'DeletePipeline',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeletePipelineInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'PipelineNotFoundException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServiceError',
           'exception' => true,
           'fault' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeObjects' =>
-    [
+    'DescribeObjects' => [
       'name' => 'DescribeObjects',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeObjectsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeObjectsOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServiceError',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'PipelineNotFoundException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'PipelineDeletedException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribePipelines' =>
-    [
+    'DescribePipelines' => [
       'name' => 'DescribePipelines',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribePipelinesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribePipelinesOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'PipelineNotFoundException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'PipelineDeletedException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InternalServiceError',
           'exception' => true,
           'fault' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
       ],
     ],
-    'EvaluateExpression' =>
-    [
+    'EvaluateExpression' => [
       'name' => 'EvaluateExpression',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'EvaluateExpressionInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'EvaluateExpressionOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServiceError',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'TaskNotFoundException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'PipelineNotFoundException',
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'PipelineDeletedException',
           'exception' => true,
         ],
       ],
     ],
-    'GetPipelineDefinition' =>
-    [
+    'GetPipelineDefinition' => [
       'name' => 'GetPipelineDefinition',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetPipelineDefinitionInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetPipelineDefinitionOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServiceError',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'PipelineNotFoundException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'PipelineDeletedException',
           'exception' => true,
         ],
       ],
     ],
-    'ListPipelines' =>
-    [
+    'ListPipelines' => [
       'name' => 'ListPipelines',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListPipelinesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListPipelinesOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServiceError',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
       ],
     ],
-    'PollForTask' =>
-    [
+    'PollForTask' => [
       'name' => 'PollForTask',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PollForTaskInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'PollForTaskOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServiceError',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'TaskNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'PutPipelineDefinition' =>
-    [
+    'PutPipelineDefinition' => [
       'name' => 'PutPipelineDefinition',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutPipelineDefinitionInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'PutPipelineDefinitionOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServiceError',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'PipelineNotFoundException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'PipelineDeletedException',
           'exception' => true,
         ],
       ],
     ],
-    'QueryObjects' =>
-    [
+    'QueryObjects' => [
       'name' => 'QueryObjects',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'QueryObjectsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'QueryObjectsOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'PipelineNotFoundException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'PipelineDeletedException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InternalServiceError',
           'exception' => true,
           'fault' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
       ],
     ],
-    'ReportTaskProgress' =>
-    [
+    'ReportTaskProgress' => [
       'name' => 'ReportTaskProgress',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ReportTaskProgressInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ReportTaskProgressOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServiceError',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'TaskNotFoundException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'PipelineNotFoundException',
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'PipelineDeletedException',
           'exception' => true,
         ],
       ],
     ],
-    'ReportTaskRunnerHeartbeat' =>
-    [
+    'ReportTaskRunnerHeartbeat' => [
       'name' => 'ReportTaskRunnerHeartbeat',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ReportTaskRunnerHeartbeatInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ReportTaskRunnerHeartbeatOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServiceError',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
       ],
     ],
-    'SetStatus' =>
-    [
+    'SetStatus' => [
       'name' => 'SetStatus',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SetStatusInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'PipelineNotFoundException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'PipelineDeletedException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InternalServiceError',
           'exception' => true,
           'fault' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
       ],
     ],
-    'SetTaskStatus' =>
-    [
+    'SetTaskStatus' => [
       'name' => 'SetTaskStatus',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SetTaskStatusInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'SetTaskStatusOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServiceError',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'TaskNotFoundException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'PipelineNotFoundException',
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'PipelineDeletedException',
           'exception' => true,
         ],
       ],
     ],
-    'ValidatePipelineDefinition' =>
-    [
+    'ValidatePipelineDefinition' => [
       'name' => 'ValidatePipelineDefinition',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ValidatePipelineDefinitionInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ValidatePipelineDefinitionOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServiceError',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'PipelineNotFoundException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'PipelineDeletedException',
           'exception' => true,
@@ -636,1006 +496,755 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'ActivatePipelineInput' =>
-    [
+  'shapes' => [
+    'ActivatePipelineInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'pipelineId',
+      'required' => [
+        'pipelineId',
       ],
-      'members' =>
-      [
-        'pipelineId' =>
-        [
+      'members' => [
+        'pipelineId' => [
           'shape' => 'id',
         ],
       ],
     ],
-    'ActivatePipelineOutput' =>
-    [
+    'ActivatePipelineOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'CreatePipelineInput' =>
-    [
+    'CreatePipelineInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'name',
-        1 => 'uniqueId',
+      'required' => [
+        'name',
+        'uniqueId',
       ],
-      'members' =>
-      [
-        'name' =>
-        [
+      'members' => [
+        'name' => [
           'shape' => 'id',
         ],
-        'uniqueId' =>
-        [
+        'uniqueId' => [
           'shape' => 'id',
         ],
-        'description' =>
-        [
+        'description' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'CreatePipelineOutput' =>
-    [
+    'CreatePipelineOutput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'pipelineId',
+      'required' => [
+        'pipelineId',
       ],
-      'members' =>
-      [
-        'pipelineId' =>
-        [
+      'members' => [
+        'pipelineId' => [
           'shape' => 'id',
         ],
       ],
     ],
-    'DeletePipelineInput' =>
-    [
+    'DeletePipelineInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'pipelineId',
+      'required' => [
+        'pipelineId',
       ],
-      'members' =>
-      [
-        'pipelineId' =>
-        [
+      'members' => [
+        'pipelineId' => [
           'shape' => 'id',
         ],
       ],
     ],
-    'DescribeObjectsInput' =>
-    [
+    'DescribeObjectsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'pipelineId',
-        1 => 'objectIds',
+      'required' => [
+        'pipelineId',
+        'objectIds',
       ],
-      'members' =>
-      [
-        'pipelineId' =>
-        [
+      'members' => [
+        'pipelineId' => [
           'shape' => 'id',
         ],
-        'objectIds' =>
-        [
+        'objectIds' => [
           'shape' => 'idList',
         ],
-        'evaluateExpressions' =>
-        [
+        'evaluateExpressions' => [
           'shape' => 'boolean',
         ],
-        'marker' =>
-        [
+        'marker' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'DescribeObjectsOutput' =>
-    [
+    'DescribeObjectsOutput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'pipelineObjects',
+      'required' => [
+        'pipelineObjects',
       ],
-      'members' =>
-      [
-        'pipelineObjects' =>
-        [
+      'members' => [
+        'pipelineObjects' => [
           'shape' => 'PipelineObjectList',
         ],
-        'marker' =>
-        [
+        'marker' => [
           'shape' => 'string',
         ],
-        'hasMoreResults' =>
-        [
+        'hasMoreResults' => [
           'shape' => 'boolean',
         ],
       ],
     ],
-    'DescribePipelinesInput' =>
-    [
+    'DescribePipelinesInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'pipelineIds',
+      'required' => [
+        'pipelineIds',
       ],
-      'members' =>
-      [
-        'pipelineIds' =>
-        [
+      'members' => [
+        'pipelineIds' => [
           'shape' => 'idList',
         ],
       ],
     ],
-    'DescribePipelinesOutput' =>
-    [
+    'DescribePipelinesOutput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'pipelineDescriptionList',
+      'required' => [
+        'pipelineDescriptionList',
       ],
-      'members' =>
-      [
-        'pipelineDescriptionList' =>
-        [
+      'members' => [
+        'pipelineDescriptionList' => [
           'shape' => 'PipelineDescriptionList',
         ],
       ],
     ],
-    'EvaluateExpressionInput' =>
-    [
+    'EvaluateExpressionInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'pipelineId',
-        1 => 'objectId',
-        2 => 'expression',
+      'required' => [
+        'pipelineId',
+        'objectId',
+        'expression',
       ],
-      'members' =>
-      [
-        'pipelineId' =>
-        [
+      'members' => [
+        'pipelineId' => [
           'shape' => 'id',
         ],
-        'objectId' =>
-        [
+        'objectId' => [
           'shape' => 'id',
         ],
-        'expression' =>
-        [
+        'expression' => [
           'shape' => 'longString',
         ],
       ],
     ],
-    'EvaluateExpressionOutput' =>
-    [
+    'EvaluateExpressionOutput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'evaluatedExpression',
+      'required' => [
+        'evaluatedExpression',
       ],
-      'members' =>
-      [
-        'evaluatedExpression' =>
-        [
+      'members' => [
+        'evaluatedExpression' => [
           'shape' => 'longString',
         ],
       ],
     ],
-    'Field' =>
-    [
+    'Field' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'key',
+      'required' => [
+        'key',
       ],
-      'members' =>
-      [
-        'key' =>
-        [
+      'members' => [
+        'key' => [
           'shape' => 'fieldNameString',
         ],
-        'stringValue' =>
-        [
+        'stringValue' => [
           'shape' => 'fieldStringValue',
         ],
-        'refValue' =>
-        [
+        'refValue' => [
           'shape' => 'fieldNameString',
         ],
       ],
     ],
-    'GetPipelineDefinitionInput' =>
-    [
+    'GetPipelineDefinitionInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'pipelineId',
+      'required' => [
+        'pipelineId',
       ],
-      'members' =>
-      [
-        'pipelineId' =>
-        [
+      'members' => [
+        'pipelineId' => [
           'shape' => 'id',
         ],
-        'version' =>
-        [
+        'version' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'GetPipelineDefinitionOutput' =>
-    [
+    'GetPipelineDefinitionOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'pipelineObjects' =>
-        [
+      'members' => [
+        'pipelineObjects' => [
           'shape' => 'PipelineObjectList',
         ],
       ],
     ],
-    'InstanceIdentity' =>
-    [
+    'InstanceIdentity' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'document' =>
-        [
+      'members' => [
+        'document' => [
           'shape' => 'string',
         ],
-        'signature' =>
-        [
+        'signature' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'InternalServiceError' =>
-    [
+    'InternalServiceError' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'errorMessage',
         ],
       ],
       'exception' => true,
       'fault' => true,
     ],
-    'InvalidRequestException' =>
-    [
+    'InvalidRequestException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'errorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'ListPipelinesInput' =>
-    [
+    'ListPipelinesInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'marker' =>
-        [
+      'members' => [
+        'marker' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'ListPipelinesOutput' =>
-    [
+    'ListPipelinesOutput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'pipelineIdList',
+      'required' => [
+        'pipelineIdList',
       ],
-      'members' =>
-      [
-        'pipelineIdList' =>
-        [
+      'members' => [
+        'pipelineIdList' => [
           'shape' => 'pipelineList',
         ],
-        'marker' =>
-        [
+        'marker' => [
           'shape' => 'string',
         ],
-        'hasMoreResults' =>
-        [
+        'hasMoreResults' => [
           'shape' => 'boolean',
         ],
       ],
     ],
-    'Operator' =>
-    [
+    'Operator' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'type' =>
-        [
+      'members' => [
+        'type' => [
           'shape' => 'OperatorType',
         ],
-        'values' =>
-        [
+        'values' => [
           'shape' => 'stringList',
         ],
       ],
     ],
-    'OperatorType' =>
-    [
+    'OperatorType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'EQ',
-        1 => 'REF_EQ',
-        2 => 'LE',
-        3 => 'GE',
-        4 => 'BETWEEN',
+      'enum' => [
+        'EQ',
+        'REF_EQ',
+        'LE',
+        'GE',
+        'BETWEEN',
       ],
     ],
-    'PipelineDeletedException' =>
-    [
+    'PipelineDeletedException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'errorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'PipelineDescription' =>
-    [
+    'PipelineDescription' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'pipelineId',
-        1 => 'name',
-        2 => 'fields',
+      'required' => [
+        'pipelineId',
+        'name',
+        'fields',
       ],
-      'members' =>
-      [
-        'pipelineId' =>
-        [
+      'members' => [
+        'pipelineId' => [
           'shape' => 'id',
         ],
-        'name' =>
-        [
+        'name' => [
           'shape' => 'id',
         ],
-        'fields' =>
-        [
+        'fields' => [
           'shape' => 'fieldList',
         ],
-        'description' =>
-        [
+        'description' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'PipelineDescriptionList' =>
-    [
+    'PipelineDescriptionList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'PipelineDescription',
       ],
     ],
-    'PipelineIdName' =>
-    [
+    'PipelineIdName' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'id' =>
-        [
+      'members' => [
+        'id' => [
           'shape' => 'id',
         ],
-        'name' =>
-        [
+        'name' => [
           'shape' => 'id',
         ],
       ],
     ],
-    'PipelineNotFoundException' =>
-    [
+    'PipelineNotFoundException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'errorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'PipelineObject' =>
-    [
+    'PipelineObject' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'id',
-        1 => 'name',
-        2 => 'fields',
+      'required' => [
+        'id',
+        'name',
+        'fields',
       ],
-      'members' =>
-      [
-        'id' =>
-        [
+      'members' => [
+        'id' => [
           'shape' => 'id',
         ],
-        'name' =>
-        [
+        'name' => [
           'shape' => 'id',
         ],
-        'fields' =>
-        [
+        'fields' => [
           'shape' => 'fieldList',
         ],
       ],
     ],
-    'PipelineObjectList' =>
-    [
+    'PipelineObjectList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'PipelineObject',
       ],
     ],
-    'PipelineObjectMap' =>
-    [
+    'PipelineObjectMap' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'id',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'PipelineObject',
       ],
     ],
-    'PollForTaskInput' =>
-    [
+    'PollForTaskInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'workerGroup',
+      'required' => [
+        'workerGroup',
       ],
-      'members' =>
-      [
-        'workerGroup' =>
-        [
+      'members' => [
+        'workerGroup' => [
           'shape' => 'string',
         ],
-        'hostname' =>
-        [
+        'hostname' => [
           'shape' => 'id',
         ],
-        'instanceIdentity' =>
-        [
+        'instanceIdentity' => [
           'shape' => 'InstanceIdentity',
         ],
       ],
     ],
-    'PollForTaskOutput' =>
-    [
+    'PollForTaskOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'taskObject' =>
-        [
+      'members' => [
+        'taskObject' => [
           'shape' => 'TaskObject',
         ],
       ],
     ],
-    'PutPipelineDefinitionInput' =>
-    [
+    'PutPipelineDefinitionInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'pipelineId',
-        1 => 'pipelineObjects',
+      'required' => [
+        'pipelineId',
+        'pipelineObjects',
       ],
-      'members' =>
-      [
-        'pipelineId' =>
-        [
+      'members' => [
+        'pipelineId' => [
           'shape' => 'id',
         ],
-        'pipelineObjects' =>
-        [
+        'pipelineObjects' => [
           'shape' => 'PipelineObjectList',
         ],
       ],
     ],
-    'PutPipelineDefinitionOutput' =>
-    [
+    'PutPipelineDefinitionOutput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'errored',
+      'required' => [
+        'errored',
       ],
-      'members' =>
-      [
-        'validationErrors' =>
-        [
+      'members' => [
+        'validationErrors' => [
           'shape' => 'ValidationErrors',
         ],
-        'validationWarnings' =>
-        [
+        'validationWarnings' => [
           'shape' => 'ValidationWarnings',
         ],
-        'errored' =>
-        [
+        'errored' => [
           'shape' => 'boolean',
         ],
       ],
     ],
-    'Query' =>
-    [
+    'Query' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'selectors' =>
-        [
+      'members' => [
+        'selectors' => [
           'shape' => 'SelectorList',
         ],
       ],
     ],
-    'QueryObjectsInput' =>
-    [
+    'QueryObjectsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'pipelineId',
-        1 => 'sphere',
+      'required' => [
+        'pipelineId',
+        'sphere',
       ],
-      'members' =>
-      [
-        'pipelineId' =>
-        [
+      'members' => [
+        'pipelineId' => [
           'shape' => 'id',
         ],
-        'query' =>
-        [
+        'query' => [
           'shape' => 'Query',
         ],
-        'sphere' =>
-        [
+        'sphere' => [
           'shape' => 'string',
         ],
-        'marker' =>
-        [
+        'marker' => [
           'shape' => 'string',
         ],
-        'limit' =>
-        [
+        'limit' => [
           'shape' => 'int',
         ],
       ],
     ],
-    'QueryObjectsOutput' =>
-    [
+    'QueryObjectsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ids' =>
-        [
+      'members' => [
+        'ids' => [
           'shape' => 'idList',
         ],
-        'marker' =>
-        [
+        'marker' => [
           'shape' => 'string',
         ],
-        'hasMoreResults' =>
-        [
+        'hasMoreResults' => [
           'shape' => 'boolean',
         ],
       ],
     ],
-    'ReportTaskProgressInput' =>
-    [
+    'ReportTaskProgressInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'taskId',
+      'required' => [
+        'taskId',
       ],
-      'members' =>
-      [
-        'taskId' =>
-        [
+      'members' => [
+        'taskId' => [
           'shape' => 'taskId',
         ],
       ],
     ],
-    'ReportTaskProgressOutput' =>
-    [
+    'ReportTaskProgressOutput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'canceled',
+      'required' => [
+        'canceled',
       ],
-      'members' =>
-      [
-        'canceled' =>
-        [
+      'members' => [
+        'canceled' => [
           'shape' => 'boolean',
         ],
       ],
     ],
-    'ReportTaskRunnerHeartbeatInput' =>
-    [
+    'ReportTaskRunnerHeartbeatInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'taskrunnerId',
+      'required' => [
+        'taskrunnerId',
       ],
-      'members' =>
-      [
-        'taskrunnerId' =>
-        [
+      'members' => [
+        'taskrunnerId' => [
           'shape' => 'id',
         ],
-        'workerGroup' =>
-        [
+        'workerGroup' => [
           'shape' => 'string',
         ],
-        'hostname' =>
-        [
+        'hostname' => [
           'shape' => 'id',
         ],
       ],
     ],
-    'ReportTaskRunnerHeartbeatOutput' =>
-    [
+    'ReportTaskRunnerHeartbeatOutput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'terminate',
+      'required' => [
+        'terminate',
       ],
-      'members' =>
-      [
-        'terminate' =>
-        [
+      'members' => [
+        'terminate' => [
           'shape' => 'boolean',
         ],
       ],
     ],
-    'Selector' =>
-    [
+    'Selector' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'fieldName' =>
-        [
+      'members' => [
+        'fieldName' => [
           'shape' => 'string',
         ],
-        'operator' =>
-        [
+        'operator' => [
           'shape' => 'Operator',
         ],
       ],
     ],
-    'SelectorList' =>
-    [
+    'SelectorList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Selector',
       ],
     ],
-    'SetStatusInput' =>
-    [
+    'SetStatusInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'pipelineId',
-        1 => 'objectIds',
-        2 => 'status',
+      'required' => [
+        'pipelineId',
+        'objectIds',
+        'status',
       ],
-      'members' =>
-      [
-        'pipelineId' =>
-        [
+      'members' => [
+        'pipelineId' => [
           'shape' => 'id',
         ],
-        'objectIds' =>
-        [
+        'objectIds' => [
           'shape' => 'idList',
         ],
-        'status' =>
-        [
+        'status' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'SetTaskStatusInput' =>
-    [
+    'SetTaskStatusInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'taskId',
-        1 => 'taskStatus',
+      'required' => [
+        'taskId',
+        'taskStatus',
       ],
-      'members' =>
-      [
-        'taskId' =>
-        [
+      'members' => [
+        'taskId' => [
           'shape' => 'taskId',
         ],
-        'taskStatus' =>
-        [
+        'taskStatus' => [
           'shape' => 'TaskStatus',
         ],
-        'errorId' =>
-        [
+        'errorId' => [
           'shape' => 'string',
         ],
-        'errorMessage' =>
-        [
+        'errorMessage' => [
           'shape' => 'errorMessage',
         ],
-        'errorStackTrace' =>
-        [
+        'errorStackTrace' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'SetTaskStatusOutput' =>
-    [
+    'SetTaskStatusOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'TaskNotFoundException' =>
-    [
+    'TaskNotFoundException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'errorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'TaskObject' =>
-    [
+    'TaskObject' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'taskId' =>
-        [
+      'members' => [
+        'taskId' => [
           'shape' => 'taskId',
         ],
-        'pipelineId' =>
-        [
+        'pipelineId' => [
           'shape' => 'id',
         ],
-        'attemptId' =>
-        [
+        'attemptId' => [
           'shape' => 'id',
         ],
-        'objects' =>
-        [
+        'objects' => [
           'shape' => 'PipelineObjectMap',
         ],
       ],
     ],
-    'TaskStatus' =>
-    [
+    'TaskStatus' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'FINISHED',
-        1 => 'FAILED',
-        2 => 'FALSE',
+      'enum' => [
+        'FINISHED',
+        'FAILED',
+        'FALSE',
       ],
     ],
-    'ValidatePipelineDefinitionInput' =>
-    [
+    'ValidatePipelineDefinitionInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'pipelineId',
-        1 => 'pipelineObjects',
+      'required' => [
+        'pipelineId',
+        'pipelineObjects',
       ],
-      'members' =>
-      [
-        'pipelineId' =>
-        [
+      'members' => [
+        'pipelineId' => [
           'shape' => 'id',
         ],
-        'pipelineObjects' =>
-        [
+        'pipelineObjects' => [
           'shape' => 'PipelineObjectList',
         ],
       ],
     ],
-    'ValidatePipelineDefinitionOutput' =>
-    [
+    'ValidatePipelineDefinitionOutput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'errored',
+      'required' => [
+        'errored',
       ],
-      'members' =>
-      [
-        'validationErrors' =>
-        [
+      'members' => [
+        'validationErrors' => [
           'shape' => 'ValidationErrors',
         ],
-        'validationWarnings' =>
-        [
+        'validationWarnings' => [
           'shape' => 'ValidationWarnings',
         ],
-        'errored' =>
-        [
+        'errored' => [
           'shape' => 'boolean',
         ],
       ],
     ],
-    'ValidationError' =>
-    [
+    'ValidationError' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'id' =>
-        [
+      'members' => [
+        'id' => [
           'shape' => 'id',
         ],
-        'errors' =>
-        [
+        'errors' => [
           'shape' => 'validationMessages',
         ],
       ],
     ],
-    'ValidationErrors' =>
-    [
+    'ValidationErrors' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ValidationError',
       ],
     ],
-    'ValidationWarning' =>
-    [
+    'ValidationWarning' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'id' =>
-        [
+      'members' => [
+        'id' => [
           'shape' => 'id',
         ],
-        'warnings' =>
-        [
+        'warnings' => [
           'shape' => 'validationMessages',
         ],
       ],
     ],
-    'ValidationWarnings' =>
-    [
+    'ValidationWarnings' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ValidationWarning',
       ],
     ],
-    'boolean' =>
-    [
+    'boolean' => [
       'type' => 'boolean',
     ],
-    'errorMessage' =>
-    [
+    'errorMessage' => [
       'type' => 'string',
     ],
-    'fieldList' =>
-    [
+    'fieldList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Field',
       ],
     ],
-    'fieldNameString' =>
-    [
+    'fieldNameString' => [
       'type' => 'string',
       'min' => 1,
       'max' => 256,
       'pattern' => '[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*',
     ],
-    'fieldStringValue' =>
-    [
+    'fieldStringValue' => [
       'type' => 'string',
       'min' => 0,
       'max' => 10240,
       'pattern' => '[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*',
     ],
-    'id' =>
-    [
+    'id' => [
       'type' => 'string',
       'min' => 1,
       'max' => 1024,
       'pattern' => '[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*',
     ],
-    'idList' =>
-    [
+    'idList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'id',
       ],
     ],
-    'int' =>
-    [
+    'int' => [
       'type' => 'integer',
     ],
-    'longString' =>
-    [
+    'longString' => [
       'type' => 'string',
       'min' => 0,
       'max' => 20971520,
       'pattern' => '[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*',
     ],
-    'pipelineList' =>
-    [
+    'pipelineList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'PipelineIdName',
       ],
     ],
-    'string' =>
-    [
+    'string' => [
       'type' => 'string',
       'min' => 0,
       'max' => 1024,
       'pattern' => '[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*',
     ],
-    'stringList' =>
-    [
+    'stringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'string',
       ],
     ],
-    'taskId' =>
-    [
+    'taskId' => [
       'type' => 'string',
       'min' => 1,
       'max' => 2048,
       'pattern' => '[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*',
     ],
-    'validationMessage' =>
-    [
+    'validationMessage' => [
       'type' => 'string',
       'min' => 0,
       'max' => 10000,
       'pattern' => '[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*',
     ],
-    'validationMessages' =>
-    [
+    'validationMessages' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'validationMessage',
       ],
     ],

@@ -1,21 +1,15 @@
-<?php
-return [
-  'pagination' =>
-  [
-    'DescribeInstanceHealth' =>
-    [
+<?php return [
+  'pagination' => [
+    'DescribeInstanceHealth' => [
       'result_key' => 'InstanceStates',
     ],
-    'DescribeLoadBalancerPolicies' =>
-    [
+    'DescribeLoadBalancerPolicies' => [
       'result_key' => 'PolicyDescriptions',
     ],
-    'DescribeLoadBalancerPolicyTypes' =>
-    [
+    'DescribeLoadBalancerPolicyTypes' => [
       'result_key' => 'PolicyTypeDescriptions',
     ],
-    'DescribeLoadBalancers' =>
-    [
+    'DescribeLoadBalancers' => [
       'input_token' => 'Marker',
       'output_token' => 'NextMarker',
       'result_key' => 'LoadBalancerDescriptions',

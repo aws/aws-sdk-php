@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2012-08-10',
     'endpointPrefix' => 'dynamodb',
     'jsonVersion' => '1.0',
@@ -11,37 +9,28 @@ return [
     'targetPrefix' => 'DynamoDB_20120810',
     'protocol' => 'json',
   ],
-  'operations' =>
-  [
-    'BatchGetItem' =>
-    [
+  'operations' => [
+    'BatchGetItem' => [
       'name' => 'BatchGetItem',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'BatchGetItemInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'BatchGetItemOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ProvisionedThroughputExceededException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InternalServerError',
           'exception' => true,
@@ -49,40 +38,31 @@ return [
         ],
       ],
     ],
-    'BatchWriteItem' =>
-    [
+    'BatchWriteItem' => [
       'name' => 'BatchWriteItem',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'BatchWriteItemInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'BatchWriteItemOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ProvisionedThroughputExceededException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ItemCollectionSizeLimitExceededException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InternalServerError',
           'exception' => true,
@@ -90,35 +70,27 @@ return [
         ],
       ],
     ],
-    'CreateTable' =>
-    [
+    'CreateTable' => [
       'name' => 'CreateTable',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateTableInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateTableOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceInUseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InternalServerError',
           'exception' => true,
@@ -126,45 +98,35 @@ return [
         ],
       ],
     ],
-    'DeleteItem' =>
-    [
+    'DeleteItem' => [
       'name' => 'DeleteItem',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteItemInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteItemOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ConditionalCheckFailedException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ProvisionedThroughputExceededException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ItemCollectionSizeLimitExceededException',
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InternalServerError',
           'exception' => true,
@@ -172,40 +134,31 @@ return [
         ],
       ],
     ],
-    'DeleteTable' =>
-    [
+    'DeleteTable' => [
       'name' => 'DeleteTable',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteTableInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteTableOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceInUseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InternalServerError',
           'exception' => true,
@@ -213,30 +166,23 @@ return [
         ],
       ],
     ],
-    'DescribeTable' =>
-    [
+    'DescribeTable' => [
       'name' => 'DescribeTable',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeTableInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeTableOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
           'exception' => true,
@@ -244,35 +190,27 @@ return [
         ],
       ],
     ],
-    'GetItem' =>
-    [
+    'GetItem' => [
       'name' => 'GetItem',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetItemInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetItemOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ProvisionedThroughputExceededException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InternalServerError',
           'exception' => true,
@@ -280,25 +218,19 @@ return [
         ],
       ],
     ],
-    'ListTables' =>
-    [
+    'ListTables' => [
       'name' => 'ListTables',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListTablesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListTablesOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerError',
           'exception' => true,
@@ -306,45 +238,35 @@ return [
         ],
       ],
     ],
-    'PutItem' =>
-    [
+    'PutItem' => [
       'name' => 'PutItem',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutItemInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'PutItemOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ConditionalCheckFailedException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ProvisionedThroughputExceededException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ItemCollectionSizeLimitExceededException',
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InternalServerError',
           'exception' => true,
@@ -352,35 +274,27 @@ return [
         ],
       ],
     ],
-    'Query' =>
-    [
+    'Query' => [
       'name' => 'Query',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'QueryInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'QueryOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ProvisionedThroughputExceededException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InternalServerError',
           'exception' => true,
@@ -388,35 +302,27 @@ return [
         ],
       ],
     ],
-    'Scan' =>
-    [
+    'Scan' => [
       'name' => 'Scan',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ScanInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ScanOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ProvisionedThroughputExceededException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InternalServerError',
           'exception' => true,
@@ -424,45 +330,35 @@ return [
         ],
       ],
     ],
-    'UpdateItem' =>
-    [
+    'UpdateItem' => [
       'name' => 'UpdateItem',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateItemInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdateItemOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ConditionalCheckFailedException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ProvisionedThroughputExceededException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ItemCollectionSizeLimitExceededException',
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InternalServerError',
           'exception' => true,
@@ -470,40 +366,31 @@ return [
         ],
       ],
     ],
-    'UpdateTable' =>
-    [
+    'UpdateTable' => [
       'name' => 'UpdateTable',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateTableInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdateTableOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceInUseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InternalServerError',
           'exception' => true,
@@ -512,1972 +399,1488 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'AttributeAction' =>
-    [
+  'shapes' => [
+    'AttributeAction' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'ADD',
-        1 => 'PUT',
-        2 => 'DELETE',
+      'enum' => [
+        'ADD',
+        'PUT',
+        'DELETE',
       ],
     ],
-    'AttributeDefinition' =>
-    [
+    'AttributeDefinition' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AttributeName',
-        1 => 'AttributeType',
+      'required' => [
+        'AttributeName',
+        'AttributeType',
       ],
-      'members' =>
-      [
-        'AttributeName' =>
-        [
+      'members' => [
+        'AttributeName' => [
           'shape' => 'KeySchemaAttributeName',
         ],
-        'AttributeType' =>
-        [
+        'AttributeType' => [
           'shape' => 'ScalarAttributeType',
         ],
       ],
     ],
-    'AttributeDefinitions' =>
-    [
+    'AttributeDefinitions' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AttributeDefinition',
       ],
     ],
-    'AttributeMap' =>
-    [
+    'AttributeMap' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'AttributeName',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'AttributeValue',
       ],
     ],
-    'AttributeName' =>
-    [
+    'AttributeName' => [
       'type' => 'string',
       'max' => 65535,
     ],
-    'AttributeNameList' =>
-    [
+    'AttributeNameList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AttributeName',
       ],
       'min' => 1,
     ],
-    'AttributeUpdates' =>
-    [
+    'AttributeUpdates' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'AttributeName',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'AttributeValueUpdate',
       ],
     ],
-    'AttributeValue' =>
-    [
+    'AttributeValue' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'S' =>
-        [
+      'members' => [
+        'S' => [
           'shape' => 'StringAttributeValue',
         ],
-        'N' =>
-        [
+        'N' => [
           'shape' => 'NumberAttributeValue',
         ],
-        'B' =>
-        [
+        'B' => [
           'shape' => 'BinaryAttributeValue',
         ],
-        'SS' =>
-        [
+        'SS' => [
           'shape' => 'StringSetAttributeValue',
         ],
-        'NS' =>
-        [
+        'NS' => [
           'shape' => 'NumberSetAttributeValue',
         ],
-        'BS' =>
-        [
+        'BS' => [
           'shape' => 'BinarySetAttributeValue',
         ],
-        'M' =>
-        [
+        'M' => [
           'shape' => 'MapAttributeValue',
         ],
-        'L' =>
-        [
+        'L' => [
           'shape' => 'ListAttributeValue',
         ],
-        'NULL' =>
-        [
+        'NULL' => [
           'shape' => 'NullAttributeValue',
         ],
-        'BOOL' =>
-        [
+        'BOOL' => [
           'shape' => 'BooleanAttributeValue',
         ],
       ],
     ],
-    'AttributeValueList' =>
-    [
+    'AttributeValueList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AttributeValue',
       ],
     ],
-    'AttributeValueUpdate' =>
-    [
+    'AttributeValueUpdate' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Value' =>
-        [
+      'members' => [
+        'Value' => [
           'shape' => 'AttributeValue',
         ],
-        'Action' =>
-        [
+        'Action' => [
           'shape' => 'AttributeAction',
         ],
       ],
     ],
-    'BatchGetItemInput' =>
-    [
+    'BatchGetItemInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RequestItems',
+      'required' => [
+        'RequestItems',
       ],
-      'members' =>
-      [
-        'RequestItems' =>
-        [
+      'members' => [
+        'RequestItems' => [
           'shape' => 'BatchGetRequestMap',
         ],
-        'ReturnConsumedCapacity' =>
-        [
+        'ReturnConsumedCapacity' => [
           'shape' => 'ReturnConsumedCapacity',
         ],
       ],
     ],
-    'BatchGetItemOutput' =>
-    [
+    'BatchGetItemOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Responses' =>
-        [
+      'members' => [
+        'Responses' => [
           'shape' => 'BatchGetResponseMap',
         ],
-        'UnprocessedKeys' =>
-        [
+        'UnprocessedKeys' => [
           'shape' => 'BatchGetRequestMap',
         ],
-        'ConsumedCapacity' =>
-        [
+        'ConsumedCapacity' => [
           'shape' => 'ConsumedCapacityMultiple',
         ],
       ],
     ],
-    'BatchGetRequestMap' =>
-    [
+    'BatchGetRequestMap' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'TableName',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'KeysAndAttributes',
       ],
       'min' => 1,
       'max' => 100,
     ],
-    'BatchGetResponseMap' =>
-    [
+    'BatchGetResponseMap' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'TableName',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'ItemList',
       ],
     ],
-    'BatchWriteItemInput' =>
-    [
+    'BatchWriteItemInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RequestItems',
+      'required' => [
+        'RequestItems',
       ],
-      'members' =>
-      [
-        'RequestItems' =>
-        [
+      'members' => [
+        'RequestItems' => [
           'shape' => 'BatchWriteItemRequestMap',
         ],
-        'ReturnConsumedCapacity' =>
-        [
+        'ReturnConsumedCapacity' => [
           'shape' => 'ReturnConsumedCapacity',
         ],
-        'ReturnItemCollectionMetrics' =>
-        [
+        'ReturnItemCollectionMetrics' => [
           'shape' => 'ReturnItemCollectionMetrics',
         ],
       ],
     ],
-    'BatchWriteItemOutput' =>
-    [
+    'BatchWriteItemOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'UnprocessedItems' =>
-        [
+      'members' => [
+        'UnprocessedItems' => [
           'shape' => 'BatchWriteItemRequestMap',
         ],
-        'ItemCollectionMetrics' =>
-        [
+        'ItemCollectionMetrics' => [
           'shape' => 'ItemCollectionMetricsPerTable',
         ],
-        'ConsumedCapacity' =>
-        [
+        'ConsumedCapacity' => [
           'shape' => 'ConsumedCapacityMultiple',
         ],
       ],
     ],
-    'BatchWriteItemRequestMap' =>
-    [
+    'BatchWriteItemRequestMap' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'TableName',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'WriteRequests',
       ],
       'min' => 1,
       'max' => 25,
     ],
-    'BinaryAttributeValue' =>
-    [
+    'BinaryAttributeValue' => [
       'type' => 'blob',
     ],
-    'BinarySetAttributeValue' =>
-    [
+    'BinarySetAttributeValue' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'BinaryAttributeValue',
       ],
     ],
-    'BooleanAttributeValue' =>
-    [
+    'BooleanAttributeValue' => [
       'type' => 'boolean',
     ],
-    'BooleanObject' =>
-    [
+    'BooleanObject' => [
       'type' => 'boolean',
     ],
-    'Capacity' =>
-    [
+    'Capacity' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CapacityUnits' =>
-        [
+      'members' => [
+        'CapacityUnits' => [
           'shape' => 'ConsumedCapacityUnits',
         ],
       ],
     ],
-    'ComparisonOperator' =>
-    [
+    'ComparisonOperator' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'EQ',
-        1 => 'NE',
-        2 => 'IN',
-        3 => 'LE',
-        4 => 'LT',
-        5 => 'GE',
-        6 => 'GT',
-        7 => 'BETWEEN',
-        8 => 'NOT_NULL',
-        9 => 'NULL',
-        10 => 'CONTAINS',
-        11 => 'NOT_CONTAINS',
-        12 => 'BEGINS_WITH',
+      'enum' => [
+        'EQ',
+        'NE',
+        'IN',
+        'LE',
+        'LT',
+        'GE',
+        'GT',
+        'BETWEEN',
+        'NOT_NULL',
+        'NULL',
+        'CONTAINS',
+        'NOT_CONTAINS',
+        'BEGINS_WITH',
       ],
     ],
-    'Condition' =>
-    [
+    'Condition' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ComparisonOperator',
+      'required' => [
+        'ComparisonOperator',
       ],
-      'members' =>
-      [
-        'AttributeValueList' =>
-        [
+      'members' => [
+        'AttributeValueList' => [
           'shape' => 'AttributeValueList',
         ],
-        'ComparisonOperator' =>
-        [
+        'ComparisonOperator' => [
           'shape' => 'ComparisonOperator',
         ],
       ],
     ],
-    'ConditionExpression' =>
-    [
+    'ConditionExpression' => [
       'type' => 'string',
     ],
-    'ConditionalCheckFailedException' =>
-    [
+    'ConditionalCheckFailedException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'ConditionalOperator' =>
-    [
+    'ConditionalOperator' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'AND',
-        1 => 'OR',
+      'enum' => [
+        'AND',
+        'OR',
       ],
     ],
-    'ConsistentRead' =>
-    [
+    'ConsistentRead' => [
       'type' => 'boolean',
     ],
-    'ConsumedCapacity' =>
-    [
+    'ConsumedCapacity' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TableName' =>
-        [
+      'members' => [
+        'TableName' => [
           'shape' => 'TableName',
         ],
-        'CapacityUnits' =>
-        [
+        'CapacityUnits' => [
           'shape' => 'ConsumedCapacityUnits',
         ],
-        'Table' =>
-        [
+        'Table' => [
           'shape' => 'Capacity',
         ],
-        'LocalSecondaryIndexes' =>
-        [
+        'LocalSecondaryIndexes' => [
           'shape' => 'SecondaryIndexesCapacityMap',
         ],
-        'GlobalSecondaryIndexes' =>
-        [
+        'GlobalSecondaryIndexes' => [
           'shape' => 'SecondaryIndexesCapacityMap',
         ],
       ],
     ],
-    'ConsumedCapacityMultiple' =>
-    [
+    'ConsumedCapacityMultiple' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ConsumedCapacity',
       ],
     ],
-    'ConsumedCapacityUnits' =>
-    [
+    'ConsumedCapacityUnits' => [
       'type' => 'double',
     ],
-    'CreateTableInput' =>
-    [
+    'CreateTableInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AttributeDefinitions',
-        1 => 'TableName',
-        2 => 'KeySchema',
-        3 => 'ProvisionedThroughput',
+      'required' => [
+        'AttributeDefinitions',
+        'TableName',
+        'KeySchema',
+        'ProvisionedThroughput',
       ],
-      'members' =>
-      [
-        'AttributeDefinitions' =>
-        [
+      'members' => [
+        'AttributeDefinitions' => [
           'shape' => 'AttributeDefinitions',
         ],
-        'TableName' =>
-        [
+        'TableName' => [
           'shape' => 'TableName',
         ],
-        'KeySchema' =>
-        [
+        'KeySchema' => [
           'shape' => 'KeySchema',
         ],
-        'LocalSecondaryIndexes' =>
-        [
+        'LocalSecondaryIndexes' => [
           'shape' => 'LocalSecondaryIndexList',
         ],
-        'GlobalSecondaryIndexes' =>
-        [
+        'GlobalSecondaryIndexes' => [
           'shape' => 'GlobalSecondaryIndexList',
         ],
-        'ProvisionedThroughput' =>
-        [
+        'ProvisionedThroughput' => [
           'shape' => 'ProvisionedThroughput',
         ],
       ],
     ],
-    'CreateTableOutput' =>
-    [
+    'CreateTableOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TableDescription' =>
-        [
+      'members' => [
+        'TableDescription' => [
           'shape' => 'TableDescription',
         ],
       ],
     ],
-    'Date' =>
-    [
+    'Date' => [
       'type' => 'timestamp',
     ],
-    'DeleteItemInput' =>
-    [
+    'DeleteItemInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TableName',
-        1 => 'Key',
+      'required' => [
+        'TableName',
+        'Key',
       ],
-      'members' =>
-      [
-        'TableName' =>
-        [
+      'members' => [
+        'TableName' => [
           'shape' => 'TableName',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'Key',
         ],
-        'Expected' =>
-        [
+        'Expected' => [
           'shape' => 'ExpectedAttributeMap',
         ],
-        'ConditionalOperator' =>
-        [
+        'ConditionalOperator' => [
           'shape' => 'ConditionalOperator',
         ],
-        'ReturnValues' =>
-        [
+        'ReturnValues' => [
           'shape' => 'ReturnValue',
         ],
-        'ReturnConsumedCapacity' =>
-        [
+        'ReturnConsumedCapacity' => [
           'shape' => 'ReturnConsumedCapacity',
         ],
-        'ReturnItemCollectionMetrics' =>
-        [
+        'ReturnItemCollectionMetrics' => [
           'shape' => 'ReturnItemCollectionMetrics',
         ],
-        'ConditionExpression' =>
-        [
+        'ConditionExpression' => [
           'shape' => 'ConditionExpression',
         ],
-        'ExpressionAttributeNames' =>
-        [
+        'ExpressionAttributeNames' => [
           'shape' => 'ExpressionAttributeNameMap',
         ],
-        'ExpressionAttributeValues' =>
-        [
+        'ExpressionAttributeValues' => [
           'shape' => 'ExpressionAttributeValueMap',
         ],
       ],
     ],
-    'DeleteItemOutput' =>
-    [
+    'DeleteItemOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Attributes' =>
-        [
+      'members' => [
+        'Attributes' => [
           'shape' => 'AttributeMap',
         ],
-        'ConsumedCapacity' =>
-        [
+        'ConsumedCapacity' => [
           'shape' => 'ConsumedCapacity',
         ],
-        'ItemCollectionMetrics' =>
-        [
+        'ItemCollectionMetrics' => [
           'shape' => 'ItemCollectionMetrics',
         ],
       ],
     ],
-    'DeleteRequest' =>
-    [
+    'DeleteRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Key',
+      'required' => [
+        'Key',
       ],
-      'members' =>
-      [
-        'Key' =>
-        [
+      'members' => [
+        'Key' => [
           'shape' => 'Key',
         ],
       ],
     ],
-    'DeleteTableInput' =>
-    [
+    'DeleteTableInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TableName',
+      'required' => [
+        'TableName',
       ],
-      'members' =>
-      [
-        'TableName' =>
-        [
+      'members' => [
+        'TableName' => [
           'shape' => 'TableName',
         ],
       ],
     ],
-    'DeleteTableOutput' =>
-    [
+    'DeleteTableOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TableDescription' =>
-        [
+      'members' => [
+        'TableDescription' => [
           'shape' => 'TableDescription',
         ],
       ],
     ],
-    'DescribeTableInput' =>
-    [
+    'DescribeTableInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TableName',
+      'required' => [
+        'TableName',
       ],
-      'members' =>
-      [
-        'TableName' =>
-        [
+      'members' => [
+        'TableName' => [
           'shape' => 'TableName',
         ],
       ],
     ],
-    'DescribeTableOutput' =>
-    [
+    'DescribeTableOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Table' =>
-        [
+      'members' => [
+        'Table' => [
           'shape' => 'TableDescription',
         ],
       ],
     ],
-    'ErrorMessage' =>
-    [
+    'ErrorMessage' => [
       'type' => 'string',
     ],
-    'ExpectedAttributeMap' =>
-    [
+    'ExpectedAttributeMap' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'AttributeName',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'ExpectedAttributeValue',
       ],
     ],
-    'ExpectedAttributeValue' =>
-    [
+    'ExpectedAttributeValue' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Value' =>
-        [
+      'members' => [
+        'Value' => [
           'shape' => 'AttributeValue',
         ],
-        'Exists' =>
-        [
+        'Exists' => [
           'shape' => 'BooleanObject',
         ],
-        'ComparisonOperator' =>
-        [
+        'ComparisonOperator' => [
           'shape' => 'ComparisonOperator',
         ],
-        'AttributeValueList' =>
-        [
+        'AttributeValueList' => [
           'shape' => 'AttributeValueList',
         ],
       ],
     ],
-    'ExpressionAttributeNameMap' =>
-    [
+    'ExpressionAttributeNameMap' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'ExpressionAttributeNameVariable',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'AttributeName',
       ],
     ],
-    'ExpressionAttributeNameVariable' =>
-    [
+    'ExpressionAttributeNameVariable' => [
       'type' => 'string',
     ],
-    'ExpressionAttributeValueMap' =>
-    [
+    'ExpressionAttributeValueMap' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'ExpressionAttributeValueVariable',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'AttributeValue',
       ],
     ],
-    'ExpressionAttributeValueVariable' =>
-    [
+    'ExpressionAttributeValueVariable' => [
       'type' => 'string',
     ],
-    'FilterConditionMap' =>
-    [
+    'FilterConditionMap' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'AttributeName',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'Condition',
       ],
     ],
-    'GetItemInput' =>
-    [
+    'GetItemInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TableName',
-        1 => 'Key',
+      'required' => [
+        'TableName',
+        'Key',
       ],
-      'members' =>
-      [
-        'TableName' =>
-        [
+      'members' => [
+        'TableName' => [
           'shape' => 'TableName',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'Key',
         ],
-        'AttributesToGet' =>
-        [
+        'AttributesToGet' => [
           'shape' => 'AttributeNameList',
         ],
-        'ConsistentRead' =>
-        [
+        'ConsistentRead' => [
           'shape' => 'ConsistentRead',
         ],
-        'ReturnConsumedCapacity' =>
-        [
+        'ReturnConsumedCapacity' => [
           'shape' => 'ReturnConsumedCapacity',
         ],
-        'ProjectionExpression' =>
-        [
+        'ProjectionExpression' => [
           'shape' => 'ProjectionExpression',
         ],
-        'ExpressionAttributeNames' =>
-        [
+        'ExpressionAttributeNames' => [
           'shape' => 'ExpressionAttributeNameMap',
         ],
       ],
     ],
-    'GetItemOutput' =>
-    [
+    'GetItemOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Item' =>
-        [
+      'members' => [
+        'Item' => [
           'shape' => 'AttributeMap',
         ],
-        'ConsumedCapacity' =>
-        [
+        'ConsumedCapacity' => [
           'shape' => 'ConsumedCapacity',
         ],
       ],
     ],
-    'GlobalSecondaryIndex' =>
-    [
+    'GlobalSecondaryIndex' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IndexName',
-        1 => 'KeySchema',
-        2 => 'Projection',
-        3 => 'ProvisionedThroughput',
+      'required' => [
+        'IndexName',
+        'KeySchema',
+        'Projection',
+        'ProvisionedThroughput',
       ],
-      'members' =>
-      [
-        'IndexName' =>
-        [
+      'members' => [
+        'IndexName' => [
           'shape' => 'IndexName',
         ],
-        'KeySchema' =>
-        [
+        'KeySchema' => [
           'shape' => 'KeySchema',
         ],
-        'Projection' =>
-        [
+        'Projection' => [
           'shape' => 'Projection',
         ],
-        'ProvisionedThroughput' =>
-        [
+        'ProvisionedThroughput' => [
           'shape' => 'ProvisionedThroughput',
         ],
       ],
     ],
-    'GlobalSecondaryIndexDescription' =>
-    [
+    'GlobalSecondaryIndexDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IndexName' =>
-        [
+      'members' => [
+        'IndexName' => [
           'shape' => 'IndexName',
         ],
-        'KeySchema' =>
-        [
+        'KeySchema' => [
           'shape' => 'KeySchema',
         ],
-        'Projection' =>
-        [
+        'Projection' => [
           'shape' => 'Projection',
         ],
-        'IndexStatus' =>
-        [
+        'IndexStatus' => [
           'shape' => 'IndexStatus',
         ],
-        'ProvisionedThroughput' =>
-        [
+        'ProvisionedThroughput' => [
           'shape' => 'ProvisionedThroughputDescription',
         ],
-        'IndexSizeBytes' =>
-        [
+        'IndexSizeBytes' => [
           'shape' => 'Long',
         ],
-        'ItemCount' =>
-        [
+        'ItemCount' => [
           'shape' => 'Long',
         ],
       ],
     ],
-    'GlobalSecondaryIndexDescriptionList' =>
-    [
+    'GlobalSecondaryIndexDescriptionList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'GlobalSecondaryIndexDescription',
       ],
     ],
-    'GlobalSecondaryIndexList' =>
-    [
+    'GlobalSecondaryIndexList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'GlobalSecondaryIndex',
       ],
     ],
-    'GlobalSecondaryIndexUpdate' =>
-    [
+    'GlobalSecondaryIndexUpdate' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Update' =>
-        [
+      'members' => [
+        'Update' => [
           'shape' => 'UpdateGlobalSecondaryIndexAction',
         ],
       ],
     ],
-    'GlobalSecondaryIndexUpdateList' =>
-    [
+    'GlobalSecondaryIndexUpdateList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'GlobalSecondaryIndexUpdate',
       ],
     ],
-    'IndexName' =>
-    [
+    'IndexName' => [
       'type' => 'string',
       'min' => 3,
       'max' => 255,
       'pattern' => '[a-zA-Z0-9_.-]+',
     ],
-    'IndexStatus' =>
-    [
+    'IndexStatus' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'CREATING',
-        1 => 'UPDATING',
-        2 => 'DELETING',
-        3 => 'ACTIVE',
+      'enum' => [
+        'CREATING',
+        'UPDATING',
+        'DELETING',
+        'ACTIVE',
       ],
     ],
-    'Integer' =>
-    [
+    'Integer' => [
       'type' => 'integer',
     ],
-    'InternalServerError' =>
-    [
+    'InternalServerError' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
       'fault' => true,
     ],
-    'ItemCollectionKeyAttributeMap' =>
-    [
+    'ItemCollectionKeyAttributeMap' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'AttributeName',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'AttributeValue',
       ],
     ],
-    'ItemCollectionMetrics' =>
-    [
+    'ItemCollectionMetrics' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ItemCollectionKey' =>
-        [
+      'members' => [
+        'ItemCollectionKey' => [
           'shape' => 'ItemCollectionKeyAttributeMap',
         ],
-        'SizeEstimateRangeGB' =>
-        [
+        'SizeEstimateRangeGB' => [
           'shape' => 'ItemCollectionSizeEstimateRange',
         ],
       ],
     ],
-    'ItemCollectionMetricsMultiple' =>
-    [
+    'ItemCollectionMetricsMultiple' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ItemCollectionMetrics',
       ],
     ],
-    'ItemCollectionMetricsPerTable' =>
-    [
+    'ItemCollectionMetricsPerTable' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'TableName',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'ItemCollectionMetricsMultiple',
       ],
     ],
-    'ItemCollectionSizeEstimateBound' =>
-    [
+    'ItemCollectionSizeEstimateBound' => [
       'type' => 'double',
     ],
-    'ItemCollectionSizeEstimateRange' =>
-    [
+    'ItemCollectionSizeEstimateRange' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ItemCollectionSizeEstimateBound',
       ],
     ],
-    'ItemCollectionSizeLimitExceededException' =>
-    [
+    'ItemCollectionSizeLimitExceededException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'ItemList' =>
-    [
+    'ItemList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AttributeMap',
       ],
     ],
-    'Key' =>
-    [
+    'Key' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'AttributeName',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'AttributeValue',
       ],
     ],
-    'KeyConditions' =>
-    [
+    'KeyConditions' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'AttributeName',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'Condition',
       ],
     ],
-    'KeyList' =>
-    [
+    'KeyList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Key',
       ],
       'min' => 1,
       'max' => 100,
     ],
-    'KeySchema' =>
-    [
+    'KeySchema' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'KeySchemaElement',
       ],
       'min' => 1,
       'max' => 2,
     ],
-    'KeySchemaAttributeName' =>
-    [
+    'KeySchemaAttributeName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 255,
     ],
-    'KeySchemaElement' =>
-    [
+    'KeySchemaElement' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AttributeName',
-        1 => 'KeyType',
+      'required' => [
+        'AttributeName',
+        'KeyType',
       ],
-      'members' =>
-      [
-        'AttributeName' =>
-        [
+      'members' => [
+        'AttributeName' => [
           'shape' => 'KeySchemaAttributeName',
         ],
-        'KeyType' =>
-        [
+        'KeyType' => [
           'shape' => 'KeyType',
         ],
       ],
     ],
-    'KeyType' =>
-    [
+    'KeyType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'HASH',
-        1 => 'RANGE',
+      'enum' => [
+        'HASH',
+        'RANGE',
       ],
     ],
-    'KeysAndAttributes' =>
-    [
+    'KeysAndAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Keys',
+      'required' => [
+        'Keys',
       ],
-      'members' =>
-      [
-        'Keys' =>
-        [
+      'members' => [
+        'Keys' => [
           'shape' => 'KeyList',
         ],
-        'AttributesToGet' =>
-        [
+        'AttributesToGet' => [
           'shape' => 'AttributeNameList',
         ],
-        'ConsistentRead' =>
-        [
+        'ConsistentRead' => [
           'shape' => 'ConsistentRead',
         ],
-        'ProjectionExpression' =>
-        [
+        'ProjectionExpression' => [
           'shape' => 'ProjectionExpression',
         ],
-        'ExpressionAttributeNames' =>
-        [
+        'ExpressionAttributeNames' => [
           'shape' => 'ExpressionAttributeNameMap',
         ],
       ],
     ],
-    'LimitExceededException' =>
-    [
+    'LimitExceededException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'ListAttributeValue' =>
-    [
+    'ListAttributeValue' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AttributeValue',
       ],
     ],
-    'ListTablesInput' =>
-    [
+    'ListTablesInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ExclusiveStartTableName' =>
-        [
+      'members' => [
+        'ExclusiveStartTableName' => [
           'shape' => 'TableName',
         ],
-        'Limit' =>
-        [
+        'Limit' => [
           'shape' => 'ListTablesInputLimit',
         ],
       ],
     ],
-    'ListTablesInputLimit' =>
-    [
+    'ListTablesInputLimit' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 100,
     ],
-    'ListTablesOutput' =>
-    [
+    'ListTablesOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TableNames' =>
-        [
+      'members' => [
+        'TableNames' => [
           'shape' => 'TableNameList',
         ],
-        'LastEvaluatedTableName' =>
-        [
+        'LastEvaluatedTableName' => [
           'shape' => 'TableName',
         ],
       ],
     ],
-    'LocalSecondaryIndex' =>
-    [
+    'LocalSecondaryIndex' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IndexName',
-        1 => 'KeySchema',
-        2 => 'Projection',
+      'required' => [
+        'IndexName',
+        'KeySchema',
+        'Projection',
       ],
-      'members' =>
-      [
-        'IndexName' =>
-        [
+      'members' => [
+        'IndexName' => [
           'shape' => 'IndexName',
         ],
-        'KeySchema' =>
-        [
+        'KeySchema' => [
           'shape' => 'KeySchema',
         ],
-        'Projection' =>
-        [
+        'Projection' => [
           'shape' => 'Projection',
         ],
       ],
     ],
-    'LocalSecondaryIndexDescription' =>
-    [
+    'LocalSecondaryIndexDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IndexName' =>
-        [
+      'members' => [
+        'IndexName' => [
           'shape' => 'IndexName',
         ],
-        'KeySchema' =>
-        [
+        'KeySchema' => [
           'shape' => 'KeySchema',
         ],
-        'Projection' =>
-        [
+        'Projection' => [
           'shape' => 'Projection',
         ],
-        'IndexSizeBytes' =>
-        [
+        'IndexSizeBytes' => [
           'shape' => 'Long',
         ],
-        'ItemCount' =>
-        [
+        'ItemCount' => [
           'shape' => 'Long',
         ],
       ],
     ],
-    'LocalSecondaryIndexDescriptionList' =>
-    [
+    'LocalSecondaryIndexDescriptionList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'LocalSecondaryIndexDescription',
       ],
     ],
-    'LocalSecondaryIndexList' =>
-    [
+    'LocalSecondaryIndexList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'LocalSecondaryIndex',
       ],
     ],
-    'Long' =>
-    [
+    'Long' => [
       'type' => 'long',
     ],
-    'MapAttributeValue' =>
-    [
+    'MapAttributeValue' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'AttributeName',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'AttributeValue',
       ],
     ],
-    'NonKeyAttributeName' =>
-    [
+    'NonKeyAttributeName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 255,
     ],
-    'NonKeyAttributeNameList' =>
-    [
+    'NonKeyAttributeNameList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'NonKeyAttributeName',
       ],
       'min' => 1,
       'max' => 20,
     ],
-    'NullAttributeValue' =>
-    [
+    'NullAttributeValue' => [
       'type' => 'boolean',
     ],
-    'NumberAttributeValue' =>
-    [
+    'NumberAttributeValue' => [
       'type' => 'string',
     ],
-    'NumberSetAttributeValue' =>
-    [
+    'NumberSetAttributeValue' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'NumberAttributeValue',
       ],
     ],
-    'PositiveIntegerObject' =>
-    [
+    'PositiveIntegerObject' => [
       'type' => 'integer',
       'min' => 1,
     ],
-    'PositiveLongObject' =>
-    [
+    'PositiveLongObject' => [
       'type' => 'long',
       'min' => 1,
     ],
-    'Projection' =>
-    [
+    'Projection' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ProjectionType' =>
-        [
+      'members' => [
+        'ProjectionType' => [
           'shape' => 'ProjectionType',
         ],
-        'NonKeyAttributes' =>
-        [
+        'NonKeyAttributes' => [
           'shape' => 'NonKeyAttributeNameList',
         ],
       ],
     ],
-    'ProjectionExpression' =>
-    [
+    'ProjectionExpression' => [
       'type' => 'string',
     ],
-    'ProjectionType' =>
-    [
+    'ProjectionType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'ALL',
-        1 => 'KEYS_ONLY',
-        2 => 'INCLUDE',
+      'enum' => [
+        'ALL',
+        'KEYS_ONLY',
+        'INCLUDE',
       ],
     ],
-    'ProvisionedThroughput' =>
-    [
+    'ProvisionedThroughput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ReadCapacityUnits',
-        1 => 'WriteCapacityUnits',
+      'required' => [
+        'ReadCapacityUnits',
+        'WriteCapacityUnits',
       ],
-      'members' =>
-      [
-        'ReadCapacityUnits' =>
-        [
+      'members' => [
+        'ReadCapacityUnits' => [
           'shape' => 'PositiveLongObject',
         ],
-        'WriteCapacityUnits' =>
-        [
+        'WriteCapacityUnits' => [
           'shape' => 'PositiveLongObject',
         ],
       ],
     ],
-    'ProvisionedThroughputDescription' =>
-    [
+    'ProvisionedThroughputDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LastIncreaseDateTime' =>
-        [
+      'members' => [
+        'LastIncreaseDateTime' => [
           'shape' => 'Date',
         ],
-        'LastDecreaseDateTime' =>
-        [
+        'LastDecreaseDateTime' => [
           'shape' => 'Date',
         ],
-        'NumberOfDecreasesToday' =>
-        [
+        'NumberOfDecreasesToday' => [
           'shape' => 'PositiveLongObject',
         ],
-        'ReadCapacityUnits' =>
-        [
+        'ReadCapacityUnits' => [
           'shape' => 'PositiveLongObject',
         ],
-        'WriteCapacityUnits' =>
-        [
+        'WriteCapacityUnits' => [
           'shape' => 'PositiveLongObject',
         ],
       ],
     ],
-    'ProvisionedThroughputExceededException' =>
-    [
+    'ProvisionedThroughputExceededException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'PutItemInput' =>
-    [
+    'PutItemInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TableName',
-        1 => 'Item',
+      'required' => [
+        'TableName',
+        'Item',
       ],
-      'members' =>
-      [
-        'TableName' =>
-        [
+      'members' => [
+        'TableName' => [
           'shape' => 'TableName',
         ],
-        'Item' =>
-        [
+        'Item' => [
           'shape' => 'PutItemInputAttributeMap',
         ],
-        'Expected' =>
-        [
+        'Expected' => [
           'shape' => 'ExpectedAttributeMap',
         ],
-        'ReturnValues' =>
-        [
+        'ReturnValues' => [
           'shape' => 'ReturnValue',
         ],
-        'ReturnConsumedCapacity' =>
-        [
+        'ReturnConsumedCapacity' => [
           'shape' => 'ReturnConsumedCapacity',
         ],
-        'ReturnItemCollectionMetrics' =>
-        [
+        'ReturnItemCollectionMetrics' => [
           'shape' => 'ReturnItemCollectionMetrics',
         ],
-        'ConditionalOperator' =>
-        [
+        'ConditionalOperator' => [
           'shape' => 'ConditionalOperator',
         ],
-        'ConditionExpression' =>
-        [
+        'ConditionExpression' => [
           'shape' => 'ConditionExpression',
         ],
-        'ExpressionAttributeNames' =>
-        [
+        'ExpressionAttributeNames' => [
           'shape' => 'ExpressionAttributeNameMap',
         ],
-        'ExpressionAttributeValues' =>
-        [
+        'ExpressionAttributeValues' => [
           'shape' => 'ExpressionAttributeValueMap',
         ],
       ],
     ],
-    'PutItemInputAttributeMap' =>
-    [
+    'PutItemInputAttributeMap' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'AttributeName',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'AttributeValue',
       ],
     ],
-    'PutItemOutput' =>
-    [
+    'PutItemOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Attributes' =>
-        [
+      'members' => [
+        'Attributes' => [
           'shape' => 'AttributeMap',
         ],
-        'ConsumedCapacity' =>
-        [
+        'ConsumedCapacity' => [
           'shape' => 'ConsumedCapacity',
         ],
-        'ItemCollectionMetrics' =>
-        [
+        'ItemCollectionMetrics' => [
           'shape' => 'ItemCollectionMetrics',
         ],
       ],
     ],
-    'PutRequest' =>
-    [
+    'PutRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Item',
+      'required' => [
+        'Item',
       ],
-      'members' =>
-      [
-        'Item' =>
-        [
+      'members' => [
+        'Item' => [
           'shape' => 'PutItemInputAttributeMap',
         ],
       ],
     ],
-    'QueryInput' =>
-    [
+    'QueryInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TableName',
-        1 => 'KeyConditions',
+      'required' => [
+        'TableName',
+        'KeyConditions',
       ],
-      'members' =>
-      [
-        'TableName' =>
-        [
+      'members' => [
+        'TableName' => [
           'shape' => 'TableName',
         ],
-        'IndexName' =>
-        [
+        'IndexName' => [
           'shape' => 'IndexName',
         ],
-        'Select' =>
-        [
+        'Select' => [
           'shape' => 'Select',
         ],
-        'AttributesToGet' =>
-        [
+        'AttributesToGet' => [
           'shape' => 'AttributeNameList',
         ],
-        'Limit' =>
-        [
+        'Limit' => [
           'shape' => 'PositiveIntegerObject',
         ],
-        'ConsistentRead' =>
-        [
+        'ConsistentRead' => [
           'shape' => 'ConsistentRead',
         ],
-        'KeyConditions' =>
-        [
+        'KeyConditions' => [
           'shape' => 'KeyConditions',
         ],
-        'QueryFilter' =>
-        [
+        'QueryFilter' => [
           'shape' => 'FilterConditionMap',
         ],
-        'ConditionalOperator' =>
-        [
+        'ConditionalOperator' => [
           'shape' => 'ConditionalOperator',
         ],
-        'ScanIndexForward' =>
-        [
+        'ScanIndexForward' => [
           'shape' => 'BooleanObject',
         ],
-        'ExclusiveStartKey' =>
-        [
+        'ExclusiveStartKey' => [
           'shape' => 'Key',
         ],
-        'ReturnConsumedCapacity' =>
-        [
+        'ReturnConsumedCapacity' => [
           'shape' => 'ReturnConsumedCapacity',
         ],
-        'ProjectionExpression' =>
-        [
+        'ProjectionExpression' => [
           'shape' => 'ProjectionExpression',
         ],
-        'FilterExpression' =>
-        [
+        'FilterExpression' => [
           'shape' => 'ConditionExpression',
         ],
-        'ExpressionAttributeNames' =>
-        [
+        'ExpressionAttributeNames' => [
           'shape' => 'ExpressionAttributeNameMap',
         ],
-        'ExpressionAttributeValues' =>
-        [
+        'ExpressionAttributeValues' => [
           'shape' => 'ExpressionAttributeValueMap',
         ],
       ],
     ],
-    'QueryOutput' =>
-    [
+    'QueryOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Items' =>
-        [
+      'members' => [
+        'Items' => [
           'shape' => 'ItemList',
         ],
-        'Count' =>
-        [
+        'Count' => [
           'shape' => 'Integer',
         ],
-        'ScannedCount' =>
-        [
+        'ScannedCount' => [
           'shape' => 'Integer',
         ],
-        'LastEvaluatedKey' =>
-        [
+        'LastEvaluatedKey' => [
           'shape' => 'Key',
         ],
-        'ConsumedCapacity' =>
-        [
+        'ConsumedCapacity' => [
           'shape' => 'ConsumedCapacity',
         ],
       ],
     ],
-    'ResourceInUseException' =>
-    [
+    'ResourceInUseException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'ResourceNotFoundException' =>
-    [
+    'ResourceNotFoundException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'ReturnConsumedCapacity' =>
-    [
+    'ReturnConsumedCapacity' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'INDEXES',
-        1 => 'TOTAL',
-        2 => 'NONE',
+      'enum' => [
+        'INDEXES',
+        'TOTAL',
+        'NONE',
       ],
     ],
-    'ReturnItemCollectionMetrics' =>
-    [
+    'ReturnItemCollectionMetrics' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'SIZE',
-        1 => 'NONE',
+      'enum' => [
+        'SIZE',
+        'NONE',
       ],
     ],
-    'ReturnValue' =>
-    [
+    'ReturnValue' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'NONE',
-        1 => 'ALL_OLD',
-        2 => 'UPDATED_OLD',
-        3 => 'ALL_NEW',
-        4 => 'UPDATED_NEW',
+      'enum' => [
+        'NONE',
+        'ALL_OLD',
+        'UPDATED_OLD',
+        'ALL_NEW',
+        'UPDATED_NEW',
       ],
     ],
-    'ScalarAttributeType' =>
-    [
+    'ScalarAttributeType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'S',
-        1 => 'N',
-        2 => 'B',
+      'enum' => [
+        'S',
+        'N',
+        'B',
       ],
     ],
-    'ScanInput' =>
-    [
+    'ScanInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TableName',
+      'required' => [
+        'TableName',
       ],
-      'members' =>
-      [
-        'TableName' =>
-        [
+      'members' => [
+        'TableName' => [
           'shape' => 'TableName',
         ],
-        'AttributesToGet' =>
-        [
+        'AttributesToGet' => [
           'shape' => 'AttributeNameList',
         ],
-        'Limit' =>
-        [
+        'Limit' => [
           'shape' => 'PositiveIntegerObject',
         ],
-        'Select' =>
-        [
+        'Select' => [
           'shape' => 'Select',
         ],
-        'ScanFilter' =>
-        [
+        'ScanFilter' => [
           'shape' => 'FilterConditionMap',
         ],
-        'ConditionalOperator' =>
-        [
+        'ConditionalOperator' => [
           'shape' => 'ConditionalOperator',
         ],
-        'ExclusiveStartKey' =>
-        [
+        'ExclusiveStartKey' => [
           'shape' => 'Key',
         ],
-        'ReturnConsumedCapacity' =>
-        [
+        'ReturnConsumedCapacity' => [
           'shape' => 'ReturnConsumedCapacity',
         ],
-        'TotalSegments' =>
-        [
+        'TotalSegments' => [
           'shape' => 'ScanTotalSegments',
         ],
-        'Segment' =>
-        [
+        'Segment' => [
           'shape' => 'ScanSegment',
         ],
-        'ProjectionExpression' =>
-        [
+        'ProjectionExpression' => [
           'shape' => 'ProjectionExpression',
         ],
-        'FilterExpression' =>
-        [
+        'FilterExpression' => [
           'shape' => 'ConditionExpression',
         ],
-        'ExpressionAttributeNames' =>
-        [
+        'ExpressionAttributeNames' => [
           'shape' => 'ExpressionAttributeNameMap',
         ],
-        'ExpressionAttributeValues' =>
-        [
+        'ExpressionAttributeValues' => [
           'shape' => 'ExpressionAttributeValueMap',
         ],
       ],
     ],
-    'ScanOutput' =>
-    [
+    'ScanOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Items' =>
-        [
+      'members' => [
+        'Items' => [
           'shape' => 'ItemList',
         ],
-        'Count' =>
-        [
+        'Count' => [
           'shape' => 'Integer',
         ],
-        'ScannedCount' =>
-        [
+        'ScannedCount' => [
           'shape' => 'Integer',
         ],
-        'LastEvaluatedKey' =>
-        [
+        'LastEvaluatedKey' => [
           'shape' => 'Key',
         ],
-        'ConsumedCapacity' =>
-        [
+        'ConsumedCapacity' => [
           'shape' => 'ConsumedCapacity',
         ],
       ],
     ],
-    'ScanSegment' =>
-    [
+    'ScanSegment' => [
       'type' => 'integer',
       'min' => 0,
       'max' => 999999,
     ],
-    'ScanTotalSegments' =>
-    [
+    'ScanTotalSegments' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 1000000,
     ],
-    'SecondaryIndexesCapacityMap' =>
-    [
+    'SecondaryIndexesCapacityMap' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'IndexName',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'Capacity',
       ],
     ],
-    'Select' =>
-    [
+    'Select' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'ALL_ATTRIBUTES',
-        1 => 'ALL_PROJECTED_ATTRIBUTES',
-        2 => 'SPECIFIC_ATTRIBUTES',
-        3 => 'COUNT',
+      'enum' => [
+        'ALL_ATTRIBUTES',
+        'ALL_PROJECTED_ATTRIBUTES',
+        'SPECIFIC_ATTRIBUTES',
+        'COUNT',
       ],
     ],
-    'StringAttributeValue' =>
-    [
+    'StringAttributeValue' => [
       'type' => 'string',
     ],
-    'StringSetAttributeValue' =>
-    [
+    'StringSetAttributeValue' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'StringAttributeValue',
       ],
     ],
-    'TableDescription' =>
-    [
+    'TableDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AttributeDefinitions' =>
-        [
+      'members' => [
+        'AttributeDefinitions' => [
           'shape' => 'AttributeDefinitions',
         ],
-        'TableName' =>
-        [
+        'TableName' => [
           'shape' => 'TableName',
         ],
-        'KeySchema' =>
-        [
+        'KeySchema' => [
           'shape' => 'KeySchema',
         ],
-        'TableStatus' =>
-        [
+        'TableStatus' => [
           'shape' => 'TableStatus',
         ],
-        'CreationDateTime' =>
-        [
+        'CreationDateTime' => [
           'shape' => 'Date',
         ],
-        'ProvisionedThroughput' =>
-        [
+        'ProvisionedThroughput' => [
           'shape' => 'ProvisionedThroughputDescription',
         ],
-        'TableSizeBytes' =>
-        [
+        'TableSizeBytes' => [
           'shape' => 'Long',
         ],
-        'ItemCount' =>
-        [
+        'ItemCount' => [
           'shape' => 'Long',
         ],
-        'LocalSecondaryIndexes' =>
-        [
+        'LocalSecondaryIndexes' => [
           'shape' => 'LocalSecondaryIndexDescriptionList',
         ],
-        'GlobalSecondaryIndexes' =>
-        [
+        'GlobalSecondaryIndexes' => [
           'shape' => 'GlobalSecondaryIndexDescriptionList',
         ],
       ],
     ],
-    'TableName' =>
-    [
+    'TableName' => [
       'type' => 'string',
       'min' => 3,
       'max' => 255,
       'pattern' => '[a-zA-Z0-9_.-]+',
     ],
-    'TableNameList' =>
-    [
+    'TableNameList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'TableName',
       ],
     ],
-    'TableStatus' =>
-    [
+    'TableStatus' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'CREATING',
-        1 => 'UPDATING',
-        2 => 'DELETING',
-        3 => 'ACTIVE',
+      'enum' => [
+        'CREATING',
+        'UPDATING',
+        'DELETING',
+        'ACTIVE',
       ],
     ],
-    'UpdateExpression' =>
-    [
+    'UpdateExpression' => [
       'type' => 'string',
     ],
-    'UpdateGlobalSecondaryIndexAction' =>
-    [
+    'UpdateGlobalSecondaryIndexAction' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IndexName',
-        1 => 'ProvisionedThroughput',
+      'required' => [
+        'IndexName',
+        'ProvisionedThroughput',
       ],
-      'members' =>
-      [
-        'IndexName' =>
-        [
+      'members' => [
+        'IndexName' => [
           'shape' => 'IndexName',
         ],
-        'ProvisionedThroughput' =>
-        [
+        'ProvisionedThroughput' => [
           'shape' => 'ProvisionedThroughput',
         ],
       ],
     ],
-    'UpdateItemInput' =>
-    [
+    'UpdateItemInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TableName',
-        1 => 'Key',
+      'required' => [
+        'TableName',
+        'Key',
       ],
-      'members' =>
-      [
-        'TableName' =>
-        [
+      'members' => [
+        'TableName' => [
           'shape' => 'TableName',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'Key',
         ],
-        'AttributeUpdates' =>
-        [
+        'AttributeUpdates' => [
           'shape' => 'AttributeUpdates',
         ],
-        'Expected' =>
-        [
+        'Expected' => [
           'shape' => 'ExpectedAttributeMap',
         ],
-        'ConditionalOperator' =>
-        [
+        'ConditionalOperator' => [
           'shape' => 'ConditionalOperator',
         ],
-        'ReturnValues' =>
-        [
+        'ReturnValues' => [
           'shape' => 'ReturnValue',
         ],
-        'ReturnConsumedCapacity' =>
-        [
+        'ReturnConsumedCapacity' => [
           'shape' => 'ReturnConsumedCapacity',
         ],
-        'ReturnItemCollectionMetrics' =>
-        [
+        'ReturnItemCollectionMetrics' => [
           'shape' => 'ReturnItemCollectionMetrics',
         ],
-        'UpdateExpression' =>
-        [
+        'UpdateExpression' => [
           'shape' => 'UpdateExpression',
         ],
-        'ConditionExpression' =>
-        [
+        'ConditionExpression' => [
           'shape' => 'ConditionExpression',
         ],
-        'ExpressionAttributeNames' =>
-        [
+        'ExpressionAttributeNames' => [
           'shape' => 'ExpressionAttributeNameMap',
         ],
-        'ExpressionAttributeValues' =>
-        [
+        'ExpressionAttributeValues' => [
           'shape' => 'ExpressionAttributeValueMap',
         ],
       ],
     ],
-    'UpdateItemOutput' =>
-    [
+    'UpdateItemOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Attributes' =>
-        [
+      'members' => [
+        'Attributes' => [
           'shape' => 'AttributeMap',
         ],
-        'ConsumedCapacity' =>
-        [
+        'ConsumedCapacity' => [
           'shape' => 'ConsumedCapacity',
         ],
-        'ItemCollectionMetrics' =>
-        [
+        'ItemCollectionMetrics' => [
           'shape' => 'ItemCollectionMetrics',
         ],
       ],
     ],
-    'UpdateTableInput' =>
-    [
+    'UpdateTableInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TableName',
+      'required' => [
+        'TableName',
       ],
-      'members' =>
-      [
-        'TableName' =>
-        [
+      'members' => [
+        'TableName' => [
           'shape' => 'TableName',
         ],
-        'ProvisionedThroughput' =>
-        [
+        'ProvisionedThroughput' => [
           'shape' => 'ProvisionedThroughput',
         ],
-        'GlobalSecondaryIndexUpdates' =>
-        [
+        'GlobalSecondaryIndexUpdates' => [
           'shape' => 'GlobalSecondaryIndexUpdateList',
         ],
       ],
     ],
-    'UpdateTableOutput' =>
-    [
+    'UpdateTableOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TableDescription' =>
-        [
+      'members' => [
+        'TableDescription' => [
           'shape' => 'TableDescription',
         ],
       ],
     ],
-    'WriteRequest' =>
-    [
+    'WriteRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PutRequest' =>
-        [
+      'members' => [
+        'PutRequest' => [
           'shape' => 'PutRequest',
         ],
-        'DeleteRequest' =>
-        [
+        'DeleteRequest' => [
           'shape' => 'DeleteRequest',
         ],
       ],
     ],
-    'WriteRequests' =>
-    [
+    'WriteRequests' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'WriteRequest',
       ],
       'min' => 1,

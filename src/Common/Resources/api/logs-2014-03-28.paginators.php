@@ -1,30 +1,24 @@
-<?php
-return [
-  'pagination' =>
-  [
-    'DescribeLogGroups' =>
-    [
+<?php return [
+  'pagination' => [
+    'DescribeLogGroups' => [
       'input_token' => 'nextToken',
       'output_token' => 'nextToken',
       'limit_key' => 'limit',
       'result_key' => 'logGroups',
     ],
-    'DescribeLogStreams' =>
-    [
+    'DescribeLogStreams' => [
       'input_token' => 'nextToken',
       'output_token' => 'nextToken',
       'limit_key' => 'limit',
       'result_key' => 'logStreams',
     ],
-    'DescribeMetricFilters' =>
-    [
+    'DescribeMetricFilters' => [
       'input_token' => 'nextToken',
       'output_token' => 'nextToken',
       'limit_key' => 'limit',
       'result_key' => 'metricFilters',
     ],
-    'GetLogEvents' =>
-    [
+    'GetLogEvents' => [
       'input_token' => 'nextToken',
       'output_token' => 'nextForwardToken',
       'limit_key' => 'limit',

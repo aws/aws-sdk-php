@@ -1,25 +1,18 @@
-<?php
-return [
-  'pagination' =>
-  [
-    'DescribeAnalysisSchemes' =>
-    [
+<?php return [
+  'pagination' => [
+    'DescribeAnalysisSchemes' => [
       'result_key' => 'AnalysisSchemes',
     ],
-    'DescribeDomains' =>
-    [
+    'DescribeDomains' => [
       'result_key' => 'DomainStatusList',
     ],
-    'DescribeExpressions' =>
-    [
+    'DescribeExpressions' => [
       'result_key' => 'Expressions',
     ],
-    'DescribeIndexFields' =>
-    [
+    'DescribeIndexFields' => [
       'result_key' => 'IndexFields',
     ],
-    'DescribeSuggesters' =>
-    [
+    'DescribeSuggesters' => [
       'result_key' => 'Suggesters',
     ],
   ],

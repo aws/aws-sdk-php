@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2012-06-01',
     'endpointPrefix' => 'elasticloadbalancing',
     'serviceFullName' => 'Elastic Load Balancing',
@@ -9,54 +7,42 @@ return [
     'xmlNamespace' => 'http://elasticloadbalancing.amazonaws.com/doc/2012-06-01/',
     'protocol' => 'query',
   ],
-  'operations' =>
-  [
-    'AddTags' =>
-    [
+  'operations' => [
+    'AddTags' => [
       'name' => 'AddTags',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AddTagsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AddTagsOutput',
         'resultWrapper' => 'AddTagsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'TooManyTagsException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'TooManyTags',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'DuplicateTagKeysException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DuplicateTagKeys',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -65,52 +51,41 @@ return [
         ],
       ],
     ],
-    'ApplySecurityGroupsToLoadBalancer' =>
-    [
+    'ApplySecurityGroupsToLoadBalancer' => [
       'name' => 'ApplySecurityGroupsToLoadBalancer',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ApplySecurityGroupsToLoadBalancerInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ApplySecurityGroupsToLoadBalancerOutput',
         'resultWrapper' => 'ApplySecurityGroupsToLoadBalancerResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidConfigurationRequestException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidConfigurationRequest',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidSecurityGroupException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidSecurityGroup',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -119,63 +94,50 @@ return [
         ],
       ],
     ],
-    'AttachLoadBalancerToSubnets' =>
-    [
+    'AttachLoadBalancerToSubnets' => [
       'name' => 'AttachLoadBalancerToSubnets',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AttachLoadBalancerToSubnetsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AttachLoadBalancerToSubnetsOutput',
         'resultWrapper' => 'AttachLoadBalancerToSubnetsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidConfigurationRequestException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidConfigurationRequest',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'SubnetNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubnetNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidSubnetException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidSubnet',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -184,30 +146,23 @@ return [
         ],
       ],
     ],
-    'ConfigureHealthCheck' =>
-    [
+    'ConfigureHealthCheck' => [
       'name' => 'ConfigureHealthCheck',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ConfigureHealthCheckInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ConfigureHealthCheckOutput',
         'resultWrapper' => 'ConfigureHealthCheckResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -216,63 +171,50 @@ return [
         ],
       ],
     ],
-    'CreateAppCookieStickinessPolicy' =>
-    [
+    'CreateAppCookieStickinessPolicy' => [
       'name' => 'CreateAppCookieStickinessPolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateAppCookieStickinessPolicyInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateAppCookieStickinessPolicyOutput',
         'resultWrapper' => 'CreateAppCookieStickinessPolicyResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DuplicatePolicyNameException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DuplicatePolicyName',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'TooManyPoliciesException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'TooManyPolicies',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidConfigurationRequestException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidConfigurationRequest',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -281,63 +223,50 @@ return [
         ],
       ],
     ],
-    'CreateLBCookieStickinessPolicy' =>
-    [
+    'CreateLBCookieStickinessPolicy' => [
       'name' => 'CreateLBCookieStickinessPolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateLBCookieStickinessPolicyInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateLBCookieStickinessPolicyOutput',
         'resultWrapper' => 'CreateLBCookieStickinessPolicyResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DuplicatePolicyNameException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DuplicatePolicyName',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'TooManyPoliciesException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'TooManyPolicies',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidConfigurationRequestException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidConfigurationRequest',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -346,129 +275,104 @@ return [
         ],
       ],
     ],
-    'CreateLoadBalancer' =>
-    [
+    'CreateLoadBalancer' => [
       'name' => 'CreateLoadBalancer',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateAccessPointInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateAccessPointOutput',
         'resultWrapper' => 'CreateLoadBalancerResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DuplicateAccessPointNameException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DuplicateLoadBalancerName',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'TooManyAccessPointsException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'TooManyLoadBalancers',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'CertificateNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CertificateNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidConfigurationRequestException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidConfigurationRequest',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'SubnetNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubnetNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'InvalidSubnetException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidSubnet',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'InvalidSecurityGroupException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidSecurityGroup',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'InvalidSchemeException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidScheme',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        8 =>
         [
           'shape' => 'TooManyTagsException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'TooManyTags',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        9 =>
         [
           'shape' => 'DuplicateTagKeysException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DuplicateTagKeys',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -477,63 +381,50 @@ return [
         ],
       ],
     ],
-    'CreateLoadBalancerListeners' =>
-    [
+    'CreateLoadBalancerListeners' => [
       'name' => 'CreateLoadBalancerListeners',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateLoadBalancerListenerInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateLoadBalancerListenerOutput',
         'resultWrapper' => 'CreateLoadBalancerListenersResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DuplicateListenerException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DuplicateListener',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'CertificateNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CertificateNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidConfigurationRequestException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidConfigurationRequest',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -542,74 +433,59 @@ return [
         ],
       ],
     ],
-    'CreateLoadBalancerPolicy' =>
-    [
+    'CreateLoadBalancerPolicy' => [
       'name' => 'CreateLoadBalancerPolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateLoadBalancerPolicyInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateLoadBalancerPolicyOutput',
         'resultWrapper' => 'CreateLoadBalancerPolicyResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'PolicyTypeNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'PolicyTypeNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'DuplicatePolicyNameException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DuplicatePolicyName',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'TooManyPoliciesException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'TooManyPolicies',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InvalidConfigurationRequestException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidConfigurationRequest',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -618,48 +494,37 @@ return [
         ],
       ],
     ],
-    'DeleteLoadBalancer' =>
-    [
+    'DeleteLoadBalancer' => [
       'name' => 'DeleteLoadBalancer',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteAccessPointInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteAccessPointOutput',
         'resultWrapper' => 'DeleteLoadBalancerResult',
       ],
     ],
-    'DeleteLoadBalancerListeners' =>
-    [
+    'DeleteLoadBalancerListeners' => [
       'name' => 'DeleteLoadBalancerListeners',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteLoadBalancerListenerInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteLoadBalancerListenerOutput',
         'resultWrapper' => 'DeleteLoadBalancerListenersResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -668,41 +533,32 @@ return [
         ],
       ],
     ],
-    'DeleteLoadBalancerPolicy' =>
-    [
+    'DeleteLoadBalancerPolicy' => [
       'name' => 'DeleteLoadBalancerPolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteLoadBalancerPolicyInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteLoadBalancerPolicyOutput',
         'resultWrapper' => 'DeleteLoadBalancerPolicyResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidConfigurationRequestException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidConfigurationRequest',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -711,41 +567,32 @@ return [
         ],
       ],
     ],
-    'DeregisterInstancesFromLoadBalancer' =>
-    [
+    'DeregisterInstancesFromLoadBalancer' => [
       'name' => 'DeregisterInstancesFromLoadBalancer',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeregisterEndPointsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeregisterEndPointsOutput',
         'resultWrapper' => 'DeregisterInstancesFromLoadBalancerResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidEndPointException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidInstance',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -754,41 +601,32 @@ return [
         ],
       ],
     ],
-    'DescribeInstanceHealth' =>
-    [
+    'DescribeInstanceHealth' => [
       'name' => 'DescribeInstanceHealth',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeEndPointStateInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeEndPointStateOutput',
         'resultWrapper' => 'DescribeInstanceHealthResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidEndPointException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidInstance',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -797,41 +635,32 @@ return [
         ],
       ],
     ],
-    'DescribeLoadBalancerAttributes' =>
-    [
+    'DescribeLoadBalancerAttributes' => [
       'name' => 'DescribeLoadBalancerAttributes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeLoadBalancerAttributesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeLoadBalancerAttributesOutput',
         'resultWrapper' => 'DescribeLoadBalancerAttributesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LoadBalancerAttributeNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerAttributeNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -840,41 +669,32 @@ return [
         ],
       ],
     ],
-    'DescribeLoadBalancerPolicies' =>
-    [
+    'DescribeLoadBalancerPolicies' => [
       'name' => 'DescribeLoadBalancerPolicies',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeLoadBalancerPoliciesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeLoadBalancerPoliciesOutput',
         'resultWrapper' => 'DescribeLoadBalancerPoliciesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'PolicyNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'PolicyNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -883,30 +703,23 @@ return [
         ],
       ],
     ],
-    'DescribeLoadBalancerPolicyTypes' =>
-    [
+    'DescribeLoadBalancerPolicyTypes' => [
       'name' => 'DescribeLoadBalancerPolicyTypes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeLoadBalancerPolicyTypesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeLoadBalancerPolicyTypesOutput',
         'resultWrapper' => 'DescribeLoadBalancerPolicyTypesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'PolicyTypeNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'PolicyTypeNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -915,30 +728,23 @@ return [
         ],
       ],
     ],
-    'DescribeLoadBalancers' =>
-    [
+    'DescribeLoadBalancers' => [
       'name' => 'DescribeLoadBalancers',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeAccessPointsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeAccessPointsOutput',
         'resultWrapper' => 'DescribeLoadBalancersResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -947,30 +753,23 @@ return [
         ],
       ],
     ],
-    'DescribeTags' =>
-    [
+    'DescribeTags' => [
       'name' => 'DescribeTags',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeTagsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeTagsOutput',
         'resultWrapper' => 'DescribeTagsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -979,41 +778,32 @@ return [
         ],
       ],
     ],
-    'DetachLoadBalancerFromSubnets' =>
-    [
+    'DetachLoadBalancerFromSubnets' => [
       'name' => 'DetachLoadBalancerFromSubnets',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DetachLoadBalancerFromSubnetsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DetachLoadBalancerFromSubnetsOutput',
         'resultWrapper' => 'DetachLoadBalancerFromSubnetsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidConfigurationRequestException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidConfigurationRequest',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -1022,41 +812,32 @@ return [
         ],
       ],
     ],
-    'DisableAvailabilityZonesForLoadBalancer' =>
-    [
+    'DisableAvailabilityZonesForLoadBalancer' => [
       'name' => 'DisableAvailabilityZonesForLoadBalancer',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RemoveAvailabilityZonesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RemoveAvailabilityZonesOutput',
         'resultWrapper' => 'DisableAvailabilityZonesForLoadBalancerResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidConfigurationRequestException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidConfigurationRequest',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -1065,30 +846,23 @@ return [
         ],
       ],
     ],
-    'EnableAvailabilityZonesForLoadBalancer' =>
-    [
+    'EnableAvailabilityZonesForLoadBalancer' => [
       'name' => 'EnableAvailabilityZonesForLoadBalancer',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AddAvailabilityZonesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AddAvailabilityZonesOutput',
         'resultWrapper' => 'EnableAvailabilityZonesForLoadBalancerResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1097,52 +871,41 @@ return [
         ],
       ],
     ],
-    'ModifyLoadBalancerAttributes' =>
-    [
+    'ModifyLoadBalancerAttributes' => [
       'name' => 'ModifyLoadBalancerAttributes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ModifyLoadBalancerAttributesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ModifyLoadBalancerAttributesOutput',
         'resultWrapper' => 'ModifyLoadBalancerAttributesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LoadBalancerAttributeNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerAttributeNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidConfigurationRequestException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidConfigurationRequest',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -1151,41 +914,32 @@ return [
         ],
       ],
     ],
-    'RegisterInstancesWithLoadBalancer' =>
-    [
+    'RegisterInstancesWithLoadBalancer' => [
       'name' => 'RegisterInstancesWithLoadBalancer',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RegisterEndPointsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RegisterEndPointsOutput',
         'resultWrapper' => 'RegisterInstancesWithLoadBalancerResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidEndPointException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidInstance',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1194,30 +948,23 @@ return [
         ],
       ],
     ],
-    'RemoveTags' =>
-    [
+    'RemoveTags' => [
       'name' => 'RemoveTags',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RemoveTagsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RemoveTagsOutput',
         'resultWrapper' => 'RemoveTagsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1226,63 +973,50 @@ return [
         ],
       ],
     ],
-    'SetLoadBalancerListenerSSLCertificate' =>
-    [
+    'SetLoadBalancerListenerSSLCertificate' => [
       'name' => 'SetLoadBalancerListenerSSLCertificate',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SetLoadBalancerListenerSSLCertificateInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'SetLoadBalancerListenerSSLCertificateOutput',
         'resultWrapper' => 'SetLoadBalancerListenerSSLCertificateResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'CertificateNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CertificateNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ListenerNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ListenerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidConfigurationRequestException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidConfigurationRequest',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -1291,52 +1025,41 @@ return [
         ],
       ],
     ],
-    'SetLoadBalancerPoliciesForBackendServer' =>
-    [
+    'SetLoadBalancerPoliciesForBackendServer' => [
       'name' => 'SetLoadBalancerPoliciesForBackendServer',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SetLoadBalancerPoliciesForBackendServerInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'SetLoadBalancerPoliciesForBackendServerOutput',
         'resultWrapper' => 'SetLoadBalancerPoliciesForBackendServerResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'PolicyNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'PolicyNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidConfigurationRequestException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidConfigurationRequest',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -1345,63 +1068,50 @@ return [
         ],
       ],
     ],
-    'SetLoadBalancerPoliciesOfListener' =>
-    [
+    'SetLoadBalancerPoliciesOfListener' => [
       'name' => 'SetLoadBalancerPoliciesOfListener',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SetLoadBalancerPoliciesOfListenerInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'SetLoadBalancerPoliciesOfListenerOutput',
         'resultWrapper' => 'SetLoadBalancerPoliciesOfListenerResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessPointNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LoadBalancerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'PolicyNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'PolicyNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ListenerNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ListenerNotFound',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidConfigurationRequestException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidConfigurationRequest',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -1411,2024 +1121,1522 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'AccessLog' =>
-    [
+  'shapes' => [
+    'AccessLog' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Enabled',
+      'required' => [
+        'Enabled',
       ],
-      'members' =>
-      [
-        'Enabled' =>
-        [
+      'members' => [
+        'Enabled' => [
           'shape' => 'AccessLogEnabled',
         ],
-        'S3BucketName' =>
-        [
+        'S3BucketName' => [
           'shape' => 'S3BucketName',
         ],
-        'EmitInterval' =>
-        [
+        'EmitInterval' => [
           'shape' => 'AccessLogInterval',
         ],
-        'S3BucketPrefix' =>
-        [
+        'S3BucketPrefix' => [
           'shape' => 'AccessLogPrefix',
         ],
       ],
     ],
-    'AccessLogEnabled' =>
-    [
+    'AccessLogEnabled' => [
       'type' => 'boolean',
     ],
-    'AccessLogInterval' =>
-    [
+    'AccessLogInterval' => [
       'type' => 'integer',
     ],
-    'AccessLogPrefix' =>
-    [
+    'AccessLogPrefix' => [
       'type' => 'string',
     ],
-    'AccessPointName' =>
-    [
+    'AccessPointName' => [
       'type' => 'string',
     ],
-    'AccessPointNotFoundException' =>
-    [
+    'AccessPointNotFoundException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'LoadBalancerNotFound',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'AccessPointPort' =>
-    [
+    'AccessPointPort' => [
       'type' => 'integer',
     ],
-    'AddAvailabilityZonesInput' =>
-    [
+    'AddAvailabilityZonesInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerName',
-        1 => 'AvailabilityZones',
+      'required' => [
+        'LoadBalancerName',
+        'AvailabilityZones',
       ],
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
-        'AvailabilityZones' =>
-        [
+        'AvailabilityZones' => [
           'shape' => 'AvailabilityZones',
         ],
       ],
     ],
-    'AddAvailabilityZonesOutput' =>
-    [
+    'AddAvailabilityZonesOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AvailabilityZones' =>
-        [
+      'members' => [
+        'AvailabilityZones' => [
           'shape' => 'AvailabilityZones',
         ],
       ],
     ],
-    'AddTagsInput' =>
-    [
+    'AddTagsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerNames',
-        1 => 'Tags',
+      'required' => [
+        'LoadBalancerNames',
+        'Tags',
       ],
-      'members' =>
-      [
-        'LoadBalancerNames' =>
-        [
+      'members' => [
+        'LoadBalancerNames' => [
           'shape' => 'LoadBalancerNames',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
         ],
       ],
     ],
-    'AddTagsOutput' =>
-    [
+    'AddTagsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'AppCookieStickinessPolicies' =>
-    [
+    'AppCookieStickinessPolicies' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AppCookieStickinessPolicy',
       ],
     ],
-    'AppCookieStickinessPolicy' =>
-    [
+    'AppCookieStickinessPolicy' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PolicyName' =>
-        [
+      'members' => [
+        'PolicyName' => [
           'shape' => 'PolicyName',
         ],
-        'CookieName' =>
-        [
+        'CookieName' => [
           'shape' => 'CookieName',
         ],
       ],
     ],
-    'ApplySecurityGroupsToLoadBalancerInput' =>
-    [
+    'ApplySecurityGroupsToLoadBalancerInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerName',
-        1 => 'SecurityGroups',
+      'required' => [
+        'LoadBalancerName',
+        'SecurityGroups',
       ],
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
-        'SecurityGroups' =>
-        [
+        'SecurityGroups' => [
           'shape' => 'SecurityGroups',
         ],
       ],
     ],
-    'ApplySecurityGroupsToLoadBalancerOutput' =>
-    [
+    'ApplySecurityGroupsToLoadBalancerOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SecurityGroups' =>
-        [
+      'members' => [
+        'SecurityGroups' => [
           'shape' => 'SecurityGroups',
         ],
       ],
     ],
-    'AttachLoadBalancerToSubnetsInput' =>
-    [
+    'AttachLoadBalancerToSubnetsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerName',
-        1 => 'Subnets',
+      'required' => [
+        'LoadBalancerName',
+        'Subnets',
       ],
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
-        'Subnets' =>
-        [
+        'Subnets' => [
           'shape' => 'Subnets',
         ],
       ],
     ],
-    'AttachLoadBalancerToSubnetsOutput' =>
-    [
+    'AttachLoadBalancerToSubnetsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Subnets' =>
-        [
+      'members' => [
+        'Subnets' => [
           'shape' => 'Subnets',
         ],
       ],
     ],
-    'AttributeName' =>
-    [
+    'AttributeName' => [
       'type' => 'string',
     ],
-    'AttributeType' =>
-    [
+    'AttributeType' => [
       'type' => 'string',
     ],
-    'AttributeValue' =>
-    [
+    'AttributeValue' => [
       'type' => 'string',
     ],
-    'AvailabilityZone' =>
-    [
+    'AvailabilityZone' => [
       'type' => 'string',
     ],
-    'AvailabilityZones' =>
-    [
+    'AvailabilityZones' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AvailabilityZone',
       ],
     ],
-    'BackendServerDescription' =>
-    [
+    'BackendServerDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstancePort' =>
-        [
+      'members' => [
+        'InstancePort' => [
           'shape' => 'InstancePort',
         ],
-        'PolicyNames' =>
-        [
+        'PolicyNames' => [
           'shape' => 'PolicyNames',
         ],
       ],
     ],
-    'BackendServerDescriptions' =>
-    [
+    'BackendServerDescriptions' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'BackendServerDescription',
       ],
     ],
-    'Cardinality' =>
-    [
+    'Cardinality' => [
       'type' => 'string',
     ],
-    'CertificateNotFoundException' =>
-    [
+    'CertificateNotFoundException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'CertificateNotFound',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ConfigureHealthCheckInput' =>
-    [
+    'ConfigureHealthCheckInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerName',
-        1 => 'HealthCheck',
+      'required' => [
+        'LoadBalancerName',
+        'HealthCheck',
       ],
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
-        'HealthCheck' =>
-        [
+        'HealthCheck' => [
           'shape' => 'HealthCheck',
         ],
       ],
     ],
-    'ConfigureHealthCheckOutput' =>
-    [
+    'ConfigureHealthCheckOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'HealthCheck' =>
-        [
+      'members' => [
+        'HealthCheck' => [
           'shape' => 'HealthCheck',
         ],
       ],
     ],
-    'ConnectionDraining' =>
-    [
+    'ConnectionDraining' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Enabled',
+      'required' => [
+        'Enabled',
       ],
-      'members' =>
-      [
-        'Enabled' =>
-        [
+      'members' => [
+        'Enabled' => [
           'shape' => 'ConnectionDrainingEnabled',
         ],
-        'Timeout' =>
-        [
+        'Timeout' => [
           'shape' => 'ConnectionDrainingTimeout',
         ],
       ],
     ],
-    'ConnectionDrainingEnabled' =>
-    [
+    'ConnectionDrainingEnabled' => [
       'type' => 'boolean',
     ],
-    'ConnectionDrainingTimeout' =>
-    [
+    'ConnectionDrainingTimeout' => [
       'type' => 'integer',
     ],
-    'ConnectionSettings' =>
-    [
+    'ConnectionSettings' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IdleTimeout',
+      'required' => [
+        'IdleTimeout',
       ],
-      'members' =>
-      [
-        'IdleTimeout' =>
-        [
+      'members' => [
+        'IdleTimeout' => [
           'shape' => 'IdleTimeout',
         ],
       ],
     ],
-    'CookieExpirationPeriod' =>
-    [
+    'CookieExpirationPeriod' => [
       'type' => 'long',
     ],
-    'CookieName' =>
-    [
+    'CookieName' => [
       'type' => 'string',
     ],
-    'CreateAccessPointInput' =>
-    [
+    'CreateAccessPointInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerName',
-        1 => 'Listeners',
+      'required' => [
+        'LoadBalancerName',
+        'Listeners',
       ],
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
-        'Listeners' =>
-        [
+        'Listeners' => [
           'shape' => 'Listeners',
         ],
-        'AvailabilityZones' =>
-        [
+        'AvailabilityZones' => [
           'shape' => 'AvailabilityZones',
         ],
-        'Subnets' =>
-        [
+        'Subnets' => [
           'shape' => 'Subnets',
         ],
-        'SecurityGroups' =>
-        [
+        'SecurityGroups' => [
           'shape' => 'SecurityGroups',
         ],
-        'Scheme' =>
-        [
+        'Scheme' => [
           'shape' => 'LoadBalancerScheme',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
         ],
       ],
     ],
-    'CreateAccessPointOutput' =>
-    [
+    'CreateAccessPointOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DNSName' =>
-        [
+      'members' => [
+        'DNSName' => [
           'shape' => 'DNSName',
         ],
       ],
     ],
-    'CreateAppCookieStickinessPolicyInput' =>
-    [
+    'CreateAppCookieStickinessPolicyInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerName',
-        1 => 'PolicyName',
-        2 => 'CookieName',
+      'required' => [
+        'LoadBalancerName',
+        'PolicyName',
+        'CookieName',
       ],
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
-        'PolicyName' =>
-        [
+        'PolicyName' => [
           'shape' => 'PolicyName',
         ],
-        'CookieName' =>
-        [
+        'CookieName' => [
           'shape' => 'CookieName',
         ],
       ],
     ],
-    'CreateAppCookieStickinessPolicyOutput' =>
-    [
+    'CreateAppCookieStickinessPolicyOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'CreateLBCookieStickinessPolicyInput' =>
-    [
+    'CreateLBCookieStickinessPolicyInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerName',
-        1 => 'PolicyName',
+      'required' => [
+        'LoadBalancerName',
+        'PolicyName',
       ],
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
-        'PolicyName' =>
-        [
+        'PolicyName' => [
           'shape' => 'PolicyName',
         ],
-        'CookieExpirationPeriod' =>
-        [
+        'CookieExpirationPeriod' => [
           'shape' => 'CookieExpirationPeriod',
         ],
       ],
     ],
-    'CreateLBCookieStickinessPolicyOutput' =>
-    [
+    'CreateLBCookieStickinessPolicyOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'CreateLoadBalancerListenerInput' =>
-    [
+    'CreateLoadBalancerListenerInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerName',
-        1 => 'Listeners',
+      'required' => [
+        'LoadBalancerName',
+        'Listeners',
       ],
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
-        'Listeners' =>
-        [
+        'Listeners' => [
           'shape' => 'Listeners',
         ],
       ],
     ],
-    'CreateLoadBalancerListenerOutput' =>
-    [
+    'CreateLoadBalancerListenerOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'CreateLoadBalancerPolicyInput' =>
-    [
+    'CreateLoadBalancerPolicyInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerName',
-        1 => 'PolicyName',
-        2 => 'PolicyTypeName',
+      'required' => [
+        'LoadBalancerName',
+        'PolicyName',
+        'PolicyTypeName',
       ],
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
-        'PolicyName' =>
-        [
+        'PolicyName' => [
           'shape' => 'PolicyName',
         ],
-        'PolicyTypeName' =>
-        [
+        'PolicyTypeName' => [
           'shape' => 'PolicyTypeName',
         ],
-        'PolicyAttributes' =>
-        [
+        'PolicyAttributes' => [
           'shape' => 'PolicyAttributes',
         ],
       ],
     ],
-    'CreateLoadBalancerPolicyOutput' =>
-    [
+    'CreateLoadBalancerPolicyOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'CreatedTime' =>
-    [
+    'CreatedTime' => [
       'type' => 'timestamp',
     ],
-    'CrossZoneLoadBalancing' =>
-    [
+    'CrossZoneLoadBalancing' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Enabled',
+      'required' => [
+        'Enabled',
       ],
-      'members' =>
-      [
-        'Enabled' =>
-        [
+      'members' => [
+        'Enabled' => [
           'shape' => 'CrossZoneLoadBalancingEnabled',
         ],
       ],
     ],
-    'CrossZoneLoadBalancingEnabled' =>
-    [
+    'CrossZoneLoadBalancingEnabled' => [
       'type' => 'boolean',
     ],
-    'DNSName' =>
-    [
+    'DNSName' => [
       'type' => 'string',
     ],
-    'DefaultValue' =>
-    [
+    'DefaultValue' => [
       'type' => 'string',
     ],
-    'DeleteAccessPointInput' =>
-    [
+    'DeleteAccessPointInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerName',
+      'required' => [
+        'LoadBalancerName',
       ],
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
       ],
     ],
-    'DeleteAccessPointOutput' =>
-    [
+    'DeleteAccessPointOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'DeleteLoadBalancerListenerInput' =>
-    [
+    'DeleteLoadBalancerListenerInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerName',
-        1 => 'LoadBalancerPorts',
+      'required' => [
+        'LoadBalancerName',
+        'LoadBalancerPorts',
       ],
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
-        'LoadBalancerPorts' =>
-        [
+        'LoadBalancerPorts' => [
           'shape' => 'Ports',
         ],
       ],
     ],
-    'DeleteLoadBalancerListenerOutput' =>
-    [
+    'DeleteLoadBalancerListenerOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'DeleteLoadBalancerPolicyInput' =>
-    [
+    'DeleteLoadBalancerPolicyInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerName',
-        1 => 'PolicyName',
+      'required' => [
+        'LoadBalancerName',
+        'PolicyName',
       ],
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
-        'PolicyName' =>
-        [
+        'PolicyName' => [
           'shape' => 'PolicyName',
         ],
       ],
     ],
-    'DeleteLoadBalancerPolicyOutput' =>
-    [
+    'DeleteLoadBalancerPolicyOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'DeregisterEndPointsInput' =>
-    [
+    'DeregisterEndPointsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerName',
-        1 => 'Instances',
+      'required' => [
+        'LoadBalancerName',
+        'Instances',
       ],
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
-        'Instances' =>
-        [
+        'Instances' => [
           'shape' => 'Instances',
         ],
       ],
     ],
-    'DeregisterEndPointsOutput' =>
-    [
+    'DeregisterEndPointsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Instances' =>
-        [
+      'members' => [
+        'Instances' => [
           'shape' => 'Instances',
         ],
       ],
     ],
-    'DescribeAccessPointsInput' =>
-    [
+    'DescribeAccessPointsInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LoadBalancerNames' =>
-        [
+      'members' => [
+        'LoadBalancerNames' => [
           'shape' => 'LoadBalancerNames',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
         ],
-        'PageSize' =>
-        [
+        'PageSize' => [
           'shape' => 'PageSize',
         ],
       ],
     ],
-    'DescribeAccessPointsOutput' =>
-    [
+    'DescribeAccessPointsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LoadBalancerDescriptions' =>
-        [
+      'members' => [
+        'LoadBalancerDescriptions' => [
           'shape' => 'LoadBalancerDescriptions',
         ],
-        'NextMarker' =>
-        [
+        'NextMarker' => [
           'shape' => 'Marker',
         ],
       ],
     ],
-    'DescribeEndPointStateInput' =>
-    [
+    'DescribeEndPointStateInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerName',
+      'required' => [
+        'LoadBalancerName',
       ],
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
-        'Instances' =>
-        [
+        'Instances' => [
           'shape' => 'Instances',
         ],
       ],
     ],
-    'DescribeEndPointStateOutput' =>
-    [
+    'DescribeEndPointStateOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceStates' =>
-        [
+      'members' => [
+        'InstanceStates' => [
           'shape' => 'InstanceStates',
         ],
       ],
     ],
-    'DescribeLoadBalancerAttributesInput' =>
-    [
+    'DescribeLoadBalancerAttributesInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerName',
+      'required' => [
+        'LoadBalancerName',
       ],
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
       ],
     ],
-    'DescribeLoadBalancerAttributesOutput' =>
-    [
+    'DescribeLoadBalancerAttributesOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LoadBalancerAttributes' =>
-        [
+      'members' => [
+        'LoadBalancerAttributes' => [
           'shape' => 'LoadBalancerAttributes',
         ],
       ],
     ],
-    'DescribeLoadBalancerPoliciesInput' =>
-    [
+    'DescribeLoadBalancerPoliciesInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
-        'PolicyNames' =>
-        [
+        'PolicyNames' => [
           'shape' => 'PolicyNames',
         ],
       ],
     ],
-    'DescribeLoadBalancerPoliciesOutput' =>
-    [
+    'DescribeLoadBalancerPoliciesOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PolicyDescriptions' =>
-        [
+      'members' => [
+        'PolicyDescriptions' => [
           'shape' => 'PolicyDescriptions',
         ],
       ],
     ],
-    'DescribeLoadBalancerPolicyTypesInput' =>
-    [
+    'DescribeLoadBalancerPolicyTypesInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PolicyTypeNames' =>
-        [
+      'members' => [
+        'PolicyTypeNames' => [
           'shape' => 'PolicyTypeNames',
         ],
       ],
     ],
-    'DescribeLoadBalancerPolicyTypesOutput' =>
-    [
+    'DescribeLoadBalancerPolicyTypesOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PolicyTypeDescriptions' =>
-        [
+      'members' => [
+        'PolicyTypeDescriptions' => [
           'shape' => 'PolicyTypeDescriptions',
         ],
       ],
     ],
-    'DescribeTagsInput' =>
-    [
+    'DescribeTagsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerNames',
+      'required' => [
+        'LoadBalancerNames',
       ],
-      'members' =>
-      [
-        'LoadBalancerNames' =>
-        [
+      'members' => [
+        'LoadBalancerNames' => [
           'shape' => 'LoadBalancerNamesMax20',
         ],
       ],
     ],
-    'DescribeTagsOutput' =>
-    [
+    'DescribeTagsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TagDescriptions' =>
-        [
+      'members' => [
+        'TagDescriptions' => [
           'shape' => 'TagDescriptions',
         ],
       ],
     ],
-    'Description' =>
-    [
+    'Description' => [
       'type' => 'string',
     ],
-    'DetachLoadBalancerFromSubnetsInput' =>
-    [
+    'DetachLoadBalancerFromSubnetsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerName',
-        1 => 'Subnets',
+      'required' => [
+        'LoadBalancerName',
+        'Subnets',
       ],
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
-        'Subnets' =>
-        [
+        'Subnets' => [
           'shape' => 'Subnets',
         ],
       ],
     ],
-    'DetachLoadBalancerFromSubnetsOutput' =>
-    [
+    'DetachLoadBalancerFromSubnetsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Subnets' =>
-        [
+      'members' => [
+        'Subnets' => [
           'shape' => 'Subnets',
         ],
       ],
     ],
-    'DuplicateAccessPointNameException' =>
-    [
+    'DuplicateAccessPointNameException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DuplicateLoadBalancerName',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'DuplicateListenerException' =>
-    [
+    'DuplicateListenerException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DuplicateListener',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'DuplicatePolicyNameException' =>
-    [
+    'DuplicatePolicyNameException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DuplicatePolicyName',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'DuplicateTagKeysException' =>
-    [
+    'DuplicateTagKeysException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DuplicateTagKeys',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'EndPointPort' =>
-    [
+    'EndPointPort' => [
       'type' => 'integer',
     ],
-    'HealthCheck' =>
-    [
+    'HealthCheck' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Target',
-        1 => 'Interval',
-        2 => 'Timeout',
-        3 => 'UnhealthyThreshold',
-        4 => 'HealthyThreshold',
+      'required' => [
+        'Target',
+        'Interval',
+        'Timeout',
+        'UnhealthyThreshold',
+        'HealthyThreshold',
       ],
-      'members' =>
-      [
-        'Target' =>
-        [
+      'members' => [
+        'Target' => [
           'shape' => 'HealthCheckTarget',
         ],
-        'Interval' =>
-        [
+        'Interval' => [
           'shape' => 'HealthCheckInterval',
         ],
-        'Timeout' =>
-        [
+        'Timeout' => [
           'shape' => 'HealthCheckTimeout',
         ],
-        'UnhealthyThreshold' =>
-        [
+        'UnhealthyThreshold' => [
           'shape' => 'UnhealthyThreshold',
         ],
-        'HealthyThreshold' =>
-        [
+        'HealthyThreshold' => [
           'shape' => 'HealthyThreshold',
         ],
       ],
     ],
-    'HealthCheckInterval' =>
-    [
+    'HealthCheckInterval' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 300,
     ],
-    'HealthCheckTarget' =>
-    [
+    'HealthCheckTarget' => [
       'type' => 'string',
     ],
-    'HealthCheckTimeout' =>
-    [
+    'HealthCheckTimeout' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 300,
     ],
-    'HealthyThreshold' =>
-    [
+    'HealthyThreshold' => [
       'type' => 'integer',
       'min' => 2,
       'max' => 10,
     ],
-    'IdleTimeout' =>
-    [
+    'IdleTimeout' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 3600,
     ],
-    'Instance' =>
-    [
+    'Instance' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'InstanceId',
         ],
       ],
     ],
-    'InstanceId' =>
-    [
+    'InstanceId' => [
       'type' => 'string',
     ],
-    'InstancePort' =>
-    [
+    'InstancePort' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 65535,
     ],
-    'InstanceState' =>
-    [
+    'InstanceState' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'InstanceId',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'State',
         ],
-        'ReasonCode' =>
-        [
+        'ReasonCode' => [
           'shape' => 'ReasonCode',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
       ],
     ],
-    'InstanceStates' =>
-    [
+    'InstanceStates' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'InstanceState',
       ],
     ],
-    'Instances' =>
-    [
+    'Instances' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Instance',
       ],
     ],
-    'InvalidConfigurationRequestException' =>
-    [
+    'InvalidConfigurationRequestException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidConfigurationRequest',
         'httpStatusCode' => 409,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidEndPointException' =>
-    [
+    'InvalidEndPointException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidInstance',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidSchemeException' =>
-    [
+    'InvalidSchemeException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidScheme',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidSecurityGroupException' =>
-    [
+    'InvalidSecurityGroupException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidSecurityGroup',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidSubnetException' =>
-    [
+    'InvalidSubnetException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidSubnet',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'LBCookieStickinessPolicies' =>
-    [
+    'LBCookieStickinessPolicies' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'LBCookieStickinessPolicy',
       ],
     ],
-    'LBCookieStickinessPolicy' =>
-    [
+    'LBCookieStickinessPolicy' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PolicyName' =>
-        [
+      'members' => [
+        'PolicyName' => [
           'shape' => 'PolicyName',
         ],
-        'CookieExpirationPeriod' =>
-        [
+        'CookieExpirationPeriod' => [
           'shape' => 'CookieExpirationPeriod',
         ],
       ],
     ],
-    'Listener' =>
-    [
+    'Listener' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Protocol',
-        1 => 'LoadBalancerPort',
-        2 => 'InstancePort',
+      'required' => [
+        'Protocol',
+        'LoadBalancerPort',
+        'InstancePort',
       ],
-      'members' =>
-      [
-        'Protocol' =>
-        [
+      'members' => [
+        'Protocol' => [
           'shape' => 'Protocol',
         ],
-        'LoadBalancerPort' =>
-        [
+        'LoadBalancerPort' => [
           'shape' => 'AccessPointPort',
         ],
-        'InstanceProtocol' =>
-        [
+        'InstanceProtocol' => [
           'shape' => 'Protocol',
         ],
-        'InstancePort' =>
-        [
+        'InstancePort' => [
           'shape' => 'InstancePort',
         ],
-        'SSLCertificateId' =>
-        [
+        'SSLCertificateId' => [
           'shape' => 'SSLCertificateId',
         ],
       ],
     ],
-    'ListenerDescription' =>
-    [
+    'ListenerDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Listener' =>
-        [
+      'members' => [
+        'Listener' => [
           'shape' => 'Listener',
         ],
-        'PolicyNames' =>
-        [
+        'PolicyNames' => [
           'shape' => 'PolicyNames',
         ],
       ],
     ],
-    'ListenerDescriptions' =>
-    [
+    'ListenerDescriptions' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ListenerDescription',
       ],
     ],
-    'ListenerNotFoundException' =>
-    [
+    'ListenerNotFoundException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ListenerNotFound',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'Listeners' =>
-    [
+    'Listeners' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Listener',
       ],
     ],
-    'LoadBalancerAttributeNotFoundException' =>
-    [
+    'LoadBalancerAttributeNotFoundException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'LoadBalancerAttributeNotFound',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'LoadBalancerAttributes' =>
-    [
+    'LoadBalancerAttributes' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CrossZoneLoadBalancing' =>
-        [
+      'members' => [
+        'CrossZoneLoadBalancing' => [
           'shape' => 'CrossZoneLoadBalancing',
         ],
-        'AccessLog' =>
-        [
+        'AccessLog' => [
           'shape' => 'AccessLog',
         ],
-        'ConnectionDraining' =>
-        [
+        'ConnectionDraining' => [
           'shape' => 'ConnectionDraining',
         ],
-        'ConnectionSettings' =>
-        [
+        'ConnectionSettings' => [
           'shape' => 'ConnectionSettings',
         ],
       ],
     ],
-    'LoadBalancerDescription' =>
-    [
+    'LoadBalancerDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
-        'DNSName' =>
-        [
+        'DNSName' => [
           'shape' => 'DNSName',
         ],
-        'CanonicalHostedZoneName' =>
-        [
+        'CanonicalHostedZoneName' => [
           'shape' => 'DNSName',
         ],
-        'CanonicalHostedZoneNameID' =>
-        [
+        'CanonicalHostedZoneNameID' => [
           'shape' => 'DNSName',
         ],
-        'ListenerDescriptions' =>
-        [
+        'ListenerDescriptions' => [
           'shape' => 'ListenerDescriptions',
         ],
-        'Policies' =>
-        [
+        'Policies' => [
           'shape' => 'Policies',
         ],
-        'BackendServerDescriptions' =>
-        [
+        'BackendServerDescriptions' => [
           'shape' => 'BackendServerDescriptions',
         ],
-        'AvailabilityZones' =>
-        [
+        'AvailabilityZones' => [
           'shape' => 'AvailabilityZones',
         ],
-        'Subnets' =>
-        [
+        'Subnets' => [
           'shape' => 'Subnets',
         ],
-        'VPCId' =>
-        [
+        'VPCId' => [
           'shape' => 'VPCId',
         ],
-        'Instances' =>
-        [
+        'Instances' => [
           'shape' => 'Instances',
         ],
-        'HealthCheck' =>
-        [
+        'HealthCheck' => [
           'shape' => 'HealthCheck',
         ],
-        'SourceSecurityGroup' =>
-        [
+        'SourceSecurityGroup' => [
           'shape' => 'SourceSecurityGroup',
         ],
-        'SecurityGroups' =>
-        [
+        'SecurityGroups' => [
           'shape' => 'SecurityGroups',
         ],
-        'CreatedTime' =>
-        [
+        'CreatedTime' => [
           'shape' => 'CreatedTime',
         ],
-        'Scheme' =>
-        [
+        'Scheme' => [
           'shape' => 'LoadBalancerScheme',
         ],
       ],
     ],
-    'LoadBalancerDescriptions' =>
-    [
+    'LoadBalancerDescriptions' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'LoadBalancerDescription',
       ],
     ],
-    'LoadBalancerNames' =>
-    [
+    'LoadBalancerNames' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AccessPointName',
       ],
     ],
-    'LoadBalancerNamesMax20' =>
-    [
+    'LoadBalancerNamesMax20' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AccessPointName',
       ],
       'min' => 1,
       'max' => 20,
     ],
-    'LoadBalancerScheme' =>
-    [
+    'LoadBalancerScheme' => [
       'type' => 'string',
     ],
-    'Marker' =>
-    [
+    'Marker' => [
       'type' => 'string',
     ],
-    'ModifyLoadBalancerAttributesInput' =>
-    [
+    'ModifyLoadBalancerAttributesInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerName',
-        1 => 'LoadBalancerAttributes',
+      'required' => [
+        'LoadBalancerName',
+        'LoadBalancerAttributes',
       ],
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
-        'LoadBalancerAttributes' =>
-        [
+        'LoadBalancerAttributes' => [
           'shape' => 'LoadBalancerAttributes',
         ],
       ],
     ],
-    'ModifyLoadBalancerAttributesOutput' =>
-    [
+    'ModifyLoadBalancerAttributesOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
-        'LoadBalancerAttributes' =>
-        [
+        'LoadBalancerAttributes' => [
           'shape' => 'LoadBalancerAttributes',
         ],
       ],
     ],
-    'PageSize' =>
-    [
+    'PageSize' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 400,
     ],
-    'Policies' =>
-    [
+    'Policies' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AppCookieStickinessPolicies' =>
-        [
+      'members' => [
+        'AppCookieStickinessPolicies' => [
           'shape' => 'AppCookieStickinessPolicies',
         ],
-        'LBCookieStickinessPolicies' =>
-        [
+        'LBCookieStickinessPolicies' => [
           'shape' => 'LBCookieStickinessPolicies',
         ],
-        'OtherPolicies' =>
-        [
+        'OtherPolicies' => [
           'shape' => 'PolicyNames',
         ],
       ],
     ],
-    'PolicyAttribute' =>
-    [
+    'PolicyAttribute' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AttributeName' =>
-        [
+      'members' => [
+        'AttributeName' => [
           'shape' => 'AttributeName',
         ],
-        'AttributeValue' =>
-        [
+        'AttributeValue' => [
           'shape' => 'AttributeValue',
         ],
       ],
     ],
-    'PolicyAttributeDescription' =>
-    [
+    'PolicyAttributeDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AttributeName' =>
-        [
+      'members' => [
+        'AttributeName' => [
           'shape' => 'AttributeName',
         ],
-        'AttributeValue' =>
-        [
+        'AttributeValue' => [
           'shape' => 'AttributeValue',
         ],
       ],
     ],
-    'PolicyAttributeDescriptions' =>
-    [
+    'PolicyAttributeDescriptions' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'PolicyAttributeDescription',
       ],
     ],
-    'PolicyAttributeTypeDescription' =>
-    [
+    'PolicyAttributeTypeDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AttributeName' =>
-        [
+      'members' => [
+        'AttributeName' => [
           'shape' => 'AttributeName',
         ],
-        'AttributeType' =>
-        [
+        'AttributeType' => [
           'shape' => 'AttributeType',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
-        'DefaultValue' =>
-        [
+        'DefaultValue' => [
           'shape' => 'DefaultValue',
         ],
-        'Cardinality' =>
-        [
+        'Cardinality' => [
           'shape' => 'Cardinality',
         ],
       ],
     ],
-    'PolicyAttributeTypeDescriptions' =>
-    [
+    'PolicyAttributeTypeDescriptions' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'PolicyAttributeTypeDescription',
       ],
     ],
-    'PolicyAttributes' =>
-    [
+    'PolicyAttributes' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'PolicyAttribute',
       ],
     ],
-    'PolicyDescription' =>
-    [
+    'PolicyDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PolicyName' =>
-        [
+      'members' => [
+        'PolicyName' => [
           'shape' => 'PolicyName',
         ],
-        'PolicyTypeName' =>
-        [
+        'PolicyTypeName' => [
           'shape' => 'PolicyTypeName',
         ],
-        'PolicyAttributeDescriptions' =>
-        [
+        'PolicyAttributeDescriptions' => [
           'shape' => 'PolicyAttributeDescriptions',
         ],
       ],
     ],
-    'PolicyDescriptions' =>
-    [
+    'PolicyDescriptions' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'PolicyDescription',
       ],
     ],
-    'PolicyName' =>
-    [
+    'PolicyName' => [
       'type' => 'string',
     ],
-    'PolicyNames' =>
-    [
+    'PolicyNames' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'PolicyName',
       ],
     ],
-    'PolicyNotFoundException' =>
-    [
+    'PolicyNotFoundException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'PolicyNotFound',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'PolicyTypeDescription' =>
-    [
+    'PolicyTypeDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PolicyTypeName' =>
-        [
+      'members' => [
+        'PolicyTypeName' => [
           'shape' => 'PolicyTypeName',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
-        'PolicyAttributeTypeDescriptions' =>
-        [
+        'PolicyAttributeTypeDescriptions' => [
           'shape' => 'PolicyAttributeTypeDescriptions',
         ],
       ],
     ],
-    'PolicyTypeDescriptions' =>
-    [
+    'PolicyTypeDescriptions' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'PolicyTypeDescription',
       ],
     ],
-    'PolicyTypeName' =>
-    [
+    'PolicyTypeName' => [
       'type' => 'string',
     ],
-    'PolicyTypeNames' =>
-    [
+    'PolicyTypeNames' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'PolicyTypeName',
       ],
     ],
-    'PolicyTypeNotFoundException' =>
-    [
+    'PolicyTypeNotFoundException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'PolicyTypeNotFound',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'Ports' =>
-    [
+    'Ports' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AccessPointPort',
       ],
     ],
-    'Protocol' =>
-    [
+    'Protocol' => [
       'type' => 'string',
     ],
-    'ReasonCode' =>
-    [
+    'ReasonCode' => [
       'type' => 'string',
     ],
-    'RegisterEndPointsInput' =>
-    [
+    'RegisterEndPointsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerName',
-        1 => 'Instances',
+      'required' => [
+        'LoadBalancerName',
+        'Instances',
       ],
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
-        'Instances' =>
-        [
+        'Instances' => [
           'shape' => 'Instances',
         ],
       ],
     ],
-    'RegisterEndPointsOutput' =>
-    [
+    'RegisterEndPointsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Instances' =>
-        [
+      'members' => [
+        'Instances' => [
           'shape' => 'Instances',
         ],
       ],
     ],
-    'RemoveAvailabilityZonesInput' =>
-    [
+    'RemoveAvailabilityZonesInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerName',
-        1 => 'AvailabilityZones',
+      'required' => [
+        'LoadBalancerName',
+        'AvailabilityZones',
       ],
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
-        'AvailabilityZones' =>
-        [
+        'AvailabilityZones' => [
           'shape' => 'AvailabilityZones',
         ],
       ],
     ],
-    'RemoveAvailabilityZonesOutput' =>
-    [
+    'RemoveAvailabilityZonesOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AvailabilityZones' =>
-        [
+      'members' => [
+        'AvailabilityZones' => [
           'shape' => 'AvailabilityZones',
         ],
       ],
     ],
-    'RemoveTagsInput' =>
-    [
+    'RemoveTagsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerNames',
-        1 => 'Tags',
+      'required' => [
+        'LoadBalancerNames',
+        'Tags',
       ],
-      'members' =>
-      [
-        'LoadBalancerNames' =>
-        [
+      'members' => [
+        'LoadBalancerNames' => [
           'shape' => 'LoadBalancerNames',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagKeyList',
         ],
       ],
     ],
-    'RemoveTagsOutput' =>
-    [
+    'RemoveTagsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'S3BucketName' =>
-    [
+    'S3BucketName' => [
       'type' => 'string',
     ],
-    'SSLCertificateId' =>
-    [
+    'SSLCertificateId' => [
       'type' => 'string',
     ],
-    'SecurityGroupId' =>
-    [
+    'SecurityGroupId' => [
       'type' => 'string',
     ],
-    'SecurityGroupName' =>
-    [
+    'SecurityGroupName' => [
       'type' => 'string',
     ],
-    'SecurityGroupOwnerAlias' =>
-    [
+    'SecurityGroupOwnerAlias' => [
       'type' => 'string',
     ],
-    'SecurityGroups' =>
-    [
+    'SecurityGroups' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'SecurityGroupId',
       ],
     ],
-    'SetLoadBalancerListenerSSLCertificateInput' =>
-    [
+    'SetLoadBalancerListenerSSLCertificateInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerName',
-        1 => 'LoadBalancerPort',
-        2 => 'SSLCertificateId',
+      'required' => [
+        'LoadBalancerName',
+        'LoadBalancerPort',
+        'SSLCertificateId',
       ],
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
-        'LoadBalancerPort' =>
-        [
+        'LoadBalancerPort' => [
           'shape' => 'AccessPointPort',
         ],
-        'SSLCertificateId' =>
-        [
+        'SSLCertificateId' => [
           'shape' => 'SSLCertificateId',
         ],
       ],
     ],
-    'SetLoadBalancerListenerSSLCertificateOutput' =>
-    [
+    'SetLoadBalancerListenerSSLCertificateOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'SetLoadBalancerPoliciesForBackendServerInput' =>
-    [
+    'SetLoadBalancerPoliciesForBackendServerInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerName',
-        1 => 'InstancePort',
-        2 => 'PolicyNames',
+      'required' => [
+        'LoadBalancerName',
+        'InstancePort',
+        'PolicyNames',
       ],
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
-        'InstancePort' =>
-        [
+        'InstancePort' => [
           'shape' => 'EndPointPort',
         ],
-        'PolicyNames' =>
-        [
+        'PolicyNames' => [
           'shape' => 'PolicyNames',
         ],
       ],
     ],
-    'SetLoadBalancerPoliciesForBackendServerOutput' =>
-    [
+    'SetLoadBalancerPoliciesForBackendServerOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'SetLoadBalancerPoliciesOfListenerInput' =>
-    [
+    'SetLoadBalancerPoliciesOfListenerInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoadBalancerName',
-        1 => 'LoadBalancerPort',
-        2 => 'PolicyNames',
+      'required' => [
+        'LoadBalancerName',
+        'LoadBalancerPort',
+        'PolicyNames',
       ],
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
-        'LoadBalancerPort' =>
-        [
+        'LoadBalancerPort' => [
           'shape' => 'AccessPointPort',
         ],
-        'PolicyNames' =>
-        [
+        'PolicyNames' => [
           'shape' => 'PolicyNames',
         ],
       ],
     ],
-    'SetLoadBalancerPoliciesOfListenerOutput' =>
-    [
+    'SetLoadBalancerPoliciesOfListenerOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'SourceSecurityGroup' =>
-    [
+    'SourceSecurityGroup' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'OwnerAlias' =>
-        [
+      'members' => [
+        'OwnerAlias' => [
           'shape' => 'SecurityGroupOwnerAlias',
         ],
-        'GroupName' =>
-        [
+        'GroupName' => [
           'shape' => 'SecurityGroupName',
         ],
       ],
     ],
-    'State' =>
-    [
+    'State' => [
       'type' => 'string',
     ],
-    'SubnetId' =>
-    [
+    'SubnetId' => [
       'type' => 'string',
     ],
-    'SubnetNotFoundException' =>
-    [
+    'SubnetNotFoundException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SubnetNotFound',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'Subnets' =>
-    [
+    'Subnets' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'SubnetId',
       ],
     ],
-    'Tag' =>
-    [
+    'Tag' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Key',
+      'required' => [
+        'Key',
       ],
-      'members' =>
-      [
-        'Key' =>
-        [
+      'members' => [
+        'Key' => [
           'shape' => 'TagKey',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'TagValue',
         ],
       ],
     ],
-    'TagDescription' =>
-    [
+    'TagDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'AccessPointName',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
         ],
       ],
     ],
-    'TagDescriptions' =>
-    [
+    'TagDescriptions' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'TagDescription',
       ],
     ],
-    'TagKey' =>
-    [
+    'TagKey' => [
       'type' => 'string',
       'min' => 1,
       'max' => 128,
       'pattern' => '^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*]$',
     ],
-    'TagKeyList' =>
-    [
+    'TagKeyList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'TagKeyOnly',
       ],
       'min' => 1,
     ],
-    'TagKeyOnly' =>
-    [
+    'TagKeyOnly' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Key' =>
-        [
+      'members' => [
+        'Key' => [
           'shape' => 'TagKey',
         ],
       ],
     ],
-    'TagList' =>
-    [
+    'TagList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Tag',
       ],
       'min' => 1,
     ],
-    'TagValue' =>
-    [
+    'TagValue' => [
       'type' => 'string',
       'min' => 0,
       'max' => 256,
       'pattern' => '^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*]$',
     ],
-    'TooManyAccessPointsException' =>
-    [
+    'TooManyAccessPointsException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'TooManyLoadBalancers',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'TooManyPoliciesException' =>
-    [
+    'TooManyPoliciesException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'TooManyPolicies',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'TooManyTagsException' =>
-    [
+    'TooManyTagsException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'TooManyTags',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'UnhealthyThreshold' =>
-    [
+    'UnhealthyThreshold' => [
       'type' => 'integer',
       'min' => 2,
       'max' => 10,
     ],
-    'VPCId' =>
-    [
+    'VPCId' => [
       'type' => 'string',
     ],
   ],

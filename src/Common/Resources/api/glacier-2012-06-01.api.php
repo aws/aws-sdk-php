@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2012-06-01',
     'checksumFormat' => 'sha256',
     'endpointPrefix' => 'glacier',
@@ -9,1075 +7,828 @@ return [
     'signatureVersion' => 'v4',
     'protocol' => 'rest-json',
   ],
-  'operations' =>
-  [
-    'AbortMultipartUpload' =>
-    [
+  'operations' => [
+    'AbortMultipartUpload' => [
       'name' => 'AbortMultipartUpload',
-      'http' =>
-      [
+      'http' => [
         'method' => 'DELETE',
         'requestUri' => '/{accountId}/vaults/{vaultName}/multipart-uploads/{uploadId}',
         'responseCode' => 204,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AbortMultipartUploadInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'MissingParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ServiceUnavailableException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'CompleteMultipartUpload' =>
-    [
+    'CompleteMultipartUpload' => [
       'name' => 'CompleteMultipartUpload',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/{accountId}/vaults/{vaultName}/multipart-uploads/{uploadId}',
         'responseCode' => 201,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CompleteMultipartUploadInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ArchiveCreationOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'MissingParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ServiceUnavailableException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'CreateVault' =>
-    [
+    'CreateVault' => [
       'name' => 'CreateVault',
-      'http' =>
-      [
+      'http' => [
         'method' => 'PUT',
         'requestUri' => '/{accountId}/vaults/{vaultName}',
         'responseCode' => 201,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateVaultInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateVaultOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'MissingParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ServiceUnavailableException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DeleteArchive' =>
-    [
+    'DeleteArchive' => [
       'name' => 'DeleteArchive',
-      'http' =>
-      [
+      'http' => [
         'method' => 'DELETE',
         'requestUri' => '/{accountId}/vaults/{vaultName}/archives/{archiveId}',
         'responseCode' => 204,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteArchiveInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'MissingParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ServiceUnavailableException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DeleteVault' =>
-    [
+    'DeleteVault' => [
       'name' => 'DeleteVault',
-      'http' =>
-      [
+      'http' => [
         'method' => 'DELETE',
         'requestUri' => '/{accountId}/vaults/{vaultName}',
         'responseCode' => 204,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteVaultInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'MissingParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ServiceUnavailableException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DeleteVaultNotifications' =>
-    [
+    'DeleteVaultNotifications' => [
       'name' => 'DeleteVaultNotifications',
-      'http' =>
-      [
+      'http' => [
         'method' => 'DELETE',
         'requestUri' => '/{accountId}/vaults/{vaultName}/notification-configuration',
         'responseCode' => 204,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteVaultNotificationsInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'MissingParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ServiceUnavailableException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DescribeJob' =>
-    [
+    'DescribeJob' => [
       'name' => 'DescribeJob',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{accountId}/vaults/{vaultName}/jobs/{jobId}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeJobInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GlacierJobDescription',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'MissingParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ServiceUnavailableException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DescribeVault' =>
-    [
+    'DescribeVault' => [
       'name' => 'DescribeVault',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{accountId}/vaults/{vaultName}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeVaultInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeVaultOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'MissingParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ServiceUnavailableException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'GetJobOutput' =>
-    [
+    'GetJobOutput' => [
       'name' => 'GetJobOutput',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{accountId}/vaults/{vaultName}/jobs/{jobId}/output',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetJobOutputInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetJobOutputOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'MissingParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ServiceUnavailableException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'GetVaultNotifications' =>
-    [
+    'GetVaultNotifications' => [
       'name' => 'GetVaultNotifications',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{accountId}/vaults/{vaultName}/notification-configuration',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetVaultNotificationsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetVaultNotificationsOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'MissingParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ServiceUnavailableException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'InitiateJob' =>
-    [
+    'InitiateJob' => [
       'name' => 'InitiateJob',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/{accountId}/vaults/{vaultName}/jobs',
         'responseCode' => 202,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'InitiateJobInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'InitiateJobOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'MissingParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ServiceUnavailableException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'InitiateMultipartUpload' =>
-    [
+    'InitiateMultipartUpload' => [
       'name' => 'InitiateMultipartUpload',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/{accountId}/vaults/{vaultName}/multipart-uploads',
         'responseCode' => 201,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'InitiateMultipartUploadInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'InitiateMultipartUploadOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'MissingParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ServiceUnavailableException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ListJobs' =>
-    [
+    'ListJobs' => [
       'name' => 'ListJobs',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{accountId}/vaults/{vaultName}/jobs',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListJobsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListJobsOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'MissingParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ServiceUnavailableException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ListMultipartUploads' =>
-    [
+    'ListMultipartUploads' => [
       'name' => 'ListMultipartUploads',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{accountId}/vaults/{vaultName}/multipart-uploads',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListMultipartUploadsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListMultipartUploadsOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'MissingParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ServiceUnavailableException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ListParts' =>
-    [
+    'ListParts' => [
       'name' => 'ListParts',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{accountId}/vaults/{vaultName}/multipart-uploads/{uploadId}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListPartsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListPartsOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'MissingParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ServiceUnavailableException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ListVaults' =>
-    [
+    'ListVaults' => [
       'name' => 'ListVaults',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{accountId}/vaults',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListVaultsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListVaultsOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'MissingParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ServiceUnavailableException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'SetVaultNotifications' =>
-    [
+    'SetVaultNotifications' => [
       'name' => 'SetVaultNotifications',
-      'http' =>
-      [
+      'http' => [
         'method' => 'PUT',
         'requestUri' => '/{accountId}/vaults/{vaultName}/notification-configuration',
         'responseCode' => 204,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SetVaultNotificationsInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'MissingParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ServiceUnavailableException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'UploadArchive' =>
-    [
+    'UploadArchive' => [
       'name' => 'UploadArchive',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/{accountId}/vaults/{vaultName}/archives',
         'responseCode' => 201,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UploadArchiveInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ArchiveCreationOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'MissingParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'RequestTimeoutException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 408,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'ServiceUnavailableException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'UploadMultipartPart' =>
-    [
+    'UploadMultipartPart' => [
       'name' => 'UploadMultipartPart',
-      'http' =>
-      [
+      'http' => [
         'method' => 'PUT',
         'requestUri' => '/{accountId}/vaults/{vaultName}/multipart-uploads/{uploadId}',
         'responseCode' => 204,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UploadMultipartPartInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UploadMultipartPartOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'MissingParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'RequestTimeoutException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 408,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'ServiceUnavailableException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
@@ -1085,399 +836,317 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'AbortMultipartUploadInput' =>
-    [
+  'shapes' => [
+    'AbortMultipartUploadInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'accountId' =>
-        [
+      'members' => [
+        'accountId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'accountId',
         ],
-        'vaultName' =>
-        [
+        'vaultName' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'vaultName',
         ],
-        'uploadId' =>
-        [
+        'uploadId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'uploadId',
         ],
       ],
-      'required' =>
-      [
-        0 => 'accountId',
-        1 => 'vaultName',
-        2 => 'uploadId',
+      'required' => [
+        'accountId',
+        'vaultName',
+        'uploadId',
       ],
     ],
-    'ActionCode' =>
-    [
+    'ActionCode' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'ArchiveRetrieval',
-        1 => 'InventoryRetrieval',
+      'enum' => [
+        'ArchiveRetrieval',
+        'InventoryRetrieval',
       ],
     ],
-    'ArchiveCreationOutput' =>
-    [
+    'ArchiveCreationOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'location' =>
-        [
+      'members' => [
+        'location' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'Location',
         ],
-        'checksum' =>
-        [
+        'checksum' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'x-amz-sha256-tree-hash',
         ],
-        'archiveId' =>
-        [
+        'archiveId' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'x-amz-archive-id',
         ],
       ],
     ],
-    'CompleteMultipartUploadInput' =>
-    [
+    'CompleteMultipartUploadInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'accountId' =>
-        [
+      'members' => [
+        'accountId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'accountId',
         ],
-        'vaultName' =>
-        [
+        'vaultName' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'vaultName',
         ],
-        'uploadId' =>
-        [
+        'uploadId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'uploadId',
         ],
-        'archiveSize' =>
-        [
+        'archiveSize' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'x-amz-archive-size',
         ],
-        'checksum' =>
-        [
+        'checksum' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'x-amz-sha256-tree-hash',
         ],
       ],
-      'required' =>
-      [
-        0 => 'accountId',
-        1 => 'vaultName',
-        2 => 'uploadId',
+      'required' => [
+        'accountId',
+        'vaultName',
+        'uploadId',
       ],
     ],
-    'CreateVaultInput' =>
-    [
+    'CreateVaultInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'accountId' =>
-        [
+      'members' => [
+        'accountId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'accountId',
         ],
-        'vaultName' =>
-        [
+        'vaultName' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'vaultName',
         ],
       ],
-      'required' =>
-      [
-        0 => 'accountId',
-        1 => 'vaultName',
+      'required' => [
+        'accountId',
+        'vaultName',
       ],
     ],
-    'CreateVaultOutput' =>
-    [
+    'CreateVaultOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'location' =>
-        [
+      'members' => [
+        'location' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'Location',
         ],
       ],
     ],
-    'DateTime' =>
-    [
+    'DateTime' => [
       'type' => 'string',
     ],
-    'DeleteArchiveInput' =>
-    [
+    'DeleteArchiveInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'accountId' =>
-        [
+      'members' => [
+        'accountId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'accountId',
         ],
-        'vaultName' =>
-        [
+        'vaultName' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'vaultName',
         ],
-        'archiveId' =>
-        [
+        'archiveId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'archiveId',
         ],
       ],
-      'required' =>
-      [
-        0 => 'accountId',
-        1 => 'vaultName',
-        2 => 'archiveId',
+      'required' => [
+        'accountId',
+        'vaultName',
+        'archiveId',
       ],
     ],
-    'DeleteVaultInput' =>
-    [
+    'DeleteVaultInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'accountId' =>
-        [
+      'members' => [
+        'accountId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'accountId',
         ],
-        'vaultName' =>
-        [
+        'vaultName' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'vaultName',
         ],
       ],
-      'required' =>
-      [
-        0 => 'accountId',
-        1 => 'vaultName',
+      'required' => [
+        'accountId',
+        'vaultName',
       ],
     ],
-    'DeleteVaultNotificationsInput' =>
-    [
+    'DeleteVaultNotificationsInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'accountId' =>
-        [
+      'members' => [
+        'accountId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'accountId',
         ],
-        'vaultName' =>
-        [
+        'vaultName' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'vaultName',
         ],
       ],
-      'required' =>
-      [
-        0 => 'accountId',
-        1 => 'vaultName',
+      'required' => [
+        'accountId',
+        'vaultName',
       ],
     ],
-    'DescribeJobInput' =>
-    [
+    'DescribeJobInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'accountId' =>
-        [
+      'members' => [
+        'accountId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'accountId',
         ],
-        'vaultName' =>
-        [
+        'vaultName' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'vaultName',
         ],
-        'jobId' =>
-        [
+        'jobId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'jobId',
         ],
       ],
-      'required' =>
-      [
-        0 => 'accountId',
-        1 => 'vaultName',
-        2 => 'jobId',
+      'required' => [
+        'accountId',
+        'vaultName',
+        'jobId',
       ],
     ],
-    'DescribeVaultInput' =>
-    [
+    'DescribeVaultInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'accountId' =>
-        [
+      'members' => [
+        'accountId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'accountId',
         ],
-        'vaultName' =>
-        [
+        'vaultName' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'vaultName',
         ],
       ],
-      'required' =>
-      [
-        0 => 'accountId',
-        1 => 'vaultName',
+      'required' => [
+        'accountId',
+        'vaultName',
       ],
     ],
-    'DescribeVaultOutput' =>
-    [
+    'DescribeVaultOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VaultARN' =>
-        [
+      'members' => [
+        'VaultARN' => [
           'shape' => 'string',
         ],
-        'VaultName' =>
-        [
+        'VaultName' => [
           'shape' => 'string',
         ],
-        'CreationDate' =>
-        [
+        'CreationDate' => [
           'shape' => 'string',
         ],
-        'LastInventoryDate' =>
-        [
+        'LastInventoryDate' => [
           'shape' => 'string',
         ],
-        'NumberOfArchives' =>
-        [
+        'NumberOfArchives' => [
           'shape' => 'long',
         ],
-        'SizeInBytes' =>
-        [
+        'SizeInBytes' => [
           'shape' => 'long',
         ],
       ],
     ],
-    'GetJobOutputInput' =>
-    [
+    'GetJobOutputInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'accountId' =>
-        [
+      'members' => [
+        'accountId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'accountId',
         ],
-        'vaultName' =>
-        [
+        'vaultName' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'vaultName',
         ],
-        'jobId' =>
-        [
+        'jobId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'jobId',
         ],
-        'range' =>
-        [
+        'range' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'Range',
         ],
       ],
-      'required' =>
-      [
-        0 => 'accountId',
-        1 => 'vaultName',
-        2 => 'jobId',
+      'required' => [
+        'accountId',
+        'vaultName',
+        'jobId',
       ],
     ],
-    'GetJobOutputOutput' =>
-    [
+    'GetJobOutputOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'body' =>
-        [
+      'members' => [
+        'body' => [
           'shape' => 'Stream',
         ],
-        'checksum' =>
-        [
+        'checksum' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'x-amz-sha256-tree-hash',
         ],
-        'status' =>
-        [
+        'status' => [
           'shape' => 'httpstatus',
           'location' => 'statusCode',
         ],
-        'contentRange' =>
-        [
+        'contentRange' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'Content-Range',
         ],
-        'acceptRanges' =>
-        [
+        'acceptRanges' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'Accept-Ranges',
         ],
-        'contentType' =>
-        [
+        'contentType' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'Content-Type',
         ],
-        'archiveDescription' =>
-        [
+        'archiveDescription' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'x-amz-archive-description',
@@ -1485,946 +1154,730 @@ return [
       ],
       'payload' => 'body',
     ],
-    'GetVaultNotificationsInput' =>
-    [
+    'GetVaultNotificationsInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'accountId' =>
-        [
+      'members' => [
+        'accountId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'accountId',
         ],
-        'vaultName' =>
-        [
+        'vaultName' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'vaultName',
         ],
       ],
-      'required' =>
-      [
-        0 => 'accountId',
-        1 => 'vaultName',
+      'required' => [
+        'accountId',
+        'vaultName',
       ],
     ],
-    'GetVaultNotificationsOutput' =>
-    [
+    'GetVaultNotificationsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'vaultNotificationConfig' =>
-        [
+      'members' => [
+        'vaultNotificationConfig' => [
           'shape' => 'VaultNotificationConfig',
         ],
       ],
       'payload' => 'vaultNotificationConfig',
     ],
-    'GlacierJobDescription' =>
-    [
+    'GlacierJobDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'JobId' =>
-        [
+      'members' => [
+        'JobId' => [
           'shape' => 'string',
         ],
-        'JobDescription' =>
-        [
+        'JobDescription' => [
           'shape' => 'string',
         ],
-        'Action' =>
-        [
+        'Action' => [
           'shape' => 'ActionCode',
         ],
-        'ArchiveId' =>
-        [
+        'ArchiveId' => [
           'shape' => 'string',
         ],
-        'VaultARN' =>
-        [
+        'VaultARN' => [
           'shape' => 'string',
         ],
-        'CreationDate' =>
-        [
+        'CreationDate' => [
           'shape' => 'string',
         ],
-        'Completed' =>
-        [
+        'Completed' => [
           'shape' => 'boolean',
         ],
-        'StatusCode' =>
-        [
+        'StatusCode' => [
           'shape' => 'StatusCode',
         ],
-        'StatusMessage' =>
-        [
+        'StatusMessage' => [
           'shape' => 'string',
         ],
-        'ArchiveSizeInBytes' =>
-        [
+        'ArchiveSizeInBytes' => [
           'shape' => 'Size',
         ],
-        'InventorySizeInBytes' =>
-        [
+        'InventorySizeInBytes' => [
           'shape' => 'Size',
         ],
-        'SNSTopic' =>
-        [
+        'SNSTopic' => [
           'shape' => 'string',
         ],
-        'CompletionDate' =>
-        [
+        'CompletionDate' => [
           'shape' => 'string',
         ],
-        'SHA256TreeHash' =>
-        [
+        'SHA256TreeHash' => [
           'shape' => 'string',
         ],
-        'ArchiveSHA256TreeHash' =>
-        [
+        'ArchiveSHA256TreeHash' => [
           'shape' => 'string',
         ],
-        'RetrievalByteRange' =>
-        [
+        'RetrievalByteRange' => [
           'shape' => 'string',
         ],
-        'InventoryRetrievalParameters' =>
-        [
+        'InventoryRetrievalParameters' => [
           'shape' => 'InventoryRetrievalJobDescription',
         ],
       ],
     ],
-    'InitiateJobInput' =>
-    [
+    'InitiateJobInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'accountId' =>
-        [
+      'members' => [
+        'accountId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'accountId',
         ],
-        'vaultName' =>
-        [
+        'vaultName' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'vaultName',
         ],
-        'jobParameters' =>
-        [
+        'jobParameters' => [
           'shape' => 'JobParameters',
         ],
       ],
-      'required' =>
-      [
-        0 => 'accountId',
-        1 => 'vaultName',
+      'required' => [
+        'accountId',
+        'vaultName',
       ],
       'payload' => 'jobParameters',
     ],
-    'InitiateJobOutput' =>
-    [
+    'InitiateJobOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'location' =>
-        [
+      'members' => [
+        'location' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'Location',
         ],
-        'jobId' =>
-        [
+        'jobId' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'x-amz-job-id',
         ],
       ],
     ],
-    'InitiateMultipartUploadInput' =>
-    [
+    'InitiateMultipartUploadInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'accountId' =>
-        [
+      'members' => [
+        'accountId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'accountId',
         ],
-        'vaultName' =>
-        [
+        'vaultName' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'vaultName',
         ],
-        'archiveDescription' =>
-        [
+        'archiveDescription' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'x-amz-archive-description',
         ],
-        'partSize' =>
-        [
+        'partSize' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'x-amz-part-size',
         ],
       ],
-      'required' =>
-      [
-        0 => 'accountId',
-        1 => 'vaultName',
+      'required' => [
+        'accountId',
+        'vaultName',
       ],
     ],
-    'InitiateMultipartUploadOutput' =>
-    [
+    'InitiateMultipartUploadOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'location' =>
-        [
+      'members' => [
+        'location' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'Location',
         ],
-        'uploadId' =>
-        [
+        'uploadId' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'x-amz-multipart-upload-id',
         ],
       ],
     ],
-    'InvalidParameterValueException' =>
-    [
+    'InvalidParameterValueException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'type' =>
-        [
+      'members' => [
+        'type' => [
           'shape' => 'string',
         ],
-        'code' =>
-        [
+        'code' => [
           'shape' => 'string',
         ],
-        'message' =>
-        [
+        'message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'InventoryRetrievalJobDescription' =>
-    [
+    'InventoryRetrievalJobDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Format' =>
-        [
+      'members' => [
+        'Format' => [
           'shape' => 'string',
         ],
-        'StartDate' =>
-        [
+        'StartDate' => [
           'shape' => 'DateTime',
         ],
-        'EndDate' =>
-        [
+        'EndDate' => [
           'shape' => 'DateTime',
         ],
-        'Limit' =>
-        [
+        'Limit' => [
           'shape' => 'string',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'InventoryRetrievalJobInput' =>
-    [
+    'InventoryRetrievalJobInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StartDate' =>
-        [
+      'members' => [
+        'StartDate' => [
           'shape' => 'string',
         ],
-        'EndDate' =>
-        [
+        'EndDate' => [
           'shape' => 'string',
         ],
-        'Limit' =>
-        [
+        'Limit' => [
           'shape' => 'string',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'JobList' =>
-    [
+    'JobList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'GlacierJobDescription',
       ],
     ],
-    'JobParameters' =>
-    [
+    'JobParameters' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Format' =>
-        [
+      'members' => [
+        'Format' => [
           'shape' => 'string',
         ],
-        'Type' =>
-        [
+        'Type' => [
           'shape' => 'string',
         ],
-        'ArchiveId' =>
-        [
+        'ArchiveId' => [
           'shape' => 'string',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'string',
         ],
-        'SNSTopic' =>
-        [
+        'SNSTopic' => [
           'shape' => 'string',
         ],
-        'RetrievalByteRange' =>
-        [
+        'RetrievalByteRange' => [
           'shape' => 'string',
         ],
-        'InventoryRetrievalParameters' =>
-        [
+        'InventoryRetrievalParameters' => [
           'shape' => 'InventoryRetrievalJobInput',
         ],
       ],
     ],
-    'LimitExceededException' =>
-    [
+    'LimitExceededException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'type' =>
-        [
+      'members' => [
+        'type' => [
           'shape' => 'string',
         ],
-        'code' =>
-        [
+        'code' => [
           'shape' => 'string',
         ],
-        'message' =>
-        [
+        'message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'ListJobsInput' =>
-    [
+    'ListJobsInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'accountId' =>
-        [
+      'members' => [
+        'accountId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'accountId',
         ],
-        'vaultName' =>
-        [
+        'vaultName' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'vaultName',
         ],
-        'limit' =>
-        [
+        'limit' => [
           'shape' => 'string',
           'location' => 'querystring',
           'locationName' => 'limit',
         ],
-        'marker' =>
-        [
+        'marker' => [
           'shape' => 'string',
           'location' => 'querystring',
           'locationName' => 'marker',
         ],
-        'statuscode' =>
-        [
+        'statuscode' => [
           'shape' => 'string',
           'location' => 'querystring',
           'locationName' => 'statuscode',
         ],
-        'completed' =>
-        [
+        'completed' => [
           'shape' => 'string',
           'location' => 'querystring',
           'locationName' => 'completed',
         ],
       ],
-      'required' =>
-      [
-        0 => 'accountId',
-        1 => 'vaultName',
+      'required' => [
+        'accountId',
+        'vaultName',
       ],
     ],
-    'ListJobsOutput' =>
-    [
+    'ListJobsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'JobList' =>
-        [
+      'members' => [
+        'JobList' => [
           'shape' => 'JobList',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'ListMultipartUploadsInput' =>
-    [
+    'ListMultipartUploadsInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'accountId' =>
-        [
+      'members' => [
+        'accountId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'accountId',
         ],
-        'vaultName' =>
-        [
+        'vaultName' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'vaultName',
         ],
-        'marker' =>
-        [
+        'marker' => [
           'shape' => 'string',
           'location' => 'querystring',
           'locationName' => 'marker',
         ],
-        'limit' =>
-        [
+        'limit' => [
           'shape' => 'string',
           'location' => 'querystring',
           'locationName' => 'limit',
         ],
       ],
-      'required' =>
-      [
-        0 => 'accountId',
-        1 => 'vaultName',
+      'required' => [
+        'accountId',
+        'vaultName',
       ],
     ],
-    'ListMultipartUploadsOutput' =>
-    [
+    'ListMultipartUploadsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'UploadsList' =>
-        [
+      'members' => [
+        'UploadsList' => [
           'shape' => 'UploadsList',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'ListPartsInput' =>
-    [
+    'ListPartsInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'accountId' =>
-        [
+      'members' => [
+        'accountId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'accountId',
         ],
-        'vaultName' =>
-        [
+        'vaultName' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'vaultName',
         ],
-        'uploadId' =>
-        [
+        'uploadId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'uploadId',
         ],
-        'marker' =>
-        [
+        'marker' => [
           'shape' => 'string',
           'location' => 'querystring',
           'locationName' => 'marker',
         ],
-        'limit' =>
-        [
+        'limit' => [
           'shape' => 'string',
           'location' => 'querystring',
           'locationName' => 'limit',
         ],
       ],
-      'required' =>
-      [
-        0 => 'accountId',
-        1 => 'vaultName',
-        2 => 'uploadId',
+      'required' => [
+        'accountId',
+        'vaultName',
+        'uploadId',
       ],
     ],
-    'ListPartsOutput' =>
-    [
+    'ListPartsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'MultipartUploadId' =>
-        [
+      'members' => [
+        'MultipartUploadId' => [
           'shape' => 'string',
         ],
-        'VaultARN' =>
-        [
+        'VaultARN' => [
           'shape' => 'string',
         ],
-        'ArchiveDescription' =>
-        [
+        'ArchiveDescription' => [
           'shape' => 'string',
         ],
-        'PartSizeInBytes' =>
-        [
+        'PartSizeInBytes' => [
           'shape' => 'long',
         ],
-        'CreationDate' =>
-        [
+        'CreationDate' => [
           'shape' => 'string',
         ],
-        'Parts' =>
-        [
+        'Parts' => [
           'shape' => 'PartList',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'ListVaultsInput' =>
-    [
+    'ListVaultsInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'accountId' =>
-        [
+      'members' => [
+        'accountId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'accountId',
         ],
-        'marker' =>
-        [
+        'marker' => [
           'shape' => 'string',
           'location' => 'querystring',
           'locationName' => 'marker',
         ],
-        'limit' =>
-        [
+        'limit' => [
           'shape' => 'string',
           'location' => 'querystring',
           'locationName' => 'limit',
         ],
       ],
-      'required' =>
-      [
-        0 => 'accountId',
+      'required' => [
+        'accountId',
       ],
     ],
-    'ListVaultsOutput' =>
-    [
+    'ListVaultsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VaultList' =>
-        [
+      'members' => [
+        'VaultList' => [
           'shape' => 'VaultList',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'MissingParameterValueException' =>
-    [
+    'MissingParameterValueException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'type' =>
-        [
+      'members' => [
+        'type' => [
           'shape' => 'string',
         ],
-        'code' =>
-        [
+        'code' => [
           'shape' => 'string',
         ],
-        'message' =>
-        [
+        'message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'NotificationEventList' =>
-    [
+    'NotificationEventList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'string',
       ],
     ],
-    'PartList' =>
-    [
+    'PartList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'PartListElement',
       ],
     ],
-    'PartListElement' =>
-    [
+    'PartListElement' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'RangeInBytes' =>
-        [
+      'members' => [
+        'RangeInBytes' => [
           'shape' => 'string',
         ],
-        'SHA256TreeHash' =>
-        [
+        'SHA256TreeHash' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'RequestTimeoutException' =>
-    [
+    'RequestTimeoutException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'type' =>
-        [
+      'members' => [
+        'type' => [
           'shape' => 'string',
         ],
-        'code' =>
-        [
+        'code' => [
           'shape' => 'string',
         ],
-        'message' =>
-        [
+        'message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 408,
       ],
       'exception' => true,
     ],
-    'ResourceNotFoundException' =>
-    [
+    'ResourceNotFoundException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'type' =>
-        [
+      'members' => [
+        'type' => [
           'shape' => 'string',
         ],
-        'code' =>
-        [
+        'code' => [
           'shape' => 'string',
         ],
-        'message' =>
-        [
+        'message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 404,
       ],
       'exception' => true,
     ],
-    'ServiceUnavailableException' =>
-    [
+    'ServiceUnavailableException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'type' =>
-        [
+      'members' => [
+        'type' => [
           'shape' => 'string',
         ],
-        'code' =>
-        [
+        'code' => [
           'shape' => 'string',
         ],
-        'message' =>
-        [
+        'message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 500,
       ],
       'exception' => true,
     ],
-    'SetVaultNotificationsInput' =>
-    [
+    'SetVaultNotificationsInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'accountId' =>
-        [
+      'members' => [
+        'accountId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'accountId',
         ],
-        'vaultName' =>
-        [
+        'vaultName' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'vaultName',
         ],
-        'vaultNotificationConfig' =>
-        [
+        'vaultNotificationConfig' => [
           'shape' => 'VaultNotificationConfig',
         ],
       ],
-      'required' =>
-      [
-        0 => 'accountId',
-        1 => 'vaultName',
+      'required' => [
+        'accountId',
+        'vaultName',
       ],
       'payload' => 'vaultNotificationConfig',
     ],
-    'Size' =>
-    [
+    'Size' => [
       'type' => 'long',
     ],
-    'StatusCode' =>
-    [
+    'StatusCode' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'InProgress',
-        1 => 'Succeeded',
-        2 => 'Failed',
+      'enum' => [
+        'InProgress',
+        'Succeeded',
+        'Failed',
       ],
     ],
-    'Stream' =>
-    [
+    'Stream' => [
       'type' => 'blob',
       'streaming' => true,
     ],
-    'UploadArchiveInput' =>
-    [
+    'UploadArchiveInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'vaultName' =>
-        [
+      'members' => [
+        'vaultName' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'vaultName',
         ],
-        'accountId' =>
-        [
+        'accountId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'accountId',
         ],
-        'archiveDescription' =>
-        [
+        'archiveDescription' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'x-amz-archive-description',
         ],
-        'checksum' =>
-        [
+        'checksum' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'x-amz-sha256-tree-hash',
         ],
-        'body' =>
-        [
+        'body' => [
           'shape' => 'Stream',
         ],
       ],
-      'required' =>
-      [
-        0 => 'vaultName',
-        1 => 'accountId',
+      'required' => [
+        'vaultName',
+        'accountId',
       ],
       'payload' => 'body',
     ],
-    'UploadListElement' =>
-    [
+    'UploadListElement' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'MultipartUploadId' =>
-        [
+      'members' => [
+        'MultipartUploadId' => [
           'shape' => 'string',
         ],
-        'VaultARN' =>
-        [
+        'VaultARN' => [
           'shape' => 'string',
         ],
-        'ArchiveDescription' =>
-        [
+        'ArchiveDescription' => [
           'shape' => 'string',
         ],
-        'PartSizeInBytes' =>
-        [
+        'PartSizeInBytes' => [
           'shape' => 'long',
         ],
-        'CreationDate' =>
-        [
+        'CreationDate' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'UploadMultipartPartInput' =>
-    [
+    'UploadMultipartPartInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'accountId' =>
-        [
+      'members' => [
+        'accountId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'accountId',
         ],
-        'vaultName' =>
-        [
+        'vaultName' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'vaultName',
         ],
-        'uploadId' =>
-        [
+        'uploadId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'uploadId',
         ],
-        'checksum' =>
-        [
+        'checksum' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'x-amz-sha256-tree-hash',
         ],
-        'range' =>
-        [
+        'range' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'Content-Range',
         ],
-        'body' =>
-        [
+        'body' => [
           'shape' => 'Stream',
         ],
       ],
-      'required' =>
-      [
-        0 => 'accountId',
-        1 => 'vaultName',
-        2 => 'uploadId',
+      'required' => [
+        'accountId',
+        'vaultName',
+        'uploadId',
       ],
       'payload' => 'body',
     ],
-    'UploadMultipartPartOutput' =>
-    [
+    'UploadMultipartPartOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'checksum' =>
-        [
+      'members' => [
+        'checksum' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'x-amz-sha256-tree-hash',
         ],
       ],
     ],
-    'UploadsList' =>
-    [
+    'UploadsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'UploadListElement',
       ],
     ],
-    'VaultList' =>
-    [
+    'VaultList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DescribeVaultOutput',
       ],
     ],
-    'VaultNotificationConfig' =>
-    [
+    'VaultNotificationConfig' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SNSTopic' =>
-        [
+      'members' => [
+        'SNSTopic' => [
           'shape' => 'string',
         ],
-        'Events' =>
-        [
+        'Events' => [
           'shape' => 'NotificationEventList',
         ],
       ],
     ],
-    'boolean' =>
-    [
+    'boolean' => [
       'type' => 'boolean',
     ],
-    'httpstatus' =>
-    [
+    'httpstatus' => [
       'type' => 'integer',
     ],
-    'long' =>
-    [
+    'long' => [
       'type' => 'long',
     ],
-    'string' =>
-    [
+    'string' => [
       'type' => 'string',
     ],
   ],

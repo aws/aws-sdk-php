@@ -1,145 +1,111 @@
-<?php
-return [
-  'pagination' =>
-  [
-    'DescribeAccountAttributes' =>
-    [
+<?php return [
+  'pagination' => [
+    'DescribeAccountAttributes' => [
       'result_key' => 'AccountAttributes',
     ],
-    'DescribeAddresses' =>
-    [
+    'DescribeAddresses' => [
       'result_key' => 'Addresses',
     ],
-    'DescribeAvailabilityZones' =>
-    [
+    'DescribeAvailabilityZones' => [
       'result_key' => 'AvailabilityZones',
     ],
-    'DescribeBundleTasks' =>
-    [
+    'DescribeBundleTasks' => [
       'result_key' => 'BundleTasks',
     ],
-    'DescribeConversionTasks' =>
-    [
+    'DescribeConversionTasks' => [
       'result_key' => 'ConversionTasks',
     ],
-    'DescribeCustomerGateways' =>
-    [
+    'DescribeCustomerGateways' => [
       'result_key' => 'CustomerGateways',
     ],
-    'DescribeDhcpOptions' =>
-    [
+    'DescribeDhcpOptions' => [
       'result_key' => 'DhcpOptions',
     ],
-    'DescribeExportTasks' =>
-    [
+    'DescribeExportTasks' => [
       'result_key' => 'ExportTasks',
     ],
-    'DescribeImages' =>
-    [
+    'DescribeImages' => [
       'result_key' => 'Images',
     ],
-    'DescribeInstanceStatus' =>
-    [
+    'DescribeInstanceStatus' => [
       'input_token' => 'NextToken',
       'output_token' => 'NextToken',
       'limit_key' => 'MaxResults',
       'result_key' => 'InstanceStatuses',
     ],
-    'DescribeInstances' =>
-    [
+    'DescribeInstances' => [
       'result_key' => 'Reservations',
     ],
-    'DescribeInternetGateways' =>
-    [
+    'DescribeInternetGateways' => [
       'result_key' => 'InternetGateways',
     ],
-    'DescribeKeyPairs' =>
-    [
+    'DescribeKeyPairs' => [
       'result_key' => 'KeyPairs',
     ],
-    'DescribeNetworkAcls' =>
-    [
+    'DescribeNetworkAcls' => [
       'result_key' => 'NetworkAcls',
     ],
-    'DescribeNetworkInterfaces' =>
-    [
+    'DescribeNetworkInterfaces' => [
       'result_key' => 'NetworkInterfaces',
     ],
-    'DescribePlacementGroups' =>
-    [
+    'DescribePlacementGroups' => [
       'result_key' => 'PlacementGroups',
     ],
-    'DescribeRegions' =>
-    [
+    'DescribeRegions' => [
       'result_key' => 'Regions',
     ],
-    'DescribeReservedInstances' =>
-    [
+    'DescribeReservedInstances' => [
       'result_key' => 'ReservedInstances',
     ],
-    'DescribeReservedInstancesListings' =>
-    [
+    'DescribeReservedInstancesListings' => [
       'result_key' => 'ReservedInstancesListings',
     ],
-    'DescribeReservedInstancesOfferings' =>
-    [
+    'DescribeReservedInstancesOfferings' => [
       'input_token' => 'NextToken',
       'output_token' => 'NextToken',
       'limit_key' => 'MaxResults',
       'result_key' => 'ReservedInstancesOfferings',
     ],
-    'DescribeRouteTables' =>
-    [
+    'DescribeRouteTables' => [
       'result_key' => 'RouteTables',
     ],
-    'DescribeSecurityGroups' =>
-    [
+    'DescribeSecurityGroups' => [
       'result_key' => 'SecurityGroups',
     ],
-    'DescribeSnapshots' =>
-    [
+    'DescribeSnapshots' => [
       'result_key' => 'Snapshots',
     ],
-    'DescribeSpotInstanceRequests' =>
-    [
+    'DescribeSpotInstanceRequests' => [
       'result_key' => 'SpotInstanceRequests',
     ],
-    'DescribeSpotPriceHistory' =>
-    [
+    'DescribeSpotPriceHistory' => [
       'input_token' => 'NextToken',
       'output_token' => 'NextToken',
       'limit_key' => 'MaxResults',
       'result_key' => 'SpotPriceHistory',
     ],
-    'DescribeSubnets' =>
-    [
+    'DescribeSubnets' => [
       'result_key' => 'Subnets',
     ],
-    'DescribeTags' =>
-    [
+    'DescribeTags' => [
       'result_key' => 'Tags',
     ],
-    'DescribeVolumeStatus' =>
-    [
+    'DescribeVolumeStatus' => [
       'input_token' => 'NextToken',
       'output_token' => 'NextToken',
       'limit_key' => 'MaxResults',
       'result_key' => 'VolumeStatuses',
     ],
-    'DescribeVolumes' =>
-    [
+    'DescribeVolumes' => [
       'result_key' => 'Volumes',
     ],
-    'DescribeVpcs' =>
-    [
+    'DescribeVpcs' => [
       'result_key' => 'Vpcs',
     ],
-    'DescribeVpnConnections' =>
-    [
+    'DescribeVpnConnections' => [
       'result_key' => 'VpnConnections',
     ],
-    'DescribeVpnGateways' =>
-    [
+    'DescribeVpnGateways' => [
       'result_key' => 'VpnGateways',
     ],
   ],

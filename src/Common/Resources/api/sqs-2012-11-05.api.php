@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2012-11-05',
     'endpointPrefix' => 'sqs',
     'serviceAbbreviation' => 'Amazon SQS',
@@ -10,27 +8,20 @@ return [
     'xmlNamespace' => 'http://queue.amazonaws.com/doc/2012-11-05/',
     'protocol' => 'query',
   ],
-  'operations' =>
-  [
-    'AddPermission' =>
-    [
+  'operations' => [
+    'AddPermission' => [
       'name' => 'AddPermission',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AddPermissionRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'OverLimit',
-          'error' =>
-          [
+          'error' => [
             'code' => 'OverLimit',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -39,95 +30,75 @@ return [
         ],
       ],
     ],
-    'ChangeMessageVisibility' =>
-    [
+    'ChangeMessageVisibility' => [
       'name' => 'ChangeMessageVisibility',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ChangeMessageVisibilityRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'MessageNotInflight',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AWS.SimpleQueueService.MessageNotInflight',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ReceiptHandleIsInvalid',
           'exception' => true,
         ],
       ],
     ],
-    'ChangeMessageVisibilityBatch' =>
-    [
+    'ChangeMessageVisibilityBatch' => [
       'name' => 'ChangeMessageVisibilityBatch',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ChangeMessageVisibilityBatchRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ChangeMessageVisibilityBatchResult',
         'resultWrapper' => 'ChangeMessageVisibilityBatchResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'TooManyEntriesInBatchRequest',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AWS.SimpleQueueService.TooManyEntriesInBatchRequest',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'EmptyBatchRequest',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AWS.SimpleQueueService.EmptyBatchRequest',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'BatchEntryIdsNotDistinct',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AWS.SimpleQueueService.BatchEntryIdsNotDistinct',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidBatchEntryId',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AWS.SimpleQueueService.InvalidBatchEntryId',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -136,41 +107,32 @@ return [
         ],
       ],
     ],
-    'CreateQueue' =>
-    [
+    'CreateQueue' => [
       'name' => 'CreateQueue',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateQueueRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateQueueResult',
         'resultWrapper' => 'CreateQueueResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'QueueDeletedRecently',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AWS.SimpleQueueService.QueueDeletedRecently',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'QueueNameExists',
-          'error' =>
-          [
+          'error' => [
             'code' => 'QueueAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -179,89 +141,70 @@ return [
         ],
       ],
     ],
-    'DeleteMessage' =>
-    [
+    'DeleteMessage' => [
       'name' => 'DeleteMessage',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteMessageRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidIdFormat',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ReceiptHandleIsInvalid',
           'exception' => true,
         ],
       ],
     ],
-    'DeleteMessageBatch' =>
-    [
+    'DeleteMessageBatch' => [
       'name' => 'DeleteMessageBatch',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteMessageBatchRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteMessageBatchResult',
         'resultWrapper' => 'DeleteMessageBatchResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'TooManyEntriesInBatchRequest',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AWS.SimpleQueueService.TooManyEntriesInBatchRequest',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'EmptyBatchRequest',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AWS.SimpleQueueService.EmptyBatchRequest',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'BatchEntryIdsNotDistinct',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AWS.SimpleQueueService.BatchEntryIdsNotDistinct',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidBatchEntryId',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AWS.SimpleQueueService.InvalidBatchEntryId',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -270,69 +213,53 @@ return [
         ],
       ],
     ],
-    'DeleteQueue' =>
-    [
+    'DeleteQueue' => [
       'name' => 'DeleteQueue',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteQueueRequest',
       ],
     ],
-    'GetQueueAttributes' =>
-    [
+    'GetQueueAttributes' => [
       'name' => 'GetQueueAttributes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetQueueAttributesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetQueueAttributesResult',
         'resultWrapper' => 'GetQueueAttributesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidAttributeName',
           'exception' => true,
         ],
       ],
     ],
-    'GetQueueUrl' =>
-    [
+    'GetQueueUrl' => [
       'name' => 'GetQueueUrl',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetQueueUrlRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetQueueUrlResult',
         'resultWrapper' => 'GetQueueUrlResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'QueueDoesNotExist',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AWS.SimpleQueueService.NonExistentQueue',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -341,30 +268,23 @@ return [
         ],
       ],
     ],
-    'ListDeadLetterSourceQueues' =>
-    [
+    'ListDeadLetterSourceQueues' => [
       'name' => 'ListDeadLetterSourceQueues',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListDeadLetterSourceQueuesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListDeadLetterSourceQueuesResult',
         'resultWrapper' => 'ListDeadLetterSourceQueuesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'QueueDoesNotExist',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AWS.SimpleQueueService.NonExistentQueue',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -373,48 +293,37 @@ return [
         ],
       ],
     ],
-    'ListQueues' =>
-    [
+    'ListQueues' => [
       'name' => 'ListQueues',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListQueuesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListQueuesResult',
         'resultWrapper' => 'ListQueuesResult',
       ],
     ],
-    'ReceiveMessage' =>
-    [
+    'ReceiveMessage' => [
       'name' => 'ReceiveMessage',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ReceiveMessageRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ReceiveMessageResult',
         'resultWrapper' => 'ReceiveMessageResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'OverLimit',
-          'error' =>
-          [
+          'error' => [
             'code' => 'OverLimit',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -423,48 +332,37 @@ return [
         ],
       ],
     ],
-    'RemovePermission' =>
-    [
+    'RemovePermission' => [
       'name' => 'RemovePermission',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RemovePermissionRequest',
       ],
     ],
-    'SendMessage' =>
-    [
+    'SendMessage' => [
       'name' => 'SendMessage',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SendMessageRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'SendMessageResult',
         'resultWrapper' => 'SendMessageResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidMessageContents',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'UnsupportedOperation',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AWS.SimpleQueueService.UnsupportedOperation',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -473,85 +371,68 @@ return [
         ],
       ],
     ],
-    'SendMessageBatch' =>
-    [
+    'SendMessageBatch' => [
       'name' => 'SendMessageBatch',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SendMessageBatchRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'SendMessageBatchResult',
         'resultWrapper' => 'SendMessageBatchResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'TooManyEntriesInBatchRequest',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AWS.SimpleQueueService.TooManyEntriesInBatchRequest',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'EmptyBatchRequest',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AWS.SimpleQueueService.EmptyBatchRequest',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'BatchEntryIdsNotDistinct',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AWS.SimpleQueueService.BatchEntryIdsNotDistinct',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'BatchRequestTooLong',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AWS.SimpleQueueService.BatchRequestTooLong',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InvalidBatchEntryId',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AWS.SimpleQueueService.InvalidBatchEntryId',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'UnsupportedOperation',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AWS.SimpleQueueService.UnsupportedOperation',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -560,21 +441,16 @@ return [
         ],
       ],
     ],
-    'SetQueueAttributes' =>
-    [
+    'SetQueueAttributes' => [
       'name' => 'SetQueueAttributes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SetQueueAttributesRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidAttributeName',
           'exception' => true,
@@ -582,1129 +458,863 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'AWSAccountIdList' =>
-    [
+  'shapes' => [
+    'AWSAccountIdList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'AWSAccountId',
       ],
       'flattened' => true,
     ],
-    'ActionNameList' =>
-    [
+    'ActionNameList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'ActionName',
       ],
       'flattened' => true,
     ],
-    'AddPermissionRequest' =>
-    [
+    'AddPermissionRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'QueueUrl',
-        1 => 'Label',
-        2 => 'AWSAccountIds',
-        3 => 'Actions',
+      'required' => [
+        'QueueUrl',
+        'Label',
+        'AWSAccountIds',
+        'Actions',
       ],
-      'members' =>
-      [
-        'QueueUrl' =>
-        [
+      'members' => [
+        'QueueUrl' => [
           'shape' => 'String',
         ],
-        'Label' =>
-        [
+        'Label' => [
           'shape' => 'String',
         ],
-        'AWSAccountIds' =>
-        [
+        'AWSAccountIds' => [
           'shape' => 'AWSAccountIdList',
         ],
-        'Actions' =>
-        [
+        'Actions' => [
           'shape' => 'ActionNameList',
         ],
       ],
     ],
-    'AttributeMap' =>
-    [
+    'AttributeMap' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'QueueAttributeName',
         'locationName' => 'Name',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'String',
         'locationName' => 'Value',
       ],
       'flattened' => true,
       'locationName' => 'Attribute',
     ],
-    'AttributeNameList' =>
-    [
+    'AttributeNameList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'QueueAttributeName',
         'locationName' => 'AttributeName',
       ],
       'flattened' => true,
     ],
-    'BatchEntryIdsNotDistinct' =>
-    [
+    'BatchEntryIdsNotDistinct' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'AWS.SimpleQueueService.BatchEntryIdsNotDistinct',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'BatchRequestTooLong' =>
-    [
+    'BatchRequestTooLong' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'AWS.SimpleQueueService.BatchRequestTooLong',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'BatchResultErrorEntry' =>
-    [
+    'BatchResultErrorEntry' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
-        1 => 'SenderFault',
-        2 => 'Code',
+      'required' => [
+        'Id',
+        'SenderFault',
+        'Code',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'String',
         ],
-        'SenderFault' =>
-        [
+        'SenderFault' => [
           'shape' => 'Boolean',
         ],
-        'Code' =>
-        [
+        'Code' => [
           'shape' => 'String',
         ],
-        'Message' =>
-        [
+        'Message' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'BatchResultErrorEntryList' =>
-    [
+    'BatchResultErrorEntryList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'BatchResultErrorEntry',
         'locationName' => 'BatchResultErrorEntry',
       ],
       'flattened' => true,
     ],
-    'Binary' =>
-    [
+    'Binary' => [
       'type' => 'blob',
     ],
-    'BinaryList' =>
-    [
+    'BinaryList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Binary',
         'locationName' => 'BinaryListValue',
       ],
     ],
-    'Boolean' =>
-    [
+    'Boolean' => [
       'type' => 'boolean',
     ],
-    'ChangeMessageVisibilityBatchRequest' =>
-    [
+    'ChangeMessageVisibilityBatchRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'QueueUrl',
-        1 => 'Entries',
+      'required' => [
+        'QueueUrl',
+        'Entries',
       ],
-      'members' =>
-      [
-        'QueueUrl' =>
-        [
+      'members' => [
+        'QueueUrl' => [
           'shape' => 'String',
         ],
-        'Entries' =>
-        [
+        'Entries' => [
           'shape' => 'ChangeMessageVisibilityBatchRequestEntryList',
         ],
       ],
     ],
-    'ChangeMessageVisibilityBatchRequestEntry' =>
-    [
+    'ChangeMessageVisibilityBatchRequestEntry' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
-        1 => 'ReceiptHandle',
+      'required' => [
+        'Id',
+        'ReceiptHandle',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'String',
         ],
-        'ReceiptHandle' =>
-        [
+        'ReceiptHandle' => [
           'shape' => 'String',
         ],
-        'VisibilityTimeout' =>
-        [
+        'VisibilityTimeout' => [
           'shape' => 'Integer',
         ],
       ],
     ],
-    'ChangeMessageVisibilityBatchRequestEntryList' =>
-    [
+    'ChangeMessageVisibilityBatchRequestEntryList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ChangeMessageVisibilityBatchRequestEntry',
         'locationName' => 'ChangeMessageVisibilityBatchRequestEntry',
       ],
       'flattened' => true,
     ],
-    'ChangeMessageVisibilityBatchResult' =>
-    [
+    'ChangeMessageVisibilityBatchResult' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Successful',
-        1 => 'Failed',
+      'required' => [
+        'Successful',
+        'Failed',
       ],
-      'members' =>
-      [
-        'Successful' =>
-        [
+      'members' => [
+        'Successful' => [
           'shape' => 'ChangeMessageVisibilityBatchResultEntryList',
         ],
-        'Failed' =>
-        [
+        'Failed' => [
           'shape' => 'BatchResultErrorEntryList',
         ],
       ],
     ],
-    'ChangeMessageVisibilityBatchResultEntry' =>
-    [
+    'ChangeMessageVisibilityBatchResultEntry' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
+      'required' => [
+        'Id',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ChangeMessageVisibilityBatchResultEntryList' =>
-    [
+    'ChangeMessageVisibilityBatchResultEntryList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ChangeMessageVisibilityBatchResultEntry',
         'locationName' => 'ChangeMessageVisibilityBatchResultEntry',
       ],
       'flattened' => true,
     ],
-    'ChangeMessageVisibilityRequest' =>
-    [
+    'ChangeMessageVisibilityRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'QueueUrl',
-        1 => 'ReceiptHandle',
-        2 => 'VisibilityTimeout',
+      'required' => [
+        'QueueUrl',
+        'ReceiptHandle',
+        'VisibilityTimeout',
       ],
-      'members' =>
-      [
-        'QueueUrl' =>
-        [
+      'members' => [
+        'QueueUrl' => [
           'shape' => 'String',
         ],
-        'ReceiptHandle' =>
-        [
+        'ReceiptHandle' => [
           'shape' => 'String',
         ],
-        'VisibilityTimeout' =>
-        [
+        'VisibilityTimeout' => [
           'shape' => 'Integer',
         ],
       ],
     ],
-    'CreateQueueRequest' =>
-    [
+    'CreateQueueRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'QueueName',
+      'required' => [
+        'QueueName',
       ],
-      'members' =>
-      [
-        'QueueName' =>
-        [
+      'members' => [
+        'QueueName' => [
           'shape' => 'String',
         ],
-        'Attributes' =>
-        [
+        'Attributes' => [
           'shape' => 'AttributeMap',
           'locationName' => 'Attribute',
         ],
       ],
     ],
-    'CreateQueueResult' =>
-    [
+    'CreateQueueResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'QueueUrl' =>
-        [
+      'members' => [
+        'QueueUrl' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteMessageBatchRequest' =>
-    [
+    'DeleteMessageBatchRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'QueueUrl',
-        1 => 'Entries',
+      'required' => [
+        'QueueUrl',
+        'Entries',
       ],
-      'members' =>
-      [
-        'QueueUrl' =>
-        [
+      'members' => [
+        'QueueUrl' => [
           'shape' => 'String',
         ],
-        'Entries' =>
-        [
+        'Entries' => [
           'shape' => 'DeleteMessageBatchRequestEntryList',
         ],
       ],
     ],
-    'DeleteMessageBatchRequestEntry' =>
-    [
+    'DeleteMessageBatchRequestEntry' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
-        1 => 'ReceiptHandle',
+      'required' => [
+        'Id',
+        'ReceiptHandle',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'String',
         ],
-        'ReceiptHandle' =>
-        [
+        'ReceiptHandle' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteMessageBatchRequestEntryList' =>
-    [
+    'DeleteMessageBatchRequestEntryList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DeleteMessageBatchRequestEntry',
         'locationName' => 'DeleteMessageBatchRequestEntry',
       ],
       'flattened' => true,
     ],
-    'DeleteMessageBatchResult' =>
-    [
+    'DeleteMessageBatchResult' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Successful',
-        1 => 'Failed',
+      'required' => [
+        'Successful',
+        'Failed',
       ],
-      'members' =>
-      [
-        'Successful' =>
-        [
+      'members' => [
+        'Successful' => [
           'shape' => 'DeleteMessageBatchResultEntryList',
         ],
-        'Failed' =>
-        [
+        'Failed' => [
           'shape' => 'BatchResultErrorEntryList',
         ],
       ],
     ],
-    'DeleteMessageBatchResultEntry' =>
-    [
+    'DeleteMessageBatchResultEntry' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
+      'required' => [
+        'Id',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteMessageBatchResultEntryList' =>
-    [
+    'DeleteMessageBatchResultEntryList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DeleteMessageBatchResultEntry',
         'locationName' => 'DeleteMessageBatchResultEntry',
       ],
       'flattened' => true,
     ],
-    'DeleteMessageRequest' =>
-    [
+    'DeleteMessageRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'QueueUrl',
-        1 => 'ReceiptHandle',
+      'required' => [
+        'QueueUrl',
+        'ReceiptHandle',
       ],
-      'members' =>
-      [
-        'QueueUrl' =>
-        [
+      'members' => [
+        'QueueUrl' => [
           'shape' => 'String',
         ],
-        'ReceiptHandle' =>
-        [
+        'ReceiptHandle' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteQueueRequest' =>
-    [
+    'DeleteQueueRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'QueueUrl',
+      'required' => [
+        'QueueUrl',
       ],
-      'members' =>
-      [
-        'QueueUrl' =>
-        [
+      'members' => [
+        'QueueUrl' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'EmptyBatchRequest' =>
-    [
+    'EmptyBatchRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'AWS.SimpleQueueService.EmptyBatchRequest',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'GetQueueAttributesRequest' =>
-    [
+    'GetQueueAttributesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'QueueUrl',
+      'required' => [
+        'QueueUrl',
       ],
-      'members' =>
-      [
-        'QueueUrl' =>
-        [
+      'members' => [
+        'QueueUrl' => [
           'shape' => 'String',
         ],
-        'AttributeNames' =>
-        [
+        'AttributeNames' => [
           'shape' => 'AttributeNameList',
         ],
       ],
     ],
-    'GetQueueAttributesResult' =>
-    [
+    'GetQueueAttributesResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Attributes' =>
-        [
+      'members' => [
+        'Attributes' => [
           'shape' => 'AttributeMap',
           'locationName' => 'Attribute',
         ],
       ],
     ],
-    'GetQueueUrlRequest' =>
-    [
+    'GetQueueUrlRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'QueueName',
+      'required' => [
+        'QueueName',
       ],
-      'members' =>
-      [
-        'QueueName' =>
-        [
+      'members' => [
+        'QueueName' => [
           'shape' => 'String',
         ],
-        'QueueOwnerAWSAccountId' =>
-        [
+        'QueueOwnerAWSAccountId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'GetQueueUrlResult' =>
-    [
+    'GetQueueUrlResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'QueueUrl' =>
-        [
+      'members' => [
+        'QueueUrl' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'Integer' =>
-    [
+    'Integer' => [
       'type' => 'integer',
     ],
-    'InvalidAttributeName' =>
-    [
+    'InvalidAttributeName' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
       'exception' => true,
     ],
-    'InvalidBatchEntryId' =>
-    [
+    'InvalidBatchEntryId' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'AWS.SimpleQueueService.InvalidBatchEntryId',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidIdFormat' =>
-    [
+    'InvalidIdFormat' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
       'exception' => true,
     ],
-    'InvalidMessageContents' =>
-    [
+    'InvalidMessageContents' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
       'exception' => true,
     ],
-    'ListDeadLetterSourceQueuesRequest' =>
-    [
+    'ListDeadLetterSourceQueuesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'QueueUrl',
+      'required' => [
+        'QueueUrl',
       ],
-      'members' =>
-      [
-        'QueueUrl' =>
-        [
+      'members' => [
+        'QueueUrl' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ListDeadLetterSourceQueuesResult' =>
-    [
+    'ListDeadLetterSourceQueuesResult' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'queueUrls',
+      'required' => [
+        'queueUrls',
       ],
-      'members' =>
-      [
-        'queueUrls' =>
-        [
+      'members' => [
+        'queueUrls' => [
           'shape' => 'QueueUrlList',
         ],
       ],
     ],
-    'ListQueuesRequest' =>
-    [
+    'ListQueuesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'QueueNamePrefix' =>
-        [
+      'members' => [
+        'QueueNamePrefix' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ListQueuesResult' =>
-    [
+    'ListQueuesResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'QueueUrls' =>
-        [
+      'members' => [
+        'QueueUrls' => [
           'shape' => 'QueueUrlList',
         ],
       ],
     ],
-    'Message' =>
-    [
+    'Message' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'MessageId' =>
-        [
+      'members' => [
+        'MessageId' => [
           'shape' => 'String',
         ],
-        'ReceiptHandle' =>
-        [
+        'ReceiptHandle' => [
           'shape' => 'String',
         ],
-        'MD5OfBody' =>
-        [
+        'MD5OfBody' => [
           'shape' => 'String',
         ],
-        'Body' =>
-        [
+        'Body' => [
           'shape' => 'String',
         ],
-        'Attributes' =>
-        [
+        'Attributes' => [
           'shape' => 'AttributeMap',
           'locationName' => 'Attribute',
         ],
-        'MD5OfMessageAttributes' =>
-        [
+        'MD5OfMessageAttributes' => [
           'shape' => 'String',
         ],
-        'MessageAttributes' =>
-        [
+        'MessageAttributes' => [
           'shape' => 'MessageAttributeMap',
           'locationName' => 'MessageAttribute',
         ],
       ],
     ],
-    'MessageAttributeMap' =>
-    [
+    'MessageAttributeMap' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'String',
         'locationName' => 'Name',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'MessageAttributeValue',
         'locationName' => 'Value',
       ],
       'flattened' => true,
     ],
-    'MessageAttributeName' =>
-    [
+    'MessageAttributeName' => [
       'type' => 'string',
     ],
-    'MessageAttributeNameList' =>
-    [
+    'MessageAttributeNameList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'MessageAttributeName',
         'locationName' => 'MessageAttributeName',
       ],
       'flattened' => true,
     ],
-    'MessageAttributeValue' =>
-    [
+    'MessageAttributeValue' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DataType',
+      'required' => [
+        'DataType',
       ],
-      'members' =>
-      [
-        'StringValue' =>
-        [
+      'members' => [
+        'StringValue' => [
           'shape' => 'String',
         ],
-        'BinaryValue' =>
-        [
+        'BinaryValue' => [
           'shape' => 'Binary',
         ],
-        'StringListValues' =>
-        [
+        'StringListValues' => [
           'shape' => 'StringList',
           'flattened' => true,
           'locationName' => 'StringListValue',
         ],
-        'BinaryListValues' =>
-        [
+        'BinaryListValues' => [
           'shape' => 'BinaryList',
           'flattened' => true,
           'locationName' => 'BinaryListValue',
         ],
-        'DataType' =>
-        [
+        'DataType' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'MessageList' =>
-    [
+    'MessageList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Message',
         'locationName' => 'Message',
       ],
       'flattened' => true,
     ],
-    'MessageNotInflight' =>
-    [
+    'MessageNotInflight' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'AWS.SimpleQueueService.MessageNotInflight',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'OverLimit' =>
-    [
+    'OverLimit' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'OverLimit',
         'httpStatusCode' => 403,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'QueueAttributeName' =>
-    [
+    'QueueAttributeName' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'Policy',
-        1 => 'VisibilityTimeout',
-        2 => 'MaximumMessageSize',
-        3 => 'MessageRetentionPeriod',
-        4 => 'ApproximateNumberOfMessages',
-        5 => 'ApproximateNumberOfMessagesNotVisible',
-        6 => 'CreatedTimestamp',
-        7 => 'LastModifiedTimestamp',
-        8 => 'QueueArn',
-        9 => 'ApproximateNumberOfMessagesDelayed',
-        10 => 'DelaySeconds',
-        11 => 'ReceiveMessageWaitTimeSeconds',
-        12 => 'RedrivePolicy',
+      'enum' => [
+        'Policy',
+        'VisibilityTimeout',
+        'MaximumMessageSize',
+        'MessageRetentionPeriod',
+        'ApproximateNumberOfMessages',
+        'ApproximateNumberOfMessagesNotVisible',
+        'CreatedTimestamp',
+        'LastModifiedTimestamp',
+        'QueueArn',
+        'ApproximateNumberOfMessagesDelayed',
+        'DelaySeconds',
+        'ReceiveMessageWaitTimeSeconds',
+        'RedrivePolicy',
       ],
     ],
-    'QueueDeletedRecently' =>
-    [
+    'QueueDeletedRecently' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'AWS.SimpleQueueService.QueueDeletedRecently',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'QueueDoesNotExist' =>
-    [
+    'QueueDoesNotExist' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'AWS.SimpleQueueService.NonExistentQueue',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'QueueNameExists' =>
-    [
+    'QueueNameExists' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'QueueAlreadyExists',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'QueueUrlList' =>
-    [
+    'QueueUrlList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'QueueUrl',
       ],
       'flattened' => true,
     ],
-    'ReceiptHandleIsInvalid' =>
-    [
+    'ReceiptHandleIsInvalid' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
       'exception' => true,
     ],
-    'ReceiveMessageRequest' =>
-    [
+    'ReceiveMessageRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'QueueUrl',
+      'required' => [
+        'QueueUrl',
       ],
-      'members' =>
-      [
-        'QueueUrl' =>
-        [
+      'members' => [
+        'QueueUrl' => [
           'shape' => 'String',
         ],
-        'AttributeNames' =>
-        [
+        'AttributeNames' => [
           'shape' => 'AttributeNameList',
         ],
-        'MessageAttributeNames' =>
-        [
+        'MessageAttributeNames' => [
           'shape' => 'MessageAttributeNameList',
         ],
-        'MaxNumberOfMessages' =>
-        [
+        'MaxNumberOfMessages' => [
           'shape' => 'Integer',
         ],
-        'VisibilityTimeout' =>
-        [
+        'VisibilityTimeout' => [
           'shape' => 'Integer',
         ],
-        'WaitTimeSeconds' =>
-        [
+        'WaitTimeSeconds' => [
           'shape' => 'Integer',
         ],
       ],
     ],
-    'ReceiveMessageResult' =>
-    [
+    'ReceiveMessageResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Messages' =>
-        [
+      'members' => [
+        'Messages' => [
           'shape' => 'MessageList',
         ],
       ],
     ],
-    'RemovePermissionRequest' =>
-    [
+    'RemovePermissionRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'QueueUrl',
-        1 => 'Label',
+      'required' => [
+        'QueueUrl',
+        'Label',
       ],
-      'members' =>
-      [
-        'QueueUrl' =>
-        [
+      'members' => [
+        'QueueUrl' => [
           'shape' => 'String',
         ],
-        'Label' =>
-        [
+        'Label' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'SendMessageBatchRequest' =>
-    [
+    'SendMessageBatchRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'QueueUrl',
-        1 => 'Entries',
+      'required' => [
+        'QueueUrl',
+        'Entries',
       ],
-      'members' =>
-      [
-        'QueueUrl' =>
-        [
+      'members' => [
+        'QueueUrl' => [
           'shape' => 'String',
         ],
-        'Entries' =>
-        [
+        'Entries' => [
           'shape' => 'SendMessageBatchRequestEntryList',
         ],
       ],
     ],
-    'SendMessageBatchRequestEntry' =>
-    [
+    'SendMessageBatchRequestEntry' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
-        1 => 'MessageBody',
+      'required' => [
+        'Id',
+        'MessageBody',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'String',
         ],
-        'MessageBody' =>
-        [
+        'MessageBody' => [
           'shape' => 'String',
         ],
-        'DelaySeconds' =>
-        [
+        'DelaySeconds' => [
           'shape' => 'Integer',
         ],
-        'MessageAttributes' =>
-        [
+        'MessageAttributes' => [
           'shape' => 'MessageAttributeMap',
           'locationName' => 'MessageAttribute',
         ],
       ],
     ],
-    'SendMessageBatchRequestEntryList' =>
-    [
+    'SendMessageBatchRequestEntryList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'SendMessageBatchRequestEntry',
         'locationName' => 'SendMessageBatchRequestEntry',
       ],
       'flattened' => true,
     ],
-    'SendMessageBatchResult' =>
-    [
+    'SendMessageBatchResult' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Successful',
-        1 => 'Failed',
+      'required' => [
+        'Successful',
+        'Failed',
       ],
-      'members' =>
-      [
-        'Successful' =>
-        [
+      'members' => [
+        'Successful' => [
           'shape' => 'SendMessageBatchResultEntryList',
         ],
-        'Failed' =>
-        [
+        'Failed' => [
           'shape' => 'BatchResultErrorEntryList',
         ],
       ],
     ],
-    'SendMessageBatchResultEntry' =>
-    [
+    'SendMessageBatchResultEntry' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
-        1 => 'MessageId',
-        2 => 'MD5OfMessageBody',
+      'required' => [
+        'Id',
+        'MessageId',
+        'MD5OfMessageBody',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'String',
         ],
-        'MessageId' =>
-        [
+        'MessageId' => [
           'shape' => 'String',
         ],
-        'MD5OfMessageBody' =>
-        [
+        'MD5OfMessageBody' => [
           'shape' => 'String',
         ],
-        'MD5OfMessageAttributes' =>
-        [
+        'MD5OfMessageAttributes' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'SendMessageBatchResultEntryList' =>
-    [
+    'SendMessageBatchResultEntryList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'SendMessageBatchResultEntry',
         'locationName' => 'SendMessageBatchResultEntry',
       ],
       'flattened' => true,
     ],
-    'SendMessageRequest' =>
-    [
+    'SendMessageRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'QueueUrl',
-        1 => 'MessageBody',
+      'required' => [
+        'QueueUrl',
+        'MessageBody',
       ],
-      'members' =>
-      [
-        'QueueUrl' =>
-        [
+      'members' => [
+        'QueueUrl' => [
           'shape' => 'String',
         ],
-        'MessageBody' =>
-        [
+        'MessageBody' => [
           'shape' => 'String',
         ],
-        'DelaySeconds' =>
-        [
+        'DelaySeconds' => [
           'shape' => 'Integer',
         ],
-        'MessageAttributes' =>
-        [
+        'MessageAttributes' => [
           'shape' => 'MessageAttributeMap',
           'locationName' => 'MessageAttribute',
         ],
       ],
     ],
-    'SendMessageResult' =>
-    [
+    'SendMessageResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'MD5OfMessageBody' =>
-        [
+      'members' => [
+        'MD5OfMessageBody' => [
           'shape' => 'String',
         ],
-        'MD5OfMessageAttributes' =>
-        [
+        'MD5OfMessageAttributes' => [
           'shape' => 'String',
         ],
-        'MessageId' =>
-        [
+        'MessageId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'SetQueueAttributesRequest' =>
-    [
+    'SetQueueAttributesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'QueueUrl',
-        1 => 'Attributes',
+      'required' => [
+        'QueueUrl',
+        'Attributes',
       ],
-      'members' =>
-      [
-        'QueueUrl' =>
-        [
+      'members' => [
+        'QueueUrl' => [
           'shape' => 'String',
         ],
-        'Attributes' =>
-        [
+        'Attributes' => [
           'shape' => 'AttributeMap',
           'locationName' => 'Attribute',
         ],
       ],
     ],
-    'String' =>
-    [
+    'String' => [
       'type' => 'string',
     ],
-    'StringList' =>
-    [
+    'StringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'StringListValue',
       ],
     ],
-    'TooManyEntriesInBatchRequest' =>
-    [
+    'TooManyEntriesInBatchRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'AWS.SimpleQueueService.TooManyEntriesInBatchRequest',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'UnsupportedOperation' =>
-    [
+    'UnsupportedOperation' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'AWS.SimpleQueueService.UnsupportedOperation',
         'httpStatusCode' => 400,
         'senderFault' => true,

@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2014-06-30',
     'endpointPrefix' => 'cognito-identity',
     'jsonVersion' => '1.1',
@@ -10,130 +8,100 @@ return [
     'targetPrefix' => 'AWSCognitoIdentityService',
     'protocol' => 'json',
   ],
-  'operations' =>
-  [
-    'CreateIdentityPool' =>
-    [
+  'operations' => [
+    'CreateIdentityPool' => [
       'name' => 'CreateIdentityPool',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateIdentityPoolInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'IdentityPool',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'NotAuthorizedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceConflictException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 409,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'TooManyRequestsException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 429,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InternalErrorException',
           'exception' => true,
           'fault' => true,
         ],
-        5 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DeleteIdentityPool' =>
-    [
+    'DeleteIdentityPool' => [
       'name' => 'DeleteIdentityPool',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteIdentityPoolInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'NotAuthorizedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'TooManyRequestsException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 429,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InternalErrorException',
           'exception' => true,
@@ -141,61 +109,47 @@ return [
         ],
       ],
     ],
-    'DescribeIdentityPool' =>
-    [
+    'DescribeIdentityPool' => [
       'name' => 'DescribeIdentityPool',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeIdentityPoolInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'IdentityPool',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'NotAuthorizedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'TooManyRequestsException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 429,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InternalErrorException',
           'exception' => true,
@@ -203,150 +157,116 @@ return [
         ],
       ],
     ],
-    'GetId' =>
-    [
+    'GetId' => [
       'name' => 'GetId',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetIdInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetIdResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'NotAuthorizedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ResourceConflictException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 409,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'TooManyRequestsException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 429,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'InternalErrorException',
           'exception' => true,
           'fault' => true,
         ],
-        6 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'GetOpenIdToken' =>
-    [
+    'GetOpenIdToken' => [
       'name' => 'GetOpenIdToken',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetOpenIdTokenInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetOpenIdTokenResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'NotAuthorizedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ResourceConflictException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 409,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'TooManyRequestsException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 429,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'InternalErrorException',
           'exception' => true,
@@ -354,61 +274,47 @@ return [
         ],
       ],
     ],
-    'ListIdentities' =>
-    [
+    'ListIdentities' => [
       'name' => 'ListIdentities',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListIdentitiesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListIdentitiesResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'NotAuthorizedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'TooManyRequestsException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 429,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InternalErrorException',
           'exception' => true,
@@ -416,52 +322,40 @@ return [
         ],
       ],
     ],
-    'ListIdentityPools' =>
-    [
+    'ListIdentityPools' => [
       'name' => 'ListIdentityPools',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListIdentityPoolsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListIdentityPoolsResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'NotAuthorizedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'TooManyRequestsException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 429,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InternalErrorException',
           'exception' => true,
@@ -469,66 +363,51 @@ return [
         ],
       ],
     ],
-    'UnlinkIdentity' =>
-    [
+    'UnlinkIdentity' => [
       'name' => 'UnlinkIdentity',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UnlinkIdentityInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'NotAuthorizedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ResourceConflictException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 409,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'TooManyRequestsException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 429,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'InternalErrorException',
           'exception' => true,
@@ -536,70 +415,54 @@ return [
         ],
       ],
     ],
-    'UpdateIdentityPool' =>
-    [
+    'UpdateIdentityPool' => [
       'name' => 'UpdateIdentityPool',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'IdentityPool',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'IdentityPool',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'NotAuthorizedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ResourceConflictException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 409,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'TooManyRequestsException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 429,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'InternalErrorException',
           'exception' => true,
@@ -608,519 +471,394 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'AccountId' =>
-    [
+  'shapes' => [
+    'AccountId' => [
       'type' => 'string',
       'min' => 1,
       'max' => 15,
       'pattern' => '\\d+',
     ],
-    'CreateIdentityPoolInput' =>
-    [
+    'CreateIdentityPoolInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IdentityPoolName',
-        1 => 'AllowUnauthenticatedIdentities',
+      'required' => [
+        'IdentityPoolName',
+        'AllowUnauthenticatedIdentities',
       ],
-      'members' =>
-      [
-        'IdentityPoolName' =>
-        [
+      'members' => [
+        'IdentityPoolName' => [
           'shape' => 'IdentityPoolName',
         ],
-        'AllowUnauthenticatedIdentities' =>
-        [
+        'AllowUnauthenticatedIdentities' => [
           'shape' => 'IdentityPoolUnauthenticated',
         ],
-        'SupportedLoginProviders' =>
-        [
+        'SupportedLoginProviders' => [
           'shape' => 'IdentityProviders',
         ],
       ],
     ],
-    'DeleteIdentityPoolInput' =>
-    [
+    'DeleteIdentityPoolInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IdentityPoolId',
+      'required' => [
+        'IdentityPoolId',
       ],
-      'members' =>
-      [
-        'IdentityPoolId' =>
-        [
+      'members' => [
+        'IdentityPoolId' => [
           'shape' => 'IdentityPoolId',
         ],
       ],
     ],
-    'DescribeIdentityPoolInput' =>
-    [
+    'DescribeIdentityPoolInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IdentityPoolId',
+      'required' => [
+        'IdentityPoolId',
       ],
-      'members' =>
-      [
-        'IdentityPoolId' =>
-        [
+      'members' => [
+        'IdentityPoolId' => [
           'shape' => 'IdentityPoolId',
         ],
       ],
     ],
-    'GetIdInput' =>
-    [
+    'GetIdInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AccountId',
-        1 => 'IdentityPoolId',
+      'required' => [
+        'AccountId',
+        'IdentityPoolId',
       ],
-      'members' =>
-      [
-        'AccountId' =>
-        [
+      'members' => [
+        'AccountId' => [
           'shape' => 'AccountId',
         ],
-        'IdentityPoolId' =>
-        [
+        'IdentityPoolId' => [
           'shape' => 'IdentityPoolId',
         ],
-        'Logins' =>
-        [
+        'Logins' => [
           'shape' => 'LoginsMap',
         ],
       ],
     ],
-    'GetIdResponse' =>
-    [
+    'GetIdResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IdentityId' =>
-        [
+      'members' => [
+        'IdentityId' => [
           'shape' => 'IdentityId',
         ],
       ],
     ],
-    'GetOpenIdTokenInput' =>
-    [
+    'GetOpenIdTokenInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IdentityId',
+      'required' => [
+        'IdentityId',
       ],
-      'members' =>
-      [
-        'IdentityId' =>
-        [
+      'members' => [
+        'IdentityId' => [
           'shape' => 'IdentityId',
         ],
-        'Logins' =>
-        [
+        'Logins' => [
           'shape' => 'LoginsMap',
         ],
       ],
     ],
-    'GetOpenIdTokenResponse' =>
-    [
+    'GetOpenIdTokenResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IdentityId' =>
-        [
+      'members' => [
+        'IdentityId' => [
           'shape' => 'IdentityId',
         ],
-        'Token' =>
-        [
+        'Token' => [
           'shape' => 'OIDCToken',
         ],
       ],
     ],
-    'IdentitiesList' =>
-    [
+    'IdentitiesList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'IdentityDescription',
       ],
     ],
-    'IdentityDescription' =>
-    [
+    'IdentityDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IdentityId' =>
-        [
+      'members' => [
+        'IdentityId' => [
           'shape' => 'IdentityId',
         ],
-        'Logins' =>
-        [
+        'Logins' => [
           'shape' => 'LoginsList',
         ],
       ],
     ],
-    'IdentityId' =>
-    [
+    'IdentityId' => [
       'type' => 'string',
       'min' => 1,
       'max' => 50,
       'pattern' => '[\\w-]+:[0-9a-f-]+',
     ],
-    'IdentityPool' =>
-    [
+    'IdentityPool' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IdentityPoolId',
-        1 => 'IdentityPoolName',
-        2 => 'AllowUnauthenticatedIdentities',
+      'required' => [
+        'IdentityPoolId',
+        'IdentityPoolName',
+        'AllowUnauthenticatedIdentities',
       ],
-      'members' =>
-      [
-        'IdentityPoolId' =>
-        [
+      'members' => [
+        'IdentityPoolId' => [
           'shape' => 'IdentityPoolId',
         ],
-        'IdentityPoolName' =>
-        [
+        'IdentityPoolName' => [
           'shape' => 'IdentityPoolName',
         ],
-        'AllowUnauthenticatedIdentities' =>
-        [
+        'AllowUnauthenticatedIdentities' => [
           'shape' => 'IdentityPoolUnauthenticated',
         ],
-        'SupportedLoginProviders' =>
-        [
+        'SupportedLoginProviders' => [
           'shape' => 'IdentityProviders',
         ],
       ],
     ],
-    'IdentityPoolId' =>
-    [
+    'IdentityPoolId' => [
       'type' => 'string',
       'min' => 1,
       'max' => 50,
       'pattern' => '[\\w-]+:[0-9a-f-]+',
     ],
-    'IdentityPoolName' =>
-    [
+    'IdentityPoolName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 128,
       'pattern' => '[\\w ]+',
     ],
-    'IdentityPoolShortDescription' =>
-    [
+    'IdentityPoolShortDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IdentityPoolId' =>
-        [
+      'members' => [
+        'IdentityPoolId' => [
           'shape' => 'IdentityPoolId',
         ],
-        'IdentityPoolName' =>
-        [
+        'IdentityPoolName' => [
           'shape' => 'IdentityPoolName',
         ],
       ],
     ],
-    'IdentityPoolUnauthenticated' =>
-    [
+    'IdentityPoolUnauthenticated' => [
       'type' => 'boolean',
     ],
-    'IdentityPoolsList' =>
-    [
+    'IdentityPoolsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'IdentityPoolShortDescription',
       ],
     ],
-    'IdentityProviderId' =>
-    [
+    'IdentityProviderId' => [
       'type' => 'string',
       'min' => 1,
       'max' => 128,
       'pattern' => '[\\w._-]+',
     ],
-    'IdentityProviderName' =>
-    [
+    'IdentityProviderName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 128,
       'pattern' => '[\\w._-]+',
     ],
-    'IdentityProviderToken' =>
-    [
+    'IdentityProviderToken' => [
       'type' => 'string',
       'min' => 1,
       'max' => 1024,
       'pattern' => '[\\S]+',
     ],
-    'IdentityProviders' =>
-    [
+    'IdentityProviders' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'IdentityProviderName',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'IdentityProviderId',
       ],
       'max' => 3,
     ],
-    'InternalErrorException' =>
-    [
+    'InternalErrorException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'String',
         ],
       ],
       'exception' => true,
       'fault' => true,
     ],
-    'InvalidParameterException' =>
-    [
+    'InvalidParameterException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'String',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'LimitExceededException' =>
-    [
+    'LimitExceededException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'String',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'ListIdentitiesInput' =>
-    [
+    'ListIdentitiesInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IdentityPoolId',
-        1 => 'MaxResults',
+      'required' => [
+        'IdentityPoolId',
+        'MaxResults',
       ],
-      'members' =>
-      [
-        'IdentityPoolId' =>
-        [
+      'members' => [
+        'IdentityPoolId' => [
           'shape' => 'IdentityPoolId',
         ],
-        'MaxResults' =>
-        [
+        'MaxResults' => [
           'shape' => 'QueryLimit',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'PaginationKey',
         ],
       ],
     ],
-    'ListIdentitiesResponse' =>
-    [
+    'ListIdentitiesResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IdentityPoolId' =>
-        [
+      'members' => [
+        'IdentityPoolId' => [
           'shape' => 'IdentityPoolId',
         ],
-        'Identities' =>
-        [
+        'Identities' => [
           'shape' => 'IdentitiesList',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'PaginationKey',
         ],
       ],
     ],
-    'ListIdentityPoolsInput' =>
-    [
+    'ListIdentityPoolsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'MaxResults',
+      'required' => [
+        'MaxResults',
       ],
-      'members' =>
-      [
-        'MaxResults' =>
-        [
+      'members' => [
+        'MaxResults' => [
           'shape' => 'QueryLimit',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'PaginationKey',
         ],
       ],
     ],
-    'ListIdentityPoolsResponse' =>
-    [
+    'ListIdentityPoolsResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IdentityPools' =>
-        [
+      'members' => [
+        'IdentityPools' => [
           'shape' => 'IdentityPoolsList',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'PaginationKey',
         ],
       ],
     ],
-    'LoginsList' =>
-    [
+    'LoginsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'IdentityProviderName',
       ],
     ],
-    'LoginsMap' =>
-    [
+    'LoginsMap' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'IdentityProviderName',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'IdentityProviderToken',
       ],
       'max' => 3,
     ],
-    'NotAuthorizedException' =>
-    [
+    'NotAuthorizedException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'String',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 403,
       ],
       'exception' => true,
     ],
-    'OIDCToken' =>
-    [
+    'OIDCToken' => [
       'type' => 'string',
     ],
-    'PaginationKey' =>
-    [
+    'PaginationKey' => [
       'type' => 'string',
       'min' => 1,
     ],
-    'QueryLimit' =>
-    [
+    'QueryLimit' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 60,
     ],
-    'ResourceConflictException' =>
-    [
+    'ResourceConflictException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'String',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 409,
       ],
       'exception' => true,
     ],
-    'ResourceNotFoundException' =>
-    [
+    'ResourceNotFoundException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'String',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 404,
       ],
       'exception' => true,
     ],
-    'String' =>
-    [
+    'String' => [
       'type' => 'string',
     ],
-    'TooManyRequestsException' =>
-    [
+    'TooManyRequestsException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'String',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 429,
       ],
       'exception' => true,
     ],
-    'UnlinkIdentityInput' =>
-    [
+    'UnlinkIdentityInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IdentityId',
-        1 => 'Logins',
-        2 => 'LoginsToRemove',
+      'required' => [
+        'IdentityId',
+        'Logins',
+        'LoginsToRemove',
       ],
-      'members' =>
-      [
-        'IdentityId' =>
-        [
+      'members' => [
+        'IdentityId' => [
           'shape' => 'IdentityId',
         ],
-        'Logins' =>
-        [
+        'Logins' => [
           'shape' => 'LoginsMap',
         ],
-        'LoginsToRemove' =>
-        [
+        'LoginsToRemove' => [
           'shape' => 'LoginsList',
         ],
       ],

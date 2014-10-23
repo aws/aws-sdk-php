@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2010-12-01',
     'endpointPrefix' => 'elasticbeanstalk',
     'serviceAbbreviation' => 'Elastic Beanstalk',
@@ -10,50 +8,38 @@ return [
     'xmlNamespace' => 'http://elasticbeanstalk.amazonaws.com/docs/2010-12-01/',
     'protocol' => 'query',
   ],
-  'operations' =>
-  [
-    'CheckDNSAvailability' =>
-    [
+  'operations' => [
+    'CheckDNSAvailability' => [
       'name' => 'CheckDNSAvailability',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CheckDNSAvailabilityMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CheckDNSAvailabilityResultMessage',
         'resultWrapper' => 'CheckDNSAvailabilityResult',
       ],
     ],
-    'CreateApplication' =>
-    [
+    'CreateApplication' => [
       'name' => 'CreateApplication',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateApplicationMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ApplicationDescriptionMessage',
         'resultWrapper' => 'CreateApplicationResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'TooManyApplicationsException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'TooManyApplicationsException',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -62,57 +48,45 @@ return [
         ],
       ],
     ],
-    'CreateApplicationVersion' =>
-    [
+    'CreateApplicationVersion' => [
       'name' => 'CreateApplicationVersion',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateApplicationVersionMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ApplicationVersionDescriptionMessage',
         'resultWrapper' => 'CreateApplicationVersionResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'TooManyApplicationsException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'TooManyApplicationsException',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'TooManyApplicationVersionsException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InsufficientPrivilegesException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientPrivilegesException',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'S3LocationNotInServiceRegionException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'S3LocationNotInServiceRegionException',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -121,41 +95,32 @@ return [
         ],
       ],
     ],
-    'CreateConfigurationTemplate' =>
-    [
+    'CreateConfigurationTemplate' => [
       'name' => 'CreateConfigurationTemplate',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateConfigurationTemplateMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ConfigurationSettingsDescription',
         'resultWrapper' => 'CreateConfigurationTemplateResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InsufficientPrivilegesException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientPrivilegesException',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'TooManyConfigurationTemplatesException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'TooManyConfigurationTemplatesException',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -164,41 +129,32 @@ return [
         ],
       ],
     ],
-    'CreateEnvironment' =>
-    [
+    'CreateEnvironment' => [
       'name' => 'CreateEnvironment',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateEnvironmentMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'EnvironmentDescription',
         'resultWrapper' => 'CreateEnvironmentResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'TooManyEnvironmentsException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'TooManyEnvironmentsException',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InsufficientPrivilegesException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientPrivilegesException',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -207,48 +163,38 @@ return [
         ],
       ],
     ],
-    'CreateStorageLocation' =>
-    [
+    'CreateStorageLocation' => [
       'name' => 'CreateStorageLocation',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateStorageLocationResultMessage',
         'resultWrapper' => 'CreateStorageLocationResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'TooManyBucketsException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'TooManyBucketsException',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'S3SubscriptionRequiredException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'S3SubscriptionRequiredException',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InsufficientPrivilegesException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientPrivilegesException',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -257,25 +203,19 @@ return [
         ],
       ],
     ],
-    'DeleteApplication' =>
-    [
+    'DeleteApplication' => [
       'name' => 'DeleteApplication',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteApplicationMessage',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'OperationInProgressException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'OperationInProgressFailure',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -284,58 +224,46 @@ return [
         ],
       ],
     ],
-    'DeleteApplicationVersion' =>
-    [
+    'DeleteApplicationVersion' => [
       'name' => 'DeleteApplicationVersion',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteApplicationVersionMessage',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'SourceBundleDeletionException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SourceBundleDeletionFailure',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InsufficientPrivilegesException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientPrivilegesException',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'OperationInProgressException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'OperationInProgressFailure',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'S3LocationNotInServiceRegionException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'S3LocationNotInServiceRegionException',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -344,25 +272,19 @@ return [
         ],
       ],
     ],
-    'DeleteConfigurationTemplate' =>
-    [
+    'DeleteConfigurationTemplate' => [
       'name' => 'DeleteConfigurationTemplate',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteConfigurationTemplateMessage',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'OperationInProgressException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'OperationInProgressFailure',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -371,115 +293,89 @@ return [
         ],
       ],
     ],
-    'DeleteEnvironmentConfiguration' =>
-    [
+    'DeleteEnvironmentConfiguration' => [
       'name' => 'DeleteEnvironmentConfiguration',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteEnvironmentConfigurationMessage',
       ],
     ],
-    'DescribeApplicationVersions' =>
-    [
+    'DescribeApplicationVersions' => [
       'name' => 'DescribeApplicationVersions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeApplicationVersionsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ApplicationVersionDescriptionsMessage',
         'resultWrapper' => 'DescribeApplicationVersionsResult',
       ],
     ],
-    'DescribeApplications' =>
-    [
+    'DescribeApplications' => [
       'name' => 'DescribeApplications',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeApplicationsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ApplicationDescriptionsMessage',
         'resultWrapper' => 'DescribeApplicationsResult',
       ],
     ],
-    'DescribeConfigurationOptions' =>
-    [
+    'DescribeConfigurationOptions' => [
       'name' => 'DescribeConfigurationOptions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeConfigurationOptionsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ConfigurationOptionsDescription',
         'resultWrapper' => 'DescribeConfigurationOptionsResult',
       ],
     ],
-    'DescribeConfigurationSettings' =>
-    [
+    'DescribeConfigurationSettings' => [
       'name' => 'DescribeConfigurationSettings',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeConfigurationSettingsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ConfigurationSettingsDescriptions',
         'resultWrapper' => 'DescribeConfigurationSettingsResult',
       ],
     ],
-    'DescribeEnvironmentResources' =>
-    [
+    'DescribeEnvironmentResources' => [
       'name' => 'DescribeEnvironmentResources',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeEnvironmentResourcesMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'EnvironmentResourceDescriptionsMessage',
         'resultWrapper' => 'DescribeEnvironmentResourcesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InsufficientPrivilegesException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientPrivilegesException',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -488,75 +384,58 @@ return [
         ],
       ],
     ],
-    'DescribeEnvironments' =>
-    [
+    'DescribeEnvironments' => [
       'name' => 'DescribeEnvironments',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeEnvironmentsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'EnvironmentDescriptionsMessage',
         'resultWrapper' => 'DescribeEnvironmentsResult',
       ],
     ],
-    'DescribeEvents' =>
-    [
+    'DescribeEvents' => [
       'name' => 'DescribeEvents',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeEventsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'EventDescriptionsMessage',
         'resultWrapper' => 'DescribeEventsResult',
       ],
     ],
-    'ListAvailableSolutionStacks' =>
-    [
+    'ListAvailableSolutionStacks' => [
       'name' => 'ListAvailableSolutionStacks',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListAvailableSolutionStacksResultMessage',
         'resultWrapper' => 'ListAvailableSolutionStacksResult',
       ],
     ],
-    'RebuildEnvironment' =>
-    [
+    'RebuildEnvironment' => [
       'name' => 'RebuildEnvironment',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RebuildEnvironmentMessage',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InsufficientPrivilegesException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientPrivilegesException',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -565,87 +444,67 @@ return [
         ],
       ],
     ],
-    'RequestEnvironmentInfo' =>
-    [
+    'RequestEnvironmentInfo' => [
       'name' => 'RequestEnvironmentInfo',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RequestEnvironmentInfoMessage',
       ],
     ],
-    'RestartAppServer' =>
-    [
+    'RestartAppServer' => [
       'name' => 'RestartAppServer',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RestartAppServerMessage',
       ],
     ],
-    'RetrieveEnvironmentInfo' =>
-    [
+    'RetrieveEnvironmentInfo' => [
       'name' => 'RetrieveEnvironmentInfo',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RetrieveEnvironmentInfoMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RetrieveEnvironmentInfoResultMessage',
         'resultWrapper' => 'RetrieveEnvironmentInfoResult',
       ],
     ],
-    'SwapEnvironmentCNAMEs' =>
-    [
+    'SwapEnvironmentCNAMEs' => [
       'name' => 'SwapEnvironmentCNAMEs',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SwapEnvironmentCNAMEsMessage',
       ],
     ],
-    'TerminateEnvironment' =>
-    [
+    'TerminateEnvironment' => [
       'name' => 'TerminateEnvironment',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'TerminateEnvironmentMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'EnvironmentDescription',
         'resultWrapper' => 'TerminateEnvironmentResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InsufficientPrivilegesException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientPrivilegesException',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -654,66 +513,51 @@ return [
         ],
       ],
     ],
-    'UpdateApplication' =>
-    [
+    'UpdateApplication' => [
       'name' => 'UpdateApplication',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateApplicationMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ApplicationDescriptionMessage',
         'resultWrapper' => 'UpdateApplicationResult',
       ],
     ],
-    'UpdateApplicationVersion' =>
-    [
+    'UpdateApplicationVersion' => [
       'name' => 'UpdateApplicationVersion',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateApplicationVersionMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ApplicationVersionDescriptionMessage',
         'resultWrapper' => 'UpdateApplicationVersionResult',
       ],
     ],
-    'UpdateConfigurationTemplate' =>
-    [
+    'UpdateConfigurationTemplate' => [
       'name' => 'UpdateConfigurationTemplate',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateConfigurationTemplateMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ConfigurationSettingsDescription',
         'resultWrapper' => 'UpdateConfigurationTemplateResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InsufficientPrivilegesException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientPrivilegesException',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -722,30 +566,23 @@ return [
         ],
       ],
     ],
-    'UpdateEnvironment' =>
-    [
+    'UpdateEnvironment' => [
       'name' => 'UpdateEnvironment',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateEnvironmentMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'EnvironmentDescription',
         'resultWrapper' => 'UpdateEnvironmentResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InsufficientPrivilegesException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientPrivilegesException',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -754,30 +591,23 @@ return [
         ],
       ],
     ],
-    'ValidateConfigurationSettings' =>
-    [
+    'ValidateConfigurationSettings' => [
       'name' => 'ValidateConfigurationSettings',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ValidateConfigurationSettingsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ConfigurationSettingsValidationMessages',
         'resultWrapper' => 'ValidateConfigurationSettingsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InsufficientPrivilegesException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientPrivilegesException',
             'httpStatusCode' => 403,
             'senderFault' => true,
@@ -787,2085 +617,1564 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'ApplicationDescription' =>
-    [
+  'shapes' => [
+    'ApplicationDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ApplicationName' =>
-        [
+      'members' => [
+        'ApplicationName' => [
           'shape' => 'ApplicationName',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
-        'DateCreated' =>
-        [
+        'DateCreated' => [
           'shape' => 'CreationDate',
         ],
-        'DateUpdated' =>
-        [
+        'DateUpdated' => [
           'shape' => 'UpdateDate',
         ],
-        'Versions' =>
-        [
+        'Versions' => [
           'shape' => 'VersionLabelsList',
         ],
-        'ConfigurationTemplates' =>
-        [
+        'ConfigurationTemplates' => [
           'shape' => 'ConfigurationTemplateNamesList',
         ],
       ],
     ],
-    'ApplicationDescriptionList' =>
-    [
+    'ApplicationDescriptionList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ApplicationDescription',
       ],
     ],
-    'ApplicationDescriptionMessage' =>
-    [
+    'ApplicationDescriptionMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Application' =>
-        [
+      'members' => [
+        'Application' => [
           'shape' => 'ApplicationDescription',
         ],
       ],
     ],
-    'ApplicationDescriptionsMessage' =>
-    [
+    'ApplicationDescriptionsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Applications' =>
-        [
+      'members' => [
+        'Applications' => [
           'shape' => 'ApplicationDescriptionList',
         ],
       ],
     ],
-    'ApplicationName' =>
-    [
+    'ApplicationName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 100,
     ],
-    'ApplicationNamesList' =>
-    [
+    'ApplicationNamesList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ApplicationName',
       ],
     ],
-    'ApplicationVersionDescription' =>
-    [
+    'ApplicationVersionDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ApplicationName' =>
-        [
+      'members' => [
+        'ApplicationName' => [
           'shape' => 'ApplicationName',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
-        'VersionLabel' =>
-        [
+        'VersionLabel' => [
           'shape' => 'VersionLabel',
         ],
-        'SourceBundle' =>
-        [
+        'SourceBundle' => [
           'shape' => 'S3Location',
         ],
-        'DateCreated' =>
-        [
+        'DateCreated' => [
           'shape' => 'CreationDate',
         ],
-        'DateUpdated' =>
-        [
+        'DateUpdated' => [
           'shape' => 'UpdateDate',
         ],
       ],
     ],
-    'ApplicationVersionDescriptionList' =>
-    [
+    'ApplicationVersionDescriptionList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ApplicationVersionDescription',
       ],
     ],
-    'ApplicationVersionDescriptionMessage' =>
-    [
+    'ApplicationVersionDescriptionMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ApplicationVersion' =>
-        [
+      'members' => [
+        'ApplicationVersion' => [
           'shape' => 'ApplicationVersionDescription',
         ],
       ],
     ],
-    'ApplicationVersionDescriptionsMessage' =>
-    [
+    'ApplicationVersionDescriptionsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ApplicationVersions' =>
-        [
+      'members' => [
+        'ApplicationVersions' => [
           'shape' => 'ApplicationVersionDescriptionList',
         ],
       ],
     ],
-    'AutoCreateApplication' =>
-    [
+    'AutoCreateApplication' => [
       'type' => 'boolean',
     ],
-    'AutoScalingGroup' =>
-    [
+    'AutoScalingGroup' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'ResourceId',
         ],
       ],
     ],
-    'AutoScalingGroupList' =>
-    [
+    'AutoScalingGroupList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AutoScalingGroup',
       ],
     ],
-    'AvailableSolutionStackDetailsList' =>
-    [
+    'AvailableSolutionStackDetailsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'SolutionStackDescription',
       ],
     ],
-    'AvailableSolutionStackNamesList' =>
-    [
+    'AvailableSolutionStackNamesList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'SolutionStackName',
       ],
     ],
-    'CheckDNSAvailabilityMessage' =>
-    [
+    'CheckDNSAvailabilityMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CNAMEPrefix',
+      'required' => [
+        'CNAMEPrefix',
       ],
-      'members' =>
-      [
-        'CNAMEPrefix' =>
-        [
+      'members' => [
+        'CNAMEPrefix' => [
           'shape' => 'DNSCnamePrefix',
         ],
       ],
     ],
-    'CheckDNSAvailabilityResultMessage' =>
-    [
+    'CheckDNSAvailabilityResultMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Available' =>
-        [
+      'members' => [
+        'Available' => [
           'shape' => 'CnameAvailability',
         ],
-        'FullyQualifiedCNAME' =>
-        [
+        'FullyQualifiedCNAME' => [
           'shape' => 'DNSCname',
         ],
       ],
     ],
-    'CnameAvailability' =>
-    [
+    'CnameAvailability' => [
       'type' => 'boolean',
     ],
-    'ConfigurationDeploymentStatus' =>
-    [
+    'ConfigurationDeploymentStatus' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'deployed',
-        1 => 'pending',
-        2 => 'failed',
+      'enum' => [
+        'deployed',
+        'pending',
+        'failed',
       ],
     ],
-    'ConfigurationOptionDefaultValue' =>
-    [
+    'ConfigurationOptionDefaultValue' => [
       'type' => 'string',
     ],
-    'ConfigurationOptionDescription' =>
-    [
+    'ConfigurationOptionDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Namespace' =>
-        [
+      'members' => [
+        'Namespace' => [
           'shape' => 'OptionNamespace',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'ConfigurationOptionName',
         ],
-        'DefaultValue' =>
-        [
+        'DefaultValue' => [
           'shape' => 'ConfigurationOptionDefaultValue',
         ],
-        'ChangeSeverity' =>
-        [
+        'ChangeSeverity' => [
           'shape' => 'ConfigurationOptionSeverity',
         ],
-        'UserDefined' =>
-        [
+        'UserDefined' => [
           'shape' => 'UserDefinedOption',
         ],
-        'ValueType' =>
-        [
+        'ValueType' => [
           'shape' => 'ConfigurationOptionValueType',
         ],
-        'ValueOptions' =>
-        [
+        'ValueOptions' => [
           'shape' => 'ConfigurationOptionPossibleValues',
         ],
-        'MinValue' =>
-        [
+        'MinValue' => [
           'shape' => 'OptionRestrictionMinValue',
         ],
-        'MaxValue' =>
-        [
+        'MaxValue' => [
           'shape' => 'OptionRestrictionMaxValue',
         ],
-        'MaxLength' =>
-        [
+        'MaxLength' => [
           'shape' => 'OptionRestrictionMaxLength',
         ],
-        'Regex' =>
-        [
+        'Regex' => [
           'shape' => 'OptionRestrictionRegex',
         ],
       ],
     ],
-    'ConfigurationOptionDescriptionsList' =>
-    [
+    'ConfigurationOptionDescriptionsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ConfigurationOptionDescription',
       ],
     ],
-    'ConfigurationOptionName' =>
-    [
+    'ConfigurationOptionName' => [
       'type' => 'string',
     ],
-    'ConfigurationOptionPossibleValue' =>
-    [
+    'ConfigurationOptionPossibleValue' => [
       'type' => 'string',
     ],
-    'ConfigurationOptionPossibleValues' =>
-    [
+    'ConfigurationOptionPossibleValues' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ConfigurationOptionPossibleValue',
       ],
     ],
-    'ConfigurationOptionSetting' =>
-    [
+    'ConfigurationOptionSetting' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Namespace' =>
-        [
+      'members' => [
+        'Namespace' => [
           'shape' => 'OptionNamespace',
         ],
-        'OptionName' =>
-        [
+        'OptionName' => [
           'shape' => 'ConfigurationOptionName',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'ConfigurationOptionValue',
         ],
       ],
     ],
-    'ConfigurationOptionSettingsList' =>
-    [
+    'ConfigurationOptionSettingsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ConfigurationOptionSetting',
       ],
     ],
-    'ConfigurationOptionSeverity' =>
-    [
+    'ConfigurationOptionSeverity' => [
       'type' => 'string',
     ],
-    'ConfigurationOptionValue' =>
-    [
+    'ConfigurationOptionValue' => [
       'type' => 'string',
     ],
-    'ConfigurationOptionValueType' =>
-    [
+    'ConfigurationOptionValueType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'Scalar',
-        1 => 'List',
+      'enum' => [
+        'Scalar',
+        'List',
       ],
     ],
-    'ConfigurationOptionsDescription' =>
-    [
+    'ConfigurationOptionsDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SolutionStackName' =>
-        [
+      'members' => [
+        'SolutionStackName' => [
           'shape' => 'SolutionStackName',
         ],
-        'Options' =>
-        [
+        'Options' => [
           'shape' => 'ConfigurationOptionDescriptionsList',
         ],
       ],
     ],
-    'ConfigurationSettingsDescription' =>
-    [
+    'ConfigurationSettingsDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SolutionStackName' =>
-        [
+      'members' => [
+        'SolutionStackName' => [
           'shape' => 'SolutionStackName',
         ],
-        'ApplicationName' =>
-        [
+        'ApplicationName' => [
           'shape' => 'ApplicationName',
         ],
-        'TemplateName' =>
-        [
+        'TemplateName' => [
           'shape' => 'ConfigurationTemplateName',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
-        'EnvironmentName' =>
-        [
+        'EnvironmentName' => [
           'shape' => 'EnvironmentName',
         ],
-        'DeploymentStatus' =>
-        [
+        'DeploymentStatus' => [
           'shape' => 'ConfigurationDeploymentStatus',
         ],
-        'DateCreated' =>
-        [
+        'DateCreated' => [
           'shape' => 'CreationDate',
         ],
-        'DateUpdated' =>
-        [
+        'DateUpdated' => [
           'shape' => 'UpdateDate',
         ],
-        'OptionSettings' =>
-        [
+        'OptionSettings' => [
           'shape' => 'ConfigurationOptionSettingsList',
         ],
       ],
     ],
-    'ConfigurationSettingsDescriptionList' =>
-    [
+    'ConfigurationSettingsDescriptionList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ConfigurationSettingsDescription',
       ],
     ],
-    'ConfigurationSettingsDescriptions' =>
-    [
+    'ConfigurationSettingsDescriptions' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ConfigurationSettings' =>
-        [
+      'members' => [
+        'ConfigurationSettings' => [
           'shape' => 'ConfigurationSettingsDescriptionList',
         ],
       ],
     ],
-    'ConfigurationSettingsValidationMessages' =>
-    [
+    'ConfigurationSettingsValidationMessages' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Messages' =>
-        [
+      'members' => [
+        'Messages' => [
           'shape' => 'ValidationMessagesList',
         ],
       ],
     ],
-    'ConfigurationTemplateName' =>
-    [
+    'ConfigurationTemplateName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 100,
     ],
-    'ConfigurationTemplateNamesList' =>
-    [
+    'ConfigurationTemplateNamesList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ConfigurationTemplateName',
       ],
     ],
-    'CreateApplicationMessage' =>
-    [
+    'CreateApplicationMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ApplicationName',
+      'required' => [
+        'ApplicationName',
       ],
-      'members' =>
-      [
-        'ApplicationName' =>
-        [
+      'members' => [
+        'ApplicationName' => [
           'shape' => 'ApplicationName',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
       ],
     ],
-    'CreateApplicationVersionMessage' =>
-    [
+    'CreateApplicationVersionMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ApplicationName',
-        1 => 'VersionLabel',
+      'required' => [
+        'ApplicationName',
+        'VersionLabel',
       ],
-      'members' =>
-      [
-        'ApplicationName' =>
-        [
+      'members' => [
+        'ApplicationName' => [
           'shape' => 'ApplicationName',
         ],
-        'VersionLabel' =>
-        [
+        'VersionLabel' => [
           'shape' => 'VersionLabel',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
-        'SourceBundle' =>
-        [
+        'SourceBundle' => [
           'shape' => 'S3Location',
         ],
-        'AutoCreateApplication' =>
-        [
+        'AutoCreateApplication' => [
           'shape' => 'AutoCreateApplication',
         ],
       ],
     ],
-    'CreateConfigurationTemplateMessage' =>
-    [
+    'CreateConfigurationTemplateMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ApplicationName',
-        1 => 'TemplateName',
+      'required' => [
+        'ApplicationName',
+        'TemplateName',
       ],
-      'members' =>
-      [
-        'ApplicationName' =>
-        [
+      'members' => [
+        'ApplicationName' => [
           'shape' => 'ApplicationName',
         ],
-        'TemplateName' =>
-        [
+        'TemplateName' => [
           'shape' => 'ConfigurationTemplateName',
         ],
-        'SolutionStackName' =>
-        [
+        'SolutionStackName' => [
           'shape' => 'SolutionStackName',
         ],
-        'SourceConfiguration' =>
-        [
+        'SourceConfiguration' => [
           'shape' => 'SourceConfiguration',
         ],
-        'EnvironmentId' =>
-        [
+        'EnvironmentId' => [
           'shape' => 'EnvironmentId',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
-        'OptionSettings' =>
-        [
+        'OptionSettings' => [
           'shape' => 'ConfigurationOptionSettingsList',
         ],
       ],
     ],
-    'CreateEnvironmentMessage' =>
-    [
+    'CreateEnvironmentMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ApplicationName',
-        1 => 'EnvironmentName',
+      'required' => [
+        'ApplicationName',
+        'EnvironmentName',
       ],
-      'members' =>
-      [
-        'ApplicationName' =>
-        [
+      'members' => [
+        'ApplicationName' => [
           'shape' => 'ApplicationName',
         ],
-        'EnvironmentName' =>
-        [
+        'EnvironmentName' => [
           'shape' => 'EnvironmentName',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
-        'CNAMEPrefix' =>
-        [
+        'CNAMEPrefix' => [
           'shape' => 'DNSCnamePrefix',
         ],
-        'Tier' =>
-        [
+        'Tier' => [
           'shape' => 'EnvironmentTier',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'Tags',
         ],
-        'VersionLabel' =>
-        [
+        'VersionLabel' => [
           'shape' => 'VersionLabel',
         ],
-        'TemplateName' =>
-        [
+        'TemplateName' => [
           'shape' => 'ConfigurationTemplateName',
         ],
-        'SolutionStackName' =>
-        [
+        'SolutionStackName' => [
           'shape' => 'SolutionStackName',
         ],
-        'OptionSettings' =>
-        [
+        'OptionSettings' => [
           'shape' => 'ConfigurationOptionSettingsList',
         ],
-        'OptionsToRemove' =>
-        [
+        'OptionsToRemove' => [
           'shape' => 'OptionsSpecifierList',
         ],
       ],
     ],
-    'CreateStorageLocationResultMessage' =>
-    [
+    'CreateStorageLocationResultMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'S3Bucket' =>
-        [
+      'members' => [
+        'S3Bucket' => [
           'shape' => 'S3Bucket',
         ],
       ],
     ],
-    'CreationDate' =>
-    [
+    'CreationDate' => [
       'type' => 'timestamp',
     ],
-    'DNSCname' =>
-    [
+    'DNSCname' => [
       'type' => 'string',
       'min' => 1,
       'max' => 255,
     ],
-    'DNSCnamePrefix' =>
-    [
+    'DNSCnamePrefix' => [
       'type' => 'string',
       'min' => 4,
       'max' => 63,
     ],
-    'DeleteApplicationMessage' =>
-    [
+    'DeleteApplicationMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ApplicationName',
+      'required' => [
+        'ApplicationName',
       ],
-      'members' =>
-      [
-        'ApplicationName' =>
-        [
+      'members' => [
+        'ApplicationName' => [
           'shape' => 'ApplicationName',
         ],
-        'TerminateEnvByForce' =>
-        [
+        'TerminateEnvByForce' => [
           'shape' => 'TerminateEnvForce',
         ],
       ],
     ],
-    'DeleteApplicationVersionMessage' =>
-    [
+    'DeleteApplicationVersionMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ApplicationName',
-        1 => 'VersionLabel',
+      'required' => [
+        'ApplicationName',
+        'VersionLabel',
       ],
-      'members' =>
-      [
-        'ApplicationName' =>
-        [
+      'members' => [
+        'ApplicationName' => [
           'shape' => 'ApplicationName',
         ],
-        'VersionLabel' =>
-        [
+        'VersionLabel' => [
           'shape' => 'VersionLabel',
         ],
-        'DeleteSourceBundle' =>
-        [
+        'DeleteSourceBundle' => [
           'shape' => 'DeleteSourceBundle',
         ],
       ],
     ],
-    'DeleteConfigurationTemplateMessage' =>
-    [
+    'DeleteConfigurationTemplateMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ApplicationName',
-        1 => 'TemplateName',
+      'required' => [
+        'ApplicationName',
+        'TemplateName',
       ],
-      'members' =>
-      [
-        'ApplicationName' =>
-        [
+      'members' => [
+        'ApplicationName' => [
           'shape' => 'ApplicationName',
         ],
-        'TemplateName' =>
-        [
+        'TemplateName' => [
           'shape' => 'ConfigurationTemplateName',
         ],
       ],
     ],
-    'DeleteEnvironmentConfigurationMessage' =>
-    [
+    'DeleteEnvironmentConfigurationMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ApplicationName',
-        1 => 'EnvironmentName',
+      'required' => [
+        'ApplicationName',
+        'EnvironmentName',
       ],
-      'members' =>
-      [
-        'ApplicationName' =>
-        [
+      'members' => [
+        'ApplicationName' => [
           'shape' => 'ApplicationName',
         ],
-        'EnvironmentName' =>
-        [
+        'EnvironmentName' => [
           'shape' => 'EnvironmentName',
         ],
       ],
     ],
-    'DeleteSourceBundle' =>
-    [
+    'DeleteSourceBundle' => [
       'type' => 'boolean',
     ],
-    'DescribeApplicationVersionsMessage' =>
-    [
+    'DescribeApplicationVersionsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ApplicationName' =>
-        [
+      'members' => [
+        'ApplicationName' => [
           'shape' => 'ApplicationName',
         ],
-        'VersionLabels' =>
-        [
+        'VersionLabels' => [
           'shape' => 'VersionLabelsList',
         ],
       ],
     ],
-    'DescribeApplicationsMessage' =>
-    [
+    'DescribeApplicationsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ApplicationNames' =>
-        [
+      'members' => [
+        'ApplicationNames' => [
           'shape' => 'ApplicationNamesList',
         ],
       ],
     ],
-    'DescribeConfigurationOptionsMessage' =>
-    [
+    'DescribeConfigurationOptionsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ApplicationName' =>
-        [
+      'members' => [
+        'ApplicationName' => [
           'shape' => 'ApplicationName',
         ],
-        'TemplateName' =>
-        [
+        'TemplateName' => [
           'shape' => 'ConfigurationTemplateName',
         ],
-        'EnvironmentName' =>
-        [
+        'EnvironmentName' => [
           'shape' => 'EnvironmentName',
         ],
-        'SolutionStackName' =>
-        [
+        'SolutionStackName' => [
           'shape' => 'SolutionStackName',
         ],
-        'Options' =>
-        [
+        'Options' => [
           'shape' => 'OptionsSpecifierList',
         ],
       ],
     ],
-    'DescribeConfigurationSettingsMessage' =>
-    [
+    'DescribeConfigurationSettingsMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ApplicationName',
+      'required' => [
+        'ApplicationName',
       ],
-      'members' =>
-      [
-        'ApplicationName' =>
-        [
+      'members' => [
+        'ApplicationName' => [
           'shape' => 'ApplicationName',
         ],
-        'TemplateName' =>
-        [
+        'TemplateName' => [
           'shape' => 'ConfigurationTemplateName',
         ],
-        'EnvironmentName' =>
-        [
+        'EnvironmentName' => [
           'shape' => 'EnvironmentName',
         ],
       ],
     ],
-    'DescribeEnvironmentResourcesMessage' =>
-    [
+    'DescribeEnvironmentResourcesMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EnvironmentId' =>
-        [
+      'members' => [
+        'EnvironmentId' => [
           'shape' => 'EnvironmentId',
         ],
-        'EnvironmentName' =>
-        [
+        'EnvironmentName' => [
           'shape' => 'EnvironmentName',
         ],
       ],
     ],
-    'DescribeEnvironmentsMessage' =>
-    [
+    'DescribeEnvironmentsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ApplicationName' =>
-        [
+      'members' => [
+        'ApplicationName' => [
           'shape' => 'ApplicationName',
         ],
-        'VersionLabel' =>
-        [
+        'VersionLabel' => [
           'shape' => 'VersionLabel',
         ],
-        'EnvironmentIds' =>
-        [
+        'EnvironmentIds' => [
           'shape' => 'EnvironmentIdList',
         ],
-        'EnvironmentNames' =>
-        [
+        'EnvironmentNames' => [
           'shape' => 'EnvironmentNamesList',
         ],
-        'IncludeDeleted' =>
-        [
+        'IncludeDeleted' => [
           'shape' => 'IncludeDeleted',
         ],
-        'IncludedDeletedBackTo' =>
-        [
+        'IncludedDeletedBackTo' => [
           'shape' => 'IncludeDeletedBackTo',
         ],
       ],
     ],
-    'DescribeEventsMessage' =>
-    [
+    'DescribeEventsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ApplicationName' =>
-        [
+      'members' => [
+        'ApplicationName' => [
           'shape' => 'ApplicationName',
         ],
-        'VersionLabel' =>
-        [
+        'VersionLabel' => [
           'shape' => 'VersionLabel',
         ],
-        'TemplateName' =>
-        [
+        'TemplateName' => [
           'shape' => 'ConfigurationTemplateName',
         ],
-        'EnvironmentId' =>
-        [
+        'EnvironmentId' => [
           'shape' => 'EnvironmentId',
         ],
-        'EnvironmentName' =>
-        [
+        'EnvironmentName' => [
           'shape' => 'EnvironmentName',
         ],
-        'RequestId' =>
-        [
+        'RequestId' => [
           'shape' => 'RequestId',
         ],
-        'Severity' =>
-        [
+        'Severity' => [
           'shape' => 'EventSeverity',
         ],
-        'StartTime' =>
-        [
+        'StartTime' => [
           'shape' => 'TimeFilterStart',
         ],
-        'EndTime' =>
-        [
+        'EndTime' => [
           'shape' => 'TimeFilterEnd',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'MaxRecords',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'Token',
         ],
       ],
     ],
-    'Description' =>
-    [
+    'Description' => [
       'type' => 'string',
       'max' => 200,
     ],
-    'Ec2InstanceId' =>
-    [
+    'Ec2InstanceId' => [
       'type' => 'string',
     ],
-    'EndpointURL' =>
-    [
+    'EndpointURL' => [
       'type' => 'string',
     ],
-    'EnvironmentDescription' =>
-    [
+    'EnvironmentDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EnvironmentName' =>
-        [
+      'members' => [
+        'EnvironmentName' => [
           'shape' => 'EnvironmentName',
         ],
-        'EnvironmentId' =>
-        [
+        'EnvironmentId' => [
           'shape' => 'EnvironmentId',
         ],
-        'ApplicationName' =>
-        [
+        'ApplicationName' => [
           'shape' => 'ApplicationName',
         ],
-        'VersionLabel' =>
-        [
+        'VersionLabel' => [
           'shape' => 'VersionLabel',
         ],
-        'SolutionStackName' =>
-        [
+        'SolutionStackName' => [
           'shape' => 'SolutionStackName',
         ],
-        'TemplateName' =>
-        [
+        'TemplateName' => [
           'shape' => 'ConfigurationTemplateName',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
-        'EndpointURL' =>
-        [
+        'EndpointURL' => [
           'shape' => 'EndpointURL',
         ],
-        'CNAME' =>
-        [
+        'CNAME' => [
           'shape' => 'DNSCname',
         ],
-        'DateCreated' =>
-        [
+        'DateCreated' => [
           'shape' => 'CreationDate',
         ],
-        'DateUpdated' =>
-        [
+        'DateUpdated' => [
           'shape' => 'UpdateDate',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'EnvironmentStatus',
         ],
-        'Health' =>
-        [
+        'Health' => [
           'shape' => 'EnvironmentHealth',
         ],
-        'Resources' =>
-        [
+        'Resources' => [
           'shape' => 'EnvironmentResourcesDescription',
         ],
-        'Tier' =>
-        [
+        'Tier' => [
           'shape' => 'EnvironmentTier',
         ],
       ],
     ],
-    'EnvironmentDescriptionsList' =>
-    [
+    'EnvironmentDescriptionsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'EnvironmentDescription',
       ],
     ],
-    'EnvironmentDescriptionsMessage' =>
-    [
+    'EnvironmentDescriptionsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Environments' =>
-        [
+      'members' => [
+        'Environments' => [
           'shape' => 'EnvironmentDescriptionsList',
         ],
       ],
     ],
-    'EnvironmentHealth' =>
-    [
+    'EnvironmentHealth' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'Green',
-        1 => 'Yellow',
-        2 => 'Red',
-        3 => 'Grey',
+      'enum' => [
+        'Green',
+        'Yellow',
+        'Red',
+        'Grey',
       ],
     ],
-    'EnvironmentId' =>
-    [
+    'EnvironmentId' => [
       'type' => 'string',
     ],
-    'EnvironmentIdList' =>
-    [
+    'EnvironmentIdList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'EnvironmentId',
       ],
     ],
-    'EnvironmentInfoDescription' =>
-    [
+    'EnvironmentInfoDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InfoType' =>
-        [
+      'members' => [
+        'InfoType' => [
           'shape' => 'EnvironmentInfoType',
         ],
-        'Ec2InstanceId' =>
-        [
+        'Ec2InstanceId' => [
           'shape' => 'Ec2InstanceId',
         ],
-        'SampleTimestamp' =>
-        [
+        'SampleTimestamp' => [
           'shape' => 'SampleTimestamp',
         ],
-        'Message' =>
-        [
+        'Message' => [
           'shape' => 'Message',
         ],
       ],
     ],
-    'EnvironmentInfoDescriptionList' =>
-    [
+    'EnvironmentInfoDescriptionList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'EnvironmentInfoDescription',
       ],
     ],
-    'EnvironmentInfoType' =>
-    [
+    'EnvironmentInfoType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'tail',
+      'enum' => [
+        'tail',
       ],
     ],
-    'EnvironmentName' =>
-    [
+    'EnvironmentName' => [
       'type' => 'string',
       'min' => 4,
       'max' => 23,
     ],
-    'EnvironmentNamesList' =>
-    [
+    'EnvironmentNamesList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'EnvironmentName',
       ],
     ],
-    'EnvironmentResourceDescription' =>
-    [
+    'EnvironmentResourceDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EnvironmentName' =>
-        [
+      'members' => [
+        'EnvironmentName' => [
           'shape' => 'EnvironmentName',
         ],
-        'AutoScalingGroups' =>
-        [
+        'AutoScalingGroups' => [
           'shape' => 'AutoScalingGroupList',
         ],
-        'Instances' =>
-        [
+        'Instances' => [
           'shape' => 'InstanceList',
         ],
-        'LaunchConfigurations' =>
-        [
+        'LaunchConfigurations' => [
           'shape' => 'LaunchConfigurationList',
         ],
-        'LoadBalancers' =>
-        [
+        'LoadBalancers' => [
           'shape' => 'LoadBalancerList',
         ],
-        'Triggers' =>
-        [
+        'Triggers' => [
           'shape' => 'TriggerList',
         ],
-        'Queues' =>
-        [
+        'Queues' => [
           'shape' => 'QueueList',
         ],
       ],
     ],
-    'EnvironmentResourceDescriptionsMessage' =>
-    [
+    'EnvironmentResourceDescriptionsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EnvironmentResources' =>
-        [
+      'members' => [
+        'EnvironmentResources' => [
           'shape' => 'EnvironmentResourceDescription',
         ],
       ],
     ],
-    'EnvironmentResourcesDescription' =>
-    [
+    'EnvironmentResourcesDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LoadBalancer' =>
-        [
+      'members' => [
+        'LoadBalancer' => [
           'shape' => 'LoadBalancerDescription',
         ],
       ],
     ],
-    'EnvironmentStatus' =>
-    [
+    'EnvironmentStatus' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'Launching',
-        1 => 'Updating',
-        2 => 'Ready',
-        3 => 'Terminating',
-        4 => 'Terminated',
+      'enum' => [
+        'Launching',
+        'Updating',
+        'Ready',
+        'Terminating',
+        'Terminated',
       ],
     ],
-    'EnvironmentTier' =>
-    [
+    'EnvironmentTier' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Type' =>
-        [
+        'Type' => [
           'shape' => 'String',
         ],
-        'Version' =>
-        [
+        'Version' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'EventDate' =>
-    [
+    'EventDate' => [
       'type' => 'timestamp',
     ],
-    'EventDescription' =>
-    [
+    'EventDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EventDate' =>
-        [
+      'members' => [
+        'EventDate' => [
           'shape' => 'EventDate',
         ],
-        'Message' =>
-        [
+        'Message' => [
           'shape' => 'EventMessage',
         ],
-        'ApplicationName' =>
-        [
+        'ApplicationName' => [
           'shape' => 'ApplicationName',
         ],
-        'VersionLabel' =>
-        [
+        'VersionLabel' => [
           'shape' => 'VersionLabel',
         ],
-        'TemplateName' =>
-        [
+        'TemplateName' => [
           'shape' => 'ConfigurationTemplateName',
         ],
-        'EnvironmentName' =>
-        [
+        'EnvironmentName' => [
           'shape' => 'EnvironmentName',
         ],
-        'RequestId' =>
-        [
+        'RequestId' => [
           'shape' => 'RequestId',
         ],
-        'Severity' =>
-        [
+        'Severity' => [
           'shape' => 'EventSeverity',
         ],
       ],
     ],
-    'EventDescriptionList' =>
-    [
+    'EventDescriptionList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'EventDescription',
       ],
     ],
-    'EventDescriptionsMessage' =>
-    [
+    'EventDescriptionsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Events' =>
-        [
+      'members' => [
+        'Events' => [
           'shape' => 'EventDescriptionList',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'Token',
         ],
       ],
     ],
-    'EventMessage' =>
-    [
+    'EventMessage' => [
       'type' => 'string',
     ],
-    'EventSeverity' =>
-    [
+    'EventSeverity' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'TRACE',
-        1 => 'DEBUG',
-        2 => 'INFO',
-        3 => 'WARN',
-        4 => 'ERROR',
-        5 => 'FATAL',
+      'enum' => [
+        'TRACE',
+        'DEBUG',
+        'INFO',
+        'WARN',
+        'ERROR',
+        'FATAL',
       ],
     ],
-    'FileTypeExtension' =>
-    [
+    'FileTypeExtension' => [
       'type' => 'string',
       'min' => 1,
       'max' => 100,
     ],
-    'IncludeDeleted' =>
-    [
+    'IncludeDeleted' => [
       'type' => 'boolean',
     ],
-    'IncludeDeletedBackTo' =>
-    [
+    'IncludeDeletedBackTo' => [
       'type' => 'timestamp',
     ],
-    'Instance' =>
-    [
+    'Instance' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'ResourceId',
         ],
       ],
     ],
-    'InstanceList' =>
-    [
+    'InstanceList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Instance',
       ],
     ],
-    'InsufficientPrivilegesException' =>
-    [
+    'InsufficientPrivilegesException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InsufficientPrivilegesException',
         'httpStatusCode' => 403,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'Integer' =>
-    [
+    'Integer' => [
       'type' => 'integer',
     ],
-    'LaunchConfiguration' =>
-    [
+    'LaunchConfiguration' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'ResourceId',
         ],
       ],
     ],
-    'LaunchConfigurationList' =>
-    [
+    'LaunchConfigurationList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'LaunchConfiguration',
       ],
     ],
-    'ListAvailableSolutionStacksResultMessage' =>
-    [
+    'ListAvailableSolutionStacksResultMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SolutionStacks' =>
-        [
+      'members' => [
+        'SolutionStacks' => [
           'shape' => 'AvailableSolutionStackNamesList',
         ],
-        'SolutionStackDetails' =>
-        [
+        'SolutionStackDetails' => [
           'shape' => 'AvailableSolutionStackDetailsList',
         ],
       ],
     ],
-    'Listener' =>
-    [
+    'Listener' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Protocol' =>
-        [
+      'members' => [
+        'Protocol' => [
           'shape' => 'String',
         ],
-        'Port' =>
-        [
+        'Port' => [
           'shape' => 'Integer',
         ],
       ],
     ],
-    'LoadBalancer' =>
-    [
+    'LoadBalancer' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'ResourceId',
         ],
       ],
     ],
-    'LoadBalancerDescription' =>
-    [
+    'LoadBalancerDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LoadBalancerName' =>
-        [
+      'members' => [
+        'LoadBalancerName' => [
           'shape' => 'String',
         ],
-        'Domain' =>
-        [
+        'Domain' => [
           'shape' => 'String',
         ],
-        'Listeners' =>
-        [
+        'Listeners' => [
           'shape' => 'LoadBalancerListenersDescription',
         ],
       ],
     ],
-    'LoadBalancerList' =>
-    [
+    'LoadBalancerList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'LoadBalancer',
       ],
     ],
-    'LoadBalancerListenersDescription' =>
-    [
+    'LoadBalancerListenersDescription' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Listener',
       ],
     ],
-    'MaxRecords' =>
-    [
+    'MaxRecords' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 1000,
     ],
-    'Message' =>
-    [
+    'Message' => [
       'type' => 'string',
     ],
-    'OperationInProgressException' =>
-    [
+    'OperationInProgressException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'OperationInProgressFailure',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'OptionNamespace' =>
-    [
+    'OptionNamespace' => [
       'type' => 'string',
     ],
-    'OptionRestrictionMaxLength' =>
-    [
+    'OptionRestrictionMaxLength' => [
       'type' => 'integer',
     ],
-    'OptionRestrictionMaxValue' =>
-    [
+    'OptionRestrictionMaxValue' => [
       'type' => 'integer',
     ],
-    'OptionRestrictionMinValue' =>
-    [
+    'OptionRestrictionMinValue' => [
       'type' => 'integer',
     ],
-    'OptionRestrictionRegex' =>
-    [
+    'OptionRestrictionRegex' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Pattern' =>
-        [
+      'members' => [
+        'Pattern' => [
           'shape' => 'RegexPattern',
         ],
-        'Label' =>
-        [
+        'Label' => [
           'shape' => 'RegexLabel',
         ],
       ],
     ],
-    'OptionSpecification' =>
-    [
+    'OptionSpecification' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Namespace' =>
-        [
+      'members' => [
+        'Namespace' => [
           'shape' => 'OptionNamespace',
         ],
-        'OptionName' =>
-        [
+        'OptionName' => [
           'shape' => 'ConfigurationOptionName',
         ],
       ],
     ],
-    'OptionsSpecifierList' =>
-    [
+    'OptionsSpecifierList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'OptionSpecification',
       ],
     ],
-    'Queue' =>
-    [
+    'Queue' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
-        'URL' =>
-        [
+        'URL' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'QueueList' =>
-    [
+    'QueueList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Queue',
       ],
     ],
-    'RebuildEnvironmentMessage' =>
-    [
+    'RebuildEnvironmentMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EnvironmentId' =>
-        [
+      'members' => [
+        'EnvironmentId' => [
           'shape' => 'EnvironmentId',
         ],
-        'EnvironmentName' =>
-        [
+        'EnvironmentName' => [
           'shape' => 'EnvironmentName',
         ],
       ],
     ],
-    'RegexLabel' =>
-    [
+    'RegexLabel' => [
       'type' => 'string',
     ],
-    'RegexPattern' =>
-    [
+    'RegexPattern' => [
       'type' => 'string',
     ],
-    'RequestEnvironmentInfoMessage' =>
-    [
+    'RequestEnvironmentInfoMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InfoType',
+      'required' => [
+        'InfoType',
       ],
-      'members' =>
-      [
-        'EnvironmentId' =>
-        [
+      'members' => [
+        'EnvironmentId' => [
           'shape' => 'EnvironmentId',
         ],
-        'EnvironmentName' =>
-        [
+        'EnvironmentName' => [
           'shape' => 'EnvironmentName',
         ],
-        'InfoType' =>
-        [
+        'InfoType' => [
           'shape' => 'EnvironmentInfoType',
         ],
       ],
     ],
-    'RequestId' =>
-    [
+    'RequestId' => [
       'type' => 'string',
     ],
-    'ResourceId' =>
-    [
+    'ResourceId' => [
       'type' => 'string',
     ],
-    'RestartAppServerMessage' =>
-    [
+    'RestartAppServerMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EnvironmentId' =>
-        [
+      'members' => [
+        'EnvironmentId' => [
           'shape' => 'EnvironmentId',
         ],
-        'EnvironmentName' =>
-        [
+        'EnvironmentName' => [
           'shape' => 'EnvironmentName',
         ],
       ],
     ],
-    'RetrieveEnvironmentInfoMessage' =>
-    [
+    'RetrieveEnvironmentInfoMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InfoType',
+      'required' => [
+        'InfoType',
       ],
-      'members' =>
-      [
-        'EnvironmentId' =>
-        [
+      'members' => [
+        'EnvironmentId' => [
           'shape' => 'EnvironmentId',
         ],
-        'EnvironmentName' =>
-        [
+        'EnvironmentName' => [
           'shape' => 'EnvironmentName',
         ],
-        'InfoType' =>
-        [
+        'InfoType' => [
           'shape' => 'EnvironmentInfoType',
         ],
       ],
     ],
-    'RetrieveEnvironmentInfoResultMessage' =>
-    [
+    'RetrieveEnvironmentInfoResultMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EnvironmentInfo' =>
-        [
+      'members' => [
+        'EnvironmentInfo' => [
           'shape' => 'EnvironmentInfoDescriptionList',
         ],
       ],
     ],
-    'S3Bucket' =>
-    [
+    'S3Bucket' => [
       'type' => 'string',
       'max' => 255,
     ],
-    'S3Key' =>
-    [
+    'S3Key' => [
       'type' => 'string',
       'max' => 1024,
     ],
-    'S3Location' =>
-    [
+    'S3Location' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'S3Bucket' =>
-        [
+      'members' => [
+        'S3Bucket' => [
           'shape' => 'S3Bucket',
         ],
-        'S3Key' =>
-        [
+        'S3Key' => [
           'shape' => 'S3Key',
         ],
       ],
     ],
-    'S3LocationNotInServiceRegionException' =>
-    [
+    'S3LocationNotInServiceRegionException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'S3LocationNotInServiceRegionException',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'S3SubscriptionRequiredException' =>
-    [
+    'S3SubscriptionRequiredException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'S3SubscriptionRequiredException',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SampleTimestamp' =>
-    [
+    'SampleTimestamp' => [
       'type' => 'timestamp',
     ],
-    'SolutionStackDescription' =>
-    [
+    'SolutionStackDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SolutionStackName' =>
-        [
+      'members' => [
+        'SolutionStackName' => [
           'shape' => 'SolutionStackName',
         ],
-        'PermittedFileTypes' =>
-        [
+        'PermittedFileTypes' => [
           'shape' => 'SolutionStackFileTypeList',
         ],
       ],
     ],
-    'SolutionStackFileTypeList' =>
-    [
+    'SolutionStackFileTypeList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'FileTypeExtension',
       ],
     ],
-    'SolutionStackName' =>
-    [
+    'SolutionStackName' => [
       'type' => 'string',
       'max' => 100,
     ],
-    'SourceBundleDeletionException' =>
-    [
+    'SourceBundleDeletionException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SourceBundleDeletionFailure',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SourceConfiguration' =>
-    [
+    'SourceConfiguration' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ApplicationName' =>
-        [
+      'members' => [
+        'ApplicationName' => [
           'shape' => 'ApplicationName',
         ],
-        'TemplateName' =>
-        [
+        'TemplateName' => [
           'shape' => 'ConfigurationTemplateName',
         ],
       ],
     ],
-    'String' =>
-    [
+    'String' => [
       'type' => 'string',
     ],
-    'SwapEnvironmentCNAMEsMessage' =>
-    [
+    'SwapEnvironmentCNAMEsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SourceEnvironmentId' =>
-        [
+      'members' => [
+        'SourceEnvironmentId' => [
           'shape' => 'EnvironmentId',
         ],
-        'SourceEnvironmentName' =>
-        [
+        'SourceEnvironmentName' => [
           'shape' => 'EnvironmentName',
         ],
-        'DestinationEnvironmentId' =>
-        [
+        'DestinationEnvironmentId' => [
           'shape' => 'EnvironmentId',
         ],
-        'DestinationEnvironmentName' =>
-        [
+        'DestinationEnvironmentName' => [
           'shape' => 'EnvironmentName',
         ],
       ],
     ],
-    'Tag' =>
-    [
+    'Tag' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Key' =>
-        [
+      'members' => [
+        'Key' => [
           'shape' => 'TagKey',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'TagValue',
         ],
       ],
     ],
-    'TagKey' =>
-    [
+    'TagKey' => [
       'type' => 'string',
       'min' => 1,
       'max' => 128,
     ],
-    'TagValue' =>
-    [
+    'TagValue' => [
       'type' => 'string',
       'min' => 1,
       'max' => 256,
     ],
-    'Tags' =>
-    [
+    'Tags' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Tag',
       ],
     ],
-    'TerminateEnvForce' =>
-    [
+    'TerminateEnvForce' => [
       'type' => 'boolean',
     ],
-    'TerminateEnvironmentMessage' =>
-    [
+    'TerminateEnvironmentMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EnvironmentId' =>
-        [
+      'members' => [
+        'EnvironmentId' => [
           'shape' => 'EnvironmentId',
         ],
-        'EnvironmentName' =>
-        [
+        'EnvironmentName' => [
           'shape' => 'EnvironmentName',
         ],
-        'TerminateResources' =>
-        [
+        'TerminateResources' => [
           'shape' => 'TerminateEnvironmentResources',
         ],
       ],
     ],
-    'TerminateEnvironmentResources' =>
-    [
+    'TerminateEnvironmentResources' => [
       'type' => 'boolean',
     ],
-    'TimeFilterEnd' =>
-    [
+    'TimeFilterEnd' => [
       'type' => 'timestamp',
     ],
-    'TimeFilterStart' =>
-    [
+    'TimeFilterStart' => [
       'type' => 'timestamp',
     ],
-    'Token' =>
-    [
+    'Token' => [
       'type' => 'string',
     ],
-    'TooManyApplicationVersionsException' =>
-    [
+    'TooManyApplicationVersionsException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
       'exception' => true,
     ],
-    'TooManyApplicationsException' =>
-    [
+    'TooManyApplicationsException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'TooManyApplicationsException',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'TooManyBucketsException' =>
-    [
+    'TooManyBucketsException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'TooManyBucketsException',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'TooManyConfigurationTemplatesException' =>
-    [
+    'TooManyConfigurationTemplatesException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'TooManyConfigurationTemplatesException',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'TooManyEnvironmentsException' =>
-    [
+    'TooManyEnvironmentsException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'TooManyEnvironmentsException',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'Trigger' =>
-    [
+    'Trigger' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'ResourceId',
         ],
       ],
     ],
-    'TriggerList' =>
-    [
+    'TriggerList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Trigger',
       ],
     ],
-    'UpdateApplicationMessage' =>
-    [
+    'UpdateApplicationMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ApplicationName',
+      'required' => [
+        'ApplicationName',
       ],
-      'members' =>
-      [
-        'ApplicationName' =>
-        [
+      'members' => [
+        'ApplicationName' => [
           'shape' => 'ApplicationName',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
       ],
     ],
-    'UpdateApplicationVersionMessage' =>
-    [
+    'UpdateApplicationVersionMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ApplicationName',
-        1 => 'VersionLabel',
+      'required' => [
+        'ApplicationName',
+        'VersionLabel',
       ],
-      'members' =>
-      [
-        'ApplicationName' =>
-        [
+      'members' => [
+        'ApplicationName' => [
           'shape' => 'ApplicationName',
         ],
-        'VersionLabel' =>
-        [
+        'VersionLabel' => [
           'shape' => 'VersionLabel',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
       ],
     ],
-    'UpdateConfigurationTemplateMessage' =>
-    [
+    'UpdateConfigurationTemplateMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ApplicationName',
-        1 => 'TemplateName',
+      'required' => [
+        'ApplicationName',
+        'TemplateName',
       ],
-      'members' =>
-      [
-        'ApplicationName' =>
-        [
+      'members' => [
+        'ApplicationName' => [
           'shape' => 'ApplicationName',
         ],
-        'TemplateName' =>
-        [
+        'TemplateName' => [
           'shape' => 'ConfigurationTemplateName',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
-        'OptionSettings' =>
-        [
+        'OptionSettings' => [
           'shape' => 'ConfigurationOptionSettingsList',
         ],
-        'OptionsToRemove' =>
-        [
+        'OptionsToRemove' => [
           'shape' => 'OptionsSpecifierList',
         ],
       ],
     ],
-    'UpdateDate' =>
-    [
+    'UpdateDate' => [
       'type' => 'timestamp',
     ],
-    'UpdateEnvironmentMessage' =>
-    [
+    'UpdateEnvironmentMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EnvironmentId' =>
-        [
+      'members' => [
+        'EnvironmentId' => [
           'shape' => 'EnvironmentId',
         ],
-        'EnvironmentName' =>
-        [
+        'EnvironmentName' => [
           'shape' => 'EnvironmentName',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
-        'Tier' =>
-        [
+        'Tier' => [
           'shape' => 'EnvironmentTier',
         ],
-        'VersionLabel' =>
-        [
+        'VersionLabel' => [
           'shape' => 'VersionLabel',
         ],
-        'TemplateName' =>
-        [
+        'TemplateName' => [
           'shape' => 'ConfigurationTemplateName',
         ],
-        'OptionSettings' =>
-        [
+        'OptionSettings' => [
           'shape' => 'ConfigurationOptionSettingsList',
         ],
-        'OptionsToRemove' =>
-        [
+        'OptionsToRemove' => [
           'shape' => 'OptionsSpecifierList',
         ],
       ],
     ],
-    'UserDefinedOption' =>
-    [
+    'UserDefinedOption' => [
       'type' => 'boolean',
     ],
-    'ValidateConfigurationSettingsMessage' =>
-    [
+    'ValidateConfigurationSettingsMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ApplicationName',
-        1 => 'OptionSettings',
+      'required' => [
+        'ApplicationName',
+        'OptionSettings',
       ],
-      'members' =>
-      [
-        'ApplicationName' =>
-        [
+      'members' => [
+        'ApplicationName' => [
           'shape' => 'ApplicationName',
         ],
-        'TemplateName' =>
-        [
+        'TemplateName' => [
           'shape' => 'ConfigurationTemplateName',
         ],
-        'EnvironmentName' =>
-        [
+        'EnvironmentName' => [
           'shape' => 'EnvironmentName',
         ],
-        'OptionSettings' =>
-        [
+        'OptionSettings' => [
           'shape' => 'ConfigurationOptionSettingsList',
         ],
       ],
     ],
-    'ValidationMessage' =>
-    [
+    'ValidationMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'ValidationMessageString',
         ],
-        'Severity' =>
-        [
+        'Severity' => [
           'shape' => 'ValidationSeverity',
         ],
-        'Namespace' =>
-        [
+        'Namespace' => [
           'shape' => 'OptionNamespace',
         ],
-        'OptionName' =>
-        [
+        'OptionName' => [
           'shape' => 'ConfigurationOptionName',
         ],
       ],
     ],
-    'ValidationMessageString' =>
-    [
+    'ValidationMessageString' => [
       'type' => 'string',
     ],
-    'ValidationMessagesList' =>
-    [
+    'ValidationMessagesList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ValidationMessage',
       ],
     ],
-    'ValidationSeverity' =>
-    [
+    'ValidationSeverity' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'error',
-        1 => 'warning',
+      'enum' => [
+        'error',
+        'warning',
       ],
     ],
-    'VersionLabel' =>
-    [
+    'VersionLabel' => [
       'type' => 'string',
       'min' => 1,
       'max' => 100,
     ],
-    'VersionLabelsList' =>
-    [
+    'VersionLabelsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'VersionLabel',
       ],
     ],

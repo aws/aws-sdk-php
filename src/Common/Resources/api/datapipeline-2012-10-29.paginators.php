@@ -1,27 +1,21 @@
-<?php
-return [
-  'pagination' =>
-  [
-    'ListPipelines' =>
-    [
+<?php return [
+  'pagination' => [
+    'ListPipelines' => [
       'input_token' => 'marker',
       'output_token' => 'marker',
       'more_results' => 'hasMoreResults',
       'result_key' => 'pipelineIdList',
     ],
-    'DescribeObjects' =>
-    [
+    'DescribeObjects' => [
       'input_token' => 'marker',
       'output_token' => 'marker',
       'more_results' => 'hasMoreResults',
       'result_key' => 'pipelineObjects',
     ],
-    'DescribePipelines' =>
-    [
+    'DescribePipelines' => [
       'result_key' => 'pipelineDescriptionList',
     ],
-    'QueryObjects' =>
-    [
+    'QueryObjects' => [
       'input_token' => 'marker',
       'output_token' => 'marker',
       'more_results' => 'hasMoreResults',

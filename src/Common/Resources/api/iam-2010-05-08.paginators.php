@@ -1,133 +1,114 @@
-<?php
-return [
-  'pagination' =>
-  [
-    'GetGroup' =>
-    [
+<?php return [
+  'pagination' => [
+    'GetGroup' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'more_results' => 'IsTruncated',
       'limit_key' => 'MaxItems',
       'result_key' => 'Users',
     ],
-    'ListAccessKeys' =>
-    [
+    'ListAccessKeys' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'more_results' => 'IsTruncated',
       'limit_key' => 'MaxItems',
       'result_key' => 'AccessKeyMetadata',
     ],
-    'ListAccountAliases' =>
-    [
+    'ListAccountAliases' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'more_results' => 'IsTruncated',
       'limit_key' => 'MaxItems',
       'result_key' => 'AccountAliases',
     ],
-    'ListGroupPolicies' =>
-    [
+    'ListGroupPolicies' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'more_results' => 'IsTruncated',
       'limit_key' => 'MaxItems',
       'result_key' => 'PolicyNames',
     ],
-    'ListGroups' =>
-    [
+    'ListGroups' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'more_results' => 'IsTruncated',
       'limit_key' => 'MaxItems',
       'result_key' => 'Groups',
     ],
-    'ListGroupsForUser' =>
-    [
+    'ListGroupsForUser' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'more_results' => 'IsTruncated',
       'limit_key' => 'MaxItems',
       'result_key' => 'Groups',
     ],
-    'ListInstanceProfiles' =>
-    [
+    'ListInstanceProfiles' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'more_results' => 'IsTruncated',
       'limit_key' => 'MaxItems',
       'result_key' => 'InstanceProfiles',
     ],
-    'ListInstanceProfilesForRole' =>
-    [
+    'ListInstanceProfilesForRole' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'more_results' => 'IsTruncated',
       'limit_key' => 'MaxItems',
       'result_key' => 'InstanceProfiles',
     ],
-    'ListMFADevices' =>
-    [
+    'ListMFADevices' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'more_results' => 'IsTruncated',
       'limit_key' => 'MaxItems',
       'result_key' => 'MFADevices',
     ],
-    'ListRolePolicies' =>
-    [
+    'ListRolePolicies' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'more_results' => 'IsTruncated',
       'limit_key' => 'MaxItems',
       'result_key' => 'PolicyNames',
     ],
-    'ListRoles' =>
-    [
+    'ListRoles' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'more_results' => 'IsTruncated',
       'limit_key' => 'MaxItems',
       'result_key' => 'Roles',
     ],
-    'ListSAMLProviders' =>
-    [
+    'ListSAMLProviders' => [
       'result_key' => 'SAMLProviderList',
     ],
-    'ListServerCertificates' =>
-    [
+    'ListServerCertificates' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'more_results' => 'IsTruncated',
       'limit_key' => 'MaxItems',
       'result_key' => 'ServerCertificateMetadataList',
     ],
-    'ListSigningCertificates' =>
-    [
+    'ListSigningCertificates' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'more_results' => 'IsTruncated',
       'limit_key' => 'MaxItems',
       'result_key' => 'Certificates',
     ],
-    'ListUserPolicies' =>
-    [
+    'ListUserPolicies' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'more_results' => 'IsTruncated',
       'limit_key' => 'MaxItems',
       'result_key' => 'PolicyNames',
     ],
-    'ListUsers' =>
-    [
+    'ListUsers' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'more_results' => 'IsTruncated',
       'limit_key' => 'MaxItems',
       'result_key' => 'Users',
     ],
-    'ListVirtualMFADevices' =>
-    [
+    'ListVirtualMFADevices' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'more_results' => 'IsTruncated',

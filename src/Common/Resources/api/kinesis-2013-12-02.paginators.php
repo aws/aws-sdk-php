@@ -1,24 +1,19 @@
-<?php
-return [
-  'pagination' =>
-  [
-    'DescribeStream' =>
-    [
+<?php return [
+  'pagination' => [
+    'DescribeStream' => [
       'input_token' => 'ExclusiveStartShardId',
       'limit_key' => 'Limit',
       'more_results' => 'StreamDescription.HasMoreShards',
       'output_token' => 'StreamDescription.Shards[-1].ShardId',
       'result_key' => 'StreamDescription.Shards',
     ],
-    'GetRecords' =>
-    [
+    'GetRecords' => [
       'input_token' => 'ShardIterator',
       'limit_key' => 'Limit',
       'output_token' => 'NextShardIterator',
       'result_key' => 'Records',
     ],
-    'ListStreams' =>
-    [
+    'ListStreams' => [
       'input_token' => 'ExclusiveStartStreamName',
       'limit_key' => 'Limit',
       'more_results' => 'HasMoreStreams',

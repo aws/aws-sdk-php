@@ -1,9 +1,6 @@
-<?php
-return [
-  'pagination' =>
-  [
-    'ListQueues' =>
-    [
+<?php return [
+  'pagination' => [
+    'ListQueues' => [
       'result_key' => 'QueueUrls',
     ],
   ],

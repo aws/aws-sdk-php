@@ -1,30 +1,24 @@
-<?php
-return [
-  'pagination' =>
-  [
-    'ListJobs' =>
-    [
+<?php return [
+  'pagination' => [
+    'ListJobs' => [
       'input_token' => 'marker',
       'output_token' => 'Marker',
       'limit_key' => 'limit',
       'result_key' => 'JobList',
     ],
-    'ListMultipartUploads' =>
-    [
+    'ListMultipartUploads' => [
       'input_token' => 'marker',
       'output_token' => 'Marker',
       'limit_key' => 'limit',
       'result_key' => 'UploadsList',
     ],
-    'ListParts' =>
-    [
+    'ListParts' => [
       'input_token' => 'marker',
       'output_token' => 'Marker',
       'limit_key' => 'limit',
       'result_key' => 'Parts',
     ],
-    'ListVaults' =>
-    [
+    'ListVaults' => [
       'input_token' => 'marker',
       'output_token' => 'Marker',
       'limit_key' => 'limit',

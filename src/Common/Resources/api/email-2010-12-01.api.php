@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2010-12-01',
     'endpointPrefix' => 'email',
     'serviceAbbreviation' => 'Amazon SES',
@@ -11,177 +9,137 @@ return [
     'xmlNamespace' => 'http://ses.amazonaws.com/doc/2010-12-01/',
     'protocol' => 'query',
   ],
-  'operations' =>
-  [
-    'DeleteIdentity' =>
-    [
+  'operations' => [
+    'DeleteIdentity' => [
       'name' => 'DeleteIdentity',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteIdentityRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteIdentityResponse',
         'resultWrapper' => 'DeleteIdentityResult',
       ],
     ],
-    'DeleteVerifiedEmailAddress' =>
-    [
+    'DeleteVerifiedEmailAddress' => [
       'name' => 'DeleteVerifiedEmailAddress',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteVerifiedEmailAddressRequest',
       ],
     ],
-    'GetIdentityDkimAttributes' =>
-    [
+    'GetIdentityDkimAttributes' => [
       'name' => 'GetIdentityDkimAttributes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetIdentityDkimAttributesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetIdentityDkimAttributesResponse',
         'resultWrapper' => 'GetIdentityDkimAttributesResult',
       ],
     ],
-    'GetIdentityNotificationAttributes' =>
-    [
+    'GetIdentityNotificationAttributes' => [
       'name' => 'GetIdentityNotificationAttributes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetIdentityNotificationAttributesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetIdentityNotificationAttributesResponse',
         'resultWrapper' => 'GetIdentityNotificationAttributesResult',
       ],
     ],
-    'GetIdentityVerificationAttributes' =>
-    [
+    'GetIdentityVerificationAttributes' => [
       'name' => 'GetIdentityVerificationAttributes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetIdentityVerificationAttributesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetIdentityVerificationAttributesResponse',
         'resultWrapper' => 'GetIdentityVerificationAttributesResult',
       ],
     ],
-    'GetSendQuota' =>
-    [
+    'GetSendQuota' => [
       'name' => 'GetSendQuota',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetSendQuotaResponse',
         'resultWrapper' => 'GetSendQuotaResult',
       ],
     ],
-    'GetSendStatistics' =>
-    [
+    'GetSendStatistics' => [
       'name' => 'GetSendStatistics',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetSendStatisticsResponse',
         'resultWrapper' => 'GetSendStatisticsResult',
       ],
     ],
-    'ListIdentities' =>
-    [
+    'ListIdentities' => [
       'name' => 'ListIdentities',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListIdentitiesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListIdentitiesResponse',
         'resultWrapper' => 'ListIdentitiesResult',
       ],
     ],
-    'ListVerifiedEmailAddresses' =>
-    [
+    'ListVerifiedEmailAddresses' => [
       'name' => 'ListVerifiedEmailAddresses',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListVerifiedEmailAddressesResponse',
         'resultWrapper' => 'ListVerifiedEmailAddressesResult',
       ],
     ],
-    'SendEmail' =>
-    [
+    'SendEmail' => [
       'name' => 'SendEmail',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SendEmailRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'SendEmailResponse',
         'resultWrapper' => 'SendEmailResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'MessageRejected',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MessageRejected',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -190,30 +148,23 @@ return [
         ],
       ],
     ],
-    'SendRawEmail' =>
-    [
+    'SendRawEmail' => [
       'name' => 'SendRawEmail',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SendRawEmailRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'SendRawEmailResponse',
         'resultWrapper' => 'SendRawEmailResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'MessageRejected',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MessageRejected',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -222,971 +173,727 @@ return [
         ],
       ],
     ],
-    'SetIdentityDkimEnabled' =>
-    [
+    'SetIdentityDkimEnabled' => [
       'name' => 'SetIdentityDkimEnabled',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SetIdentityDkimEnabledRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'SetIdentityDkimEnabledResponse',
         'resultWrapper' => 'SetIdentityDkimEnabledResult',
       ],
     ],
-    'SetIdentityFeedbackForwardingEnabled' =>
-    [
+    'SetIdentityFeedbackForwardingEnabled' => [
       'name' => 'SetIdentityFeedbackForwardingEnabled',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SetIdentityFeedbackForwardingEnabledRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'SetIdentityFeedbackForwardingEnabledResponse',
         'resultWrapper' => 'SetIdentityFeedbackForwardingEnabledResult',
       ],
     ],
-    'SetIdentityNotificationTopic' =>
-    [
+    'SetIdentityNotificationTopic' => [
       'name' => 'SetIdentityNotificationTopic',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SetIdentityNotificationTopicRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'SetIdentityNotificationTopicResponse',
         'resultWrapper' => 'SetIdentityNotificationTopicResult',
       ],
     ],
-    'VerifyDomainDkim' =>
-    [
+    'VerifyDomainDkim' => [
       'name' => 'VerifyDomainDkim',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'VerifyDomainDkimRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'VerifyDomainDkimResponse',
         'resultWrapper' => 'VerifyDomainDkimResult',
       ],
     ],
-    'VerifyDomainIdentity' =>
-    [
+    'VerifyDomainIdentity' => [
       'name' => 'VerifyDomainIdentity',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'VerifyDomainIdentityRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'VerifyDomainIdentityResponse',
         'resultWrapper' => 'VerifyDomainIdentityResult',
       ],
     ],
-    'VerifyEmailAddress' =>
-    [
+    'VerifyEmailAddress' => [
       'name' => 'VerifyEmailAddress',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'VerifyEmailAddressRequest',
       ],
     ],
-    'VerifyEmailIdentity' =>
-    [
+    'VerifyEmailIdentity' => [
       'name' => 'VerifyEmailIdentity',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'VerifyEmailIdentityRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'VerifyEmailIdentityResponse',
         'resultWrapper' => 'VerifyEmailIdentityResult',
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'Address' =>
-    [
+  'shapes' => [
+    'Address' => [
       'type' => 'string',
     ],
-    'AddressList' =>
-    [
+    'AddressList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Address',
       ],
     ],
-    'Body' =>
-    [
+    'Body' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Text' =>
-        [
+      'members' => [
+        'Text' => [
           'shape' => 'Content',
         ],
-        'Html' =>
-        [
+        'Html' => [
           'shape' => 'Content',
         ],
       ],
     ],
-    'Charset' =>
-    [
+    'Charset' => [
       'type' => 'string',
     ],
-    'Content' =>
-    [
+    'Content' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Data',
+      'required' => [
+        'Data',
       ],
-      'members' =>
-      [
-        'Data' =>
-        [
+      'members' => [
+        'Data' => [
           'shape' => 'MessageData',
         ],
-        'Charset' =>
-        [
+        'Charset' => [
           'shape' => 'Charset',
         ],
       ],
     ],
-    'Counter' =>
-    [
+    'Counter' => [
       'type' => 'long',
     ],
-    'DeleteIdentityRequest' =>
-    [
+    'DeleteIdentityRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Identity',
+      'required' => [
+        'Identity',
       ],
-      'members' =>
-      [
-        'Identity' =>
-        [
+      'members' => [
+        'Identity' => [
           'shape' => 'Identity',
         ],
       ],
     ],
-    'DeleteIdentityResponse' =>
-    [
+    'DeleteIdentityResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'DeleteVerifiedEmailAddressRequest' =>
-    [
+    'DeleteVerifiedEmailAddressRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'EmailAddress',
+      'required' => [
+        'EmailAddress',
       ],
-      'members' =>
-      [
-        'EmailAddress' =>
-        [
+      'members' => [
+        'EmailAddress' => [
           'shape' => 'Address',
         ],
       ],
     ],
-    'Destination' =>
-    [
+    'Destination' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ToAddresses' =>
-        [
+      'members' => [
+        'ToAddresses' => [
           'shape' => 'AddressList',
         ],
-        'CcAddresses' =>
-        [
+        'CcAddresses' => [
           'shape' => 'AddressList',
         ],
-        'BccAddresses' =>
-        [
+        'BccAddresses' => [
           'shape' => 'AddressList',
         ],
       ],
     ],
-    'DkimAttributes' =>
-    [
+    'DkimAttributes' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'Identity',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'IdentityDkimAttributes',
       ],
     ],
-    'Domain' =>
-    [
+    'Domain' => [
       'type' => 'string',
     ],
-    'Enabled' =>
-    [
+    'Enabled' => [
       'type' => 'boolean',
     ],
-    'GetIdentityDkimAttributesRequest' =>
-    [
+    'GetIdentityDkimAttributesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Identities',
+      'required' => [
+        'Identities',
       ],
-      'members' =>
-      [
-        'Identities' =>
-        [
+      'members' => [
+        'Identities' => [
           'shape' => 'IdentityList',
         ],
       ],
     ],
-    'GetIdentityDkimAttributesResponse' =>
-    [
+    'GetIdentityDkimAttributesResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DkimAttributes',
+      'required' => [
+        'DkimAttributes',
       ],
-      'members' =>
-      [
-        'DkimAttributes' =>
-        [
+      'members' => [
+        'DkimAttributes' => [
           'shape' => 'DkimAttributes',
         ],
       ],
     ],
-    'GetIdentityNotificationAttributesRequest' =>
-    [
+    'GetIdentityNotificationAttributesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Identities',
+      'required' => [
+        'Identities',
       ],
-      'members' =>
-      [
-        'Identities' =>
-        [
+      'members' => [
+        'Identities' => [
           'shape' => 'IdentityList',
         ],
       ],
     ],
-    'GetIdentityNotificationAttributesResponse' =>
-    [
+    'GetIdentityNotificationAttributesResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'NotificationAttributes',
+      'required' => [
+        'NotificationAttributes',
       ],
-      'members' =>
-      [
-        'NotificationAttributes' =>
-        [
+      'members' => [
+        'NotificationAttributes' => [
           'shape' => 'NotificationAttributes',
         ],
       ],
     ],
-    'GetIdentityVerificationAttributesRequest' =>
-    [
+    'GetIdentityVerificationAttributesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Identities',
+      'required' => [
+        'Identities',
       ],
-      'members' =>
-      [
-        'Identities' =>
-        [
+      'members' => [
+        'Identities' => [
           'shape' => 'IdentityList',
         ],
       ],
     ],
-    'GetIdentityVerificationAttributesResponse' =>
-    [
+    'GetIdentityVerificationAttributesResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VerificationAttributes',
+      'required' => [
+        'VerificationAttributes',
       ],
-      'members' =>
-      [
-        'VerificationAttributes' =>
-        [
+      'members' => [
+        'VerificationAttributes' => [
           'shape' => 'VerificationAttributes',
         ],
       ],
     ],
-    'GetSendQuotaResponse' =>
-    [
+    'GetSendQuotaResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Max24HourSend' =>
-        [
+      'members' => [
+        'Max24HourSend' => [
           'shape' => 'Max24HourSend',
         ],
-        'MaxSendRate' =>
-        [
+        'MaxSendRate' => [
           'shape' => 'MaxSendRate',
         ],
-        'SentLast24Hours' =>
-        [
+        'SentLast24Hours' => [
           'shape' => 'SentLast24Hours',
         ],
       ],
     ],
-    'GetSendStatisticsResponse' =>
-    [
+    'GetSendStatisticsResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SendDataPoints' =>
-        [
+      'members' => [
+        'SendDataPoints' => [
           'shape' => 'SendDataPointList',
         ],
       ],
     ],
-    'Identity' =>
-    [
+    'Identity' => [
       'type' => 'string',
     ],
-    'IdentityDkimAttributes' =>
-    [
+    'IdentityDkimAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DkimEnabled',
-        1 => 'DkimVerificationStatus',
+      'required' => [
+        'DkimEnabled',
+        'DkimVerificationStatus',
       ],
-      'members' =>
-      [
-        'DkimEnabled' =>
-        [
+      'members' => [
+        'DkimEnabled' => [
           'shape' => 'Enabled',
         ],
-        'DkimVerificationStatus' =>
-        [
+        'DkimVerificationStatus' => [
           'shape' => 'VerificationStatus',
         ],
-        'DkimTokens' =>
-        [
+        'DkimTokens' => [
           'shape' => 'VerificationTokenList',
         ],
       ],
     ],
-    'IdentityList' =>
-    [
+    'IdentityList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Identity',
       ],
     ],
-    'IdentityNotificationAttributes' =>
-    [
+    'IdentityNotificationAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'BounceTopic',
-        1 => 'ComplaintTopic',
-        2 => 'DeliveryTopic',
-        3 => 'ForwardingEnabled',
+      'required' => [
+        'BounceTopic',
+        'ComplaintTopic',
+        'DeliveryTopic',
+        'ForwardingEnabled',
       ],
-      'members' =>
-      [
-        'BounceTopic' =>
-        [
+      'members' => [
+        'BounceTopic' => [
           'shape' => 'NotificationTopic',
         ],
-        'ComplaintTopic' =>
-        [
+        'ComplaintTopic' => [
           'shape' => 'NotificationTopic',
         ],
-        'DeliveryTopic' =>
-        [
+        'DeliveryTopic' => [
           'shape' => 'NotificationTopic',
         ],
-        'ForwardingEnabled' =>
-        [
+        'ForwardingEnabled' => [
           'shape' => 'Enabled',
         ],
       ],
     ],
-    'IdentityType' =>
-    [
+    'IdentityType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'EmailAddress',
-        1 => 'Domain',
+      'enum' => [
+        'EmailAddress',
+        'Domain',
       ],
     ],
-    'IdentityVerificationAttributes' =>
-    [
+    'IdentityVerificationAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VerificationStatus',
+      'required' => [
+        'VerificationStatus',
       ],
-      'members' =>
-      [
-        'VerificationStatus' =>
-        [
+      'members' => [
+        'VerificationStatus' => [
           'shape' => 'VerificationStatus',
         ],
-        'VerificationToken' =>
-        [
+        'VerificationToken' => [
           'shape' => 'VerificationToken',
         ],
       ],
     ],
-    'ListIdentitiesRequest' =>
-    [
+    'ListIdentitiesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IdentityType' =>
-        [
+      'members' => [
+        'IdentityType' => [
           'shape' => 'IdentityType',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'NextToken',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'MaxItems',
         ],
       ],
     ],
-    'ListIdentitiesResponse' =>
-    [
+    'ListIdentitiesResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Identities',
+      'required' => [
+        'Identities',
       ],
-      'members' =>
-      [
-        'Identities' =>
-        [
+      'members' => [
+        'Identities' => [
           'shape' => 'IdentityList',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'NextToken',
         ],
       ],
     ],
-    'ListVerifiedEmailAddressesResponse' =>
-    [
+    'ListVerifiedEmailAddressesResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VerifiedEmailAddresses' =>
-        [
+      'members' => [
+        'VerifiedEmailAddresses' => [
           'shape' => 'AddressList',
         ],
       ],
     ],
-    'Max24HourSend' =>
-    [
+    'Max24HourSend' => [
       'type' => 'double',
     ],
-    'MaxItems' =>
-    [
+    'MaxItems' => [
       'type' => 'integer',
     ],
-    'MaxSendRate' =>
-    [
+    'MaxSendRate' => [
       'type' => 'double',
     ],
-    'Message' =>
-    [
+    'Message' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Subject',
-        1 => 'Body',
+      'required' => [
+        'Subject',
+        'Body',
       ],
-      'members' =>
-      [
-        'Subject' =>
-        [
+      'members' => [
+        'Subject' => [
           'shape' => 'Content',
         ],
-        'Body' =>
-        [
+        'Body' => [
           'shape' => 'Body',
         ],
       ],
     ],
-    'MessageData' =>
-    [
+    'MessageData' => [
       'type' => 'string',
     ],
-    'MessageId' =>
-    [
+    'MessageId' => [
       'type' => 'string',
     ],
-    'MessageRejected' =>
-    [
+    'MessageRejected' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'MessageRejected',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'NextToken' =>
-    [
+    'NextToken' => [
       'type' => 'string',
     ],
-    'NotificationAttributes' =>
-    [
+    'NotificationAttributes' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'Identity',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'IdentityNotificationAttributes',
       ],
     ],
-    'NotificationTopic' =>
-    [
+    'NotificationTopic' => [
       'type' => 'string',
     ],
-    'NotificationType' =>
-    [
+    'NotificationType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'Bounce',
-        1 => 'Complaint',
-        2 => 'Delivery',
+      'enum' => [
+        'Bounce',
+        'Complaint',
+        'Delivery',
       ],
     ],
-    'RawMessage' =>
-    [
+    'RawMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Data',
+      'required' => [
+        'Data',
       ],
-      'members' =>
-      [
-        'Data' =>
-        [
+      'members' => [
+        'Data' => [
           'shape' => 'RawMessageData',
         ],
       ],
     ],
-    'RawMessageData' =>
-    [
+    'RawMessageData' => [
       'type' => 'blob',
     ],
-    'SendDataPoint' =>
-    [
+    'SendDataPoint' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Timestamp' =>
-        [
+      'members' => [
+        'Timestamp' => [
           'shape' => 'Timestamp',
         ],
-        'DeliveryAttempts' =>
-        [
+        'DeliveryAttempts' => [
           'shape' => 'Counter',
         ],
-        'Bounces' =>
-        [
+        'Bounces' => [
           'shape' => 'Counter',
         ],
-        'Complaints' =>
-        [
+        'Complaints' => [
           'shape' => 'Counter',
         ],
-        'Rejects' =>
-        [
+        'Rejects' => [
           'shape' => 'Counter',
         ],
       ],
     ],
-    'SendDataPointList' =>
-    [
+    'SendDataPointList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'SendDataPoint',
       ],
     ],
-    'SendEmailRequest' =>
-    [
+    'SendEmailRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Source',
-        1 => 'Destination',
-        2 => 'Message',
+      'required' => [
+        'Source',
+        'Destination',
+        'Message',
       ],
-      'members' =>
-      [
-        'Source' =>
-        [
+      'members' => [
+        'Source' => [
           'shape' => 'Address',
         ],
-        'Destination' =>
-        [
+        'Destination' => [
           'shape' => 'Destination',
         ],
-        'Message' =>
-        [
+        'Message' => [
           'shape' => 'Message',
         ],
-        'ReplyToAddresses' =>
-        [
+        'ReplyToAddresses' => [
           'shape' => 'AddressList',
         ],
-        'ReturnPath' =>
-        [
+        'ReturnPath' => [
           'shape' => 'Address',
         ],
       ],
     ],
-    'SendEmailResponse' =>
-    [
+    'SendEmailResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'MessageId',
+      'required' => [
+        'MessageId',
       ],
-      'members' =>
-      [
-        'MessageId' =>
-        [
+      'members' => [
+        'MessageId' => [
           'shape' => 'MessageId',
         ],
       ],
     ],
-    'SendRawEmailRequest' =>
-    [
+    'SendRawEmailRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RawMessage',
+      'required' => [
+        'RawMessage',
       ],
-      'members' =>
-      [
-        'Source' =>
-        [
+      'members' => [
+        'Source' => [
           'shape' => 'Address',
         ],
-        'Destinations' =>
-        [
+        'Destinations' => [
           'shape' => 'AddressList',
         ],
-        'RawMessage' =>
-        [
+        'RawMessage' => [
           'shape' => 'RawMessage',
         ],
       ],
     ],
-    'SendRawEmailResponse' =>
-    [
+    'SendRawEmailResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'MessageId',
+      'required' => [
+        'MessageId',
       ],
-      'members' =>
-      [
-        'MessageId' =>
-        [
+      'members' => [
+        'MessageId' => [
           'shape' => 'MessageId',
         ],
       ],
     ],
-    'SentLast24Hours' =>
-    [
+    'SentLast24Hours' => [
       'type' => 'double',
     ],
-    'SetIdentityDkimEnabledRequest' =>
-    [
+    'SetIdentityDkimEnabledRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Identity',
-        1 => 'DkimEnabled',
+      'required' => [
+        'Identity',
+        'DkimEnabled',
       ],
-      'members' =>
-      [
-        'Identity' =>
-        [
+      'members' => [
+        'Identity' => [
           'shape' => 'Identity',
         ],
-        'DkimEnabled' =>
-        [
+        'DkimEnabled' => [
           'shape' => 'Enabled',
         ],
       ],
     ],
-    'SetIdentityDkimEnabledResponse' =>
-    [
+    'SetIdentityDkimEnabledResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'SetIdentityFeedbackForwardingEnabledRequest' =>
-    [
+    'SetIdentityFeedbackForwardingEnabledRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Identity',
-        1 => 'ForwardingEnabled',
+      'required' => [
+        'Identity',
+        'ForwardingEnabled',
       ],
-      'members' =>
-      [
-        'Identity' =>
-        [
+      'members' => [
+        'Identity' => [
           'shape' => 'Identity',
         ],
-        'ForwardingEnabled' =>
-        [
+        'ForwardingEnabled' => [
           'shape' => 'Enabled',
         ],
       ],
     ],
-    'SetIdentityFeedbackForwardingEnabledResponse' =>
-    [
+    'SetIdentityFeedbackForwardingEnabledResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'SetIdentityNotificationTopicRequest' =>
-    [
+    'SetIdentityNotificationTopicRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Identity',
-        1 => 'NotificationType',
+      'required' => [
+        'Identity',
+        'NotificationType',
       ],
-      'members' =>
-      [
-        'Identity' =>
-        [
+      'members' => [
+        'Identity' => [
           'shape' => 'Identity',
         ],
-        'NotificationType' =>
-        [
+        'NotificationType' => [
           'shape' => 'NotificationType',
         ],
-        'SnsTopic' =>
-        [
+        'SnsTopic' => [
           'shape' => 'NotificationTopic',
         ],
       ],
     ],
-    'SetIdentityNotificationTopicResponse' =>
-    [
+    'SetIdentityNotificationTopicResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'Timestamp' =>
-    [
+    'Timestamp' => [
       'type' => 'timestamp',
     ],
-    'VerificationAttributes' =>
-    [
+    'VerificationAttributes' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'Identity',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'IdentityVerificationAttributes',
       ],
     ],
-    'VerificationStatus' =>
-    [
+    'VerificationStatus' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'Pending',
-        1 => 'Success',
-        2 => 'Failed',
-        3 => 'TemporaryFailure',
-        4 => 'NotStarted',
+      'enum' => [
+        'Pending',
+        'Success',
+        'Failed',
+        'TemporaryFailure',
+        'NotStarted',
       ],
     ],
-    'VerificationToken' =>
-    [
+    'VerificationToken' => [
       'type' => 'string',
     ],
-    'VerificationTokenList' =>
-    [
+    'VerificationTokenList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'VerificationToken',
       ],
     ],
-    'VerifyDomainDkimRequest' =>
-    [
+    'VerifyDomainDkimRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Domain',
+      'required' => [
+        'Domain',
       ],
-      'members' =>
-      [
-        'Domain' =>
-        [
+      'members' => [
+        'Domain' => [
           'shape' => 'Domain',
         ],
       ],
     ],
-    'VerifyDomainDkimResponse' =>
-    [
+    'VerifyDomainDkimResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DkimTokens',
+      'required' => [
+        'DkimTokens',
       ],
-      'members' =>
-      [
-        'DkimTokens' =>
-        [
+      'members' => [
+        'DkimTokens' => [
           'shape' => 'VerificationTokenList',
         ],
       ],
     ],
-    'VerifyDomainIdentityRequest' =>
-    [
+    'VerifyDomainIdentityRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Domain',
+      'required' => [
+        'Domain',
       ],
-      'members' =>
-      [
-        'Domain' =>
-        [
+      'members' => [
+        'Domain' => [
           'shape' => 'Domain',
         ],
       ],
     ],
-    'VerifyDomainIdentityResponse' =>
-    [
+    'VerifyDomainIdentityResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VerificationToken',
+      'required' => [
+        'VerificationToken',
       ],
-      'members' =>
-      [
-        'VerificationToken' =>
-        [
+      'members' => [
+        'VerificationToken' => [
           'shape' => 'VerificationToken',
         ],
       ],
     ],
-    'VerifyEmailAddressRequest' =>
-    [
+    'VerifyEmailAddressRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'EmailAddress',
+      'required' => [
+        'EmailAddress',
       ],
-      'members' =>
-      [
-        'EmailAddress' =>
-        [
+      'members' => [
+        'EmailAddress' => [
           'shape' => 'Address',
         ],
       ],
     ],
-    'VerifyEmailIdentityRequest' =>
-    [
+    'VerifyEmailIdentityRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'EmailAddress',
+      'required' => [
+        'EmailAddress',
       ],
-      'members' =>
-      [
-        'EmailAddress' =>
-        [
+      'members' => [
+        'EmailAddress' => [
           'shape' => 'Address',
         ],
       ],
     ],
-    'VerifyEmailIdentityResponse' =>
-    [
+    'VerifyEmailIdentityResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
   ],

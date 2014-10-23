@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2013-04-15',
     'endpointPrefix' => 'support',
     'jsonVersion' => '1.1',
@@ -10,253 +8,196 @@ return [
     'targetPrefix' => 'AWSSupport_20130415',
     'protocol' => 'json',
   ],
-  'operations' =>
-  [
-    'AddAttachmentsToSet' =>
-    [
+  'operations' => [
+    'AddAttachmentsToSet' => [
       'name' => 'AddAttachmentsToSet',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AddAttachmentsToSetRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AddAttachmentsToSetResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerError',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'AttachmentSetIdNotFound',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'AttachmentSetExpired',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'AttachmentSetSizeLimitExceeded',
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'AttachmentLimitExceeded',
           'exception' => true,
         ],
       ],
     ],
-    'AddCommunicationToCase' =>
-    [
+    'AddCommunicationToCase' => [
       'name' => 'AddCommunicationToCase',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AddCommunicationToCaseRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AddCommunicationToCaseResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerError',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'CaseIdNotFound',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'AttachmentSetIdNotFound',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'AttachmentSetExpired',
           'exception' => true,
         ],
       ],
     ],
-    'CreateCase' =>
-    [
+    'CreateCase' => [
       'name' => 'CreateCase',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateCaseRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateCaseResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerError',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'CaseCreationLimitExceeded',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'AttachmentSetIdNotFound',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'AttachmentSetExpired',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeAttachment' =>
-    [
+    'DescribeAttachment' => [
       'name' => 'DescribeAttachment',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeAttachmentRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeAttachmentResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerError',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'DescribeAttachmentLimitExceeded',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'AttachmentIdNotFound',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeCases' =>
-    [
+    'DescribeCases' => [
       'name' => 'DescribeCases',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeCasesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeCasesResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerError',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'CaseIdNotFound',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeCommunications' =>
-    [
+    'DescribeCommunications' => [
       'name' => 'DescribeCommunications',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeCommunicationsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeCommunicationsResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerError',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'CaseIdNotFound',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeServices' =>
-    [
+    'DescribeServices' => [
       'name' => 'DescribeServices',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeServicesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeServicesResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerError',
           'exception' => true,
@@ -264,25 +205,19 @@ return [
         ],
       ],
     ],
-    'DescribeSeverityLevels' =>
-    [
+    'DescribeSeverityLevels' => [
       'name' => 'DescribeSeverityLevels',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeSeverityLevelsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeSeverityLevelsResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerError',
           'exception' => true,
@@ -290,25 +225,19 @@ return [
         ],
       ],
     ],
-    'DescribeTrustedAdvisorCheckRefreshStatuses' =>
-    [
+    'DescribeTrustedAdvisorCheckRefreshStatuses' => [
       'name' => 'DescribeTrustedAdvisorCheckRefreshStatuses',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeTrustedAdvisorCheckRefreshStatusesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeTrustedAdvisorCheckRefreshStatusesResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerError',
           'exception' => true,
@@ -316,25 +245,19 @@ return [
         ],
       ],
     ],
-    'DescribeTrustedAdvisorCheckResult' =>
-    [
+    'DescribeTrustedAdvisorCheckResult' => [
       'name' => 'DescribeTrustedAdvisorCheckResult',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeTrustedAdvisorCheckResultRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeTrustedAdvisorCheckResultResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerError',
           'exception' => true,
@@ -342,25 +265,19 @@ return [
         ],
       ],
     ],
-    'DescribeTrustedAdvisorCheckSummaries' =>
-    [
+    'DescribeTrustedAdvisorCheckSummaries' => [
       'name' => 'DescribeTrustedAdvisorCheckSummaries',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeTrustedAdvisorCheckSummariesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeTrustedAdvisorCheckSummariesResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerError',
           'exception' => true,
@@ -368,25 +285,19 @@ return [
         ],
       ],
     ],
-    'DescribeTrustedAdvisorChecks' =>
-    [
+    'DescribeTrustedAdvisorChecks' => [
       'name' => 'DescribeTrustedAdvisorChecks',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeTrustedAdvisorChecksRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeTrustedAdvisorChecksResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerError',
           'exception' => true,
@@ -394,25 +305,19 @@ return [
         ],
       ],
     ],
-    'RefreshTrustedAdvisorCheck' =>
-    [
+    'RefreshTrustedAdvisorCheck' => [
       'name' => 'RefreshTrustedAdvisorCheck',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RefreshTrustedAdvisorCheckRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RefreshTrustedAdvisorCheckResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerError',
           'exception' => true,
@@ -420,31 +325,24 @@ return [
         ],
       ],
     ],
-    'ResolveCase' =>
-    [
+    'ResolveCase' => [
       'name' => 'ResolveCase',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ResolveCaseRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ResolveCaseResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerError',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'CaseIdNotFound',
           'exception' => true,
@@ -452,1275 +350,953 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'AddAttachmentsToSetRequest' =>
-    [
+  'shapes' => [
+    'AddAttachmentsToSetRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'attachments',
+      'required' => [
+        'attachments',
       ],
-      'members' =>
-      [
-        'attachmentSetId' =>
-        [
+      'members' => [
+        'attachmentSetId' => [
           'shape' => 'AttachmentSetId',
         ],
-        'attachments' =>
-        [
+        'attachments' => [
           'shape' => 'Attachments',
         ],
       ],
     ],
-    'AddAttachmentsToSetResponse' =>
-    [
+    'AddAttachmentsToSetResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'attachmentSetId' =>
-        [
+      'members' => [
+        'attachmentSetId' => [
           'shape' => 'AttachmentSetId',
         ],
-        'expiryTime' =>
-        [
+        'expiryTime' => [
           'shape' => 'ExpiryTime',
         ],
       ],
     ],
-    'AddCommunicationToCaseRequest' =>
-    [
+    'AddCommunicationToCaseRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'communicationBody',
+      'required' => [
+        'communicationBody',
       ],
-      'members' =>
-      [
-        'caseId' =>
-        [
+      'members' => [
+        'caseId' => [
           'shape' => 'CaseId',
         ],
-        'communicationBody' =>
-        [
+        'communicationBody' => [
           'shape' => 'CommunicationBody',
         ],
-        'ccEmailAddresses' =>
-        [
+        'ccEmailAddresses' => [
           'shape' => 'CcEmailAddressList',
         ],
-        'attachmentSetId' =>
-        [
+        'attachmentSetId' => [
           'shape' => 'AttachmentSetId',
         ],
       ],
     ],
-    'AddCommunicationToCaseResponse' =>
-    [
+    'AddCommunicationToCaseResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'result' =>
-        [
+      'members' => [
+        'result' => [
           'shape' => 'Result',
         ],
       ],
     ],
-    'AfterTime' =>
-    [
+    'AfterTime' => [
       'type' => 'string',
     ],
-    'Attachment' =>
-    [
+    'Attachment' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'fileName' =>
-        [
+      'members' => [
+        'fileName' => [
           'shape' => 'FileName',
         ],
-        'data' =>
-        [
+        'data' => [
           'shape' => 'Data',
         ],
       ],
     ],
-    'AttachmentDetails' =>
-    [
+    'AttachmentDetails' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'attachmentId' =>
-        [
+      'members' => [
+        'attachmentId' => [
           'shape' => 'AttachmentId',
         ],
-        'fileName' =>
-        [
+        'fileName' => [
           'shape' => 'FileName',
         ],
       ],
     ],
-    'AttachmentId' =>
-    [
+    'AttachmentId' => [
       'type' => 'string',
     ],
-    'AttachmentIdNotFound' =>
-    [
+    'AttachmentIdNotFound' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'AttachmentLimitExceeded' =>
-    [
+    'AttachmentLimitExceeded' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'AttachmentSet' =>
-    [
+    'AttachmentSet' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AttachmentDetails',
       ],
     ],
-    'AttachmentSetExpired' =>
-    [
+    'AttachmentSetExpired' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'AttachmentSetId' =>
-    [
+    'AttachmentSetId' => [
       'type' => 'string',
     ],
-    'AttachmentSetIdNotFound' =>
-    [
+    'AttachmentSetIdNotFound' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'AttachmentSetSizeLimitExceeded' =>
-    [
+    'AttachmentSetSizeLimitExceeded' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'Attachments' =>
-    [
+    'Attachments' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Attachment',
       ],
     ],
-    'BeforeTime' =>
-    [
+    'BeforeTime' => [
       'type' => 'string',
     ],
-    'Boolean' =>
-    [
+    'Boolean' => [
       'type' => 'boolean',
     ],
-    'CaseCreationLimitExceeded' =>
-    [
+    'CaseCreationLimitExceeded' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'CaseDetails' =>
-    [
+    'CaseDetails' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'caseId' =>
-        [
+      'members' => [
+        'caseId' => [
           'shape' => 'CaseId',
         ],
-        'displayId' =>
-        [
+        'displayId' => [
           'shape' => 'DisplayId',
         ],
-        'subject' =>
-        [
+        'subject' => [
           'shape' => 'Subject',
         ],
-        'status' =>
-        [
+        'status' => [
           'shape' => 'Status',
         ],
-        'serviceCode' =>
-        [
+        'serviceCode' => [
           'shape' => 'ServiceCode',
         ],
-        'categoryCode' =>
-        [
+        'categoryCode' => [
           'shape' => 'CategoryCode',
         ],
-        'severityCode' =>
-        [
+        'severityCode' => [
           'shape' => 'SeverityCode',
         ],
-        'submittedBy' =>
-        [
+        'submittedBy' => [
           'shape' => 'SubmittedBy',
         ],
-        'timeCreated' =>
-        [
+        'timeCreated' => [
           'shape' => 'TimeCreated',
         ],
-        'recentCommunications' =>
-        [
+        'recentCommunications' => [
           'shape' => 'RecentCaseCommunications',
         ],
-        'ccEmailAddresses' =>
-        [
+        'ccEmailAddresses' => [
           'shape' => 'CcEmailAddressList',
         ],
-        'language' =>
-        [
+        'language' => [
           'shape' => 'Language',
         ],
       ],
     ],
-    'CaseId' =>
-    [
+    'CaseId' => [
       'type' => 'string',
     ],
-    'CaseIdList' =>
-    [
+    'CaseIdList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CaseId',
       ],
       'min' => 0,
       'max' => 100,
     ],
-    'CaseIdNotFound' =>
-    [
+    'CaseIdNotFound' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'CaseList' =>
-    [
+    'CaseList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CaseDetails',
       ],
     ],
-    'CaseStatus' =>
-    [
+    'CaseStatus' => [
       'type' => 'string',
     ],
-    'Category' =>
-    [
+    'Category' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'code' =>
-        [
+      'members' => [
+        'code' => [
           'shape' => 'CategoryCode',
         ],
-        'name' =>
-        [
+        'name' => [
           'shape' => 'CategoryName',
         ],
       ],
     ],
-    'CategoryCode' =>
-    [
+    'CategoryCode' => [
       'type' => 'string',
     ],
-    'CategoryList' =>
-    [
+    'CategoryList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Category',
       ],
     ],
-    'CategoryName' =>
-    [
+    'CategoryName' => [
       'type' => 'string',
     ],
-    'CcEmailAddress' =>
-    [
+    'CcEmailAddress' => [
       'type' => 'string',
     ],
-    'CcEmailAddressList' =>
-    [
+    'CcEmailAddressList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CcEmailAddress',
       ],
     ],
-    'Communication' =>
-    [
+    'Communication' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'caseId' =>
-        [
+      'members' => [
+        'caseId' => [
           'shape' => 'CaseId',
         ],
-        'body' =>
-        [
+        'body' => [
           'shape' => 'CommunicationBody',
         ],
-        'submittedBy' =>
-        [
+        'submittedBy' => [
           'shape' => 'SubmittedBy',
         ],
-        'timeCreated' =>
-        [
+        'timeCreated' => [
           'shape' => 'TimeCreated',
         ],
-        'attachmentSet' =>
-        [
+        'attachmentSet' => [
           'shape' => 'AttachmentSet',
         ],
       ],
     ],
-    'CommunicationBody' =>
-    [
+    'CommunicationBody' => [
       'type' => 'string',
     ],
-    'CommunicationList' =>
-    [
+    'CommunicationList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Communication',
       ],
     ],
-    'CreateCaseRequest' =>
-    [
+    'CreateCaseRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'subject',
-        1 => 'communicationBody',
+      'required' => [
+        'subject',
+        'communicationBody',
       ],
-      'members' =>
-      [
-        'subject' =>
-        [
+      'members' => [
+        'subject' => [
           'shape' => 'Subject',
         ],
-        'serviceCode' =>
-        [
+        'serviceCode' => [
           'shape' => 'ServiceCode',
         ],
-        'severityCode' =>
-        [
+        'severityCode' => [
           'shape' => 'SeverityCode',
         ],
-        'categoryCode' =>
-        [
+        'categoryCode' => [
           'shape' => 'CategoryCode',
         ],
-        'communicationBody' =>
-        [
+        'communicationBody' => [
           'shape' => 'CommunicationBody',
         ],
-        'ccEmailAddresses' =>
-        [
+        'ccEmailAddresses' => [
           'shape' => 'CcEmailAddressList',
         ],
-        'language' =>
-        [
+        'language' => [
           'shape' => 'Language',
         ],
-        'issueType' =>
-        [
+        'issueType' => [
           'shape' => 'IssueType',
         ],
-        'attachmentSetId' =>
-        [
+        'attachmentSetId' => [
           'shape' => 'AttachmentSetId',
         ],
       ],
     ],
-    'CreateCaseResponse' =>
-    [
+    'CreateCaseResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'caseId' =>
-        [
+      'members' => [
+        'caseId' => [
           'shape' => 'CaseId',
         ],
       ],
     ],
-    'Data' =>
-    [
+    'Data' => [
       'type' => 'blob',
     ],
-    'DescribeAttachmentLimitExceeded' =>
-    [
+    'DescribeAttachmentLimitExceeded' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'DescribeAttachmentRequest' =>
-    [
+    'DescribeAttachmentRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'attachmentId',
+      'required' => [
+        'attachmentId',
       ],
-      'members' =>
-      [
-        'attachmentId' =>
-        [
+      'members' => [
+        'attachmentId' => [
           'shape' => 'AttachmentId',
         ],
       ],
     ],
-    'DescribeAttachmentResponse' =>
-    [
+    'DescribeAttachmentResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'attachment' =>
-        [
+      'members' => [
+        'attachment' => [
           'shape' => 'Attachment',
         ],
       ],
     ],
-    'DescribeCasesRequest' =>
-    [
+    'DescribeCasesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'caseIdList' =>
-        [
+      'members' => [
+        'caseIdList' => [
           'shape' => 'CaseIdList',
         ],
-        'displayId' =>
-        [
+        'displayId' => [
           'shape' => 'DisplayId',
         ],
-        'afterTime' =>
-        [
+        'afterTime' => [
           'shape' => 'AfterTime',
         ],
-        'beforeTime' =>
-        [
+        'beforeTime' => [
           'shape' => 'BeforeTime',
         ],
-        'includeResolvedCases' =>
-        [
+        'includeResolvedCases' => [
           'shape' => 'IncludeResolvedCases',
         ],
-        'nextToken' =>
-        [
+        'nextToken' => [
           'shape' => 'NextToken',
         ],
-        'maxResults' =>
-        [
+        'maxResults' => [
           'shape' => 'MaxResults',
         ],
-        'language' =>
-        [
+        'language' => [
           'shape' => 'Language',
         ],
-        'includeCommunications' =>
-        [
+        'includeCommunications' => [
           'shape' => 'IncludeCommunications',
         ],
       ],
     ],
-    'DescribeCasesResponse' =>
-    [
+    'DescribeCasesResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'cases' =>
-        [
+      'members' => [
+        'cases' => [
           'shape' => 'CaseList',
         ],
-        'nextToken' =>
-        [
+        'nextToken' => [
           'shape' => 'NextToken',
         ],
       ],
     ],
-    'DescribeCommunicationsRequest' =>
-    [
+    'DescribeCommunicationsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'caseId',
+      'required' => [
+        'caseId',
       ],
-      'members' =>
-      [
-        'caseId' =>
-        [
+      'members' => [
+        'caseId' => [
           'shape' => 'CaseId',
         ],
-        'beforeTime' =>
-        [
+        'beforeTime' => [
           'shape' => 'BeforeTime',
         ],
-        'afterTime' =>
-        [
+        'afterTime' => [
           'shape' => 'AfterTime',
         ],
-        'nextToken' =>
-        [
+        'nextToken' => [
           'shape' => 'NextToken',
         ],
-        'maxResults' =>
-        [
+        'maxResults' => [
           'shape' => 'MaxResults',
         ],
       ],
     ],
-    'DescribeCommunicationsResponse' =>
-    [
+    'DescribeCommunicationsResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'communications' =>
-        [
+      'members' => [
+        'communications' => [
           'shape' => 'CommunicationList',
         ],
-        'nextToken' =>
-        [
+        'nextToken' => [
           'shape' => 'NextToken',
         ],
       ],
     ],
-    'DescribeServicesRequest' =>
-    [
+    'DescribeServicesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'serviceCodeList' =>
-        [
+      'members' => [
+        'serviceCodeList' => [
           'shape' => 'ServiceCodeList',
         ],
-        'language' =>
-        [
+        'language' => [
           'shape' => 'Language',
         ],
       ],
     ],
-    'DescribeServicesResponse' =>
-    [
+    'DescribeServicesResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'services' =>
-        [
+      'members' => [
+        'services' => [
           'shape' => 'ServiceList',
         ],
       ],
     ],
-    'DescribeSeverityLevelsRequest' =>
-    [
+    'DescribeSeverityLevelsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'language' =>
-        [
+      'members' => [
+        'language' => [
           'shape' => 'Language',
         ],
       ],
     ],
-    'DescribeSeverityLevelsResponse' =>
-    [
+    'DescribeSeverityLevelsResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'severityLevels' =>
-        [
+      'members' => [
+        'severityLevels' => [
           'shape' => 'SeverityLevelsList',
         ],
       ],
     ],
-    'DescribeTrustedAdvisorCheckRefreshStatusesRequest' =>
-    [
+    'DescribeTrustedAdvisorCheckRefreshStatusesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'checkIds',
+      'required' => [
+        'checkIds',
       ],
-      'members' =>
-      [
-        'checkIds' =>
-        [
+      'members' => [
+        'checkIds' => [
           'shape' => 'StringList',
         ],
       ],
     ],
-    'DescribeTrustedAdvisorCheckRefreshStatusesResponse' =>
-    [
+    'DescribeTrustedAdvisorCheckRefreshStatusesResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'statuses',
+      'required' => [
+        'statuses',
       ],
-      'members' =>
-      [
-        'statuses' =>
-        [
+      'members' => [
+        'statuses' => [
           'shape' => 'TrustedAdvisorCheckRefreshStatusList',
         ],
       ],
     ],
-    'DescribeTrustedAdvisorCheckResultRequest' =>
-    [
+    'DescribeTrustedAdvisorCheckResultRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'checkId',
+      'required' => [
+        'checkId',
       ],
-      'members' =>
-      [
-        'checkId' =>
-        [
+      'members' => [
+        'checkId' => [
           'shape' => 'String',
         ],
-        'language' =>
-        [
+        'language' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeTrustedAdvisorCheckResultResponse' =>
-    [
+    'DescribeTrustedAdvisorCheckResultResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'result' =>
-        [
+      'members' => [
+        'result' => [
           'shape' => 'TrustedAdvisorCheckResult',
         ],
       ],
     ],
-    'DescribeTrustedAdvisorCheckSummariesRequest' =>
-    [
+    'DescribeTrustedAdvisorCheckSummariesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'checkIds',
+      'required' => [
+        'checkIds',
       ],
-      'members' =>
-      [
-        'checkIds' =>
-        [
+      'members' => [
+        'checkIds' => [
           'shape' => 'StringList',
         ],
       ],
     ],
-    'DescribeTrustedAdvisorCheckSummariesResponse' =>
-    [
+    'DescribeTrustedAdvisorCheckSummariesResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'summaries',
+      'required' => [
+        'summaries',
       ],
-      'members' =>
-      [
-        'summaries' =>
-        [
+      'members' => [
+        'summaries' => [
           'shape' => 'TrustedAdvisorCheckSummaryList',
         ],
       ],
     ],
-    'DescribeTrustedAdvisorChecksRequest' =>
-    [
+    'DescribeTrustedAdvisorChecksRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'language',
+      'required' => [
+        'language',
       ],
-      'members' =>
-      [
-        'language' =>
-        [
+      'members' => [
+        'language' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeTrustedAdvisorChecksResponse' =>
-    [
+    'DescribeTrustedAdvisorChecksResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'checks',
+      'required' => [
+        'checks',
       ],
-      'members' =>
-      [
-        'checks' =>
-        [
+      'members' => [
+        'checks' => [
           'shape' => 'TrustedAdvisorCheckList',
         ],
       ],
     ],
-    'DisplayId' =>
-    [
+    'DisplayId' => [
       'type' => 'string',
     ],
-    'Double' =>
-    [
+    'Double' => [
       'type' => 'double',
     ],
-    'ErrorMessage' =>
-    [
+    'ErrorMessage' => [
       'type' => 'string',
     ],
-    'ExpiryTime' =>
-    [
+    'ExpiryTime' => [
       'type' => 'string',
     ],
-    'FileName' =>
-    [
+    'FileName' => [
       'type' => 'string',
     ],
-    'IncludeCommunications' =>
-    [
+    'IncludeCommunications' => [
       'type' => 'boolean',
     ],
-    'IncludeResolvedCases' =>
-    [
+    'IncludeResolvedCases' => [
       'type' => 'boolean',
     ],
-    'InternalServerError' =>
-    [
+    'InternalServerError' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
       'fault' => true,
     ],
-    'IssueType' =>
-    [
+    'IssueType' => [
       'type' => 'string',
     ],
-    'Language' =>
-    [
+    'Language' => [
       'type' => 'string',
     ],
-    'Long' =>
-    [
+    'Long' => [
       'type' => 'long',
     ],
-    'MaxResults' =>
-    [
+    'MaxResults' => [
       'type' => 'integer',
       'min' => 10,
       'max' => 100,
     ],
-    'NextToken' =>
-    [
+    'NextToken' => [
       'type' => 'string',
     ],
-    'RecentCaseCommunications' =>
-    [
+    'RecentCaseCommunications' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'communications' =>
-        [
+      'members' => [
+        'communications' => [
           'shape' => 'CommunicationList',
         ],
-        'nextToken' =>
-        [
+        'nextToken' => [
           'shape' => 'NextToken',
         ],
       ],
     ],
-    'RefreshTrustedAdvisorCheckRequest' =>
-    [
+    'RefreshTrustedAdvisorCheckRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'checkId',
+      'required' => [
+        'checkId',
       ],
-      'members' =>
-      [
-        'checkId' =>
-        [
+      'members' => [
+        'checkId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'RefreshTrustedAdvisorCheckResponse' =>
-    [
+    'RefreshTrustedAdvisorCheckResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'status',
+      'required' => [
+        'status',
       ],
-      'members' =>
-      [
-        'status' =>
-        [
+      'members' => [
+        'status' => [
           'shape' => 'TrustedAdvisorCheckRefreshStatus',
         ],
       ],
     ],
-    'ResolveCaseRequest' =>
-    [
+    'ResolveCaseRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'caseId' =>
-        [
+      'members' => [
+        'caseId' => [
           'shape' => 'CaseId',
         ],
       ],
     ],
-    'ResolveCaseResponse' =>
-    [
+    'ResolveCaseResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'initialCaseStatus' =>
-        [
+      'members' => [
+        'initialCaseStatus' => [
           'shape' => 'CaseStatus',
         ],
-        'finalCaseStatus' =>
-        [
+        'finalCaseStatus' => [
           'shape' => 'CaseStatus',
         ],
       ],
     ],
-    'Result' =>
-    [
+    'Result' => [
       'type' => 'boolean',
     ],
-    'Service' =>
-    [
+    'Service' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'code' =>
-        [
+      'members' => [
+        'code' => [
           'shape' => 'ServiceCode',
         ],
-        'name' =>
-        [
+        'name' => [
           'shape' => 'ServiceName',
         ],
-        'categories' =>
-        [
+        'categories' => [
           'shape' => 'CategoryList',
         ],
       ],
     ],
-    'ServiceCode' =>
-    [
+    'ServiceCode' => [
       'type' => 'string',
       'pattern' => '[0-9a-z\\-_]+',
     ],
-    'ServiceCodeList' =>
-    [
+    'ServiceCodeList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ServiceCode',
       ],
       'min' => 0,
       'max' => 100,
     ],
-    'ServiceList' =>
-    [
+    'ServiceList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Service',
       ],
     ],
-    'ServiceName' =>
-    [
+    'ServiceName' => [
       'type' => 'string',
     ],
-    'SeverityCode' =>
-    [
+    'SeverityCode' => [
       'type' => 'string',
     ],
-    'SeverityLevel' =>
-    [
+    'SeverityLevel' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'code' =>
-        [
+      'members' => [
+        'code' => [
           'shape' => 'SeverityLevelCode',
         ],
-        'name' =>
-        [
+        'name' => [
           'shape' => 'SeverityLevelName',
         ],
       ],
     ],
-    'SeverityLevelCode' =>
-    [
+    'SeverityLevelCode' => [
       'type' => 'string',
     ],
-    'SeverityLevelName' =>
-    [
+    'SeverityLevelName' => [
       'type' => 'string',
     ],
-    'SeverityLevelsList' =>
-    [
+    'SeverityLevelsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'SeverityLevel',
       ],
     ],
-    'Status' =>
-    [
+    'Status' => [
       'type' => 'string',
     ],
-    'String' =>
-    [
+    'String' => [
       'type' => 'string',
     ],
-    'StringList' =>
-    [
+    'StringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
       ],
     ],
-    'Subject' =>
-    [
+    'Subject' => [
       'type' => 'string',
     ],
-    'SubmittedBy' =>
-    [
+    'SubmittedBy' => [
       'type' => 'string',
     ],
-    'TimeCreated' =>
-    [
+    'TimeCreated' => [
       'type' => 'string',
     ],
-    'TrustedAdvisorCategorySpecificSummary' =>
-    [
+    'TrustedAdvisorCategorySpecificSummary' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'costOptimizing' =>
-        [
+      'members' => [
+        'costOptimizing' => [
           'shape' => 'TrustedAdvisorCostOptimizingSummary',
         ],
       ],
     ],
-    'TrustedAdvisorCheckDescription' =>
-    [
+    'TrustedAdvisorCheckDescription' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'id',
-        1 => 'name',
-        2 => 'description',
-        3 => 'category',
-        4 => 'metadata',
+      'required' => [
+        'id',
+        'name',
+        'description',
+        'category',
+        'metadata',
       ],
-      'members' =>
-      [
-        'id' =>
-        [
+      'members' => [
+        'id' => [
           'shape' => 'String',
         ],
-        'name' =>
-        [
+        'name' => [
           'shape' => 'String',
         ],
-        'description' =>
-        [
+        'description' => [
           'shape' => 'String',
         ],
-        'category' =>
-        [
+        'category' => [
           'shape' => 'String',
         ],
-        'metadata' =>
-        [
+        'metadata' => [
           'shape' => 'StringList',
         ],
       ],
     ],
-    'TrustedAdvisorCheckList' =>
-    [
+    'TrustedAdvisorCheckList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'TrustedAdvisorCheckDescription',
       ],
     ],
-    'TrustedAdvisorCheckRefreshStatus' =>
-    [
+    'TrustedAdvisorCheckRefreshStatus' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'checkId',
-        1 => 'status',
-        2 => 'millisUntilNextRefreshable',
+      'required' => [
+        'checkId',
+        'status',
+        'millisUntilNextRefreshable',
       ],
-      'members' =>
-      [
-        'checkId' =>
-        [
+      'members' => [
+        'checkId' => [
           'shape' => 'String',
         ],
-        'status' =>
-        [
+        'status' => [
           'shape' => 'String',
         ],
-        'millisUntilNextRefreshable' =>
-        [
+        'millisUntilNextRefreshable' => [
           'shape' => 'Long',
         ],
       ],
     ],
-    'TrustedAdvisorCheckRefreshStatusList' =>
-    [
+    'TrustedAdvisorCheckRefreshStatusList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'TrustedAdvisorCheckRefreshStatus',
       ],
     ],
-    'TrustedAdvisorCheckResult' =>
-    [
+    'TrustedAdvisorCheckResult' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'checkId',
-        1 => 'timestamp',
-        2 => 'status',
-        3 => 'resourcesSummary',
-        4 => 'categorySpecificSummary',
-        5 => 'flaggedResources',
+      'required' => [
+        'checkId',
+        'timestamp',
+        'status',
+        'resourcesSummary',
+        'categorySpecificSummary',
+        'flaggedResources',
       ],
-      'members' =>
-      [
-        'checkId' =>
-        [
+      'members' => [
+        'checkId' => [
           'shape' => 'String',
         ],
-        'timestamp' =>
-        [
+        'timestamp' => [
           'shape' => 'String',
         ],
-        'status' =>
-        [
+        'status' => [
           'shape' => 'String',
         ],
-        'resourcesSummary' =>
-        [
+        'resourcesSummary' => [
           'shape' => 'TrustedAdvisorResourcesSummary',
         ],
-        'categorySpecificSummary' =>
-        [
+        'categorySpecificSummary' => [
           'shape' => 'TrustedAdvisorCategorySpecificSummary',
         ],
-        'flaggedResources' =>
-        [
+        'flaggedResources' => [
           'shape' => 'TrustedAdvisorResourceDetailList',
         ],
       ],
     ],
-    'TrustedAdvisorCheckSummary' =>
-    [
+    'TrustedAdvisorCheckSummary' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'checkId',
-        1 => 'timestamp',
-        2 => 'status',
-        3 => 'resourcesSummary',
-        4 => 'categorySpecificSummary',
+      'required' => [
+        'checkId',
+        'timestamp',
+        'status',
+        'resourcesSummary',
+        'categorySpecificSummary',
       ],
-      'members' =>
-      [
-        'checkId' =>
-        [
+      'members' => [
+        'checkId' => [
           'shape' => 'String',
         ],
-        'timestamp' =>
-        [
+        'timestamp' => [
           'shape' => 'String',
         ],
-        'status' =>
-        [
+        'status' => [
           'shape' => 'String',
         ],
-        'hasFlaggedResources' =>
-        [
+        'hasFlaggedResources' => [
           'shape' => 'Boolean',
         ],
-        'resourcesSummary' =>
-        [
+        'resourcesSummary' => [
           'shape' => 'TrustedAdvisorResourcesSummary',
         ],
-        'categorySpecificSummary' =>
-        [
+        'categorySpecificSummary' => [
           'shape' => 'TrustedAdvisorCategorySpecificSummary',
         ],
       ],
     ],
-    'TrustedAdvisorCheckSummaryList' =>
-    [
+    'TrustedAdvisorCheckSummaryList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'TrustedAdvisorCheckSummary',
       ],
     ],
-    'TrustedAdvisorCostOptimizingSummary' =>
-    [
+    'TrustedAdvisorCostOptimizingSummary' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'estimatedMonthlySavings',
-        1 => 'estimatedPercentMonthlySavings',
+      'required' => [
+        'estimatedMonthlySavings',
+        'estimatedPercentMonthlySavings',
       ],
-      'members' =>
-      [
-        'estimatedMonthlySavings' =>
-        [
+      'members' => [
+        'estimatedMonthlySavings' => [
           'shape' => 'Double',
         ],
-        'estimatedPercentMonthlySavings' =>
-        [
+        'estimatedPercentMonthlySavings' => [
           'shape' => 'Double',
         ],
       ],
     ],
-    'TrustedAdvisorResourceDetail' =>
-    [
+    'TrustedAdvisorResourceDetail' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'status',
-        1 => 'region',
-        2 => 'resourceId',
-        3 => 'metadata',
+      'required' => [
+        'status',
+        'region',
+        'resourceId',
+        'metadata',
       ],
-      'members' =>
-      [
-        'status' =>
-        [
+      'members' => [
+        'status' => [
           'shape' => 'String',
         ],
-        'region' =>
-        [
+        'region' => [
           'shape' => 'String',
         ],
-        'resourceId' =>
-        [
+        'resourceId' => [
           'shape' => 'String',
         ],
-        'isSuppressed' =>
-        [
+        'isSuppressed' => [
           'shape' => 'Boolean',
         ],
-        'metadata' =>
-        [
+        'metadata' => [
           'shape' => 'StringList',
         ],
       ],
     ],
-    'TrustedAdvisorResourceDetailList' =>
-    [
+    'TrustedAdvisorResourceDetailList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'TrustedAdvisorResourceDetail',
       ],
     ],
-    'TrustedAdvisorResourcesSummary' =>
-    [
+    'TrustedAdvisorResourcesSummary' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'resourcesProcessed',
-        1 => 'resourcesFlagged',
-        2 => 'resourcesIgnored',
-        3 => 'resourcesSuppressed',
+      'required' => [
+        'resourcesProcessed',
+        'resourcesFlagged',
+        'resourcesIgnored',
+        'resourcesSuppressed',
       ],
-      'members' =>
-      [
-        'resourcesProcessed' =>
-        [
+      'members' => [
+        'resourcesProcessed' => [
           'shape' => 'Long',
         ],
-        'resourcesFlagged' =>
-        [
+        'resourcesFlagged' => [
           'shape' => 'Long',
         ],
-        'resourcesIgnored' =>
-        [
+        'resourcesIgnored' => [
           'shape' => 'Long',
         ],
-        'resourcesSuppressed' =>
-        [
+        'resourcesSuppressed' => [
           'shape' => 'Long',
         ],
       ],

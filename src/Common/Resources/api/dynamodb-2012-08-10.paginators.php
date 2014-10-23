@@ -1,28 +1,22 @@
-<?php
-return [
-  'pagination' =>
-  [
-    'BatchGetItem' =>
-    [
+<?php return [
+  'pagination' => [
+    'BatchGetItem' => [
       'input_token' => 'RequestItems',
       'output_token' => 'UnprocessedKeys',
     ],
-    'ListTables' =>
-    [
+    'ListTables' => [
       'input_token' => 'ExclusiveStartTableName',
       'output_token' => 'LastEvaluatedTableName',
       'limit_key' => 'Limit',
       'result_key' => 'TableNames',
     ],
-    'Query' =>
-    [
+    'Query' => [
       'input_token' => 'ExclusiveStartKey',
       'output_token' => 'LastEvaluatedKey',
       'limit_key' => 'Limit',
       'result_key' => 'Items',
     ],
-    'Scan' =>
-    [
+    'Scan' => [
       'input_token' => 'ExclusiveStartKey',
       'output_token' => 'LastEvaluatedKey',
       'limit_key' => 'Limit',

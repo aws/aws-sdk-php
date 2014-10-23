@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2010-05-15',
     'endpointPrefix' => 'cloudformation',
     'serviceFullName' => 'AWS CloudFormation',
@@ -9,67 +7,52 @@ return [
     'xmlNamespace' => 'http://cloudformation.amazonaws.com/doc/2010-05-15/',
     'protocol' => 'query',
   ],
-  'operations' =>
-  [
-    'CancelUpdateStack' =>
-    [
+  'operations' => [
+    'CancelUpdateStack' => [
       'name' => 'CancelUpdateStack',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CancelUpdateStackInput',
       ],
     ],
-    'CreateStack' =>
-    [
+    'CreateStack' => [
       'name' => 'CreateStack',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateStackInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateStackOutput',
         'resultWrapper' => 'CreateStackResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceededException',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'AlreadyExistsException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AlreadyExistsException',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InsufficientCapabilitiesException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientCapabilitiesException',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -78,218 +61,169 @@ return [
         ],
       ],
     ],
-    'DeleteStack' =>
-    [
+    'DeleteStack' => [
       'name' => 'DeleteStack',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteStackInput',
       ],
     ],
-    'DescribeStackEvents' =>
-    [
+    'DescribeStackEvents' => [
       'name' => 'DescribeStackEvents',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeStackEventsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeStackEventsOutput',
         'resultWrapper' => 'DescribeStackEventsResult',
       ],
     ],
-    'DescribeStackResource' =>
-    [
+    'DescribeStackResource' => [
       'name' => 'DescribeStackResource',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeStackResourceInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeStackResourceOutput',
         'resultWrapper' => 'DescribeStackResourceResult',
       ],
     ],
-    'DescribeStackResources' =>
-    [
+    'DescribeStackResources' => [
       'name' => 'DescribeStackResources',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeStackResourcesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeStackResourcesOutput',
         'resultWrapper' => 'DescribeStackResourcesResult',
       ],
     ],
-    'DescribeStacks' =>
-    [
+    'DescribeStacks' => [
       'name' => 'DescribeStacks',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeStacksInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeStacksOutput',
         'resultWrapper' => 'DescribeStacksResult',
       ],
     ],
-    'EstimateTemplateCost' =>
-    [
+    'EstimateTemplateCost' => [
       'name' => 'EstimateTemplateCost',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'EstimateTemplateCostInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'EstimateTemplateCostOutput',
         'resultWrapper' => 'EstimateTemplateCostResult',
       ],
     ],
-    'GetStackPolicy' =>
-    [
+    'GetStackPolicy' => [
       'name' => 'GetStackPolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetStackPolicyInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetStackPolicyOutput',
         'resultWrapper' => 'GetStackPolicyResult',
       ],
     ],
-    'GetTemplate' =>
-    [
+    'GetTemplate' => [
       'name' => 'GetTemplate',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetTemplateInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetTemplateOutput',
         'resultWrapper' => 'GetTemplateResult',
       ],
     ],
-    'ListStackResources' =>
-    [
+    'ListStackResources' => [
       'name' => 'ListStackResources',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListStackResourcesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListStackResourcesOutput',
         'resultWrapper' => 'ListStackResourcesResult',
       ],
     ],
-    'ListStacks' =>
-    [
+    'ListStacks' => [
       'name' => 'ListStacks',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListStacksInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListStacksOutput',
         'resultWrapper' => 'ListStacksResult',
       ],
     ],
-    'SetStackPolicy' =>
-    [
+    'SetStackPolicy' => [
       'name' => 'SetStackPolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SetStackPolicyInput',
       ],
     ],
-    'UpdateStack' =>
-    [
+    'UpdateStack' => [
       'name' => 'UpdateStack',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateStackInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdateStackOutput',
         'resultWrapper' => 'UpdateStackResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InsufficientCapabilitiesException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientCapabilitiesException',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -298,1261 +232,953 @@ return [
         ],
       ],
     ],
-    'ValidateTemplate' =>
-    [
+    'ValidateTemplate' => [
       'name' => 'ValidateTemplate',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ValidateTemplateInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ValidateTemplateOutput',
         'resultWrapper' => 'ValidateTemplateResult',
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'AlreadyExistsException' =>
-    [
+  'shapes' => [
+    'AlreadyExistsException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'AlreadyExistsException',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'CancelUpdateStackInput' =>
-    [
+    'CancelUpdateStackInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackName',
+      'required' => [
+        'StackName',
       ],
-      'members' =>
-      [
-        'StackName' =>
-        [
+      'members' => [
+        'StackName' => [
           'shape' => 'StackName',
         ],
       ],
     ],
-    'Capabilities' =>
-    [
+    'Capabilities' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Capability',
       ],
     ],
-    'CapabilitiesReason' =>
-    [
+    'CapabilitiesReason' => [
       'type' => 'string',
     ],
-    'Capability' =>
-    [
+    'Capability' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'CAPABILITY_IAM',
+      'enum' => [
+        'CAPABILITY_IAM',
       ],
     ],
-    'CreateStackInput' =>
-    [
+    'CreateStackInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackName',
+      'required' => [
+        'StackName',
       ],
-      'members' =>
-      [
-        'StackName' =>
-        [
+      'members' => [
+        'StackName' => [
           'shape' => 'StackName',
         ],
-        'TemplateBody' =>
-        [
+        'TemplateBody' => [
           'shape' => 'TemplateBody',
         ],
-        'TemplateURL' =>
-        [
+        'TemplateURL' => [
           'shape' => 'TemplateURL',
         ],
-        'Parameters' =>
-        [
+        'Parameters' => [
           'shape' => 'Parameters',
         ],
-        'DisableRollback' =>
-        [
+        'DisableRollback' => [
           'shape' => 'DisableRollback',
         ],
-        'TimeoutInMinutes' =>
-        [
+        'TimeoutInMinutes' => [
           'shape' => 'TimeoutMinutes',
         ],
-        'NotificationARNs' =>
-        [
+        'NotificationARNs' => [
           'shape' => 'NotificationARNs',
         ],
-        'Capabilities' =>
-        [
+        'Capabilities' => [
           'shape' => 'Capabilities',
         ],
-        'OnFailure' =>
-        [
+        'OnFailure' => [
           'shape' => 'OnFailure',
         ],
-        'StackPolicyBody' =>
-        [
+        'StackPolicyBody' => [
           'shape' => 'StackPolicyBody',
         ],
-        'StackPolicyURL' =>
-        [
+        'StackPolicyURL' => [
           'shape' => 'StackPolicyURL',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'Tags',
         ],
       ],
     ],
-    'CreateStackOutput' =>
-    [
+    'CreateStackOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'StackId',
         ],
       ],
     ],
-    'CreationTime' =>
-    [
+    'CreationTime' => [
       'type' => 'timestamp',
     ],
-    'DeleteStackInput' =>
-    [
+    'DeleteStackInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackName',
+      'required' => [
+        'StackName',
       ],
-      'members' =>
-      [
-        'StackName' =>
-        [
+      'members' => [
+        'StackName' => [
           'shape' => 'StackName',
         ],
       ],
     ],
-    'DeletionTime' =>
-    [
+    'DeletionTime' => [
       'type' => 'timestamp',
     ],
-    'DescribeStackEventsInput' =>
-    [
+    'DescribeStackEventsInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackName' =>
-        [
+      'members' => [
+        'StackName' => [
           'shape' => 'StackName',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'NextToken',
         ],
       ],
     ],
-    'DescribeStackEventsOutput' =>
-    [
+    'DescribeStackEventsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackEvents' =>
-        [
+      'members' => [
+        'StackEvents' => [
           'shape' => 'StackEvents',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'NextToken',
         ],
       ],
     ],
-    'DescribeStackResourceInput' =>
-    [
+    'DescribeStackResourceInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackName',
-        1 => 'LogicalResourceId',
+      'required' => [
+        'StackName',
+        'LogicalResourceId',
       ],
-      'members' =>
-      [
-        'StackName' =>
-        [
+      'members' => [
+        'StackName' => [
           'shape' => 'StackName',
         ],
-        'LogicalResourceId' =>
-        [
+        'LogicalResourceId' => [
           'shape' => 'LogicalResourceId',
         ],
       ],
     ],
-    'DescribeStackResourceOutput' =>
-    [
+    'DescribeStackResourceOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackResourceDetail' =>
-        [
+      'members' => [
+        'StackResourceDetail' => [
           'shape' => 'StackResourceDetail',
         ],
       ],
     ],
-    'DescribeStackResourcesInput' =>
-    [
+    'DescribeStackResourcesInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackName' =>
-        [
+      'members' => [
+        'StackName' => [
           'shape' => 'StackName',
         ],
-        'LogicalResourceId' =>
-        [
+        'LogicalResourceId' => [
           'shape' => 'LogicalResourceId',
         ],
-        'PhysicalResourceId' =>
-        [
+        'PhysicalResourceId' => [
           'shape' => 'PhysicalResourceId',
         ],
       ],
     ],
-    'DescribeStackResourcesOutput' =>
-    [
+    'DescribeStackResourcesOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackResources' =>
-        [
+      'members' => [
+        'StackResources' => [
           'shape' => 'StackResources',
         ],
       ],
     ],
-    'DescribeStacksInput' =>
-    [
+    'DescribeStacksInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackName' =>
-        [
+      'members' => [
+        'StackName' => [
           'shape' => 'StackName',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'NextToken',
         ],
       ],
     ],
-    'DescribeStacksOutput' =>
-    [
+    'DescribeStacksOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Stacks' =>
-        [
+      'members' => [
+        'Stacks' => [
           'shape' => 'Stacks',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'NextToken',
         ],
       ],
     ],
-    'Description' =>
-    [
+    'Description' => [
       'type' => 'string',
     ],
-    'DisableRollback' =>
-    [
+    'DisableRollback' => [
       'type' => 'boolean',
     ],
-    'EstimateTemplateCostInput' =>
-    [
+    'EstimateTemplateCostInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TemplateBody' =>
-        [
+      'members' => [
+        'TemplateBody' => [
           'shape' => 'TemplateBody',
         ],
-        'TemplateURL' =>
-        [
+        'TemplateURL' => [
           'shape' => 'TemplateURL',
         ],
-        'Parameters' =>
-        [
+        'Parameters' => [
           'shape' => 'Parameters',
         ],
       ],
     ],
-    'EstimateTemplateCostOutput' =>
-    [
+    'EstimateTemplateCostOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Url' =>
-        [
+      'members' => [
+        'Url' => [
           'shape' => 'Url',
         ],
       ],
     ],
-    'EventId' =>
-    [
+    'EventId' => [
       'type' => 'string',
     ],
-    'GetStackPolicyInput' =>
-    [
+    'GetStackPolicyInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackName',
+      'required' => [
+        'StackName',
       ],
-      'members' =>
-      [
-        'StackName' =>
-        [
+      'members' => [
+        'StackName' => [
           'shape' => 'StackName',
         ],
       ],
     ],
-    'GetStackPolicyOutput' =>
-    [
+    'GetStackPolicyOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackPolicyBody' =>
-        [
+      'members' => [
+        'StackPolicyBody' => [
           'shape' => 'StackPolicyBody',
         ],
       ],
     ],
-    'GetTemplateInput' =>
-    [
+    'GetTemplateInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackName',
+      'required' => [
+        'StackName',
       ],
-      'members' =>
-      [
-        'StackName' =>
-        [
+      'members' => [
+        'StackName' => [
           'shape' => 'StackName',
         ],
       ],
     ],
-    'GetTemplateOutput' =>
-    [
+    'GetTemplateOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TemplateBody' =>
-        [
+      'members' => [
+        'TemplateBody' => [
           'shape' => 'TemplateBody',
         ],
       ],
     ],
-    'InsufficientCapabilitiesException' =>
-    [
+    'InsufficientCapabilitiesException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InsufficientCapabilitiesException',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'LastUpdatedTime' =>
-    [
+    'LastUpdatedTime' => [
       'type' => 'timestamp',
     ],
-    'LimitExceededException' =>
-    [
+    'LimitExceededException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'LimitExceededException',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ListStackResourcesInput' =>
-    [
+    'ListStackResourcesInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackName',
+      'required' => [
+        'StackName',
       ],
-      'members' =>
-      [
-        'StackName' =>
-        [
+      'members' => [
+        'StackName' => [
           'shape' => 'StackName',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'NextToken',
         ],
       ],
     ],
-    'ListStackResourcesOutput' =>
-    [
+    'ListStackResourcesOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackResourceSummaries' =>
-        [
+      'members' => [
+        'StackResourceSummaries' => [
           'shape' => 'StackResourceSummaries',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'NextToken',
         ],
       ],
     ],
-    'ListStacksInput' =>
-    [
+    'ListStacksInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'NextToken' =>
-        [
+      'members' => [
+        'NextToken' => [
           'shape' => 'NextToken',
         ],
-        'StackStatusFilter' =>
-        [
+        'StackStatusFilter' => [
           'shape' => 'StackStatusFilter',
         ],
       ],
     ],
-    'ListStacksOutput' =>
-    [
+    'ListStacksOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackSummaries' =>
-        [
+      'members' => [
+        'StackSummaries' => [
           'shape' => 'StackSummaries',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'NextToken',
         ],
       ],
     ],
-    'LogicalResourceId' =>
-    [
+    'LogicalResourceId' => [
       'type' => 'string',
     ],
-    'Metadata' =>
-    [
+    'Metadata' => [
       'type' => 'string',
     ],
-    'NextToken' =>
-    [
+    'NextToken' => [
       'type' => 'string',
       'min' => 1,
       'max' => 1024,
     ],
-    'NoEcho' =>
-    [
+    'NoEcho' => [
       'type' => 'boolean',
     ],
-    'NotificationARN' =>
-    [
+    'NotificationARN' => [
       'type' => 'string',
     ],
-    'NotificationARNs' =>
-    [
+    'NotificationARNs' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'NotificationARN',
       ],
       'max' => 5,
     ],
-    'OnFailure' =>
-    [
+    'OnFailure' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'DO_NOTHING',
-        1 => 'ROLLBACK',
-        2 => 'DELETE',
+      'enum' => [
+        'DO_NOTHING',
+        'ROLLBACK',
+        'DELETE',
       ],
     ],
-    'Output' =>
-    [
+    'Output' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'OutputKey' =>
-        [
+      'members' => [
+        'OutputKey' => [
           'shape' => 'OutputKey',
         ],
-        'OutputValue' =>
-        [
+        'OutputValue' => [
           'shape' => 'OutputValue',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
       ],
     ],
-    'OutputKey' =>
-    [
+    'OutputKey' => [
       'type' => 'string',
     ],
-    'OutputValue' =>
-    [
+    'OutputValue' => [
       'type' => 'string',
     ],
-    'Outputs' =>
-    [
+    'Outputs' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Output',
       ],
     ],
-    'Parameter' =>
-    [
+    'Parameter' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ParameterKey' =>
-        [
+      'members' => [
+        'ParameterKey' => [
           'shape' => 'ParameterKey',
         ],
-        'ParameterValue' =>
-        [
+        'ParameterValue' => [
           'shape' => 'ParameterValue',
         ],
-        'UsePreviousValue' =>
-        [
+        'UsePreviousValue' => [
           'shape' => 'UsePreviousValue',
         ],
       ],
     ],
-    'ParameterKey' =>
-    [
+    'ParameterKey' => [
       'type' => 'string',
     ],
-    'ParameterValue' =>
-    [
+    'ParameterValue' => [
       'type' => 'string',
     ],
-    'Parameters' =>
-    [
+    'Parameters' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Parameter',
       ],
     ],
-    'PhysicalResourceId' =>
-    [
+    'PhysicalResourceId' => [
       'type' => 'string',
     ],
-    'ResourceProperties' =>
-    [
+    'ResourceProperties' => [
       'type' => 'string',
     ],
-    'ResourceStatus' =>
-    [
+    'ResourceStatus' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'CREATE_IN_PROGRESS',
-        1 => 'CREATE_FAILED',
-        2 => 'CREATE_COMPLETE',
-        3 => 'DELETE_IN_PROGRESS',
-        4 => 'DELETE_FAILED',
-        5 => 'DELETE_COMPLETE',
-        6 => 'UPDATE_IN_PROGRESS',
-        7 => 'UPDATE_FAILED',
-        8 => 'UPDATE_COMPLETE',
+      'enum' => [
+        'CREATE_IN_PROGRESS',
+        'CREATE_FAILED',
+        'CREATE_COMPLETE',
+        'DELETE_IN_PROGRESS',
+        'DELETE_FAILED',
+        'DELETE_COMPLETE',
+        'UPDATE_IN_PROGRESS',
+        'UPDATE_FAILED',
+        'UPDATE_COMPLETE',
       ],
     ],
-    'ResourceStatusReason' =>
-    [
+    'ResourceStatusReason' => [
       'type' => 'string',
     ],
-    'ResourceType' =>
-    [
+    'ResourceType' => [
       'type' => 'string',
     ],
-    'SetStackPolicyInput' =>
-    [
+    'SetStackPolicyInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackName',
+      'required' => [
+        'StackName',
       ],
-      'members' =>
-      [
-        'StackName' =>
-        [
+      'members' => [
+        'StackName' => [
           'shape' => 'StackName',
         ],
-        'StackPolicyBody' =>
-        [
+        'StackPolicyBody' => [
           'shape' => 'StackPolicyBody',
         ],
-        'StackPolicyURL' =>
-        [
+        'StackPolicyURL' => [
           'shape' => 'StackPolicyURL',
         ],
       ],
     ],
-    'Stack' =>
-    [
+    'Stack' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackName',
-        1 => 'CreationTime',
-        2 => 'StackStatus',
+      'required' => [
+        'StackName',
+        'CreationTime',
+        'StackStatus',
       ],
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'StackId',
         ],
-        'StackName' =>
-        [
+        'StackName' => [
           'shape' => 'StackName',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
-        'Parameters' =>
-        [
+        'Parameters' => [
           'shape' => 'Parameters',
         ],
-        'CreationTime' =>
-        [
+        'CreationTime' => [
           'shape' => 'CreationTime',
         ],
-        'LastUpdatedTime' =>
-        [
+        'LastUpdatedTime' => [
           'shape' => 'LastUpdatedTime',
         ],
-        'StackStatus' =>
-        [
+        'StackStatus' => [
           'shape' => 'StackStatus',
         ],
-        'StackStatusReason' =>
-        [
+        'StackStatusReason' => [
           'shape' => 'StackStatusReason',
         ],
-        'DisableRollback' =>
-        [
+        'DisableRollback' => [
           'shape' => 'DisableRollback',
         ],
-        'NotificationARNs' =>
-        [
+        'NotificationARNs' => [
           'shape' => 'NotificationARNs',
         ],
-        'TimeoutInMinutes' =>
-        [
+        'TimeoutInMinutes' => [
           'shape' => 'TimeoutMinutes',
         ],
-        'Capabilities' =>
-        [
+        'Capabilities' => [
           'shape' => 'Capabilities',
         ],
-        'Outputs' =>
-        [
+        'Outputs' => [
           'shape' => 'Outputs',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'Tags',
         ],
       ],
     ],
-    'StackEvent' =>
-    [
+    'StackEvent' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackId',
-        1 => 'EventId',
-        2 => 'StackName',
-        3 => 'Timestamp',
+      'required' => [
+        'StackId',
+        'EventId',
+        'StackName',
+        'Timestamp',
       ],
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'StackId',
         ],
-        'EventId' =>
-        [
+        'EventId' => [
           'shape' => 'EventId',
         ],
-        'StackName' =>
-        [
+        'StackName' => [
           'shape' => 'StackName',
         ],
-        'LogicalResourceId' =>
-        [
+        'LogicalResourceId' => [
           'shape' => 'LogicalResourceId',
         ],
-        'PhysicalResourceId' =>
-        [
+        'PhysicalResourceId' => [
           'shape' => 'PhysicalResourceId',
         ],
-        'ResourceType' =>
-        [
+        'ResourceType' => [
           'shape' => 'ResourceType',
         ],
-        'Timestamp' =>
-        [
+        'Timestamp' => [
           'shape' => 'Timestamp',
         ],
-        'ResourceStatus' =>
-        [
+        'ResourceStatus' => [
           'shape' => 'ResourceStatus',
         ],
-        'ResourceStatusReason' =>
-        [
+        'ResourceStatusReason' => [
           'shape' => 'ResourceStatusReason',
         ],
-        'ResourceProperties' =>
-        [
+        'ResourceProperties' => [
           'shape' => 'ResourceProperties',
         ],
       ],
     ],
-    'StackEvents' =>
-    [
+    'StackEvents' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'StackEvent',
       ],
     ],
-    'StackId' =>
-    [
+    'StackId' => [
       'type' => 'string',
     ],
-    'StackName' =>
-    [
+    'StackName' => [
       'type' => 'string',
     ],
-    'StackPolicyBody' =>
-    [
+    'StackPolicyBody' => [
       'type' => 'string',
       'min' => 1,
       'max' => 16384,
     ],
-    'StackPolicyDuringUpdateBody' =>
-    [
+    'StackPolicyDuringUpdateBody' => [
       'type' => 'string',
       'min' => 1,
       'max' => 16384,
     ],
-    'StackPolicyDuringUpdateURL' =>
-    [
+    'StackPolicyDuringUpdateURL' => [
       'type' => 'string',
       'min' => 1,
       'max' => 1350,
     ],
-    'StackPolicyURL' =>
-    [
+    'StackPolicyURL' => [
       'type' => 'string',
       'min' => 1,
       'max' => 1350,
     ],
-    'StackResource' =>
-    [
+    'StackResource' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LogicalResourceId',
-        1 => 'ResourceType',
-        2 => 'Timestamp',
-        3 => 'ResourceStatus',
+      'required' => [
+        'LogicalResourceId',
+        'ResourceType',
+        'Timestamp',
+        'ResourceStatus',
       ],
-      'members' =>
-      [
-        'StackName' =>
-        [
+      'members' => [
+        'StackName' => [
           'shape' => 'StackName',
         ],
-        'StackId' =>
-        [
+        'StackId' => [
           'shape' => 'StackId',
         ],
-        'LogicalResourceId' =>
-        [
+        'LogicalResourceId' => [
           'shape' => 'LogicalResourceId',
         ],
-        'PhysicalResourceId' =>
-        [
+        'PhysicalResourceId' => [
           'shape' => 'PhysicalResourceId',
         ],
-        'ResourceType' =>
-        [
+        'ResourceType' => [
           'shape' => 'ResourceType',
         ],
-        'Timestamp' =>
-        [
+        'Timestamp' => [
           'shape' => 'Timestamp',
         ],
-        'ResourceStatus' =>
-        [
+        'ResourceStatus' => [
           'shape' => 'ResourceStatus',
         ],
-        'ResourceStatusReason' =>
-        [
+        'ResourceStatusReason' => [
           'shape' => 'ResourceStatusReason',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
       ],
     ],
-    'StackResourceDetail' =>
-    [
+    'StackResourceDetail' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LogicalResourceId',
-        1 => 'ResourceType',
-        2 => 'LastUpdatedTimestamp',
-        3 => 'ResourceStatus',
+      'required' => [
+        'LogicalResourceId',
+        'ResourceType',
+        'LastUpdatedTimestamp',
+        'ResourceStatus',
       ],
-      'members' =>
-      [
-        'StackName' =>
-        [
+      'members' => [
+        'StackName' => [
           'shape' => 'StackName',
         ],
-        'StackId' =>
-        [
+        'StackId' => [
           'shape' => 'StackId',
         ],
-        'LogicalResourceId' =>
-        [
+        'LogicalResourceId' => [
           'shape' => 'LogicalResourceId',
         ],
-        'PhysicalResourceId' =>
-        [
+        'PhysicalResourceId' => [
           'shape' => 'PhysicalResourceId',
         ],
-        'ResourceType' =>
-        [
+        'ResourceType' => [
           'shape' => 'ResourceType',
         ],
-        'LastUpdatedTimestamp' =>
-        [
+        'LastUpdatedTimestamp' => [
           'shape' => 'Timestamp',
         ],
-        'ResourceStatus' =>
-        [
+        'ResourceStatus' => [
           'shape' => 'ResourceStatus',
         ],
-        'ResourceStatusReason' =>
-        [
+        'ResourceStatusReason' => [
           'shape' => 'ResourceStatusReason',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
-        'Metadata' =>
-        [
+        'Metadata' => [
           'shape' => 'Metadata',
         ],
       ],
     ],
-    'StackResourceSummaries' =>
-    [
+    'StackResourceSummaries' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'StackResourceSummary',
       ],
     ],
-    'StackResourceSummary' =>
-    [
+    'StackResourceSummary' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LogicalResourceId',
-        1 => 'ResourceType',
-        2 => 'LastUpdatedTimestamp',
-        3 => 'ResourceStatus',
+      'required' => [
+        'LogicalResourceId',
+        'ResourceType',
+        'LastUpdatedTimestamp',
+        'ResourceStatus',
       ],
-      'members' =>
-      [
-        'LogicalResourceId' =>
-        [
+      'members' => [
+        'LogicalResourceId' => [
           'shape' => 'LogicalResourceId',
         ],
-        'PhysicalResourceId' =>
-        [
+        'PhysicalResourceId' => [
           'shape' => 'PhysicalResourceId',
         ],
-        'ResourceType' =>
-        [
+        'ResourceType' => [
           'shape' => 'ResourceType',
         ],
-        'LastUpdatedTimestamp' =>
-        [
+        'LastUpdatedTimestamp' => [
           'shape' => 'Timestamp',
         ],
-        'ResourceStatus' =>
-        [
+        'ResourceStatus' => [
           'shape' => 'ResourceStatus',
         ],
-        'ResourceStatusReason' =>
-        [
+        'ResourceStatusReason' => [
           'shape' => 'ResourceStatusReason',
         ],
       ],
     ],
-    'StackResources' =>
-    [
+    'StackResources' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'StackResource',
       ],
     ],
-    'StackStatus' =>
-    [
+    'StackStatus' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'CREATE_IN_PROGRESS',
-        1 => 'CREATE_FAILED',
-        2 => 'CREATE_COMPLETE',
-        3 => 'ROLLBACK_IN_PROGRESS',
-        4 => 'ROLLBACK_FAILED',
-        5 => 'ROLLBACK_COMPLETE',
-        6 => 'DELETE_IN_PROGRESS',
-        7 => 'DELETE_FAILED',
-        8 => 'DELETE_COMPLETE',
-        9 => 'UPDATE_IN_PROGRESS',
-        10 => 'UPDATE_COMPLETE_CLEANUP_IN_PROGRESS',
-        11 => 'UPDATE_COMPLETE',
-        12 => 'UPDATE_ROLLBACK_IN_PROGRESS',
-        13 => 'UPDATE_ROLLBACK_FAILED',
-        14 => 'UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS',
-        15 => 'UPDATE_ROLLBACK_COMPLETE',
+      'enum' => [
+        'CREATE_IN_PROGRESS',
+        'CREATE_FAILED',
+        'CREATE_COMPLETE',
+        'ROLLBACK_IN_PROGRESS',
+        'ROLLBACK_FAILED',
+        'ROLLBACK_COMPLETE',
+        'DELETE_IN_PROGRESS',
+        'DELETE_FAILED',
+        'DELETE_COMPLETE',
+        'UPDATE_IN_PROGRESS',
+        'UPDATE_COMPLETE_CLEANUP_IN_PROGRESS',
+        'UPDATE_COMPLETE',
+        'UPDATE_ROLLBACK_IN_PROGRESS',
+        'UPDATE_ROLLBACK_FAILED',
+        'UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS',
+        'UPDATE_ROLLBACK_COMPLETE',
       ],
     ],
-    'StackStatusFilter' =>
-    [
+    'StackStatusFilter' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'StackStatus',
       ],
     ],
-    'StackStatusReason' =>
-    [
+    'StackStatusReason' => [
       'type' => 'string',
     ],
-    'StackSummaries' =>
-    [
+    'StackSummaries' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'StackSummary',
       ],
     ],
-    'StackSummary' =>
-    [
+    'StackSummary' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackName',
-        1 => 'CreationTime',
-        2 => 'StackStatus',
+      'required' => [
+        'StackName',
+        'CreationTime',
+        'StackStatus',
       ],
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'StackId',
         ],
-        'StackName' =>
-        [
+        'StackName' => [
           'shape' => 'StackName',
         ],
-        'TemplateDescription' =>
-        [
+        'TemplateDescription' => [
           'shape' => 'TemplateDescription',
         ],
-        'CreationTime' =>
-        [
+        'CreationTime' => [
           'shape' => 'CreationTime',
         ],
-        'LastUpdatedTime' =>
-        [
+        'LastUpdatedTime' => [
           'shape' => 'LastUpdatedTime',
         ],
-        'DeletionTime' =>
-        [
+        'DeletionTime' => [
           'shape' => 'DeletionTime',
         ],
-        'StackStatus' =>
-        [
+        'StackStatus' => [
           'shape' => 'StackStatus',
         ],
-        'StackStatusReason' =>
-        [
+        'StackStatusReason' => [
           'shape' => 'StackStatusReason',
         ],
       ],
     ],
-    'Stacks' =>
-    [
+    'Stacks' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Stack',
       ],
     ],
-    'Tag' =>
-    [
+    'Tag' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Key' =>
-        [
+      'members' => [
+        'Key' => [
           'shape' => 'TagKey',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'TagValue',
         ],
       ],
     ],
-    'TagKey' =>
-    [
+    'TagKey' => [
       'type' => 'string',
     ],
-    'TagValue' =>
-    [
+    'TagValue' => [
       'type' => 'string',
     ],
-    'Tags' =>
-    [
+    'Tags' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Tag',
       ],
     ],
-    'TemplateBody' =>
-    [
+    'TemplateBody' => [
       'type' => 'string',
       'min' => 1,
     ],
-    'TemplateDescription' =>
-    [
+    'TemplateDescription' => [
       'type' => 'string',
     ],
-    'TemplateParameter' =>
-    [
+    'TemplateParameter' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ParameterKey' =>
-        [
+      'members' => [
+        'ParameterKey' => [
           'shape' => 'ParameterKey',
         ],
-        'DefaultValue' =>
-        [
+        'DefaultValue' => [
           'shape' => 'ParameterValue',
         ],
-        'NoEcho' =>
-        [
+        'NoEcho' => [
           'shape' => 'NoEcho',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
       ],
     ],
-    'TemplateParameters' =>
-    [
+    'TemplateParameters' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'TemplateParameter',
       ],
     ],
-    'TemplateURL' =>
-    [
+    'TemplateURL' => [
       'type' => 'string',
       'min' => 1,
       'max' => 1024,
     ],
-    'TimeoutMinutes' =>
-    [
+    'TimeoutMinutes' => [
       'type' => 'integer',
       'min' => 1,
     ],
-    'Timestamp' =>
-    [
+    'Timestamp' => [
       'type' => 'timestamp',
     ],
-    'UpdateStackInput' =>
-    [
+    'UpdateStackInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackName',
+      'required' => [
+        'StackName',
       ],
-      'members' =>
-      [
-        'StackName' =>
-        [
+      'members' => [
+        'StackName' => [
           'shape' => 'StackName',
         ],
-        'TemplateBody' =>
-        [
+        'TemplateBody' => [
           'shape' => 'TemplateBody',
         ],
-        'TemplateURL' =>
-        [
+        'TemplateURL' => [
           'shape' => 'TemplateURL',
         ],
-        'UsePreviousTemplate' =>
-        [
+        'UsePreviousTemplate' => [
           'shape' => 'UsePreviousTemplate',
         ],
-        'StackPolicyDuringUpdateBody' =>
-        [
+        'StackPolicyDuringUpdateBody' => [
           'shape' => 'StackPolicyDuringUpdateBody',
         ],
-        'StackPolicyDuringUpdateURL' =>
-        [
+        'StackPolicyDuringUpdateURL' => [
           'shape' => 'StackPolicyDuringUpdateURL',
         ],
-        'Parameters' =>
-        [
+        'Parameters' => [
           'shape' => 'Parameters',
         ],
-        'Capabilities' =>
-        [
+        'Capabilities' => [
           'shape' => 'Capabilities',
         ],
-        'StackPolicyBody' =>
-        [
+        'StackPolicyBody' => [
           'shape' => 'StackPolicyBody',
         ],
-        'StackPolicyURL' =>
-        [
+        'StackPolicyURL' => [
           'shape' => 'StackPolicyURL',
         ],
-        'NotificationARNs' =>
-        [
+        'NotificationARNs' => [
           'shape' => 'NotificationARNs',
         ],
       ],
     ],
-    'UpdateStackOutput' =>
-    [
+    'UpdateStackOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'StackId',
         ],
       ],
     ],
-    'Url' =>
-    [
+    'Url' => [
       'type' => 'string',
     ],
-    'UsePreviousTemplate' =>
-    [
+    'UsePreviousTemplate' => [
       'type' => 'boolean',
     ],
-    'UsePreviousValue' =>
-    [
+    'UsePreviousValue' => [
       'type' => 'boolean',
     ],
-    'ValidateTemplateInput' =>
-    [
+    'ValidateTemplateInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TemplateBody' =>
-        [
+      'members' => [
+        'TemplateBody' => [
           'shape' => 'TemplateBody',
         ],
-        'TemplateURL' =>
-        [
+        'TemplateURL' => [
           'shape' => 'TemplateURL',
         ],
       ],
     ],
-    'ValidateTemplateOutput' =>
-    [
+    'ValidateTemplateOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Parameters' =>
-        [
+      'members' => [
+        'Parameters' => [
           'shape' => 'TemplateParameters',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
-        'Capabilities' =>
-        [
+        'Capabilities' => [
           'shape' => 'Capabilities',
         ],
-        'CapabilitiesReason' =>
-        [
+        'CapabilitiesReason' => [
           'shape' => 'CapabilitiesReason',
         ],
       ],

@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2014-06-30',
     'endpointPrefix' => 'cognito-sync',
     'jsonVersion' => '1.1',
@@ -9,467 +7,360 @@ return [
     'signatureVersion' => 'v4',
     'protocol' => 'rest-json',
   ],
-  'operations' =>
-  [
-    'DeleteDataset' =>
-    [
+  'operations' => [
+    'DeleteDataset' => [
       'name' => 'DeleteDataset',
-      'http' =>
-      [
+      'http' => [
         'method' => 'DELETE',
         'requestUri' => '/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}',
         'responseCode' => 200,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteDatasetRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteDatasetResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NotAuthorizedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DescribeDataset' =>
-    [
+    'DescribeDataset' => [
       'name' => 'DescribeDataset',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}',
         'responseCode' => 200,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeDatasetRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeDatasetResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NotAuthorizedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DescribeIdentityPoolUsage' =>
-    [
+    'DescribeIdentityPoolUsage' => [
       'name' => 'DescribeIdentityPoolUsage',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/identitypools/{IdentityPoolId}',
         'responseCode' => 200,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeIdentityPoolUsageRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeIdentityPoolUsageResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NotAuthorizedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DescribeIdentityUsage' =>
-    [
+    'DescribeIdentityUsage' => [
       'name' => 'DescribeIdentityUsage',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/identitypools/{IdentityPoolId}/identities/{IdentityId}',
         'responseCode' => 200,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeIdentityUsageRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeIdentityUsageResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NotAuthorizedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ListDatasets' =>
-    [
+    'ListDatasets' => [
       'name' => 'ListDatasets',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets',
         'responseCode' => 200,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListDatasetsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListDatasetsResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NotAuthorizedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ListIdentityPoolUsage' =>
-    [
+    'ListIdentityPoolUsage' => [
       'name' => 'ListIdentityPoolUsage',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/identitypools',
         'responseCode' => 200,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListIdentityPoolUsageRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListIdentityPoolUsageResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NotAuthorizedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ListRecords' =>
-    [
+    'ListRecords' => [
       'name' => 'ListRecords',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}/records',
         'responseCode' => 200,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListRecordsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListRecordsResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'NotAuthorizedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'TooManyRequestsException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 429,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'UpdateRecords' =>
-    [
+    'UpdateRecords' => [
       'name' => 'UpdateRecords',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}',
         'responseCode' => 200,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateRecordsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdateRecordsResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'NotAuthorizedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'ResourceConflictException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 409,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'TooManyRequestsException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 429,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'InternalErrorException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
@@ -477,809 +368,621 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'Boolean' =>
-    [
+  'shapes' => [
+    'Boolean' => [
       'type' => 'boolean',
     ],
-    'ClientContext' =>
-    [
+    'ClientContext' => [
       'type' => 'string',
     ],
-    'Dataset' =>
-    [
+    'Dataset' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IdentityId' =>
-        [
+      'members' => [
+        'IdentityId' => [
           'shape' => 'IdentityId',
         ],
-        'DatasetName' =>
-        [
+        'DatasetName' => [
           'shape' => 'DatasetName',
         ],
-        'CreationDate' =>
-        [
+        'CreationDate' => [
           'shape' => 'Date',
         ],
-        'LastModifiedDate' =>
-        [
+        'LastModifiedDate' => [
           'shape' => 'Date',
         ],
-        'LastModifiedBy' =>
-        [
+        'LastModifiedBy' => [
           'shape' => 'String',
         ],
-        'DataStorage' =>
-        [
+        'DataStorage' => [
           'shape' => 'Long',
         ],
-        'NumRecords' =>
-        [
+        'NumRecords' => [
           'shape' => 'Long',
         ],
       ],
     ],
-    'DatasetList' =>
-    [
+    'DatasetList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Dataset',
       ],
     ],
-    'DatasetName' =>
-    [
+    'DatasetName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 128,
       'pattern' => '[a-zA-Z0-9_.:-]+',
     ],
-    'Date' =>
-    [
+    'Date' => [
       'type' => 'timestamp',
     ],
-    'DeleteDatasetRequest' =>
-    [
+    'DeleteDatasetRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IdentityPoolId',
-        1 => 'IdentityId',
-        2 => 'DatasetName',
+      'required' => [
+        'IdentityPoolId',
+        'IdentityId',
+        'DatasetName',
       ],
-      'members' =>
-      [
-        'IdentityPoolId' =>
-        [
+      'members' => [
+        'IdentityPoolId' => [
           'shape' => 'IdentityPoolId',
           'location' => 'uri',
           'locationName' => 'IdentityPoolId',
         ],
-        'IdentityId' =>
-        [
+        'IdentityId' => [
           'shape' => 'IdentityId',
           'location' => 'uri',
           'locationName' => 'IdentityId',
         ],
-        'DatasetName' =>
-        [
+        'DatasetName' => [
           'shape' => 'DatasetName',
           'location' => 'uri',
           'locationName' => 'DatasetName',
         ],
       ],
     ],
-    'DeleteDatasetResponse' =>
-    [
+    'DeleteDatasetResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Dataset' =>
-        [
+      'members' => [
+        'Dataset' => [
           'shape' => 'Dataset',
         ],
       ],
     ],
-    'DescribeDatasetRequest' =>
-    [
+    'DescribeDatasetRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IdentityPoolId',
-        1 => 'IdentityId',
-        2 => 'DatasetName',
+      'required' => [
+        'IdentityPoolId',
+        'IdentityId',
+        'DatasetName',
       ],
-      'members' =>
-      [
-        'IdentityPoolId' =>
-        [
+      'members' => [
+        'IdentityPoolId' => [
           'shape' => 'IdentityPoolId',
           'location' => 'uri',
           'locationName' => 'IdentityPoolId',
         ],
-        'IdentityId' =>
-        [
+        'IdentityId' => [
           'shape' => 'IdentityId',
           'location' => 'uri',
           'locationName' => 'IdentityId',
         ],
-        'DatasetName' =>
-        [
+        'DatasetName' => [
           'shape' => 'DatasetName',
           'location' => 'uri',
           'locationName' => 'DatasetName',
         ],
       ],
     ],
-    'DescribeDatasetResponse' =>
-    [
+    'DescribeDatasetResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Dataset' =>
-        [
+      'members' => [
+        'Dataset' => [
           'shape' => 'Dataset',
         ],
       ],
     ],
-    'DescribeIdentityPoolUsageRequest' =>
-    [
+    'DescribeIdentityPoolUsageRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IdentityPoolId',
+      'required' => [
+        'IdentityPoolId',
       ],
-      'members' =>
-      [
-        'IdentityPoolId' =>
-        [
+      'members' => [
+        'IdentityPoolId' => [
           'shape' => 'IdentityPoolId',
           'location' => 'uri',
           'locationName' => 'IdentityPoolId',
         ],
       ],
     ],
-    'DescribeIdentityPoolUsageResponse' =>
-    [
+    'DescribeIdentityPoolUsageResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IdentityPoolUsage' =>
-        [
+      'members' => [
+        'IdentityPoolUsage' => [
           'shape' => 'IdentityPoolUsage',
         ],
       ],
     ],
-    'DescribeIdentityUsageRequest' =>
-    [
+    'DescribeIdentityUsageRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IdentityPoolId',
-        1 => 'IdentityId',
+      'required' => [
+        'IdentityPoolId',
+        'IdentityId',
       ],
-      'members' =>
-      [
-        'IdentityPoolId' =>
-        [
+      'members' => [
+        'IdentityPoolId' => [
           'shape' => 'IdentityPoolId',
           'location' => 'uri',
           'locationName' => 'IdentityPoolId',
         ],
-        'IdentityId' =>
-        [
+        'IdentityId' => [
           'shape' => 'IdentityId',
           'location' => 'uri',
           'locationName' => 'IdentityId',
         ],
       ],
     ],
-    'DescribeIdentityUsageResponse' =>
-    [
+    'DescribeIdentityUsageResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IdentityUsage' =>
-        [
+      'members' => [
+        'IdentityUsage' => [
           'shape' => 'IdentityUsage',
         ],
       ],
     ],
-    'ExceptionMessage' =>
-    [
+    'ExceptionMessage' => [
       'type' => 'string',
     ],
-    'IdentityId' =>
-    [
+    'IdentityId' => [
       'type' => 'string',
       'min' => 1,
       'max' => 50,
       'pattern' => '[\\w-]+:[0-9a-f-]+',
     ],
-    'IdentityPoolId' =>
-    [
+    'IdentityPoolId' => [
       'type' => 'string',
       'min' => 1,
       'max' => 50,
       'pattern' => '[\\w-]+:[0-9a-f-]+',
     ],
-    'IdentityPoolUsage' =>
-    [
+    'IdentityPoolUsage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IdentityPoolId' =>
-        [
+      'members' => [
+        'IdentityPoolId' => [
           'shape' => 'IdentityPoolId',
         ],
-        'SyncSessionsCount' =>
-        [
+        'SyncSessionsCount' => [
           'shape' => 'Long',
         ],
-        'DataStorage' =>
-        [
+        'DataStorage' => [
           'shape' => 'Long',
         ],
-        'LastModifiedDate' =>
-        [
+        'LastModifiedDate' => [
           'shape' => 'Date',
         ],
       ],
     ],
-    'IdentityPoolUsageList' =>
-    [
+    'IdentityPoolUsageList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'IdentityPoolUsage',
       ],
     ],
-    'IdentityUsage' =>
-    [
+    'IdentityUsage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IdentityId' =>
-        [
+      'members' => [
+        'IdentityId' => [
           'shape' => 'IdentityId',
         ],
-        'IdentityPoolId' =>
-        [
+        'IdentityPoolId' => [
           'shape' => 'IdentityPoolId',
         ],
-        'LastModifiedDate' =>
-        [
+        'LastModifiedDate' => [
           'shape' => 'Date',
         ],
-        'DatasetCount' =>
-        [
+        'DatasetCount' => [
           'shape' => 'Integer',
         ],
-        'DataStorage' =>
-        [
+        'DataStorage' => [
           'shape' => 'Long',
         ],
       ],
     ],
-    'Integer' =>
-    [
+    'Integer' => [
       'type' => 'integer',
     ],
-    'IntegerString' =>
-    [
+    'IntegerString' => [
       'type' => 'integer',
     ],
-    'InternalErrorException' =>
-    [
+    'InternalErrorException' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'message',
+      'required' => [
+        'message',
       ],
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ExceptionMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 500,
       ],
       'exception' => true,
     ],
-    'InvalidParameterException' =>
-    [
+    'InvalidParameterException' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'message',
+      'required' => [
+        'message',
       ],
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ExceptionMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'LimitExceededException' =>
-    [
+    'LimitExceededException' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'message',
+      'required' => [
+        'message',
       ],
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ExceptionMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'ListDatasetsRequest' =>
-    [
+    'ListDatasetsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IdentityId',
-        1 => 'IdentityPoolId',
+      'required' => [
+        'IdentityId',
+        'IdentityPoolId',
       ],
-      'members' =>
-      [
-        'IdentityPoolId' =>
-        [
+      'members' => [
+        'IdentityPoolId' => [
           'shape' => 'IdentityPoolId',
           'location' => 'uri',
           'locationName' => 'IdentityPoolId',
         ],
-        'IdentityId' =>
-        [
+        'IdentityId' => [
           'shape' => 'IdentityId',
           'location' => 'uri',
           'locationName' => 'IdentityId',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
           'location' => 'querystring',
           'locationName' => 'nextToken',
         ],
-        'MaxResults' =>
-        [
+        'MaxResults' => [
           'shape' => 'IntegerString',
           'location' => 'querystring',
           'locationName' => 'maxResults',
         ],
       ],
     ],
-    'ListDatasetsResponse' =>
-    [
+    'ListDatasetsResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Datasets' =>
-        [
+      'members' => [
+        'Datasets' => [
           'shape' => 'DatasetList',
         ],
-        'Count' =>
-        [
+        'Count' => [
           'shape' => 'Integer',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ListIdentityPoolUsageRequest' =>
-    [
+    'ListIdentityPoolUsageRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'NextToken' =>
-        [
+      'members' => [
+        'NextToken' => [
           'shape' => 'String',
           'location' => 'querystring',
           'locationName' => 'nextToken',
         ],
-        'MaxResults' =>
-        [
+        'MaxResults' => [
           'shape' => 'IntegerString',
           'location' => 'querystring',
           'locationName' => 'maxResults',
         ],
       ],
     ],
-    'ListIdentityPoolUsageResponse' =>
-    [
+    'ListIdentityPoolUsageResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IdentityPoolUsages' =>
-        [
+      'members' => [
+        'IdentityPoolUsages' => [
           'shape' => 'IdentityPoolUsageList',
         ],
-        'MaxResults' =>
-        [
+        'MaxResults' => [
           'shape' => 'Integer',
         ],
-        'Count' =>
-        [
+        'Count' => [
           'shape' => 'Integer',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ListRecordsRequest' =>
-    [
+    'ListRecordsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IdentityPoolId',
-        1 => 'IdentityId',
-        2 => 'DatasetName',
+      'required' => [
+        'IdentityPoolId',
+        'IdentityId',
+        'DatasetName',
       ],
-      'members' =>
-      [
-        'IdentityPoolId' =>
-        [
+      'members' => [
+        'IdentityPoolId' => [
           'shape' => 'IdentityPoolId',
           'location' => 'uri',
           'locationName' => 'IdentityPoolId',
         ],
-        'IdentityId' =>
-        [
+        'IdentityId' => [
           'shape' => 'IdentityId',
           'location' => 'uri',
           'locationName' => 'IdentityId',
         ],
-        'DatasetName' =>
-        [
+        'DatasetName' => [
           'shape' => 'DatasetName',
           'location' => 'uri',
           'locationName' => 'DatasetName',
         ],
-        'LastSyncCount' =>
-        [
+        'LastSyncCount' => [
           'shape' => 'Long',
           'location' => 'querystring',
           'locationName' => 'lastSyncCount',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
           'location' => 'querystring',
           'locationName' => 'nextToken',
         ],
-        'MaxResults' =>
-        [
+        'MaxResults' => [
           'shape' => 'IntegerString',
           'location' => 'querystring',
           'locationName' => 'maxResults',
         ],
-        'SyncSessionToken' =>
-        [
+        'SyncSessionToken' => [
           'shape' => 'SyncSessionToken',
           'location' => 'querystring',
           'locationName' => 'syncSessionToken',
         ],
       ],
     ],
-    'ListRecordsResponse' =>
-    [
+    'ListRecordsResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Records' =>
-        [
+      'members' => [
+        'Records' => [
           'shape' => 'RecordList',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
         ],
-        'Count' =>
-        [
+        'Count' => [
           'shape' => 'Integer',
         ],
-        'DatasetSyncCount' =>
-        [
+        'DatasetSyncCount' => [
           'shape' => 'Long',
         ],
-        'LastModifiedBy' =>
-        [
+        'LastModifiedBy' => [
           'shape' => 'String',
         ],
-        'MergedDatasetNames' =>
-        [
+        'MergedDatasetNames' => [
           'shape' => 'MergedDatasetNameList',
         ],
-        'DatasetExists' =>
-        [
+        'DatasetExists' => [
           'shape' => 'Boolean',
         ],
-        'DatasetDeletedAfterRequestedSyncCount' =>
-        [
+        'DatasetDeletedAfterRequestedSyncCount' => [
           'shape' => 'Boolean',
         ],
-        'SyncSessionToken' =>
-        [
+        'SyncSessionToken' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'Long' =>
-    [
+    'Long' => [
       'type' => 'long',
     ],
-    'MergedDatasetNameList' =>
-    [
+    'MergedDatasetNameList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
       ],
     ],
-    'NotAuthorizedException' =>
-    [
+    'NotAuthorizedException' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'message',
+      'required' => [
+        'message',
       ],
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ExceptionMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 403,
       ],
       'exception' => true,
     ],
-    'Operation' =>
-    [
+    'Operation' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'replace',
-        1 => 'remove',
+      'enum' => [
+        'replace',
+        'remove',
       ],
     ],
-    'Record' =>
-    [
+    'Record' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Key' =>
-        [
+      'members' => [
+        'Key' => [
           'shape' => 'RecordKey',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'RecordValue',
         ],
-        'SyncCount' =>
-        [
+        'SyncCount' => [
           'shape' => 'Long',
         ],
-        'LastModifiedDate' =>
-        [
+        'LastModifiedDate' => [
           'shape' => 'Date',
         ],
-        'LastModifiedBy' =>
-        [
+        'LastModifiedBy' => [
           'shape' => 'String',
         ],
-        'DeviceLastModifiedDate' =>
-        [
+        'DeviceLastModifiedDate' => [
           'shape' => 'Date',
         ],
       ],
     ],
-    'RecordKey' =>
-    [
+    'RecordKey' => [
       'type' => 'string',
       'min' => 1,
       'max' => 1024,
     ],
-    'RecordList' =>
-    [
+    'RecordList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Record',
       ],
     ],
-    'RecordPatch' =>
-    [
+    'RecordPatch' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Op',
-        1 => 'Key',
-        2 => 'SyncCount',
+      'required' => [
+        'Op',
+        'Key',
+        'SyncCount',
       ],
-      'members' =>
-      [
-        'Op' =>
-        [
+      'members' => [
+        'Op' => [
           'shape' => 'Operation',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'RecordKey',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'RecordValue',
         ],
-        'SyncCount' =>
-        [
+        'SyncCount' => [
           'shape' => 'Long',
         ],
-        'DeviceLastModifiedDate' =>
-        [
+        'DeviceLastModifiedDate' => [
           'shape' => 'Date',
         ],
       ],
     ],
-    'RecordPatchList' =>
-    [
+    'RecordPatchList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'RecordPatch',
       ],
     ],
-    'RecordValue' =>
-    [
+    'RecordValue' => [
       'type' => 'string',
       'max' => 1048575,
     ],
-    'ResourceConflictException' =>
-    [
+    'ResourceConflictException' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'message',
+      'required' => [
+        'message',
       ],
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ExceptionMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 409,
       ],
       'exception' => true,
     ],
-    'ResourceNotFoundException' =>
-    [
+    'ResourceNotFoundException' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'message',
+      'required' => [
+        'message',
       ],
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ExceptionMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 404,
       ],
       'exception' => true,
     ],
-    'String' =>
-    [
+    'String' => [
       'type' => 'string',
     ],
-    'SyncSessionToken' =>
-    [
+    'SyncSessionToken' => [
       'type' => 'string',
     ],
-    'TooManyRequestsException' =>
-    [
+    'TooManyRequestsException' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'message',
+      'required' => [
+        'message',
       ],
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ExceptionMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 429,
       ],
       'exception' => true,
     ],
-    'UpdateRecordsRequest' =>
-    [
+    'UpdateRecordsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IdentityPoolId',
-        1 => 'IdentityId',
-        2 => 'DatasetName',
-        3 => 'SyncSessionToken',
+      'required' => [
+        'IdentityPoolId',
+        'IdentityId',
+        'DatasetName',
+        'SyncSessionToken',
       ],
-      'members' =>
-      [
-        'IdentityPoolId' =>
-        [
+      'members' => [
+        'IdentityPoolId' => [
           'shape' => 'IdentityPoolId',
           'location' => 'uri',
           'locationName' => 'IdentityPoolId',
         ],
-        'IdentityId' =>
-        [
+        'IdentityId' => [
           'shape' => 'IdentityId',
           'location' => 'uri',
           'locationName' => 'IdentityId',
         ],
-        'DatasetName' =>
-        [
+        'DatasetName' => [
           'shape' => 'DatasetName',
           'location' => 'uri',
           'locationName' => 'DatasetName',
         ],
-        'RecordPatches' =>
-        [
+        'RecordPatches' => [
           'shape' => 'RecordPatchList',
         ],
-        'SyncSessionToken' =>
-        [
+        'SyncSessionToken' => [
           'shape' => 'SyncSessionToken',
         ],
-        'ClientContext' =>
-        [
+        'ClientContext' => [
           'shape' => 'ClientContext',
           'location' => 'header',
           'locationName' => 'x-amz-Client-Context',
         ],
       ],
     ],
-    'UpdateRecordsResponse' =>
-    [
+    'UpdateRecordsResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Records' =>
-        [
+      'members' => [
+        'Records' => [
           'shape' => 'RecordList',
         ],
       ],

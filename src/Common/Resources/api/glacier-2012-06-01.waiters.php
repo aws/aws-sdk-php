@@ -1,27 +1,20 @@
-<?php
-return [
-  'waiters' =>
-  [
-    '__default__' =>
-    [
+<?php return [
+  'waiters' => [
+    '__default__' => [
       'interval' => 3,
       'max_attempts' => 15,
     ],
-    '__VaultState' =>
-    [
+    '__VaultState' => [
       'operation' => 'DescribeVault',
     ],
-    'VaultExists' =>
-    [
+    'VaultExists' => [
       'extends' => '__VaultState',
-      'ignore_errors' =>
-      [
-        0 => 'ResourceNotFoundException',
+      'ignore_errors' => [
+        'ResourceNotFoundException',
       ],
       'success_type' => 'output',
     ],
-    'VaultNotExists' =>
-    [
+    'VaultNotExists' => [
       'extends' => '__VaultState',
       'success_type' => 'error',
       'success_value' => 'ResourceNotFoundException',

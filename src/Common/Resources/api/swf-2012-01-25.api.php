@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2012-01-25',
     'endpointPrefix' => 'swf',
     'jsonVersion' => '1.0',
@@ -12,945 +10,727 @@ return [
     'timestampFormat' => 'unixTimestamp',
     'protocol' => 'json',
   ],
-  'operations' =>
-  [
-    'CountClosedWorkflowExecutions' =>
-    [
+  'operations' => [
+    'CountClosedWorkflowExecutions' => [
       'name' => 'CountClosedWorkflowExecutions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CountClosedWorkflowExecutionsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'WorkflowExecutionCount',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'CountOpenWorkflowExecutions' =>
-    [
+    'CountOpenWorkflowExecutions' => [
       'name' => 'CountOpenWorkflowExecutions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CountOpenWorkflowExecutionsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'WorkflowExecutionCount',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'CountPendingActivityTasks' =>
-    [
+    'CountPendingActivityTasks' => [
       'name' => 'CountPendingActivityTasks',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CountPendingActivityTasksInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'PendingTaskCount',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'CountPendingDecisionTasks' =>
-    [
+    'CountPendingDecisionTasks' => [
       'name' => 'CountPendingDecisionTasks',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CountPendingDecisionTasksInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'PendingTaskCount',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'DeprecateActivityType' =>
-    [
+    'DeprecateActivityType' => [
       'name' => 'DeprecateActivityType',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeprecateActivityTypeInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'TypeDeprecatedFault',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'DeprecateDomain' =>
-    [
+    'DeprecateDomain' => [
       'name' => 'DeprecateDomain',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeprecateDomainInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DomainDeprecatedFault',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'DeprecateWorkflowType' =>
-    [
+    'DeprecateWorkflowType' => [
       'name' => 'DeprecateWorkflowType',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeprecateWorkflowTypeInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'TypeDeprecatedFault',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeActivityType' =>
-    [
+    'DescribeActivityType' => [
       'name' => 'DescribeActivityType',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeActivityTypeInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ActivityTypeDetail',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeDomain' =>
-    [
+    'DescribeDomain' => [
       'name' => 'DescribeDomain',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeDomainInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DomainDetail',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeWorkflowExecution' =>
-    [
+    'DescribeWorkflowExecution' => [
       'name' => 'DescribeWorkflowExecution',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeWorkflowExecutionInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'WorkflowExecutionDetail',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeWorkflowType' =>
-    [
+    'DescribeWorkflowType' => [
       'name' => 'DescribeWorkflowType',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeWorkflowTypeInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'WorkflowTypeDetail',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'GetWorkflowExecutionHistory' =>
-    [
+    'GetWorkflowExecutionHistory' => [
       'name' => 'GetWorkflowExecutionHistory',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetWorkflowExecutionHistoryInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'History',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'ListActivityTypes' =>
-    [
+    'ListActivityTypes' => [
       'name' => 'ListActivityTypes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListActivityTypesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ActivityTypeInfos',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
       ],
     ],
-    'ListClosedWorkflowExecutions' =>
-    [
+    'ListClosedWorkflowExecutions' => [
       'name' => 'ListClosedWorkflowExecutions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListClosedWorkflowExecutionsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'WorkflowExecutionInfos',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'ListDomains' =>
-    [
+    'ListDomains' => [
       'name' => 'ListDomains',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListDomainsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DomainInfos',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'ListOpenWorkflowExecutions' =>
-    [
+    'ListOpenWorkflowExecutions' => [
       'name' => 'ListOpenWorkflowExecutions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListOpenWorkflowExecutionsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'WorkflowExecutionInfos',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'ListWorkflowTypes' =>
-    [
+    'ListWorkflowTypes' => [
       'name' => 'ListWorkflowTypes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListWorkflowTypesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'WorkflowTypeInfos',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
       ],
     ],
-    'PollForActivityTask' =>
-    [
+    'PollForActivityTask' => [
       'name' => 'PollForActivityTask',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PollForActivityTaskInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ActivityTask',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededFault',
           'exception' => true,
         ],
       ],
     ],
-    'PollForDecisionTask' =>
-    [
+    'PollForDecisionTask' => [
       'name' => 'PollForDecisionTask',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PollForDecisionTaskInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DecisionTask',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededFault',
           'exception' => true,
         ],
       ],
     ],
-    'RecordActivityTaskHeartbeat' =>
-    [
+    'RecordActivityTaskHeartbeat' => [
       'name' => 'RecordActivityTaskHeartbeat',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RecordActivityTaskHeartbeatInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ActivityTaskStatus',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'RegisterActivityType' =>
-    [
+    'RegisterActivityType' => [
       'name' => 'RegisterActivityType',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RegisterActivityTypeInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'TypeAlreadyExistsFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededFault',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'RegisterDomain' =>
-    [
+    'RegisterDomain' => [
       'name' => 'RegisterDomain',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RegisterDomainInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DomainAlreadyExistsFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededFault',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'RegisterWorkflowType' =>
-    [
+    'RegisterWorkflowType' => [
       'name' => 'RegisterWorkflowType',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RegisterWorkflowTypeInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'TypeAlreadyExistsFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededFault',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'RequestCancelWorkflowExecution' =>
-    [
+    'RequestCancelWorkflowExecution' => [
       'name' => 'RequestCancelWorkflowExecution',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RequestCancelWorkflowExecutionInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'RespondActivityTaskCanceled' =>
-    [
+    'RespondActivityTaskCanceled' => [
       'name' => 'RespondActivityTaskCanceled',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RespondActivityTaskCanceledInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'RespondActivityTaskCompleted' =>
-    [
+    'RespondActivityTaskCompleted' => [
       'name' => 'RespondActivityTaskCompleted',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RespondActivityTaskCompletedInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'RespondActivityTaskFailed' =>
-    [
+    'RespondActivityTaskFailed' => [
       'name' => 'RespondActivityTaskFailed',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RespondActivityTaskFailedInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'RespondDecisionTaskCompleted' =>
-    [
+    'RespondDecisionTaskCompleted' => [
       'name' => 'RespondDecisionTaskCompleted',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RespondDecisionTaskCompletedInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'SignalWorkflowExecution' =>
-    [
+    'SignalWorkflowExecution' => [
       'name' => 'SignalWorkflowExecution',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SignalWorkflowExecutionInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
       ],
     ],
-    'StartWorkflowExecution' =>
-    [
+    'StartWorkflowExecution' => [
       'name' => 'StartWorkflowExecution',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'StartWorkflowExecutionInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'Run',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'TypeDeprecatedFault',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'WorkflowExecutionAlreadyStartedFault',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'LimitExceededFault',
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'DefaultUndefinedFault',
           'exception' => true,
         ],
       ],
     ],
-    'TerminateWorkflowExecution' =>
-    [
+    'TerminateWorkflowExecution' => [
       'name' => 'TerminateWorkflowExecution',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'TerminateWorkflowExecutionInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'UnknownResourceFault',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'OperationNotPermittedFault',
           'exception' => true,
@@ -958,4177 +738,3174 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'ActivityId' =>
-    [
+  'shapes' => [
+    'ActivityId' => [
       'type' => 'string',
       'min' => 1,
       'max' => 256,
     ],
-    'ActivityTask' =>
-    [
+    'ActivityTask' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'taskToken',
-        1 => 'activityId',
-        2 => 'startedEventId',
-        3 => 'workflowExecution',
-        4 => 'activityType',
+      'required' => [
+        'taskToken',
+        'activityId',
+        'startedEventId',
+        'workflowExecution',
+        'activityType',
       ],
-      'members' =>
-      [
-        'taskToken' =>
-        [
+      'members' => [
+        'taskToken' => [
           'shape' => 'TaskToken',
         ],
-        'activityId' =>
-        [
+        'activityId' => [
           'shape' => 'ActivityId',
         ],
-        'startedEventId' =>
-        [
+        'startedEventId' => [
           'shape' => 'EventId',
         ],
-        'workflowExecution' =>
-        [
+        'workflowExecution' => [
           'shape' => 'WorkflowExecution',
         ],
-        'activityType' =>
-        [
+        'activityType' => [
           'shape' => 'ActivityType',
         ],
-        'input' =>
-        [
+        'input' => [
           'shape' => 'Data',
         ],
       ],
     ],
-    'ActivityTaskCancelRequestedEventAttributes' =>
-    [
+    'ActivityTaskCancelRequestedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'decisionTaskCompletedEventId',
-        1 => 'activityId',
+      'required' => [
+        'decisionTaskCompletedEventId',
+        'activityId',
       ],
-      'members' =>
-      [
-        'decisionTaskCompletedEventId' =>
-        [
+      'members' => [
+        'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
-        'activityId' =>
-        [
+        'activityId' => [
           'shape' => 'ActivityId',
         ],
       ],
     ],
-    'ActivityTaskCanceledEventAttributes' =>
-    [
+    'ActivityTaskCanceledEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'scheduledEventId',
-        1 => 'startedEventId',
+      'required' => [
+        'scheduledEventId',
+        'startedEventId',
       ],
-      'members' =>
-      [
-        'details' =>
-        [
+      'members' => [
+        'details' => [
           'shape' => 'Data',
         ],
-        'scheduledEventId' =>
-        [
+        'scheduledEventId' => [
           'shape' => 'EventId',
         ],
-        'startedEventId' =>
-        [
+        'startedEventId' => [
           'shape' => 'EventId',
         ],
-        'latestCancelRequestedEventId' =>
-        [
+        'latestCancelRequestedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'ActivityTaskCompletedEventAttributes' =>
-    [
+    'ActivityTaskCompletedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'scheduledEventId',
-        1 => 'startedEventId',
+      'required' => [
+        'scheduledEventId',
+        'startedEventId',
       ],
-      'members' =>
-      [
-        'result' =>
-        [
+      'members' => [
+        'result' => [
           'shape' => 'Data',
         ],
-        'scheduledEventId' =>
-        [
+        'scheduledEventId' => [
           'shape' => 'EventId',
         ],
-        'startedEventId' =>
-        [
+        'startedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'ActivityTaskFailedEventAttributes' =>
-    [
+    'ActivityTaskFailedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'scheduledEventId',
-        1 => 'startedEventId',
+      'required' => [
+        'scheduledEventId',
+        'startedEventId',
       ],
-      'members' =>
-      [
-        'reason' =>
-        [
+      'members' => [
+        'reason' => [
           'shape' => 'FailureReason',
         ],
-        'details' =>
-        [
+        'details' => [
           'shape' => 'Data',
         ],
-        'scheduledEventId' =>
-        [
+        'scheduledEventId' => [
           'shape' => 'EventId',
         ],
-        'startedEventId' =>
-        [
+        'startedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'ActivityTaskScheduledEventAttributes' =>
-    [
+    'ActivityTaskScheduledEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'activityType',
-        1 => 'activityId',
-        2 => 'taskList',
-        3 => 'decisionTaskCompletedEventId',
+      'required' => [
+        'activityType',
+        'activityId',
+        'taskList',
+        'decisionTaskCompletedEventId',
       ],
-      'members' =>
-      [
-        'activityType' =>
-        [
+      'members' => [
+        'activityType' => [
           'shape' => 'ActivityType',
         ],
-        'activityId' =>
-        [
+        'activityId' => [
           'shape' => 'ActivityId',
         ],
-        'input' =>
-        [
+        'input' => [
           'shape' => 'Data',
         ],
-        'control' =>
-        [
+        'control' => [
           'shape' => 'Data',
         ],
-        'scheduleToStartTimeout' =>
-        [
+        'scheduleToStartTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'scheduleToCloseTimeout' =>
-        [
+        'scheduleToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'startToCloseTimeout' =>
-        [
+        'startToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'taskList' =>
-        [
+        'taskList' => [
           'shape' => 'TaskList',
         ],
-        'decisionTaskCompletedEventId' =>
-        [
+        'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
-        'heartbeatTimeout' =>
-        [
+        'heartbeatTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
       ],
     ],
-    'ActivityTaskStartedEventAttributes' =>
-    [
+    'ActivityTaskStartedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'scheduledEventId',
+      'required' => [
+        'scheduledEventId',
       ],
-      'members' =>
-      [
-        'identity' =>
-        [
+      'members' => [
+        'identity' => [
           'shape' => 'Identity',
         ],
-        'scheduledEventId' =>
-        [
+        'scheduledEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'ActivityTaskStatus' =>
-    [
+    'ActivityTaskStatus' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'cancelRequested',
+      'required' => [
+        'cancelRequested',
       ],
-      'members' =>
-      [
-        'cancelRequested' =>
-        [
+      'members' => [
+        'cancelRequested' => [
           'shape' => 'Canceled',
         ],
       ],
     ],
-    'ActivityTaskTimedOutEventAttributes' =>
-    [
+    'ActivityTaskTimedOutEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'timeoutType',
-        1 => 'scheduledEventId',
-        2 => 'startedEventId',
+      'required' => [
+        'timeoutType',
+        'scheduledEventId',
+        'startedEventId',
       ],
-      'members' =>
-      [
-        'timeoutType' =>
-        [
+      'members' => [
+        'timeoutType' => [
           'shape' => 'ActivityTaskTimeoutType',
         ],
-        'scheduledEventId' =>
-        [
+        'scheduledEventId' => [
           'shape' => 'EventId',
         ],
-        'startedEventId' =>
-        [
+        'startedEventId' => [
           'shape' => 'EventId',
         ],
-        'details' =>
-        [
+        'details' => [
           'shape' => 'LimitedData',
         ],
       ],
     ],
-    'ActivityTaskTimeoutType' =>
-    [
+    'ActivityTaskTimeoutType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'START_TO_CLOSE',
-        1 => 'SCHEDULE_TO_START',
-        2 => 'SCHEDULE_TO_CLOSE',
-        3 => 'HEARTBEAT',
+      'enum' => [
+        'START_TO_CLOSE',
+        'SCHEDULE_TO_START',
+        'SCHEDULE_TO_CLOSE',
+        'HEARTBEAT',
       ],
     ],
-    'ActivityType' =>
-    [
+    'ActivityType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'name',
-        1 => 'version',
+      'required' => [
+        'name',
+        'version',
       ],
-      'members' =>
-      [
-        'name' =>
-        [
+      'members' => [
+        'name' => [
           'shape' => 'Name',
         ],
-        'version' =>
-        [
+        'version' => [
           'shape' => 'Version',
         ],
       ],
     ],
-    'ActivityTypeConfiguration' =>
-    [
+    'ActivityTypeConfiguration' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'defaultTaskStartToCloseTimeout' =>
-        [
+      'members' => [
+        'defaultTaskStartToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'defaultTaskHeartbeatTimeout' =>
-        [
+        'defaultTaskHeartbeatTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'defaultTaskList' =>
-        [
+        'defaultTaskList' => [
           'shape' => 'TaskList',
         ],
-        'defaultTaskScheduleToStartTimeout' =>
-        [
+        'defaultTaskScheduleToStartTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'defaultTaskScheduleToCloseTimeout' =>
-        [
+        'defaultTaskScheduleToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
       ],
     ],
-    'ActivityTypeDetail' =>
-    [
+    'ActivityTypeDetail' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'typeInfo',
-        1 => 'configuration',
+      'required' => [
+        'typeInfo',
+        'configuration',
       ],
-      'members' =>
-      [
-        'typeInfo' =>
-        [
+      'members' => [
+        'typeInfo' => [
           'shape' => 'ActivityTypeInfo',
         ],
-        'configuration' =>
-        [
+        'configuration' => [
           'shape' => 'ActivityTypeConfiguration',
         ],
       ],
     ],
-    'ActivityTypeInfo' =>
-    [
+    'ActivityTypeInfo' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'activityType',
-        1 => 'status',
-        2 => 'creationDate',
+      'required' => [
+        'activityType',
+        'status',
+        'creationDate',
       ],
-      'members' =>
-      [
-        'activityType' =>
-        [
+      'members' => [
+        'activityType' => [
           'shape' => 'ActivityType',
         ],
-        'status' =>
-        [
+        'status' => [
           'shape' => 'RegistrationStatus',
         ],
-        'description' =>
-        [
+        'description' => [
           'shape' => 'Description',
         ],
-        'creationDate' =>
-        [
+        'creationDate' => [
           'shape' => 'Timestamp',
         ],
-        'deprecationDate' =>
-        [
+        'deprecationDate' => [
           'shape' => 'Timestamp',
         ],
       ],
     ],
-    'ActivityTypeInfoList' =>
-    [
+    'ActivityTypeInfoList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ActivityTypeInfo',
       ],
     ],
-    'ActivityTypeInfos' =>
-    [
+    'ActivityTypeInfos' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'typeInfos',
+      'required' => [
+        'typeInfos',
       ],
-      'members' =>
-      [
-        'typeInfos' =>
-        [
+      'members' => [
+        'typeInfos' => [
           'shape' => 'ActivityTypeInfoList',
         ],
-        'nextPageToken' =>
-        [
+        'nextPageToken' => [
           'shape' => 'PageToken',
         ],
       ],
     ],
-    'CancelTimerDecisionAttributes' =>
-    [
+    'CancelTimerDecisionAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'timerId',
+      'required' => [
+        'timerId',
       ],
-      'members' =>
-      [
-        'timerId' =>
-        [
+      'members' => [
+        'timerId' => [
           'shape' => 'TimerId',
         ],
       ],
     ],
-    'CancelTimerFailedCause' =>
-    [
+    'CancelTimerFailedCause' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'TIMER_ID_UNKNOWN',
-        1 => 'OPERATION_NOT_PERMITTED',
+      'enum' => [
+        'TIMER_ID_UNKNOWN',
+        'OPERATION_NOT_PERMITTED',
       ],
     ],
-    'CancelTimerFailedEventAttributes' =>
-    [
+    'CancelTimerFailedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'timerId',
-        1 => 'cause',
-        2 => 'decisionTaskCompletedEventId',
+      'required' => [
+        'timerId',
+        'cause',
+        'decisionTaskCompletedEventId',
       ],
-      'members' =>
-      [
-        'timerId' =>
-        [
+      'members' => [
+        'timerId' => [
           'shape' => 'TimerId',
         ],
-        'cause' =>
-        [
+        'cause' => [
           'shape' => 'CancelTimerFailedCause',
         ],
-        'decisionTaskCompletedEventId' =>
-        [
+        'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'CancelWorkflowExecutionDecisionAttributes' =>
-    [
+    'CancelWorkflowExecutionDecisionAttributes' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'details' =>
-        [
+      'members' => [
+        'details' => [
           'shape' => 'Data',
         ],
       ],
     ],
-    'CancelWorkflowExecutionFailedCause' =>
-    [
+    'CancelWorkflowExecutionFailedCause' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'UNHANDLED_DECISION',
-        1 => 'OPERATION_NOT_PERMITTED',
+      'enum' => [
+        'UNHANDLED_DECISION',
+        'OPERATION_NOT_PERMITTED',
       ],
     ],
-    'CancelWorkflowExecutionFailedEventAttributes' =>
-    [
+    'CancelWorkflowExecutionFailedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'cause',
-        1 => 'decisionTaskCompletedEventId',
+      'required' => [
+        'cause',
+        'decisionTaskCompletedEventId',
       ],
-      'members' =>
-      [
-        'cause' =>
-        [
+      'members' => [
+        'cause' => [
           'shape' => 'CancelWorkflowExecutionFailedCause',
         ],
-        'decisionTaskCompletedEventId' =>
-        [
+        'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'Canceled' =>
-    [
+    'Canceled' => [
       'type' => 'boolean',
     ],
-    'ChildPolicy' =>
-    [
+    'ChildPolicy' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'TERMINATE',
-        1 => 'REQUEST_CANCEL',
-        2 => 'ABANDON',
+      'enum' => [
+        'TERMINATE',
+        'REQUEST_CANCEL',
+        'ABANDON',
       ],
     ],
-    'ChildWorkflowExecutionCanceledEventAttributes' =>
-    [
+    'ChildWorkflowExecutionCanceledEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'workflowExecution',
-        1 => 'workflowType',
-        2 => 'initiatedEventId',
-        3 => 'startedEventId',
+      'required' => [
+        'workflowExecution',
+        'workflowType',
+        'initiatedEventId',
+        'startedEventId',
       ],
-      'members' =>
-      [
-        'workflowExecution' =>
-        [
+      'members' => [
+        'workflowExecution' => [
           'shape' => 'WorkflowExecution',
         ],
-        'workflowType' =>
-        [
+        'workflowType' => [
           'shape' => 'WorkflowType',
         ],
-        'details' =>
-        [
+        'details' => [
           'shape' => 'Data',
         ],
-        'initiatedEventId' =>
-        [
+        'initiatedEventId' => [
           'shape' => 'EventId',
         ],
-        'startedEventId' =>
-        [
+        'startedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'ChildWorkflowExecutionCompletedEventAttributes' =>
-    [
+    'ChildWorkflowExecutionCompletedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'workflowExecution',
-        1 => 'workflowType',
-        2 => 'initiatedEventId',
-        3 => 'startedEventId',
+      'required' => [
+        'workflowExecution',
+        'workflowType',
+        'initiatedEventId',
+        'startedEventId',
       ],
-      'members' =>
-      [
-        'workflowExecution' =>
-        [
+      'members' => [
+        'workflowExecution' => [
           'shape' => 'WorkflowExecution',
         ],
-        'workflowType' =>
-        [
+        'workflowType' => [
           'shape' => 'WorkflowType',
         ],
-        'result' =>
-        [
+        'result' => [
           'shape' => 'Data',
         ],
-        'initiatedEventId' =>
-        [
+        'initiatedEventId' => [
           'shape' => 'EventId',
         ],
-        'startedEventId' =>
-        [
+        'startedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'ChildWorkflowExecutionFailedEventAttributes' =>
-    [
+    'ChildWorkflowExecutionFailedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'workflowExecution',
-        1 => 'workflowType',
-        2 => 'initiatedEventId',
-        3 => 'startedEventId',
+      'required' => [
+        'workflowExecution',
+        'workflowType',
+        'initiatedEventId',
+        'startedEventId',
       ],
-      'members' =>
-      [
-        'workflowExecution' =>
-        [
+      'members' => [
+        'workflowExecution' => [
           'shape' => 'WorkflowExecution',
         ],
-        'workflowType' =>
-        [
+        'workflowType' => [
           'shape' => 'WorkflowType',
         ],
-        'reason' =>
-        [
+        'reason' => [
           'shape' => 'FailureReason',
         ],
-        'details' =>
-        [
+        'details' => [
           'shape' => 'Data',
         ],
-        'initiatedEventId' =>
-        [
+        'initiatedEventId' => [
           'shape' => 'EventId',
         ],
-        'startedEventId' =>
-        [
-          'shape' => 'EventId',
-        ],
-      ],
-    ],
-    'ChildWorkflowExecutionStartedEventAttributes' =>
-    [
-      'type' => 'structure',
-      'required' =>
-      [
-        0 => 'workflowExecution',
-        1 => 'workflowType',
-        2 => 'initiatedEventId',
-      ],
-      'members' =>
-      [
-        'workflowExecution' =>
-        [
-          'shape' => 'WorkflowExecution',
-        ],
-        'workflowType' =>
-        [
-          'shape' => 'WorkflowType',
-        ],
-        'initiatedEventId' =>
-        [
+        'startedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'ChildWorkflowExecutionTerminatedEventAttributes' =>
-    [
+    'ChildWorkflowExecutionStartedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'workflowExecution',
-        1 => 'workflowType',
-        2 => 'initiatedEventId',
-        3 => 'startedEventId',
+      'required' => [
+        'workflowExecution',
+        'workflowType',
+        'initiatedEventId',
       ],
-      'members' =>
-      [
-        'workflowExecution' =>
-        [
+      'members' => [
+        'workflowExecution' => [
           'shape' => 'WorkflowExecution',
         ],
-        'workflowType' =>
-        [
+        'workflowType' => [
           'shape' => 'WorkflowType',
         ],
-        'initiatedEventId' =>
-        [
-          'shape' => 'EventId',
-        ],
-        'startedEventId' =>
-        [
+        'initiatedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'ChildWorkflowExecutionTimedOutEventAttributes' =>
-    [
+    'ChildWorkflowExecutionTerminatedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'workflowExecution',
-        1 => 'workflowType',
-        2 => 'timeoutType',
-        3 => 'initiatedEventId',
-        4 => 'startedEventId',
+      'required' => [
+        'workflowExecution',
+        'workflowType',
+        'initiatedEventId',
+        'startedEventId',
       ],
-      'members' =>
-      [
-        'workflowExecution' =>
-        [
+      'members' => [
+        'workflowExecution' => [
           'shape' => 'WorkflowExecution',
         ],
-        'workflowType' =>
-        [
+        'workflowType' => [
           'shape' => 'WorkflowType',
         ],
-        'timeoutType' =>
-        [
+        'initiatedEventId' => [
+          'shape' => 'EventId',
+        ],
+        'startedEventId' => [
+          'shape' => 'EventId',
+        ],
+      ],
+    ],
+    'ChildWorkflowExecutionTimedOutEventAttributes' => [
+      'type' => 'structure',
+      'required' => [
+        'workflowExecution',
+        'workflowType',
+        'timeoutType',
+        'initiatedEventId',
+        'startedEventId',
+      ],
+      'members' => [
+        'workflowExecution' => [
+          'shape' => 'WorkflowExecution',
+        ],
+        'workflowType' => [
+          'shape' => 'WorkflowType',
+        ],
+        'timeoutType' => [
           'shape' => 'WorkflowExecutionTimeoutType',
         ],
-        'initiatedEventId' =>
-        [
+        'initiatedEventId' => [
           'shape' => 'EventId',
         ],
-        'startedEventId' =>
-        [
+        'startedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'CloseStatus' =>
-    [
+    'CloseStatus' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'COMPLETED',
-        1 => 'FAILED',
-        2 => 'CANCELED',
-        3 => 'TERMINATED',
-        4 => 'CONTINUED_AS_NEW',
-        5 => 'TIMED_OUT',
+      'enum' => [
+        'COMPLETED',
+        'FAILED',
+        'CANCELED',
+        'TERMINATED',
+        'CONTINUED_AS_NEW',
+        'TIMED_OUT',
       ],
     ],
-    'CloseStatusFilter' =>
-    [
+    'CloseStatusFilter' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'status',
+      'required' => [
+        'status',
       ],
-      'members' =>
-      [
-        'status' =>
-        [
+      'members' => [
+        'status' => [
           'shape' => 'CloseStatus',
         ],
       ],
     ],
-    'CompleteWorkflowExecutionDecisionAttributes' =>
-    [
+    'CompleteWorkflowExecutionDecisionAttributes' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'result' =>
-        [
+      'members' => [
+        'result' => [
           'shape' => 'Data',
         ],
       ],
     ],
-    'CompleteWorkflowExecutionFailedCause' =>
-    [
+    'CompleteWorkflowExecutionFailedCause' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'UNHANDLED_DECISION',
-        1 => 'OPERATION_NOT_PERMITTED',
+      'enum' => [
+        'UNHANDLED_DECISION',
+        'OPERATION_NOT_PERMITTED',
       ],
     ],
-    'CompleteWorkflowExecutionFailedEventAttributes' =>
-    [
+    'CompleteWorkflowExecutionFailedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'cause',
-        1 => 'decisionTaskCompletedEventId',
+      'required' => [
+        'cause',
+        'decisionTaskCompletedEventId',
       ],
-      'members' =>
-      [
-        'cause' =>
-        [
+      'members' => [
+        'cause' => [
           'shape' => 'CompleteWorkflowExecutionFailedCause',
         ],
-        'decisionTaskCompletedEventId' =>
-        [
+        'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'ContinueAsNewWorkflowExecutionDecisionAttributes' =>
-    [
+    'ContinueAsNewWorkflowExecutionDecisionAttributes' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'input' =>
-        [
+      'members' => [
+        'input' => [
           'shape' => 'Data',
         ],
-        'executionStartToCloseTimeout' =>
-        [
+        'executionStartToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'taskList' =>
-        [
+        'taskList' => [
           'shape' => 'TaskList',
         ],
-        'taskStartToCloseTimeout' =>
-        [
+        'taskStartToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'childPolicy' =>
-        [
+        'childPolicy' => [
           'shape' => 'ChildPolicy',
         ],
-        'tagList' =>
-        [
+        'tagList' => [
           'shape' => 'TagList',
         ],
-        'workflowTypeVersion' =>
-        [
+        'workflowTypeVersion' => [
           'shape' => 'Version',
         ],
       ],
     ],
-    'ContinueAsNewWorkflowExecutionFailedCause' =>
-    [
+    'ContinueAsNewWorkflowExecutionFailedCause' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'UNHANDLED_DECISION',
-        1 => 'WORKFLOW_TYPE_DEPRECATED',
-        2 => 'WORKFLOW_TYPE_DOES_NOT_EXIST',
-        3 => 'DEFAULT_EXECUTION_START_TO_CLOSE_TIMEOUT_UNDEFINED',
-        4 => 'DEFAULT_TASK_START_TO_CLOSE_TIMEOUT_UNDEFINED',
-        5 => 'DEFAULT_TASK_LIST_UNDEFINED',
-        6 => 'DEFAULT_CHILD_POLICY_UNDEFINED',
-        7 => 'OPERATION_NOT_PERMITTED',
+      'enum' => [
+        'UNHANDLED_DECISION',
+        'WORKFLOW_TYPE_DEPRECATED',
+        'WORKFLOW_TYPE_DOES_NOT_EXIST',
+        'DEFAULT_EXECUTION_START_TO_CLOSE_TIMEOUT_UNDEFINED',
+        'DEFAULT_TASK_START_TO_CLOSE_TIMEOUT_UNDEFINED',
+        'DEFAULT_TASK_LIST_UNDEFINED',
+        'DEFAULT_CHILD_POLICY_UNDEFINED',
+        'OPERATION_NOT_PERMITTED',
       ],
     ],
-    'ContinueAsNewWorkflowExecutionFailedEventAttributes' =>
-    [
+    'ContinueAsNewWorkflowExecutionFailedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'cause',
-        1 => 'decisionTaskCompletedEventId',
+      'required' => [
+        'cause',
+        'decisionTaskCompletedEventId',
       ],
-      'members' =>
-      [
-        'cause' =>
-        [
+      'members' => [
+        'cause' => [
           'shape' => 'ContinueAsNewWorkflowExecutionFailedCause',
         ],
-        'decisionTaskCompletedEventId' =>
-        [
+        'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'Count' =>
-    [
+    'Count' => [
       'type' => 'integer',
       'min' => 0,
     ],
-    'CountClosedWorkflowExecutionsInput' =>
-    [
+    'CountClosedWorkflowExecutionsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'domain',
+      'required' => [
+        'domain',
       ],
-      'members' =>
-      [
-        'domain' =>
-        [
+      'members' => [
+        'domain' => [
           'shape' => 'DomainName',
         ],
-        'startTimeFilter' =>
-        [
+        'startTimeFilter' => [
           'shape' => 'ExecutionTimeFilter',
         ],
-        'closeTimeFilter' =>
-        [
+        'closeTimeFilter' => [
           'shape' => 'ExecutionTimeFilter',
         ],
-        'executionFilter' =>
-        [
+        'executionFilter' => [
           'shape' => 'WorkflowExecutionFilter',
         ],
-        'typeFilter' =>
-        [
+        'typeFilter' => [
           'shape' => 'WorkflowTypeFilter',
         ],
-        'tagFilter' =>
-        [
+        'tagFilter' => [
           'shape' => 'TagFilter',
         ],
-        'closeStatusFilter' =>
-        [
+        'closeStatusFilter' => [
           'shape' => 'CloseStatusFilter',
         ],
       ],
     ],
-    'CountOpenWorkflowExecutionsInput' =>
-    [
+    'CountOpenWorkflowExecutionsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'domain',
-        1 => 'startTimeFilter',
+      'required' => [
+        'domain',
+        'startTimeFilter',
       ],
-      'members' =>
-      [
-        'domain' =>
-        [
+      'members' => [
+        'domain' => [
           'shape' => 'DomainName',
         ],
-        'startTimeFilter' =>
-        [
+        'startTimeFilter' => [
           'shape' => 'ExecutionTimeFilter',
         ],
-        'typeFilter' =>
-        [
+        'typeFilter' => [
           'shape' => 'WorkflowTypeFilter',
         ],
-        'tagFilter' =>
-        [
+        'tagFilter' => [
           'shape' => 'TagFilter',
         ],
-        'executionFilter' =>
-        [
+        'executionFilter' => [
           'shape' => 'WorkflowExecutionFilter',
         ],
       ],
     ],
-    'CountPendingActivityTasksInput' =>
-    [
+    'CountPendingActivityTasksInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'domain',
-        1 => 'taskList',
+      'required' => [
+        'domain',
+        'taskList',
       ],
-      'members' =>
-      [
-        'domain' =>
-        [
+      'members' => [
+        'domain' => [
           'shape' => 'DomainName',
         ],
-        'taskList' =>
-        [
+        'taskList' => [
           'shape' => 'TaskList',
         ],
       ],
     ],
-    'CountPendingDecisionTasksInput' =>
-    [
+    'CountPendingDecisionTasksInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'domain',
-        1 => 'taskList',
+      'required' => [
+        'domain',
+        'taskList',
       ],
-      'members' =>
-      [
-        'domain' =>
-        [
+      'members' => [
+        'domain' => [
           'shape' => 'DomainName',
         ],
-        'taskList' =>
-        [
+        'taskList' => [
           'shape' => 'TaskList',
         ],
       ],
     ],
-    'Data' =>
-    [
+    'Data' => [
       'type' => 'string',
       'max' => 32768,
     ],
-    'Decision' =>
-    [
+    'Decision' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'decisionType',
+      'required' => [
+        'decisionType',
       ],
-      'members' =>
-      [
-        'decisionType' =>
-        [
+      'members' => [
+        'decisionType' => [
           'shape' => 'DecisionType',
         ],
-        'scheduleActivityTaskDecisionAttributes' =>
-        [
+        'scheduleActivityTaskDecisionAttributes' => [
           'shape' => 'ScheduleActivityTaskDecisionAttributes',
         ],
-        'requestCancelActivityTaskDecisionAttributes' =>
-        [
+        'requestCancelActivityTaskDecisionAttributes' => [
           'shape' => 'RequestCancelActivityTaskDecisionAttributes',
         ],
-        'completeWorkflowExecutionDecisionAttributes' =>
-        [
+        'completeWorkflowExecutionDecisionAttributes' => [
           'shape' => 'CompleteWorkflowExecutionDecisionAttributes',
         ],
-        'failWorkflowExecutionDecisionAttributes' =>
-        [
+        'failWorkflowExecutionDecisionAttributes' => [
           'shape' => 'FailWorkflowExecutionDecisionAttributes',
         ],
-        'cancelWorkflowExecutionDecisionAttributes' =>
-        [
+        'cancelWorkflowExecutionDecisionAttributes' => [
           'shape' => 'CancelWorkflowExecutionDecisionAttributes',
         ],
-        'continueAsNewWorkflowExecutionDecisionAttributes' =>
-        [
+        'continueAsNewWorkflowExecutionDecisionAttributes' => [
           'shape' => 'ContinueAsNewWorkflowExecutionDecisionAttributes',
         ],
-        'recordMarkerDecisionAttributes' =>
-        [
+        'recordMarkerDecisionAttributes' => [
           'shape' => 'RecordMarkerDecisionAttributes',
         ],
-        'startTimerDecisionAttributes' =>
-        [
+        'startTimerDecisionAttributes' => [
           'shape' => 'StartTimerDecisionAttributes',
         ],
-        'cancelTimerDecisionAttributes' =>
-        [
+        'cancelTimerDecisionAttributes' => [
           'shape' => 'CancelTimerDecisionAttributes',
         ],
-        'signalExternalWorkflowExecutionDecisionAttributes' =>
-        [
+        'signalExternalWorkflowExecutionDecisionAttributes' => [
           'shape' => 'SignalExternalWorkflowExecutionDecisionAttributes',
         ],
-        'requestCancelExternalWorkflowExecutionDecisionAttributes' =>
-        [
+        'requestCancelExternalWorkflowExecutionDecisionAttributes' => [
           'shape' => 'RequestCancelExternalWorkflowExecutionDecisionAttributes',
         ],
-        'startChildWorkflowExecutionDecisionAttributes' =>
-        [
+        'startChildWorkflowExecutionDecisionAttributes' => [
           'shape' => 'StartChildWorkflowExecutionDecisionAttributes',
         ],
       ],
     ],
-    'DecisionList' =>
-    [
+    'DecisionList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Decision',
       ],
     ],
-    'DecisionTask' =>
-    [
+    'DecisionTask' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'taskToken',
-        1 => 'startedEventId',
-        2 => 'workflowExecution',
-        3 => 'workflowType',
-        4 => 'events',
+      'required' => [
+        'taskToken',
+        'startedEventId',
+        'workflowExecution',
+        'workflowType',
+        'events',
       ],
-      'members' =>
-      [
-        'taskToken' =>
-        [
+      'members' => [
+        'taskToken' => [
           'shape' => 'TaskToken',
         ],
-        'startedEventId' =>
-        [
+        'startedEventId' => [
           'shape' => 'EventId',
         ],
-        'workflowExecution' =>
-        [
+        'workflowExecution' => [
           'shape' => 'WorkflowExecution',
         ],
-        'workflowType' =>
-        [
+        'workflowType' => [
           'shape' => 'WorkflowType',
         ],
-        'events' =>
-        [
+        'events' => [
           'shape' => 'HistoryEventList',
         ],
-        'nextPageToken' =>
-        [
+        'nextPageToken' => [
           'shape' => 'PageToken',
         ],
-        'previousStartedEventId' =>
-        [
+        'previousStartedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'DecisionTaskCompletedEventAttributes' =>
-    [
+    'DecisionTaskCompletedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'scheduledEventId',
-        1 => 'startedEventId',
+      'required' => [
+        'scheduledEventId',
+        'startedEventId',
       ],
-      'members' =>
-      [
-        'executionContext' =>
-        [
+      'members' => [
+        'executionContext' => [
           'shape' => 'Data',
         ],
-        'scheduledEventId' =>
-        [
+        'scheduledEventId' => [
           'shape' => 'EventId',
         ],
-        'startedEventId' =>
-        [
+        'startedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'DecisionTaskScheduledEventAttributes' =>
-    [
+    'DecisionTaskScheduledEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'taskList',
+      'required' => [
+        'taskList',
       ],
-      'members' =>
-      [
-        'taskList' =>
-        [
+      'members' => [
+        'taskList' => [
           'shape' => 'TaskList',
         ],
-        'startToCloseTimeout' =>
-        [
+        'startToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
       ],
     ],
-    'DecisionTaskStartedEventAttributes' =>
-    [
+    'DecisionTaskStartedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'scheduledEventId',
+      'required' => [
+        'scheduledEventId',
       ],
-      'members' =>
-      [
-        'identity' =>
-        [
+      'members' => [
+        'identity' => [
           'shape' => 'Identity',
         ],
-        'scheduledEventId' =>
-        [
+        'scheduledEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'DecisionTaskTimedOutEventAttributes' =>
-    [
+    'DecisionTaskTimedOutEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'timeoutType',
-        1 => 'scheduledEventId',
-        2 => 'startedEventId',
+      'required' => [
+        'timeoutType',
+        'scheduledEventId',
+        'startedEventId',
       ],
-      'members' =>
-      [
-        'timeoutType' =>
-        [
+      'members' => [
+        'timeoutType' => [
           'shape' => 'DecisionTaskTimeoutType',
         ],
-        'scheduledEventId' =>
-        [
+        'scheduledEventId' => [
           'shape' => 'EventId',
         ],
-        'startedEventId' =>
-        [
+        'startedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'DecisionTaskTimeoutType' =>
-    [
+    'DecisionTaskTimeoutType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'START_TO_CLOSE',
+      'enum' => [
+        'START_TO_CLOSE',
       ],
     ],
-    'DecisionType' =>
-    [
+    'DecisionType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'ScheduleActivityTask',
-        1 => 'RequestCancelActivityTask',
-        2 => 'CompleteWorkflowExecution',
-        3 => 'FailWorkflowExecution',
-        4 => 'CancelWorkflowExecution',
-        5 => 'ContinueAsNewWorkflowExecution',
-        6 => 'RecordMarker',
-        7 => 'StartTimer',
-        8 => 'CancelTimer',
-        9 => 'SignalExternalWorkflowExecution',
-        10 => 'RequestCancelExternalWorkflowExecution',
-        11 => 'StartChildWorkflowExecution',
+      'enum' => [
+        'ScheduleActivityTask',
+        'RequestCancelActivityTask',
+        'CompleteWorkflowExecution',
+        'FailWorkflowExecution',
+        'CancelWorkflowExecution',
+        'ContinueAsNewWorkflowExecution',
+        'RecordMarker',
+        'StartTimer',
+        'CancelTimer',
+        'SignalExternalWorkflowExecution',
+        'RequestCancelExternalWorkflowExecution',
+        'StartChildWorkflowExecution',
       ],
     ],
-    'DefaultUndefinedFault' =>
-    [
+    'DefaultUndefinedFault' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'DeprecateActivityTypeInput' =>
-    [
+    'DeprecateActivityTypeInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'domain',
-        1 => 'activityType',
+      'required' => [
+        'domain',
+        'activityType',
       ],
-      'members' =>
-      [
-        'domain' =>
-        [
+      'members' => [
+        'domain' => [
           'shape' => 'DomainName',
         ],
-        'activityType' =>
-        [
+        'activityType' => [
           'shape' => 'ActivityType',
         ],
       ],
     ],
-    'DeprecateDomainInput' =>
-    [
+    'DeprecateDomainInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'name',
+      'required' => [
+        'name',
       ],
-      'members' =>
-      [
-        'name' =>
-        [
+      'members' => [
+        'name' => [
           'shape' => 'DomainName',
         ],
       ],
     ],
-    'DeprecateWorkflowTypeInput' =>
-    [
+    'DeprecateWorkflowTypeInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'domain',
-        1 => 'workflowType',
+      'required' => [
+        'domain',
+        'workflowType',
       ],
-      'members' =>
-      [
-        'domain' =>
-        [
+      'members' => [
+        'domain' => [
           'shape' => 'DomainName',
         ],
-        'workflowType' =>
-        [
+        'workflowType' => [
           'shape' => 'WorkflowType',
         ],
       ],
     ],
-    'DescribeActivityTypeInput' =>
-    [
+    'DescribeActivityTypeInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'domain',
-        1 => 'activityType',
+      'required' => [
+        'domain',
+        'activityType',
       ],
-      'members' =>
-      [
-        'domain' =>
-        [
+      'members' => [
+        'domain' => [
           'shape' => 'DomainName',
         ],
-        'activityType' =>
-        [
+        'activityType' => [
           'shape' => 'ActivityType',
         ],
       ],
     ],
-    'DescribeDomainInput' =>
-    [
+    'DescribeDomainInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'name',
+      'required' => [
+        'name',
       ],
-      'members' =>
-      [
-        'name' =>
-        [
+      'members' => [
+        'name' => [
           'shape' => 'DomainName',
         ],
       ],
     ],
-    'DescribeWorkflowExecutionInput' =>
-    [
+    'DescribeWorkflowExecutionInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'domain',
-        1 => 'execution',
+      'required' => [
+        'domain',
+        'execution',
       ],
-      'members' =>
-      [
-        'domain' =>
-        [
+      'members' => [
+        'domain' => [
           'shape' => 'DomainName',
         ],
-        'execution' =>
-        [
+        'execution' => [
           'shape' => 'WorkflowExecution',
         ],
       ],
     ],
-    'DescribeWorkflowTypeInput' =>
-    [
+    'DescribeWorkflowTypeInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'domain',
-        1 => 'workflowType',
+      'required' => [
+        'domain',
+        'workflowType',
       ],
-      'members' =>
-      [
-        'domain' =>
-        [
+      'members' => [
+        'domain' => [
           'shape' => 'DomainName',
         ],
-        'workflowType' =>
-        [
+        'workflowType' => [
           'shape' => 'WorkflowType',
         ],
       ],
     ],
-    'Description' =>
-    [
+    'Description' => [
       'type' => 'string',
       'max' => 1024,
     ],
-    'DomainAlreadyExistsFault' =>
-    [
+    'DomainAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'DomainConfiguration' =>
-    [
+    'DomainConfiguration' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'workflowExecutionRetentionPeriodInDays',
+      'required' => [
+        'workflowExecutionRetentionPeriodInDays',
       ],
-      'members' =>
-      [
-        'workflowExecutionRetentionPeriodInDays' =>
-        [
+      'members' => [
+        'workflowExecutionRetentionPeriodInDays' => [
           'shape' => 'DurationInDays',
         ],
       ],
     ],
-    'DomainDeprecatedFault' =>
-    [
+    'DomainDeprecatedFault' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'DomainDetail' =>
-    [
+    'DomainDetail' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'domainInfo',
-        1 => 'configuration',
+      'required' => [
+        'domainInfo',
+        'configuration',
       ],
-      'members' =>
-      [
-        'domainInfo' =>
-        [
+      'members' => [
+        'domainInfo' => [
           'shape' => 'DomainInfo',
         ],
-        'configuration' =>
-        [
+        'configuration' => [
           'shape' => 'DomainConfiguration',
         ],
       ],
     ],
-    'DomainInfo' =>
-    [
+    'DomainInfo' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'name',
-        1 => 'status',
+      'required' => [
+        'name',
+        'status',
       ],
-      'members' =>
-      [
-        'name' =>
-        [
+      'members' => [
+        'name' => [
           'shape' => 'DomainName',
         ],
-        'status' =>
-        [
+        'status' => [
           'shape' => 'RegistrationStatus',
         ],
-        'description' =>
-        [
+        'description' => [
           'shape' => 'Description',
         ],
       ],
     ],
-    'DomainInfoList' =>
-    [
+    'DomainInfoList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DomainInfo',
       ],
     ],
-    'DomainInfos' =>
-    [
+    'DomainInfos' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'domainInfos',
+      'required' => [
+        'domainInfos',
       ],
-      'members' =>
-      [
-        'domainInfos' =>
-        [
+      'members' => [
+        'domainInfos' => [
           'shape' => 'DomainInfoList',
         ],
-        'nextPageToken' =>
-        [
+        'nextPageToken' => [
           'shape' => 'PageToken',
         ],
       ],
     ],
-    'DomainName' =>
-    [
+    'DomainName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 256,
     ],
-    'DurationInDays' =>
-    [
+    'DurationInDays' => [
       'type' => 'string',
       'min' => 1,
       'max' => 8,
     ],
-    'DurationInSeconds' =>
-    [
+    'DurationInSeconds' => [
       'type' => 'string',
       'min' => 1,
       'max' => 8,
     ],
-    'DurationInSecondsOptional' =>
-    [
+    'DurationInSecondsOptional' => [
       'type' => 'string',
       'max' => 8,
     ],
-    'ErrorMessage' =>
-    [
+    'ErrorMessage' => [
       'type' => 'string',
     ],
-    'EventId' =>
-    [
+    'EventId' => [
       'type' => 'long',
     ],
-    'EventType' =>
-    [
+    'EventType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'WorkflowExecutionStarted',
-        1 => 'WorkflowExecutionCancelRequested',
-        2 => 'WorkflowExecutionCompleted',
-        3 => 'CompleteWorkflowExecutionFailed',
-        4 => 'WorkflowExecutionFailed',
-        5 => 'FailWorkflowExecutionFailed',
-        6 => 'WorkflowExecutionTimedOut',
-        7 => 'WorkflowExecutionCanceled',
-        8 => 'CancelWorkflowExecutionFailed',
-        9 => 'WorkflowExecutionContinuedAsNew',
-        10 => 'ContinueAsNewWorkflowExecutionFailed',
-        11 => 'WorkflowExecutionTerminated',
-        12 => 'DecisionTaskScheduled',
-        13 => 'DecisionTaskStarted',
-        14 => 'DecisionTaskCompleted',
-        15 => 'DecisionTaskTimedOut',
-        16 => 'ActivityTaskScheduled',
-        17 => 'ScheduleActivityTaskFailed',
-        18 => 'ActivityTaskStarted',
-        19 => 'ActivityTaskCompleted',
-        20 => 'ActivityTaskFailed',
-        21 => 'ActivityTaskTimedOut',
-        22 => 'ActivityTaskCanceled',
-        23 => 'ActivityTaskCancelRequested',
-        24 => 'RequestCancelActivityTaskFailed',
-        25 => 'WorkflowExecutionSignaled',
-        26 => 'MarkerRecorded',
-        27 => 'RecordMarkerFailed',
-        28 => 'TimerStarted',
-        29 => 'StartTimerFailed',
-        30 => 'TimerFired',
-        31 => 'TimerCanceled',
-        32 => 'CancelTimerFailed',
-        33 => 'StartChildWorkflowExecutionInitiated',
-        34 => 'StartChildWorkflowExecutionFailed',
-        35 => 'ChildWorkflowExecutionStarted',
-        36 => 'ChildWorkflowExecutionCompleted',
-        37 => 'ChildWorkflowExecutionFailed',
-        38 => 'ChildWorkflowExecutionTimedOut',
-        39 => 'ChildWorkflowExecutionCanceled',
-        40 => 'ChildWorkflowExecutionTerminated',
-        41 => 'SignalExternalWorkflowExecutionInitiated',
-        42 => 'SignalExternalWorkflowExecutionFailed',
-        43 => 'ExternalWorkflowExecutionSignaled',
-        44 => 'RequestCancelExternalWorkflowExecutionInitiated',
-        45 => 'RequestCancelExternalWorkflowExecutionFailed',
-        46 => 'ExternalWorkflowExecutionCancelRequested',
+      'enum' => [
+        'WorkflowExecutionStarted',
+        'WorkflowExecutionCancelRequested',
+        'WorkflowExecutionCompleted',
+        'CompleteWorkflowExecutionFailed',
+        'WorkflowExecutionFailed',
+        'FailWorkflowExecutionFailed',
+        'WorkflowExecutionTimedOut',
+        'WorkflowExecutionCanceled',
+        'CancelWorkflowExecutionFailed',
+        'WorkflowExecutionContinuedAsNew',
+        'ContinueAsNewWorkflowExecutionFailed',
+        'WorkflowExecutionTerminated',
+        'DecisionTaskScheduled',
+        'DecisionTaskStarted',
+        'DecisionTaskCompleted',
+        'DecisionTaskTimedOut',
+        'ActivityTaskScheduled',
+        'ScheduleActivityTaskFailed',
+        'ActivityTaskStarted',
+        'ActivityTaskCompleted',
+        'ActivityTaskFailed',
+        'ActivityTaskTimedOut',
+        'ActivityTaskCanceled',
+        'ActivityTaskCancelRequested',
+        'RequestCancelActivityTaskFailed',
+        'WorkflowExecutionSignaled',
+        'MarkerRecorded',
+        'RecordMarkerFailed',
+        'TimerStarted',
+        'StartTimerFailed',
+        'TimerFired',
+        'TimerCanceled',
+        'CancelTimerFailed',
+        'StartChildWorkflowExecutionInitiated',
+        'StartChildWorkflowExecutionFailed',
+        'ChildWorkflowExecutionStarted',
+        'ChildWorkflowExecutionCompleted',
+        'ChildWorkflowExecutionFailed',
+        'ChildWorkflowExecutionTimedOut',
+        'ChildWorkflowExecutionCanceled',
+        'ChildWorkflowExecutionTerminated',
+        'SignalExternalWorkflowExecutionInitiated',
+        'SignalExternalWorkflowExecutionFailed',
+        'ExternalWorkflowExecutionSignaled',
+        'RequestCancelExternalWorkflowExecutionInitiated',
+        'RequestCancelExternalWorkflowExecutionFailed',
+        'ExternalWorkflowExecutionCancelRequested',
       ],
     ],
-    'ExecutionStatus' =>
-    [
+    'ExecutionStatus' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'OPEN',
-        1 => 'CLOSED',
+      'enum' => [
+        'OPEN',
+        'CLOSED',
       ],
     ],
-    'ExecutionTimeFilter' =>
-    [
+    'ExecutionTimeFilter' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'oldestDate',
+      'required' => [
+        'oldestDate',
       ],
-      'members' =>
-      [
-        'oldestDate' =>
-        [
+      'members' => [
+        'oldestDate' => [
           'shape' => 'Timestamp',
         ],
-        'latestDate' =>
-        [
+        'latestDate' => [
           'shape' => 'Timestamp',
         ],
       ],
     ],
-    'ExternalWorkflowExecutionCancelRequestedEventAttributes' =>
-    [
+    'ExternalWorkflowExecutionCancelRequestedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'workflowExecution',
-        1 => 'initiatedEventId',
+      'required' => [
+        'workflowExecution',
+        'initiatedEventId',
       ],
-      'members' =>
-      [
-        'workflowExecution' =>
-        [
+      'members' => [
+        'workflowExecution' => [
           'shape' => 'WorkflowExecution',
         ],
-        'initiatedEventId' =>
-        [
+        'initiatedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'ExternalWorkflowExecutionSignaledEventAttributes' =>
-    [
+    'ExternalWorkflowExecutionSignaledEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'workflowExecution',
-        1 => 'initiatedEventId',
+      'required' => [
+        'workflowExecution',
+        'initiatedEventId',
       ],
-      'members' =>
-      [
-        'workflowExecution' =>
-        [
+      'members' => [
+        'workflowExecution' => [
           'shape' => 'WorkflowExecution',
         ],
-        'initiatedEventId' =>
-        [
+        'initiatedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'FailWorkflowExecutionDecisionAttributes' =>
-    [
+    'FailWorkflowExecutionDecisionAttributes' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'reason' =>
-        [
+      'members' => [
+        'reason' => [
           'shape' => 'FailureReason',
         ],
-        'details' =>
-        [
+        'details' => [
           'shape' => 'Data',
         ],
       ],
     ],
-    'FailWorkflowExecutionFailedCause' =>
-    [
+    'FailWorkflowExecutionFailedCause' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'UNHANDLED_DECISION',
-        1 => 'OPERATION_NOT_PERMITTED',
+      'enum' => [
+        'UNHANDLED_DECISION',
+        'OPERATION_NOT_PERMITTED',
       ],
     ],
-    'FailWorkflowExecutionFailedEventAttributes' =>
-    [
+    'FailWorkflowExecutionFailedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'cause',
-        1 => 'decisionTaskCompletedEventId',
+      'required' => [
+        'cause',
+        'decisionTaskCompletedEventId',
       ],
-      'members' =>
-      [
-        'cause' =>
-        [
+      'members' => [
+        'cause' => [
           'shape' => 'FailWorkflowExecutionFailedCause',
         ],
-        'decisionTaskCompletedEventId' =>
-        [
+        'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'FailureReason' =>
-    [
+    'FailureReason' => [
       'type' => 'string',
       'max' => 256,
     ],
-    'GetWorkflowExecutionHistoryInput' =>
-    [
+    'GetWorkflowExecutionHistoryInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'domain',
-        1 => 'execution',
+      'required' => [
+        'domain',
+        'execution',
       ],
-      'members' =>
-      [
-        'domain' =>
-        [
+      'members' => [
+        'domain' => [
           'shape' => 'DomainName',
         ],
-        'execution' =>
-        [
+        'execution' => [
           'shape' => 'WorkflowExecution',
         ],
-        'nextPageToken' =>
-        [
+        'nextPageToken' => [
           'shape' => 'PageToken',
         ],
-        'maximumPageSize' =>
-        [
+        'maximumPageSize' => [
           'shape' => 'PageSize',
         ],
-        'reverseOrder' =>
-        [
+        'reverseOrder' => [
           'shape' => 'ReverseOrder',
         ],
       ],
     ],
-    'History' =>
-    [
+    'History' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'events',
+      'required' => [
+        'events',
       ],
-      'members' =>
-      [
-        'events' =>
-        [
+      'members' => [
+        'events' => [
           'shape' => 'HistoryEventList',
         ],
-        'nextPageToken' =>
-        [
+        'nextPageToken' => [
           'shape' => 'PageToken',
         ],
       ],
     ],
-    'HistoryEvent' =>
-    [
+    'HistoryEvent' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'eventTimestamp',
-        1 => 'eventType',
-        2 => 'eventId',
+      'required' => [
+        'eventTimestamp',
+        'eventType',
+        'eventId',
       ],
-      'members' =>
-      [
-        'eventTimestamp' =>
-        [
+      'members' => [
+        'eventTimestamp' => [
           'shape' => 'Timestamp',
         ],
-        'eventType' =>
-        [
+        'eventType' => [
           'shape' => 'EventType',
         ],
-        'eventId' =>
-        [
+        'eventId' => [
           'shape' => 'EventId',
         ],
-        'workflowExecutionStartedEventAttributes' =>
-        [
+        'workflowExecutionStartedEventAttributes' => [
           'shape' => 'WorkflowExecutionStartedEventAttributes',
         ],
-        'workflowExecutionCompletedEventAttributes' =>
-        [
+        'workflowExecutionCompletedEventAttributes' => [
           'shape' => 'WorkflowExecutionCompletedEventAttributes',
         ],
-        'completeWorkflowExecutionFailedEventAttributes' =>
-        [
+        'completeWorkflowExecutionFailedEventAttributes' => [
           'shape' => 'CompleteWorkflowExecutionFailedEventAttributes',
         ],
-        'workflowExecutionFailedEventAttributes' =>
-        [
+        'workflowExecutionFailedEventAttributes' => [
           'shape' => 'WorkflowExecutionFailedEventAttributes',
         ],
-        'failWorkflowExecutionFailedEventAttributes' =>
-        [
+        'failWorkflowExecutionFailedEventAttributes' => [
           'shape' => 'FailWorkflowExecutionFailedEventAttributes',
         ],
-        'workflowExecutionTimedOutEventAttributes' =>
-        [
+        'workflowExecutionTimedOutEventAttributes' => [
           'shape' => 'WorkflowExecutionTimedOutEventAttributes',
         ],
-        'workflowExecutionCanceledEventAttributes' =>
-        [
+        'workflowExecutionCanceledEventAttributes' => [
           'shape' => 'WorkflowExecutionCanceledEventAttributes',
         ],
-        'cancelWorkflowExecutionFailedEventAttributes' =>
-        [
+        'cancelWorkflowExecutionFailedEventAttributes' => [
           'shape' => 'CancelWorkflowExecutionFailedEventAttributes',
         ],
-        'workflowExecutionContinuedAsNewEventAttributes' =>
-        [
+        'workflowExecutionContinuedAsNewEventAttributes' => [
           'shape' => 'WorkflowExecutionContinuedAsNewEventAttributes',
         ],
-        'continueAsNewWorkflowExecutionFailedEventAttributes' =>
-        [
+        'continueAsNewWorkflowExecutionFailedEventAttributes' => [
           'shape' => 'ContinueAsNewWorkflowExecutionFailedEventAttributes',
         ],
-        'workflowExecutionTerminatedEventAttributes' =>
-        [
+        'workflowExecutionTerminatedEventAttributes' => [
           'shape' => 'WorkflowExecutionTerminatedEventAttributes',
         ],
-        'workflowExecutionCancelRequestedEventAttributes' =>
-        [
+        'workflowExecutionCancelRequestedEventAttributes' => [
           'shape' => 'WorkflowExecutionCancelRequestedEventAttributes',
         ],
-        'decisionTaskScheduledEventAttributes' =>
-        [
+        'decisionTaskScheduledEventAttributes' => [
           'shape' => 'DecisionTaskScheduledEventAttributes',
         ],
-        'decisionTaskStartedEventAttributes' =>
-        [
+        'decisionTaskStartedEventAttributes' => [
           'shape' => 'DecisionTaskStartedEventAttributes',
         ],
-        'decisionTaskCompletedEventAttributes' =>
-        [
+        'decisionTaskCompletedEventAttributes' => [
           'shape' => 'DecisionTaskCompletedEventAttributes',
         ],
-        'decisionTaskTimedOutEventAttributes' =>
-        [
+        'decisionTaskTimedOutEventAttributes' => [
           'shape' => 'DecisionTaskTimedOutEventAttributes',
         ],
-        'activityTaskScheduledEventAttributes' =>
-        [
+        'activityTaskScheduledEventAttributes' => [
           'shape' => 'ActivityTaskScheduledEventAttributes',
         ],
-        'activityTaskStartedEventAttributes' =>
-        [
+        'activityTaskStartedEventAttributes' => [
           'shape' => 'ActivityTaskStartedEventAttributes',
         ],
-        'activityTaskCompletedEventAttributes' =>
-        [
+        'activityTaskCompletedEventAttributes' => [
           'shape' => 'ActivityTaskCompletedEventAttributes',
         ],
-        'activityTaskFailedEventAttributes' =>
-        [
+        'activityTaskFailedEventAttributes' => [
           'shape' => 'ActivityTaskFailedEventAttributes',
         ],
-        'activityTaskTimedOutEventAttributes' =>
-        [
+        'activityTaskTimedOutEventAttributes' => [
           'shape' => 'ActivityTaskTimedOutEventAttributes',
         ],
-        'activityTaskCanceledEventAttributes' =>
-        [
+        'activityTaskCanceledEventAttributes' => [
           'shape' => 'ActivityTaskCanceledEventAttributes',
         ],
-        'activityTaskCancelRequestedEventAttributes' =>
-        [
+        'activityTaskCancelRequestedEventAttributes' => [
           'shape' => 'ActivityTaskCancelRequestedEventAttributes',
         ],
-        'workflowExecutionSignaledEventAttributes' =>
-        [
+        'workflowExecutionSignaledEventAttributes' => [
           'shape' => 'WorkflowExecutionSignaledEventAttributes',
         ],
-        'markerRecordedEventAttributes' =>
-        [
+        'markerRecordedEventAttributes' => [
           'shape' => 'MarkerRecordedEventAttributes',
         ],
-        'recordMarkerFailedEventAttributes' =>
-        [
+        'recordMarkerFailedEventAttributes' => [
           'shape' => 'RecordMarkerFailedEventAttributes',
         ],
-        'timerStartedEventAttributes' =>
-        [
+        'timerStartedEventAttributes' => [
           'shape' => 'TimerStartedEventAttributes',
         ],
-        'timerFiredEventAttributes' =>
-        [
+        'timerFiredEventAttributes' => [
           'shape' => 'TimerFiredEventAttributes',
         ],
-        'timerCanceledEventAttributes' =>
-        [
+        'timerCanceledEventAttributes' => [
           'shape' => 'TimerCanceledEventAttributes',
         ],
-        'startChildWorkflowExecutionInitiatedEventAttributes' =>
-        [
+        'startChildWorkflowExecutionInitiatedEventAttributes' => [
           'shape' => 'StartChildWorkflowExecutionInitiatedEventAttributes',
         ],
-        'childWorkflowExecutionStartedEventAttributes' =>
-        [
+        'childWorkflowExecutionStartedEventAttributes' => [
           'shape' => 'ChildWorkflowExecutionStartedEventAttributes',
         ],
-        'childWorkflowExecutionCompletedEventAttributes' =>
-        [
+        'childWorkflowExecutionCompletedEventAttributes' => [
           'shape' => 'ChildWorkflowExecutionCompletedEventAttributes',
         ],
-        'childWorkflowExecutionFailedEventAttributes' =>
-        [
+        'childWorkflowExecutionFailedEventAttributes' => [
           'shape' => 'ChildWorkflowExecutionFailedEventAttributes',
         ],
-        'childWorkflowExecutionTimedOutEventAttributes' =>
-        [
+        'childWorkflowExecutionTimedOutEventAttributes' => [
           'shape' => 'ChildWorkflowExecutionTimedOutEventAttributes',
         ],
-        'childWorkflowExecutionCanceledEventAttributes' =>
-        [
+        'childWorkflowExecutionCanceledEventAttributes' => [
           'shape' => 'ChildWorkflowExecutionCanceledEventAttributes',
         ],
-        'childWorkflowExecutionTerminatedEventAttributes' =>
-        [
+        'childWorkflowExecutionTerminatedEventAttributes' => [
           'shape' => 'ChildWorkflowExecutionTerminatedEventAttributes',
         ],
-        'signalExternalWorkflowExecutionInitiatedEventAttributes' =>
-        [
+        'signalExternalWorkflowExecutionInitiatedEventAttributes' => [
           'shape' => 'SignalExternalWorkflowExecutionInitiatedEventAttributes',
         ],
-        'externalWorkflowExecutionSignaledEventAttributes' =>
-        [
+        'externalWorkflowExecutionSignaledEventAttributes' => [
           'shape' => 'ExternalWorkflowExecutionSignaledEventAttributes',
         ],
-        'signalExternalWorkflowExecutionFailedEventAttributes' =>
-        [
+        'signalExternalWorkflowExecutionFailedEventAttributes' => [
           'shape' => 'SignalExternalWorkflowExecutionFailedEventAttributes',
         ],
-        'externalWorkflowExecutionCancelRequestedEventAttributes' =>
-        [
+        'externalWorkflowExecutionCancelRequestedEventAttributes' => [
           'shape' => 'ExternalWorkflowExecutionCancelRequestedEventAttributes',
         ],
-        'requestCancelExternalWorkflowExecutionInitiatedEventAttributes' =>
-        [
+        'requestCancelExternalWorkflowExecutionInitiatedEventAttributes' => [
           'shape' => 'RequestCancelExternalWorkflowExecutionInitiatedEventAttributes',
         ],
-        'requestCancelExternalWorkflowExecutionFailedEventAttributes' =>
-        [
+        'requestCancelExternalWorkflowExecutionFailedEventAttributes' => [
           'shape' => 'RequestCancelExternalWorkflowExecutionFailedEventAttributes',
         ],
-        'scheduleActivityTaskFailedEventAttributes' =>
-        [
+        'scheduleActivityTaskFailedEventAttributes' => [
           'shape' => 'ScheduleActivityTaskFailedEventAttributes',
         ],
-        'requestCancelActivityTaskFailedEventAttributes' =>
-        [
+        'requestCancelActivityTaskFailedEventAttributes' => [
           'shape' => 'RequestCancelActivityTaskFailedEventAttributes',
         ],
-        'startTimerFailedEventAttributes' =>
-        [
+        'startTimerFailedEventAttributes' => [
           'shape' => 'StartTimerFailedEventAttributes',
         ],
-        'cancelTimerFailedEventAttributes' =>
-        [
+        'cancelTimerFailedEventAttributes' => [
           'shape' => 'CancelTimerFailedEventAttributes',
         ],
-        'startChildWorkflowExecutionFailedEventAttributes' =>
-        [
+        'startChildWorkflowExecutionFailedEventAttributes' => [
           'shape' => 'StartChildWorkflowExecutionFailedEventAttributes',
         ],
       ],
     ],
-    'HistoryEventList' =>
-    [
+    'HistoryEventList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'HistoryEvent',
       ],
     ],
-    'Identity' =>
-    [
+    'Identity' => [
       'type' => 'string',
       'max' => 256,
     ],
-    'LimitExceededFault' =>
-    [
+    'LimitExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'LimitedData' =>
-    [
+    'LimitedData' => [
       'type' => 'string',
       'max' => 2048,
     ],
-    'ListActivityTypesInput' =>
-    [
+    'ListActivityTypesInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'domain',
-        1 => 'registrationStatus',
+      'required' => [
+        'domain',
+        'registrationStatus',
       ],
-      'members' =>
-      [
-        'domain' =>
-        [
+      'members' => [
+        'domain' => [
           'shape' => 'DomainName',
         ],
-        'name' =>
-        [
+        'name' => [
           'shape' => 'Name',
         ],
-        'registrationStatus' =>
-        [
+        'registrationStatus' => [
           'shape' => 'RegistrationStatus',
         ],
-        'nextPageToken' =>
-        [
+        'nextPageToken' => [
           'shape' => 'PageToken',
         ],
-        'maximumPageSize' =>
-        [
+        'maximumPageSize' => [
           'shape' => 'PageSize',
         ],
-        'reverseOrder' =>
-        [
+        'reverseOrder' => [
           'shape' => 'ReverseOrder',
         ],
       ],
     ],
-    'ListClosedWorkflowExecutionsInput' =>
-    [
+    'ListClosedWorkflowExecutionsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'domain',
+      'required' => [
+        'domain',
       ],
-      'members' =>
-      [
-        'domain' =>
-        [
+      'members' => [
+        'domain' => [
           'shape' => 'DomainName',
         ],
-        'startTimeFilter' =>
-        [
+        'startTimeFilter' => [
           'shape' => 'ExecutionTimeFilter',
         ],
-        'closeTimeFilter' =>
-        [
+        'closeTimeFilter' => [
           'shape' => 'ExecutionTimeFilter',
         ],
-        'executionFilter' =>
-        [
+        'executionFilter' => [
           'shape' => 'WorkflowExecutionFilter',
         ],
-        'closeStatusFilter' =>
-        [
+        'closeStatusFilter' => [
           'shape' => 'CloseStatusFilter',
         ],
-        'typeFilter' =>
-        [
+        'typeFilter' => [
           'shape' => 'WorkflowTypeFilter',
         ],
-        'tagFilter' =>
-        [
+        'tagFilter' => [
           'shape' => 'TagFilter',
         ],
-        'nextPageToken' =>
-        [
+        'nextPageToken' => [
           'shape' => 'PageToken',
         ],
-        'maximumPageSize' =>
-        [
+        'maximumPageSize' => [
           'shape' => 'PageSize',
         ],
-        'reverseOrder' =>
-        [
+        'reverseOrder' => [
           'shape' => 'ReverseOrder',
         ],
       ],
     ],
-    'ListDomainsInput' =>
-    [
+    'ListDomainsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'registrationStatus',
+      'required' => [
+        'registrationStatus',
       ],
-      'members' =>
-      [
-        'nextPageToken' =>
-        [
+      'members' => [
+        'nextPageToken' => [
           'shape' => 'PageToken',
         ],
-        'registrationStatus' =>
-        [
+        'registrationStatus' => [
           'shape' => 'RegistrationStatus',
         ],
-        'maximumPageSize' =>
-        [
+        'maximumPageSize' => [
           'shape' => 'PageSize',
         ],
-        'reverseOrder' =>
-        [
+        'reverseOrder' => [
           'shape' => 'ReverseOrder',
         ],
       ],
     ],
-    'ListOpenWorkflowExecutionsInput' =>
-    [
+    'ListOpenWorkflowExecutionsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'domain',
-        1 => 'startTimeFilter',
+      'required' => [
+        'domain',
+        'startTimeFilter',
       ],
-      'members' =>
-      [
-        'domain' =>
-        [
+      'members' => [
+        'domain' => [
           'shape' => 'DomainName',
         ],
-        'startTimeFilter' =>
-        [
+        'startTimeFilter' => [
           'shape' => 'ExecutionTimeFilter',
         ],
-        'typeFilter' =>
-        [
+        'typeFilter' => [
           'shape' => 'WorkflowTypeFilter',
         ],
-        'tagFilter' =>
-        [
+        'tagFilter' => [
           'shape' => 'TagFilter',
         ],
-        'nextPageToken' =>
-        [
+        'nextPageToken' => [
           'shape' => 'PageToken',
         ],
-        'maximumPageSize' =>
-        [
+        'maximumPageSize' => [
           'shape' => 'PageSize',
         ],
-        'reverseOrder' =>
-        [
+        'reverseOrder' => [
           'shape' => 'ReverseOrder',
         ],
-        'executionFilter' =>
-        [
+        'executionFilter' => [
           'shape' => 'WorkflowExecutionFilter',
         ],
       ],
     ],
-    'ListWorkflowTypesInput' =>
-    [
+    'ListWorkflowTypesInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'domain',
-        1 => 'registrationStatus',
+      'required' => [
+        'domain',
+        'registrationStatus',
       ],
-      'members' =>
-      [
-        'domain' =>
-        [
+      'members' => [
+        'domain' => [
           'shape' => 'DomainName',
         ],
-        'name' =>
-        [
+        'name' => [
           'shape' => 'Name',
         ],
-        'registrationStatus' =>
-        [
+        'registrationStatus' => [
           'shape' => 'RegistrationStatus',
         ],
-        'nextPageToken' =>
-        [
+        'nextPageToken' => [
           'shape' => 'PageToken',
         ],
-        'maximumPageSize' =>
-        [
+        'maximumPageSize' => [
           'shape' => 'PageSize',
         ],
-        'reverseOrder' =>
-        [
+        'reverseOrder' => [
           'shape' => 'ReverseOrder',
         ],
       ],
     ],
-    'MarkerName' =>
-    [
+    'MarkerName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 256,
     ],
-    'MarkerRecordedEventAttributes' =>
-    [
+    'MarkerRecordedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'markerName',
-        1 => 'decisionTaskCompletedEventId',
+      'required' => [
+        'markerName',
+        'decisionTaskCompletedEventId',
       ],
-      'members' =>
-      [
-        'markerName' =>
-        [
+      'members' => [
+        'markerName' => [
           'shape' => 'MarkerName',
         ],
-        'details' =>
-        [
+        'details' => [
           'shape' => 'Data',
         ],
-        'decisionTaskCompletedEventId' =>
-        [
+        'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'Name' =>
-    [
+    'Name' => [
       'type' => 'string',
       'min' => 1,
       'max' => 256,
     ],
-    'OpenDecisionTasksCount' =>
-    [
+    'OpenDecisionTasksCount' => [
       'type' => 'integer',
       'min' => 0,
       'max' => 1,
     ],
-    'OperationNotPermittedFault' =>
-    [
+    'OperationNotPermittedFault' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'PageSize' =>
-    [
+    'PageSize' => [
       'type' => 'integer',
       'min' => 0,
       'max' => 1000,
     ],
-    'PageToken' =>
-    [
+    'PageToken' => [
       'type' => 'string',
       'max' => 2048,
     ],
-    'PendingTaskCount' =>
-    [
+    'PendingTaskCount' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'count',
+      'required' => [
+        'count',
       ],
-      'members' =>
-      [
-        'count' =>
-        [
+      'members' => [
+        'count' => [
           'shape' => 'Count',
         ],
-        'truncated' =>
-        [
+        'truncated' => [
           'shape' => 'Truncated',
         ],
       ],
     ],
-    'PollForActivityTaskInput' =>
-    [
+    'PollForActivityTaskInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'domain',
-        1 => 'taskList',
+      'required' => [
+        'domain',
+        'taskList',
       ],
-      'members' =>
-      [
-        'domain' =>
-        [
+      'members' => [
+        'domain' => [
           'shape' => 'DomainName',
         ],
-        'taskList' =>
-        [
+        'taskList' => [
           'shape' => 'TaskList',
         ],
-        'identity' =>
-        [
+        'identity' => [
           'shape' => 'Identity',
         ],
       ],
     ],
-    'PollForDecisionTaskInput' =>
-    [
+    'PollForDecisionTaskInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'domain',
-        1 => 'taskList',
+      'required' => [
+        'domain',
+        'taskList',
       ],
-      'members' =>
-      [
-        'domain' =>
-        [
+      'members' => [
+        'domain' => [
           'shape' => 'DomainName',
         ],
-        'taskList' =>
-        [
+        'taskList' => [
           'shape' => 'TaskList',
         ],
-        'identity' =>
-        [
+        'identity' => [
           'shape' => 'Identity',
         ],
-        'nextPageToken' =>
-        [
+        'nextPageToken' => [
           'shape' => 'PageToken',
         ],
-        'maximumPageSize' =>
-        [
+        'maximumPageSize' => [
           'shape' => 'PageSize',
         ],
-        'reverseOrder' =>
-        [
+        'reverseOrder' => [
           'shape' => 'ReverseOrder',
         ],
       ],
     ],
-    'RecordActivityTaskHeartbeatInput' =>
-    [
+    'RecordActivityTaskHeartbeatInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'taskToken',
+      'required' => [
+        'taskToken',
       ],
-      'members' =>
-      [
-        'taskToken' =>
-        [
+      'members' => [
+        'taskToken' => [
           'shape' => 'TaskToken',
         ],
-        'details' =>
-        [
+        'details' => [
           'shape' => 'LimitedData',
         ],
       ],
     ],
-    'RecordMarkerDecisionAttributes' =>
-    [
+    'RecordMarkerDecisionAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'markerName',
+      'required' => [
+        'markerName',
       ],
-      'members' =>
-      [
-        'markerName' =>
-        [
+      'members' => [
+        'markerName' => [
           'shape' => 'MarkerName',
         ],
-        'details' =>
-        [
+        'details' => [
           'shape' => 'Data',
         ],
       ],
     ],
-    'RecordMarkerFailedCause' =>
-    [
+    'RecordMarkerFailedCause' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'OPERATION_NOT_PERMITTED',
+      'enum' => [
+        'OPERATION_NOT_PERMITTED',
       ],
     ],
-    'RecordMarkerFailedEventAttributes' =>
-    [
+    'RecordMarkerFailedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'markerName',
-        1 => 'cause',
-        2 => 'decisionTaskCompletedEventId',
+      'required' => [
+        'markerName',
+        'cause',
+        'decisionTaskCompletedEventId',
       ],
-      'members' =>
-      [
-        'markerName' =>
-        [
+      'members' => [
+        'markerName' => [
           'shape' => 'MarkerName',
         ],
-        'cause' =>
-        [
+        'cause' => [
           'shape' => 'RecordMarkerFailedCause',
         ],
-        'decisionTaskCompletedEventId' =>
-        [
+        'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'RegisterActivityTypeInput' =>
-    [
+    'RegisterActivityTypeInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'domain',
-        1 => 'name',
-        2 => 'version',
+      'required' => [
+        'domain',
+        'name',
+        'version',
       ],
-      'members' =>
-      [
-        'domain' =>
-        [
+      'members' => [
+        'domain' => [
           'shape' => 'DomainName',
         ],
-        'name' =>
-        [
+        'name' => [
           'shape' => 'Name',
         ],
-        'version' =>
-        [
+        'version' => [
           'shape' => 'Version',
         ],
-        'description' =>
-        [
+        'description' => [
           'shape' => 'Description',
         ],
-        'defaultTaskStartToCloseTimeout' =>
-        [
+        'defaultTaskStartToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'defaultTaskHeartbeatTimeout' =>
-        [
+        'defaultTaskHeartbeatTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'defaultTaskList' =>
-        [
+        'defaultTaskList' => [
           'shape' => 'TaskList',
         ],
-        'defaultTaskScheduleToStartTimeout' =>
-        [
+        'defaultTaskScheduleToStartTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'defaultTaskScheduleToCloseTimeout' =>
-        [
+        'defaultTaskScheduleToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
       ],
     ],
-    'RegisterDomainInput' =>
-    [
+    'RegisterDomainInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'name',
-        1 => 'workflowExecutionRetentionPeriodInDays',
+      'required' => [
+        'name',
+        'workflowExecutionRetentionPeriodInDays',
       ],
-      'members' =>
-      [
-        'name' =>
-        [
+      'members' => [
+        'name' => [
           'shape' => 'DomainName',
         ],
-        'description' =>
-        [
+        'description' => [
           'shape' => 'Description',
         ],
-        'workflowExecutionRetentionPeriodInDays' =>
-        [
+        'workflowExecutionRetentionPeriodInDays' => [
           'shape' => 'DurationInDays',
         ],
       ],
     ],
-    'RegisterWorkflowTypeInput' =>
-    [
+    'RegisterWorkflowTypeInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'domain',
-        1 => 'name',
-        2 => 'version',
+      'required' => [
+        'domain',
+        'name',
+        'version',
       ],
-      'members' =>
-      [
-        'domain' =>
-        [
+      'members' => [
+        'domain' => [
           'shape' => 'DomainName',
         ],
-        'name' =>
-        [
+        'name' => [
           'shape' => 'Name',
         ],
-        'version' =>
-        [
+        'version' => [
           'shape' => 'Version',
         ],
-        'description' =>
-        [
+        'description' => [
           'shape' => 'Description',
         ],
-        'defaultTaskStartToCloseTimeout' =>
-        [
+        'defaultTaskStartToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'defaultExecutionStartToCloseTimeout' =>
-        [
+        'defaultExecutionStartToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'defaultTaskList' =>
-        [
+        'defaultTaskList' => [
           'shape' => 'TaskList',
         ],
-        'defaultChildPolicy' =>
-        [
+        'defaultChildPolicy' => [
           'shape' => 'ChildPolicy',
         ],
       ],
     ],
-    'RegistrationStatus' =>
-    [
+    'RegistrationStatus' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'REGISTERED',
-        1 => 'DEPRECATED',
+      'enum' => [
+        'REGISTERED',
+        'DEPRECATED',
       ],
     ],
-    'RequestCancelActivityTaskDecisionAttributes' =>
-    [
+    'RequestCancelActivityTaskDecisionAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'activityId',
+      'required' => [
+        'activityId',
       ],
-      'members' =>
-      [
-        'activityId' =>
-        [
+      'members' => [
+        'activityId' => [
           'shape' => 'ActivityId',
         ],
       ],
     ],
-    'RequestCancelActivityTaskFailedCause' =>
-    [
+    'RequestCancelActivityTaskFailedCause' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'ACTIVITY_ID_UNKNOWN',
-        1 => 'OPERATION_NOT_PERMITTED',
+      'enum' => [
+        'ACTIVITY_ID_UNKNOWN',
+        'OPERATION_NOT_PERMITTED',
       ],
     ],
-    'RequestCancelActivityTaskFailedEventAttributes' =>
-    [
+    'RequestCancelActivityTaskFailedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'activityId',
-        1 => 'cause',
-        2 => 'decisionTaskCompletedEventId',
+      'required' => [
+        'activityId',
+        'cause',
+        'decisionTaskCompletedEventId',
       ],
-      'members' =>
-      [
-        'activityId' =>
-        [
+      'members' => [
+        'activityId' => [
           'shape' => 'ActivityId',
         ],
-        'cause' =>
-        [
+        'cause' => [
           'shape' => 'RequestCancelActivityTaskFailedCause',
         ],
-        'decisionTaskCompletedEventId' =>
-        [
+        'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'RequestCancelExternalWorkflowExecutionDecisionAttributes' =>
-    [
+    'RequestCancelExternalWorkflowExecutionDecisionAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'workflowId',
+      'required' => [
+        'workflowId',
       ],
-      'members' =>
-      [
-        'workflowId' =>
-        [
+      'members' => [
+        'workflowId' => [
           'shape' => 'WorkflowId',
         ],
-        'runId' =>
-        [
+        'runId' => [
           'shape' => 'RunIdOptional',
         ],
-        'control' =>
-        [
+        'control' => [
           'shape' => 'Data',
         ],
       ],
     ],
-    'RequestCancelExternalWorkflowExecutionFailedCause' =>
-    [
+    'RequestCancelExternalWorkflowExecutionFailedCause' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'UNKNOWN_EXTERNAL_WORKFLOW_EXECUTION',
-        1 => 'REQUEST_CANCEL_EXTERNAL_WORKFLOW_EXECUTION_RATE_EXCEEDED',
-        2 => 'OPERATION_NOT_PERMITTED',
+      'enum' => [
+        'UNKNOWN_EXTERNAL_WORKFLOW_EXECUTION',
+        'REQUEST_CANCEL_EXTERNAL_WORKFLOW_EXECUTION_RATE_EXCEEDED',
+        'OPERATION_NOT_PERMITTED',
       ],
     ],
-    'RequestCancelExternalWorkflowExecutionFailedEventAttributes' =>
-    [
+    'RequestCancelExternalWorkflowExecutionFailedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'workflowId',
-        1 => 'cause',
-        2 => 'initiatedEventId',
-        3 => 'decisionTaskCompletedEventId',
+      'required' => [
+        'workflowId',
+        'cause',
+        'initiatedEventId',
+        'decisionTaskCompletedEventId',
       ],
-      'members' =>
-      [
-        'workflowId' =>
-        [
+      'members' => [
+        'workflowId' => [
           'shape' => 'WorkflowId',
         ],
-        'runId' =>
-        [
+        'runId' => [
           'shape' => 'RunIdOptional',
         ],
-        'cause' =>
-        [
+        'cause' => [
           'shape' => 'RequestCancelExternalWorkflowExecutionFailedCause',
         ],
-        'initiatedEventId' =>
-        [
+        'initiatedEventId' => [
           'shape' => 'EventId',
         ],
-        'decisionTaskCompletedEventId' =>
-        [
+        'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
-        'control' =>
-        [
+        'control' => [
           'shape' => 'Data',
         ],
       ],
     ],
-    'RequestCancelExternalWorkflowExecutionInitiatedEventAttributes' =>
-    [
+    'RequestCancelExternalWorkflowExecutionInitiatedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'workflowId',
-        1 => 'decisionTaskCompletedEventId',
+      'required' => [
+        'workflowId',
+        'decisionTaskCompletedEventId',
       ],
-      'members' =>
-      [
-        'workflowId' =>
-        [
+      'members' => [
+        'workflowId' => [
           'shape' => 'WorkflowId',
         ],
-        'runId' =>
-        [
+        'runId' => [
           'shape' => 'RunIdOptional',
         ],
-        'decisionTaskCompletedEventId' =>
-        [
+        'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
-        'control' =>
-        [
+        'control' => [
           'shape' => 'Data',
         ],
       ],
     ],
-    'RequestCancelWorkflowExecutionInput' =>
-    [
+    'RequestCancelWorkflowExecutionInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'domain',
-        1 => 'workflowId',
+      'required' => [
+        'domain',
+        'workflowId',
       ],
-      'members' =>
-      [
-        'domain' =>
-        [
+      'members' => [
+        'domain' => [
           'shape' => 'DomainName',
         ],
-        'workflowId' =>
-        [
+        'workflowId' => [
           'shape' => 'WorkflowId',
         ],
-        'runId' =>
-        [
+        'runId' => [
           'shape' => 'RunIdOptional',
         ],
       ],
     ],
-    'RespondActivityTaskCanceledInput' =>
-    [
+    'RespondActivityTaskCanceledInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'taskToken',
+      'required' => [
+        'taskToken',
       ],
-      'members' =>
-      [
-        'taskToken' =>
-        [
+      'members' => [
+        'taskToken' => [
           'shape' => 'TaskToken',
         ],
-        'details' =>
-        [
+        'details' => [
           'shape' => 'Data',
         ],
       ],
     ],
-    'RespondActivityTaskCompletedInput' =>
-    [
+    'RespondActivityTaskCompletedInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'taskToken',
+      'required' => [
+        'taskToken',
       ],
-      'members' =>
-      [
-        'taskToken' =>
-        [
+      'members' => [
+        'taskToken' => [
           'shape' => 'TaskToken',
         ],
-        'result' =>
-        [
+        'result' => [
           'shape' => 'Data',
         ],
       ],
     ],
-    'RespondActivityTaskFailedInput' =>
-    [
+    'RespondActivityTaskFailedInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'taskToken',
+      'required' => [
+        'taskToken',
       ],
-      'members' =>
-      [
-        'taskToken' =>
-        [
+      'members' => [
+        'taskToken' => [
           'shape' => 'TaskToken',
         ],
-        'reason' =>
-        [
+        'reason' => [
           'shape' => 'FailureReason',
         ],
-        'details' =>
-        [
+        'details' => [
           'shape' => 'Data',
         ],
       ],
     ],
-    'RespondDecisionTaskCompletedInput' =>
-    [
+    'RespondDecisionTaskCompletedInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'taskToken',
+      'required' => [
+        'taskToken',
       ],
-      'members' =>
-      [
-        'taskToken' =>
-        [
+      'members' => [
+        'taskToken' => [
           'shape' => 'TaskToken',
         ],
-        'decisions' =>
-        [
+        'decisions' => [
           'shape' => 'DecisionList',
         ],
-        'executionContext' =>
-        [
+        'executionContext' => [
           'shape' => 'Data',
         ],
       ],
     ],
-    'ReverseOrder' =>
-    [
+    'ReverseOrder' => [
       'type' => 'boolean',
     ],
-    'Run' =>
-    [
+    'Run' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'runId' =>
-        [
+      'members' => [
+        'runId' => [
           'shape' => 'RunId',
         ],
       ],
     ],
-    'RunId' =>
-    [
+    'RunId' => [
       'type' => 'string',
       'min' => 1,
       'max' => 64,
     ],
-    'RunIdOptional' =>
-    [
+    'RunIdOptional' => [
       'type' => 'string',
       'max' => 64,
     ],
-    'ScheduleActivityTaskDecisionAttributes' =>
-    [
+    'ScheduleActivityTaskDecisionAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'activityType',
-        1 => 'activityId',
+      'required' => [
+        'activityType',
+        'activityId',
       ],
-      'members' =>
-      [
-        'activityType' =>
-        [
+      'members' => [
+        'activityType' => [
           'shape' => 'ActivityType',
         ],
-        'activityId' =>
-        [
+        'activityId' => [
           'shape' => 'ActivityId',
         ],
-        'control' =>
-        [
+        'control' => [
           'shape' => 'Data',
         ],
-        'input' =>
-        [
+        'input' => [
           'shape' => 'Data',
         ],
-        'scheduleToCloseTimeout' =>
-        [
+        'scheduleToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'taskList' =>
-        [
+        'taskList' => [
           'shape' => 'TaskList',
         ],
-        'scheduleToStartTimeout' =>
-        [
+        'scheduleToStartTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'startToCloseTimeout' =>
-        [
+        'startToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'heartbeatTimeout' =>
-        [
+        'heartbeatTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
       ],
     ],
-    'ScheduleActivityTaskFailedCause' =>
-    [
+    'ScheduleActivityTaskFailedCause' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'ACTIVITY_TYPE_DEPRECATED',
-        1 => 'ACTIVITY_TYPE_DOES_NOT_EXIST',
-        2 => 'ACTIVITY_ID_ALREADY_IN_USE',
-        3 => 'OPEN_ACTIVITIES_LIMIT_EXCEEDED',
-        4 => 'ACTIVITY_CREATION_RATE_EXCEEDED',
-        5 => 'DEFAULT_SCHEDULE_TO_CLOSE_TIMEOUT_UNDEFINED',
-        6 => 'DEFAULT_TASK_LIST_UNDEFINED',
-        7 => 'DEFAULT_SCHEDULE_TO_START_TIMEOUT_UNDEFINED',
-        8 => 'DEFAULT_START_TO_CLOSE_TIMEOUT_UNDEFINED',
-        9 => 'DEFAULT_HEARTBEAT_TIMEOUT_UNDEFINED',
-        10 => 'OPERATION_NOT_PERMITTED',
+      'enum' => [
+        'ACTIVITY_TYPE_DEPRECATED',
+        'ACTIVITY_TYPE_DOES_NOT_EXIST',
+        'ACTIVITY_ID_ALREADY_IN_USE',
+        'OPEN_ACTIVITIES_LIMIT_EXCEEDED',
+        'ACTIVITY_CREATION_RATE_EXCEEDED',
+        'DEFAULT_SCHEDULE_TO_CLOSE_TIMEOUT_UNDEFINED',
+        'DEFAULT_TASK_LIST_UNDEFINED',
+        'DEFAULT_SCHEDULE_TO_START_TIMEOUT_UNDEFINED',
+        'DEFAULT_START_TO_CLOSE_TIMEOUT_UNDEFINED',
+        'DEFAULT_HEARTBEAT_TIMEOUT_UNDEFINED',
+        'OPERATION_NOT_PERMITTED',
       ],
     ],
-    'ScheduleActivityTaskFailedEventAttributes' =>
-    [
+    'ScheduleActivityTaskFailedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'activityType',
-        1 => 'activityId',
-        2 => 'cause',
-        3 => 'decisionTaskCompletedEventId',
+      'required' => [
+        'activityType',
+        'activityId',
+        'cause',
+        'decisionTaskCompletedEventId',
       ],
-      'members' =>
-      [
-        'activityType' =>
-        [
+      'members' => [
+        'activityType' => [
           'shape' => 'ActivityType',
         ],
-        'activityId' =>
-        [
+        'activityId' => [
           'shape' => 'ActivityId',
         ],
-        'cause' =>
-        [
+        'cause' => [
           'shape' => 'ScheduleActivityTaskFailedCause',
         ],
-        'decisionTaskCompletedEventId' =>
-        [
+        'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'SignalExternalWorkflowExecutionDecisionAttributes' =>
-    [
+    'SignalExternalWorkflowExecutionDecisionAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'workflowId',
-        1 => 'signalName',
+      'required' => [
+        'workflowId',
+        'signalName',
       ],
-      'members' =>
-      [
-        'workflowId' =>
-        [
+      'members' => [
+        'workflowId' => [
           'shape' => 'WorkflowId',
         ],
-        'runId' =>
-        [
+        'runId' => [
           'shape' => 'RunIdOptional',
         ],
-        'signalName' =>
-        [
+        'signalName' => [
           'shape' => 'SignalName',
         ],
-        'input' =>
-        [
+        'input' => [
           'shape' => 'Data',
         ],
-        'control' =>
-        [
+        'control' => [
           'shape' => 'Data',
         ],
       ],
     ],
-    'SignalExternalWorkflowExecutionFailedCause' =>
-    [
+    'SignalExternalWorkflowExecutionFailedCause' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'UNKNOWN_EXTERNAL_WORKFLOW_EXECUTION',
-        1 => 'SIGNAL_EXTERNAL_WORKFLOW_EXECUTION_RATE_EXCEEDED',
-        2 => 'OPERATION_NOT_PERMITTED',
+      'enum' => [
+        'UNKNOWN_EXTERNAL_WORKFLOW_EXECUTION',
+        'SIGNAL_EXTERNAL_WORKFLOW_EXECUTION_RATE_EXCEEDED',
+        'OPERATION_NOT_PERMITTED',
       ],
     ],
-    'SignalExternalWorkflowExecutionFailedEventAttributes' =>
-    [
+    'SignalExternalWorkflowExecutionFailedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'workflowId',
-        1 => 'cause',
-        2 => 'initiatedEventId',
-        3 => 'decisionTaskCompletedEventId',
+      'required' => [
+        'workflowId',
+        'cause',
+        'initiatedEventId',
+        'decisionTaskCompletedEventId',
       ],
-      'members' =>
-      [
-        'workflowId' =>
-        [
+      'members' => [
+        'workflowId' => [
           'shape' => 'WorkflowId',
         ],
-        'runId' =>
-        [
+        'runId' => [
           'shape' => 'RunIdOptional',
         ],
-        'cause' =>
-        [
+        'cause' => [
           'shape' => 'SignalExternalWorkflowExecutionFailedCause',
         ],
-        'initiatedEventId' =>
-        [
+        'initiatedEventId' => [
           'shape' => 'EventId',
         ],
-        'decisionTaskCompletedEventId' =>
-        [
+        'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
-        'control' =>
-        [
+        'control' => [
           'shape' => 'Data',
         ],
       ],
     ],
-    'SignalExternalWorkflowExecutionInitiatedEventAttributes' =>
-    [
+    'SignalExternalWorkflowExecutionInitiatedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'workflowId',
-        1 => 'signalName',
-        2 => 'decisionTaskCompletedEventId',
+      'required' => [
+        'workflowId',
+        'signalName',
+        'decisionTaskCompletedEventId',
       ],
-      'members' =>
-      [
-        'workflowId' =>
-        [
+      'members' => [
+        'workflowId' => [
           'shape' => 'WorkflowId',
         ],
-        'runId' =>
-        [
+        'runId' => [
           'shape' => 'RunIdOptional',
         ],
-        'signalName' =>
-        [
+        'signalName' => [
           'shape' => 'SignalName',
         ],
-        'input' =>
-        [
+        'input' => [
           'shape' => 'Data',
         ],
-        'decisionTaskCompletedEventId' =>
-        [
+        'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
-        'control' =>
-        [
+        'control' => [
           'shape' => 'Data',
         ],
       ],
     ],
-    'SignalName' =>
-    [
+    'SignalName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 256,
     ],
-    'SignalWorkflowExecutionInput' =>
-    [
+    'SignalWorkflowExecutionInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'domain',
-        1 => 'workflowId',
-        2 => 'signalName',
+      'required' => [
+        'domain',
+        'workflowId',
+        'signalName',
       ],
-      'members' =>
-      [
-        'domain' =>
-        [
+      'members' => [
+        'domain' => [
           'shape' => 'DomainName',
         ],
-        'workflowId' =>
-        [
+        'workflowId' => [
           'shape' => 'WorkflowId',
         ],
-        'runId' =>
-        [
+        'runId' => [
           'shape' => 'RunIdOptional',
         ],
-        'signalName' =>
-        [
+        'signalName' => [
           'shape' => 'SignalName',
         ],
-        'input' =>
-        [
+        'input' => [
           'shape' => 'Data',
         ],
       ],
     ],
-    'StartChildWorkflowExecutionDecisionAttributes' =>
-    [
+    'StartChildWorkflowExecutionDecisionAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'workflowType',
-        1 => 'workflowId',
+      'required' => [
+        'workflowType',
+        'workflowId',
       ],
-      'members' =>
-      [
-        'workflowType' =>
-        [
+      'members' => [
+        'workflowType' => [
           'shape' => 'WorkflowType',
         ],
-        'workflowId' =>
-        [
+        'workflowId' => [
           'shape' => 'WorkflowId',
         ],
-        'control' =>
-        [
+        'control' => [
           'shape' => 'Data',
         ],
-        'input' =>
-        [
+        'input' => [
           'shape' => 'Data',
         ],
-        'executionStartToCloseTimeout' =>
-        [
+        'executionStartToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'taskList' =>
-        [
+        'taskList' => [
           'shape' => 'TaskList',
         ],
-        'taskStartToCloseTimeout' =>
-        [
+        'taskStartToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'childPolicy' =>
-        [
+        'childPolicy' => [
           'shape' => 'ChildPolicy',
         ],
-        'tagList' =>
-        [
+        'tagList' => [
           'shape' => 'TagList',
         ],
       ],
     ],
-    'StartChildWorkflowExecutionFailedCause' =>
-    [
+    'StartChildWorkflowExecutionFailedCause' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'WORKFLOW_TYPE_DOES_NOT_EXIST',
-        1 => 'WORKFLOW_TYPE_DEPRECATED',
-        2 => 'OPEN_CHILDREN_LIMIT_EXCEEDED',
-        3 => 'OPEN_WORKFLOWS_LIMIT_EXCEEDED',
-        4 => 'CHILD_CREATION_RATE_EXCEEDED',
-        5 => 'WORKFLOW_ALREADY_RUNNING',
-        6 => 'DEFAULT_EXECUTION_START_TO_CLOSE_TIMEOUT_UNDEFINED',
-        7 => 'DEFAULT_TASK_LIST_UNDEFINED',
-        8 => 'DEFAULT_TASK_START_TO_CLOSE_TIMEOUT_UNDEFINED',
-        9 => 'DEFAULT_CHILD_POLICY_UNDEFINED',
-        10 => 'OPERATION_NOT_PERMITTED',
+      'enum' => [
+        'WORKFLOW_TYPE_DOES_NOT_EXIST',
+        'WORKFLOW_TYPE_DEPRECATED',
+        'OPEN_CHILDREN_LIMIT_EXCEEDED',
+        'OPEN_WORKFLOWS_LIMIT_EXCEEDED',
+        'CHILD_CREATION_RATE_EXCEEDED',
+        'WORKFLOW_ALREADY_RUNNING',
+        'DEFAULT_EXECUTION_START_TO_CLOSE_TIMEOUT_UNDEFINED',
+        'DEFAULT_TASK_LIST_UNDEFINED',
+        'DEFAULT_TASK_START_TO_CLOSE_TIMEOUT_UNDEFINED',
+        'DEFAULT_CHILD_POLICY_UNDEFINED',
+        'OPERATION_NOT_PERMITTED',
       ],
     ],
-    'StartChildWorkflowExecutionFailedEventAttributes' =>
-    [
+    'StartChildWorkflowExecutionFailedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'workflowType',
-        1 => 'cause',
-        2 => 'workflowId',
-        3 => 'initiatedEventId',
-        4 => 'decisionTaskCompletedEventId',
+      'required' => [
+        'workflowType',
+        'cause',
+        'workflowId',
+        'initiatedEventId',
+        'decisionTaskCompletedEventId',
       ],
-      'members' =>
-      [
-        'workflowType' =>
-        [
+      'members' => [
+        'workflowType' => [
           'shape' => 'WorkflowType',
         ],
-        'cause' =>
-        [
+        'cause' => [
           'shape' => 'StartChildWorkflowExecutionFailedCause',
         ],
-        'workflowId' =>
-        [
+        'workflowId' => [
           'shape' => 'WorkflowId',
         ],
-        'initiatedEventId' =>
-        [
+        'initiatedEventId' => [
           'shape' => 'EventId',
         ],
-        'decisionTaskCompletedEventId' =>
-        [
+        'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
-        'control' =>
-        [
+        'control' => [
           'shape' => 'Data',
         ],
       ],
     ],
-    'StartChildWorkflowExecutionInitiatedEventAttributes' =>
-    [
+    'StartChildWorkflowExecutionInitiatedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'workflowId',
-        1 => 'workflowType',
-        2 => 'taskList',
-        3 => 'decisionTaskCompletedEventId',
-        4 => 'childPolicy',
+      'required' => [
+        'workflowId',
+        'workflowType',
+        'taskList',
+        'decisionTaskCompletedEventId',
+        'childPolicy',
       ],
-      'members' =>
-      [
-        'workflowId' =>
-        [
+      'members' => [
+        'workflowId' => [
           'shape' => 'WorkflowId',
         ],
-        'workflowType' =>
-        [
+        'workflowType' => [
           'shape' => 'WorkflowType',
         ],
-        'control' =>
-        [
+        'control' => [
           'shape' => 'Data',
         ],
-        'input' =>
-        [
+        'input' => [
           'shape' => 'Data',
         ],
-        'executionStartToCloseTimeout' =>
-        [
+        'executionStartToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'taskList' =>
-        [
+        'taskList' => [
           'shape' => 'TaskList',
         ],
-        'decisionTaskCompletedEventId' =>
-        [
+        'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
-        'childPolicy' =>
-        [
+        'childPolicy' => [
           'shape' => 'ChildPolicy',
         ],
-        'taskStartToCloseTimeout' =>
-        [
+        'taskStartToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'tagList' =>
-        [
+        'tagList' => [
           'shape' => 'TagList',
         ],
       ],
     ],
-    'StartTimerDecisionAttributes' =>
-    [
+    'StartTimerDecisionAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'timerId',
-        1 => 'startToFireTimeout',
+      'required' => [
+        'timerId',
+        'startToFireTimeout',
       ],
-      'members' =>
-      [
-        'timerId' =>
-        [
+      'members' => [
+        'timerId' => [
           'shape' => 'TimerId',
         ],
-        'control' =>
-        [
+        'control' => [
           'shape' => 'Data',
         ],
-        'startToFireTimeout' =>
-        [
+        'startToFireTimeout' => [
           'shape' => 'DurationInSeconds',
         ],
       ],
     ],
-    'StartTimerFailedCause' =>
-    [
+    'StartTimerFailedCause' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'TIMER_ID_ALREADY_IN_USE',
-        1 => 'OPEN_TIMERS_LIMIT_EXCEEDED',
-        2 => 'TIMER_CREATION_RATE_EXCEEDED',
-        3 => 'OPERATION_NOT_PERMITTED',
+      'enum' => [
+        'TIMER_ID_ALREADY_IN_USE',
+        'OPEN_TIMERS_LIMIT_EXCEEDED',
+        'TIMER_CREATION_RATE_EXCEEDED',
+        'OPERATION_NOT_PERMITTED',
       ],
     ],
-    'StartTimerFailedEventAttributes' =>
-    [
+    'StartTimerFailedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'timerId',
-        1 => 'cause',
-        2 => 'decisionTaskCompletedEventId',
+      'required' => [
+        'timerId',
+        'cause',
+        'decisionTaskCompletedEventId',
       ],
-      'members' =>
-      [
-        'timerId' =>
-        [
+      'members' => [
+        'timerId' => [
           'shape' => 'TimerId',
         ],
-        'cause' =>
-        [
+        'cause' => [
           'shape' => 'StartTimerFailedCause',
         ],
-        'decisionTaskCompletedEventId' =>
-        [
+        'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'StartWorkflowExecutionInput' =>
-    [
+    'StartWorkflowExecutionInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'domain',
-        1 => 'workflowId',
-        2 => 'workflowType',
+      'required' => [
+        'domain',
+        'workflowId',
+        'workflowType',
       ],
-      'members' =>
-      [
-        'domain' =>
-        [
+      'members' => [
+        'domain' => [
           'shape' => 'DomainName',
         ],
-        'workflowId' =>
-        [
+        'workflowId' => [
           'shape' => 'WorkflowId',
         ],
-        'workflowType' =>
-        [
+        'workflowType' => [
           'shape' => 'WorkflowType',
         ],
-        'taskList' =>
-        [
+        'taskList' => [
           'shape' => 'TaskList',
         ],
-        'input' =>
-        [
+        'input' => [
           'shape' => 'Data',
         ],
-        'executionStartToCloseTimeout' =>
-        [
+        'executionStartToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'tagList' =>
-        [
+        'tagList' => [
           'shape' => 'TagList',
         ],
-        'taskStartToCloseTimeout' =>
-        [
+        'taskStartToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'childPolicy' =>
-        [
+        'childPolicy' => [
           'shape' => 'ChildPolicy',
         ],
       ],
     ],
-    'Tag' =>
-    [
+    'Tag' => [
       'type' => 'string',
       'min' => 1,
       'max' => 256,
     ],
-    'TagFilter' =>
-    [
+    'TagFilter' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'tag',
+      'required' => [
+        'tag',
       ],
-      'members' =>
-      [
-        'tag' =>
-        [
+      'members' => [
+        'tag' => [
           'shape' => 'Tag',
         ],
       ],
     ],
-    'TagList' =>
-    [
+    'TagList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Tag',
       ],
       'max' => 5,
     ],
-    'TaskList' =>
-    [
+    'TaskList' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'name',
+      'required' => [
+        'name',
       ],
-      'members' =>
-      [
-        'name' =>
-        [
+      'members' => [
+        'name' => [
           'shape' => 'Name',
         ],
       ],
     ],
-    'TaskToken' =>
-    [
+    'TaskToken' => [
       'type' => 'string',
       'min' => 1,
       'max' => 1024,
     ],
-    'TerminateReason' =>
-    [
+    'TerminateReason' => [
       'type' => 'string',
       'max' => 256,
     ],
-    'TerminateWorkflowExecutionInput' =>
-    [
+    'TerminateWorkflowExecutionInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'domain',
-        1 => 'workflowId',
+      'required' => [
+        'domain',
+        'workflowId',
       ],
-      'members' =>
-      [
-        'domain' =>
-        [
+      'members' => [
+        'domain' => [
           'shape' => 'DomainName',
         ],
-        'workflowId' =>
-        [
+        'workflowId' => [
           'shape' => 'WorkflowId',
         ],
-        'runId' =>
-        [
+        'runId' => [
           'shape' => 'RunIdOptional',
         ],
-        'reason' =>
-        [
+        'reason' => [
           'shape' => 'TerminateReason',
         ],
-        'details' =>
-        [
+        'details' => [
           'shape' => 'Data',
         ],
-        'childPolicy' =>
-        [
+        'childPolicy' => [
           'shape' => 'ChildPolicy',
         ],
       ],
     ],
-    'TimerCanceledEventAttributes' =>
-    [
+    'TimerCanceledEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'timerId',
-        1 => 'startedEventId',
-        2 => 'decisionTaskCompletedEventId',
+      'required' => [
+        'timerId',
+        'startedEventId',
+        'decisionTaskCompletedEventId',
       ],
-      'members' =>
-      [
-        'timerId' =>
-        [
+      'members' => [
+        'timerId' => [
           'shape' => 'TimerId',
         ],
-        'startedEventId' =>
-        [
+        'startedEventId' => [
           'shape' => 'EventId',
         ],
-        'decisionTaskCompletedEventId' =>
-        [
+        'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'TimerFiredEventAttributes' =>
-    [
+    'TimerFiredEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'timerId',
-        1 => 'startedEventId',
+      'required' => [
+        'timerId',
+        'startedEventId',
       ],
-      'members' =>
-      [
-        'timerId' =>
-        [
+      'members' => [
+        'timerId' => [
           'shape' => 'TimerId',
         ],
-        'startedEventId' =>
-        [
+        'startedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'TimerId' =>
-    [
+    'TimerId' => [
       'type' => 'string',
       'min' => 1,
       'max' => 256,
     ],
-    'TimerStartedEventAttributes' =>
-    [
+    'TimerStartedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'timerId',
-        1 => 'startToFireTimeout',
-        2 => 'decisionTaskCompletedEventId',
+      'required' => [
+        'timerId',
+        'startToFireTimeout',
+        'decisionTaskCompletedEventId',
       ],
-      'members' =>
-      [
-        'timerId' =>
-        [
+      'members' => [
+        'timerId' => [
           'shape' => 'TimerId',
         ],
-        'control' =>
-        [
+        'control' => [
           'shape' => 'Data',
         ],
-        'startToFireTimeout' =>
-        [
+        'startToFireTimeout' => [
           'shape' => 'DurationInSeconds',
         ],
-        'decisionTaskCompletedEventId' =>
-        [
+        'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'Timestamp' =>
-    [
+    'Timestamp' => [
       'type' => 'timestamp',
     ],
-    'Truncated' =>
-    [
+    'Truncated' => [
       'type' => 'boolean',
     ],
-    'TypeAlreadyExistsFault' =>
-    [
+    'TypeAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'TypeDeprecatedFault' =>
-    [
+    'TypeDeprecatedFault' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'UnknownResourceFault' =>
-    [
+    'UnknownResourceFault' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'Version' =>
-    [
+    'Version' => [
       'type' => 'string',
       'min' => 1,
       'max' => 64,
     ],
-    'VersionOptional' =>
-    [
+    'VersionOptional' => [
       'type' => 'string',
       'max' => 64,
     ],
-    'WorkflowExecution' =>
-    [
+    'WorkflowExecution' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'workflowId',
-        1 => 'runId',
+      'required' => [
+        'workflowId',
+        'runId',
       ],
-      'members' =>
-      [
-        'workflowId' =>
-        [
+      'members' => [
+        'workflowId' => [
           'shape' => 'WorkflowId',
         ],
-        'runId' =>
-        [
+        'runId' => [
           'shape' => 'RunId',
         ],
       ],
     ],
-    'WorkflowExecutionAlreadyStartedFault' =>
-    [
+    'WorkflowExecutionAlreadyStartedFault' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'WorkflowExecutionCancelRequestedCause' =>
-    [
+    'WorkflowExecutionCancelRequestedCause' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'CHILD_POLICY_APPLIED',
+      'enum' => [
+        'CHILD_POLICY_APPLIED',
       ],
     ],
-    'WorkflowExecutionCancelRequestedEventAttributes' =>
-    [
+    'WorkflowExecutionCancelRequestedEventAttributes' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'externalWorkflowExecution' =>
-        [
+      'members' => [
+        'externalWorkflowExecution' => [
           'shape' => 'WorkflowExecution',
         ],
-        'externalInitiatedEventId' =>
-        [
+        'externalInitiatedEventId' => [
           'shape' => 'EventId',
         ],
-        'cause' =>
-        [
+        'cause' => [
           'shape' => 'WorkflowExecutionCancelRequestedCause',
         ],
       ],
     ],
-    'WorkflowExecutionCanceledEventAttributes' =>
-    [
+    'WorkflowExecutionCanceledEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'decisionTaskCompletedEventId',
+      'required' => [
+        'decisionTaskCompletedEventId',
       ],
-      'members' =>
-      [
-        'details' =>
-        [
+      'members' => [
+        'details' => [
           'shape' => 'Data',
         ],
-        'decisionTaskCompletedEventId' =>
-        [
+        'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'WorkflowExecutionCompletedEventAttributes' =>
-    [
+    'WorkflowExecutionCompletedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'decisionTaskCompletedEventId',
+      'required' => [
+        'decisionTaskCompletedEventId',
       ],
-      'members' =>
-      [
-        'result' =>
-        [
+      'members' => [
+        'result' => [
           'shape' => 'Data',
         ],
-        'decisionTaskCompletedEventId' =>
-        [
+        'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'WorkflowExecutionConfiguration' =>
-    [
+    'WorkflowExecutionConfiguration' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'taskStartToCloseTimeout',
-        1 => 'executionStartToCloseTimeout',
-        2 => 'taskList',
-        3 => 'childPolicy',
+      'required' => [
+        'taskStartToCloseTimeout',
+        'executionStartToCloseTimeout',
+        'taskList',
+        'childPolicy',
       ],
-      'members' =>
-      [
-        'taskStartToCloseTimeout' =>
-        [
+      'members' => [
+        'taskStartToCloseTimeout' => [
           'shape' => 'DurationInSeconds',
         ],
-        'executionStartToCloseTimeout' =>
-        [
+        'executionStartToCloseTimeout' => [
           'shape' => 'DurationInSeconds',
         ],
-        'taskList' =>
-        [
+        'taskList' => [
           'shape' => 'TaskList',
         ],
-        'childPolicy' =>
-        [
+        'childPolicy' => [
           'shape' => 'ChildPolicy',
         ],
       ],
     ],
-    'WorkflowExecutionContinuedAsNewEventAttributes' =>
-    [
+    'WorkflowExecutionContinuedAsNewEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'decisionTaskCompletedEventId',
-        1 => 'newExecutionRunId',
-        2 => 'taskList',
-        3 => 'childPolicy',
-        4 => 'workflowType',
+      'required' => [
+        'decisionTaskCompletedEventId',
+        'newExecutionRunId',
+        'taskList',
+        'childPolicy',
+        'workflowType',
       ],
-      'members' =>
-      [
-        'input' =>
-        [
+      'members' => [
+        'input' => [
           'shape' => 'Data',
         ],
-        'decisionTaskCompletedEventId' =>
-        [
+        'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
-        'newExecutionRunId' =>
-        [
+        'newExecutionRunId' => [
           'shape' => 'RunId',
         ],
-        'executionStartToCloseTimeout' =>
-        [
+        'executionStartToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'taskList' =>
-        [
+        'taskList' => [
           'shape' => 'TaskList',
         ],
-        'taskStartToCloseTimeout' =>
-        [
+        'taskStartToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'childPolicy' =>
-        [
+        'childPolicy' => [
           'shape' => 'ChildPolicy',
         ],
-        'tagList' =>
-        [
+        'tagList' => [
           'shape' => 'TagList',
         ],
-        'workflowType' =>
-        [
+        'workflowType' => [
           'shape' => 'WorkflowType',
         ],
       ],
     ],
-    'WorkflowExecutionCount' =>
-    [
+    'WorkflowExecutionCount' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'count',
+      'required' => [
+        'count',
       ],
-      'members' =>
-      [
-        'count' =>
-        [
+      'members' => [
+        'count' => [
           'shape' => 'Count',
         ],
-        'truncated' =>
-        [
+        'truncated' => [
           'shape' => 'Truncated',
         ],
       ],
     ],
-    'WorkflowExecutionDetail' =>
-    [
+    'WorkflowExecutionDetail' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'executionInfo',
-        1 => 'executionConfiguration',
-        2 => 'openCounts',
+      'required' => [
+        'executionInfo',
+        'executionConfiguration',
+        'openCounts',
       ],
-      'members' =>
-      [
-        'executionInfo' =>
-        [
+      'members' => [
+        'executionInfo' => [
           'shape' => 'WorkflowExecutionInfo',
         ],
-        'executionConfiguration' =>
-        [
+        'executionConfiguration' => [
           'shape' => 'WorkflowExecutionConfiguration',
         ],
-        'openCounts' =>
-        [
+        'openCounts' => [
           'shape' => 'WorkflowExecutionOpenCounts',
         ],
-        'latestActivityTaskTimestamp' =>
-        [
+        'latestActivityTaskTimestamp' => [
           'shape' => 'Timestamp',
         ],
-        'latestExecutionContext' =>
-        [
+        'latestExecutionContext' => [
           'shape' => 'Data',
         ],
       ],
     ],
-    'WorkflowExecutionFailedEventAttributes' =>
-    [
+    'WorkflowExecutionFailedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'decisionTaskCompletedEventId',
+      'required' => [
+        'decisionTaskCompletedEventId',
       ],
-      'members' =>
-      [
-        'reason' =>
-        [
+      'members' => [
+        'reason' => [
           'shape' => 'FailureReason',
         ],
-        'details' =>
-        [
+        'details' => [
           'shape' => 'Data',
         ],
-        'decisionTaskCompletedEventId' =>
-        [
+        'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'WorkflowExecutionFilter' =>
-    [
+    'WorkflowExecutionFilter' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'workflowId',
+      'required' => [
+        'workflowId',
       ],
-      'members' =>
-      [
-        'workflowId' =>
-        [
+      'members' => [
+        'workflowId' => [
           'shape' => 'WorkflowId',
         ],
       ],
     ],
-    'WorkflowExecutionInfo' =>
-    [
+    'WorkflowExecutionInfo' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'execution',
-        1 => 'workflowType',
-        2 => 'startTimestamp',
-        3 => 'executionStatus',
+      'required' => [
+        'execution',
+        'workflowType',
+        'startTimestamp',
+        'executionStatus',
       ],
-      'members' =>
-      [
-        'execution' =>
-        [
+      'members' => [
+        'execution' => [
           'shape' => 'WorkflowExecution',
         ],
-        'workflowType' =>
-        [
+        'workflowType' => [
           'shape' => 'WorkflowType',
         ],
-        'startTimestamp' =>
-        [
+        'startTimestamp' => [
           'shape' => 'Timestamp',
         ],
-        'closeTimestamp' =>
-        [
+        'closeTimestamp' => [
           'shape' => 'Timestamp',
         ],
-        'executionStatus' =>
-        [
+        'executionStatus' => [
           'shape' => 'ExecutionStatus',
         ],
-        'closeStatus' =>
-        [
+        'closeStatus' => [
           'shape' => 'CloseStatus',
         ],
-        'parent' =>
-        [
+        'parent' => [
           'shape' => 'WorkflowExecution',
         ],
-        'tagList' =>
-        [
+        'tagList' => [
           'shape' => 'TagList',
         ],
-        'cancelRequested' =>
-        [
+        'cancelRequested' => [
           'shape' => 'Canceled',
         ],
       ],
     ],
-    'WorkflowExecutionInfoList' =>
-    [
+    'WorkflowExecutionInfoList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'WorkflowExecutionInfo',
       ],
     ],
-    'WorkflowExecutionInfos' =>
-    [
+    'WorkflowExecutionInfos' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'executionInfos',
+      'required' => [
+        'executionInfos',
       ],
-      'members' =>
-      [
-        'executionInfos' =>
-        [
+      'members' => [
+        'executionInfos' => [
           'shape' => 'WorkflowExecutionInfoList',
         ],
-        'nextPageToken' =>
-        [
+        'nextPageToken' => [
           'shape' => 'PageToken',
         ],
       ],
     ],
-    'WorkflowExecutionOpenCounts' =>
-    [
+    'WorkflowExecutionOpenCounts' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'openActivityTasks',
-        1 => 'openDecisionTasks',
-        2 => 'openTimers',
-        3 => 'openChildWorkflowExecutions',
+      'required' => [
+        'openActivityTasks',
+        'openDecisionTasks',
+        'openTimers',
+        'openChildWorkflowExecutions',
       ],
-      'members' =>
-      [
-        'openActivityTasks' =>
-        [
+      'members' => [
+        'openActivityTasks' => [
           'shape' => 'Count',
         ],
-        'openDecisionTasks' =>
-        [
+        'openDecisionTasks' => [
           'shape' => 'OpenDecisionTasksCount',
         ],
-        'openTimers' =>
-        [
+        'openTimers' => [
           'shape' => 'Count',
         ],
-        'openChildWorkflowExecutions' =>
-        [
+        'openChildWorkflowExecutions' => [
           'shape' => 'Count',
         ],
       ],
     ],
-    'WorkflowExecutionSignaledEventAttributes' =>
-    [
+    'WorkflowExecutionSignaledEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'signalName',
+      'required' => [
+        'signalName',
       ],
-      'members' =>
-      [
-        'signalName' =>
-        [
+      'members' => [
+        'signalName' => [
           'shape' => 'SignalName',
         ],
-        'input' =>
-        [
+        'input' => [
           'shape' => 'Data',
         ],
-        'externalWorkflowExecution' =>
-        [
+        'externalWorkflowExecution' => [
           'shape' => 'WorkflowExecution',
         ],
-        'externalInitiatedEventId' =>
-        [
+        'externalInitiatedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'WorkflowExecutionStartedEventAttributes' =>
-    [
+    'WorkflowExecutionStartedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'childPolicy',
-        1 => 'taskList',
-        2 => 'workflowType',
+      'required' => [
+        'childPolicy',
+        'taskList',
+        'workflowType',
       ],
-      'members' =>
-      [
-        'input' =>
-        [
+      'members' => [
+        'input' => [
           'shape' => 'Data',
         ],
-        'executionStartToCloseTimeout' =>
-        [
+        'executionStartToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'taskStartToCloseTimeout' =>
-        [
+        'taskStartToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'childPolicy' =>
-        [
+        'childPolicy' => [
           'shape' => 'ChildPolicy',
         ],
-        'taskList' =>
-        [
+        'taskList' => [
           'shape' => 'TaskList',
         ],
-        'workflowType' =>
-        [
+        'workflowType' => [
           'shape' => 'WorkflowType',
         ],
-        'tagList' =>
-        [
+        'tagList' => [
           'shape' => 'TagList',
         ],
-        'continuedExecutionRunId' =>
-        [
+        'continuedExecutionRunId' => [
           'shape' => 'RunIdOptional',
         ],
-        'parentWorkflowExecution' =>
-        [
+        'parentWorkflowExecution' => [
           'shape' => 'WorkflowExecution',
         ],
-        'parentInitiatedEventId' =>
-        [
+        'parentInitiatedEventId' => [
           'shape' => 'EventId',
         ],
       ],
     ],
-    'WorkflowExecutionTerminatedCause' =>
-    [
+    'WorkflowExecutionTerminatedCause' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'CHILD_POLICY_APPLIED',
-        1 => 'EVENT_LIMIT_EXCEEDED',
-        2 => 'OPERATOR_INITIATED',
+      'enum' => [
+        'CHILD_POLICY_APPLIED',
+        'EVENT_LIMIT_EXCEEDED',
+        'OPERATOR_INITIATED',
       ],
     ],
-    'WorkflowExecutionTerminatedEventAttributes' =>
-    [
+    'WorkflowExecutionTerminatedEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'childPolicy',
+      'required' => [
+        'childPolicy',
       ],
-      'members' =>
-      [
-        'reason' =>
-        [
+      'members' => [
+        'reason' => [
           'shape' => 'TerminateReason',
         ],
-        'details' =>
-        [
+        'details' => [
           'shape' => 'Data',
         ],
-        'childPolicy' =>
-        [
+        'childPolicy' => [
           'shape' => 'ChildPolicy',
         ],
-        'cause' =>
-        [
+        'cause' => [
           'shape' => 'WorkflowExecutionTerminatedCause',
         ],
       ],
     ],
-    'WorkflowExecutionTimedOutEventAttributes' =>
-    [
+    'WorkflowExecutionTimedOutEventAttributes' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'timeoutType',
-        1 => 'childPolicy',
+      'required' => [
+        'timeoutType',
+        'childPolicy',
       ],
-      'members' =>
-      [
-        'timeoutType' =>
-        [
+      'members' => [
+        'timeoutType' => [
           'shape' => 'WorkflowExecutionTimeoutType',
         ],
-        'childPolicy' =>
-        [
+        'childPolicy' => [
           'shape' => 'ChildPolicy',
         ],
       ],
     ],
-    'WorkflowExecutionTimeoutType' =>
-    [
+    'WorkflowExecutionTimeoutType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'START_TO_CLOSE',
+      'enum' => [
+        'START_TO_CLOSE',
       ],
     ],
-    'WorkflowId' =>
-    [
+    'WorkflowId' => [
       'type' => 'string',
       'min' => 1,
       'max' => 256,
     ],
-    'WorkflowType' =>
-    [
+    'WorkflowType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'name',
-        1 => 'version',
+      'required' => [
+        'name',
+        'version',
       ],
-      'members' =>
-      [
-        'name' =>
-        [
+      'members' => [
+        'name' => [
           'shape' => 'Name',
         ],
-        'version' =>
-        [
+        'version' => [
           'shape' => 'Version',
         ],
       ],
     ],
-    'WorkflowTypeConfiguration' =>
-    [
+    'WorkflowTypeConfiguration' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'defaultTaskStartToCloseTimeout' =>
-        [
+      'members' => [
+        'defaultTaskStartToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'defaultExecutionStartToCloseTimeout' =>
-        [
+        'defaultExecutionStartToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
-        'defaultTaskList' =>
-        [
+        'defaultTaskList' => [
           'shape' => 'TaskList',
         ],
-        'defaultChildPolicy' =>
-        [
+        'defaultChildPolicy' => [
           'shape' => 'ChildPolicy',
         ],
       ],
     ],
-    'WorkflowTypeDetail' =>
-    [
+    'WorkflowTypeDetail' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'typeInfo',
-        1 => 'configuration',
+      'required' => [
+        'typeInfo',
+        'configuration',
       ],
-      'members' =>
-      [
-        'typeInfo' =>
-        [
+      'members' => [
+        'typeInfo' => [
           'shape' => 'WorkflowTypeInfo',
         ],
-        'configuration' =>
-        [
+        'configuration' => [
           'shape' => 'WorkflowTypeConfiguration',
         ],
       ],
     ],
-    'WorkflowTypeFilter' =>
-    [
+    'WorkflowTypeFilter' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'name',
+      'required' => [
+        'name',
       ],
-      'members' =>
-      [
-        'name' =>
-        [
+      'members' => [
+        'name' => [
           'shape' => 'Name',
         ],
-        'version' =>
-        [
+        'version' => [
           'shape' => 'VersionOptional',
         ],
       ],
     ],
-    'WorkflowTypeInfo' =>
-    [
+    'WorkflowTypeInfo' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'workflowType',
-        1 => 'status',
-        2 => 'creationDate',
+      'required' => [
+        'workflowType',
+        'status',
+        'creationDate',
       ],
-      'members' =>
-      [
-        'workflowType' =>
-        [
+      'members' => [
+        'workflowType' => [
           'shape' => 'WorkflowType',
         ],
-        'status' =>
-        [
+        'status' => [
           'shape' => 'RegistrationStatus',
         ],
-        'description' =>
-        [
+        'description' => [
           'shape' => 'Description',
         ],
-        'creationDate' =>
-        [
+        'creationDate' => [
           'shape' => 'Timestamp',
         ],
-        'deprecationDate' =>
-        [
+        'deprecationDate' => [
           'shape' => 'Timestamp',
         ],
       ],
     ],
-    'WorkflowTypeInfoList' =>
-    [
+    'WorkflowTypeInfoList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'WorkflowTypeInfo',
       ],
     ],
-    'WorkflowTypeInfos' =>
-    [
+    'WorkflowTypeInfos' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'typeInfos',
+      'required' => [
+        'typeInfos',
       ],
-      'members' =>
-      [
-        'typeInfos' =>
-        [
+      'members' => [
+        'typeInfos' => [
           'shape' => 'WorkflowTypeInfoList',
         ],
-        'nextPageToken' =>
-        [
+        'nextPageToken' => [
           'shape' => 'PageToken',
         ],
       ],

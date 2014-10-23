@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2011-01-01',
     'endpointPrefix' => 'autoscaling',
     'serviceFullName' => 'Auto Scaling',
@@ -9,69 +7,53 @@ return [
     'xmlNamespace' => 'http://autoscaling.amazonaws.com/doc/2011-01-01/',
     'protocol' => 'query',
   ],
-  'operations' =>
-  [
-    'AttachInstances' =>
-    [
+  'operations' => [
+    'AttachInstances' => [
       'name' => 'AttachInstances',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AttachInstancesQuery',
       ],
     ],
-    'CompleteLifecycleAction' =>
-    [
+    'CompleteLifecycleAction' => [
       'name' => 'CompleteLifecycleAction',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CompleteLifecycleActionType',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CompleteLifecycleActionAnswer',
         'resultWrapper' => 'CompleteLifecycleActionResult',
       ],
     ],
-    'CreateAutoScalingGroup' =>
-    [
+    'CreateAutoScalingGroup' => [
       'name' => 'CreateAutoScalingGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateAutoScalingGroupType',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -80,36 +62,28 @@ return [
         ],
       ],
     ],
-    'CreateLaunchConfiguration' =>
-    [
+    'CreateLaunchConfiguration' => [
       'name' => 'CreateLaunchConfiguration',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateLaunchConfigurationType',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -118,36 +92,28 @@ return [
         ],
       ],
     ],
-    'CreateOrUpdateTags' =>
-    [
+    'CreateOrUpdateTags' => [
       'name' => 'CreateOrUpdateTags',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateOrUpdateTagsType',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'LimitExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'AlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -156,36 +122,28 @@ return [
         ],
       ],
     ],
-    'DeleteAutoScalingGroup' =>
-    [
+    'DeleteAutoScalingGroup' => [
       'name' => 'DeleteAutoScalingGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteAutoScalingGroupType',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ScalingActivityInProgressFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ScalingActivityInProgress',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceInUseFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResourceInUse',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -194,25 +152,19 @@ return [
         ],
       ],
     ],
-    'DeleteLaunchConfiguration' =>
-    [
+    'DeleteLaunchConfiguration' => [
       'name' => 'DeleteLaunchConfiguration',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'LaunchConfigurationNameType',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceInUseFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResourceInUse',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -221,128 +173,99 @@ return [
         ],
       ],
     ],
-    'DeleteLifecycleHook' =>
-    [
+    'DeleteLifecycleHook' => [
       'name' => 'DeleteLifecycleHook',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteLifecycleHookType',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteLifecycleHookAnswer',
         'resultWrapper' => 'DeleteLifecycleHookResult',
       ],
     ],
-    'DeleteNotificationConfiguration' =>
-    [
+    'DeleteNotificationConfiguration' => [
       'name' => 'DeleteNotificationConfiguration',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteNotificationConfigurationType',
       ],
     ],
-    'DeletePolicy' =>
-    [
+    'DeletePolicy' => [
       'name' => 'DeletePolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeletePolicyType',
       ],
     ],
-    'DeleteScheduledAction' =>
-    [
+    'DeleteScheduledAction' => [
       'name' => 'DeleteScheduledAction',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteScheduledActionType',
       ],
     ],
-    'DeleteTags' =>
-    [
+    'DeleteTags' => [
       'name' => 'DeleteTags',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteTagsType',
       ],
     ],
-    'DescribeAccountLimits' =>
-    [
+    'DescribeAccountLimits' => [
       'name' => 'DescribeAccountLimits',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeAccountLimitsAnswer',
         'resultWrapper' => 'DescribeAccountLimitsResult',
       ],
     ],
-    'DescribeAdjustmentTypes' =>
-    [
+    'DescribeAdjustmentTypes' => [
       'name' => 'DescribeAdjustmentTypes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeAdjustmentTypesAnswer',
         'resultWrapper' => 'DescribeAdjustmentTypesResult',
       ],
     ],
-    'DescribeAutoScalingGroups' =>
-    [
+    'DescribeAutoScalingGroups' => [
       'name' => 'DescribeAutoScalingGroups',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AutoScalingGroupNamesType',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AutoScalingGroupsType',
         'resultWrapper' => 'DescribeAutoScalingGroupsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidNextToken',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidNextToken',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -351,30 +274,23 @@ return [
         ],
       ],
     ],
-    'DescribeAutoScalingInstances' =>
-    [
+    'DescribeAutoScalingInstances' => [
       'name' => 'DescribeAutoScalingInstances',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeAutoScalingInstancesType',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AutoScalingInstancesType',
         'resultWrapper' => 'DescribeAutoScalingInstancesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidNextToken',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidNextToken',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -383,44 +299,34 @@ return [
         ],
       ],
     ],
-    'DescribeAutoScalingNotificationTypes' =>
-    [
+    'DescribeAutoScalingNotificationTypes' => [
       'name' => 'DescribeAutoScalingNotificationTypes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeAutoScalingNotificationTypesAnswer',
         'resultWrapper' => 'DescribeAutoScalingNotificationTypesResult',
       ],
     ],
-    'DescribeLaunchConfigurations' =>
-    [
+    'DescribeLaunchConfigurations' => [
       'name' => 'DescribeLaunchConfigurations',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'LaunchConfigurationNamesType',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'LaunchConfigurationsType',
         'resultWrapper' => 'DescribeLaunchConfigurationsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidNextToken',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidNextToken',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -429,76 +335,59 @@ return [
         ],
       ],
     ],
-    'DescribeLifecycleHookTypes' =>
-    [
+    'DescribeLifecycleHookTypes' => [
       'name' => 'DescribeLifecycleHookTypes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeLifecycleHookTypesAnswer',
         'resultWrapper' => 'DescribeLifecycleHookTypesResult',
       ],
     ],
-    'DescribeLifecycleHooks' =>
-    [
+    'DescribeLifecycleHooks' => [
       'name' => 'DescribeLifecycleHooks',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeLifecycleHooksType',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeLifecycleHooksAnswer',
         'resultWrapper' => 'DescribeLifecycleHooksResult',
       ],
     ],
-    'DescribeMetricCollectionTypes' =>
-    [
+    'DescribeMetricCollectionTypes' => [
       'name' => 'DescribeMetricCollectionTypes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeMetricCollectionTypesAnswer',
         'resultWrapper' => 'DescribeMetricCollectionTypesResult',
       ],
     ],
-    'DescribeNotificationConfigurations' =>
-    [
+    'DescribeNotificationConfigurations' => [
       'name' => 'DescribeNotificationConfigurations',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeNotificationConfigurationsType',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeNotificationConfigurationsAnswer',
         'resultWrapper' => 'DescribeNotificationConfigurationsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidNextToken',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidNextToken',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -507,30 +396,23 @@ return [
         ],
       ],
     ],
-    'DescribePolicies' =>
-    [
+    'DescribePolicies' => [
       'name' => 'DescribePolicies',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribePoliciesType',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'PoliciesType',
         'resultWrapper' => 'DescribePoliciesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidNextToken',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidNextToken',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -539,30 +421,23 @@ return [
         ],
       ],
     ],
-    'DescribeScalingActivities' =>
-    [
+    'DescribeScalingActivities' => [
       'name' => 'DescribeScalingActivities',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeScalingActivitiesType',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ActivitiesType',
         'resultWrapper' => 'DescribeScalingActivitiesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidNextToken',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidNextToken',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -571,44 +446,34 @@ return [
         ],
       ],
     ],
-    'DescribeScalingProcessTypes' =>
-    [
+    'DescribeScalingProcessTypes' => [
       'name' => 'DescribeScalingProcessTypes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ProcessesType',
         'resultWrapper' => 'DescribeScalingProcessTypesResult',
       ],
     ],
-    'DescribeScheduledActions' =>
-    [
+    'DescribeScheduledActions' => [
       'name' => 'DescribeScheduledActions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeScheduledActionsType',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ScheduledActionsType',
         'resultWrapper' => 'DescribeScheduledActionsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidNextToken',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidNextToken',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -617,30 +482,23 @@ return [
         ],
       ],
     ],
-    'DescribeTags' =>
-    [
+    'DescribeTags' => [
       'name' => 'DescribeTags',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeTagsType',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'TagsType',
         'resultWrapper' => 'DescribeTagsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidNextToken',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidNextToken',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -649,101 +507,78 @@ return [
         ],
       ],
     ],
-    'DescribeTerminationPolicyTypes' =>
-    [
+    'DescribeTerminationPolicyTypes' => [
       'name' => 'DescribeTerminationPolicyTypes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeTerminationPolicyTypesAnswer',
         'resultWrapper' => 'DescribeTerminationPolicyTypesResult',
       ],
     ],
-    'DetachInstances' =>
-    [
+    'DetachInstances' => [
       'name' => 'DetachInstances',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DetachInstancesQuery',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DetachInstancesAnswer',
         'resultWrapper' => 'DetachInstancesResult',
       ],
     ],
-    'DisableMetricsCollection' =>
-    [
+    'DisableMetricsCollection' => [
       'name' => 'DisableMetricsCollection',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DisableMetricsCollectionQuery',
       ],
     ],
-    'EnableMetricsCollection' =>
-    [
+    'EnableMetricsCollection' => [
       'name' => 'EnableMetricsCollection',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'EnableMetricsCollectionQuery',
       ],
     ],
-    'EnterStandby' =>
-    [
+    'EnterStandby' => [
       'name' => 'EnterStandby',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'EnterStandbyQuery',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'EnterStandbyAnswer',
         'resultWrapper' => 'EnterStandbyResult',
       ],
     ],
-    'ExecutePolicy' =>
-    [
+    'ExecutePolicy' => [
       'name' => 'ExecutePolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ExecutePolicyType',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ScalingActivityInProgressFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ScalingActivityInProgress',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -752,48 +587,37 @@ return [
         ],
       ],
     ],
-    'ExitStandby' =>
-    [
+    'ExitStandby' => [
       'name' => 'ExitStandby',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ExitStandbyQuery',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ExitStandbyAnswer',
         'resultWrapper' => 'ExitStandbyResult',
       ],
     ],
-    'PutLifecycleHook' =>
-    [
+    'PutLifecycleHook' => [
       'name' => 'PutLifecycleHook',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutLifecycleHookType',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'PutLifecycleHookAnswer',
         'resultWrapper' => 'PutLifecycleHookResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'LimitExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -802,25 +626,19 @@ return [
         ],
       ],
     ],
-    'PutNotificationConfiguration' =>
-    [
+    'PutNotificationConfiguration' => [
       'name' => 'PutNotificationConfiguration',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutNotificationConfigurationType',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'LimitExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -829,30 +647,23 @@ return [
         ],
       ],
     ],
-    'PutScalingPolicy' =>
-    [
+    'PutScalingPolicy' => [
       'name' => 'PutScalingPolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutScalingPolicyType',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'PolicyARNType',
         'resultWrapper' => 'PutScalingPolicyResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'LimitExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -861,36 +672,28 @@ return [
         ],
       ],
     ],
-    'PutScheduledUpdateGroupAction' =>
-    [
+    'PutScheduledUpdateGroupAction' => [
       'name' => 'PutScheduledUpdateGroupAction',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutScheduledUpdateGroupActionType',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -899,56 +702,43 @@ return [
         ],
       ],
     ],
-    'RecordLifecycleActionHeartbeat' =>
-    [
+    'RecordLifecycleActionHeartbeat' => [
       'name' => 'RecordLifecycleActionHeartbeat',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RecordLifecycleActionHeartbeatType',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RecordLifecycleActionHeartbeatAnswer',
         'resultWrapper' => 'RecordLifecycleActionHeartbeatResult',
       ],
     ],
-    'ResumeProcesses' =>
-    [
+    'ResumeProcesses' => [
       'name' => 'ResumeProcesses',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ScalingProcessQuery',
       ],
     ],
-    'SetDesiredCapacity' =>
-    [
+    'SetDesiredCapacity' => [
       'name' => 'SetDesiredCapacity',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SetDesiredCapacityType',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ScalingActivityInProgressFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ScalingActivityInProgress',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -957,56 +747,43 @@ return [
         ],
       ],
     ],
-    'SetInstanceHealth' =>
-    [
+    'SetInstanceHealth' => [
       'name' => 'SetInstanceHealth',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SetInstanceHealthQuery',
       ],
     ],
-    'SuspendProcesses' =>
-    [
+    'SuspendProcesses' => [
       'name' => 'SuspendProcesses',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ScalingProcessQuery',
       ],
     ],
-    'TerminateInstanceInAutoScalingGroup' =>
-    [
+    'TerminateInstanceInAutoScalingGroup' => [
       'name' => 'TerminateInstanceInAutoScalingGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'TerminateInstanceInAutoScalingGroupType',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ActivityType',
         'resultWrapper' => 'TerminateInstanceInAutoScalingGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ScalingActivityInProgressFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ScalingActivityInProgress',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1015,25 +792,19 @@ return [
         ],
       ],
     ],
-    'UpdateAutoScalingGroup' =>
-    [
+    'UpdateAutoScalingGroup' => [
       'name' => 'UpdateAutoScalingGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateAutoScalingGroupType',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ScalingActivityInProgressFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ScalingActivityInProgress',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1043,2621 +814,1975 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'Activities' =>
-    [
+  'shapes' => [
+    'Activities' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Activity',
       ],
     ],
-    'ActivitiesType' =>
-    [
+    'ActivitiesType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Activities',
+      'required' => [
+        'Activities',
       ],
-      'members' =>
-      [
-        'Activities' =>
-        [
+      'members' => [
+        'Activities' => [
           'shape' => 'Activities',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'XmlString',
         ],
       ],
     ],
-    'Activity' =>
-    [
+    'Activity' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ActivityId',
-        1 => 'AutoScalingGroupName',
-        2 => 'Cause',
-        3 => 'StartTime',
-        4 => 'StatusCode',
+      'required' => [
+        'ActivityId',
+        'AutoScalingGroupName',
+        'Cause',
+        'StartTime',
+        'StatusCode',
       ],
-      'members' =>
-      [
-        'ActivityId' =>
-        [
+      'members' => [
+        'ActivityId' => [
           'shape' => 'XmlString',
         ],
-        'AutoScalingGroupName' =>
-        [
+        'AutoScalingGroupName' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'XmlString',
         ],
-        'Cause' =>
-        [
+        'Cause' => [
           'shape' => 'XmlStringMaxLen1023',
         ],
-        'StartTime' =>
-        [
+        'StartTime' => [
           'shape' => 'TimestampType',
         ],
-        'EndTime' =>
-        [
+        'EndTime' => [
           'shape' => 'TimestampType',
         ],
-        'StatusCode' =>
-        [
+        'StatusCode' => [
           'shape' => 'ScalingActivityStatusCode',
         ],
-        'StatusMessage' =>
-        [
+        'StatusMessage' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'Progress' =>
-        [
+        'Progress' => [
           'shape' => 'Progress',
         ],
-        'Details' =>
-        [
+        'Details' => [
           'shape' => 'XmlString',
         ],
       ],
     ],
-    'ActivityIds' =>
-    [
+    'ActivityIds' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'XmlString',
       ],
     ],
-    'ActivityType' =>
-    [
+    'ActivityType' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Activity' =>
-        [
+      'members' => [
+        'Activity' => [
           'shape' => 'Activity',
         ],
       ],
     ],
-    'AdjustmentType' =>
-    [
+    'AdjustmentType' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AdjustmentType' =>
-        [
+      'members' => [
+        'AdjustmentType' => [
           'shape' => 'XmlStringMaxLen255',
         ],
       ],
     ],
-    'AdjustmentTypes' =>
-    [
+    'AdjustmentTypes' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AdjustmentType',
       ],
     ],
-    'Alarm' =>
-    [
+    'Alarm' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AlarmName' =>
-        [
+      'members' => [
+        'AlarmName' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'AlarmARN' =>
-        [
+        'AlarmARN' => [
           'shape' => 'ResourceName',
         ],
       ],
     ],
-    'Alarms' =>
-    [
+    'Alarms' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Alarm',
       ],
     ],
-    'AlreadyExistsFault' =>
-    [
+    'AlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'XmlStringMaxLen255',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'AlreadyExists',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'AsciiStringMaxLen255' =>
-    [
+    'AsciiStringMaxLen255' => [
       'type' => 'string',
       'min' => 1,
       'max' => 255,
       'pattern' => '[A-Za-z0-9\\-_\\/]+',
     ],
-    'AssociatePublicIpAddress' =>
-    [
+    'AssociatePublicIpAddress' => [
       'type' => 'boolean',
     ],
-    'AttachInstancesQuery' =>
-    [
+    'AttachInstancesQuery' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AutoScalingGroupName',
+      'required' => [
+        'AutoScalingGroupName',
       ],
-      'members' =>
-      [
-        'InstanceIds' =>
-        [
+      'members' => [
+        'InstanceIds' => [
           'shape' => 'InstanceIds',
         ],
-        'AutoScalingGroupName' =>
-        [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
       ],
     ],
-    'AutoScalingGroup' =>
-    [
+    'AutoScalingGroup' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AutoScalingGroupName',
-        1 => 'LaunchConfigurationName',
-        2 => 'MinSize',
-        3 => 'MaxSize',
-        4 => 'DesiredCapacity',
-        5 => 'DefaultCooldown',
-        6 => 'AvailabilityZones',
-        7 => 'HealthCheckType',
-        8 => 'CreatedTime',
+      'required' => [
+        'AutoScalingGroupName',
+        'LaunchConfigurationName',
+        'MinSize',
+        'MaxSize',
+        'DesiredCapacity',
+        'DefaultCooldown',
+        'AvailabilityZones',
+        'HealthCheckType',
+        'CreatedTime',
       ],
-      'members' =>
-      [
-        'AutoScalingGroupName' =>
-        [
+      'members' => [
+        'AutoScalingGroupName' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'AutoScalingGroupARN' =>
-        [
+        'AutoScalingGroupARN' => [
           'shape' => 'ResourceName',
         ],
-        'LaunchConfigurationName' =>
-        [
+        'LaunchConfigurationName' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'MinSize' =>
-        [
+        'MinSize' => [
           'shape' => 'AutoScalingGroupMinSize',
         ],
-        'MaxSize' =>
-        [
+        'MaxSize' => [
           'shape' => 'AutoScalingGroupMaxSize',
         ],
-        'DesiredCapacity' =>
-        [
+        'DesiredCapacity' => [
           'shape' => 'AutoScalingGroupDesiredCapacity',
         ],
-        'DefaultCooldown' =>
-        [
+        'DefaultCooldown' => [
           'shape' => 'Cooldown',
         ],
-        'AvailabilityZones' =>
-        [
+        'AvailabilityZones' => [
           'shape' => 'AvailabilityZones',
         ],
-        'LoadBalancerNames' =>
-        [
+        'LoadBalancerNames' => [
           'shape' => 'LoadBalancerNames',
         ],
-        'HealthCheckType' =>
-        [
+        'HealthCheckType' => [
           'shape' => 'XmlStringMaxLen32',
         ],
-        'HealthCheckGracePeriod' =>
-        [
+        'HealthCheckGracePeriod' => [
           'shape' => 'HealthCheckGracePeriod',
         ],
-        'Instances' =>
-        [
+        'Instances' => [
           'shape' => 'Instances',
         ],
-        'CreatedTime' =>
-        [
+        'CreatedTime' => [
           'shape' => 'TimestampType',
         ],
-        'SuspendedProcesses' =>
-        [
+        'SuspendedProcesses' => [
           'shape' => 'SuspendedProcesses',
         ],
-        'PlacementGroup' =>
-        [
+        'PlacementGroup' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'VPCZoneIdentifier' =>
-        [
+        'VPCZoneIdentifier' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'EnabledMetrics' =>
-        [
+        'EnabledMetrics' => [
           'shape' => 'EnabledMetrics',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagDescriptionList',
         ],
-        'TerminationPolicies' =>
-        [
+        'TerminationPolicies' => [
           'shape' => 'TerminationPolicies',
         ],
       ],
     ],
-    'AutoScalingGroupDesiredCapacity' =>
-    [
+    'AutoScalingGroupDesiredCapacity' => [
       'type' => 'integer',
     ],
-    'AutoScalingGroupMaxSize' =>
-    [
+    'AutoScalingGroupMaxSize' => [
       'type' => 'integer',
     ],
-    'AutoScalingGroupMinSize' =>
-    [
+    'AutoScalingGroupMinSize' => [
       'type' => 'integer',
     ],
-    'AutoScalingGroupNames' =>
-    [
+    'AutoScalingGroupNames' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ResourceName',
       ],
     ],
-    'AutoScalingGroupNamesType' =>
-    [
+    'AutoScalingGroupNamesType' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AutoScalingGroupNames' =>
-        [
+      'members' => [
+        'AutoScalingGroupNames' => [
           'shape' => 'AutoScalingGroupNames',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'XmlString',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'MaxRecords',
         ],
       ],
     ],
-    'AutoScalingGroups' =>
-    [
+    'AutoScalingGroups' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AutoScalingGroup',
       ],
     ],
-    'AutoScalingGroupsType' =>
-    [
+    'AutoScalingGroupsType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AutoScalingGroups',
+      'required' => [
+        'AutoScalingGroups',
       ],
-      'members' =>
-      [
-        'AutoScalingGroups' =>
-        [
+      'members' => [
+        'AutoScalingGroups' => [
           'shape' => 'AutoScalingGroups',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'XmlString',
         ],
       ],
     ],
-    'AutoScalingInstanceDetails' =>
-    [
+    'AutoScalingInstanceDetails' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceId',
-        1 => 'AutoScalingGroupName',
-        2 => 'AvailabilityZone',
-        3 => 'LifecycleState',
-        4 => 'HealthStatus',
-        5 => 'LaunchConfigurationName',
+      'required' => [
+        'InstanceId',
+        'AutoScalingGroupName',
+        'AvailabilityZone',
+        'LifecycleState',
+        'HealthStatus',
+        'LaunchConfigurationName',
       ],
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'XmlStringMaxLen16',
         ],
-        'AutoScalingGroupName' =>
-        [
+        'AutoScalingGroupName' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'LifecycleState' =>
-        [
+        'LifecycleState' => [
           'shape' => 'XmlStringMaxLen32',
         ],
-        'HealthStatus' =>
-        [
+        'HealthStatus' => [
           'shape' => 'XmlStringMaxLen32',
         ],
-        'LaunchConfigurationName' =>
-        [
+        'LaunchConfigurationName' => [
           'shape' => 'XmlStringMaxLen255',
         ],
       ],
     ],
-    'AutoScalingInstances' =>
-    [
+    'AutoScalingInstances' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AutoScalingInstanceDetails',
       ],
     ],
-    'AutoScalingInstancesType' =>
-    [
+    'AutoScalingInstancesType' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AutoScalingInstances' =>
-        [
+      'members' => [
+        'AutoScalingInstances' => [
           'shape' => 'AutoScalingInstances',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'XmlString',
         ],
       ],
     ],
-    'AutoScalingNotificationTypes' =>
-    [
+    'AutoScalingNotificationTypes' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'XmlStringMaxLen255',
       ],
     ],
-    'AvailabilityZones' =>
-    [
+    'AvailabilityZones' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'XmlStringMaxLen255',
       ],
       'min' => 1,
     ],
-    'BlockDeviceEbsDeleteOnTermination' =>
-    [
+    'BlockDeviceEbsDeleteOnTermination' => [
       'type' => 'boolean',
     ],
-    'BlockDeviceEbsIops' =>
-    [
+    'BlockDeviceEbsIops' => [
       'type' => 'integer',
       'min' => 100,
       'max' => 4000,
     ],
-    'BlockDeviceEbsVolumeSize' =>
-    [
+    'BlockDeviceEbsVolumeSize' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 1024,
     ],
-    'BlockDeviceEbsVolumeType' =>
-    [
+    'BlockDeviceEbsVolumeType' => [
       'type' => 'string',
       'min' => 1,
       'max' => 255,
     ],
-    'BlockDeviceMapping' =>
-    [
+    'BlockDeviceMapping' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DeviceName',
+      'required' => [
+        'DeviceName',
       ],
-      'members' =>
-      [
-        'VirtualName' =>
-        [
+      'members' => [
+        'VirtualName' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'DeviceName' =>
-        [
+        'DeviceName' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'Ebs' =>
-        [
+        'Ebs' => [
           'shape' => 'Ebs',
         ],
-        'NoDevice' =>
-        [
+        'NoDevice' => [
           'shape' => 'NoDevice',
         ],
       ],
     ],
-    'BlockDeviceMappings' =>
-    [
+    'BlockDeviceMappings' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'BlockDeviceMapping',
       ],
     ],
-    'CompleteLifecycleActionAnswer' =>
-    [
+    'CompleteLifecycleActionAnswer' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'CompleteLifecycleActionType' =>
-    [
+    'CompleteLifecycleActionType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LifecycleHookName',
-        1 => 'AutoScalingGroupName',
-        2 => 'LifecycleActionToken',
-        3 => 'LifecycleActionResult',
+      'required' => [
+        'LifecycleHookName',
+        'AutoScalingGroupName',
+        'LifecycleActionToken',
+        'LifecycleActionResult',
       ],
-      'members' =>
-      [
-        'LifecycleHookName' =>
-        [
+      'members' => [
+        'LifecycleHookName' => [
           'shape' => 'AsciiStringMaxLen255',
         ],
-        'AutoScalingGroupName' =>
-        [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
-        'LifecycleActionToken' =>
-        [
+        'LifecycleActionToken' => [
           'shape' => 'LifecycleActionToken',
         ],
-        'LifecycleActionResult' =>
-        [
+        'LifecycleActionResult' => [
           'shape' => 'LifecycleActionResult',
         ],
       ],
     ],
-    'Cooldown' =>
-    [
+    'Cooldown' => [
       'type' => 'integer',
     ],
-    'CreateAutoScalingGroupType' =>
-    [
+    'CreateAutoScalingGroupType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AutoScalingGroupName',
-        1 => 'MinSize',
-        2 => 'MaxSize',
+      'required' => [
+        'AutoScalingGroupName',
+        'MinSize',
+        'MaxSize',
       ],
-      'members' =>
-      [
-        'AutoScalingGroupName' =>
-        [
+      'members' => [
+        'AutoScalingGroupName' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'LaunchConfigurationName' =>
-        [
+        'LaunchConfigurationName' => [
           'shape' => 'ResourceName',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'XmlStringMaxLen16',
         ],
-        'MinSize' =>
-        [
+        'MinSize' => [
           'shape' => 'AutoScalingGroupMinSize',
         ],
-        'MaxSize' =>
-        [
+        'MaxSize' => [
           'shape' => 'AutoScalingGroupMaxSize',
         ],
-        'DesiredCapacity' =>
-        [
+        'DesiredCapacity' => [
           'shape' => 'AutoScalingGroupDesiredCapacity',
         ],
-        'DefaultCooldown' =>
-        [
+        'DefaultCooldown' => [
           'shape' => 'Cooldown',
         ],
-        'AvailabilityZones' =>
-        [
+        'AvailabilityZones' => [
           'shape' => 'AvailabilityZones',
         ],
-        'LoadBalancerNames' =>
-        [
+        'LoadBalancerNames' => [
           'shape' => 'LoadBalancerNames',
         ],
-        'HealthCheckType' =>
-        [
+        'HealthCheckType' => [
           'shape' => 'XmlStringMaxLen32',
         ],
-        'HealthCheckGracePeriod' =>
-        [
+        'HealthCheckGracePeriod' => [
           'shape' => 'HealthCheckGracePeriod',
         ],
-        'PlacementGroup' =>
-        [
+        'PlacementGroup' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'VPCZoneIdentifier' =>
-        [
+        'VPCZoneIdentifier' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'TerminationPolicies' =>
-        [
+        'TerminationPolicies' => [
           'shape' => 'TerminationPolicies',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'Tags',
         ],
       ],
     ],
-    'CreateLaunchConfigurationType' =>
-    [
+    'CreateLaunchConfigurationType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LaunchConfigurationName',
+      'required' => [
+        'LaunchConfigurationName',
       ],
-      'members' =>
-      [
-        'LaunchConfigurationName' =>
-        [
+      'members' => [
+        'LaunchConfigurationName' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'ImageId' =>
-        [
+        'ImageId' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'KeyName' =>
-        [
+        'KeyName' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'SecurityGroups' =>
-        [
+        'SecurityGroups' => [
           'shape' => 'SecurityGroups',
         ],
-        'UserData' =>
-        [
+        'UserData' => [
           'shape' => 'XmlStringUserData',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'XmlStringMaxLen16',
         ],
-        'InstanceType' =>
-        [
+        'InstanceType' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'KernelId' =>
-        [
+        'KernelId' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'RamdiskId' =>
-        [
+        'RamdiskId' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'BlockDeviceMappings' =>
-        [
+        'BlockDeviceMappings' => [
           'shape' => 'BlockDeviceMappings',
         ],
-        'InstanceMonitoring' =>
-        [
+        'InstanceMonitoring' => [
           'shape' => 'InstanceMonitoring',
         ],
-        'SpotPrice' =>
-        [
+        'SpotPrice' => [
           'shape' => 'SpotPrice',
         ],
-        'IamInstanceProfile' =>
-        [
+        'IamInstanceProfile' => [
           'shape' => 'XmlStringMaxLen1600',
         ],
-        'EbsOptimized' =>
-        [
+        'EbsOptimized' => [
           'shape' => 'EbsOptimized',
         ],
-        'AssociatePublicIpAddress' =>
-        [
+        'AssociatePublicIpAddress' => [
           'shape' => 'AssociatePublicIpAddress',
         ],
-        'PlacementTenancy' =>
-        [
+        'PlacementTenancy' => [
           'shape' => 'XmlStringMaxLen64',
         ],
       ],
     ],
-    'CreateOrUpdateTagsType' =>
-    [
+    'CreateOrUpdateTagsType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Tags',
+      'required' => [
+        'Tags',
       ],
-      'members' =>
-      [
-        'Tags' =>
-        [
+      'members' => [
+        'Tags' => [
           'shape' => 'Tags',
         ],
       ],
     ],
-    'DeleteAutoScalingGroupType' =>
-    [
+    'DeleteAutoScalingGroupType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AutoScalingGroupName',
+      'required' => [
+        'AutoScalingGroupName',
       ],
-      'members' =>
-      [
-        'AutoScalingGroupName' =>
-        [
+      'members' => [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
-        'ForceDelete' =>
-        [
+        'ForceDelete' => [
           'shape' => 'ForceDelete',
         ],
       ],
     ],
-    'DeleteLifecycleHookAnswer' =>
-    [
+    'DeleteLifecycleHookAnswer' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'DeleteLifecycleHookType' =>
-    [
+    'DeleteLifecycleHookType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LifecycleHookName',
-        1 => 'AutoScalingGroupName',
+      'required' => [
+        'LifecycleHookName',
+        'AutoScalingGroupName',
       ],
-      'members' =>
-      [
-        'LifecycleHookName' =>
-        [
+      'members' => [
+        'LifecycleHookName' => [
           'shape' => 'AsciiStringMaxLen255',
         ],
-        'AutoScalingGroupName' =>
-        [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
       ],
     ],
-    'DeleteNotificationConfigurationType' =>
-    [
+    'DeleteNotificationConfigurationType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AutoScalingGroupName',
-        1 => 'TopicARN',
+      'required' => [
+        'AutoScalingGroupName',
+        'TopicARN',
       ],
-      'members' =>
-      [
-        'AutoScalingGroupName' =>
-        [
+      'members' => [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
-        'TopicARN' =>
-        [
+        'TopicARN' => [
           'shape' => 'ResourceName',
         ],
       ],
     ],
-    'DeletePolicyType' =>
-    [
+    'DeletePolicyType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'PolicyName',
+      'required' => [
+        'PolicyName',
       ],
-      'members' =>
-      [
-        'AutoScalingGroupName' =>
-        [
+      'members' => [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
-        'PolicyName' =>
-        [
+        'PolicyName' => [
           'shape' => 'ResourceName',
         ],
       ],
     ],
-    'DeleteScheduledActionType' =>
-    [
+    'DeleteScheduledActionType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ScheduledActionName',
+      'required' => [
+        'ScheduledActionName',
       ],
-      'members' =>
-      [
-        'AutoScalingGroupName' =>
-        [
+      'members' => [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
-        'ScheduledActionName' =>
-        [
+        'ScheduledActionName' => [
           'shape' => 'ResourceName',
         ],
       ],
     ],
-    'DeleteTagsType' =>
-    [
+    'DeleteTagsType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Tags',
+      'required' => [
+        'Tags',
       ],
-      'members' =>
-      [
-        'Tags' =>
-        [
+      'members' => [
+        'Tags' => [
           'shape' => 'Tags',
         ],
       ],
     ],
-    'DescribeAccountLimitsAnswer' =>
-    [
+    'DescribeAccountLimitsAnswer' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'MaxNumberOfAutoScalingGroups' =>
-        [
+      'members' => [
+        'MaxNumberOfAutoScalingGroups' => [
           'shape' => 'MaxNumberOfAutoScalingGroups',
         ],
-        'MaxNumberOfLaunchConfigurations' =>
-        [
+        'MaxNumberOfLaunchConfigurations' => [
           'shape' => 'MaxNumberOfLaunchConfigurations',
         ],
       ],
     ],
-    'DescribeAdjustmentTypesAnswer' =>
-    [
+    'DescribeAdjustmentTypesAnswer' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AdjustmentTypes' =>
-        [
+      'members' => [
+        'AdjustmentTypes' => [
           'shape' => 'AdjustmentTypes',
         ],
       ],
     ],
-    'DescribeAutoScalingInstancesType' =>
-    [
+    'DescribeAutoScalingInstancesType' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceIds' =>
-        [
+      'members' => [
+        'InstanceIds' => [
           'shape' => 'InstanceIds',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'MaxRecords',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'XmlString',
         ],
       ],
     ],
-    'DescribeAutoScalingNotificationTypesAnswer' =>
-    [
+    'DescribeAutoScalingNotificationTypesAnswer' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AutoScalingNotificationTypes' =>
-        [
+      'members' => [
+        'AutoScalingNotificationTypes' => [
           'shape' => 'AutoScalingNotificationTypes',
         ],
       ],
     ],
-    'DescribeLifecycleHookTypesAnswer' =>
-    [
+    'DescribeLifecycleHookTypesAnswer' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LifecycleHookTypes' =>
-        [
+      'members' => [
+        'LifecycleHookTypes' => [
           'shape' => 'AutoScalingNotificationTypes',
         ],
       ],
     ],
-    'DescribeLifecycleHooksAnswer' =>
-    [
+    'DescribeLifecycleHooksAnswer' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LifecycleHooks' =>
-        [
+      'members' => [
+        'LifecycleHooks' => [
           'shape' => 'LifecycleHooks',
         ],
       ],
     ],
-    'DescribeLifecycleHooksType' =>
-    [
+    'DescribeLifecycleHooksType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AutoScalingGroupName',
+      'required' => [
+        'AutoScalingGroupName',
       ],
-      'members' =>
-      [
-        'AutoScalingGroupName' =>
-        [
+      'members' => [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
-        'LifecycleHookNames' =>
-        [
+        'LifecycleHookNames' => [
           'shape' => 'LifecycleHookNames',
         ],
       ],
     ],
-    'DescribeMetricCollectionTypesAnswer' =>
-    [
+    'DescribeMetricCollectionTypesAnswer' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Metrics' =>
-        [
+      'members' => [
+        'Metrics' => [
           'shape' => 'MetricCollectionTypes',
         ],
-        'Granularities' =>
-        [
+        'Granularities' => [
           'shape' => 'MetricGranularityTypes',
         ],
       ],
     ],
-    'DescribeNotificationConfigurationsAnswer' =>
-    [
+    'DescribeNotificationConfigurationsAnswer' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'NotificationConfigurations',
+      'required' => [
+        'NotificationConfigurations',
       ],
-      'members' =>
-      [
-        'NotificationConfigurations' =>
-        [
+      'members' => [
+        'NotificationConfigurations' => [
           'shape' => 'NotificationConfigurations',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'XmlString',
         ],
       ],
     ],
-    'DescribeNotificationConfigurationsType' =>
-    [
+    'DescribeNotificationConfigurationsType' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AutoScalingGroupNames' =>
-        [
+      'members' => [
+        'AutoScalingGroupNames' => [
           'shape' => 'AutoScalingGroupNames',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'XmlString',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'MaxRecords',
         ],
       ],
     ],
-    'DescribePoliciesType' =>
-    [
+    'DescribePoliciesType' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AutoScalingGroupName' =>
-        [
+      'members' => [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
-        'PolicyNames' =>
-        [
+        'PolicyNames' => [
           'shape' => 'PolicyNames',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'XmlString',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'MaxRecords',
         ],
       ],
     ],
-    'DescribeScalingActivitiesType' =>
-    [
+    'DescribeScalingActivitiesType' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ActivityIds' =>
-        [
+      'members' => [
+        'ActivityIds' => [
           'shape' => 'ActivityIds',
         ],
-        'AutoScalingGroupName' =>
-        [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'MaxRecords',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'XmlString',
         ],
       ],
     ],
-    'DescribeScheduledActionsType' =>
-    [
+    'DescribeScheduledActionsType' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AutoScalingGroupName' =>
-        [
+      'members' => [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
-        'ScheduledActionNames' =>
-        [
+        'ScheduledActionNames' => [
           'shape' => 'ScheduledActionNames',
         ],
-        'StartTime' =>
-        [
+        'StartTime' => [
           'shape' => 'TimestampType',
         ],
-        'EndTime' =>
-        [
+        'EndTime' => [
           'shape' => 'TimestampType',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'XmlString',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'MaxRecords',
         ],
       ],
     ],
-    'DescribeTagsType' =>
-    [
+    'DescribeTagsType' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Filters' =>
-        [
+      'members' => [
+        'Filters' => [
           'shape' => 'Filters',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'XmlString',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'MaxRecords',
         ],
       ],
     ],
-    'DescribeTerminationPolicyTypesAnswer' =>
-    [
+    'DescribeTerminationPolicyTypesAnswer' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TerminationPolicyTypes' =>
-        [
+      'members' => [
+        'TerminationPolicyTypes' => [
           'shape' => 'TerminationPolicies',
         ],
       ],
     ],
-    'DetachInstancesAnswer' =>
-    [
+    'DetachInstancesAnswer' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Activities' =>
-        [
+      'members' => [
+        'Activities' => [
           'shape' => 'Activities',
         ],
       ],
     ],
-    'DetachInstancesQuery' =>
-    [
+    'DetachInstancesQuery' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AutoScalingGroupName',
-        1 => 'ShouldDecrementDesiredCapacity',
+      'required' => [
+        'AutoScalingGroupName',
+        'ShouldDecrementDesiredCapacity',
       ],
-      'members' =>
-      [
-        'InstanceIds' =>
-        [
+      'members' => [
+        'InstanceIds' => [
           'shape' => 'InstanceIds',
         ],
-        'AutoScalingGroupName' =>
-        [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
-        'ShouldDecrementDesiredCapacity' =>
-        [
+        'ShouldDecrementDesiredCapacity' => [
           'shape' => 'ShouldDecrementDesiredCapacity',
         ],
       ],
     ],
-    'DisableMetricsCollectionQuery' =>
-    [
+    'DisableMetricsCollectionQuery' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AutoScalingGroupName',
+      'required' => [
+        'AutoScalingGroupName',
       ],
-      'members' =>
-      [
-        'AutoScalingGroupName' =>
-        [
+      'members' => [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
-        'Metrics' =>
-        [
+        'Metrics' => [
           'shape' => 'Metrics',
         ],
       ],
     ],
-    'Ebs' =>
-    [
+    'Ebs' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SnapshotId' =>
-        [
+      'members' => [
+        'SnapshotId' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'VolumeSize' =>
-        [
+        'VolumeSize' => [
           'shape' => 'BlockDeviceEbsVolumeSize',
         ],
-        'VolumeType' =>
-        [
+        'VolumeType' => [
           'shape' => 'BlockDeviceEbsVolumeType',
         ],
-        'DeleteOnTermination' =>
-        [
+        'DeleteOnTermination' => [
           'shape' => 'BlockDeviceEbsDeleteOnTermination',
         ],
-        'Iops' =>
-        [
+        'Iops' => [
           'shape' => 'BlockDeviceEbsIops',
         ],
       ],
     ],
-    'EbsOptimized' =>
-    [
+    'EbsOptimized' => [
       'type' => 'boolean',
     ],
-    'EnableMetricsCollectionQuery' =>
-    [
+    'EnableMetricsCollectionQuery' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AutoScalingGroupName',
-        1 => 'Granularity',
+      'required' => [
+        'AutoScalingGroupName',
+        'Granularity',
       ],
-      'members' =>
-      [
-        'AutoScalingGroupName' =>
-        [
+      'members' => [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
-        'Metrics' =>
-        [
+        'Metrics' => [
           'shape' => 'Metrics',
         ],
-        'Granularity' =>
-        [
+        'Granularity' => [
           'shape' => 'XmlStringMaxLen255',
         ],
       ],
     ],
-    'EnabledMetric' =>
-    [
+    'EnabledMetric' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Metric' =>
-        [
+      'members' => [
+        'Metric' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'Granularity' =>
-        [
+        'Granularity' => [
           'shape' => 'XmlStringMaxLen255',
         ],
       ],
     ],
-    'EnabledMetrics' =>
-    [
+    'EnabledMetrics' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'EnabledMetric',
       ],
     ],
-    'EnterStandbyAnswer' =>
-    [
+    'EnterStandbyAnswer' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Activities' =>
-        [
+      'members' => [
+        'Activities' => [
           'shape' => 'Activities',
         ],
       ],
     ],
-    'EnterStandbyQuery' =>
-    [
+    'EnterStandbyQuery' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AutoScalingGroupName',
-        1 => 'ShouldDecrementDesiredCapacity',
+      'required' => [
+        'AutoScalingGroupName',
+        'ShouldDecrementDesiredCapacity',
       ],
-      'members' =>
-      [
-        'InstanceIds' =>
-        [
+      'members' => [
+        'InstanceIds' => [
           'shape' => 'InstanceIds',
         ],
-        'AutoScalingGroupName' =>
-        [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
-        'ShouldDecrementDesiredCapacity' =>
-        [
+        'ShouldDecrementDesiredCapacity' => [
           'shape' => 'ShouldDecrementDesiredCapacity',
         ],
       ],
     ],
-    'ExecutePolicyType' =>
-    [
+    'ExecutePolicyType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'PolicyName',
+      'required' => [
+        'PolicyName',
       ],
-      'members' =>
-      [
-        'AutoScalingGroupName' =>
-        [
+      'members' => [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
-        'PolicyName' =>
-        [
+        'PolicyName' => [
           'shape' => 'ResourceName',
         ],
-        'HonorCooldown' =>
-        [
+        'HonorCooldown' => [
           'shape' => 'HonorCooldown',
         ],
       ],
     ],
-    'ExitStandbyAnswer' =>
-    [
+    'ExitStandbyAnswer' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Activities' =>
-        [
+      'members' => [
+        'Activities' => [
           'shape' => 'Activities',
         ],
       ],
     ],
-    'ExitStandbyQuery' =>
-    [
+    'ExitStandbyQuery' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AutoScalingGroupName',
+      'required' => [
+        'AutoScalingGroupName',
       ],
-      'members' =>
-      [
-        'InstanceIds' =>
-        [
+      'members' => [
+        'InstanceIds' => [
           'shape' => 'InstanceIds',
         ],
-        'AutoScalingGroupName' =>
-        [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
       ],
     ],
-    'Filter' =>
-    [
+    'Filter' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'XmlString',
         ],
-        'Values' =>
-        [
+        'Values' => [
           'shape' => 'Values',
         ],
       ],
     ],
-    'Filters' =>
-    [
+    'Filters' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Filter',
       ],
     ],
-    'ForceDelete' =>
-    [
+    'ForceDelete' => [
       'type' => 'boolean',
     ],
-    'GlobalTimeout' =>
-    [
+    'GlobalTimeout' => [
       'type' => 'integer',
     ],
-    'HealthCheckGracePeriod' =>
-    [
+    'HealthCheckGracePeriod' => [
       'type' => 'integer',
     ],
-    'HeartbeatTimeout' =>
-    [
+    'HeartbeatTimeout' => [
       'type' => 'integer',
     ],
-    'HonorCooldown' =>
-    [
+    'HonorCooldown' => [
       'type' => 'boolean',
     ],
-    'Instance' =>
-    [
+    'Instance' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceId',
-        1 => 'AvailabilityZone',
-        2 => 'LifecycleState',
-        3 => 'HealthStatus',
-        4 => 'LaunchConfigurationName',
+      'required' => [
+        'InstanceId',
+        'AvailabilityZone',
+        'LifecycleState',
+        'HealthStatus',
+        'LaunchConfigurationName',
       ],
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'XmlStringMaxLen16',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'LifecycleState' =>
-        [
+        'LifecycleState' => [
           'shape' => 'LifecycleState',
         ],
-        'HealthStatus' =>
-        [
+        'HealthStatus' => [
           'shape' => 'XmlStringMaxLen32',
         ],
-        'LaunchConfigurationName' =>
-        [
+        'LaunchConfigurationName' => [
           'shape' => 'XmlStringMaxLen255',
         ],
       ],
     ],
-    'InstanceIds' =>
-    [
+    'InstanceIds' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'XmlStringMaxLen16',
       ],
     ],
-    'InstanceMonitoring' =>
-    [
+    'InstanceMonitoring' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Enabled' =>
-        [
+      'members' => [
+        'Enabled' => [
           'shape' => 'MonitoringEnabled',
         ],
       ],
     ],
-    'Instances' =>
-    [
+    'Instances' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Instance',
       ],
     ],
-    'InvalidNextToken' =>
-    [
+    'InvalidNextToken' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'XmlStringMaxLen255',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidNextToken',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'LaunchConfiguration' =>
-    [
+    'LaunchConfiguration' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LaunchConfigurationName',
-        1 => 'ImageId',
-        2 => 'InstanceType',
-        3 => 'CreatedTime',
+      'required' => [
+        'LaunchConfigurationName',
+        'ImageId',
+        'InstanceType',
+        'CreatedTime',
       ],
-      'members' =>
-      [
-        'LaunchConfigurationName' =>
-        [
+      'members' => [
+        'LaunchConfigurationName' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'LaunchConfigurationARN' =>
-        [
+        'LaunchConfigurationARN' => [
           'shape' => 'ResourceName',
         ],
-        'ImageId' =>
-        [
+        'ImageId' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'KeyName' =>
-        [
+        'KeyName' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'SecurityGroups' =>
-        [
+        'SecurityGroups' => [
           'shape' => 'SecurityGroups',
         ],
-        'UserData' =>
-        [
+        'UserData' => [
           'shape' => 'XmlStringUserData',
         ],
-        'InstanceType' =>
-        [
+        'InstanceType' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'KernelId' =>
-        [
+        'KernelId' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'RamdiskId' =>
-        [
+        'RamdiskId' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'BlockDeviceMappings' =>
-        [
+        'BlockDeviceMappings' => [
           'shape' => 'BlockDeviceMappings',
         ],
-        'InstanceMonitoring' =>
-        [
+        'InstanceMonitoring' => [
           'shape' => 'InstanceMonitoring',
         ],
-        'SpotPrice' =>
-        [
+        'SpotPrice' => [
           'shape' => 'SpotPrice',
         ],
-        'IamInstanceProfile' =>
-        [
+        'IamInstanceProfile' => [
           'shape' => 'XmlStringMaxLen1600',
         ],
-        'CreatedTime' =>
-        [
+        'CreatedTime' => [
           'shape' => 'TimestampType',
         ],
-        'EbsOptimized' =>
-        [
+        'EbsOptimized' => [
           'shape' => 'EbsOptimized',
         ],
-        'AssociatePublicIpAddress' =>
-        [
+        'AssociatePublicIpAddress' => [
           'shape' => 'AssociatePublicIpAddress',
         ],
-        'PlacementTenancy' =>
-        [
+        'PlacementTenancy' => [
           'shape' => 'XmlStringMaxLen64',
         ],
       ],
     ],
-    'LaunchConfigurationNameType' =>
-    [
+    'LaunchConfigurationNameType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LaunchConfigurationName',
+      'required' => [
+        'LaunchConfigurationName',
       ],
-      'members' =>
-      [
-        'LaunchConfigurationName' =>
-        [
+      'members' => [
+        'LaunchConfigurationName' => [
           'shape' => 'ResourceName',
         ],
       ],
     ],
-    'LaunchConfigurationNames' =>
-    [
+    'LaunchConfigurationNames' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ResourceName',
       ],
     ],
-    'LaunchConfigurationNamesType' =>
-    [
+    'LaunchConfigurationNamesType' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LaunchConfigurationNames' =>
-        [
+      'members' => [
+        'LaunchConfigurationNames' => [
           'shape' => 'LaunchConfigurationNames',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'XmlString',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'MaxRecords',
         ],
       ],
     ],
-    'LaunchConfigurations' =>
-    [
+    'LaunchConfigurations' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'LaunchConfiguration',
       ],
     ],
-    'LaunchConfigurationsType' =>
-    [
+    'LaunchConfigurationsType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LaunchConfigurations',
+      'required' => [
+        'LaunchConfigurations',
       ],
-      'members' =>
-      [
-        'LaunchConfigurations' =>
-        [
+      'members' => [
+        'LaunchConfigurations' => [
           'shape' => 'LaunchConfigurations',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'XmlString',
         ],
       ],
     ],
-    'LifecycleActionResult' =>
-    [
+    'LifecycleActionResult' => [
       'type' => 'string',
     ],
-    'LifecycleActionToken' =>
-    [
+    'LifecycleActionToken' => [
       'type' => 'string',
       'min' => 36,
       'max' => 36,
     ],
-    'LifecycleHook' =>
-    [
+    'LifecycleHook' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LifecycleHookName' =>
-        [
+      'members' => [
+        'LifecycleHookName' => [
           'shape' => 'AsciiStringMaxLen255',
         ],
-        'AutoScalingGroupName' =>
-        [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
-        'LifecycleTransition' =>
-        [
+        'LifecycleTransition' => [
           'shape' => 'LifecycleTransition',
         ],
-        'NotificationTargetARN' =>
-        [
+        'NotificationTargetARN' => [
           'shape' => 'ResourceName',
         ],
-        'RoleARN' =>
-        [
+        'RoleARN' => [
           'shape' => 'ResourceName',
         ],
-        'NotificationMetadata' =>
-        [
+        'NotificationMetadata' => [
           'shape' => 'XmlStringMaxLen1023',
         ],
-        'HeartbeatTimeout' =>
-        [
+        'HeartbeatTimeout' => [
           'shape' => 'HeartbeatTimeout',
         ],
-        'GlobalTimeout' =>
-        [
+        'GlobalTimeout' => [
           'shape' => 'GlobalTimeout',
         ],
-        'DefaultResult' =>
-        [
+        'DefaultResult' => [
           'shape' => 'LifecycleActionResult',
         ],
       ],
     ],
-    'LifecycleHookNames' =>
-    [
+    'LifecycleHookNames' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AsciiStringMaxLen255',
       ],
     ],
-    'LifecycleHooks' =>
-    [
+    'LifecycleHooks' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'LifecycleHook',
       ],
     ],
-    'LifecycleState' =>
-    [
+    'LifecycleState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'Pending',
-        1 => 'Pending:Wait',
-        2 => 'Pending:Proceed',
-        3 => 'Quarantined',
-        4 => 'InService',
-        5 => 'Terminating',
-        6 => 'Terminating:Wait',
-        7 => 'Terminating:Proceed',
-        8 => 'Terminated',
-        9 => 'Detaching',
-        10 => 'Detached',
-        11 => 'EnteringStandby',
-        12 => 'Standby',
+      'enum' => [
+        'Pending',
+        'Pending:Wait',
+        'Pending:Proceed',
+        'Quarantined',
+        'InService',
+        'Terminating',
+        'Terminating:Wait',
+        'Terminating:Proceed',
+        'Terminated',
+        'Detaching',
+        'Detached',
+        'EnteringStandby',
+        'Standby',
       ],
     ],
-    'LifecycleTransition' =>
-    [
+    'LifecycleTransition' => [
       'type' => 'string',
     ],
-    'LimitExceededFault' =>
-    [
+    'LimitExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'XmlStringMaxLen255',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'LimitExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'LoadBalancerNames' =>
-    [
+    'LoadBalancerNames' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'XmlStringMaxLen255',
       ],
     ],
-    'MaxNumberOfAutoScalingGroups' =>
-    [
+    'MaxNumberOfAutoScalingGroups' => [
       'type' => 'integer',
     ],
-    'MaxNumberOfLaunchConfigurations' =>
-    [
+    'MaxNumberOfLaunchConfigurations' => [
       'type' => 'integer',
     ],
-    'MaxRecords' =>
-    [
+    'MaxRecords' => [
       'type' => 'integer',
     ],
-    'MetricCollectionType' =>
-    [
+    'MetricCollectionType' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Metric' =>
-        [
+      'members' => [
+        'Metric' => [
           'shape' => 'XmlStringMaxLen255',
         ],
       ],
     ],
-    'MetricCollectionTypes' =>
-    [
+    'MetricCollectionTypes' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'MetricCollectionType',
       ],
     ],
-    'MetricGranularityType' =>
-    [
+    'MetricGranularityType' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Granularity' =>
-        [
+      'members' => [
+        'Granularity' => [
           'shape' => 'XmlStringMaxLen255',
         ],
       ],
     ],
-    'MetricGranularityTypes' =>
-    [
+    'MetricGranularityTypes' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'MetricGranularityType',
       ],
     ],
-    'Metrics' =>
-    [
+    'Metrics' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'XmlStringMaxLen255',
       ],
     ],
-    'MinAdjustmentStep' =>
-    [
+    'MinAdjustmentStep' => [
       'type' => 'integer',
     ],
-    'MonitoringEnabled' =>
-    [
+    'MonitoringEnabled' => [
       'type' => 'boolean',
     ],
-    'NoDevice' =>
-    [
+    'NoDevice' => [
       'type' => 'boolean',
     ],
-    'NotificationConfiguration' =>
-    [
+    'NotificationConfiguration' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AutoScalingGroupName' =>
-        [
+      'members' => [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
-        'TopicARN' =>
-        [
+        'TopicARN' => [
           'shape' => 'ResourceName',
         ],
-        'NotificationType' =>
-        [
+        'NotificationType' => [
           'shape' => 'XmlStringMaxLen255',
         ],
       ],
     ],
-    'NotificationConfigurations' =>
-    [
+    'NotificationConfigurations' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'NotificationConfiguration',
       ],
     ],
-    'PoliciesType' =>
-    [
+    'PoliciesType' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ScalingPolicies' =>
-        [
+      'members' => [
+        'ScalingPolicies' => [
           'shape' => 'ScalingPolicies',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'XmlString',
         ],
       ],
     ],
-    'PolicyARNType' =>
-    [
+    'PolicyARNType' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PolicyARN' =>
-        [
+      'members' => [
+        'PolicyARN' => [
           'shape' => 'ResourceName',
         ],
       ],
     ],
-    'PolicyIncrement' =>
-    [
+    'PolicyIncrement' => [
       'type' => 'integer',
     ],
-    'PolicyNames' =>
-    [
+    'PolicyNames' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ResourceName',
       ],
     ],
-    'ProcessNames' =>
-    [
+    'ProcessNames' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'XmlStringMaxLen255',
       ],
     ],
-    'ProcessType' =>
-    [
+    'ProcessType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ProcessName',
+      'required' => [
+        'ProcessName',
       ],
-      'members' =>
-      [
-        'ProcessName' =>
-        [
+      'members' => [
+        'ProcessName' => [
           'shape' => 'XmlStringMaxLen255',
         ],
       ],
     ],
-    'Processes' =>
-    [
+    'Processes' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ProcessType',
       ],
     ],
-    'ProcessesType' =>
-    [
+    'ProcessesType' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Processes' =>
-        [
+      'members' => [
+        'Processes' => [
           'shape' => 'Processes',
         ],
       ],
     ],
-    'Progress' =>
-    [
+    'Progress' => [
       'type' => 'integer',
     ],
-    'PropagateAtLaunch' =>
-    [
+    'PropagateAtLaunch' => [
       'type' => 'boolean',
     ],
-    'PutLifecycleHookAnswer' =>
-    [
+    'PutLifecycleHookAnswer' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'PutLifecycleHookType' =>
-    [
+    'PutLifecycleHookType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LifecycleHookName',
-        1 => 'AutoScalingGroupName',
+      'required' => [
+        'LifecycleHookName',
+        'AutoScalingGroupName',
       ],
-      'members' =>
-      [
-        'LifecycleHookName' =>
-        [
+      'members' => [
+        'LifecycleHookName' => [
           'shape' => 'AsciiStringMaxLen255',
         ],
-        'AutoScalingGroupName' =>
-        [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
-        'LifecycleTransition' =>
-        [
+        'LifecycleTransition' => [
           'shape' => 'LifecycleTransition',
         ],
-        'RoleARN' =>
-        [
+        'RoleARN' => [
           'shape' => 'ResourceName',
         ],
-        'NotificationTargetARN' =>
-        [
+        'NotificationTargetARN' => [
           'shape' => 'ResourceName',
         ],
-        'NotificationMetadata' =>
-        [
+        'NotificationMetadata' => [
           'shape' => 'XmlStringMaxLen1023',
         ],
-        'HeartbeatTimeout' =>
-        [
+        'HeartbeatTimeout' => [
           'shape' => 'HeartbeatTimeout',
         ],
-        'DefaultResult' =>
-        [
+        'DefaultResult' => [
           'shape' => 'LifecycleActionResult',
         ],
       ],
     ],
-    'PutNotificationConfigurationType' =>
-    [
+    'PutNotificationConfigurationType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AutoScalingGroupName',
-        1 => 'TopicARN',
-        2 => 'NotificationTypes',
+      'required' => [
+        'AutoScalingGroupName',
+        'TopicARN',
+        'NotificationTypes',
       ],
-      'members' =>
-      [
-        'AutoScalingGroupName' =>
-        [
+      'members' => [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
-        'TopicARN' =>
-        [
+        'TopicARN' => [
           'shape' => 'ResourceName',
         ],
-        'NotificationTypes' =>
-        [
+        'NotificationTypes' => [
           'shape' => 'AutoScalingNotificationTypes',
         ],
       ],
     ],
-    'PutScalingPolicyType' =>
-    [
+    'PutScalingPolicyType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AutoScalingGroupName',
-        1 => 'PolicyName',
-        2 => 'ScalingAdjustment',
-        3 => 'AdjustmentType',
+      'required' => [
+        'AutoScalingGroupName',
+        'PolicyName',
+        'ScalingAdjustment',
+        'AdjustmentType',
       ],
-      'members' =>
-      [
-        'AutoScalingGroupName' =>
-        [
+      'members' => [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
-        'PolicyName' =>
-        [
+        'PolicyName' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'ScalingAdjustment' =>
-        [
+        'ScalingAdjustment' => [
           'shape' => 'PolicyIncrement',
         ],
-        'AdjustmentType' =>
-        [
+        'AdjustmentType' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'Cooldown' =>
-        [
+        'Cooldown' => [
           'shape' => 'Cooldown',
         ],
-        'MinAdjustmentStep' =>
-        [
+        'MinAdjustmentStep' => [
           'shape' => 'MinAdjustmentStep',
         ],
       ],
     ],
-    'PutScheduledUpdateGroupActionType' =>
-    [
+    'PutScheduledUpdateGroupActionType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AutoScalingGroupName',
-        1 => 'ScheduledActionName',
+      'required' => [
+        'AutoScalingGroupName',
+        'ScheduledActionName',
       ],
-      'members' =>
-      [
-        'AutoScalingGroupName' =>
-        [
+      'members' => [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
-        'ScheduledActionName' =>
-        [
+        'ScheduledActionName' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'Time' =>
-        [
+        'Time' => [
           'shape' => 'TimestampType',
         ],
-        'StartTime' =>
-        [
+        'StartTime' => [
           'shape' => 'TimestampType',
         ],
-        'EndTime' =>
-        [
+        'EndTime' => [
           'shape' => 'TimestampType',
         ],
-        'Recurrence' =>
-        [
+        'Recurrence' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'MinSize' =>
-        [
+        'MinSize' => [
           'shape' => 'AutoScalingGroupMinSize',
         ],
-        'MaxSize' =>
-        [
+        'MaxSize' => [
           'shape' => 'AutoScalingGroupMaxSize',
         ],
-        'DesiredCapacity' =>
-        [
+        'DesiredCapacity' => [
           'shape' => 'AutoScalingGroupDesiredCapacity',
         ],
       ],
     ],
-    'RecordLifecycleActionHeartbeatAnswer' =>
-    [
+    'RecordLifecycleActionHeartbeatAnswer' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'RecordLifecycleActionHeartbeatType' =>
-    [
+    'RecordLifecycleActionHeartbeatType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LifecycleHookName',
-        1 => 'AutoScalingGroupName',
-        2 => 'LifecycleActionToken',
+      'required' => [
+        'LifecycleHookName',
+        'AutoScalingGroupName',
+        'LifecycleActionToken',
       ],
-      'members' =>
-      [
-        'LifecycleHookName' =>
-        [
+      'members' => [
+        'LifecycleHookName' => [
           'shape' => 'AsciiStringMaxLen255',
         ],
-        'AutoScalingGroupName' =>
-        [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
-        'LifecycleActionToken' =>
-        [
+        'LifecycleActionToken' => [
           'shape' => 'LifecycleActionToken',
         ],
       ],
     ],
-    'ResourceInUseFault' =>
-    [
+    'ResourceInUseFault' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'XmlStringMaxLen255',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ResourceInUse',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ResourceName' =>
-    [
+    'ResourceName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 1600,
       'pattern' => '[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*',
     ],
-    'ScalingActivityInProgressFault' =>
-    [
+    'ScalingActivityInProgressFault' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'XmlStringMaxLen255',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ScalingActivityInProgress',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ScalingActivityStatusCode' =>
-    [
+    'ScalingActivityStatusCode' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'WaitingForSpotInstanceRequestId',
-        1 => 'WaitingForSpotInstanceId',
-        2 => 'WaitingForInstanceId',
-        3 => 'PreInService',
-        4 => 'InProgress',
-        5 => 'WaitingForELBConnectionDraining',
-        6 => 'MidLifecycleAction',
-        7 => 'Successful',
-        8 => 'Failed',
-        9 => 'Cancelled',
+      'enum' => [
+        'WaitingForSpotInstanceRequestId',
+        'WaitingForSpotInstanceId',
+        'WaitingForInstanceId',
+        'PreInService',
+        'InProgress',
+        'WaitingForELBConnectionDraining',
+        'MidLifecycleAction',
+        'Successful',
+        'Failed',
+        'Cancelled',
       ],
     ],
-    'ScalingPolicies' =>
-    [
+    'ScalingPolicies' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ScalingPolicy',
       ],
     ],
-    'ScalingPolicy' =>
-    [
+    'ScalingPolicy' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AutoScalingGroupName' =>
-        [
+      'members' => [
+        'AutoScalingGroupName' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'PolicyName' =>
-        [
+        'PolicyName' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'ScalingAdjustment' =>
-        [
+        'ScalingAdjustment' => [
           'shape' => 'PolicyIncrement',
         ],
-        'AdjustmentType' =>
-        [
+        'AdjustmentType' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'Cooldown' =>
-        [
+        'Cooldown' => [
           'shape' => 'Cooldown',
         ],
-        'PolicyARN' =>
-        [
+        'PolicyARN' => [
           'shape' => 'ResourceName',
         ],
-        'Alarms' =>
-        [
+        'Alarms' => [
           'shape' => 'Alarms',
         ],
-        'MinAdjustmentStep' =>
-        [
+        'MinAdjustmentStep' => [
           'shape' => 'MinAdjustmentStep',
         ],
       ],
     ],
-    'ScalingProcessQuery' =>
-    [
+    'ScalingProcessQuery' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AutoScalingGroupName',
+      'required' => [
+        'AutoScalingGroupName',
       ],
-      'members' =>
-      [
-        'AutoScalingGroupName' =>
-        [
+      'members' => [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
-        'ScalingProcesses' =>
-        [
+        'ScalingProcesses' => [
           'shape' => 'ProcessNames',
         ],
       ],
     ],
-    'ScheduledActionNames' =>
-    [
+    'ScheduledActionNames' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ResourceName',
       ],
     ],
-    'ScheduledActionsType' =>
-    [
+    'ScheduledActionsType' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ScheduledUpdateGroupActions' =>
-        [
+      'members' => [
+        'ScheduledUpdateGroupActions' => [
           'shape' => 'ScheduledUpdateGroupActions',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'XmlString',
         ],
       ],
     ],
-    'ScheduledUpdateGroupAction' =>
-    [
+    'ScheduledUpdateGroupAction' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AutoScalingGroupName' =>
-        [
+      'members' => [
+        'AutoScalingGroupName' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'ScheduledActionName' =>
-        [
+        'ScheduledActionName' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'ScheduledActionARN' =>
-        [
+        'ScheduledActionARN' => [
           'shape' => 'ResourceName',
         ],
-        'Time' =>
-        [
+        'Time' => [
           'shape' => 'TimestampType',
         ],
-        'StartTime' =>
-        [
+        'StartTime' => [
           'shape' => 'TimestampType',
         ],
-        'EndTime' =>
-        [
+        'EndTime' => [
           'shape' => 'TimestampType',
         ],
-        'Recurrence' =>
-        [
+        'Recurrence' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'MinSize' =>
-        [
+        'MinSize' => [
           'shape' => 'AutoScalingGroupMinSize',
         ],
-        'MaxSize' =>
-        [
+        'MaxSize' => [
           'shape' => 'AutoScalingGroupMaxSize',
         ],
-        'DesiredCapacity' =>
-        [
+        'DesiredCapacity' => [
           'shape' => 'AutoScalingGroupDesiredCapacity',
         ],
       ],
     ],
-    'ScheduledUpdateGroupActions' =>
-    [
+    'ScheduledUpdateGroupActions' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ScheduledUpdateGroupAction',
       ],
     ],
-    'SecurityGroups' =>
-    [
+    'SecurityGroups' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'XmlString',
       ],
     ],
-    'SetDesiredCapacityType' =>
-    [
+    'SetDesiredCapacityType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AutoScalingGroupName',
-        1 => 'DesiredCapacity',
+      'required' => [
+        'AutoScalingGroupName',
+        'DesiredCapacity',
       ],
-      'members' =>
-      [
-        'AutoScalingGroupName' =>
-        [
+      'members' => [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
-        'DesiredCapacity' =>
-        [
+        'DesiredCapacity' => [
           'shape' => 'AutoScalingGroupDesiredCapacity',
         ],
-        'HonorCooldown' =>
-        [
+        'HonorCooldown' => [
           'shape' => 'HonorCooldown',
         ],
       ],
     ],
-    'SetInstanceHealthQuery' =>
-    [
+    'SetInstanceHealthQuery' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceId',
-        1 => 'HealthStatus',
+      'required' => [
+        'InstanceId',
+        'HealthStatus',
       ],
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'XmlStringMaxLen16',
         ],
-        'HealthStatus' =>
-        [
+        'HealthStatus' => [
           'shape' => 'XmlStringMaxLen32',
         ],
-        'ShouldRespectGracePeriod' =>
-        [
+        'ShouldRespectGracePeriod' => [
           'shape' => 'ShouldRespectGracePeriod',
         ],
       ],
     ],
-    'ShouldDecrementDesiredCapacity' =>
-    [
+    'ShouldDecrementDesiredCapacity' => [
       'type' => 'boolean',
     ],
-    'ShouldRespectGracePeriod' =>
-    [
+    'ShouldRespectGracePeriod' => [
       'type' => 'boolean',
     ],
-    'SpotPrice' =>
-    [
+    'SpotPrice' => [
       'type' => 'string',
       'min' => 1,
       'max' => 255,
     ],
-    'SuspendedProcess' =>
-    [
+    'SuspendedProcess' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ProcessName' =>
-        [
+      'members' => [
+        'ProcessName' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'SuspensionReason' =>
-        [
+        'SuspensionReason' => [
           'shape' => 'XmlStringMaxLen255',
         ],
       ],
     ],
-    'SuspendedProcesses' =>
-    [
+    'SuspendedProcesses' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'SuspendedProcess',
       ],
     ],
-    'Tag' =>
-    [
+    'Tag' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Key',
+      'required' => [
+        'Key',
       ],
-      'members' =>
-      [
-        'ResourceId' =>
-        [
+      'members' => [
+        'ResourceId' => [
           'shape' => 'XmlString',
         ],
-        'ResourceType' =>
-        [
+        'ResourceType' => [
           'shape' => 'XmlString',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'TagKey',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'TagValue',
         ],
-        'PropagateAtLaunch' =>
-        [
+        'PropagateAtLaunch' => [
           'shape' => 'PropagateAtLaunch',
         ],
       ],
     ],
-    'TagDescription' =>
-    [
+    'TagDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ResourceId' =>
-        [
+      'members' => [
+        'ResourceId' => [
           'shape' => 'XmlString',
         ],
-        'ResourceType' =>
-        [
+        'ResourceType' => [
           'shape' => 'XmlString',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'TagKey',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'TagValue',
         ],
-        'PropagateAtLaunch' =>
-        [
+        'PropagateAtLaunch' => [
           'shape' => 'PropagateAtLaunch',
         ],
       ],
     ],
-    'TagDescriptionList' =>
-    [
+    'TagDescriptionList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'TagDescription',
       ],
     ],
-    'TagKey' =>
-    [
+    'TagKey' => [
       'type' => 'string',
       'min' => 1,
       'max' => 128,
       'pattern' => '[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*',
     ],
-    'TagValue' =>
-    [
+    'TagValue' => [
       'type' => 'string',
       'min' => 0,
       'max' => 256,
       'pattern' => '[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*',
     ],
-    'Tags' =>
-    [
+    'Tags' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Tag',
       ],
     ],
-    'TagsType' =>
-    [
+    'TagsType' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Tags' =>
-        [
+      'members' => [
+        'Tags' => [
           'shape' => 'TagDescriptionList',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'XmlString',
         ],
       ],
     ],
-    'TerminateInstanceInAutoScalingGroupType' =>
-    [
+    'TerminateInstanceInAutoScalingGroupType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceId',
-        1 => 'ShouldDecrementDesiredCapacity',
+      'required' => [
+        'InstanceId',
+        'ShouldDecrementDesiredCapacity',
       ],
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'XmlStringMaxLen16',
         ],
-        'ShouldDecrementDesiredCapacity' =>
-        [
+        'ShouldDecrementDesiredCapacity' => [
           'shape' => 'ShouldDecrementDesiredCapacity',
         ],
       ],
     ],
-    'TerminationPolicies' =>
-    [
+    'TerminationPolicies' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'XmlStringMaxLen1600',
       ],
     ],
-    'TimestampType' =>
-    [
+    'TimestampType' => [
       'type' => 'timestamp',
     ],
-    'UpdateAutoScalingGroupType' =>
-    [
+    'UpdateAutoScalingGroupType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AutoScalingGroupName',
+      'required' => [
+        'AutoScalingGroupName',
       ],
-      'members' =>
-      [
-        'AutoScalingGroupName' =>
-        [
+      'members' => [
+        'AutoScalingGroupName' => [
           'shape' => 'ResourceName',
         ],
-        'LaunchConfigurationName' =>
-        [
+        'LaunchConfigurationName' => [
           'shape' => 'ResourceName',
         ],
-        'MinSize' =>
-        [
+        'MinSize' => [
           'shape' => 'AutoScalingGroupMinSize',
         ],
-        'MaxSize' =>
-        [
+        'MaxSize' => [
           'shape' => 'AutoScalingGroupMaxSize',
         ],
-        'DesiredCapacity' =>
-        [
+        'DesiredCapacity' => [
           'shape' => 'AutoScalingGroupDesiredCapacity',
         ],
-        'DefaultCooldown' =>
-        [
+        'DefaultCooldown' => [
           'shape' => 'Cooldown',
         ],
-        'AvailabilityZones' =>
-        [
+        'AvailabilityZones' => [
           'shape' => 'AvailabilityZones',
         ],
-        'HealthCheckType' =>
-        [
+        'HealthCheckType' => [
           'shape' => 'XmlStringMaxLen32',
         ],
-        'HealthCheckGracePeriod' =>
-        [
+        'HealthCheckGracePeriod' => [
           'shape' => 'HealthCheckGracePeriod',
         ],
-        'PlacementGroup' =>
-        [
+        'PlacementGroup' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'VPCZoneIdentifier' =>
-        [
+        'VPCZoneIdentifier' => [
           'shape' => 'XmlStringMaxLen255',
         ],
-        'TerminationPolicies' =>
-        [
+        'TerminationPolicies' => [
           'shape' => 'TerminationPolicies',
         ],
       ],
     ],
-    'Values' =>
-    [
+    'Values' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'XmlString',
       ],
     ],
-    'XmlString' =>
-    [
+    'XmlString' => [
       'type' => 'string',
       'pattern' => '[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*',
     ],
-    'XmlStringMaxLen1023' =>
-    [
+    'XmlStringMaxLen1023' => [
       'type' => 'string',
       'min' => 1,
       'max' => 1023,
       'pattern' => '[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*',
     ],
-    'XmlStringMaxLen16' =>
-    [
+    'XmlStringMaxLen16' => [
       'type' => 'string',
       'min' => 1,
       'max' => 16,
       'pattern' => '[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*',
     ],
-    'XmlStringMaxLen1600' =>
-    [
+    'XmlStringMaxLen1600' => [
       'type' => 'string',
       'min' => 1,
       'max' => 1600,
       'pattern' => '[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*',
     ],
-    'XmlStringMaxLen255' =>
-    [
+    'XmlStringMaxLen255' => [
       'type' => 'string',
       'min' => 1,
       'max' => 255,
       'pattern' => '[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*',
     ],
-    'XmlStringMaxLen32' =>
-    [
+    'XmlStringMaxLen32' => [
       'type' => 'string',
       'min' => 1,
       'max' => 32,
       'pattern' => '[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*',
     ],
-    'XmlStringMaxLen64' =>
-    [
+    'XmlStringMaxLen64' => [
       'type' => 'string',
       'min' => 1,
       'max' => 64,
       'pattern' => '[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*',
     ],
-    'XmlStringUserData' =>
-    [
+    'XmlStringUserData' => [
       'type' => 'string',
       'max' => 21847,
       'pattern' => '[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*',

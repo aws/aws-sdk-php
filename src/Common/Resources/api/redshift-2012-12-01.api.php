@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2012-12-01',
     'endpointPrefix' => 'redshift',
     'serviceFullName' => 'Amazon Redshift',
@@ -9,66 +7,52 @@ return [
     'xmlNamespace' => 'http://redshift.amazonaws.com/doc/2012-12-01/',
     'protocol' => 'query',
   ],
-  'operations' =>
-  [
-    'AuthorizeClusterSecurityGroupIngress' =>
-    [
+  'operations' => [
+    'AuthorizeClusterSecurityGroupIngress' => [
       'name' => 'AuthorizeClusterSecurityGroupIngress',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AuthorizeClusterSecurityGroupIngressMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AuthorizeClusterSecurityGroupIngressResult',
         'wrapper' => true,
         'resultWrapper' => 'AuthorizeClusterSecurityGroupIngressResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterSecurityGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSecurityGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidClusterSecurityGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidClusterSecurityGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'AuthorizationAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'AuthorizationQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -77,53 +61,42 @@ return [
         ],
       ],
     ],
-    'AuthorizeSnapshotAccess' =>
-    [
+    'AuthorizeSnapshotAccess' => [
       'name' => 'AuthorizeSnapshotAccess',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AuthorizeSnapshotAccessMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AuthorizeSnapshotAccessResult',
         'wrapper' => true,
         'resultWrapper' => 'AuthorizeSnapshotAccessResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterSnapshotNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSnapshotNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'AuthorizationAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'AuthorizationQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -132,64 +105,51 @@ return [
         ],
       ],
     ],
-    'CopyClusterSnapshot' =>
-    [
+    'CopyClusterSnapshot' => [
       'name' => 'CopyClusterSnapshot',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CopyClusterSnapshotMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CopyClusterSnapshotResult',
         'wrapper' => true,
         'resultWrapper' => 'CopyClusterSnapshotResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterSnapshotAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSnapshotAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ClusterSnapshotNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSnapshotNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidClusterSnapshotStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidClusterSnapshotState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ClusterSnapshotQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSnapshotQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -198,185 +158,150 @@ return [
         ],
       ],
     ],
-    'CreateCluster' =>
-    [
+    'CreateCluster' => [
       'name' => 'CreateCluster',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateClusterMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateClusterResult',
         'wrapper' => true,
         'resultWrapper' => 'CreateClusterResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InsufficientClusterCapacityFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientClusterCapacity',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ClusterParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ClusterSecurityGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSecurityGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'ClusterQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'NumberOfNodesQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NumberOfNodesQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'NumberOfNodesPerClusterLimitExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NumberOfNodesPerClusterLimitExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'ClusterSubnetGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSubnetGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        8 =>
         [
           'shape' => 'InvalidVPCNetworkStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidVPCNetworkStateFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        9 =>
         [
           'shape' => 'InvalidClusterSubnetGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidClusterSubnetGroupStateFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        10 =>
         [
           'shape' => 'InvalidSubnet',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidSubnet',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        11 =>
         [
           'shape' => 'UnauthorizedOperation',
-          'error' =>
-          [
+          'error' => [
             'code' => 'UnauthorizedOperation',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        12 =>
         [
           'shape' => 'HsmClientCertificateNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'HsmClientCertificateNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        13 =>
         [
           'shape' => 'HsmConfigurationNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'HsmConfigurationNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        14 =>
         [
           'shape' => 'InvalidElasticIpFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidElasticIpFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -385,42 +310,33 @@ return [
         ],
       ],
     ],
-    'CreateClusterParameterGroup' =>
-    [
+    'CreateClusterParameterGroup' => [
       'name' => 'CreateClusterParameterGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateClusterParameterGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateClusterParameterGroupResult',
         'wrapper' => true,
         'resultWrapper' => 'CreateClusterParameterGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterParameterGroupQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterParameterGroupQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ClusterParameterGroupAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterParameterGroupAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -429,42 +345,33 @@ return [
         ],
       ],
     ],
-    'CreateClusterSecurityGroup' =>
-    [
+    'CreateClusterSecurityGroup' => [
       'name' => 'CreateClusterSecurityGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateClusterSecurityGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateClusterSecurityGroupResult',
         'wrapper' => true,
         'resultWrapper' => 'CreateClusterSecurityGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterSecurityGroupAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSecurityGroupAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ClusterSecurityGroupQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'QuotaExceeded.ClusterSecurityGroup',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -473,64 +380,51 @@ return [
         ],
       ],
     ],
-    'CreateClusterSnapshot' =>
-    [
+    'CreateClusterSnapshot' => [
       'name' => 'CreateClusterSnapshot',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateClusterSnapshotMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateClusterSnapshotResult',
         'wrapper' => true,
         'resultWrapper' => 'CreateClusterSnapshotResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterSnapshotAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSnapshotAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidClusterStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidClusterState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ClusterNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ClusterSnapshotQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSnapshotQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -539,75 +433,60 @@ return [
         ],
       ],
     ],
-    'CreateClusterSubnetGroup' =>
-    [
+    'CreateClusterSubnetGroup' => [
       'name' => 'CreateClusterSubnetGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateClusterSubnetGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateClusterSubnetGroupResult',
         'wrapper' => true,
         'resultWrapper' => 'CreateClusterSubnetGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterSubnetGroupAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSubnetGroupAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ClusterSubnetGroupQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSubnetGroupQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ClusterSubnetQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSubnetQuotaExceededFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidSubnet',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidSubnet',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'UnauthorizedOperation',
-          'error' =>
-          [
+          'error' => [
             'code' => 'UnauthorizedOperation',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -616,119 +495,96 @@ return [
         ],
       ],
     ],
-    'CreateEventSubscription' =>
-    [
+    'CreateEventSubscription' => [
       'name' => 'CreateEventSubscription',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateEventSubscriptionMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateEventSubscriptionResult',
         'wrapper' => true,
         'resultWrapper' => 'CreateEventSubscriptionResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'EventSubscriptionQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EventSubscriptionQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'SubscriptionAlreadyExistFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubscriptionAlreadyExist',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'SNSInvalidTopicFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SNSInvalidTopic',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'SNSNoAuthorizationFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SNSNoAuthorization',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'SNSTopicArnNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SNSTopicArnNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'SubscriptionEventIdNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubscriptionEventIdNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'SubscriptionCategoryNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubscriptionCategoryNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'SubscriptionSeverityNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubscriptionSeverityNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        8 =>
         [
           'shape' => 'SourceNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SourceNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -737,42 +593,33 @@ return [
         ],
       ],
     ],
-    'CreateHsmClientCertificate' =>
-    [
+    'CreateHsmClientCertificate' => [
       'name' => 'CreateHsmClientCertificate',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateHsmClientCertificateMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateHsmClientCertificateResult',
         'wrapper' => true,
         'resultWrapper' => 'CreateHsmClientCertificateResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'HsmClientCertificateAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'HsmClientCertificateAlreadyExistsFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'HsmClientCertificateQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'HsmClientCertificateQuotaExceededFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -781,42 +628,33 @@ return [
         ],
       ],
     ],
-    'CreateHsmConfiguration' =>
-    [
+    'CreateHsmConfiguration' => [
       'name' => 'CreateHsmConfiguration',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateHsmConfigurationMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateHsmConfigurationResult',
         'wrapper' => true,
         'resultWrapper' => 'CreateHsmConfigurationResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'HsmConfigurationAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'HsmConfigurationAlreadyExistsFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'HsmConfigurationQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'HsmConfigurationQuotaExceededFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -825,64 +663,51 @@ return [
         ],
       ],
     ],
-    'DeleteCluster' =>
-    [
+    'DeleteCluster' => [
       'name' => 'DeleteCluster',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteClusterMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteClusterResult',
         'wrapper' => true,
         'resultWrapper' => 'DeleteClusterResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidClusterStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidClusterState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ClusterSnapshotAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSnapshotAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ClusterSnapshotQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSnapshotQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -891,36 +716,28 @@ return [
         ],
       ],
     ],
-    'DeleteClusterParameterGroup' =>
-    [
+    'DeleteClusterParameterGroup' => [
       'name' => 'DeleteClusterParameterGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteClusterParameterGroupMessage',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidClusterParameterGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidClusterParameterGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ClusterParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -929,36 +746,28 @@ return [
         ],
       ],
     ],
-    'DeleteClusterSecurityGroup' =>
-    [
+    'DeleteClusterSecurityGroup' => [
       'name' => 'DeleteClusterSecurityGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteClusterSecurityGroupMessage',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidClusterSecurityGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidClusterSecurityGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ClusterSecurityGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSecurityGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -967,42 +776,33 @@ return [
         ],
       ],
     ],
-    'DeleteClusterSnapshot' =>
-    [
+    'DeleteClusterSnapshot' => [
       'name' => 'DeleteClusterSnapshot',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteClusterSnapshotMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteClusterSnapshotResult',
         'wrapper' => true,
         'resultWrapper' => 'DeleteClusterSnapshotResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidClusterSnapshotStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidClusterSnapshotState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ClusterSnapshotNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSnapshotNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1011,47 +811,37 @@ return [
         ],
       ],
     ],
-    'DeleteClusterSubnetGroup' =>
-    [
+    'DeleteClusterSubnetGroup' => [
       'name' => 'DeleteClusterSubnetGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteClusterSubnetGroupMessage',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidClusterSubnetGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidClusterSubnetGroupStateFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidClusterSubnetStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidClusterSubnetStateFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ClusterSubnetGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSubnetGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1060,36 +850,28 @@ return [
         ],
       ],
     ],
-    'DeleteEventSubscription' =>
-    [
+    'DeleteEventSubscription' => [
       'name' => 'DeleteEventSubscription',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteEventSubscriptionMessage',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'SubscriptionNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubscriptionNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidSubscriptionStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidSubscriptionStateFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1098,36 +880,28 @@ return [
         ],
       ],
     ],
-    'DeleteHsmClientCertificate' =>
-    [
+    'DeleteHsmClientCertificate' => [
       'name' => 'DeleteHsmClientCertificate',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteHsmClientCertificateMessage',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidHsmClientCertificateStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidHsmClientCertificateStateFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'HsmClientCertificateNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'HsmClientCertificateNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1136,36 +910,28 @@ return [
         ],
       ],
     ],
-    'DeleteHsmConfiguration' =>
-    [
+    'DeleteHsmConfiguration' => [
       'name' => 'DeleteHsmConfiguration',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteHsmConfigurationMessage',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidHsmConfigurationStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidHsmConfigurationStateFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'HsmConfigurationNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'HsmConfigurationNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1174,30 +940,23 @@ return [
         ],
       ],
     ],
-    'DescribeClusterParameterGroups' =>
-    [
+    'DescribeClusterParameterGroups' => [
       'name' => 'DescribeClusterParameterGroups',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeClusterParameterGroupsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ClusterParameterGroupsMessage',
         'resultWrapper' => 'DescribeClusterParameterGroupsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1206,30 +965,23 @@ return [
         ],
       ],
     ],
-    'DescribeClusterParameters' =>
-    [
+    'DescribeClusterParameters' => [
       'name' => 'DescribeClusterParameters',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeClusterParametersMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ClusterParameterGroupDetails',
         'resultWrapper' => 'DescribeClusterParametersResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1238,30 +990,23 @@ return [
         ],
       ],
     ],
-    'DescribeClusterSecurityGroups' =>
-    [
+    'DescribeClusterSecurityGroups' => [
       'name' => 'DescribeClusterSecurityGroups',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeClusterSecurityGroupsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ClusterSecurityGroupMessage',
         'resultWrapper' => 'DescribeClusterSecurityGroupsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterSecurityGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSecurityGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1270,30 +1015,23 @@ return [
         ],
       ],
     ],
-    'DescribeClusterSnapshots' =>
-    [
+    'DescribeClusterSnapshots' => [
       'name' => 'DescribeClusterSnapshots',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeClusterSnapshotsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'SnapshotMessage',
         'resultWrapper' => 'DescribeClusterSnapshotsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterSnapshotNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSnapshotNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1302,30 +1040,23 @@ return [
         ],
       ],
     ],
-    'DescribeClusterSubnetGroups' =>
-    [
+    'DescribeClusterSubnetGroups' => [
       'name' => 'DescribeClusterSubnetGroups',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeClusterSubnetGroupsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ClusterSubnetGroupMessage',
         'resultWrapper' => 'DescribeClusterSubnetGroupsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterSubnetGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSubnetGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1334,48 +1065,37 @@ return [
         ],
       ],
     ],
-    'DescribeClusterVersions' =>
-    [
+    'DescribeClusterVersions' => [
       'name' => 'DescribeClusterVersions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeClusterVersionsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ClusterVersionsMessage',
         'resultWrapper' => 'DescribeClusterVersionsResult',
       ],
     ],
-    'DescribeClusters' =>
-    [
+    'DescribeClusters' => [
       'name' => 'DescribeClusters',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeClustersMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ClustersMessage',
         'resultWrapper' => 'DescribeClustersResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1384,67 +1104,52 @@ return [
         ],
       ],
     ],
-    'DescribeDefaultClusterParameters' =>
-    [
+    'DescribeDefaultClusterParameters' => [
       'name' => 'DescribeDefaultClusterParameters',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeDefaultClusterParametersMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeDefaultClusterParametersResult',
         'wrapper' => true,
         'resultWrapper' => 'DescribeDefaultClusterParametersResult',
       ],
     ],
-    'DescribeEventCategories' =>
-    [
+    'DescribeEventCategories' => [
       'name' => 'DescribeEventCategories',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeEventCategoriesMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'EventCategoriesMessage',
         'resultWrapper' => 'DescribeEventCategoriesResult',
       ],
     ],
-    'DescribeEventSubscriptions' =>
-    [
+    'DescribeEventSubscriptions' => [
       'name' => 'DescribeEventSubscriptions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeEventSubscriptionsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'EventSubscriptionsMessage',
         'resultWrapper' => 'DescribeEventSubscriptionsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'SubscriptionNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubscriptionNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1453,48 +1158,37 @@ return [
         ],
       ],
     ],
-    'DescribeEvents' =>
-    [
+    'DescribeEvents' => [
       'name' => 'DescribeEvents',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeEventsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'EventsMessage',
         'resultWrapper' => 'DescribeEventsResult',
       ],
     ],
-    'DescribeHsmClientCertificates' =>
-    [
+    'DescribeHsmClientCertificates' => [
       'name' => 'DescribeHsmClientCertificates',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeHsmClientCertificatesMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'HsmClientCertificateMessage',
         'resultWrapper' => 'DescribeHsmClientCertificatesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'HsmClientCertificateNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'HsmClientCertificateNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1503,30 +1197,23 @@ return [
         ],
       ],
     ],
-    'DescribeHsmConfigurations' =>
-    [
+    'DescribeHsmConfigurations' => [
       'name' => 'DescribeHsmConfigurations',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeHsmConfigurationsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'HsmConfigurationMessage',
         'resultWrapper' => 'DescribeHsmConfigurationsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'HsmConfigurationNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'HsmConfigurationNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1535,30 +1222,23 @@ return [
         ],
       ],
     ],
-    'DescribeLoggingStatus' =>
-    [
+    'DescribeLoggingStatus' => [
       'name' => 'DescribeLoggingStatus',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeLoggingStatusMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'LoggingStatus',
         'resultWrapper' => 'DescribeLoggingStatusResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1567,48 +1247,37 @@ return [
         ],
       ],
     ],
-    'DescribeOrderableClusterOptions' =>
-    [
+    'DescribeOrderableClusterOptions' => [
       'name' => 'DescribeOrderableClusterOptions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeOrderableClusterOptionsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'OrderableClusterOptionsMessage',
         'resultWrapper' => 'DescribeOrderableClusterOptionsResult',
       ],
     ],
-    'DescribeReservedNodeOfferings' =>
-    [
+    'DescribeReservedNodeOfferings' => [
       'name' => 'DescribeReservedNodeOfferings',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeReservedNodeOfferingsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ReservedNodeOfferingsMessage',
         'resultWrapper' => 'DescribeReservedNodeOfferingsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ReservedNodeOfferingNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ReservedNodeOfferingNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1617,30 +1286,23 @@ return [
         ],
       ],
     ],
-    'DescribeReservedNodes' =>
-    [
+    'DescribeReservedNodes' => [
       'name' => 'DescribeReservedNodes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeReservedNodesMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ReservedNodesMessage',
         'resultWrapper' => 'DescribeReservedNodesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ReservedNodeNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ReservedNodeNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1649,41 +1311,32 @@ return [
         ],
       ],
     ],
-    'DescribeResize' =>
-    [
+    'DescribeResize' => [
       'name' => 'DescribeResize',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeResizeMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ResizeProgressMessage',
         'resultWrapper' => 'DescribeResizeResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResizeNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResizeNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1692,30 +1345,23 @@ return [
         ],
       ],
     ],
-    'DisableLogging' =>
-    [
+    'DisableLogging' => [
       'name' => 'DisableLogging',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DisableLoggingMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'LoggingStatus',
         'resultWrapper' => 'DisableLoggingResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1724,64 +1370,51 @@ return [
         ],
       ],
     ],
-    'DisableSnapshotCopy' =>
-    [
+    'DisableSnapshotCopy' => [
       'name' => 'DisableSnapshotCopy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DisableSnapshotCopyMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DisableSnapshotCopyResult',
         'wrapper' => true,
         'resultWrapper' => 'DisableSnapshotCopyResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'SnapshotCopyAlreadyDisabledFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SnapshotCopyAlreadyDisabledFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidClusterStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidClusterState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'UnauthorizedOperation',
-          'error' =>
-          [
+          'error' => [
             'code' => 'UnauthorizedOperation',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1790,74 +1423,59 @@ return [
         ],
       ],
     ],
-    'EnableLogging' =>
-    [
+    'EnableLogging' => [
       'name' => 'EnableLogging',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'EnableLoggingMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'LoggingStatus',
         'resultWrapper' => 'EnableLoggingResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'BucketNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'BucketNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InsufficientS3BucketPolicyFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientS3BucketPolicyFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidS3KeyPrefixFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidS3KeyPrefixFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InvalidS3BucketNameFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidS3BucketNameFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1866,97 +1484,78 @@ return [
         ],
       ],
     ],
-    'EnableSnapshotCopy' =>
-    [
+    'EnableSnapshotCopy' => [
       'name' => 'EnableSnapshotCopy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'EnableSnapshotCopyMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'EnableSnapshotCopyResult',
         'wrapper' => true,
         'resultWrapper' => 'EnableSnapshotCopyResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'IncompatibleOrderableOptions',
-          'error' =>
-          [
+          'error' => [
             'code' => 'IncompatibleOrderableOptions',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidClusterStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidClusterState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ClusterNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'CopyToRegionDisabledFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CopyToRegionDisabledFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'SnapshotCopyAlreadyEnabledFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SnapshotCopyAlreadyEnabledFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'UnknownSnapshotCopyRegionFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'UnknownSnapshotCopyRegionFault',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'UnauthorizedOperation',
-          'error' =>
-          [
+          'error' => [
             'code' => 'UnauthorizedOperation',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1965,152 +1564,123 @@ return [
         ],
       ],
     ],
-    'ModifyCluster' =>
-    [
+    'ModifyCluster' => [
       'name' => 'ModifyCluster',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ModifyClusterMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ModifyClusterResult',
         'wrapper' => true,
         'resultWrapper' => 'ModifyClusterResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidClusterStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidClusterState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidClusterSecurityGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidClusterSecurityGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ClusterNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'NumberOfNodesQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NumberOfNodesQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'ClusterSecurityGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSecurityGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'ClusterParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'InsufficientClusterCapacityFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientClusterCapacity',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'UnsupportedOptionFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'UnsupportedOptionFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        8 =>
         [
           'shape' => 'UnauthorizedOperation',
-          'error' =>
-          [
+          'error' => [
             'code' => 'UnauthorizedOperation',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        9 =>
         [
           'shape' => 'HsmClientCertificateNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'HsmClientCertificateNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        10 =>
         [
           'shape' => 'HsmConfigurationNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'HsmConfigurationNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        11 =>
         [
           'shape' => 'ClusterAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -2119,41 +1689,32 @@ return [
         ],
       ],
     ],
-    'ModifyClusterParameterGroup' =>
-    [
+    'ModifyClusterParameterGroup' => [
       'name' => 'ModifyClusterParameterGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ModifyClusterParameterGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ClusterParameterGroupNameMessage',
         'resultWrapper' => 'ModifyClusterParameterGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidClusterParameterGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidClusterParameterGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -2162,75 +1723,60 @@ return [
         ],
       ],
     ],
-    'ModifyClusterSubnetGroup' =>
-    [
+    'ModifyClusterSubnetGroup' => [
       'name' => 'ModifyClusterSubnetGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ModifyClusterSubnetGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ModifyClusterSubnetGroupResult',
         'wrapper' => true,
         'resultWrapper' => 'ModifyClusterSubnetGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterSubnetGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSubnetGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ClusterSubnetQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSubnetQuotaExceededFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'SubnetAlreadyInUse',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubnetAlreadyInUse',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidSubnet',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidSubnet',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'UnauthorizedOperation',
-          'error' =>
-          [
+          'error' => [
             'code' => 'UnauthorizedOperation',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -2239,119 +1785,96 @@ return [
         ],
       ],
     ],
-    'ModifyEventSubscription' =>
-    [
+    'ModifyEventSubscription' => [
       'name' => 'ModifyEventSubscription',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ModifyEventSubscriptionMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ModifyEventSubscriptionResult',
         'wrapper' => true,
         'resultWrapper' => 'ModifyEventSubscriptionResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'SubscriptionNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubscriptionNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'SNSInvalidTopicFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SNSInvalidTopic',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'SNSNoAuthorizationFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SNSNoAuthorization',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'SNSTopicArnNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SNSTopicArnNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'SubscriptionEventIdNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubscriptionEventIdNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'SubscriptionCategoryNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubscriptionCategoryNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'SubscriptionSeverityNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubscriptionSeverityNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'SourceNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SourceNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        8 =>
         [
           'shape' => 'InvalidSubscriptionStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidSubscriptionStateFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -2360,64 +1883,51 @@ return [
         ],
       ],
     ],
-    'ModifySnapshotCopyRetentionPeriod' =>
-    [
+    'ModifySnapshotCopyRetentionPeriod' => [
       'name' => 'ModifySnapshotCopyRetentionPeriod',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ModifySnapshotCopyRetentionPeriodMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ModifySnapshotCopyRetentionPeriodResult',
         'wrapper' => true,
         'resultWrapper' => 'ModifySnapshotCopyRetentionPeriodResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'SnapshotCopyDisabledFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SnapshotCopyDisabledFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'UnauthorizedOperation',
-          'error' =>
-          [
+          'error' => [
             'code' => 'UnauthorizedOperation',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidClusterStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidClusterState',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -2426,53 +1936,42 @@ return [
         ],
       ],
     ],
-    'PurchaseReservedNodeOffering' =>
-    [
+    'PurchaseReservedNodeOffering' => [
       'name' => 'PurchaseReservedNodeOffering',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PurchaseReservedNodeOfferingMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'PurchaseReservedNodeOfferingResult',
         'wrapper' => true,
         'resultWrapper' => 'PurchaseReservedNodeOfferingResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ReservedNodeOfferingNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ReservedNodeOfferingNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ReservedNodeAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ReservedNodeAlreadyExists',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ReservedNodeQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ReservedNodeQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -2481,42 +1980,33 @@ return [
         ],
       ],
     ],
-    'RebootCluster' =>
-    [
+    'RebootCluster' => [
       'name' => 'RebootCluster',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RebootClusterMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RebootClusterResult',
         'wrapper' => true,
         'resultWrapper' => 'RebootClusterResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidClusterStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidClusterState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ClusterNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -2525,41 +2015,32 @@ return [
         ],
       ],
     ],
-    'ResetClusterParameterGroup' =>
-    [
+    'ResetClusterParameterGroup' => [
       'name' => 'ResetClusterParameterGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ResetClusterParameterGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ClusterParameterGroupNameMessage',
         'resultWrapper' => 'ResetClusterParameterGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidClusterParameterGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidClusterParameterGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ClusterParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -2568,229 +2049,186 @@ return [
         ],
       ],
     ],
-    'RestoreFromClusterSnapshot' =>
-    [
+    'RestoreFromClusterSnapshot' => [
       'name' => 'RestoreFromClusterSnapshot',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RestoreFromClusterSnapshotMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RestoreFromClusterSnapshotResult',
         'wrapper' => true,
         'resultWrapper' => 'RestoreFromClusterSnapshotResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessToSnapshotDeniedFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AccessToSnapshotDenied',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ClusterAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ClusterSnapshotNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSnapshotNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ClusterQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InsufficientClusterCapacityFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientClusterCapacity',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'InvalidClusterSnapshotStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidClusterSnapshotState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'InvalidRestoreFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidRestore',
             'httpStatusCode' => 406,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'NumberOfNodesQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NumberOfNodesQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        8 =>
         [
           'shape' => 'NumberOfNodesPerClusterLimitExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NumberOfNodesPerClusterLimitExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        9 =>
         [
           'shape' => 'InvalidVPCNetworkStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidVPCNetworkStateFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        10 =>
         [
           'shape' => 'InvalidClusterSubnetGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidClusterSubnetGroupStateFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        11 =>
         [
           'shape' => 'InvalidSubnet',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidSubnet',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        12 =>
         [
           'shape' => 'ClusterSubnetGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSubnetGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        13 =>
         [
           'shape' => 'UnauthorizedOperation',
-          'error' =>
-          [
+          'error' => [
             'code' => 'UnauthorizedOperation',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        14 =>
         [
           'shape' => 'HsmClientCertificateNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'HsmClientCertificateNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        15 =>
         [
           'shape' => 'HsmConfigurationNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'HsmConfigurationNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        16 =>
         [
           'shape' => 'InvalidElasticIpFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidElasticIpFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        17 =>
         [
           'shape' => 'ClusterParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        18 =>
         [
           'shape' => 'ClusterSecurityGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSecurityGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -2799,53 +2237,42 @@ return [
         ],
       ],
     ],
-    'RevokeClusterSecurityGroupIngress' =>
-    [
+    'RevokeClusterSecurityGroupIngress' => [
       'name' => 'RevokeClusterSecurityGroupIngress',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RevokeClusterSecurityGroupIngressMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RevokeClusterSecurityGroupIngressResult',
         'wrapper' => true,
         'resultWrapper' => 'RevokeClusterSecurityGroupIngressResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterSecurityGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSecurityGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'AuthorizationNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidClusterSecurityGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidClusterSecurityGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -2854,53 +2281,42 @@ return [
         ],
       ],
     ],
-    'RevokeSnapshotAccess' =>
-    [
+    'RevokeSnapshotAccess' => [
       'name' => 'RevokeSnapshotAccess',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RevokeSnapshotAccessMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RevokeSnapshotAccessResult',
         'wrapper' => true,
         'resultWrapper' => 'RevokeSnapshotAccessResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessToSnapshotDeniedFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AccessToSnapshotDenied',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'AuthorizationNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ClusterSnapshotNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterSnapshotNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -2909,42 +2325,33 @@ return [
         ],
       ],
     ],
-    'RotateEncryptionKey' =>
-    [
+    'RotateEncryptionKey' => [
       'name' => 'RotateEncryptionKey',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RotateEncryptionKeyMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RotateEncryptionKeyResult',
         'wrapper' => true,
         'resultWrapper' => 'RotateEncryptionKeyResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ClusterNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidClusterStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidClusterState',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -2954,4227 +2361,3191 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'AccessToSnapshotDeniedFault' =>
-    [
+  'shapes' => [
+    'AccessToSnapshotDeniedFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'AccessToSnapshotDenied',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'AccountWithRestoreAccess' =>
-    [
+    'AccountWithRestoreAccess' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AccountId' =>
-        [
+      'members' => [
+        'AccountId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'AccountsWithRestoreAccessList' =>
-    [
+    'AccountsWithRestoreAccessList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AccountWithRestoreAccess',
         'locationName' => 'AccountWithRestoreAccess',
       ],
     ],
-    'AuthorizationAlreadyExistsFault' =>
-    [
+    'AuthorizationAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'AuthorizationAlreadyExists',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'AuthorizationNotFoundFault' =>
-    [
+    'AuthorizationNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'AuthorizationNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'AuthorizationQuotaExceededFault' =>
-    [
+    'AuthorizationQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'AuthorizationQuotaExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'AuthorizeClusterSecurityGroupIngressMessage' =>
-    [
+    'AuthorizeClusterSecurityGroupIngressMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterSecurityGroupName',
+      'required' => [
+        'ClusterSecurityGroupName',
       ],
-      'members' =>
-      [
-        'ClusterSecurityGroupName' =>
-        [
+      'members' => [
+        'ClusterSecurityGroupName' => [
           'shape' => 'String',
         ],
-        'CIDRIP' =>
-        [
+        'CIDRIP' => [
           'shape' => 'String',
         ],
-        'EC2SecurityGroupName' =>
-        [
+        'EC2SecurityGroupName' => [
           'shape' => 'String',
         ],
-        'EC2SecurityGroupOwnerId' =>
-        [
+        'EC2SecurityGroupOwnerId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'AuthorizeSnapshotAccessMessage' =>
-    [
+    'AuthorizeSnapshotAccessMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SnapshotIdentifier',
-        1 => 'AccountWithRestoreAccess',
+      'required' => [
+        'SnapshotIdentifier',
+        'AccountWithRestoreAccess',
       ],
-      'members' =>
-      [
-        'SnapshotIdentifier' =>
-        [
+      'members' => [
+        'SnapshotIdentifier' => [
           'shape' => 'String',
         ],
-        'SnapshotClusterIdentifier' =>
-        [
+        'SnapshotClusterIdentifier' => [
           'shape' => 'String',
         ],
-        'AccountWithRestoreAccess' =>
-        [
+        'AccountWithRestoreAccess' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'AvailabilityZone' =>
-    [
+    'AvailabilityZone' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
       ],
       'wrapper' => true,
     ],
-    'AvailabilityZoneList' =>
-    [
+    'AvailabilityZoneList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AvailabilityZone',
         'locationName' => 'AvailabilityZone',
       ],
     ],
-    'Boolean' =>
-    [
+    'Boolean' => [
       'type' => 'boolean',
     ],
-    'BooleanOptional' =>
-    [
+    'BooleanOptional' => [
       'type' => 'boolean',
     ],
-    'BucketNotFoundFault' =>
-    [
+    'BucketNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'BucketNotFoundFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'Cluster' =>
-    [
+    'Cluster' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ClusterIdentifier' =>
-        [
+      'members' => [
+        'ClusterIdentifier' => [
           'shape' => 'String',
         ],
-        'NodeType' =>
-        [
+        'NodeType' => [
           'shape' => 'String',
         ],
-        'ClusterStatus' =>
-        [
+        'ClusterStatus' => [
           'shape' => 'String',
         ],
-        'ModifyStatus' =>
-        [
+        'ModifyStatus' => [
           'shape' => 'String',
         ],
-        'MasterUsername' =>
-        [
+        'MasterUsername' => [
           'shape' => 'String',
         ],
-        'DBName' =>
-        [
+        'DBName' => [
           'shape' => 'String',
         ],
-        'Endpoint' =>
-        [
+        'Endpoint' => [
           'shape' => 'Endpoint',
         ],
-        'ClusterCreateTime' =>
-        [
+        'ClusterCreateTime' => [
           'shape' => 'TStamp',
         ],
-        'AutomatedSnapshotRetentionPeriod' =>
-        [
+        'AutomatedSnapshotRetentionPeriod' => [
           'shape' => 'Integer',
         ],
-        'ClusterSecurityGroups' =>
-        [
+        'ClusterSecurityGroups' => [
           'shape' => 'ClusterSecurityGroupMembershipList',
         ],
-        'VpcSecurityGroups' =>
-        [
+        'VpcSecurityGroups' => [
           'shape' => 'VpcSecurityGroupMembershipList',
         ],
-        'ClusterParameterGroups' =>
-        [
+        'ClusterParameterGroups' => [
           'shape' => 'ClusterParameterGroupStatusList',
         ],
-        'ClusterSubnetGroupName' =>
-        [
+        'ClusterSubnetGroupName' => [
           'shape' => 'String',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
         ],
-        'PreferredMaintenanceWindow' =>
-        [
+        'PreferredMaintenanceWindow' => [
           'shape' => 'String',
         ],
-        'PendingModifiedValues' =>
-        [
+        'PendingModifiedValues' => [
           'shape' => 'PendingModifiedValues',
         ],
-        'ClusterVersion' =>
-        [
+        'ClusterVersion' => [
           'shape' => 'String',
         ],
-        'AllowVersionUpgrade' =>
-        [
+        'AllowVersionUpgrade' => [
           'shape' => 'Boolean',
         ],
-        'NumberOfNodes' =>
-        [
+        'NumberOfNodes' => [
           'shape' => 'Integer',
         ],
-        'PubliclyAccessible' =>
-        [
+        'PubliclyAccessible' => [
           'shape' => 'Boolean',
         ],
-        'Encrypted' =>
-        [
+        'Encrypted' => [
           'shape' => 'Boolean',
         ],
-        'RestoreStatus' =>
-        [
+        'RestoreStatus' => [
           'shape' => 'RestoreStatus',
         ],
-        'HsmStatus' =>
-        [
+        'HsmStatus' => [
           'shape' => 'HsmStatus',
         ],
-        'ClusterSnapshotCopyStatus' =>
-        [
+        'ClusterSnapshotCopyStatus' => [
           'shape' => 'ClusterSnapshotCopyStatus',
         ],
-        'ClusterPublicKey' =>
-        [
+        'ClusterPublicKey' => [
           'shape' => 'String',
         ],
-        'ClusterNodes' =>
-        [
+        'ClusterNodes' => [
           'shape' => 'ClusterNodesList',
         ],
-        'ElasticIpStatus' =>
-        [
+        'ElasticIpStatus' => [
           'shape' => 'ElasticIpStatus',
         ],
-        'ClusterRevisionNumber' =>
-        [
+        'ClusterRevisionNumber' => [
           'shape' => 'String',
         ],
       ],
       'wrapper' => true,
     ],
-    'ClusterAlreadyExistsFault' =>
-    [
+    'ClusterAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ClusterAlreadyExists',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ClusterList' =>
-    [
+    'ClusterList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Cluster',
         'locationName' => 'Cluster',
       ],
     ],
-    'ClusterNode' =>
-    [
+    'ClusterNode' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'NodeRole' =>
-        [
+      'members' => [
+        'NodeRole' => [
           'shape' => 'String',
         ],
-        'PrivateIPAddress' =>
-        [
+        'PrivateIPAddress' => [
           'shape' => 'String',
         ],
-        'PublicIPAddress' =>
-        [
+        'PublicIPAddress' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ClusterNodesList' =>
-    [
+    'ClusterNodesList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ClusterNode',
       ],
     ],
-    'ClusterNotFoundFault' =>
-    [
+    'ClusterNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ClusterNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ClusterParameterGroup' =>
-    [
+    'ClusterParameterGroup' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ParameterGroupName' =>
-        [
+      'members' => [
+        'ParameterGroupName' => [
           'shape' => 'String',
         ],
-        'ParameterGroupFamily' =>
-        [
+        'ParameterGroupFamily' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
       ],
       'wrapper' => true,
     ],
-    'ClusterParameterGroupAlreadyExistsFault' =>
-    [
+    'ClusterParameterGroupAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ClusterParameterGroupAlreadyExists',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ClusterParameterGroupDetails' =>
-    [
+    'ClusterParameterGroupDetails' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Parameters' =>
-        [
+      'members' => [
+        'Parameters' => [
           'shape' => 'ParametersList',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ClusterParameterGroupNameMessage' =>
-    [
+    'ClusterParameterGroupNameMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ParameterGroupName' =>
-        [
+      'members' => [
+        'ParameterGroupName' => [
           'shape' => 'String',
         ],
-        'ParameterGroupStatus' =>
-        [
+        'ParameterGroupStatus' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ClusterParameterGroupNotFoundFault' =>
-    [
+    'ClusterParameterGroupNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ClusterParameterGroupNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ClusterParameterGroupQuotaExceededFault' =>
-    [
+    'ClusterParameterGroupQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ClusterParameterGroupQuotaExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ClusterParameterGroupStatus' =>
-    [
+    'ClusterParameterGroupStatus' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ParameterGroupName' =>
-        [
+      'members' => [
+        'ParameterGroupName' => [
           'shape' => 'String',
         ],
-        'ParameterApplyStatus' =>
-        [
+        'ParameterApplyStatus' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ClusterParameterGroupStatusList' =>
-    [
+    'ClusterParameterGroupStatusList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ClusterParameterGroupStatus',
         'locationName' => 'ClusterParameterGroup',
       ],
     ],
-    'ClusterParameterGroupsMessage' =>
-    [
+    'ClusterParameterGroupsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'ParameterGroups' =>
-        [
+        'ParameterGroups' => [
           'shape' => 'ParameterGroupList',
         ],
       ],
     ],
-    'ClusterQuotaExceededFault' =>
-    [
+    'ClusterQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ClusterQuotaExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ClusterSecurityGroup' =>
-    [
+    'ClusterSecurityGroup' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ClusterSecurityGroupName' =>
-        [
+      'members' => [
+        'ClusterSecurityGroupName' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
-        'EC2SecurityGroups' =>
-        [
+        'EC2SecurityGroups' => [
           'shape' => 'EC2SecurityGroupList',
         ],
-        'IPRanges' =>
-        [
+        'IPRanges' => [
           'shape' => 'IPRangeList',
         ],
       ],
       'wrapper' => true,
     ],
-    'ClusterSecurityGroupAlreadyExistsFault' =>
-    [
+    'ClusterSecurityGroupAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ClusterSecurityGroupAlreadyExists',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ClusterSecurityGroupMembership' =>
-    [
+    'ClusterSecurityGroupMembership' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ClusterSecurityGroupName' =>
-        [
+      'members' => [
+        'ClusterSecurityGroupName' => [
           'shape' => 'String',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ClusterSecurityGroupMembershipList' =>
-    [
+    'ClusterSecurityGroupMembershipList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ClusterSecurityGroupMembership',
         'locationName' => 'ClusterSecurityGroup',
       ],
     ],
-    'ClusterSecurityGroupMessage' =>
-    [
+    'ClusterSecurityGroupMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'ClusterSecurityGroups' =>
-        [
+        'ClusterSecurityGroups' => [
           'shape' => 'ClusterSecurityGroups',
         ],
       ],
     ],
-    'ClusterSecurityGroupNameList' =>
-    [
+    'ClusterSecurityGroupNameList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'ClusterSecurityGroupName',
       ],
     ],
-    'ClusterSecurityGroupNotFoundFault' =>
-    [
+    'ClusterSecurityGroupNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ClusterSecurityGroupNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ClusterSecurityGroupQuotaExceededFault' =>
-    [
+    'ClusterSecurityGroupQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'QuotaExceeded.ClusterSecurityGroup',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ClusterSecurityGroups' =>
-    [
+    'ClusterSecurityGroups' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ClusterSecurityGroup',
         'locationName' => 'ClusterSecurityGroup',
       ],
     ],
-    'ClusterSnapshotAlreadyExistsFault' =>
-    [
+    'ClusterSnapshotAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ClusterSnapshotAlreadyExists',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ClusterSnapshotCopyStatus' =>
-    [
+    'ClusterSnapshotCopyStatus' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DestinationRegion' =>
-        [
+      'members' => [
+        'DestinationRegion' => [
           'shape' => 'String',
         ],
-        'RetentionPeriod' =>
-        [
+        'RetentionPeriod' => [
           'shape' => 'Long',
         ],
       ],
     ],
-    'ClusterSnapshotNotFoundFault' =>
-    [
+    'ClusterSnapshotNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ClusterSnapshotNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ClusterSnapshotQuotaExceededFault' =>
-    [
+    'ClusterSnapshotQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ClusterSnapshotQuotaExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ClusterSubnetGroup' =>
-    [
+    'ClusterSubnetGroup' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ClusterSubnetGroupName' =>
-        [
+      'members' => [
+        'ClusterSubnetGroupName' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
         ],
-        'SubnetGroupStatus' =>
-        [
+        'SubnetGroupStatus' => [
           'shape' => 'String',
         ],
-        'Subnets' =>
-        [
+        'Subnets' => [
           'shape' => 'SubnetList',
         ],
       ],
       'wrapper' => true,
     ],
-    'ClusterSubnetGroupAlreadyExistsFault' =>
-    [
+    'ClusterSubnetGroupAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ClusterSubnetGroupAlreadyExists',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ClusterSubnetGroupMessage' =>
-    [
+    'ClusterSubnetGroupMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'ClusterSubnetGroups' =>
-        [
+        'ClusterSubnetGroups' => [
           'shape' => 'ClusterSubnetGroups',
         ],
       ],
     ],
-    'ClusterSubnetGroupNotFoundFault' =>
-    [
+    'ClusterSubnetGroupNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ClusterSubnetGroupNotFoundFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ClusterSubnetGroupQuotaExceededFault' =>
-    [
+    'ClusterSubnetGroupQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ClusterSubnetGroupQuotaExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ClusterSubnetGroups' =>
-    [
+    'ClusterSubnetGroups' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ClusterSubnetGroup',
         'locationName' => 'ClusterSubnetGroup',
       ],
     ],
-    'ClusterSubnetQuotaExceededFault' =>
-    [
+    'ClusterSubnetQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ClusterSubnetQuotaExceededFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ClusterVersion' =>
-    [
+    'ClusterVersion' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ClusterVersion' =>
-        [
+      'members' => [
+        'ClusterVersion' => [
           'shape' => 'String',
         ],
-        'ClusterParameterGroupFamily' =>
-        [
+        'ClusterParameterGroupFamily' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ClusterVersionList' =>
-    [
+    'ClusterVersionList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ClusterVersion',
         'locationName' => 'ClusterVersion',
       ],
     ],
-    'ClusterVersionsMessage' =>
-    [
+    'ClusterVersionsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'ClusterVersions' =>
-        [
+        'ClusterVersions' => [
           'shape' => 'ClusterVersionList',
         ],
       ],
     ],
-    'ClustersMessage' =>
-    [
+    'ClustersMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'Clusters' =>
-        [
+        'Clusters' => [
           'shape' => 'ClusterList',
         ],
       ],
     ],
-    'CopyClusterSnapshotMessage' =>
-    [
+    'CopyClusterSnapshotMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SourceSnapshotIdentifier',
-        1 => 'TargetSnapshotIdentifier',
+      'required' => [
+        'SourceSnapshotIdentifier',
+        'TargetSnapshotIdentifier',
       ],
-      'members' =>
-      [
-        'SourceSnapshotIdentifier' =>
-        [
+      'members' => [
+        'SourceSnapshotIdentifier' => [
           'shape' => 'String',
         ],
-        'SourceSnapshotClusterIdentifier' =>
-        [
+        'SourceSnapshotClusterIdentifier' => [
           'shape' => 'String',
         ],
-        'TargetSnapshotIdentifier' =>
-        [
+        'TargetSnapshotIdentifier' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CopyToRegionDisabledFault' =>
-    [
+    'CopyToRegionDisabledFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'CopyToRegionDisabledFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'CreateClusterMessage' =>
-    [
+    'CreateClusterMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterIdentifier',
-        1 => 'NodeType',
-        2 => 'MasterUsername',
-        3 => 'MasterUserPassword',
+      'required' => [
+        'ClusterIdentifier',
+        'NodeType',
+        'MasterUsername',
+        'MasterUserPassword',
       ],
-      'members' =>
-      [
-        'DBName' =>
-        [
+      'members' => [
+        'DBName' => [
           'shape' => 'String',
         ],
-        'ClusterIdentifier' =>
-        [
+        'ClusterIdentifier' => [
           'shape' => 'String',
         ],
-        'ClusterType' =>
-        [
+        'ClusterType' => [
           'shape' => 'String',
         ],
-        'NodeType' =>
-        [
+        'NodeType' => [
           'shape' => 'String',
         ],
-        'MasterUsername' =>
-        [
+        'MasterUsername' => [
           'shape' => 'String',
         ],
-        'MasterUserPassword' =>
-        [
+        'MasterUserPassword' => [
           'shape' => 'String',
         ],
-        'ClusterSecurityGroups' =>
-        [
+        'ClusterSecurityGroups' => [
           'shape' => 'ClusterSecurityGroupNameList',
         ],
-        'VpcSecurityGroupIds' =>
-        [
+        'VpcSecurityGroupIds' => [
           'shape' => 'VpcSecurityGroupIdList',
         ],
-        'ClusterSubnetGroupName' =>
-        [
+        'ClusterSubnetGroupName' => [
           'shape' => 'String',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
         ],
-        'PreferredMaintenanceWindow' =>
-        [
+        'PreferredMaintenanceWindow' => [
           'shape' => 'String',
         ],
-        'ClusterParameterGroupName' =>
-        [
+        'ClusterParameterGroupName' => [
           'shape' => 'String',
         ],
-        'AutomatedSnapshotRetentionPeriod' =>
-        [
+        'AutomatedSnapshotRetentionPeriod' => [
           'shape' => 'IntegerOptional',
         ],
-        'Port' =>
-        [
+        'Port' => [
           'shape' => 'IntegerOptional',
         ],
-        'ClusterVersion' =>
-        [
+        'ClusterVersion' => [
           'shape' => 'String',
         ],
-        'AllowVersionUpgrade' =>
-        [
+        'AllowVersionUpgrade' => [
           'shape' => 'BooleanOptional',
         ],
-        'NumberOfNodes' =>
-        [
+        'NumberOfNodes' => [
           'shape' => 'IntegerOptional',
         ],
-        'PubliclyAccessible' =>
-        [
+        'PubliclyAccessible' => [
           'shape' => 'BooleanOptional',
         ],
-        'Encrypted' =>
-        [
+        'Encrypted' => [
           'shape' => 'BooleanOptional',
         ],
-        'HsmClientCertificateIdentifier' =>
-        [
+        'HsmClientCertificateIdentifier' => [
           'shape' => 'String',
         ],
-        'HsmConfigurationIdentifier' =>
-        [
+        'HsmConfigurationIdentifier' => [
           'shape' => 'String',
         ],
-        'ElasticIp' =>
-        [
+        'ElasticIp' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreateClusterParameterGroupMessage' =>
-    [
+    'CreateClusterParameterGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ParameterGroupName',
-        1 => 'ParameterGroupFamily',
-        2 => 'Description',
+      'required' => [
+        'ParameterGroupName',
+        'ParameterGroupFamily',
+        'Description',
       ],
-      'members' =>
-      [
-        'ParameterGroupName' =>
-        [
+      'members' => [
+        'ParameterGroupName' => [
           'shape' => 'String',
         ],
-        'ParameterGroupFamily' =>
-        [
+        'ParameterGroupFamily' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreateClusterSecurityGroupMessage' =>
-    [
+    'CreateClusterSecurityGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterSecurityGroupName',
-        1 => 'Description',
+      'required' => [
+        'ClusterSecurityGroupName',
+        'Description',
       ],
-      'members' =>
-      [
-        'ClusterSecurityGroupName' =>
-        [
+      'members' => [
+        'ClusterSecurityGroupName' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreateClusterSnapshotMessage' =>
-    [
+    'CreateClusterSnapshotMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SnapshotIdentifier',
-        1 => 'ClusterIdentifier',
+      'required' => [
+        'SnapshotIdentifier',
+        'ClusterIdentifier',
       ],
-      'members' =>
-      [
-        'SnapshotIdentifier' =>
-        [
+      'members' => [
+        'SnapshotIdentifier' => [
           'shape' => 'String',
         ],
-        'ClusterIdentifier' =>
-        [
+        'ClusterIdentifier' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreateClusterSubnetGroupMessage' =>
-    [
+    'CreateClusterSubnetGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterSubnetGroupName',
-        1 => 'Description',
-        2 => 'SubnetIds',
+      'required' => [
+        'ClusterSubnetGroupName',
+        'Description',
+        'SubnetIds',
       ],
-      'members' =>
-      [
-        'ClusterSubnetGroupName' =>
-        [
+      'members' => [
+        'ClusterSubnetGroupName' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
-        'SubnetIds' =>
-        [
+        'SubnetIds' => [
           'shape' => 'SubnetIdentifierList',
         ],
       ],
     ],
-    'CreateEventSubscriptionMessage' =>
-    [
+    'CreateEventSubscriptionMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SubscriptionName',
-        1 => 'SnsTopicArn',
+      'required' => [
+        'SubscriptionName',
+        'SnsTopicArn',
       ],
-      'members' =>
-      [
-        'SubscriptionName' =>
-        [
+      'members' => [
+        'SubscriptionName' => [
           'shape' => 'String',
         ],
-        'SnsTopicArn' =>
-        [
+        'SnsTopicArn' => [
           'shape' => 'String',
         ],
-        'SourceType' =>
-        [
+        'SourceType' => [
           'shape' => 'String',
         ],
-        'SourceIds' =>
-        [
+        'SourceIds' => [
           'shape' => 'SourceIdsList',
         ],
-        'EventCategories' =>
-        [
+        'EventCategories' => [
           'shape' => 'EventCategoriesList',
         ],
-        'Severity' =>
-        [
+        'Severity' => [
           'shape' => 'String',
         ],
-        'Enabled' =>
-        [
+        'Enabled' => [
           'shape' => 'BooleanOptional',
         ],
       ],
     ],
-    'CreateHsmClientCertificateMessage' =>
-    [
+    'CreateHsmClientCertificateMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'HsmClientCertificateIdentifier',
+      'required' => [
+        'HsmClientCertificateIdentifier',
       ],
-      'members' =>
-      [
-        'HsmClientCertificateIdentifier' =>
-        [
+      'members' => [
+        'HsmClientCertificateIdentifier' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreateHsmConfigurationMessage' =>
-    [
+    'CreateHsmConfigurationMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'HsmConfigurationIdentifier',
-        1 => 'Description',
-        2 => 'HsmIpAddress',
-        3 => 'HsmPartitionName',
-        4 => 'HsmPartitionPassword',
-        5 => 'HsmServerPublicCertificate',
+      'required' => [
+        'HsmConfigurationIdentifier',
+        'Description',
+        'HsmIpAddress',
+        'HsmPartitionName',
+        'HsmPartitionPassword',
+        'HsmServerPublicCertificate',
       ],
-      'members' =>
-      [
-        'HsmConfigurationIdentifier' =>
-        [
+      'members' => [
+        'HsmConfigurationIdentifier' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
-        'HsmIpAddress' =>
-        [
+        'HsmIpAddress' => [
           'shape' => 'String',
         ],
-        'HsmPartitionName' =>
-        [
+        'HsmPartitionName' => [
           'shape' => 'String',
         ],
-        'HsmPartitionPassword' =>
-        [
+        'HsmPartitionPassword' => [
           'shape' => 'String',
         ],
-        'HsmServerPublicCertificate' =>
-        [
+        'HsmServerPublicCertificate' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DefaultClusterParameters' =>
-    [
+    'DefaultClusterParameters' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ParameterGroupFamily' =>
-        [
+      'members' => [
+        'ParameterGroupFamily' => [
           'shape' => 'String',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'Parameters' =>
-        [
+        'Parameters' => [
           'shape' => 'ParametersList',
         ],
       ],
       'wrapper' => true,
     ],
-    'DeleteClusterMessage' =>
-    [
+    'DeleteClusterMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterIdentifier',
+      'required' => [
+        'ClusterIdentifier',
       ],
-      'members' =>
-      [
-        'ClusterIdentifier' =>
-        [
+      'members' => [
+        'ClusterIdentifier' => [
           'shape' => 'String',
         ],
-        'SkipFinalClusterSnapshot' =>
-        [
+        'SkipFinalClusterSnapshot' => [
           'shape' => 'Boolean',
         ],
-        'FinalClusterSnapshotIdentifier' =>
-        [
+        'FinalClusterSnapshotIdentifier' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteClusterParameterGroupMessage' =>
-    [
+    'DeleteClusterParameterGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ParameterGroupName',
+      'required' => [
+        'ParameterGroupName',
       ],
-      'members' =>
-      [
-        'ParameterGroupName' =>
-        [
+      'members' => [
+        'ParameterGroupName' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteClusterSecurityGroupMessage' =>
-    [
+    'DeleteClusterSecurityGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterSecurityGroupName',
+      'required' => [
+        'ClusterSecurityGroupName',
       ],
-      'members' =>
-      [
-        'ClusterSecurityGroupName' =>
-        [
+      'members' => [
+        'ClusterSecurityGroupName' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteClusterSnapshotMessage' =>
-    [
+    'DeleteClusterSnapshotMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SnapshotIdentifier',
+      'required' => [
+        'SnapshotIdentifier',
       ],
-      'members' =>
-      [
-        'SnapshotIdentifier' =>
-        [
+      'members' => [
+        'SnapshotIdentifier' => [
           'shape' => 'String',
         ],
-        'SnapshotClusterIdentifier' =>
-        [
+        'SnapshotClusterIdentifier' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteClusterSubnetGroupMessage' =>
-    [
+    'DeleteClusterSubnetGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterSubnetGroupName',
+      'required' => [
+        'ClusterSubnetGroupName',
       ],
-      'members' =>
-      [
-        'ClusterSubnetGroupName' =>
-        [
+      'members' => [
+        'ClusterSubnetGroupName' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteEventSubscriptionMessage' =>
-    [
+    'DeleteEventSubscriptionMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SubscriptionName',
+      'required' => [
+        'SubscriptionName',
       ],
-      'members' =>
-      [
-        'SubscriptionName' =>
-        [
+      'members' => [
+        'SubscriptionName' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteHsmClientCertificateMessage' =>
-    [
+    'DeleteHsmClientCertificateMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'HsmClientCertificateIdentifier',
+      'required' => [
+        'HsmClientCertificateIdentifier',
       ],
-      'members' =>
-      [
-        'HsmClientCertificateIdentifier' =>
-        [
+      'members' => [
+        'HsmClientCertificateIdentifier' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteHsmConfigurationMessage' =>
-    [
+    'DeleteHsmConfigurationMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'HsmConfigurationIdentifier',
+      'required' => [
+        'HsmConfigurationIdentifier',
       ],
-      'members' =>
-      [
-        'HsmConfigurationIdentifier' =>
-        [
+      'members' => [
+        'HsmConfigurationIdentifier' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeClusterParameterGroupsMessage' =>
-    [
+    'DescribeClusterParameterGroupsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ParameterGroupName' =>
-        [
+      'members' => [
+        'ParameterGroupName' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeClusterParametersMessage' =>
-    [
+    'DescribeClusterParametersMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ParameterGroupName',
+      'required' => [
+        'ParameterGroupName',
       ],
-      'members' =>
-      [
-        'ParameterGroupName' =>
-        [
+      'members' => [
+        'ParameterGroupName' => [
           'shape' => 'String',
         ],
-        'Source' =>
-        [
+        'Source' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeClusterSecurityGroupsMessage' =>
-    [
+    'DescribeClusterSecurityGroupsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ClusterSecurityGroupName' =>
-        [
+      'members' => [
+        'ClusterSecurityGroupName' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeClusterSnapshotsMessage' =>
-    [
+    'DescribeClusterSnapshotsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ClusterIdentifier' =>
-        [
+      'members' => [
+        'ClusterIdentifier' => [
           'shape' => 'String',
         ],
-        'SnapshotIdentifier' =>
-        [
+        'SnapshotIdentifier' => [
           'shape' => 'String',
         ],
-        'SnapshotType' =>
-        [
+        'SnapshotType' => [
           'shape' => 'String',
         ],
-        'StartTime' =>
-        [
+        'StartTime' => [
           'shape' => 'TStamp',
         ],
-        'EndTime' =>
-        [
+        'EndTime' => [
           'shape' => 'TStamp',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'OwnerAccount' =>
-        [
+        'OwnerAccount' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeClusterSubnetGroupsMessage' =>
-    [
+    'DescribeClusterSubnetGroupsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ClusterSubnetGroupName' =>
-        [
+      'members' => [
+        'ClusterSubnetGroupName' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeClusterVersionsMessage' =>
-    [
+    'DescribeClusterVersionsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ClusterVersion' =>
-        [
+      'members' => [
+        'ClusterVersion' => [
           'shape' => 'String',
         ],
-        'ClusterParameterGroupFamily' =>
-        [
+        'ClusterParameterGroupFamily' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeClustersMessage' =>
-    [
+    'DescribeClustersMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ClusterIdentifier' =>
-        [
+      'members' => [
+        'ClusterIdentifier' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeDefaultClusterParametersMessage' =>
-    [
+    'DescribeDefaultClusterParametersMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ParameterGroupFamily',
+      'required' => [
+        'ParameterGroupFamily',
       ],
-      'members' =>
-      [
-        'ParameterGroupFamily' =>
-        [
+      'members' => [
+        'ParameterGroupFamily' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeEventCategoriesMessage' =>
-    [
+    'DescribeEventCategoriesMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SourceType' =>
-        [
+      'members' => [
+        'SourceType' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeEventSubscriptionsMessage' =>
-    [
+    'DescribeEventSubscriptionsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SubscriptionName' =>
-        [
+      'members' => [
+        'SubscriptionName' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeEventsMessage' =>
-    [
+    'DescribeEventsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SourceIdentifier' =>
-        [
+      'members' => [
+        'SourceIdentifier' => [
           'shape' => 'String',
         ],
-        'SourceType' =>
-        [
+        'SourceType' => [
           'shape' => 'SourceType',
         ],
-        'StartTime' =>
-        [
+        'StartTime' => [
           'shape' => 'TStamp',
         ],
-        'EndTime' =>
-        [
+        'EndTime' => [
           'shape' => 'TStamp',
         ],
-        'Duration' =>
-        [
+        'Duration' => [
           'shape' => 'IntegerOptional',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeHsmClientCertificatesMessage' =>
-    [
+    'DescribeHsmClientCertificatesMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'HsmClientCertificateIdentifier' =>
-        [
+      'members' => [
+        'HsmClientCertificateIdentifier' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeHsmConfigurationsMessage' =>
-    [
+    'DescribeHsmConfigurationsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'HsmConfigurationIdentifier' =>
-        [
+      'members' => [
+        'HsmConfigurationIdentifier' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeLoggingStatusMessage' =>
-    [
+    'DescribeLoggingStatusMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterIdentifier',
+      'required' => [
+        'ClusterIdentifier',
       ],
-      'members' =>
-      [
-        'ClusterIdentifier' =>
-        [
+      'members' => [
+        'ClusterIdentifier' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeOrderableClusterOptionsMessage' =>
-    [
+    'DescribeOrderableClusterOptionsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ClusterVersion' =>
-        [
+      'members' => [
+        'ClusterVersion' => [
           'shape' => 'String',
         ],
-        'NodeType' =>
-        [
+        'NodeType' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeReservedNodeOfferingsMessage' =>
-    [
+    'DescribeReservedNodeOfferingsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedNodeOfferingId' =>
-        [
+      'members' => [
+        'ReservedNodeOfferingId' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeReservedNodesMessage' =>
-    [
+    'DescribeReservedNodesMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedNodeId' =>
-        [
+      'members' => [
+        'ReservedNodeId' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeResizeMessage' =>
-    [
+    'DescribeResizeMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterIdentifier',
+      'required' => [
+        'ClusterIdentifier',
       ],
-      'members' =>
-      [
-        'ClusterIdentifier' =>
-        [
+      'members' => [
+        'ClusterIdentifier' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DisableLoggingMessage' =>
-    [
+    'DisableLoggingMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterIdentifier',
+      'required' => [
+        'ClusterIdentifier',
       ],
-      'members' =>
-      [
-        'ClusterIdentifier' =>
-        [
+      'members' => [
+        'ClusterIdentifier' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DisableSnapshotCopyMessage' =>
-    [
+    'DisableSnapshotCopyMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterIdentifier',
+      'required' => [
+        'ClusterIdentifier',
       ],
-      'members' =>
-      [
-        'ClusterIdentifier' =>
-        [
+      'members' => [
+        'ClusterIdentifier' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'Double' =>
-    [
+    'Double' => [
       'type' => 'double',
     ],
-    'DoubleOptional' =>
-    [
+    'DoubleOptional' => [
       'type' => 'double',
     ],
-    'EC2SecurityGroup' =>
-    [
+    'EC2SecurityGroup' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Status' =>
-        [
+      'members' => [
+        'Status' => [
           'shape' => 'String',
         ],
-        'EC2SecurityGroupName' =>
-        [
+        'EC2SecurityGroupName' => [
           'shape' => 'String',
         ],
-        'EC2SecurityGroupOwnerId' =>
-        [
+        'EC2SecurityGroupOwnerId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'EC2SecurityGroupList' =>
-    [
+    'EC2SecurityGroupList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'EC2SecurityGroup',
         'locationName' => 'EC2SecurityGroup',
       ],
     ],
-    'ElasticIpStatus' =>
-    [
+    'ElasticIpStatus' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ElasticIp' =>
-        [
+      'members' => [
+        'ElasticIp' => [
           'shape' => 'String',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'EnableLoggingMessage' =>
-    [
+    'EnableLoggingMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterIdentifier',
-        1 => 'BucketName',
+      'required' => [
+        'ClusterIdentifier',
+        'BucketName',
       ],
-      'members' =>
-      [
-        'ClusterIdentifier' =>
-        [
+      'members' => [
+        'ClusterIdentifier' => [
           'shape' => 'String',
         ],
-        'BucketName' =>
-        [
+        'BucketName' => [
           'shape' => 'String',
         ],
-        'S3KeyPrefix' =>
-        [
+        'S3KeyPrefix' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'EnableSnapshotCopyMessage' =>
-    [
+    'EnableSnapshotCopyMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterIdentifier',
-        1 => 'DestinationRegion',
+      'required' => [
+        'ClusterIdentifier',
+        'DestinationRegion',
       ],
-      'members' =>
-      [
-        'ClusterIdentifier' =>
-        [
+      'members' => [
+        'ClusterIdentifier' => [
           'shape' => 'String',
         ],
-        'DestinationRegion' =>
-        [
+        'DestinationRegion' => [
           'shape' => 'String',
         ],
-        'RetentionPeriod' =>
-        [
+        'RetentionPeriod' => [
           'shape' => 'IntegerOptional',
         ],
       ],
     ],
-    'Endpoint' =>
-    [
+    'Endpoint' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Address' =>
-        [
+      'members' => [
+        'Address' => [
           'shape' => 'String',
         ],
-        'Port' =>
-        [
+        'Port' => [
           'shape' => 'Integer',
         ],
       ],
     ],
-    'Event' =>
-    [
+    'Event' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SourceIdentifier' =>
-        [
+      'members' => [
+        'SourceIdentifier' => [
           'shape' => 'String',
         ],
-        'SourceType' =>
-        [
+        'SourceType' => [
           'shape' => 'SourceType',
         ],
-        'Message' =>
-        [
+        'Message' => [
           'shape' => 'String',
         ],
-        'EventCategories' =>
-        [
+        'EventCategories' => [
           'shape' => 'EventCategoriesList',
         ],
-        'Severity' =>
-        [
+        'Severity' => [
           'shape' => 'String',
         ],
-        'Date' =>
-        [
+        'Date' => [
           'shape' => 'TStamp',
         ],
-        'EventId' =>
-        [
+        'EventId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'EventCategoriesList' =>
-    [
+    'EventCategoriesList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'EventCategory',
       ],
     ],
-    'EventCategoriesMap' =>
-    [
+    'EventCategoriesMap' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SourceType' =>
-        [
+      'members' => [
+        'SourceType' => [
           'shape' => 'String',
         ],
-        'Events' =>
-        [
+        'Events' => [
           'shape' => 'EventInfoMapList',
         ],
       ],
       'wrapper' => true,
     ],
-    'EventCategoriesMapList' =>
-    [
+    'EventCategoriesMapList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'EventCategoriesMap',
         'locationName' => 'EventCategoriesMap',
       ],
     ],
-    'EventCategoriesMessage' =>
-    [
+    'EventCategoriesMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EventCategoriesMapList' =>
-        [
+      'members' => [
+        'EventCategoriesMapList' => [
           'shape' => 'EventCategoriesMapList',
         ],
       ],
     ],
-    'EventInfoMap' =>
-    [
+    'EventInfoMap' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EventId' =>
-        [
+      'members' => [
+        'EventId' => [
           'shape' => 'String',
         ],
-        'EventCategories' =>
-        [
+        'EventCategories' => [
           'shape' => 'EventCategoriesList',
         ],
-        'EventDescription' =>
-        [
+        'EventDescription' => [
           'shape' => 'String',
         ],
-        'Severity' =>
-        [
+        'Severity' => [
           'shape' => 'String',
         ],
       ],
       'wrapper' => true,
     ],
-    'EventInfoMapList' =>
-    [
+    'EventInfoMapList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'EventInfoMap',
         'locationName' => 'EventInfoMap',
       ],
     ],
-    'EventList' =>
-    [
+    'EventList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Event',
         'locationName' => 'Event',
       ],
     ],
-    'EventSubscription' =>
-    [
+    'EventSubscription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CustomerAwsId' =>
-        [
+      'members' => [
+        'CustomerAwsId' => [
           'shape' => 'String',
         ],
-        'CustSubscriptionId' =>
-        [
+        'CustSubscriptionId' => [
           'shape' => 'String',
         ],
-        'SnsTopicArn' =>
-        [
+        'SnsTopicArn' => [
           'shape' => 'String',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'String',
         ],
-        'SubscriptionCreationTime' =>
-        [
+        'SubscriptionCreationTime' => [
           'shape' => 'TStamp',
         ],
-        'SourceType' =>
-        [
+        'SourceType' => [
           'shape' => 'String',
         ],
-        'SourceIdsList' =>
-        [
+        'SourceIdsList' => [
           'shape' => 'SourceIdsList',
         ],
-        'EventCategoriesList' =>
-        [
+        'EventCategoriesList' => [
           'shape' => 'EventCategoriesList',
         ],
-        'Severity' =>
-        [
+        'Severity' => [
           'shape' => 'String',
         ],
-        'Enabled' =>
-        [
+        'Enabled' => [
           'shape' => 'Boolean',
         ],
       ],
       'wrapper' => true,
     ],
-    'EventSubscriptionQuotaExceededFault' =>
-    [
+    'EventSubscriptionQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'EventSubscriptionQuotaExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'EventSubscriptionsList' =>
-    [
+    'EventSubscriptionsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'EventSubscription',
         'locationName' => 'EventSubscription',
       ],
     ],
-    'EventSubscriptionsMessage' =>
-    [
+    'EventSubscriptionsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'EventSubscriptionsList' =>
-        [
+        'EventSubscriptionsList' => [
           'shape' => 'EventSubscriptionsList',
         ],
       ],
     ],
-    'EventsMessage' =>
-    [
+    'EventsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'Events' =>
-        [
+        'Events' => [
           'shape' => 'EventList',
         ],
       ],
     ],
-    'HsmClientCertificate' =>
-    [
+    'HsmClientCertificate' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'HsmClientCertificateIdentifier' =>
-        [
+      'members' => [
+        'HsmClientCertificateIdentifier' => [
           'shape' => 'String',
         ],
-        'HsmClientCertificatePublicKey' =>
-        [
+        'HsmClientCertificatePublicKey' => [
           'shape' => 'String',
         ],
       ],
       'wrapper' => true,
     ],
-    'HsmClientCertificateAlreadyExistsFault' =>
-    [
+    'HsmClientCertificateAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'HsmClientCertificateAlreadyExistsFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'HsmClientCertificateList' =>
-    [
+    'HsmClientCertificateList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'HsmClientCertificate',
         'locationName' => 'HsmClientCertificate',
       ],
     ],
-    'HsmClientCertificateMessage' =>
-    [
+    'HsmClientCertificateMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'HsmClientCertificates' =>
-        [
+        'HsmClientCertificates' => [
           'shape' => 'HsmClientCertificateList',
         ],
       ],
     ],
-    'HsmClientCertificateNotFoundFault' =>
-    [
+    'HsmClientCertificateNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'HsmClientCertificateNotFoundFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'HsmClientCertificateQuotaExceededFault' =>
-    [
+    'HsmClientCertificateQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'HsmClientCertificateQuotaExceededFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'HsmConfiguration' =>
-    [
+    'HsmConfiguration' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'HsmConfigurationIdentifier' =>
-        [
+      'members' => [
+        'HsmConfigurationIdentifier' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
-        'HsmIpAddress' =>
-        [
+        'HsmIpAddress' => [
           'shape' => 'String',
         ],
-        'HsmPartitionName' =>
-        [
+        'HsmPartitionName' => [
           'shape' => 'String',
         ],
       ],
       'wrapper' => true,
     ],
-    'HsmConfigurationAlreadyExistsFault' =>
-    [
+    'HsmConfigurationAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'HsmConfigurationAlreadyExistsFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'HsmConfigurationList' =>
-    [
+    'HsmConfigurationList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'HsmConfiguration',
         'locationName' => 'HsmConfiguration',
       ],
     ],
-    'HsmConfigurationMessage' =>
-    [
+    'HsmConfigurationMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'HsmConfigurations' =>
-        [
+        'HsmConfigurations' => [
           'shape' => 'HsmConfigurationList',
         ],
       ],
     ],
-    'HsmConfigurationNotFoundFault' =>
-    [
+    'HsmConfigurationNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'HsmConfigurationNotFoundFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'HsmConfigurationQuotaExceededFault' =>
-    [
+    'HsmConfigurationQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'HsmConfigurationQuotaExceededFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'HsmStatus' =>
-    [
+    'HsmStatus' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'HsmClientCertificateIdentifier' =>
-        [
+      'members' => [
+        'HsmClientCertificateIdentifier' => [
           'shape' => 'String',
         ],
-        'HsmConfigurationIdentifier' =>
-        [
+        'HsmConfigurationIdentifier' => [
           'shape' => 'String',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'IPRange' =>
-    [
+    'IPRange' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Status' =>
-        [
+      'members' => [
+        'Status' => [
           'shape' => 'String',
         ],
-        'CIDRIP' =>
-        [
+        'CIDRIP' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'IPRangeList' =>
-    [
+    'IPRangeList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'IPRange',
         'locationName' => 'IPRange',
       ],
     ],
-    'ImportTablesCompleted' =>
-    [
+    'ImportTablesCompleted' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
       ],
     ],
-    'ImportTablesInProgress' =>
-    [
+    'ImportTablesInProgress' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
       ],
     ],
-    'ImportTablesNotStarted' =>
-    [
+    'ImportTablesNotStarted' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
       ],
     ],
-    'IncompatibleOrderableOptions' =>
-    [
+    'IncompatibleOrderableOptions' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'IncompatibleOrderableOptions',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InsufficientClusterCapacityFault' =>
-    [
+    'InsufficientClusterCapacityFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InsufficientClusterCapacity',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InsufficientS3BucketPolicyFault' =>
-    [
+    'InsufficientS3BucketPolicyFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InsufficientS3BucketPolicyFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'Integer' =>
-    [
+    'Integer' => [
       'type' => 'integer',
     ],
-    'IntegerOptional' =>
-    [
+    'IntegerOptional' => [
       'type' => 'integer',
     ],
-    'InvalidClusterParameterGroupStateFault' =>
-    [
+    'InvalidClusterParameterGroupStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidClusterParameterGroupState',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidClusterSecurityGroupStateFault' =>
-    [
+    'InvalidClusterSecurityGroupStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidClusterSecurityGroupState',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidClusterSnapshotStateFault' =>
-    [
+    'InvalidClusterSnapshotStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidClusterSnapshotState',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidClusterStateFault' =>
-    [
+    'InvalidClusterStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidClusterState',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidClusterSubnetGroupStateFault' =>
-    [
+    'InvalidClusterSubnetGroupStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidClusterSubnetGroupStateFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidClusterSubnetStateFault' =>
-    [
+    'InvalidClusterSubnetStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidClusterSubnetStateFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidElasticIpFault' =>
-    [
+    'InvalidElasticIpFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidElasticIpFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidHsmClientCertificateStateFault' =>
-    [
+    'InvalidHsmClientCertificateStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidHsmClientCertificateStateFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidHsmConfigurationStateFault' =>
-    [
+    'InvalidHsmConfigurationStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidHsmConfigurationStateFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidRestoreFault' =>
-    [
+    'InvalidRestoreFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidRestore',
         'httpStatusCode' => 406,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidS3BucketNameFault' =>
-    [
+    'InvalidS3BucketNameFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidS3BucketNameFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidS3KeyPrefixFault' =>
-    [
+    'InvalidS3KeyPrefixFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidS3KeyPrefixFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidSubnet' =>
-    [
+    'InvalidSubnet' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidSubnet',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidSubscriptionStateFault' =>
-    [
+    'InvalidSubscriptionStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidSubscriptionStateFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidVPCNetworkStateFault' =>
-    [
+    'InvalidVPCNetworkStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidVPCNetworkStateFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'LoggingStatus' =>
-    [
+    'LoggingStatus' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LoggingEnabled' =>
-        [
+      'members' => [
+        'LoggingEnabled' => [
           'shape' => 'Boolean',
         ],
-        'BucketName' =>
-        [
+        'BucketName' => [
           'shape' => 'String',
         ],
-        'S3KeyPrefix' =>
-        [
+        'S3KeyPrefix' => [
           'shape' => 'String',
         ],
-        'LastSuccessfulDeliveryTime' =>
-        [
+        'LastSuccessfulDeliveryTime' => [
           'shape' => 'TStamp',
         ],
-        'LastFailureTime' =>
-        [
+        'LastFailureTime' => [
           'shape' => 'TStamp',
         ],
-        'LastFailureMessage' =>
-        [
+        'LastFailureMessage' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'Long' =>
-    [
+    'Long' => [
       'type' => 'long',
     ],
-    'LongOptional' =>
-    [
+    'LongOptional' => [
       'type' => 'long',
     ],
-    'ModifyClusterMessage' =>
-    [
+    'ModifyClusterMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterIdentifier',
+      'required' => [
+        'ClusterIdentifier',
       ],
-      'members' =>
-      [
-        'ClusterIdentifier' =>
-        [
+      'members' => [
+        'ClusterIdentifier' => [
           'shape' => 'String',
         ],
-        'ClusterType' =>
-        [
+        'ClusterType' => [
           'shape' => 'String',
         ],
-        'NodeType' =>
-        [
+        'NodeType' => [
           'shape' => 'String',
         ],
-        'NumberOfNodes' =>
-        [
+        'NumberOfNodes' => [
           'shape' => 'IntegerOptional',
         ],
-        'ClusterSecurityGroups' =>
-        [
+        'ClusterSecurityGroups' => [
           'shape' => 'ClusterSecurityGroupNameList',
         ],
-        'VpcSecurityGroupIds' =>
-        [
+        'VpcSecurityGroupIds' => [
           'shape' => 'VpcSecurityGroupIdList',
         ],
-        'MasterUserPassword' =>
-        [
+        'MasterUserPassword' => [
           'shape' => 'String',
         ],
-        'ClusterParameterGroupName' =>
-        [
+        'ClusterParameterGroupName' => [
           'shape' => 'String',
         ],
-        'AutomatedSnapshotRetentionPeriod' =>
-        [
+        'AutomatedSnapshotRetentionPeriod' => [
           'shape' => 'IntegerOptional',
         ],
-        'PreferredMaintenanceWindow' =>
-        [
+        'PreferredMaintenanceWindow' => [
           'shape' => 'String',
         ],
-        'ClusterVersion' =>
-        [
+        'ClusterVersion' => [
           'shape' => 'String',
         ],
-        'AllowVersionUpgrade' =>
-        [
+        'AllowVersionUpgrade' => [
           'shape' => 'BooleanOptional',
         ],
-        'HsmClientCertificateIdentifier' =>
-        [
+        'HsmClientCertificateIdentifier' => [
           'shape' => 'String',
         ],
-        'HsmConfigurationIdentifier' =>
-        [
+        'HsmConfigurationIdentifier' => [
           'shape' => 'String',
         ],
-        'NewClusterIdentifier' =>
-        [
+        'NewClusterIdentifier' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ModifyClusterParameterGroupMessage' =>
-    [
+    'ModifyClusterParameterGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ParameterGroupName',
-        1 => 'Parameters',
+      'required' => [
+        'ParameterGroupName',
+        'Parameters',
       ],
-      'members' =>
-      [
-        'ParameterGroupName' =>
-        [
+      'members' => [
+        'ParameterGroupName' => [
           'shape' => 'String',
         ],
-        'Parameters' =>
-        [
+        'Parameters' => [
           'shape' => 'ParametersList',
         ],
       ],
     ],
-    'ModifyClusterSubnetGroupMessage' =>
-    [
+    'ModifyClusterSubnetGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterSubnetGroupName',
-        1 => 'SubnetIds',
+      'required' => [
+        'ClusterSubnetGroupName',
+        'SubnetIds',
       ],
-      'members' =>
-      [
-        'ClusterSubnetGroupName' =>
-        [
+      'members' => [
+        'ClusterSubnetGroupName' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
-        'SubnetIds' =>
-        [
+        'SubnetIds' => [
           'shape' => 'SubnetIdentifierList',
         ],
       ],
     ],
-    'ModifyEventSubscriptionMessage' =>
-    [
+    'ModifyEventSubscriptionMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SubscriptionName',
+      'required' => [
+        'SubscriptionName',
       ],
-      'members' =>
-      [
-        'SubscriptionName' =>
-        [
+      'members' => [
+        'SubscriptionName' => [
           'shape' => 'String',
         ],
-        'SnsTopicArn' =>
-        [
+        'SnsTopicArn' => [
           'shape' => 'String',
         ],
-        'SourceType' =>
-        [
+        'SourceType' => [
           'shape' => 'String',
         ],
-        'SourceIds' =>
-        [
+        'SourceIds' => [
           'shape' => 'SourceIdsList',
         ],
-        'EventCategories' =>
-        [
+        'EventCategories' => [
           'shape' => 'EventCategoriesList',
         ],
-        'Severity' =>
-        [
+        'Severity' => [
           'shape' => 'String',
         ],
-        'Enabled' =>
-        [
+        'Enabled' => [
           'shape' => 'BooleanOptional',
         ],
       ],
     ],
-    'ModifySnapshotCopyRetentionPeriodMessage' =>
-    [
+    'ModifySnapshotCopyRetentionPeriodMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterIdentifier',
-        1 => 'RetentionPeriod',
+      'required' => [
+        'ClusterIdentifier',
+        'RetentionPeriod',
       ],
-      'members' =>
-      [
-        'ClusterIdentifier' =>
-        [
+      'members' => [
+        'ClusterIdentifier' => [
           'shape' => 'String',
         ],
-        'RetentionPeriod' =>
-        [
+        'RetentionPeriod' => [
           'shape' => 'Integer',
         ],
       ],
     ],
-    'NumberOfNodesPerClusterLimitExceededFault' =>
-    [
+    'NumberOfNodesPerClusterLimitExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'NumberOfNodesPerClusterLimitExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'NumberOfNodesQuotaExceededFault' =>
-    [
+    'NumberOfNodesQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'NumberOfNodesQuotaExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'OrderableClusterOption' =>
-    [
+    'OrderableClusterOption' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ClusterVersion' =>
-        [
+      'members' => [
+        'ClusterVersion' => [
           'shape' => 'String',
         ],
-        'ClusterType' =>
-        [
+        'ClusterType' => [
           'shape' => 'String',
         ],
-        'NodeType' =>
-        [
+        'NodeType' => [
           'shape' => 'String',
         ],
-        'AvailabilityZones' =>
-        [
+        'AvailabilityZones' => [
           'shape' => 'AvailabilityZoneList',
         ],
       ],
       'wrapper' => true,
     ],
-    'OrderableClusterOptionsList' =>
-    [
+    'OrderableClusterOptionsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'OrderableClusterOption',
         'locationName' => 'OrderableClusterOption',
       ],
     ],
-    'OrderableClusterOptionsMessage' =>
-    [
+    'OrderableClusterOptionsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'OrderableClusterOptions' =>
-        [
+      'members' => [
+        'OrderableClusterOptions' => [
           'shape' => 'OrderableClusterOptionsList',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'Parameter' =>
-    [
+    'Parameter' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ParameterName' =>
-        [
+      'members' => [
+        'ParameterName' => [
           'shape' => 'String',
         ],
-        'ParameterValue' =>
-        [
+        'ParameterValue' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
-        'Source' =>
-        [
+        'Source' => [
           'shape' => 'String',
         ],
-        'DataType' =>
-        [
+        'DataType' => [
           'shape' => 'String',
         ],
-        'AllowedValues' =>
-        [
+        'AllowedValues' => [
           'shape' => 'String',
         ],
-        'IsModifiable' =>
-        [
+        'IsModifiable' => [
           'shape' => 'Boolean',
         ],
-        'MinimumEngineVersion' =>
-        [
+        'MinimumEngineVersion' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ParameterGroupList' =>
-    [
+    'ParameterGroupList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ClusterParameterGroup',
         'locationName' => 'ClusterParameterGroup',
       ],
     ],
-    'ParametersList' =>
-    [
+    'ParametersList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Parameter',
         'locationName' => 'Parameter',
       ],
     ],
-    'PendingModifiedValues' =>
-    [
+    'PendingModifiedValues' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'MasterUserPassword' =>
-        [
+      'members' => [
+        'MasterUserPassword' => [
           'shape' => 'String',
         ],
-        'NodeType' =>
-        [
+        'NodeType' => [
           'shape' => 'String',
         ],
-        'NumberOfNodes' =>
-        [
+        'NumberOfNodes' => [
           'shape' => 'IntegerOptional',
         ],
-        'ClusterType' =>
-        [
+        'ClusterType' => [
           'shape' => 'String',
         ],
-        'ClusterVersion' =>
-        [
+        'ClusterVersion' => [
           'shape' => 'String',
         ],
-        'AutomatedSnapshotRetentionPeriod' =>
-        [
+        'AutomatedSnapshotRetentionPeriod' => [
           'shape' => 'IntegerOptional',
         ],
-        'ClusterIdentifier' =>
-        [
+        'ClusterIdentifier' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'PurchaseReservedNodeOfferingMessage' =>
-    [
+    'PurchaseReservedNodeOfferingMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ReservedNodeOfferingId',
+      'required' => [
+        'ReservedNodeOfferingId',
       ],
-      'members' =>
-      [
-        'ReservedNodeOfferingId' =>
-        [
+      'members' => [
+        'ReservedNodeOfferingId' => [
           'shape' => 'String',
         ],
-        'NodeCount' =>
-        [
+        'NodeCount' => [
           'shape' => 'IntegerOptional',
         ],
       ],
     ],
-    'RebootClusterMessage' =>
-    [
+    'RebootClusterMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterIdentifier',
+      'required' => [
+        'ClusterIdentifier',
       ],
-      'members' =>
-      [
-        'ClusterIdentifier' =>
-        [
+      'members' => [
+        'ClusterIdentifier' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'RecurringCharge' =>
-    [
+    'RecurringCharge' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'RecurringChargeAmount' =>
-        [
+      'members' => [
+        'RecurringChargeAmount' => [
           'shape' => 'Double',
         ],
-        'RecurringChargeFrequency' =>
-        [
+        'RecurringChargeFrequency' => [
           'shape' => 'String',
         ],
       ],
       'wrapper' => true,
     ],
-    'RecurringChargeList' =>
-    [
+    'RecurringChargeList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'RecurringCharge',
         'locationName' => 'RecurringCharge',
       ],
     ],
-    'ReservedNode' =>
-    [
+    'ReservedNode' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedNodeId' =>
-        [
+      'members' => [
+        'ReservedNodeId' => [
           'shape' => 'String',
         ],
-        'ReservedNodeOfferingId' =>
-        [
+        'ReservedNodeOfferingId' => [
           'shape' => 'String',
         ],
-        'NodeType' =>
-        [
+        'NodeType' => [
           'shape' => 'String',
         ],
-        'StartTime' =>
-        [
+        'StartTime' => [
           'shape' => 'TStamp',
         ],
-        'Duration' =>
-        [
+        'Duration' => [
           'shape' => 'Integer',
         ],
-        'FixedPrice' =>
-        [
+        'FixedPrice' => [
           'shape' => 'Double',
         ],
-        'UsagePrice' =>
-        [
+        'UsagePrice' => [
           'shape' => 'Double',
         ],
-        'CurrencyCode' =>
-        [
+        'CurrencyCode' => [
           'shape' => 'String',
         ],
-        'NodeCount' =>
-        [
+        'NodeCount' => [
           'shape' => 'Integer',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'String',
         ],
-        'OfferingType' =>
-        [
+        'OfferingType' => [
           'shape' => 'String',
         ],
-        'RecurringCharges' =>
-        [
+        'RecurringCharges' => [
           'shape' => 'RecurringChargeList',
         ],
       ],
       'wrapper' => true,
     ],
-    'ReservedNodeAlreadyExistsFault' =>
-    [
+    'ReservedNodeAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ReservedNodeAlreadyExists',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ReservedNodeList' =>
-    [
+    'ReservedNodeList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ReservedNode',
         'locationName' => 'ReservedNode',
       ],
     ],
-    'ReservedNodeNotFoundFault' =>
-    [
+    'ReservedNodeNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ReservedNodeNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ReservedNodeOffering' =>
-    [
+    'ReservedNodeOffering' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedNodeOfferingId' =>
-        [
+      'members' => [
+        'ReservedNodeOfferingId' => [
           'shape' => 'String',
         ],
-        'NodeType' =>
-        [
+        'NodeType' => [
           'shape' => 'String',
         ],
-        'Duration' =>
-        [
+        'Duration' => [
           'shape' => 'Integer',
         ],
-        'FixedPrice' =>
-        [
+        'FixedPrice' => [
           'shape' => 'Double',
         ],
-        'UsagePrice' =>
-        [
+        'UsagePrice' => [
           'shape' => 'Double',
         ],
-        'CurrencyCode' =>
-        [
+        'CurrencyCode' => [
           'shape' => 'String',
         ],
-        'OfferingType' =>
-        [
+        'OfferingType' => [
           'shape' => 'String',
         ],
-        'RecurringCharges' =>
-        [
+        'RecurringCharges' => [
           'shape' => 'RecurringChargeList',
         ],
       ],
       'wrapper' => true,
     ],
-    'ReservedNodeOfferingList' =>
-    [
+    'ReservedNodeOfferingList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ReservedNodeOffering',
         'locationName' => 'ReservedNodeOffering',
       ],
     ],
-    'ReservedNodeOfferingNotFoundFault' =>
-    [
+    'ReservedNodeOfferingNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ReservedNodeOfferingNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ReservedNodeOfferingsMessage' =>
-    [
+    'ReservedNodeOfferingsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'ReservedNodeOfferings' =>
-        [
+        'ReservedNodeOfferings' => [
           'shape' => 'ReservedNodeOfferingList',
         ],
       ],
     ],
-    'ReservedNodeQuotaExceededFault' =>
-    [
+    'ReservedNodeQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ReservedNodeQuotaExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ReservedNodesMessage' =>
-    [
+    'ReservedNodesMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'ReservedNodes' =>
-        [
+        'ReservedNodes' => [
           'shape' => 'ReservedNodeList',
         ],
       ],
     ],
-    'ResetClusterParameterGroupMessage' =>
-    [
+    'ResetClusterParameterGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ParameterGroupName',
+      'required' => [
+        'ParameterGroupName',
       ],
-      'members' =>
-      [
-        'ParameterGroupName' =>
-        [
+      'members' => [
+        'ParameterGroupName' => [
           'shape' => 'String',
         ],
-        'ResetAllParameters' =>
-        [
+        'ResetAllParameters' => [
           'shape' => 'Boolean',
         ],
-        'Parameters' =>
-        [
+        'Parameters' => [
           'shape' => 'ParametersList',
         ],
       ],
     ],
-    'ResizeNotFoundFault' =>
-    [
+    'ResizeNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ResizeNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ResizeProgressMessage' =>
-    [
+    'ResizeProgressMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TargetNodeType' =>
-        [
+      'members' => [
+        'TargetNodeType' => [
           'shape' => 'String',
         ],
-        'TargetNumberOfNodes' =>
-        [
+        'TargetNumberOfNodes' => [
           'shape' => 'IntegerOptional',
         ],
-        'TargetClusterType' =>
-        [
+        'TargetClusterType' => [
           'shape' => 'String',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'String',
         ],
-        'ImportTablesCompleted' =>
-        [
+        'ImportTablesCompleted' => [
           'shape' => 'ImportTablesCompleted',
         ],
-        'ImportTablesInProgress' =>
-        [
+        'ImportTablesInProgress' => [
           'shape' => 'ImportTablesInProgress',
         ],
-        'ImportTablesNotStarted' =>
-        [
+        'ImportTablesNotStarted' => [
           'shape' => 'ImportTablesNotStarted',
         ],
-        'AvgResizeRateInMegaBytesPerSecond' =>
-        [
+        'AvgResizeRateInMegaBytesPerSecond' => [
           'shape' => 'DoubleOptional',
         ],
-        'TotalResizeDataInMegaBytes' =>
-        [
+        'TotalResizeDataInMegaBytes' => [
           'shape' => 'LongOptional',
         ],
-        'ProgressInMegaBytes' =>
-        [
+        'ProgressInMegaBytes' => [
           'shape' => 'LongOptional',
         ],
-        'ElapsedTimeInSeconds' =>
-        [
+        'ElapsedTimeInSeconds' => [
           'shape' => 'LongOptional',
         ],
-        'EstimatedTimeToCompletionInSeconds' =>
-        [
+        'EstimatedTimeToCompletionInSeconds' => [
           'shape' => 'LongOptional',
         ],
       ],
     ],
-    'RestoreFromClusterSnapshotMessage' =>
-    [
+    'RestoreFromClusterSnapshotMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterIdentifier',
-        1 => 'SnapshotIdentifier',
+      'required' => [
+        'ClusterIdentifier',
+        'SnapshotIdentifier',
       ],
-      'members' =>
-      [
-        'ClusterIdentifier' =>
-        [
+      'members' => [
+        'ClusterIdentifier' => [
           'shape' => 'String',
         ],
-        'SnapshotIdentifier' =>
-        [
+        'SnapshotIdentifier' => [
           'shape' => 'String',
         ],
-        'SnapshotClusterIdentifier' =>
-        [
+        'SnapshotClusterIdentifier' => [
           'shape' => 'String',
         ],
-        'Port' =>
-        [
+        'Port' => [
           'shape' => 'IntegerOptional',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
         ],
-        'AllowVersionUpgrade' =>
-        [
+        'AllowVersionUpgrade' => [
           'shape' => 'BooleanOptional',
         ],
-        'ClusterSubnetGroupName' =>
-        [
+        'ClusterSubnetGroupName' => [
           'shape' => 'String',
         ],
-        'PubliclyAccessible' =>
-        [
+        'PubliclyAccessible' => [
           'shape' => 'BooleanOptional',
         ],
-        'OwnerAccount' =>
-        [
+        'OwnerAccount' => [
           'shape' => 'String',
         ],
-        'HsmClientCertificateIdentifier' =>
-        [
+        'HsmClientCertificateIdentifier' => [
           'shape' => 'String',
         ],
-        'HsmConfigurationIdentifier' =>
-        [
+        'HsmConfigurationIdentifier' => [
           'shape' => 'String',
         ],
-        'ElasticIp' =>
-        [
+        'ElasticIp' => [
           'shape' => 'String',
         ],
-        'ClusterParameterGroupName' =>
-        [
+        'ClusterParameterGroupName' => [
           'shape' => 'String',
         ],
-        'ClusterSecurityGroups' =>
-        [
+        'ClusterSecurityGroups' => [
           'shape' => 'ClusterSecurityGroupNameList',
         ],
-        'VpcSecurityGroupIds' =>
-        [
+        'VpcSecurityGroupIds' => [
           'shape' => 'VpcSecurityGroupIdList',
         ],
-        'PreferredMaintenanceWindow' =>
-        [
+        'PreferredMaintenanceWindow' => [
           'shape' => 'String',
         ],
-        'AutomatedSnapshotRetentionPeriod' =>
-        [
+        'AutomatedSnapshotRetentionPeriod' => [
           'shape' => 'IntegerOptional',
         ],
       ],
     ],
-    'RestoreStatus' =>
-    [
+    'RestoreStatus' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Status' =>
-        [
+      'members' => [
+        'Status' => [
           'shape' => 'String',
         ],
-        'CurrentRestoreRateInMegaBytesPerSecond' =>
-        [
+        'CurrentRestoreRateInMegaBytesPerSecond' => [
           'shape' => 'Double',
         ],
-        'SnapshotSizeInMegaBytes' =>
-        [
+        'SnapshotSizeInMegaBytes' => [
           'shape' => 'Long',
         ],
-        'ProgressInMegaBytes' =>
-        [
+        'ProgressInMegaBytes' => [
           'shape' => 'Long',
         ],
-        'ElapsedTimeInSeconds' =>
-        [
+        'ElapsedTimeInSeconds' => [
           'shape' => 'Long',
         ],
-        'EstimatedTimeToCompletionInSeconds' =>
-        [
+        'EstimatedTimeToCompletionInSeconds' => [
           'shape' => 'Long',
         ],
       ],
     ],
-    'RevokeClusterSecurityGroupIngressMessage' =>
-    [
+    'RevokeClusterSecurityGroupIngressMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterSecurityGroupName',
+      'required' => [
+        'ClusterSecurityGroupName',
       ],
-      'members' =>
-      [
-        'ClusterSecurityGroupName' =>
-        [
+      'members' => [
+        'ClusterSecurityGroupName' => [
           'shape' => 'String',
         ],
-        'CIDRIP' =>
-        [
+        'CIDRIP' => [
           'shape' => 'String',
         ],
-        'EC2SecurityGroupName' =>
-        [
+        'EC2SecurityGroupName' => [
           'shape' => 'String',
         ],
-        'EC2SecurityGroupOwnerId' =>
-        [
+        'EC2SecurityGroupOwnerId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'RevokeSnapshotAccessMessage' =>
-    [
+    'RevokeSnapshotAccessMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SnapshotIdentifier',
-        1 => 'AccountWithRestoreAccess',
+      'required' => [
+        'SnapshotIdentifier',
+        'AccountWithRestoreAccess',
       ],
-      'members' =>
-      [
-        'SnapshotIdentifier' =>
-        [
+      'members' => [
+        'SnapshotIdentifier' => [
           'shape' => 'String',
         ],
-        'SnapshotClusterIdentifier' =>
-        [
+        'SnapshotClusterIdentifier' => [
           'shape' => 'String',
         ],
-        'AccountWithRestoreAccess' =>
-        [
+        'AccountWithRestoreAccess' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'RotateEncryptionKeyMessage' =>
-    [
+    'RotateEncryptionKeyMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterIdentifier',
+      'required' => [
+        'ClusterIdentifier',
       ],
-      'members' =>
-      [
-        'ClusterIdentifier' =>
-        [
+      'members' => [
+        'ClusterIdentifier' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'SNSInvalidTopicFault' =>
-    [
+    'SNSInvalidTopicFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SNSInvalidTopic',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SNSNoAuthorizationFault' =>
-    [
+    'SNSNoAuthorizationFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SNSNoAuthorization',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SNSTopicArnNotFoundFault' =>
-    [
+    'SNSTopicArnNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SNSTopicArnNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'Snapshot' =>
-    [
+    'Snapshot' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SnapshotIdentifier' =>
-        [
+      'members' => [
+        'SnapshotIdentifier' => [
           'shape' => 'String',
         ],
-        'ClusterIdentifier' =>
-        [
+        'ClusterIdentifier' => [
           'shape' => 'String',
         ],
-        'SnapshotCreateTime' =>
-        [
+        'SnapshotCreateTime' => [
           'shape' => 'TStamp',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'String',
         ],
-        'Port' =>
-        [
+        'Port' => [
           'shape' => 'Integer',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
         ],
-        'ClusterCreateTime' =>
-        [
+        'ClusterCreateTime' => [
           'shape' => 'TStamp',
         ],
-        'MasterUsername' =>
-        [
+        'MasterUsername' => [
           'shape' => 'String',
         ],
-        'ClusterVersion' =>
-        [
+        'ClusterVersion' => [
           'shape' => 'String',
         ],
-        'SnapshotType' =>
-        [
+        'SnapshotType' => [
           'shape' => 'String',
         ],
-        'NodeType' =>
-        [
+        'NodeType' => [
           'shape' => 'String',
         ],
-        'NumberOfNodes' =>
-        [
+        'NumberOfNodes' => [
           'shape' => 'Integer',
         ],
-        'DBName' =>
-        [
+        'DBName' => [
           'shape' => 'String',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
         ],
-        'Encrypted' =>
-        [
+        'Encrypted' => [
           'shape' => 'Boolean',
         ],
-        'EncryptedWithHSM' =>
-        [
+        'EncryptedWithHSM' => [
           'shape' => 'Boolean',
         ],
-        'AccountsWithRestoreAccess' =>
-        [
+        'AccountsWithRestoreAccess' => [
           'shape' => 'AccountsWithRestoreAccessList',
         ],
-        'OwnerAccount' =>
-        [
+        'OwnerAccount' => [
           'shape' => 'String',
         ],
-        'TotalBackupSizeInMegaBytes' =>
-        [
+        'TotalBackupSizeInMegaBytes' => [
           'shape' => 'Double',
         ],
-        'ActualIncrementalBackupSizeInMegaBytes' =>
-        [
+        'ActualIncrementalBackupSizeInMegaBytes' => [
           'shape' => 'Double',
         ],
-        'BackupProgressInMegaBytes' =>
-        [
+        'BackupProgressInMegaBytes' => [
           'shape' => 'Double',
         ],
-        'CurrentBackupRateInMegaBytesPerSecond' =>
-        [
+        'CurrentBackupRateInMegaBytesPerSecond' => [
           'shape' => 'Double',
         ],
-        'EstimatedSecondsToCompletion' =>
-        [
+        'EstimatedSecondsToCompletion' => [
           'shape' => 'Long',
         ],
-        'ElapsedTimeInSeconds' =>
-        [
+        'ElapsedTimeInSeconds' => [
           'shape' => 'Long',
         ],
-        'SourceRegion' =>
-        [
+        'SourceRegion' => [
           'shape' => 'String',
         ],
       ],
       'wrapper' => true,
     ],
-    'SnapshotCopyAlreadyDisabledFault' =>
-    [
+    'SnapshotCopyAlreadyDisabledFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SnapshotCopyAlreadyDisabledFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SnapshotCopyAlreadyEnabledFault' =>
-    [
+    'SnapshotCopyAlreadyEnabledFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SnapshotCopyAlreadyEnabledFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SnapshotCopyDisabledFault' =>
-    [
+    'SnapshotCopyDisabledFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SnapshotCopyDisabledFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SnapshotList' =>
-    [
+    'SnapshotList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Snapshot',
         'locationName' => 'Snapshot',
       ],
     ],
-    'SnapshotMessage' =>
-    [
+    'SnapshotMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'Snapshots' =>
-        [
+        'Snapshots' => [
           'shape' => 'SnapshotList',
         ],
       ],
     ],
-    'SourceIdsList' =>
-    [
+    'SourceIdsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'SourceId',
       ],
     ],
-    'SourceNotFoundFault' =>
-    [
+    'SourceNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SourceNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SourceType' =>
-    [
+    'SourceType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'cluster',
-        1 => 'cluster-parameter-group',
-        2 => 'cluster-security-group',
-        3 => 'cluster-snapshot',
+      'enum' => [
+        'cluster',
+        'cluster-parameter-group',
+        'cluster-security-group',
+        'cluster-snapshot',
       ],
     ],
-    'String' =>
-    [
+    'String' => [
       'type' => 'string',
     ],
-    'Subnet' =>
-    [
+    'Subnet' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SubnetIdentifier' =>
-        [
+      'members' => [
+        'SubnetIdentifier' => [
           'shape' => 'String',
         ],
-        'SubnetAvailabilityZone' =>
-        [
+        'SubnetAvailabilityZone' => [
           'shape' => 'AvailabilityZone',
         ],
-        'SubnetStatus' =>
-        [
+        'SubnetStatus' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'SubnetAlreadyInUse' =>
-    [
+    'SubnetAlreadyInUse' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SubnetAlreadyInUse',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SubnetIdentifierList' =>
-    [
+    'SubnetIdentifierList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'SubnetIdentifier',
       ],
     ],
-    'SubnetList' =>
-    [
+    'SubnetList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Subnet',
         'locationName' => 'Subnet',
       ],
     ],
-    'SubscriptionAlreadyExistFault' =>
-    [
+    'SubscriptionAlreadyExistFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SubscriptionAlreadyExist',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SubscriptionCategoryNotFoundFault' =>
-    [
+    'SubscriptionCategoryNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SubscriptionCategoryNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SubscriptionEventIdNotFoundFault' =>
-    [
+    'SubscriptionEventIdNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SubscriptionEventIdNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SubscriptionNotFoundFault' =>
-    [
+    'SubscriptionNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SubscriptionNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SubscriptionSeverityNotFoundFault' =>
-    [
+    'SubscriptionSeverityNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SubscriptionSeverityNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'TStamp' =>
-    [
+    'TStamp' => [
       'type' => 'timestamp',
     ],
-    'UnauthorizedOperation' =>
-    [
+    'UnauthorizedOperation' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'UnauthorizedOperation',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'UnknownSnapshotCopyRegionFault' =>
-    [
+    'UnknownSnapshotCopyRegionFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'UnknownSnapshotCopyRegionFault',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'UnsupportedOptionFault' =>
-    [
+    'UnsupportedOptionFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'UnsupportedOptionFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'VpcSecurityGroupIdList' =>
-    [
+    'VpcSecurityGroupIdList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'VpcSecurityGroupId',
       ],
     ],
-    'VpcSecurityGroupMembership' =>
-    [
+    'VpcSecurityGroupMembership' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VpcSecurityGroupId' =>
-        [
+      'members' => [
+        'VpcSecurityGroupId' => [
           'shape' => 'String',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'VpcSecurityGroupMembershipList' =>
-    [
+    'VpcSecurityGroupMembershipList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'VpcSecurityGroupMembership',
         'locationName' => 'VpcSecurityGroup',
       ],
     ],
-    'AuthorizeClusterSecurityGroupIngressResult' =>
-    [
+    'AuthorizeClusterSecurityGroupIngressResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ClusterSecurityGroup' =>
-        [
+      'members' => [
+        'ClusterSecurityGroup' => [
           'shape' => 'ClusterSecurityGroup',
         ],
       ],
     ],
-    'AuthorizeSnapshotAccessResult' =>
-    [
+    'AuthorizeSnapshotAccessResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Snapshot' =>
-        [
+      'members' => [
+        'Snapshot' => [
           'shape' => 'Snapshot',
         ],
       ],
     ],
-    'CopyClusterSnapshotResult' =>
-    [
+    'CopyClusterSnapshotResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Snapshot' =>
-        [
+      'members' => [
+        'Snapshot' => [
           'shape' => 'Snapshot',
         ],
       ],
     ],
-    'CreateClusterResult' =>
-    [
+    'CreateClusterResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Cluster' =>
-        [
+      'members' => [
+        'Cluster' => [
           'shape' => 'Cluster',
         ],
       ],
     ],
-    'CreateClusterParameterGroupResult' =>
-    [
+    'CreateClusterParameterGroupResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ClusterParameterGroup' =>
-        [
+      'members' => [
+        'ClusterParameterGroup' => [
           'shape' => 'ClusterParameterGroup',
         ],
       ],
     ],
-    'CreateClusterSecurityGroupResult' =>
-    [
+    'CreateClusterSecurityGroupResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ClusterSecurityGroup' =>
-        [
+      'members' => [
+        'ClusterSecurityGroup' => [
           'shape' => 'ClusterSecurityGroup',
         ],
       ],
     ],
-    'CreateClusterSnapshotResult' =>
-    [
+    'CreateClusterSnapshotResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Snapshot' =>
-        [
+      'members' => [
+        'Snapshot' => [
           'shape' => 'Snapshot',
         ],
       ],
     ],
-    'CreateClusterSubnetGroupResult' =>
-    [
+    'CreateClusterSubnetGroupResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ClusterSubnetGroup' =>
-        [
+      'members' => [
+        'ClusterSubnetGroup' => [
           'shape' => 'ClusterSubnetGroup',
         ],
       ],
     ],
-    'CreateEventSubscriptionResult' =>
-    [
+    'CreateEventSubscriptionResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EventSubscription' =>
-        [
+      'members' => [
+        'EventSubscription' => [
           'shape' => 'EventSubscription',
         ],
       ],
     ],
-    'CreateHsmClientCertificateResult' =>
-    [
+    'CreateHsmClientCertificateResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'HsmClientCertificate' =>
-        [
+      'members' => [
+        'HsmClientCertificate' => [
           'shape' => 'HsmClientCertificate',
         ],
       ],
     ],
-    'CreateHsmConfigurationResult' =>
-    [
+    'CreateHsmConfigurationResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'HsmConfiguration' =>
-        [
+      'members' => [
+        'HsmConfiguration' => [
           'shape' => 'HsmConfiguration',
         ],
       ],
     ],
-    'DeleteClusterResult' =>
-    [
+    'DeleteClusterResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Cluster' =>
-        [
+      'members' => [
+        'Cluster' => [
           'shape' => 'Cluster',
         ],
       ],
     ],
-    'DeleteClusterSnapshotResult' =>
-    [
+    'DeleteClusterSnapshotResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Snapshot' =>
-        [
+      'members' => [
+        'Snapshot' => [
           'shape' => 'Snapshot',
         ],
       ],
     ],
-    'DescribeDefaultClusterParametersResult' =>
-    [
+    'DescribeDefaultClusterParametersResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DefaultClusterParameters' =>
-        [
+      'members' => [
+        'DefaultClusterParameters' => [
           'shape' => 'DefaultClusterParameters',
         ],
       ],
     ],
-    'DisableSnapshotCopyResult' =>
-    [
+    'DisableSnapshotCopyResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Cluster' =>
-        [
+      'members' => [
+        'Cluster' => [
           'shape' => 'Cluster',
         ],
       ],
     ],
-    'EnableSnapshotCopyResult' =>
-    [
+    'EnableSnapshotCopyResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Cluster' =>
-        [
+      'members' => [
+        'Cluster' => [
           'shape' => 'Cluster',
         ],
       ],
     ],
-    'ModifyClusterResult' =>
-    [
+    'ModifyClusterResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Cluster' =>
-        [
+      'members' => [
+        'Cluster' => [
           'shape' => 'Cluster',
         ],
       ],
     ],
-    'ModifyClusterSubnetGroupResult' =>
-    [
+    'ModifyClusterSubnetGroupResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ClusterSubnetGroup' =>
-        [
+      'members' => [
+        'ClusterSubnetGroup' => [
           'shape' => 'ClusterSubnetGroup',
         ],
       ],
     ],
-    'ModifyEventSubscriptionResult' =>
-    [
+    'ModifyEventSubscriptionResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EventSubscription' =>
-        [
+      'members' => [
+        'EventSubscription' => [
           'shape' => 'EventSubscription',
         ],
       ],
     ],
-    'ModifySnapshotCopyRetentionPeriodResult' =>
-    [
+    'ModifySnapshotCopyRetentionPeriodResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Cluster' =>
-        [
+      'members' => [
+        'Cluster' => [
           'shape' => 'Cluster',
         ],
       ],
     ],
-    'PurchaseReservedNodeOfferingResult' =>
-    [
+    'PurchaseReservedNodeOfferingResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedNode' =>
-        [
+      'members' => [
+        'ReservedNode' => [
           'shape' => 'ReservedNode',
         ],
       ],
     ],
-    'RebootClusterResult' =>
-    [
+    'RebootClusterResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Cluster' =>
-        [
+      'members' => [
+        'Cluster' => [
           'shape' => 'Cluster',
         ],
       ],
     ],
-    'RestoreFromClusterSnapshotResult' =>
-    [
+    'RestoreFromClusterSnapshotResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Cluster' =>
-        [
+      'members' => [
+        'Cluster' => [
           'shape' => 'Cluster',
         ],
       ],
     ],
-    'RevokeClusterSecurityGroupIngressResult' =>
-    [
+    'RevokeClusterSecurityGroupIngressResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ClusterSecurityGroup' =>
-        [
+      'members' => [
+        'ClusterSecurityGroup' => [
           'shape' => 'ClusterSecurityGroup',
         ],
       ],
     ],
-    'RevokeSnapshotAccessResult' =>
-    [
+    'RevokeSnapshotAccessResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Snapshot' =>
-        [
+      'members' => [
+        'Snapshot' => [
           'shape' => 'Snapshot',
         ],
       ],
     ],
-    'RotateEncryptionKeyResult' =>
-    [
+    'RotateEncryptionKeyResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Cluster' =>
-        [
+      'members' => [
+        'Cluster' => [
           'shape' => 'Cluster',
         ],
       ],

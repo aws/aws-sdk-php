@@ -1,181 +1,144 @@
-<?php
-return [
-  'waiters' =>
-  [
-    '__default__' =>
-    [
+<?php return [
+  'waiters' => [
+    '__default__' => [
       'interval' => 15,
       'max_attempts' => 40,
       'acceptor_type' => 'output',
     ],
-    '__InstanceState' =>
-    [
+    '__InstanceState' => [
       'operation' => 'DescribeInstances',
       'acceptor_path' => 'Reservations[].Instances[].State.Name',
     ],
-    'InstanceRunning' =>
-    [
+    'InstanceRunning' => [
       'extends' => '__InstanceState',
       'success_value' => 'running',
-      'failure_value' =>
-      [
-        0 => 'shutting-down',
-        1 => 'terminated',
-        2 => 'stopping',
+      'failure_value' => [
+        'shutting-down',
+        'terminated',
+        'stopping',
       ],
     ],
-    'InstanceStopped' =>
-    [
+    'InstanceStopped' => [
       'extends' => '__InstanceState',
       'success_value' => 'stopped',
-      'failure_value' =>
-      [
-        0 => 'pending',
-        1 => 'terminated',
+      'failure_value' => [
+        'pending',
+        'terminated',
       ],
     ],
-    'InstanceTerminated' =>
-    [
+    'InstanceTerminated' => [
       'extends' => '__InstanceState',
       'success_value' => 'terminated',
-      'failure_value' =>
-      [
-        0 => 'pending',
-        1 => 'stopping',
+      'failure_value' => [
+        'pending',
+        'stopping',
       ],
     ],
-    '__ExportTaskState' =>
-    [
+    '__ExportTaskState' => [
       'operation' => 'DescribeExportTasks',
       'acceptor_path' => 'ExportTasks[].State',
     ],
-    'ExportTaskCompleted' =>
-    [
+    'ExportTaskCompleted' => [
       'extends' => '__ExportTaskState',
       'success_value' => 'completed',
     ],
-    'ExportTaskCancelled' =>
-    [
+    'ExportTaskCancelled' => [
       'extends' => '__ExportTaskState',
       'success_value' => 'cancelled',
     ],
-    'SnapshotCompleted' =>
-    [
+    'SnapshotCompleted' => [
       'operation' => 'DescribeSnapshots',
       'success_path' => 'Snapshots[].State',
       'success_value' => 'completed',
     ],
-    'SubnetAvailable' =>
-    [
+    'SubnetAvailable' => [
       'operation' => 'DescribeSubnets',
       'success_path' => 'Subnets[].State',
       'success_value' => 'available',
     ],
-    '__VolumeStatus' =>
-    [
+    '__VolumeStatus' => [
       'operation' => 'DescribeVolumes',
       'acceptor_path' => 'VolumeStatuses[].VolumeStatus.Status',
     ],
-    'VolumeAvailable' =>
-    [
+    'VolumeAvailable' => [
       'extends' => '__VolumeStatus',
       'success_value' => 'available',
-      'failure_value' =>
-      [
-        0 => 'deleted',
+      'failure_value' => [
+        'deleted',
       ],
     ],
-    'VolumeInUse' =>
-    [
+    'VolumeInUse' => [
       'extends' => '__VolumeStatus',
       'success_value' => 'in-use',
-      'failure_value' =>
-      [
-        0 => 'deleted',
+      'failure_value' => [
+        'deleted',
       ],
     ],
-    'VolumeDeleted' =>
-    [
+    'VolumeDeleted' => [
       'extends' => '__VolumeStatus',
       'success_value' => 'deleted',
     ],
-    'VpcAvailable' =>
-    [
+    'VpcAvailable' => [
       'operation' => 'DescribeVpcs',
       'success_path' => 'Vpcs[].State',
       'success_value' => 'available',
     ],
-    '__VpnConnectionState' =>
-    [
+    '__VpnConnectionState' => [
       'operation' => 'DescribeVpnConnections',
       'acceptor_path' => 'VpnConnections[].State',
     ],
-    'VpnConnectionAvailable' =>
-    [
+    'VpnConnectionAvailable' => [
       'extends' => '__VpnConnectionState',
       'success_value' => 'available',
-      'failure_value' =>
-      [
-        0 => 'deleting',
-        1 => 'deleted',
+      'failure_value' => [
+        'deleting',
+        'deleted',
       ],
     ],
-    'VpnConnectionDeleted' =>
-    [
+    'VpnConnectionDeleted' => [
       'extends' => '__VpnConnectionState',
       'success_value' => 'deleted',
-      'failure_value' =>
-      [
-        0 => 'pending',
+      'failure_value' => [
+        'pending',
       ],
     ],
-    'BundleTaskComplete' =>
-    [
+    'BundleTaskComplete' => [
       'operation' => 'DescribeBundleTasks',
       'acceptor_path' => 'BundleTasks[].State',
       'success_value' => 'complete',
-      'failure_value' =>
-      [
-        0 => 'failed',
+      'failure_value' => [
+        'failed',
       ],
     ],
-    '__ConversionTaskState' =>
-    [
+    '__ConversionTaskState' => [
       'operation' => 'DescribeConversionTasks',
       'acceptor_path' => 'ConversionTasks[].State',
     ],
-    'ConversionTaskCompleted' =>
-    [
+    'ConversionTaskCompleted' => [
       'extends' => '__ConversionTaskState',
       'success_value' => 'completed',
-      'failure_value' =>
-      [
-        0 => 'cancelled',
-        1 => 'cancelling',
+      'failure_value' => [
+        'cancelled',
+        'cancelling',
       ],
     ],
-    'ConversionTaskCancelled' =>
-    [
+    'ConversionTaskCancelled' => [
       'extends' => '__ConversionTaskState',
       'success_value' => 'cancelled',
     ],
-    '__CustomerGatewayState' =>
-    [
+    '__CustomerGatewayState' => [
       'operation' => 'DescribeCustomerGateways',
       'acceptor_path' => 'CustomerGateways[].State',
     ],
-    'CustomerGatewayAvailable' =>
-    [
+    'CustomerGatewayAvailable' => [
       'extends' => '__CustomerGatewayState',
       'success_value' => 'available',
-      'failure_value' =>
-      [
-        0 => 'deleted',
-        1 => 'deleting',
+      'failure_value' => [
+        'deleted',
+        'deleting',
       ],
     ],
-    'ConversionTaskDeleted' =>
-    [
+    'ConversionTaskDeleted' => [
       'extends' => '__CustomerGatewayState',
       'success_value' => 'deleted',
     ],

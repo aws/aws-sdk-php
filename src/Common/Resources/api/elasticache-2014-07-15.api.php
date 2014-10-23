@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2014-07-15',
     'endpointPrefix' => 'elasticache',
     'serviceFullName' => 'Amazon ElastiCache',
@@ -9,77 +7,61 @@ return [
     'xmlNamespace' => 'http://elasticache.amazonaws.com/doc/2014-07-15/',
     'protocol' => 'query',
   ],
-  'operations' =>
-  [
-    'AuthorizeCacheSecurityGroupIngress' =>
-    [
+  'operations' => [
+    'AuthorizeCacheSecurityGroupIngress' => [
       'name' => 'AuthorizeCacheSecurityGroupIngress',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AuthorizeCacheSecurityGroupIngressMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AuthorizeCacheSecurityGroupIngressResult',
         'wrapper' => true,
         'resultWrapper' => 'AuthorizeCacheSecurityGroupIngressResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'CacheSecurityGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheSecurityGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidCacheSecurityGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidCacheSecurityGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'AuthorizationAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -88,86 +70,69 @@ return [
         ],
       ],
     ],
-    'CopySnapshot' =>
-    [
+    'CopySnapshot' => [
       'name' => 'CopySnapshot',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CopySnapshotMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CopySnapshotResult',
         'wrapper' => true,
         'resultWrapper' => 'CopySnapshotResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'SnapshotAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SnapshotAlreadyExistsFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'SnapshotNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SnapshotNotFoundFault',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'SnapshotQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SnapshotQuotaExceededFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidSnapshotStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidSnapshotState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -176,163 +141,132 @@ return [
         ],
       ],
     ],
-    'CreateCacheCluster' =>
-    [
+    'CreateCacheCluster' => [
       'name' => 'CreateCacheCluster',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateCacheClusterMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateCacheClusterResult',
         'wrapper' => true,
         'resultWrapper' => 'CreateCacheClusterResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ReplicationGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ReplicationGroupNotFoundFault',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidReplicationGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidReplicationGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'CacheClusterAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheClusterAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InsufficientCacheClusterCapacityFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientCacheClusterCapacity',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'CacheSecurityGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheSecurityGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'CacheSubnetGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheSubnetGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'ClusterQuotaForCustomerExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ClusterQuotaForCustomerExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'NodeQuotaForClusterExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NodeQuotaForClusterExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        8 =>
         [
           'shape' => 'NodeQuotaForCustomerExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NodeQuotaForCustomerExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        9 =>
         [
           'shape' => 'CacheParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        10 =>
         [
           'shape' => 'InvalidVPCNetworkStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidVPCNetworkStateFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        11 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        12 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -341,75 +275,60 @@ return [
         ],
       ],
     ],
-    'CreateCacheParameterGroup' =>
-    [
+    'CreateCacheParameterGroup' => [
       'name' => 'CreateCacheParameterGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateCacheParameterGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateCacheParameterGroupResult',
         'wrapper' => true,
         'resultWrapper' => 'CreateCacheParameterGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'CacheParameterGroupQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheParameterGroupQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'CacheParameterGroupAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheParameterGroupAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidCacheParameterGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidCacheParameterGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -418,64 +337,51 @@ return [
         ],
       ],
     ],
-    'CreateCacheSecurityGroup' =>
-    [
+    'CreateCacheSecurityGroup' => [
       'name' => 'CreateCacheSecurityGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateCacheSecurityGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateCacheSecurityGroupResult',
         'wrapper' => true,
         'resultWrapper' => 'CreateCacheSecurityGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'CacheSecurityGroupAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheSecurityGroupAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'CacheSecurityGroupQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'QuotaExceeded.CacheSecurityGroup',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -484,64 +390,51 @@ return [
         ],
       ],
     ],
-    'CreateCacheSubnetGroup' =>
-    [
+    'CreateCacheSubnetGroup' => [
       'name' => 'CreateCacheSubnetGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateCacheSubnetGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateCacheSubnetGroupResult',
         'wrapper' => true,
         'resultWrapper' => 'CreateCacheSubnetGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'CacheSubnetGroupAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheSubnetGroupAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'CacheSubnetGroupQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheSubnetGroupQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'CacheSubnetQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheSubnetQuotaExceededFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidSubnet',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidSubnet',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -550,75 +443,60 @@ return [
         ],
       ],
     ],
-    'CreateReplicationGroup' =>
-    [
+    'CreateReplicationGroup' => [
       'name' => 'CreateReplicationGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateReplicationGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateReplicationGroupResult',
         'wrapper' => true,
         'resultWrapper' => 'CreateReplicationGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'CacheClusterNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheClusterNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidCacheClusterStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidCacheClusterState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ReplicationGroupAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ReplicationGroupAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -627,97 +505,78 @@ return [
         ],
       ],
     ],
-    'CreateSnapshot' =>
-    [
+    'CreateSnapshot' => [
       'name' => 'CreateSnapshot',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateSnapshotMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateSnapshotResult',
         'wrapper' => true,
         'resultWrapper' => 'CreateSnapshotResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'SnapshotAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SnapshotAlreadyExistsFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'CacheClusterNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheClusterNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidCacheClusterStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidCacheClusterState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'SnapshotQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SnapshotQuotaExceededFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'SnapshotFeatureNotSupportedFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SnapshotFeatureNotSupportedFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -726,97 +585,78 @@ return [
         ],
       ],
     ],
-    'DeleteCacheCluster' =>
-    [
+    'DeleteCacheCluster' => [
       'name' => 'DeleteCacheCluster',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteCacheClusterMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteCacheClusterResult',
         'wrapper' => true,
         'resultWrapper' => 'DeleteCacheClusterResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'CacheClusterNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheClusterNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidCacheClusterStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidCacheClusterState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'SnapshotAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SnapshotAlreadyExistsFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'SnapshotFeatureNotSupportedFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SnapshotFeatureNotSupportedFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'SnapshotQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SnapshotQuotaExceededFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -825,58 +665,46 @@ return [
         ],
       ],
     ],
-    'DeleteCacheParameterGroup' =>
-    [
+    'DeleteCacheParameterGroup' => [
       'name' => 'DeleteCacheParameterGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteCacheParameterGroupMessage',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidCacheParameterGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidCacheParameterGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'CacheParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -885,58 +713,46 @@ return [
         ],
       ],
     ],
-    'DeleteCacheSecurityGroup' =>
-    [
+    'DeleteCacheSecurityGroup' => [
       'name' => 'DeleteCacheSecurityGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteCacheSecurityGroupMessage',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidCacheSecurityGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidCacheSecurityGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'CacheSecurityGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheSecurityGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -945,36 +761,28 @@ return [
         ],
       ],
     ],
-    'DeleteCacheSubnetGroup' =>
-    [
+    'DeleteCacheSubnetGroup' => [
       'name' => 'DeleteCacheSubnetGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteCacheSubnetGroupMessage',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'CacheSubnetGroupInUse',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheSubnetGroupInUse',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'CacheSubnetGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheSubnetGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -983,97 +791,78 @@ return [
         ],
       ],
     ],
-    'DeleteReplicationGroup' =>
-    [
+    'DeleteReplicationGroup' => [
       'name' => 'DeleteReplicationGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteReplicationGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteReplicationGroupResult',
         'wrapper' => true,
         'resultWrapper' => 'DeleteReplicationGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ReplicationGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ReplicationGroupNotFoundFault',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidReplicationGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidReplicationGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'SnapshotAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SnapshotAlreadyExistsFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'SnapshotFeatureNotSupportedFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SnapshotFeatureNotSupportedFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'SnapshotQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SnapshotQuotaExceededFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1082,64 +871,51 @@ return [
         ],
       ],
     ],
-    'DeleteSnapshot' =>
-    [
+    'DeleteSnapshot' => [
       'name' => 'DeleteSnapshot',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteSnapshotMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteSnapshotResult',
         'wrapper' => true,
         'resultWrapper' => 'DeleteSnapshotResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'SnapshotNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SnapshotNotFoundFault',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidSnapshotStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidSnapshotState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1148,52 +924,41 @@ return [
         ],
       ],
     ],
-    'DescribeCacheClusters' =>
-    [
+    'DescribeCacheClusters' => [
       'name' => 'DescribeCacheClusters',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeCacheClustersMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CacheClusterMessage',
         'resultWrapper' => 'DescribeCacheClustersResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'CacheClusterNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheClusterNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1202,70 +967,55 @@ return [
         ],
       ],
     ],
-    'DescribeCacheEngineVersions' =>
-    [
+    'DescribeCacheEngineVersions' => [
       'name' => 'DescribeCacheEngineVersions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeCacheEngineVersionsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CacheEngineVersionMessage',
         'resultWrapper' => 'DescribeCacheEngineVersionsResult',
       ],
     ],
-    'DescribeCacheParameterGroups' =>
-    [
+    'DescribeCacheParameterGroups' => [
       'name' => 'DescribeCacheParameterGroups',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeCacheParameterGroupsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CacheParameterGroupsMessage',
         'resultWrapper' => 'DescribeCacheParameterGroupsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'CacheParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1274,52 +1024,41 @@ return [
         ],
       ],
     ],
-    'DescribeCacheParameters' =>
-    [
+    'DescribeCacheParameters' => [
       'name' => 'DescribeCacheParameters',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeCacheParametersMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CacheParameterGroupDetails',
         'resultWrapper' => 'DescribeCacheParametersResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'CacheParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1328,52 +1067,41 @@ return [
         ],
       ],
     ],
-    'DescribeCacheSecurityGroups' =>
-    [
+    'DescribeCacheSecurityGroups' => [
       'name' => 'DescribeCacheSecurityGroups',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeCacheSecurityGroupsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CacheSecurityGroupMessage',
         'resultWrapper' => 'DescribeCacheSecurityGroupsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'CacheSecurityGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheSecurityGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1382,30 +1110,23 @@ return [
         ],
       ],
     ],
-    'DescribeCacheSubnetGroups' =>
-    [
+    'DescribeCacheSubnetGroups' => [
       'name' => 'DescribeCacheSubnetGroups',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeCacheSubnetGroupsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CacheSubnetGroupMessage',
         'resultWrapper' => 'DescribeCacheSubnetGroupsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'CacheSubnetGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheSubnetGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1414,42 +1135,33 @@ return [
         ],
       ],
     ],
-    'DescribeEngineDefaultParameters' =>
-    [
+    'DescribeEngineDefaultParameters' => [
       'name' => 'DescribeEngineDefaultParameters',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeEngineDefaultParametersMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeEngineDefaultParametersResult',
         'wrapper' => true,
         'resultWrapper' => 'DescribeEngineDefaultParametersResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1458,41 +1170,32 @@ return [
         ],
       ],
     ],
-    'DescribeEvents' =>
-    [
+    'DescribeEvents' => [
       'name' => 'DescribeEvents',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeEventsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'EventsMessage',
         'resultWrapper' => 'DescribeEventsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1501,52 +1204,41 @@ return [
         ],
       ],
     ],
-    'DescribeReplicationGroups' =>
-    [
+    'DescribeReplicationGroups' => [
       'name' => 'DescribeReplicationGroups',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeReplicationGroupsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ReplicationGroupMessage',
         'resultWrapper' => 'DescribeReplicationGroupsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ReplicationGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ReplicationGroupNotFoundFault',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1555,52 +1247,41 @@ return [
         ],
       ],
     ],
-    'DescribeReservedCacheNodes' =>
-    [
+    'DescribeReservedCacheNodes' => [
       'name' => 'DescribeReservedCacheNodes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeReservedCacheNodesMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ReservedCacheNodeMessage',
         'resultWrapper' => 'DescribeReservedCacheNodesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ReservedCacheNodeNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ReservedCacheNodeNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1609,52 +1290,41 @@ return [
         ],
       ],
     ],
-    'DescribeReservedCacheNodesOfferings' =>
-    [
+    'DescribeReservedCacheNodesOfferings' => [
       'name' => 'DescribeReservedCacheNodesOfferings',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeReservedCacheNodesOfferingsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ReservedCacheNodesOfferingMessage',
         'resultWrapper' => 'DescribeReservedCacheNodesOfferingsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ReservedCacheNodesOfferingNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ReservedCacheNodesOfferingNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1663,63 +1333,50 @@ return [
         ],
       ],
     ],
-    'DescribeSnapshots' =>
-    [
+    'DescribeSnapshots' => [
       'name' => 'DescribeSnapshots',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeSnapshotsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeSnapshotsListMessage',
         'resultWrapper' => 'DescribeSnapshotsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'CacheClusterNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheClusterNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'SnapshotNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SnapshotNotFoundFault',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1728,141 +1385,114 @@ return [
         ],
       ],
     ],
-    'ModifyCacheCluster' =>
-    [
+    'ModifyCacheCluster' => [
       'name' => 'ModifyCacheCluster',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ModifyCacheClusterMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ModifyCacheClusterResult',
         'wrapper' => true,
         'resultWrapper' => 'ModifyCacheClusterResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidCacheClusterStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidCacheClusterState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidCacheSecurityGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidCacheSecurityGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InsufficientCacheClusterCapacityFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientCacheClusterCapacity',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'CacheClusterNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheClusterNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'NodeQuotaForClusterExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NodeQuotaForClusterExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'NodeQuotaForCustomerExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NodeQuotaForCustomerExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'CacheSecurityGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheSecurityGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'CacheParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        8 =>
         [
           'shape' => 'InvalidVPCNetworkStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidVPCNetworkStateFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        9 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        10 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1871,63 +1501,50 @@ return [
         ],
       ],
     ],
-    'ModifyCacheParameterGroup' =>
-    [
+    'ModifyCacheParameterGroup' => [
       'name' => 'ModifyCacheParameterGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ModifyCacheParameterGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CacheParameterGroupNameMessage',
         'resultWrapper' => 'ModifyCacheParameterGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'CacheParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidCacheParameterGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidCacheParameterGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1936,64 +1553,51 @@ return [
         ],
       ],
     ],
-    'ModifyCacheSubnetGroup' =>
-    [
+    'ModifyCacheSubnetGroup' => [
       'name' => 'ModifyCacheSubnetGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ModifyCacheSubnetGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ModifyCacheSubnetGroupResult',
         'wrapper' => true,
         'resultWrapper' => 'ModifyCacheSubnetGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'CacheSubnetGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheSubnetGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'CacheSubnetQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheSubnetQuotaExceededFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'SubnetInUse',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubnetInUse',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidSubnet',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidSubnet',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -2002,130 +1606,105 @@ return [
         ],
       ],
     ],
-    'ModifyReplicationGroup' =>
-    [
+    'ModifyReplicationGroup' => [
       'name' => 'ModifyReplicationGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ModifyReplicationGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ModifyReplicationGroupResult',
         'wrapper' => true,
         'resultWrapper' => 'ModifyReplicationGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ReplicationGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ReplicationGroupNotFoundFault',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidReplicationGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidReplicationGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidCacheClusterStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidCacheClusterState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidCacheSecurityGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidCacheSecurityGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'CacheClusterNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheClusterNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'CacheSecurityGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheSecurityGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'CacheParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'InvalidVPCNetworkStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidVPCNetworkStateFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        8 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        9 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -2134,75 +1713,60 @@ return [
         ],
       ],
     ],
-    'PurchaseReservedCacheNodesOffering' =>
-    [
+    'PurchaseReservedCacheNodesOffering' => [
       'name' => 'PurchaseReservedCacheNodesOffering',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PurchaseReservedCacheNodesOfferingMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'PurchaseReservedCacheNodesOfferingResult',
         'wrapper' => true,
         'resultWrapper' => 'PurchaseReservedCacheNodesOfferingResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ReservedCacheNodesOfferingNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ReservedCacheNodesOfferingNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ReservedCacheNodeAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ReservedCacheNodeAlreadyExists',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ReservedCacheNodeQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ReservedCacheNodeQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -2211,42 +1775,33 @@ return [
         ],
       ],
     ],
-    'RebootCacheCluster' =>
-    [
+    'RebootCacheCluster' => [
       'name' => 'RebootCacheCluster',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RebootCacheClusterMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RebootCacheClusterResult',
         'wrapper' => true,
         'resultWrapper' => 'RebootCacheClusterResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidCacheClusterStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidCacheClusterState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'CacheClusterNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheClusterNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -2255,63 +1810,50 @@ return [
         ],
       ],
     ],
-    'ResetCacheParameterGroup' =>
-    [
+    'ResetCacheParameterGroup' => [
       'name' => 'ResetCacheParameterGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ResetCacheParameterGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CacheParameterGroupNameMessage',
         'resultWrapper' => 'ResetCacheParameterGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidCacheParameterGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidCacheParameterGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'CacheParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -2320,75 +1862,60 @@ return [
         ],
       ],
     ],
-    'RevokeCacheSecurityGroupIngress' =>
-    [
+    'RevokeCacheSecurityGroupIngress' => [
       'name' => 'RevokeCacheSecurityGroupIngress',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RevokeCacheSecurityGroupIngressMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RevokeCacheSecurityGroupIngressResult',
         'wrapper' => true,
         'resultWrapper' => 'RevokeCacheSecurityGroupIngressResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'CacheSecurityGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'CacheSecurityGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'AuthorizationNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidCacheSecurityGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidCacheSecurityGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -2398,3048 +1925,2297 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'AuthorizationAlreadyExistsFault' =>
-    [
+  'shapes' => [
+    'AuthorizationAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'AuthorizationAlreadyExists',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'AuthorizationNotFoundFault' =>
-    [
+    'AuthorizationNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'AuthorizationNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'AuthorizeCacheSecurityGroupIngressMessage' =>
-    [
+    'AuthorizeCacheSecurityGroupIngressMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CacheSecurityGroupName',
-        1 => 'EC2SecurityGroupName',
-        2 => 'EC2SecurityGroupOwnerId',
+      'required' => [
+        'CacheSecurityGroupName',
+        'EC2SecurityGroupName',
+        'EC2SecurityGroupOwnerId',
       ],
-      'members' =>
-      [
-        'CacheSecurityGroupName' =>
-        [
+      'members' => [
+        'CacheSecurityGroupName' => [
           'shape' => 'String',
         ],
-        'EC2SecurityGroupName' =>
-        [
+        'EC2SecurityGroupName' => [
           'shape' => 'String',
         ],
-        'EC2SecurityGroupOwnerId' =>
-        [
+        'EC2SecurityGroupOwnerId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'AvailabilityZone' =>
-    [
+    'AvailabilityZone' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
       ],
       'wrapper' => true,
     ],
-    'AwsQueryErrorMessage' =>
-    [
+    'AwsQueryErrorMessage' => [
       'type' => 'string',
     ],
-    'Boolean' =>
-    [
+    'Boolean' => [
       'type' => 'boolean',
     ],
-    'BooleanOptional' =>
-    [
+    'BooleanOptional' => [
       'type' => 'boolean',
     ],
-    'CacheCluster' =>
-    [
+    'CacheCluster' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheClusterId' =>
-        [
+      'members' => [
+        'CacheClusterId' => [
           'shape' => 'String',
         ],
-        'ConfigurationEndpoint' =>
-        [
+        'ConfigurationEndpoint' => [
           'shape' => 'Endpoint',
         ],
-        'ClientDownloadLandingPage' =>
-        [
+        'ClientDownloadLandingPage' => [
           'shape' => 'String',
         ],
-        'CacheNodeType' =>
-        [
+        'CacheNodeType' => [
           'shape' => 'String',
         ],
-        'Engine' =>
-        [
+        'Engine' => [
           'shape' => 'String',
         ],
-        'EngineVersion' =>
-        [
+        'EngineVersion' => [
           'shape' => 'String',
         ],
-        'CacheClusterStatus' =>
-        [
+        'CacheClusterStatus' => [
           'shape' => 'String',
         ],
-        'NumCacheNodes' =>
-        [
+        'NumCacheNodes' => [
           'shape' => 'IntegerOptional',
         ],
-        'PreferredAvailabilityZone' =>
-        [
+        'PreferredAvailabilityZone' => [
           'shape' => 'String',
         ],
-        'CacheClusterCreateTime' =>
-        [
+        'CacheClusterCreateTime' => [
           'shape' => 'TStamp',
         ],
-        'PreferredMaintenanceWindow' =>
-        [
+        'PreferredMaintenanceWindow' => [
           'shape' => 'String',
         ],
-        'PendingModifiedValues' =>
-        [
+        'PendingModifiedValues' => [
           'shape' => 'PendingModifiedValues',
         ],
-        'NotificationConfiguration' =>
-        [
+        'NotificationConfiguration' => [
           'shape' => 'NotificationConfiguration',
         ],
-        'CacheSecurityGroups' =>
-        [
+        'CacheSecurityGroups' => [
           'shape' => 'CacheSecurityGroupMembershipList',
         ],
-        'CacheParameterGroup' =>
-        [
+        'CacheParameterGroup' => [
           'shape' => 'CacheParameterGroupStatus',
         ],
-        'CacheSubnetGroupName' =>
-        [
+        'CacheSubnetGroupName' => [
           'shape' => 'String',
         ],
-        'CacheNodes' =>
-        [
+        'CacheNodes' => [
           'shape' => 'CacheNodeList',
         ],
-        'AutoMinorVersionUpgrade' =>
-        [
+        'AutoMinorVersionUpgrade' => [
           'shape' => 'Boolean',
         ],
-        'SecurityGroups' =>
-        [
+        'SecurityGroups' => [
           'shape' => 'SecurityGroupMembershipList',
         ],
-        'ReplicationGroupId' =>
-        [
+        'ReplicationGroupId' => [
           'shape' => 'String',
         ],
-        'SnapshotRetentionLimit' =>
-        [
+        'SnapshotRetentionLimit' => [
           'shape' => 'IntegerOptional',
         ],
-        'SnapshotWindow' =>
-        [
+        'SnapshotWindow' => [
           'shape' => 'String',
         ],
       ],
       'wrapper' => true,
     ],
-    'CacheClusterAlreadyExistsFault' =>
-    [
+    'CacheClusterAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'CacheClusterAlreadyExists',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'CacheClusterList' =>
-    [
+    'CacheClusterList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CacheCluster',
         'locationName' => 'CacheCluster',
       ],
     ],
-    'CacheClusterMessage' =>
-    [
+    'CacheClusterMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'CacheClusters' =>
-        [
+        'CacheClusters' => [
           'shape' => 'CacheClusterList',
         ],
       ],
     ],
-    'CacheClusterNotFoundFault' =>
-    [
+    'CacheClusterNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'CacheClusterNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'CacheEngineVersion' =>
-    [
+    'CacheEngineVersion' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Engine' =>
-        [
+      'members' => [
+        'Engine' => [
           'shape' => 'String',
         ],
-        'EngineVersion' =>
-        [
+        'EngineVersion' => [
           'shape' => 'String',
         ],
-        'CacheParameterGroupFamily' =>
-        [
+        'CacheParameterGroupFamily' => [
           'shape' => 'String',
         ],
-        'CacheEngineDescription' =>
-        [
+        'CacheEngineDescription' => [
           'shape' => 'String',
         ],
-        'CacheEngineVersionDescription' =>
-        [
+        'CacheEngineVersionDescription' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CacheEngineVersionList' =>
-    [
+    'CacheEngineVersionList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CacheEngineVersion',
         'locationName' => 'CacheEngineVersion',
       ],
     ],
-    'CacheEngineVersionMessage' =>
-    [
+    'CacheEngineVersionMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'CacheEngineVersions' =>
-        [
+        'CacheEngineVersions' => [
           'shape' => 'CacheEngineVersionList',
         ],
       ],
     ],
-    'CacheNode' =>
-    [
+    'CacheNode' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheNodeId' =>
-        [
+      'members' => [
+        'CacheNodeId' => [
           'shape' => 'String',
         ],
-        'CacheNodeStatus' =>
-        [
+        'CacheNodeStatus' => [
           'shape' => 'String',
         ],
-        'CacheNodeCreateTime' =>
-        [
+        'CacheNodeCreateTime' => [
           'shape' => 'TStamp',
         ],
-        'Endpoint' =>
-        [
+        'Endpoint' => [
           'shape' => 'Endpoint',
         ],
-        'ParameterGroupStatus' =>
-        [
+        'ParameterGroupStatus' => [
           'shape' => 'String',
         ],
-        'SourceCacheNodeId' =>
-        [
+        'SourceCacheNodeId' => [
           'shape' => 'String',
         ],
-        'CustomerAvailabilityZone' =>
-        [
+        'CustomerAvailabilityZone' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CacheNodeIdsList' =>
-    [
+    'CacheNodeIdsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'CacheNodeId',
       ],
     ],
-    'CacheNodeList' =>
-    [
+    'CacheNodeList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CacheNode',
         'locationName' => 'CacheNode',
       ],
     ],
-    'CacheNodeTypeSpecificParameter' =>
-    [
+    'CacheNodeTypeSpecificParameter' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ParameterName' =>
-        [
+      'members' => [
+        'ParameterName' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
-        'Source' =>
-        [
+        'Source' => [
           'shape' => 'String',
         ],
-        'DataType' =>
-        [
+        'DataType' => [
           'shape' => 'String',
         ],
-        'AllowedValues' =>
-        [
+        'AllowedValues' => [
           'shape' => 'String',
         ],
-        'IsModifiable' =>
-        [
+        'IsModifiable' => [
           'shape' => 'Boolean',
         ],
-        'MinimumEngineVersion' =>
-        [
+        'MinimumEngineVersion' => [
           'shape' => 'String',
         ],
-        'CacheNodeTypeSpecificValues' =>
-        [
+        'CacheNodeTypeSpecificValues' => [
           'shape' => 'CacheNodeTypeSpecificValueList',
         ],
       ],
     ],
-    'CacheNodeTypeSpecificParametersList' =>
-    [
+    'CacheNodeTypeSpecificParametersList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CacheNodeTypeSpecificParameter',
         'locationName' => 'CacheNodeTypeSpecificParameter',
       ],
     ],
-    'CacheNodeTypeSpecificValue' =>
-    [
+    'CacheNodeTypeSpecificValue' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheNodeType' =>
-        [
+      'members' => [
+        'CacheNodeType' => [
           'shape' => 'String',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CacheNodeTypeSpecificValueList' =>
-    [
+    'CacheNodeTypeSpecificValueList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CacheNodeTypeSpecificValue',
         'locationName' => 'CacheNodeTypeSpecificValue',
       ],
     ],
-    'CacheParameterGroup' =>
-    [
+    'CacheParameterGroup' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheParameterGroupName' =>
-        [
+      'members' => [
+        'CacheParameterGroupName' => [
           'shape' => 'String',
         ],
-        'CacheParameterGroupFamily' =>
-        [
+        'CacheParameterGroupFamily' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
       ],
       'wrapper' => true,
     ],
-    'CacheParameterGroupAlreadyExistsFault' =>
-    [
+    'CacheParameterGroupAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'CacheParameterGroupAlreadyExists',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'CacheParameterGroupDetails' =>
-    [
+    'CacheParameterGroupDetails' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'Parameters' =>
-        [
+        'Parameters' => [
           'shape' => 'ParametersList',
         ],
-        'CacheNodeTypeSpecificParameters' =>
-        [
+        'CacheNodeTypeSpecificParameters' => [
           'shape' => 'CacheNodeTypeSpecificParametersList',
         ],
       ],
     ],
-    'CacheParameterGroupList' =>
-    [
+    'CacheParameterGroupList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CacheParameterGroup',
         'locationName' => 'CacheParameterGroup',
       ],
     ],
-    'CacheParameterGroupNameMessage' =>
-    [
+    'CacheParameterGroupNameMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheParameterGroupName' =>
-        [
+      'members' => [
+        'CacheParameterGroupName' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CacheParameterGroupNotFoundFault' =>
-    [
+    'CacheParameterGroupNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'CacheParameterGroupNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'CacheParameterGroupQuotaExceededFault' =>
-    [
+    'CacheParameterGroupQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'CacheParameterGroupQuotaExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'CacheParameterGroupStatus' =>
-    [
+    'CacheParameterGroupStatus' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheParameterGroupName' =>
-        [
+      'members' => [
+        'CacheParameterGroupName' => [
           'shape' => 'String',
         ],
-        'ParameterApplyStatus' =>
-        [
+        'ParameterApplyStatus' => [
           'shape' => 'String',
         ],
-        'CacheNodeIdsToReboot' =>
-        [
+        'CacheNodeIdsToReboot' => [
           'shape' => 'CacheNodeIdsList',
         ],
       ],
     ],
-    'CacheParameterGroupsMessage' =>
-    [
+    'CacheParameterGroupsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'CacheParameterGroups' =>
-        [
+        'CacheParameterGroups' => [
           'shape' => 'CacheParameterGroupList',
         ],
       ],
     ],
-    'CacheSecurityGroup' =>
-    [
+    'CacheSecurityGroup' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'OwnerId' =>
-        [
+      'members' => [
+        'OwnerId' => [
           'shape' => 'String',
         ],
-        'CacheSecurityGroupName' =>
-        [
+        'CacheSecurityGroupName' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
-        'EC2SecurityGroups' =>
-        [
+        'EC2SecurityGroups' => [
           'shape' => 'EC2SecurityGroupList',
         ],
       ],
       'wrapper' => true,
     ],
-    'CacheSecurityGroupAlreadyExistsFault' =>
-    [
+    'CacheSecurityGroupAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'CacheSecurityGroupAlreadyExists',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'CacheSecurityGroupMembership' =>
-    [
+    'CacheSecurityGroupMembership' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheSecurityGroupName' =>
-        [
+      'members' => [
+        'CacheSecurityGroupName' => [
           'shape' => 'String',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CacheSecurityGroupMembershipList' =>
-    [
+    'CacheSecurityGroupMembershipList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CacheSecurityGroupMembership',
         'locationName' => 'CacheSecurityGroup',
       ],
     ],
-    'CacheSecurityGroupMessage' =>
-    [
+    'CacheSecurityGroupMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'CacheSecurityGroups' =>
-        [
+        'CacheSecurityGroups' => [
           'shape' => 'CacheSecurityGroups',
         ],
       ],
     ],
-    'CacheSecurityGroupNameList' =>
-    [
+    'CacheSecurityGroupNameList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'CacheSecurityGroupName',
       ],
     ],
-    'CacheSecurityGroupNotFoundFault' =>
-    [
+    'CacheSecurityGroupNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'CacheSecurityGroupNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'CacheSecurityGroupQuotaExceededFault' =>
-    [
+    'CacheSecurityGroupQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'QuotaExceeded.CacheSecurityGroup',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'CacheSecurityGroups' =>
-    [
+    'CacheSecurityGroups' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CacheSecurityGroup',
         'locationName' => 'CacheSecurityGroup',
       ],
     ],
-    'CacheSubnetGroup' =>
-    [
+    'CacheSubnetGroup' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheSubnetGroupName' =>
-        [
+      'members' => [
+        'CacheSubnetGroupName' => [
           'shape' => 'String',
         ],
-        'CacheSubnetGroupDescription' =>
-        [
+        'CacheSubnetGroupDescription' => [
           'shape' => 'String',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
         ],
-        'Subnets' =>
-        [
+        'Subnets' => [
           'shape' => 'SubnetList',
         ],
       ],
       'wrapper' => true,
     ],
-    'CacheSubnetGroupAlreadyExistsFault' =>
-    [
+    'CacheSubnetGroupAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'CacheSubnetGroupAlreadyExists',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'CacheSubnetGroupInUse' =>
-    [
+    'CacheSubnetGroupInUse' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'CacheSubnetGroupInUse',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'CacheSubnetGroupMessage' =>
-    [
+    'CacheSubnetGroupMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'CacheSubnetGroups' =>
-        [
+        'CacheSubnetGroups' => [
           'shape' => 'CacheSubnetGroups',
         ],
       ],
     ],
-    'CacheSubnetGroupNotFoundFault' =>
-    [
+    'CacheSubnetGroupNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'CacheSubnetGroupNotFoundFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'CacheSubnetGroupQuotaExceededFault' =>
-    [
+    'CacheSubnetGroupQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'CacheSubnetGroupQuotaExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'CacheSubnetGroups' =>
-    [
+    'CacheSubnetGroups' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CacheSubnetGroup',
         'locationName' => 'CacheSubnetGroup',
       ],
     ],
-    'CacheSubnetQuotaExceededFault' =>
-    [
+    'CacheSubnetQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'CacheSubnetQuotaExceededFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ClusterIdList' =>
-    [
+    'ClusterIdList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'ClusterId',
       ],
     ],
-    'ClusterQuotaForCustomerExceededFault' =>
-    [
+    'ClusterQuotaForCustomerExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ClusterQuotaForCustomerExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'CopySnapshotMessage' =>
-    [
+    'CopySnapshotMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SourceSnapshotName',
-        1 => 'TargetSnapshotName',
+      'required' => [
+        'SourceSnapshotName',
+        'TargetSnapshotName',
       ],
-      'members' =>
-      [
-        'SourceSnapshotName' =>
-        [
+      'members' => [
+        'SourceSnapshotName' => [
           'shape' => 'String',
         ],
-        'TargetSnapshotName' =>
-        [
+        'TargetSnapshotName' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreateCacheClusterMessage' =>
-    [
+    'CreateCacheClusterMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CacheClusterId',
+      'required' => [
+        'CacheClusterId',
       ],
-      'members' =>
-      [
-        'CacheClusterId' =>
-        [
+      'members' => [
+        'CacheClusterId' => [
           'shape' => 'String',
         ],
-        'ReplicationGroupId' =>
-        [
+        'ReplicationGroupId' => [
           'shape' => 'String',
         ],
-        'NumCacheNodes' =>
-        [
+        'NumCacheNodes' => [
           'shape' => 'IntegerOptional',
         ],
-        'CacheNodeType' =>
-        [
+        'CacheNodeType' => [
           'shape' => 'String',
         ],
-        'Engine' =>
-        [
+        'Engine' => [
           'shape' => 'String',
         ],
-        'EngineVersion' =>
-        [
+        'EngineVersion' => [
           'shape' => 'String',
         ],
-        'CacheParameterGroupName' =>
-        [
+        'CacheParameterGroupName' => [
           'shape' => 'String',
         ],
-        'CacheSubnetGroupName' =>
-        [
+        'CacheSubnetGroupName' => [
           'shape' => 'String',
         ],
-        'CacheSecurityGroupNames' =>
-        [
+        'CacheSecurityGroupNames' => [
           'shape' => 'CacheSecurityGroupNameList',
         ],
-        'SecurityGroupIds' =>
-        [
+        'SecurityGroupIds' => [
           'shape' => 'SecurityGroupIdsList',
         ],
-        'SnapshotArns' =>
-        [
+        'SnapshotArns' => [
           'shape' => 'SnapshotArnsList',
         ],
-        'SnapshotName' =>
-        [
+        'SnapshotName' => [
           'shape' => 'String',
         ],
-        'AZMode' =>
-        [
+        'AZMode' => [
           'shape' => 'String',
         ],
-        'PreferredAvailabilityZone' =>
-        [
+        'PreferredAvailabilityZone' => [
           'shape' => 'String',
         ],
-        'PreferredAvailabilityZones' =>
-        [
+        'PreferredAvailabilityZones' => [
           'shape' => 'PreferredAvailabilityZoneList',
         ],
-        'PreferredMaintenanceWindow' =>
-        [
+        'PreferredMaintenanceWindow' => [
           'shape' => 'String',
         ],
-        'Port' =>
-        [
+        'Port' => [
           'shape' => 'IntegerOptional',
         ],
-        'NotificationTopicArn' =>
-        [
+        'NotificationTopicArn' => [
           'shape' => 'String',
         ],
-        'AutoMinorVersionUpgrade' =>
-        [
+        'AutoMinorVersionUpgrade' => [
           'shape' => 'BooleanOptional',
         ],
-        'SnapshotRetentionLimit' =>
-        [
+        'SnapshotRetentionLimit' => [
           'shape' => 'IntegerOptional',
         ],
-        'SnapshotWindow' =>
-        [
+        'SnapshotWindow' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreateCacheParameterGroupMessage' =>
-    [
+    'CreateCacheParameterGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CacheParameterGroupName',
-        1 => 'CacheParameterGroupFamily',
-        2 => 'Description',
+      'required' => [
+        'CacheParameterGroupName',
+        'CacheParameterGroupFamily',
+        'Description',
       ],
-      'members' =>
-      [
-        'CacheParameterGroupName' =>
-        [
+      'members' => [
+        'CacheParameterGroupName' => [
           'shape' => 'String',
         ],
-        'CacheParameterGroupFamily' =>
-        [
+        'CacheParameterGroupFamily' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreateCacheSecurityGroupMessage' =>
-    [
+    'CreateCacheSecurityGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CacheSecurityGroupName',
-        1 => 'Description',
+      'required' => [
+        'CacheSecurityGroupName',
+        'Description',
       ],
-      'members' =>
-      [
-        'CacheSecurityGroupName' =>
-        [
+      'members' => [
+        'CacheSecurityGroupName' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreateCacheSubnetGroupMessage' =>
-    [
+    'CreateCacheSubnetGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CacheSubnetGroupName',
-        1 => 'CacheSubnetGroupDescription',
-        2 => 'SubnetIds',
+      'required' => [
+        'CacheSubnetGroupName',
+        'CacheSubnetGroupDescription',
+        'SubnetIds',
       ],
-      'members' =>
-      [
-        'CacheSubnetGroupName' =>
-        [
+      'members' => [
+        'CacheSubnetGroupName' => [
           'shape' => 'String',
         ],
-        'CacheSubnetGroupDescription' =>
-        [
+        'CacheSubnetGroupDescription' => [
           'shape' => 'String',
         ],
-        'SubnetIds' =>
-        [
+        'SubnetIds' => [
           'shape' => 'SubnetIdentifierList',
         ],
       ],
     ],
-    'CreateReplicationGroupMessage' =>
-    [
+    'CreateReplicationGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ReplicationGroupId',
-        1 => 'PrimaryClusterId',
-        2 => 'ReplicationGroupDescription',
+      'required' => [
+        'ReplicationGroupId',
+        'PrimaryClusterId',
+        'ReplicationGroupDescription',
       ],
-      'members' =>
-      [
-        'ReplicationGroupId' =>
-        [
+      'members' => [
+        'ReplicationGroupId' => [
           'shape' => 'String',
         ],
-        'PrimaryClusterId' =>
-        [
+        'PrimaryClusterId' => [
           'shape' => 'String',
         ],
-        'ReplicationGroupDescription' =>
-        [
+        'ReplicationGroupDescription' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreateSnapshotMessage' =>
-    [
+    'CreateSnapshotMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CacheClusterId',
-        1 => 'SnapshotName',
+      'required' => [
+        'CacheClusterId',
+        'SnapshotName',
       ],
-      'members' =>
-      [
-        'CacheClusterId' =>
-        [
+      'members' => [
+        'CacheClusterId' => [
           'shape' => 'String',
         ],
-        'SnapshotName' =>
-        [
+        'SnapshotName' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteCacheClusterMessage' =>
-    [
+    'DeleteCacheClusterMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CacheClusterId',
+      'required' => [
+        'CacheClusterId',
       ],
-      'members' =>
-      [
-        'CacheClusterId' =>
-        [
+      'members' => [
+        'CacheClusterId' => [
           'shape' => 'String',
         ],
-        'FinalSnapshotIdentifier' =>
-        [
+        'FinalSnapshotIdentifier' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteCacheParameterGroupMessage' =>
-    [
+    'DeleteCacheParameterGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CacheParameterGroupName',
+      'required' => [
+        'CacheParameterGroupName',
       ],
-      'members' =>
-      [
-        'CacheParameterGroupName' =>
-        [
+      'members' => [
+        'CacheParameterGroupName' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteCacheSecurityGroupMessage' =>
-    [
+    'DeleteCacheSecurityGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CacheSecurityGroupName',
+      'required' => [
+        'CacheSecurityGroupName',
       ],
-      'members' =>
-      [
-        'CacheSecurityGroupName' =>
-        [
+      'members' => [
+        'CacheSecurityGroupName' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteCacheSubnetGroupMessage' =>
-    [
+    'DeleteCacheSubnetGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CacheSubnetGroupName',
+      'required' => [
+        'CacheSubnetGroupName',
       ],
-      'members' =>
-      [
-        'CacheSubnetGroupName' =>
-        [
+      'members' => [
+        'CacheSubnetGroupName' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteReplicationGroupMessage' =>
-    [
+    'DeleteReplicationGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ReplicationGroupId',
+      'required' => [
+        'ReplicationGroupId',
       ],
-      'members' =>
-      [
-        'ReplicationGroupId' =>
-        [
+      'members' => [
+        'ReplicationGroupId' => [
           'shape' => 'String',
         ],
-        'RetainPrimaryCluster' =>
-        [
+        'RetainPrimaryCluster' => [
           'shape' => 'BooleanOptional',
         ],
-        'FinalSnapshotIdentifier' =>
-        [
+        'FinalSnapshotIdentifier' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteSnapshotMessage' =>
-    [
+    'DeleteSnapshotMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SnapshotName',
+      'required' => [
+        'SnapshotName',
       ],
-      'members' =>
-      [
-        'SnapshotName' =>
-        [
+      'members' => [
+        'SnapshotName' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeCacheClustersMessage' =>
-    [
+    'DescribeCacheClustersMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheClusterId' =>
-        [
+      'members' => [
+        'CacheClusterId' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'ShowCacheNodeInfo' =>
-        [
+        'ShowCacheNodeInfo' => [
           'shape' => 'BooleanOptional',
         ],
       ],
     ],
-    'DescribeCacheEngineVersionsMessage' =>
-    [
+    'DescribeCacheEngineVersionsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Engine' =>
-        [
+      'members' => [
+        'Engine' => [
           'shape' => 'String',
         ],
-        'EngineVersion' =>
-        [
+        'EngineVersion' => [
           'shape' => 'String',
         ],
-        'CacheParameterGroupFamily' =>
-        [
+        'CacheParameterGroupFamily' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'DefaultOnly' =>
-        [
+        'DefaultOnly' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'DescribeCacheParameterGroupsMessage' =>
-    [
+    'DescribeCacheParameterGroupsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheParameterGroupName' =>
-        [
+      'members' => [
+        'CacheParameterGroupName' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeCacheParametersMessage' =>
-    [
+    'DescribeCacheParametersMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CacheParameterGroupName',
+      'required' => [
+        'CacheParameterGroupName',
       ],
-      'members' =>
-      [
-        'CacheParameterGroupName' =>
-        [
+      'members' => [
+        'CacheParameterGroupName' => [
           'shape' => 'String',
         ],
-        'Source' =>
-        [
+        'Source' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeCacheSecurityGroupsMessage' =>
-    [
+    'DescribeCacheSecurityGroupsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheSecurityGroupName' =>
-        [
+      'members' => [
+        'CacheSecurityGroupName' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeCacheSubnetGroupsMessage' =>
-    [
+    'DescribeCacheSubnetGroupsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheSubnetGroupName' =>
-        [
+      'members' => [
+        'CacheSubnetGroupName' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeEngineDefaultParametersMessage' =>
-    [
+    'DescribeEngineDefaultParametersMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CacheParameterGroupFamily',
+      'required' => [
+        'CacheParameterGroupFamily',
       ],
-      'members' =>
-      [
-        'CacheParameterGroupFamily' =>
-        [
+      'members' => [
+        'CacheParameterGroupFamily' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeEventsMessage' =>
-    [
+    'DescribeEventsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SourceIdentifier' =>
-        [
+      'members' => [
+        'SourceIdentifier' => [
           'shape' => 'String',
         ],
-        'SourceType' =>
-        [
+        'SourceType' => [
           'shape' => 'SourceType',
         ],
-        'StartTime' =>
-        [
+        'StartTime' => [
           'shape' => 'TStamp',
         ],
-        'EndTime' =>
-        [
+        'EndTime' => [
           'shape' => 'TStamp',
         ],
-        'Duration' =>
-        [
+        'Duration' => [
           'shape' => 'IntegerOptional',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeReplicationGroupsMessage' =>
-    [
+    'DescribeReplicationGroupsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReplicationGroupId' =>
-        [
+      'members' => [
+        'ReplicationGroupId' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeReservedCacheNodesMessage' =>
-    [
+    'DescribeReservedCacheNodesMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedCacheNodeId' =>
-        [
+      'members' => [
+        'ReservedCacheNodeId' => [
           'shape' => 'String',
         ],
-        'ReservedCacheNodesOfferingId' =>
-        [
+        'ReservedCacheNodesOfferingId' => [
           'shape' => 'String',
         ],
-        'CacheNodeType' =>
-        [
+        'CacheNodeType' => [
           'shape' => 'String',
         ],
-        'Duration' =>
-        [
+        'Duration' => [
           'shape' => 'String',
         ],
-        'ProductDescription' =>
-        [
+        'ProductDescription' => [
           'shape' => 'String',
         ],
-        'OfferingType' =>
-        [
+        'OfferingType' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeReservedCacheNodesOfferingsMessage' =>
-    [
+    'DescribeReservedCacheNodesOfferingsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedCacheNodesOfferingId' =>
-        [
+      'members' => [
+        'ReservedCacheNodesOfferingId' => [
           'shape' => 'String',
         ],
-        'CacheNodeType' =>
-        [
+        'CacheNodeType' => [
           'shape' => 'String',
         ],
-        'Duration' =>
-        [
+        'Duration' => [
           'shape' => 'String',
         ],
-        'ProductDescription' =>
-        [
+        'ProductDescription' => [
           'shape' => 'String',
         ],
-        'OfferingType' =>
-        [
+        'OfferingType' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeSnapshotsListMessage' =>
-    [
+    'DescribeSnapshotsListMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'Snapshots' =>
-        [
+        'Snapshots' => [
           'shape' => 'SnapshotList',
         ],
       ],
     ],
-    'DescribeSnapshotsMessage' =>
-    [
+    'DescribeSnapshotsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheClusterId' =>
-        [
+      'members' => [
+        'CacheClusterId' => [
           'shape' => 'String',
         ],
-        'SnapshotName' =>
-        [
+        'SnapshotName' => [
           'shape' => 'String',
         ],
-        'SnapshotSource' =>
-        [
+        'SnapshotSource' => [
           'shape' => 'String',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
       ],
     ],
-    'Double' =>
-    [
+    'Double' => [
       'type' => 'double',
     ],
-    'EC2SecurityGroup' =>
-    [
+    'EC2SecurityGroup' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Status' =>
-        [
+      'members' => [
+        'Status' => [
           'shape' => 'String',
         ],
-        'EC2SecurityGroupName' =>
-        [
+        'EC2SecurityGroupName' => [
           'shape' => 'String',
         ],
-        'EC2SecurityGroupOwnerId' =>
-        [
+        'EC2SecurityGroupOwnerId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'EC2SecurityGroupList' =>
-    [
+    'EC2SecurityGroupList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'EC2SecurityGroup',
         'locationName' => 'EC2SecurityGroup',
       ],
     ],
-    'Endpoint' =>
-    [
+    'Endpoint' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Address' =>
-        [
+      'members' => [
+        'Address' => [
           'shape' => 'String',
         ],
-        'Port' =>
-        [
+        'Port' => [
           'shape' => 'Integer',
         ],
       ],
     ],
-    'EngineDefaults' =>
-    [
+    'EngineDefaults' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheParameterGroupFamily' =>
-        [
+      'members' => [
+        'CacheParameterGroupFamily' => [
           'shape' => 'String',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'Parameters' =>
-        [
+        'Parameters' => [
           'shape' => 'ParametersList',
         ],
-        'CacheNodeTypeSpecificParameters' =>
-        [
+        'CacheNodeTypeSpecificParameters' => [
           'shape' => 'CacheNodeTypeSpecificParametersList',
         ],
       ],
       'wrapper' => true,
     ],
-    'Event' =>
-    [
+    'Event' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SourceIdentifier' =>
-        [
+      'members' => [
+        'SourceIdentifier' => [
           'shape' => 'String',
         ],
-        'SourceType' =>
-        [
+        'SourceType' => [
           'shape' => 'SourceType',
         ],
-        'Message' =>
-        [
+        'Message' => [
           'shape' => 'String',
         ],
-        'Date' =>
-        [
+        'Date' => [
           'shape' => 'TStamp',
         ],
       ],
     ],
-    'EventList' =>
-    [
+    'EventList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Event',
         'locationName' => 'Event',
       ],
     ],
-    'EventsMessage' =>
-    [
+    'EventsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'Events' =>
-        [
+        'Events' => [
           'shape' => 'EventList',
         ],
       ],
     ],
-    'InsufficientCacheClusterCapacityFault' =>
-    [
+    'InsufficientCacheClusterCapacityFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InsufficientCacheClusterCapacity',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'Integer' =>
-    [
+    'Integer' => [
       'type' => 'integer',
     ],
-    'IntegerOptional' =>
-    [
+    'IntegerOptional' => [
       'type' => 'integer',
     ],
-    'InvalidCacheClusterStateFault' =>
-    [
+    'InvalidCacheClusterStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidCacheClusterState',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidCacheParameterGroupStateFault' =>
-    [
+    'InvalidCacheParameterGroupStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidCacheParameterGroupState',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidCacheSecurityGroupStateFault' =>
-    [
+    'InvalidCacheSecurityGroupStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidCacheSecurityGroupState',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidParameterCombinationException' =>
-    [
+    'InvalidParameterCombinationException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'AwsQueryErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidParameterCombination',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidParameterValueException' =>
-    [
+    'InvalidParameterValueException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'AwsQueryErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidParameterValue',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidReplicationGroupStateFault' =>
-    [
+    'InvalidReplicationGroupStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidReplicationGroupState',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidSnapshotStateFault' =>
-    [
+    'InvalidSnapshotStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidSnapshotState',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidSubnet' =>
-    [
+    'InvalidSubnet' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidSubnet',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidVPCNetworkStateFault' =>
-    [
+    'InvalidVPCNetworkStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidVPCNetworkStateFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ModifyCacheClusterMessage' =>
-    [
+    'ModifyCacheClusterMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CacheClusterId',
+      'required' => [
+        'CacheClusterId',
       ],
-      'members' =>
-      [
-        'CacheClusterId' =>
-        [
+      'members' => [
+        'CacheClusterId' => [
           'shape' => 'String',
         ],
-        'NumCacheNodes' =>
-        [
+        'NumCacheNodes' => [
           'shape' => 'IntegerOptional',
         ],
-        'CacheNodeIdsToRemove' =>
-        [
+        'CacheNodeIdsToRemove' => [
           'shape' => 'CacheNodeIdsList',
         ],
-        'CacheSecurityGroupNames' =>
-        [
+        'CacheSecurityGroupNames' => [
           'shape' => 'CacheSecurityGroupNameList',
         ],
-        'SecurityGroupIds' =>
-        [
+        'SecurityGroupIds' => [
           'shape' => 'SecurityGroupIdsList',
         ],
-        'PreferredMaintenanceWindow' =>
-        [
+        'PreferredMaintenanceWindow' => [
           'shape' => 'String',
         ],
-        'NotificationTopicArn' =>
-        [
+        'NotificationTopicArn' => [
           'shape' => 'String',
         ],
-        'CacheParameterGroupName' =>
-        [
+        'CacheParameterGroupName' => [
           'shape' => 'String',
         ],
-        'NotificationTopicStatus' =>
-        [
+        'NotificationTopicStatus' => [
           'shape' => 'String',
         ],
-        'ApplyImmediately' =>
-        [
+        'ApplyImmediately' => [
           'shape' => 'Boolean',
         ],
-        'EngineVersion' =>
-        [
+        'EngineVersion' => [
           'shape' => 'String',
         ],
-        'AutoMinorVersionUpgrade' =>
-        [
+        'AutoMinorVersionUpgrade' => [
           'shape' => 'BooleanOptional',
         ],
-        'SnapshotRetentionLimit' =>
-        [
+        'SnapshotRetentionLimit' => [
           'shape' => 'IntegerOptional',
         ],
-        'SnapshotWindow' =>
-        [
+        'SnapshotWindow' => [
           'shape' => 'String',
         ],
-        'AZMode' =>
-        [
+        'AZMode' => [
           'shape' => 'String',
         ],
-        'NewAvailabilityZones' =>
-        [
+        'NewAvailabilityZones' => [
           'shape' => 'PreferredAvailabilityZoneList',
         ],
       ],
     ],
-    'ModifyCacheParameterGroupMessage' =>
-    [
+    'ModifyCacheParameterGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CacheParameterGroupName',
-        1 => 'ParameterNameValues',
+      'required' => [
+        'CacheParameterGroupName',
+        'ParameterNameValues',
       ],
-      'members' =>
-      [
-        'CacheParameterGroupName' =>
-        [
+      'members' => [
+        'CacheParameterGroupName' => [
           'shape' => 'String',
         ],
-        'ParameterNameValues' =>
-        [
+        'ParameterNameValues' => [
           'shape' => 'ParameterNameValueList',
         ],
       ],
     ],
-    'ModifyCacheSubnetGroupMessage' =>
-    [
+    'ModifyCacheSubnetGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CacheSubnetGroupName',
+      'required' => [
+        'CacheSubnetGroupName',
       ],
-      'members' =>
-      [
-        'CacheSubnetGroupName' =>
-        [
+      'members' => [
+        'CacheSubnetGroupName' => [
           'shape' => 'String',
         ],
-        'CacheSubnetGroupDescription' =>
-        [
+        'CacheSubnetGroupDescription' => [
           'shape' => 'String',
         ],
-        'SubnetIds' =>
-        [
+        'SubnetIds' => [
           'shape' => 'SubnetIdentifierList',
         ],
       ],
     ],
-    'ModifyReplicationGroupMessage' =>
-    [
+    'ModifyReplicationGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ReplicationGroupId',
+      'required' => [
+        'ReplicationGroupId',
       ],
-      'members' =>
-      [
-        'ReplicationGroupId' =>
-        [
+      'members' => [
+        'ReplicationGroupId' => [
           'shape' => 'String',
         ],
-        'ReplicationGroupDescription' =>
-        [
+        'ReplicationGroupDescription' => [
           'shape' => 'String',
         ],
-        'CacheSecurityGroupNames' =>
-        [
+        'CacheSecurityGroupNames' => [
           'shape' => 'CacheSecurityGroupNameList',
         ],
-        'SecurityGroupIds' =>
-        [
+        'SecurityGroupIds' => [
           'shape' => 'SecurityGroupIdsList',
         ],
-        'PreferredMaintenanceWindow' =>
-        [
+        'PreferredMaintenanceWindow' => [
           'shape' => 'String',
         ],
-        'NotificationTopicArn' =>
-        [
+        'NotificationTopicArn' => [
           'shape' => 'String',
         ],
-        'CacheParameterGroupName' =>
-        [
+        'CacheParameterGroupName' => [
           'shape' => 'String',
         ],
-        'NotificationTopicStatus' =>
-        [
+        'NotificationTopicStatus' => [
           'shape' => 'String',
         ],
-        'ApplyImmediately' =>
-        [
+        'ApplyImmediately' => [
           'shape' => 'Boolean',
         ],
-        'EngineVersion' =>
-        [
+        'EngineVersion' => [
           'shape' => 'String',
         ],
-        'AutoMinorVersionUpgrade' =>
-        [
+        'AutoMinorVersionUpgrade' => [
           'shape' => 'BooleanOptional',
         ],
-        'PrimaryClusterId' =>
-        [
+        'PrimaryClusterId' => [
           'shape' => 'String',
         ],
-        'SnapshotRetentionLimit' =>
-        [
+        'SnapshotRetentionLimit' => [
           'shape' => 'IntegerOptional',
         ],
-        'SnapshotWindow' =>
-        [
+        'SnapshotWindow' => [
           'shape' => 'String',
         ],
-        'SnapshottingClusterId' =>
-        [
+        'SnapshottingClusterId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'NodeGroup' =>
-    [
+    'NodeGroup' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'NodeGroupId' =>
-        [
+      'members' => [
+        'NodeGroupId' => [
           'shape' => 'String',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'String',
         ],
-        'PrimaryEndpoint' =>
-        [
+        'PrimaryEndpoint' => [
           'shape' => 'Endpoint',
         ],
-        'NodeGroupMembers' =>
-        [
+        'NodeGroupMembers' => [
           'shape' => 'NodeGroupMemberList',
         ],
       ],
     ],
-    'NodeGroupList' =>
-    [
+    'NodeGroupList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'NodeGroup',
         'locationName' => 'NodeGroup',
       ],
     ],
-    'NodeGroupMember' =>
-    [
+    'NodeGroupMember' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheClusterId' =>
-        [
+      'members' => [
+        'CacheClusterId' => [
           'shape' => 'String',
         ],
-        'CacheNodeId' =>
-        [
+        'CacheNodeId' => [
           'shape' => 'String',
         ],
-        'ReadEndpoint' =>
-        [
+        'ReadEndpoint' => [
           'shape' => 'Endpoint',
         ],
-        'PreferredAvailabilityZone' =>
-        [
+        'PreferredAvailabilityZone' => [
           'shape' => 'String',
         ],
-        'CurrentRole' =>
-        [
+        'CurrentRole' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'NodeGroupMemberList' =>
-    [
+    'NodeGroupMemberList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'NodeGroupMember',
         'locationName' => 'NodeGroupMember',
       ],
     ],
-    'NodeQuotaForClusterExceededFault' =>
-    [
+    'NodeQuotaForClusterExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'NodeQuotaForClusterExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'NodeQuotaForCustomerExceededFault' =>
-    [
+    'NodeQuotaForCustomerExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'NodeQuotaForCustomerExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'NodeSnapshot' =>
-    [
+    'NodeSnapshot' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheNodeId' =>
-        [
+      'members' => [
+        'CacheNodeId' => [
           'shape' => 'String',
         ],
-        'CacheSize' =>
-        [
+        'CacheSize' => [
           'shape' => 'String',
         ],
-        'CacheNodeCreateTime' =>
-        [
+        'CacheNodeCreateTime' => [
           'shape' => 'TStamp',
         ],
-        'SnapshotCreateTime' =>
-        [
+        'SnapshotCreateTime' => [
           'shape' => 'TStamp',
         ],
       ],
       'wrapper' => true,
     ],
-    'NodeSnapshotList' =>
-    [
+    'NodeSnapshotList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'NodeSnapshot',
         'locationName' => 'NodeSnapshot',
       ],
     ],
-    'NotificationConfiguration' =>
-    [
+    'NotificationConfiguration' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TopicArn' =>
-        [
+      'members' => [
+        'TopicArn' => [
           'shape' => 'String',
         ],
-        'TopicStatus' =>
-        [
+        'TopicStatus' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'Parameter' =>
-    [
+    'Parameter' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ParameterName' =>
-        [
+      'members' => [
+        'ParameterName' => [
           'shape' => 'String',
         ],
-        'ParameterValue' =>
-        [
+        'ParameterValue' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
-        'Source' =>
-        [
+        'Source' => [
           'shape' => 'String',
         ],
-        'DataType' =>
-        [
+        'DataType' => [
           'shape' => 'String',
         ],
-        'AllowedValues' =>
-        [
+        'AllowedValues' => [
           'shape' => 'String',
         ],
-        'IsModifiable' =>
-        [
+        'IsModifiable' => [
           'shape' => 'Boolean',
         ],
-        'MinimumEngineVersion' =>
-        [
+        'MinimumEngineVersion' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ParameterNameValue' =>
-    [
+    'ParameterNameValue' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ParameterName' =>
-        [
+      'members' => [
+        'ParameterName' => [
           'shape' => 'String',
         ],
-        'ParameterValue' =>
-        [
+        'ParameterValue' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ParameterNameValueList' =>
-    [
+    'ParameterNameValueList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ParameterNameValue',
         'locationName' => 'ParameterNameValue',
       ],
     ],
-    'ParametersList' =>
-    [
+    'ParametersList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Parameter',
         'locationName' => 'Parameter',
       ],
     ],
-    'PendingModifiedValues' =>
-    [
+    'PendingModifiedValues' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'NumCacheNodes' =>
-        [
+      'members' => [
+        'NumCacheNodes' => [
           'shape' => 'IntegerOptional',
         ],
-        'CacheNodeIdsToRemove' =>
-        [
+        'CacheNodeIdsToRemove' => [
           'shape' => 'CacheNodeIdsList',
         ],
-        'EngineVersion' =>
-        [
+        'EngineVersion' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'PreferredAvailabilityZoneList' =>
-    [
+    'PreferredAvailabilityZoneList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'PreferredAvailabilityZone',
       ],
     ],
-    'PurchaseReservedCacheNodesOfferingMessage' =>
-    [
+    'PurchaseReservedCacheNodesOfferingMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ReservedCacheNodesOfferingId',
+      'required' => [
+        'ReservedCacheNodesOfferingId',
       ],
-      'members' =>
-      [
-        'ReservedCacheNodesOfferingId' =>
-        [
+      'members' => [
+        'ReservedCacheNodesOfferingId' => [
           'shape' => 'String',
         ],
-        'ReservedCacheNodeId' =>
-        [
+        'ReservedCacheNodeId' => [
           'shape' => 'String',
         ],
-        'CacheNodeCount' =>
-        [
+        'CacheNodeCount' => [
           'shape' => 'IntegerOptional',
         ],
       ],
     ],
-    'RebootCacheClusterMessage' =>
-    [
+    'RebootCacheClusterMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CacheClusterId',
-        1 => 'CacheNodeIdsToReboot',
+      'required' => [
+        'CacheClusterId',
+        'CacheNodeIdsToReboot',
       ],
-      'members' =>
-      [
-        'CacheClusterId' =>
-        [
+      'members' => [
+        'CacheClusterId' => [
           'shape' => 'String',
         ],
-        'CacheNodeIdsToReboot' =>
-        [
+        'CacheNodeIdsToReboot' => [
           'shape' => 'CacheNodeIdsList',
         ],
       ],
     ],
-    'RecurringCharge' =>
-    [
+    'RecurringCharge' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'RecurringChargeAmount' =>
-        [
+      'members' => [
+        'RecurringChargeAmount' => [
           'shape' => 'Double',
         ],
-        'RecurringChargeFrequency' =>
-        [
+        'RecurringChargeFrequency' => [
           'shape' => 'String',
         ],
       ],
       'wrapper' => true,
     ],
-    'RecurringChargeList' =>
-    [
+    'RecurringChargeList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'RecurringCharge',
         'locationName' => 'RecurringCharge',
       ],
     ],
-    'ReplicationGroup' =>
-    [
+    'ReplicationGroup' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReplicationGroupId' =>
-        [
+      'members' => [
+        'ReplicationGroupId' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'String',
         ],
-        'PendingModifiedValues' =>
-        [
+        'PendingModifiedValues' => [
           'shape' => 'ReplicationGroupPendingModifiedValues',
         ],
-        'MemberClusters' =>
-        [
+        'MemberClusters' => [
           'shape' => 'ClusterIdList',
         ],
-        'NodeGroups' =>
-        [
+        'NodeGroups' => [
           'shape' => 'NodeGroupList',
         ],
-        'SnapshottingClusterId' =>
-        [
+        'SnapshottingClusterId' => [
           'shape' => 'String',
         ],
       ],
       'wrapper' => true,
     ],
-    'ReplicationGroupAlreadyExistsFault' =>
-    [
+    'ReplicationGroupAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ReplicationGroupAlreadyExists',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ReplicationGroupList' =>
-    [
+    'ReplicationGroupList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ReplicationGroup',
         'locationName' => 'ReplicationGroup',
       ],
     ],
-    'ReplicationGroupMessage' =>
-    [
+    'ReplicationGroupMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'ReplicationGroups' =>
-        [
+        'ReplicationGroups' => [
           'shape' => 'ReplicationGroupList',
         ],
       ],
     ],
-    'ReplicationGroupNotFoundFault' =>
-    [
+    'ReplicationGroupNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ReplicationGroupNotFoundFault',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ReplicationGroupPendingModifiedValues' =>
-    [
+    'ReplicationGroupPendingModifiedValues' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PrimaryClusterId' =>
-        [
+      'members' => [
+        'PrimaryClusterId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ReservedCacheNode' =>
-    [
+    'ReservedCacheNode' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedCacheNodeId' =>
-        [
+      'members' => [
+        'ReservedCacheNodeId' => [
           'shape' => 'String',
         ],
-        'ReservedCacheNodesOfferingId' =>
-        [
+        'ReservedCacheNodesOfferingId' => [
           'shape' => 'String',
         ],
-        'CacheNodeType' =>
-        [
+        'CacheNodeType' => [
           'shape' => 'String',
         ],
-        'StartTime' =>
-        [
+        'StartTime' => [
           'shape' => 'TStamp',
         ],
-        'Duration' =>
-        [
+        'Duration' => [
           'shape' => 'Integer',
         ],
-        'FixedPrice' =>
-        [
+        'FixedPrice' => [
           'shape' => 'Double',
         ],
-        'UsagePrice' =>
-        [
+        'UsagePrice' => [
           'shape' => 'Double',
         ],
-        'CacheNodeCount' =>
-        [
+        'CacheNodeCount' => [
           'shape' => 'Integer',
         ],
-        'ProductDescription' =>
-        [
+        'ProductDescription' => [
           'shape' => 'String',
         ],
-        'OfferingType' =>
-        [
+        'OfferingType' => [
           'shape' => 'String',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'String',
         ],
-        'RecurringCharges' =>
-        [
+        'RecurringCharges' => [
           'shape' => 'RecurringChargeList',
         ],
       ],
       'wrapper' => true,
     ],
-    'ReservedCacheNodeAlreadyExistsFault' =>
-    [
+    'ReservedCacheNodeAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ReservedCacheNodeAlreadyExists',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ReservedCacheNodeList' =>
-    [
+    'ReservedCacheNodeList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ReservedCacheNode',
         'locationName' => 'ReservedCacheNode',
       ],
     ],
-    'ReservedCacheNodeMessage' =>
-    [
+    'ReservedCacheNodeMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'ReservedCacheNodes' =>
-        [
+        'ReservedCacheNodes' => [
           'shape' => 'ReservedCacheNodeList',
         ],
       ],
     ],
-    'ReservedCacheNodeNotFoundFault' =>
-    [
+    'ReservedCacheNodeNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ReservedCacheNodeNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ReservedCacheNodeQuotaExceededFault' =>
-    [
+    'ReservedCacheNodeQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ReservedCacheNodeQuotaExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ReservedCacheNodesOffering' =>
-    [
+    'ReservedCacheNodesOffering' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedCacheNodesOfferingId' =>
-        [
+      'members' => [
+        'ReservedCacheNodesOfferingId' => [
           'shape' => 'String',
         ],
-        'CacheNodeType' =>
-        [
+        'CacheNodeType' => [
           'shape' => 'String',
         ],
-        'Duration' =>
-        [
+        'Duration' => [
           'shape' => 'Integer',
         ],
-        'FixedPrice' =>
-        [
+        'FixedPrice' => [
           'shape' => 'Double',
         ],
-        'UsagePrice' =>
-        [
+        'UsagePrice' => [
           'shape' => 'Double',
         ],
-        'ProductDescription' =>
-        [
+        'ProductDescription' => [
           'shape' => 'String',
         ],
-        'OfferingType' =>
-        [
+        'OfferingType' => [
           'shape' => 'String',
         ],
-        'RecurringCharges' =>
-        [
+        'RecurringCharges' => [
           'shape' => 'RecurringChargeList',
         ],
       ],
       'wrapper' => true,
     ],
-    'ReservedCacheNodesOfferingList' =>
-    [
+    'ReservedCacheNodesOfferingList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ReservedCacheNodesOffering',
         'locationName' => 'ReservedCacheNodesOffering',
       ],
     ],
-    'ReservedCacheNodesOfferingMessage' =>
-    [
+    'ReservedCacheNodesOfferingMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'ReservedCacheNodesOfferings' =>
-        [
+        'ReservedCacheNodesOfferings' => [
           'shape' => 'ReservedCacheNodesOfferingList',
         ],
       ],
     ],
-    'ReservedCacheNodesOfferingNotFoundFault' =>
-    [
+    'ReservedCacheNodesOfferingNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ReservedCacheNodesOfferingNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ResetCacheParameterGroupMessage' =>
-    [
+    'ResetCacheParameterGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CacheParameterGroupName',
-        1 => 'ParameterNameValues',
+      'required' => [
+        'CacheParameterGroupName',
+        'ParameterNameValues',
       ],
-      'members' =>
-      [
-        'CacheParameterGroupName' =>
-        [
+      'members' => [
+        'CacheParameterGroupName' => [
           'shape' => 'String',
         ],
-        'ResetAllParameters' =>
-        [
+        'ResetAllParameters' => [
           'shape' => 'Boolean',
         ],
-        'ParameterNameValues' =>
-        [
+        'ParameterNameValues' => [
           'shape' => 'ParameterNameValueList',
         ],
       ],
     ],
-    'RevokeCacheSecurityGroupIngressMessage' =>
-    [
+    'RevokeCacheSecurityGroupIngressMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CacheSecurityGroupName',
-        1 => 'EC2SecurityGroupName',
-        2 => 'EC2SecurityGroupOwnerId',
+      'required' => [
+        'CacheSecurityGroupName',
+        'EC2SecurityGroupName',
+        'EC2SecurityGroupOwnerId',
       ],
-      'members' =>
-      [
-        'CacheSecurityGroupName' =>
-        [
+      'members' => [
+        'CacheSecurityGroupName' => [
           'shape' => 'String',
         ],
-        'EC2SecurityGroupName' =>
-        [
+        'EC2SecurityGroupName' => [
           'shape' => 'String',
         ],
-        'EC2SecurityGroupOwnerId' =>
-        [
+        'EC2SecurityGroupOwnerId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'SecurityGroupIdsList' =>
-    [
+    'SecurityGroupIdsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'SecurityGroupId',
       ],
     ],
-    'SecurityGroupMembership' =>
-    [
+    'SecurityGroupMembership' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SecurityGroupId' =>
-        [
+      'members' => [
+        'SecurityGroupId' => [
           'shape' => 'String',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'SecurityGroupMembershipList' =>
-    [
+    'SecurityGroupMembershipList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'SecurityGroupMembership',
       ],
     ],
-    'Snapshot' =>
-    [
+    'Snapshot' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SnapshotName' =>
-        [
+      'members' => [
+        'SnapshotName' => [
           'shape' => 'String',
         ],
-        'CacheClusterId' =>
-        [
+        'CacheClusterId' => [
           'shape' => 'String',
         ],
-        'SnapshotStatus' =>
-        [
+        'SnapshotStatus' => [
           'shape' => 'String',
         ],
-        'SnapshotSource' =>
-        [
+        'SnapshotSource' => [
           'shape' => 'String',
         ],
-        'CacheNodeType' =>
-        [
+        'CacheNodeType' => [
           'shape' => 'String',
         ],
-        'Engine' =>
-        [
+        'Engine' => [
           'shape' => 'String',
         ],
-        'EngineVersion' =>
-        [
+        'EngineVersion' => [
           'shape' => 'String',
         ],
-        'NumCacheNodes' =>
-        [
+        'NumCacheNodes' => [
           'shape' => 'IntegerOptional',
         ],
-        'PreferredAvailabilityZone' =>
-        [
+        'PreferredAvailabilityZone' => [
           'shape' => 'String',
         ],
-        'CacheClusterCreateTime' =>
-        [
+        'CacheClusterCreateTime' => [
           'shape' => 'TStamp',
         ],
-        'PreferredMaintenanceWindow' =>
-        [
+        'PreferredMaintenanceWindow' => [
           'shape' => 'String',
         ],
-        'TopicArn' =>
-        [
+        'TopicArn' => [
           'shape' => 'String',
         ],
-        'Port' =>
-        [
+        'Port' => [
           'shape' => 'IntegerOptional',
         ],
-        'CacheParameterGroupName' =>
-        [
+        'CacheParameterGroupName' => [
           'shape' => 'String',
         ],
-        'CacheSubnetGroupName' =>
-        [
+        'CacheSubnetGroupName' => [
           'shape' => 'String',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
         ],
-        'AutoMinorVersionUpgrade' =>
-        [
+        'AutoMinorVersionUpgrade' => [
           'shape' => 'Boolean',
         ],
-        'SnapshotRetentionLimit' =>
-        [
+        'SnapshotRetentionLimit' => [
           'shape' => 'IntegerOptional',
         ],
-        'SnapshotWindow' =>
-        [
+        'SnapshotWindow' => [
           'shape' => 'String',
         ],
-        'NodeSnapshots' =>
-        [
+        'NodeSnapshots' => [
           'shape' => 'NodeSnapshotList',
         ],
       ],
       'wrapper' => true,
     ],
-    'SnapshotAlreadyExistsFault' =>
-    [
+    'SnapshotAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SnapshotAlreadyExistsFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SnapshotArnsList' =>
-    [
+    'SnapshotArnsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'SnapshotArn',
       ],
     ],
-    'SnapshotFeatureNotSupportedFault' =>
-    [
+    'SnapshotFeatureNotSupportedFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SnapshotFeatureNotSupportedFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SnapshotList' =>
-    [
+    'SnapshotList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Snapshot',
         'locationName' => 'Snapshot',
       ],
     ],
-    'SnapshotNotFoundFault' =>
-    [
+    'SnapshotNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SnapshotNotFoundFault',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SnapshotQuotaExceededFault' =>
-    [
+    'SnapshotQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SnapshotQuotaExceededFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SourceType' =>
-    [
+    'SourceType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'cache-cluster',
-        1 => 'cache-parameter-group',
-        2 => 'cache-security-group',
-        3 => 'cache-subnet-group',
+      'enum' => [
+        'cache-cluster',
+        'cache-parameter-group',
+        'cache-security-group',
+        'cache-subnet-group',
       ],
     ],
-    'String' =>
-    [
+    'String' => [
       'type' => 'string',
     ],
-    'Subnet' =>
-    [
+    'Subnet' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SubnetIdentifier' =>
-        [
+      'members' => [
+        'SubnetIdentifier' => [
           'shape' => 'String',
         ],
-        'SubnetAvailabilityZone' =>
-        [
+        'SubnetAvailabilityZone' => [
           'shape' => 'AvailabilityZone',
         ],
       ],
     ],
-    'SubnetIdentifierList' =>
-    [
+    'SubnetIdentifierList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'SubnetIdentifier',
       ],
     ],
-    'SubnetInUse' =>
-    [
+    'SubnetInUse' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SubnetInUse',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SubnetList' =>
-    [
+    'SubnetList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Subnet',
         'locationName' => 'Subnet',
       ],
     ],
-    'TStamp' =>
-    [
+    'TStamp' => [
       'type' => 'timestamp',
     ],
-    'AuthorizeCacheSecurityGroupIngressResult' =>
-    [
+    'AuthorizeCacheSecurityGroupIngressResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheSecurityGroup' =>
-        [
+      'members' => [
+        'CacheSecurityGroup' => [
           'shape' => 'CacheSecurityGroup',
         ],
       ],
     ],
-    'CopySnapshotResult' =>
-    [
+    'CopySnapshotResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Snapshot' =>
-        [
+      'members' => [
+        'Snapshot' => [
           'shape' => 'Snapshot',
         ],
       ],
     ],
-    'CreateCacheClusterResult' =>
-    [
+    'CreateCacheClusterResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheCluster' =>
-        [
+      'members' => [
+        'CacheCluster' => [
           'shape' => 'CacheCluster',
         ],
       ],
     ],
-    'CreateCacheParameterGroupResult' =>
-    [
+    'CreateCacheParameterGroupResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheParameterGroup' =>
-        [
+      'members' => [
+        'CacheParameterGroup' => [
           'shape' => 'CacheParameterGroup',
         ],
       ],
     ],
-    'CreateCacheSecurityGroupResult' =>
-    [
+    'CreateCacheSecurityGroupResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheSecurityGroup' =>
-        [
+      'members' => [
+        'CacheSecurityGroup' => [
           'shape' => 'CacheSecurityGroup',
         ],
       ],
     ],
-    'CreateCacheSubnetGroupResult' =>
-    [
+    'CreateCacheSubnetGroupResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheSubnetGroup' =>
-        [
+      'members' => [
+        'CacheSubnetGroup' => [
           'shape' => 'CacheSubnetGroup',
         ],
       ],
     ],
-    'CreateReplicationGroupResult' =>
-    [
+    'CreateReplicationGroupResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReplicationGroup' =>
-        [
+      'members' => [
+        'ReplicationGroup' => [
           'shape' => 'ReplicationGroup',
         ],
       ],
     ],
-    'CreateSnapshotResult' =>
-    [
+    'CreateSnapshotResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Snapshot' =>
-        [
+      'members' => [
+        'Snapshot' => [
           'shape' => 'Snapshot',
         ],
       ],
     ],
-    'DeleteCacheClusterResult' =>
-    [
+    'DeleteCacheClusterResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheCluster' =>
-        [
+      'members' => [
+        'CacheCluster' => [
           'shape' => 'CacheCluster',
         ],
       ],
     ],
-    'DeleteReplicationGroupResult' =>
-    [
+    'DeleteReplicationGroupResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReplicationGroup' =>
-        [
+      'members' => [
+        'ReplicationGroup' => [
           'shape' => 'ReplicationGroup',
         ],
       ],
     ],
-    'DeleteSnapshotResult' =>
-    [
+    'DeleteSnapshotResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Snapshot' =>
-        [
+      'members' => [
+        'Snapshot' => [
           'shape' => 'Snapshot',
         ],
       ],
     ],
-    'DescribeEngineDefaultParametersResult' =>
-    [
+    'DescribeEngineDefaultParametersResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EngineDefaults' =>
-        [
+      'members' => [
+        'EngineDefaults' => [
           'shape' => 'EngineDefaults',
         ],
       ],
     ],
-    'ModifyCacheClusterResult' =>
-    [
+    'ModifyCacheClusterResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheCluster' =>
-        [
+      'members' => [
+        'CacheCluster' => [
           'shape' => 'CacheCluster',
         ],
       ],
     ],
-    'ModifyCacheSubnetGroupResult' =>
-    [
+    'ModifyCacheSubnetGroupResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheSubnetGroup' =>
-        [
+      'members' => [
+        'CacheSubnetGroup' => [
           'shape' => 'CacheSubnetGroup',
         ],
       ],
     ],
-    'ModifyReplicationGroupResult' =>
-    [
+    'ModifyReplicationGroupResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReplicationGroup' =>
-        [
+      'members' => [
+        'ReplicationGroup' => [
           'shape' => 'ReplicationGroup',
         ],
       ],
     ],
-    'PurchaseReservedCacheNodesOfferingResult' =>
-    [
+    'PurchaseReservedCacheNodesOfferingResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedCacheNode' =>
-        [
+      'members' => [
+        'ReservedCacheNode' => [
           'shape' => 'ReservedCacheNode',
         ],
       ],
     ],
-    'RebootCacheClusterResult' =>
-    [
+    'RebootCacheClusterResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheCluster' =>
-        [
+      'members' => [
+        'CacheCluster' => [
           'shape' => 'CacheCluster',
         ],
       ],
     ],
-    'RevokeCacheSecurityGroupIngressResult' =>
-    [
+    'RevokeCacheSecurityGroupIngressResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CacheSecurityGroup' =>
-        [
+      'members' => [
+        'CacheSecurityGroup' => [
           'shape' => 'CacheSecurityGroup',
         ],
       ],

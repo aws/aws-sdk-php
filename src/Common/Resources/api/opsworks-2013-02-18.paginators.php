@@ -1,65 +1,48 @@
-<?php
-return [
-  'pagination' =>
-  [
-    'DescribeApps' =>
-    [
+<?php return [
+  'pagination' => [
+    'DescribeApps' => [
       'result_key' => 'Apps',
     ],
-    'DescribeCommands' =>
-    [
+    'DescribeCommands' => [
       'result_key' => 'Commands',
     ],
-    'DescribeDeployments' =>
-    [
+    'DescribeDeployments' => [
       'result_key' => 'Deployments',
     ],
-    'DescribeElasticIps' =>
-    [
+    'DescribeElasticIps' => [
       'result_key' => 'ElasticIps',
     ],
-    'DescribeElasticLoadBalancers' =>
-    [
+    'DescribeElasticLoadBalancers' => [
       'result_key' => 'ElasticLoadBalancers',
     ],
-    'DescribeInstances' =>
-    [
+    'DescribeInstances' => [
       'result_key' => 'Instances',
     ],
-    'DescribeLayers' =>
-    [
+    'DescribeLayers' => [
       'result_key' => 'Layers',
     ],
-    'DescribeLoadBasedAutoScaling' =>
-    [
+    'DescribeLoadBasedAutoScaling' => [
       'result_key' => 'LoadBasedAutoScalingConfigurations',
     ],
-    'DescribePermissions' =>
-    [
+    'DescribePermissions' => [
       'result_key' => 'Permissions',
     ],
-    'DescribeRaidArrays' =>
-    [
+    'DescribeRaidArrays' => [
       'result_key' => 'RaidArrays',
     ],
-    'DescribeServiceErrors' =>
-    [
+    'DescribeServiceErrors' => [
       'result_key' => 'ServiceErrors',
     ],
-    'DescribeStacks' =>
-    [
+    'DescribeStacks' => [
       'result_key' => 'Stacks',
     ],
-    'DescribeTimeBasedAutoScaling' =>
-    [
+    'DescribeTimeBasedAutoScaling' => [
       'result_key' => 'TimeBasedAutoScalingConfigurations',
     ],
-    'DescribeUserProfiles' =>
-    [
+    'DescribeUserProfiles' => [
       'result_key' => 'UserProfiles',
     ],
-    'DescribeVolumes' =>
-    [
+    'DescribeVolumes' => [
       'result_key' => 'Volumes',
     ],
   ],

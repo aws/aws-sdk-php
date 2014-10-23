@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2013-01-01',
     'endpointPrefix' => 'cloudsearch',
     'serviceFullName' => 'Amazon CloudSearch',
@@ -9,47 +7,36 @@ return [
     'xmlNamespace' => 'http://cloudsearch.amazonaws.com/doc/2013-01-01/',
     'protocol' => 'query',
   ],
-  'operations' =>
-  [
-    'BuildSuggesters' =>
-    [
+  'operations' => [
+    'BuildSuggesters' => [
       'name' => 'BuildSuggesters',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'BuildSuggestersRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'BuildSuggestersResponse',
         'resultWrapper' => 'BuildSuggestersResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BaseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalException',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResourceNotFound',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -58,45 +45,35 @@ return [
         ],
       ],
     ],
-    'CreateDomain' =>
-    [
+    'CreateDomain' => [
       'name' => 'CreateDomain',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateDomainRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateDomainResponse',
         'resultWrapper' => 'CreateDomainResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BaseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalException',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -105,67 +82,53 @@ return [
         ],
       ],
     ],
-    'DefineAnalysisScheme' =>
-    [
+    'DefineAnalysisScheme' => [
       'name' => 'DefineAnalysisScheme',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DefineAnalysisSchemeRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DefineAnalysisSchemeResponse',
         'resultWrapper' => 'DefineAnalysisSchemeResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BaseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalException',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidTypeException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidType',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResourceNotFound',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -174,67 +137,53 @@ return [
         ],
       ],
     ],
-    'DefineExpression' =>
-    [
+    'DefineExpression' => [
       'name' => 'DefineExpression',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DefineExpressionRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DefineExpressionResponse',
         'resultWrapper' => 'DefineExpressionResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BaseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalException',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidTypeException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidType',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResourceNotFound',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -243,67 +192,53 @@ return [
         ],
       ],
     ],
-    'DefineIndexField' =>
-    [
+    'DefineIndexField' => [
       'name' => 'DefineIndexField',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DefineIndexFieldRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DefineIndexFieldResponse',
         'resultWrapper' => 'DefineIndexFieldResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BaseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalException',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidTypeException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidType',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResourceNotFound',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -312,67 +247,53 @@ return [
         ],
       ],
     ],
-    'DefineSuggester' =>
-    [
+    'DefineSuggester' => [
       'name' => 'DefineSuggester',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DefineSuggesterRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DefineSuggesterResponse',
         'resultWrapper' => 'DefineSuggesterResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BaseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalException',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidTypeException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidType',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResourceNotFound',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -381,56 +302,44 @@ return [
         ],
       ],
     ],
-    'DeleteAnalysisScheme' =>
-    [
+    'DeleteAnalysisScheme' => [
       'name' => 'DeleteAnalysisScheme',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteAnalysisSchemeRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteAnalysisSchemeResponse',
         'resultWrapper' => 'DeleteAnalysisSchemeResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BaseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalException',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidTypeException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidType',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResourceNotFound',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -439,35 +348,27 @@ return [
         ],
       ],
     ],
-    'DeleteDomain' =>
-    [
+    'DeleteDomain' => [
       'name' => 'DeleteDomain',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteDomainRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteDomainResponse',
         'resultWrapper' => 'DeleteDomainResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BaseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalException',
             'httpStatusCode' => 500,
           ],
@@ -475,56 +376,44 @@ return [
         ],
       ],
     ],
-    'DeleteExpression' =>
-    [
+    'DeleteExpression' => [
       'name' => 'DeleteExpression',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteExpressionRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteExpressionResponse',
         'resultWrapper' => 'DeleteExpressionResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BaseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalException',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidTypeException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidType',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResourceNotFound',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -533,56 +422,44 @@ return [
         ],
       ],
     ],
-    'DeleteIndexField' =>
-    [
+    'DeleteIndexField' => [
       'name' => 'DeleteIndexField',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteIndexFieldRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteIndexFieldResponse',
         'resultWrapper' => 'DeleteIndexFieldResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BaseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalException',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidTypeException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidType',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResourceNotFound',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -591,56 +468,44 @@ return [
         ],
       ],
     ],
-    'DeleteSuggester' =>
-    [
+    'DeleteSuggester' => [
       'name' => 'DeleteSuggester',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteSuggesterRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteSuggesterResponse',
         'resultWrapper' => 'DeleteSuggesterResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BaseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalException',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidTypeException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidType',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResourceNotFound',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -649,45 +514,35 @@ return [
         ],
       ],
     ],
-    'DescribeAnalysisSchemes' =>
-    [
+    'DescribeAnalysisSchemes' => [
       'name' => 'DescribeAnalysisSchemes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeAnalysisSchemesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeAnalysisSchemesResponse',
         'resultWrapper' => 'DescribeAnalysisSchemesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BaseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalException',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResourceNotFound',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -696,78 +551,62 @@ return [
         ],
       ],
     ],
-    'DescribeAvailabilityOptions' =>
-    [
+    'DescribeAvailabilityOptions' => [
       'name' => 'DescribeAvailabilityOptions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeAvailabilityOptionsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeAvailabilityOptionsResponse',
         'resultWrapper' => 'DescribeAvailabilityOptionsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BaseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalException',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidTypeException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidType',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResourceNotFound',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'DisabledOperationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DisabledAction',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -776,35 +615,27 @@ return [
         ],
       ],
     ],
-    'DescribeDomains' =>
-    [
+    'DescribeDomains' => [
       'name' => 'DescribeDomains',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeDomainsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeDomainsResponse',
         'resultWrapper' => 'DescribeDomainsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BaseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalException',
             'httpStatusCode' => 500,
           ],
@@ -812,45 +643,35 @@ return [
         ],
       ],
     ],
-    'DescribeExpressions' =>
-    [
+    'DescribeExpressions' => [
       'name' => 'DescribeExpressions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeExpressionsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeExpressionsResponse',
         'resultWrapper' => 'DescribeExpressionsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BaseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalException',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResourceNotFound',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -859,45 +680,35 @@ return [
         ],
       ],
     ],
-    'DescribeIndexFields' =>
-    [
+    'DescribeIndexFields' => [
       'name' => 'DescribeIndexFields',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeIndexFieldsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeIndexFieldsResponse',
         'resultWrapper' => 'DescribeIndexFieldsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BaseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalException',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResourceNotFound',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -906,45 +717,35 @@ return [
         ],
       ],
     ],
-    'DescribeScalingParameters' =>
-    [
+    'DescribeScalingParameters' => [
       'name' => 'DescribeScalingParameters',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeScalingParametersRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeScalingParametersResponse',
         'resultWrapper' => 'DescribeScalingParametersResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BaseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalException',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResourceNotFound',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -953,45 +754,35 @@ return [
         ],
       ],
     ],
-    'DescribeServiceAccessPolicies' =>
-    [
+    'DescribeServiceAccessPolicies' => [
       'name' => 'DescribeServiceAccessPolicies',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeServiceAccessPoliciesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeServiceAccessPoliciesResponse',
         'resultWrapper' => 'DescribeServiceAccessPoliciesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BaseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalException',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResourceNotFound',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -1000,45 +791,35 @@ return [
         ],
       ],
     ],
-    'DescribeSuggesters' =>
-    [
+    'DescribeSuggesters' => [
       'name' => 'DescribeSuggesters',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeSuggestersRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeSuggestersResponse',
         'resultWrapper' => 'DescribeSuggestersResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BaseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalException',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResourceNotFound',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -1047,45 +828,35 @@ return [
         ],
       ],
     ],
-    'IndexDocuments' =>
-    [
+    'IndexDocuments' => [
       'name' => 'IndexDocuments',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'IndexDocumentsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'IndexDocumentsResponse',
         'resultWrapper' => 'IndexDocumentsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BaseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalException',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResourceNotFound',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -1094,100 +865,79 @@ return [
         ],
       ],
     ],
-    'ListDomainNames' =>
-    [
+    'ListDomainNames' => [
       'name' => 'ListDomainNames',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListDomainNamesResponse',
         'resultWrapper' => 'ListDomainNamesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BaseException',
           'exception' => true,
         ],
       ],
     ],
-    'UpdateAvailabilityOptions' =>
-    [
+    'UpdateAvailabilityOptions' => [
       'name' => 'UpdateAvailabilityOptions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateAvailabilityOptionsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdateAvailabilityOptionsResponse',
         'resultWrapper' => 'UpdateAvailabilityOptionsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BaseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalException',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidTypeException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidType',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResourceNotFound',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'DisabledOperationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DisabledAction',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -1196,67 +946,53 @@ return [
         ],
       ],
     ],
-    'UpdateScalingParameters' =>
-    [
+    'UpdateScalingParameters' => [
       'name' => 'UpdateScalingParameters',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateScalingParametersRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdateScalingParametersResponse',
         'resultWrapper' => 'UpdateScalingParametersResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BaseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalException',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResourceNotFound',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InvalidTypeException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidType',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -1265,67 +1001,53 @@ return [
         ],
       ],
     ],
-    'UpdateServiceAccessPolicies' =>
-    [
+    'UpdateServiceAccessPolicies' => [
       'name' => 'UpdateServiceAccessPolicies',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateServiceAccessPoliciesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdateServiceAccessPoliciesResponse',
         'resultWrapper' => 'UpdateServiceAccessPoliciesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BaseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalException',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResourceNotFound',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InvalidTypeException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidType',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -1335,1935 +1057,1460 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'APIVersion' =>
-    [
+  'shapes' => [
+    'APIVersion' => [
       'type' => 'string',
     ],
-    'ARN' =>
-    [
+    'ARN' => [
       'type' => 'string',
     ],
-    'AccessPoliciesStatus' =>
-    [
+    'AccessPoliciesStatus' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Options',
-        1 => 'Status',
+      'required' => [
+        'Options',
+        'Status',
       ],
-      'members' =>
-      [
-        'Options' =>
-        [
+      'members' => [
+        'Options' => [
           'shape' => 'PolicyDocument',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'OptionStatus',
         ],
       ],
     ],
-    'AlgorithmicStemming' =>
-    [
+    'AlgorithmicStemming' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'none',
-        1 => 'minimal',
-        2 => 'light',
-        3 => 'full',
+      'enum' => [
+        'none',
+        'minimal',
+        'light',
+        'full',
       ],
     ],
-    'AnalysisOptions' =>
-    [
+    'AnalysisOptions' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Synonyms' =>
-        [
+      'members' => [
+        'Synonyms' => [
           'shape' => 'String',
         ],
-        'Stopwords' =>
-        [
+        'Stopwords' => [
           'shape' => 'String',
         ],
-        'StemmingDictionary' =>
-        [
+        'StemmingDictionary' => [
           'shape' => 'String',
         ],
-        'JapaneseTokenizationDictionary' =>
-        [
+        'JapaneseTokenizationDictionary' => [
           'shape' => 'String',
         ],
-        'AlgorithmicStemming' =>
-        [
+        'AlgorithmicStemming' => [
           'shape' => 'AlgorithmicStemming',
         ],
       ],
     ],
-    'AnalysisScheme' =>
-    [
+    'AnalysisScheme' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AnalysisSchemeName',
-        1 => 'AnalysisSchemeLanguage',
+      'required' => [
+        'AnalysisSchemeName',
+        'AnalysisSchemeLanguage',
       ],
-      'members' =>
-      [
-        'AnalysisSchemeName' =>
-        [
+      'members' => [
+        'AnalysisSchemeName' => [
           'shape' => 'FieldName',
         ],
-        'AnalysisSchemeLanguage' =>
-        [
+        'AnalysisSchemeLanguage' => [
           'shape' => 'AnalysisSchemeLanguage',
         ],
-        'AnalysisOptions' =>
-        [
+        'AnalysisOptions' => [
           'shape' => 'AnalysisOptions',
         ],
       ],
     ],
-    'AnalysisSchemeLanguage' =>
-    [
+    'AnalysisSchemeLanguage' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'ar',
-        1 => 'bg',
-        2 => 'ca',
-        3 => 'cs',
-        4 => 'da',
-        5 => 'de',
-        6 => 'el',
-        7 => 'en',
-        8 => 'es',
-        9 => 'eu',
-        10 => 'fa',
-        11 => 'fi',
-        12 => 'fr',
-        13 => 'ga',
-        14 => 'gl',
-        15 => 'he',
-        16 => 'hi',
-        17 => 'hu',
-        18 => 'hy',
-        19 => 'id',
-        20 => 'it',
-        21 => 'ja',
-        22 => 'ko',
-        23 => 'lv',
-        24 => 'mul',
-        25 => 'nl',
-        26 => 'no',
-        27 => 'pt',
-        28 => 'ro',
-        29 => 'ru',
-        30 => 'sv',
-        31 => 'th',
-        32 => 'tr',
-        33 => 'zh-Hans',
-        34 => 'zh-Hant',
+      'enum' => [
+        'ar',
+        'bg',
+        'ca',
+        'cs',
+        'da',
+        'de',
+        'el',
+        'en',
+        'es',
+        'eu',
+        'fa',
+        'fi',
+        'fr',
+        'ga',
+        'gl',
+        'he',
+        'hi',
+        'hu',
+        'hy',
+        'id',
+        'it',
+        'ja',
+        'ko',
+        'lv',
+        'mul',
+        'nl',
+        'no',
+        'pt',
+        'ro',
+        'ru',
+        'sv',
+        'th',
+        'tr',
+        'zh-Hans',
+        'zh-Hant',
       ],
     ],
-    'AnalysisSchemeStatus' =>
-    [
+    'AnalysisSchemeStatus' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Options',
-        1 => 'Status',
+      'required' => [
+        'Options',
+        'Status',
       ],
-      'members' =>
-      [
-        'Options' =>
-        [
+      'members' => [
+        'Options' => [
           'shape' => 'AnalysisScheme',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'OptionStatus',
         ],
       ],
     ],
-    'AnalysisSchemeStatusList' =>
-    [
+    'AnalysisSchemeStatusList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AnalysisSchemeStatus',
       ],
     ],
-    'AvailabilityOptionsStatus' =>
-    [
+    'AvailabilityOptionsStatus' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Options',
-        1 => 'Status',
+      'required' => [
+        'Options',
+        'Status',
       ],
-      'members' =>
-      [
-        'Options' =>
-        [
+      'members' => [
+        'Options' => [
           'shape' => 'MultiAZ',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'OptionStatus',
         ],
       ],
     ],
-    'BaseException' =>
-    [
+    'BaseException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Code' =>
-        [
+      'members' => [
+        'Code' => [
           'shape' => 'ErrorCode',
         ],
-        'Message' =>
-        [
+        'Message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'Boolean' =>
-    [
+    'Boolean' => [
       'type' => 'boolean',
     ],
-    'BuildSuggestersRequest' =>
-    [
+    'BuildSuggestersRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
+      'required' => [
+        'DomainName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
       ],
     ],
-    'BuildSuggestersResponse' =>
-    [
+    'BuildSuggestersResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'FieldNames' =>
-        [
+      'members' => [
+        'FieldNames' => [
           'shape' => 'FieldNameList',
         ],
       ],
     ],
-    'CreateDomainRequest' =>
-    [
+    'CreateDomainRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
+      'required' => [
+        'DomainName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
       ],
     ],
-    'CreateDomainResponse' =>
-    [
+    'CreateDomainResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DomainStatus' =>
-        [
+      'members' => [
+        'DomainStatus' => [
           'shape' => 'DomainStatus',
         ],
       ],
     ],
-    'DateArrayOptions' =>
-    [
+    'DateArrayOptions' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DefaultValue' =>
-        [
+      'members' => [
+        'DefaultValue' => [
           'shape' => 'FieldValue',
         ],
-        'SourceFields' =>
-        [
+        'SourceFields' => [
           'shape' => 'FieldNameCommaList',
         ],
-        'FacetEnabled' =>
-        [
+        'FacetEnabled' => [
           'shape' => 'Boolean',
         ],
-        'SearchEnabled' =>
-        [
+        'SearchEnabled' => [
           'shape' => 'Boolean',
         ],
-        'ReturnEnabled' =>
-        [
+        'ReturnEnabled' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'DateOptions' =>
-    [
+    'DateOptions' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DefaultValue' =>
-        [
+      'members' => [
+        'DefaultValue' => [
           'shape' => 'FieldValue',
         ],
-        'SourceField' =>
-        [
+        'SourceField' => [
           'shape' => 'FieldName',
         ],
-        'FacetEnabled' =>
-        [
+        'FacetEnabled' => [
           'shape' => 'Boolean',
         ],
-        'SearchEnabled' =>
-        [
+        'SearchEnabled' => [
           'shape' => 'Boolean',
         ],
-        'ReturnEnabled' =>
-        [
+        'ReturnEnabled' => [
           'shape' => 'Boolean',
         ],
-        'SortEnabled' =>
-        [
+        'SortEnabled' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'DefineAnalysisSchemeRequest' =>
-    [
+    'DefineAnalysisSchemeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
-        1 => 'AnalysisScheme',
+      'required' => [
+        'DomainName',
+        'AnalysisScheme',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'AnalysisScheme' =>
-        [
+        'AnalysisScheme' => [
           'shape' => 'AnalysisScheme',
         ],
       ],
     ],
-    'DefineAnalysisSchemeResponse' =>
-    [
+    'DefineAnalysisSchemeResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AnalysisScheme',
+      'required' => [
+        'AnalysisScheme',
       ],
-      'members' =>
-      [
-        'AnalysisScheme' =>
-        [
+      'members' => [
+        'AnalysisScheme' => [
           'shape' => 'AnalysisSchemeStatus',
         ],
       ],
     ],
-    'DefineExpressionRequest' =>
-    [
+    'DefineExpressionRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
-        1 => 'Expression',
+      'required' => [
+        'DomainName',
+        'Expression',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'Expression' =>
-        [
+        'Expression' => [
           'shape' => 'Expression',
         ],
       ],
     ],
-    'DefineExpressionResponse' =>
-    [
+    'DefineExpressionResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Expression',
+      'required' => [
+        'Expression',
       ],
-      'members' =>
-      [
-        'Expression' =>
-        [
+      'members' => [
+        'Expression' => [
           'shape' => 'ExpressionStatus',
         ],
       ],
     ],
-    'DefineIndexFieldRequest' =>
-    [
+    'DefineIndexFieldRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
-        1 => 'IndexField',
+      'required' => [
+        'DomainName',
+        'IndexField',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'IndexField' =>
-        [
+        'IndexField' => [
           'shape' => 'IndexField',
         ],
       ],
     ],
-    'DefineIndexFieldResponse' =>
-    [
+    'DefineIndexFieldResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IndexField',
+      'required' => [
+        'IndexField',
       ],
-      'members' =>
-      [
-        'IndexField' =>
-        [
+      'members' => [
+        'IndexField' => [
           'shape' => 'IndexFieldStatus',
         ],
       ],
     ],
-    'DefineSuggesterRequest' =>
-    [
+    'DefineSuggesterRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
-        1 => 'Suggester',
+      'required' => [
+        'DomainName',
+        'Suggester',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'Suggester' =>
-        [
+        'Suggester' => [
           'shape' => 'Suggester',
         ],
       ],
     ],
-    'DefineSuggesterResponse' =>
-    [
+    'DefineSuggesterResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Suggester',
+      'required' => [
+        'Suggester',
       ],
-      'members' =>
-      [
-        'Suggester' =>
-        [
+      'members' => [
+        'Suggester' => [
           'shape' => 'SuggesterStatus',
         ],
       ],
     ],
-    'DeleteAnalysisSchemeRequest' =>
-    [
+    'DeleteAnalysisSchemeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
-        1 => 'AnalysisSchemeName',
+      'required' => [
+        'DomainName',
+        'AnalysisSchemeName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'AnalysisSchemeName' =>
-        [
+        'AnalysisSchemeName' => [
           'shape' => 'FieldName',
         ],
       ],
     ],
-    'DeleteAnalysisSchemeResponse' =>
-    [
+    'DeleteAnalysisSchemeResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AnalysisScheme',
+      'required' => [
+        'AnalysisScheme',
       ],
-      'members' =>
-      [
-        'AnalysisScheme' =>
-        [
+      'members' => [
+        'AnalysisScheme' => [
           'shape' => 'AnalysisSchemeStatus',
         ],
       ],
     ],
-    'DeleteDomainRequest' =>
-    [
+    'DeleteDomainRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
+      'required' => [
+        'DomainName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
       ],
     ],
-    'DeleteDomainResponse' =>
-    [
+    'DeleteDomainResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DomainStatus' =>
-        [
+      'members' => [
+        'DomainStatus' => [
           'shape' => 'DomainStatus',
         ],
       ],
     ],
-    'DeleteExpressionRequest' =>
-    [
+    'DeleteExpressionRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
-        1 => 'ExpressionName',
+      'required' => [
+        'DomainName',
+        'ExpressionName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'ExpressionName' =>
-        [
+        'ExpressionName' => [
           'shape' => 'FieldName',
         ],
       ],
     ],
-    'DeleteExpressionResponse' =>
-    [
+    'DeleteExpressionResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Expression',
+      'required' => [
+        'Expression',
       ],
-      'members' =>
-      [
-        'Expression' =>
-        [
+      'members' => [
+        'Expression' => [
           'shape' => 'ExpressionStatus',
         ],
       ],
     ],
-    'DeleteIndexFieldRequest' =>
-    [
+    'DeleteIndexFieldRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
-        1 => 'IndexFieldName',
+      'required' => [
+        'DomainName',
+        'IndexFieldName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'IndexFieldName' =>
-        [
+        'IndexFieldName' => [
           'shape' => 'FieldName',
         ],
       ],
     ],
-    'DeleteIndexFieldResponse' =>
-    [
+    'DeleteIndexFieldResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IndexField',
+      'required' => [
+        'IndexField',
       ],
-      'members' =>
-      [
-        'IndexField' =>
-        [
+      'members' => [
+        'IndexField' => [
           'shape' => 'IndexFieldStatus',
         ],
       ],
     ],
-    'DeleteSuggesterRequest' =>
-    [
+    'DeleteSuggesterRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
-        1 => 'SuggesterName',
+      'required' => [
+        'DomainName',
+        'SuggesterName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'SuggesterName' =>
-        [
+        'SuggesterName' => [
           'shape' => 'FieldName',
         ],
       ],
     ],
-    'DeleteSuggesterResponse' =>
-    [
+    'DeleteSuggesterResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Suggester',
+      'required' => [
+        'Suggester',
       ],
-      'members' =>
-      [
-        'Suggester' =>
-        [
+      'members' => [
+        'Suggester' => [
           'shape' => 'SuggesterStatus',
         ],
       ],
     ],
-    'DescribeAnalysisSchemesRequest' =>
-    [
+    'DescribeAnalysisSchemesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
+      'required' => [
+        'DomainName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'AnalysisSchemeNames' =>
-        [
+        'AnalysisSchemeNames' => [
           'shape' => 'FieldNameList',
         ],
-        'Deployed' =>
-        [
+        'Deployed' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'DescribeAnalysisSchemesResponse' =>
-    [
+    'DescribeAnalysisSchemesResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AnalysisSchemes',
+      'required' => [
+        'AnalysisSchemes',
       ],
-      'members' =>
-      [
-        'AnalysisSchemes' =>
-        [
+      'members' => [
+        'AnalysisSchemes' => [
           'shape' => 'AnalysisSchemeStatusList',
         ],
       ],
     ],
-    'DescribeAvailabilityOptionsRequest' =>
-    [
+    'DescribeAvailabilityOptionsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
+      'required' => [
+        'DomainName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'Deployed' =>
-        [
+        'Deployed' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'DescribeAvailabilityOptionsResponse' =>
-    [
+    'DescribeAvailabilityOptionsResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AvailabilityOptions' =>
-        [
+      'members' => [
+        'AvailabilityOptions' => [
           'shape' => 'AvailabilityOptionsStatus',
         ],
       ],
     ],
-    'DescribeDomainsRequest' =>
-    [
+    'DescribeDomainsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DomainNames' =>
-        [
+      'members' => [
+        'DomainNames' => [
           'shape' => 'DomainNameList',
         ],
       ],
     ],
-    'DescribeDomainsResponse' =>
-    [
+    'DescribeDomainsResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainStatusList',
+      'required' => [
+        'DomainStatusList',
       ],
-      'members' =>
-      [
-        'DomainStatusList' =>
-        [
+      'members' => [
+        'DomainStatusList' => [
           'shape' => 'DomainStatusList',
         ],
       ],
     ],
-    'DescribeExpressionsRequest' =>
-    [
+    'DescribeExpressionsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
+      'required' => [
+        'DomainName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'ExpressionNames' =>
-        [
+        'ExpressionNames' => [
           'shape' => 'FieldNameList',
         ],
-        'Deployed' =>
-        [
+        'Deployed' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'DescribeExpressionsResponse' =>
-    [
+    'DescribeExpressionsResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Expressions',
+      'required' => [
+        'Expressions',
       ],
-      'members' =>
-      [
-        'Expressions' =>
-        [
+      'members' => [
+        'Expressions' => [
           'shape' => 'ExpressionStatusList',
         ],
       ],
     ],
-    'DescribeIndexFieldsRequest' =>
-    [
+    'DescribeIndexFieldsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
+      'required' => [
+        'DomainName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'FieldNames' =>
-        [
+        'FieldNames' => [
           'shape' => 'FieldNameList',
         ],
-        'Deployed' =>
-        [
+        'Deployed' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'DescribeIndexFieldsResponse' =>
-    [
+    'DescribeIndexFieldsResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IndexFields',
+      'required' => [
+        'IndexFields',
       ],
-      'members' =>
-      [
-        'IndexFields' =>
-        [
+      'members' => [
+        'IndexFields' => [
           'shape' => 'IndexFieldStatusList',
         ],
       ],
     ],
-    'DescribeScalingParametersRequest' =>
-    [
+    'DescribeScalingParametersRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
+      'required' => [
+        'DomainName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
       ],
     ],
-    'DescribeScalingParametersResponse' =>
-    [
+    'DescribeScalingParametersResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ScalingParameters',
+      'required' => [
+        'ScalingParameters',
       ],
-      'members' =>
-      [
-        'ScalingParameters' =>
-        [
+      'members' => [
+        'ScalingParameters' => [
           'shape' => 'ScalingParametersStatus',
         ],
       ],
     ],
-    'DescribeServiceAccessPoliciesRequest' =>
-    [
+    'DescribeServiceAccessPoliciesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
+      'required' => [
+        'DomainName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'Deployed' =>
-        [
+        'Deployed' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'DescribeServiceAccessPoliciesResponse' =>
-    [
+    'DescribeServiceAccessPoliciesResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AccessPolicies',
+      'required' => [
+        'AccessPolicies',
       ],
-      'members' =>
-      [
-        'AccessPolicies' =>
-        [
+      'members' => [
+        'AccessPolicies' => [
           'shape' => 'AccessPoliciesStatus',
         ],
       ],
     ],
-    'DescribeSuggestersRequest' =>
-    [
+    'DescribeSuggestersRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
+      'required' => [
+        'DomainName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'SuggesterNames' =>
-        [
+        'SuggesterNames' => [
           'shape' => 'FieldNameList',
         ],
-        'Deployed' =>
-        [
+        'Deployed' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'DescribeSuggestersResponse' =>
-    [
+    'DescribeSuggestersResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Suggesters',
+      'required' => [
+        'Suggesters',
       ],
-      'members' =>
-      [
-        'Suggesters' =>
-        [
+      'members' => [
+        'Suggesters' => [
           'shape' => 'SuggesterStatusList',
         ],
       ],
     ],
-    'DisabledOperationException' =>
-    [
+    'DisabledOperationException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DisabledAction',
         'httpStatusCode' => 409,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'DocumentSuggesterOptions' =>
-    [
+    'DocumentSuggesterOptions' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SourceField',
+      'required' => [
+        'SourceField',
       ],
-      'members' =>
-      [
-        'SourceField' =>
-        [
+      'members' => [
+        'SourceField' => [
           'shape' => 'FieldName',
         ],
-        'FuzzyMatching' =>
-        [
+        'FuzzyMatching' => [
           'shape' => 'SuggesterFuzzyMatching',
         ],
-        'SortExpression' =>
-        [
+        'SortExpression' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DomainId' =>
-    [
+    'DomainId' => [
       'type' => 'string',
       'min' => 1,
       'max' => 64,
     ],
-    'DomainName' =>
-    [
+    'DomainName' => [
       'type' => 'string',
       'min' => 3,
       'max' => 28,
       'pattern' => '[a-z][a-z0-9\\-]+',
     ],
-    'DomainNameList' =>
-    [
+    'DomainNameList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DomainName',
       ],
     ],
-    'DomainNameMap' =>
-    [
+    'DomainNameMap' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'DomainName',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'APIVersion',
       ],
     ],
-    'DomainStatus' =>
-    [
+    'DomainStatus' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainId',
-        1 => 'DomainName',
-        2 => 'RequiresIndexDocuments',
+      'required' => [
+        'DomainId',
+        'DomainName',
+        'RequiresIndexDocuments',
       ],
-      'members' =>
-      [
-        'DomainId' =>
-        [
+      'members' => [
+        'DomainId' => [
           'shape' => 'DomainId',
         ],
-        'DomainName' =>
-        [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'ARN' =>
-        [
+        'ARN' => [
           'shape' => 'ARN',
         ],
-        'Created' =>
-        [
+        'Created' => [
           'shape' => 'Boolean',
         ],
-        'Deleted' =>
-        [
+        'Deleted' => [
           'shape' => 'Boolean',
         ],
-        'DocService' =>
-        [
+        'DocService' => [
           'shape' => 'ServiceEndpoint',
         ],
-        'SearchService' =>
-        [
+        'SearchService' => [
           'shape' => 'ServiceEndpoint',
         ],
-        'RequiresIndexDocuments' =>
-        [
+        'RequiresIndexDocuments' => [
           'shape' => 'Boolean',
         ],
-        'Processing' =>
-        [
+        'Processing' => [
           'shape' => 'Boolean',
         ],
-        'SearchInstanceType' =>
-        [
+        'SearchInstanceType' => [
           'shape' => 'SearchInstanceType',
         ],
-        'SearchPartitionCount' =>
-        [
+        'SearchPartitionCount' => [
           'shape' => 'PartitionCount',
         ],
-        'SearchInstanceCount' =>
-        [
+        'SearchInstanceCount' => [
           'shape' => 'InstanceCount',
         ],
-        'Limits' =>
-        [
+        'Limits' => [
           'shape' => 'Limits',
         ],
       ],
     ],
-    'DomainStatusList' =>
-    [
+    'DomainStatusList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DomainStatus',
       ],
     ],
-    'Double' =>
-    [
+    'Double' => [
       'type' => 'double',
     ],
-    'DoubleArrayOptions' =>
-    [
+    'DoubleArrayOptions' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DefaultValue' =>
-        [
+      'members' => [
+        'DefaultValue' => [
           'shape' => 'Double',
         ],
-        'SourceFields' =>
-        [
+        'SourceFields' => [
           'shape' => 'FieldNameCommaList',
         ],
-        'FacetEnabled' =>
-        [
+        'FacetEnabled' => [
           'shape' => 'Boolean',
         ],
-        'SearchEnabled' =>
-        [
+        'SearchEnabled' => [
           'shape' => 'Boolean',
         ],
-        'ReturnEnabled' =>
-        [
+        'ReturnEnabled' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'DoubleOptions' =>
-    [
+    'DoubleOptions' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DefaultValue' =>
-        [
+      'members' => [
+        'DefaultValue' => [
           'shape' => 'Double',
         ],
-        'SourceField' =>
-        [
+        'SourceField' => [
           'shape' => 'FieldName',
         ],
-        'FacetEnabled' =>
-        [
+        'FacetEnabled' => [
           'shape' => 'Boolean',
         ],
-        'SearchEnabled' =>
-        [
+        'SearchEnabled' => [
           'shape' => 'Boolean',
         ],
-        'ReturnEnabled' =>
-        [
+        'ReturnEnabled' => [
           'shape' => 'Boolean',
         ],
-        'SortEnabled' =>
-        [
+        'SortEnabled' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'ErrorCode' =>
-    [
+    'ErrorCode' => [
       'type' => 'string',
     ],
-    'ErrorMessage' =>
-    [
+    'ErrorMessage' => [
       'type' => 'string',
     ],
-    'Expression' =>
-    [
+    'Expression' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ExpressionName',
-        1 => 'ExpressionValue',
+      'required' => [
+        'ExpressionName',
+        'ExpressionValue',
       ],
-      'members' =>
-      [
-        'ExpressionName' =>
-        [
+      'members' => [
+        'ExpressionName' => [
           'shape' => 'FieldName',
         ],
-        'ExpressionValue' =>
-        [
+        'ExpressionValue' => [
           'shape' => 'ExpressionValue',
         ],
       ],
     ],
-    'ExpressionStatus' =>
-    [
+    'ExpressionStatus' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Options',
-        1 => 'Status',
+      'required' => [
+        'Options',
+        'Status',
       ],
-      'members' =>
-      [
-        'Options' =>
-        [
+      'members' => [
+        'Options' => [
           'shape' => 'Expression',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'OptionStatus',
         ],
       ],
     ],
-    'ExpressionStatusList' =>
-    [
+    'ExpressionStatusList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ExpressionStatus',
       ],
     ],
-    'ExpressionValue' =>
-    [
+    'ExpressionValue' => [
       'type' => 'string',
       'min' => 1,
       'max' => 10240,
     ],
-    'FieldName' =>
-    [
+    'FieldName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 64,
       'pattern' => '[a-z][a-z0-9_]*',
     ],
-    'FieldNameCommaList' =>
-    [
+    'FieldNameCommaList' => [
       'type' => 'string',
       'pattern' => '\\s*[a-z][a-z0-9_]*\\s*(,\\s*[a-z][a-z0-9_]*\\s*]*',
     ],
-    'FieldNameList' =>
-    [
+    'FieldNameList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'FieldName',
       ],
     ],
-    'FieldValue' =>
-    [
+    'FieldValue' => [
       'type' => 'string',
       'min' => 0,
       'max' => 1024,
     ],
-    'IndexDocumentsRequest' =>
-    [
+    'IndexDocumentsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
+      'required' => [
+        'DomainName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
       ],
     ],
-    'IndexDocumentsResponse' =>
-    [
+    'IndexDocumentsResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'FieldNames' =>
-        [
+      'members' => [
+        'FieldNames' => [
           'shape' => 'FieldNameList',
         ],
       ],
     ],
-    'IndexField' =>
-    [
+    'IndexField' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IndexFieldName',
-        1 => 'IndexFieldType',
+      'required' => [
+        'IndexFieldName',
+        'IndexFieldType',
       ],
-      'members' =>
-      [
-        'IndexFieldName' =>
-        [
+      'members' => [
+        'IndexFieldName' => [
           'shape' => 'FieldName',
         ],
-        'IndexFieldType' =>
-        [
+        'IndexFieldType' => [
           'shape' => 'IndexFieldType',
         ],
-        'IntOptions' =>
-        [
+        'IntOptions' => [
           'shape' => 'IntOptions',
         ],
-        'DoubleOptions' =>
-        [
+        'DoubleOptions' => [
           'shape' => 'DoubleOptions',
         ],
-        'LiteralOptions' =>
-        [
+        'LiteralOptions' => [
           'shape' => 'LiteralOptions',
         ],
-        'TextOptions' =>
-        [
+        'TextOptions' => [
           'shape' => 'TextOptions',
         ],
-        'DateOptions' =>
-        [
+        'DateOptions' => [
           'shape' => 'DateOptions',
         ],
-        'LatLonOptions' =>
-        [
+        'LatLonOptions' => [
           'shape' => 'LatLonOptions',
         ],
-        'IntArrayOptions' =>
-        [
+        'IntArrayOptions' => [
           'shape' => 'IntArrayOptions',
         ],
-        'DoubleArrayOptions' =>
-        [
+        'DoubleArrayOptions' => [
           'shape' => 'DoubleArrayOptions',
         ],
-        'LiteralArrayOptions' =>
-        [
+        'LiteralArrayOptions' => [
           'shape' => 'LiteralArrayOptions',
         ],
-        'TextArrayOptions' =>
-        [
+        'TextArrayOptions' => [
           'shape' => 'TextArrayOptions',
         ],
-        'DateArrayOptions' =>
-        [
+        'DateArrayOptions' => [
           'shape' => 'DateArrayOptions',
         ],
       ],
     ],
-    'IndexFieldStatus' =>
-    [
+    'IndexFieldStatus' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Options',
-        1 => 'Status',
+      'required' => [
+        'Options',
+        'Status',
       ],
-      'members' =>
-      [
-        'Options' =>
-        [
+      'members' => [
+        'Options' => [
           'shape' => 'IndexField',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'OptionStatus',
         ],
       ],
     ],
-    'IndexFieldStatusList' =>
-    [
+    'IndexFieldStatusList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'IndexFieldStatus',
       ],
     ],
-    'IndexFieldType' =>
-    [
+    'IndexFieldType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'int',
-        1 => 'double',
-        2 => 'literal',
-        3 => 'text',
-        4 => 'date',
-        5 => 'latlon',
-        6 => 'int-array',
-        7 => 'double-array',
-        8 => 'literal-array',
-        9 => 'text-array',
-        10 => 'date-array',
+      'enum' => [
+        'int',
+        'double',
+        'literal',
+        'text',
+        'date',
+        'latlon',
+        'int-array',
+        'double-array',
+        'literal-array',
+        'text-array',
+        'date-array',
       ],
     ],
-    'InstanceCount' =>
-    [
+    'InstanceCount' => [
       'type' => 'integer',
       'min' => 1,
     ],
-    'IntArrayOptions' =>
-    [
+    'IntArrayOptions' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DefaultValue' =>
-        [
+      'members' => [
+        'DefaultValue' => [
           'shape' => 'Long',
         ],
-        'SourceFields' =>
-        [
+        'SourceFields' => [
           'shape' => 'FieldNameCommaList',
         ],
-        'FacetEnabled' =>
-        [
+        'FacetEnabled' => [
           'shape' => 'Boolean',
         ],
-        'SearchEnabled' =>
-        [
+        'SearchEnabled' => [
           'shape' => 'Boolean',
         ],
-        'ReturnEnabled' =>
-        [
+        'ReturnEnabled' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'IntOptions' =>
-    [
+    'IntOptions' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DefaultValue' =>
-        [
+      'members' => [
+        'DefaultValue' => [
           'shape' => 'Long',
         ],
-        'SourceField' =>
-        [
+        'SourceField' => [
           'shape' => 'FieldName',
         ],
-        'FacetEnabled' =>
-        [
+        'FacetEnabled' => [
           'shape' => 'Boolean',
         ],
-        'SearchEnabled' =>
-        [
+        'SearchEnabled' => [
           'shape' => 'Boolean',
         ],
-        'ReturnEnabled' =>
-        [
+        'ReturnEnabled' => [
           'shape' => 'Boolean',
         ],
-        'SortEnabled' =>
-        [
+        'SortEnabled' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'InternalException' =>
-    [
+    'InternalException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InternalException',
         'httpStatusCode' => 500,
       ],
       'exception' => true,
     ],
-    'InvalidTypeException' =>
-    [
+    'InvalidTypeException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidType',
         'httpStatusCode' => 409,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'LatLonOptions' =>
-    [
+    'LatLonOptions' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DefaultValue' =>
-        [
+      'members' => [
+        'DefaultValue' => [
           'shape' => 'FieldValue',
         ],
-        'SourceField' =>
-        [
+        'SourceField' => [
           'shape' => 'FieldName',
         ],
-        'FacetEnabled' =>
-        [
+        'FacetEnabled' => [
           'shape' => 'Boolean',
         ],
-        'SearchEnabled' =>
-        [
+        'SearchEnabled' => [
           'shape' => 'Boolean',
         ],
-        'ReturnEnabled' =>
-        [
+        'ReturnEnabled' => [
           'shape' => 'Boolean',
         ],
-        'SortEnabled' =>
-        [
+        'SortEnabled' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'LimitExceededException' =>
-    [
+    'LimitExceededException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'LimitExceeded',
         'httpStatusCode' => 409,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'Limits' =>
-    [
+    'Limits' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'MaximumReplicationCount',
-        1 => 'MaximumPartitionCount',
+      'required' => [
+        'MaximumReplicationCount',
+        'MaximumPartitionCount',
       ],
-      'members' =>
-      [
-        'MaximumReplicationCount' =>
-        [
+      'members' => [
+        'MaximumReplicationCount' => [
           'shape' => 'MaximumReplicationCount',
         ],
-        'MaximumPartitionCount' =>
-        [
+        'MaximumPartitionCount' => [
           'shape' => 'MaximumPartitionCount',
         ],
       ],
     ],
-    'ListDomainNamesResponse' =>
-    [
+    'ListDomainNamesResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DomainNames' =>
-        [
+      'members' => [
+        'DomainNames' => [
           'shape' => 'DomainNameMap',
         ],
       ],
     ],
-    'LiteralArrayOptions' =>
-    [
+    'LiteralArrayOptions' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DefaultValue' =>
-        [
+      'members' => [
+        'DefaultValue' => [
           'shape' => 'FieldValue',
         ],
-        'SourceFields' =>
-        [
+        'SourceFields' => [
           'shape' => 'FieldNameCommaList',
         ],
-        'FacetEnabled' =>
-        [
+        'FacetEnabled' => [
           'shape' => 'Boolean',
         ],
-        'SearchEnabled' =>
-        [
+        'SearchEnabled' => [
           'shape' => 'Boolean',
         ],
-        'ReturnEnabled' =>
-        [
+        'ReturnEnabled' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'LiteralOptions' =>
-    [
+    'LiteralOptions' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DefaultValue' =>
-        [
+      'members' => [
+        'DefaultValue' => [
           'shape' => 'FieldValue',
         ],
-        'SourceField' =>
-        [
+        'SourceField' => [
           'shape' => 'FieldName',
         ],
-        'FacetEnabled' =>
-        [
+        'FacetEnabled' => [
           'shape' => 'Boolean',
         ],
-        'SearchEnabled' =>
-        [
+        'SearchEnabled' => [
           'shape' => 'Boolean',
         ],
-        'ReturnEnabled' =>
-        [
+        'ReturnEnabled' => [
           'shape' => 'Boolean',
         ],
-        'SortEnabled' =>
-        [
+        'SortEnabled' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'Long' =>
-    [
+    'Long' => [
       'type' => 'long',
     ],
-    'MaximumPartitionCount' =>
-    [
+    'MaximumPartitionCount' => [
       'type' => 'integer',
       'min' => 1,
     ],
-    'MaximumReplicationCount' =>
-    [
+    'MaximumReplicationCount' => [
       'type' => 'integer',
       'min' => 1,
     ],
-    'MultiAZ' =>
-    [
+    'MultiAZ' => [
       'type' => 'boolean',
     ],
-    'OptionState' =>
-    [
+    'OptionState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'RequiresIndexDocuments',
-        1 => 'Processing',
-        2 => 'Active',
-        3 => 'FailedToValidate',
+      'enum' => [
+        'RequiresIndexDocuments',
+        'Processing',
+        'Active',
+        'FailedToValidate',
       ],
     ],
-    'OptionStatus' =>
-    [
+    'OptionStatus' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CreationDate',
-        1 => 'UpdateDate',
-        2 => 'State',
+      'required' => [
+        'CreationDate',
+        'UpdateDate',
+        'State',
       ],
-      'members' =>
-      [
-        'CreationDate' =>
-        [
+      'members' => [
+        'CreationDate' => [
           'shape' => 'UpdateTimestamp',
         ],
-        'UpdateDate' =>
-        [
+        'UpdateDate' => [
           'shape' => 'UpdateTimestamp',
         ],
-        'UpdateVersion' =>
-        [
+        'UpdateVersion' => [
           'shape' => 'UIntValue',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'OptionState',
         ],
-        'PendingDeletion' =>
-        [
+        'PendingDeletion' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'PartitionCount' =>
-    [
+    'PartitionCount' => [
       'type' => 'integer',
       'min' => 1,
     ],
-    'PartitionInstanceType' =>
-    [
+    'PartitionInstanceType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'search.m1.small',
-        1 => 'search.m1.large',
-        2 => 'search.m2.xlarge',
-        3 => 'search.m2.2xlarge',
+      'enum' => [
+        'search.m1.small',
+        'search.m1.large',
+        'search.m2.xlarge',
+        'search.m2.2xlarge',
       ],
     ],
-    'PolicyDocument' =>
-    [
+    'PolicyDocument' => [
       'type' => 'string',
     ],
-    'ResourceNotFoundException' =>
-    [
+    'ResourceNotFoundException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ResourceNotFound',
         'httpStatusCode' => 409,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ScalingParameters' =>
-    [
+    'ScalingParameters' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DesiredInstanceType' =>
-        [
+      'members' => [
+        'DesiredInstanceType' => [
           'shape' => 'PartitionInstanceType',
         ],
-        'DesiredReplicationCount' =>
-        [
+        'DesiredReplicationCount' => [
           'shape' => 'UIntValue',
         ],
-        'DesiredPartitionCount' =>
-        [
+        'DesiredPartitionCount' => [
           'shape' => 'UIntValue',
         ],
       ],
     ],
-    'ScalingParametersStatus' =>
-    [
+    'ScalingParametersStatus' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Options',
-        1 => 'Status',
+      'required' => [
+        'Options',
+        'Status',
       ],
-      'members' =>
-      [
-        'Options' =>
-        [
+      'members' => [
+        'Options' => [
           'shape' => 'ScalingParameters',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'OptionStatus',
         ],
       ],
     ],
-    'SearchInstanceType' =>
-    [
+    'SearchInstanceType' => [
       'type' => 'string',
     ],
-    'ServiceEndpoint' =>
-    [
+    'ServiceEndpoint' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Endpoint' =>
-        [
+      'members' => [
+        'Endpoint' => [
           'shape' => 'ServiceUrl',
         ],
       ],
     ],
-    'ServiceUrl' =>
-    [
+    'ServiceUrl' => [
       'type' => 'string',
     ],
-    'String' =>
-    [
+    'String' => [
       'type' => 'string',
     ],
-    'Suggester' =>
-    [
+    'Suggester' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SuggesterName',
-        1 => 'DocumentSuggesterOptions',
+      'required' => [
+        'SuggesterName',
+        'DocumentSuggesterOptions',
       ],
-      'members' =>
-      [
-        'SuggesterName' =>
-        [
+      'members' => [
+        'SuggesterName' => [
           'shape' => 'FieldName',
         ],
-        'DocumentSuggesterOptions' =>
-        [
+        'DocumentSuggesterOptions' => [
           'shape' => 'DocumentSuggesterOptions',
         ],
       ],
     ],
-    'SuggesterFuzzyMatching' =>
-    [
+    'SuggesterFuzzyMatching' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'none',
-        1 => 'low',
-        2 => 'high',
+      'enum' => [
+        'none',
+        'low',
+        'high',
       ],
     ],
-    'SuggesterStatus' =>
-    [
+    'SuggesterStatus' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Options',
-        1 => 'Status',
+      'required' => [
+        'Options',
+        'Status',
       ],
-      'members' =>
-      [
-        'Options' =>
-        [
+      'members' => [
+        'Options' => [
           'shape' => 'Suggester',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'OptionStatus',
         ],
       ],
     ],
-    'SuggesterStatusList' =>
-    [
+    'SuggesterStatusList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'SuggesterStatus',
       ],
     ],
-    'TextArrayOptions' =>
-    [
+    'TextArrayOptions' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DefaultValue' =>
-        [
+      'members' => [
+        'DefaultValue' => [
           'shape' => 'FieldValue',
         ],
-        'SourceFields' =>
-        [
+        'SourceFields' => [
           'shape' => 'FieldNameCommaList',
         ],
-        'ReturnEnabled' =>
-        [
+        'ReturnEnabled' => [
           'shape' => 'Boolean',
         ],
-        'HighlightEnabled' =>
-        [
+        'HighlightEnabled' => [
           'shape' => 'Boolean',
         ],
-        'AnalysisScheme' =>
-        [
+        'AnalysisScheme' => [
           'shape' => 'Word',
         ],
       ],
     ],
-    'TextOptions' =>
-    [
+    'TextOptions' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DefaultValue' =>
-        [
+      'members' => [
+        'DefaultValue' => [
           'shape' => 'FieldValue',
         ],
-        'SourceField' =>
-        [
+        'SourceField' => [
           'shape' => 'FieldName',
         ],
-        'ReturnEnabled' =>
-        [
+        'ReturnEnabled' => [
           'shape' => 'Boolean',
         ],
-        'SortEnabled' =>
-        [
+        'SortEnabled' => [
           'shape' => 'Boolean',
         ],
-        'HighlightEnabled' =>
-        [
+        'HighlightEnabled' => [
           'shape' => 'Boolean',
         ],
-        'AnalysisScheme' =>
-        [
+        'AnalysisScheme' => [
           'shape' => 'Word',
         ],
       ],
     ],
-    'UIntValue' =>
-    [
+    'UIntValue' => [
       'type' => 'integer',
       'min' => 0,
     ],
-    'UpdateAvailabilityOptionsRequest' =>
-    [
+    'UpdateAvailabilityOptionsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
-        1 => 'MultiAZ',
+      'required' => [
+        'DomainName',
+        'MultiAZ',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'MultiAZ' =>
-        [
+        'MultiAZ' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'UpdateAvailabilityOptionsResponse' =>
-    [
+    'UpdateAvailabilityOptionsResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AvailabilityOptions' =>
-        [
+      'members' => [
+        'AvailabilityOptions' => [
           'shape' => 'AvailabilityOptionsStatus',
         ],
       ],
     ],
-    'UpdateScalingParametersRequest' =>
-    [
+    'UpdateScalingParametersRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
-        1 => 'ScalingParameters',
+      'required' => [
+        'DomainName',
+        'ScalingParameters',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'ScalingParameters' =>
-        [
+        'ScalingParameters' => [
           'shape' => 'ScalingParameters',
         ],
       ],
     ],
-    'UpdateScalingParametersResponse' =>
-    [
+    'UpdateScalingParametersResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ScalingParameters',
+      'required' => [
+        'ScalingParameters',
       ],
-      'members' =>
-      [
-        'ScalingParameters' =>
-        [
+      'members' => [
+        'ScalingParameters' => [
           'shape' => 'ScalingParametersStatus',
         ],
       ],
     ],
-    'UpdateServiceAccessPoliciesRequest' =>
-    [
+    'UpdateServiceAccessPoliciesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
-        1 => 'AccessPolicies',
+      'required' => [
+        'DomainName',
+        'AccessPolicies',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'DomainName',
         ],
-        'AccessPolicies' =>
-        [
+        'AccessPolicies' => [
           'shape' => 'PolicyDocument',
         ],
       ],
     ],
-    'UpdateServiceAccessPoliciesResponse' =>
-    [
+    'UpdateServiceAccessPoliciesResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AccessPolicies',
+      'required' => [
+        'AccessPolicies',
       ],
-      'members' =>
-      [
-        'AccessPolicies' =>
-        [
+      'members' => [
+        'AccessPolicies' => [
           'shape' => 'AccessPoliciesStatus',
         ],
       ],
     ],
-    'UpdateTimestamp' =>
-    [
+    'UpdateTimestamp' => [
       'type' => 'timestamp',
     ],
-    'Word' =>
-    [
+    'Word' => [
       'type' => 'string',
       'pattern' => '[\\S]+',
     ],

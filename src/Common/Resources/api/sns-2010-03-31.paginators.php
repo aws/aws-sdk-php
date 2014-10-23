@@ -1,33 +1,26 @@
-<?php
-return [
-  'pagination' =>
-  [
-    'ListEndpointsByPlatformApplication' =>
-    [
+<?php return [
+  'pagination' => [
+    'ListEndpointsByPlatformApplication' => [
       'input_token' => 'NextToken',
       'output_token' => 'NextToken',
       'result_key' => 'Endpoints',
     ],
-    'ListPlatformApplications' =>
-    [
+    'ListPlatformApplications' => [
       'input_token' => 'NextToken',
       'output_token' => 'NextToken',
       'result_key' => 'PlatformApplications',
     ],
-    'ListSubscriptions' =>
-    [
+    'ListSubscriptions' => [
       'input_token' => 'NextToken',
       'output_token' => 'NextToken',
       'result_key' => 'Subscriptions',
     ],
-    'ListSubscriptionsByTopic' =>
-    [
+    'ListSubscriptionsByTopic' => [
       'input_token' => 'NextToken',
       'output_token' => 'NextToken',
       'result_key' => 'Subscriptions',
     ],
-    'ListTopics' =>
-    [
+    'ListTopics' => [
       'input_token' => 'NextToken',
       'output_token' => 'NextToken',
       'result_key' => 'Topics',

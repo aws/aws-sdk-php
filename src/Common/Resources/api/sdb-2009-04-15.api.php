@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2009-04-15',
     'endpointPrefix' => 'sdb',
     'serviceFullName' => 'Amazon SimpleDB',
@@ -9,128 +7,102 @@ return [
     'xmlNamespace' => 'http://sdb.amazonaws.com/doc/2009-04-15/',
     'protocol' => 'query',
   ],
-  'operations' =>
-  [
-    'BatchDeleteAttributes' =>
-    [
+  'operations' => [
+    'BatchDeleteAttributes' => [
       'name' => 'BatchDeleteAttributes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'BatchDeleteAttributesRequest',
       ],
     ],
-    'BatchPutAttributes' =>
-    [
+    'BatchPutAttributes' => [
       'name' => 'BatchPutAttributes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'BatchPutAttributesRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DuplicateItemName',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DuplicateItemName',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValue',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'MissingParameter',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MissingParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'NoSuchDomain',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchDomain',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'NumberItemAttributesExceeded',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NumberItemAttributesExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'NumberDomainAttributesExceeded',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NumberDomainAttributesExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'NumberDomainBytesExceeded',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NumberDomainBytesExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'NumberSubmittedItemsExceeded',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NumberSubmittedItemsExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        8 =>
         [
           'shape' => 'NumberSubmittedAttributesExceeded',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NumberSubmittedAttributesExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -139,47 +111,37 @@ return [
         ],
       ],
     ],
-    'CreateDomain' =>
-    [
+    'CreateDomain' => [
       'name' => 'CreateDomain',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateDomainRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterValue',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'MissingParameter',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MissingParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'NumberDomainsExceeded',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NumberDomainsExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -188,58 +150,46 @@ return [
         ],
       ],
     ],
-    'DeleteAttributes' =>
-    [
+    'DeleteAttributes' => [
       'name' => 'DeleteAttributes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteAttributesRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterValue',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'MissingParameter',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MissingParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'NoSuchDomain',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchDomain',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'AttributeDoesNotExist',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AttributeDoesNotExist',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -248,25 +198,19 @@ return [
         ],
       ],
     ],
-    'DeleteDomain' =>
-    [
+    'DeleteDomain' => [
       'name' => 'DeleteDomain',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteDomainRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'MissingParameter',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MissingParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -275,41 +219,32 @@ return [
         ],
       ],
     ],
-    'DomainMetadata' =>
-    [
+    'DomainMetadata' => [
       'name' => 'DomainMetadata',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DomainMetadataRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DomainMetadataResult',
         'resultWrapper' => 'DomainMetadataResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'MissingParameter',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MissingParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'NoSuchDomain',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchDomain',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -318,52 +253,41 @@ return [
         ],
       ],
     ],
-    'GetAttributes' =>
-    [
+    'GetAttributes' => [
       'name' => 'GetAttributes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetAttributesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetAttributesResult',
         'resultWrapper' => 'GetAttributesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterValue',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'MissingParameter',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MissingParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'NoSuchDomain',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchDomain',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -372,41 +296,32 @@ return [
         ],
       ],
     ],
-    'ListDomains' =>
-    [
+    'ListDomains' => [
       'name' => 'ListDomains',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListDomainsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListDomainsResult',
         'resultWrapper' => 'ListDomainsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterValue',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidNextToken',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidNextToken',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -415,91 +330,73 @@ return [
         ],
       ],
     ],
-    'PutAttributes' =>
-    [
+    'PutAttributes' => [
       'name' => 'PutAttributes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutAttributesRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterValue',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'MissingParameter',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MissingParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'NoSuchDomain',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchDomain',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'NumberDomainAttributesExceeded',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NumberDomainAttributesExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'NumberDomainBytesExceeded',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NumberDomainBytesExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'NumberItemAttributesExceeded',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NumberItemAttributesExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'AttributeDoesNotExist',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AttributeDoesNotExist',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -508,118 +405,95 @@ return [
         ],
       ],
     ],
-    'Select' =>
-    [
+    'Select' => [
       'name' => 'Select',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SelectRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'SelectResult',
         'resultWrapper' => 'SelectResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterValue',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidNextToken',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidNextToken',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidNumberPredicates',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidNumberPredicates',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidNumberValueTests',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidNumberValueTests',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InvalidQueryExpression',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidQueryExpression',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'MissingParameter',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MissingParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'NoSuchDomain',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchDomain',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'RequestTimeout',
-          'error' =>
-          [
+          'error' => [
             'code' => 'RequestTimeout',
             'httpStatusCode' => 408,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        8 =>
         [
           'shape' => 'TooManyRequestedAttributes',
-          'error' =>
-          [
+          'error' => [
             'code' => 'TooManyRequestedAttributes',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -629,820 +503,625 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'Attribute' =>
-    [
+  'shapes' => [
+    'Attribute' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
-        1 => 'Value',
+      'required' => [
+        'Name',
+        'Value',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
-        'AlternateNameEncoding' =>
-        [
+        'AlternateNameEncoding' => [
           'shape' => 'String',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'String',
         ],
-        'AlternateValueEncoding' =>
-        [
+        'AlternateValueEncoding' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'AttributeDoesNotExist' =>
-    [
+    'AttributeDoesNotExist' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'BoxUsage' =>
-        [
+      'members' => [
+        'BoxUsage' => [
           'shape' => 'Float',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'AttributeDoesNotExist',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'AttributeList' =>
-    [
+    'AttributeList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Attribute',
         'locationName' => 'Attribute',
       ],
       'flattened' => true,
     ],
-    'AttributeNameList' =>
-    [
+    'AttributeNameList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'AttributeName',
       ],
       'flattened' => true,
     ],
-    'BatchDeleteAttributesRequest' =>
-    [
+    'BatchDeleteAttributesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
-        1 => 'Items',
+      'required' => [
+        'DomainName',
+        'Items',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'String',
         ],
-        'Items' =>
-        [
+        'Items' => [
           'shape' => 'DeletableItemList',
         ],
       ],
     ],
-    'BatchPutAttributesRequest' =>
-    [
+    'BatchPutAttributesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
-        1 => 'Items',
+      'required' => [
+        'DomainName',
+        'Items',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'String',
         ],
-        'Items' =>
-        [
+        'Items' => [
           'shape' => 'ReplaceableItemList',
         ],
       ],
     ],
-    'Boolean' =>
-    [
+    'Boolean' => [
       'type' => 'boolean',
     ],
-    'CreateDomainRequest' =>
-    [
+    'CreateDomainRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
+      'required' => [
+        'DomainName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeletableItem' =>
-    [
+    'DeletableItem' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
+      'required' => [
+        'Name',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
           'locationName' => 'ItemName',
         ],
-        'Attributes' =>
-        [
+        'Attributes' => [
           'shape' => 'AttributeList',
         ],
       ],
     ],
-    'DeletableItemList' =>
-    [
+    'DeletableItemList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DeletableItem',
         'locationName' => 'Item',
       ],
       'flattened' => true,
     ],
-    'DeleteAttributesRequest' =>
-    [
+    'DeleteAttributesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
-        1 => 'ItemName',
+      'required' => [
+        'DomainName',
+        'ItemName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'String',
         ],
-        'ItemName' =>
-        [
+        'ItemName' => [
           'shape' => 'String',
         ],
-        'Attributes' =>
-        [
+        'Attributes' => [
           'shape' => 'AttributeList',
         ],
-        'Expected' =>
-        [
+        'Expected' => [
           'shape' => 'UpdateCondition',
         ],
       ],
     ],
-    'DeleteDomainRequest' =>
-    [
+    'DeleteDomainRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
+      'required' => [
+        'DomainName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DomainMetadataRequest' =>
-    [
+    'DomainMetadataRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
+      'required' => [
+        'DomainName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DomainMetadataResult' =>
-    [
+    'DomainMetadataResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ItemCount' =>
-        [
+      'members' => [
+        'ItemCount' => [
           'shape' => 'Integer',
         ],
-        'ItemNamesSizeBytes' =>
-        [
+        'ItemNamesSizeBytes' => [
           'shape' => 'Long',
         ],
-        'AttributeNameCount' =>
-        [
+        'AttributeNameCount' => [
           'shape' => 'Integer',
         ],
-        'AttributeNamesSizeBytes' =>
-        [
+        'AttributeNamesSizeBytes' => [
           'shape' => 'Long',
         ],
-        'AttributeValueCount' =>
-        [
+        'AttributeValueCount' => [
           'shape' => 'Integer',
         ],
-        'AttributeValuesSizeBytes' =>
-        [
+        'AttributeValuesSizeBytes' => [
           'shape' => 'Long',
         ],
-        'Timestamp' =>
-        [
+        'Timestamp' => [
           'shape' => 'Integer',
         ],
       ],
     ],
-    'DomainNameList' =>
-    [
+    'DomainNameList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'DomainName',
       ],
       'flattened' => true,
     ],
-    'DuplicateItemName' =>
-    [
+    'DuplicateItemName' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'BoxUsage' =>
-        [
+      'members' => [
+        'BoxUsage' => [
           'shape' => 'Float',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DuplicateItemName',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'Float' =>
-    [
+    'Float' => [
       'type' => 'float',
     ],
-    'GetAttributesRequest' =>
-    [
+    'GetAttributesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
-        1 => 'ItemName',
+      'required' => [
+        'DomainName',
+        'ItemName',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'String',
         ],
-        'ItemName' =>
-        [
+        'ItemName' => [
           'shape' => 'String',
         ],
-        'AttributeNames' =>
-        [
+        'AttributeNames' => [
           'shape' => 'AttributeNameList',
         ],
-        'ConsistentRead' =>
-        [
+        'ConsistentRead' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'GetAttributesResult' =>
-    [
+    'GetAttributesResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Attributes' =>
-        [
+      'members' => [
+        'Attributes' => [
           'shape' => 'AttributeList',
         ],
       ],
     ],
-    'Integer' =>
-    [
+    'Integer' => [
       'type' => 'integer',
     ],
-    'InvalidNextToken' =>
-    [
+    'InvalidNextToken' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'BoxUsage' =>
-        [
+      'members' => [
+        'BoxUsage' => [
           'shape' => 'Float',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidNextToken',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidNumberPredicates' =>
-    [
+    'InvalidNumberPredicates' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'BoxUsage' =>
-        [
+      'members' => [
+        'BoxUsage' => [
           'shape' => 'Float',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidNumberPredicates',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidNumberValueTests' =>
-    [
+    'InvalidNumberValueTests' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'BoxUsage' =>
-        [
+      'members' => [
+        'BoxUsage' => [
           'shape' => 'Float',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidNumberValueTests',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidParameterValue' =>
-    [
+    'InvalidParameterValue' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'BoxUsage' =>
-        [
+      'members' => [
+        'BoxUsage' => [
           'shape' => 'Float',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidParameterValue',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidQueryExpression' =>
-    [
+    'InvalidQueryExpression' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'BoxUsage' =>
-        [
+      'members' => [
+        'BoxUsage' => [
           'shape' => 'Float',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidQueryExpression',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'Item' =>
-    [
+    'Item' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
-        1 => 'Attributes',
+      'required' => [
+        'Name',
+        'Attributes',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
-        'AlternateNameEncoding' =>
-        [
+        'AlternateNameEncoding' => [
           'shape' => 'String',
         ],
-        'Attributes' =>
-        [
+        'Attributes' => [
           'shape' => 'AttributeList',
         ],
       ],
     ],
-    'ItemList' =>
-    [
+    'ItemList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Item',
         'locationName' => 'Item',
       ],
       'flattened' => true,
     ],
-    'ListDomainsRequest' =>
-    [
+    'ListDomainsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'MaxNumberOfDomains' =>
-        [
+      'members' => [
+        'MaxNumberOfDomains' => [
           'shape' => 'Integer',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ListDomainsResult' =>
-    [
+    'ListDomainsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DomainNames' =>
-        [
+      'members' => [
+        'DomainNames' => [
           'shape' => 'DomainNameList',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'Long' =>
-    [
+    'Long' => [
       'type' => 'long',
     ],
-    'MissingParameter' =>
-    [
+    'MissingParameter' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'BoxUsage' =>
-        [
+      'members' => [
+        'BoxUsage' => [
           'shape' => 'Float',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'MissingParameter',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'NoSuchDomain' =>
-    [
+    'NoSuchDomain' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'BoxUsage' =>
-        [
+      'members' => [
+        'BoxUsage' => [
           'shape' => 'Float',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'NoSuchDomain',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'NumberDomainAttributesExceeded' =>
-    [
+    'NumberDomainAttributesExceeded' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'BoxUsage' =>
-        [
+      'members' => [
+        'BoxUsage' => [
           'shape' => 'Float',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'NumberDomainAttributesExceeded',
         'httpStatusCode' => 409,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'NumberDomainBytesExceeded' =>
-    [
+    'NumberDomainBytesExceeded' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'BoxUsage' =>
-        [
+      'members' => [
+        'BoxUsage' => [
           'shape' => 'Float',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'NumberDomainBytesExceeded',
         'httpStatusCode' => 409,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'NumberDomainsExceeded' =>
-    [
+    'NumberDomainsExceeded' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'BoxUsage' =>
-        [
+      'members' => [
+        'BoxUsage' => [
           'shape' => 'Float',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'NumberDomainsExceeded',
         'httpStatusCode' => 409,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'NumberItemAttributesExceeded' =>
-    [
+    'NumberItemAttributesExceeded' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'BoxUsage' =>
-        [
+      'members' => [
+        'BoxUsage' => [
           'shape' => 'Float',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'NumberItemAttributesExceeded',
         'httpStatusCode' => 409,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'NumberSubmittedAttributesExceeded' =>
-    [
+    'NumberSubmittedAttributesExceeded' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'BoxUsage' =>
-        [
+      'members' => [
+        'BoxUsage' => [
           'shape' => 'Float',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'NumberSubmittedAttributesExceeded',
         'httpStatusCode' => 409,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'NumberSubmittedItemsExceeded' =>
-    [
+    'NumberSubmittedItemsExceeded' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'BoxUsage' =>
-        [
+      'members' => [
+        'BoxUsage' => [
           'shape' => 'Float',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'NumberSubmittedItemsExceeded',
         'httpStatusCode' => 409,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'PutAttributesRequest' =>
-    [
+    'PutAttributesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
-        1 => 'ItemName',
-        2 => 'Attributes',
+      'required' => [
+        'DomainName',
+        'ItemName',
+        'Attributes',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'String',
         ],
-        'ItemName' =>
-        [
+        'ItemName' => [
           'shape' => 'String',
         ],
-        'Attributes' =>
-        [
+        'Attributes' => [
           'shape' => 'ReplaceableAttributeList',
         ],
-        'Expected' =>
-        [
+        'Expected' => [
           'shape' => 'UpdateCondition',
         ],
       ],
     ],
-    'ReplaceableAttribute' =>
-    [
+    'ReplaceableAttribute' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
-        1 => 'Value',
+      'required' => [
+        'Name',
+        'Value',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'String',
         ],
-        'Replace' =>
-        [
+        'Replace' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'ReplaceableAttributeList' =>
-    [
+    'ReplaceableAttributeList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ReplaceableAttribute',
         'locationName' => 'Attribute',
       ],
       'flattened' => true,
     ],
-    'ReplaceableItem' =>
-    [
+    'ReplaceableItem' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
-        1 => 'Attributes',
+      'required' => [
+        'Name',
+        'Attributes',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
           'locationName' => 'ItemName',
         ],
-        'Attributes' =>
-        [
+        'Attributes' => [
           'shape' => 'ReplaceableAttributeList',
         ],
       ],
     ],
-    'ReplaceableItemList' =>
-    [
+    'ReplaceableItemList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ReplaceableItem',
         'locationName' => 'Item',
       ],
       'flattened' => true,
     ],
-    'RequestTimeout' =>
-    [
+    'RequestTimeout' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'BoxUsage' =>
-        [
+      'members' => [
+        'BoxUsage' => [
           'shape' => 'Float',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'RequestTimeout',
         'httpStatusCode' => 408,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SelectRequest' =>
-    [
+    'SelectRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SelectExpression',
+      'required' => [
+        'SelectExpression',
       ],
-      'members' =>
-      [
-        'SelectExpression' =>
-        [
+      'members' => [
+        'SelectExpression' => [
           'shape' => 'String',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
         ],
-        'ConsistentRead' =>
-        [
+        'ConsistentRead' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'SelectResult' =>
-    [
+    'SelectResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Items' =>
-        [
+      'members' => [
+        'Items' => [
           'shape' => 'ItemList',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'String' =>
-    [
+    'String' => [
       'type' => 'string',
     ],
-    'TooManyRequestedAttributes' =>
-    [
+    'TooManyRequestedAttributes' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'BoxUsage' =>
-        [
+      'members' => [
+        'BoxUsage' => [
           'shape' => 'Float',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'TooManyRequestedAttributes',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'UpdateCondition' =>
-    [
+    'UpdateCondition' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'String',
         ],
-        'Exists' =>
-        [
+        'Exists' => [
           'shape' => 'Boolean',
         ],
       ],

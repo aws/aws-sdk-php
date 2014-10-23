@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2009-03-31',
     'endpointPrefix' => 'elasticmapreduce',
     'jsonVersion' => '1.1',
@@ -12,31 +10,23 @@ return [
     'timestampFormat' => 'unixTimestamp',
     'protocol' => 'json',
   ],
-  'operations' =>
-  [
-    'AddInstanceGroups' =>
-    [
+  'operations' => [
+    'AddInstanceGroups' => [
       'name' => 'AddInstanceGroups',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AddInstanceGroupsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AddInstanceGroupsOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalFailure',
             'httpStatusCode' => 500,
           ],
@@ -44,29 +34,22 @@ return [
         ],
       ],
     ],
-    'AddJobFlowSteps' =>
-    [
+    'AddJobFlowSteps' => [
       'name' => 'AddJobFlowSteps',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AddJobFlowStepsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AddJobFlowStepsOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalFailure',
             'httpStatusCode' => 500,
           ],
@@ -74,91 +57,70 @@ return [
         ],
       ],
     ],
-    'AddTags' =>
-    [
+    'AddTags' => [
       'name' => 'AddTags',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AddTagsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AddTagsOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerException',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeCluster' =>
-    [
+    'DescribeCluster' => [
       'name' => 'DescribeCluster',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeClusterInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeClusterOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerException',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeJobFlows' =>
-    [
+    'DescribeJobFlows' => [
       'name' => 'DescribeJobFlows',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeJobFlowsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeJobFlowsOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalFailure',
             'httpStatusCode' => 500,
           ],
@@ -167,211 +129,163 @@ return [
       ],
       'deprecated' => true,
     ],
-    'DescribeStep' =>
-    [
+    'DescribeStep' => [
       'name' => 'DescribeStep',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeStepInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeStepOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerException',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
       ],
     ],
-    'ListBootstrapActions' =>
-    [
+    'ListBootstrapActions' => [
       'name' => 'ListBootstrapActions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListBootstrapActionsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListBootstrapActionsOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerException',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
       ],
     ],
-    'ListClusters' =>
-    [
+    'ListClusters' => [
       'name' => 'ListClusters',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListClustersInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListClustersOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerException',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
       ],
     ],
-    'ListInstanceGroups' =>
-    [
+    'ListInstanceGroups' => [
       'name' => 'ListInstanceGroups',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListInstanceGroupsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListInstanceGroupsOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerException',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
       ],
     ],
-    'ListInstances' =>
-    [
+    'ListInstances' => [
       'name' => 'ListInstances',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListInstancesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListInstancesOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerException',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
       ],
     ],
-    'ListSteps' =>
-    [
+    'ListSteps' => [
       'name' => 'ListSteps',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListStepsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListStepsOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerException',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
       ],
     ],
-    'ModifyInstanceGroups' =>
-    [
+    'ModifyInstanceGroups' => [
       'name' => 'ModifyInstanceGroups',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ModifyInstanceGroupsInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalFailure',
             'httpStatusCode' => 500,
           ],
@@ -379,60 +293,46 @@ return [
         ],
       ],
     ],
-    'RemoveTags' =>
-    [
+    'RemoveTags' => [
       'name' => 'RemoveTags',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RemoveTagsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RemoveTagsOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerException',
           'exception' => true,
           'fault' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidRequestException',
           'exception' => true,
         ],
       ],
     ],
-    'RunJobFlow' =>
-    [
+    'RunJobFlow' => [
       'name' => 'RunJobFlow',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RunJobFlowInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RunJobFlowOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalFailure',
             'httpStatusCode' => 500,
           ],
@@ -440,25 +340,19 @@ return [
         ],
       ],
     ],
-    'SetTerminationProtection' =>
-    [
+    'SetTerminationProtection' => [
       'name' => 'SetTerminationProtection',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SetTerminationProtectionInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalFailure',
             'httpStatusCode' => 500,
           ],
@@ -466,25 +360,19 @@ return [
         ],
       ],
     ],
-    'SetVisibleToAllUsers' =>
-    [
+    'SetVisibleToAllUsers' => [
       'name' => 'SetVisibleToAllUsers',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SetVisibleToAllUsersInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalFailure',
             'httpStatusCode' => 500,
           ],
@@ -492,25 +380,19 @@ return [
         ],
       ],
     ],
-    'TerminateJobFlows' =>
-    [
+    'TerminateJobFlows' => [
       'name' => 'TerminateJobFlows',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'TerminateJobFlowsInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalFailure',
             'httpStatusCode' => 500,
           ],
@@ -519,2110 +401,1589 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'ActionOnFailure' =>
-    [
+  'shapes' => [
+    'ActionOnFailure' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'TERMINATE_JOB_FLOW',
-        1 => 'TERMINATE_CLUSTER',
-        2 => 'CANCEL_AND_WAIT',
-        3 => 'CONTINUE',
+      'enum' => [
+        'TERMINATE_JOB_FLOW',
+        'TERMINATE_CLUSTER',
+        'CANCEL_AND_WAIT',
+        'CONTINUE',
       ],
     ],
-    'AddInstanceGroupsInput' =>
-    [
+    'AddInstanceGroupsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceGroups',
-        1 => 'JobFlowId',
+      'required' => [
+        'InstanceGroups',
+        'JobFlowId',
       ],
-      'members' =>
-      [
-        'InstanceGroups' =>
-        [
+      'members' => [
+        'InstanceGroups' => [
           'shape' => 'InstanceGroupConfigList',
         ],
-        'JobFlowId' =>
-        [
+        'JobFlowId' => [
           'shape' => 'XmlStringMaxLen256',
         ],
       ],
     ],
-    'AddInstanceGroupsOutput' =>
-    [
+    'AddInstanceGroupsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'JobFlowId' =>
-        [
+      'members' => [
+        'JobFlowId' => [
           'shape' => 'XmlStringMaxLen256',
         ],
-        'InstanceGroupIds' =>
-        [
+        'InstanceGroupIds' => [
           'shape' => 'InstanceGroupIdsList',
         ],
       ],
     ],
-    'AddJobFlowStepsInput' =>
-    [
+    'AddJobFlowStepsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'JobFlowId',
-        1 => 'Steps',
+      'required' => [
+        'JobFlowId',
+        'Steps',
       ],
-      'members' =>
-      [
-        'JobFlowId' =>
-        [
+      'members' => [
+        'JobFlowId' => [
           'shape' => 'XmlStringMaxLen256',
         ],
-        'Steps' =>
-        [
+        'Steps' => [
           'shape' => 'StepConfigList',
         ],
       ],
     ],
-    'AddJobFlowStepsOutput' =>
-    [
+    'AddJobFlowStepsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StepIds' =>
-        [
+      'members' => [
+        'StepIds' => [
           'shape' => 'StepIdsList',
         ],
       ],
     ],
-    'AddTagsInput' =>
-    [
+    'AddTagsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ResourceId',
-        1 => 'Tags',
+      'required' => [
+        'ResourceId',
+        'Tags',
       ],
-      'members' =>
-      [
-        'ResourceId' =>
-        [
+      'members' => [
+        'ResourceId' => [
           'shape' => 'ResourceId',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
         ],
       ],
     ],
-    'AddTagsOutput' =>
-    [
+    'AddTagsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'Application' =>
-    [
+    'Application' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Version' =>
-        [
+        'Version' => [
           'shape' => 'String',
         ],
-        'Args' =>
-        [
+        'Args' => [
           'shape' => 'StringList',
         ],
-        'AdditionalInfo' =>
-        [
+        'AdditionalInfo' => [
           'shape' => 'StringMap',
         ],
       ],
     ],
-    'ApplicationList' =>
-    [
+    'ApplicationList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Application',
       ],
     ],
-    'Boolean' =>
-    [
+    'Boolean' => [
       'type' => 'boolean',
     ],
-    'BootstrapActionConfig' =>
-    [
+    'BootstrapActionConfig' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
-        1 => 'ScriptBootstrapAction',
+      'required' => [
+        'Name',
+        'ScriptBootstrapAction',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'XmlStringMaxLen256',
         ],
-        'ScriptBootstrapAction' =>
-        [
+        'ScriptBootstrapAction' => [
           'shape' => 'ScriptBootstrapActionConfig',
         ],
       ],
     ],
-    'BootstrapActionConfigList' =>
-    [
+    'BootstrapActionConfigList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'BootstrapActionConfig',
       ],
     ],
-    'BootstrapActionDetail' =>
-    [
+    'BootstrapActionDetail' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'BootstrapActionConfig' =>
-        [
+      'members' => [
+        'BootstrapActionConfig' => [
           'shape' => 'BootstrapActionConfig',
         ],
       ],
     ],
-    'BootstrapActionDetailList' =>
-    [
+    'BootstrapActionDetailList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'BootstrapActionDetail',
       ],
     ],
-    'Cluster' =>
-    [
+    'Cluster' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'ClusterId',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'ClusterStatus',
         ],
-        'Ec2InstanceAttributes' =>
-        [
+        'Ec2InstanceAttributes' => [
           'shape' => 'Ec2InstanceAttributes',
         ],
-        'LogUri' =>
-        [
+        'LogUri' => [
           'shape' => 'String',
         ],
-        'RequestedAmiVersion' =>
-        [
+        'RequestedAmiVersion' => [
           'shape' => 'String',
         ],
-        'RunningAmiVersion' =>
-        [
+        'RunningAmiVersion' => [
           'shape' => 'String',
         ],
-        'AutoTerminate' =>
-        [
+        'AutoTerminate' => [
           'shape' => 'Boolean',
         ],
-        'TerminationProtected' =>
-        [
+        'TerminationProtected' => [
           'shape' => 'Boolean',
         ],
-        'VisibleToAllUsers' =>
-        [
+        'VisibleToAllUsers' => [
           'shape' => 'Boolean',
         ],
-        'Applications' =>
-        [
+        'Applications' => [
           'shape' => 'ApplicationList',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
         ],
-        'ServiceRole' =>
-        [
+        'ServiceRole' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ClusterId' =>
-    [
+    'ClusterId' => [
       'type' => 'string',
     ],
-    'ClusterState' =>
-    [
+    'ClusterState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'STARTING',
-        1 => 'BOOTSTRAPPING',
-        2 => 'RUNNING',
-        3 => 'WAITING',
-        4 => 'TERMINATING',
-        5 => 'TERMINATED',
-        6 => 'TERMINATED_WITH_ERRORS',
+      'enum' => [
+        'STARTING',
+        'BOOTSTRAPPING',
+        'RUNNING',
+        'WAITING',
+        'TERMINATING',
+        'TERMINATED',
+        'TERMINATED_WITH_ERRORS',
       ],
     ],
-    'ClusterStateChangeReason' =>
-    [
+    'ClusterStateChangeReason' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Code' =>
-        [
+      'members' => [
+        'Code' => [
           'shape' => 'ClusterStateChangeReasonCode',
         ],
-        'Message' =>
-        [
+        'Message' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ClusterStateChangeReasonCode' =>
-    [
+    'ClusterStateChangeReasonCode' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'INTERNAL_ERROR',
-        1 => 'VALIDATION_ERROR',
-        2 => 'INSTANCE_FAILURE',
-        3 => 'BOOTSTRAP_FAILURE',
-        4 => 'USER_REQUEST',
-        5 => 'STEP_FAILURE',
-        6 => 'ALL_STEPS_COMPLETED',
+      'enum' => [
+        'INTERNAL_ERROR',
+        'VALIDATION_ERROR',
+        'INSTANCE_FAILURE',
+        'BOOTSTRAP_FAILURE',
+        'USER_REQUEST',
+        'STEP_FAILURE',
+        'ALL_STEPS_COMPLETED',
       ],
     ],
-    'ClusterStateList' =>
-    [
+    'ClusterStateList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ClusterState',
       ],
     ],
-    'ClusterStatus' =>
-    [
+    'ClusterStatus' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'State' =>
-        [
+      'members' => [
+        'State' => [
           'shape' => 'ClusterState',
         ],
-        'StateChangeReason' =>
-        [
+        'StateChangeReason' => [
           'shape' => 'ClusterStateChangeReason',
         ],
-        'Timeline' =>
-        [
+        'Timeline' => [
           'shape' => 'ClusterTimeline',
         ],
       ],
     ],
-    'ClusterSummary' =>
-    [
+    'ClusterSummary' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'ClusterId',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'ClusterStatus',
         ],
       ],
     ],
-    'ClusterSummaryList' =>
-    [
+    'ClusterSummaryList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ClusterSummary',
       ],
     ],
-    'ClusterTimeline' =>
-    [
+    'ClusterTimeline' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CreationDateTime' =>
-        [
+      'members' => [
+        'CreationDateTime' => [
           'shape' => 'Date',
         ],
-        'ReadyDateTime' =>
-        [
+        'ReadyDateTime' => [
           'shape' => 'Date',
         ],
-        'EndDateTime' =>
-        [
+        'EndDateTime' => [
           'shape' => 'Date',
         ],
       ],
     ],
-    'Command' =>
-    [
+    'Command' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
-        'ScriptPath' =>
-        [
+        'ScriptPath' => [
           'shape' => 'String',
         ],
-        'Args' =>
-        [
+        'Args' => [
           'shape' => 'StringList',
         ],
       ],
     ],
-    'CommandList' =>
-    [
+    'CommandList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Command',
       ],
     ],
-    'Date' =>
-    [
+    'Date' => [
       'type' => 'timestamp',
     ],
-    'DescribeClusterInput' =>
-    [
+    'DescribeClusterInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterId',
+      'required' => [
+        'ClusterId',
       ],
-      'members' =>
-      [
-        'ClusterId' =>
-        [
+      'members' => [
+        'ClusterId' => [
           'shape' => 'ClusterId',
         ],
       ],
     ],
-    'DescribeClusterOutput' =>
-    [
+    'DescribeClusterOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Cluster' =>
-        [
+      'members' => [
+        'Cluster' => [
           'shape' => 'Cluster',
         ],
       ],
     ],
-    'DescribeJobFlowsInput' =>
-    [
+    'DescribeJobFlowsInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CreatedAfter' =>
-        [
+      'members' => [
+        'CreatedAfter' => [
           'shape' => 'Date',
         ],
-        'CreatedBefore' =>
-        [
+        'CreatedBefore' => [
           'shape' => 'Date',
         ],
-        'JobFlowIds' =>
-        [
+        'JobFlowIds' => [
           'shape' => 'XmlStringList',
         ],
-        'JobFlowStates' =>
-        [
+        'JobFlowStates' => [
           'shape' => 'JobFlowExecutionStateList',
         ],
       ],
     ],
-    'DescribeJobFlowsOutput' =>
-    [
+    'DescribeJobFlowsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'JobFlows' =>
-        [
+      'members' => [
+        'JobFlows' => [
           'shape' => 'JobFlowDetailList',
         ],
       ],
     ],
-    'DescribeStepInput' =>
-    [
+    'DescribeStepInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterId',
-        1 => 'StepId',
+      'required' => [
+        'ClusterId',
+        'StepId',
       ],
-      'members' =>
-      [
-        'ClusterId' =>
-        [
+      'members' => [
+        'ClusterId' => [
           'shape' => 'ClusterId',
         ],
-        'StepId' =>
-        [
+        'StepId' => [
           'shape' => 'StepId',
         ],
       ],
     ],
-    'DescribeStepOutput' =>
-    [
+    'DescribeStepOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Step' =>
-        [
+      'members' => [
+        'Step' => [
           'shape' => 'Step',
         ],
       ],
     ],
-    'EC2InstanceIdsToTerminateList' =>
-    [
+    'EC2InstanceIdsToTerminateList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'InstanceId',
       ],
     ],
-    'Ec2InstanceAttributes' =>
-    [
+    'Ec2InstanceAttributes' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Ec2KeyName' =>
-        [
+      'members' => [
+        'Ec2KeyName' => [
           'shape' => 'String',
         ],
-        'Ec2SubnetId' =>
-        [
+        'Ec2SubnetId' => [
           'shape' => 'String',
         ],
-        'Ec2AvailabilityZone' =>
-        [
+        'Ec2AvailabilityZone' => [
           'shape' => 'String',
         ],
-        'IamInstanceProfile' =>
-        [
+        'IamInstanceProfile' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ErrorCode' =>
-    [
+    'ErrorCode' => [
       'type' => 'string',
       'min' => 1,
       'max' => 256,
     ],
-    'ErrorMessage' =>
-    [
+    'ErrorMessage' => [
       'type' => 'string',
     ],
-    'HadoopJarStepConfig' =>
-    [
+    'HadoopJarStepConfig' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Jar',
+      'required' => [
+        'Jar',
       ],
-      'members' =>
-      [
-        'Properties' =>
-        [
+      'members' => [
+        'Properties' => [
           'shape' => 'KeyValueList',
         ],
-        'Jar' =>
-        [
+        'Jar' => [
           'shape' => 'XmlString',
         ],
-        'MainClass' =>
-        [
+        'MainClass' => [
           'shape' => 'XmlString',
         ],
-        'Args' =>
-        [
+        'Args' => [
           'shape' => 'XmlStringList',
         ],
       ],
     ],
-    'HadoopStepConfig' =>
-    [
+    'HadoopStepConfig' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Jar' =>
-        [
+      'members' => [
+        'Jar' => [
           'shape' => 'String',
         ],
-        'Properties' =>
-        [
+        'Properties' => [
           'shape' => 'StringMap',
         ],
-        'MainClass' =>
-        [
+        'MainClass' => [
           'shape' => 'String',
         ],
-        'Args' =>
-        [
+        'Args' => [
           'shape' => 'StringList',
         ],
       ],
     ],
-    'Instance' =>
-    [
+    'Instance' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'InstanceId',
         ],
-        'Ec2InstanceId' =>
-        [
+        'Ec2InstanceId' => [
           'shape' => 'InstanceId',
         ],
-        'PublicDnsName' =>
-        [
+        'PublicDnsName' => [
           'shape' => 'String',
         ],
-        'PublicIpAddress' =>
-        [
+        'PublicIpAddress' => [
           'shape' => 'String',
         ],
-        'PrivateDnsName' =>
-        [
+        'PrivateDnsName' => [
           'shape' => 'String',
         ],
-        'PrivateIpAddress' =>
-        [
+        'PrivateIpAddress' => [
           'shape' => 'String',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'InstanceStatus',
         ],
       ],
     ],
-    'InstanceGroup' =>
-    [
+    'InstanceGroup' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'InstanceGroupId',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Market' =>
-        [
+        'Market' => [
           'shape' => 'MarketType',
         ],
-        'InstanceGroupType' =>
-        [
+        'InstanceGroupType' => [
           'shape' => 'InstanceGroupType',
         ],
-        'BidPrice' =>
-        [
+        'BidPrice' => [
           'shape' => 'String',
         ],
-        'InstanceType' =>
-        [
+        'InstanceType' => [
           'shape' => 'InstanceType',
         ],
-        'RequestedInstanceCount' =>
-        [
+        'RequestedInstanceCount' => [
           'shape' => 'Integer',
         ],
-        'RunningInstanceCount' =>
-        [
+        'RunningInstanceCount' => [
           'shape' => 'Integer',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'InstanceGroupStatus',
         ],
       ],
     ],
-    'InstanceGroupConfig' =>
-    [
+    'InstanceGroupConfig' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceRole',
-        1 => 'InstanceType',
-        2 => 'InstanceCount',
+      'required' => [
+        'InstanceRole',
+        'InstanceType',
+        'InstanceCount',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'XmlStringMaxLen256',
         ],
-        'Market' =>
-        [
+        'Market' => [
           'shape' => 'MarketType',
         ],
-        'InstanceRole' =>
-        [
+        'InstanceRole' => [
           'shape' => 'InstanceRoleType',
         ],
-        'BidPrice' =>
-        [
+        'BidPrice' => [
           'shape' => 'XmlStringMaxLen256',
         ],
-        'InstanceType' =>
-        [
+        'InstanceType' => [
           'shape' => 'InstanceType',
         ],
-        'InstanceCount' =>
-        [
+        'InstanceCount' => [
           'shape' => 'Integer',
         ],
       ],
     ],
-    'InstanceGroupConfigList' =>
-    [
+    'InstanceGroupConfigList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'InstanceGroupConfig',
       ],
     ],
-    'InstanceGroupDetail' =>
-    [
+    'InstanceGroupDetail' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Market',
-        1 => 'InstanceRole',
-        2 => 'InstanceType',
-        3 => 'InstanceRequestCount',
-        4 => 'InstanceRunningCount',
-        5 => 'State',
-        6 => 'CreationDateTime',
+      'required' => [
+        'Market',
+        'InstanceRole',
+        'InstanceType',
+        'InstanceRequestCount',
+        'InstanceRunningCount',
+        'State',
+        'CreationDateTime',
       ],
-      'members' =>
-      [
-        'InstanceGroupId' =>
-        [
+      'members' => [
+        'InstanceGroupId' => [
           'shape' => 'XmlStringMaxLen256',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'XmlStringMaxLen256',
         ],
-        'Market' =>
-        [
+        'Market' => [
           'shape' => 'MarketType',
         ],
-        'InstanceRole' =>
-        [
+        'InstanceRole' => [
           'shape' => 'InstanceRoleType',
         ],
-        'BidPrice' =>
-        [
+        'BidPrice' => [
           'shape' => 'XmlStringMaxLen256',
         ],
-        'InstanceType' =>
-        [
+        'InstanceType' => [
           'shape' => 'InstanceType',
         ],
-        'InstanceRequestCount' =>
-        [
+        'InstanceRequestCount' => [
           'shape' => 'Integer',
         ],
-        'InstanceRunningCount' =>
-        [
+        'InstanceRunningCount' => [
           'shape' => 'Integer',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'InstanceGroupState',
         ],
-        'LastStateChangeReason' =>
-        [
+        'LastStateChangeReason' => [
           'shape' => 'XmlString',
         ],
-        'CreationDateTime' =>
-        [
+        'CreationDateTime' => [
           'shape' => 'Date',
         ],
-        'StartDateTime' =>
-        [
+        'StartDateTime' => [
           'shape' => 'Date',
         ],
-        'ReadyDateTime' =>
-        [
+        'ReadyDateTime' => [
           'shape' => 'Date',
         ],
-        'EndDateTime' =>
-        [
+        'EndDateTime' => [
           'shape' => 'Date',
         ],
       ],
     ],
-    'InstanceGroupDetailList' =>
-    [
+    'InstanceGroupDetailList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'InstanceGroupDetail',
       ],
     ],
-    'InstanceGroupId' =>
-    [
+    'InstanceGroupId' => [
       'type' => 'string',
     ],
-    'InstanceGroupIdsList' =>
-    [
+    'InstanceGroupIdsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'XmlStringMaxLen256',
       ],
     ],
-    'InstanceGroupList' =>
-    [
+    'InstanceGroupList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'InstanceGroup',
       ],
     ],
-    'InstanceGroupModifyConfig' =>
-    [
+    'InstanceGroupModifyConfig' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceGroupId',
+      'required' => [
+        'InstanceGroupId',
       ],
-      'members' =>
-      [
-        'InstanceGroupId' =>
-        [
+      'members' => [
+        'InstanceGroupId' => [
           'shape' => 'XmlStringMaxLen256',
         ],
-        'InstanceCount' =>
-        [
+        'InstanceCount' => [
           'shape' => 'Integer',
         ],
-        'EC2InstanceIdsToTerminate' =>
-        [
+        'EC2InstanceIdsToTerminate' => [
           'shape' => 'EC2InstanceIdsToTerminateList',
         ],
       ],
     ],
-    'InstanceGroupModifyConfigList' =>
-    [
+    'InstanceGroupModifyConfigList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'InstanceGroupModifyConfig',
       ],
     ],
-    'InstanceGroupState' =>
-    [
+    'InstanceGroupState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'PROVISIONING',
-        1 => 'BOOTSTRAPPING',
-        2 => 'RUNNING',
-        3 => 'RESIZING',
-        4 => 'SUSPENDED',
-        5 => 'TERMINATING',
-        6 => 'TERMINATED',
-        7 => 'ARRESTED',
-        8 => 'SHUTTING_DOWN',
-        9 => 'ENDED',
+      'enum' => [
+        'PROVISIONING',
+        'BOOTSTRAPPING',
+        'RUNNING',
+        'RESIZING',
+        'SUSPENDED',
+        'TERMINATING',
+        'TERMINATED',
+        'ARRESTED',
+        'SHUTTING_DOWN',
+        'ENDED',
       ],
     ],
-    'InstanceGroupStateChangeReason' =>
-    [
+    'InstanceGroupStateChangeReason' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Code' =>
-        [
+      'members' => [
+        'Code' => [
           'shape' => 'InstanceGroupStateChangeReasonCode',
         ],
-        'Message' =>
-        [
+        'Message' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'InstanceGroupStateChangeReasonCode' =>
-    [
+    'InstanceGroupStateChangeReasonCode' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'INTERNAL_ERROR',
-        1 => 'VALIDATION_ERROR',
-        2 => 'INSTANCE_FAILURE',
-        3 => 'CLUSTER_TERMINATED',
+      'enum' => [
+        'INTERNAL_ERROR',
+        'VALIDATION_ERROR',
+        'INSTANCE_FAILURE',
+        'CLUSTER_TERMINATED',
       ],
     ],
-    'InstanceGroupStatus' =>
-    [
+    'InstanceGroupStatus' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'State' =>
-        [
+      'members' => [
+        'State' => [
           'shape' => 'InstanceGroupState',
         ],
-        'StateChangeReason' =>
-        [
+        'StateChangeReason' => [
           'shape' => 'InstanceGroupStateChangeReason',
         ],
-        'Timeline' =>
-        [
+        'Timeline' => [
           'shape' => 'InstanceGroupTimeline',
         ],
       ],
     ],
-    'InstanceGroupTimeline' =>
-    [
+    'InstanceGroupTimeline' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CreationDateTime' =>
-        [
+      'members' => [
+        'CreationDateTime' => [
           'shape' => 'Date',
         ],
-        'ReadyDateTime' =>
-        [
+        'ReadyDateTime' => [
           'shape' => 'Date',
         ],
-        'EndDateTime' =>
-        [
+        'EndDateTime' => [
           'shape' => 'Date',
         ],
       ],
     ],
-    'InstanceGroupType' =>
-    [
+    'InstanceGroupType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'MASTER',
-        1 => 'CORE',
-        2 => 'TASK',
+      'enum' => [
+        'MASTER',
+        'CORE',
+        'TASK',
       ],
     ],
-    'InstanceGroupTypeList' =>
-    [
+    'InstanceGroupTypeList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'InstanceGroupType',
       ],
     ],
-    'InstanceId' =>
-    [
+    'InstanceId' => [
       'type' => 'string',
     ],
-    'InstanceList' =>
-    [
+    'InstanceList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Instance',
       ],
     ],
-    'InstanceRoleType' =>
-    [
+    'InstanceRoleType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'MASTER',
-        1 => 'CORE',
-        2 => 'TASK',
+      'enum' => [
+        'MASTER',
+        'CORE',
+        'TASK',
       ],
     ],
-    'InstanceState' =>
-    [
+    'InstanceState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'AWAITING_FULFILLMENT',
-        1 => 'PROVISIONING',
-        2 => 'BOOTSTRAPPING',
-        3 => 'RUNNING',
-        4 => 'TERMINATED',
+      'enum' => [
+        'AWAITING_FULFILLMENT',
+        'PROVISIONING',
+        'BOOTSTRAPPING',
+        'RUNNING',
+        'TERMINATED',
       ],
     ],
-    'InstanceStateChangeReason' =>
-    [
+    'InstanceStateChangeReason' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Code' =>
-        [
+      'members' => [
+        'Code' => [
           'shape' => 'InstanceStateChangeReasonCode',
         ],
-        'Message' =>
-        [
+        'Message' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'InstanceStateChangeReasonCode' =>
-    [
+    'InstanceStateChangeReasonCode' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'INTERNAL_ERROR',
-        1 => 'VALIDATION_ERROR',
-        2 => 'INSTANCE_FAILURE',
-        3 => 'BOOTSTRAP_FAILURE',
-        4 => 'CLUSTER_TERMINATED',
+      'enum' => [
+        'INTERNAL_ERROR',
+        'VALIDATION_ERROR',
+        'INSTANCE_FAILURE',
+        'BOOTSTRAP_FAILURE',
+        'CLUSTER_TERMINATED',
       ],
     ],
-    'InstanceStatus' =>
-    [
+    'InstanceStatus' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'State' =>
-        [
+      'members' => [
+        'State' => [
           'shape' => 'InstanceState',
         ],
-        'StateChangeReason' =>
-        [
+        'StateChangeReason' => [
           'shape' => 'InstanceStateChangeReason',
         ],
-        'Timeline' =>
-        [
+        'Timeline' => [
           'shape' => 'InstanceTimeline',
         ],
       ],
     ],
-    'InstanceTimeline' =>
-    [
+    'InstanceTimeline' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CreationDateTime' =>
-        [
+      'members' => [
+        'CreationDateTime' => [
           'shape' => 'Date',
         ],
-        'ReadyDateTime' =>
-        [
+        'ReadyDateTime' => [
           'shape' => 'Date',
         ],
-        'EndDateTime' =>
-        [
+        'EndDateTime' => [
           'shape' => 'Date',
         ],
       ],
     ],
-    'InstanceType' =>
-    [
+    'InstanceType' => [
       'type' => 'string',
       'min' => 1,
       'max' => 256,
       'pattern' => '[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*',
     ],
-    'Integer' =>
-    [
+    'Integer' => [
       'type' => 'integer',
     ],
-    'InternalServerError' =>
-    [
+    'InternalServerError' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InternalFailure',
         'httpStatusCode' => 500,
       ],
       'exception' => true,
     ],
-    'InternalServerException' =>
-    [
+    'InternalServerException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
       'fault' => true,
     ],
-    'InvalidRequestException' =>
-    [
+    'InvalidRequestException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ErrorCode' =>
-        [
+      'members' => [
+        'ErrorCode' => [
           'shape' => 'ErrorCode',
         ],
-        'Message' =>
-        [
+        'Message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'JobFlowDetail' =>
-    [
+    'JobFlowDetail' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'JobFlowId',
-        1 => 'Name',
-        2 => 'ExecutionStatusDetail',
-        3 => 'Instances',
+      'required' => [
+        'JobFlowId',
+        'Name',
+        'ExecutionStatusDetail',
+        'Instances',
       ],
-      'members' =>
-      [
-        'JobFlowId' =>
-        [
+      'members' => [
+        'JobFlowId' => [
           'shape' => 'XmlStringMaxLen256',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'XmlStringMaxLen256',
         ],
-        'LogUri' =>
-        [
+        'LogUri' => [
           'shape' => 'XmlString',
         ],
-        'AmiVersion' =>
-        [
+        'AmiVersion' => [
           'shape' => 'XmlStringMaxLen256',
         ],
-        'ExecutionStatusDetail' =>
-        [
+        'ExecutionStatusDetail' => [
           'shape' => 'JobFlowExecutionStatusDetail',
         ],
-        'Instances' =>
-        [
+        'Instances' => [
           'shape' => 'JobFlowInstancesDetail',
         ],
-        'Steps' =>
-        [
+        'Steps' => [
           'shape' => 'StepDetailList',
         ],
-        'BootstrapActions' =>
-        [
+        'BootstrapActions' => [
           'shape' => 'BootstrapActionDetailList',
         ],
-        'SupportedProducts' =>
-        [
+        'SupportedProducts' => [
           'shape' => 'SupportedProductsList',
         ],
-        'VisibleToAllUsers' =>
-        [
+        'VisibleToAllUsers' => [
           'shape' => 'Boolean',
         ],
-        'JobFlowRole' =>
-        [
+        'JobFlowRole' => [
           'shape' => 'XmlString',
         ],
-        'ServiceRole' =>
-        [
+        'ServiceRole' => [
           'shape' => 'XmlString',
         ],
       ],
     ],
-    'JobFlowDetailList' =>
-    [
+    'JobFlowDetailList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'JobFlowDetail',
       ],
     ],
-    'JobFlowExecutionState' =>
-    [
+    'JobFlowExecutionState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'STARTING',
-        1 => 'BOOTSTRAPPING',
-        2 => 'RUNNING',
-        3 => 'WAITING',
-        4 => 'SHUTTING_DOWN',
-        5 => 'TERMINATED',
-        6 => 'COMPLETED',
-        7 => 'FAILED',
+      'enum' => [
+        'STARTING',
+        'BOOTSTRAPPING',
+        'RUNNING',
+        'WAITING',
+        'SHUTTING_DOWN',
+        'TERMINATED',
+        'COMPLETED',
+        'FAILED',
       ],
     ],
-    'JobFlowExecutionStateList' =>
-    [
+    'JobFlowExecutionStateList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'JobFlowExecutionState',
       ],
     ],
-    'JobFlowExecutionStatusDetail' =>
-    [
+    'JobFlowExecutionStatusDetail' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'State',
-        1 => 'CreationDateTime',
+      'required' => [
+        'State',
+        'CreationDateTime',
       ],
-      'members' =>
-      [
-        'State' =>
-        [
+      'members' => [
+        'State' => [
           'shape' => 'JobFlowExecutionState',
         ],
-        'CreationDateTime' =>
-        [
+        'CreationDateTime' => [
           'shape' => 'Date',
         ],
-        'StartDateTime' =>
-        [
+        'StartDateTime' => [
           'shape' => 'Date',
         ],
-        'ReadyDateTime' =>
-        [
+        'ReadyDateTime' => [
           'shape' => 'Date',
         ],
-        'EndDateTime' =>
-        [
+        'EndDateTime' => [
           'shape' => 'Date',
         ],
-        'LastStateChangeReason' =>
-        [
+        'LastStateChangeReason' => [
           'shape' => 'XmlString',
         ],
       ],
     ],
-    'JobFlowInstancesConfig' =>
-    [
+    'JobFlowInstancesConfig' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'MasterInstanceType' =>
-        [
+      'members' => [
+        'MasterInstanceType' => [
           'shape' => 'InstanceType',
         ],
-        'SlaveInstanceType' =>
-        [
+        'SlaveInstanceType' => [
           'shape' => 'InstanceType',
         ],
-        'InstanceCount' =>
-        [
+        'InstanceCount' => [
           'shape' => 'Integer',
         ],
-        'InstanceGroups' =>
-        [
+        'InstanceGroups' => [
           'shape' => 'InstanceGroupConfigList',
         ],
-        'Ec2KeyName' =>
-        [
+        'Ec2KeyName' => [
           'shape' => 'XmlStringMaxLen256',
         ],
-        'Placement' =>
-        [
+        'Placement' => [
           'shape' => 'PlacementType',
         ],
-        'KeepJobFlowAliveWhenNoSteps' =>
-        [
+        'KeepJobFlowAliveWhenNoSteps' => [
           'shape' => 'Boolean',
         ],
-        'TerminationProtected' =>
-        [
+        'TerminationProtected' => [
           'shape' => 'Boolean',
         ],
-        'HadoopVersion' =>
-        [
+        'HadoopVersion' => [
           'shape' => 'XmlStringMaxLen256',
         ],
-        'Ec2SubnetId' =>
-        [
+        'Ec2SubnetId' => [
           'shape' => 'XmlStringMaxLen256',
         ],
       ],
     ],
-    'JobFlowInstancesDetail' =>
-    [
+    'JobFlowInstancesDetail' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'MasterInstanceType',
-        1 => 'SlaveInstanceType',
-        2 => 'InstanceCount',
+      'required' => [
+        'MasterInstanceType',
+        'SlaveInstanceType',
+        'InstanceCount',
       ],
-      'members' =>
-      [
-        'MasterInstanceType' =>
-        [
+      'members' => [
+        'MasterInstanceType' => [
           'shape' => 'InstanceType',
         ],
-        'MasterPublicDnsName' =>
-        [
+        'MasterPublicDnsName' => [
           'shape' => 'XmlString',
         ],
-        'MasterInstanceId' =>
-        [
+        'MasterInstanceId' => [
           'shape' => 'XmlString',
         ],
-        'SlaveInstanceType' =>
-        [
+        'SlaveInstanceType' => [
           'shape' => 'InstanceType',
         ],
-        'InstanceCount' =>
-        [
+        'InstanceCount' => [
           'shape' => 'Integer',
         ],
-        'InstanceGroups' =>
-        [
+        'InstanceGroups' => [
           'shape' => 'InstanceGroupDetailList',
         ],
-        'NormalizedInstanceHours' =>
-        [
+        'NormalizedInstanceHours' => [
           'shape' => 'Integer',
         ],
-        'Ec2KeyName' =>
-        [
+        'Ec2KeyName' => [
           'shape' => 'XmlStringMaxLen256',
         ],
-        'Ec2SubnetId' =>
-        [
+        'Ec2SubnetId' => [
           'shape' => 'XmlStringMaxLen256',
         ],
-        'Placement' =>
-        [
+        'Placement' => [
           'shape' => 'PlacementType',
         ],
-        'KeepJobFlowAliveWhenNoSteps' =>
-        [
+        'KeepJobFlowAliveWhenNoSteps' => [
           'shape' => 'Boolean',
         ],
-        'TerminationProtected' =>
-        [
+        'TerminationProtected' => [
           'shape' => 'Boolean',
         ],
-        'HadoopVersion' =>
-        [
+        'HadoopVersion' => [
           'shape' => 'XmlStringMaxLen256',
         ],
       ],
     ],
-    'KeyValue' =>
-    [
+    'KeyValue' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Key' =>
-        [
+      'members' => [
+        'Key' => [
           'shape' => 'XmlString',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'XmlString',
         ],
       ],
     ],
-    'KeyValueList' =>
-    [
+    'KeyValueList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'KeyValue',
       ],
     ],
-    'ListBootstrapActionsInput' =>
-    [
+    'ListBootstrapActionsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterId',
+      'required' => [
+        'ClusterId',
       ],
-      'members' =>
-      [
-        'ClusterId' =>
-        [
+      'members' => [
+        'ClusterId' => [
           'shape' => 'ClusterId',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
         ],
       ],
     ],
-    'ListBootstrapActionsOutput' =>
-    [
+    'ListBootstrapActionsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'BootstrapActions' =>
-        [
+      'members' => [
+        'BootstrapActions' => [
           'shape' => 'CommandList',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
         ],
       ],
     ],
-    'ListClustersInput' =>
-    [
+    'ListClustersInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CreatedAfter' =>
-        [
+      'members' => [
+        'CreatedAfter' => [
           'shape' => 'Date',
         ],
-        'CreatedBefore' =>
-        [
+        'CreatedBefore' => [
           'shape' => 'Date',
         ],
-        'ClusterStates' =>
-        [
+        'ClusterStates' => [
           'shape' => 'ClusterStateList',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
         ],
       ],
     ],
-    'ListClustersOutput' =>
-    [
+    'ListClustersOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Clusters' =>
-        [
+      'members' => [
+        'Clusters' => [
           'shape' => 'ClusterSummaryList',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
         ],
       ],
     ],
-    'ListInstanceGroupsInput' =>
-    [
+    'ListInstanceGroupsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterId',
+      'required' => [
+        'ClusterId',
       ],
-      'members' =>
-      [
-        'ClusterId' =>
-        [
+      'members' => [
+        'ClusterId' => [
           'shape' => 'ClusterId',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
         ],
       ],
     ],
-    'ListInstanceGroupsOutput' =>
-    [
+    'ListInstanceGroupsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceGroups' =>
-        [
+      'members' => [
+        'InstanceGroups' => [
           'shape' => 'InstanceGroupList',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
         ],
       ],
     ],
-    'ListInstancesInput' =>
-    [
+    'ListInstancesInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterId',
+      'required' => [
+        'ClusterId',
       ],
-      'members' =>
-      [
-        'ClusterId' =>
-        [
+      'members' => [
+        'ClusterId' => [
           'shape' => 'ClusterId',
         ],
-        'InstanceGroupId' =>
-        [
+        'InstanceGroupId' => [
           'shape' => 'InstanceGroupId',
         ],
-        'InstanceGroupTypes' =>
-        [
+        'InstanceGroupTypes' => [
           'shape' => 'InstanceGroupTypeList',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
         ],
       ],
     ],
-    'ListInstancesOutput' =>
-    [
+    'ListInstancesOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Instances' =>
-        [
+      'members' => [
+        'Instances' => [
           'shape' => 'InstanceList',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
         ],
       ],
     ],
-    'ListStepsInput' =>
-    [
+    'ListStepsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ClusterId',
+      'required' => [
+        'ClusterId',
       ],
-      'members' =>
-      [
-        'ClusterId' =>
-        [
+      'members' => [
+        'ClusterId' => [
           'shape' => 'ClusterId',
         ],
-        'StepStates' =>
-        [
+        'StepStates' => [
           'shape' => 'StepStateList',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
         ],
       ],
     ],
-    'ListStepsOutput' =>
-    [
+    'ListStepsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Steps' =>
-        [
+      'members' => [
+        'Steps' => [
           'shape' => 'StepSummaryList',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
         ],
       ],
     ],
-    'Marker' =>
-    [
+    'Marker' => [
       'type' => 'string',
     ],
-    'MarketType' =>
-    [
+    'MarketType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'ON_DEMAND',
-        1 => 'SPOT',
+      'enum' => [
+        'ON_DEMAND',
+        'SPOT',
       ],
     ],
-    'ModifyInstanceGroupsInput' =>
-    [
+    'ModifyInstanceGroupsInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceGroups' =>
-        [
+      'members' => [
+        'InstanceGroups' => [
           'shape' => 'InstanceGroupModifyConfigList',
         ],
       ],
     ],
-    'NewSupportedProductsList' =>
-    [
+    'NewSupportedProductsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'SupportedProductConfig',
       ],
     ],
-    'PlacementType' =>
-    [
+    'PlacementType' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AvailabilityZone',
+      'required' => [
+        'AvailabilityZone',
       ],
-      'members' =>
-      [
-        'AvailabilityZone' =>
-        [
+      'members' => [
+        'AvailabilityZone' => [
           'shape' => 'XmlString',
         ],
       ],
     ],
-    'RemoveTagsInput' =>
-    [
+    'RemoveTagsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ResourceId',
-        1 => 'TagKeys',
+      'required' => [
+        'ResourceId',
+        'TagKeys',
       ],
-      'members' =>
-      [
-        'ResourceId' =>
-        [
+      'members' => [
+        'ResourceId' => [
           'shape' => 'ResourceId',
         ],
-        'TagKeys' =>
-        [
+        'TagKeys' => [
           'shape' => 'StringList',
         ],
       ],
     ],
-    'RemoveTagsOutput' =>
-    [
+    'RemoveTagsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'ResourceId' =>
-    [
+    'ResourceId' => [
       'type' => 'string',
     ],
-    'RunJobFlowInput' =>
-    [
+    'RunJobFlowInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
-        1 => 'Instances',
+      'required' => [
+        'Name',
+        'Instances',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'XmlStringMaxLen256',
         ],
-        'LogUri' =>
-        [
+        'LogUri' => [
           'shape' => 'XmlString',
         ],
-        'AdditionalInfo' =>
-        [
+        'AdditionalInfo' => [
           'shape' => 'XmlString',
         ],
-        'AmiVersion' =>
-        [
+        'AmiVersion' => [
           'shape' => 'XmlStringMaxLen256',
         ],
-        'Instances' =>
-        [
+        'Instances' => [
           'shape' => 'JobFlowInstancesConfig',
         ],
-        'Steps' =>
-        [
+        'Steps' => [
           'shape' => 'StepConfigList',
         ],
-        'BootstrapActions' =>
-        [
+        'BootstrapActions' => [
           'shape' => 'BootstrapActionConfigList',
         ],
-        'SupportedProducts' =>
-        [
+        'SupportedProducts' => [
           'shape' => 'SupportedProductsList',
         ],
-        'NewSupportedProducts' =>
-        [
+        'NewSupportedProducts' => [
           'shape' => 'NewSupportedProductsList',
         ],
-        'VisibleToAllUsers' =>
-        [
+        'VisibleToAllUsers' => [
           'shape' => 'Boolean',
         ],
-        'JobFlowRole' =>
-        [
+        'JobFlowRole' => [
           'shape' => 'XmlString',
         ],
-        'ServiceRole' =>
-        [
+        'ServiceRole' => [
           'shape' => 'XmlString',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
         ],
       ],
     ],
-    'RunJobFlowOutput' =>
-    [
+    'RunJobFlowOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'JobFlowId' =>
-        [
+      'members' => [
+        'JobFlowId' => [
           'shape' => 'XmlStringMaxLen256',
         ],
       ],
     ],
-    'ScriptBootstrapActionConfig' =>
-    [
+    'ScriptBootstrapActionConfig' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Path',
+      'required' => [
+        'Path',
       ],
-      'members' =>
-      [
-        'Path' =>
-        [
+      'members' => [
+        'Path' => [
           'shape' => 'XmlString',
         ],
-        'Args' =>
-        [
+        'Args' => [
           'shape' => 'XmlStringList',
         ],
       ],
     ],
-    'SetTerminationProtectionInput' =>
-    [
+    'SetTerminationProtectionInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'JobFlowIds',
-        1 => 'TerminationProtected',
+      'required' => [
+        'JobFlowIds',
+        'TerminationProtected',
       ],
-      'members' =>
-      [
-        'JobFlowIds' =>
-        [
+      'members' => [
+        'JobFlowIds' => [
           'shape' => 'XmlStringList',
         ],
-        'TerminationProtected' =>
-        [
+        'TerminationProtected' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'SetVisibleToAllUsersInput' =>
-    [
+    'SetVisibleToAllUsersInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'JobFlowIds',
-        1 => 'VisibleToAllUsers',
+      'required' => [
+        'JobFlowIds',
+        'VisibleToAllUsers',
       ],
-      'members' =>
-      [
-        'JobFlowIds' =>
-        [
+      'members' => [
+        'JobFlowIds' => [
           'shape' => 'XmlStringList',
         ],
-        'VisibleToAllUsers' =>
-        [
+        'VisibleToAllUsers' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'Step' =>
-    [
+    'Step' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'StepId',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Config' =>
-        [
+        'Config' => [
           'shape' => 'HadoopStepConfig',
         ],
-        'ActionOnFailure' =>
-        [
+        'ActionOnFailure' => [
           'shape' => 'ActionOnFailure',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'StepStatus',
         ],
       ],
     ],
-    'StepConfig' =>
-    [
+    'StepConfig' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
-        1 => 'HadoopJarStep',
+      'required' => [
+        'Name',
+        'HadoopJarStep',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'XmlStringMaxLen256',
         ],
-        'ActionOnFailure' =>
-        [
+        'ActionOnFailure' => [
           'shape' => 'ActionOnFailure',
         ],
-        'HadoopJarStep' =>
-        [
+        'HadoopJarStep' => [
           'shape' => 'HadoopJarStepConfig',
         ],
       ],
     ],
-    'StepConfigList' =>
-    [
+    'StepConfigList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'StepConfig',
       ],
     ],
-    'StepDetail' =>
-    [
+    'StepDetail' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StepConfig',
-        1 => 'ExecutionStatusDetail',
+      'required' => [
+        'StepConfig',
+        'ExecutionStatusDetail',
       ],
-      'members' =>
-      [
-        'StepConfig' =>
-        [
+      'members' => [
+        'StepConfig' => [
           'shape' => 'StepConfig',
         ],
-        'ExecutionStatusDetail' =>
-        [
+        'ExecutionStatusDetail' => [
           'shape' => 'StepExecutionStatusDetail',
         ],
       ],
     ],
-    'StepDetailList' =>
-    [
+    'StepDetailList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'StepDetail',
       ],
     ],
-    'StepExecutionState' =>
-    [
+    'StepExecutionState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'PENDING',
-        1 => 'RUNNING',
-        2 => 'CONTINUE',
-        3 => 'COMPLETED',
-        4 => 'CANCELLED',
-        5 => 'FAILED',
-        6 => 'INTERRUPTED',
+      'enum' => [
+        'PENDING',
+        'RUNNING',
+        'CONTINUE',
+        'COMPLETED',
+        'CANCELLED',
+        'FAILED',
+        'INTERRUPTED',
       ],
     ],
-    'StepExecutionStatusDetail' =>
-    [
+    'StepExecutionStatusDetail' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'State',
-        1 => 'CreationDateTime',
+      'required' => [
+        'State',
+        'CreationDateTime',
       ],
-      'members' =>
-      [
-        'State' =>
-        [
+      'members' => [
+        'State' => [
           'shape' => 'StepExecutionState',
         ],
-        'CreationDateTime' =>
-        [
+        'CreationDateTime' => [
           'shape' => 'Date',
         ],
-        'StartDateTime' =>
-        [
+        'StartDateTime' => [
           'shape' => 'Date',
         ],
-        'EndDateTime' =>
-        [
+        'EndDateTime' => [
           'shape' => 'Date',
         ],
-        'LastStateChangeReason' =>
-        [
+        'LastStateChangeReason' => [
           'shape' => 'XmlString',
         ],
       ],
     ],
-    'StepId' =>
-    [
+    'StepId' => [
       'type' => 'string',
     ],
-    'StepIdsList' =>
-    [
+    'StepIdsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'XmlStringMaxLen256',
       ],
     ],
-    'StepState' =>
-    [
+    'StepState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'PENDING',
-        1 => 'RUNNING',
-        2 => 'COMPLETED',
-        3 => 'CANCELLED',
-        4 => 'FAILED',
-        5 => 'INTERRUPTED',
+      'enum' => [
+        'PENDING',
+        'RUNNING',
+        'COMPLETED',
+        'CANCELLED',
+        'FAILED',
+        'INTERRUPTED',
       ],
     ],
-    'StepStateChangeReason' =>
-    [
+    'StepStateChangeReason' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Code' =>
-        [
+      'members' => [
+        'Code' => [
           'shape' => 'StepStateChangeReasonCode',
         ],
-        'Message' =>
-        [
+        'Message' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'StepStateChangeReasonCode' =>
-    [
+    'StepStateChangeReasonCode' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'NONE',
+      'enum' => [
+        'NONE',
       ],
     ],
-    'StepStateList' =>
-    [
+    'StepStateList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'StepState',
       ],
     ],
-    'StepStatus' =>
-    [
+    'StepStatus' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'State' =>
-        [
+      'members' => [
+        'State' => [
           'shape' => 'StepState',
         ],
-        'StateChangeReason' =>
-        [
+        'StateChangeReason' => [
           'shape' => 'StepStateChangeReason',
         ],
-        'Timeline' =>
-        [
+        'Timeline' => [
           'shape' => 'StepTimeline',
         ],
       ],
     ],
-    'StepSummary' =>
-    [
+    'StepSummary' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'StepId',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'StepStatus',
         ],
       ],
     ],
-    'StepSummaryList' =>
-    [
+    'StepSummaryList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'StepSummary',
       ],
     ],
-    'StepTimeline' =>
-    [
+    'StepTimeline' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CreationDateTime' =>
-        [
+      'members' => [
+        'CreationDateTime' => [
           'shape' => 'Date',
         ],
-        'StartDateTime' =>
-        [
+        'StartDateTime' => [
           'shape' => 'Date',
         ],
-        'EndDateTime' =>
-        [
+        'EndDateTime' => [
           'shape' => 'Date',
         ],
       ],
     ],
-    'String' =>
-    [
+    'String' => [
       'type' => 'string',
     ],
-    'StringList' =>
-    [
+    'StringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
       ],
     ],
-    'StringMap' =>
-    [
+    'StringMap' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'String',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'String',
       ],
     ],
-    'SupportedProductConfig' =>
-    [
+    'SupportedProductConfig' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'XmlStringMaxLen256',
         ],
-        'Args' =>
-        [
+        'Args' => [
           'shape' => 'XmlStringList',
         ],
       ],
     ],
-    'SupportedProductsList' =>
-    [
+    'SupportedProductsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'XmlStringMaxLen256',
       ],
     ],
-    'Tag' =>
-    [
+    'Tag' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Key' =>
-        [
+      'members' => [
+        'Key' => [
           'shape' => 'String',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'TagList' =>
-    [
+    'TagList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Tag',
       ],
     ],
-    'TerminateJobFlowsInput' =>
-    [
+    'TerminateJobFlowsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'JobFlowIds',
+      'required' => [
+        'JobFlowIds',
       ],
-      'members' =>
-      [
-        'JobFlowIds' =>
-        [
+      'members' => [
+        'JobFlowIds' => [
           'shape' => 'XmlStringList',
         ],
       ],
     ],
-    'XmlString' =>
-    [
+    'XmlString' => [
       'type' => 'string',
       'min' => 0,
       'max' => 10280,
       'pattern' => '[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*',
     ],
-    'XmlStringList' =>
-    [
+    'XmlStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'XmlString',
       ],
     ],
-    'XmlStringMaxLen256' =>
-    [
+    'XmlStringMaxLen256' => [
       'type' => 'string',
       'min' => 0,
       'max' => 256,

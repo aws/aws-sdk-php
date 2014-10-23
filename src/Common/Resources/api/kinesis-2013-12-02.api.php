@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2013-12-02',
     'endpointPrefix' => 'kinesis',
     'jsonVersion' => '1.1',
@@ -11,296 +9,228 @@ return [
     'targetPrefix' => 'Kinesis_20131202',
     'protocol' => 'json',
   ],
-  'operations' =>
-  [
-    'CreateStream' =>
-    [
+  'operations' => [
+    'CreateStream' => [
       'name' => 'CreateStream',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateStreamInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceInUseException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidArgumentException',
           'exception' => true,
         ],
       ],
     ],
-    'DeleteStream' =>
-    [
+    'DeleteStream' => [
       'name' => 'DeleteStream',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteStreamInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeStream' =>
-    [
+    'DescribeStream' => [
       'name' => 'DescribeStream',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeStreamInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeStreamOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededException',
           'exception' => true,
         ],
       ],
     ],
-    'GetRecords' =>
-    [
+    'GetRecords' => [
       'name' => 'GetRecords',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetRecordsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetRecordsOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidArgumentException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ProvisionedThroughputExceededException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ExpiredIteratorException',
           'exception' => true,
         ],
       ],
     ],
-    'GetShardIterator' =>
-    [
+    'GetShardIterator' => [
       'name' => 'GetShardIterator',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetShardIteratorInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetShardIteratorOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidArgumentException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ProvisionedThroughputExceededException',
           'exception' => true,
         ],
       ],
     ],
-    'ListStreams' =>
-    [
+    'ListStreams' => [
       'name' => 'ListStreams',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListStreamsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListStreamsOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'LimitExceededException',
           'exception' => true,
         ],
       ],
     ],
-    'MergeShards' =>
-    [
+    'MergeShards' => [
       'name' => 'MergeShards',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'MergeShardsInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceInUseException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidArgumentException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'LimitExceededException',
           'exception' => true,
         ],
       ],
     ],
-    'PutRecord' =>
-    [
+    'PutRecord' => [
       'name' => 'PutRecord',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutRecordInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'PutRecordOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidArgumentException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ProvisionedThroughputExceededException',
           'exception' => true,
         ],
       ],
     ],
-    'SplitShard' =>
-    [
+    'SplitShard' => [
       'name' => 'SplitShard',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SplitShardInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceInUseException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidArgumentException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'LimitExceededException',
           'exception' => true,
@@ -308,622 +238,474 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'BooleanObject' =>
-    [
+  'shapes' => [
+    'BooleanObject' => [
       'type' => 'boolean',
     ],
-    'CreateStreamInput' =>
-    [
+    'CreateStreamInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StreamName',
-        1 => 'ShardCount',
+      'required' => [
+        'StreamName',
+        'ShardCount',
       ],
-      'members' =>
-      [
-        'StreamName' =>
-        [
+      'members' => [
+        'StreamName' => [
           'shape' => 'StreamName',
         ],
-        'ShardCount' =>
-        [
+        'ShardCount' => [
           'shape' => 'PositiveIntegerObject',
         ],
       ],
     ],
-    'Data' =>
-    [
+    'Data' => [
       'type' => 'blob',
       'min' => 0,
       'max' => 51200,
     ],
-    'DeleteStreamInput' =>
-    [
+    'DeleteStreamInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StreamName',
+      'required' => [
+        'StreamName',
       ],
-      'members' =>
-      [
-        'StreamName' =>
-        [
+      'members' => [
+        'StreamName' => [
           'shape' => 'StreamName',
         ],
       ],
     ],
-    'DescribeStreamInput' =>
-    [
+    'DescribeStreamInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StreamName',
+      'required' => [
+        'StreamName',
       ],
-      'members' =>
-      [
-        'StreamName' =>
-        [
+      'members' => [
+        'StreamName' => [
           'shape' => 'StreamName',
         ],
-        'Limit' =>
-        [
+        'Limit' => [
           'shape' => 'DescribeStreamInputLimit',
         ],
-        'ExclusiveStartShardId' =>
-        [
+        'ExclusiveStartShardId' => [
           'shape' => 'ShardId',
         ],
       ],
     ],
-    'DescribeStreamInputLimit' =>
-    [
+    'DescribeStreamInputLimit' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 10000,
     ],
-    'DescribeStreamOutput' =>
-    [
+    'DescribeStreamOutput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StreamDescription',
+      'required' => [
+        'StreamDescription',
       ],
-      'members' =>
-      [
-        'StreamDescription' =>
-        [
+      'members' => [
+        'StreamDescription' => [
           'shape' => 'StreamDescription',
         ],
       ],
     ],
-    'ErrorMessage' =>
-    [
+    'ErrorMessage' => [
       'type' => 'string',
     ],
-    'ExpiredIteratorException' =>
-    [
+    'ExpiredIteratorException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'GetRecordsInput' =>
-    [
+    'GetRecordsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ShardIterator',
+      'required' => [
+        'ShardIterator',
       ],
-      'members' =>
-      [
-        'ShardIterator' =>
-        [
+      'members' => [
+        'ShardIterator' => [
           'shape' => 'ShardIterator',
         ],
-        'Limit' =>
-        [
+        'Limit' => [
           'shape' => 'GetRecordsInputLimit',
         ],
       ],
     ],
-    'GetRecordsInputLimit' =>
-    [
+    'GetRecordsInputLimit' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 10000,
     ],
-    'GetRecordsOutput' =>
-    [
+    'GetRecordsOutput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Records',
+      'required' => [
+        'Records',
       ],
-      'members' =>
-      [
-        'Records' =>
-        [
+      'members' => [
+        'Records' => [
           'shape' => 'RecordList',
         ],
-        'NextShardIterator' =>
-        [
+        'NextShardIterator' => [
           'shape' => 'ShardIterator',
         ],
       ],
     ],
-    'GetShardIteratorInput' =>
-    [
+    'GetShardIteratorInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StreamName',
-        1 => 'ShardId',
-        2 => 'ShardIteratorType',
+      'required' => [
+        'StreamName',
+        'ShardId',
+        'ShardIteratorType',
       ],
-      'members' =>
-      [
-        'StreamName' =>
-        [
+      'members' => [
+        'StreamName' => [
           'shape' => 'StreamName',
         ],
-        'ShardId' =>
-        [
+        'ShardId' => [
           'shape' => 'ShardId',
         ],
-        'ShardIteratorType' =>
-        [
+        'ShardIteratorType' => [
           'shape' => 'ShardIteratorType',
         ],
-        'StartingSequenceNumber' =>
-        [
+        'StartingSequenceNumber' => [
           'shape' => 'SequenceNumber',
         ],
       ],
     ],
-    'GetShardIteratorOutput' =>
-    [
+    'GetShardIteratorOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ShardIterator' =>
-        [
+      'members' => [
+        'ShardIterator' => [
           'shape' => 'ShardIterator',
         ],
       ],
     ],
-    'HashKey' =>
-    [
+    'HashKey' => [
       'type' => 'string',
       'pattern' => '0|([1-9]\\d{0,38}]',
     ],
-    'HashKeyRange' =>
-    [
+    'HashKeyRange' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StartingHashKey',
-        1 => 'EndingHashKey',
+      'required' => [
+        'StartingHashKey',
+        'EndingHashKey',
       ],
-      'members' =>
-      [
-        'StartingHashKey' =>
-        [
+      'members' => [
+        'StartingHashKey' => [
           'shape' => 'HashKey',
         ],
-        'EndingHashKey' =>
-        [
+        'EndingHashKey' => [
           'shape' => 'HashKey',
         ],
       ],
     ],
-    'InvalidArgumentException' =>
-    [
+    'InvalidArgumentException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'LimitExceededException' =>
-    [
+    'LimitExceededException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'ListStreamsInput' =>
-    [
+    'ListStreamsInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Limit' =>
-        [
+      'members' => [
+        'Limit' => [
           'shape' => 'ListStreamsInputLimit',
         ],
-        'ExclusiveStartStreamName' =>
-        [
+        'ExclusiveStartStreamName' => [
           'shape' => 'StreamName',
         ],
       ],
     ],
-    'ListStreamsInputLimit' =>
-    [
+    'ListStreamsInputLimit' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 10000,
     ],
-    'ListStreamsOutput' =>
-    [
+    'ListStreamsOutput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StreamNames',
-        1 => 'HasMoreStreams',
+      'required' => [
+        'StreamNames',
+        'HasMoreStreams',
       ],
-      'members' =>
-      [
-        'StreamNames' =>
-        [
+      'members' => [
+        'StreamNames' => [
           'shape' => 'StreamNameList',
         ],
-        'HasMoreStreams' =>
-        [
+        'HasMoreStreams' => [
           'shape' => 'BooleanObject',
         ],
       ],
     ],
-    'MergeShardsInput' =>
-    [
+    'MergeShardsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StreamName',
-        1 => 'ShardToMerge',
-        2 => 'AdjacentShardToMerge',
+      'required' => [
+        'StreamName',
+        'ShardToMerge',
+        'AdjacentShardToMerge',
       ],
-      'members' =>
-      [
-        'StreamName' =>
-        [
+      'members' => [
+        'StreamName' => [
           'shape' => 'StreamName',
         ],
-        'ShardToMerge' =>
-        [
+        'ShardToMerge' => [
           'shape' => 'ShardId',
         ],
-        'AdjacentShardToMerge' =>
-        [
+        'AdjacentShardToMerge' => [
           'shape' => 'ShardId',
         ],
       ],
     ],
-    'PartitionKey' =>
-    [
+    'PartitionKey' => [
       'type' => 'string',
       'min' => 1,
       'max' => 256,
     ],
-    'PositiveIntegerObject' =>
-    [
+    'PositiveIntegerObject' => [
       'type' => 'integer',
       'min' => 1,
     ],
-    'ProvisionedThroughputExceededException' =>
-    [
+    'ProvisionedThroughputExceededException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'PutRecordInput' =>
-    [
+    'PutRecordInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StreamName',
-        1 => 'Data',
-        2 => 'PartitionKey',
+      'required' => [
+        'StreamName',
+        'Data',
+        'PartitionKey',
       ],
-      'members' =>
-      [
-        'StreamName' =>
-        [
+      'members' => [
+        'StreamName' => [
           'shape' => 'StreamName',
         ],
-        'Data' =>
-        [
+        'Data' => [
           'shape' => 'Data',
         ],
-        'PartitionKey' =>
-        [
+        'PartitionKey' => [
           'shape' => 'PartitionKey',
         ],
-        'ExplicitHashKey' =>
-        [
+        'ExplicitHashKey' => [
           'shape' => 'HashKey',
         ],
-        'SequenceNumberForOrdering' =>
-        [
+        'SequenceNumberForOrdering' => [
           'shape' => 'SequenceNumber',
         ],
       ],
     ],
-    'PutRecordOutput' =>
-    [
+    'PutRecordOutput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ShardId',
-        1 => 'SequenceNumber',
+      'required' => [
+        'ShardId',
+        'SequenceNumber',
       ],
-      'members' =>
-      [
-        'ShardId' =>
-        [
+      'members' => [
+        'ShardId' => [
           'shape' => 'ShardId',
         ],
-        'SequenceNumber' =>
-        [
+        'SequenceNumber' => [
           'shape' => 'SequenceNumber',
         ],
       ],
     ],
-    'Record' =>
-    [
+    'Record' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SequenceNumber',
-        1 => 'Data',
-        2 => 'PartitionKey',
+      'required' => [
+        'SequenceNumber',
+        'Data',
+        'PartitionKey',
       ],
-      'members' =>
-      [
-        'SequenceNumber' =>
-        [
+      'members' => [
+        'SequenceNumber' => [
           'shape' => 'SequenceNumber',
         ],
-        'Data' =>
-        [
+        'Data' => [
           'shape' => 'Data',
         ],
-        'PartitionKey' =>
-        [
+        'PartitionKey' => [
           'shape' => 'PartitionKey',
         ],
       ],
     ],
-    'RecordList' =>
-    [
+    'RecordList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Record',
       ],
     ],
-    'ResourceInUseException' =>
-    [
+    'ResourceInUseException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'ResourceNotFoundException' =>
-    [
+    'ResourceNotFoundException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'SequenceNumber' =>
-    [
+    'SequenceNumber' => [
       'type' => 'string',
       'pattern' => '0|([1-9]\\d{0,128}]',
     ],
-    'SequenceNumberRange' =>
-    [
+    'SequenceNumberRange' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StartingSequenceNumber',
+      'required' => [
+        'StartingSequenceNumber',
       ],
-      'members' =>
-      [
-        'StartingSequenceNumber' =>
-        [
+      'members' => [
+        'StartingSequenceNumber' => [
           'shape' => 'SequenceNumber',
         ],
-        'EndingSequenceNumber' =>
-        [
+        'EndingSequenceNumber' => [
           'shape' => 'SequenceNumber',
         ],
       ],
     ],
-    'Shard' =>
-    [
+    'Shard' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ShardId',
-        1 => 'HashKeyRange',
-        2 => 'SequenceNumberRange',
+      'required' => [
+        'ShardId',
+        'HashKeyRange',
+        'SequenceNumberRange',
       ],
-      'members' =>
-      [
-        'ShardId' =>
-        [
+      'members' => [
+        'ShardId' => [
           'shape' => 'ShardId',
         ],
-        'ParentShardId' =>
-        [
+        'ParentShardId' => [
           'shape' => 'ShardId',
         ],
-        'AdjacentParentShardId' =>
-        [
+        'AdjacentParentShardId' => [
           'shape' => 'ShardId',
         ],
-        'HashKeyRange' =>
-        [
+        'HashKeyRange' => [
           'shape' => 'HashKeyRange',
         ],
-        'SequenceNumberRange' =>
-        [
+        'SequenceNumberRange' => [
           'shape' => 'SequenceNumberRange',
         ],
       ],
     ],
-    'ShardId' =>
-    [
+    'ShardId' => [
       'type' => 'string',
       'min' => 1,
       'max' => 128,
       'pattern' => '[a-zA-Z0-9_.-]+',
     ],
-    'ShardIterator' =>
-    [
+    'ShardIterator' => [
       'type' => 'string',
       'min' => 1,
       'max' => 512,
     ],
-    'ShardIteratorType' =>
-    [
+    'ShardIteratorType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'AT_SEQUENCE_NUMBER',
-        1 => 'AFTER_SEQUENCE_NUMBER',
-        2 => 'TRIM_HORIZON',
-        3 => 'LATEST',
+      'enum' => [
+        'AT_SEQUENCE_NUMBER',
+        'AFTER_SEQUENCE_NUMBER',
+        'TRIM_HORIZON',
+        'LATEST',
       ],
     ],
-    'ShardList' =>
-    [
+    'ShardList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Shard',
       ],
     ],
-    'SplitShardInput' =>
-    [
+    'SplitShardInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StreamName',
-        1 => 'ShardToSplit',
-        2 => 'NewStartingHashKey',
+      'required' => [
+        'StreamName',
+        'ShardToSplit',
+        'NewStartingHashKey',
       ],
-      'members' =>
-      [
-        'StreamName' =>
-        [
+      'members' => [
+        'StreamName' => [
           'shape' => 'StreamName',
         ],
-        'ShardToSplit' =>
-        [
+        'ShardToSplit' => [
           'shape' => 'ShardId',
         ],
-        'NewStartingHashKey' =>
-        [
+        'NewStartingHashKey' => [
           'shape' => 'HashKey',
         ],
       ],
     ],
-    'StreamARN' =>
-    [
+    'StreamARN' => [
       'type' => 'string',
     ],
-    'StreamDescription' =>
-    [
+    'StreamDescription' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StreamName',
-        1 => 'StreamARN',
-        2 => 'StreamStatus',
-        3 => 'Shards',
-        4 => 'HasMoreShards',
+      'required' => [
+        'StreamName',
+        'StreamARN',
+        'StreamStatus',
+        'Shards',
+        'HasMoreShards',
       ],
-      'members' =>
-      [
-        'StreamName' =>
-        [
+      'members' => [
+        'StreamName' => [
           'shape' => 'StreamName',
         ],
-        'StreamARN' =>
-        [
+        'StreamARN' => [
           'shape' => 'StreamARN',
         ],
-        'StreamStatus' =>
-        [
+        'StreamStatus' => [
           'shape' => 'StreamStatus',
         ],
-        'Shards' =>
-        [
+        'Shards' => [
           'shape' => 'ShardList',
         ],
-        'HasMoreShards' =>
-        [
+        'HasMoreShards' => [
           'shape' => 'BooleanObject',
         ],
       ],
     ],
-    'StreamName' =>
-    [
+    'StreamName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 128,
       'pattern' => '[a-zA-Z0-9_.-]+',
     ],
-    'StreamNameList' =>
-    [
+    'StreamNameList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'StreamName',
       ],
     ],
-    'StreamStatus' =>
-    [
+    'StreamStatus' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'CREATING',
-        1 => 'DELETING',
-        2 => 'ACTIVE',
-        3 => 'UPDATING',
+      'enum' => [
+        'CREATING',
+        'DELETING',
+        'ACTIVE',
+        'UPDATING',
       ],
     ],
   ],

@@ -1,39 +1,32 @@
-<?php
-return [
-  'pagination' =>
-  [
-    'ListHealthChecks' =>
-    [
+<?php return [
+  'pagination' => [
+    'ListHealthChecks' => [
       'input_token' => 'Marker',
       'output_token' => 'NextMarker',
       'more_results' => 'IsTruncated',
       'limit_key' => 'MaxItems',
       'result_key' => 'HealthChecks',
     ],
-    'ListHostedZones' =>
-    [
+    'ListHostedZones' => [
       'input_token' => 'Marker',
       'output_token' => 'NextMarker',
       'more_results' => 'IsTruncated',
       'limit_key' => 'MaxItems',
       'result_key' => 'HostedZones',
     ],
-    'ListResourceRecordSets' =>
-    [
+    'ListResourceRecordSets' => [
       'more_results' => 'IsTruncated',
       'limit_key' => 'MaxItems',
       'result_key' => 'ResourceRecordSets',
-      'input_token' =>
-      [
-        0 => 'StartRecordName',
-        1 => 'StartRecordType',
-        2 => 'StartRecordIdentifier',
+      'input_token' => [
+        'StartRecordName',
+        'StartRecordType',
+        'StartRecordIdentifier',
       ],
-      'output_token' =>
-      [
-        0 => 'NextRecordName',
-        1 => 'NextRecordType',
-        2 => 'NextRecordIdentifier',
+      'output_token' => [
+        'NextRecordName',
+        'NextRecordType',
+        'NextRecordIdentifier',
       ],
     ],
   ],

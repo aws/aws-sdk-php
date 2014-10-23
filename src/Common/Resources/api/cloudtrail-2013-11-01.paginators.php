@@ -1,9 +1,6 @@
-<?php
-return [
-  'pagination' =>
-  [
-    'DescribeTrails' =>
-    [
+<?php return [
+  'pagination' => [
+    'DescribeTrails' => [
       'result_key' => 'trailList',
     ],
   ],

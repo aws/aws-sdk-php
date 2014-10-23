@@ -1,14 +1,10 @@
-<?php
-return [
-  'waiters' =>
-  [
-    '__default__' =>
-    [
+<?php return [
+  'waiters' => [
+    '__default__' => [
       'interval' => 3,
       'max_attempts' => 20,
     ],
-    'IdentityExists' =>
-    [
+    'IdentityExists' => [
       'operation' => 'GetIdentityVerificationAttributes',
       'success_type' => 'output',
       'success_path' => 'VerificationAttributes[].VerificationStatus',

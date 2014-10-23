@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2013-02-18',
     'endpointPrefix' => 'opsworks',
     'jsonVersion' => '1.1',
@@ -10,1637 +8,1256 @@ return [
     'targetPrefix' => 'OpsWorks_20130218',
     'protocol' => 'json',
   ],
-  'operations' =>
-  [
-    'AssignVolume' =>
-    [
+  'operations' => [
+    'AssignVolume' => [
       'name' => 'AssignVolume',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AssignVolumeRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'AssociateElasticIp' =>
-    [
+    'AssociateElasticIp' => [
       'name' => 'AssociateElasticIp',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AssociateElasticIpRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'AttachElasticLoadBalancer' =>
-    [
+    'AttachElasticLoadBalancer' => [
       'name' => 'AttachElasticLoadBalancer',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AttachElasticLoadBalancerRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'CloneStack' =>
-    [
+    'CloneStack' => [
       'name' => 'CloneStack',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CloneStackRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CloneStackResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'CreateApp' =>
-    [
+    'CreateApp' => [
       'name' => 'CreateApp',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateAppRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateAppResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'CreateDeployment' =>
-    [
+    'CreateDeployment' => [
       'name' => 'CreateDeployment',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateDeploymentRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateDeploymentResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'CreateInstance' =>
-    [
+    'CreateInstance' => [
       'name' => 'CreateInstance',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateInstanceRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateInstanceResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'CreateLayer' =>
-    [
+    'CreateLayer' => [
       'name' => 'CreateLayer',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateLayerRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateLayerResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'CreateStack' =>
-    [
+    'CreateStack' => [
       'name' => 'CreateStack',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateStackRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateStackResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
       ],
     ],
-    'CreateUserProfile' =>
-    [
+    'CreateUserProfile' => [
       'name' => 'CreateUserProfile',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateUserProfileRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateUserProfileResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
       ],
     ],
-    'DeleteApp' =>
-    [
+    'DeleteApp' => [
       'name' => 'DeleteApp',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteAppRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DeleteInstance' =>
-    [
+    'DeleteInstance' => [
       'name' => 'DeleteInstance',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteInstanceRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DeleteLayer' =>
-    [
+    'DeleteLayer' => [
       'name' => 'DeleteLayer',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteLayerRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DeleteStack' =>
-    [
+    'DeleteStack' => [
       'name' => 'DeleteStack',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteStackRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DeleteUserProfile' =>
-    [
+    'DeleteUserProfile' => [
       'name' => 'DeleteUserProfile',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteUserProfileRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DeregisterElasticIp' =>
-    [
+    'DeregisterElasticIp' => [
       'name' => 'DeregisterElasticIp',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeregisterElasticIpRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DeregisterRdsDbInstance' =>
-    [
+    'DeregisterRdsDbInstance' => [
       'name' => 'DeregisterRdsDbInstance',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeregisterRdsDbInstanceRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DeregisterVolume' =>
-    [
+    'DeregisterVolume' => [
       'name' => 'DeregisterVolume',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeregisterVolumeRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeApps' =>
-    [
+    'DescribeApps' => [
       'name' => 'DescribeApps',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeAppsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeAppsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeCommands' =>
-    [
+    'DescribeCommands' => [
       'name' => 'DescribeCommands',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeCommandsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeCommandsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeDeployments' =>
-    [
+    'DescribeDeployments' => [
       'name' => 'DescribeDeployments',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeDeploymentsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeDeploymentsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeElasticIps' =>
-    [
+    'DescribeElasticIps' => [
       'name' => 'DescribeElasticIps',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeElasticIpsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeElasticIpsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeElasticLoadBalancers' =>
-    [
+    'DescribeElasticLoadBalancers' => [
       'name' => 'DescribeElasticLoadBalancers',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeElasticLoadBalancersRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeElasticLoadBalancersResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeInstances' =>
-    [
+    'DescribeInstances' => [
       'name' => 'DescribeInstances',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeInstancesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeInstancesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeLayers' =>
-    [
+    'DescribeLayers' => [
       'name' => 'DescribeLayers',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeLayersRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeLayersResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeLoadBasedAutoScaling' =>
-    [
+    'DescribeLoadBasedAutoScaling' => [
       'name' => 'DescribeLoadBasedAutoScaling',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeLoadBasedAutoScalingRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeLoadBasedAutoScalingResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeMyUserProfile' =>
-    [
+    'DescribeMyUserProfile' => [
       'name' => 'DescribeMyUserProfile',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeMyUserProfileResult',
       ],
     ],
-    'DescribePermissions' =>
-    [
+    'DescribePermissions' => [
       'name' => 'DescribePermissions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribePermissionsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribePermissionsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeRaidArrays' =>
-    [
+    'DescribeRaidArrays' => [
       'name' => 'DescribeRaidArrays',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeRaidArraysRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeRaidArraysResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeRdsDbInstances' =>
-    [
+    'DescribeRdsDbInstances' => [
       'name' => 'DescribeRdsDbInstances',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeRdsDbInstancesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeRdsDbInstancesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeServiceErrors' =>
-    [
+    'DescribeServiceErrors' => [
       'name' => 'DescribeServiceErrors',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeServiceErrorsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeServiceErrorsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeStackSummary' =>
-    [
+    'DescribeStackSummary' => [
       'name' => 'DescribeStackSummary',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeStackSummaryRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeStackSummaryResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeStacks' =>
-    [
+    'DescribeStacks' => [
       'name' => 'DescribeStacks',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeStacksRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeStacksResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeTimeBasedAutoScaling' =>
-    [
+    'DescribeTimeBasedAutoScaling' => [
       'name' => 'DescribeTimeBasedAutoScaling',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeTimeBasedAutoScalingRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeTimeBasedAutoScalingResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeUserProfiles' =>
-    [
+    'DescribeUserProfiles' => [
       'name' => 'DescribeUserProfiles',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeUserProfilesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeUserProfilesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeVolumes' =>
-    [
+    'DescribeVolumes' => [
       'name' => 'DescribeVolumes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeVolumesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeVolumesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DetachElasticLoadBalancer' =>
-    [
+    'DetachElasticLoadBalancer' => [
       'name' => 'DetachElasticLoadBalancer',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DetachElasticLoadBalancerRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'DisassociateElasticIp' =>
-    [
+    'DisassociateElasticIp' => [
       'name' => 'DisassociateElasticIp',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DisassociateElasticIpRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'GetHostnameSuggestion' =>
-    [
+    'GetHostnameSuggestion' => [
       'name' => 'GetHostnameSuggestion',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetHostnameSuggestionRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetHostnameSuggestionResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'RebootInstance' =>
-    [
+    'RebootInstance' => [
       'name' => 'RebootInstance',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RebootInstanceRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'RegisterElasticIp' =>
-    [
+    'RegisterElasticIp' => [
       'name' => 'RegisterElasticIp',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RegisterElasticIpRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RegisterElasticIpResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'RegisterRdsDbInstance' =>
-    [
+    'RegisterRdsDbInstance' => [
       'name' => 'RegisterRdsDbInstance',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RegisterRdsDbInstanceRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'RegisterVolume' =>
-    [
+    'RegisterVolume' => [
       'name' => 'RegisterVolume',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RegisterVolumeRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RegisterVolumeResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'SetLoadBasedAutoScaling' =>
-    [
+    'SetLoadBasedAutoScaling' => [
       'name' => 'SetLoadBasedAutoScaling',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SetLoadBasedAutoScalingRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'SetPermission' =>
-    [
+    'SetPermission' => [
       'name' => 'SetPermission',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SetPermissionRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'SetTimeBasedAutoScaling' =>
-    [
+    'SetTimeBasedAutoScaling' => [
       'name' => 'SetTimeBasedAutoScaling',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SetTimeBasedAutoScalingRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'StartInstance' =>
-    [
+    'StartInstance' => [
       'name' => 'StartInstance',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'StartInstanceRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'StartStack' =>
-    [
+    'StartStack' => [
       'name' => 'StartStack',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'StartStackRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'StopInstance' =>
-    [
+    'StopInstance' => [
       'name' => 'StopInstance',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'StopInstanceRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'StopStack' =>
-    [
+    'StopStack' => [
       'name' => 'StopStack',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'StopStackRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'UnassignVolume' =>
-    [
+    'UnassignVolume' => [
       'name' => 'UnassignVolume',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UnassignVolumeRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'UpdateApp' =>
-    [
+    'UpdateApp' => [
       'name' => 'UpdateApp',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateAppRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'UpdateElasticIp' =>
-    [
+    'UpdateElasticIp' => [
       'name' => 'UpdateElasticIp',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateElasticIpRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'UpdateInstance' =>
-    [
+    'UpdateInstance' => [
       'name' => 'UpdateInstance',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateInstanceRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'UpdateLayer' =>
-    [
+    'UpdateLayer' => [
       'name' => 'UpdateLayer',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateLayerRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'UpdateMyUserProfile' =>
-    [
+    'UpdateMyUserProfile' => [
       'name' => 'UpdateMyUserProfile',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateMyUserProfileRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
       ],
     ],
-    'UpdateRdsDbInstance' =>
-    [
+    'UpdateRdsDbInstance' => [
       'name' => 'UpdateRdsDbInstance',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateRdsDbInstanceRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'UpdateStack' =>
-    [
+    'UpdateStack' => [
       'name' => 'UpdateStack',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateStackRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'UpdateUserProfile' =>
-    [
+    'UpdateUserProfile' => [
       'name' => 'UpdateUserProfile',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateUserProfileRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
       ],
     ],
-    'UpdateVolume' =>
-    [
+    'UpdateVolume' => [
       'name' => 'UpdateVolume',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateVolumeRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
@@ -1648,3459 +1265,2585 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'App' =>
-    [
+  'shapes' => [
+    'App' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AppId' =>
-        [
+      'members' => [
+        'AppId' => [
           'shape' => 'String',
         ],
-        'StackId' =>
-        [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'Shortname' =>
-        [
+        'Shortname' => [
           'shape' => 'String',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
-        'DataSources' =>
-        [
+        'DataSources' => [
           'shape' => 'DataSources',
         ],
-        'Type' =>
-        [
+        'Type' => [
           'shape' => 'AppType',
         ],
-        'AppSource' =>
-        [
+        'AppSource' => [
           'shape' => 'Source',
         ],
-        'Domains' =>
-        [
+        'Domains' => [
           'shape' => 'Strings',
         ],
-        'EnableSsl' =>
-        [
+        'EnableSsl' => [
           'shape' => 'Boolean',
         ],
-        'SslConfiguration' =>
-        [
+        'SslConfiguration' => [
           'shape' => 'SslConfiguration',
         ],
-        'Attributes' =>
-        [
+        'Attributes' => [
           'shape' => 'AppAttributes',
         ],
-        'CreatedAt' =>
-        [
+        'CreatedAt' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'AppAttributes' =>
-    [
+    'AppAttributes' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'AppAttributesKeys',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'String',
       ],
     ],
-    'AppAttributesKeys' =>
-    [
+    'AppAttributesKeys' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'DocumentRoot',
-        1 => 'RailsEnv',
-        2 => 'AutoBundleOnDeploy',
+      'enum' => [
+        'DocumentRoot',
+        'RailsEnv',
+        'AutoBundleOnDeploy',
       ],
     ],
-    'AppType' =>
-    [
+    'AppType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'rails',
-        1 => 'php',
-        2 => 'nodejs',
-        3 => 'static',
-        4 => 'other',
+      'enum' => [
+        'rails',
+        'php',
+        'nodejs',
+        'static',
+        'other',
       ],
     ],
-    'Apps' =>
-    [
+    'Apps' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'App',
       ],
     ],
-    'Architecture' =>
-    [
+    'Architecture' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'x86_64',
-        1 => 'i386',
+      'enum' => [
+        'x86_64',
+        'i386',
       ],
     ],
-    'AssignVolumeRequest' =>
-    [
+    'AssignVolumeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VolumeId',
+      'required' => [
+        'VolumeId',
       ],
-      'members' =>
-      [
-        'VolumeId' =>
-        [
+      'members' => [
+        'VolumeId' => [
           'shape' => 'String',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'AssociateElasticIpRequest' =>
-    [
+    'AssociateElasticIpRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ElasticIp',
+      'required' => [
+        'ElasticIp',
       ],
-      'members' =>
-      [
-        'ElasticIp' =>
-        [
+      'members' => [
+        'ElasticIp' => [
           'shape' => 'String',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'AttachElasticLoadBalancerRequest' =>
-    [
+    'AttachElasticLoadBalancerRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ElasticLoadBalancerName',
-        1 => 'LayerId',
+      'required' => [
+        'ElasticLoadBalancerName',
+        'LayerId',
       ],
-      'members' =>
-      [
-        'ElasticLoadBalancerName' =>
-        [
+      'members' => [
+        'ElasticLoadBalancerName' => [
           'shape' => 'String',
         ],
-        'LayerId' =>
-        [
+        'LayerId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'AutoScalingThresholds' =>
-    [
+    'AutoScalingThresholds' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceCount' =>
-        [
+      'members' => [
+        'InstanceCount' => [
           'shape' => 'Integer',
         ],
-        'ThresholdsWaitTime' =>
-        [
+        'ThresholdsWaitTime' => [
           'shape' => 'Minute',
         ],
-        'IgnoreMetricsTime' =>
-        [
+        'IgnoreMetricsTime' => [
           'shape' => 'Minute',
         ],
-        'CpuThreshold' =>
-        [
+        'CpuThreshold' => [
           'shape' => 'Double',
         ],
-        'MemoryThreshold' =>
-        [
+        'MemoryThreshold' => [
           'shape' => 'Double',
         ],
-        'LoadThreshold' =>
-        [
+        'LoadThreshold' => [
           'shape' => 'Double',
         ],
       ],
     ],
-    'AutoScalingType' =>
-    [
+    'AutoScalingType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'load',
-        1 => 'timer',
+      'enum' => [
+        'load',
+        'timer',
       ],
     ],
-    'Boolean' =>
-    [
+    'Boolean' => [
       'type' => 'boolean',
       'box' => true,
     ],
-    'ChefConfiguration' =>
-    [
+    'ChefConfiguration' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ManageBerkshelf' =>
-        [
+      'members' => [
+        'ManageBerkshelf' => [
           'shape' => 'Boolean',
         ],
-        'BerkshelfVersion' =>
-        [
+        'BerkshelfVersion' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CloneStackRequest' =>
-    [
+    'CloneStackRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SourceStackId',
-        1 => 'ServiceRoleArn',
+      'required' => [
+        'SourceStackId',
+        'ServiceRoleArn',
       ],
-      'members' =>
-      [
-        'SourceStackId' =>
-        [
+      'members' => [
+        'SourceStackId' => [
           'shape' => 'String',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Region' =>
-        [
+        'Region' => [
           'shape' => 'String',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
         ],
-        'Attributes' =>
-        [
+        'Attributes' => [
           'shape' => 'StackAttributes',
         ],
-        'ServiceRoleArn' =>
-        [
+        'ServiceRoleArn' => [
           'shape' => 'String',
         ],
-        'DefaultInstanceProfileArn' =>
-        [
+        'DefaultInstanceProfileArn' => [
           'shape' => 'String',
         ],
-        'DefaultOs' =>
-        [
+        'DefaultOs' => [
           'shape' => 'String',
         ],
-        'HostnameTheme' =>
-        [
+        'HostnameTheme' => [
           'shape' => 'String',
         ],
-        'DefaultAvailabilityZone' =>
-        [
+        'DefaultAvailabilityZone' => [
           'shape' => 'String',
         ],
-        'DefaultSubnetId' =>
-        [
+        'DefaultSubnetId' => [
           'shape' => 'String',
         ],
-        'CustomJson' =>
-        [
+        'CustomJson' => [
           'shape' => 'String',
         ],
-        'ConfigurationManager' =>
-        [
+        'ConfigurationManager' => [
           'shape' => 'StackConfigurationManager',
         ],
-        'ChefConfiguration' =>
-        [
+        'ChefConfiguration' => [
           'shape' => 'ChefConfiguration',
         ],
-        'UseCustomCookbooks' =>
-        [
+        'UseCustomCookbooks' => [
           'shape' => 'Boolean',
         ],
-        'UseOpsworksSecurityGroups' =>
-        [
+        'UseOpsworksSecurityGroups' => [
           'shape' => 'Boolean',
         ],
-        'CustomCookbooksSource' =>
-        [
+        'CustomCookbooksSource' => [
           'shape' => 'Source',
         ],
-        'DefaultSshKeyName' =>
-        [
+        'DefaultSshKeyName' => [
           'shape' => 'String',
         ],
-        'ClonePermissions' =>
-        [
+        'ClonePermissions' => [
           'shape' => 'Boolean',
         ],
-        'CloneAppIds' =>
-        [
+        'CloneAppIds' => [
           'shape' => 'Strings',
         ],
-        'DefaultRootDeviceType' =>
-        [
+        'DefaultRootDeviceType' => [
           'shape' => 'RootDeviceType',
         ],
       ],
     ],
-    'CloneStackResult' =>
-    [
+    'CloneStackResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'Command' =>
-    [
+    'Command' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CommandId' =>
-        [
+      'members' => [
+        'CommandId' => [
           'shape' => 'String',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
         ],
-        'DeploymentId' =>
-        [
+        'DeploymentId' => [
           'shape' => 'String',
         ],
-        'CreatedAt' =>
-        [
+        'CreatedAt' => [
           'shape' => 'DateTime',
         ],
-        'AcknowledgedAt' =>
-        [
+        'AcknowledgedAt' => [
           'shape' => 'DateTime',
         ],
-        'CompletedAt' =>
-        [
+        'CompletedAt' => [
           'shape' => 'DateTime',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'String',
         ],
-        'ExitCode' =>
-        [
+        'ExitCode' => [
           'shape' => 'Integer',
         ],
-        'LogUrl' =>
-        [
+        'LogUrl' => [
           'shape' => 'String',
         ],
-        'Type' =>
-        [
+        'Type' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'Commands' =>
-    [
+    'Commands' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Command',
       ],
     ],
-    'CreateAppRequest' =>
-    [
+    'CreateAppRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackId',
-        1 => 'Name',
-        2 => 'Type',
+      'required' => [
+        'StackId',
+        'Name',
+        'Type',
       ],
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'Shortname' =>
-        [
+        'Shortname' => [
           'shape' => 'String',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
-        'DataSources' =>
-        [
+        'DataSources' => [
           'shape' => 'DataSources',
         ],
-        'Type' =>
-        [
+        'Type' => [
           'shape' => 'AppType',
         ],
-        'AppSource' =>
-        [
+        'AppSource' => [
           'shape' => 'Source',
         ],
-        'Domains' =>
-        [
+        'Domains' => [
           'shape' => 'Strings',
         ],
-        'EnableSsl' =>
-        [
+        'EnableSsl' => [
           'shape' => 'Boolean',
         ],
-        'SslConfiguration' =>
-        [
+        'SslConfiguration' => [
           'shape' => 'SslConfiguration',
         ],
-        'Attributes' =>
-        [
+        'Attributes' => [
           'shape' => 'AppAttributes',
         ],
       ],
     ],
-    'CreateAppResult' =>
-    [
+    'CreateAppResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AppId' =>
-        [
+      'members' => [
+        'AppId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreateDeploymentRequest' =>
-    [
+    'CreateDeploymentRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackId',
-        1 => 'Command',
+      'required' => [
+        'StackId',
+        'Command',
       ],
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'AppId' =>
-        [
+        'AppId' => [
           'shape' => 'String',
         ],
-        'InstanceIds' =>
-        [
+        'InstanceIds' => [
           'shape' => 'Strings',
         ],
-        'Command' =>
-        [
+        'Command' => [
           'shape' => 'DeploymentCommand',
         ],
-        'Comment' =>
-        [
+        'Comment' => [
           'shape' => 'String',
         ],
-        'CustomJson' =>
-        [
-          'shape' => 'String',
-        ],
-      ],
-    ],
-    'CreateDeploymentResult' =>
-    [
-      'type' => 'structure',
-      'members' =>
-      [
-        'DeploymentId' =>
-        [
+        'CustomJson' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreateInstanceRequest' =>
-    [
+    'CreateDeploymentResult' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackId',
-        1 => 'LayerIds',
-        2 => 'InstanceType',
-      ],
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'DeploymentId' => [
           'shape' => 'String',
         ],
-        'LayerIds' =>
-        [
+      ],
+    ],
+    'CreateInstanceRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'StackId',
+        'LayerIds',
+        'InstanceType',
+      ],
+      'members' => [
+        'StackId' => [
+          'shape' => 'String',
+        ],
+        'LayerIds' => [
           'shape' => 'Strings',
         ],
-        'InstanceType' =>
-        [
+        'InstanceType' => [
           'shape' => 'String',
         ],
-        'AutoScalingType' =>
-        [
+        'AutoScalingType' => [
           'shape' => 'AutoScalingType',
         ],
-        'Hostname' =>
-        [
+        'Hostname' => [
           'shape' => 'String',
         ],
-        'Os' =>
-        [
+        'Os' => [
           'shape' => 'String',
         ],
-        'AmiId' =>
-        [
+        'AmiId' => [
           'shape' => 'String',
         ],
-        'SshKeyName' =>
-        [
+        'SshKeyName' => [
           'shape' => 'String',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
         ],
-        'VirtualizationType' =>
-        [
+        'VirtualizationType' => [
           'shape' => 'String',
         ],
-        'SubnetId' =>
-        [
+        'SubnetId' => [
           'shape' => 'String',
         ],
-        'Architecture' =>
-        [
+        'Architecture' => [
           'shape' => 'Architecture',
         ],
-        'RootDeviceType' =>
-        [
+        'RootDeviceType' => [
           'shape' => 'RootDeviceType',
         ],
-        'InstallUpdatesOnBoot' =>
-        [
+        'InstallUpdatesOnBoot' => [
           'shape' => 'Boolean',
         ],
-        'EbsOptimized' =>
-        [
+        'EbsOptimized' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'CreateInstanceResult' =>
-    [
+    'CreateInstanceResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreateLayerRequest' =>
-    [
+    'CreateLayerRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackId',
-        1 => 'Type',
-        2 => 'Name',
-        3 => 'Shortname',
+      'required' => [
+        'StackId',
+        'Type',
+        'Name',
+        'Shortname',
       ],
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'Type' =>
-        [
+        'Type' => [
           'shape' => 'LayerType',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Shortname' =>
-        [
+        'Shortname' => [
           'shape' => 'String',
         ],
-        'Attributes' =>
-        [
+        'Attributes' => [
           'shape' => 'LayerAttributes',
         ],
-        'CustomInstanceProfileArn' =>
-        [
+        'CustomInstanceProfileArn' => [
           'shape' => 'String',
         ],
-        'CustomSecurityGroupIds' =>
-        [
+        'CustomSecurityGroupIds' => [
           'shape' => 'Strings',
         ],
-        'Packages' =>
-        [
+        'Packages' => [
           'shape' => 'Strings',
         ],
-        'VolumeConfigurations' =>
-        [
+        'VolumeConfigurations' => [
           'shape' => 'VolumeConfigurations',
         ],
-        'EnableAutoHealing' =>
-        [
+        'EnableAutoHealing' => [
           'shape' => 'Boolean',
         ],
-        'AutoAssignElasticIps' =>
-        [
+        'AutoAssignElasticIps' => [
           'shape' => 'Boolean',
         ],
-        'AutoAssignPublicIps' =>
-        [
+        'AutoAssignPublicIps' => [
           'shape' => 'Boolean',
         ],
-        'CustomRecipes' =>
-        [
+        'CustomRecipes' => [
           'shape' => 'Recipes',
         ],
-        'InstallUpdatesOnBoot' =>
-        [
+        'InstallUpdatesOnBoot' => [
           'shape' => 'Boolean',
         ],
-        'UseEbsOptimizedInstances' =>
-        [
+        'UseEbsOptimizedInstances' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'CreateLayerResult' =>
-    [
+    'CreateLayerResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LayerId' =>
-        [
+      'members' => [
+        'LayerId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreateStackRequest' =>
-    [
+    'CreateStackRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
-        1 => 'Region',
-        2 => 'ServiceRoleArn',
-        3 => 'DefaultInstanceProfileArn',
+      'required' => [
+        'Name',
+        'Region',
+        'ServiceRoleArn',
+        'DefaultInstanceProfileArn',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Region' =>
-        [
+        'Region' => [
           'shape' => 'String',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
         ],
-        'Attributes' =>
-        [
+        'Attributes' => [
           'shape' => 'StackAttributes',
         ],
-        'ServiceRoleArn' =>
-        [
+        'ServiceRoleArn' => [
           'shape' => 'String',
         ],
-        'DefaultInstanceProfileArn' =>
-        [
+        'DefaultInstanceProfileArn' => [
           'shape' => 'String',
         ],
-        'DefaultOs' =>
-        [
+        'DefaultOs' => [
           'shape' => 'String',
         ],
-        'HostnameTheme' =>
-        [
+        'HostnameTheme' => [
           'shape' => 'String',
         ],
-        'DefaultAvailabilityZone' =>
-        [
+        'DefaultAvailabilityZone' => [
           'shape' => 'String',
         ],
-        'DefaultSubnetId' =>
-        [
+        'DefaultSubnetId' => [
           'shape' => 'String',
         ],
-        'CustomJson' =>
-        [
+        'CustomJson' => [
           'shape' => 'String',
         ],
-        'ConfigurationManager' =>
-        [
+        'ConfigurationManager' => [
           'shape' => 'StackConfigurationManager',
         ],
-        'ChefConfiguration' =>
-        [
+        'ChefConfiguration' => [
           'shape' => 'ChefConfiguration',
         ],
-        'UseCustomCookbooks' =>
-        [
+        'UseCustomCookbooks' => [
           'shape' => 'Boolean',
         ],
-        'UseOpsworksSecurityGroups' =>
-        [
+        'UseOpsworksSecurityGroups' => [
           'shape' => 'Boolean',
         ],
-        'CustomCookbooksSource' =>
-        [
+        'CustomCookbooksSource' => [
           'shape' => 'Source',
         ],
-        'DefaultSshKeyName' =>
-        [
+        'DefaultSshKeyName' => [
           'shape' => 'String',
         ],
-        'DefaultRootDeviceType' =>
-        [
+        'DefaultRootDeviceType' => [
           'shape' => 'RootDeviceType',
         ],
       ],
     ],
-    'CreateStackResult' =>
-    [
+    'CreateStackResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreateUserProfileRequest' =>
-    [
+    'CreateUserProfileRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IamUserArn',
+      'required' => [
+        'IamUserArn',
       ],
-      'members' =>
-      [
-        'IamUserArn' =>
-        [
+      'members' => [
+        'IamUserArn' => [
           'shape' => 'String',
         ],
-        'SshUsername' =>
-        [
+        'SshUsername' => [
           'shape' => 'String',
         ],
-        'SshPublicKey' =>
-        [
+        'SshPublicKey' => [
           'shape' => 'String',
         ],
-        'AllowSelfManagement' =>
-        [
+        'AllowSelfManagement' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'CreateUserProfileResult' =>
-    [
+    'CreateUserProfileResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IamUserArn' =>
-        [
+      'members' => [
+        'IamUserArn' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DailyAutoScalingSchedule' =>
-    [
+    'DailyAutoScalingSchedule' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'Hour',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'Switch',
       ],
     ],
-    'DataSource' =>
-    [
+    'DataSource' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Type' =>
-        [
+      'members' => [
+        'Type' => [
           'shape' => 'String',
         ],
-        'Arn' =>
-        [
+        'Arn' => [
           'shape' => 'String',
         ],
-        'DatabaseName' =>
-        [
+        'DatabaseName' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DataSources' =>
-    [
+    'DataSources' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DataSource',
       ],
     ],
-    'DateTime' =>
-    [
+    'DateTime' => [
       'type' => 'string',
     ],
-    'DeleteAppRequest' =>
-    [
+    'DeleteAppRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AppId',
+      'required' => [
+        'AppId',
       ],
-      'members' =>
-      [
-        'AppId' =>
-        [
+      'members' => [
+        'AppId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteInstanceRequest' =>
-    [
+    'DeleteInstanceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceId',
+      'required' => [
+        'InstanceId',
       ],
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'String',
         ],
-        'DeleteElasticIp' =>
-        [
+        'DeleteElasticIp' => [
           'shape' => 'Boolean',
         ],
-        'DeleteVolumes' =>
-        [
+        'DeleteVolumes' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'DeleteLayerRequest' =>
-    [
+    'DeleteLayerRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LayerId',
+      'required' => [
+        'LayerId',
       ],
-      'members' =>
-      [
-        'LayerId' =>
-        [
+      'members' => [
+        'LayerId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteStackRequest' =>
-    [
+    'DeleteStackRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackId',
+      'required' => [
+        'StackId',
       ],
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteUserProfileRequest' =>
-    [
+    'DeleteUserProfileRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IamUserArn',
+      'required' => [
+        'IamUserArn',
       ],
-      'members' =>
-      [
-        'IamUserArn' =>
-        [
+      'members' => [
+        'IamUserArn' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'Deployment' =>
-    [
+    'Deployment' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DeploymentId' =>
-        [
+      'members' => [
+        'DeploymentId' => [
           'shape' => 'String',
         ],
-        'StackId' =>
-        [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'AppId' =>
-        [
+        'AppId' => [
           'shape' => 'String',
         ],
-        'CreatedAt' =>
-        [
+        'CreatedAt' => [
           'shape' => 'DateTime',
         ],
-        'CompletedAt' =>
-        [
+        'CompletedAt' => [
           'shape' => 'DateTime',
         ],
-        'Duration' =>
-        [
+        'Duration' => [
           'shape' => 'Integer',
         ],
-        'IamUserArn' =>
-        [
+        'IamUserArn' => [
           'shape' => 'String',
         ],
-        'Comment' =>
-        [
+        'Comment' => [
           'shape' => 'String',
         ],
-        'Command' =>
-        [
+        'Command' => [
           'shape' => 'DeploymentCommand',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'String',
         ],
-        'CustomJson' =>
-        [
+        'CustomJson' => [
           'shape' => 'String',
         ],
-        'InstanceIds' =>
-        [
+        'InstanceIds' => [
           'shape' => 'Strings',
         ],
       ],
     ],
-    'DeploymentCommand' =>
-    [
+    'DeploymentCommand' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
+      'required' => [
+        'Name',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'DeploymentCommandName',
         ],
-        'Args' =>
-        [
+        'Args' => [
           'shape' => 'DeploymentCommandArgs',
         ],
       ],
     ],
-    'DeploymentCommandArgs' =>
-    [
+    'DeploymentCommandArgs' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'String',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'Strings',
       ],
     ],
-    'DeploymentCommandName' =>
-    [
+    'DeploymentCommandName' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'install_dependencies',
-        1 => 'update_dependencies',
-        2 => 'update_custom_cookbooks',
-        3 => 'execute_recipes',
-        4 => 'deploy',
-        5 => 'rollback',
-        6 => 'start',
-        7 => 'stop',
-        8 => 'restart',
-        9 => 'undeploy',
+      'enum' => [
+        'install_dependencies',
+        'update_dependencies',
+        'update_custom_cookbooks',
+        'execute_recipes',
+        'deploy',
+        'rollback',
+        'start',
+        'stop',
+        'restart',
+        'undeploy',
       ],
     ],
-    'Deployments' =>
-    [
+    'Deployments' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Deployment',
       ],
     ],
-    'DeregisterElasticIpRequest' =>
-    [
+    'DeregisterElasticIpRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ElasticIp',
+      'required' => [
+        'ElasticIp',
       ],
-      'members' =>
-      [
-        'ElasticIp' =>
-        [
+      'members' => [
+        'ElasticIp' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeregisterRdsDbInstanceRequest' =>
-    [
+    'DeregisterRdsDbInstanceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RdsDbInstanceArn',
+      'required' => [
+        'RdsDbInstanceArn',
       ],
-      'members' =>
-      [
-        'RdsDbInstanceArn' =>
-        [
+      'members' => [
+        'RdsDbInstanceArn' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeregisterVolumeRequest' =>
-    [
+    'DeregisterVolumeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VolumeId',
+      'required' => [
+        'VolumeId',
       ],
-      'members' =>
-      [
-        'VolumeId' =>
-        [
+      'members' => [
+        'VolumeId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeAppsRequest' =>
-    [
+    'DescribeAppsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'AppIds' =>
-        [
+        'AppIds' => [
           'shape' => 'Strings',
         ],
       ],
     ],
-    'DescribeAppsResult' =>
-    [
+    'DescribeAppsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Apps' =>
-        [
+      'members' => [
+        'Apps' => [
           'shape' => 'Apps',
         ],
       ],
     ],
-    'DescribeCommandsRequest' =>
-    [
+    'DescribeCommandsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DeploymentId' =>
-        [
+      'members' => [
+        'DeploymentId' => [
           'shape' => 'String',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
         ],
-        'CommandIds' =>
-        [
+        'CommandIds' => [
           'shape' => 'Strings',
         ],
       ],
     ],
-    'DescribeCommandsResult' =>
-    [
+    'DescribeCommandsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Commands' =>
-        [
+      'members' => [
+        'Commands' => [
           'shape' => 'Commands',
         ],
       ],
     ],
-    'DescribeDeploymentsRequest' =>
-    [
+    'DescribeDeploymentsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'AppId' =>
-        [
+        'AppId' => [
           'shape' => 'String',
         ],
-        'DeploymentIds' =>
-        [
+        'DeploymentIds' => [
           'shape' => 'Strings',
         ],
       ],
     ],
-    'DescribeDeploymentsResult' =>
-    [
+    'DescribeDeploymentsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Deployments' =>
-        [
+      'members' => [
+        'Deployments' => [
           'shape' => 'Deployments',
         ],
       ],
     ],
-    'DescribeElasticIpsRequest' =>
-    [
+    'DescribeElasticIpsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'String',
         ],
-        'StackId' =>
-        [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'Ips' =>
-        [
+        'Ips' => [
           'shape' => 'Strings',
         ],
       ],
     ],
-    'DescribeElasticIpsResult' =>
-    [
+    'DescribeElasticIpsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ElasticIps' =>
-        [
+      'members' => [
+        'ElasticIps' => [
           'shape' => 'ElasticIps',
         ],
       ],
     ],
-    'DescribeElasticLoadBalancersRequest' =>
-    [
+    'DescribeElasticLoadBalancersRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'LayerIds' =>
-        [
+        'LayerIds' => [
           'shape' => 'Strings',
         ],
       ],
     ],
-    'DescribeElasticLoadBalancersResult' =>
-    [
+    'DescribeElasticLoadBalancersResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ElasticLoadBalancers' =>
-        [
+      'members' => [
+        'ElasticLoadBalancers' => [
           'shape' => 'ElasticLoadBalancers',
         ],
       ],
     ],
-    'DescribeInstancesRequest' =>
-    [
+    'DescribeInstancesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'LayerId' =>
-        [
+        'LayerId' => [
           'shape' => 'String',
         ],
-        'InstanceIds' =>
-        [
+        'InstanceIds' => [
           'shape' => 'Strings',
         ],
       ],
     ],
-    'DescribeInstancesResult' =>
-    [
+    'DescribeInstancesResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Instances' =>
-        [
+      'members' => [
+        'Instances' => [
           'shape' => 'Instances',
         ],
       ],
     ],
-    'DescribeLayersRequest' =>
-    [
+    'DescribeLayersRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'LayerIds' =>
-        [
+        'LayerIds' => [
           'shape' => 'Strings',
         ],
       ],
     ],
-    'DescribeLayersResult' =>
-    [
+    'DescribeLayersResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Layers' =>
-        [
+      'members' => [
+        'Layers' => [
           'shape' => 'Layers',
         ],
       ],
     ],
-    'DescribeLoadBasedAutoScalingRequest' =>
-    [
+    'DescribeLoadBasedAutoScalingRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LayerIds',
+      'required' => [
+        'LayerIds',
       ],
-      'members' =>
-      [
-        'LayerIds' =>
-        [
+      'members' => [
+        'LayerIds' => [
           'shape' => 'Strings',
         ],
       ],
     ],
-    'DescribeLoadBasedAutoScalingResult' =>
-    [
+    'DescribeLoadBasedAutoScalingResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LoadBasedAutoScalingConfigurations' =>
-        [
+      'members' => [
+        'LoadBasedAutoScalingConfigurations' => [
           'shape' => 'LoadBasedAutoScalingConfigurations',
         ],
       ],
     ],
-    'DescribeMyUserProfileResult' =>
-    [
+    'DescribeMyUserProfileResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'UserProfile' =>
-        [
+      'members' => [
+        'UserProfile' => [
           'shape' => 'SelfUserProfile',
         ],
       ],
     ],
-    'DescribePermissionsRequest' =>
-    [
+    'DescribePermissionsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IamUserArn' =>
-        [
+      'members' => [
+        'IamUserArn' => [
           'shape' => 'String',
         ],
-        'StackId' =>
-        [
+        'StackId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribePermissionsResult' =>
-    [
+    'DescribePermissionsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Permissions' =>
-        [
+      'members' => [
+        'Permissions' => [
           'shape' => 'Permissions',
         ],
       ],
     ],
-    'DescribeRaidArraysRequest' =>
-    [
+    'DescribeRaidArraysRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'String',
         ],
-        'RaidArrayIds' =>
-        [
+        'RaidArrayIds' => [
           'shape' => 'Strings',
         ],
       ],
     ],
-    'DescribeRaidArraysResult' =>
-    [
+    'DescribeRaidArraysResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'RaidArrays' =>
-        [
+      'members' => [
+        'RaidArrays' => [
           'shape' => 'RaidArrays',
         ],
       ],
     ],
-    'DescribeRdsDbInstancesRequest' =>
-    [
+    'DescribeRdsDbInstancesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackId',
+      'required' => [
+        'StackId',
       ],
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'RdsDbInstanceArns' =>
-        [
+        'RdsDbInstanceArns' => [
           'shape' => 'Strings',
         ],
       ],
     ],
-    'DescribeRdsDbInstancesResult' =>
-    [
+    'DescribeRdsDbInstancesResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'RdsDbInstances' =>
-        [
+      'members' => [
+        'RdsDbInstances' => [
           'shape' => 'RdsDbInstances',
         ],
       ],
     ],
-    'DescribeServiceErrorsRequest' =>
-    [
+    'DescribeServiceErrorsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
         ],
-        'ServiceErrorIds' =>
-        [
+        'ServiceErrorIds' => [
           'shape' => 'Strings',
         ],
       ],
     ],
-    'DescribeServiceErrorsResult' =>
-    [
+    'DescribeServiceErrorsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ServiceErrors' =>
-        [
+      'members' => [
+        'ServiceErrors' => [
           'shape' => 'ServiceErrors',
         ],
       ],
     ],
-    'DescribeStackSummaryRequest' =>
-    [
+    'DescribeStackSummaryRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackId',
+      'required' => [
+        'StackId',
       ],
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeStackSummaryResult' =>
-    [
+    'DescribeStackSummaryResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackSummary' =>
-        [
+      'members' => [
+        'StackSummary' => [
           'shape' => 'StackSummary',
         ],
       ],
     ],
-    'DescribeStacksRequest' =>
-    [
+    'DescribeStacksRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackIds' =>
-        [
+      'members' => [
+        'StackIds' => [
           'shape' => 'Strings',
         ],
       ],
     ],
-    'DescribeStacksResult' =>
-    [
+    'DescribeStacksResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Stacks' =>
-        [
+      'members' => [
+        'Stacks' => [
           'shape' => 'Stacks',
         ],
       ],
     ],
-    'DescribeTimeBasedAutoScalingRequest' =>
-    [
+    'DescribeTimeBasedAutoScalingRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceIds',
+      'required' => [
+        'InstanceIds',
       ],
-      'members' =>
-      [
-        'InstanceIds' =>
-        [
+      'members' => [
+        'InstanceIds' => [
           'shape' => 'Strings',
         ],
       ],
     ],
-    'DescribeTimeBasedAutoScalingResult' =>
-    [
+    'DescribeTimeBasedAutoScalingResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TimeBasedAutoScalingConfigurations' =>
-        [
+      'members' => [
+        'TimeBasedAutoScalingConfigurations' => [
           'shape' => 'TimeBasedAutoScalingConfigurations',
         ],
       ],
     ],
-    'DescribeUserProfilesRequest' =>
-    [
+    'DescribeUserProfilesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IamUserArns' =>
-        [
+      'members' => [
+        'IamUserArns' => [
           'shape' => 'Strings',
         ],
       ],
     ],
-    'DescribeUserProfilesResult' =>
-    [
+    'DescribeUserProfilesResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'UserProfiles' =>
-        [
+      'members' => [
+        'UserProfiles' => [
           'shape' => 'UserProfiles',
         ],
       ],
     ],
-    'DescribeVolumesRequest' =>
-    [
+    'DescribeVolumesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'String',
         ],
-        'StackId' =>
-        [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'RaidArrayId' =>
-        [
+        'RaidArrayId' => [
           'shape' => 'String',
         ],
-        'VolumeIds' =>
-        [
+        'VolumeIds' => [
           'shape' => 'Strings',
         ],
       ],
     ],
-    'DescribeVolumesResult' =>
-    [
+    'DescribeVolumesResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Volumes' =>
-        [
+      'members' => [
+        'Volumes' => [
           'shape' => 'Volumes',
         ],
       ],
     ],
-    'DetachElasticLoadBalancerRequest' =>
-    [
+    'DetachElasticLoadBalancerRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ElasticLoadBalancerName',
-        1 => 'LayerId',
+      'required' => [
+        'ElasticLoadBalancerName',
+        'LayerId',
       ],
-      'members' =>
-      [
-        'ElasticLoadBalancerName' =>
-        [
+      'members' => [
+        'ElasticLoadBalancerName' => [
           'shape' => 'String',
         ],
-        'LayerId' =>
-        [
+        'LayerId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DisassociateElasticIpRequest' =>
-    [
+    'DisassociateElasticIpRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ElasticIp',
+      'required' => [
+        'ElasticIp',
       ],
-      'members' =>
-      [
-        'ElasticIp' =>
-        [
+      'members' => [
+        'ElasticIp' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'Double' =>
-    [
+    'Double' => [
       'type' => 'double',
       'box' => true,
     ],
-    'ElasticIp' =>
-    [
+    'ElasticIp' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Ip' =>
-        [
+      'members' => [
+        'Ip' => [
           'shape' => 'String',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Domain' =>
-        [
+        'Domain' => [
           'shape' => 'String',
         ],
-        'Region' =>
-        [
+        'Region' => [
           'shape' => 'String',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ElasticIps' =>
-    [
+    'ElasticIps' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ElasticIp',
       ],
     ],
-    'ElasticLoadBalancer' =>
-    [
+    'ElasticLoadBalancer' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ElasticLoadBalancerName' =>
-        [
+      'members' => [
+        'ElasticLoadBalancerName' => [
           'shape' => 'String',
         ],
-        'Region' =>
-        [
+        'Region' => [
           'shape' => 'String',
         ],
-        'DnsName' =>
-        [
+        'DnsName' => [
           'shape' => 'String',
         ],
-        'StackId' =>
-        [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'LayerId' =>
-        [
+        'LayerId' => [
           'shape' => 'String',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
         ],
-        'AvailabilityZones' =>
-        [
+        'AvailabilityZones' => [
           'shape' => 'Strings',
         ],
-        'SubnetIds' =>
-        [
+        'SubnetIds' => [
           'shape' => 'Strings',
         ],
-        'Ec2InstanceIds' =>
-        [
+        'Ec2InstanceIds' => [
           'shape' => 'Strings',
         ],
       ],
     ],
-    'ElasticLoadBalancers' =>
-    [
+    'ElasticLoadBalancers' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ElasticLoadBalancer',
       ],
     ],
-    'GetHostnameSuggestionRequest' =>
-    [
+    'GetHostnameSuggestionRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LayerId',
+      'required' => [
+        'LayerId',
       ],
-      'members' =>
-      [
-        'LayerId' =>
-        [
+      'members' => [
+        'LayerId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'GetHostnameSuggestionResult' =>
-    [
+    'GetHostnameSuggestionResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LayerId' =>
-        [
+      'members' => [
+        'LayerId' => [
           'shape' => 'String',
         ],
-        'Hostname' =>
-        [
+        'Hostname' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'Hour' =>
-    [
+    'Hour' => [
       'type' => 'string',
     ],
-    'Instance' =>
-    [
+    'Instance' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'String',
         ],
-        'Ec2InstanceId' =>
-        [
+        'Ec2InstanceId' => [
           'shape' => 'String',
         ],
-        'VirtualizationType' =>
-        [
+        'VirtualizationType' => [
           'shape' => 'String',
         ],
-        'Hostname' =>
-        [
+        'Hostname' => [
           'shape' => 'String',
         ],
-        'StackId' =>
-        [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'LayerIds' =>
-        [
+        'LayerIds' => [
           'shape' => 'Strings',
         ],
-        'SecurityGroupIds' =>
-        [
+        'SecurityGroupIds' => [
           'shape' => 'Strings',
         ],
-        'InstanceType' =>
-        [
+        'InstanceType' => [
           'shape' => 'String',
         ],
-        'InstanceProfileArn' =>
-        [
+        'InstanceProfileArn' => [
           'shape' => 'String',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'String',
         ],
-        'Os' =>
-        [
+        'Os' => [
           'shape' => 'String',
         ],
-        'AmiId' =>
-        [
+        'AmiId' => [
           'shape' => 'String',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
         ],
-        'SubnetId' =>
-        [
+        'SubnetId' => [
           'shape' => 'String',
         ],
-        'PublicDns' =>
-        [
+        'PublicDns' => [
           'shape' => 'String',
         ],
-        'PrivateDns' =>
-        [
+        'PrivateDns' => [
           'shape' => 'String',
         ],
-        'PublicIp' =>
-        [
+        'PublicIp' => [
           'shape' => 'String',
         ],
-        'PrivateIp' =>
-        [
+        'PrivateIp' => [
           'shape' => 'String',
         ],
-        'ElasticIp' =>
-        [
+        'ElasticIp' => [
           'shape' => 'String',
         ],
-        'AutoScalingType' =>
-        [
+        'AutoScalingType' => [
           'shape' => 'AutoScalingType',
         ],
-        'SshKeyName' =>
-        [
+        'SshKeyName' => [
           'shape' => 'String',
         ],
-        'SshHostRsaKeyFingerprint' =>
-        [
+        'SshHostRsaKeyFingerprint' => [
           'shape' => 'String',
         ],
-        'SshHostDsaKeyFingerprint' =>
-        [
+        'SshHostDsaKeyFingerprint' => [
           'shape' => 'String',
         ],
-        'CreatedAt' =>
-        [
+        'CreatedAt' => [
           'shape' => 'DateTime',
         ],
-        'LastServiceErrorId' =>
-        [
+        'LastServiceErrorId' => [
           'shape' => 'String',
         ],
-        'Architecture' =>
-        [
+        'Architecture' => [
           'shape' => 'Architecture',
         ],
-        'RootDeviceType' =>
-        [
+        'RootDeviceType' => [
           'shape' => 'RootDeviceType',
         ],
-        'RootDeviceVolumeId' =>
-        [
+        'RootDeviceVolumeId' => [
           'shape' => 'String',
         ],
-        'InstallUpdatesOnBoot' =>
-        [
+        'InstallUpdatesOnBoot' => [
           'shape' => 'Boolean',
         ],
-        'EbsOptimized' =>
-        [
+        'EbsOptimized' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'Instances' =>
-    [
+    'Instances' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Instance',
       ],
     ],
-    'InstancesCount' =>
-    [
+    'InstancesCount' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Booting' =>
-        [
+      'members' => [
+        'Booting' => [
           'shape' => 'Integer',
         ],
-        'ConnectionLost' =>
-        [
+        'ConnectionLost' => [
           'shape' => 'Integer',
         ],
-        'Online' =>
-        [
+        'Online' => [
           'shape' => 'Integer',
         ],
-        'Pending' =>
-        [
+        'Pending' => [
           'shape' => 'Integer',
         ],
-        'Rebooting' =>
-        [
+        'Rebooting' => [
           'shape' => 'Integer',
         ],
-        'Requested' =>
-        [
+        'Requested' => [
           'shape' => 'Integer',
         ],
-        'RunningSetup' =>
-        [
+        'RunningSetup' => [
           'shape' => 'Integer',
         ],
-        'SetupFailed' =>
-        [
+        'SetupFailed' => [
           'shape' => 'Integer',
         ],
-        'ShuttingDown' =>
-        [
+        'ShuttingDown' => [
           'shape' => 'Integer',
         ],
-        'StartFailed' =>
-        [
+        'StartFailed' => [
           'shape' => 'Integer',
         ],
-        'Stopped' =>
-        [
+        'Stopped' => [
           'shape' => 'Integer',
         ],
-        'Stopping' =>
-        [
+        'Stopping' => [
           'shape' => 'Integer',
         ],
-        'Terminated' =>
-        [
+        'Terminated' => [
           'shape' => 'Integer',
         ],
-        'Terminating' =>
-        [
+        'Terminating' => [
           'shape' => 'Integer',
         ],
       ],
     ],
-    'Integer' =>
-    [
+    'Integer' => [
       'type' => 'integer',
       'box' => true,
     ],
-    'Layer' =>
-    [
+    'Layer' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'LayerId' =>
-        [
+        'LayerId' => [
           'shape' => 'String',
         ],
-        'Type' =>
-        [
+        'Type' => [
           'shape' => 'LayerType',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Shortname' =>
-        [
+        'Shortname' => [
           'shape' => 'String',
         ],
-        'Attributes' =>
-        [
+        'Attributes' => [
           'shape' => 'LayerAttributes',
         ],
-        'CustomInstanceProfileArn' =>
-        [
+        'CustomInstanceProfileArn' => [
           'shape' => 'String',
         ],
-        'CustomSecurityGroupIds' =>
-        [
+        'CustomSecurityGroupIds' => [
           'shape' => 'Strings',
         ],
-        'DefaultSecurityGroupNames' =>
-        [
+        'DefaultSecurityGroupNames' => [
           'shape' => 'Strings',
         ],
-        'Packages' =>
-        [
+        'Packages' => [
           'shape' => 'Strings',
         ],
-        'VolumeConfigurations' =>
-        [
+        'VolumeConfigurations' => [
           'shape' => 'VolumeConfigurations',
         ],
-        'EnableAutoHealing' =>
-        [
+        'EnableAutoHealing' => [
           'shape' => 'Boolean',
         ],
-        'AutoAssignElasticIps' =>
-        [
+        'AutoAssignElasticIps' => [
           'shape' => 'Boolean',
         ],
-        'AutoAssignPublicIps' =>
-        [
+        'AutoAssignPublicIps' => [
           'shape' => 'Boolean',
         ],
-        'DefaultRecipes' =>
-        [
+        'DefaultRecipes' => [
           'shape' => 'Recipes',
         ],
-        'CustomRecipes' =>
-        [
+        'CustomRecipes' => [
           'shape' => 'Recipes',
         ],
-        'CreatedAt' =>
-        [
+        'CreatedAt' => [
           'shape' => 'DateTime',
         ],
-        'InstallUpdatesOnBoot' =>
-        [
+        'InstallUpdatesOnBoot' => [
           'shape' => 'Boolean',
         ],
-        'UseEbsOptimizedInstances' =>
-        [
+        'UseEbsOptimizedInstances' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'LayerAttributes' =>
-    [
+    'LayerAttributes' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'LayerAttributesKeys',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'String',
       ],
     ],
-    'LayerAttributesKeys' =>
-    [
+    'LayerAttributesKeys' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'EnableHaproxyStats',
-        1 => 'HaproxyStatsUrl',
-        2 => 'HaproxyStatsUser',
-        3 => 'HaproxyStatsPassword',
-        4 => 'HaproxyHealthCheckUrl',
-        5 => 'HaproxyHealthCheckMethod',
-        6 => 'MysqlRootPassword',
-        7 => 'MysqlRootPasswordUbiquitous',
-        8 => 'GangliaUrl',
-        9 => 'GangliaUser',
-        10 => 'GangliaPassword',
-        11 => 'MemcachedMemory',
-        12 => 'NodejsVersion',
-        13 => 'RubyVersion',
-        14 => 'RubygemsVersion',
-        15 => 'ManageBundler',
-        16 => 'BundlerVersion',
-        17 => 'RailsStack',
-        18 => 'PassengerVersion',
-        19 => 'Jvm',
-        20 => 'JvmVersion',
-        21 => 'JvmOptions',
-        22 => 'JavaAppServer',
-        23 => 'JavaAppServerVersion',
+      'enum' => [
+        'EnableHaproxyStats',
+        'HaproxyStatsUrl',
+        'HaproxyStatsUser',
+        'HaproxyStatsPassword',
+        'HaproxyHealthCheckUrl',
+        'HaproxyHealthCheckMethod',
+        'MysqlRootPassword',
+        'MysqlRootPasswordUbiquitous',
+        'GangliaUrl',
+        'GangliaUser',
+        'GangliaPassword',
+        'MemcachedMemory',
+        'NodejsVersion',
+        'RubyVersion',
+        'RubygemsVersion',
+        'ManageBundler',
+        'BundlerVersion',
+        'RailsStack',
+        'PassengerVersion',
+        'Jvm',
+        'JvmVersion',
+        'JvmOptions',
+        'JavaAppServer',
+        'JavaAppServerVersion',
       ],
     ],
-    'LayerType' =>
-    [
+    'LayerType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'lb',
-        1 => 'web',
-        2 => 'php-app',
-        3 => 'rails-app',
-        4 => 'nodejs-app',
-        5 => 'memcached',
-        6 => 'db-master',
-        7 => 'monitoring-master',
-        8 => 'custom',
+      'enum' => [
+        'lb',
+        'web',
+        'php-app',
+        'rails-app',
+        'nodejs-app',
+        'memcached',
+        'db-master',
+        'monitoring-master',
+        'custom',
       ],
     ],
-    'Layers' =>
-    [
+    'Layers' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Layer',
       ],
     ],
-    'LoadBasedAutoScalingConfiguration' =>
-    [
+    'LoadBasedAutoScalingConfiguration' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LayerId' =>
-        [
+      'members' => [
+        'LayerId' => [
           'shape' => 'String',
         ],
-        'Enable' =>
-        [
+        'Enable' => [
           'shape' => 'Boolean',
         ],
-        'UpScaling' =>
-        [
+        'UpScaling' => [
           'shape' => 'AutoScalingThresholds',
         ],
-        'DownScaling' =>
-        [
+        'DownScaling' => [
           'shape' => 'AutoScalingThresholds',
         ],
       ],
     ],
-    'LoadBasedAutoScalingConfigurations' =>
-    [
+    'LoadBasedAutoScalingConfigurations' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'LoadBasedAutoScalingConfiguration',
       ],
     ],
-    'Minute' =>
-    [
+    'Minute' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 100,
     ],
-    'Permission' =>
-    [
+    'Permission' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'IamUserArn' =>
-        [
+        'IamUserArn' => [
           'shape' => 'String',
         ],
-        'AllowSsh' =>
-        [
+        'AllowSsh' => [
           'shape' => 'Boolean',
         ],
-        'AllowSudo' =>
-        [
+        'AllowSudo' => [
           'shape' => 'Boolean',
         ],
-        'Level' =>
-        [
+        'Level' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'Permissions' =>
-    [
+    'Permissions' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Permission',
       ],
     ],
-    'RaidArray' =>
-    [
+    'RaidArray' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'RaidArrayId' =>
-        [
+      'members' => [
+        'RaidArrayId' => [
           'shape' => 'String',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
         ],
-        'RaidLevel' =>
-        [
+        'RaidLevel' => [
           'shape' => 'Integer',
         ],
-        'NumberOfDisks' =>
-        [
+        'NumberOfDisks' => [
           'shape' => 'Integer',
         ],
-        'Size' =>
-        [
+        'Size' => [
           'shape' => 'Integer',
         ],
-        'Device' =>
-        [
+        'Device' => [
           'shape' => 'String',
         ],
-        'MountPoint' =>
-        [
+        'MountPoint' => [
           'shape' => 'String',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
         ],
-        'CreatedAt' =>
-        [
+        'CreatedAt' => [
           'shape' => 'DateTime',
         ],
-        'VolumeType' =>
-        [
+        'VolumeType' => [
           'shape' => 'String',
         ],
-        'Iops' =>
-        [
+        'Iops' => [
           'shape' => 'Integer',
         ],
       ],
     ],
-    'RaidArrays' =>
-    [
+    'RaidArrays' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'RaidArray',
       ],
     ],
-    'RdsDbInstance' =>
-    [
+    'RdsDbInstance' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'RdsDbInstanceArn' =>
-        [
+      'members' => [
+        'RdsDbInstanceArn' => [
           'shape' => 'String',
         ],
-        'DbInstanceIdentifier' =>
-        [
+        'DbInstanceIdentifier' => [
           'shape' => 'String',
         ],
-        'DbUser' =>
-        [
+        'DbUser' => [
           'shape' => 'String',
         ],
-        'DbPassword' =>
-        [
+        'DbPassword' => [
           'shape' => 'String',
         ],
-        'Region' =>
-        [
+        'Region' => [
           'shape' => 'String',
         ],
-        'Address' =>
-        [
+        'Address' => [
           'shape' => 'String',
         ],
-        'Engine' =>
-        [
+        'Engine' => [
           'shape' => 'String',
         ],
-        'StackId' =>
-        [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'MissingOnRds' =>
-        [
+        'MissingOnRds' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'RdsDbInstances' =>
-    [
+    'RdsDbInstances' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'RdsDbInstance',
       ],
     ],
-    'RebootInstanceRequest' =>
-    [
+    'RebootInstanceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceId',
+      'required' => [
+        'InstanceId',
       ],
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'Recipes' =>
-    [
+    'Recipes' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Setup' =>
-        [
+      'members' => [
+        'Setup' => [
           'shape' => 'Strings',
         ],
-        'Configure' =>
-        [
+        'Configure' => [
           'shape' => 'Strings',
         ],
-        'Deploy' =>
-        [
+        'Deploy' => [
           'shape' => 'Strings',
         ],
-        'Undeploy' =>
-        [
+        'Undeploy' => [
           'shape' => 'Strings',
         ],
-        'Shutdown' =>
-        [
+        'Shutdown' => [
           'shape' => 'Strings',
         ],
       ],
     ],
-    'RegisterElasticIpRequest' =>
-    [
+    'RegisterElasticIpRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ElasticIp',
-        1 => 'StackId',
+      'required' => [
+        'ElasticIp',
+        'StackId',
       ],
-      'members' =>
-      [
-        'ElasticIp' =>
-        [
+      'members' => [
+        'ElasticIp' => [
           'shape' => 'String',
         ],
-        'StackId' =>
-        [
+        'StackId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'RegisterElasticIpResult' =>
-    [
+    'RegisterElasticIpResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ElasticIp' =>
-        [
+      'members' => [
+        'ElasticIp' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'RegisterRdsDbInstanceRequest' =>
-    [
+    'RegisterRdsDbInstanceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackId',
-        1 => 'RdsDbInstanceArn',
-        2 => 'DbUser',
-        3 => 'DbPassword',
+      'required' => [
+        'StackId',
+        'RdsDbInstanceArn',
+        'DbUser',
+        'DbPassword',
       ],
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'RdsDbInstanceArn' =>
-        [
+        'RdsDbInstanceArn' => [
           'shape' => 'String',
         ],
-        'DbUser' =>
-        [
+        'DbUser' => [
           'shape' => 'String',
         ],
-        'DbPassword' =>
-        [
+        'DbPassword' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'RegisterVolumeRequest' =>
-    [
+    'RegisterVolumeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackId',
+      'required' => [
+        'StackId',
       ],
-      'members' =>
-      [
-        'Ec2VolumeId' =>
-        [
+      'members' => [
+        'Ec2VolumeId' => [
           'shape' => 'String',
         ],
-        'StackId' =>
-        [
+        'StackId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'RegisterVolumeResult' =>
-    [
+    'RegisterVolumeResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VolumeId' =>
-        [
+      'members' => [
+        'VolumeId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ResourceNotFoundException' =>
-    [
+    'ResourceNotFoundException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'String',
         ],
       ],
       'exception' => true,
     ],
-    'RootDeviceType' =>
-    [
+    'RootDeviceType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'ebs',
-        1 => 'instance-store',
+      'enum' => [
+        'ebs',
+        'instance-store',
       ],
     ],
-    'SelfUserProfile' =>
-    [
+    'SelfUserProfile' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IamUserArn' =>
-        [
+      'members' => [
+        'IamUserArn' => [
           'shape' => 'String',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
         ],
-        'SshUsername' =>
-        [
+        'SshUsername' => [
           'shape' => 'String',
         ],
-        'SshPublicKey' =>
-        [
+        'SshPublicKey' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ServiceError' =>
-    [
+    'ServiceError' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ServiceErrorId' =>
-        [
+      'members' => [
+        'ServiceErrorId' => [
           'shape' => 'String',
         ],
-        'StackId' =>
-        [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
         ],
-        'Type' =>
-        [
+        'Type' => [
           'shape' => 'String',
         ],
-        'Message' =>
-        [
+        'Message' => [
           'shape' => 'String',
         ],
-        'CreatedAt' =>
-        [
+        'CreatedAt' => [
           'shape' => 'DateTime',
         ],
       ],
     ],
-    'ServiceErrors' =>
-    [
+    'ServiceErrors' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ServiceError',
       ],
     ],
-    'SetLoadBasedAutoScalingRequest' =>
-    [
+    'SetLoadBasedAutoScalingRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LayerId',
+      'required' => [
+        'LayerId',
       ],
-      'members' =>
-      [
-        'LayerId' =>
-        [
+      'members' => [
+        'LayerId' => [
           'shape' => 'String',
         ],
-        'Enable' =>
-        [
+        'Enable' => [
           'shape' => 'Boolean',
         ],
-        'UpScaling' =>
-        [
+        'UpScaling' => [
           'shape' => 'AutoScalingThresholds',
         ],
-        'DownScaling' =>
-        [
+        'DownScaling' => [
           'shape' => 'AutoScalingThresholds',
         ],
       ],
     ],
-    'SetPermissionRequest' =>
-    [
+    'SetPermissionRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackId',
-        1 => 'IamUserArn',
+      'required' => [
+        'StackId',
+        'IamUserArn',
       ],
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'IamUserArn' =>
-        [
+        'IamUserArn' => [
           'shape' => 'String',
         ],
-        'AllowSsh' =>
-        [
+        'AllowSsh' => [
           'shape' => 'Boolean',
         ],
-        'AllowSudo' =>
-        [
+        'AllowSudo' => [
           'shape' => 'Boolean',
         ],
-        'Level' =>
-        [
+        'Level' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'SetTimeBasedAutoScalingRequest' =>
-    [
+    'SetTimeBasedAutoScalingRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceId',
+      'required' => [
+        'InstanceId',
       ],
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'String',
         ],
-        'AutoScalingSchedule' =>
-        [
+        'AutoScalingSchedule' => [
           'shape' => 'WeeklyAutoScalingSchedule',
         ],
       ],
     ],
-    'Source' =>
-    [
+    'Source' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Type' =>
-        [
+      'members' => [
+        'Type' => [
           'shape' => 'SourceType',
         ],
-        'Url' =>
-        [
+        'Url' => [
           'shape' => 'String',
         ],
-        'Username' =>
-        [
+        'Username' => [
           'shape' => 'String',
         ],
-        'Password' =>
-        [
+        'Password' => [
           'shape' => 'String',
         ],
-        'SshKey' =>
-        [
+        'SshKey' => [
           'shape' => 'String',
         ],
-        'Revision' =>
-        [
+        'Revision' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'SourceType' =>
-    [
+    'SourceType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'git',
-        1 => 'svn',
-        2 => 'archive',
-        3 => 's3',
+      'enum' => [
+        'git',
+        'svn',
+        'archive',
+        's3',
       ],
     ],
-    'SslConfiguration' =>
-    [
+    'SslConfiguration' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Certificate',
-        1 => 'PrivateKey',
+      'required' => [
+        'Certificate',
+        'PrivateKey',
       ],
-      'members' =>
-      [
-        'Certificate' =>
-        [
+      'members' => [
+        'Certificate' => [
           'shape' => 'String',
         ],
-        'PrivateKey' =>
-        [
+        'PrivateKey' => [
           'shape' => 'String',
         ],
-        'Chain' =>
-        [
+        'Chain' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'Stack' =>
-    [
+    'Stack' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Arn' =>
-        [
+        'Arn' => [
           'shape' => 'String',
         ],
-        'Region' =>
-        [
+        'Region' => [
           'shape' => 'String',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
         ],
-        'Attributes' =>
-        [
+        'Attributes' => [
           'shape' => 'StackAttributes',
         ],
-        'ServiceRoleArn' =>
-        [
+        'ServiceRoleArn' => [
           'shape' => 'String',
         ],
-        'DefaultInstanceProfileArn' =>
-        [
+        'DefaultInstanceProfileArn' => [
           'shape' => 'String',
         ],
-        'DefaultOs' =>
-        [
+        'DefaultOs' => [
           'shape' => 'String',
         ],
-        'HostnameTheme' =>
-        [
+        'HostnameTheme' => [
           'shape' => 'String',
         ],
-        'DefaultAvailabilityZone' =>
-        [
+        'DefaultAvailabilityZone' => [
           'shape' => 'String',
         ],
-        'DefaultSubnetId' =>
-        [
+        'DefaultSubnetId' => [
           'shape' => 'String',
         ],
-        'CustomJson' =>
-        [
+        'CustomJson' => [
           'shape' => 'String',
         ],
-        'ConfigurationManager' =>
-        [
+        'ConfigurationManager' => [
           'shape' => 'StackConfigurationManager',
         ],
-        'ChefConfiguration' =>
-        [
+        'ChefConfiguration' => [
           'shape' => 'ChefConfiguration',
         ],
-        'UseCustomCookbooks' =>
-        [
+        'UseCustomCookbooks' => [
           'shape' => 'Boolean',
         ],
-        'UseOpsworksSecurityGroups' =>
-        [
+        'UseOpsworksSecurityGroups' => [
           'shape' => 'Boolean',
         ],
-        'CustomCookbooksSource' =>
-        [
+        'CustomCookbooksSource' => [
           'shape' => 'Source',
         ],
-        'DefaultSshKeyName' =>
-        [
+        'DefaultSshKeyName' => [
           'shape' => 'String',
         ],
-        'CreatedAt' =>
-        [
+        'CreatedAt' => [
           'shape' => 'DateTime',
         ],
-        'DefaultRootDeviceType' =>
-        [
+        'DefaultRootDeviceType' => [
           'shape' => 'RootDeviceType',
         ],
       ],
     ],
-    'StackAttributes' =>
-    [
+    'StackAttributes' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'StackAttributesKeys',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'String',
       ],
     ],
-    'StackAttributesKeys' =>
-    [
+    'StackAttributesKeys' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'Color',
+      'enum' => [
+        'Color',
       ],
     ],
-    'StackConfigurationManager' =>
-    [
+    'StackConfigurationManager' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Version' =>
-        [
+        'Version' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'StackSummary' =>
-    [
+    'StackSummary' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Arn' =>
-        [
+        'Arn' => [
           'shape' => 'String',
         ],
-        'LayersCount' =>
-        [
+        'LayersCount' => [
           'shape' => 'Integer',
         ],
-        'AppsCount' =>
-        [
+        'AppsCount' => [
           'shape' => 'Integer',
         ],
-        'InstancesCount' =>
-        [
+        'InstancesCount' => [
           'shape' => 'InstancesCount',
         ],
       ],
     ],
-    'Stacks' =>
-    [
+    'Stacks' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Stack',
       ],
     ],
-    'StartInstanceRequest' =>
-    [
+    'StartInstanceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceId',
+      'required' => [
+        'InstanceId',
       ],
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'StartStackRequest' =>
-    [
+    'StartStackRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackId',
+      'required' => [
+        'StackId',
       ],
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'StopInstanceRequest' =>
-    [
+    'StopInstanceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceId',
+      'required' => [
+        'InstanceId',
       ],
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'StopStackRequest' =>
-    [
+    'StopStackRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackId',
+      'required' => [
+        'StackId',
       ],
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'String' =>
-    [
+    'String' => [
       'type' => 'string',
     ],
-    'Strings' =>
-    [
+    'Strings' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
       ],
     ],
-    'Switch' =>
-    [
+    'Switch' => [
       'type' => 'string',
     ],
-    'TimeBasedAutoScalingConfiguration' =>
-    [
+    'TimeBasedAutoScalingConfiguration' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'String',
         ],
-        'AutoScalingSchedule' =>
-        [
+        'AutoScalingSchedule' => [
           'shape' => 'WeeklyAutoScalingSchedule',
         ],
       ],
     ],
-    'TimeBasedAutoScalingConfigurations' =>
-    [
+    'TimeBasedAutoScalingConfigurations' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'TimeBasedAutoScalingConfiguration',
       ],
     ],
-    'UnassignVolumeRequest' =>
-    [
+    'UnassignVolumeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VolumeId',
+      'required' => [
+        'VolumeId',
       ],
-      'members' =>
-      [
-        'VolumeId' =>
-        [
+      'members' => [
+        'VolumeId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'UpdateAppRequest' =>
-    [
+    'UpdateAppRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AppId',
+      'required' => [
+        'AppId',
       ],
-      'members' =>
-      [
-        'AppId' =>
-        [
+      'members' => [
+        'AppId' => [
           'shape' => 'String',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
-        'DataSources' =>
-        [
+        'DataSources' => [
           'shape' => 'DataSources',
         ],
-        'Type' =>
-        [
+        'Type' => [
           'shape' => 'AppType',
         ],
-        'AppSource' =>
-        [
+        'AppSource' => [
           'shape' => 'Source',
         ],
-        'Domains' =>
-        [
+        'Domains' => [
           'shape' => 'Strings',
         ],
-        'EnableSsl' =>
-        [
+        'EnableSsl' => [
           'shape' => 'Boolean',
         ],
-        'SslConfiguration' =>
-        [
+        'SslConfiguration' => [
           'shape' => 'SslConfiguration',
         ],
-        'Attributes' =>
-        [
+        'Attributes' => [
           'shape' => 'AppAttributes',
         ],
       ],
     ],
-    'UpdateElasticIpRequest' =>
-    [
+    'UpdateElasticIpRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ElasticIp',
+      'required' => [
+        'ElasticIp',
       ],
-      'members' =>
-      [
-        'ElasticIp' =>
-        [
+      'members' => [
+        'ElasticIp' => [
           'shape' => 'String',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'UpdateInstanceRequest' =>
-    [
+    'UpdateInstanceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceId',
+      'required' => [
+        'InstanceId',
       ],
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'String',
         ],
-        'LayerIds' =>
-        [
+        'LayerIds' => [
           'shape' => 'Strings',
         ],
-        'InstanceType' =>
-        [
+        'InstanceType' => [
           'shape' => 'String',
         ],
-        'AutoScalingType' =>
-        [
+        'AutoScalingType' => [
           'shape' => 'AutoScalingType',
         ],
-        'Hostname' =>
-        [
+        'Hostname' => [
           'shape' => 'String',
         ],
-        'Os' =>
-        [
+        'Os' => [
           'shape' => 'String',
         ],
-        'AmiId' =>
-        [
+        'AmiId' => [
           'shape' => 'String',
         ],
-        'SshKeyName' =>
-        [
+        'SshKeyName' => [
           'shape' => 'String',
         ],
-        'Architecture' =>
-        [
+        'Architecture' => [
           'shape' => 'Architecture',
         ],
-        'InstallUpdatesOnBoot' =>
-        [
+        'InstallUpdatesOnBoot' => [
           'shape' => 'Boolean',
         ],
-        'EbsOptimized' =>
-        [
+        'EbsOptimized' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'UpdateLayerRequest' =>
-    [
+    'UpdateLayerRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LayerId',
+      'required' => [
+        'LayerId',
       ],
-      'members' =>
-      [
-        'LayerId' =>
-        [
+      'members' => [
+        'LayerId' => [
           'shape' => 'String',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Shortname' =>
-        [
+        'Shortname' => [
           'shape' => 'String',
         ],
-        'Attributes' =>
-        [
+        'Attributes' => [
           'shape' => 'LayerAttributes',
         ],
-        'CustomInstanceProfileArn' =>
-        [
+        'CustomInstanceProfileArn' => [
           'shape' => 'String',
         ],
-        'CustomSecurityGroupIds' =>
-        [
+        'CustomSecurityGroupIds' => [
           'shape' => 'Strings',
         ],
-        'Packages' =>
-        [
+        'Packages' => [
           'shape' => 'Strings',
         ],
-        'VolumeConfigurations' =>
-        [
+        'VolumeConfigurations' => [
           'shape' => 'VolumeConfigurations',
         ],
-        'EnableAutoHealing' =>
-        [
+        'EnableAutoHealing' => [
           'shape' => 'Boolean',
         ],
-        'AutoAssignElasticIps' =>
-        [
+        'AutoAssignElasticIps' => [
           'shape' => 'Boolean',
         ],
-        'AutoAssignPublicIps' =>
-        [
+        'AutoAssignPublicIps' => [
           'shape' => 'Boolean',
         ],
-        'CustomRecipes' =>
-        [
+        'CustomRecipes' => [
           'shape' => 'Recipes',
         ],
-        'InstallUpdatesOnBoot' =>
-        [
+        'InstallUpdatesOnBoot' => [
           'shape' => 'Boolean',
         ],
-        'UseEbsOptimizedInstances' =>
-        [
+        'UseEbsOptimizedInstances' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'UpdateMyUserProfileRequest' =>
-    [
+    'UpdateMyUserProfileRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SshPublicKey' =>
-        [
+      'members' => [
+        'SshPublicKey' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'UpdateRdsDbInstanceRequest' =>
-    [
+    'UpdateRdsDbInstanceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RdsDbInstanceArn',
+      'required' => [
+        'RdsDbInstanceArn',
       ],
-      'members' =>
-      [
-        'RdsDbInstanceArn' =>
-        [
+      'members' => [
+        'RdsDbInstanceArn' => [
           'shape' => 'String',
         ],
-        'DbUser' =>
-        [
+        'DbUser' => [
           'shape' => 'String',
         ],
-        'DbPassword' =>
-        [
+        'DbPassword' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'UpdateStackRequest' =>
-    [
+    'UpdateStackRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StackId',
+      'required' => [
+        'StackId',
       ],
-      'members' =>
-      [
-        'StackId' =>
-        [
+      'members' => [
+        'StackId' => [
           'shape' => 'String',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Attributes' =>
-        [
+        'Attributes' => [
           'shape' => 'StackAttributes',
         ],
-        'ServiceRoleArn' =>
-        [
+        'ServiceRoleArn' => [
           'shape' => 'String',
         ],
-        'DefaultInstanceProfileArn' =>
-        [
+        'DefaultInstanceProfileArn' => [
           'shape' => 'String',
         ],
-        'DefaultOs' =>
-        [
+        'DefaultOs' => [
           'shape' => 'String',
         ],
-        'HostnameTheme' =>
-        [
+        'HostnameTheme' => [
           'shape' => 'String',
         ],
-        'DefaultAvailabilityZone' =>
-        [
+        'DefaultAvailabilityZone' => [
           'shape' => 'String',
         ],
-        'DefaultSubnetId' =>
-        [
+        'DefaultSubnetId' => [
           'shape' => 'String',
         ],
-        'CustomJson' =>
-        [
+        'CustomJson' => [
           'shape' => 'String',
         ],
-        'ConfigurationManager' =>
-        [
+        'ConfigurationManager' => [
           'shape' => 'StackConfigurationManager',
         ],
-        'ChefConfiguration' =>
-        [
+        'ChefConfiguration' => [
           'shape' => 'ChefConfiguration',
         ],
-        'UseCustomCookbooks' =>
-        [
+        'UseCustomCookbooks' => [
           'shape' => 'Boolean',
         ],
-        'CustomCookbooksSource' =>
-        [
+        'CustomCookbooksSource' => [
           'shape' => 'Source',
         ],
-        'DefaultSshKeyName' =>
-        [
+        'DefaultSshKeyName' => [
           'shape' => 'String',
         ],
-        'DefaultRootDeviceType' =>
-        [
+        'DefaultRootDeviceType' => [
           'shape' => 'RootDeviceType',
         ],
-        'UseOpsworksSecurityGroups' =>
-        [
+        'UseOpsworksSecurityGroups' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'UpdateUserProfileRequest' =>
-    [
+    'UpdateUserProfileRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'IamUserArn',
+      'required' => [
+        'IamUserArn',
       ],
-      'members' =>
-      [
-        'IamUserArn' =>
-        [
+      'members' => [
+        'IamUserArn' => [
           'shape' => 'String',
         ],
-        'SshUsername' =>
-        [
+        'SshUsername' => [
           'shape' => 'String',
         ],
-        'SshPublicKey' =>
-        [
+        'SshPublicKey' => [
           'shape' => 'String',
         ],
-        'AllowSelfManagement' =>
-        [
+        'AllowSelfManagement' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'UpdateVolumeRequest' =>
-    [
+    'UpdateVolumeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VolumeId',
+      'required' => [
+        'VolumeId',
       ],
-      'members' =>
-      [
-        'VolumeId' =>
-        [
+      'members' => [
+        'VolumeId' => [
           'shape' => 'String',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
         ],
-        'MountPoint' =>
-        [
+        'MountPoint' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'UserProfile' =>
-    [
+    'UserProfile' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IamUserArn' =>
-        [
+      'members' => [
+        'IamUserArn' => [
           'shape' => 'String',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
         ],
-        'SshUsername' =>
-        [
+        'SshUsername' => [
           'shape' => 'String',
         ],
-        'SshPublicKey' =>
-        [
+        'SshPublicKey' => [
           'shape' => 'String',
         ],
-        'AllowSelfManagement' =>
-        [
+        'AllowSelfManagement' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'UserProfiles' =>
-    [
+    'UserProfiles' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'UserProfile',
       ],
     ],
-    'ValidationException' =>
-    [
+    'ValidationException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'String',
         ],
       ],
       'exception' => true,
     ],
-    'Volume' =>
-    [
+    'Volume' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VolumeId' =>
-        [
+      'members' => [
+        'VolumeId' => [
           'shape' => 'String',
         ],
-        'Ec2VolumeId' =>
-        [
+        'Ec2VolumeId' => [
           'shape' => 'String',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
         ],
-        'RaidArrayId' =>
-        [
+        'RaidArrayId' => [
           'shape' => 'String',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'String',
         ],
-        'Size' =>
-        [
+        'Size' => [
           'shape' => 'Integer',
         ],
-        'Device' =>
-        [
+        'Device' => [
           'shape' => 'String',
         ],
-        'MountPoint' =>
-        [
+        'MountPoint' => [
           'shape' => 'String',
         ],
-        'Region' =>
-        [
+        'Region' => [
           'shape' => 'String',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
         ],
-        'VolumeType' =>
-        [
+        'VolumeType' => [
           'shape' => 'String',
         ],
-        'Iops' =>
-        [
+        'Iops' => [
           'shape' => 'Integer',
         ],
       ],
     ],
-    'VolumeConfiguration' =>
-    [
+    'VolumeConfiguration' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'MountPoint',
-        1 => 'NumberOfDisks',
-        2 => 'Size',
+      'required' => [
+        'MountPoint',
+        'NumberOfDisks',
+        'Size',
       ],
-      'members' =>
-      [
-        'MountPoint' =>
-        [
+      'members' => [
+        'MountPoint' => [
           'shape' => 'String',
         ],
-        'RaidLevel' =>
-        [
+        'RaidLevel' => [
           'shape' => 'Integer',
         ],
-        'NumberOfDisks' =>
-        [
+        'NumberOfDisks' => [
           'shape' => 'Integer',
         ],
-        'Size' =>
-        [
+        'Size' => [
           'shape' => 'Integer',
         ],
-        'VolumeType' =>
-        [
+        'VolumeType' => [
           'shape' => 'String',
         ],
-        'Iops' =>
-        [
+        'Iops' => [
           'shape' => 'Integer',
         ],
       ],
     ],
-    'VolumeConfigurations' =>
-    [
+    'VolumeConfigurations' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'VolumeConfiguration',
       ],
     ],
-    'Volumes' =>
-    [
+    'Volumes' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Volume',
       ],
     ],
-    'WeeklyAutoScalingSchedule' =>
-    [
+    'WeeklyAutoScalingSchedule' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Monday' =>
-        [
+      'members' => [
+        'Monday' => [
           'shape' => 'DailyAutoScalingSchedule',
         ],
-        'Tuesday' =>
-        [
+        'Tuesday' => [
           'shape' => 'DailyAutoScalingSchedule',
         ],
-        'Wednesday' =>
-        [
+        'Wednesday' => [
           'shape' => 'DailyAutoScalingSchedule',
         ],
-        'Thursday' =>
-        [
+        'Thursday' => [
           'shape' => 'DailyAutoScalingSchedule',
         ],
-        'Friday' =>
-        [
+        'Friday' => [
           'shape' => 'DailyAutoScalingSchedule',
         ],
-        'Saturday' =>
-        [
+        'Saturday' => [
           'shape' => 'DailyAutoScalingSchedule',
         ],
-        'Sunday' =>
-        [
+        'Sunday' => [
           'shape' => 'DailyAutoScalingSchedule',
         ],
       ],

@@ -1,80 +1,61 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2012-09-25',
     'endpointPrefix' => 'elastictranscoder',
     'serviceFullName' => 'Amazon Elastic Transcoder',
     'signatureVersion' => 'v4',
     'protocol' => 'rest-json',
   ],
-  'operations' =>
-  [
-    'CancelJob' =>
-    [
+  'operations' => [
+    'CancelJob' => [
       'name' => 'CancelJob',
-      'http' =>
-      [
+      'http' => [
         'method' => 'DELETE',
         'requestUri' => '/2012-09-25/jobs/{Id}',
         'responseCode' => 202,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CancelJobRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CancelJobResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'IncompatibleVersionException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ResourceInUseException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 409,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'AccessDeniedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'InternalServiceException',
           'exception' => true,
@@ -82,71 +63,55 @@ return [
         ],
       ],
     ],
-    'CreateJob' =>
-    [
+    'CreateJob' => [
       'name' => 'CreateJob',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/2012-09-25/jobs',
         'responseCode' => 201,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateJobRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateJobResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'IncompatibleVersionException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'AccessDeniedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 429,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'InternalServiceException',
           'exception' => true,
@@ -154,71 +119,55 @@ return [
         ],
       ],
     ],
-    'CreatePipeline' =>
-    [
+    'CreatePipeline' => [
       'name' => 'CreatePipeline',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/2012-09-25/pipelines',
         'responseCode' => 201,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreatePipelineRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreatePipelineResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'IncompatibleVersionException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'AccessDeniedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 429,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'InternalServiceException',
           'exception' => true,
@@ -226,62 +175,48 @@ return [
         ],
       ],
     ],
-    'CreatePreset' =>
-    [
+    'CreatePreset' => [
       'name' => 'CreatePreset',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/2012-09-25/presets',
         'responseCode' => 201,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreatePresetRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreatePresetResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'IncompatibleVersionException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'AccessDeniedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 429,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InternalServiceException',
           'exception' => true,
@@ -289,71 +224,55 @@ return [
         ],
       ],
     ],
-    'DeletePipeline' =>
-    [
+    'DeletePipeline' => [
       'name' => 'DeletePipeline',
-      'http' =>
-      [
+      'http' => [
         'method' => 'DELETE',
         'requestUri' => '/2012-09-25/pipelines/{Id}',
         'responseCode' => 202,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeletePipelineRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeletePipelineResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'IncompatibleVersionException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ResourceInUseException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 409,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'AccessDeniedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'InternalServiceException',
           'exception' => true,
@@ -361,62 +280,48 @@ return [
         ],
       ],
     ],
-    'DeletePreset' =>
-    [
+    'DeletePreset' => [
       'name' => 'DeletePreset',
-      'http' =>
-      [
+      'http' => [
         'method' => 'DELETE',
         'requestUri' => '/2012-09-25/presets/{Id}',
         'responseCode' => 202,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeletePresetRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeletePresetResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'IncompatibleVersionException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'AccessDeniedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InternalServiceException',
           'exception' => true,
@@ -424,61 +329,47 @@ return [
         ],
       ],
     ],
-    'ListJobsByPipeline' =>
-    [
+    'ListJobsByPipeline' => [
       'name' => 'ListJobsByPipeline',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2012-09-25/jobsByPipeline/{PipelineId}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListJobsByPipelineRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListJobsByPipelineResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'IncompatibleVersionException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'AccessDeniedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InternalServiceException',
           'exception' => true,
@@ -486,61 +377,47 @@ return [
         ],
       ],
     ],
-    'ListJobsByStatus' =>
-    [
+    'ListJobsByStatus' => [
       'name' => 'ListJobsByStatus',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2012-09-25/jobsByStatus/{Status}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListJobsByStatusRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListJobsByStatusResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'IncompatibleVersionException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'AccessDeniedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InternalServiceException',
           'exception' => true,
@@ -548,52 +425,40 @@ return [
         ],
       ],
     ],
-    'ListPipelines' =>
-    [
+    'ListPipelines' => [
       'name' => 'ListPipelines',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2012-09-25/pipelines',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListPipelinesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListPipelinesResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'IncompatibleVersionException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'AccessDeniedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InternalServiceException',
           'exception' => true,
@@ -601,52 +466,40 @@ return [
         ],
       ],
     ],
-    'ListPresets' =>
-    [
+    'ListPresets' => [
       'name' => 'ListPresets',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2012-09-25/presets',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListPresetsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListPresetsResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'IncompatibleVersionException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'AccessDeniedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InternalServiceException',
           'exception' => true,
@@ -654,61 +507,47 @@ return [
         ],
       ],
     ],
-    'ReadJob' =>
-    [
+    'ReadJob' => [
       'name' => 'ReadJob',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2012-09-25/jobs/{Id}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ReadJobRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ReadJobResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'IncompatibleVersionException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'AccessDeniedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InternalServiceException',
           'exception' => true,
@@ -716,61 +555,47 @@ return [
         ],
       ],
     ],
-    'ReadPipeline' =>
-    [
+    'ReadPipeline' => [
       'name' => 'ReadPipeline',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2012-09-25/pipelines/{Id}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ReadPipelineRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ReadPipelineResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'IncompatibleVersionException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'AccessDeniedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InternalServiceException',
           'exception' => true,
@@ -778,61 +603,47 @@ return [
         ],
       ],
     ],
-    'ReadPreset' =>
-    [
+    'ReadPreset' => [
       'name' => 'ReadPreset',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2012-09-25/presets/{Id}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ReadPresetRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ReadPresetResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'IncompatibleVersionException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'AccessDeniedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InternalServiceException',
           'exception' => true,
@@ -840,62 +651,48 @@ return [
         ],
       ],
     ],
-    'TestRole' =>
-    [
+    'TestRole' => [
       'name' => 'TestRole',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/2012-09-25/roleTests',
         'responseCode' => 200,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'TestRoleRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'TestRoleResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'IncompatibleVersionException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'AccessDeniedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InternalServiceException',
           'exception' => true,
@@ -903,71 +700,55 @@ return [
         ],
       ],
     ],
-    'UpdatePipeline' =>
-    [
+    'UpdatePipeline' => [
       'name' => 'UpdatePipeline',
-      'http' =>
-      [
+      'http' => [
         'method' => 'PUT',
         'requestUri' => '/2012-09-25/pipelines/{Id}',
         'responseCode' => 200,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdatePipelineRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdatePipelineResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'IncompatibleVersionException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'AccessDeniedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ResourceInUseException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 409,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'InternalServiceException',
           'exception' => true,
@@ -975,70 +756,54 @@ return [
         ],
       ],
     ],
-    'UpdatePipelineNotifications' =>
-    [
+    'UpdatePipelineNotifications' => [
       'name' => 'UpdatePipelineNotifications',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/2012-09-25/pipelines/{Id}/notifications',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdatePipelineNotificationsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdatePipelineNotificationsResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'IncompatibleVersionException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ResourceInUseException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 409,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'AccessDeniedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'InternalServiceException',
           'exception' => true,
@@ -1046,70 +811,54 @@ return [
         ],
       ],
     ],
-    'UpdatePipelineStatus' =>
-    [
+    'UpdatePipelineStatus' => [
       'name' => 'UpdatePipelineStatus',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/2012-09-25/pipelines/{Id}/status',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdatePipelineStatusRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdatePipelineStatusResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ValidationException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'IncompatibleVersionException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ResourceInUseException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 409,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'AccessDeniedException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'InternalServiceException',
           'exception' => true,
@@ -1118,1907 +867,1447 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'AccessControl' =>
-    [
+  'shapes' => [
+    'AccessControl' => [
       'type' => 'string',
       'pattern' => '(^FullControl$]|(^Read$]|(^ReadAcp$]|(^WriteAcp$]',
     ],
-    'AccessControls' =>
-    [
+    'AccessControls' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AccessControl',
       ],
       'max' => 30,
     ],
-    'AccessDeniedException' =>
-    [
+    'AccessDeniedException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 403,
       ],
       'exception' => true,
     ],
-    'Artwork' =>
-    [
+    'Artwork' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InputKey' =>
-        [
+      'members' => [
+        'InputKey' => [
           'shape' => 'WatermarkKey',
         ],
-        'MaxWidth' =>
-        [
+        'MaxWidth' => [
           'shape' => 'DigitsOrAuto',
         ],
-        'MaxHeight' =>
-        [
+        'MaxHeight' => [
           'shape' => 'DigitsOrAuto',
         ],
-        'SizingPolicy' =>
-        [
+        'SizingPolicy' => [
           'shape' => 'SizingPolicy',
         ],
-        'PaddingPolicy' =>
-        [
+        'PaddingPolicy' => [
           'shape' => 'PaddingPolicy',
         ],
-        'AlbumArtFormat' =>
-        [
+        'AlbumArtFormat' => [
           'shape' => 'JpgOrPng',
         ],
       ],
     ],
-    'Artworks' =>
-    [
+    'Artworks' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Artwork',
       ],
     ],
-    'Ascending' =>
-    [
+    'Ascending' => [
       'type' => 'string',
       'pattern' => '(^true$]|(^false$]',
     ],
-    'AspectRatio' =>
-    [
+    'AspectRatio' => [
       'type' => 'string',
       'pattern' => '(^auto$]|(^1:1$]|(^4:3$]|(^3:2$]|(^16:9$]',
     ],
-    'AudioBitRate' =>
-    [
+    'AudioBitRate' => [
       'type' => 'string',
       'pattern' => '^\\d{1,3}$',
     ],
-    'AudioChannels' =>
-    [
+    'AudioChannels' => [
       'type' => 'string',
       'pattern' => '(^auto$]|(^0$]|(^1$]|(^2$]',
     ],
-    'AudioCodec' =>
-    [
+    'AudioCodec' => [
       'type' => 'string',
       'pattern' => '(^AAC$]|(^vorbis$]|(^mp3$]',
     ],
-    'AudioCodecOptions' =>
-    [
+    'AudioCodecOptions' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Profile' =>
-        [
+      'members' => [
+        'Profile' => [
           'shape' => 'AudioCodecProfile',
         ],
       ],
     ],
-    'AudioCodecProfile' =>
-    [
+    'AudioCodecProfile' => [
       'type' => 'string',
       'pattern' => '(^auto$]|(^AAC-LC$]|(^HE-AAC$]|(^HE-AACv2$]',
     ],
-    'AudioParameters' =>
-    [
+    'AudioParameters' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Codec' =>
-        [
+      'members' => [
+        'Codec' => [
           'shape' => 'AudioCodec',
         ],
-        'SampleRate' =>
-        [
+        'SampleRate' => [
           'shape' => 'AudioSampleRate',
         ],
-        'BitRate' =>
-        [
+        'BitRate' => [
           'shape' => 'AudioBitRate',
         ],
-        'Channels' =>
-        [
+        'Channels' => [
           'shape' => 'AudioChannels',
         ],
-        'CodecOptions' =>
-        [
+        'CodecOptions' => [
           'shape' => 'AudioCodecOptions',
         ],
       ],
     ],
-    'AudioSampleRate' =>
-    [
+    'AudioSampleRate' => [
       'type' => 'string',
       'pattern' => '(^auto$]|(^22050$]|(^32000$]|(^44100$]|(^48000$]|(^96000$]',
     ],
-    'BucketName' =>
-    [
+    'BucketName' => [
       'type' => 'string',
       'pattern' => '^(\\w|\\.|-]{1,255}$',
     ],
-    'CancelJobRequest' =>
-    [
+    'CancelJobRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
+      'required' => [
+        'Id',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'Id',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
       ],
     ],
-    'CancelJobResponse' =>
-    [
+    'CancelJobResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'CaptionFormat' =>
-    [
+    'CaptionFormat' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Format' =>
-        [
+      'members' => [
+        'Format' => [
           'shape' => 'CaptionFormatFormat',
         ],
-        'Pattern' =>
-        [
+        'Pattern' => [
           'shape' => 'CaptionFormatPattern',
         ],
       ],
     ],
-    'CaptionFormatFormat' =>
-    [
+    'CaptionFormatFormat' => [
       'type' => 'string',
       'pattern' => '(^mov-text$]|(^cea-608$]|(^cea-708$]|(^srt$]|(^scc$]|(^webvtt$]|(^dfxp$]',
     ],
-    'CaptionFormatPattern' =>
-    [
+    'CaptionFormatPattern' => [
       'type' => 'string',
       'pattern' => '(^$]|(^.*\\{language\\}.*$]',
     ],
-    'CaptionFormats' =>
-    [
+    'CaptionFormats' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CaptionFormat',
       ],
       'max' => 4,
     ],
-    'CaptionMergePolicy' =>
-    [
+    'CaptionMergePolicy' => [
       'type' => 'string',
       'pattern' => '(^MergeOverride$]|(^MergeRetain$]|(^Override$]',
     ],
-    'CaptionSource' =>
-    [
+    'CaptionSource' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Key' =>
-        [
+      'members' => [
+        'Key' => [
           'shape' => 'Key',
         ],
-        'Language' =>
-        [
+        'Language' => [
           'shape' => 'Key',
         ],
-        'TimeOffset' =>
-        [
+        'TimeOffset' => [
           'shape' => 'TimeOffset',
         ],
-        'Label' =>
-        [
+        'Label' => [
           'shape' => 'Name',
         ],
       ],
     ],
-    'CaptionSources' =>
-    [
+    'CaptionSources' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CaptionSource',
       ],
       'max' => 20,
     ],
-    'Captions' =>
-    [
+    'Captions' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'MergePolicy' =>
-        [
+      'members' => [
+        'MergePolicy' => [
           'shape' => 'CaptionMergePolicy',
         ],
-        'CaptionSources' =>
-        [
+        'CaptionSources' => [
           'shape' => 'CaptionSources',
         ],
-        'CaptionFormats' =>
-        [
+        'CaptionFormats' => [
           'shape' => 'CaptionFormats',
         ],
       ],
     ],
-    'Clip' =>
-    [
+    'Clip' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TimeSpan' =>
-        [
+      'members' => [
+        'TimeSpan' => [
           'shape' => 'TimeSpan',
         ],
       ],
     ],
-    'CodecOption' =>
-    [
+    'CodecOption' => [
       'type' => 'string',
       'min' => 1,
       'max' => 255,
     ],
-    'CodecOptions' =>
-    [
+    'CodecOptions' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'CodecOption',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'CodecOption',
       ],
       'max' => 30,
     ],
-    'Composition' =>
-    [
+    'Composition' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Clip',
       ],
     ],
-    'CreateJobOutput' =>
-    [
+    'CreateJobOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Key' =>
-        [
+      'members' => [
+        'Key' => [
           'shape' => 'Key',
         ],
-        'ThumbnailPattern' =>
-        [
+        'ThumbnailPattern' => [
           'shape' => 'ThumbnailPattern',
         ],
-        'Rotate' =>
-        [
+        'Rotate' => [
           'shape' => 'Rotate',
         ],
-        'PresetId' =>
-        [
+        'PresetId' => [
           'shape' => 'Id',
         ],
-        'SegmentDuration' =>
-        [
+        'SegmentDuration' => [
           'shape' => 'Float',
         ],
-        'Watermarks' =>
-        [
+        'Watermarks' => [
           'shape' => 'JobWatermarks',
         ],
-        'AlbumArt' =>
-        [
+        'AlbumArt' => [
           'shape' => 'JobAlbumArt',
         ],
-        'Composition' =>
-        [
+        'Composition' => [
           'shape' => 'Composition',
         ],
-        'Captions' =>
-        [
+        'Captions' => [
           'shape' => 'Captions',
         ],
       ],
     ],
-    'CreateJobOutputs' =>
-    [
+    'CreateJobOutputs' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CreateJobOutput',
       ],
       'max' => 30,
     ],
-    'CreateJobPlaylist' =>
-    [
+    'CreateJobPlaylist' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'Filename',
         ],
-        'Format' =>
-        [
+        'Format' => [
           'shape' => 'PlaylistFormat',
         ],
-        'OutputKeys' =>
-        [
+        'OutputKeys' => [
           'shape' => 'OutputKeys',
         ],
       ],
     ],
-    'CreateJobPlaylists' =>
-    [
+    'CreateJobPlaylists' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CreateJobPlaylist',
       ],
       'max' => 30,
     ],
-    'CreateJobRequest' =>
-    [
+    'CreateJobRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'PipelineId',
-        1 => 'Input',
+      'required' => [
+        'PipelineId',
+        'Input',
       ],
-      'members' =>
-      [
-        'PipelineId' =>
-        [
+      'members' => [
+        'PipelineId' => [
           'shape' => 'Id',
         ],
-        'Input' =>
-        [
+        'Input' => [
           'shape' => 'JobInput',
         ],
-        'Output' =>
-        [
+        'Output' => [
           'shape' => 'CreateJobOutput',
         ],
-        'Outputs' =>
-        [
+        'Outputs' => [
           'shape' => 'CreateJobOutputs',
         ],
-        'OutputKeyPrefix' =>
-        [
+        'OutputKeyPrefix' => [
           'shape' => 'Key',
         ],
-        'Playlists' =>
-        [
+        'Playlists' => [
           'shape' => 'CreateJobPlaylists',
         ],
       ],
     ],
-    'CreateJobResponse' =>
-    [
+    'CreateJobResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Job' =>
-        [
+      'members' => [
+        'Job' => [
           'shape' => 'Job',
         ],
       ],
     ],
-    'CreatePipelineRequest' =>
-    [
+    'CreatePipelineRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
-        1 => 'InputBucket',
-        2 => 'Role',
+      'required' => [
+        'Name',
+        'InputBucket',
+        'Role',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'Name',
         ],
-        'InputBucket' =>
-        [
+        'InputBucket' => [
           'shape' => 'BucketName',
         ],
-        'OutputBucket' =>
-        [
+        'OutputBucket' => [
           'shape' => 'BucketName',
         ],
-        'Role' =>
-        [
+        'Role' => [
           'shape' => 'Role',
         ],
-        'Notifications' =>
-        [
+        'Notifications' => [
           'shape' => 'Notifications',
         ],
-        'ContentConfig' =>
-        [
+        'ContentConfig' => [
           'shape' => 'PipelineOutputConfig',
         ],
-        'ThumbnailConfig' =>
-        [
+        'ThumbnailConfig' => [
           'shape' => 'PipelineOutputConfig',
         ],
       ],
     ],
-    'CreatePipelineResponse' =>
-    [
+    'CreatePipelineResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Pipeline' =>
-        [
+      'members' => [
+        'Pipeline' => [
           'shape' => 'Pipeline',
         ],
       ],
     ],
-    'CreatePresetRequest' =>
-    [
+    'CreatePresetRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
-        1 => 'Container',
+      'required' => [
+        'Name',
+        'Container',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'Name',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
-        'Container' =>
-        [
+        'Container' => [
           'shape' => 'PresetContainer',
         ],
-        'Video' =>
-        [
+        'Video' => [
           'shape' => 'VideoParameters',
         ],
-        'Audio' =>
-        [
+        'Audio' => [
           'shape' => 'AudioParameters',
         ],
-        'Thumbnails' =>
-        [
+        'Thumbnails' => [
           'shape' => 'Thumbnails',
         ],
       ],
     ],
-    'CreatePresetResponse' =>
-    [
+    'CreatePresetResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Preset' =>
-        [
+      'members' => [
+        'Preset' => [
           'shape' => 'Preset',
         ],
-        'Warning' =>
-        [
+        'Warning' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeletePipelineRequest' =>
-    [
+    'DeletePipelineRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
+      'required' => [
+        'Id',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'Id',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
       ],
     ],
-    'DeletePipelineResponse' =>
-    [
+    'DeletePipelineResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'DeletePresetRequest' =>
-    [
+    'DeletePresetRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
+      'required' => [
+        'Id',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'Id',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
       ],
     ],
-    'DeletePresetResponse' =>
-    [
+    'DeletePresetResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'Description' =>
-    [
+    'Description' => [
       'type' => 'string',
       'min' => 0,
       'max' => 255,
     ],
-    'Digits' =>
-    [
+    'Digits' => [
       'type' => 'string',
       'pattern' => '^\\d{1,5}$',
     ],
-    'DigitsOrAuto' =>
-    [
+    'DigitsOrAuto' => [
       'type' => 'string',
       'pattern' => '(^auto$]|(^\\d{2,4}$]',
     ],
-    'ExceptionMessages' =>
-    [
+    'ExceptionMessages' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
       ],
     ],
-    'Filename' =>
-    [
+    'Filename' => [
       'type' => 'string',
       'min' => 1,
       'max' => 255,
     ],
-    'FixedGOP' =>
-    [
+    'FixedGOP' => [
       'type' => 'string',
       'pattern' => '(^true$]|(^false$]',
     ],
-    'Float' =>
-    [
+    'Float' => [
       'type' => 'string',
       'pattern' => '^\\d{1,5}(\\.\\d{0,5}]?$',
     ],
-    'FrameRate' =>
-    [
+    'FrameRate' => [
       'type' => 'string',
       'pattern' => '(^auto$]|(^10$]|(^15$]|(^23.97$]|(^24$]|(^25$]|(^29.97$]|(^30$]|(^50$]|(^60$]',
     ],
-    'Grantee' =>
-    [
+    'Grantee' => [
       'type' => 'string',
       'min' => 1,
       'max' => 255,
     ],
-    'GranteeType' =>
-    [
+    'GranteeType' => [
       'type' => 'string',
       'pattern' => '(^Canonical$]|(^Email$]|(^Group$]',
     ],
-    'HorizontalAlign' =>
-    [
+    'HorizontalAlign' => [
       'type' => 'string',
       'pattern' => '(^Left$]|(^Right$]|(^Center$]',
     ],
-    'Id' =>
-    [
+    'Id' => [
       'type' => 'string',
       'pattern' => '^\\d{13}-\\w{6}$',
     ],
-    'IncompatibleVersionException' =>
-    [
+    'IncompatibleVersionException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'Interlaced' =>
-    [
+    'Interlaced' => [
       'type' => 'string',
       'pattern' => '(^auto$]|(^true$]|(^false$]',
     ],
-    'InternalServiceException' =>
-    [
+    'InternalServiceException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
       'exception' => true,
       'fault' => true,
     ],
-    'Job' =>
-    [
+    'Job' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'Id',
         ],
-        'Arn' =>
-        [
+        'Arn' => [
           'shape' => 'String',
         ],
-        'PipelineId' =>
-        [
+        'PipelineId' => [
           'shape' => 'Id',
         ],
-        'Input' =>
-        [
+        'Input' => [
           'shape' => 'JobInput',
         ],
-        'Output' =>
-        [
+        'Output' => [
           'shape' => 'JobOutput',
         ],
-        'Outputs' =>
-        [
+        'Outputs' => [
           'shape' => 'JobOutputs',
         ],
-        'OutputKeyPrefix' =>
-        [
+        'OutputKeyPrefix' => [
           'shape' => 'Key',
         ],
-        'Playlists' =>
-        [
+        'Playlists' => [
           'shape' => 'Playlists',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'JobStatus',
         ],
       ],
     ],
-    'JobAlbumArt' =>
-    [
+    'JobAlbumArt' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'MergePolicy' =>
-        [
+      'members' => [
+        'MergePolicy' => [
           'shape' => 'MergePolicy',
         ],
-        'Artwork' =>
-        [
+        'Artwork' => [
           'shape' => 'Artworks',
         ],
       ],
     ],
-    'JobContainer' =>
-    [
+    'JobContainer' => [
       'type' => 'string',
       'pattern' => '(^auto$]|(^3gp$]|(^asf$]|(^avi$]|(^divx$]|(^flv$]|(^mkv$]|(^mov$]|(^mp4$]|(^mpeg$]|(^mpeg-ps$]|(^mpeg-ts$]|(^mxf$]|(^ogg$]|(^ts$]|(^vob$]|(^wav$]|(^webm$]|(^mp3$]|(^m4a$]|(^aac$]',
     ],
-    'JobInput' =>
-    [
+    'JobInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Key' =>
-        [
+      'members' => [
+        'Key' => [
           'shape' => 'Key',
         ],
-        'FrameRate' =>
-        [
+        'FrameRate' => [
           'shape' => 'FrameRate',
         ],
-        'Resolution' =>
-        [
+        'Resolution' => [
           'shape' => 'Resolution',
         ],
-        'AspectRatio' =>
-        [
+        'AspectRatio' => [
           'shape' => 'AspectRatio',
         ],
-        'Interlaced' =>
-        [
+        'Interlaced' => [
           'shape' => 'Interlaced',
         ],
-        'Container' =>
-        [
+        'Container' => [
           'shape' => 'JobContainer',
         ],
       ],
     ],
-    'JobOutput' =>
-    [
+    'JobOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'String',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'Key',
         ],
-        'ThumbnailPattern' =>
-        [
+        'ThumbnailPattern' => [
           'shape' => 'ThumbnailPattern',
         ],
-        'Rotate' =>
-        [
+        'Rotate' => [
           'shape' => 'Rotate',
         ],
-        'PresetId' =>
-        [
+        'PresetId' => [
           'shape' => 'Id',
         ],
-        'SegmentDuration' =>
-        [
+        'SegmentDuration' => [
           'shape' => 'Float',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'JobStatus',
         ],
-        'StatusDetail' =>
-        [
+        'StatusDetail' => [
           'shape' => 'Description',
         ],
-        'Duration' =>
-        [
+        'Duration' => [
           'shape' => 'NullableLong',
         ],
-        'Width' =>
-        [
+        'Width' => [
           'shape' => 'NullableInteger',
         ],
-        'Height' =>
-        [
+        'Height' => [
           'shape' => 'NullableInteger',
         ],
-        'Watermarks' =>
-        [
+        'Watermarks' => [
           'shape' => 'JobWatermarks',
         ],
-        'AlbumArt' =>
-        [
+        'AlbumArt' => [
           'shape' => 'JobAlbumArt',
         ],
-        'Composition' =>
-        [
+        'Composition' => [
           'shape' => 'Composition',
         ],
-        'Captions' =>
-        [
+        'Captions' => [
           'shape' => 'Captions',
         ],
       ],
     ],
-    'JobOutputs' =>
-    [
+    'JobOutputs' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'JobOutput',
       ],
     ],
-    'JobStatus' =>
-    [
+    'JobStatus' => [
       'type' => 'string',
       'pattern' => '(^Submitted$]|(^Progressing$]|(^Complete$]|(^Canceled$]|(^Error$]',
     ],
-    'JobWatermark' =>
-    [
+    'JobWatermark' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PresetWatermarkId' =>
-        [
+      'members' => [
+        'PresetWatermarkId' => [
           'shape' => 'PresetWatermarkId',
         ],
-        'InputKey' =>
-        [
+        'InputKey' => [
           'shape' => 'WatermarkKey',
         ],
       ],
     ],
-    'JobWatermarks' =>
-    [
+    'JobWatermarks' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'JobWatermark',
       ],
     ],
-    'Jobs' =>
-    [
+    'Jobs' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Job',
       ],
     ],
-    'JpgOrPng' =>
-    [
+    'JpgOrPng' => [
       'type' => 'string',
       'pattern' => '(^jpg$]|(^png$]',
     ],
-    'Key' =>
-    [
+    'Key' => [
       'type' => 'string',
       'min' => 1,
       'max' => 255,
     ],
-    'KeyframesMaxDist' =>
-    [
+    'KeyframesMaxDist' => [
       'type' => 'string',
       'pattern' => '^\\d{1,6}$',
     ],
-    'LimitExceededException' =>
-    [
+    'LimitExceededException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 429,
       ],
       'exception' => true,
     ],
-    'ListJobsByPipelineRequest' =>
-    [
+    'ListJobsByPipelineRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'PipelineId',
+      'required' => [
+        'PipelineId',
       ],
-      'members' =>
-      [
-        'PipelineId' =>
-        [
+      'members' => [
+        'PipelineId' => [
           'shape' => 'Id',
           'location' => 'uri',
           'locationName' => 'PipelineId',
         ],
-        'Ascending' =>
-        [
+        'Ascending' => [
           'shape' => 'Ascending',
           'location' => 'querystring',
           'locationName' => 'Ascending',
         ],
-        'PageToken' =>
-        [
+        'PageToken' => [
           'shape' => 'Id',
           'location' => 'querystring',
           'locationName' => 'PageToken',
         ],
       ],
     ],
-    'ListJobsByPipelineResponse' =>
-    [
+    'ListJobsByPipelineResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Jobs' =>
-        [
+      'members' => [
+        'Jobs' => [
           'shape' => 'Jobs',
         ],
-        'NextPageToken' =>
-        [
+        'NextPageToken' => [
           'shape' => 'Id',
         ],
       ],
     ],
-    'ListJobsByStatusRequest' =>
-    [
+    'ListJobsByStatusRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Status',
+      'required' => [
+        'Status',
       ],
-      'members' =>
-      [
-        'Status' =>
-        [
+      'members' => [
+        'Status' => [
           'shape' => 'JobStatus',
           'location' => 'uri',
           'locationName' => 'Status',
         ],
-        'Ascending' =>
-        [
+        'Ascending' => [
           'shape' => 'Ascending',
           'location' => 'querystring',
           'locationName' => 'Ascending',
         ],
-        'PageToken' =>
-        [
+        'PageToken' => [
           'shape' => 'Id',
           'location' => 'querystring',
           'locationName' => 'PageToken',
         ],
       ],
     ],
-    'ListJobsByStatusResponse' =>
-    [
+    'ListJobsByStatusResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Jobs' =>
-        [
+      'members' => [
+        'Jobs' => [
           'shape' => 'Jobs',
         ],
-        'NextPageToken' =>
-        [
+        'NextPageToken' => [
           'shape' => 'Id',
         ],
       ],
     ],
-    'ListPipelinesRequest' =>
-    [
+    'ListPipelinesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Ascending' =>
-        [
+      'members' => [
+        'Ascending' => [
           'shape' => 'Ascending',
           'location' => 'querystring',
           'locationName' => 'Ascending',
         ],
-        'PageToken' =>
-        [
+        'PageToken' => [
           'shape' => 'Id',
           'location' => 'querystring',
           'locationName' => 'PageToken',
         ],
       ],
     ],
-    'ListPipelinesResponse' =>
-    [
+    'ListPipelinesResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Pipelines' =>
-        [
+      'members' => [
+        'Pipelines' => [
           'shape' => 'Pipelines',
         ],
-        'NextPageToken' =>
-        [
+        'NextPageToken' => [
           'shape' => 'Id',
         ],
       ],
     ],
-    'ListPresetsRequest' =>
-    [
+    'ListPresetsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Ascending' =>
-        [
+      'members' => [
+        'Ascending' => [
           'shape' => 'Ascending',
           'location' => 'querystring',
           'locationName' => 'Ascending',
         ],
-        'PageToken' =>
-        [
+        'PageToken' => [
           'shape' => 'Id',
           'location' => 'querystring',
           'locationName' => 'PageToken',
         ],
       ],
     ],
-    'ListPresetsResponse' =>
-    [
+    'ListPresetsResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Presets' =>
-        [
+      'members' => [
+        'Presets' => [
           'shape' => 'Presets',
         ],
-        'NextPageToken' =>
-        [
+        'NextPageToken' => [
           'shape' => 'Id',
         ],
       ],
     ],
-    'MaxFrameRate' =>
-    [
+    'MaxFrameRate' => [
       'type' => 'string',
       'pattern' => '(^10$]|(^15$]|(^23.97$]|(^24$]|(^25$]|(^29.97$]|(^30$]|(^50$]|(^60$]',
     ],
-    'MergePolicy' =>
-    [
+    'MergePolicy' => [
       'type' => 'string',
       'pattern' => '(^Replace$]|(^Prepend$]|(^Append$]|(^Fallback$]',
     ],
-    'Name' =>
-    [
+    'Name' => [
       'type' => 'string',
       'min' => 1,
       'max' => 40,
     ],
-    'Notifications' =>
-    [
+    'Notifications' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Progressing' =>
-        [
+      'members' => [
+        'Progressing' => [
           'shape' => 'SnsTopic',
         ],
-        'Completed' =>
-        [
+        'Completed' => [
           'shape' => 'SnsTopic',
         ],
-        'Warning' =>
-        [
+        'Warning' => [
           'shape' => 'SnsTopic',
         ],
-        'Error' =>
-        [
+        'Error' => [
           'shape' => 'SnsTopic',
         ],
       ],
     ],
-    'NullableInteger' =>
-    [
+    'NullableInteger' => [
       'type' => 'integer',
     ],
-    'NullableLong' =>
-    [
+    'NullableLong' => [
       'type' => 'long',
     ],
-    'Opacity' =>
-    [
+    'Opacity' => [
       'type' => 'string',
       'pattern' => '^\\d{1,3}(\\.\\d{0,20}]?$',
     ],
-    'OutputKeys' =>
-    [
+    'OutputKeys' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Key',
       ],
       'max' => 30,
     ],
-    'PaddingPolicy' =>
-    [
+    'PaddingPolicy' => [
       'type' => 'string',
       'pattern' => '(^Pad$]|(^NoPad$]',
     ],
-    'Permission' =>
-    [
+    'Permission' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GranteeType' =>
-        [
+      'members' => [
+        'GranteeType' => [
           'shape' => 'GranteeType',
         ],
-        'Grantee' =>
-        [
+        'Grantee' => [
           'shape' => 'Grantee',
         ],
-        'Access' =>
-        [
+        'Access' => [
           'shape' => 'AccessControls',
         ],
       ],
     ],
-    'Permissions' =>
-    [
+    'Permissions' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Permission',
       ],
       'max' => 30,
     ],
-    'Pipeline' =>
-    [
+    'Pipeline' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'Id',
         ],
-        'Arn' =>
-        [
+        'Arn' => [
           'shape' => 'String',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'Name',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'PipelineStatus',
         ],
-        'InputBucket' =>
-        [
+        'InputBucket' => [
           'shape' => 'BucketName',
         ],
-        'OutputBucket' =>
-        [
+        'OutputBucket' => [
           'shape' => 'BucketName',
         ],
-        'Role' =>
-        [
+        'Role' => [
           'shape' => 'Role',
         ],
-        'Notifications' =>
-        [
+        'Notifications' => [
           'shape' => 'Notifications',
         ],
-        'ContentConfig' =>
-        [
+        'ContentConfig' => [
           'shape' => 'PipelineOutputConfig',
         ],
-        'ThumbnailConfig' =>
-        [
+        'ThumbnailConfig' => [
           'shape' => 'PipelineOutputConfig',
         ],
       ],
     ],
-    'PipelineOutputConfig' =>
-    [
+    'PipelineOutputConfig' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
         ],
-        'StorageClass' =>
-        [
+        'StorageClass' => [
           'shape' => 'StorageClass',
         ],
-        'Permissions' =>
-        [
+        'Permissions' => [
           'shape' => 'Permissions',
         ],
       ],
     ],
-    'PipelineStatus' =>
-    [
+    'PipelineStatus' => [
       'type' => 'string',
       'pattern' => '(^Active$]|(^Paused$]',
     ],
-    'Pipelines' =>
-    [
+    'Pipelines' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Pipeline',
       ],
     ],
-    'PixelsOrPercent' =>
-    [
+    'PixelsOrPercent' => [
       'type' => 'string',
       'pattern' => '(^\\d{1,3}(\\.\\d{0,5}]?%$]|(^\\d{1,4}?px$]',
     ],
-    'Playlist' =>
-    [
+    'Playlist' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'Filename',
         ],
-        'Format' =>
-        [
+        'Format' => [
           'shape' => 'PlaylistFormat',
         ],
-        'OutputKeys' =>
-        [
+        'OutputKeys' => [
           'shape' => 'OutputKeys',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'JobStatus',
         ],
-        'StatusDetail' =>
-        [
+        'StatusDetail' => [
           'shape' => 'Description',
         ],
       ],
     ],
-    'PlaylistFormat' =>
-    [
+    'PlaylistFormat' => [
       'type' => 'string',
       'pattern' => '(^HLSv3$]',
     ],
-    'Playlists' =>
-    [
+    'Playlists' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Playlist',
       ],
     ],
-    'Preset' =>
-    [
+    'Preset' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'Id',
         ],
-        'Arn' =>
-        [
+        'Arn' => [
           'shape' => 'String',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'Name',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
-        'Container' =>
-        [
+        'Container' => [
           'shape' => 'PresetContainer',
         ],
-        'Audio' =>
-        [
+        'Audio' => [
           'shape' => 'AudioParameters',
         ],
-        'Video' =>
-        [
+        'Video' => [
           'shape' => 'VideoParameters',
         ],
-        'Thumbnails' =>
-        [
+        'Thumbnails' => [
           'shape' => 'Thumbnails',
         ],
-        'Type' =>
-        [
+        'Type' => [
           'shape' => 'PresetType',
         ],
       ],
     ],
-    'PresetContainer' =>
-    [
+    'PresetContainer' => [
       'type' => 'string',
       'pattern' => '(^mp4$]|(^ts$]|(^webm$]|(^mp3$]|(^ogg$]',
     ],
-    'PresetType' =>
-    [
+    'PresetType' => [
       'type' => 'string',
       'pattern' => '(^System$]|(^Custom$]',
     ],
-    'PresetWatermark' =>
-    [
+    'PresetWatermark' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'PresetWatermarkId',
         ],
-        'MaxWidth' =>
-        [
+        'MaxWidth' => [
           'shape' => 'PixelsOrPercent',
         ],
-        'MaxHeight' =>
-        [
+        'MaxHeight' => [
           'shape' => 'PixelsOrPercent',
         ],
-        'SizingPolicy' =>
-        [
+        'SizingPolicy' => [
           'shape' => 'WatermarkSizingPolicy',
         ],
-        'HorizontalAlign' =>
-        [
+        'HorizontalAlign' => [
           'shape' => 'HorizontalAlign',
         ],
-        'HorizontalOffset' =>
-        [
+        'HorizontalOffset' => [
           'shape' => 'PixelsOrPercent',
         ],
-        'VerticalAlign' =>
-        [
+        'VerticalAlign' => [
           'shape' => 'VerticalAlign',
         ],
-        'VerticalOffset' =>
-        [
+        'VerticalOffset' => [
           'shape' => 'PixelsOrPercent',
         ],
-        'Opacity' =>
-        [
+        'Opacity' => [
           'shape' => 'Opacity',
         ],
-        'Target' =>
-        [
+        'Target' => [
           'shape' => 'Target',
         ],
       ],
     ],
-    'PresetWatermarkId' =>
-    [
+    'PresetWatermarkId' => [
       'type' => 'string',
       'min' => 1,
       'max' => 40,
     ],
-    'PresetWatermarks' =>
-    [
+    'PresetWatermarks' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'PresetWatermark',
       ],
     ],
-    'Presets' =>
-    [
+    'Presets' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Preset',
       ],
     ],
-    'ReadJobRequest' =>
-    [
+    'ReadJobRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
+      'required' => [
+        'Id',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'Id',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
       ],
     ],
-    'ReadJobResponse' =>
-    [
+    'ReadJobResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Job' =>
-        [
+      'members' => [
+        'Job' => [
           'shape' => 'Job',
         ],
       ],
     ],
-    'ReadPipelineRequest' =>
-    [
+    'ReadPipelineRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
+      'required' => [
+        'Id',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'Id',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
       ],
     ],
-    'ReadPipelineResponse' =>
-    [
+    'ReadPipelineResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Pipeline' =>
-        [
+      'members' => [
+        'Pipeline' => [
           'shape' => 'Pipeline',
         ],
       ],
     ],
-    'ReadPresetRequest' =>
-    [
+    'ReadPresetRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
+      'required' => [
+        'Id',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'Id',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
       ],
     ],
-    'ReadPresetResponse' =>
-    [
+    'ReadPresetResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Preset' =>
-        [
+      'members' => [
+        'Preset' => [
           'shape' => 'Preset',
         ],
       ],
     ],
-    'Resolution' =>
-    [
+    'Resolution' => [
       'type' => 'string',
       'pattern' => '(^auto$]|(^\\d{1,5}x\\d{1,5}$]',
     ],
-    'ResourceInUseException' =>
-    [
+    'ResourceInUseException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 409,
       ],
       'exception' => true,
     ],
-    'ResourceNotFoundException' =>
-    [
+    'ResourceNotFoundException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 404,
       ],
       'exception' => true,
     ],
-    'Role' =>
-    [
+    'Role' => [
       'type' => 'string',
       'pattern' => '^arn:aws:iam::\\w{12}:role/.+$',
     ],
-    'Rotate' =>
-    [
+    'Rotate' => [
       'type' => 'string',
       'pattern' => '(^auto$]|(^0$]|(^90$]|(^180$]|(^270$]',
     ],
-    'SizingPolicy' =>
-    [
+    'SizingPolicy' => [
       'type' => 'string',
       'pattern' => '(^Fit$]|(^Fill$]|(^Stretch$]|(^Keep$]|(^ShrinkToFit$]|(^ShrinkToFill$]',
     ],
-    'SnsTopic' =>
-    [
+    'SnsTopic' => [
       'type' => 'string',
       'pattern' => '(^$]|(^arn:aws:sns:.*:\\w{12}:.+$]',
     ],
-    'SnsTopics' =>
-    [
+    'SnsTopics' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'SnsTopic',
       ],
       'max' => 30,
     ],
-    'StorageClass' =>
-    [
+    'StorageClass' => [
       'type' => 'string',
       'pattern' => '(^ReducedRedundancy$]|(^Standard$]',
     ],
-    'String' =>
-    [
+    'String' => [
       'type' => 'string',
     ],
-    'Success' =>
-    [
+    'Success' => [
       'type' => 'string',
       'pattern' => '(^true$]|(^false$]',
     ],
-    'Target' =>
-    [
+    'Target' => [
       'type' => 'string',
       'pattern' => '(^Content$]|(^Frame$]',
     ],
-    'TestRoleRequest' =>
-    [
+    'TestRoleRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Role',
-        1 => 'InputBucket',
-        2 => 'OutputBucket',
-        3 => 'Topics',
+      'required' => [
+        'Role',
+        'InputBucket',
+        'OutputBucket',
+        'Topics',
       ],
-      'members' =>
-      [
-        'Role' =>
-        [
+      'members' => [
+        'Role' => [
           'shape' => 'Role',
         ],
-        'InputBucket' =>
-        [
+        'InputBucket' => [
           'shape' => 'BucketName',
         ],
-        'OutputBucket' =>
-        [
+        'OutputBucket' => [
           'shape' => 'BucketName',
         ],
-        'Topics' =>
-        [
+        'Topics' => [
           'shape' => 'SnsTopics',
         ],
       ],
     ],
-    'TestRoleResponse' =>
-    [
+    'TestRoleResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Success' =>
-        [
+      'members' => [
+        'Success' => [
           'shape' => 'Success',
         ],
-        'Messages' =>
-        [
+        'Messages' => [
           'shape' => 'ExceptionMessages',
         ],
       ],
     ],
-    'ThumbnailPattern' =>
-    [
+    'ThumbnailPattern' => [
       'type' => 'string',
       'pattern' => '(^$]|(^.*\\{count\\}.*$]',
     ],
-    'ThumbnailResolution' =>
-    [
+    'ThumbnailResolution' => [
       'type' => 'string',
       'pattern' => '^\\d{1,5}x\\d{1,5}$',
     ],
-    'Thumbnails' =>
-    [
+    'Thumbnails' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Format' =>
-        [
+      'members' => [
+        'Format' => [
           'shape' => 'JpgOrPng',
         ],
-        'Interval' =>
-        [
+        'Interval' => [
           'shape' => 'Digits',
         ],
-        'Resolution' =>
-        [
+        'Resolution' => [
           'shape' => 'ThumbnailResolution',
         ],
-        'AspectRatio' =>
-        [
+        'AspectRatio' => [
           'shape' => 'AspectRatio',
         ],
-        'MaxWidth' =>
-        [
+        'MaxWidth' => [
           'shape' => 'DigitsOrAuto',
         ],
-        'MaxHeight' =>
-        [
+        'MaxHeight' => [
           'shape' => 'DigitsOrAuto',
         ],
-        'SizingPolicy' =>
-        [
+        'SizingPolicy' => [
           'shape' => 'SizingPolicy',
         ],
-        'PaddingPolicy' =>
-        [
+        'PaddingPolicy' => [
           'shape' => 'PaddingPolicy',
         ],
       ],
     ],
-    'Time' =>
-    [
+    'Time' => [
       'type' => 'string',
       'pattern' => '(^\\d{1,5}(\\.\\d{0,3}]?$]|(^([0-1]?[0-9]:|2[0-3]:]?([0-5]?[0-9]:]?[0-5]?[0-9](\\.\\d{0,3}]?$]',
     ],
-    'TimeOffset' =>
-    [
+    'TimeOffset' => [
       'type' => 'string',
       'pattern' => '(^[+-]?\\d{1,5}(\\.\\d{0,3}]?$]|(^[+-]?([0-1]?[0-9]:|2[0-3]:]?([0-5]?[0-9]:]?[0-5]?[0-9](\\.\\d{0,3}]?$]',
     ],
-    'TimeSpan' =>
-    [
+    'TimeSpan' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StartTime' =>
-        [
+      'members' => [
+        'StartTime' => [
           'shape' => 'Time',
         ],
-        'Duration' =>
-        [
+        'Duration' => [
           'shape' => 'Time',
         ],
       ],
     ],
-    'UpdatePipelineNotificationsRequest' =>
-    [
+    'UpdatePipelineNotificationsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
-        1 => 'Notifications',
+      'required' => [
+        'Id',
+        'Notifications',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'Id',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
-        'Notifications' =>
-        [
+        'Notifications' => [
           'shape' => 'Notifications',
         ],
       ],
     ],
-    'UpdatePipelineNotificationsResponse' =>
-    [
+    'UpdatePipelineNotificationsResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Pipeline' =>
-        [
+      'members' => [
+        'Pipeline' => [
           'shape' => 'Pipeline',
         ],
       ],
     ],
-    'UpdatePipelineRequest' =>
-    [
+    'UpdatePipelineRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
+      'required' => [
+        'Id',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'Id',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'Name',
         ],
-        'InputBucket' =>
-        [
+        'InputBucket' => [
           'shape' => 'BucketName',
         ],
-        'Role' =>
-        [
+        'Role' => [
           'shape' => 'Role',
         ],
-        'Notifications' =>
-        [
+        'Notifications' => [
           'shape' => 'Notifications',
         ],
-        'ContentConfig' =>
-        [
+        'ContentConfig' => [
           'shape' => 'PipelineOutputConfig',
         ],
-        'ThumbnailConfig' =>
-        [
+        'ThumbnailConfig' => [
           'shape' => 'PipelineOutputConfig',
         ],
       ],
     ],
-    'UpdatePipelineResponse' =>
-    [
+    'UpdatePipelineResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Pipeline',
+      'required' => [
+        'Pipeline',
       ],
-      'members' =>
-      [
-        'Pipeline' =>
-        [
+      'members' => [
+        'Pipeline' => [
           'shape' => 'Pipeline',
         ],
       ],
     ],
-    'UpdatePipelineStatusRequest' =>
-    [
+    'UpdatePipelineStatusRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
-        1 => 'Status',
+      'required' => [
+        'Id',
+        'Status',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'Id',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'PipelineStatus',
         ],
       ],
     ],
-    'UpdatePipelineStatusResponse' =>
-    [
+    'UpdatePipelineStatusResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Pipeline' =>
-        [
+      'members' => [
+        'Pipeline' => [
           'shape' => 'Pipeline',
         ],
       ],
     ],
-    'ValidationException' =>
-    [
+    'ValidationException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'VerticalAlign' =>
-    [
+    'VerticalAlign' => [
       'type' => 'string',
       'pattern' => '(^Top$]|(^Bottom$]|(^Center$]',
     ],
-    'VideoBitRate' =>
-    [
+    'VideoBitRate' => [
       'type' => 'string',
       'pattern' => '(^\\d{2,5}$]|(^auto$]',
     ],
-    'VideoCodec' =>
-    [
+    'VideoCodec' => [
       'type' => 'string',
       'pattern' => '(^H\\.264$]|(^vp8$]',
     ],
-    'VideoParameters' =>
-    [
+    'VideoParameters' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Codec' =>
-        [
+      'members' => [
+        'Codec' => [
           'shape' => 'VideoCodec',
         ],
-        'CodecOptions' =>
-        [
+        'CodecOptions' => [
           'shape' => 'CodecOptions',
         ],
-        'KeyframesMaxDist' =>
-        [
+        'KeyframesMaxDist' => [
           'shape' => 'KeyframesMaxDist',
         ],
-        'FixedGOP' =>
-        [
+        'FixedGOP' => [
           'shape' => 'FixedGOP',
         ],
-        'BitRate' =>
-        [
+        'BitRate' => [
           'shape' => 'VideoBitRate',
         ],
-        'FrameRate' =>
-        [
+        'FrameRate' => [
           'shape' => 'FrameRate',
         ],
-        'MaxFrameRate' =>
-        [
+        'MaxFrameRate' => [
           'shape' => 'MaxFrameRate',
         ],
-        'Resolution' =>
-        [
+        'Resolution' => [
           'shape' => 'Resolution',
         ],
-        'AspectRatio' =>
-        [
+        'AspectRatio' => [
           'shape' => 'AspectRatio',
         ],
-        'MaxWidth' =>
-        [
+        'MaxWidth' => [
           'shape' => 'DigitsOrAuto',
         ],
-        'MaxHeight' =>
-        [
+        'MaxHeight' => [
           'shape' => 'DigitsOrAuto',
         ],
-        'DisplayAspectRatio' =>
-        [
+        'DisplayAspectRatio' => [
           'shape' => 'AspectRatio',
         ],
-        'SizingPolicy' =>
-        [
+        'SizingPolicy' => [
           'shape' => 'SizingPolicy',
         ],
-        'PaddingPolicy' =>
-        [
+        'PaddingPolicy' => [
           'shape' => 'PaddingPolicy',
         ],
-        'Watermarks' =>
-        [
+        'Watermarks' => [
           'shape' => 'PresetWatermarks',
         ],
       ],
     ],
-    'WatermarkKey' =>
-    [
+    'WatermarkKey' => [
       'type' => 'string',
       'min' => 1,
       'max' => 255,
       'pattern' => '(^.{1,}.jpg$]|(^.{1,}.jpeg$]|(^.{1,}.png$]',
     ],
-    'WatermarkSizingPolicy' =>
-    [
+    'WatermarkSizingPolicy' => [
       'type' => 'string',
       'pattern' => '(^Fit$]|(^Stretch$]|(^ShrinkToFit$]',
     ],

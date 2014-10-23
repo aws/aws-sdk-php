@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2013-11-01',
     'endpointPrefix' => 'cloudtrail',
     'jsonVersion' => '1.1',
@@ -11,119 +9,95 @@ return [
     'targetPrefix' => 'com.amazonaws.cloudtrail.v20131101.CloudTrail_20131101',
     'protocol' => 'json',
   ],
-  'operations' =>
-  [
-    'CreateTrail' =>
-    [
+  'operations' => [
+    'CreateTrail' => [
       'name' => 'CreateTrail',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateTrailRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateTrailResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'MaximumNumberOfTrailsExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MaximumNumberOfTrailsExceeded',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'TrailAlreadyExistsException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'TrailAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'S3BucketDoesNotExistException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'S3BucketDoesNotExist',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InsufficientS3BucketPolicyException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientS3BucketPolicy',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InsufficientSnsTopicPolicyException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientSnsTopicPolicy',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'InvalidS3BucketNameException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidS3BucketName',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'InvalidS3PrefixException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidS3Prefix',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'InvalidSnsTopicNameException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidSnsTopicName',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        8 =>
         [
           'shape' => 'InvalidTrailNameException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidTrailName',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -132,40 +106,31 @@ return [
         ],
       ],
     ],
-    'DeleteTrail' =>
-    [
+    'DeleteTrail' => [
       'name' => 'DeleteTrail',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteTrailRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteTrailResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'TrailNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'TrailNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidTrailNameException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidTrailName',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -174,57 +139,44 @@ return [
         ],
       ],
     ],
-    'DescribeTrails' =>
-    [
+    'DescribeTrails' => [
       'name' => 'DescribeTrails',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeTrailsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeTrailsResponse',
       ],
     ],
-    'GetTrailStatus' =>
-    [
+    'GetTrailStatus' => [
       'name' => 'GetTrailStatus',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetTrailStatusRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetTrailStatusResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'TrailNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'TrailNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidTrailNameException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidTrailName',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -233,40 +185,31 @@ return [
         ],
       ],
     ],
-    'StartLogging' =>
-    [
+    'StartLogging' => [
       'name' => 'StartLogging',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'StartLoggingRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'StartLoggingResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'TrailNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'TrailNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidTrailNameException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidTrailName',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -275,40 +218,31 @@ return [
         ],
       ],
     ],
-    'StopLogging' =>
-    [
+    'StopLogging' => [
       'name' => 'StopLogging',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'StopLoggingRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'StopLoggingResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'TrailNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'TrailNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidTrailNameException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidTrailName',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -317,106 +251,85 @@ return [
         ],
       ],
     ],
-    'UpdateTrail' =>
-    [
+    'UpdateTrail' => [
       'name' => 'UpdateTrail',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateTrailRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdateTrailResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'S3BucketDoesNotExistException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'S3BucketDoesNotExist',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InsufficientS3BucketPolicyException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientS3BucketPolicy',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InsufficientSnsTopicPolicyException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientSnsTopicPolicy',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'TrailNotFoundException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'TrailNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InvalidS3BucketNameException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidS3BucketName',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'InvalidS3PrefixException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidS3Prefix',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'InvalidSnsTopicNameException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidSnsTopicName',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'InvalidTrailNameException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidTrailName',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -426,454 +339,342 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'Boolean' =>
-    [
+  'shapes' => [
+    'Boolean' => [
       'type' => 'boolean',
     ],
-    'CreateTrailRequest' =>
-    [
+    'CreateTrailRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
-        1 => 'S3BucketName',
+      'required' => [
+        'Name',
+        'S3BucketName',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
-        'S3BucketName' =>
-        [
+        'S3BucketName' => [
           'shape' => 'String',
         ],
-        'S3KeyPrefix' =>
-        [
+        'S3KeyPrefix' => [
           'shape' => 'String',
         ],
-        'SnsTopicName' =>
-        [
+        'SnsTopicName' => [
           'shape' => 'String',
         ],
-        'IncludeGlobalServiceEvents' =>
-        [
+        'IncludeGlobalServiceEvents' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'CreateTrailResponse' =>
-    [
+    'CreateTrailResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
-        'S3BucketName' =>
-        [
+        'S3BucketName' => [
           'shape' => 'String',
         ],
-        'S3KeyPrefix' =>
-        [
+        'S3KeyPrefix' => [
           'shape' => 'String',
         ],
-        'SnsTopicName' =>
-        [
+        'SnsTopicName' => [
           'shape' => 'String',
         ],
-        'IncludeGlobalServiceEvents' =>
-        [
+        'IncludeGlobalServiceEvents' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'Date' =>
-    [
+    'Date' => [
       'type' => 'timestamp',
     ],
-    'DeleteTrailRequest' =>
-    [
+    'DeleteTrailRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
+      'required' => [
+        'Name',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteTrailResponse' =>
-    [
+    'DeleteTrailResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'DescribeTrailsRequest' =>
-    [
+    'DescribeTrailsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'trailNameList' =>
-        [
+      'members' => [
+        'trailNameList' => [
           'shape' => 'TrailNameList',
         ],
       ],
     ],
-    'DescribeTrailsResponse' =>
-    [
+    'DescribeTrailsResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'trailList' =>
-        [
+      'members' => [
+        'trailList' => [
           'shape' => 'TrailList',
         ],
       ],
     ],
-    'GetTrailStatusRequest' =>
-    [
+    'GetTrailStatusRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
+      'required' => [
+        'Name',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'GetTrailStatusResponse' =>
-    [
+    'GetTrailStatusResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IsLogging' =>
-        [
+      'members' => [
+        'IsLogging' => [
           'shape' => 'Boolean',
         ],
-        'LatestDeliveryError' =>
-        [
+        'LatestDeliveryError' => [
           'shape' => 'String',
         ],
-        'LatestNotificationError' =>
-        [
+        'LatestNotificationError' => [
           'shape' => 'String',
         ],
-        'LatestDeliveryTime' =>
-        [
+        'LatestDeliveryTime' => [
           'shape' => 'Date',
         ],
-        'LatestNotificationTime' =>
-        [
+        'LatestNotificationTime' => [
           'shape' => 'Date',
         ],
-        'StartLoggingTime' =>
-        [
+        'StartLoggingTime' => [
           'shape' => 'Date',
         ],
-        'StopLoggingTime' =>
-        [
+        'StopLoggingTime' => [
           'shape' => 'Date',
         ],
       ],
     ],
-    'InsufficientS3BucketPolicyException' =>
-    [
+    'InsufficientS3BucketPolicyException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InsufficientS3BucketPolicy',
         'httpStatusCode' => 403,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InsufficientSnsTopicPolicyException' =>
-    [
+    'InsufficientSnsTopicPolicyException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InsufficientSnsTopicPolicy',
         'httpStatusCode' => 403,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidS3BucketNameException' =>
-    [
+    'InvalidS3BucketNameException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidS3BucketName',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidS3PrefixException' =>
-    [
+    'InvalidS3PrefixException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidS3Prefix',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidSnsTopicNameException' =>
-    [
+    'InvalidSnsTopicNameException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidSnsTopicName',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidTrailNameException' =>
-    [
+    'InvalidTrailNameException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidTrailName',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'MaximumNumberOfTrailsExceededException' =>
-    [
+    'MaximumNumberOfTrailsExceededException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'MaximumNumberOfTrailsExceeded',
         'httpStatusCode' => 403,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'S3BucketDoesNotExistException' =>
-    [
+    'S3BucketDoesNotExistException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'S3BucketDoesNotExist',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'StartLoggingRequest' =>
-    [
+    'StartLoggingRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
+      'required' => [
+        'Name',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'StartLoggingResponse' =>
-    [
+    'StartLoggingResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'StopLoggingRequest' =>
-    [
+    'StopLoggingRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
+      'required' => [
+        'Name',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'StopLoggingResponse' =>
-    [
+    'StopLoggingResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'String' =>
-    [
+    'String' => [
       'type' => 'string',
     ],
-    'Trail' =>
-    [
+    'Trail' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
-        'S3BucketName' =>
-        [
+        'S3BucketName' => [
           'shape' => 'String',
         ],
-        'S3KeyPrefix' =>
-        [
+        'S3KeyPrefix' => [
           'shape' => 'String',
         ],
-        'SnsTopicName' =>
-        [
+        'SnsTopicName' => [
           'shape' => 'String',
         ],
-        'IncludeGlobalServiceEvents' =>
-        [
+        'IncludeGlobalServiceEvents' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'TrailAlreadyExistsException' =>
-    [
+    'TrailAlreadyExistsException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'TrailAlreadyExists',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'TrailList' =>
-    [
+    'TrailList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Trail',
       ],
     ],
-    'TrailNameList' =>
-    [
+    'TrailNameList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
       ],
     ],
-    'TrailNotFoundException' =>
-    [
+    'TrailNotFoundException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'TrailNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'UpdateTrailRequest' =>
-    [
+    'UpdateTrailRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
+      'required' => [
+        'Name',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
-        'S3BucketName' =>
-        [
+        'S3BucketName' => [
           'shape' => 'String',
         ],
-        'S3KeyPrefix' =>
-        [
+        'S3KeyPrefix' => [
           'shape' => 'String',
         ],
-        'SnsTopicName' =>
-        [
+        'SnsTopicName' => [
           'shape' => 'String',
         ],
-        'IncludeGlobalServiceEvents' =>
-        [
+        'IncludeGlobalServiceEvents' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'UpdateTrailResponse' =>
-    [
+    'UpdateTrailResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
-        'S3BucketName' =>
-        [
+        'S3BucketName' => [
           'shape' => 'String',
         ],
-        'S3KeyPrefix' =>
-        [
+        'S3KeyPrefix' => [
           'shape' => 'String',
         ],
-        'SnsTopicName' =>
-        [
+        'SnsTopicName' => [
           'shape' => 'String',
         ],
-        'IncludeGlobalServiceEvents' =>
-        [
+        'IncludeGlobalServiceEvents' => [
           'shape' => 'Boolean',
         ],
       ],

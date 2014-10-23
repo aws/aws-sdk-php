@@ -1,32 +1,24 @@
-<?php
-return [
-  'pagination' =>
-  [
-    'DescribeApplicationVersions' =>
-    [
+<?php return [
+  'pagination' => [
+    'DescribeApplicationVersions' => [
       'result_key' => 'ApplicationVersions',
     ],
-    'DescribeApplications' =>
-    [
+    'DescribeApplications' => [
       'result_key' => 'Applications',
     ],
-    'DescribeConfigurationOptions' =>
-    [
+    'DescribeConfigurationOptions' => [
       'result_key' => 'Options',
     ],
-    'DescribeEnvironments' =>
-    [
+    'DescribeEnvironments' => [
       'result_key' => 'Environments',
     ],
-    'DescribeEvents' =>
-    [
+    'DescribeEvents' => [
       'input_token' => 'NextToken',
       'output_token' => 'NextToken',
       'limit_key' => 'MaxRecords',
       'result_key' => 'Events',
     ],
-    'ListAvailableSolutionStacks' =>
-    [
+    'ListAvailableSolutionStacks' => [
       'result_key' => 'SolutionStacks',
     ],
   ],

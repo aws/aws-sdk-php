@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2010-05-08',
     'endpointPrefix' => 'iam',
     'globalEndpoint' => 'iam.amazonaws.com',
@@ -11,49 +9,38 @@ return [
     'xmlNamespace' => 'https://iam.amazonaws.com/doc/2010-05-08/',
     'protocol' => 'query',
   ],
-  'operations' =>
-  [
-    'AddRoleToInstanceProfile' =>
-    [
+  'operations' => [
+    'AddRoleToInstanceProfile' => [
       'name' => 'AddRoleToInstanceProfile',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AddRoleToInstanceProfileRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'EntityAlreadyExistsException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EntityAlreadyExists',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -62,36 +49,28 @@ return [
         ],
       ],
     ],
-    'AddUserToGroup' =>
-    [
+    'AddUserToGroup' => [
       'name' => 'AddUserToGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AddUserToGroupRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -100,69 +79,55 @@ return [
         ],
       ],
     ],
-    'ChangePassword' =>
-    [
+    'ChangePassword' => [
       'name' => 'ChangePassword',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ChangePasswordRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidUserTypeException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidUserType',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'EntityTemporarilyUnmodifiableException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EntityTemporarilyUnmodifiable',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'PasswordPolicyViolationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'PasswordPolicyViolation',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -171,41 +136,32 @@ return [
         ],
       ],
     ],
-    'CreateAccessKey' =>
-    [
+    'CreateAccessKey' => [
       'name' => 'CreateAccessKey',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateAccessKeyRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateAccessKeyResponse',
         'resultWrapper' => 'CreateAccessKeyResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -214,36 +170,28 @@ return [
         ],
       ],
     ],
-    'CreateAccountAlias' =>
-    [
+    'CreateAccountAlias' => [
       'name' => 'CreateAccountAlias',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateAccountAliasRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'EntityAlreadyExistsException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EntityAlreadyExists',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -252,52 +200,41 @@ return [
         ],
       ],
     ],
-    'CreateGroup' =>
-    [
+    'CreateGroup' => [
       'name' => 'CreateGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateGroupRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateGroupResponse',
         'resultWrapper' => 'CreateGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'EntityAlreadyExistsException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EntityAlreadyExists',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -306,41 +243,32 @@ return [
         ],
       ],
     ],
-    'CreateInstanceProfile' =>
-    [
+    'CreateInstanceProfile' => [
       'name' => 'CreateInstanceProfile',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateInstanceProfileRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateInstanceProfileResponse',
         'resultWrapper' => 'CreateInstanceProfileResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'EntityAlreadyExistsException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EntityAlreadyExists',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -349,63 +277,50 @@ return [
         ],
       ],
     ],
-    'CreateLoginProfile' =>
-    [
+    'CreateLoginProfile' => [
       'name' => 'CreateLoginProfile',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateLoginProfileRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateLoginProfileResponse',
         'resultWrapper' => 'CreateLoginProfileResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'EntityAlreadyExistsException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EntityAlreadyExists',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'PasswordPolicyViolationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'PasswordPolicyViolation',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -414,52 +329,41 @@ return [
         ],
       ],
     ],
-    'CreateRole' =>
-    [
+    'CreateRole' => [
       'name' => 'CreateRole',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateRoleRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateRoleResponse',
         'resultWrapper' => 'CreateRoleResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'EntityAlreadyExistsException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EntityAlreadyExists',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'MalformedPolicyDocumentException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MalformedPolicyDocument',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -468,52 +372,41 @@ return [
         ],
       ],
     ],
-    'CreateSAMLProvider' =>
-    [
+    'CreateSAMLProvider' => [
       'name' => 'CreateSAMLProvider',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateSAMLProviderRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateSAMLProviderResponse',
         'resultWrapper' => 'CreateSAMLProviderResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidInputException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidInput',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'EntityAlreadyExistsException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EntityAlreadyExists',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -522,52 +415,41 @@ return [
         ],
       ],
     ],
-    'CreateUser' =>
-    [
+    'CreateUser' => [
       'name' => 'CreateUser',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateUserRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateUserResponse',
         'resultWrapper' => 'CreateUserResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'EntityAlreadyExistsException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EntityAlreadyExists',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -576,41 +458,32 @@ return [
         ],
       ],
     ],
-    'CreateVirtualMFADevice' =>
-    [
+    'CreateVirtualMFADevice' => [
       'name' => 'CreateVirtualMFADevice',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateVirtualMFADeviceRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateVirtualMFADeviceResponse',
         'resultWrapper' => 'CreateVirtualMFADeviceResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'EntityAlreadyExistsException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EntityAlreadyExists',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -619,47 +492,37 @@ return [
         ],
       ],
     ],
-    'DeactivateMFADevice' =>
-    [
+    'DeactivateMFADevice' => [
       'name' => 'DeactivateMFADevice',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeactivateMFADeviceRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'EntityTemporarilyUnmodifiableException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EntityTemporarilyUnmodifiable',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -668,36 +531,28 @@ return [
         ],
       ],
     ],
-    'DeleteAccessKey' =>
-    [
+    'DeleteAccessKey' => [
       'name' => 'DeleteAccessKey',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteAccessKeyRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -706,36 +561,28 @@ return [
         ],
       ],
     ],
-    'DeleteAccountAlias' =>
-    [
+    'DeleteAccountAlias' => [
       'name' => 'DeleteAccountAlias',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteAccountAliasRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -744,32 +591,25 @@ return [
         ],
       ],
     ],
-    'DeleteAccountPasswordPolicy' =>
-    [
+    'DeleteAccountPasswordPolicy' => [
       'name' => 'DeleteAccountPasswordPolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -778,47 +618,37 @@ return [
         ],
       ],
     ],
-    'DeleteGroup' =>
-    [
+    'DeleteGroup' => [
       'name' => 'DeleteGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteGroupRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DeleteConflictException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DeleteConflict',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -827,36 +657,28 @@ return [
         ],
       ],
     ],
-    'DeleteGroupPolicy' =>
-    [
+    'DeleteGroupPolicy' => [
       'name' => 'DeleteGroupPolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteGroupPolicyRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -865,47 +687,37 @@ return [
         ],
       ],
     ],
-    'DeleteInstanceProfile' =>
-    [
+    'DeleteInstanceProfile' => [
       'name' => 'DeleteInstanceProfile',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteInstanceProfileRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DeleteConflictException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DeleteConflict',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -914,47 +726,37 @@ return [
         ],
       ],
     ],
-    'DeleteLoginProfile' =>
-    [
+    'DeleteLoginProfile' => [
       'name' => 'DeleteLoginProfile',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteLoginProfileRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'EntityTemporarilyUnmodifiableException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EntityTemporarilyUnmodifiable',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -963,47 +765,37 @@ return [
         ],
       ],
     ],
-    'DeleteRole' =>
-    [
+    'DeleteRole' => [
       'name' => 'DeleteRole',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteRoleRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DeleteConflictException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DeleteConflict',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -1012,36 +804,28 @@ return [
         ],
       ],
     ],
-    'DeleteRolePolicy' =>
-    [
+    'DeleteRolePolicy' => [
       'name' => 'DeleteRolePolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteRolePolicyRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -1050,47 +834,37 @@ return [
         ],
       ],
     ],
-    'DeleteSAMLProvider' =>
-    [
+    'DeleteSAMLProvider' => [
       'name' => 'DeleteSAMLProvider',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteSAMLProviderRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidInputException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidInput',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1099,47 +873,37 @@ return [
         ],
       ],
     ],
-    'DeleteServerCertificate' =>
-    [
+    'DeleteServerCertificate' => [
       'name' => 'DeleteServerCertificate',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteServerCertificateRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DeleteConflictException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DeleteConflict',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -1148,36 +912,28 @@ return [
         ],
       ],
     ],
-    'DeleteSigningCertificate' =>
-    [
+    'DeleteSigningCertificate' => [
       'name' => 'DeleteSigningCertificate',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteSigningCertificateRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -1186,47 +942,37 @@ return [
         ],
       ],
     ],
-    'DeleteUser' =>
-    [
+    'DeleteUser' => [
       'name' => 'DeleteUser',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteUserRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'DeleteConflictException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DeleteConflict',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -1235,36 +981,28 @@ return [
         ],
       ],
     ],
-    'DeleteUserPolicy' =>
-    [
+    'DeleteUserPolicy' => [
       'name' => 'DeleteUserPolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteUserPolicyRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -1273,47 +1011,37 @@ return [
         ],
       ],
     ],
-    'DeleteVirtualMFADevice' =>
-    [
+    'DeleteVirtualMFADevice' => [
       'name' => 'DeleteVirtualMFADevice',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteVirtualMFADeviceRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DeleteConflictException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DeleteConflict',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -1322,69 +1050,55 @@ return [
         ],
       ],
     ],
-    'EnableMFADevice' =>
-    [
+    'EnableMFADevice' => [
       'name' => 'EnableMFADevice',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'EnableMFADeviceRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'EntityAlreadyExistsException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EntityAlreadyExists',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'EntityTemporarilyUnmodifiableException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EntityTemporarilyUnmodifiable',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidAuthenticationCodeException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidAuthenticationCode',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1393,26 +1107,20 @@ return [
         ],
       ],
     ],
-    'GenerateCredentialReport' =>
-    [
+    'GenerateCredentialReport' => [
       'name' => 'GenerateCredentialReport',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GenerateCredentialReportResponse',
         'resultWrapper' => 'GenerateCredentialReportResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -1421,26 +1129,20 @@ return [
         ],
       ],
     ],
-    'GetAccountPasswordPolicy' =>
-    [
+    'GetAccountPasswordPolicy' => [
       'name' => 'GetAccountPasswordPolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetAccountPasswordPolicyResponse',
         'resultWrapper' => 'GetAccountPasswordPolicyResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1449,62 +1151,49 @@ return [
         ],
       ],
     ],
-    'GetAccountSummary' =>
-    [
+    'GetAccountSummary' => [
       'name' => 'GetAccountSummary',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetAccountSummaryResponse',
         'resultWrapper' => 'GetAccountSummaryResult',
       ],
     ],
-    'GetCredentialReport' =>
-    [
+    'GetCredentialReport' => [
       'name' => 'GetCredentialReport',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetCredentialReportResponse',
         'resultWrapper' => 'GetCredentialReportResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'CredentialReportNotPresentException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ReportNotPresent',
             'httpStatusCode' => 410,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'CredentialReportExpiredException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ReportExpired',
             'httpStatusCode' => 410,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'CredentialReportNotReadyException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ReportInProgress',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1513,30 +1202,23 @@ return [
         ],
       ],
     ],
-    'GetGroup' =>
-    [
+    'GetGroup' => [
       'name' => 'GetGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetGroupRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetGroupResponse',
         'resultWrapper' => 'GetGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1545,30 +1227,23 @@ return [
         ],
       ],
     ],
-    'GetGroupPolicy' =>
-    [
+    'GetGroupPolicy' => [
       'name' => 'GetGroupPolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetGroupPolicyRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetGroupPolicyResponse',
         'resultWrapper' => 'GetGroupPolicyResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1577,30 +1252,23 @@ return [
         ],
       ],
     ],
-    'GetInstanceProfile' =>
-    [
+    'GetInstanceProfile' => [
       'name' => 'GetInstanceProfile',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetInstanceProfileRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetInstanceProfileResponse',
         'resultWrapper' => 'GetInstanceProfileResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1609,30 +1277,23 @@ return [
         ],
       ],
     ],
-    'GetLoginProfile' =>
-    [
+    'GetLoginProfile' => [
       'name' => 'GetLoginProfile',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetLoginProfileRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetLoginProfileResponse',
         'resultWrapper' => 'GetLoginProfileResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1641,30 +1302,23 @@ return [
         ],
       ],
     ],
-    'GetRole' =>
-    [
+    'GetRole' => [
       'name' => 'GetRole',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetRoleRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetRoleResponse',
         'resultWrapper' => 'GetRoleResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1673,30 +1327,23 @@ return [
         ],
       ],
     ],
-    'GetRolePolicy' =>
-    [
+    'GetRolePolicy' => [
       'name' => 'GetRolePolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetRolePolicyRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetRolePolicyResponse',
         'resultWrapper' => 'GetRolePolicyResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1705,41 +1352,32 @@ return [
         ],
       ],
     ],
-    'GetSAMLProvider' =>
-    [
+    'GetSAMLProvider' => [
       'name' => 'GetSAMLProvider',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetSAMLProviderRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetSAMLProviderResponse',
         'resultWrapper' => 'GetSAMLProviderResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidInputException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidInput',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1748,30 +1386,23 @@ return [
         ],
       ],
     ],
-    'GetServerCertificate' =>
-    [
+    'GetServerCertificate' => [
       'name' => 'GetServerCertificate',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetServerCertificateRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetServerCertificateResponse',
         'resultWrapper' => 'GetServerCertificateResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1780,30 +1411,23 @@ return [
         ],
       ],
     ],
-    'GetUser' =>
-    [
+    'GetUser' => [
       'name' => 'GetUser',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetUserRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetUserResponse',
         'resultWrapper' => 'GetUserResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1812,30 +1436,23 @@ return [
         ],
       ],
     ],
-    'GetUserPolicy' =>
-    [
+    'GetUserPolicy' => [
       'name' => 'GetUserPolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetUserPolicyRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetUserPolicyResponse',
         'resultWrapper' => 'GetUserPolicyResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1844,30 +1461,23 @@ return [
         ],
       ],
     ],
-    'ListAccessKeys' =>
-    [
+    'ListAccessKeys' => [
       'name' => 'ListAccessKeys',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListAccessKeysRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListAccessKeysResponse',
         'resultWrapper' => 'ListAccessKeysResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1876,48 +1486,37 @@ return [
         ],
       ],
     ],
-    'ListAccountAliases' =>
-    [
+    'ListAccountAliases' => [
       'name' => 'ListAccountAliases',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListAccountAliasesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListAccountAliasesResponse',
         'resultWrapper' => 'ListAccountAliasesResult',
       ],
     ],
-    'ListGroupPolicies' =>
-    [
+    'ListGroupPolicies' => [
       'name' => 'ListGroupPolicies',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListGroupPoliciesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListGroupPoliciesResponse',
         'resultWrapper' => 'ListGroupPoliciesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1926,48 +1525,37 @@ return [
         ],
       ],
     ],
-    'ListGroups' =>
-    [
+    'ListGroups' => [
       'name' => 'ListGroups',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListGroupsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListGroupsResponse',
         'resultWrapper' => 'ListGroupsResult',
       ],
     ],
-    'ListGroupsForUser' =>
-    [
+    'ListGroupsForUser' => [
       'name' => 'ListGroupsForUser',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListGroupsForUserRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListGroupsForUserResponse',
         'resultWrapper' => 'ListGroupsForUserResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1976,48 +1564,37 @@ return [
         ],
       ],
     ],
-    'ListInstanceProfiles' =>
-    [
+    'ListInstanceProfiles' => [
       'name' => 'ListInstanceProfiles',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListInstanceProfilesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListInstanceProfilesResponse',
         'resultWrapper' => 'ListInstanceProfilesResult',
       ],
     ],
-    'ListInstanceProfilesForRole' =>
-    [
+    'ListInstanceProfilesForRole' => [
       'name' => 'ListInstanceProfilesForRole',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListInstanceProfilesForRoleRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListInstanceProfilesForRoleResponse',
         'resultWrapper' => 'ListInstanceProfilesForRoleResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -2026,30 +1603,23 @@ return [
         ],
       ],
     ],
-    'ListMFADevices' =>
-    [
+    'ListMFADevices' => [
       'name' => 'ListMFADevices',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListMFADevicesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListMFADevicesResponse',
         'resultWrapper' => 'ListMFADevicesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -2058,30 +1628,23 @@ return [
         ],
       ],
     ],
-    'ListRolePolicies' =>
-    [
+    'ListRolePolicies' => [
       'name' => 'ListRolePolicies',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListRolePoliciesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListRolePoliciesResponse',
         'resultWrapper' => 'ListRolePoliciesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -2090,84 +1653,65 @@ return [
         ],
       ],
     ],
-    'ListRoles' =>
-    [
+    'ListRoles' => [
       'name' => 'ListRoles',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListRolesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListRolesResponse',
         'resultWrapper' => 'ListRolesResult',
       ],
     ],
-    'ListSAMLProviders' =>
-    [
+    'ListSAMLProviders' => [
       'name' => 'ListSAMLProviders',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListSAMLProvidersRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListSAMLProvidersResponse',
         'resultWrapper' => 'ListSAMLProvidersResult',
       ],
     ],
-    'ListServerCertificates' =>
-    [
+    'ListServerCertificates' => [
       'name' => 'ListServerCertificates',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListServerCertificatesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListServerCertificatesResponse',
         'resultWrapper' => 'ListServerCertificatesResult',
       ],
     ],
-    'ListSigningCertificates' =>
-    [
+    'ListSigningCertificates' => [
       'name' => 'ListSigningCertificates',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListSigningCertificatesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListSigningCertificatesResponse',
         'resultWrapper' => 'ListSigningCertificatesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -2176,30 +1720,23 @@ return [
         ],
       ],
     ],
-    'ListUserPolicies' =>
-    [
+    'ListUserPolicies' => [
       'name' => 'ListUserPolicies',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListUserPoliciesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListUserPoliciesResponse',
         'resultWrapper' => 'ListUserPoliciesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -2208,83 +1745,65 @@ return [
         ],
       ],
     ],
-    'ListUsers' =>
-    [
+    'ListUsers' => [
       'name' => 'ListUsers',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListUsersRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListUsersResponse',
         'resultWrapper' => 'ListUsersResult',
       ],
     ],
-    'ListVirtualMFADevices' =>
-    [
+    'ListVirtualMFADevices' => [
       'name' => 'ListVirtualMFADevices',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListVirtualMFADevicesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListVirtualMFADevicesResponse',
         'resultWrapper' => 'ListVirtualMFADevicesResult',
       ],
     ],
-    'PutGroupPolicy' =>
-    [
+    'PutGroupPolicy' => [
       'name' => 'PutGroupPolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutGroupPolicyRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'MalformedPolicyDocumentException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MalformedPolicyDocument',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -2293,47 +1812,37 @@ return [
         ],
       ],
     ],
-    'PutRolePolicy' =>
-    [
+    'PutRolePolicy' => [
       'name' => 'PutRolePolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutRolePolicyRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'MalformedPolicyDocumentException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MalformedPolicyDocument',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -2342,47 +1851,37 @@ return [
         ],
       ],
     ],
-    'PutUserPolicy' =>
-    [
+    'PutUserPolicy' => [
       'name' => 'PutUserPolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutUserPolicyRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'MalformedPolicyDocumentException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MalformedPolicyDocument',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -2391,36 +1890,28 @@ return [
         ],
       ],
     ],
-    'RemoveRoleFromInstanceProfile' =>
-    [
+    'RemoveRoleFromInstanceProfile' => [
       'name' => 'RemoveRoleFromInstanceProfile',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RemoveRoleFromInstanceProfileRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -2429,36 +1920,28 @@ return [
         ],
       ],
     ],
-    'RemoveUserFromGroup' =>
-    [
+    'RemoveUserFromGroup' => [
       'name' => 'RemoveUserFromGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RemoveUserFromGroupRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -2467,47 +1950,37 @@ return [
         ],
       ],
     ],
-    'ResyncMFADevice' =>
-    [
+    'ResyncMFADevice' => [
       'name' => 'ResyncMFADevice',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ResyncMFADeviceRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidAuthenticationCodeException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidAuthenticationCode',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -2516,36 +1989,28 @@ return [
         ],
       ],
     ],
-    'UpdateAccessKey' =>
-    [
+    'UpdateAccessKey' => [
       'name' => 'UpdateAccessKey',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateAccessKeyRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -2554,47 +2019,37 @@ return [
         ],
       ],
     ],
-    'UpdateAccountPasswordPolicy' =>
-    [
+    'UpdateAccountPasswordPolicy' => [
       'name' => 'UpdateAccountPasswordPolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateAccountPasswordPolicyRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'MalformedPolicyDocumentException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MalformedPolicyDocument',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -2603,47 +2058,37 @@ return [
         ],
       ],
     ],
-    'UpdateAssumeRolePolicy' =>
-    [
+    'UpdateAssumeRolePolicy' => [
       'name' => 'UpdateAssumeRolePolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateAssumeRolePolicyRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'MalformedPolicyDocumentException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MalformedPolicyDocument',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -2652,47 +2097,37 @@ return [
         ],
       ],
     ],
-    'UpdateGroup' =>
-    [
+    'UpdateGroup' => [
       'name' => 'UpdateGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateGroupRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'EntityAlreadyExistsException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EntityAlreadyExists',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -2701,58 +2136,46 @@ return [
         ],
       ],
     ],
-    'UpdateLoginProfile' =>
-    [
+    'UpdateLoginProfile' => [
       'name' => 'UpdateLoginProfile',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateLoginProfileRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'EntityTemporarilyUnmodifiableException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EntityTemporarilyUnmodifiable',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'PasswordPolicyViolationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'PasswordPolicyViolation',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -2761,52 +2184,41 @@ return [
         ],
       ],
     ],
-    'UpdateSAMLProvider' =>
-    [
+    'UpdateSAMLProvider' => [
       'name' => 'UpdateSAMLProvider',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateSAMLProviderRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdateSAMLProviderResponse',
         'resultWrapper' => 'UpdateSAMLProviderResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidInputException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidInput',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -2815,47 +2227,37 @@ return [
         ],
       ],
     ],
-    'UpdateServerCertificate' =>
-    [
+    'UpdateServerCertificate' => [
       'name' => 'UpdateServerCertificate',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateServerCertificateRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'EntityAlreadyExistsException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EntityAlreadyExists',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -2864,36 +2266,28 @@ return [
         ],
       ],
     ],
-    'UpdateSigningCertificate' =>
-    [
+    'UpdateSigningCertificate' => [
       'name' => 'UpdateSigningCertificate',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateSigningCertificateRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -2902,58 +2296,46 @@ return [
         ],
       ],
     ],
-    'UpdateUser' =>
-    [
+    'UpdateUser' => [
       'name' => 'UpdateUser',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateUserRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'EntityAlreadyExistsException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EntityAlreadyExists',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'EntityTemporarilyUnmodifiableException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EntityTemporarilyUnmodifiable',
             'httpStatusCode' => 409,
             'senderFault' => true,
@@ -2962,63 +2344,50 @@ return [
         ],
       ],
     ],
-    'UploadServerCertificate' =>
-    [
+    'UploadServerCertificate' => [
       'name' => 'UploadServerCertificate',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UploadServerCertificateRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UploadServerCertificateResponse',
         'resultWrapper' => 'UploadServerCertificateResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'EntityAlreadyExistsException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EntityAlreadyExists',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'MalformedCertificateException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MalformedCertificate',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'KeyPairMismatchException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'KeyPairMismatch',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -3027,85 +2396,68 @@ return [
         ],
       ],
     ],
-    'UploadSigningCertificate' =>
-    [
+    'UploadSigningCertificate' => [
       'name' => 'UploadSigningCertificate',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UploadSigningCertificateRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UploadSigningCertificateResponse',
         'resultWrapper' => 'UploadSigningCertificateResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'LimitExceededException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'EntityAlreadyExistsException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EntityAlreadyExists',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'MalformedCertificateException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MalformedCertificate',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidCertificateException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidCertificate',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'DuplicateCertificateException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DuplicateCertificate',
             'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'NoSuchEntityException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'NoSuchEntity',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -3115,3399 +2467,2570 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'AccessKey' =>
-    [
+  'shapes' => [
+    'AccessKey' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'UserName',
-        1 => 'AccessKeyId',
-        2 => 'Status',
-        3 => 'SecretAccessKey',
+      'required' => [
+        'UserName',
+        'AccessKeyId',
+        'Status',
+        'SecretAccessKey',
       ],
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'userNameType',
         ],
-        'AccessKeyId' =>
-        [
+        'AccessKeyId' => [
           'shape' => 'accessKeyIdType',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'statusType',
         ],
-        'SecretAccessKey' =>
-        [
+        'SecretAccessKey' => [
           'shape' => 'accessKeySecretType',
         ],
-        'CreateDate' =>
-        [
+        'CreateDate' => [
           'shape' => 'dateType',
         ],
       ],
     ],
-    'AccessKeyMetadata' =>
-    [
+    'AccessKeyMetadata' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'userNameType',
         ],
-        'AccessKeyId' =>
-        [
+        'AccessKeyId' => [
           'shape' => 'accessKeyIdType',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'statusType',
         ],
-        'CreateDate' =>
-        [
+        'CreateDate' => [
           'shape' => 'dateType',
         ],
       ],
     ],
-    'AddRoleToInstanceProfileRequest' =>
-    [
+    'AddRoleToInstanceProfileRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceProfileName',
-        1 => 'RoleName',
+      'required' => [
+        'InstanceProfileName',
+        'RoleName',
       ],
-      'members' =>
-      [
-        'InstanceProfileName' =>
-        [
+      'members' => [
+        'InstanceProfileName' => [
           'shape' => 'instanceProfileNameType',
         ],
-        'RoleName' =>
-        [
+        'RoleName' => [
           'shape' => 'roleNameType',
         ],
       ],
     ],
-    'AddUserToGroupRequest' =>
-    [
+    'AddUserToGroupRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GroupName',
-        1 => 'UserName',
+      'required' => [
+        'GroupName',
+        'UserName',
       ],
-      'members' =>
-      [
-        'GroupName' =>
-        [
+      'members' => [
+        'GroupName' => [
           'shape' => 'groupNameType',
         ],
-        'UserName' =>
-        [
+        'UserName' => [
           'shape' => 'existingUserNameType',
         ],
       ],
     ],
-    'BootstrapDatum' =>
-    [
+    'BootstrapDatum' => [
       'type' => 'blob',
       'sensitive' => true,
     ],
-    'ChangePasswordRequest' =>
-    [
+    'ChangePasswordRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'OldPassword',
-        1 => 'NewPassword',
+      'required' => [
+        'OldPassword',
+        'NewPassword',
       ],
-      'members' =>
-      [
-        'OldPassword' =>
-        [
+      'members' => [
+        'OldPassword' => [
           'shape' => 'passwordType',
         ],
-        'NewPassword' =>
-        [
+        'NewPassword' => [
           'shape' => 'passwordType',
         ],
       ],
     ],
-    'CreateAccessKeyRequest' =>
-    [
+    'CreateAccessKeyRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'existingUserNameType',
         ],
       ],
     ],
-    'CreateAccessKeyResponse' =>
-    [
+    'CreateAccessKeyResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AccessKey',
+      'required' => [
+        'AccessKey',
       ],
-      'members' =>
-      [
-        'AccessKey' =>
-        [
+      'members' => [
+        'AccessKey' => [
           'shape' => 'AccessKey',
         ],
       ],
     ],
-    'CreateAccountAliasRequest' =>
-    [
+    'CreateAccountAliasRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AccountAlias',
+      'required' => [
+        'AccountAlias',
       ],
-      'members' =>
-      [
-        'AccountAlias' =>
-        [
+      'members' => [
+        'AccountAlias' => [
           'shape' => 'accountAliasType',
         ],
       ],
     ],
-    'CreateGroupRequest' =>
-    [
+    'CreateGroupRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GroupName',
+      'required' => [
+        'GroupName',
       ],
-      'members' =>
-      [
-        'Path' =>
-        [
+      'members' => [
+        'Path' => [
           'shape' => 'pathType',
         ],
-        'GroupName' =>
-        [
+        'GroupName' => [
           'shape' => 'groupNameType',
         ],
       ],
     ],
-    'CreateGroupResponse' =>
-    [
+    'CreateGroupResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Group',
+      'required' => [
+        'Group',
       ],
-      'members' =>
-      [
-        'Group' =>
-        [
+      'members' => [
+        'Group' => [
           'shape' => 'Group',
         ],
       ],
     ],
-    'CreateInstanceProfileRequest' =>
-    [
+    'CreateInstanceProfileRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceProfileName',
+      'required' => [
+        'InstanceProfileName',
       ],
-      'members' =>
-      [
-        'InstanceProfileName' =>
-        [
+      'members' => [
+        'InstanceProfileName' => [
           'shape' => 'instanceProfileNameType',
         ],
-        'Path' =>
-        [
+        'Path' => [
           'shape' => 'pathType',
         ],
       ],
     ],
-    'CreateInstanceProfileResponse' =>
-    [
+    'CreateInstanceProfileResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceProfile',
+      'required' => [
+        'InstanceProfile',
       ],
-      'members' =>
-      [
-        'InstanceProfile' =>
-        [
+      'members' => [
+        'InstanceProfile' => [
           'shape' => 'InstanceProfile',
         ],
       ],
     ],
-    'CreateLoginProfileRequest' =>
-    [
+    'CreateLoginProfileRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'UserName',
-        1 => 'Password',
+      'required' => [
+        'UserName',
+        'Password',
       ],
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'userNameType',
         ],
-        'Password' =>
-        [
+        'Password' => [
           'shape' => 'passwordType',
         ],
-        'PasswordResetRequired' =>
-        [
+        'PasswordResetRequired' => [
           'shape' => 'booleanType',
         ],
       ],
     ],
-    'CreateLoginProfileResponse' =>
-    [
+    'CreateLoginProfileResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoginProfile',
+      'required' => [
+        'LoginProfile',
       ],
-      'members' =>
-      [
-        'LoginProfile' =>
-        [
+      'members' => [
+        'LoginProfile' => [
           'shape' => 'LoginProfile',
         ],
       ],
     ],
-    'CreateRoleRequest' =>
-    [
+    'CreateRoleRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RoleName',
-        1 => 'AssumeRolePolicyDocument',
+      'required' => [
+        'RoleName',
+        'AssumeRolePolicyDocument',
       ],
-      'members' =>
-      [
-        'Path' =>
-        [
+      'members' => [
+        'Path' => [
           'shape' => 'pathType',
         ],
-        'RoleName' =>
-        [
+        'RoleName' => [
           'shape' => 'roleNameType',
         ],
-        'AssumeRolePolicyDocument' =>
-        [
+        'AssumeRolePolicyDocument' => [
           'shape' => 'policyDocumentType',
         ],
       ],
     ],
-    'CreateRoleResponse' =>
-    [
+    'CreateRoleResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Role',
+      'required' => [
+        'Role',
       ],
-      'members' =>
-      [
-        'Role' =>
-        [
+      'members' => [
+        'Role' => [
           'shape' => 'Role',
         ],
       ],
     ],
-    'CreateSAMLProviderRequest' =>
-    [
+    'CreateSAMLProviderRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SAMLMetadataDocument',
-        1 => 'Name',
+      'required' => [
+        'SAMLMetadataDocument',
+        'Name',
       ],
-      'members' =>
-      [
-        'SAMLMetadataDocument' =>
-        [
+      'members' => [
+        'SAMLMetadataDocument' => [
           'shape' => 'SAMLMetadataDocumentType',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'SAMLProviderNameType',
         ],
       ],
     ],
-    'CreateSAMLProviderResponse' =>
-    [
+    'CreateSAMLProviderResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SAMLProviderArn' =>
-        [
+      'members' => [
+        'SAMLProviderArn' => [
           'shape' => 'arnType',
         ],
       ],
     ],
-    'CreateUserRequest' =>
-    [
+    'CreateUserRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'UserName',
+      'required' => [
+        'UserName',
       ],
-      'members' =>
-      [
-        'Path' =>
-        [
+      'members' => [
+        'Path' => [
           'shape' => 'pathType',
         ],
-        'UserName' =>
-        [
+        'UserName' => [
           'shape' => 'userNameType',
         ],
       ],
     ],
-    'CreateUserResponse' =>
-    [
+    'CreateUserResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'User' =>
-        [
+      'members' => [
+        'User' => [
           'shape' => 'User',
         ],
       ],
     ],
-    'CreateVirtualMFADeviceRequest' =>
-    [
+    'CreateVirtualMFADeviceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VirtualMFADeviceName',
+      'required' => [
+        'VirtualMFADeviceName',
       ],
-      'members' =>
-      [
-        'Path' =>
-        [
+      'members' => [
+        'Path' => [
           'shape' => 'pathType',
         ],
-        'VirtualMFADeviceName' =>
-        [
+        'VirtualMFADeviceName' => [
           'shape' => 'virtualMFADeviceName',
         ],
       ],
     ],
-    'CreateVirtualMFADeviceResponse' =>
-    [
+    'CreateVirtualMFADeviceResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VirtualMFADevice',
+      'required' => [
+        'VirtualMFADevice',
       ],
-      'members' =>
-      [
-        'VirtualMFADevice' =>
-        [
+      'members' => [
+        'VirtualMFADevice' => [
           'shape' => 'VirtualMFADevice',
         ],
       ],
     ],
-    'CredentialReportExpiredException' =>
-    [
+    'CredentialReportExpiredException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'credentialReportExpiredExceptionMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ReportExpired',
         'httpStatusCode' => 410,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'CredentialReportNotPresentException' =>
-    [
+    'CredentialReportNotPresentException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'credentialReportNotPresentExceptionMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ReportNotPresent',
         'httpStatusCode' => 410,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'CredentialReportNotReadyException' =>
-    [
+    'CredentialReportNotReadyException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'credentialReportNotReadyExceptionMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ReportInProgress',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'DeactivateMFADeviceRequest' =>
-    [
+    'DeactivateMFADeviceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'UserName',
-        1 => 'SerialNumber',
+      'required' => [
+        'UserName',
+        'SerialNumber',
       ],
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'existingUserNameType',
         ],
-        'SerialNumber' =>
-        [
+        'SerialNumber' => [
           'shape' => 'serialNumberType',
         ],
       ],
     ],
-    'DeleteAccessKeyRequest' =>
-    [
+    'DeleteAccessKeyRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AccessKeyId',
+      'required' => [
+        'AccessKeyId',
       ],
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'existingUserNameType',
         ],
-        'AccessKeyId' =>
-        [
+        'AccessKeyId' => [
           'shape' => 'accessKeyIdType',
         ],
       ],
     ],
-    'DeleteAccountAliasRequest' =>
-    [
+    'DeleteAccountAliasRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AccountAlias',
+      'required' => [
+        'AccountAlias',
       ],
-      'members' =>
-      [
-        'AccountAlias' =>
-        [
+      'members' => [
+        'AccountAlias' => [
           'shape' => 'accountAliasType',
         ],
       ],
     ],
-    'DeleteConflictException' =>
-    [
+    'DeleteConflictException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'deleteConflictMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DeleteConflict',
         'httpStatusCode' => 409,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'DeleteGroupPolicyRequest' =>
-    [
+    'DeleteGroupPolicyRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GroupName',
-        1 => 'PolicyName',
+      'required' => [
+        'GroupName',
+        'PolicyName',
       ],
-      'members' =>
-      [
-        'GroupName' =>
-        [
+      'members' => [
+        'GroupName' => [
           'shape' => 'groupNameType',
         ],
-        'PolicyName' =>
-        [
+        'PolicyName' => [
           'shape' => 'policyNameType',
         ],
       ],
     ],
-    'DeleteGroupRequest' =>
-    [
+    'DeleteGroupRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GroupName',
+      'required' => [
+        'GroupName',
       ],
-      'members' =>
-      [
-        'GroupName' =>
-        [
+      'members' => [
+        'GroupName' => [
           'shape' => 'groupNameType',
         ],
       ],
     ],
-    'DeleteInstanceProfileRequest' =>
-    [
+    'DeleteInstanceProfileRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceProfileName',
+      'required' => [
+        'InstanceProfileName',
       ],
-      'members' =>
-      [
-        'InstanceProfileName' =>
-        [
+      'members' => [
+        'InstanceProfileName' => [
           'shape' => 'instanceProfileNameType',
         ],
       ],
     ],
-    'DeleteLoginProfileRequest' =>
-    [
+    'DeleteLoginProfileRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'UserName',
+      'required' => [
+        'UserName',
       ],
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'userNameType',
         ],
       ],
     ],
-    'DeleteRolePolicyRequest' =>
-    [
+    'DeleteRolePolicyRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RoleName',
-        1 => 'PolicyName',
+      'required' => [
+        'RoleName',
+        'PolicyName',
       ],
-      'members' =>
-      [
-        'RoleName' =>
-        [
+      'members' => [
+        'RoleName' => [
           'shape' => 'roleNameType',
         ],
-        'PolicyName' =>
-        [
+        'PolicyName' => [
           'shape' => 'policyNameType',
         ],
       ],
     ],
-    'DeleteRoleRequest' =>
-    [
+    'DeleteRoleRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RoleName',
+      'required' => [
+        'RoleName',
       ],
-      'members' =>
-      [
-        'RoleName' =>
-        [
+      'members' => [
+        'RoleName' => [
           'shape' => 'roleNameType',
         ],
       ],
     ],
-    'DeleteSAMLProviderRequest' =>
-    [
+    'DeleteSAMLProviderRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SAMLProviderArn',
+      'required' => [
+        'SAMLProviderArn',
       ],
-      'members' =>
-      [
-        'SAMLProviderArn' =>
-        [
+      'members' => [
+        'SAMLProviderArn' => [
           'shape' => 'arnType',
         ],
       ],
     ],
-    'DeleteServerCertificateRequest' =>
-    [
+    'DeleteServerCertificateRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ServerCertificateName',
+      'required' => [
+        'ServerCertificateName',
       ],
-      'members' =>
-      [
-        'ServerCertificateName' =>
-        [
+      'members' => [
+        'ServerCertificateName' => [
           'shape' => 'serverCertificateNameType',
         ],
       ],
     ],
-    'DeleteSigningCertificateRequest' =>
-    [
+    'DeleteSigningCertificateRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CertificateId',
+      'required' => [
+        'CertificateId',
       ],
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'existingUserNameType',
         ],
-        'CertificateId' =>
-        [
+        'CertificateId' => [
           'shape' => 'certificateIdType',
         ],
       ],
     ],
-    'DeleteUserPolicyRequest' =>
-    [
+    'DeleteUserPolicyRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'UserName',
-        1 => 'PolicyName',
+      'required' => [
+        'UserName',
+        'PolicyName',
       ],
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'existingUserNameType',
         ],
-        'PolicyName' =>
-        [
+        'PolicyName' => [
           'shape' => 'policyNameType',
         ],
       ],
     ],
-    'DeleteUserRequest' =>
-    [
+    'DeleteUserRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'UserName',
+      'required' => [
+        'UserName',
       ],
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'existingUserNameType',
         ],
       ],
     ],
-    'DeleteVirtualMFADeviceRequest' =>
-    [
+    'DeleteVirtualMFADeviceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SerialNumber',
+      'required' => [
+        'SerialNumber',
       ],
-      'members' =>
-      [
-        'SerialNumber' =>
-        [
+      'members' => [
+        'SerialNumber' => [
           'shape' => 'serialNumberType',
         ],
       ],
     ],
-    'DuplicateCertificateException' =>
-    [
+    'DuplicateCertificateException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'duplicateCertificateMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DuplicateCertificate',
         'httpStatusCode' => 409,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'EnableMFADeviceRequest' =>
-    [
+    'EnableMFADeviceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'UserName',
-        1 => 'SerialNumber',
-        2 => 'AuthenticationCode1',
-        3 => 'AuthenticationCode2',
+      'required' => [
+        'UserName',
+        'SerialNumber',
+        'AuthenticationCode1',
+        'AuthenticationCode2',
       ],
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'existingUserNameType',
         ],
-        'SerialNumber' =>
-        [
+        'SerialNumber' => [
           'shape' => 'serialNumberType',
         ],
-        'AuthenticationCode1' =>
-        [
+        'AuthenticationCode1' => [
           'shape' => 'authenticationCodeType',
         ],
-        'AuthenticationCode2' =>
-        [
+        'AuthenticationCode2' => [
           'shape' => 'authenticationCodeType',
         ],
       ],
     ],
-    'EntityAlreadyExistsException' =>
-    [
+    'EntityAlreadyExistsException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'entityAlreadyExistsMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'EntityAlreadyExists',
         'httpStatusCode' => 409,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'EntityTemporarilyUnmodifiableException' =>
-    [
+    'EntityTemporarilyUnmodifiableException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'entityTemporarilyUnmodifiableMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'EntityTemporarilyUnmodifiable',
         'httpStatusCode' => 409,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'GenerateCredentialReportResponse' =>
-    [
+    'GenerateCredentialReportResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'State' =>
-        [
+      'members' => [
+        'State' => [
           'shape' => 'ReportStateType',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'ReportStateDescriptionType',
         ],
       ],
     ],
-    'GetAccountPasswordPolicyResponse' =>
-    [
+    'GetAccountPasswordPolicyResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'PasswordPolicy',
+      'required' => [
+        'PasswordPolicy',
       ],
-      'members' =>
-      [
-        'PasswordPolicy' =>
-        [
+      'members' => [
+        'PasswordPolicy' => [
           'shape' => 'PasswordPolicy',
         ],
       ],
     ],
-    'GetAccountSummaryResponse' =>
-    [
+    'GetAccountSummaryResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SummaryMap' =>
-        [
+      'members' => [
+        'SummaryMap' => [
           'shape' => 'summaryMapType',
         ],
       ],
     ],
-    'GetCredentialReportResponse' =>
-    [
+    'GetCredentialReportResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Content' =>
-        [
+      'members' => [
+        'Content' => [
           'shape' => 'ReportContentType',
         ],
-        'ReportFormat' =>
-        [
+        'ReportFormat' => [
           'shape' => 'ReportFormatType',
         ],
-        'GeneratedTime' =>
-        [
+        'GeneratedTime' => [
           'shape' => 'dateType',
         ],
       ],
     ],
-    'GetGroupPolicyRequest' =>
-    [
+    'GetGroupPolicyRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GroupName',
-        1 => 'PolicyName',
+      'required' => [
+        'GroupName',
+        'PolicyName',
       ],
-      'members' =>
-      [
-        'GroupName' =>
-        [
+      'members' => [
+        'GroupName' => [
           'shape' => 'groupNameType',
         ],
-        'PolicyName' =>
-        [
+        'PolicyName' => [
           'shape' => 'policyNameType',
         ],
       ],
     ],
-    'GetGroupPolicyResponse' =>
-    [
+    'GetGroupPolicyResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GroupName',
-        1 => 'PolicyName',
-        2 => 'PolicyDocument',
+      'required' => [
+        'GroupName',
+        'PolicyName',
+        'PolicyDocument',
       ],
-      'members' =>
-      [
-        'GroupName' =>
-        [
+      'members' => [
+        'GroupName' => [
           'shape' => 'groupNameType',
         ],
-        'PolicyName' =>
-        [
+        'PolicyName' => [
           'shape' => 'policyNameType',
         ],
-        'PolicyDocument' =>
-        [
+        'PolicyDocument' => [
           'shape' => 'policyDocumentType',
         ],
       ],
     ],
-    'GetGroupRequest' =>
-    [
+    'GetGroupRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GroupName',
+      'required' => [
+        'GroupName',
       ],
-      'members' =>
-      [
-        'GroupName' =>
-        [
+      'members' => [
+        'GroupName' => [
           'shape' => 'groupNameType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'maxItemsType',
         ],
       ],
     ],
-    'GetGroupResponse' =>
-    [
+    'GetGroupResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Group',
-        1 => 'Users',
+      'required' => [
+        'Group',
+        'Users',
       ],
-      'members' =>
-      [
-        'Group' =>
-        [
+      'members' => [
+        'Group' => [
           'shape' => 'Group',
         ],
-        'Users' =>
-        [
+        'Users' => [
           'shape' => 'userListType',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'booleanType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
       ],
     ],
-    'GetInstanceProfileRequest' =>
-    [
+    'GetInstanceProfileRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceProfileName',
+      'required' => [
+        'InstanceProfileName',
       ],
-      'members' =>
-      [
-        'InstanceProfileName' =>
-        [
+      'members' => [
+        'InstanceProfileName' => [
           'shape' => 'instanceProfileNameType',
         ],
       ],
     ],
-    'GetInstanceProfileResponse' =>
-    [
+    'GetInstanceProfileResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceProfile',
+      'required' => [
+        'InstanceProfile',
       ],
-      'members' =>
-      [
-        'InstanceProfile' =>
-        [
+      'members' => [
+        'InstanceProfile' => [
           'shape' => 'InstanceProfile',
         ],
       ],
     ],
-    'GetLoginProfileRequest' =>
-    [
+    'GetLoginProfileRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'UserName',
+      'required' => [
+        'UserName',
       ],
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'userNameType',
         ],
       ],
     ],
-    'GetLoginProfileResponse' =>
-    [
+    'GetLoginProfileResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'LoginProfile',
+      'required' => [
+        'LoginProfile',
       ],
-      'members' =>
-      [
-        'LoginProfile' =>
-        [
+      'members' => [
+        'LoginProfile' => [
           'shape' => 'LoginProfile',
         ],
       ],
     ],
-    'GetRolePolicyRequest' =>
-    [
+    'GetRolePolicyRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RoleName',
-        1 => 'PolicyName',
+      'required' => [
+        'RoleName',
+        'PolicyName',
       ],
-      'members' =>
-      [
-        'RoleName' =>
-        [
+      'members' => [
+        'RoleName' => [
           'shape' => 'roleNameType',
         ],
-        'PolicyName' =>
-        [
+        'PolicyName' => [
           'shape' => 'policyNameType',
         ],
       ],
     ],
-    'GetRolePolicyResponse' =>
-    [
+    'GetRolePolicyResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RoleName',
-        1 => 'PolicyName',
-        2 => 'PolicyDocument',
+      'required' => [
+        'RoleName',
+        'PolicyName',
+        'PolicyDocument',
       ],
-      'members' =>
-      [
-        'RoleName' =>
-        [
+      'members' => [
+        'RoleName' => [
           'shape' => 'roleNameType',
         ],
-        'PolicyName' =>
-        [
+        'PolicyName' => [
           'shape' => 'policyNameType',
         ],
-        'PolicyDocument' =>
-        [
+        'PolicyDocument' => [
           'shape' => 'policyDocumentType',
         ],
       ],
     ],
-    'GetRoleRequest' =>
-    [
+    'GetRoleRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RoleName',
+      'required' => [
+        'RoleName',
       ],
-      'members' =>
-      [
-        'RoleName' =>
-        [
+      'members' => [
+        'RoleName' => [
           'shape' => 'roleNameType',
         ],
       ],
     ],
-    'GetRoleResponse' =>
-    [
+    'GetRoleResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Role',
+      'required' => [
+        'Role',
       ],
-      'members' =>
-      [
-        'Role' =>
-        [
+      'members' => [
+        'Role' => [
           'shape' => 'Role',
         ],
       ],
     ],
-    'GetSAMLProviderRequest' =>
-    [
+    'GetSAMLProviderRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SAMLProviderArn',
+      'required' => [
+        'SAMLProviderArn',
       ],
-      'members' =>
-      [
-        'SAMLProviderArn' =>
-        [
+      'members' => [
+        'SAMLProviderArn' => [
           'shape' => 'arnType',
         ],
       ],
     ],
-    'GetSAMLProviderResponse' =>
-    [
+    'GetSAMLProviderResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SAMLMetadataDocument' =>
-        [
+      'members' => [
+        'SAMLMetadataDocument' => [
           'shape' => 'SAMLMetadataDocumentType',
         ],
-        'CreateDate' =>
-        [
+        'CreateDate' => [
           'shape' => 'dateType',
         ],
-        'ValidUntil' =>
-        [
+        'ValidUntil' => [
           'shape' => 'dateType',
         ],
       ],
     ],
-    'GetServerCertificateRequest' =>
-    [
+    'GetServerCertificateRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ServerCertificateName',
+      'required' => [
+        'ServerCertificateName',
       ],
-      'members' =>
-      [
-        'ServerCertificateName' =>
-        [
+      'members' => [
+        'ServerCertificateName' => [
           'shape' => 'serverCertificateNameType',
         ],
       ],
     ],
-    'GetServerCertificateResponse' =>
-    [
+    'GetServerCertificateResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ServerCertificate',
+      'required' => [
+        'ServerCertificate',
       ],
-      'members' =>
-      [
-        'ServerCertificate' =>
-        [
+      'members' => [
+        'ServerCertificate' => [
           'shape' => 'ServerCertificate',
         ],
       ],
     ],
-    'GetUserPolicyRequest' =>
-    [
+    'GetUserPolicyRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'UserName',
-        1 => 'PolicyName',
+      'required' => [
+        'UserName',
+        'PolicyName',
       ],
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'existingUserNameType',
         ],
-        'PolicyName' =>
-        [
+        'PolicyName' => [
           'shape' => 'policyNameType',
         ],
       ],
     ],
-    'GetUserPolicyResponse' =>
-    [
+    'GetUserPolicyResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'UserName',
-        1 => 'PolicyName',
-        2 => 'PolicyDocument',
+      'required' => [
+        'UserName',
+        'PolicyName',
+        'PolicyDocument',
       ],
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'existingUserNameType',
         ],
-        'PolicyName' =>
-        [
+        'PolicyName' => [
           'shape' => 'policyNameType',
         ],
-        'PolicyDocument' =>
-        [
+        'PolicyDocument' => [
           'shape' => 'policyDocumentType',
         ],
       ],
     ],
-    'GetUserRequest' =>
-    [
+    'GetUserRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'existingUserNameType',
         ],
       ],
     ],
-    'GetUserResponse' =>
-    [
+    'GetUserResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'User',
+      'required' => [
+        'User',
       ],
-      'members' =>
-      [
-        'User' =>
-        [
+      'members' => [
+        'User' => [
           'shape' => 'User',
         ],
       ],
     ],
-    'Group' =>
-    [
+    'Group' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Path',
-        1 => 'GroupName',
-        2 => 'GroupId',
-        3 => 'Arn',
-        4 => 'CreateDate',
+      'required' => [
+        'Path',
+        'GroupName',
+        'GroupId',
+        'Arn',
+        'CreateDate',
       ],
-      'members' =>
-      [
-        'Path' =>
-        [
+      'members' => [
+        'Path' => [
           'shape' => 'pathType',
         ],
-        'GroupName' =>
-        [
+        'GroupName' => [
           'shape' => 'groupNameType',
         ],
-        'GroupId' =>
-        [
+        'GroupId' => [
           'shape' => 'idType',
         ],
-        'Arn' =>
-        [
+        'Arn' => [
           'shape' => 'arnType',
         ],
-        'CreateDate' =>
-        [
+        'CreateDate' => [
           'shape' => 'dateType',
         ],
       ],
     ],
-    'InstanceProfile' =>
-    [
+    'InstanceProfile' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Path',
-        1 => 'InstanceProfileName',
-        2 => 'InstanceProfileId',
-        3 => 'Arn',
-        4 => 'CreateDate',
-        5 => 'Roles',
+      'required' => [
+        'Path',
+        'InstanceProfileName',
+        'InstanceProfileId',
+        'Arn',
+        'CreateDate',
+        'Roles',
       ],
-      'members' =>
-      [
-        'Path' =>
-        [
+      'members' => [
+        'Path' => [
           'shape' => 'pathType',
         ],
-        'InstanceProfileName' =>
-        [
+        'InstanceProfileName' => [
           'shape' => 'instanceProfileNameType',
         ],
-        'InstanceProfileId' =>
-        [
+        'InstanceProfileId' => [
           'shape' => 'idType',
         ],
-        'Arn' =>
-        [
+        'Arn' => [
           'shape' => 'arnType',
         ],
-        'CreateDate' =>
-        [
+        'CreateDate' => [
           'shape' => 'dateType',
         ],
-        'Roles' =>
-        [
+        'Roles' => [
           'shape' => 'roleListType',
         ],
       ],
     ],
-    'InvalidAuthenticationCodeException' =>
-    [
+    'InvalidAuthenticationCodeException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'invalidAuthenticationCodeMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidAuthenticationCode',
         'httpStatusCode' => 403,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidCertificateException' =>
-    [
+    'InvalidCertificateException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'invalidCertificateMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidCertificate',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidInputException' =>
-    [
+    'InvalidInputException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'invalidInputMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidInput',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidUserTypeException' =>
-    [
+    'InvalidUserTypeException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'invalidUserTypeMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidUserType',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'KeyPairMismatchException' =>
-    [
+    'KeyPairMismatchException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'keyPairMismatchMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'KeyPairMismatch',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'LimitExceededException' =>
-    [
+    'LimitExceededException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'limitExceededMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'LimitExceeded',
         'httpStatusCode' => 409,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ListAccessKeysRequest' =>
-    [
+    'ListAccessKeysRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'existingUserNameType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'maxItemsType',
         ],
       ],
     ],
-    'ListAccessKeysResponse' =>
-    [
+    'ListAccessKeysResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AccessKeyMetadata',
+      'required' => [
+        'AccessKeyMetadata',
       ],
-      'members' =>
-      [
-        'AccessKeyMetadata' =>
-        [
+      'members' => [
+        'AccessKeyMetadata' => [
           'shape' => 'accessKeyMetadataListType',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'booleanType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
       ],
     ],
-    'ListAccountAliasesRequest' =>
-    [
+    'ListAccountAliasesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'markerType',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'maxItemsType',
         ],
       ],
     ],
-    'ListAccountAliasesResponse' =>
-    [
+    'ListAccountAliasesResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AccountAliases',
+      'required' => [
+        'AccountAliases',
       ],
-      'members' =>
-      [
-        'AccountAliases' =>
-        [
+      'members' => [
+        'AccountAliases' => [
           'shape' => 'accountAliasListType',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'booleanType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
       ],
     ],
-    'ListGroupPoliciesRequest' =>
-    [
+    'ListGroupPoliciesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GroupName',
+      'required' => [
+        'GroupName',
       ],
-      'members' =>
-      [
-        'GroupName' =>
-        [
+      'members' => [
+        'GroupName' => [
           'shape' => 'groupNameType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'maxItemsType',
         ],
       ],
     ],
-    'ListGroupPoliciesResponse' =>
-    [
+    'ListGroupPoliciesResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'PolicyNames',
+      'required' => [
+        'PolicyNames',
       ],
-      'members' =>
-      [
-        'PolicyNames' =>
-        [
+      'members' => [
+        'PolicyNames' => [
           'shape' => 'policyNameListType',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'booleanType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
       ],
     ],
-    'ListGroupsForUserRequest' =>
-    [
+    'ListGroupsForUserRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'UserName',
+      'required' => [
+        'UserName',
       ],
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'existingUserNameType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'maxItemsType',
         ],
       ],
     ],
-    'ListGroupsForUserResponse' =>
-    [
+    'ListGroupsForUserResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Groups',
+      'required' => [
+        'Groups',
       ],
-      'members' =>
-      [
-        'Groups' =>
-        [
+      'members' => [
+        'Groups' => [
           'shape' => 'groupListType',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'booleanType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
       ],
     ],
-    'ListGroupsRequest' =>
-    [
+    'ListGroupsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PathPrefix' =>
-        [
+      'members' => [
+        'PathPrefix' => [
           'shape' => 'pathPrefixType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'maxItemsType',
         ],
       ],
     ],
-    'ListGroupsResponse' =>
-    [
+    'ListGroupsResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Groups',
+      'required' => [
+        'Groups',
       ],
-      'members' =>
-      [
-        'Groups' =>
-        [
+      'members' => [
+        'Groups' => [
           'shape' => 'groupListType',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'booleanType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
       ],
     ],
-    'ListInstanceProfilesForRoleRequest' =>
-    [
+    'ListInstanceProfilesForRoleRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RoleName',
+      'required' => [
+        'RoleName',
       ],
-      'members' =>
-      [
-        'RoleName' =>
-        [
+      'members' => [
+        'RoleName' => [
           'shape' => 'roleNameType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'maxItemsType',
         ],
       ],
     ],
-    'ListInstanceProfilesForRoleResponse' =>
-    [
+    'ListInstanceProfilesForRoleResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceProfiles',
+      'required' => [
+        'InstanceProfiles',
       ],
-      'members' =>
-      [
-        'InstanceProfiles' =>
-        [
+      'members' => [
+        'InstanceProfiles' => [
           'shape' => 'instanceProfileListType',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'booleanType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
       ],
     ],
-    'ListInstanceProfilesRequest' =>
-    [
+    'ListInstanceProfilesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PathPrefix' =>
-        [
+      'members' => [
+        'PathPrefix' => [
           'shape' => 'pathPrefixType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'maxItemsType',
         ],
       ],
     ],
-    'ListInstanceProfilesResponse' =>
-    [
+    'ListInstanceProfilesResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceProfiles',
+      'required' => [
+        'InstanceProfiles',
       ],
-      'members' =>
-      [
-        'InstanceProfiles' =>
-        [
+      'members' => [
+        'InstanceProfiles' => [
           'shape' => 'instanceProfileListType',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'booleanType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
       ],
     ],
-    'ListMFADevicesRequest' =>
-    [
+    'ListMFADevicesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'existingUserNameType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'maxItemsType',
         ],
       ],
     ],
-    'ListMFADevicesResponse' =>
-    [
+    'ListMFADevicesResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'MFADevices',
+      'required' => [
+        'MFADevices',
       ],
-      'members' =>
-      [
-        'MFADevices' =>
-        [
+      'members' => [
+        'MFADevices' => [
           'shape' => 'mfaDeviceListType',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'booleanType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
       ],
     ],
-    'ListRolePoliciesRequest' =>
-    [
+    'ListRolePoliciesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RoleName',
+      'required' => [
+        'RoleName',
       ],
-      'members' =>
-      [
-        'RoleName' =>
-        [
+      'members' => [
+        'RoleName' => [
           'shape' => 'roleNameType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'maxItemsType',
         ],
       ],
     ],
-    'ListRolePoliciesResponse' =>
-    [
+    'ListRolePoliciesResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'PolicyNames',
+      'required' => [
+        'PolicyNames',
       ],
-      'members' =>
-      [
-        'PolicyNames' =>
-        [
+      'members' => [
+        'PolicyNames' => [
           'shape' => 'policyNameListType',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'booleanType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
       ],
     ],
-    'ListRolesRequest' =>
-    [
+    'ListRolesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PathPrefix' =>
-        [
+      'members' => [
+        'PathPrefix' => [
           'shape' => 'pathPrefixType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'maxItemsType',
         ],
       ],
     ],
-    'ListRolesResponse' =>
-    [
+    'ListRolesResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Roles',
+      'required' => [
+        'Roles',
       ],
-      'members' =>
-      [
-        'Roles' =>
-        [
+      'members' => [
+        'Roles' => [
           'shape' => 'roleListType',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'booleanType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
       ],
     ],
-    'ListSAMLProvidersRequest' =>
-    [
+    'ListSAMLProvidersRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'ListSAMLProvidersResponse' =>
-    [
+    'ListSAMLProvidersResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SAMLProviderList' =>
-        [
+      'members' => [
+        'SAMLProviderList' => [
           'shape' => 'SAMLProviderListType',
         ],
       ],
     ],
-    'ListServerCertificatesRequest' =>
-    [
+    'ListServerCertificatesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PathPrefix' =>
-        [
+      'members' => [
+        'PathPrefix' => [
           'shape' => 'pathPrefixType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'maxItemsType',
         ],
       ],
     ],
-    'ListServerCertificatesResponse' =>
-    [
+    'ListServerCertificatesResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ServerCertificateMetadataList',
+      'required' => [
+        'ServerCertificateMetadataList',
       ],
-      'members' =>
-      [
-        'ServerCertificateMetadataList' =>
-        [
+      'members' => [
+        'ServerCertificateMetadataList' => [
           'shape' => 'serverCertificateMetadataListType',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'booleanType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
       ],
     ],
-    'ListSigningCertificatesRequest' =>
-    [
+    'ListSigningCertificatesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'existingUserNameType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'maxItemsType',
         ],
       ],
     ],
-    'ListSigningCertificatesResponse' =>
-    [
+    'ListSigningCertificatesResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Certificates',
+      'required' => [
+        'Certificates',
       ],
-      'members' =>
-      [
-        'Certificates' =>
-        [
+      'members' => [
+        'Certificates' => [
           'shape' => 'certificateListType',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'booleanType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
       ],
     ],
-    'ListUserPoliciesRequest' =>
-    [
+    'ListUserPoliciesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'UserName',
+      'required' => [
+        'UserName',
       ],
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'existingUserNameType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'maxItemsType',
         ],
       ],
     ],
-    'ListUserPoliciesResponse' =>
-    [
+    'ListUserPoliciesResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'PolicyNames',
+      'required' => [
+        'PolicyNames',
       ],
-      'members' =>
-      [
-        'PolicyNames' =>
-        [
+      'members' => [
+        'PolicyNames' => [
           'shape' => 'policyNameListType',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'booleanType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
       ],
     ],
-    'ListUsersRequest' =>
-    [
+    'ListUsersRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PathPrefix' =>
-        [
+      'members' => [
+        'PathPrefix' => [
           'shape' => 'pathPrefixType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'maxItemsType',
         ],
       ],
     ],
-    'ListUsersResponse' =>
-    [
+    'ListUsersResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Users',
+      'required' => [
+        'Users',
       ],
-      'members' =>
-      [
-        'Users' =>
-        [
+      'members' => [
+        'Users' => [
           'shape' => 'userListType',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'booleanType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
       ],
     ],
-    'ListVirtualMFADevicesRequest' =>
-    [
+    'ListVirtualMFADevicesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AssignmentStatus' =>
-        [
+      'members' => [
+        'AssignmentStatus' => [
           'shape' => 'assignmentStatusType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'maxItemsType',
         ],
       ],
     ],
-    'ListVirtualMFADevicesResponse' =>
-    [
+    'ListVirtualMFADevicesResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VirtualMFADevices',
+      'required' => [
+        'VirtualMFADevices',
       ],
-      'members' =>
-      [
-        'VirtualMFADevices' =>
-        [
+      'members' => [
+        'VirtualMFADevices' => [
           'shape' => 'virtualMFADeviceListType',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'booleanType',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'markerType',
         ],
       ],
     ],
-    'LoginProfile' =>
-    [
+    'LoginProfile' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'UserName',
-        1 => 'CreateDate',
+      'required' => [
+        'UserName',
+        'CreateDate',
       ],
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'userNameType',
         ],
-        'CreateDate' =>
-        [
+        'CreateDate' => [
           'shape' => 'dateType',
         ],
-        'PasswordResetRequired' =>
-        [
+        'PasswordResetRequired' => [
           'shape' => 'booleanType',
         ],
       ],
     ],
-    'MFADevice' =>
-    [
+    'MFADevice' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'UserName',
-        1 => 'SerialNumber',
-        2 => 'EnableDate',
+      'required' => [
+        'UserName',
+        'SerialNumber',
+        'EnableDate',
       ],
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'userNameType',
         ],
-        'SerialNumber' =>
-        [
+        'SerialNumber' => [
           'shape' => 'serialNumberType',
         ],
-        'EnableDate' =>
-        [
+        'EnableDate' => [
           'shape' => 'dateType',
         ],
       ],
     ],
-    'MalformedCertificateException' =>
-    [
+    'MalformedCertificateException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'malformedCertificateMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'MalformedCertificate',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'MalformedPolicyDocumentException' =>
-    [
+    'MalformedPolicyDocumentException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'malformedPolicyDocumentMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'MalformedPolicyDocument',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'NoSuchEntityException' =>
-    [
+    'NoSuchEntityException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'noSuchEntityMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'NoSuchEntity',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'PasswordPolicy' =>
-    [
+    'PasswordPolicy' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'MinimumPasswordLength' =>
-        [
+      'members' => [
+        'MinimumPasswordLength' => [
           'shape' => 'minimumPasswordLengthType',
         ],
-        'RequireSymbols' =>
-        [
+        'RequireSymbols' => [
           'shape' => 'booleanType',
         ],
-        'RequireNumbers' =>
-        [
+        'RequireNumbers' => [
           'shape' => 'booleanType',
         ],
-        'RequireUppercaseCharacters' =>
-        [
+        'RequireUppercaseCharacters' => [
           'shape' => 'booleanType',
         ],
-        'RequireLowercaseCharacters' =>
-        [
+        'RequireLowercaseCharacters' => [
           'shape' => 'booleanType',
         ],
-        'AllowUsersToChangePassword' =>
-        [
+        'AllowUsersToChangePassword' => [
           'shape' => 'booleanType',
         ],
-        'ExpirePasswords' =>
-        [
+        'ExpirePasswords' => [
           'shape' => 'booleanType',
         ],
-        'MaxPasswordAge' =>
-        [
+        'MaxPasswordAge' => [
           'shape' => 'maxPasswordAgeType',
         ],
-        'PasswordReusePrevention' =>
-        [
+        'PasswordReusePrevention' => [
           'shape' => 'passwordReusePreventionType',
         ],
-        'HardExpiry' =>
-        [
+        'HardExpiry' => [
           'shape' => 'booleanObjectType',
         ],
       ],
     ],
-    'PasswordPolicyViolationException' =>
-    [
+    'PasswordPolicyViolationException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'passwordPolicyViolationMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'PasswordPolicyViolation',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'PutGroupPolicyRequest' =>
-    [
+    'PutGroupPolicyRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GroupName',
-        1 => 'PolicyName',
-        2 => 'PolicyDocument',
+      'required' => [
+        'GroupName',
+        'PolicyName',
+        'PolicyDocument',
       ],
-      'members' =>
-      [
-        'GroupName' =>
-        [
+      'members' => [
+        'GroupName' => [
           'shape' => 'groupNameType',
         ],
-        'PolicyName' =>
-        [
+        'PolicyName' => [
           'shape' => 'policyNameType',
         ],
-        'PolicyDocument' =>
-        [
+        'PolicyDocument' => [
           'shape' => 'policyDocumentType',
         ],
       ],
     ],
-    'PutRolePolicyRequest' =>
-    [
+    'PutRolePolicyRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RoleName',
-        1 => 'PolicyName',
-        2 => 'PolicyDocument',
+      'required' => [
+        'RoleName',
+        'PolicyName',
+        'PolicyDocument',
       ],
-      'members' =>
-      [
-        'RoleName' =>
-        [
+      'members' => [
+        'RoleName' => [
           'shape' => 'roleNameType',
         ],
-        'PolicyName' =>
-        [
+        'PolicyName' => [
           'shape' => 'policyNameType',
         ],
-        'PolicyDocument' =>
-        [
+        'PolicyDocument' => [
           'shape' => 'policyDocumentType',
         ],
       ],
     ],
-    'PutUserPolicyRequest' =>
-    [
+    'PutUserPolicyRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'UserName',
-        1 => 'PolicyName',
-        2 => 'PolicyDocument',
+      'required' => [
+        'UserName',
+        'PolicyName',
+        'PolicyDocument',
       ],
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'existingUserNameType',
         ],
-        'PolicyName' =>
-        [
+        'PolicyName' => [
           'shape' => 'policyNameType',
         ],
-        'PolicyDocument' =>
-        [
+        'PolicyDocument' => [
           'shape' => 'policyDocumentType',
         ],
       ],
     ],
-    'RemoveRoleFromInstanceProfileRequest' =>
-    [
+    'RemoveRoleFromInstanceProfileRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceProfileName',
-        1 => 'RoleName',
+      'required' => [
+        'InstanceProfileName',
+        'RoleName',
       ],
-      'members' =>
-      [
-        'InstanceProfileName' =>
-        [
+      'members' => [
+        'InstanceProfileName' => [
           'shape' => 'instanceProfileNameType',
         ],
-        'RoleName' =>
-        [
+        'RoleName' => [
           'shape' => 'roleNameType',
         ],
       ],
     ],
-    'RemoveUserFromGroupRequest' =>
-    [
+    'RemoveUserFromGroupRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GroupName',
-        1 => 'UserName',
+      'required' => [
+        'GroupName',
+        'UserName',
       ],
-      'members' =>
-      [
-        'GroupName' =>
-        [
+      'members' => [
+        'GroupName' => [
           'shape' => 'groupNameType',
         ],
-        'UserName' =>
-        [
+        'UserName' => [
           'shape' => 'existingUserNameType',
         ],
       ],
     ],
-    'ReportContentType' =>
-    [
+    'ReportContentType' => [
       'type' => 'blob',
     ],
-    'ReportFormatType' =>
-    [
+    'ReportFormatType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'text/csv',
+      'enum' => [
+        'text/csv',
       ],
     ],
-    'ReportStateDescriptionType' =>
-    [
+    'ReportStateDescriptionType' => [
       'type' => 'string',
     ],
-    'ReportStateType' =>
-    [
+    'ReportStateType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'STARTED',
-        1 => 'INPROGRESS',
-        2 => 'COMPLETE',
+      'enum' => [
+        'STARTED',
+        'INPROGRESS',
+        'COMPLETE',
       ],
     ],
-    'ResyncMFADeviceRequest' =>
-    [
+    'ResyncMFADeviceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'UserName',
-        1 => 'SerialNumber',
-        2 => 'AuthenticationCode1',
-        3 => 'AuthenticationCode2',
+      'required' => [
+        'UserName',
+        'SerialNumber',
+        'AuthenticationCode1',
+        'AuthenticationCode2',
       ],
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'existingUserNameType',
         ],
-        'SerialNumber' =>
-        [
+        'SerialNumber' => [
           'shape' => 'serialNumberType',
         ],
-        'AuthenticationCode1' =>
-        [
+        'AuthenticationCode1' => [
           'shape' => 'authenticationCodeType',
         ],
-        'AuthenticationCode2' =>
-        [
+        'AuthenticationCode2' => [
           'shape' => 'authenticationCodeType',
         ],
       ],
     ],
-    'Role' =>
-    [
+    'Role' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Path',
-        1 => 'RoleName',
-        2 => 'RoleId',
-        3 => 'Arn',
-        4 => 'CreateDate',
+      'required' => [
+        'Path',
+        'RoleName',
+        'RoleId',
+        'Arn',
+        'CreateDate',
       ],
-      'members' =>
-      [
-        'Path' =>
-        [
+      'members' => [
+        'Path' => [
           'shape' => 'pathType',
         ],
-        'RoleName' =>
-        [
+        'RoleName' => [
           'shape' => 'roleNameType',
         ],
-        'RoleId' =>
-        [
+        'RoleId' => [
           'shape' => 'idType',
         ],
-        'Arn' =>
-        [
+        'Arn' => [
           'shape' => 'arnType',
         ],
-        'CreateDate' =>
-        [
+        'CreateDate' => [
           'shape' => 'dateType',
         ],
-        'AssumeRolePolicyDocument' =>
-        [
+        'AssumeRolePolicyDocument' => [
           'shape' => 'policyDocumentType',
         ],
       ],
     ],
-    'SAMLMetadataDocumentType' =>
-    [
+    'SAMLMetadataDocumentType' => [
       'type' => 'string',
       'min' => 1000,
       'max' => 10000000,
     ],
-    'SAMLProviderListEntry' =>
-    [
+    'SAMLProviderListEntry' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Arn' =>
-        [
+      'members' => [
+        'Arn' => [
           'shape' => 'arnType',
         ],
-        'ValidUntil' =>
-        [
+        'ValidUntil' => [
           'shape' => 'dateType',
         ],
-        'CreateDate' =>
-        [
+        'CreateDate' => [
           'shape' => 'dateType',
         ],
       ],
     ],
-    'SAMLProviderListType' =>
-    [
+    'SAMLProviderListType' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'SAMLProviderListEntry',
       ],
     ],
-    'SAMLProviderNameType' =>
-    [
+    'SAMLProviderNameType' => [
       'type' => 'string',
       'min' => 1,
       'max' => 128,
       'pattern' => '[\\w._-]*',
     ],
-    'ServerCertificate' =>
-    [
+    'ServerCertificate' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ServerCertificateMetadata',
-        1 => 'CertificateBody',
+      'required' => [
+        'ServerCertificateMetadata',
+        'CertificateBody',
       ],
-      'members' =>
-      [
-        'ServerCertificateMetadata' =>
-        [
+      'members' => [
+        'ServerCertificateMetadata' => [
           'shape' => 'ServerCertificateMetadata',
         ],
-        'CertificateBody' =>
-        [
+        'CertificateBody' => [
           'shape' => 'certificateBodyType',
         ],
-        'CertificateChain' =>
-        [
+        'CertificateChain' => [
           'shape' => 'certificateChainType',
         ],
       ],
     ],
-    'ServerCertificateMetadata' =>
-    [
+    'ServerCertificateMetadata' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Path',
-        1 => 'ServerCertificateName',
-        2 => 'ServerCertificateId',
-        3 => 'Arn',
+      'required' => [
+        'Path',
+        'ServerCertificateName',
+        'ServerCertificateId',
+        'Arn',
       ],
-      'members' =>
-      [
-        'Path' =>
-        [
+      'members' => [
+        'Path' => [
           'shape' => 'pathType',
         ],
-        'ServerCertificateName' =>
-        [
+        'ServerCertificateName' => [
           'shape' => 'serverCertificateNameType',
         ],
-        'ServerCertificateId' =>
-        [
+        'ServerCertificateId' => [
           'shape' => 'idType',
         ],
-        'Arn' =>
-        [
+        'Arn' => [
           'shape' => 'arnType',
         ],
-        'UploadDate' =>
-        [
+        'UploadDate' => [
           'shape' => 'dateType',
         ],
-        'Expiration' =>
-        [
+        'Expiration' => [
           'shape' => 'dateType',
         ],
       ],
     ],
-    'SigningCertificate' =>
-    [
+    'SigningCertificate' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'UserName',
-        1 => 'CertificateId',
-        2 => 'CertificateBody',
-        3 => 'Status',
+      'required' => [
+        'UserName',
+        'CertificateId',
+        'CertificateBody',
+        'Status',
       ],
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'userNameType',
         ],
-        'CertificateId' =>
-        [
+        'CertificateId' => [
           'shape' => 'certificateIdType',
         ],
-        'CertificateBody' =>
-        [
+        'CertificateBody' => [
           'shape' => 'certificateBodyType',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'statusType',
         ],
-        'UploadDate' =>
-        [
+        'UploadDate' => [
           'shape' => 'dateType',
         ],
       ],
     ],
-    'UpdateAccessKeyRequest' =>
-    [
+    'UpdateAccessKeyRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AccessKeyId',
-        1 => 'Status',
+      'required' => [
+        'AccessKeyId',
+        'Status',
       ],
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'existingUserNameType',
         ],
-        'AccessKeyId' =>
-        [
+        'AccessKeyId' => [
           'shape' => 'accessKeyIdType',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'statusType',
         ],
       ],
     ],
-    'UpdateAccountPasswordPolicyRequest' =>
-    [
+    'UpdateAccountPasswordPolicyRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'MinimumPasswordLength' =>
-        [
+      'members' => [
+        'MinimumPasswordLength' => [
           'shape' => 'minimumPasswordLengthType',
         ],
-        'RequireSymbols' =>
-        [
+        'RequireSymbols' => [
           'shape' => 'booleanType',
         ],
-        'RequireNumbers' =>
-        [
+        'RequireNumbers' => [
           'shape' => 'booleanType',
         ],
-        'RequireUppercaseCharacters' =>
-        [
+        'RequireUppercaseCharacters' => [
           'shape' => 'booleanType',
         ],
-        'RequireLowercaseCharacters' =>
-        [
+        'RequireLowercaseCharacters' => [
           'shape' => 'booleanType',
         ],
-        'AllowUsersToChangePassword' =>
-        [
+        'AllowUsersToChangePassword' => [
           'shape' => 'booleanType',
         ],
-        'MaxPasswordAge' =>
-        [
+        'MaxPasswordAge' => [
           'shape' => 'maxPasswordAgeType',
         ],
-        'PasswordReusePrevention' =>
-        [
+        'PasswordReusePrevention' => [
           'shape' => 'passwordReusePreventionType',
         ],
-        'HardExpiry' =>
-        [
+        'HardExpiry' => [
           'shape' => 'booleanObjectType',
         ],
       ],
     ],
-    'UpdateAssumeRolePolicyRequest' =>
-    [
+    'UpdateAssumeRolePolicyRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RoleName',
-        1 => 'PolicyDocument',
+      'required' => [
+        'RoleName',
+        'PolicyDocument',
       ],
-      'members' =>
-      [
-        'RoleName' =>
-        [
+      'members' => [
+        'RoleName' => [
           'shape' => 'roleNameType',
         ],
-        'PolicyDocument' =>
-        [
+        'PolicyDocument' => [
           'shape' => 'policyDocumentType',
         ],
       ],
     ],
-    'UpdateGroupRequest' =>
-    [
+    'UpdateGroupRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GroupName',
+      'required' => [
+        'GroupName',
       ],
-      'members' =>
-      [
-        'GroupName' =>
-        [
+      'members' => [
+        'GroupName' => [
           'shape' => 'groupNameType',
         ],
-        'NewPath' =>
-        [
+        'NewPath' => [
           'shape' => 'pathType',
         ],
-        'NewGroupName' =>
-        [
+        'NewGroupName' => [
           'shape' => 'groupNameType',
         ],
       ],
     ],
-    'UpdateLoginProfileRequest' =>
-    [
+    'UpdateLoginProfileRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'UserName',
+      'required' => [
+        'UserName',
       ],
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'userNameType',
         ],
-        'Password' =>
-        [
+        'Password' => [
           'shape' => 'passwordType',
         ],
-        'PasswordResetRequired' =>
-        [
+        'PasswordResetRequired' => [
           'shape' => 'booleanObjectType',
         ],
       ],
     ],
-    'UpdateSAMLProviderRequest' =>
-    [
+    'UpdateSAMLProviderRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SAMLMetadataDocument',
-        1 => 'SAMLProviderArn',
+      'required' => [
+        'SAMLMetadataDocument',
+        'SAMLProviderArn',
       ],
-      'members' =>
-      [
-        'SAMLMetadataDocument' =>
-        [
+      'members' => [
+        'SAMLMetadataDocument' => [
           'shape' => 'SAMLMetadataDocumentType',
         ],
-        'SAMLProviderArn' =>
-        [
+        'SAMLProviderArn' => [
           'shape' => 'arnType',
         ],
       ],
     ],
-    'UpdateSAMLProviderResponse' =>
-    [
+    'UpdateSAMLProviderResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SAMLProviderArn' =>
-        [
+      'members' => [
+        'SAMLProviderArn' => [
           'shape' => 'arnType',
         ],
       ],
     ],
-    'UpdateServerCertificateRequest' =>
-    [
+    'UpdateServerCertificateRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ServerCertificateName',
+      'required' => [
+        'ServerCertificateName',
       ],
-      'members' =>
-      [
-        'ServerCertificateName' =>
-        [
+      'members' => [
+        'ServerCertificateName' => [
           'shape' => 'serverCertificateNameType',
         ],
-        'NewPath' =>
-        [
+        'NewPath' => [
           'shape' => 'pathType',
         ],
-        'NewServerCertificateName' =>
-        [
+        'NewServerCertificateName' => [
           'shape' => 'serverCertificateNameType',
         ],
       ],
     ],
-    'UpdateSigningCertificateRequest' =>
-    [
+    'UpdateSigningCertificateRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CertificateId',
-        1 => 'Status',
+      'required' => [
+        'CertificateId',
+        'Status',
       ],
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'existingUserNameType',
         ],
-        'CertificateId' =>
-        [
+        'CertificateId' => [
           'shape' => 'certificateIdType',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'statusType',
         ],
       ],
     ],
-    'UpdateUserRequest' =>
-    [
+    'UpdateUserRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'UserName',
+      'required' => [
+        'UserName',
       ],
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'existingUserNameType',
         ],
-        'NewPath' =>
-        [
+        'NewPath' => [
           'shape' => 'pathType',
         ],
-        'NewUserName' =>
-        [
+        'NewUserName' => [
           'shape' => 'userNameType',
         ],
       ],
     ],
-    'UploadServerCertificateRequest' =>
-    [
+    'UploadServerCertificateRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ServerCertificateName',
-        1 => 'CertificateBody',
-        2 => 'PrivateKey',
+      'required' => [
+        'ServerCertificateName',
+        'CertificateBody',
+        'PrivateKey',
       ],
-      'members' =>
-      [
-        'Path' =>
-        [
+      'members' => [
+        'Path' => [
           'shape' => 'pathType',
         ],
-        'ServerCertificateName' =>
-        [
+        'ServerCertificateName' => [
           'shape' => 'serverCertificateNameType',
         ],
-        'CertificateBody' =>
-        [
+        'CertificateBody' => [
           'shape' => 'certificateBodyType',
         ],
-        'PrivateKey' =>
-        [
+        'PrivateKey' => [
           'shape' => 'privateKeyType',
         ],
-        'CertificateChain' =>
-        [
+        'CertificateChain' => [
           'shape' => 'certificateChainType',
         ],
       ],
     ],
-    'UploadServerCertificateResponse' =>
-    [
+    'UploadServerCertificateResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ServerCertificateMetadata' =>
-        [
+      'members' => [
+        'ServerCertificateMetadata' => [
           'shape' => 'ServerCertificateMetadata',
         ],
       ],
     ],
-    'UploadSigningCertificateRequest' =>
-    [
+    'UploadSigningCertificateRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CertificateBody',
+      'required' => [
+        'CertificateBody',
       ],
-      'members' =>
-      [
-        'UserName' =>
-        [
+      'members' => [
+        'UserName' => [
           'shape' => 'existingUserNameType',
         ],
-        'CertificateBody' =>
-        [
+        'CertificateBody' => [
           'shape' => 'certificateBodyType',
         ],
       ],
     ],
-    'UploadSigningCertificateResponse' =>
-    [
+    'UploadSigningCertificateResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Certificate',
+      'required' => [
+        'Certificate',
       ],
-      'members' =>
-      [
-        'Certificate' =>
-        [
+      'members' => [
+        'Certificate' => [
           'shape' => 'SigningCertificate',
         ],
       ],
     ],
-    'User' =>
-    [
+    'User' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Path',
-        1 => 'UserName',
-        2 => 'UserId',
-        3 => 'Arn',
-        4 => 'CreateDate',
+      'required' => [
+        'Path',
+        'UserName',
+        'UserId',
+        'Arn',
+        'CreateDate',
       ],
-      'members' =>
-      [
-        'Path' =>
-        [
+      'members' => [
+        'Path' => [
           'shape' => 'pathType',
         ],
-        'UserName' =>
-        [
+        'UserName' => [
           'shape' => 'userNameType',
         ],
-        'UserId' =>
-        [
+        'UserId' => [
           'shape' => 'idType',
         ],
-        'Arn' =>
-        [
+        'Arn' => [
           'shape' => 'arnType',
         ],
-        'CreateDate' =>
-        [
+        'CreateDate' => [
           'shape' => 'dateType',
         ],
       ],
     ],
-    'VirtualMFADevice' =>
-    [
+    'VirtualMFADevice' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SerialNumber',
+      'required' => [
+        'SerialNumber',
       ],
-      'members' =>
-      [
-        'SerialNumber' =>
-        [
+      'members' => [
+        'SerialNumber' => [
           'shape' => 'serialNumberType',
         ],
-        'Base32StringSeed' =>
-        [
+        'Base32StringSeed' => [
           'shape' => 'BootstrapDatum',
         ],
-        'QRCodePNG' =>
-        [
+        'QRCodePNG' => [
           'shape' => 'BootstrapDatum',
         ],
-        'User' =>
-        [
+        'User' => [
           'shape' => 'User',
         ],
-        'EnableDate' =>
-        [
+        'EnableDate' => [
           'shape' => 'dateType',
         ],
       ],
     ],
-    'accessKeyIdType' =>
-    [
+    'accessKeyIdType' => [
       'type' => 'string',
       'min' => 16,
       'max' => 32,
       'pattern' => '[\\w]*',
     ],
-    'accessKeyMetadataListType' =>
-    [
+    'accessKeyMetadataListType' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AccessKeyMetadata',
       ],
     ],
-    'accessKeySecretType' =>
-    [
+    'accessKeySecretType' => [
       'type' => 'string',
       'sensitive' => true,
     ],
-    'accountAliasListType' =>
-    [
+    'accountAliasListType' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'accountAliasType',
       ],
     ],
-    'accountAliasType' =>
-    [
+    'accountAliasType' => [
       'type' => 'string',
       'min' => 3,
       'max' => 63,
       'pattern' => '^[a-z0-9](([a-z0-9]|-(?!-]]*[a-z0-9]]?$',
     ],
-    'arnType' =>
-    [
+    'arnType' => [
       'type' => 'string',
       'min' => 20,
       'max' => 2048,
     ],
-    'assignmentStatusType' =>
-    [
+    'assignmentStatusType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'Assigned',
-        1 => 'Unassigned',
-        2 => 'Any',
+      'enum' => [
+        'Assigned',
+        'Unassigned',
+        'Any',
       ],
     ],
-    'authenticationCodeType' =>
-    [
+    'authenticationCodeType' => [
       'type' => 'string',
       'min' => 6,
       'max' => 6,
       'pattern' => '[\\d]*',
     ],
-    'booleanObjectType' =>
-    [
+    'booleanObjectType' => [
       'type' => 'boolean',
       'box' => true,
     ],
-    'booleanType' =>
-    [
+    'booleanType' => [
       'type' => 'boolean',
     ],
-    'certificateBodyType' =>
-    [
+    'certificateBodyType' => [
       'type' => 'string',
       'min' => 1,
       'max' => 16384,
       'pattern' => '[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+',
     ],
-    'certificateChainType' =>
-    [
+    'certificateChainType' => [
       'type' => 'string',
       'min' => 1,
       'max' => 2097152,
       'pattern' => '[\\u0009\\u000A\\u000D\\u0020-\\u00FF]*',
     ],
-    'certificateIdType' =>
-    [
+    'certificateIdType' => [
       'type' => 'string',
       'min' => 24,
       'max' => 128,
       'pattern' => '[\\w]*',
     ],
-    'certificateListType' =>
-    [
+    'certificateListType' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'SigningCertificate',
       ],
     ],
-    'credentialReportExpiredExceptionMessage' =>
-    [
+    'credentialReportExpiredExceptionMessage' => [
       'type' => 'string',
     ],
-    'credentialReportNotPresentExceptionMessage' =>
-    [
+    'credentialReportNotPresentExceptionMessage' => [
       'type' => 'string',
     ],
-    'credentialReportNotReadyExceptionMessage' =>
-    [
+    'credentialReportNotReadyExceptionMessage' => [
       'type' => 'string',
     ],
-    'dateType' =>
-    [
+    'dateType' => [
       'type' => 'timestamp',
     ],
-    'deleteConflictMessage' =>
-    [
+    'deleteConflictMessage' => [
       'type' => 'string',
     ],
-    'duplicateCertificateMessage' =>
-    [
+    'duplicateCertificateMessage' => [
       'type' => 'string',
     ],
-    'entityAlreadyExistsMessage' =>
-    [
+    'entityAlreadyExistsMessage' => [
       'type' => 'string',
     ],
-    'entityTemporarilyUnmodifiableMessage' =>
-    [
+    'entityTemporarilyUnmodifiableMessage' => [
       'type' => 'string',
     ],
-    'existingUserNameType' =>
-    [
+    'existingUserNameType' => [
       'type' => 'string',
       'min' => 1,
       'max' => 128,
       'pattern' => '[\\w+=,.@-]*',
     ],
-    'groupListType' =>
-    [
+    'groupListType' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Group',
       ],
     ],
-    'groupNameType' =>
-    [
+    'groupNameType' => [
       'type' => 'string',
       'min' => 1,
       'max' => 128,
       'pattern' => '[\\w+=,.@-]*',
     ],
-    'idType' =>
-    [
+    'idType' => [
       'type' => 'string',
       'min' => 16,
       'max' => 32,
       'pattern' => '[\\w]*',
     ],
-    'instanceProfileListType' =>
-    [
+    'instanceProfileListType' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'InstanceProfile',
       ],
     ],
-    'instanceProfileNameType' =>
-    [
+    'instanceProfileNameType' => [
       'type' => 'string',
       'min' => 1,
       'max' => 128,
       'pattern' => '[\\w+=,.@-]*',
     ],
-    'invalidAuthenticationCodeMessage' =>
-    [
+    'invalidAuthenticationCodeMessage' => [
       'type' => 'string',
     ],
-    'invalidCertificateMessage' =>
-    [
+    'invalidCertificateMessage' => [
       'type' => 'string',
     ],
-    'invalidInputMessage' =>
-    [
+    'invalidInputMessage' => [
       'type' => 'string',
     ],
-    'invalidUserTypeMessage' =>
-    [
+    'invalidUserTypeMessage' => [
       'type' => 'string',
     ],
-    'keyPairMismatchMessage' =>
-    [
+    'keyPairMismatchMessage' => [
       'type' => 'string',
     ],
-    'limitExceededMessage' =>
-    [
+    'limitExceededMessage' => [
       'type' => 'string',
     ],
-    'malformedCertificateMessage' =>
-    [
+    'malformedCertificateMessage' => [
       'type' => 'string',
     ],
-    'malformedPolicyDocumentMessage' =>
-    [
+    'malformedPolicyDocumentMessage' => [
       'type' => 'string',
     ],
-    'markerType' =>
-    [
+    'markerType' => [
       'type' => 'string',
       'min' => 1,
       'max' => 320,
       'pattern' => '[\\u0020-\\u00FF]*',
     ],
-    'maxItemsType' =>
-    [
+    'maxItemsType' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 1000,
     ],
-    'maxPasswordAgeType' =>
-    [
+    'maxPasswordAgeType' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 1095,
       'box' => true,
     ],
-    'mfaDeviceListType' =>
-    [
+    'mfaDeviceListType' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'MFADevice',
       ],
     ],
-    'minimumPasswordLengthType' =>
-    [
+    'minimumPasswordLengthType' => [
       'type' => 'integer',
       'min' => 6,
       'max' => 128,
     ],
-    'noSuchEntityMessage' =>
-    [
+    'noSuchEntityMessage' => [
       'type' => 'string',
     ],
-    'passwordPolicyViolationMessage' =>
-    [
+    'passwordPolicyViolationMessage' => [
       'type' => 'string',
     ],
-    'passwordReusePreventionType' =>
-    [
+    'passwordReusePreventionType' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 24,
       'box' => true,
     ],
-    'passwordType' =>
-    [
+    'passwordType' => [
       'type' => 'string',
       'min' => 1,
       'max' => 128,
       'pattern' => '[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+',
       'sensitive' => true,
     ],
-    'pathPrefixType' =>
-    [
+    'pathPrefixType' => [
       'type' => 'string',
       'min' => 1,
       'max' => 512,
       'pattern' => '\\u002F[\\u0021-\\u007F]*',
     ],
-    'pathType' =>
-    [
+    'pathType' => [
       'type' => 'string',
       'min' => 1,
       'max' => 512,
       'pattern' => '(\\u002F]|(\\u002F[\\u0021-\\u007F]+\\u002F]',
     ],
-    'policyDocumentType' =>
-    [
+    'policyDocumentType' => [
       'type' => 'string',
       'min' => 1,
       'max' => 131072,
       'pattern' => '[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+',
     ],
-    'policyNameListType' =>
-    [
+    'policyNameListType' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'policyNameType',
       ],
     ],
-    'policyNameType' =>
-    [
+    'policyNameType' => [
       'type' => 'string',
       'min' => 1,
       'max' => 128,
       'pattern' => '[\\w+=,.@-]*',
     ],
-    'privateKeyType' =>
-    [
+    'privateKeyType' => [
       'type' => 'string',
       'min' => 1,
       'max' => 16384,
       'pattern' => '[\\u0009\\u000A\\u000D\\u0020-\\u00FF]*',
       'sensitive' => true,
     ],
-    'roleListType' =>
-    [
+    'roleListType' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Role',
       ],
     ],
-    'roleNameType' =>
-    [
+    'roleNameType' => [
       'type' => 'string',
       'min' => 1,
       'max' => 64,
       'pattern' => '[\\w+=,.@-]*',
     ],
-    'serialNumberType' =>
-    [
+    'serialNumberType' => [
       'type' => 'string',
       'min' => 9,
       'max' => 256,
       'pattern' => '[\\w+=/:,.@-]*',
     ],
-    'serverCertificateMetadataListType' =>
-    [
+    'serverCertificateMetadataListType' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ServerCertificateMetadata',
       ],
     ],
-    'serverCertificateNameType' =>
-    [
+    'serverCertificateNameType' => [
       'type' => 'string',
       'min' => 1,
       'max' => 128,
       'pattern' => '[\\w+=,.@-]*',
     ],
-    'statusType' =>
-    [
+    'statusType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'Active',
-        1 => 'Inactive',
+      'enum' => [
+        'Active',
+        'Inactive',
       ],
     ],
-    'summaryKeyType' =>
-    [
+    'summaryKeyType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'Users',
-        1 => 'UsersQuota',
-        2 => 'Groups',
-        3 => 'GroupsQuota',
-        4 => 'ServerCertificates',
-        5 => 'ServerCertificatesQuota',
-        6 => 'UserPolicySizeQuota',
-        7 => 'GroupPolicySizeQuota',
-        8 => 'GroupsPerUserQuota',
-        9 => 'SigningCertificatesPerUserQuota',
-        10 => 'AccessKeysPerUserQuota',
-        11 => 'MFADevices',
-        12 => 'MFADevicesInUse',
-        13 => 'AccountMFAEnabled',
+      'enum' => [
+        'Users',
+        'UsersQuota',
+        'Groups',
+        'GroupsQuota',
+        'ServerCertificates',
+        'ServerCertificatesQuota',
+        'UserPolicySizeQuota',
+        'GroupPolicySizeQuota',
+        'GroupsPerUserQuota',
+        'SigningCertificatesPerUserQuota',
+        'AccessKeysPerUserQuota',
+        'MFADevices',
+        'MFADevicesInUse',
+        'AccountMFAEnabled',
       ],
     ],
-    'summaryMapType' =>
-    [
+    'summaryMapType' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'summaryKeyType',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'summaryValueType',
       ],
     ],
-    'summaryValueType' =>
-    [
+    'summaryValueType' => [
       'type' => 'integer',
     ],
-    'userListType' =>
-    [
+    'userListType' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'User',
       ],
     ],
-    'userNameType' =>
-    [
+    'userNameType' => [
       'type' => 'string',
       'min' => 1,
       'max' => 64,
       'pattern' => '[\\w+=,.@-]*',
     ],
-    'virtualMFADeviceListType' =>
-    [
+    'virtualMFADeviceListType' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'VirtualMFADevice',
       ],
     ],
-    'virtualMFADeviceName' =>
-    [
+    'virtualMFADeviceName' => [
       'type' => 'string',
       'min' => 1,
       'pattern' => '[\\w+=,.@-]*',

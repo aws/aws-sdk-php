@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2012-10-25',
     'endpointPrefix' => 'directconnect',
     'jsonVersion' => '1.1',
@@ -10,564 +8,432 @@ return [
     'targetPrefix' => 'OvertureService',
     'protocol' => 'json',
   ],
-  'operations' =>
-  [
-    'AllocateConnectionOnInterconnect' =>
-    [
+  'operations' => [
+    'AllocateConnectionOnInterconnect' => [
       'name' => 'AllocateConnectionOnInterconnect',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AllocateConnectionOnInterconnectRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'Connection',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DirectConnectServerException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DirectConnectClientException',
           'exception' => true,
         ],
       ],
     ],
-    'AllocatePrivateVirtualInterface' =>
-    [
+    'AllocatePrivateVirtualInterface' => [
       'name' => 'AllocatePrivateVirtualInterface',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AllocatePrivateVirtualInterfaceRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'VirtualInterface',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DirectConnectServerException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DirectConnectClientException',
           'exception' => true,
         ],
       ],
     ],
-    'AllocatePublicVirtualInterface' =>
-    [
+    'AllocatePublicVirtualInterface' => [
       'name' => 'AllocatePublicVirtualInterface',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AllocatePublicVirtualInterfaceRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'VirtualInterface',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DirectConnectServerException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DirectConnectClientException',
           'exception' => true,
         ],
       ],
     ],
-    'ConfirmConnection' =>
-    [
+    'ConfirmConnection' => [
       'name' => 'ConfirmConnection',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ConfirmConnectionRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ConfirmConnectionResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DirectConnectServerException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DirectConnectClientException',
           'exception' => true,
         ],
       ],
     ],
-    'ConfirmPrivateVirtualInterface' =>
-    [
+    'ConfirmPrivateVirtualInterface' => [
       'name' => 'ConfirmPrivateVirtualInterface',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ConfirmPrivateVirtualInterfaceRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ConfirmPrivateVirtualInterfaceResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DirectConnectServerException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DirectConnectClientException',
           'exception' => true,
         ],
       ],
     ],
-    'ConfirmPublicVirtualInterface' =>
-    [
+    'ConfirmPublicVirtualInterface' => [
       'name' => 'ConfirmPublicVirtualInterface',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ConfirmPublicVirtualInterfaceRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ConfirmPublicVirtualInterfaceResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DirectConnectServerException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DirectConnectClientException',
           'exception' => true,
         ],
       ],
     ],
-    'CreateConnection' =>
-    [
+    'CreateConnection' => [
       'name' => 'CreateConnection',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateConnectionRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'Connection',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DirectConnectServerException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DirectConnectClientException',
           'exception' => true,
         ],
       ],
     ],
-    'CreateInterconnect' =>
-    [
+    'CreateInterconnect' => [
       'name' => 'CreateInterconnect',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateInterconnectRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'Interconnect',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DirectConnectServerException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DirectConnectClientException',
           'exception' => true,
         ],
       ],
     ],
-    'CreatePrivateVirtualInterface' =>
-    [
+    'CreatePrivateVirtualInterface' => [
       'name' => 'CreatePrivateVirtualInterface',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreatePrivateVirtualInterfaceRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'VirtualInterface',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DirectConnectServerException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DirectConnectClientException',
           'exception' => true,
         ],
       ],
     ],
-    'CreatePublicVirtualInterface' =>
-    [
+    'CreatePublicVirtualInterface' => [
       'name' => 'CreatePublicVirtualInterface',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreatePublicVirtualInterfaceRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'VirtualInterface',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DirectConnectServerException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DirectConnectClientException',
           'exception' => true,
         ],
       ],
     ],
-    'DeleteConnection' =>
-    [
+    'DeleteConnection' => [
       'name' => 'DeleteConnection',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteConnectionRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'Connection',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DirectConnectServerException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DirectConnectClientException',
           'exception' => true,
         ],
       ],
     ],
-    'DeleteInterconnect' =>
-    [
+    'DeleteInterconnect' => [
       'name' => 'DeleteInterconnect',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteInterconnectRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteInterconnectResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DirectConnectServerException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DirectConnectClientException',
           'exception' => true,
         ],
       ],
     ],
-    'DeleteVirtualInterface' =>
-    [
+    'DeleteVirtualInterface' => [
       'name' => 'DeleteVirtualInterface',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteVirtualInterfaceRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteVirtualInterfaceResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DirectConnectServerException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DirectConnectClientException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeConnections' =>
-    [
+    'DescribeConnections' => [
       'name' => 'DescribeConnections',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeConnectionsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'Connections',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DirectConnectServerException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DirectConnectClientException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeConnectionsOnInterconnect' =>
-    [
+    'DescribeConnectionsOnInterconnect' => [
       'name' => 'DescribeConnectionsOnInterconnect',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeConnectionsOnInterconnectRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'Connections',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DirectConnectServerException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DirectConnectClientException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeInterconnects' =>
-    [
+    'DescribeInterconnects' => [
       'name' => 'DescribeInterconnects',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeInterconnectsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'Interconnects',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DirectConnectServerException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DirectConnectClientException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeLocations' =>
-    [
+    'DescribeLocations' => [
       'name' => 'DescribeLocations',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'Locations',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DirectConnectServerException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DirectConnectClientException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeVirtualGateways' =>
-    [
+    'DescribeVirtualGateways' => [
       'name' => 'DescribeVirtualGateways',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'VirtualGateways',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DirectConnectServerException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DirectConnectClientException',
           'exception' => true,
         ],
       ],
     ],
-    'DescribeVirtualInterfaces' =>
-    [
+    'DescribeVirtualInterfaces' => [
       'name' => 'DescribeVirtualInterfaces',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeVirtualInterfacesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'VirtualInterfaces',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DirectConnectServerException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DirectConnectClientException',
           'exception' => true,
@@ -575,991 +441,746 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'ASN' =>
-    [
+  'shapes' => [
+    'ASN' => [
       'type' => 'integer',
     ],
-    'AllocateConnectionOnInterconnectRequest' =>
-    [
+    'AllocateConnectionOnInterconnectRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'bandwidth',
-        1 => 'connectionName',
-        2 => 'ownerAccount',
-        3 => 'interconnectId',
-        4 => 'vlan',
+      'required' => [
+        'bandwidth',
+        'connectionName',
+        'ownerAccount',
+        'interconnectId',
+        'vlan',
       ],
-      'members' =>
-      [
-        'bandwidth' =>
-        [
+      'members' => [
+        'bandwidth' => [
           'shape' => 'Bandwidth',
         ],
-        'connectionName' =>
-        [
+        'connectionName' => [
           'shape' => 'ConnectionName',
         ],
-        'ownerAccount' =>
-        [
+        'ownerAccount' => [
           'shape' => 'OwnerAccount',
         ],
-        'interconnectId' =>
-        [
+        'interconnectId' => [
           'shape' => 'InterconnectId',
         ],
-        'vlan' =>
-        [
+        'vlan' => [
           'shape' => 'VLAN',
         ],
       ],
     ],
-    'AllocatePrivateVirtualInterfaceRequest' =>
-    [
+    'AllocatePrivateVirtualInterfaceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'connectionId',
-        1 => 'ownerAccount',
-        2 => 'newPrivateVirtualInterfaceAllocation',
+      'required' => [
+        'connectionId',
+        'ownerAccount',
+        'newPrivateVirtualInterfaceAllocation',
       ],
-      'members' =>
-      [
-        'connectionId' =>
-        [
+      'members' => [
+        'connectionId' => [
           'shape' => 'ConnectionId',
         ],
-        'ownerAccount' =>
-        [
+        'ownerAccount' => [
           'shape' => 'OwnerAccount',
         ],
-        'newPrivateVirtualInterfaceAllocation' =>
-        [
+        'newPrivateVirtualInterfaceAllocation' => [
           'shape' => 'NewPrivateVirtualInterfaceAllocation',
         ],
       ],
     ],
-    'AllocatePublicVirtualInterfaceRequest' =>
-    [
+    'AllocatePublicVirtualInterfaceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'connectionId',
-        1 => 'ownerAccount',
-        2 => 'newPublicVirtualInterfaceAllocation',
+      'required' => [
+        'connectionId',
+        'ownerAccount',
+        'newPublicVirtualInterfaceAllocation',
       ],
-      'members' =>
-      [
-        'connectionId' =>
-        [
+      'members' => [
+        'connectionId' => [
           'shape' => 'ConnectionId',
         ],
-        'ownerAccount' =>
-        [
+        'ownerAccount' => [
           'shape' => 'OwnerAccount',
         ],
-        'newPublicVirtualInterfaceAllocation' =>
-        [
+        'newPublicVirtualInterfaceAllocation' => [
           'shape' => 'NewPublicVirtualInterfaceAllocation',
         ],
       ],
     ],
-    'AmazonAddress' =>
-    [
+    'AmazonAddress' => [
       'type' => 'string',
     ],
-    'BGPAuthKey' =>
-    [
+    'BGPAuthKey' => [
       'type' => 'string',
     ],
-    'Bandwidth' =>
-    [
+    'Bandwidth' => [
       'type' => 'string',
     ],
-    'CIDR' =>
-    [
+    'CIDR' => [
       'type' => 'string',
     ],
-    'ConfirmConnectionRequest' =>
-    [
+    'ConfirmConnectionRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'connectionId',
+      'required' => [
+        'connectionId',
       ],
-      'members' =>
-      [
-        'connectionId' =>
-        [
+      'members' => [
+        'connectionId' => [
           'shape' => 'ConnectionId',
         ],
       ],
     ],
-    'ConfirmConnectionResponse' =>
-    [
+    'ConfirmConnectionResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'connectionState' =>
-        [
+      'members' => [
+        'connectionState' => [
           'shape' => 'ConnectionState',
         ],
       ],
     ],
-    'ConfirmPrivateVirtualInterfaceRequest' =>
-    [
+    'ConfirmPrivateVirtualInterfaceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'virtualInterfaceId',
-        1 => 'virtualGatewayId',
+      'required' => [
+        'virtualInterfaceId',
+        'virtualGatewayId',
       ],
-      'members' =>
-      [
-        'virtualInterfaceId' =>
-        [
+      'members' => [
+        'virtualInterfaceId' => [
           'shape' => 'VirtualInterfaceId',
         ],
-        'virtualGatewayId' =>
-        [
+        'virtualGatewayId' => [
           'shape' => 'VirtualGatewayId',
         ],
       ],
     ],
-    'ConfirmPrivateVirtualInterfaceResponse' =>
-    [
+    'ConfirmPrivateVirtualInterfaceResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'virtualInterfaceState' =>
-        [
+      'members' => [
+        'virtualInterfaceState' => [
           'shape' => 'VirtualInterfaceState',
         ],
       ],
     ],
-    'ConfirmPublicVirtualInterfaceRequest' =>
-    [
+    'ConfirmPublicVirtualInterfaceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'virtualInterfaceId',
+      'required' => [
+        'virtualInterfaceId',
       ],
-      'members' =>
-      [
-        'virtualInterfaceId' =>
-        [
+      'members' => [
+        'virtualInterfaceId' => [
           'shape' => 'VirtualInterfaceId',
         ],
       ],
     ],
-    'ConfirmPublicVirtualInterfaceResponse' =>
-    [
+    'ConfirmPublicVirtualInterfaceResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'virtualInterfaceState' =>
-        [
+      'members' => [
+        'virtualInterfaceState' => [
           'shape' => 'VirtualInterfaceState',
         ],
       ],
     ],
-    'Connection' =>
-    [
+    'Connection' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ownerAccount' =>
-        [
+      'members' => [
+        'ownerAccount' => [
           'shape' => 'OwnerAccount',
         ],
-        'connectionId' =>
-        [
+        'connectionId' => [
           'shape' => 'ConnectionId',
         ],
-        'connectionName' =>
-        [
+        'connectionName' => [
           'shape' => 'ConnectionName',
         ],
-        'connectionState' =>
-        [
+        'connectionState' => [
           'shape' => 'ConnectionState',
         ],
-        'region' =>
-        [
+        'region' => [
           'shape' => 'Region',
         ],
-        'location' =>
-        [
+        'location' => [
           'shape' => 'LocationCode',
         ],
-        'bandwidth' =>
-        [
+        'bandwidth' => [
           'shape' => 'Bandwidth',
         ],
-        'vlan' =>
-        [
+        'vlan' => [
           'shape' => 'VLAN',
         ],
-        'partnerName' =>
-        [
+        'partnerName' => [
           'shape' => 'PartnerName',
         ],
       ],
     ],
-    'ConnectionId' =>
-    [
+    'ConnectionId' => [
       'type' => 'string',
     ],
-    'ConnectionList' =>
-    [
+    'ConnectionList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Connection',
       ],
     ],
-    'ConnectionName' =>
-    [
+    'ConnectionName' => [
       'type' => 'string',
     ],
-    'ConnectionState' =>
-    [
+    'ConnectionState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'ordering',
-        1 => 'requested',
-        2 => 'pending',
-        3 => 'available',
-        4 => 'down',
-        5 => 'deleting',
-        6 => 'deleted',
-        7 => 'rejected',
+      'enum' => [
+        'ordering',
+        'requested',
+        'pending',
+        'available',
+        'down',
+        'deleting',
+        'deleted',
+        'rejected',
       ],
     ],
-    'Connections' =>
-    [
+    'Connections' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'connections' =>
-        [
+      'members' => [
+        'connections' => [
           'shape' => 'ConnectionList',
         ],
       ],
     ],
-    'CreateConnectionRequest' =>
-    [
+    'CreateConnectionRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'location',
-        1 => 'bandwidth',
-        2 => 'connectionName',
+      'required' => [
+        'location',
+        'bandwidth',
+        'connectionName',
       ],
-      'members' =>
-      [
-        'location' =>
-        [
+      'members' => [
+        'location' => [
           'shape' => 'LocationCode',
         ],
-        'bandwidth' =>
-        [
+        'bandwidth' => [
           'shape' => 'Bandwidth',
         ],
-        'connectionName' =>
-        [
+        'connectionName' => [
           'shape' => 'ConnectionName',
         ],
       ],
     ],
-    'CreateInterconnectRequest' =>
-    [
+    'CreateInterconnectRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'interconnectName',
-        1 => 'bandwidth',
-        2 => 'location',
+      'required' => [
+        'interconnectName',
+        'bandwidth',
+        'location',
       ],
-      'members' =>
-      [
-        'interconnectName' =>
-        [
+      'members' => [
+        'interconnectName' => [
           'shape' => 'InterconnectName',
         ],
-        'bandwidth' =>
-        [
+        'bandwidth' => [
           'shape' => 'Bandwidth',
         ],
-        'location' =>
-        [
+        'location' => [
           'shape' => 'LocationCode',
         ],
       ],
     ],
-    'CreatePrivateVirtualInterfaceRequest' =>
-    [
+    'CreatePrivateVirtualInterfaceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'connectionId',
-        1 => 'newPrivateVirtualInterface',
+      'required' => [
+        'connectionId',
+        'newPrivateVirtualInterface',
       ],
-      'members' =>
-      [
-        'connectionId' =>
-        [
+      'members' => [
+        'connectionId' => [
           'shape' => 'ConnectionId',
         ],
-        'newPrivateVirtualInterface' =>
-        [
+        'newPrivateVirtualInterface' => [
           'shape' => 'NewPrivateVirtualInterface',
         ],
       ],
     ],
-    'CreatePublicVirtualInterfaceRequest' =>
-    [
+    'CreatePublicVirtualInterfaceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'connectionId',
-        1 => 'newPublicVirtualInterface',
+      'required' => [
+        'connectionId',
+        'newPublicVirtualInterface',
       ],
-      'members' =>
-      [
-        'connectionId' =>
-        [
+      'members' => [
+        'connectionId' => [
           'shape' => 'ConnectionId',
         ],
-        'newPublicVirtualInterface' =>
-        [
+        'newPublicVirtualInterface' => [
           'shape' => 'NewPublicVirtualInterface',
         ],
       ],
     ],
-    'CustomerAddress' =>
-    [
+    'CustomerAddress' => [
       'type' => 'string',
     ],
-    'DeleteConnectionRequest' =>
-    [
+    'DeleteConnectionRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'connectionId',
+      'required' => [
+        'connectionId',
       ],
-      'members' =>
-      [
-        'connectionId' =>
-        [
+      'members' => [
+        'connectionId' => [
           'shape' => 'ConnectionId',
         ],
       ],
     ],
-    'DeleteInterconnectRequest' =>
-    [
+    'DeleteInterconnectRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'interconnectId',
+      'required' => [
+        'interconnectId',
       ],
-      'members' =>
-      [
-        'interconnectId' =>
-        [
+      'members' => [
+        'interconnectId' => [
           'shape' => 'InterconnectId',
         ],
       ],
     ],
-    'DeleteInterconnectResponse' =>
-    [
+    'DeleteInterconnectResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'interconnectState' =>
-        [
+      'members' => [
+        'interconnectState' => [
           'shape' => 'InterconnectState',
         ],
       ],
     ],
-    'DeleteVirtualInterfaceRequest' =>
-    [
+    'DeleteVirtualInterfaceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'virtualInterfaceId',
+      'required' => [
+        'virtualInterfaceId',
       ],
-      'members' =>
-      [
-        'virtualInterfaceId' =>
-        [
+      'members' => [
+        'virtualInterfaceId' => [
           'shape' => 'VirtualInterfaceId',
         ],
       ],
     ],
-    'DeleteVirtualInterfaceResponse' =>
-    [
+    'DeleteVirtualInterfaceResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'virtualInterfaceState' =>
-        [
+      'members' => [
+        'virtualInterfaceState' => [
           'shape' => 'VirtualInterfaceState',
         ],
       ],
     ],
-    'DescribeConnectionsOnInterconnectRequest' =>
-    [
+    'DescribeConnectionsOnInterconnectRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'interconnectId',
+      'required' => [
+        'interconnectId',
       ],
-      'members' =>
-      [
-        'interconnectId' =>
-        [
+      'members' => [
+        'interconnectId' => [
           'shape' => 'InterconnectId',
         ],
       ],
     ],
-    'DescribeConnectionsRequest' =>
-    [
+    'DescribeConnectionsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'connectionId' =>
-        [
+      'members' => [
+        'connectionId' => [
           'shape' => 'ConnectionId',
         ],
       ],
     ],
-    'DescribeInterconnectsRequest' =>
-    [
+    'DescribeInterconnectsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'interconnectId' =>
-        [
+      'members' => [
+        'interconnectId' => [
           'shape' => 'InterconnectId',
         ],
       ],
     ],
-    'DescribeVirtualInterfacesRequest' =>
-    [
+    'DescribeVirtualInterfacesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'connectionId' =>
-        [
+      'members' => [
+        'connectionId' => [
           'shape' => 'ConnectionId',
         ],
-        'virtualInterfaceId' =>
-        [
+        'virtualInterfaceId' => [
           'shape' => 'VirtualInterfaceId',
         ],
       ],
     ],
-    'DirectConnectClientException' =>
-    [
+    'DirectConnectClientException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'DirectConnectServerException' =>
-    [
+    'DirectConnectServerException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'ErrorMessage' =>
-    [
+    'ErrorMessage' => [
       'type' => 'string',
     ],
-    'Interconnect' =>
-    [
+    'Interconnect' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'interconnectId' =>
-        [
+      'members' => [
+        'interconnectId' => [
           'shape' => 'InterconnectId',
         ],
-        'interconnectName' =>
-        [
+        'interconnectName' => [
           'shape' => 'InterconnectName',
         ],
-        'interconnectState' =>
-        [
+        'interconnectState' => [
           'shape' => 'InterconnectState',
         ],
-        'region' =>
-        [
+        'region' => [
           'shape' => 'Region',
         ],
-        'location' =>
-        [
+        'location' => [
           'shape' => 'LocationCode',
         ],
-        'bandwidth' =>
-        [
+        'bandwidth' => [
           'shape' => 'Bandwidth',
         ],
       ],
     ],
-    'InterconnectId' =>
-    [
+    'InterconnectId' => [
       'type' => 'string',
     ],
-    'InterconnectList' =>
-    [
+    'InterconnectList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Interconnect',
       ],
     ],
-    'InterconnectName' =>
-    [
+    'InterconnectName' => [
       'type' => 'string',
     ],
-    'InterconnectState' =>
-    [
+    'InterconnectState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'requested',
-        1 => 'pending',
-        2 => 'available',
-        3 => 'down',
-        4 => 'deleting',
-        5 => 'deleted',
+      'enum' => [
+        'requested',
+        'pending',
+        'available',
+        'down',
+        'deleting',
+        'deleted',
       ],
     ],
-    'Interconnects' =>
-    [
+    'Interconnects' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'interconnects' =>
-        [
+      'members' => [
+        'interconnects' => [
           'shape' => 'InterconnectList',
         ],
       ],
     ],
-    'Location' =>
-    [
+    'Location' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'locationCode' =>
-        [
+      'members' => [
+        'locationCode' => [
           'shape' => 'LocationCode',
         ],
-        'locationName' =>
-        [
+        'locationName' => [
           'shape' => 'LocationName',
         ],
       ],
     ],
-    'LocationCode' =>
-    [
+    'LocationCode' => [
       'type' => 'string',
     ],
-    'LocationList' =>
-    [
+    'LocationList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Location',
       ],
     ],
-    'LocationName' =>
-    [
+    'LocationName' => [
       'type' => 'string',
     ],
-    'Locations' =>
-    [
+    'Locations' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'locations' =>
-        [
+      'members' => [
+        'locations' => [
           'shape' => 'LocationList',
         ],
       ],
     ],
-    'NewPrivateVirtualInterface' =>
-    [
+    'NewPrivateVirtualInterface' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'virtualInterfaceName',
-        1 => 'vlan',
-        2 => 'asn',
-        3 => 'virtualGatewayId',
+      'required' => [
+        'virtualInterfaceName',
+        'vlan',
+        'asn',
+        'virtualGatewayId',
       ],
-      'members' =>
-      [
-        'virtualInterfaceName' =>
-        [
+      'members' => [
+        'virtualInterfaceName' => [
           'shape' => 'VirtualInterfaceName',
         ],
-        'vlan' =>
-        [
+        'vlan' => [
           'shape' => 'VLAN',
         ],
-        'asn' =>
-        [
+        'asn' => [
           'shape' => 'ASN',
         ],
-        'authKey' =>
-        [
+        'authKey' => [
           'shape' => 'BGPAuthKey',
         ],
-        'amazonAddress' =>
-        [
+        'amazonAddress' => [
           'shape' => 'AmazonAddress',
         ],
-        'customerAddress' =>
-        [
+        'customerAddress' => [
           'shape' => 'CustomerAddress',
         ],
-        'virtualGatewayId' =>
-        [
+        'virtualGatewayId' => [
           'shape' => 'VirtualGatewayId',
         ],
       ],
     ],
-    'NewPrivateVirtualInterfaceAllocation' =>
-    [
+    'NewPrivateVirtualInterfaceAllocation' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'virtualInterfaceName',
-        1 => 'vlan',
-        2 => 'asn',
+      'required' => [
+        'virtualInterfaceName',
+        'vlan',
+        'asn',
       ],
-      'members' =>
-      [
-        'virtualInterfaceName' =>
-        [
+      'members' => [
+        'virtualInterfaceName' => [
           'shape' => 'VirtualInterfaceName',
         ],
-        'vlan' =>
-        [
+        'vlan' => [
           'shape' => 'VLAN',
         ],
-        'asn' =>
-        [
+        'asn' => [
           'shape' => 'ASN',
         ],
-        'authKey' =>
-        [
+        'authKey' => [
           'shape' => 'BGPAuthKey',
         ],
-        'amazonAddress' =>
-        [
+        'amazonAddress' => [
           'shape' => 'AmazonAddress',
         ],
-        'customerAddress' =>
-        [
+        'customerAddress' => [
           'shape' => 'CustomerAddress',
         ],
       ],
     ],
-    'NewPublicVirtualInterface' =>
-    [
+    'NewPublicVirtualInterface' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'virtualInterfaceName',
-        1 => 'vlan',
-        2 => 'asn',
-        3 => 'amazonAddress',
-        4 => 'customerAddress',
-        5 => 'routeFilterPrefixes',
+      'required' => [
+        'virtualInterfaceName',
+        'vlan',
+        'asn',
+        'amazonAddress',
+        'customerAddress',
+        'routeFilterPrefixes',
       ],
-      'members' =>
-      [
-        'virtualInterfaceName' =>
-        [
+      'members' => [
+        'virtualInterfaceName' => [
           'shape' => 'VirtualInterfaceName',
         ],
-        'vlan' =>
-        [
+        'vlan' => [
           'shape' => 'VLAN',
         ],
-        'asn' =>
-        [
+        'asn' => [
           'shape' => 'ASN',
         ],
-        'authKey' =>
-        [
+        'authKey' => [
           'shape' => 'BGPAuthKey',
         ],
-        'amazonAddress' =>
-        [
+        'amazonAddress' => [
           'shape' => 'AmazonAddress',
         ],
-        'customerAddress' =>
-        [
+        'customerAddress' => [
           'shape' => 'CustomerAddress',
         ],
-        'routeFilterPrefixes' =>
-        [
+        'routeFilterPrefixes' => [
           'shape' => 'RouteFilterPrefixList',
         ],
       ],
     ],
-    'NewPublicVirtualInterfaceAllocation' =>
-    [
+    'NewPublicVirtualInterfaceAllocation' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'virtualInterfaceName',
-        1 => 'vlan',
-        2 => 'asn',
-        3 => 'amazonAddress',
-        4 => 'customerAddress',
-        5 => 'routeFilterPrefixes',
+      'required' => [
+        'virtualInterfaceName',
+        'vlan',
+        'asn',
+        'amazonAddress',
+        'customerAddress',
+        'routeFilterPrefixes',
       ],
-      'members' =>
-      [
-        'virtualInterfaceName' =>
-        [
+      'members' => [
+        'virtualInterfaceName' => [
           'shape' => 'VirtualInterfaceName',
         ],
-        'vlan' =>
-        [
+        'vlan' => [
           'shape' => 'VLAN',
         ],
-        'asn' =>
-        [
+        'asn' => [
           'shape' => 'ASN',
         ],
-        'authKey' =>
-        [
+        'authKey' => [
           'shape' => 'BGPAuthKey',
         ],
-        'amazonAddress' =>
-        [
+        'amazonAddress' => [
           'shape' => 'AmazonAddress',
         ],
-        'customerAddress' =>
-        [
+        'customerAddress' => [
           'shape' => 'CustomerAddress',
         ],
-        'routeFilterPrefixes' =>
-        [
+        'routeFilterPrefixes' => [
           'shape' => 'RouteFilterPrefixList',
         ],
       ],
     ],
-    'OwnerAccount' =>
-    [
+    'OwnerAccount' => [
       'type' => 'string',
     ],
-    'PartnerName' =>
-    [
+    'PartnerName' => [
       'type' => 'string',
     ],
-    'Region' =>
-    [
+    'Region' => [
       'type' => 'string',
     ],
-    'RouteFilterPrefix' =>
-    [
+    'RouteFilterPrefix' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'cidr' =>
-        [
+      'members' => [
+        'cidr' => [
           'shape' => 'CIDR',
         ],
       ],
     ],
-    'RouteFilterPrefixList' =>
-    [
+    'RouteFilterPrefixList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'RouteFilterPrefix',
       ],
     ],
-    'RouterConfig' =>
-    [
+    'RouterConfig' => [
       'type' => 'string',
     ],
-    'VLAN' =>
-    [
+    'VLAN' => [
       'type' => 'integer',
     ],
-    'VirtualGateway' =>
-    [
+    'VirtualGateway' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'virtualGatewayId' =>
-        [
+      'members' => [
+        'virtualGatewayId' => [
           'shape' => 'VirtualGatewayId',
         ],
-        'virtualGatewayState' =>
-        [
+        'virtualGatewayState' => [
           'shape' => 'VirtualGatewayState',
         ],
       ],
     ],
-    'VirtualGatewayId' =>
-    [
+    'VirtualGatewayId' => [
       'type' => 'string',
     ],
-    'VirtualGatewayList' =>
-    [
+    'VirtualGatewayList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'VirtualGateway',
       ],
     ],
-    'VirtualGatewayState' =>
-    [
+    'VirtualGatewayState' => [
       'type' => 'string',
     ],
-    'VirtualGateways' =>
-    [
+    'VirtualGateways' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'virtualGateways' =>
-        [
+      'members' => [
+        'virtualGateways' => [
           'shape' => 'VirtualGatewayList',
         ],
       ],
     ],
-    'VirtualInterface' =>
-    [
+    'VirtualInterface' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ownerAccount' =>
-        [
+      'members' => [
+        'ownerAccount' => [
           'shape' => 'OwnerAccount',
         ],
-        'virtualInterfaceId' =>
-        [
+        'virtualInterfaceId' => [
           'shape' => 'VirtualInterfaceId',
         ],
-        'location' =>
-        [
+        'location' => [
           'shape' => 'LocationCode',
         ],
-        'connectionId' =>
-        [
+        'connectionId' => [
           'shape' => 'ConnectionId',
         ],
-        'virtualInterfaceType' =>
-        [
+        'virtualInterfaceType' => [
           'shape' => 'VirtualInterfaceType',
         ],
-        'virtualInterfaceName' =>
-        [
+        'virtualInterfaceName' => [
           'shape' => 'VirtualInterfaceName',
         ],
-        'vlan' =>
-        [
+        'vlan' => [
           'shape' => 'VLAN',
         ],
-        'asn' =>
-        [
+        'asn' => [
           'shape' => 'ASN',
         ],
-        'authKey' =>
-        [
+        'authKey' => [
           'shape' => 'BGPAuthKey',
         ],
-        'amazonAddress' =>
-        [
+        'amazonAddress' => [
           'shape' => 'AmazonAddress',
         ],
-        'customerAddress' =>
-        [
+        'customerAddress' => [
           'shape' => 'CustomerAddress',
         ],
-        'virtualInterfaceState' =>
-        [
+        'virtualInterfaceState' => [
           'shape' => 'VirtualInterfaceState',
         ],
-        'customerRouterConfig' =>
-        [
+        'customerRouterConfig' => [
           'shape' => 'RouterConfig',
         ],
-        'virtualGatewayId' =>
-        [
+        'virtualGatewayId' => [
           'shape' => 'VirtualGatewayId',
         ],
-        'routeFilterPrefixes' =>
-        [
+        'routeFilterPrefixes' => [
           'shape' => 'RouteFilterPrefixList',
         ],
       ],
     ],
-    'VirtualInterfaceId' =>
-    [
+    'VirtualInterfaceId' => [
       'type' => 'string',
     ],
-    'VirtualInterfaceList' =>
-    [
+    'VirtualInterfaceList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'VirtualInterface',
       ],
     ],
-    'VirtualInterfaceName' =>
-    [
+    'VirtualInterfaceName' => [
       'type' => 'string',
     ],
-    'VirtualInterfaceState' =>
-    [
+    'VirtualInterfaceState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'confirming',
-        1 => 'verifying',
-        2 => 'pending',
-        3 => 'available',
-        4 => 'deleting',
-        5 => 'deleted',
-        6 => 'rejected',
+      'enum' => [
+        'confirming',
+        'verifying',
+        'pending',
+        'available',
+        'deleting',
+        'deleted',
+        'rejected',
       ],
     ],
-    'VirtualInterfaceType' =>
-    [
+    'VirtualInterfaceType' => [
       'type' => 'string',
     ],
-    'VirtualInterfaces' =>
-    [
+    'VirtualInterfaces' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'virtualInterfaces' =>
-        [
+      'members' => [
+        'virtualInterfaces' => [
           'shape' => 'VirtualInterfaceList',
         ],
       ],

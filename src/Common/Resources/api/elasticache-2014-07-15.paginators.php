@@ -1,86 +1,72 @@
-<?php
-return [
-  'pagination' =>
-  [
-    'DescribeCacheClusters' =>
-    [
+<?php return [
+  'pagination' => [
+    'DescribeCacheClusters' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'CacheClusters',
     ],
-    'DescribeCacheEngineVersions' =>
-    [
+    'DescribeCacheEngineVersions' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'CacheEngineVersions',
     ],
-    'DescribeCacheParameterGroups' =>
-    [
+    'DescribeCacheParameterGroups' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'CacheParameterGroups',
     ],
-    'DescribeCacheParameters' =>
-    [
+    'DescribeCacheParameters' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'Parameters',
     ],
-    'DescribeCacheSecurityGroups' =>
-    [
+    'DescribeCacheSecurityGroups' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'CacheSecurityGroups',
     ],
-    'DescribeCacheSubnetGroups' =>
-    [
+    'DescribeCacheSubnetGroups' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'CacheSubnetGroups',
     ],
-    'DescribeEngineDefaultParameters' =>
-    [
+    'DescribeEngineDefaultParameters' => [
       'input_token' => 'Marker',
       'output_token' => 'EngineDefaults.Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'EngineDefaults.Parameters',
     ],
-    'DescribeEvents' =>
-    [
+    'DescribeEvents' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'Events',
     ],
-    'DescribeReservedCacheNodes' =>
-    [
+    'DescribeReservedCacheNodes' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'ReservedCacheNodes',
     ],
-    'DescribeReservedCacheNodesOfferings' =>
-    [
+    'DescribeReservedCacheNodesOfferings' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'ReservedCacheNodesOfferings',
     ],
-    'DescribeReplicationGroups' =>
-    [
+    'DescribeReplicationGroups' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'ReplicationGroups',
     ],
-    'DescribeSnapshots' =>
-    [
+    'DescribeSnapshots' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',

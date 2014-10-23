@@ -1,27 +1,21 @@
-<?php
-return [
-  'pagination' =>
-  [
-    'DescribeAlarmHistory' =>
-    [
+<?php return [
+  'pagination' => [
+    'DescribeAlarmHistory' => [
       'input_token' => 'NextToken',
       'output_token' => 'NextToken',
       'limit_key' => 'MaxRecords',
       'result_key' => 'AlarmHistoryItems',
     ],
-    'DescribeAlarms' =>
-    [
+    'DescribeAlarms' => [
       'input_token' => 'NextToken',
       'output_token' => 'NextToken',
       'limit_key' => 'MaxRecords',
       'result_key' => 'MetricAlarms',
     ],
-    'DescribeAlarmsForMetric' =>
-    [
+    'DescribeAlarmsForMetric' => [
       'result_key' => 'MetricAlarms',
     ],
-    'ListMetrics' =>
-    [
+    'ListMetrics' => [
       'input_token' => 'NextToken',
       'output_token' => 'NextToken',
       'result_key' => 'Metrics',

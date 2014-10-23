@@ -1,38 +1,29 @@
-<?php
-return [
-  'waiters' =>
-  [
-    '__default__' =>
-    [
+<?php return [
+  'waiters' => [
+    '__default__' => [
       'interval' => 5,
       'max_attempts' => 20,
     ],
-    'BucketExists' =>
-    [
+    'BucketExists' => [
       'operation' => 'HeadBucket',
-      'ignore_errors' =>
-      [
-        0 => 'NoSuchBucket',
+      'ignore_errors' => [
+        'NoSuchBucket',
       ],
       'success_type' => 'output',
     ],
-    'BucketNotExists' =>
-    [
+    'BucketNotExists' => [
       'operation' => 'HeadBucket',
       'success_type' => 'error',
       'success_value' => 'NoSuchBucket',
     ],
-    'ObjectExists' =>
-    [
+    'ObjectExists' => [
       'operation' => 'HeadObject',
-      'ignore_errors' =>
-      [
-        0 => 'NoSuchKey',
+      'ignore_errors' => [
+        'NoSuchKey',
       ],
       'success_type' => 'output',
     ],
-    'ObjectNotExists' =>
-    [
+    'ObjectNotExists' => [
       'operation' => 'HeadObject',
       'success_type' => 'error',
       'success_value' => 'NoSuchKey',

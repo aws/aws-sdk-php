@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2013-01-01',
     'endpointPrefix' => 'cloudsearchdomain',
     'jsonVersion' => '1.1',
@@ -10,77 +8,58 @@ return [
     'signingName' => 'cloudsearch',
     'protocol' => 'rest-json',
   ],
-  'operations' =>
-  [
-    'Search' =>
-    [
+  'operations' => [
+    'Search' => [
       'name' => 'Search',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2013-01-01/search?format=sdk&pretty=true',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SearchRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'SearchResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'SearchException',
           'exception' => true,
         ],
       ],
     ],
-    'Suggest' =>
-    [
+    'Suggest' => [
       'name' => 'Suggest',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2013-01-01/suggest?format=sdk&pretty=true',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SuggestRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'SuggestResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'SearchException',
           'exception' => true,
         ],
       ],
     ],
-    'UploadDocuments' =>
-    [
+    'UploadDocuments' => [
       'name' => 'UploadDocuments',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/2013-01-01/documents/batch?format=sdk',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UploadDocumentsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UploadDocumentsResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DocumentServiceException',
           'exception' => true,
@@ -88,525 +67,400 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'Adds' =>
-    [
+  'shapes' => [
+    'Adds' => [
       'type' => 'long',
     ],
-    'Blob' =>
-    [
+    'Blob' => [
       'type' => 'blob',
       'streaming' => true,
     ],
-    'Bucket' =>
-    [
+    'Bucket' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'value' =>
-        [
+      'members' => [
+        'value' => [
           'shape' => 'String',
         ],
-        'count' =>
-        [
+        'count' => [
           'shape' => 'Long',
         ],
       ],
     ],
-    'BucketInfo' =>
-    [
+    'BucketInfo' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'buckets' =>
-        [
+      'members' => [
+        'buckets' => [
           'shape' => 'BucketList',
         ],
       ],
     ],
-    'BucketList' =>
-    [
+    'BucketList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Bucket',
       ],
     ],
-    'ContentType' =>
-    [
+    'ContentType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'application/json',
-        1 => 'application/xml',
+      'enum' => [
+        'application/json',
+        'application/xml',
       ],
     ],
-    'Cursor' =>
-    [
+    'Cursor' => [
       'type' => 'string',
     ],
-    'Deletes' =>
-    [
+    'Deletes' => [
       'type' => 'long',
     ],
-    'DocumentServiceException' =>
-    [
+    'DocumentServiceException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'status' =>
-        [
+      'members' => [
+        'status' => [
           'shape' => 'String',
         ],
-        'message' =>
-        [
+        'message' => [
           'shape' => 'String',
         ],
       ],
       'exception' => true,
     ],
-    'DocumentServiceWarning' =>
-    [
+    'DocumentServiceWarning' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DocumentServiceWarnings' =>
-    [
+    'DocumentServiceWarnings' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DocumentServiceWarning',
       ],
     ],
-    'Expr' =>
-    [
+    'Expr' => [
       'type' => 'string',
     ],
-    'Facet' =>
-    [
+    'Facet' => [
       'type' => 'string',
     ],
-    'Facets' =>
-    [
+    'Facets' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'String',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'BucketInfo',
       ],
     ],
-    'FieldValue' =>
-    [
+    'FieldValue' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
       ],
     ],
-    'Fields' =>
-    [
+    'Fields' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'String',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'FieldValue',
       ],
     ],
-    'FilterQuery' =>
-    [
+    'FilterQuery' => [
       'type' => 'string',
     ],
-    'Highlight' =>
-    [
+    'Highlight' => [
       'type' => 'string',
     ],
-    'Highlights' =>
-    [
+    'Highlights' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'String',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'String',
       ],
     ],
-    'Hit' =>
-    [
+    'Hit' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'id' =>
-        [
+      'members' => [
+        'id' => [
           'shape' => 'String',
         ],
-        'fields' =>
-        [
+        'fields' => [
           'shape' => 'Fields',
         ],
-        'highlights' =>
-        [
+        'highlights' => [
           'shape' => 'Highlights',
         ],
       ],
     ],
-    'HitList' =>
-    [
+    'HitList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Hit',
       ],
     ],
-    'Hits' =>
-    [
+    'Hits' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'found' =>
-        [
+      'members' => [
+        'found' => [
           'shape' => 'Long',
         ],
-        'start' =>
-        [
+        'start' => [
           'shape' => 'Long',
         ],
-        'cursor' =>
-        [
+        'cursor' => [
           'shape' => 'String',
         ],
-        'hit' =>
-        [
+        'hit' => [
           'shape' => 'HitList',
         ],
       ],
     ],
-    'Long' =>
-    [
+    'Long' => [
       'type' => 'long',
     ],
-    'Partial' =>
-    [
+    'Partial' => [
       'type' => 'boolean',
     ],
-    'Query' =>
-    [
+    'Query' => [
       'type' => 'string',
     ],
-    'QueryOptions' =>
-    [
+    'QueryOptions' => [
       'type' => 'string',
     ],
-    'QueryParser' =>
-    [
+    'QueryParser' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'simple',
-        1 => 'structured',
-        2 => 'lucene',
-        3 => 'dismax',
+      'enum' => [
+        'simple',
+        'structured',
+        'lucene',
+        'dismax',
       ],
     ],
-    'Return' =>
-    [
+    'Return' => [
       'type' => 'string',
     ],
-    'SearchException' =>
-    [
+    'SearchException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'String',
         ],
       ],
       'exception' => true,
     ],
-    'SearchRequest' =>
-    [
+    'SearchRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'query',
+      'required' => [
+        'query',
       ],
-      'members' =>
-      [
-        'cursor' =>
-        [
+      'members' => [
+        'cursor' => [
           'shape' => 'Cursor',
           'location' => 'querystring',
           'locationName' => 'cursor',
         ],
-        'expr' =>
-        [
+        'expr' => [
           'shape' => 'Expr',
           'location' => 'querystring',
           'locationName' => 'expr',
         ],
-        'facet' =>
-        [
+        'facet' => [
           'shape' => 'Facet',
           'location' => 'querystring',
           'locationName' => 'facet',
         ],
-        'filterQuery' =>
-        [
+        'filterQuery' => [
           'shape' => 'FilterQuery',
           'location' => 'querystring',
           'locationName' => 'fq',
         ],
-        'highlight' =>
-        [
+        'highlight' => [
           'shape' => 'Highlight',
           'location' => 'querystring',
           'locationName' => 'highlight',
         ],
-        'partial' =>
-        [
+        'partial' => [
           'shape' => 'Partial',
           'location' => 'querystring',
           'locationName' => 'partial',
         ],
-        'query' =>
-        [
+        'query' => [
           'shape' => 'Query',
           'location' => 'querystring',
           'locationName' => 'q',
         ],
-        'queryOptions' =>
-        [
+        'queryOptions' => [
           'shape' => 'QueryOptions',
           'location' => 'querystring',
           'locationName' => 'q.options',
         ],
-        'queryParser' =>
-        [
+        'queryParser' => [
           'shape' => 'QueryParser',
           'location' => 'querystring',
           'locationName' => 'q.parser',
         ],
-        'return' =>
-        [
+        'return' => [
           'shape' => 'Return',
           'location' => 'querystring',
           'locationName' => 'return',
         ],
-        'size' =>
-        [
+        'size' => [
           'shape' => 'Size',
           'location' => 'querystring',
           'locationName' => 'size',
         ],
-        'sort' =>
-        [
+        'sort' => [
           'shape' => 'Sort',
           'location' => 'querystring',
           'locationName' => 'sort',
         ],
-        'start' =>
-        [
+        'start' => [
           'shape' => 'Start',
           'location' => 'querystring',
           'locationName' => 'start',
         ],
       ],
     ],
-    'SearchResponse' =>
-    [
+    'SearchResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'status' =>
-        [
+      'members' => [
+        'status' => [
           'shape' => 'SearchStatus',
         ],
-        'hits' =>
-        [
+        'hits' => [
           'shape' => 'Hits',
         ],
-        'facets' =>
-        [
+        'facets' => [
           'shape' => 'Facets',
         ],
       ],
     ],
-    'SearchStatus' =>
-    [
+    'SearchStatus' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'timems' =>
-        [
+      'members' => [
+        'timems' => [
           'shape' => 'Long',
         ],
-        'rid' =>
-        [
+        'rid' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'Size' =>
-    [
+    'Size' => [
       'type' => 'long',
     ],
-    'Sort' =>
-    [
+    'Sort' => [
       'type' => 'string',
     ],
-    'Start' =>
-    [
+    'Start' => [
       'type' => 'long',
     ],
-    'String' =>
-    [
+    'String' => [
       'type' => 'string',
     ],
-    'SuggestModel' =>
-    [
+    'SuggestModel' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'query' =>
-        [
+      'members' => [
+        'query' => [
           'shape' => 'String',
         ],
-        'found' =>
-        [
+        'found' => [
           'shape' => 'Long',
         ],
-        'suggestions' =>
-        [
+        'suggestions' => [
           'shape' => 'Suggestions',
         ],
       ],
     ],
-    'SuggestRequest' =>
-    [
+    'SuggestRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'query',
-        1 => 'suggester',
+      'required' => [
+        'query',
+        'suggester',
       ],
-      'members' =>
-      [
-        'query' =>
-        [
+      'members' => [
+        'query' => [
           'shape' => 'Query',
           'location' => 'querystring',
           'locationName' => 'q',
         ],
-        'suggester' =>
-        [
+        'suggester' => [
           'shape' => 'Suggester',
           'location' => 'querystring',
           'locationName' => 'suggester',
         ],
-        'size' =>
-        [
+        'size' => [
           'shape' => 'SuggestionsSize',
           'location' => 'querystring',
           'locationName' => 'size',
         ],
       ],
     ],
-    'SuggestResponse' =>
-    [
+    'SuggestResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'status' =>
-        [
+      'members' => [
+        'status' => [
           'shape' => 'SuggestStatus',
         ],
-        'suggest' =>
-        [
+        'suggest' => [
           'shape' => 'SuggestModel',
         ],
       ],
     ],
-    'SuggestStatus' =>
-    [
+    'SuggestStatus' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'timems' =>
-        [
+      'members' => [
+        'timems' => [
           'shape' => 'Long',
         ],
-        'rid' =>
-        [
+        'rid' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'Suggester' =>
-    [
+    'Suggester' => [
       'type' => 'string',
     ],
-    'SuggestionMatch' =>
-    [
+    'SuggestionMatch' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'suggestion' =>
-        [
+      'members' => [
+        'suggestion' => [
           'shape' => 'String',
         ],
-        'score' =>
-        [
+        'score' => [
           'shape' => 'Long',
         ],
-        'id' =>
-        [
+        'id' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'Suggestions' =>
-    [
+    'Suggestions' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'SuggestionMatch',
       ],
     ],
-    'SuggestionsSize' =>
-    [
+    'SuggestionsSize' => [
       'type' => 'long',
     ],
-    'UploadDocumentsRequest' =>
-    [
+    'UploadDocumentsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'documents',
-        1 => 'contentType',
+      'required' => [
+        'documents',
+        'contentType',
       ],
-      'members' =>
-      [
-        'documents' =>
-        [
+      'members' => [
+        'documents' => [
           'shape' => 'Blob',
         ],
-        'contentType' =>
-        [
+        'contentType' => [
           'shape' => 'ContentType',
           'location' => 'header',
           'locationName' => 'Content-Type',
@@ -614,25 +468,19 @@ return [
       ],
       'payload' => 'documents',
     ],
-    'UploadDocumentsResponse' =>
-    [
+    'UploadDocumentsResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'status' =>
-        [
+      'members' => [
+        'status' => [
           'shape' => 'String',
         ],
-        'adds' =>
-        [
+        'adds' => [
           'shape' => 'Adds',
         ],
-        'deletes' =>
-        [
+        'deletes' => [
           'shape' => 'Deletes',
         ],
-        'warnings' =>
-        [
+        'warnings' => [
           'shape' => 'DocumentServiceWarnings',
         ],
       ],

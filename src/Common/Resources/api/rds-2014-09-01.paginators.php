@@ -1,129 +1,109 @@
-<?php
-return [
-  'pagination' =>
-  [
-    'DescribeDBEngineVersions' =>
-    [
+<?php return [
+  'pagination' => [
+    'DescribeDBEngineVersions' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'DBEngineVersions',
     ],
-    'DescribeDBInstances' =>
-    [
+    'DescribeDBInstances' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'DBInstances',
     ],
-    'DescribeDBLogFiles' =>
-    [
+    'DescribeDBLogFiles' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'DescribeDBLogFiles',
     ],
-    'DescribeDBParameterGroups' =>
-    [
+    'DescribeDBParameterGroups' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'DBParameterGroups',
     ],
-    'DescribeDBParameters' =>
-    [
+    'DescribeDBParameters' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'Parameters',
     ],
-    'DescribeDBSecurityGroups' =>
-    [
+    'DescribeDBSecurityGroups' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'DBSecurityGroups',
     ],
-    'DescribeDBSnapshots' =>
-    [
+    'DescribeDBSnapshots' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'DBSnapshots',
     ],
-    'DescribeDBSubnetGroups' =>
-    [
+    'DescribeDBSubnetGroups' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'DBSubnetGroups',
     ],
-    'DescribeEngineDefaultParameters' =>
-    [
+    'DescribeEngineDefaultParameters' => [
       'input_token' => 'Marker',
       'output_token' => 'EngineDefaults.Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'EngineDefaults.Parameters',
     ],
-    'DescribeEventSubscriptions' =>
-    [
+    'DescribeEventSubscriptions' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'EventSubscriptionsList',
     ],
-    'DescribeEvents' =>
-    [
+    'DescribeEvents' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'Events',
     ],
-    'DescribeOptionGroupOptions' =>
-    [
+    'DescribeOptionGroupOptions' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'OptionGroupOptions',
     ],
-    'DescribeOptionGroups' =>
-    [
+    'DescribeOptionGroups' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'OptionGroupsList',
     ],
-    'DescribeOrderableDBInstanceOptions' =>
-    [
+    'DescribeOrderableDBInstanceOptions' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'OrderableDBInstanceOptions',
     ],
-    'DescribeReservedDBInstances' =>
-    [
+    'DescribeReservedDBInstances' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'ReservedDBInstances',
     ],
-    'DescribeReservedDBInstancesOfferings' =>
-    [
+    'DescribeReservedDBInstancesOfferings' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'MaxRecords',
       'result_key' => 'ReservedDBInstancesOfferings',
     ],
-    'DownloadDBLogFilePortion' =>
-    [
+    'DownloadDBLogFilePortion' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',
       'limit_key' => 'NumberOfLines',
       'more_results' => 'AdditionalDataPending',
       'result_key' => 'LogFileData',
     ],
-    'ListTagsForResource' =>
-    [
+    'ListTagsForResource' => [
       'result_key' => 'TagList',
     ],
   ],

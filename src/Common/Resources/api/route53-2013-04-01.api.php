@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2013-04-01',
     'endpointPrefix' => 'route53',
     'globalEndpoint' => 'route53.amazonaws.com',
@@ -10,1024 +8,795 @@ return [
     'signatureVersion' => 'v3https',
     'protocol' => 'rest-xml',
   ],
-  'operations' =>
-  [
-    'ChangeResourceRecordSets' =>
-    [
+  'operations' => [
+    'ChangeResourceRecordSets' => [
       'name' => 'ChangeResourceRecordSets',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/2013-04-01/hostedzone/{Id}/rrset/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ChangeResourceRecordSetsRequest',
-        'xmlOrder' =>
-        [
-          0 => 'HostedZoneId',
-          1 => 'ChangeBatch',
+        'xmlOrder' => [
+          'HostedZoneId',
+          'ChangeBatch',
         ],
-        'xmlNamespace' =>
-        [
+        'xmlNamespace' => [
           'uri' => 'https://route53.amazonaws.com/doc/2013-04-01/',
         ],
         'locationName' => 'ChangeResourceRecordSetsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ChangeResourceRecordSetsResponse',
-        'xmlOrder' =>
-        [
-          0 => 'ChangeInfo',
+        'xmlOrder' => [
+          'ChangeInfo',
         ],
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchHostedZone',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'NoSuchHealthCheck',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidChangeBatch',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'PriorRequestNotComplete',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ChangeTagsForResource' =>
-    [
+    'ChangeTagsForResource' => [
       'name' => 'ChangeTagsForResource',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/2013-04-01/tags/{ResourceType}/{ResourceId}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ChangeTagsForResourceRequest',
-        'xmlOrder' =>
-        [
-          0 => 'ResourceType',
-          1 => 'ResourceId',
-          2 => 'AddTags',
-          3 => 'RemoveTagKeys',
+        'xmlOrder' => [
+          'ResourceType',
+          'ResourceId',
+          'AddTags',
+          'RemoveTagKeys',
         ],
-        'xmlNamespace' =>
-        [
+        'xmlNamespace' => [
           'uri' => 'https://route53.amazonaws.com/doc/2013-04-01/',
         ],
         'locationName' => 'ChangeTagsForResourceRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ChangeTagsForResourceResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'NoSuchHealthCheck',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'PriorRequestNotComplete',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ThrottlingException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'CreateHealthCheck' =>
-    [
+    'CreateHealthCheck' => [
       'name' => 'CreateHealthCheck',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/2013-04-01/healthcheck',
         'responseCode' => 201,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateHealthCheckRequest',
-        'xmlOrder' =>
-        [
-          0 => 'CallerReference',
-          1 => 'HealthCheckConfig',
+        'xmlOrder' => [
+          'CallerReference',
+          'HealthCheckConfig',
         ],
-        'xmlNamespace' =>
-        [
+        'xmlNamespace' => [
           'uri' => 'https://route53.amazonaws.com/doc/2013-04-01/',
         ],
         'locationName' => 'CreateHealthCheckRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateHealthCheckResponse',
-        'xmlOrder' =>
-        [
-          0 => 'HealthCheck',
-          1 => 'Location',
+        'xmlOrder' => [
+          'HealthCheck',
+          'Location',
         ],
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'TooManyHealthChecks',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'HealthCheckAlreadyExists',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 409,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'CreateHostedZone' =>
-    [
+    'CreateHostedZone' => [
       'name' => 'CreateHostedZone',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/2013-04-01/hostedzone',
         'responseCode' => 201,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateHostedZoneRequest',
-        'xmlOrder' =>
-        [
-          0 => 'Name',
-          1 => 'CallerReference',
-          2 => 'HostedZoneConfig',
+        'xmlOrder' => [
+          'Name',
+          'CallerReference',
+          'HostedZoneConfig',
         ],
-        'xmlNamespace' =>
-        [
+        'xmlNamespace' => [
           'uri' => 'https://route53.amazonaws.com/doc/2013-04-01/',
         ],
         'locationName' => 'CreateHostedZoneRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateHostedZoneResponse',
-        'xmlOrder' =>
-        [
-          0 => 'HostedZone',
-          1 => 'ChangeInfo',
-          2 => 'DelegationSet',
-          3 => 'Location',
+        'xmlOrder' => [
+          'HostedZone',
+          'ChangeInfo',
+          'DelegationSet',
+          'Location',
         ],
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidDomainName',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'HostedZoneAlreadyExists',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 409,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'TooManyHostedZones',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'DelegationSetNotAvailable',
           'exception' => true,
         ],
       ],
     ],
-    'DeleteHealthCheck' =>
-    [
+    'DeleteHealthCheck' => [
       'name' => 'DeleteHealthCheck',
-      'http' =>
-      [
+      'http' => [
         'method' => 'DELETE',
         'requestUri' => '/2013-04-01/healthcheck/{HealthCheckId}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteHealthCheckRequest',
-        'xmlOrder' =>
-        [
-          0 => 'HealthCheckId',
+        'xmlOrder' => [
+          'HealthCheckId',
         ],
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteHealthCheckResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchHealthCheck',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'HealthCheckInUse',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DeleteHostedZone' =>
-    [
+    'DeleteHostedZone' => [
       'name' => 'DeleteHostedZone',
-      'http' =>
-      [
+      'http' => [
         'method' => 'DELETE',
         'requestUri' => '/2013-04-01/hostedzone/{Id}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteHostedZoneRequest',
-        'xmlOrder' =>
-        [
-          0 => 'Id',
+        'xmlOrder' => [
+          'Id',
         ],
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteHostedZoneResponse',
-        'xmlOrder' =>
-        [
-          0 => 'ChangeInfo',
+        'xmlOrder' => [
+          'ChangeInfo',
         ],
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchHostedZone',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'HostedZoneNotEmpty',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'PriorRequestNotComplete',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'GetChange' =>
-    [
+    'GetChange' => [
       'name' => 'GetChange',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2013-04-01/change/{Id}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetChangeRequest',
-        'xmlOrder' =>
-        [
-          0 => 'Id',
+        'xmlOrder' => [
+          'Id',
         ],
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetChangeResponse',
-        'xmlOrder' =>
-        [
-          0 => 'ChangeInfo',
+        'xmlOrder' => [
+          'ChangeInfo',
         ],
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchChange',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'GetCheckerIpRanges' =>
-    [
+    'GetCheckerIpRanges' => [
       'name' => 'GetCheckerIpRanges',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2013-04-01/checkeripranges',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetCheckerIpRangesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetCheckerIpRangesResponse',
       ],
     ],
-    'GetGeoLocation' =>
-    [
+    'GetGeoLocation' => [
       'name' => 'GetGeoLocation',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2013-04-01/geolocation',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetGeoLocationRequest',
-        'xmlOrder' =>
-        [
-          0 => 'ContinentCode',
-          1 => 'CountryCode',
-          2 => 'SubdivisionCode',
+        'xmlOrder' => [
+          'ContinentCode',
+          'CountryCode',
+          'SubdivisionCode',
         ],
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetGeoLocationResponse',
-        'xmlOrder' =>
-        [
-          0 => 'GeoLocationDetails',
+        'xmlOrder' => [
+          'GeoLocationDetails',
         ],
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchGeoLocation',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'GetHealthCheck' =>
-    [
+    'GetHealthCheck' => [
       'name' => 'GetHealthCheck',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2013-04-01/healthcheck/{HealthCheckId}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetHealthCheckRequest',
-        'xmlOrder' =>
-        [
-          0 => 'HealthCheckId',
+        'xmlOrder' => [
+          'HealthCheckId',
         ],
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetHealthCheckResponse',
-        'xmlOrder' =>
-        [
-          0 => 'HealthCheck',
+        'xmlOrder' => [
+          'HealthCheck',
         ],
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchHealthCheck',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'IncompatibleVersion',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'GetHealthCheckCount' =>
-    [
+    'GetHealthCheckCount' => [
       'name' => 'GetHealthCheckCount',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2013-04-01/healthcheckcount',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetHealthCheckCountRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetHealthCheckCountResponse',
       ],
     ],
-    'GetHostedZone' =>
-    [
+    'GetHostedZone' => [
       'name' => 'GetHostedZone',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2013-04-01/hostedzone/{Id}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetHostedZoneRequest',
-        'xmlOrder' =>
-        [
-          0 => 'Id',
+        'xmlOrder' => [
+          'Id',
         ],
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetHostedZoneResponse',
-        'xmlOrder' =>
-        [
-          0 => 'HostedZone',
-          1 => 'DelegationSet',
+        'xmlOrder' => [
+          'HostedZone',
+          'DelegationSet',
         ],
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchHostedZone',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ListGeoLocations' =>
-    [
+    'ListGeoLocations' => [
       'name' => 'ListGeoLocations',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2013-04-01/geolocations',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListGeoLocationsRequest',
-        'xmlOrder' =>
-        [
-          0 => 'StartContinentCode',
-          1 => 'StartCountryCode',
-          2 => 'StartSubdivisionCode',
-          3 => 'MaxItems',
+        'xmlOrder' => [
+          'StartContinentCode',
+          'StartCountryCode',
+          'StartSubdivisionCode',
+          'MaxItems',
         ],
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListGeoLocationsResponse',
-        'xmlOrder' =>
-        [
-          0 => 'GeoLocationDetailsList',
-          1 => 'IsTruncated',
-          2 => 'NextContinentCode',
-          3 => 'NextCountryCode',
-          4 => 'NextSubdivisionCode',
-          5 => 'MaxItems',
+        'xmlOrder' => [
+          'GeoLocationDetailsList',
+          'IsTruncated',
+          'NextContinentCode',
+          'NextCountryCode',
+          'NextSubdivisionCode',
+          'MaxItems',
         ],
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ListHealthChecks' =>
-    [
+    'ListHealthChecks' => [
       'name' => 'ListHealthChecks',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2013-04-01/healthcheck',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListHealthChecksRequest',
-        'xmlOrder' =>
-        [
-          0 => 'Marker',
-          1 => 'MaxItems',
+        'xmlOrder' => [
+          'Marker',
+          'MaxItems',
         ],
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListHealthChecksResponse',
-        'xmlOrder' =>
-        [
-          0 => 'HealthChecks',
-          1 => 'Marker',
-          2 => 'IsTruncated',
-          3 => 'NextMarker',
-          4 => 'MaxItems',
+        'xmlOrder' => [
+          'HealthChecks',
+          'Marker',
+          'IsTruncated',
+          'NextMarker',
+          'MaxItems',
         ],
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'IncompatibleVersion',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ListHostedZones' =>
-    [
+    'ListHostedZones' => [
       'name' => 'ListHostedZones',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2013-04-01/hostedzone',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListHostedZonesRequest',
-        'xmlOrder' =>
-        [
-          0 => 'Marker',
-          1 => 'MaxItems',
+        'xmlOrder' => [
+          'Marker',
+          'MaxItems',
         ],
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListHostedZonesResponse',
-        'xmlOrder' =>
-        [
-          0 => 'HostedZones',
-          1 => 'Marker',
-          2 => 'IsTruncated',
-          3 => 'NextMarker',
-          4 => 'MaxItems',
+        'xmlOrder' => [
+          'HostedZones',
+          'Marker',
+          'IsTruncated',
+          'NextMarker',
+          'MaxItems',
         ],
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ListResourceRecordSets' =>
-    [
+    'ListResourceRecordSets' => [
       'name' => 'ListResourceRecordSets',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2013-04-01/hostedzone/{Id}/rrset',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListResourceRecordSetsRequest',
-        'xmlOrder' =>
-        [
-          0 => 'HostedZoneId',
-          1 => 'StartRecordName',
-          2 => 'StartRecordType',
-          3 => 'StartRecordIdentifier',
-          4 => 'MaxItems',
+        'xmlOrder' => [
+          'HostedZoneId',
+          'StartRecordName',
+          'StartRecordType',
+          'StartRecordIdentifier',
+          'MaxItems',
         ],
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListResourceRecordSetsResponse',
-        'xmlOrder' =>
-        [
-          0 => 'ResourceRecordSets',
-          1 => 'IsTruncated',
-          2 => 'NextRecordName',
-          3 => 'NextRecordType',
-          4 => 'NextRecordIdentifier',
-          5 => 'MaxItems',
+        'xmlOrder' => [
+          'ResourceRecordSets',
+          'IsTruncated',
+          'NextRecordName',
+          'NextRecordType',
+          'NextRecordIdentifier',
+          'MaxItems',
         ],
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchHostedZone',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ListTagsForResource' =>
-    [
+    'ListTagsForResource' => [
       'name' => 'ListTagsForResource',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2013-04-01/tags/{ResourceType}/{ResourceId}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListTagsForResourceRequest',
-        'xmlOrder' =>
-        [
-          0 => 'ResourceType',
-          1 => 'ResourceId',
+        'xmlOrder' => [
+          'ResourceType',
+          'ResourceId',
         ],
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListTagsForResourceResponse',
-        'xmlOrder' =>
-        [
-          0 => 'ResourceTagSet',
+        'xmlOrder' => [
+          'ResourceTagSet',
         ],
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'NoSuchHealthCheck',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'PriorRequestNotComplete',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ThrottlingException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ListTagsForResources' =>
-    [
+    'ListTagsForResources' => [
       'name' => 'ListTagsForResources',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/2013-04-01/tags/{ResourceType}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListTagsForResourcesRequest',
-        'xmlOrder' =>
-        [
-          0 => 'ResourceType',
-          1 => 'ResourceIds',
+        'xmlOrder' => [
+          'ResourceType',
+          'ResourceIds',
         ],
-        'xmlNamespace' =>
-        [
+        'xmlNamespace' => [
           'uri' => 'https://route53.amazonaws.com/doc/2013-04-01/',
         ],
         'locationName' => 'ListTagsForResourcesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListTagsForResourcesResponse',
-        'xmlOrder' =>
-        [
-          0 => 'ResourceTagSets',
+        'xmlOrder' => [
+          'ResourceTagSets',
         ],
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'NoSuchHealthCheck',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'PriorRequestNotComplete',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ThrottlingException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'UpdateHealthCheck' =>
-    [
+    'UpdateHealthCheck' => [
       'name' => 'UpdateHealthCheck',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/2013-04-01/healthcheck/{HealthCheckId}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateHealthCheckRequest',
-        'xmlOrder' =>
-        [
-          0 => 'HealthCheckId',
-          1 => 'HealthCheckVersion',
-          2 => 'IPAddress',
-          3 => 'Port',
-          4 => 'ResourcePath',
-          5 => 'FullyQualifiedDomainName',
-          6 => 'SearchString',
-          7 => 'FailureThreshold',
+        'xmlOrder' => [
+          'HealthCheckId',
+          'HealthCheckVersion',
+          'IPAddress',
+          'Port',
+          'ResourcePath',
+          'FullyQualifiedDomainName',
+          'SearchString',
+          'FailureThreshold',
         ],
-        'xmlNamespace' =>
-        [
+        'xmlNamespace' => [
           'uri' => 'https://route53.amazonaws.com/doc/2013-04-01/',
         ],
         'locationName' => 'UpdateHealthCheckRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdateHealthCheckResponse',
-        'xmlOrder' =>
-        [
-          0 => 'HealthCheck',
+        'xmlOrder' => [
+          'HealthCheck',
         ],
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchHealthCheck',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidInput',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'HealthCheckVersionMismatch',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 409,
           ],
           'exception' => true,
@@ -1035,2133 +804,1655 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'AliasHealthEnabled' =>
-    [
+  'shapes' => [
+    'AliasHealthEnabled' => [
       'type' => 'boolean',
     ],
-    'AliasTarget' =>
-    [
+    'AliasTarget' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'HostedZoneId',
-        1 => 'DNSName',
-        2 => 'EvaluateTargetHealth',
+      'required' => [
+        'HostedZoneId',
+        'DNSName',
+        'EvaluateTargetHealth',
       ],
-      'members' =>
-      [
-        'HostedZoneId' =>
-        [
+      'members' => [
+        'HostedZoneId' => [
           'shape' => 'ResourceId',
         ],
-        'DNSName' =>
-        [
+        'DNSName' => [
           'shape' => 'DNSName',
         ],
-        'EvaluateTargetHealth' =>
-        [
+        'EvaluateTargetHealth' => [
           'shape' => 'AliasHealthEnabled',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'HostedZoneId',
-        1 => 'DNSName',
-        2 => 'EvaluateTargetHealth',
+      'xmlOrder' => [
+        'HostedZoneId',
+        'DNSName',
+        'EvaluateTargetHealth',
       ],
     ],
-    'Change' =>
-    [
+    'Change' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Action',
-        1 => 'ResourceRecordSet',
+      'required' => [
+        'Action',
+        'ResourceRecordSet',
       ],
-      'members' =>
-      [
-        'Action' =>
-        [
+      'members' => [
+        'Action' => [
           'shape' => 'ChangeAction',
         ],
-        'ResourceRecordSet' =>
-        [
+        'ResourceRecordSet' => [
           'shape' => 'ResourceRecordSet',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'Action',
-        1 => 'ResourceRecordSet',
+      'xmlOrder' => [
+        'Action',
+        'ResourceRecordSet',
       ],
     ],
-    'ChangeAction' =>
-    [
+    'ChangeAction' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'CREATE',
-        1 => 'DELETE',
-        2 => 'UPSERT',
+      'enum' => [
+        'CREATE',
+        'DELETE',
+        'UPSERT',
       ],
     ],
-    'ChangeBatch' =>
-    [
+    'ChangeBatch' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Changes',
+      'required' => [
+        'Changes',
       ],
-      'members' =>
-      [
-        'Comment' =>
-        [
+      'members' => [
+        'Comment' => [
           'shape' => 'ResourceDescription',
         ],
-        'Changes' =>
-        [
+        'Changes' => [
           'shape' => 'Changes',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'Comment',
-        1 => 'Changes',
+      'xmlOrder' => [
+        'Comment',
+        'Changes',
       ],
     ],
-    'ChangeInfo' =>
-    [
+    'ChangeInfo' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
-        1 => 'Status',
-        2 => 'SubmittedAt',
+      'required' => [
+        'Id',
+        'Status',
+        'SubmittedAt',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'ResourceId',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'ChangeStatus',
         ],
-        'SubmittedAt' =>
-        [
+        'SubmittedAt' => [
           'shape' => 'TimeStamp',
         ],
-        'Comment' =>
-        [
+        'Comment' => [
           'shape' => 'ResourceDescription',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'Id',
-        1 => 'Status',
-        2 => 'SubmittedAt',
-        3 => 'Comment',
+      'xmlOrder' => [
+        'Id',
+        'Status',
+        'SubmittedAt',
+        'Comment',
       ],
     ],
-    'ChangeResourceRecordSetsRequest' =>
-    [
+    'ChangeResourceRecordSetsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'HostedZoneId',
-        1 => 'ChangeBatch',
+      'required' => [
+        'HostedZoneId',
+        'ChangeBatch',
       ],
-      'members' =>
-      [
-        'HostedZoneId' =>
-        [
+      'members' => [
+        'HostedZoneId' => [
           'shape' => 'ResourceId',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
-        'ChangeBatch' =>
-        [
+        'ChangeBatch' => [
           'shape' => 'ChangeBatch',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'HostedZoneId',
-        1 => 'ChangeBatch',
+      'xmlOrder' => [
+        'HostedZoneId',
+        'ChangeBatch',
       ],
     ],
-    'ChangeResourceRecordSetsResponse' =>
-    [
+    'ChangeResourceRecordSetsResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ChangeInfo',
+      'required' => [
+        'ChangeInfo',
       ],
-      'members' =>
-      [
-        'ChangeInfo' =>
-        [
+      'members' => [
+        'ChangeInfo' => [
           'shape' => 'ChangeInfo',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'ChangeInfo',
+      'xmlOrder' => [
+        'ChangeInfo',
       ],
     ],
-    'ChangeStatus' =>
-    [
+    'ChangeStatus' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'PENDING',
-        1 => 'INSYNC',
+      'enum' => [
+        'PENDING',
+        'INSYNC',
       ],
     ],
-    'ChangeTagsForResourceRequest' =>
-    [
+    'ChangeTagsForResourceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ResourceType',
-        1 => 'ResourceId',
+      'required' => [
+        'ResourceType',
+        'ResourceId',
       ],
-      'members' =>
-      [
-        'ResourceType' =>
-        [
+      'members' => [
+        'ResourceType' => [
           'shape' => 'TagResourceType',
           'location' => 'uri',
           'locationName' => 'ResourceType',
         ],
-        'ResourceId' =>
-        [
+        'ResourceId' => [
           'shape' => 'TagResourceId',
           'location' => 'uri',
           'locationName' => 'ResourceId',
         ],
-        'AddTags' =>
-        [
+        'AddTags' => [
           'shape' => 'TagList',
         ],
-        'RemoveTagKeys' =>
-        [
+        'RemoveTagKeys' => [
           'shape' => 'TagKeyList',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'ResourceType',
-        1 => 'ResourceId',
-        2 => 'AddTags',
-        3 => 'RemoveTagKeys',
+      'xmlOrder' => [
+        'ResourceType',
+        'ResourceId',
+        'AddTags',
+        'RemoveTagKeys',
       ],
     ],
-    'ChangeTagsForResourceResponse' =>
-    [
+    'ChangeTagsForResourceResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'Changes' =>
-    [
+    'Changes' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Change',
         'locationName' => 'Change',
       ],
       'min' => 1,
     ],
-    'CheckerIpRanges' =>
-    [
+    'CheckerIpRanges' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'IPAddressCidr',
       ],
     ],
-    'CreateHealthCheckRequest' =>
-    [
+    'CreateHealthCheckRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CallerReference',
-        1 => 'HealthCheckConfig',
+      'required' => [
+        'CallerReference',
+        'HealthCheckConfig',
       ],
-      'members' =>
-      [
-        'CallerReference' =>
-        [
+      'members' => [
+        'CallerReference' => [
           'shape' => 'HealthCheckNonce',
         ],
-        'HealthCheckConfig' =>
-        [
+        'HealthCheckConfig' => [
           'shape' => 'HealthCheckConfig',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'CallerReference',
-        1 => 'HealthCheckConfig',
+      'xmlOrder' => [
+        'CallerReference',
+        'HealthCheckConfig',
       ],
     ],
-    'CreateHealthCheckResponse' =>
-    [
+    'CreateHealthCheckResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'HealthCheck',
-        1 => 'Location',
+      'required' => [
+        'HealthCheck',
+        'Location',
       ],
-      'members' =>
-      [
-        'HealthCheck' =>
-        [
+      'members' => [
+        'HealthCheck' => [
           'shape' => 'HealthCheck',
         ],
-        'Location' =>
-        [
+        'Location' => [
           'shape' => 'ResourceURI',
           'location' => 'header',
           'locationName' => 'Location',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'HealthCheck',
-        1 => 'Location',
+      'xmlOrder' => [
+        'HealthCheck',
+        'Location',
       ],
     ],
-    'CreateHostedZoneRequest' =>
-    [
+    'CreateHostedZoneRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
-        1 => 'CallerReference',
+      'required' => [
+        'Name',
+        'CallerReference',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'DNSName',
         ],
-        'CallerReference' =>
-        [
+        'CallerReference' => [
           'shape' => 'Nonce',
         ],
-        'HostedZoneConfig' =>
-        [
+        'HostedZoneConfig' => [
           'shape' => 'HostedZoneConfig',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'Name',
-        1 => 'CallerReference',
-        2 => 'HostedZoneConfig',
+      'xmlOrder' => [
+        'Name',
+        'CallerReference',
+        'HostedZoneConfig',
       ],
     ],
-    'CreateHostedZoneResponse' =>
-    [
+    'CreateHostedZoneResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'HostedZone',
-        1 => 'ChangeInfo',
-        2 => 'DelegationSet',
-        3 => 'Location',
+      'required' => [
+        'HostedZone',
+        'ChangeInfo',
+        'DelegationSet',
+        'Location',
       ],
-      'members' =>
-      [
-        'HostedZone' =>
-        [
+      'members' => [
+        'HostedZone' => [
           'shape' => 'HostedZone',
         ],
-        'ChangeInfo' =>
-        [
+        'ChangeInfo' => [
           'shape' => 'ChangeInfo',
         ],
-        'DelegationSet' =>
-        [
+        'DelegationSet' => [
           'shape' => 'DelegationSet',
         ],
-        'Location' =>
-        [
+        'Location' => [
           'shape' => 'ResourceURI',
           'location' => 'header',
           'locationName' => 'Location',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'HostedZone',
-        1 => 'ChangeInfo',
-        2 => 'DelegationSet',
-        3 => 'Location',
+      'xmlOrder' => [
+        'HostedZone',
+        'ChangeInfo',
+        'DelegationSet',
+        'Location',
       ],
     ],
-    'DNSName' =>
-    [
+    'DNSName' => [
       'type' => 'string',
       'max' => 1024,
     ],
-    'DelegationSet' =>
-    [
+    'DelegationSet' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'NameServers',
+      'required' => [
+        'NameServers',
       ],
-      'members' =>
-      [
-        'NameServers' =>
-        [
+      'members' => [
+        'NameServers' => [
           'shape' => 'DelegationSetNameServers',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'NameServers',
+      'xmlOrder' => [
+        'NameServers',
       ],
     ],
-    'DelegationSetNameServers' =>
-    [
+    'DelegationSetNameServers' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DNSName',
         'locationName' => 'NameServer',
       ],
       'min' => 1,
     ],
-    'DelegationSetNotAvailable' =>
-    [
+    'DelegationSetNotAvailable' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'DeleteHealthCheckRequest' =>
-    [
+    'DeleteHealthCheckRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'HealthCheckId',
+      'required' => [
+        'HealthCheckId',
       ],
-      'members' =>
-      [
-        'HealthCheckId' =>
-        [
+      'members' => [
+        'HealthCheckId' => [
           'shape' => 'HealthCheckId',
           'location' => 'uri',
           'locationName' => 'HealthCheckId',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'HealthCheckId',
+      'xmlOrder' => [
+        'HealthCheckId',
       ],
     ],
-    'DeleteHealthCheckResponse' =>
-    [
+    'DeleteHealthCheckResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'DeleteHostedZoneRequest' =>
-    [
+    'DeleteHostedZoneRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
+      'required' => [
+        'Id',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'ResourceId',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'Id',
+      'xmlOrder' => [
+        'Id',
       ],
     ],
-    'DeleteHostedZoneResponse' =>
-    [
+    'DeleteHostedZoneResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ChangeInfo',
+      'required' => [
+        'ChangeInfo',
       ],
-      'members' =>
-      [
-        'ChangeInfo' =>
-        [
+      'members' => [
+        'ChangeInfo' => [
           'shape' => 'ChangeInfo',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'ChangeInfo',
+      'xmlOrder' => [
+        'ChangeInfo',
       ],
     ],
-    'ErrorMessage' =>
-    [
+    'ErrorMessage' => [
       'type' => 'string',
     ],
-    'ErrorMessages' =>
-    [
+    'ErrorMessages' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ErrorMessage',
         'locationName' => 'Message',
       ],
     ],
-    'FailureThreshold' =>
-    [
+    'FailureThreshold' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 10,
     ],
-    'FullyQualifiedDomainName' =>
-    [
+    'FullyQualifiedDomainName' => [
       'type' => 'string',
       'max' => 255,
     ],
-    'GeoLocation' =>
-    [
+    'GeoLocation' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ContinentCode' =>
-        [
+      'members' => [
+        'ContinentCode' => [
           'shape' => 'GeoLocationContinentCode',
         ],
-        'CountryCode' =>
-        [
+        'CountryCode' => [
           'shape' => 'GeoLocationCountryCode',
         ],
-        'SubdivisionCode' =>
-        [
+        'SubdivisionCode' => [
           'shape' => 'GeoLocationSubdivisionCode',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'ContinentCode',
-        1 => 'CountryCode',
-        2 => 'SubdivisionCode',
+      'xmlOrder' => [
+        'ContinentCode',
+        'CountryCode',
+        'SubdivisionCode',
       ],
     ],
-    'GeoLocationContinentCode' =>
-    [
+    'GeoLocationContinentCode' => [
       'type' => 'string',
       'min' => 2,
       'max' => 2,
     ],
-    'GeoLocationContinentName' =>
-    [
+    'GeoLocationContinentName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 32,
     ],
-    'GeoLocationCountryCode' =>
-    [
+    'GeoLocationCountryCode' => [
       'type' => 'string',
       'min' => 1,
       'max' => 2,
     ],
-    'GeoLocationCountryName' =>
-    [
+    'GeoLocationCountryName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 64,
     ],
-    'GeoLocationDetails' =>
-    [
+    'GeoLocationDetails' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ContinentCode' =>
-        [
+      'members' => [
+        'ContinentCode' => [
           'shape' => 'GeoLocationContinentCode',
         ],
-        'ContinentName' =>
-        [
+        'ContinentName' => [
           'shape' => 'GeoLocationContinentName',
         ],
-        'CountryCode' =>
-        [
+        'CountryCode' => [
           'shape' => 'GeoLocationCountryCode',
         ],
-        'CountryName' =>
-        [
+        'CountryName' => [
           'shape' => 'GeoLocationCountryName',
         ],
-        'SubdivisionCode' =>
-        [
+        'SubdivisionCode' => [
           'shape' => 'GeoLocationSubdivisionCode',
         ],
-        'SubdivisionName' =>
-        [
+        'SubdivisionName' => [
           'shape' => 'GeoLocationSubdivisionName',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'ContinentCode',
-        1 => 'ContinentName',
-        2 => 'CountryCode',
-        3 => 'CountryName',
-        4 => 'SubdivisionCode',
-        5 => 'SubdivisionName',
+      'xmlOrder' => [
+        'ContinentCode',
+        'ContinentName',
+        'CountryCode',
+        'CountryName',
+        'SubdivisionCode',
+        'SubdivisionName',
       ],
     ],
-    'GeoLocationDetailsList' =>
-    [
+    'GeoLocationDetailsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'GeoLocationDetails',
         'locationName' => 'GeoLocationDetails',
       ],
     ],
-    'GeoLocationSubdivisionCode' =>
-    [
+    'GeoLocationSubdivisionCode' => [
       'type' => 'string',
       'min' => 1,
       'max' => 3,
     ],
-    'GeoLocationSubdivisionName' =>
-    [
+    'GeoLocationSubdivisionName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 64,
     ],
-    'GetChangeRequest' =>
-    [
+    'GetChangeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
+      'required' => [
+        'Id',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'ResourceId',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'Id',
+      'xmlOrder' => [
+        'Id',
       ],
     ],
-    'GetChangeResponse' =>
-    [
+    'GetChangeResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ChangeInfo',
+      'required' => [
+        'ChangeInfo',
       ],
-      'members' =>
-      [
-        'ChangeInfo' =>
-        [
+      'members' => [
+        'ChangeInfo' => [
           'shape' => 'ChangeInfo',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'ChangeInfo',
+      'xmlOrder' => [
+        'ChangeInfo',
       ],
     ],
-    'GetCheckerIpRangesRequest' =>
-    [
+    'GetCheckerIpRangesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'GetCheckerIpRangesResponse' =>
-    [
+    'GetCheckerIpRangesResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CheckerIpRanges',
+      'required' => [
+        'CheckerIpRanges',
       ],
-      'members' =>
-      [
-        'CheckerIpRanges' =>
-        [
+      'members' => [
+        'CheckerIpRanges' => [
           'shape' => 'CheckerIpRanges',
         ],
       ],
     ],
-    'GetGeoLocationRequest' =>
-    [
+    'GetGeoLocationRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ContinentCode' =>
-        [
+      'members' => [
+        'ContinentCode' => [
           'shape' => 'GeoLocationContinentCode',
           'location' => 'querystring',
           'locationName' => 'continentcode',
         ],
-        'CountryCode' =>
-        [
+        'CountryCode' => [
           'shape' => 'GeoLocationCountryCode',
           'location' => 'querystring',
           'locationName' => 'countrycode',
         ],
-        'SubdivisionCode' =>
-        [
+        'SubdivisionCode' => [
           'shape' => 'GeoLocationSubdivisionCode',
           'location' => 'querystring',
           'locationName' => 'subdivisioncode',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'ContinentCode',
-        1 => 'CountryCode',
-        2 => 'SubdivisionCode',
+      'xmlOrder' => [
+        'ContinentCode',
+        'CountryCode',
+        'SubdivisionCode',
       ],
     ],
-    'GetGeoLocationResponse' =>
-    [
+    'GetGeoLocationResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GeoLocationDetails',
+      'required' => [
+        'GeoLocationDetails',
       ],
-      'members' =>
-      [
-        'GeoLocationDetails' =>
-        [
+      'members' => [
+        'GeoLocationDetails' => [
           'shape' => 'GeoLocationDetails',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'GeoLocationDetails',
+      'xmlOrder' => [
+        'GeoLocationDetails',
       ],
     ],
-    'GetHealthCheckCountRequest' =>
-    [
+    'GetHealthCheckCountRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
     ],
-    'GetHealthCheckCountResponse' =>
-    [
+    'GetHealthCheckCountResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'HealthCheckCount',
+      'required' => [
+        'HealthCheckCount',
       ],
-      'members' =>
-      [
-        'HealthCheckCount' =>
-        [
+      'members' => [
+        'HealthCheckCount' => [
           'shape' => 'HealthCheckCount',
         ],
       ],
     ],
-    'GetHealthCheckRequest' =>
-    [
+    'GetHealthCheckRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'HealthCheckId',
+      'required' => [
+        'HealthCheckId',
       ],
-      'members' =>
-      [
-        'HealthCheckId' =>
-        [
+      'members' => [
+        'HealthCheckId' => [
           'shape' => 'HealthCheckId',
           'location' => 'uri',
           'locationName' => 'HealthCheckId',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'HealthCheckId',
+      'xmlOrder' => [
+        'HealthCheckId',
       ],
     ],
-    'GetHealthCheckResponse' =>
-    [
+    'GetHealthCheckResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'HealthCheck',
+      'required' => [
+        'HealthCheck',
       ],
-      'members' =>
-      [
-        'HealthCheck' =>
-        [
+      'members' => [
+        'HealthCheck' => [
           'shape' => 'HealthCheck',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'HealthCheck',
+      'xmlOrder' => [
+        'HealthCheck',
       ],
     ],
-    'GetHostedZoneRequest' =>
-    [
+    'GetHostedZoneRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
+      'required' => [
+        'Id',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'ResourceId',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'Id',
+      'xmlOrder' => [
+        'Id',
       ],
     ],
-    'GetHostedZoneResponse' =>
-    [
+    'GetHostedZoneResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'HostedZone',
-        1 => 'DelegationSet',
+      'required' => [
+        'HostedZone',
+        'DelegationSet',
       ],
-      'members' =>
-      [
-        'HostedZone' =>
-        [
+      'members' => [
+        'HostedZone' => [
           'shape' => 'HostedZone',
         ],
-        'DelegationSet' =>
-        [
+        'DelegationSet' => [
           'shape' => 'DelegationSet',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'HostedZone',
-        1 => 'DelegationSet',
+      'xmlOrder' => [
+        'HostedZone',
+        'DelegationSet',
       ],
     ],
-    'HealthCheck' =>
-    [
+    'HealthCheck' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
-        1 => 'CallerReference',
-        2 => 'HealthCheckConfig',
-        3 => 'HealthCheckVersion',
+      'required' => [
+        'Id',
+        'CallerReference',
+        'HealthCheckConfig',
+        'HealthCheckVersion',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'HealthCheckId',
         ],
-        'CallerReference' =>
-        [
+        'CallerReference' => [
           'shape' => 'HealthCheckNonce',
         ],
-        'HealthCheckConfig' =>
-        [
+        'HealthCheckConfig' => [
           'shape' => 'HealthCheckConfig',
         ],
-        'HealthCheckVersion' =>
-        [
+        'HealthCheckVersion' => [
           'shape' => 'HealthCheckVersion',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'Id',
-        1 => 'CallerReference',
-        2 => 'HealthCheckConfig',
-        3 => 'HealthCheckVersion',
+      'xmlOrder' => [
+        'Id',
+        'CallerReference',
+        'HealthCheckConfig',
+        'HealthCheckVersion',
       ],
     ],
-    'HealthCheckAlreadyExists' =>
-    [
+    'HealthCheckAlreadyExists' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 409,
       ],
       'exception' => true,
     ],
-    'HealthCheckConfig' =>
-    [
+    'HealthCheckConfig' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Type',
+      'required' => [
+        'Type',
       ],
-      'members' =>
-      [
-        'IPAddress' =>
-        [
+      'members' => [
+        'IPAddress' => [
           'shape' => 'IPAddress',
         ],
-        'Port' =>
-        [
+        'Port' => [
           'shape' => 'Port',
         ],
-        'Type' =>
-        [
+        'Type' => [
           'shape' => 'HealthCheckType',
         ],
-        'ResourcePath' =>
-        [
+        'ResourcePath' => [
           'shape' => 'ResourcePath',
         ],
-        'FullyQualifiedDomainName' =>
-        [
+        'FullyQualifiedDomainName' => [
           'shape' => 'FullyQualifiedDomainName',
         ],
-        'SearchString' =>
-        [
+        'SearchString' => [
           'shape' => 'SearchString',
         ],
-        'RequestInterval' =>
-        [
+        'RequestInterval' => [
           'shape' => 'RequestInterval',
         ],
-        'FailureThreshold' =>
-        [
+        'FailureThreshold' => [
           'shape' => 'FailureThreshold',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'IPAddress',
-        1 => 'Port',
-        2 => 'Type',
-        3 => 'ResourcePath',
-        4 => 'FullyQualifiedDomainName',
-        5 => 'SearchString',
-        6 => 'RequestInterval',
-        7 => 'FailureThreshold',
+      'xmlOrder' => [
+        'IPAddress',
+        'Port',
+        'Type',
+        'ResourcePath',
+        'FullyQualifiedDomainName',
+        'SearchString',
+        'RequestInterval',
+        'FailureThreshold',
       ],
     ],
-    'HealthCheckCount' =>
-    [
+    'HealthCheckCount' => [
       'type' => 'long',
     ],
-    'HealthCheckId' =>
-    [
+    'HealthCheckId' => [
       'type' => 'string',
       'max' => 64,
     ],
-    'HealthCheckInUse' =>
-    [
+    'HealthCheckInUse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'HealthCheckNonce' =>
-    [
+    'HealthCheckNonce' => [
       'type' => 'string',
       'min' => 1,
       'max' => 64,
     ],
-    'HealthCheckType' =>
-    [
+    'HealthCheckType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'HTTP',
-        1 => 'HTTPS',
-        2 => 'HTTP_STR_MATCH',
-        3 => 'HTTPS_STR_MATCH',
-        4 => 'TCP',
+      'enum' => [
+        'HTTP',
+        'HTTPS',
+        'HTTP_STR_MATCH',
+        'HTTPS_STR_MATCH',
+        'TCP',
       ],
     ],
-    'HealthCheckVersion' =>
-    [
+    'HealthCheckVersion' => [
       'type' => 'long',
       'min' => 1,
     ],
-    'HealthCheckVersionMismatch' =>
-    [
+    'HealthCheckVersionMismatch' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 409,
       ],
       'exception' => true,
     ],
-    'HealthChecks' =>
-    [
+    'HealthChecks' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'HealthCheck',
         'locationName' => 'HealthCheck',
       ],
     ],
-    'HostedZone' =>
-    [
+    'HostedZone' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
-        1 => 'Name',
-        2 => 'CallerReference',
+      'required' => [
+        'Id',
+        'Name',
+        'CallerReference',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'ResourceId',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'DNSName',
         ],
-        'CallerReference' =>
-        [
+        'CallerReference' => [
           'shape' => 'Nonce',
         ],
-        'Config' =>
-        [
+        'Config' => [
           'shape' => 'HostedZoneConfig',
         ],
-        'ResourceRecordSetCount' =>
-        [
+        'ResourceRecordSetCount' => [
           'shape' => 'HostedZoneRRSetCount',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'Id',
-        1 => 'Name',
-        2 => 'CallerReference',
-        3 => 'Config',
-        4 => 'ResourceRecordSetCount',
+      'xmlOrder' => [
+        'Id',
+        'Name',
+        'CallerReference',
+        'Config',
+        'ResourceRecordSetCount',
       ],
     ],
-    'HostedZoneAlreadyExists' =>
-    [
+    'HostedZoneAlreadyExists' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 409,
       ],
       'exception' => true,
     ],
-    'HostedZoneConfig' =>
-    [
+    'HostedZoneConfig' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Comment' =>
-        [
+      'members' => [
+        'Comment' => [
           'shape' => 'ResourceDescription',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'Comment',
+      'xmlOrder' => [
+        'Comment',
       ],
     ],
-    'HostedZoneNotEmpty' =>
-    [
+    'HostedZoneNotEmpty' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'HostedZoneRRSetCount' =>
-    [
+    'HostedZoneRRSetCount' => [
       'type' => 'long',
     ],
-    'HostedZones' =>
-    [
+    'HostedZones' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'HostedZone',
         'locationName' => 'HostedZone',
       ],
     ],
-    'IPAddress' =>
-    [
+    'IPAddress' => [
       'type' => 'string',
       'max' => 15,
       'pattern' => '^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]]\\.]{3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]]$',
     ],
-    'IPAddressCidr' =>
-    [
+    'IPAddressCidr' => [
       'type' => 'string',
     ],
-    'IncompatibleVersion' =>
-    [
+    'IncompatibleVersion' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'InvalidChangeBatch' =>
-    [
+    'InvalidChangeBatch' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'messages' =>
-        [
+      'members' => [
+        'messages' => [
           'shape' => 'ErrorMessages',
         ],
       ],
       'exception' => true,
     ],
-    'InvalidDomainName' =>
-    [
+    'InvalidDomainName' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'InvalidInput' =>
-    [
+    'InvalidInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'ListGeoLocationsRequest' =>
-    [
+    'ListGeoLocationsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StartContinentCode' =>
-        [
+      'members' => [
+        'StartContinentCode' => [
           'shape' => 'GeoLocationContinentCode',
           'location' => 'querystring',
           'locationName' => 'startcontinentcode',
         ],
-        'StartCountryCode' =>
-        [
+        'StartCountryCode' => [
           'shape' => 'GeoLocationCountryCode',
           'location' => 'querystring',
           'locationName' => 'startcountrycode',
         ],
-        'StartSubdivisionCode' =>
-        [
+        'StartSubdivisionCode' => [
           'shape' => 'GeoLocationSubdivisionCode',
           'location' => 'querystring',
           'locationName' => 'startsubdivisioncode',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'PageMaxItems',
           'location' => 'querystring',
           'locationName' => 'maxitems',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'StartContinentCode',
-        1 => 'StartCountryCode',
-        2 => 'StartSubdivisionCode',
-        3 => 'MaxItems',
+      'xmlOrder' => [
+        'StartContinentCode',
+        'StartCountryCode',
+        'StartSubdivisionCode',
+        'MaxItems',
       ],
     ],
-    'ListGeoLocationsResponse' =>
-    [
+    'ListGeoLocationsResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GeoLocationDetailsList',
-        1 => 'IsTruncated',
-        2 => 'MaxItems',
+      'required' => [
+        'GeoLocationDetailsList',
+        'IsTruncated',
+        'MaxItems',
       ],
-      'members' =>
-      [
-        'GeoLocationDetailsList' =>
-        [
+      'members' => [
+        'GeoLocationDetailsList' => [
           'shape' => 'GeoLocationDetailsList',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'PageTruncated',
         ],
-        'NextContinentCode' =>
-        [
+        'NextContinentCode' => [
           'shape' => 'GeoLocationContinentCode',
         ],
-        'NextCountryCode' =>
-        [
+        'NextCountryCode' => [
           'shape' => 'GeoLocationCountryCode',
         ],
-        'NextSubdivisionCode' =>
-        [
+        'NextSubdivisionCode' => [
           'shape' => 'GeoLocationSubdivisionCode',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'PageMaxItems',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'GeoLocationDetailsList',
-        1 => 'IsTruncated',
-        2 => 'NextContinentCode',
-        3 => 'NextCountryCode',
-        4 => 'NextSubdivisionCode',
-        5 => 'MaxItems',
+      'xmlOrder' => [
+        'GeoLocationDetailsList',
+        'IsTruncated',
+        'NextContinentCode',
+        'NextCountryCode',
+        'NextSubdivisionCode',
+        'MaxItems',
       ],
     ],
-    'ListHealthChecksRequest' =>
-    [
+    'ListHealthChecksRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'PageMarker',
           'location' => 'querystring',
           'locationName' => 'marker',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'PageMaxItems',
           'location' => 'querystring',
           'locationName' => 'maxitems',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'Marker',
-        1 => 'MaxItems',
+      'xmlOrder' => [
+        'Marker',
+        'MaxItems',
       ],
     ],
-    'ListHealthChecksResponse' =>
-    [
+    'ListHealthChecksResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'HealthChecks',
-        1 => 'Marker',
-        2 => 'IsTruncated',
-        3 => 'MaxItems',
+      'required' => [
+        'HealthChecks',
+        'Marker',
+        'IsTruncated',
+        'MaxItems',
       ],
-      'members' =>
-      [
-        'HealthChecks' =>
-        [
+      'members' => [
+        'HealthChecks' => [
           'shape' => 'HealthChecks',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'PageMarker',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'PageTruncated',
         ],
-        'NextMarker' =>
-        [
+        'NextMarker' => [
           'shape' => 'PageMarker',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'PageMaxItems',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'HealthChecks',
-        1 => 'Marker',
-        2 => 'IsTruncated',
-        3 => 'NextMarker',
-        4 => 'MaxItems',
+      'xmlOrder' => [
+        'HealthChecks',
+        'Marker',
+        'IsTruncated',
+        'NextMarker',
+        'MaxItems',
       ],
     ],
-    'ListHostedZonesRequest' =>
-    [
+    'ListHostedZonesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'PageMarker',
           'location' => 'querystring',
           'locationName' => 'marker',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'PageMaxItems',
           'location' => 'querystring',
           'locationName' => 'maxitems',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'Marker',
-        1 => 'MaxItems',
+      'xmlOrder' => [
+        'Marker',
+        'MaxItems',
       ],
     ],
-    'ListHostedZonesResponse' =>
-    [
+    'ListHostedZonesResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'HostedZones',
-        1 => 'Marker',
-        2 => 'IsTruncated',
-        3 => 'MaxItems',
+      'required' => [
+        'HostedZones',
+        'Marker',
+        'IsTruncated',
+        'MaxItems',
       ],
-      'members' =>
-      [
-        'HostedZones' =>
-        [
+      'members' => [
+        'HostedZones' => [
           'shape' => 'HostedZones',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'PageMarker',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'PageTruncated',
         ],
-        'NextMarker' =>
-        [
+        'NextMarker' => [
           'shape' => 'PageMarker',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'PageMaxItems',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'HostedZones',
-        1 => 'Marker',
-        2 => 'IsTruncated',
-        3 => 'NextMarker',
-        4 => 'MaxItems',
+      'xmlOrder' => [
+        'HostedZones',
+        'Marker',
+        'IsTruncated',
+        'NextMarker',
+        'MaxItems',
       ],
     ],
-    'ListResourceRecordSetsRequest' =>
-    [
+    'ListResourceRecordSetsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'HostedZoneId',
+      'required' => [
+        'HostedZoneId',
       ],
-      'members' =>
-      [
-        'HostedZoneId' =>
-        [
+      'members' => [
+        'HostedZoneId' => [
           'shape' => 'ResourceId',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
-        'StartRecordName' =>
-        [
+        'StartRecordName' => [
           'shape' => 'DNSName',
           'location' => 'querystring',
           'locationName' => 'name',
         ],
-        'StartRecordType' =>
-        [
+        'StartRecordType' => [
           'shape' => 'RRType',
           'location' => 'querystring',
           'locationName' => 'type',
         ],
-        'StartRecordIdentifier' =>
-        [
+        'StartRecordIdentifier' => [
           'shape' => 'ResourceRecordSetIdentifier',
           'location' => 'querystring',
           'locationName' => 'identifier',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'PageMaxItems',
           'location' => 'querystring',
           'locationName' => 'maxitems',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'HostedZoneId',
-        1 => 'StartRecordName',
-        2 => 'StartRecordType',
-        3 => 'StartRecordIdentifier',
-        4 => 'MaxItems',
+      'xmlOrder' => [
+        'HostedZoneId',
+        'StartRecordName',
+        'StartRecordType',
+        'StartRecordIdentifier',
+        'MaxItems',
       ],
     ],
-    'ListResourceRecordSetsResponse' =>
-    [
+    'ListResourceRecordSetsResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ResourceRecordSets',
-        1 => 'IsTruncated',
-        2 => 'MaxItems',
+      'required' => [
+        'ResourceRecordSets',
+        'IsTruncated',
+        'MaxItems',
       ],
-      'members' =>
-      [
-        'ResourceRecordSets' =>
-        [
+      'members' => [
+        'ResourceRecordSets' => [
           'shape' => 'ResourceRecordSets',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'PageTruncated',
         ],
-        'NextRecordName' =>
-        [
+        'NextRecordName' => [
           'shape' => 'DNSName',
         ],
-        'NextRecordType' =>
-        [
+        'NextRecordType' => [
           'shape' => 'RRType',
         ],
-        'NextRecordIdentifier' =>
-        [
+        'NextRecordIdentifier' => [
           'shape' => 'ResourceRecordSetIdentifier',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'PageMaxItems',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'ResourceRecordSets',
-        1 => 'IsTruncated',
-        2 => 'NextRecordName',
-        3 => 'NextRecordType',
-        4 => 'NextRecordIdentifier',
-        5 => 'MaxItems',
+      'xmlOrder' => [
+        'ResourceRecordSets',
+        'IsTruncated',
+        'NextRecordName',
+        'NextRecordType',
+        'NextRecordIdentifier',
+        'MaxItems',
       ],
     ],
-    'ListTagsForResourceRequest' =>
-    [
+    'ListTagsForResourceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ResourceType',
-        1 => 'ResourceId',
+      'required' => [
+        'ResourceType',
+        'ResourceId',
       ],
-      'members' =>
-      [
-        'ResourceType' =>
-        [
+      'members' => [
+        'ResourceType' => [
           'shape' => 'TagResourceType',
           'location' => 'uri',
           'locationName' => 'ResourceType',
         ],
-        'ResourceId' =>
-        [
+        'ResourceId' => [
           'shape' => 'TagResourceId',
           'location' => 'uri',
           'locationName' => 'ResourceId',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'ResourceType',
-        1 => 'ResourceId',
+      'xmlOrder' => [
+        'ResourceType',
+        'ResourceId',
       ],
     ],
-    'ListTagsForResourceResponse' =>
-    [
+    'ListTagsForResourceResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ResourceTagSet',
+      'required' => [
+        'ResourceTagSet',
       ],
-      'members' =>
-      [
-        'ResourceTagSet' =>
-        [
+      'members' => [
+        'ResourceTagSet' => [
           'shape' => 'ResourceTagSet',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'ResourceTagSet',
+      'xmlOrder' => [
+        'ResourceTagSet',
       ],
     ],
-    'ListTagsForResourcesRequest' =>
-    [
+    'ListTagsForResourcesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ResourceType',
-        1 => 'ResourceIds',
+      'required' => [
+        'ResourceType',
+        'ResourceIds',
       ],
-      'members' =>
-      [
-        'ResourceType' =>
-        [
+      'members' => [
+        'ResourceType' => [
           'shape' => 'TagResourceType',
           'location' => 'uri',
           'locationName' => 'ResourceType',
         ],
-        'ResourceIds' =>
-        [
+        'ResourceIds' => [
           'shape' => 'TagResourceIdList',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'ResourceType',
-        1 => 'ResourceIds',
+      'xmlOrder' => [
+        'ResourceType',
+        'ResourceIds',
       ],
     ],
-    'ListTagsForResourcesResponse' =>
-    [
+    'ListTagsForResourcesResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ResourceTagSets',
+      'required' => [
+        'ResourceTagSets',
       ],
-      'members' =>
-      [
-        'ResourceTagSets' =>
-        [
+      'members' => [
+        'ResourceTagSets' => [
           'shape' => 'ResourceTagSetList',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'ResourceTagSets',
+      'xmlOrder' => [
+        'ResourceTagSets',
       ],
     ],
-    'NoSuchChange' =>
-    [
+    'NoSuchChange' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 404,
       ],
       'exception' => true,
     ],
-    'NoSuchGeoLocation' =>
-    [
+    'NoSuchGeoLocation' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 404,
       ],
       'exception' => true,
     ],
-    'NoSuchHealthCheck' =>
-    [
+    'NoSuchHealthCheck' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 404,
       ],
       'exception' => true,
     ],
-    'NoSuchHostedZone' =>
-    [
+    'NoSuchHostedZone' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 404,
       ],
       'exception' => true,
     ],
-    'Nonce' =>
-    [
+    'Nonce' => [
       'type' => 'string',
       'min' => 1,
       'max' => 128,
     ],
-    'PageMarker' =>
-    [
+    'PageMarker' => [
       'type' => 'string',
       'max' => 64,
     ],
-    'PageMaxItems' =>
-    [
+    'PageMaxItems' => [
       'type' => 'string',
     ],
-    'PageTruncated' =>
-    [
+    'PageTruncated' => [
       'type' => 'boolean',
     ],
-    'Port' =>
-    [
+    'Port' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 65535,
     ],
-    'PriorRequestNotComplete' =>
-    [
+    'PriorRequestNotComplete' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'RData' =>
-    [
+    'RData' => [
       'type' => 'string',
       'max' => 4000,
     ],
-    'RRType' =>
-    [
+    'RRType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'SOA',
-        1 => 'A',
-        2 => 'TXT',
-        3 => 'NS',
-        4 => 'CNAME',
-        5 => 'MX',
-        6 => 'PTR',
-        7 => 'SRV',
-        8 => 'SPF',
-        9 => 'AAAA',
+      'enum' => [
+        'SOA',
+        'A',
+        'TXT',
+        'NS',
+        'CNAME',
+        'MX',
+        'PTR',
+        'SRV',
+        'SPF',
+        'AAAA',
       ],
     ],
-    'RequestInterval' =>
-    [
+    'RequestInterval' => [
       'type' => 'integer',
       'min' => 10,
       'max' => 30,
     ],
-    'ResourceDescription' =>
-    [
+    'ResourceDescription' => [
       'type' => 'string',
       'max' => 256,
     ],
-    'ResourceId' =>
-    [
+    'ResourceId' => [
       'type' => 'string',
       'max' => 32,
     ],
-    'ResourcePath' =>
-    [
+    'ResourcePath' => [
       'type' => 'string',
       'max' => 255,
     ],
-    'ResourceRecord' =>
-    [
+    'ResourceRecord' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Value',
+      'required' => [
+        'Value',
       ],
-      'members' =>
-      [
-        'Value' =>
-        [
+      'members' => [
+        'Value' => [
           'shape' => 'RData',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'Value',
+      'xmlOrder' => [
+        'Value',
       ],
     ],
-    'ResourceRecordSet' =>
-    [
+    'ResourceRecordSet' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
-        1 => 'Type',
+      'required' => [
+        'Name',
+        'Type',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'DNSName',
         ],
-        'Type' =>
-        [
+        'Type' => [
           'shape' => 'RRType',
         ],
-        'SetIdentifier' =>
-        [
+        'SetIdentifier' => [
           'shape' => 'ResourceRecordSetIdentifier',
         ],
-        'Weight' =>
-        [
+        'Weight' => [
           'shape' => 'ResourceRecordSetWeight',
         ],
-        'Region' =>
-        [
+        'Region' => [
           'shape' => 'ResourceRecordSetRegion',
         ],
-        'GeoLocation' =>
-        [
+        'GeoLocation' => [
           'shape' => 'GeoLocation',
         ],
-        'Failover' =>
-        [
+        'Failover' => [
           'shape' => 'ResourceRecordSetFailover',
         ],
-        'TTL' =>
-        [
+        'TTL' => [
           'shape' => 'TTL',
         ],
-        'ResourceRecords' =>
-        [
+        'ResourceRecords' => [
           'shape' => 'ResourceRecords',
         ],
-        'AliasTarget' =>
-        [
+        'AliasTarget' => [
           'shape' => 'AliasTarget',
         ],
-        'HealthCheckId' =>
-        [
+        'HealthCheckId' => [
           'shape' => 'HealthCheckId',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'Name',
-        1 => 'Type',
-        2 => 'SetIdentifier',
-        3 => 'Weight',
-        4 => 'Region',
-        5 => 'GeoLocation',
-        6 => 'Failover',
-        7 => 'TTL',
-        8 => 'ResourceRecords',
-        9 => 'AliasTarget',
-        10 => 'HealthCheckId',
+      'xmlOrder' => [
+        'Name',
+        'Type',
+        'SetIdentifier',
+        'Weight',
+        'Region',
+        'GeoLocation',
+        'Failover',
+        'TTL',
+        'ResourceRecords',
+        'AliasTarget',
+        'HealthCheckId',
       ],
     ],
-    'ResourceRecordSetFailover' =>
-    [
+    'ResourceRecordSetFailover' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'PRIMARY',
-        1 => 'SECONDARY',
+      'enum' => [
+        'PRIMARY',
+        'SECONDARY',
       ],
     ],
-    'ResourceRecordSetIdentifier' =>
-    [
+    'ResourceRecordSetIdentifier' => [
       'type' => 'string',
       'min' => 1,
       'max' => 128,
     ],
-    'ResourceRecordSetRegion' =>
-    [
+    'ResourceRecordSetRegion' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'us-east-1',
-        1 => 'us-west-1',
-        2 => 'us-west-2',
-        3 => 'eu-west-1',
-        4 => 'ap-southeast-1',
-        5 => 'ap-southeast-2',
-        6 => 'ap-northeast-1',
-        7 => 'sa-east-1',
-        8 => 'cn-north-1',
+      'enum' => [
+        'us-east-1',
+        'us-west-1',
+        'us-west-2',
+        'eu-west-1',
+        'ap-southeast-1',
+        'ap-southeast-2',
+        'ap-northeast-1',
+        'sa-east-1',
+        'cn-north-1',
       ],
       'min' => 1,
       'max' => 64,
     ],
-    'ResourceRecordSetWeight' =>
-    [
+    'ResourceRecordSetWeight' => [
       'type' => 'long',
       'min' => 0,
       'max' => 255,
     ],
-    'ResourceRecordSets' =>
-    [
+    'ResourceRecordSets' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ResourceRecordSet',
         'locationName' => 'ResourceRecordSet',
       ],
     ],
-    'ResourceRecords' =>
-    [
+    'ResourceRecords' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ResourceRecord',
         'locationName' => 'ResourceRecord',
       ],
       'min' => 1,
     ],
-    'ResourceTagSet' =>
-    [
+    'ResourceTagSet' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ResourceType' =>
-        [
+      'members' => [
+        'ResourceType' => [
           'shape' => 'TagResourceType',
         ],
-        'ResourceId' =>
-        [
+        'ResourceId' => [
           'shape' => 'TagResourceId',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
         ],
       ],
     ],
-    'ResourceTagSetList' =>
-    [
+    'ResourceTagSetList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ResourceTagSet',
         'locationName' => 'ResourceTagSet',
       ],
     ],
-    'ResourceURI' =>
-    [
+    'ResourceURI' => [
       'type' => 'string',
       'max' => 1024,
     ],
-    'SearchString' =>
-    [
+    'SearchString' => [
       'type' => 'string',
       'max' => 255,
     ],
-    'TTL' =>
-    [
+    'TTL' => [
       'type' => 'long',
       'min' => 0,
       'max' => 2147483647,
     ],
-    'Tag' =>
-    [
+    'Tag' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Key' =>
-        [
+      'members' => [
+        'Key' => [
           'shape' => 'TagKey',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'TagValue',
         ],
       ],
     ],
-    'TagKey' =>
-    [
+    'TagKey' => [
       'type' => 'string',
       'max' => 128,
     ],
-    'TagKeyList' =>
-    [
+    'TagKeyList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'TagKey',
         'locationName' => 'Key',
       ],
       'min' => 1,
       'max' => 10,
     ],
-    'TagList' =>
-    [
+    'TagList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Tag',
         'locationName' => 'Tag',
       ],
       'min' => 1,
       'max' => 10,
     ],
-    'TagResourceId' =>
-    [
+    'TagResourceId' => [
       'type' => 'string',
       'max' => 64,
     ],
-    'TagResourceIdList' =>
-    [
+    'TagResourceIdList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'TagResourceId',
         'locationName' => 'ResourceId',
       ],
       'min' => 1,
       'max' => 10,
     ],
-    'TagResourceType' =>
-    [
+    'TagResourceType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'healthcheck',
+      'enum' => [
+        'healthcheck',
       ],
     ],
-    'TagValue' =>
-    [
+    'TagValue' => [
       'type' => 'string',
       'max' => 256,
     ],
-    'ThrottlingException' =>
-    [
+    'ThrottlingException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'TimeStamp' =>
-    [
+    'TimeStamp' => [
       'type' => 'timestamp',
     ],
-    'TooManyHealthChecks' =>
-    [
+    'TooManyHealthChecks' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'TooManyHostedZones' =>
-    [
+    'TooManyHostedZones' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'UpdateHealthCheckRequest' =>
-    [
+    'UpdateHealthCheckRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'HealthCheckId',
+      'required' => [
+        'HealthCheckId',
       ],
-      'members' =>
-      [
-        'HealthCheckId' =>
-        [
+      'members' => [
+        'HealthCheckId' => [
           'shape' => 'HealthCheckId',
           'location' => 'uri',
           'locationName' => 'HealthCheckId',
         ],
-        'HealthCheckVersion' =>
-        [
+        'HealthCheckVersion' => [
           'shape' => 'HealthCheckVersion',
         ],
-        'IPAddress' =>
-        [
+        'IPAddress' => [
           'shape' => 'IPAddress',
         ],
-        'Port' =>
-        [
+        'Port' => [
           'shape' => 'Port',
         ],
-        'ResourcePath' =>
-        [
+        'ResourcePath' => [
           'shape' => 'ResourcePath',
         ],
-        'FullyQualifiedDomainName' =>
-        [
+        'FullyQualifiedDomainName' => [
           'shape' => 'FullyQualifiedDomainName',
         ],
-        'SearchString' =>
-        [
+        'SearchString' => [
           'shape' => 'SearchString',
         ],
-        'FailureThreshold' =>
-        [
+        'FailureThreshold' => [
           'shape' => 'FailureThreshold',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'HealthCheckId',
-        1 => 'HealthCheckVersion',
-        2 => 'IPAddress',
-        3 => 'Port',
-        4 => 'ResourcePath',
-        5 => 'FullyQualifiedDomainName',
-        6 => 'SearchString',
-        7 => 'FailureThreshold',
+      'xmlOrder' => [
+        'HealthCheckId',
+        'HealthCheckVersion',
+        'IPAddress',
+        'Port',
+        'ResourcePath',
+        'FullyQualifiedDomainName',
+        'SearchString',
+        'FailureThreshold',
       ],
     ],
-    'UpdateHealthCheckResponse' =>
-    [
+    'UpdateHealthCheckResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'HealthCheck',
+      'required' => [
+        'HealthCheck',
       ],
-      'members' =>
-      [
-        'HealthCheck' =>
-        [
+      'members' => [
+        'HealthCheck' => [
           'shape' => 'HealthCheck',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'HealthCheck',
+      'xmlOrder' => [
+        'HealthCheck',
       ],
     ],
   ],

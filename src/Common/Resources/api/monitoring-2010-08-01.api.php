@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2010-08-01',
     'endpointPrefix' => 'monitoring',
     'serviceAbbreviation' => 'CloudWatch',
@@ -10,27 +8,20 @@ return [
     'xmlNamespace' => 'http://monitoring.amazonaws.com/doc/2010-08-01/',
     'protocol' => 'query',
   ],
-  'operations' =>
-  [
-    'DeleteAlarms' =>
-    [
+  'operations' => [
+    'DeleteAlarms' => [
       'name' => 'DeleteAlarms',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteAlarmsInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFound',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResourceNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -39,30 +30,23 @@ return [
         ],
       ],
     ],
-    'DescribeAlarmHistory' =>
-    [
+    'DescribeAlarmHistory' => [
       'name' => 'DescribeAlarmHistory',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeAlarmHistoryInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeAlarmHistoryOutput',
         'resultWrapper' => 'DescribeAlarmHistoryResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidNextToken',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidNextToken',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -71,30 +55,23 @@ return [
         ],
       ],
     ],
-    'DescribeAlarms' =>
-    [
+    'DescribeAlarms' => [
       'name' => 'DescribeAlarms',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeAlarmsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeAlarmsOutput',
         'resultWrapper' => 'DescribeAlarmsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidNextToken',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidNextToken',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -103,161 +80,126 @@ return [
         ],
       ],
     ],
-    'DescribeAlarmsForMetric' =>
-    [
+    'DescribeAlarmsForMetric' => [
       'name' => 'DescribeAlarmsForMetric',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeAlarmsForMetricInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeAlarmsForMetricOutput',
         'resultWrapper' => 'DescribeAlarmsForMetricResult',
       ],
     ],
-    'DisableAlarmActions' =>
-    [
+    'DisableAlarmActions' => [
       'name' => 'DisableAlarmActions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DisableAlarmActionsInput',
       ],
     ],
-    'EnableAlarmActions' =>
-    [
+    'EnableAlarmActions' => [
       'name' => 'EnableAlarmActions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'EnableAlarmActionsInput',
       ],
     ],
-    'GetMetricStatistics' =>
-    [
+    'GetMetricStatistics' => [
       'name' => 'GetMetricStatistics',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetMetricStatisticsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetMetricStatisticsOutput',
         'resultWrapper' => 'GetMetricStatisticsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'MissingRequiredParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MissingParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InternalServiceFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalServiceError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
-          'xmlOrder' =>
-          [
-            0 => 'Message',
+          'xmlOrder' => [
+            'Message',
           ],
         ],
       ],
     ],
-    'ListMetrics' =>
-    [
+    'ListMetrics' => [
       'name' => 'ListMetrics',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListMetricsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListMetricsOutput',
-        'xmlOrder' =>
-        [
-          0 => 'Metrics',
-          1 => 'NextToken',
+        'xmlOrder' => [
+          'Metrics',
+          'NextToken',
         ],
         'resultWrapper' => 'ListMetricsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InternalServiceFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalServiceError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
-          'xmlOrder' =>
-          [
-            0 => 'Message',
+          'xmlOrder' => [
+            'Message',
           ],
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -266,25 +208,19 @@ return [
         ],
       ],
     ],
-    'PutMetricAlarm' =>
-    [
+    'PutMetricAlarm' => [
       'name' => 'PutMetricAlarm',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutMetricAlarmInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'LimitExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -293,99 +229,78 @@ return [
         ],
       ],
     ],
-    'PutMetricData' =>
-    [
+    'PutMetricData' => [
       'name' => 'PutMetricData',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutMetricDataInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterValueException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterValue',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'MissingRequiredParameterException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MissingParameter',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidParameterCombinationException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidParameterCombination',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InternalServiceFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InternalServiceError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
-          'xmlOrder' =>
-          [
-            0 => 'Message',
+          'xmlOrder' => [
+            'Message',
           ],
         ],
       ],
     ],
-    'SetAlarmState' =>
-    [
+    'SetAlarmState' => [
       'name' => 'SetAlarmState',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'SetAlarmStateInput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ResourceNotFound',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ResourceNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidFormatFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidFormat',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -395,1193 +310,925 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'ActionPrefix' =>
-    [
+  'shapes' => [
+    'ActionPrefix' => [
       'type' => 'string',
       'min' => 1,
       'max' => 1024,
     ],
-    'ActionsEnabled' =>
-    [
+    'ActionsEnabled' => [
       'type' => 'boolean',
     ],
-    'AlarmArn' =>
-    [
+    'AlarmArn' => [
       'type' => 'string',
       'min' => 1,
       'max' => 1600,
     ],
-    'AlarmDescription' =>
-    [
+    'AlarmDescription' => [
       'type' => 'string',
       'min' => 0,
       'max' => 255,
     ],
-    'AlarmHistoryItem' =>
-    [
+    'AlarmHistoryItem' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AlarmName' =>
-        [
+      'members' => [
+        'AlarmName' => [
           'shape' => 'AlarmName',
         ],
-        'Timestamp' =>
-        [
+        'Timestamp' => [
           'shape' => 'Timestamp',
         ],
-        'HistoryItemType' =>
-        [
+        'HistoryItemType' => [
           'shape' => 'HistoryItemType',
         ],
-        'HistorySummary' =>
-        [
+        'HistorySummary' => [
           'shape' => 'HistorySummary',
         ],
-        'HistoryData' =>
-        [
+        'HistoryData' => [
           'shape' => 'HistoryData',
         ],
       ],
     ],
-    'AlarmHistoryItems' =>
-    [
+    'AlarmHistoryItems' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AlarmHistoryItem',
       ],
     ],
-    'AlarmName' =>
-    [
+    'AlarmName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 255,
     ],
-    'AlarmNamePrefix' =>
-    [
+    'AlarmNamePrefix' => [
       'type' => 'string',
       'min' => 1,
       'max' => 255,
     ],
-    'AlarmNames' =>
-    [
+    'AlarmNames' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AlarmName',
       ],
       'max' => 100,
     ],
-    'AwsQueryErrorMessage' =>
-    [
+    'AwsQueryErrorMessage' => [
       'type' => 'string',
     ],
-    'ComparisonOperator' =>
-    [
+    'ComparisonOperator' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'GreaterThanOrEqualToThreshold',
-        1 => 'GreaterThanThreshold',
-        2 => 'LessThanThreshold',
-        3 => 'LessThanOrEqualToThreshold',
+      'enum' => [
+        'GreaterThanOrEqualToThreshold',
+        'GreaterThanThreshold',
+        'LessThanThreshold',
+        'LessThanOrEqualToThreshold',
       ],
     ],
-    'Datapoint' =>
-    [
+    'Datapoint' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Timestamp' =>
-        [
+      'members' => [
+        'Timestamp' => [
           'shape' => 'Timestamp',
         ],
-        'SampleCount' =>
-        [
+        'SampleCount' => [
           'shape' => 'DatapointValue',
         ],
-        'Average' =>
-        [
+        'Average' => [
           'shape' => 'DatapointValue',
         ],
-        'Sum' =>
-        [
+        'Sum' => [
           'shape' => 'DatapointValue',
         ],
-        'Minimum' =>
-        [
+        'Minimum' => [
           'shape' => 'DatapointValue',
         ],
-        'Maximum' =>
-        [
+        'Maximum' => [
           'shape' => 'DatapointValue',
         ],
-        'Unit' =>
-        [
+        'Unit' => [
           'shape' => 'StandardUnit',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'Timestamp',
-        1 => 'SampleCount',
-        2 => 'Average',
-        3 => 'Sum',
-        4 => 'Minimum',
-        5 => 'Maximum',
-        6 => 'Unit',
+      'xmlOrder' => [
+        'Timestamp',
+        'SampleCount',
+        'Average',
+        'Sum',
+        'Minimum',
+        'Maximum',
+        'Unit',
       ],
     ],
-    'DatapointValue' =>
-    [
+    'DatapointValue' => [
       'type' => 'double',
     ],
-    'Datapoints' =>
-    [
+    'Datapoints' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Datapoint',
       ],
     ],
-    'DeleteAlarmsInput' =>
-    [
+    'DeleteAlarmsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AlarmNames',
+      'required' => [
+        'AlarmNames',
       ],
-      'members' =>
-      [
-        'AlarmNames' =>
-        [
+      'members' => [
+        'AlarmNames' => [
           'shape' => 'AlarmNames',
         ],
       ],
     ],
-    'DescribeAlarmHistoryInput' =>
-    [
+    'DescribeAlarmHistoryInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AlarmName' =>
-        [
+      'members' => [
+        'AlarmName' => [
           'shape' => 'AlarmName',
         ],
-        'HistoryItemType' =>
-        [
+        'HistoryItemType' => [
           'shape' => 'HistoryItemType',
         ],
-        'StartDate' =>
-        [
+        'StartDate' => [
           'shape' => 'Timestamp',
         ],
-        'EndDate' =>
-        [
+        'EndDate' => [
           'shape' => 'Timestamp',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'MaxRecords',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'NextToken',
         ],
       ],
     ],
-    'DescribeAlarmHistoryOutput' =>
-    [
+    'DescribeAlarmHistoryOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AlarmHistoryItems' =>
-        [
+      'members' => [
+        'AlarmHistoryItems' => [
           'shape' => 'AlarmHistoryItems',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'NextToken',
         ],
       ],
     ],
-    'DescribeAlarmsForMetricInput' =>
-    [
+    'DescribeAlarmsForMetricInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'MetricName',
-        1 => 'Namespace',
+      'required' => [
+        'MetricName',
+        'Namespace',
       ],
-      'members' =>
-      [
-        'MetricName' =>
-        [
+      'members' => [
+        'MetricName' => [
           'shape' => 'MetricName',
         ],
-        'Namespace' =>
-        [
+        'Namespace' => [
           'shape' => 'Namespace',
         ],
-        'Statistic' =>
-        [
+        'Statistic' => [
           'shape' => 'Statistic',
         ],
-        'Dimensions' =>
-        [
+        'Dimensions' => [
           'shape' => 'Dimensions',
         ],
-        'Period' =>
-        [
+        'Period' => [
           'shape' => 'Period',
         ],
-        'Unit' =>
-        [
+        'Unit' => [
           'shape' => 'StandardUnit',
         ],
       ],
     ],
-    'DescribeAlarmsForMetricOutput' =>
-    [
+    'DescribeAlarmsForMetricOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'MetricAlarms' =>
-        [
+      'members' => [
+        'MetricAlarms' => [
           'shape' => 'MetricAlarms',
         ],
       ],
     ],
-    'DescribeAlarmsInput' =>
-    [
+    'DescribeAlarmsInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AlarmNames' =>
-        [
+      'members' => [
+        'AlarmNames' => [
           'shape' => 'AlarmNames',
         ],
-        'AlarmNamePrefix' =>
-        [
+        'AlarmNamePrefix' => [
           'shape' => 'AlarmNamePrefix',
         ],
-        'StateValue' =>
-        [
+        'StateValue' => [
           'shape' => 'StateValue',
         ],
-        'ActionPrefix' =>
-        [
+        'ActionPrefix' => [
           'shape' => 'ActionPrefix',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'MaxRecords',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'NextToken',
         ],
       ],
     ],
-    'DescribeAlarmsOutput' =>
-    [
+    'DescribeAlarmsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'MetricAlarms' =>
-        [
+      'members' => [
+        'MetricAlarms' => [
           'shape' => 'MetricAlarms',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'NextToken',
         ],
       ],
     ],
-    'Dimension' =>
-    [
+    'Dimension' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
-        1 => 'Value',
+      'required' => [
+        'Name',
+        'Value',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'DimensionName',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'DimensionValue',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'Name',
-        1 => 'Value',
+      'xmlOrder' => [
+        'Name',
+        'Value',
       ],
     ],
-    'DimensionFilter' =>
-    [
+    'DimensionFilter' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
+      'required' => [
+        'Name',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'DimensionName',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'DimensionValue',
         ],
       ],
     ],
-    'DimensionFilters' =>
-    [
+    'DimensionFilters' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DimensionFilter',
       ],
       'max' => 10,
     ],
-    'DimensionName' =>
-    [
+    'DimensionName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 255,
     ],
-    'DimensionValue' =>
-    [
+    'DimensionValue' => [
       'type' => 'string',
       'min' => 1,
       'max' => 255,
     ],
-    'Dimensions' =>
-    [
+    'Dimensions' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Dimension',
       ],
       'max' => 10,
     ],
-    'DisableAlarmActionsInput' =>
-    [
+    'DisableAlarmActionsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AlarmNames',
+      'required' => [
+        'AlarmNames',
       ],
-      'members' =>
-      [
-        'AlarmNames' =>
-        [
+      'members' => [
+        'AlarmNames' => [
           'shape' => 'AlarmNames',
         ],
       ],
     ],
-    'EnableAlarmActionsInput' =>
-    [
+    'EnableAlarmActionsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AlarmNames',
+      'required' => [
+        'AlarmNames',
       ],
-      'members' =>
-      [
-        'AlarmNames' =>
-        [
+      'members' => [
+        'AlarmNames' => [
           'shape' => 'AlarmNames',
         ],
       ],
     ],
-    'ErrorMessage' =>
-    [
+    'ErrorMessage' => [
       'type' => 'string',
       'min' => 1,
       'max' => 255,
     ],
-    'EvaluationPeriods' =>
-    [
+    'EvaluationPeriods' => [
       'type' => 'integer',
       'min' => 1,
     ],
-    'FaultDescription' =>
-    [
+    'FaultDescription' => [
       'type' => 'string',
     ],
-    'GetMetricStatisticsInput' =>
-    [
+    'GetMetricStatisticsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Namespace',
-        1 => 'MetricName',
-        2 => 'StartTime',
-        3 => 'EndTime',
-        4 => 'Period',
-        5 => 'Statistics',
+      'required' => [
+        'Namespace',
+        'MetricName',
+        'StartTime',
+        'EndTime',
+        'Period',
+        'Statistics',
       ],
-      'members' =>
-      [
-        'Namespace' =>
-        [
+      'members' => [
+        'Namespace' => [
           'shape' => 'Namespace',
         ],
-        'MetricName' =>
-        [
+        'MetricName' => [
           'shape' => 'MetricName',
         ],
-        'Dimensions' =>
-        [
+        'Dimensions' => [
           'shape' => 'Dimensions',
         ],
-        'StartTime' =>
-        [
+        'StartTime' => [
           'shape' => 'Timestamp',
         ],
-        'EndTime' =>
-        [
+        'EndTime' => [
           'shape' => 'Timestamp',
         ],
-        'Period' =>
-        [
+        'Period' => [
           'shape' => 'Period',
         ],
-        'Statistics' =>
-        [
+        'Statistics' => [
           'shape' => 'Statistics',
         ],
-        'Unit' =>
-        [
+        'Unit' => [
           'shape' => 'StandardUnit',
         ],
       ],
     ],
-    'GetMetricStatisticsOutput' =>
-    [
+    'GetMetricStatisticsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Label' =>
-        [
+      'members' => [
+        'Label' => [
           'shape' => 'MetricLabel',
         ],
-        'Datapoints' =>
-        [
+        'Datapoints' => [
           'shape' => 'Datapoints',
         ],
       ],
     ],
-    'HistoryData' =>
-    [
+    'HistoryData' => [
       'type' => 'string',
       'min' => 1,
       'max' => 4095,
     ],
-    'HistoryItemType' =>
-    [
+    'HistoryItemType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'ConfigurationUpdate',
-        1 => 'StateUpdate',
-        2 => 'Action',
+      'enum' => [
+        'ConfigurationUpdate',
+        'StateUpdate',
+        'Action',
       ],
     ],
-    'HistorySummary' =>
-    [
+    'HistorySummary' => [
       'type' => 'string',
       'min' => 1,
       'max' => 255,
     ],
-    'InternalServiceFault' =>
-    [
+    'InternalServiceFault' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'FaultDescription',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InternalServiceError',
         'httpStatusCode' => 500,
       ],
       'exception' => true,
-      'xmlOrder' =>
-      [
-        0 => 'Message',
+      'xmlOrder' => [
+        'Message',
       ],
     ],
-    'InvalidFormatFault' =>
-    [
+    'InvalidFormatFault' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidFormat',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidNextToken' =>
-    [
+    'InvalidNextToken' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidNextToken',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidParameterCombinationException' =>
-    [
+    'InvalidParameterCombinationException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'AwsQueryErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidParameterCombination',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidParameterValueException' =>
-    [
+    'InvalidParameterValueException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'AwsQueryErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidParameterValue',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'LimitExceededFault' =>
-    [
+    'LimitExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'LimitExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ListMetricsInput' =>
-    [
+    'ListMetricsInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Namespace' =>
-        [
+      'members' => [
+        'Namespace' => [
           'shape' => 'Namespace',
         ],
-        'MetricName' =>
-        [
+        'MetricName' => [
           'shape' => 'MetricName',
         ],
-        'Dimensions' =>
-        [
+        'Dimensions' => [
           'shape' => 'DimensionFilters',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'NextToken',
         ],
       ],
     ],
-    'ListMetricsOutput' =>
-    [
+    'ListMetricsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Metrics' =>
-        [
+      'members' => [
+        'Metrics' => [
           'shape' => 'Metrics',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'NextToken',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'Metrics',
-        1 => 'NextToken',
+      'xmlOrder' => [
+        'Metrics',
+        'NextToken',
       ],
     ],
-    'MaxRecords' =>
-    [
+    'MaxRecords' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 100,
     ],
-    'Metric' =>
-    [
+    'Metric' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Namespace' =>
-        [
+      'members' => [
+        'Namespace' => [
           'shape' => 'Namespace',
         ],
-        'MetricName' =>
-        [
+        'MetricName' => [
           'shape' => 'MetricName',
         ],
-        'Dimensions' =>
-        [
+        'Dimensions' => [
           'shape' => 'Dimensions',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'Namespace',
-        1 => 'MetricName',
-        2 => 'Dimensions',
+      'xmlOrder' => [
+        'Namespace',
+        'MetricName',
+        'Dimensions',
       ],
     ],
-    'MetricAlarm' =>
-    [
+    'MetricAlarm' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AlarmName' =>
-        [
+      'members' => [
+        'AlarmName' => [
           'shape' => 'AlarmName',
         ],
-        'AlarmArn' =>
-        [
+        'AlarmArn' => [
           'shape' => 'AlarmArn',
         ],
-        'AlarmDescription' =>
-        [
+        'AlarmDescription' => [
           'shape' => 'AlarmDescription',
         ],
-        'AlarmConfigurationUpdatedTimestamp' =>
-        [
+        'AlarmConfigurationUpdatedTimestamp' => [
           'shape' => 'Timestamp',
         ],
-        'ActionsEnabled' =>
-        [
+        'ActionsEnabled' => [
           'shape' => 'ActionsEnabled',
         ],
-        'OKActions' =>
-        [
+        'OKActions' => [
           'shape' => 'ResourceList',
         ],
-        'AlarmActions' =>
-        [
+        'AlarmActions' => [
           'shape' => 'ResourceList',
         ],
-        'InsufficientDataActions' =>
-        [
+        'InsufficientDataActions' => [
           'shape' => 'ResourceList',
         ],
-        'StateValue' =>
-        [
+        'StateValue' => [
           'shape' => 'StateValue',
         ],
-        'StateReason' =>
-        [
+        'StateReason' => [
           'shape' => 'StateReason',
         ],
-        'StateReasonData' =>
-        [
+        'StateReasonData' => [
           'shape' => 'StateReasonData',
         ],
-        'StateUpdatedTimestamp' =>
-        [
+        'StateUpdatedTimestamp' => [
           'shape' => 'Timestamp',
         ],
-        'MetricName' =>
-        [
+        'MetricName' => [
           'shape' => 'MetricName',
         ],
-        'Namespace' =>
-        [
+        'Namespace' => [
           'shape' => 'Namespace',
         ],
-        'Statistic' =>
-        [
+        'Statistic' => [
           'shape' => 'Statistic',
         ],
-        'Dimensions' =>
-        [
+        'Dimensions' => [
           'shape' => 'Dimensions',
         ],
-        'Period' =>
-        [
+        'Period' => [
           'shape' => 'Period',
         ],
-        'Unit' =>
-        [
+        'Unit' => [
           'shape' => 'StandardUnit',
         ],
-        'EvaluationPeriods' =>
-        [
+        'EvaluationPeriods' => [
           'shape' => 'EvaluationPeriods',
         ],
-        'Threshold' =>
-        [
+        'Threshold' => [
           'shape' => 'Threshold',
         ],
-        'ComparisonOperator' =>
-        [
+        'ComparisonOperator' => [
           'shape' => 'ComparisonOperator',
         ],
       ],
-      'xmlOrder' =>
-      [
-        0 => 'AlarmName',
-        1 => 'AlarmArn',
-        2 => 'AlarmDescription',
-        3 => 'AlarmConfigurationUpdatedTimestamp',
-        4 => 'ActionsEnabled',
-        5 => 'OKActions',
-        6 => 'AlarmActions',
-        7 => 'InsufficientDataActions',
-        8 => 'StateValue',
-        9 => 'StateReason',
-        10 => 'StateReasonData',
-        11 => 'StateUpdatedTimestamp',
-        12 => 'MetricName',
-        13 => 'Namespace',
-        14 => 'Statistic',
-        15 => 'Dimensions',
-        16 => 'Period',
-        17 => 'Unit',
-        18 => 'EvaluationPeriods',
-        19 => 'Threshold',
-        20 => 'ComparisonOperator',
+      'xmlOrder' => [
+        'AlarmName',
+        'AlarmArn',
+        'AlarmDescription',
+        'AlarmConfigurationUpdatedTimestamp',
+        'ActionsEnabled',
+        'OKActions',
+        'AlarmActions',
+        'InsufficientDataActions',
+        'StateValue',
+        'StateReason',
+        'StateReasonData',
+        'StateUpdatedTimestamp',
+        'MetricName',
+        'Namespace',
+        'Statistic',
+        'Dimensions',
+        'Period',
+        'Unit',
+        'EvaluationPeriods',
+        'Threshold',
+        'ComparisonOperator',
       ],
     ],
-    'MetricAlarms' =>
-    [
+    'MetricAlarms' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'MetricAlarm',
       ],
     ],
-    'MetricData' =>
-    [
+    'MetricData' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'MetricDatum',
       ],
     ],
-    'MetricDatum' =>
-    [
+    'MetricDatum' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'MetricName',
+      'required' => [
+        'MetricName',
       ],
-      'members' =>
-      [
-        'MetricName' =>
-        [
+      'members' => [
+        'MetricName' => [
           'shape' => 'MetricName',
         ],
-        'Dimensions' =>
-        [
+        'Dimensions' => [
           'shape' => 'Dimensions',
         ],
-        'Timestamp' =>
-        [
+        'Timestamp' => [
           'shape' => 'Timestamp',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'DatapointValue',
         ],
-        'StatisticValues' =>
-        [
+        'StatisticValues' => [
           'shape' => 'StatisticSet',
         ],
-        'Unit' =>
-        [
+        'Unit' => [
           'shape' => 'StandardUnit',
         ],
       ],
     ],
-    'MetricLabel' =>
-    [
+    'MetricLabel' => [
       'type' => 'string',
     ],
-    'MetricName' =>
-    [
+    'MetricName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 255,
     ],
-    'Metrics' =>
-    [
+    'Metrics' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Metric',
       ],
     ],
-    'MissingRequiredParameterException' =>
-    [
+    'MissingRequiredParameterException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'AwsQueryErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'MissingParameter',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'Namespace' =>
-    [
+    'Namespace' => [
       'type' => 'string',
       'min' => 1,
       'max' => 255,
       'pattern' => '[^:].*',
     ],
-    'NextToken' =>
-    [
+    'NextToken' => [
       'type' => 'string',
     ],
-    'Period' =>
-    [
+    'Period' => [
       'type' => 'integer',
       'min' => 60,
     ],
-    'PutMetricAlarmInput' =>
-    [
+    'PutMetricAlarmInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AlarmName',
-        1 => 'MetricName',
-        2 => 'Namespace',
-        3 => 'Statistic',
-        4 => 'Period',
-        5 => 'EvaluationPeriods',
-        6 => 'Threshold',
-        7 => 'ComparisonOperator',
+      'required' => [
+        'AlarmName',
+        'MetricName',
+        'Namespace',
+        'Statistic',
+        'Period',
+        'EvaluationPeriods',
+        'Threshold',
+        'ComparisonOperator',
       ],
-      'members' =>
-      [
-        'AlarmName' =>
-        [
+      'members' => [
+        'AlarmName' => [
           'shape' => 'AlarmName',
         ],
-        'AlarmDescription' =>
-        [
+        'AlarmDescription' => [
           'shape' => 'AlarmDescription',
         ],
-        'ActionsEnabled' =>
-        [
+        'ActionsEnabled' => [
           'shape' => 'ActionsEnabled',
         ],
-        'OKActions' =>
-        [
+        'OKActions' => [
           'shape' => 'ResourceList',
         ],
-        'AlarmActions' =>
-        [
+        'AlarmActions' => [
           'shape' => 'ResourceList',
         ],
-        'InsufficientDataActions' =>
-        [
+        'InsufficientDataActions' => [
           'shape' => 'ResourceList',
         ],
-        'MetricName' =>
-        [
+        'MetricName' => [
           'shape' => 'MetricName',
         ],
-        'Namespace' =>
-        [
+        'Namespace' => [
           'shape' => 'Namespace',
         ],
-        'Statistic' =>
-        [
+        'Statistic' => [
           'shape' => 'Statistic',
         ],
-        'Dimensions' =>
-        [
+        'Dimensions' => [
           'shape' => 'Dimensions',
         ],
-        'Period' =>
-        [
+        'Period' => [
           'shape' => 'Period',
         ],
-        'Unit' =>
-        [
+        'Unit' => [
           'shape' => 'StandardUnit',
         ],
-        'EvaluationPeriods' =>
-        [
+        'EvaluationPeriods' => [
           'shape' => 'EvaluationPeriods',
         ],
-        'Threshold' =>
-        [
+        'Threshold' => [
           'shape' => 'Threshold',
         ],
-        'ComparisonOperator' =>
-        [
+        'ComparisonOperator' => [
           'shape' => 'ComparisonOperator',
         ],
       ],
     ],
-    'PutMetricDataInput' =>
-    [
+    'PutMetricDataInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Namespace',
-        1 => 'MetricData',
+      'required' => [
+        'Namespace',
+        'MetricData',
       ],
-      'members' =>
-      [
-        'Namespace' =>
-        [
+      'members' => [
+        'Namespace' => [
           'shape' => 'Namespace',
         ],
-        'MetricData' =>
-        [
+        'MetricData' => [
           'shape' => 'MetricData',
         ],
       ],
     ],
-    'ResourceList' =>
-    [
+    'ResourceList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ResourceName',
       ],
       'max' => 5,
     ],
-    'ResourceName' =>
-    [
+    'ResourceName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 1024,
     ],
-    'ResourceNotFound' =>
-    [
+    'ResourceNotFound' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ResourceNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SetAlarmStateInput' =>
-    [
+    'SetAlarmStateInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AlarmName',
-        1 => 'StateValue',
-        2 => 'StateReason',
+      'required' => [
+        'AlarmName',
+        'StateValue',
+        'StateReason',
       ],
-      'members' =>
-      [
-        'AlarmName' =>
-        [
+      'members' => [
+        'AlarmName' => [
           'shape' => 'AlarmName',
         ],
-        'StateValue' =>
-        [
+        'StateValue' => [
           'shape' => 'StateValue',
         ],
-        'StateReason' =>
-        [
+        'StateReason' => [
           'shape' => 'StateReason',
         ],
-        'StateReasonData' =>
-        [
+        'StateReasonData' => [
           'shape' => 'StateReasonData',
         ],
       ],
     ],
-    'StandardUnit' =>
-    [
+    'StandardUnit' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'Seconds',
-        1 => 'Microseconds',
-        2 => 'Milliseconds',
-        3 => 'Bytes',
-        4 => 'Kilobytes',
-        5 => 'Megabytes',
-        6 => 'Gigabytes',
-        7 => 'Terabytes',
-        8 => 'Bits',
-        9 => 'Kilobits',
-        10 => 'Megabits',
-        11 => 'Gigabits',
-        12 => 'Terabits',
-        13 => 'Percent',
-        14 => 'Count',
-        15 => 'Bytes/Second',
-        16 => 'Kilobytes/Second',
-        17 => 'Megabytes/Second',
-        18 => 'Gigabytes/Second',
-        19 => 'Terabytes/Second',
-        20 => 'Bits/Second',
-        21 => 'Kilobits/Second',
-        22 => 'Megabits/Second',
-        23 => 'Gigabits/Second',
-        24 => 'Terabits/Second',
-        25 => 'Count/Second',
-        26 => 'None',
+      'enum' => [
+        'Seconds',
+        'Microseconds',
+        'Milliseconds',
+        'Bytes',
+        'Kilobytes',
+        'Megabytes',
+        'Gigabytes',
+        'Terabytes',
+        'Bits',
+        'Kilobits',
+        'Megabits',
+        'Gigabits',
+        'Terabits',
+        'Percent',
+        'Count',
+        'Bytes/Second',
+        'Kilobytes/Second',
+        'Megabytes/Second',
+        'Gigabytes/Second',
+        'Terabytes/Second',
+        'Bits/Second',
+        'Kilobits/Second',
+        'Megabits/Second',
+        'Gigabits/Second',
+        'Terabits/Second',
+        'Count/Second',
+        'None',
       ],
     ],
-    'StateReason' =>
-    [
+    'StateReason' => [
       'type' => 'string',
       'min' => 0,
       'max' => 1023,
     ],
-    'StateReasonData' =>
-    [
+    'StateReasonData' => [
       'type' => 'string',
       'min' => 0,
       'max' => 4000,
     ],
-    'StateValue' =>
-    [
+    'StateValue' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'OK',
-        1 => 'ALARM',
-        2 => 'INSUFFICIENT_DATA',
+      'enum' => [
+        'OK',
+        'ALARM',
+        'INSUFFICIENT_DATA',
       ],
     ],
-    'Statistic' =>
-    [
+    'Statistic' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'SampleCount',
-        1 => 'Average',
-        2 => 'Sum',
-        3 => 'Minimum',
-        4 => 'Maximum',
+      'enum' => [
+        'SampleCount',
+        'Average',
+        'Sum',
+        'Minimum',
+        'Maximum',
       ],
     ],
-    'StatisticSet' =>
-    [
+    'StatisticSet' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SampleCount',
-        1 => 'Sum',
-        2 => 'Minimum',
-        3 => 'Maximum',
+      'required' => [
+        'SampleCount',
+        'Sum',
+        'Minimum',
+        'Maximum',
       ],
-      'members' =>
-      [
-        'SampleCount' =>
-        [
+      'members' => [
+        'SampleCount' => [
           'shape' => 'DatapointValue',
         ],
-        'Sum' =>
-        [
+        'Sum' => [
           'shape' => 'DatapointValue',
         ],
-        'Minimum' =>
-        [
+        'Minimum' => [
           'shape' => 'DatapointValue',
         ],
-        'Maximum' =>
-        [
+        'Maximum' => [
           'shape' => 'DatapointValue',
         ],
       ],
     ],
-    'Statistics' =>
-    [
+    'Statistics' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Statistic',
       ],
       'min' => 1,
       'max' => 5,
     ],
-    'Threshold' =>
-    [
+    'Threshold' => [
       'type' => 'double',
     ],
-    'Timestamp' =>
-    [
+    'Timestamp' => [
       'type' => 'timestamp',
     ],
   ],

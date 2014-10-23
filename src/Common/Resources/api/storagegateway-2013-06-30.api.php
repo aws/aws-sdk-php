@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2013-06-30',
     'endpointPrefix' => 'storagegateway',
     'jsonVersion' => '1.1',
@@ -10,1788 +8,1364 @@ return [
     'targetPrefix' => 'StorageGateway_20130630',
     'protocol' => 'json',
   ],
-  'operations' =>
-  [
-    'ActivateGateway' =>
-    [
+  'operations' => [
+    'ActivateGateway' => [
       'name' => 'ActivateGateway',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ActivateGatewayInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ActivateGatewayOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'AddCache' =>
-    [
+    'AddCache' => [
       'name' => 'AddCache',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AddCacheInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AddCacheOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'AddUploadBuffer' =>
-    [
+    'AddUploadBuffer' => [
       'name' => 'AddUploadBuffer',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AddUploadBufferInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AddUploadBufferOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'AddWorkingStorage' =>
-    [
+    'AddWorkingStorage' => [
       'name' => 'AddWorkingStorage',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AddWorkingStorageInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AddWorkingStorageOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'CancelArchival' =>
-    [
+    'CancelArchival' => [
       'name' => 'CancelArchival',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CancelArchivalInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CancelArchivalOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'CancelRetrieval' =>
-    [
+    'CancelRetrieval' => [
       'name' => 'CancelRetrieval',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CancelRetrievalInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CancelRetrievalOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'CreateCachediSCSIVolume' =>
-    [
+    'CreateCachediSCSIVolume' => [
       'name' => 'CreateCachediSCSIVolume',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateCachediSCSIVolumeInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateCachediSCSIVolumeOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'CreateSnapshot' =>
-    [
+    'CreateSnapshot' => [
       'name' => 'CreateSnapshot',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateSnapshotInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateSnapshotOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'CreateSnapshotFromVolumeRecoveryPoint' =>
-    [
+    'CreateSnapshotFromVolumeRecoveryPoint' => [
       'name' => 'CreateSnapshotFromVolumeRecoveryPoint',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateSnapshotFromVolumeRecoveryPointInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateSnapshotFromVolumeRecoveryPointOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'CreateStorediSCSIVolume' =>
-    [
+    'CreateStorediSCSIVolume' => [
       'name' => 'CreateStorediSCSIVolume',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateStorediSCSIVolumeInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateStorediSCSIVolumeOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'CreateTapes' =>
-    [
+    'CreateTapes' => [
       'name' => 'CreateTapes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateTapesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateTapesOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DeleteBandwidthRateLimit' =>
-    [
+    'DeleteBandwidthRateLimit' => [
       'name' => 'DeleteBandwidthRateLimit',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteBandwidthRateLimitInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteBandwidthRateLimitOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DeleteChapCredentials' =>
-    [
+    'DeleteChapCredentials' => [
       'name' => 'DeleteChapCredentials',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteChapCredentialsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteChapCredentialsOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DeleteGateway' =>
-    [
+    'DeleteGateway' => [
       'name' => 'DeleteGateway',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteGatewayInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteGatewayOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DeleteSnapshotSchedule' =>
-    [
+    'DeleteSnapshotSchedule' => [
       'name' => 'DeleteSnapshotSchedule',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteSnapshotScheduleInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteSnapshotScheduleOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DeleteTape' =>
-    [
+    'DeleteTape' => [
       'name' => 'DeleteTape',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteTapeInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteTapeOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DeleteTapeArchive' =>
-    [
+    'DeleteTapeArchive' => [
       'name' => 'DeleteTapeArchive',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteTapeArchiveInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteTapeArchiveOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DeleteVolume' =>
-    [
+    'DeleteVolume' => [
       'name' => 'DeleteVolume',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteVolumeInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteVolumeOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DescribeBandwidthRateLimit' =>
-    [
+    'DescribeBandwidthRateLimit' => [
       'name' => 'DescribeBandwidthRateLimit',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeBandwidthRateLimitInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeBandwidthRateLimitOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DescribeCache' =>
-    [
+    'DescribeCache' => [
       'name' => 'DescribeCache',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeCacheInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeCacheOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DescribeCachediSCSIVolumes' =>
-    [
+    'DescribeCachediSCSIVolumes' => [
       'name' => 'DescribeCachediSCSIVolumes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeCachediSCSIVolumesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeCachediSCSIVolumesOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DescribeChapCredentials' =>
-    [
+    'DescribeChapCredentials' => [
       'name' => 'DescribeChapCredentials',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeChapCredentialsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeChapCredentialsOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DescribeGatewayInformation' =>
-    [
+    'DescribeGatewayInformation' => [
       'name' => 'DescribeGatewayInformation',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeGatewayInformationInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeGatewayInformationOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DescribeMaintenanceStartTime' =>
-    [
+    'DescribeMaintenanceStartTime' => [
       'name' => 'DescribeMaintenanceStartTime',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeMaintenanceStartTimeInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeMaintenanceStartTimeOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DescribeSnapshotSchedule' =>
-    [
+    'DescribeSnapshotSchedule' => [
       'name' => 'DescribeSnapshotSchedule',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeSnapshotScheduleInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeSnapshotScheduleOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DescribeStorediSCSIVolumes' =>
-    [
+    'DescribeStorediSCSIVolumes' => [
       'name' => 'DescribeStorediSCSIVolumes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeStorediSCSIVolumesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeStorediSCSIVolumesOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DescribeTapeArchives' =>
-    [
+    'DescribeTapeArchives' => [
       'name' => 'DescribeTapeArchives',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeTapeArchivesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeTapeArchivesOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DescribeTapeRecoveryPoints' =>
-    [
+    'DescribeTapeRecoveryPoints' => [
       'name' => 'DescribeTapeRecoveryPoints',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeTapeRecoveryPointsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeTapeRecoveryPointsOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DescribeTapes' =>
-    [
+    'DescribeTapes' => [
       'name' => 'DescribeTapes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeTapesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeTapesOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DescribeUploadBuffer' =>
-    [
+    'DescribeUploadBuffer' => [
       'name' => 'DescribeUploadBuffer',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeUploadBufferInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeUploadBufferOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DescribeVTLDevices' =>
-    [
+    'DescribeVTLDevices' => [
       'name' => 'DescribeVTLDevices',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeVTLDevicesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeVTLDevicesOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DescribeWorkingStorage' =>
-    [
+    'DescribeWorkingStorage' => [
       'name' => 'DescribeWorkingStorage',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeWorkingStorageInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeWorkingStorageOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DisableGateway' =>
-    [
+    'DisableGateway' => [
       'name' => 'DisableGateway',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DisableGatewayInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DisableGatewayOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ListGateways' =>
-    [
+    'ListGateways' => [
       'name' => 'ListGateways',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListGatewaysInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListGatewaysOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ListLocalDisks' =>
-    [
+    'ListLocalDisks' => [
       'name' => 'ListLocalDisks',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListLocalDisksInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListLocalDisksOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ListVolumeRecoveryPoints' =>
-    [
+    'ListVolumeRecoveryPoints' => [
       'name' => 'ListVolumeRecoveryPoints',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListVolumeRecoveryPointsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListVolumeRecoveryPointsOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ListVolumes' =>
-    [
+    'ListVolumes' => [
       'name' => 'ListVolumes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListVolumesInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListVolumesOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'RetrieveTapeArchive' =>
-    [
+    'RetrieveTapeArchive' => [
       'name' => 'RetrieveTapeArchive',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RetrieveTapeArchiveInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RetrieveTapeArchiveOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'RetrieveTapeRecoveryPoint' =>
-    [
+    'RetrieveTapeRecoveryPoint' => [
       'name' => 'RetrieveTapeRecoveryPoint',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RetrieveTapeRecoveryPointInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RetrieveTapeRecoveryPointOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ShutdownGateway' =>
-    [
+    'ShutdownGateway' => [
       'name' => 'ShutdownGateway',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ShutdownGatewayInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ShutdownGatewayOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'StartGateway' =>
-    [
+    'StartGateway' => [
       'name' => 'StartGateway',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'StartGatewayInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'StartGatewayOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'UpdateBandwidthRateLimit' =>
-    [
+    'UpdateBandwidthRateLimit' => [
       'name' => 'UpdateBandwidthRateLimit',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateBandwidthRateLimitInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdateBandwidthRateLimitOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'UpdateChapCredentials' =>
-    [
+    'UpdateChapCredentials' => [
       'name' => 'UpdateChapCredentials',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateChapCredentialsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdateChapCredentialsOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'UpdateGatewayInformation' =>
-    [
+    'UpdateGatewayInformation' => [
       'name' => 'UpdateGatewayInformation',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateGatewayInformationInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdateGatewayInformationOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'UpdateGatewaySoftwareNow' =>
-    [
+    'UpdateGatewaySoftwareNow' => [
       'name' => 'UpdateGatewaySoftwareNow',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateGatewaySoftwareNowInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdateGatewaySoftwareNowOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'UpdateMaintenanceStartTime' =>
-    [
+    'UpdateMaintenanceStartTime' => [
       'name' => 'UpdateMaintenanceStartTime',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateMaintenanceStartTimeInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdateMaintenanceStartTimeOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'UpdateSnapshotSchedule' =>
-    [
+    'UpdateSnapshotSchedule' => [
       'name' => 'UpdateSnapshotSchedule',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateSnapshotScheduleInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdateSnapshotScheduleOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidGatewayRequestException',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InternalServerError',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 500,
           ],
           'exception' => true,
@@ -1799,2619 +1373,1982 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'ActivateGatewayInput' =>
-    [
+  'shapes' => [
+    'ActivateGatewayInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ActivationKey',
-        1 => 'GatewayName',
-        2 => 'GatewayTimezone',
-        3 => 'GatewayRegion',
+      'required' => [
+        'ActivationKey',
+        'GatewayName',
+        'GatewayTimezone',
+        'GatewayRegion',
       ],
-      'members' =>
-      [
-        'ActivationKey' =>
-        [
+      'members' => [
+        'ActivationKey' => [
           'shape' => 'ActivationKey',
         ],
-        'GatewayName' =>
-        [
+        'GatewayName' => [
           'shape' => 'GatewayName',
         ],
-        'GatewayTimezone' =>
-        [
+        'GatewayTimezone' => [
           'shape' => 'GatewayTimezone',
         ],
-        'GatewayRegion' =>
-        [
+        'GatewayRegion' => [
           'shape' => 'RegionId',
         ],
-        'GatewayType' =>
-        [
+        'GatewayType' => [
           'shape' => 'GatewayType',
         ],
-        'TapeDriveType' =>
-        [
+        'TapeDriveType' => [
           'shape' => 'TapeDriveType',
         ],
-        'MediumChangerType' =>
-        [
+        'MediumChangerType' => [
           'shape' => 'MediumChangerType',
         ],
       ],
     ],
-    'ActivateGatewayOutput' =>
-    [
+    'ActivateGatewayOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'ActivationKey' =>
-    [
+    'ActivationKey' => [
       'type' => 'string',
       'min' => 1,
       'max' => 50,
     ],
-    'AddCacheInput' =>
-    [
+    'AddCacheInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
-        1 => 'DiskIds',
+      'required' => [
+        'GatewayARN',
+        'DiskIds',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'DiskIds' =>
-        [
+        'DiskIds' => [
           'shape' => 'DiskIds',
         ],
       ],
     ],
-    'AddCacheOutput' =>
-    [
+    'AddCacheOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'AddUploadBufferInput' =>
-    [
+    'AddUploadBufferInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
-        1 => 'DiskIds',
+      'required' => [
+        'GatewayARN',
+        'DiskIds',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'DiskIds' =>
-        [
+        'DiskIds' => [
           'shape' => 'DiskIds',
         ],
       ],
     ],
-    'AddUploadBufferOutput' =>
-    [
+    'AddUploadBufferOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'AddWorkingStorageInput' =>
-    [
+    'AddWorkingStorageInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
-        1 => 'DiskIds',
+      'required' => [
+        'GatewayARN',
+        'DiskIds',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'DiskIds' =>
-        [
+        'DiskIds' => [
           'shape' => 'DiskIds',
         ],
       ],
     ],
-    'AddWorkingStorageOutput' =>
-    [
+    'AddWorkingStorageOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'BandwidthDownloadRateLimit' =>
-    [
+    'BandwidthDownloadRateLimit' => [
       'type' => 'long',
       'min' => 102400,
     ],
-    'BandwidthType' =>
-    [
+    'BandwidthType' => [
       'type' => 'string',
       'min' => 3,
       'max' => 25,
     ],
-    'BandwidthUploadRateLimit' =>
-    [
+    'BandwidthUploadRateLimit' => [
       'type' => 'long',
       'min' => 51200,
     ],
-    'CachediSCSIVolume' =>
-    [
+    'CachediSCSIVolume' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VolumeARN' =>
-        [
+      'members' => [
+        'VolumeARN' => [
           'shape' => 'VolumeARN',
         ],
-        'VolumeId' =>
-        [
+        'VolumeId' => [
           'shape' => 'VolumeId',
         ],
-        'VolumeType' =>
-        [
+        'VolumeType' => [
           'shape' => 'VolumeType',
         ],
-        'VolumeStatus' =>
-        [
+        'VolumeStatus' => [
           'shape' => 'VolumeStatus',
         ],
-        'VolumeSizeInBytes' =>
-        [
+        'VolumeSizeInBytes' => [
           'shape' => 'long',
         ],
-        'VolumeProgress' =>
-        [
+        'VolumeProgress' => [
           'shape' => 'DoubleObject',
         ],
-        'SourceSnapshotId' =>
-        [
+        'SourceSnapshotId' => [
           'shape' => 'SnapshotId',
         ],
-        'VolumeiSCSIAttributes' =>
-        [
+        'VolumeiSCSIAttributes' => [
           'shape' => 'VolumeiSCSIAttributes',
         ],
       ],
     ],
-    'CachediSCSIVolumes' =>
-    [
+    'CachediSCSIVolumes' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CachediSCSIVolume',
       ],
     ],
-    'CancelArchivalInput' =>
-    [
+    'CancelArchivalInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
-        1 => 'TapeARN',
+      'required' => [
+        'GatewayARN',
+        'TapeARN',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'TapeARN' =>
-        [
+        'TapeARN' => [
           'shape' => 'TapeARN',
         ],
       ],
     ],
-    'CancelArchivalOutput' =>
-    [
+    'CancelArchivalOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TapeARN' =>
-        [
+      'members' => [
+        'TapeARN' => [
           'shape' => 'TapeARN',
         ],
       ],
     ],
-    'CancelRetrievalInput' =>
-    [
+    'CancelRetrievalInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
-        1 => 'TapeARN',
+      'required' => [
+        'GatewayARN',
+        'TapeARN',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'TapeARN' =>
-        [
+        'TapeARN' => [
           'shape' => 'TapeARN',
         ],
       ],
     ],
-    'CancelRetrievalOutput' =>
-    [
+    'CancelRetrievalOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TapeARN' =>
-        [
+      'members' => [
+        'TapeARN' => [
           'shape' => 'TapeARN',
         ],
       ],
     ],
-    'ChapCredentials' =>
-    [
+    'ChapCredentials' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ChapInfo',
       ],
     ],
-    'ChapInfo' =>
-    [
+    'ChapInfo' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TargetARN' =>
-        [
+      'members' => [
+        'TargetARN' => [
           'shape' => 'TargetARN',
         ],
-        'SecretToAuthenticateInitiator' =>
-        [
+        'SecretToAuthenticateInitiator' => [
           'shape' => 'ChapSecret',
         ],
-        'InitiatorName' =>
-        [
+        'InitiatorName' => [
           'shape' => 'IqnName',
         ],
-        'SecretToAuthenticateTarget' =>
-        [
+        'SecretToAuthenticateTarget' => [
           'shape' => 'ChapSecret',
         ],
       ],
     ],
-    'ChapSecret' =>
-    [
+    'ChapSecret' => [
       'type' => 'string',
       'min' => 12,
       'max' => 16,
     ],
-    'ClientToken' =>
-    [
+    'ClientToken' => [
       'type' => 'string',
       'min' => 5,
       'max' => 100,
     ],
-    'CreateCachediSCSIVolumeInput' =>
-    [
+    'CreateCachediSCSIVolumeInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
-        1 => 'VolumeSizeInBytes',
-        2 => 'TargetName',
-        3 => 'NetworkInterfaceId',
-        4 => 'ClientToken',
+      'required' => [
+        'GatewayARN',
+        'VolumeSizeInBytes',
+        'TargetName',
+        'NetworkInterfaceId',
+        'ClientToken',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'VolumeSizeInBytes' =>
-        [
+        'VolumeSizeInBytes' => [
           'shape' => 'long',
         ],
-        'SnapshotId' =>
-        [
+        'SnapshotId' => [
           'shape' => 'SnapshotId',
         ],
-        'TargetName' =>
-        [
+        'TargetName' => [
           'shape' => 'TargetName',
         ],
-        'NetworkInterfaceId' =>
-        [
+        'NetworkInterfaceId' => [
           'shape' => 'NetworkInterfaceId',
         ],
-        'ClientToken' =>
-        [
+        'ClientToken' => [
           'shape' => 'ClientToken',
         ],
       ],
     ],
-    'CreateCachediSCSIVolumeOutput' =>
-    [
+    'CreateCachediSCSIVolumeOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VolumeARN' =>
-        [
+      'members' => [
+        'VolumeARN' => [
           'shape' => 'VolumeARN',
         ],
-        'TargetARN' =>
-        [
+        'TargetARN' => [
           'shape' => 'TargetARN',
         ],
       ],
     ],
-    'CreateSnapshotFromVolumeRecoveryPointInput' =>
-    [
+    'CreateSnapshotFromVolumeRecoveryPointInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VolumeARN',
-        1 => 'SnapshotDescription',
+      'required' => [
+        'VolumeARN',
+        'SnapshotDescription',
       ],
-      'members' =>
-      [
-        'VolumeARN' =>
-        [
+      'members' => [
+        'VolumeARN' => [
           'shape' => 'VolumeARN',
         ],
-        'SnapshotDescription' =>
-        [
+        'SnapshotDescription' => [
           'shape' => 'SnapshotDescription',
         ],
       ],
     ],
-    'CreateSnapshotFromVolumeRecoveryPointOutput' =>
-    [
+    'CreateSnapshotFromVolumeRecoveryPointOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SnapshotId' =>
-        [
+      'members' => [
+        'SnapshotId' => [
           'shape' => 'SnapshotId',
         ],
-        'VolumeARN' =>
-        [
+        'VolumeARN' => [
           'shape' => 'VolumeARN',
         ],
-        'VolumeRecoveryPointTime' =>
-        [
+        'VolumeRecoveryPointTime' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'CreateSnapshotInput' =>
-    [
+    'CreateSnapshotInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VolumeARN',
-        1 => 'SnapshotDescription',
+      'required' => [
+        'VolumeARN',
+        'SnapshotDescription',
       ],
-      'members' =>
-      [
-        'VolumeARN' =>
-        [
+      'members' => [
+        'VolumeARN' => [
           'shape' => 'VolumeARN',
         ],
-        'SnapshotDescription' =>
-        [
+        'SnapshotDescription' => [
           'shape' => 'SnapshotDescription',
         ],
       ],
     ],
-    'CreateSnapshotOutput' =>
-    [
+    'CreateSnapshotOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VolumeARN' =>
-        [
+      'members' => [
+        'VolumeARN' => [
           'shape' => 'VolumeARN',
         ],
-        'SnapshotId' =>
-        [
+        'SnapshotId' => [
           'shape' => 'SnapshotId',
         ],
       ],
     ],
-    'CreateStorediSCSIVolumeInput' =>
-    [
+    'CreateStorediSCSIVolumeInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
-        1 => 'DiskId',
-        2 => 'PreserveExistingData',
-        3 => 'TargetName',
-        4 => 'NetworkInterfaceId',
+      'required' => [
+        'GatewayARN',
+        'DiskId',
+        'PreserveExistingData',
+        'TargetName',
+        'NetworkInterfaceId',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'DiskId' =>
-        [
+        'DiskId' => [
           'shape' => 'DiskId',
         ],
-        'SnapshotId' =>
-        [
+        'SnapshotId' => [
           'shape' => 'SnapshotId',
         ],
-        'PreserveExistingData' =>
-        [
+        'PreserveExistingData' => [
           'shape' => 'boolean',
         ],
-        'TargetName' =>
-        [
+        'TargetName' => [
           'shape' => 'TargetName',
         ],
-        'NetworkInterfaceId' =>
-        [
+        'NetworkInterfaceId' => [
           'shape' => 'NetworkInterfaceId',
         ],
       ],
     ],
-    'CreateStorediSCSIVolumeOutput' =>
-    [
+    'CreateStorediSCSIVolumeOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VolumeARN' =>
-        [
+      'members' => [
+        'VolumeARN' => [
           'shape' => 'VolumeARN',
         ],
-        'VolumeSizeInBytes' =>
-        [
+        'VolumeSizeInBytes' => [
           'shape' => 'long',
         ],
-        'TargetARN' =>
-        [
+        'TargetARN' => [
           'shape' => 'TargetARN',
         ],
       ],
     ],
-    'CreateTapesInput' =>
-    [
+    'CreateTapesInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
-        1 => 'TapeSizeInBytes',
-        2 => 'ClientToken',
-        3 => 'NumTapesToCreate',
-        4 => 'TapeBarcodePrefix',
+      'required' => [
+        'GatewayARN',
+        'TapeSizeInBytes',
+        'ClientToken',
+        'NumTapesToCreate',
+        'TapeBarcodePrefix',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'TapeSizeInBytes' =>
-        [
+        'TapeSizeInBytes' => [
           'shape' => 'TapeSize',
         ],
-        'ClientToken' =>
-        [
+        'ClientToken' => [
           'shape' => 'ClientToken',
         ],
-        'NumTapesToCreate' =>
-        [
+        'NumTapesToCreate' => [
           'shape' => 'NumTapesToCreate',
         ],
-        'TapeBarcodePrefix' =>
-        [
+        'TapeBarcodePrefix' => [
           'shape' => 'TapeBarcodePrefix',
         ],
       ],
     ],
-    'CreateTapesOutput' =>
-    [
+    'CreateTapesOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TapeARNs' =>
-        [
+      'members' => [
+        'TapeARNs' => [
           'shape' => 'TapeARNs',
         ],
       ],
     ],
-    'DayOfWeek' =>
-    [
+    'DayOfWeek' => [
       'type' => 'integer',
       'min' => 0,
       'max' => 6,
     ],
-    'DeleteBandwidthRateLimitInput' =>
-    [
+    'DeleteBandwidthRateLimitInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
-        1 => 'BandwidthType',
+      'required' => [
+        'GatewayARN',
+        'BandwidthType',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'BandwidthType' =>
-        [
+        'BandwidthType' => [
           'shape' => 'BandwidthType',
         ],
       ],
     ],
-    'DeleteBandwidthRateLimitOutput' =>
-    [
+    'DeleteBandwidthRateLimitOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'DeleteChapCredentialsInput' =>
-    [
+    'DeleteChapCredentialsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TargetARN',
-        1 => 'InitiatorName',
+      'required' => [
+        'TargetARN',
+        'InitiatorName',
       ],
-      'members' =>
-      [
-        'TargetARN' =>
-        [
+      'members' => [
+        'TargetARN' => [
           'shape' => 'TargetARN',
         ],
-        'InitiatorName' =>
-        [
+        'InitiatorName' => [
           'shape' => 'IqnName',
         ],
       ],
     ],
-    'DeleteChapCredentialsOutput' =>
-    [
+    'DeleteChapCredentialsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TargetARN' =>
-        [
+      'members' => [
+        'TargetARN' => [
           'shape' => 'TargetARN',
         ],
-        'InitiatorName' =>
-        [
+        'InitiatorName' => [
           'shape' => 'IqnName',
         ],
       ],
     ],
-    'DeleteGatewayInput' =>
-    [
+    'DeleteGatewayInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
+      'required' => [
+        'GatewayARN',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'DeleteGatewayOutput' =>
-    [
+    'DeleteGatewayOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'DeleteSnapshotScheduleInput' =>
-    [
+    'DeleteSnapshotScheduleInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VolumeARN',
+      'required' => [
+        'VolumeARN',
       ],
-      'members' =>
-      [
-        'VolumeARN' =>
-        [
+      'members' => [
+        'VolumeARN' => [
           'shape' => 'VolumeARN',
         ],
       ],
     ],
-    'DeleteSnapshotScheduleOutput' =>
-    [
+    'DeleteSnapshotScheduleOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VolumeARN' =>
-        [
+      'members' => [
+        'VolumeARN' => [
           'shape' => 'VolumeARN',
         ],
       ],
     ],
-    'DeleteTapeArchiveInput' =>
-    [
+    'DeleteTapeArchiveInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TapeARN',
+      'required' => [
+        'TapeARN',
       ],
-      'members' =>
-      [
-        'TapeARN' =>
-        [
+      'members' => [
+        'TapeARN' => [
           'shape' => 'TapeARN',
         ],
       ],
     ],
-    'DeleteTapeArchiveOutput' =>
-    [
+    'DeleteTapeArchiveOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TapeARN' =>
-        [
+      'members' => [
+        'TapeARN' => [
           'shape' => 'TapeARN',
         ],
       ],
     ],
-    'DeleteTapeInput' =>
-    [
+    'DeleteTapeInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
-        1 => 'TapeARN',
+      'required' => [
+        'GatewayARN',
+        'TapeARN',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'TapeARN' =>
-        [
+        'TapeARN' => [
           'shape' => 'TapeARN',
         ],
       ],
     ],
-    'DeleteTapeOutput' =>
-    [
+    'DeleteTapeOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TapeARN' =>
-        [
+      'members' => [
+        'TapeARN' => [
           'shape' => 'TapeARN',
         ],
       ],
     ],
-    'DeleteVolumeInput' =>
-    [
+    'DeleteVolumeInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VolumeARN',
+      'required' => [
+        'VolumeARN',
       ],
-      'members' =>
-      [
-        'VolumeARN' =>
-        [
+      'members' => [
+        'VolumeARN' => [
           'shape' => 'VolumeARN',
         ],
       ],
     ],
-    'DeleteVolumeOutput' =>
-    [
+    'DeleteVolumeOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VolumeARN' =>
-        [
+      'members' => [
+        'VolumeARN' => [
           'shape' => 'VolumeARN',
         ],
       ],
     ],
-    'DescribeBandwidthRateLimitInput' =>
-    [
+    'DescribeBandwidthRateLimitInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
+      'required' => [
+        'GatewayARN',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'DescribeBandwidthRateLimitOutput' =>
-    [
+    'DescribeBandwidthRateLimitOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'AverageUploadRateLimitInBitsPerSec' =>
-        [
+        'AverageUploadRateLimitInBitsPerSec' => [
           'shape' => 'BandwidthUploadRateLimit',
         ],
-        'AverageDownloadRateLimitInBitsPerSec' =>
-        [
+        'AverageDownloadRateLimitInBitsPerSec' => [
           'shape' => 'BandwidthDownloadRateLimit',
         ],
       ],
     ],
-    'DescribeCacheInput' =>
-    [
+    'DescribeCacheInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
+      'required' => [
+        'GatewayARN',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'DescribeCacheOutput' =>
-    [
+    'DescribeCacheOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'DiskIds' =>
-        [
+        'DiskIds' => [
           'shape' => 'DiskIds',
         ],
-        'CacheAllocatedInBytes' =>
-        [
+        'CacheAllocatedInBytes' => [
           'shape' => 'long',
         ],
-        'CacheUsedPercentage' =>
-        [
+        'CacheUsedPercentage' => [
           'shape' => 'double',
         ],
-        'CacheDirtyPercentage' =>
-        [
+        'CacheDirtyPercentage' => [
           'shape' => 'double',
         ],
-        'CacheHitPercentage' =>
-        [
+        'CacheHitPercentage' => [
           'shape' => 'double',
         ],
-        'CacheMissPercentage' =>
-        [
+        'CacheMissPercentage' => [
           'shape' => 'double',
         ],
       ],
     ],
-    'DescribeCachediSCSIVolumesInput' =>
-    [
+    'DescribeCachediSCSIVolumesInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VolumeARNs',
+      'required' => [
+        'VolumeARNs',
       ],
-      'members' =>
-      [
-        'VolumeARNs' =>
-        [
+      'members' => [
+        'VolumeARNs' => [
           'shape' => 'VolumeARNs',
         ],
       ],
     ],
-    'DescribeCachediSCSIVolumesOutput' =>
-    [
+    'DescribeCachediSCSIVolumesOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CachediSCSIVolumes' =>
-        [
+      'members' => [
+        'CachediSCSIVolumes' => [
           'shape' => 'CachediSCSIVolumes',
         ],
       ],
     ],
-    'DescribeChapCredentialsInput' =>
-    [
+    'DescribeChapCredentialsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TargetARN',
+      'required' => [
+        'TargetARN',
       ],
-      'members' =>
-      [
-        'TargetARN' =>
-        [
+      'members' => [
+        'TargetARN' => [
           'shape' => 'TargetARN',
         ],
       ],
     ],
-    'DescribeChapCredentialsOutput' =>
-    [
+    'DescribeChapCredentialsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ChapCredentials' =>
-        [
+      'members' => [
+        'ChapCredentials' => [
           'shape' => 'ChapCredentials',
         ],
       ],
     ],
-    'DescribeGatewayInformationInput' =>
-    [
+    'DescribeGatewayInformationInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
+      'required' => [
+        'GatewayARN',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'DescribeGatewayInformationOutput' =>
-    [
+    'DescribeGatewayInformationOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'GatewayId' =>
-        [
+        'GatewayId' => [
           'shape' => 'GatewayId',
         ],
-        'GatewayTimezone' =>
-        [
+        'GatewayTimezone' => [
           'shape' => 'GatewayTimezone',
         ],
-        'GatewayState' =>
-        [
+        'GatewayState' => [
           'shape' => 'GatewayState',
         ],
-        'GatewayNetworkInterfaces' =>
-        [
+        'GatewayNetworkInterfaces' => [
           'shape' => 'GatewayNetworkInterfaces',
         ],
-        'GatewayType' =>
-        [
+        'GatewayType' => [
           'shape' => 'GatewayType',
         ],
-        'NextUpdateAvailabilityDate' =>
-        [
+        'NextUpdateAvailabilityDate' => [
           'shape' => 'NextUpdateAvailabilityDate',
         ],
       ],
     ],
-    'DescribeMaintenanceStartTimeInput' =>
-    [
+    'DescribeMaintenanceStartTimeInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
+      'required' => [
+        'GatewayARN',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'DescribeMaintenanceStartTimeOutput' =>
-    [
+    'DescribeMaintenanceStartTimeOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'HourOfDay' =>
-        [
+        'HourOfDay' => [
           'shape' => 'HourOfDay',
         ],
-        'MinuteOfHour' =>
-        [
+        'MinuteOfHour' => [
           'shape' => 'MinuteOfHour',
         ],
-        'DayOfWeek' =>
-        [
+        'DayOfWeek' => [
           'shape' => 'DayOfWeek',
         ],
-        'Timezone' =>
-        [
+        'Timezone' => [
           'shape' => 'GatewayTimezone',
         ],
       ],
     ],
-    'DescribeSnapshotScheduleInput' =>
-    [
+    'DescribeSnapshotScheduleInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VolumeARN',
+      'required' => [
+        'VolumeARN',
       ],
-      'members' =>
-      [
-        'VolumeARN' =>
-        [
+      'members' => [
+        'VolumeARN' => [
           'shape' => 'VolumeARN',
         ],
       ],
     ],
-    'DescribeSnapshotScheduleOutput' =>
-    [
+    'DescribeSnapshotScheduleOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VolumeARN' =>
-        [
+      'members' => [
+        'VolumeARN' => [
           'shape' => 'VolumeARN',
         ],
-        'StartAt' =>
-        [
+        'StartAt' => [
           'shape' => 'HourOfDay',
         ],
-        'RecurrenceInHours' =>
-        [
+        'RecurrenceInHours' => [
           'shape' => 'RecurrenceInHours',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
-        'Timezone' =>
-        [
+        'Timezone' => [
           'shape' => 'GatewayTimezone',
         ],
       ],
     ],
-    'DescribeStorediSCSIVolumesInput' =>
-    [
+    'DescribeStorediSCSIVolumesInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VolumeARNs',
+      'required' => [
+        'VolumeARNs',
       ],
-      'members' =>
-      [
-        'VolumeARNs' =>
-        [
+      'members' => [
+        'VolumeARNs' => [
           'shape' => 'VolumeARNs',
         ],
       ],
     ],
-    'DescribeStorediSCSIVolumesOutput' =>
-    [
+    'DescribeStorediSCSIVolumesOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StorediSCSIVolumes' =>
-        [
+      'members' => [
+        'StorediSCSIVolumes' => [
           'shape' => 'StorediSCSIVolumes',
         ],
       ],
     ],
-    'DescribeTapeArchivesInput' =>
-    [
+    'DescribeTapeArchivesInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TapeARNs' =>
-        [
+      'members' => [
+        'TapeARNs' => [
           'shape' => 'TapeARNs',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
         ],
-        'Limit' =>
-        [
+        'Limit' => [
           'shape' => 'PositiveIntObject',
         ],
       ],
     ],
-    'DescribeTapeArchivesOutput' =>
-    [
+    'DescribeTapeArchivesOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TapeArchives' =>
-        [
+      'members' => [
+        'TapeArchives' => [
           'shape' => 'TapeArchives',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
         ],
       ],
     ],
-    'DescribeTapeRecoveryPointsInput' =>
-    [
+    'DescribeTapeRecoveryPointsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
+      'required' => [
+        'GatewayARN',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
         ],
-        'Limit' =>
-        [
+        'Limit' => [
           'shape' => 'PositiveIntObject',
         ],
       ],
     ],
-    'DescribeTapeRecoveryPointsOutput' =>
-    [
+    'DescribeTapeRecoveryPointsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'TapeRecoveryPointInfos' =>
-        [
+        'TapeRecoveryPointInfos' => [
           'shape' => 'TapeRecoveryPointInfos',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
         ],
       ],
     ],
-    'DescribeTapesInput' =>
-    [
+    'DescribeTapesInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
+      'required' => [
+        'GatewayARN',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'TapeARNs' =>
-        [
+        'TapeARNs' => [
           'shape' => 'TapeARNs',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
         ],
-        'Limit' =>
-        [
+        'Limit' => [
           'shape' => 'PositiveIntObject',
         ],
       ],
     ],
-    'DescribeTapesOutput' =>
-    [
+    'DescribeTapesOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Tapes' =>
-        [
+      'members' => [
+        'Tapes' => [
           'shape' => 'Tapes',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
         ],
       ],
     ],
-    'DescribeUploadBufferInput' =>
-    [
+    'DescribeUploadBufferInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
+      'required' => [
+        'GatewayARN',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'DescribeUploadBufferOutput' =>
-    [
+    'DescribeUploadBufferOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'DiskIds' =>
-        [
+        'DiskIds' => [
           'shape' => 'DiskIds',
         ],
-        'UploadBufferUsedInBytes' =>
-        [
+        'UploadBufferUsedInBytes' => [
           'shape' => 'long',
         ],
-        'UploadBufferAllocatedInBytes' =>
-        [
+        'UploadBufferAllocatedInBytes' => [
           'shape' => 'long',
         ],
       ],
     ],
-    'DescribeVTLDevicesInput' =>
-    [
+    'DescribeVTLDevicesInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
+      'required' => [
+        'GatewayARN',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'VTLDeviceARNs' =>
-        [
+        'VTLDeviceARNs' => [
           'shape' => 'VTLDeviceARNs',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
         ],
-        'Limit' =>
-        [
+        'Limit' => [
           'shape' => 'PositiveIntObject',
         ],
       ],
     ],
-    'DescribeVTLDevicesOutput' =>
-    [
+    'DescribeVTLDevicesOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'VTLDevices' =>
-        [
+        'VTLDevices' => [
           'shape' => 'VTLDevices',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
         ],
       ],
     ],
-    'DescribeWorkingStorageInput' =>
-    [
+    'DescribeWorkingStorageInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
+      'required' => [
+        'GatewayARN',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'DescribeWorkingStorageOutput' =>
-    [
+    'DescribeWorkingStorageOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'DiskIds' =>
-        [
+        'DiskIds' => [
           'shape' => 'DiskIds',
         ],
-        'WorkingStorageUsedInBytes' =>
-        [
+        'WorkingStorageUsedInBytes' => [
           'shape' => 'long',
         ],
-        'WorkingStorageAllocatedInBytes' =>
-        [
+        'WorkingStorageAllocatedInBytes' => [
           'shape' => 'long',
         ],
       ],
     ],
-    'Description' =>
-    [
+    'Description' => [
       'type' => 'string',
       'min' => 1,
       'max' => 255,
     ],
-    'DeviceiSCSIAttributes' =>
-    [
+    'DeviceiSCSIAttributes' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TargetARN' =>
-        [
+      'members' => [
+        'TargetARN' => [
           'shape' => 'TargetARN',
         ],
-        'NetworkInterfaceId' =>
-        [
+        'NetworkInterfaceId' => [
           'shape' => 'NetworkInterfaceId',
         ],
-        'NetworkInterfacePort' =>
-        [
+        'NetworkInterfacePort' => [
           'shape' => 'integer',
         ],
-        'ChapEnabled' =>
-        [
+        'ChapEnabled' => [
           'shape' => 'boolean',
         ],
       ],
     ],
-    'DisableGatewayInput' =>
-    [
+    'DisableGatewayInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
+      'required' => [
+        'GatewayARN',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'DisableGatewayOutput' =>
-    [
+    'DisableGatewayOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'Disk' =>
-    [
+    'Disk' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DiskId' =>
-        [
+      'members' => [
+        'DiskId' => [
           'shape' => 'DiskId',
         ],
-        'DiskPath' =>
-        [
+        'DiskPath' => [
           'shape' => 'string',
         ],
-        'DiskNode' =>
-        [
+        'DiskNode' => [
           'shape' => 'string',
         ],
-        'DiskSizeInBytes' =>
-        [
+        'DiskSizeInBytes' => [
           'shape' => 'long',
         ],
-        'DiskAllocationType' =>
-        [
+        'DiskAllocationType' => [
           'shape' => 'DiskAllocationType',
         ],
-        'DiskAllocationResource' =>
-        [
+        'DiskAllocationResource' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'DiskAllocationType' =>
-    [
+    'DiskAllocationType' => [
       'type' => 'string',
       'min' => 3,
       'max' => 100,
     ],
-    'DiskId' =>
-    [
+    'DiskId' => [
       'type' => 'string',
       'min' => 1,
       'max' => 300,
     ],
-    'DiskIds' =>
-    [
+    'DiskIds' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DiskId',
       ],
     ],
-    'Disks' =>
-    [
+    'Disks' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Disk',
       ],
     ],
-    'DoubleObject' =>
-    [
+    'DoubleObject' => [
       'type' => 'double',
     ],
-    'ErrorCode' =>
-    [
+    'ErrorCode' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'ActivationKeyExpired',
-        1 => 'ActivationKeyInvalid',
-        2 => 'ActivationKeyNotFound',
-        3 => 'GatewayInternalError',
-        4 => 'GatewayNotConnected',
-        5 => 'GatewayNotFound',
-        6 => 'GatewayProxyNetworkConnectionBusy',
-        7 => 'AuthenticationFailure',
-        8 => 'BandwidthThrottleScheduleNotFound',
-        9 => 'Blocked',
-        10 => 'CannotExportSnapshot',
-        11 => 'ChapCredentialNotFound',
-        12 => 'DiskAlreadyAllocated',
-        13 => 'DiskDoesNotExist',
-        14 => 'DiskSizeGreaterThanVolumeMaxSize',
-        15 => 'DiskSizeLessThanVolumeSize',
-        16 => 'DiskSizeNotGigAligned',
-        17 => 'DuplicateCertificateInfo',
-        18 => 'DuplicateSchedule',
-        19 => 'EndpointNotFound',
-        20 => 'IAMNotSupported',
-        21 => 'InitiatorInvalid',
-        22 => 'InitiatorNotFound',
-        23 => 'InternalError',
-        24 => 'InvalidGateway',
-        25 => 'InvalidEndpoint',
-        26 => 'InvalidParameters',
-        27 => 'InvalidSchedule',
-        28 => 'LocalStorageLimitExceeded',
-        29 => 'LunAlreadyAllocated ',
-        30 => 'LunInvalid',
-        31 => 'MaximumContentLengthExceeded',
-        32 => 'MaximumTapeCartridgeCountExceeded',
-        33 => 'MaximumVolumeCountExceeded',
-        34 => 'NetworkConfigurationChanged',
-        35 => 'NoDisksAvailable',
-        36 => 'NotImplemented',
-        37 => 'NotSupported',
-        38 => 'OperationAborted',
-        39 => 'OutdatedGateway',
-        40 => 'ParametersNotImplemented',
-        41 => 'RegionInvalid',
-        42 => 'RequestTimeout',
-        43 => 'ServiceUnavailable',
-        44 => 'SnapshotDeleted',
-        45 => 'SnapshotIdInvalid',
-        46 => 'SnapshotInProgress',
-        47 => 'SnapshotNotFound',
-        48 => 'SnapshotScheduleNotFound',
-        49 => 'StagingAreaFull',
-        50 => 'StorageFailure',
-        51 => 'TapeCartridgeNotFound',
-        52 => 'TargetAlreadyExists',
-        53 => 'TargetInvalid',
-        54 => 'TargetNotFound',
-        55 => 'UnauthorizedOperation',
-        56 => 'VolumeAlreadyExists',
-        57 => 'VolumeIdInvalid',
-        58 => 'VolumeInUse',
-        59 => 'VolumeNotFound',
-        60 => 'VolumeNotReady',
+      'enum' => [
+        'ActivationKeyExpired',
+        'ActivationKeyInvalid',
+        'ActivationKeyNotFound',
+        'GatewayInternalError',
+        'GatewayNotConnected',
+        'GatewayNotFound',
+        'GatewayProxyNetworkConnectionBusy',
+        'AuthenticationFailure',
+        'BandwidthThrottleScheduleNotFound',
+        'Blocked',
+        'CannotExportSnapshot',
+        'ChapCredentialNotFound',
+        'DiskAlreadyAllocated',
+        'DiskDoesNotExist',
+        'DiskSizeGreaterThanVolumeMaxSize',
+        'DiskSizeLessThanVolumeSize',
+        'DiskSizeNotGigAligned',
+        'DuplicateCertificateInfo',
+        'DuplicateSchedule',
+        'EndpointNotFound',
+        'IAMNotSupported',
+        'InitiatorInvalid',
+        'InitiatorNotFound',
+        'InternalError',
+        'InvalidGateway',
+        'InvalidEndpoint',
+        'InvalidParameters',
+        'InvalidSchedule',
+        'LocalStorageLimitExceeded',
+        'LunAlreadyAllocated ',
+        'LunInvalid',
+        'MaximumContentLengthExceeded',
+        'MaximumTapeCartridgeCountExceeded',
+        'MaximumVolumeCountExceeded',
+        'NetworkConfigurationChanged',
+        'NoDisksAvailable',
+        'NotImplemented',
+        'NotSupported',
+        'OperationAborted',
+        'OutdatedGateway',
+        'ParametersNotImplemented',
+        'RegionInvalid',
+        'RequestTimeout',
+        'ServiceUnavailable',
+        'SnapshotDeleted',
+        'SnapshotIdInvalid',
+        'SnapshotInProgress',
+        'SnapshotNotFound',
+        'SnapshotScheduleNotFound',
+        'StagingAreaFull',
+        'StorageFailure',
+        'TapeCartridgeNotFound',
+        'TargetAlreadyExists',
+        'TargetInvalid',
+        'TargetNotFound',
+        'UnauthorizedOperation',
+        'VolumeAlreadyExists',
+        'VolumeIdInvalid',
+        'VolumeInUse',
+        'VolumeNotFound',
+        'VolumeNotReady',
       ],
     ],
-    'GatewayARN' =>
-    [
+    'GatewayARN' => [
       'type' => 'string',
       'min' => 50,
       'max' => 500,
     ],
-    'GatewayId' =>
-    [
+    'GatewayId' => [
       'type' => 'string',
       'min' => 12,
       'max' => 30,
     ],
-    'GatewayInfo' =>
-    [
+    'GatewayInfo' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'GatewayType' =>
-        [
+        'GatewayType' => [
           'shape' => 'GatewayType',
         ],
-        'GatewayOperationalState' =>
-        [
+        'GatewayOperationalState' => [
           'shape' => 'GatewayOperationalState',
         ],
       ],
     ],
-    'GatewayName' =>
-    [
+    'GatewayName' => [
       'type' => 'string',
       'min' => 2,
       'max' => 255,
       'pattern' => '^[ -\\.0-\\[\\]-~]*[!-\\.0-\\[\\]-~][ -\\.0-\\[\\]-~]*$',
     ],
-    'GatewayNetworkInterfaces' =>
-    [
+    'GatewayNetworkInterfaces' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'NetworkInterface',
       ],
     ],
-    'GatewayOperationalState' =>
-    [
+    'GatewayOperationalState' => [
       'type' => 'string',
       'min' => 2,
       'max' => 25,
     ],
-    'GatewayState' =>
-    [
+    'GatewayState' => [
       'type' => 'string',
       'min' => 2,
       'max' => 25,
     ],
-    'GatewayTimezone' =>
-    [
+    'GatewayTimezone' => [
       'type' => 'string',
       'min' => 3,
       'max' => 10,
     ],
-    'GatewayType' =>
-    [
+    'GatewayType' => [
       'type' => 'string',
       'min' => 2,
       'max' => 20,
     ],
-    'Gateways' =>
-    [
+    'Gateways' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'GatewayInfo',
       ],
     ],
-    'HourOfDay' =>
-    [
+    'HourOfDay' => [
       'type' => 'integer',
       'min' => 0,
       'max' => 23,
     ],
-    'InternalServerError' =>
-    [
+    'InternalServerError' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'string',
         ],
-        'error' =>
-        [
+        'error' => [
           'shape' => 'StorageGatewayError',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 500,
       ],
       'exception' => true,
     ],
-    'InvalidGatewayRequestException' =>
-    [
+    'InvalidGatewayRequestException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'string',
         ],
-        'error' =>
-        [
+        'error' => [
           'shape' => 'StorageGatewayError',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'IqnName' =>
-    [
+    'IqnName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 255,
       'pattern' => '[0-9a-z:.-]+',
     ],
-    'ListGatewaysInput' =>
-    [
+    'ListGatewaysInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'Marker',
         ],
-        'Limit' =>
-        [
+        'Limit' => [
           'shape' => 'PositiveIntObject',
         ],
       ],
     ],
-    'ListGatewaysOutput' =>
-    [
+    'ListGatewaysOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Gateways' =>
-        [
+      'members' => [
+        'Gateways' => [
           'shape' => 'Gateways',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
         ],
       ],
     ],
-    'ListLocalDisksInput' =>
-    [
+    'ListLocalDisksInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
+      'required' => [
+        'GatewayARN',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'ListLocalDisksOutput' =>
-    [
+    'ListLocalDisksOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'Disks' =>
-        [
+        'Disks' => [
           'shape' => 'Disks',
         ],
       ],
     ],
-    'ListVolumeRecoveryPointsInput' =>
-    [
+    'ListVolumeRecoveryPointsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
+      'required' => [
+        'GatewayARN',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'ListVolumeRecoveryPointsOutput' =>
-    [
+    'ListVolumeRecoveryPointsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'VolumeRecoveryPointInfos' =>
-        [
+        'VolumeRecoveryPointInfos' => [
           'shape' => 'VolumeRecoveryPointInfos',
         ],
       ],
     ],
-    'ListVolumesInput' =>
-    [
+    'ListVolumesInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
+      'required' => [
+        'GatewayARN',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
         ],
-        'Limit' =>
-        [
+        'Limit' => [
           'shape' => 'PositiveIntObject',
         ],
       ],
     ],
-    'ListVolumesOutput' =>
-    [
+    'ListVolumesOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
         ],
-        'VolumeInfos' =>
-        [
+        'VolumeInfos' => [
           'shape' => 'VolumeInfos',
         ],
       ],
     ],
-    'Marker' =>
-    [
+    'Marker' => [
       'type' => 'string',
       'min' => 1,
       'max' => 1000,
     ],
-    'MediumChangerType' =>
-    [
+    'MediumChangerType' => [
       'type' => 'string',
       'min' => 2,
       'max' => 50,
     ],
-    'MinuteOfHour' =>
-    [
+    'MinuteOfHour' => [
       'type' => 'integer',
       'min' => 0,
       'max' => 59,
     ],
-    'NetworkInterface' =>
-    [
+    'NetworkInterface' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Ipv4Address' =>
-        [
+      'members' => [
+        'Ipv4Address' => [
           'shape' => 'string',
         ],
-        'MacAddress' =>
-        [
+        'MacAddress' => [
           'shape' => 'string',
         ],
-        'Ipv6Address' =>
-        [
+        'Ipv6Address' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'NetworkInterfaceId' =>
-    [
+    'NetworkInterfaceId' => [
       'type' => 'string',
       'pattern' => '\\A(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d](\\.(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d]]{3}\\z',
     ],
-    'NextUpdateAvailabilityDate' =>
-    [
+    'NextUpdateAvailabilityDate' => [
       'type' => 'string',
       'min' => 1,
       'max' => 25,
     ],
-    'NumTapesToCreate' =>
-    [
+    'NumTapesToCreate' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 10,
     ],
-    'PositiveIntObject' =>
-    [
+    'PositiveIntObject' => [
       'type' => 'integer',
       'min' => 1,
     ],
-    'RecurrenceInHours' =>
-    [
+    'RecurrenceInHours' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 24,
     ],
-    'RegionId' =>
-    [
+    'RegionId' => [
       'type' => 'string',
       'min' => 1,
       'max' => 25,
     ],
-    'RetrieveTapeArchiveInput' =>
-    [
+    'RetrieveTapeArchiveInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TapeARN',
-        1 => 'GatewayARN',
+      'required' => [
+        'TapeARN',
+        'GatewayARN',
       ],
-      'members' =>
-      [
-        'TapeARN' =>
-        [
+      'members' => [
+        'TapeARN' => [
           'shape' => 'TapeARN',
         ],
-        'GatewayARN' =>
-        [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'RetrieveTapeArchiveOutput' =>
-    [
+    'RetrieveTapeArchiveOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TapeARN' =>
-        [
+      'members' => [
+        'TapeARN' => [
           'shape' => 'TapeARN',
         ],
       ],
     ],
-    'RetrieveTapeRecoveryPointInput' =>
-    [
+    'RetrieveTapeRecoveryPointInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TapeARN',
-        1 => 'GatewayARN',
+      'required' => [
+        'TapeARN',
+        'GatewayARN',
       ],
-      'members' =>
-      [
-        'TapeARN' =>
-        [
+      'members' => [
+        'TapeARN' => [
           'shape' => 'TapeARN',
         ],
-        'GatewayARN' =>
-        [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'RetrieveTapeRecoveryPointOutput' =>
-    [
+    'RetrieveTapeRecoveryPointOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TapeARN' =>
-        [
+      'members' => [
+        'TapeARN' => [
           'shape' => 'TapeARN',
         ],
       ],
     ],
-    'ShutdownGatewayInput' =>
-    [
+    'ShutdownGatewayInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
+      'required' => [
+        'GatewayARN',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'ShutdownGatewayOutput' =>
-    [
+    'ShutdownGatewayOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'SnapshotDescription' =>
-    [
+    'SnapshotDescription' => [
       'type' => 'string',
       'min' => 1,
       'max' => 255,
     ],
-    'SnapshotId' =>
-    [
+    'SnapshotId' => [
       'type' => 'string',
       'pattern' => '\\Asnap-[0-9a-fA-F]{8}\\z',
     ],
-    'StartGatewayInput' =>
-    [
+    'StartGatewayInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
+      'required' => [
+        'GatewayARN',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'StartGatewayOutput' =>
-    [
+    'StartGatewayOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'StorageGatewayError' =>
-    [
+    'StorageGatewayError' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'errorCode' =>
-        [
+      'members' => [
+        'errorCode' => [
           'shape' => 'ErrorCode',
         ],
-        'errorDetails' =>
-        [
+        'errorDetails' => [
           'shape' => 'errorDetails',
         ],
       ],
     ],
-    'StorediSCSIVolume' =>
-    [
+    'StorediSCSIVolume' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VolumeARN' =>
-        [
+      'members' => [
+        'VolumeARN' => [
           'shape' => 'VolumeARN',
         ],
-        'VolumeId' =>
-        [
+        'VolumeId' => [
           'shape' => 'VolumeId',
         ],
-        'VolumeType' =>
-        [
+        'VolumeType' => [
           'shape' => 'VolumeType',
         ],
-        'VolumeStatus' =>
-        [
+        'VolumeStatus' => [
           'shape' => 'VolumeStatus',
         ],
-        'VolumeSizeInBytes' =>
-        [
+        'VolumeSizeInBytes' => [
           'shape' => 'long',
         ],
-        'VolumeProgress' =>
-        [
+        'VolumeProgress' => [
           'shape' => 'DoubleObject',
         ],
-        'VolumeDiskId' =>
-        [
+        'VolumeDiskId' => [
           'shape' => 'DiskId',
         ],
-        'SourceSnapshotId' =>
-        [
+        'SourceSnapshotId' => [
           'shape' => 'SnapshotId',
         ],
-        'PreservedExistingData' =>
-        [
+        'PreservedExistingData' => [
           'shape' => 'boolean',
         ],
-        'VolumeiSCSIAttributes' =>
-        [
+        'VolumeiSCSIAttributes' => [
           'shape' => 'VolumeiSCSIAttributes',
         ],
       ],
     ],
-    'StorediSCSIVolumes' =>
-    [
+    'StorediSCSIVolumes' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'StorediSCSIVolume',
       ],
     ],
-    'Tape' =>
-    [
+    'Tape' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TapeARN' =>
-        [
+      'members' => [
+        'TapeARN' => [
           'shape' => 'TapeARN',
         ],
-        'TapeBarcode' =>
-        [
+        'TapeBarcode' => [
           'shape' => 'TapeBarcode',
         ],
-        'TapeSizeInBytes' =>
-        [
+        'TapeSizeInBytes' => [
           'shape' => 'TapeSize',
         ],
-        'TapeStatus' =>
-        [
+        'TapeStatus' => [
           'shape' => 'TapeStatus',
         ],
-        'VTLDevice' =>
-        [
+        'VTLDevice' => [
           'shape' => 'VTLDeviceARN',
         ],
-        'Progress' =>
-        [
+        'Progress' => [
           'shape' => 'DoubleObject',
         ],
       ],
     ],
-    'TapeARN' =>
-    [
+    'TapeARN' => [
       'type' => 'string',
       'min' => 50,
       'max' => 500,
     ],
-    'TapeARNs' =>
-    [
+    'TapeARNs' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'TapeARN',
       ],
     ],
-    'TapeArchive' =>
-    [
+    'TapeArchive' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TapeARN' =>
-        [
+      'members' => [
+        'TapeARN' => [
           'shape' => 'TapeARN',
         ],
-        'TapeBarcode' =>
-        [
+        'TapeBarcode' => [
           'shape' => 'TapeBarcode',
         ],
-        'TapeSizeInBytes' =>
-        [
+        'TapeSizeInBytes' => [
           'shape' => 'TapeSize',
         ],
-        'CompletionTime' =>
-        [
+        'CompletionTime' => [
           'shape' => 'Time',
         ],
-        'RetrievedTo' =>
-        [
+        'RetrievedTo' => [
           'shape' => 'GatewayARN',
         ],
-        'TapeStatus' =>
-        [
+        'TapeStatus' => [
           'shape' => 'TapeArchiveStatus',
         ],
       ],
     ],
-    'TapeArchiveStatus' =>
-    [
+    'TapeArchiveStatus' => [
       'type' => 'string',
     ],
-    'TapeArchives' =>
-    [
+    'TapeArchives' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'TapeArchive',
       ],
     ],
-    'TapeBarcode' =>
-    [
+    'TapeBarcode' => [
       'type' => 'string',
       'min' => 8,
       'max' => 16,
       'pattern' => '^[A-Z0-9]*$',
     ],
-    'TapeBarcodePrefix' =>
-    [
+    'TapeBarcodePrefix' => [
       'type' => 'string',
       'min' => 1,
       'max' => 4,
       'pattern' => '^[A-Z]*$',
     ],
-    'TapeDriveType' =>
-    [
+    'TapeDriveType' => [
       'type' => 'string',
       'min' => 2,
       'max' => 50,
     ],
-    'TapeRecoveryPointInfo' =>
-    [
+    'TapeRecoveryPointInfo' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TapeARN' =>
-        [
+      'members' => [
+        'TapeARN' => [
           'shape' => 'TapeARN',
         ],
-        'TapeRecoveryPointTime' =>
-        [
+        'TapeRecoveryPointTime' => [
           'shape' => 'Time',
         ],
-        'TapeSizeInBytes' =>
-        [
+        'TapeSizeInBytes' => [
           'shape' => 'TapeSize',
         ],
-        'TapeStatus' =>
-        [
+        'TapeStatus' => [
           'shape' => 'TapeRecoveryPointStatus',
         ],
       ],
     ],
-    'TapeRecoveryPointInfos' =>
-    [
+    'TapeRecoveryPointInfos' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'TapeRecoveryPointInfo',
       ],
     ],
-    'TapeRecoveryPointStatus' =>
-    [
+    'TapeRecoveryPointStatus' => [
       'type' => 'string',
     ],
-    'TapeSize' =>
-    [
+    'TapeSize' => [
       'type' => 'long',
       'min' => 107374182400,
       'max' => 2748779069440,
     ],
-    'TapeStatus' =>
-    [
+    'TapeStatus' => [
       'type' => 'string',
     ],
-    'Tapes' =>
-    [
+    'Tapes' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Tape',
       ],
     ],
-    'TargetARN' =>
-    [
+    'TargetARN' => [
       'type' => 'string',
       'min' => 50,
       'max' => 800,
     ],
-    'TargetName' =>
-    [
+    'TargetName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 200,
       'pattern' => '^[-\\.;a-z0-9]+$',
     ],
-    'Time' =>
-    [
+    'Time' => [
       'type' => 'timestamp',
     ],
-    'UpdateBandwidthRateLimitInput' =>
-    [
+    'UpdateBandwidthRateLimitInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
+      'required' => [
+        'GatewayARN',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'AverageUploadRateLimitInBitsPerSec' =>
-        [
+        'AverageUploadRateLimitInBitsPerSec' => [
           'shape' => 'BandwidthUploadRateLimit',
         ],
-        'AverageDownloadRateLimitInBitsPerSec' =>
-        [
+        'AverageDownloadRateLimitInBitsPerSec' => [
           'shape' => 'BandwidthDownloadRateLimit',
         ],
       ],
     ],
-    'UpdateBandwidthRateLimitOutput' =>
-    [
+    'UpdateBandwidthRateLimitOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'UpdateChapCredentialsInput' =>
-    [
+    'UpdateChapCredentialsInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TargetARN',
-        1 => 'SecretToAuthenticateInitiator',
-        2 => 'InitiatorName',
+      'required' => [
+        'TargetARN',
+        'SecretToAuthenticateInitiator',
+        'InitiatorName',
       ],
-      'members' =>
-      [
-        'TargetARN' =>
-        [
+      'members' => [
+        'TargetARN' => [
           'shape' => 'TargetARN',
         ],
-        'SecretToAuthenticateInitiator' =>
-        [
+        'SecretToAuthenticateInitiator' => [
           'shape' => 'ChapSecret',
         ],
-        'InitiatorName' =>
-        [
+        'InitiatorName' => [
           'shape' => 'IqnName',
         ],
-        'SecretToAuthenticateTarget' =>
-        [
+        'SecretToAuthenticateTarget' => [
           'shape' => 'ChapSecret',
         ],
       ],
     ],
-    'UpdateChapCredentialsOutput' =>
-    [
+    'UpdateChapCredentialsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TargetARN' =>
-        [
+      'members' => [
+        'TargetARN' => [
           'shape' => 'TargetARN',
         ],
-        'InitiatorName' =>
-        [
+        'InitiatorName' => [
           'shape' => 'IqnName',
         ],
       ],
     ],
-    'UpdateGatewayInformationInput' =>
-    [
+    'UpdateGatewayInformationInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
+      'required' => [
+        'GatewayARN',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'GatewayName' =>
-        [
+        'GatewayName' => [
           'shape' => 'GatewayName',
         ],
-        'GatewayTimezone' =>
-        [
+        'GatewayTimezone' => [
           'shape' => 'GatewayTimezone',
         ],
       ],
     ],
-    'UpdateGatewayInformationOutput' =>
-    [
+    'UpdateGatewayInformationOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'UpdateGatewaySoftwareNowInput' =>
-    [
+    'UpdateGatewaySoftwareNowInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
+      'required' => [
+        'GatewayARN',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'UpdateGatewaySoftwareNowOutput' =>
-    [
+    'UpdateGatewaySoftwareNowOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'UpdateMaintenanceStartTimeInput' =>
-    [
+    'UpdateMaintenanceStartTimeInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GatewayARN',
-        1 => 'HourOfDay',
-        2 => 'MinuteOfHour',
-        3 => 'DayOfWeek',
+      'required' => [
+        'GatewayARN',
+        'HourOfDay',
+        'MinuteOfHour',
+        'DayOfWeek',
       ],
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
-        'HourOfDay' =>
-        [
+        'HourOfDay' => [
           'shape' => 'HourOfDay',
         ],
-        'MinuteOfHour' =>
-        [
+        'MinuteOfHour' => [
           'shape' => 'MinuteOfHour',
         ],
-        'DayOfWeek' =>
-        [
+        'DayOfWeek' => [
           'shape' => 'DayOfWeek',
         ],
       ],
     ],
-    'UpdateMaintenanceStartTimeOutput' =>
-    [
+    'UpdateMaintenanceStartTimeOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayARN' =>
-        [
+      'members' => [
+        'GatewayARN' => [
           'shape' => 'GatewayARN',
         ],
       ],
     ],
-    'UpdateSnapshotScheduleInput' =>
-    [
+    'UpdateSnapshotScheduleInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VolumeARN',
-        1 => 'StartAt',
-        2 => 'RecurrenceInHours',
+      'required' => [
+        'VolumeARN',
+        'StartAt',
+        'RecurrenceInHours',
       ],
-      'members' =>
-      [
-        'VolumeARN' =>
-        [
+      'members' => [
+        'VolumeARN' => [
           'shape' => 'VolumeARN',
         ],
-        'StartAt' =>
-        [
+        'StartAt' => [
           'shape' => 'HourOfDay',
         ],
-        'RecurrenceInHours' =>
-        [
+        'RecurrenceInHours' => [
           'shape' => 'RecurrenceInHours',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'Description',
         ],
       ],
     ],
-    'UpdateSnapshotScheduleOutput' =>
-    [
+    'UpdateSnapshotScheduleOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VolumeARN' =>
-        [
+      'members' => [
+        'VolumeARN' => [
           'shape' => 'VolumeARN',
         ],
       ],
     ],
-    'VTLDevice' =>
-    [
+    'VTLDevice' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VTLDeviceARN' =>
-        [
+      'members' => [
+        'VTLDeviceARN' => [
           'shape' => 'VTLDeviceARN',
         ],
-        'VTLDeviceType' =>
-        [
+        'VTLDeviceType' => [
           'shape' => 'VTLDeviceType',
         ],
-        'VTLDeviceVendor' =>
-        [
+        'VTLDeviceVendor' => [
           'shape' => 'VTLDeviceVendor',
         ],
-        'VTLDeviceProductIdentifier' =>
-        [
+        'VTLDeviceProductIdentifier' => [
           'shape' => 'VTLDeviceProductIdentifier',
         ],
-        'DeviceiSCSIAttributes' =>
-        [
+        'DeviceiSCSIAttributes' => [
           'shape' => 'DeviceiSCSIAttributes',
         ],
       ],
     ],
-    'VTLDeviceARN' =>
-    [
+    'VTLDeviceARN' => [
       'type' => 'string',
       'min' => 50,
       'max' => 500,
     ],
-    'VTLDeviceARNs' =>
-    [
+    'VTLDeviceARNs' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'VTLDeviceARN',
       ],
     ],
-    'VTLDeviceProductIdentifier' =>
-    [
+    'VTLDeviceProductIdentifier' => [
       'type' => 'string',
     ],
-    'VTLDeviceType' =>
-    [
+    'VTLDeviceType' => [
       'type' => 'string',
     ],
-    'VTLDeviceVendor' =>
-    [
+    'VTLDeviceVendor' => [
       'type' => 'string',
     ],
-    'VTLDevices' =>
-    [
+    'VTLDevices' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'VTLDevice',
       ],
     ],
-    'VolumeARN' =>
-    [
+    'VolumeARN' => [
       'type' => 'string',
       'min' => 50,
       'max' => 500,
     ],
-    'VolumeARNs' =>
-    [
+    'VolumeARNs' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'VolumeARN',
       ],
     ],
-    'VolumeId' =>
-    [
+    'VolumeId' => [
       'type' => 'string',
       'min' => 12,
       'max' => 30,
     ],
-    'VolumeInfo' =>
-    [
+    'VolumeInfo' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VolumeARN' =>
-        [
+      'members' => [
+        'VolumeARN' => [
           'shape' => 'VolumeARN',
         ],
-        'VolumeType' =>
-        [
+        'VolumeType' => [
           'shape' => 'VolumeType',
         ],
       ],
     ],
-    'VolumeInfos' =>
-    [
+    'VolumeInfos' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'VolumeInfo',
       ],
     ],
-    'VolumeRecoveryPointInfo' =>
-    [
+    'VolumeRecoveryPointInfo' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VolumeARN' =>
-        [
+      'members' => [
+        'VolumeARN' => [
           'shape' => 'VolumeARN',
         ],
-        'VolumeSizeInBytes' =>
-        [
+        'VolumeSizeInBytes' => [
           'shape' => 'long',
         ],
-        'VolumeUsageInBytes' =>
-        [
+        'VolumeUsageInBytes' => [
           'shape' => 'long',
         ],
-        'VolumeRecoveryPointTime' =>
-        [
+        'VolumeRecoveryPointTime' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'VolumeRecoveryPointInfos' =>
-    [
+    'VolumeRecoveryPointInfos' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'VolumeRecoveryPointInfo',
       ],
     ],
-    'VolumeStatus' =>
-    [
+    'VolumeStatus' => [
       'type' => 'string',
       'min' => 3,
       'max' => 50,
     ],
-    'VolumeType' =>
-    [
+    'VolumeType' => [
       'type' => 'string',
       'min' => 3,
       'max' => 100,
     ],
-    'VolumeiSCSIAttributes' =>
-    [
+    'VolumeiSCSIAttributes' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TargetARN' =>
-        [
+      'members' => [
+        'TargetARN' => [
           'shape' => 'TargetARN',
         ],
-        'NetworkInterfaceId' =>
-        [
+        'NetworkInterfaceId' => [
           'shape' => 'NetworkInterfaceId',
         ],
-        'NetworkInterfacePort' =>
-        [
+        'NetworkInterfacePort' => [
           'shape' => 'integer',
         ],
-        'LunNumber' =>
-        [
+        'LunNumber' => [
           'shape' => 'PositiveIntObject',
         ],
-        'ChapEnabled' =>
-        [
+        'ChapEnabled' => [
           'shape' => 'boolean',
         ],
       ],
     ],
-    'boolean' =>
-    [
+    'boolean' => [
       'type' => 'boolean',
     ],
-    'double' =>
-    [
+    'double' => [
       'type' => 'double',
     ],
-    'errorDetails' =>
-    [
+    'errorDetails' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'string',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'string',
       ],
     ],
-    'integer' =>
-    [
+    'integer' => [
       'type' => 'integer',
     ],
-    'long' =>
-    [
+    'long' => [
       'type' => 'long',
     ],
-    'string' =>
-    [
+    'string' => [
       'type' => 'string',
     ],
   ],

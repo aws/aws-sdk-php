@@ -1,29 +1,21 @@
-<?php
-return [
-  'pagination' =>
-  [
-    'DescribeConnections' =>
-    [
+<?php return [
+  'pagination' => [
+    'DescribeConnections' => [
       'result_key' => 'connections',
     ],
-    'DescribeConnectionsOnInterconnect' =>
-    [
+    'DescribeConnectionsOnInterconnect' => [
       'result_key' => 'connections',
     ],
-    'DescribeInterconnects' =>
-    [
+    'DescribeInterconnects' => [
       'result_key' => 'interconnects',
     ],
-    'DescribeLocations' =>
-    [
+    'DescribeLocations' => [
       'result_key' => 'locations',
     ],
-    'DescribeVirtualGateways' =>
-    [
+    'DescribeVirtualGateways' => [
       'result_key' => 'virtualGateways',
     ],
-    'DescribeVirtualInterfaces' =>
-    [
+    'DescribeVirtualInterfaces' => [
       'result_key' => 'virtualInterfaces',
     ],
   ],

@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2014-05-31',
     'endpointPrefix' => 'cloudfront',
     'globalEndpoint' => 'cloudfront.amazonaws.com',
@@ -10,1659 +8,1280 @@ return [
     'signatureVersion' => 'v4',
     'protocol' => 'rest-xml',
   ],
-  'operations' =>
-  [
-    'CreateCloudFrontOriginAccessIdentity' =>
-    [
+  'operations' => [
+    'CreateCloudFrontOriginAccessIdentity' => [
       'name' => 'CreateCloudFrontOriginAccessIdentity2014_05_31',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/2014-05-31/origin-access-identity/cloudfront',
         'responseCode' => 201,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateCloudFrontOriginAccessIdentityRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateCloudFrontOriginAccessIdentityResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'CloudFrontOriginAccessIdentityAlreadyExists',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 409,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'MissingBody',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'TooManyCloudFrontOriginAccessIdentities',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidArgument',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InconsistentQuantities',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'CreateDistribution' =>
-    [
+    'CreateDistribution' => [
       'name' => 'CreateDistribution2014_05_31',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/2014-05-31/distribution',
         'responseCode' => 201,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateDistributionRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateDistributionResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'CNAMEAlreadyExists',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 409,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DistributionAlreadyExists',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 409,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidOrigin',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidOriginAccessIdentity',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'AccessDenied',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'TooManyTrustedSigners',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'TrustedSignerDoesNotExist',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'InvalidViewerCertificate',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        8 =>
         [
           'shape' => 'MissingBody',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        9 =>
         [
           'shape' => 'TooManyDistributionCNAMEs',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        10 =>
         [
           'shape' => 'TooManyDistributions',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        11 =>
         [
           'shape' => 'InvalidDefaultRootObject',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        12 =>
         [
           'shape' => 'InvalidRelativePath',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        13 =>
         [
           'shape' => 'InvalidErrorCode',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        14 =>
         [
           'shape' => 'InvalidResponseCode',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        15 =>
         [
           'shape' => 'InvalidArgument',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        16 =>
         [
           'shape' => 'InvalidRequiredProtocol',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        17 =>
         [
           'shape' => 'NoSuchOrigin',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        18 =>
         [
           'shape' => 'TooManyOrigins',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        19 =>
         [
           'shape' => 'TooManyCacheBehaviors',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        20 =>
         [
           'shape' => 'TooManyCookieNamesInWhiteList',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        21 =>
         [
           'shape' => 'InvalidForwardCookies',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        22 =>
         [
           'shape' => 'TooManyHeadersInForwardedValues',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        23 =>
         [
           'shape' => 'InvalidHeadersForS3Origin',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        24 =>
         [
           'shape' => 'InconsistentQuantities',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        25 =>
         [
           'shape' => 'TooManyCertificates',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        26 =>
         [
           'shape' => 'InvalidLocationCode',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        27 =>
         [
           'shape' => 'InvalidGeoRestrictionParameter',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'CreateInvalidation' =>
-    [
+    'CreateInvalidation' => [
       'name' => 'CreateInvalidation2014_05_31',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/2014-05-31/distribution/{DistributionId}/invalidation',
         'responseCode' => 201,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateInvalidationRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateInvalidationResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessDenied',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'MissingBody',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidArgument',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'NoSuchDistribution',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'BatchTooLarge',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 413,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'TooManyInvalidationsInProgress',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'InconsistentQuantities',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'CreateStreamingDistribution' =>
-    [
+    'CreateStreamingDistribution' => [
       'name' => 'CreateStreamingDistribution2014_05_31',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/2014-05-31/streaming-distribution',
         'responseCode' => 201,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateStreamingDistributionRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateStreamingDistributionResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'CNAMEAlreadyExists',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 409,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'StreamingDistributionAlreadyExists',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 409,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidOrigin',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidOriginAccessIdentity',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'AccessDenied',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'TooManyTrustedSigners',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'TrustedSignerDoesNotExist',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'MissingBody',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        8 =>
         [
           'shape' => 'TooManyStreamingDistributionCNAMEs',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        9 =>
         [
           'shape' => 'TooManyStreamingDistributions',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        10 =>
         [
           'shape' => 'InvalidArgument',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        11 =>
         [
           'shape' => 'InconsistentQuantities',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DeleteCloudFrontOriginAccessIdentity' =>
-    [
+    'DeleteCloudFrontOriginAccessIdentity' => [
       'name' => 'DeleteCloudFrontOriginAccessIdentity2014_05_31',
-      'http' =>
-      [
+      'http' => [
         'method' => 'DELETE',
         'requestUri' => '/2014-05-31/origin-access-identity/cloudfront/{Id}',
         'responseCode' => 204,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteCloudFrontOriginAccessIdentityRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessDenied',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidIfMatchVersion',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'NoSuchCloudFrontOriginAccessIdentity',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'PreconditionFailed',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 412,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'CloudFrontOriginAccessIdentityInUse',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 409,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DeleteDistribution' =>
-    [
+    'DeleteDistribution' => [
       'name' => 'DeleteDistribution2014_05_31',
-      'http' =>
-      [
+      'http' => [
         'method' => 'DELETE',
         'requestUri' => '/2014-05-31/distribution/{Id}',
         'responseCode' => 204,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteDistributionRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessDenied',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DistributionNotDisabled',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 409,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidIfMatchVersion',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'NoSuchDistribution',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'PreconditionFailed',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 412,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'DeleteStreamingDistribution' =>
-    [
+    'DeleteStreamingDistribution' => [
       'name' => 'DeleteStreamingDistribution2014_05_31',
-      'http' =>
-      [
+      'http' => [
         'method' => 'DELETE',
         'requestUri' => '/2014-05-31/streaming-distribution/{Id}',
         'responseCode' => 204,
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteStreamingDistributionRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessDenied',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'StreamingDistributionNotDisabled',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 409,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidIfMatchVersion',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'NoSuchStreamingDistribution',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'PreconditionFailed',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 412,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'GetCloudFrontOriginAccessIdentity' =>
-    [
+    'GetCloudFrontOriginAccessIdentity' => [
       'name' => 'GetCloudFrontOriginAccessIdentity2014_05_31',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2014-05-31/origin-access-identity/cloudfront/{Id}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetCloudFrontOriginAccessIdentityRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetCloudFrontOriginAccessIdentityResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchCloudFrontOriginAccessIdentity',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'AccessDenied',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'GetCloudFrontOriginAccessIdentityConfig' =>
-    [
+    'GetCloudFrontOriginAccessIdentityConfig' => [
       'name' => 'GetCloudFrontOriginAccessIdentityConfig2014_05_31',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2014-05-31/origin-access-identity/cloudfront/{Id}/config',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetCloudFrontOriginAccessIdentityConfigRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetCloudFrontOriginAccessIdentityConfigResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchCloudFrontOriginAccessIdentity',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'AccessDenied',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'GetDistribution' =>
-    [
+    'GetDistribution' => [
       'name' => 'GetDistribution2014_05_31',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2014-05-31/distribution/{Id}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetDistributionRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetDistributionResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchDistribution',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'AccessDenied',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'GetDistributionConfig' =>
-    [
+    'GetDistributionConfig' => [
       'name' => 'GetDistributionConfig2014_05_31',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2014-05-31/distribution/{Id}/config',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetDistributionConfigRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetDistributionConfigResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchDistribution',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'AccessDenied',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'GetInvalidation' =>
-    [
+    'GetInvalidation' => [
       'name' => 'GetInvalidation2014_05_31',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2014-05-31/distribution/{DistributionId}/invalidation/{Id}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetInvalidationRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetInvalidationResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchInvalidation',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'NoSuchDistribution',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'AccessDenied',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'GetStreamingDistribution' =>
-    [
+    'GetStreamingDistribution' => [
       'name' => 'GetStreamingDistribution2014_05_31',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2014-05-31/streaming-distribution/{Id}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetStreamingDistributionRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetStreamingDistributionResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchStreamingDistribution',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'AccessDenied',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'GetStreamingDistributionConfig' =>
-    [
+    'GetStreamingDistributionConfig' => [
       'name' => 'GetStreamingDistributionConfig2014_05_31',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2014-05-31/streaming-distribution/{Id}/config',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetStreamingDistributionConfigRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetStreamingDistributionConfigResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchStreamingDistribution',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'AccessDenied',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ListCloudFrontOriginAccessIdentities' =>
-    [
+    'ListCloudFrontOriginAccessIdentities' => [
       'name' => 'ListCloudFrontOriginAccessIdentities2014_05_31',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2014-05-31/origin-access-identity/cloudfront',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListCloudFrontOriginAccessIdentitiesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListCloudFrontOriginAccessIdentitiesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidArgument',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ListDistributions' =>
-    [
+    'ListDistributions' => [
       'name' => 'ListDistributions2014_05_31',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2014-05-31/distribution',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListDistributionsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListDistributionsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidArgument',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ListInvalidations' =>
-    [
+    'ListInvalidations' => [
       'name' => 'ListInvalidations2014_05_31',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2014-05-31/distribution/{DistributionId}/invalidation',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListInvalidationsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListInvalidationsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidArgument',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'NoSuchDistribution',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'AccessDenied',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'ListStreamingDistributions' =>
-    [
+    'ListStreamingDistributions' => [
       'name' => 'ListStreamingDistributions2014_05_31',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/2014-05-31/streaming-distribution',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListStreamingDistributionsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListStreamingDistributionsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidArgument',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'UpdateCloudFrontOriginAccessIdentity' =>
-    [
+    'UpdateCloudFrontOriginAccessIdentity' => [
       'name' => 'UpdateCloudFrontOriginAccessIdentity2014_05_31',
-      'http' =>
-      [
+      'http' => [
         'method' => 'PUT',
         'requestUri' => '/2014-05-31/origin-access-identity/cloudfront/{Id}/config',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateCloudFrontOriginAccessIdentityRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdateCloudFrontOriginAccessIdentityResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessDenied',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'IllegalUpdate',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidIfMatchVersion',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'MissingBody',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'NoSuchCloudFrontOriginAccessIdentity',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'PreconditionFailed',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 412,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'InvalidArgument',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'InconsistentQuantities',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'UpdateDistribution' =>
-    [
+    'UpdateDistribution' => [
       'name' => 'UpdateDistribution2014_05_31',
-      'http' =>
-      [
+      'http' => [
         'method' => 'PUT',
         'requestUri' => '/2014-05-31/distribution/{Id}/config',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateDistributionRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdateDistributionResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessDenied',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'CNAMEAlreadyExists',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 409,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'IllegalUpdate',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidIfMatchVersion',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'MissingBody',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'NoSuchDistribution',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'PreconditionFailed',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 412,
           ],
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'TooManyDistributionCNAMEs',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        8 =>
         [
           'shape' => 'InvalidDefaultRootObject',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        9 =>
         [
           'shape' => 'InvalidRelativePath',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        10 =>
         [
           'shape' => 'InvalidErrorCode',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        11 =>
         [
           'shape' => 'InvalidResponseCode',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        12 =>
         [
           'shape' => 'InvalidArgument',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        13 =>
         [
           'shape' => 'InvalidOriginAccessIdentity',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        14 =>
         [
           'shape' => 'TooManyTrustedSigners',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        15 =>
         [
           'shape' => 'TrustedSignerDoesNotExist',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        16 =>
         [
           'shape' => 'InvalidViewerCertificate',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        17 =>
         [
           'shape' => 'InvalidRequiredProtocol',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        18 =>
         [
           'shape' => 'NoSuchOrigin',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        19 =>
         [
           'shape' => 'TooManyOrigins',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        20 =>
         [
           'shape' => 'TooManyCacheBehaviors',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        21 =>
         [
           'shape' => 'TooManyCookieNamesInWhiteList',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        22 =>
         [
           'shape' => 'InvalidForwardCookies',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        23 =>
         [
           'shape' => 'TooManyHeadersInForwardedValues',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        24 =>
         [
           'shape' => 'InvalidHeadersForS3Origin',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        25 =>
         [
           'shape' => 'InconsistentQuantities',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        26 =>
         [
           'shape' => 'TooManyCertificates',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        27 =>
         [
           'shape' => 'InvalidLocationCode',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        28 =>
         [
           'shape' => 'InvalidGeoRestrictionParameter',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
       ],
     ],
-    'UpdateStreamingDistribution' =>
-    [
+    'UpdateStreamingDistribution' => [
       'name' => 'UpdateStreamingDistribution2014_05_31',
-      'http' =>
-      [
+      'http' => [
         'method' => 'PUT',
         'requestUri' => '/2014-05-31/streaming-distribution/{Id}/config',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateStreamingDistributionRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdateStreamingDistributionResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'AccessDenied',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 403,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'CNAMEAlreadyExists',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 409,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'IllegalUpdate',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidIfMatchVersion',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'MissingBody',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'NoSuchStreamingDistribution',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 404,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'PreconditionFailed',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 412,
           ],
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'TooManyStreamingDistributionCNAMEs',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        8 =>
         [
           'shape' => 'InvalidArgument',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        9 =>
         [
           'shape' => 'InvalidOriginAccessIdentity',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        10 =>
         [
           'shape' => 'TooManyTrustedSigners',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        11 =>
         [
           'shape' => 'TrustedSignerDoesNotExist',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
-        12 =>
         [
           'shape' => 'InconsistentQuantities',
-          'error' =>
-          [
+          'error' => [
             'httpStatusCode' => 400,
           ],
           'exception' => true,
@@ -1670,430 +1289,324 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'AccessDenied' =>
-    [
+  'shapes' => [
+    'AccessDenied' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 403,
       ],
       'exception' => true,
     ],
-    'ActiveTrustedSigners' =>
-    [
+    'ActiveTrustedSigners' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Enabled',
-        1 => 'Quantity',
+      'required' => [
+        'Enabled',
+        'Quantity',
       ],
-      'members' =>
-      [
-        'Enabled' =>
-        [
+      'members' => [
+        'Enabled' => [
           'shape' => 'boolean',
         ],
-        'Quantity' =>
-        [
+        'Quantity' => [
           'shape' => 'integer',
         ],
-        'Items' =>
-        [
+        'Items' => [
           'shape' => 'SignerList',
         ],
       ],
     ],
-    'AliasList' =>
-    [
+    'AliasList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'string',
         'locationName' => 'CNAME',
       ],
     ],
-    'Aliases' =>
-    [
+    'Aliases' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Quantity',
+      'required' => [
+        'Quantity',
       ],
-      'members' =>
-      [
-        'Quantity' =>
-        [
+      'members' => [
+        'Quantity' => [
           'shape' => 'integer',
         ],
-        'Items' =>
-        [
+        'Items' => [
           'shape' => 'AliasList',
         ],
       ],
     ],
-    'AllowedMethods' =>
-    [
+    'AllowedMethods' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Quantity',
+      'required' => [
+        'Quantity',
       ],
-      'members' =>
-      [
-        'Quantity' =>
-        [
+      'members' => [
+        'Quantity' => [
           'shape' => 'integer',
         ],
-        'Items' =>
-        [
+        'Items' => [
           'shape' => 'AllowedMethodsList',
         ],
       ],
     ],
-    'AllowedMethodsList' =>
-    [
+    'AllowedMethodsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Method',
         'locationName' => 'Method',
       ],
     ],
-    'AwsAccountNumberList' =>
-    [
+    'AwsAccountNumberList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'string',
         'locationName' => 'AwsAccountNumber',
       ],
     ],
-    'BatchTooLarge' =>
-    [
+    'BatchTooLarge' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 413,
       ],
       'exception' => true,
     ],
-    'CNAMEAlreadyExists' =>
-    [
+    'CNAMEAlreadyExists' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 409,
       ],
       'exception' => true,
     ],
-    'CacheBehavior' =>
-    [
+    'CacheBehavior' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'PathPattern',
-        1 => 'TargetOriginId',
-        2 => 'ForwardedValues',
-        3 => 'TrustedSigners',
-        4 => 'ViewerProtocolPolicy',
-        5 => 'MinTTL',
+      'required' => [
+        'PathPattern',
+        'TargetOriginId',
+        'ForwardedValues',
+        'TrustedSigners',
+        'ViewerProtocolPolicy',
+        'MinTTL',
       ],
-      'members' =>
-      [
-        'PathPattern' =>
-        [
+      'members' => [
+        'PathPattern' => [
           'shape' => 'string',
         ],
-        'TargetOriginId' =>
-        [
+        'TargetOriginId' => [
           'shape' => 'string',
         ],
-        'ForwardedValues' =>
-        [
+        'ForwardedValues' => [
           'shape' => 'ForwardedValues',
         ],
-        'TrustedSigners' =>
-        [
+        'TrustedSigners' => [
           'shape' => 'TrustedSigners',
         ],
-        'ViewerProtocolPolicy' =>
-        [
+        'ViewerProtocolPolicy' => [
           'shape' => 'ViewerProtocolPolicy',
         ],
-        'MinTTL' =>
-        [
+        'MinTTL' => [
           'shape' => 'long',
         ],
-        'AllowedMethods' =>
-        [
+        'AllowedMethods' => [
           'shape' => 'AllowedMethods',
         ],
-        'SmoothStreaming' =>
-        [
+        'SmoothStreaming' => [
           'shape' => 'boolean',
         ],
       ],
     ],
-    'CacheBehaviorList' =>
-    [
+    'CacheBehaviorList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CacheBehavior',
         'locationName' => 'CacheBehavior',
       ],
     ],
-    'CacheBehaviors' =>
-    [
+    'CacheBehaviors' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Quantity',
+      'required' => [
+        'Quantity',
       ],
-      'members' =>
-      [
-        'Quantity' =>
-        [
+      'members' => [
+        'Quantity' => [
           'shape' => 'integer',
         ],
-        'Items' =>
-        [
+        'Items' => [
           'shape' => 'CacheBehaviorList',
         ],
       ],
     ],
-    'CloudFrontOriginAccessIdentity' =>
-    [
+    'CloudFrontOriginAccessIdentity' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
-        1 => 'S3CanonicalUserId',
+      'required' => [
+        'Id',
+        'S3CanonicalUserId',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'string',
         ],
-        'S3CanonicalUserId' =>
-        [
+        'S3CanonicalUserId' => [
           'shape' => 'string',
         ],
-        'CloudFrontOriginAccessIdentityConfig' =>
-        [
+        'CloudFrontOriginAccessIdentityConfig' => [
           'shape' => 'CloudFrontOriginAccessIdentityConfig',
         ],
       ],
     ],
-    'CloudFrontOriginAccessIdentityAlreadyExists' =>
-    [
+    'CloudFrontOriginAccessIdentityAlreadyExists' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 409,
       ],
       'exception' => true,
     ],
-    'CloudFrontOriginAccessIdentityConfig' =>
-    [
+    'CloudFrontOriginAccessIdentityConfig' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CallerReference',
-        1 => 'Comment',
+      'required' => [
+        'CallerReference',
+        'Comment',
       ],
-      'members' =>
-      [
-        'CallerReference' =>
-        [
+      'members' => [
+        'CallerReference' => [
           'shape' => 'string',
         ],
-        'Comment' =>
-        [
+        'Comment' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'CloudFrontOriginAccessIdentityInUse' =>
-    [
+    'CloudFrontOriginAccessIdentityInUse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 409,
       ],
       'exception' => true,
     ],
-    'CloudFrontOriginAccessIdentityList' =>
-    [
+    'CloudFrontOriginAccessIdentityList' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Marker',
-        1 => 'MaxItems',
-        2 => 'IsTruncated',
-        3 => 'Quantity',
+      'required' => [
+        'Marker',
+        'MaxItems',
+        'IsTruncated',
+        'Quantity',
       ],
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'string',
         ],
-        'NextMarker' =>
-        [
+        'NextMarker' => [
           'shape' => 'string',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'integer',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'boolean',
         ],
-        'Quantity' =>
-        [
+        'Quantity' => [
           'shape' => 'integer',
         ],
-        'Items' =>
-        [
+        'Items' => [
           'shape' => 'CloudFrontOriginAccessIdentitySummaryList',
         ],
       ],
     ],
-    'CloudFrontOriginAccessIdentitySummary' =>
-    [
+    'CloudFrontOriginAccessIdentitySummary' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
-        1 => 'S3CanonicalUserId',
-        2 => 'Comment',
+      'required' => [
+        'Id',
+        'S3CanonicalUserId',
+        'Comment',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'string',
         ],
-        'S3CanonicalUserId' =>
-        [
+        'S3CanonicalUserId' => [
           'shape' => 'string',
         ],
-        'Comment' =>
-        [
+        'Comment' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'CloudFrontOriginAccessIdentitySummaryList' =>
-    [
+    'CloudFrontOriginAccessIdentitySummaryList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CloudFrontOriginAccessIdentitySummary',
         'locationName' => 'CloudFrontOriginAccessIdentitySummary',
       ],
     ],
-    'CookieNameList' =>
-    [
+    'CookieNameList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'string',
         'locationName' => 'Name',
       ],
     ],
-    'CookieNames' =>
-    [
+    'CookieNames' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Quantity',
+      'required' => [
+        'Quantity',
       ],
-      'members' =>
-      [
-        'Quantity' =>
-        [
+      'members' => [
+        'Quantity' => [
           'shape' => 'integer',
         ],
-        'Items' =>
-        [
+        'Items' => [
           'shape' => 'CookieNameList',
         ],
       ],
     ],
-    'CookiePreference' =>
-    [
+    'CookiePreference' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Forward',
+      'required' => [
+        'Forward',
       ],
-      'members' =>
-      [
-        'Forward' =>
-        [
+      'members' => [
+        'Forward' => [
           'shape' => 'ItemSelection',
         ],
-        'WhitelistedNames' =>
-        [
+        'WhitelistedNames' => [
           'shape' => 'CookieNames',
         ],
       ],
     ],
-    'CreateCloudFrontOriginAccessIdentityRequest' =>
-    [
+    'CreateCloudFrontOriginAccessIdentityRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CloudFrontOriginAccessIdentityConfig',
+      'required' => [
+        'CloudFrontOriginAccessIdentityConfig',
       ],
-      'members' =>
-      [
-        'CloudFrontOriginAccessIdentityConfig' =>
-        [
+      'members' => [
+        'CloudFrontOriginAccessIdentityConfig' => [
           'shape' => 'CloudFrontOriginAccessIdentityConfig',
-          'xmlNamespace' =>
-          [
+          'xmlNamespace' => [
             'uri' => 'http://cloudfront.amazonaws.com/doc/2014-05-31/',
           ],
           'locationName' => 'CloudFrontOriginAccessIdentityConfig',
@@ -2101,23 +1614,18 @@ return [
       ],
       'payload' => 'CloudFrontOriginAccessIdentityConfig',
     ],
-    'CreateCloudFrontOriginAccessIdentityResult' =>
-    [
+    'CreateCloudFrontOriginAccessIdentityResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CloudFrontOriginAccessIdentity' =>
-        [
+      'members' => [
+        'CloudFrontOriginAccessIdentity' => [
           'shape' => 'CloudFrontOriginAccessIdentity',
         ],
-        'Location' =>
-        [
+        'Location' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'Location',
         ],
-        'ETag' =>
-        [
+        'ETag' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'ETag',
@@ -2125,20 +1633,15 @@ return [
       ],
       'payload' => 'CloudFrontOriginAccessIdentity',
     ],
-    'CreateDistributionRequest' =>
-    [
+    'CreateDistributionRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DistributionConfig',
+      'required' => [
+        'DistributionConfig',
       ],
-      'members' =>
-      [
-        'DistributionConfig' =>
-        [
+      'members' => [
+        'DistributionConfig' => [
           'shape' => 'DistributionConfig',
-          'xmlNamespace' =>
-          [
+          'xmlNamespace' => [
             'uri' => 'http://cloudfront.amazonaws.com/doc/2014-05-31/',
           ],
           'locationName' => 'DistributionConfig',
@@ -2146,23 +1649,18 @@ return [
       ],
       'payload' => 'DistributionConfig',
     ],
-    'CreateDistributionResult' =>
-    [
+    'CreateDistributionResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Distribution' =>
-        [
+      'members' => [
+        'Distribution' => [
           'shape' => 'Distribution',
         ],
-        'Location' =>
-        [
+        'Location' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'Location',
         ],
-        'ETag' =>
-        [
+        'ETag' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'ETag',
@@ -2170,27 +1668,21 @@ return [
       ],
       'payload' => 'Distribution',
     ],
-    'CreateInvalidationRequest' =>
-    [
+    'CreateInvalidationRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DistributionId',
-        1 => 'InvalidationBatch',
+      'required' => [
+        'DistributionId',
+        'InvalidationBatch',
       ],
-      'members' =>
-      [
-        'DistributionId' =>
-        [
+      'members' => [
+        'DistributionId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'DistributionId',
         ],
-        'InvalidationBatch' =>
-        [
+        'InvalidationBatch' => [
           'shape' => 'InvalidationBatch',
-          'xmlNamespace' =>
-          [
+          'xmlNamespace' => [
             'uri' => 'http://cloudfront.amazonaws.com/doc/2014-05-31/',
           ],
           'locationName' => 'InvalidationBatch',
@@ -2198,38 +1690,29 @@ return [
       ],
       'payload' => 'InvalidationBatch',
     ],
-    'CreateInvalidationResult' =>
-    [
+    'CreateInvalidationResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Location' =>
-        [
+      'members' => [
+        'Location' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'Location',
         ],
-        'Invalidation' =>
-        [
+        'Invalidation' => [
           'shape' => 'Invalidation',
         ],
       ],
       'payload' => 'Invalidation',
     ],
-    'CreateStreamingDistributionRequest' =>
-    [
+    'CreateStreamingDistributionRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StreamingDistributionConfig',
+      'required' => [
+        'StreamingDistributionConfig',
       ],
-      'members' =>
-      [
-        'StreamingDistributionConfig' =>
-        [
+      'members' => [
+        'StreamingDistributionConfig' => [
           'shape' => 'StreamingDistributionConfig',
-          'xmlNamespace' =>
-          [
+          'xmlNamespace' => [
             'uri' => 'http://cloudfront.amazonaws.com/doc/2014-05-31/',
           ],
           'locationName' => 'StreamingDistributionConfig',
@@ -2237,23 +1720,18 @@ return [
       ],
       'payload' => 'StreamingDistributionConfig',
     ],
-    'CreateStreamingDistributionResult' =>
-    [
+    'CreateStreamingDistributionResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StreamingDistribution' =>
-        [
+      'members' => [
+        'StreamingDistribution' => [
           'shape' => 'StreamingDistribution',
         ],
-        'Location' =>
-        [
+        'Location' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'Location',
         ],
-        'ETag' =>
-        [
+        'ETag' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'ETag',
@@ -2261,560 +1739,431 @@ return [
       ],
       'payload' => 'StreamingDistribution',
     ],
-    'CustomErrorResponse' =>
-    [
+    'CustomErrorResponse' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ErrorCode',
+      'required' => [
+        'ErrorCode',
       ],
-      'members' =>
-      [
-        'ErrorCode' =>
-        [
+      'members' => [
+        'ErrorCode' => [
           'shape' => 'integer',
         ],
-        'ResponsePagePath' =>
-        [
+        'ResponsePagePath' => [
           'shape' => 'string',
         ],
-        'ResponseCode' =>
-        [
+        'ResponseCode' => [
           'shape' => 'string',
         ],
-        'ErrorCachingMinTTL' =>
-        [
+        'ErrorCachingMinTTL' => [
           'shape' => 'long',
         ],
       ],
     ],
-    'CustomErrorResponseList' =>
-    [
+    'CustomErrorResponseList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CustomErrorResponse',
         'locationName' => 'CustomErrorResponse',
       ],
     ],
-    'CustomErrorResponses' =>
-    [
+    'CustomErrorResponses' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Quantity',
+      'required' => [
+        'Quantity',
       ],
-      'members' =>
-      [
-        'Quantity' =>
-        [
+      'members' => [
+        'Quantity' => [
           'shape' => 'integer',
         ],
-        'Items' =>
-        [
+        'Items' => [
           'shape' => 'CustomErrorResponseList',
         ],
       ],
     ],
-    'CustomOriginConfig' =>
-    [
+    'CustomOriginConfig' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'HTTPPort',
-        1 => 'HTTPSPort',
-        2 => 'OriginProtocolPolicy',
+      'required' => [
+        'HTTPPort',
+        'HTTPSPort',
+        'OriginProtocolPolicy',
       ],
-      'members' =>
-      [
-        'HTTPPort' =>
-        [
+      'members' => [
+        'HTTPPort' => [
           'shape' => 'integer',
         ],
-        'HTTPSPort' =>
-        [
+        'HTTPSPort' => [
           'shape' => 'integer',
         ],
-        'OriginProtocolPolicy' =>
-        [
+        'OriginProtocolPolicy' => [
           'shape' => 'OriginProtocolPolicy',
         ],
       ],
     ],
-    'DefaultCacheBehavior' =>
-    [
+    'DefaultCacheBehavior' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TargetOriginId',
-        1 => 'ForwardedValues',
-        2 => 'TrustedSigners',
-        3 => 'ViewerProtocolPolicy',
-        4 => 'MinTTL',
+      'required' => [
+        'TargetOriginId',
+        'ForwardedValues',
+        'TrustedSigners',
+        'ViewerProtocolPolicy',
+        'MinTTL',
       ],
-      'members' =>
-      [
-        'TargetOriginId' =>
-        [
+      'members' => [
+        'TargetOriginId' => [
           'shape' => 'string',
         ],
-        'ForwardedValues' =>
-        [
+        'ForwardedValues' => [
           'shape' => 'ForwardedValues',
         ],
-        'TrustedSigners' =>
-        [
+        'TrustedSigners' => [
           'shape' => 'TrustedSigners',
         ],
-        'ViewerProtocolPolicy' =>
-        [
+        'ViewerProtocolPolicy' => [
           'shape' => 'ViewerProtocolPolicy',
         ],
-        'MinTTL' =>
-        [
+        'MinTTL' => [
           'shape' => 'long',
         ],
-        'AllowedMethods' =>
-        [
+        'AllowedMethods' => [
           'shape' => 'AllowedMethods',
         ],
-        'SmoothStreaming' =>
-        [
+        'SmoothStreaming' => [
           'shape' => 'boolean',
         ],
       ],
     ],
-    'DeleteCloudFrontOriginAccessIdentityRequest' =>
-    [
+    'DeleteCloudFrontOriginAccessIdentityRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
-        'IfMatch' =>
-        [
+        'IfMatch' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'If-Match',
         ],
       ],
-      'required' =>
-      [
-        0 => 'Id',
+      'required' => [
+        'Id',
       ],
     ],
-    'DeleteDistributionRequest' =>
-    [
+    'DeleteDistributionRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
-        'IfMatch' =>
-        [
+        'IfMatch' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'If-Match',
         ],
       ],
-      'required' =>
-      [
-        0 => 'Id',
+      'required' => [
+        'Id',
       ],
     ],
-    'DeleteStreamingDistributionRequest' =>
-    [
+    'DeleteStreamingDistributionRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
-        'IfMatch' =>
-        [
+        'IfMatch' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'If-Match',
         ],
       ],
-      'required' =>
-      [
-        0 => 'Id',
+      'required' => [
+        'Id',
       ],
     ],
-    'Distribution' =>
-    [
+    'Distribution' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
-        1 => 'Status',
-        2 => 'LastModifiedTime',
-        3 => 'InProgressInvalidationBatches',
-        4 => 'DomainName',
-        5 => 'ActiveTrustedSigners',
-        6 => 'DistributionConfig',
+      'required' => [
+        'Id',
+        'Status',
+        'LastModifiedTime',
+        'InProgressInvalidationBatches',
+        'DomainName',
+        'ActiveTrustedSigners',
+        'DistributionConfig',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'string',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'string',
         ],
-        'LastModifiedTime' =>
-        [
+        'LastModifiedTime' => [
           'shape' => 'timestamp',
         ],
-        'InProgressInvalidationBatches' =>
-        [
+        'InProgressInvalidationBatches' => [
           'shape' => 'integer',
         ],
-        'DomainName' =>
-        [
+        'DomainName' => [
           'shape' => 'string',
         ],
-        'ActiveTrustedSigners' =>
-        [
+        'ActiveTrustedSigners' => [
           'shape' => 'ActiveTrustedSigners',
         ],
-        'DistributionConfig' =>
-        [
+        'DistributionConfig' => [
           'shape' => 'DistributionConfig',
         ],
       ],
     ],
-    'DistributionAlreadyExists' =>
-    [
+    'DistributionAlreadyExists' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 409,
       ],
       'exception' => true,
     ],
-    'DistributionConfig' =>
-    [
+    'DistributionConfig' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CallerReference',
-        1 => 'Aliases',
-        2 => 'DefaultRootObject',
-        3 => 'Origins',
-        4 => 'DefaultCacheBehavior',
-        5 => 'CacheBehaviors',
-        6 => 'Comment',
-        7 => 'Logging',
-        8 => 'PriceClass',
-        9 => 'Enabled',
+      'required' => [
+        'CallerReference',
+        'Aliases',
+        'DefaultRootObject',
+        'Origins',
+        'DefaultCacheBehavior',
+        'CacheBehaviors',
+        'Comment',
+        'Logging',
+        'PriceClass',
+        'Enabled',
       ],
-      'members' =>
-      [
-        'CallerReference' =>
-        [
+      'members' => [
+        'CallerReference' => [
           'shape' => 'string',
         ],
-        'Aliases' =>
-        [
+        'Aliases' => [
           'shape' => 'Aliases',
         ],
-        'DefaultRootObject' =>
-        [
+        'DefaultRootObject' => [
           'shape' => 'string',
         ],
-        'Origins' =>
-        [
+        'Origins' => [
           'shape' => 'Origins',
         ],
-        'DefaultCacheBehavior' =>
-        [
+        'DefaultCacheBehavior' => [
           'shape' => 'DefaultCacheBehavior',
         ],
-        'CacheBehaviors' =>
-        [
+        'CacheBehaviors' => [
           'shape' => 'CacheBehaviors',
         ],
-        'CustomErrorResponses' =>
-        [
+        'CustomErrorResponses' => [
           'shape' => 'CustomErrorResponses',
         ],
-        'Comment' =>
-        [
+        'Comment' => [
           'shape' => 'string',
         ],
-        'Logging' =>
-        [
+        'Logging' => [
           'shape' => 'LoggingConfig',
         ],
-        'PriceClass' =>
-        [
+        'PriceClass' => [
           'shape' => 'PriceClass',
         ],
-        'Enabled' =>
-        [
+        'Enabled' => [
           'shape' => 'boolean',
         ],
-        'ViewerCertificate' =>
-        [
+        'ViewerCertificate' => [
           'shape' => 'ViewerCertificate',
         ],
-        'Restrictions' =>
-        [
+        'Restrictions' => [
           'shape' => 'Restrictions',
         ],
       ],
     ],
-    'DistributionList' =>
-    [
+    'DistributionList' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Marker',
-        1 => 'MaxItems',
-        2 => 'IsTruncated',
-        3 => 'Quantity',
+      'required' => [
+        'Marker',
+        'MaxItems',
+        'IsTruncated',
+        'Quantity',
       ],
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'string',
         ],
-        'NextMarker' =>
-        [
+        'NextMarker' => [
           'shape' => 'string',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'integer',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'boolean',
         ],
-        'Quantity' =>
-        [
+        'Quantity' => [
           'shape' => 'integer',
         ],
-        'Items' =>
-        [
+        'Items' => [
           'shape' => 'DistributionSummaryList',
         ],
       ],
     ],
-    'DistributionNotDisabled' =>
-    [
+    'DistributionNotDisabled' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 409,
       ],
       'exception' => true,
     ],
-    'DistributionSummary' =>
-    [
+    'DistributionSummary' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
-        1 => 'Status',
-        2 => 'LastModifiedTime',
-        3 => 'DomainName',
-        4 => 'Aliases',
-        5 => 'Origins',
-        6 => 'DefaultCacheBehavior',
-        7 => 'CacheBehaviors',
-        8 => 'CustomErrorResponses',
-        9 => 'Comment',
-        10 => 'PriceClass',
-        11 => 'Enabled',
-        12 => 'ViewerCertificate',
-        13 => 'Restrictions',
+      'required' => [
+        'Id',
+        'Status',
+        'LastModifiedTime',
+        'DomainName',
+        'Aliases',
+        'Origins',
+        'DefaultCacheBehavior',
+        'CacheBehaviors',
+        'CustomErrorResponses',
+        'Comment',
+        'PriceClass',
+        'Enabled',
+        'ViewerCertificate',
+        'Restrictions',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'string',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'string',
         ],
-        'LastModifiedTime' =>
-        [
+        'LastModifiedTime' => [
           'shape' => 'timestamp',
         ],
-        'DomainName' =>
-        [
+        'DomainName' => [
           'shape' => 'string',
         ],
-        'Aliases' =>
-        [
+        'Aliases' => [
           'shape' => 'Aliases',
         ],
-        'Origins' =>
-        [
+        'Origins' => [
           'shape' => 'Origins',
         ],
-        'DefaultCacheBehavior' =>
-        [
+        'DefaultCacheBehavior' => [
           'shape' => 'DefaultCacheBehavior',
         ],
-        'CacheBehaviors' =>
-        [
+        'CacheBehaviors' => [
           'shape' => 'CacheBehaviors',
         ],
-        'CustomErrorResponses' =>
-        [
+        'CustomErrorResponses' => [
           'shape' => 'CustomErrorResponses',
         ],
-        'Comment' =>
-        [
+        'Comment' => [
           'shape' => 'string',
         ],
-        'PriceClass' =>
-        [
+        'PriceClass' => [
           'shape' => 'PriceClass',
         ],
-        'Enabled' =>
-        [
+        'Enabled' => [
           'shape' => 'boolean',
         ],
-        'ViewerCertificate' =>
-        [
+        'ViewerCertificate' => [
           'shape' => 'ViewerCertificate',
         ],
-        'Restrictions' =>
-        [
+        'Restrictions' => [
           'shape' => 'Restrictions',
         ],
       ],
     ],
-    'DistributionSummaryList' =>
-    [
+    'DistributionSummaryList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DistributionSummary',
         'locationName' => 'DistributionSummary',
       ],
     ],
-    'ForwardedValues' =>
-    [
+    'ForwardedValues' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'QueryString',
-        1 => 'Cookies',
+      'required' => [
+        'QueryString',
+        'Cookies',
       ],
-      'members' =>
-      [
-        'QueryString' =>
-        [
+      'members' => [
+        'QueryString' => [
           'shape' => 'boolean',
         ],
-        'Cookies' =>
-        [
+        'Cookies' => [
           'shape' => 'CookiePreference',
         ],
-        'Headers' =>
-        [
+        'Headers' => [
           'shape' => 'Headers',
         ],
       ],
     ],
-    'GeoRestriction' =>
-    [
+    'GeoRestriction' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RestrictionType',
-        1 => 'Quantity',
+      'required' => [
+        'RestrictionType',
+        'Quantity',
       ],
-      'members' =>
-      [
-        'RestrictionType' =>
-        [
+      'members' => [
+        'RestrictionType' => [
           'shape' => 'GeoRestrictionType',
         ],
-        'Quantity' =>
-        [
+        'Quantity' => [
           'shape' => 'integer',
         ],
-        'Items' =>
-        [
+        'Items' => [
           'shape' => 'LocationList',
         ],
       ],
     ],
-    'GeoRestrictionType' =>
-    [
+    'GeoRestrictionType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'blacklist',
-        1 => 'whitelist',
-        2 => 'none',
+      'enum' => [
+        'blacklist',
+        'whitelist',
+        'none',
       ],
     ],
-    'GetCloudFrontOriginAccessIdentityConfigRequest' =>
-    [
+    'GetCloudFrontOriginAccessIdentityConfigRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
       ],
-      'required' =>
-      [
-        0 => 'Id',
+      'required' => [
+        'Id',
       ],
     ],
-    'GetCloudFrontOriginAccessIdentityConfigResult' =>
-    [
+    'GetCloudFrontOriginAccessIdentityConfigResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CloudFrontOriginAccessIdentityConfig' =>
-        [
+      'members' => [
+        'CloudFrontOriginAccessIdentityConfig' => [
           'shape' => 'CloudFrontOriginAccessIdentityConfig',
         ],
-        'ETag' =>
-        [
+        'ETag' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'ETag',
@@ -2822,34 +2171,26 @@ return [
       ],
       'payload' => 'CloudFrontOriginAccessIdentityConfig',
     ],
-    'GetCloudFrontOriginAccessIdentityRequest' =>
-    [
+    'GetCloudFrontOriginAccessIdentityRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
       ],
-      'required' =>
-      [
-        0 => 'Id',
+      'required' => [
+        'Id',
       ],
     ],
-    'GetCloudFrontOriginAccessIdentityResult' =>
-    [
+    'GetCloudFrontOriginAccessIdentityResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CloudFrontOriginAccessIdentity' =>
-        [
+      'members' => [
+        'CloudFrontOriginAccessIdentity' => [
           'shape' => 'CloudFrontOriginAccessIdentity',
         ],
-        'ETag' =>
-        [
+        'ETag' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'ETag',
@@ -2857,34 +2198,26 @@ return [
       ],
       'payload' => 'CloudFrontOriginAccessIdentity',
     ],
-    'GetDistributionConfigRequest' =>
-    [
+    'GetDistributionConfigRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
       ],
-      'required' =>
-      [
-        0 => 'Id',
+      'required' => [
+        'Id',
       ],
     ],
-    'GetDistributionConfigResult' =>
-    [
+    'GetDistributionConfigResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DistributionConfig' =>
-        [
+      'members' => [
+        'DistributionConfig' => [
           'shape' => 'DistributionConfig',
         ],
-        'ETag' =>
-        [
+        'ETag' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'ETag',
@@ -2892,34 +2225,26 @@ return [
       ],
       'payload' => 'DistributionConfig',
     ],
-    'GetDistributionRequest' =>
-    [
+    'GetDistributionRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
       ],
-      'required' =>
-      [
-        0 => 'Id',
+      'required' => [
+        'Id',
       ],
     ],
-    'GetDistributionResult' =>
-    [
+    'GetDistributionResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Distribution' =>
-        [
+      'members' => [
+        'Distribution' => [
           'shape' => 'Distribution',
         ],
-        'ETag' =>
-        [
+        'ETag' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'ETag',
@@ -2927,70 +2252,54 @@ return [
       ],
       'payload' => 'Distribution',
     ],
-    'GetInvalidationRequest' =>
-    [
+    'GetInvalidationRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DistributionId',
-        1 => 'Id',
+      'required' => [
+        'DistributionId',
+        'Id',
       ],
-      'members' =>
-      [
-        'DistributionId' =>
-        [
+      'members' => [
+        'DistributionId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'DistributionId',
         ],
-        'Id' =>
-        [
+        'Id' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
       ],
     ],
-    'GetInvalidationResult' =>
-    [
+    'GetInvalidationResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Invalidation' =>
-        [
+      'members' => [
+        'Invalidation' => [
           'shape' => 'Invalidation',
         ],
       ],
       'payload' => 'Invalidation',
     ],
-    'GetStreamingDistributionConfigRequest' =>
-    [
+    'GetStreamingDistributionConfigRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
       ],
-      'required' =>
-      [
-        0 => 'Id',
+      'required' => [
+        'Id',
       ],
     ],
-    'GetStreamingDistributionConfigResult' =>
-    [
+    'GetStreamingDistributionConfigResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StreamingDistributionConfig' =>
-        [
+      'members' => [
+        'StreamingDistributionConfig' => [
           'shape' => 'StreamingDistributionConfig',
         ],
-        'ETag' =>
-        [
+        'ETag' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'ETag',
@@ -2998,34 +2307,26 @@ return [
       ],
       'payload' => 'StreamingDistributionConfig',
     ],
-    'GetStreamingDistributionRequest' =>
-    [
+    'GetStreamingDistributionRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
       ],
-      'required' =>
-      [
-        0 => 'Id',
+      'required' => [
+        'Id',
       ],
     ],
-    'GetStreamingDistributionResult' =>
-    [
+    'GetStreamingDistributionResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StreamingDistribution' =>
-        [
+      'members' => [
+        'StreamingDistribution' => [
           'shape' => 'StreamingDistribution',
         ],
-        'ETag' =>
-        [
+        'ETag' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'ETag',
@@ -3033,1448 +2334,1101 @@ return [
       ],
       'payload' => 'StreamingDistribution',
     ],
-    'HeaderList' =>
-    [
+    'HeaderList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'string',
         'locationName' => 'Name',
       ],
     ],
-    'Headers' =>
-    [
+    'Headers' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Quantity',
+      'required' => [
+        'Quantity',
       ],
-      'members' =>
-      [
-        'Quantity' =>
-        [
+      'members' => [
+        'Quantity' => [
           'shape' => 'integer',
         ],
-        'Items' =>
-        [
+        'Items' => [
           'shape' => 'HeaderList',
         ],
       ],
     ],
-    'IllegalUpdate' =>
-    [
+    'IllegalUpdate' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'InconsistentQuantities' =>
-    [
+    'InconsistentQuantities' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'InvalidArgument' =>
-    [
+    'InvalidArgument' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'InvalidDefaultRootObject' =>
-    [
+    'InvalidDefaultRootObject' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'InvalidErrorCode' =>
-    [
+    'InvalidErrorCode' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'InvalidForwardCookies' =>
-    [
+    'InvalidForwardCookies' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'InvalidGeoRestrictionParameter' =>
-    [
+    'InvalidGeoRestrictionParameter' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'InvalidHeadersForS3Origin' =>
-    [
+    'InvalidHeadersForS3Origin' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'InvalidIfMatchVersion' =>
-    [
+    'InvalidIfMatchVersion' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'InvalidLocationCode' =>
-    [
+    'InvalidLocationCode' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'InvalidOrigin' =>
-    [
+    'InvalidOrigin' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'InvalidOriginAccessIdentity' =>
-    [
+    'InvalidOriginAccessIdentity' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'InvalidRelativePath' =>
-    [
+    'InvalidRelativePath' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'InvalidRequiredProtocol' =>
-    [
+    'InvalidRequiredProtocol' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'InvalidResponseCode' =>
-    [
+    'InvalidResponseCode' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'InvalidViewerCertificate' =>
-    [
+    'InvalidViewerCertificate' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'Invalidation' =>
-    [
+    'Invalidation' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
-        1 => 'Status',
-        2 => 'CreateTime',
-        3 => 'InvalidationBatch',
+      'required' => [
+        'Id',
+        'Status',
+        'CreateTime',
+        'InvalidationBatch',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'string',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'string',
         ],
-        'CreateTime' =>
-        [
+        'CreateTime' => [
           'shape' => 'timestamp',
         ],
-        'InvalidationBatch' =>
-        [
+        'InvalidationBatch' => [
           'shape' => 'InvalidationBatch',
         ],
       ],
     ],
-    'InvalidationBatch' =>
-    [
+    'InvalidationBatch' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Paths',
-        1 => 'CallerReference',
+      'required' => [
+        'Paths',
+        'CallerReference',
       ],
-      'members' =>
-      [
-        'Paths' =>
-        [
+      'members' => [
+        'Paths' => [
           'shape' => 'Paths',
         ],
-        'CallerReference' =>
-        [
+        'CallerReference' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'InvalidationList' =>
-    [
+    'InvalidationList' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Marker',
-        1 => 'MaxItems',
-        2 => 'IsTruncated',
-        3 => 'Quantity',
+      'required' => [
+        'Marker',
+        'MaxItems',
+        'IsTruncated',
+        'Quantity',
       ],
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'string',
         ],
-        'NextMarker' =>
-        [
+        'NextMarker' => [
           'shape' => 'string',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'integer',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'boolean',
         ],
-        'Quantity' =>
-        [
+        'Quantity' => [
           'shape' => 'integer',
         ],
-        'Items' =>
-        [
+        'Items' => [
           'shape' => 'InvalidationSummaryList',
         ],
       ],
     ],
-    'InvalidationSummary' =>
-    [
+    'InvalidationSummary' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
-        1 => 'CreateTime',
-        2 => 'Status',
+      'required' => [
+        'Id',
+        'CreateTime',
+        'Status',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'string',
         ],
-        'CreateTime' =>
-        [
+        'CreateTime' => [
           'shape' => 'timestamp',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'InvalidationSummaryList' =>
-    [
+    'InvalidationSummaryList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'InvalidationSummary',
         'locationName' => 'InvalidationSummary',
       ],
     ],
-    'ItemSelection' =>
-    [
+    'ItemSelection' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'none',
-        1 => 'whitelist',
-        2 => 'all',
+      'enum' => [
+        'none',
+        'whitelist',
+        'all',
       ],
     ],
-    'KeyPairIdList' =>
-    [
+    'KeyPairIdList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'string',
         'locationName' => 'KeyPairId',
       ],
     ],
-    'KeyPairIds' =>
-    [
+    'KeyPairIds' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Quantity',
+      'required' => [
+        'Quantity',
       ],
-      'members' =>
-      [
-        'Quantity' =>
-        [
+      'members' => [
+        'Quantity' => [
           'shape' => 'integer',
         ],
-        'Items' =>
-        [
+        'Items' => [
           'shape' => 'KeyPairIdList',
         ],
       ],
     ],
-    'ListCloudFrontOriginAccessIdentitiesRequest' =>
-    [
+    'ListCloudFrontOriginAccessIdentitiesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'string',
           'location' => 'querystring',
           'locationName' => 'Marker',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'string',
           'location' => 'querystring',
           'locationName' => 'MaxItems',
         ],
       ],
     ],
-    'ListCloudFrontOriginAccessIdentitiesResult' =>
-    [
+    'ListCloudFrontOriginAccessIdentitiesResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CloudFrontOriginAccessIdentityList' =>
-        [
+      'members' => [
+        'CloudFrontOriginAccessIdentityList' => [
           'shape' => 'CloudFrontOriginAccessIdentityList',
         ],
       ],
       'payload' => 'CloudFrontOriginAccessIdentityList',
     ],
-    'ListDistributionsRequest' =>
-    [
+    'ListDistributionsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'string',
           'location' => 'querystring',
           'locationName' => 'Marker',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'string',
           'location' => 'querystring',
           'locationName' => 'MaxItems',
         ],
       ],
     ],
-    'ListDistributionsResult' =>
-    [
+    'ListDistributionsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DistributionList' =>
-        [
+      'members' => [
+        'DistributionList' => [
           'shape' => 'DistributionList',
         ],
       ],
       'payload' => 'DistributionList',
     ],
-    'ListInvalidationsRequest' =>
-    [
+    'ListInvalidationsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DistributionId',
+      'required' => [
+        'DistributionId',
       ],
-      'members' =>
-      [
-        'DistributionId' =>
-        [
+      'members' => [
+        'DistributionId' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'DistributionId',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'string',
           'location' => 'querystring',
           'locationName' => 'Marker',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'string',
           'location' => 'querystring',
           'locationName' => 'MaxItems',
         ],
       ],
     ],
-    'ListInvalidationsResult' =>
-    [
+    'ListInvalidationsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InvalidationList' =>
-        [
+      'members' => [
+        'InvalidationList' => [
           'shape' => 'InvalidationList',
         ],
       ],
       'payload' => 'InvalidationList',
     ],
-    'ListStreamingDistributionsRequest' =>
-    [
+    'ListStreamingDistributionsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'string',
           'location' => 'querystring',
           'locationName' => 'Marker',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'string',
           'location' => 'querystring',
           'locationName' => 'MaxItems',
         ],
       ],
     ],
-    'ListStreamingDistributionsResult' =>
-    [
+    'ListStreamingDistributionsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StreamingDistributionList' =>
-        [
+      'members' => [
+        'StreamingDistributionList' => [
           'shape' => 'StreamingDistributionList',
         ],
       ],
       'payload' => 'StreamingDistributionList',
     ],
-    'LocationList' =>
-    [
+    'LocationList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'string',
         'locationName' => 'Location',
       ],
     ],
-    'LoggingConfig' =>
-    [
+    'LoggingConfig' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Enabled',
-        1 => 'IncludeCookies',
-        2 => 'Bucket',
-        3 => 'Prefix',
+      'required' => [
+        'Enabled',
+        'IncludeCookies',
+        'Bucket',
+        'Prefix',
       ],
-      'members' =>
-      [
-        'Enabled' =>
-        [
+      'members' => [
+        'Enabled' => [
           'shape' => 'boolean',
         ],
-        'IncludeCookies' =>
-        [
+        'IncludeCookies' => [
           'shape' => 'boolean',
         ],
-        'Bucket' =>
-        [
+        'Bucket' => [
           'shape' => 'string',
         ],
-        'Prefix' =>
-        [
+        'Prefix' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'Method' =>
-    [
+    'Method' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'GET',
-        1 => 'HEAD',
-        2 => 'POST',
-        3 => 'PUT',
-        4 => 'PATCH',
-        5 => 'OPTIONS',
-        6 => 'DELETE',
+      'enum' => [
+        'GET',
+        'HEAD',
+        'POST',
+        'PUT',
+        'PATCH',
+        'OPTIONS',
+        'DELETE',
       ],
     ],
-    'MissingBody' =>
-    [
+    'MissingBody' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'NoSuchCloudFrontOriginAccessIdentity' =>
-    [
+    'NoSuchCloudFrontOriginAccessIdentity' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 404,
       ],
       'exception' => true,
     ],
-    'NoSuchDistribution' =>
-    [
+    'NoSuchDistribution' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 404,
       ],
       'exception' => true,
     ],
-    'NoSuchInvalidation' =>
-    [
+    'NoSuchInvalidation' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 404,
       ],
       'exception' => true,
     ],
-    'NoSuchOrigin' =>
-    [
+    'NoSuchOrigin' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 404,
       ],
       'exception' => true,
     ],
-    'NoSuchStreamingDistribution' =>
-    [
+    'NoSuchStreamingDistribution' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 404,
       ],
       'exception' => true,
     ],
-    'Origin' =>
-    [
+    'Origin' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
-        1 => 'DomainName',
+      'required' => [
+        'Id',
+        'DomainName',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'string',
         ],
-        'DomainName' =>
-        [
+        'DomainName' => [
           'shape' => 'string',
         ],
-        'S3OriginConfig' =>
-        [
+        'S3OriginConfig' => [
           'shape' => 'S3OriginConfig',
         ],
-        'CustomOriginConfig' =>
-        [
+        'CustomOriginConfig' => [
           'shape' => 'CustomOriginConfig',
         ],
       ],
     ],
-    'OriginList' =>
-    [
+    'OriginList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Origin',
         'locationName' => 'Origin',
       ],
       'min' => 1,
     ],
-    'OriginProtocolPolicy' =>
-    [
+    'OriginProtocolPolicy' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'http-only',
-        1 => 'match-viewer',
+      'enum' => [
+        'http-only',
+        'match-viewer',
       ],
     ],
-    'Origins' =>
-    [
+    'Origins' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Quantity',
+      'required' => [
+        'Quantity',
       ],
-      'members' =>
-      [
-        'Quantity' =>
-        [
+      'members' => [
+        'Quantity' => [
           'shape' => 'integer',
         ],
-        'Items' =>
-        [
+        'Items' => [
           'shape' => 'OriginList',
         ],
       ],
     ],
-    'PathList' =>
-    [
+    'PathList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'string',
         'locationName' => 'Path',
       ],
     ],
-    'Paths' =>
-    [
+    'Paths' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Quantity',
+      'required' => [
+        'Quantity',
       ],
-      'members' =>
-      [
-        'Quantity' =>
-        [
+      'members' => [
+        'Quantity' => [
           'shape' => 'integer',
         ],
-        'Items' =>
-        [
+        'Items' => [
           'shape' => 'PathList',
         ],
       ],
     ],
-    'PreconditionFailed' =>
-    [
+    'PreconditionFailed' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 412,
       ],
       'exception' => true,
     ],
-    'PriceClass' =>
-    [
+    'PriceClass' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'PriceClass_100',
-        1 => 'PriceClass_200',
-        2 => 'PriceClass_All',
+      'enum' => [
+        'PriceClass_100',
+        'PriceClass_200',
+        'PriceClass_All',
       ],
     ],
-    'Restrictions' =>
-    [
+    'Restrictions' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GeoRestriction',
+      'required' => [
+        'GeoRestriction',
       ],
-      'members' =>
-      [
-        'GeoRestriction' =>
-        [
+      'members' => [
+        'GeoRestriction' => [
           'shape' => 'GeoRestriction',
         ],
       ],
     ],
-    'S3Origin' =>
-    [
+    'S3Origin' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DomainName',
-        1 => 'OriginAccessIdentity',
+      'required' => [
+        'DomainName',
+        'OriginAccessIdentity',
       ],
-      'members' =>
-      [
-        'DomainName' =>
-        [
+      'members' => [
+        'DomainName' => [
           'shape' => 'string',
         ],
-        'OriginAccessIdentity' =>
-        [
+        'OriginAccessIdentity' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'S3OriginConfig' =>
-    [
+    'S3OriginConfig' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'OriginAccessIdentity',
+      'required' => [
+        'OriginAccessIdentity',
       ],
-      'members' =>
-      [
-        'OriginAccessIdentity' =>
-        [
+      'members' => [
+        'OriginAccessIdentity' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'SSLSupportMethod' =>
-    [
+    'SSLSupportMethod' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'sni-only',
-        1 => 'vip',
+      'enum' => [
+        'sni-only',
+        'vip',
       ],
     ],
-    'Signer' =>
-    [
+    'Signer' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AwsAccountNumber' =>
-        [
+      'members' => [
+        'AwsAccountNumber' => [
           'shape' => 'string',
         ],
-        'KeyPairIds' =>
-        [
+        'KeyPairIds' => [
           'shape' => 'KeyPairIds',
         ],
       ],
     ],
-    'SignerList' =>
-    [
+    'SignerList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Signer',
         'locationName' => 'Signer',
       ],
     ],
-    'StreamingDistribution' =>
-    [
+    'StreamingDistribution' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
-        1 => 'Status',
-        2 => 'DomainName',
-        3 => 'ActiveTrustedSigners',
-        4 => 'StreamingDistributionConfig',
+      'required' => [
+        'Id',
+        'Status',
+        'DomainName',
+        'ActiveTrustedSigners',
+        'StreamingDistributionConfig',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'string',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'string',
         ],
-        'LastModifiedTime' =>
-        [
+        'LastModifiedTime' => [
           'shape' => 'timestamp',
         ],
-        'DomainName' =>
-        [
+        'DomainName' => [
           'shape' => 'string',
         ],
-        'ActiveTrustedSigners' =>
-        [
+        'ActiveTrustedSigners' => [
           'shape' => 'ActiveTrustedSigners',
         ],
-        'StreamingDistributionConfig' =>
-        [
+        'StreamingDistributionConfig' => [
           'shape' => 'StreamingDistributionConfig',
         ],
       ],
     ],
-    'StreamingDistributionAlreadyExists' =>
-    [
+    'StreamingDistributionAlreadyExists' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 409,
       ],
       'exception' => true,
     ],
-    'StreamingDistributionConfig' =>
-    [
+    'StreamingDistributionConfig' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CallerReference',
-        1 => 'S3Origin',
-        2 => 'Aliases',
-        3 => 'Comment',
-        4 => 'Logging',
-        5 => 'TrustedSigners',
-        6 => 'PriceClass',
-        7 => 'Enabled',
+      'required' => [
+        'CallerReference',
+        'S3Origin',
+        'Aliases',
+        'Comment',
+        'Logging',
+        'TrustedSigners',
+        'PriceClass',
+        'Enabled',
       ],
-      'members' =>
-      [
-        'CallerReference' =>
-        [
+      'members' => [
+        'CallerReference' => [
           'shape' => 'string',
         ],
-        'S3Origin' =>
-        [
+        'S3Origin' => [
           'shape' => 'S3Origin',
         ],
-        'Aliases' =>
-        [
+        'Aliases' => [
           'shape' => 'Aliases',
         ],
-        'Comment' =>
-        [
+        'Comment' => [
           'shape' => 'string',
         ],
-        'Logging' =>
-        [
+        'Logging' => [
           'shape' => 'StreamingLoggingConfig',
         ],
-        'TrustedSigners' =>
-        [
+        'TrustedSigners' => [
           'shape' => 'TrustedSigners',
         ],
-        'PriceClass' =>
-        [
+        'PriceClass' => [
           'shape' => 'PriceClass',
         ],
-        'Enabled' =>
-        [
+        'Enabled' => [
           'shape' => 'boolean',
         ],
       ],
     ],
-    'StreamingDistributionList' =>
-    [
+    'StreamingDistributionList' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Marker',
-        1 => 'MaxItems',
-        2 => 'IsTruncated',
-        3 => 'Quantity',
+      'required' => [
+        'Marker',
+        'MaxItems',
+        'IsTruncated',
+        'Quantity',
       ],
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'string',
         ],
-        'NextMarker' =>
-        [
+        'NextMarker' => [
           'shape' => 'string',
         ],
-        'MaxItems' =>
-        [
+        'MaxItems' => [
           'shape' => 'integer',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'boolean',
         ],
-        'Quantity' =>
-        [
+        'Quantity' => [
           'shape' => 'integer',
         ],
-        'Items' =>
-        [
+        'Items' => [
           'shape' => 'StreamingDistributionSummaryList',
         ],
       ],
     ],
-    'StreamingDistributionNotDisabled' =>
-    [
+    'StreamingDistributionNotDisabled' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 409,
       ],
       'exception' => true,
     ],
-    'StreamingDistributionSummary' =>
-    [
+    'StreamingDistributionSummary' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
-        1 => 'Status',
-        2 => 'LastModifiedTime',
-        3 => 'DomainName',
-        4 => 'S3Origin',
-        5 => 'Aliases',
-        6 => 'TrustedSigners',
-        7 => 'Comment',
-        8 => 'PriceClass',
-        9 => 'Enabled',
+      'required' => [
+        'Id',
+        'Status',
+        'LastModifiedTime',
+        'DomainName',
+        'S3Origin',
+        'Aliases',
+        'TrustedSigners',
+        'Comment',
+        'PriceClass',
+        'Enabled',
       ],
-      'members' =>
-      [
-        'Id' =>
-        [
+      'members' => [
+        'Id' => [
           'shape' => 'string',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'string',
         ],
-        'LastModifiedTime' =>
-        [
+        'LastModifiedTime' => [
           'shape' => 'timestamp',
         ],
-        'DomainName' =>
-        [
+        'DomainName' => [
           'shape' => 'string',
         ],
-        'S3Origin' =>
-        [
+        'S3Origin' => [
           'shape' => 'S3Origin',
         ],
-        'Aliases' =>
-        [
+        'Aliases' => [
           'shape' => 'Aliases',
         ],
-        'TrustedSigners' =>
-        [
+        'TrustedSigners' => [
           'shape' => 'TrustedSigners',
         ],
-        'Comment' =>
-        [
+        'Comment' => [
           'shape' => 'string',
         ],
-        'PriceClass' =>
-        [
+        'PriceClass' => [
           'shape' => 'PriceClass',
         ],
-        'Enabled' =>
-        [
+        'Enabled' => [
           'shape' => 'boolean',
         ],
       ],
     ],
-    'StreamingDistributionSummaryList' =>
-    [
+    'StreamingDistributionSummaryList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'StreamingDistributionSummary',
         'locationName' => 'StreamingDistributionSummary',
       ],
     ],
-    'StreamingLoggingConfig' =>
-    [
+    'StreamingLoggingConfig' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Enabled',
-        1 => 'Bucket',
-        2 => 'Prefix',
+      'required' => [
+        'Enabled',
+        'Bucket',
+        'Prefix',
       ],
-      'members' =>
-      [
-        'Enabled' =>
-        [
+      'members' => [
+        'Enabled' => [
           'shape' => 'boolean',
         ],
-        'Bucket' =>
-        [
+        'Bucket' => [
           'shape' => 'string',
         ],
-        'Prefix' =>
-        [
+        'Prefix' => [
           'shape' => 'string',
         ],
       ],
     ],
-    'TooManyCacheBehaviors' =>
-    [
+    'TooManyCacheBehaviors' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'TooManyCertificates' =>
-    [
+    'TooManyCertificates' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'TooManyCloudFrontOriginAccessIdentities' =>
-    [
+    'TooManyCloudFrontOriginAccessIdentities' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'TooManyCookieNamesInWhiteList' =>
-    [
+    'TooManyCookieNamesInWhiteList' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'TooManyDistributionCNAMEs' =>
-    [
+    'TooManyDistributionCNAMEs' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'TooManyDistributions' =>
-    [
+    'TooManyDistributions' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'TooManyHeadersInForwardedValues' =>
-    [
+    'TooManyHeadersInForwardedValues' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'TooManyInvalidationsInProgress' =>
-    [
+    'TooManyInvalidationsInProgress' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'TooManyOrigins' =>
-    [
+    'TooManyOrigins' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'TooManyStreamingDistributionCNAMEs' =>
-    [
+    'TooManyStreamingDistributionCNAMEs' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'TooManyStreamingDistributions' =>
-    [
+    'TooManyStreamingDistributions' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'TooManyTrustedSigners' =>
-    [
+    'TooManyTrustedSigners' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'TrustedSignerDoesNotExist' =>
-    [
+    'TrustedSignerDoesNotExist' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'string',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'httpStatusCode' => 400,
       ],
       'exception' => true,
     ],
-    'TrustedSigners' =>
-    [
+    'TrustedSigners' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Enabled',
-        1 => 'Quantity',
+      'required' => [
+        'Enabled',
+        'Quantity',
       ],
-      'members' =>
-      [
-        'Enabled' =>
-        [
+      'members' => [
+        'Enabled' => [
           'shape' => 'boolean',
         ],
-        'Quantity' =>
-        [
+        'Quantity' => [
           'shape' => 'integer',
         ],
-        'Items' =>
-        [
+        'Items' => [
           'shape' => 'AwsAccountNumberList',
         ],
       ],
     ],
-    'UpdateCloudFrontOriginAccessIdentityRequest' =>
-    [
+    'UpdateCloudFrontOriginAccessIdentityRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CloudFrontOriginAccessIdentityConfig',
-        1 => 'Id',
+      'required' => [
+        'CloudFrontOriginAccessIdentityConfig',
+        'Id',
       ],
-      'members' =>
-      [
-        'CloudFrontOriginAccessIdentityConfig' =>
-        [
+      'members' => [
+        'CloudFrontOriginAccessIdentityConfig' => [
           'shape' => 'CloudFrontOriginAccessIdentityConfig',
-          'xmlNamespace' =>
-          [
+          'xmlNamespace' => [
             'uri' => 'http://cloudfront.amazonaws.com/doc/2014-05-31/',
           ],
           'locationName' => 'CloudFrontOriginAccessIdentityConfig',
         ],
-        'Id' =>
-        [
+        'Id' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
-        'IfMatch' =>
-        [
+        'IfMatch' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'If-Match',
@@ -4482,17 +3436,13 @@ return [
       ],
       'payload' => 'CloudFrontOriginAccessIdentityConfig',
     ],
-    'UpdateCloudFrontOriginAccessIdentityResult' =>
-    [
+    'UpdateCloudFrontOriginAccessIdentityResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CloudFrontOriginAccessIdentity' =>
-        [
+      'members' => [
+        'CloudFrontOriginAccessIdentity' => [
           'shape' => 'CloudFrontOriginAccessIdentity',
         ],
-        'ETag' =>
-        [
+        'ETag' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'ETag',
@@ -4500,33 +3450,26 @@ return [
       ],
       'payload' => 'CloudFrontOriginAccessIdentity',
     ],
-    'UpdateDistributionRequest' =>
-    [
+    'UpdateDistributionRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DistributionConfig',
-        1 => 'Id',
+      'required' => [
+        'DistributionConfig',
+        'Id',
       ],
-      'members' =>
-      [
-        'DistributionConfig' =>
-        [
+      'members' => [
+        'DistributionConfig' => [
           'shape' => 'DistributionConfig',
-          'xmlNamespace' =>
-          [
+          'xmlNamespace' => [
             'uri' => 'http://cloudfront.amazonaws.com/doc/2014-05-31/',
           ],
           'locationName' => 'DistributionConfig',
         ],
-        'Id' =>
-        [
+        'Id' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
-        'IfMatch' =>
-        [
+        'IfMatch' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'If-Match',
@@ -4534,17 +3477,13 @@ return [
       ],
       'payload' => 'DistributionConfig',
     ],
-    'UpdateDistributionResult' =>
-    [
+    'UpdateDistributionResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Distribution' =>
-        [
+      'members' => [
+        'Distribution' => [
           'shape' => 'Distribution',
         ],
-        'ETag' =>
-        [
+        'ETag' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'ETag',
@@ -4552,33 +3491,26 @@ return [
       ],
       'payload' => 'Distribution',
     ],
-    'UpdateStreamingDistributionRequest' =>
-    [
+    'UpdateStreamingDistributionRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'StreamingDistributionConfig',
-        1 => 'Id',
+      'required' => [
+        'StreamingDistributionConfig',
+        'Id',
       ],
-      'members' =>
-      [
-        'StreamingDistributionConfig' =>
-        [
+      'members' => [
+        'StreamingDistributionConfig' => [
           'shape' => 'StreamingDistributionConfig',
-          'xmlNamespace' =>
-          [
+          'xmlNamespace' => [
             'uri' => 'http://cloudfront.amazonaws.com/doc/2014-05-31/',
           ],
           'locationName' => 'StreamingDistributionConfig',
         ],
-        'Id' =>
-        [
+        'Id' => [
           'shape' => 'string',
           'location' => 'uri',
           'locationName' => 'Id',
         ],
-        'IfMatch' =>
-        [
+        'IfMatch' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'If-Match',
@@ -4586,17 +3518,13 @@ return [
       ],
       'payload' => 'StreamingDistributionConfig',
     ],
-    'UpdateStreamingDistributionResult' =>
-    [
+    'UpdateStreamingDistributionResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StreamingDistribution' =>
-        [
+      'members' => [
+        'StreamingDistribution' => [
           'shape' => 'StreamingDistribution',
         ],
-        'ETag' =>
-        [
+        'ETag' => [
           'shape' => 'string',
           'location' => 'header',
           'locationName' => 'ETag',
@@ -4604,53 +3532,41 @@ return [
       ],
       'payload' => 'StreamingDistribution',
     ],
-    'ViewerCertificate' =>
-    [
+    'ViewerCertificate' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IAMCertificateId' =>
-        [
+      'members' => [
+        'IAMCertificateId' => [
           'shape' => 'string',
         ],
-        'CloudFrontDefaultCertificate' =>
-        [
+        'CloudFrontDefaultCertificate' => [
           'shape' => 'boolean',
         ],
-        'SSLSupportMethod' =>
-        [
+        'SSLSupportMethod' => [
           'shape' => 'SSLSupportMethod',
         ],
       ],
     ],
-    'ViewerProtocolPolicy' =>
-    [
+    'ViewerProtocolPolicy' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'allow-all',
-        1 => 'https-only',
-        2 => 'redirect-to-https',
+      'enum' => [
+        'allow-all',
+        'https-only',
+        'redirect-to-https',
       ],
     ],
-    'boolean' =>
-    [
+    'boolean' => [
       'type' => 'boolean',
     ],
-    'integer' =>
-    [
+    'integer' => [
       'type' => 'integer',
     ],
-    'long' =>
-    [
+    'long' => [
       'type' => 'long',
     ],
-    'string' =>
-    [
+    'string' => [
       'type' => 'string',
     ],
-    'timestamp' =>
-    [
+    'timestamp' => [
       'type' => 'timestamp',
     ],
   ],

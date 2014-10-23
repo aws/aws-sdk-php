@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2010-06-01',
     'endpointPrefix' => 'importexport',
     'globalEndpoint' => 'importexport.amazonaws.com',
@@ -10,312 +8,245 @@ return [
     'xmlNamespace' => 'http://importexport.amazonaws.com/doc/2010-06-01/',
     'protocol' => 'query',
   ],
-  'operations' =>
-  [
-    'CancelJob' =>
-    [
+  'operations' => [
+    'CancelJob' => [
       'name' => 'CancelJob',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/?Operation=CancelJob',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CancelJobInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CancelJobOutput',
         'resultWrapper' => 'CancelJobResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidJobIdException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ExpiredJobIdException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'CanceledJobIdException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'UnableToCancelJobIdException',
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InvalidAccessKeyIdException',
           'exception' => true,
         ],
       ],
     ],
-    'CreateJob' =>
-    [
+    'CreateJob' => [
       'name' => 'CreateJob',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/?Operation=CreateJob',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateJobInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateJobOutput',
         'resultWrapper' => 'CreateJobResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'MissingParameterException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidParameterException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidAccessKeyIdException',
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InvalidAddressException',
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'InvalidManifestFieldException',
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'MissingManifestFieldException',
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'NoSuchBucketException',
           'exception' => true,
         ],
-        8 =>
         [
           'shape' => 'MissingCustomsException',
           'exception' => true,
         ],
-        9 =>
         [
           'shape' => 'InvalidCustomsException',
           'exception' => true,
         ],
-        10 =>
         [
           'shape' => 'InvalidFileSystemException',
           'exception' => true,
         ],
-        11 =>
         [
           'shape' => 'MultipleRegionsException',
           'exception' => true,
         ],
-        12 =>
         [
           'shape' => 'BucketPermissionException',
           'exception' => true,
         ],
-        13 =>
         [
           'shape' => 'MalformedManifestException',
           'exception' => true,
         ],
       ],
     ],
-    'GetStatus' =>
-    [
+    'GetStatus' => [
       'name' => 'GetStatus',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/?Operation=GetStatus',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetStatusInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetStatusOutput',
         'resultWrapper' => 'GetStatusResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidJobIdException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ExpiredJobIdException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'CanceledJobIdException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidAccessKeyIdException',
           'exception' => true,
         ],
       ],
     ],
-    'ListJobs' =>
-    [
+    'ListJobs' => [
       'name' => 'ListJobs',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/?Operation=ListJobs',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListJobsInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListJobsOutput',
         'resultWrapper' => 'ListJobsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidAccessKeyIdException',
           'exception' => true,
         ],
       ],
     ],
-    'UpdateJob' =>
-    [
+    'UpdateJob' => [
       'name' => 'UpdateJob',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/?Operation=UpdateJob',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UpdateJobInput',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UpdateJobOutput',
         'resultWrapper' => 'UpdateJobResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'MissingParameterException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidParameterException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidAccessKeyIdException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidAddressException',
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InvalidManifestFieldException',
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'InvalidJobIdException',
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'MissingManifestFieldException',
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'NoSuchBucketException',
           'exception' => true,
         ],
-        8 =>
         [
           'shape' => 'ExpiredJobIdException',
           'exception' => true,
         ],
-        9 =>
         [
           'shape' => 'CanceledJobIdException',
           'exception' => true,
         ],
-        10 =>
         [
           'shape' => 'MissingCustomsException',
           'exception' => true,
         ],
-        11 =>
         [
           'shape' => 'InvalidCustomsException',
           'exception' => true,
         ],
-        12 =>
         [
           'shape' => 'InvalidFileSystemException',
           'exception' => true,
         ],
-        13 =>
         [
           'shape' => 'MultipleRegionsException',
           'exception' => true,
         ],
-        14 =>
         [
           'shape' => 'BucketPermissionException',
           'exception' => true,
         ],
-        15 =>
         [
           'shape' => 'MalformedManifestException',
           'exception' => true,
@@ -323,597 +254,447 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'AwsShippingAddress' =>
-    [
+  'shapes' => [
+    'AwsShippingAddress' => [
       'type' => 'string',
     ],
-    'BucketPermissionException' =>
-    [
+    'BucketPermissionException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'CancelJobInput' =>
-    [
+    'CancelJobInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'JobId',
+      'required' => [
+        'JobId',
       ],
-      'members' =>
-      [
-        'JobId' =>
-        [
+      'members' => [
+        'JobId' => [
           'shape' => 'JobId',
         ],
       ],
     ],
-    'CancelJobOutput' =>
-    [
+    'CancelJobOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Success' =>
-        [
+      'members' => [
+        'Success' => [
           'shape' => 'Success',
         ],
       ],
     ],
-    'CanceledJobIdException' =>
-    [
+    'CanceledJobIdException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'Carrier' =>
-    [
+    'Carrier' => [
       'type' => 'string',
     ],
-    'CreateJobInput' =>
-    [
+    'CreateJobInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'JobType',
-        1 => 'Manifest',
-        2 => 'ValidateOnly',
+      'required' => [
+        'JobType',
+        'Manifest',
+        'ValidateOnly',
       ],
-      'members' =>
-      [
-        'JobType' =>
-        [
+      'members' => [
+        'JobType' => [
           'shape' => 'JobType',
         ],
-        'Manifest' =>
-        [
+        'Manifest' => [
           'shape' => 'Manifest',
         ],
-        'ManifestAddendum' =>
-        [
+        'ManifestAddendum' => [
           'shape' => 'ManifestAddendum',
         ],
-        'ValidateOnly' =>
-        [
+        'ValidateOnly' => [
           'shape' => 'ValidateOnly',
         ],
       ],
     ],
-    'CreateJobOutput' =>
-    [
+    'CreateJobOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'JobId' =>
-        [
+      'members' => [
+        'JobId' => [
           'shape' => 'JobId',
         ],
-        'JobType' =>
-        [
+        'JobType' => [
           'shape' => 'JobType',
         ],
-        'AwsShippingAddress' =>
-        [
+        'AwsShippingAddress' => [
           'shape' => 'AwsShippingAddress',
         ],
-        'Signature' =>
-        [
+        'Signature' => [
           'shape' => 'Signature',
         ],
-        'SignatureFileContents' =>
-        [
+        'SignatureFileContents' => [
           'shape' => 'SignatureFileContents',
         ],
-        'WarningMessage' =>
-        [
+        'WarningMessage' => [
           'shape' => 'WarningMessage',
         ],
       ],
     ],
-    'CreationDate' =>
-    [
+    'CreationDate' => [
       'type' => 'timestamp',
     ],
-    'CurrentManifest' =>
-    [
+    'CurrentManifest' => [
       'type' => 'string',
     ],
-    'ErrorCount' =>
-    [
+    'ErrorCount' => [
       'type' => 'integer',
     ],
-    'ErrorMessage' =>
-    [
+    'ErrorMessage' => [
       'type' => 'string',
     ],
-    'ExpiredJobIdException' =>
-    [
+    'ExpiredJobIdException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'GetStatusInput' =>
-    [
+    'GetStatusInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'JobId',
+      'required' => [
+        'JobId',
       ],
-      'members' =>
-      [
-        'JobId' =>
-        [
+      'members' => [
+        'JobId' => [
           'shape' => 'JobId',
         ],
       ],
     ],
-    'GetStatusOutput' =>
-    [
+    'GetStatusOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'JobId' =>
-        [
+      'members' => [
+        'JobId' => [
           'shape' => 'JobId',
         ],
-        'JobType' =>
-        [
+        'JobType' => [
           'shape' => 'JobType',
         ],
-        'AwsShippingAddress' =>
-        [
+        'AwsShippingAddress' => [
           'shape' => 'AwsShippingAddress',
         ],
-        'LocationCode' =>
-        [
+        'LocationCode' => [
           'shape' => 'LocationCode',
         ],
-        'LocationMessage' =>
-        [
+        'LocationMessage' => [
           'shape' => 'LocationMessage',
         ],
-        'ProgressCode' =>
-        [
+        'ProgressCode' => [
           'shape' => 'ProgressCode',
         ],
-        'ProgressMessage' =>
-        [
+        'ProgressMessage' => [
           'shape' => 'ProgressMessage',
         ],
-        'Carrier' =>
-        [
+        'Carrier' => [
           'shape' => 'Carrier',
         ],
-        'TrackingNumber' =>
-        [
+        'TrackingNumber' => [
           'shape' => 'TrackingNumber',
         ],
-        'LogBucket' =>
-        [
+        'LogBucket' => [
           'shape' => 'LogBucket',
         ],
-        'LogKey' =>
-        [
+        'LogKey' => [
           'shape' => 'LogKey',
         ],
-        'ErrorCount' =>
-        [
+        'ErrorCount' => [
           'shape' => 'ErrorCount',
         ],
-        'Signature' =>
-        [
+        'Signature' => [
           'shape' => 'Signature',
         ],
-        'SignatureFileContents' =>
-        [
+        'SignatureFileContents' => [
           'shape' => 'Signature',
         ],
-        'CurrentManifest' =>
-        [
+        'CurrentManifest' => [
           'shape' => 'CurrentManifest',
         ],
-        'CreationDate' =>
-        [
+        'CreationDate' => [
           'shape' => 'CreationDate',
         ],
       ],
     ],
-    'InvalidAccessKeyIdException' =>
-    [
+    'InvalidAccessKeyIdException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'InvalidAddressException' =>
-    [
+    'InvalidAddressException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'InvalidCustomsException' =>
-    [
+    'InvalidCustomsException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'InvalidFileSystemException' =>
-    [
+    'InvalidFileSystemException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'InvalidJobIdException' =>
-    [
+    'InvalidJobIdException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'InvalidManifestFieldException' =>
-    [
+    'InvalidManifestFieldException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'InvalidParameterException' =>
-    [
+    'InvalidParameterException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'IsCanceled' =>
-    [
+    'IsCanceled' => [
       'type' => 'boolean',
     ],
-    'IsTruncated' =>
-    [
+    'IsTruncated' => [
       'type' => 'boolean',
     ],
-    'Job' =>
-    [
+    'Job' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'JobId' =>
-        [
+      'members' => [
+        'JobId' => [
           'shape' => 'JobId',
         ],
-        'CreationDate' =>
-        [
+        'CreationDate' => [
           'shape' => 'CreationDate',
         ],
-        'IsCanceled' =>
-        [
+        'IsCanceled' => [
           'shape' => 'IsCanceled',
         ],
-        'JobType' =>
-        [
+        'JobType' => [
           'shape' => 'JobType',
         ],
       ],
     ],
-    'JobId' =>
-    [
+    'JobId' => [
       'type' => 'string',
     ],
-    'JobType' =>
-    [
+    'JobType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'Import',
-        1 => 'Export',
+      'enum' => [
+        'Import',
+        'Export',
       ],
     ],
-    'JobsList' =>
-    [
+    'JobsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Job',
       ],
     ],
-    'ListJobsInput' =>
-    [
+    'ListJobsInput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'MaxJobs' =>
-        [
+      'members' => [
+        'MaxJobs' => [
           'shape' => 'MaxJobs',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
         ],
       ],
     ],
-    'ListJobsOutput' =>
-    [
+    'ListJobsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Jobs' =>
-        [
+      'members' => [
+        'Jobs' => [
           'shape' => 'JobsList',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'IsTruncated',
         ],
       ],
     ],
-    'LocationCode' =>
-    [
+    'LocationCode' => [
       'type' => 'string',
     ],
-    'LocationMessage' =>
-    [
+    'LocationMessage' => [
       'type' => 'string',
     ],
-    'LogBucket' =>
-    [
+    'LogBucket' => [
       'type' => 'string',
     ],
-    'LogKey' =>
-    [
+    'LogKey' => [
       'type' => 'string',
     ],
-    'MalformedManifestException' =>
-    [
+    'MalformedManifestException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'Manifest' =>
-    [
+    'Manifest' => [
       'type' => 'string',
     ],
-    'ManifestAddendum' =>
-    [
+    'ManifestAddendum' => [
       'type' => 'string',
     ],
-    'Marker' =>
-    [
+    'Marker' => [
       'type' => 'string',
     ],
-    'MaxJobs' =>
-    [
+    'MaxJobs' => [
       'type' => 'integer',
     ],
-    'MissingCustomsException' =>
-    [
+    'MissingCustomsException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'MissingManifestFieldException' =>
-    [
+    'MissingManifestFieldException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'MissingParameterException' =>
-    [
+    'MissingParameterException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'MultipleRegionsException' =>
-    [
+    'MultipleRegionsException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'NoSuchBucketException' =>
-    [
+    'NoSuchBucketException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'ProgressCode' =>
-    [
+    'ProgressCode' => [
       'type' => 'string',
     ],
-    'ProgressMessage' =>
-    [
+    'ProgressMessage' => [
       'type' => 'string',
     ],
-    'Signature' =>
-    [
+    'Signature' => [
       'type' => 'string',
     ],
-    'SignatureFileContents' =>
-    [
+    'SignatureFileContents' => [
       'type' => 'string',
     ],
-    'Success' =>
-    [
+    'Success' => [
       'type' => 'boolean',
     ],
-    'TrackingNumber' =>
-    [
+    'TrackingNumber' => [
       'type' => 'string',
     ],
-    'UnableToCancelJobIdException' =>
-    [
+    'UnableToCancelJobIdException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'ErrorMessage',
         ],
       ],
       'exception' => true,
     ],
-    'UpdateJobInput' =>
-    [
+    'UpdateJobInput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'JobId',
-        1 => 'Manifest',
-        2 => 'JobType',
-        3 => 'ValidateOnly',
+      'required' => [
+        'JobId',
+        'Manifest',
+        'JobType',
+        'ValidateOnly',
       ],
-      'members' =>
-      [
-        'JobId' =>
-        [
+      'members' => [
+        'JobId' => [
           'shape' => 'JobId',
         ],
-        'Manifest' =>
-        [
+        'Manifest' => [
           'shape' => 'Manifest',
         ],
-        'JobType' =>
-        [
+        'JobType' => [
           'shape' => 'JobType',
         ],
-        'ValidateOnly' =>
-        [
+        'ValidateOnly' => [
           'shape' => 'ValidateOnly',
         ],
       ],
     ],
-    'UpdateJobOutput' =>
-    [
+    'UpdateJobOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Success' =>
-        [
+      'members' => [
+        'Success' => [
           'shape' => 'Success',
         ],
-        'WarningMessage' =>
-        [
+        'WarningMessage' => [
           'shape' => 'WarningMessage',
         ],
       ],
     ],
-    'ValidateOnly' =>
-    [
+    'ValidateOnly' => [
       'type' => 'boolean',
     ],
-    'WarningMessage' =>
-    [
+    'WarningMessage' => [
       'type' => 'string',
     ],
   ],

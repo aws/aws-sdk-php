@@ -1,51 +1,42 @@
-<?php
-return [
-  'pagination' =>
-  [
-    'GetWorkflowExecutionHistory' =>
-    [
+<?php return [
+  'pagination' => [
+    'GetWorkflowExecutionHistory' => [
       'limit_key' => 'maximumPageSize',
       'input_token' => 'nextPageToken',
       'output_token' => 'nextPageToken',
       'result_key' => 'events',
     ],
-    'ListActivityTypes' =>
-    [
+    'ListActivityTypes' => [
       'limit_key' => 'maximumPageSize',
       'input_token' => 'nextPageToken',
       'output_token' => 'nextPageToken',
       'result_key' => 'typeInfos',
     ],
-    'ListClosedWorkflowExecutions' =>
-    [
+    'ListClosedWorkflowExecutions' => [
       'limit_key' => 'maximumPageSize',
       'input_token' => 'nextPageToken',
       'output_token' => 'nextPageToken',
       'result_key' => 'executionInfos',
     ],
-    'ListDomains' =>
-    [
+    'ListDomains' => [
       'limit_key' => 'maximumPageSize',
       'input_token' => 'nextPageToken',
       'output_token' => 'nextPageToken',
       'result_key' => 'domainInfos',
     ],
-    'ListOpenWorkflowExecutions' =>
-    [
+    'ListOpenWorkflowExecutions' => [
       'limit_key' => 'maximumPageSize',
       'input_token' => 'nextPageToken',
       'output_token' => 'nextPageToken',
       'result_key' => 'executionInfos',
     ],
-    'ListWorkflowTypes' =>
-    [
+    'ListWorkflowTypes' => [
       'limit_key' => 'maximumPageSize',
       'input_token' => 'nextPageToken',
       'output_token' => 'nextPageToken',
       'result_key' => 'typeInfos',
     ],
-    'PollForDecisionTask' =>
-    [
+    'PollForDecisionTask' => [
       'limit_key' => 'maximumPageSize',
       'input_token' => 'nextPageToken',
       'output_token' => 'nextPageToken',

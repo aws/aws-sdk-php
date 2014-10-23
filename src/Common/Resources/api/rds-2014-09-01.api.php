@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2014-09-01',
     'endpointPrefix' => 'rds',
     'serviceAbbreviation' => 'Amazon RDS',
@@ -10,44 +8,34 @@ return [
     'xmlNamespace' => 'http://rds.amazonaws.com/doc/2014-09-01/',
     'protocol' => 'query',
   ],
-  'operations' =>
-  [
-    'AddSourceIdentifierToSubscription' =>
-    [
+  'operations' => [
+    'AddSourceIdentifierToSubscription' => [
       'name' => 'AddSourceIdentifierToSubscription',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AddSourceIdentifierToSubscriptionMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AddSourceIdentifierToSubscriptionResult',
         'wrapper' => true,
         'resultWrapper' => 'AddSourceIdentifierToSubscriptionResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'SubscriptionNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubscriptionNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'SourceNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SourceNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -56,36 +44,28 @@ return [
         ],
       ],
     ],
-    'AddTagsToResource' =>
-    [
+    'AddTagsToResource' => [
       'name' => 'AddTagsToResource',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AddTagsToResourceMessage',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBInstanceNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBInstanceNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DBSnapshotNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSnapshotNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -94,64 +74,51 @@ return [
         ],
       ],
     ],
-    'AuthorizeDBSecurityGroupIngress' =>
-    [
+    'AuthorizeDBSecurityGroupIngress' => [
       'name' => 'AuthorizeDBSecurityGroupIngress',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AuthorizeDBSecurityGroupIngressMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AuthorizeDBSecurityGroupIngressResult',
         'wrapper' => true,
         'resultWrapper' => 'AuthorizeDBSecurityGroupIngressResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBSecurityGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSecurityGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidDBSecurityGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidDBSecurityGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'AuthorizationAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'AuthorizationQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -160,53 +127,42 @@ return [
         ],
       ],
     ],
-    'CopyDBParameterGroup' =>
-    [
+    'CopyDBParameterGroup' => [
       'name' => 'CopyDBParameterGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CopyDBParameterGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CopyDBParameterGroupResult',
         'wrapper' => true,
         'resultWrapper' => 'CopyDBParameterGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DBParameterGroupAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBParameterGroupAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'DBParameterGroupQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBParameterGroupQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -215,64 +171,51 @@ return [
         ],
       ],
     ],
-    'CopyDBSnapshot' =>
-    [
+    'CopyDBSnapshot' => [
       'name' => 'CopyDBSnapshot',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CopyDBSnapshotMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CopyDBSnapshotResult',
         'wrapper' => true,
         'resultWrapper' => 'CopyDBSnapshotResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBSnapshotAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSnapshotAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DBSnapshotNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSnapshotNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidDBSnapshotStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidDBSnapshotState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'SnapshotQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SnapshotQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -281,53 +224,42 @@ return [
         ],
       ],
     ],
-    'CopyOptionGroup' =>
-    [
+    'CopyOptionGroup' => [
       'name' => 'CopyOptionGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CopyOptionGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CopyOptionGroupResult',
         'wrapper' => true,
         'resultWrapper' => 'CopyOptionGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'OptionGroupAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'OptionGroupAlreadyExistsFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'OptionGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'OptionGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'OptionGroupQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'OptionGroupQuotaExceededFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -336,174 +268,141 @@ return [
         ],
       ],
     ],
-    'CreateDBInstance' =>
-    [
+    'CreateDBInstance' => [
       'name' => 'CreateDBInstance',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateDBInstanceMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateDBInstanceResult',
         'wrapper' => true,
         'resultWrapper' => 'CreateDBInstanceResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBInstanceAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBInstanceAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InsufficientDBInstanceCapacityFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientDBInstanceCapacity',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'DBParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'DBSecurityGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSecurityGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InstanceQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InstanceQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'StorageQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'StorageQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'DBSubnetGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSubnetGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'DBSubnetGroupDoesNotCoverEnoughAZs',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSubnetGroupDoesNotCoverEnoughAZs',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        8 =>
         [
           'shape' => 'InvalidSubnet',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidSubnet',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        9 =>
         [
           'shape' => 'InvalidVPCNetworkStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidVPCNetworkStateFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        10 =>
         [
           'shape' => 'ProvisionedIopsNotAvailableInAZFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ProvisionedIopsNotAvailableInAZFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        11 =>
         [
           'shape' => 'OptionGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'OptionGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        12 =>
         [
           'shape' => 'StorageTypeNotSupportedFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'StorageTypeNotSupported',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        13 =>
         [
           'shape' => 'AuthorizationNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -512,207 +411,168 @@ return [
         ],
       ],
     ],
-    'CreateDBInstanceReadReplica' =>
-    [
+    'CreateDBInstanceReadReplica' => [
       'name' => 'CreateDBInstanceReadReplica',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateDBInstanceReadReplicaMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateDBInstanceReadReplicaResult',
         'wrapper' => true,
         'resultWrapper' => 'CreateDBInstanceReadReplicaResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBInstanceAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBInstanceAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InsufficientDBInstanceCapacityFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientDBInstanceCapacity',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'DBParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'DBSecurityGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSecurityGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InstanceQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InstanceQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'StorageQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'StorageQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'DBInstanceNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBInstanceNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'InvalidDBInstanceStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidDBInstanceState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        8 =>
         [
           'shape' => 'DBSubnetGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSubnetGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        9 =>
         [
           'shape' => 'DBSubnetGroupDoesNotCoverEnoughAZs',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSubnetGroupDoesNotCoverEnoughAZs',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        10 =>
         [
           'shape' => 'InvalidSubnet',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidSubnet',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        11 =>
         [
           'shape' => 'InvalidVPCNetworkStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidVPCNetworkStateFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        12 =>
         [
           'shape' => 'ProvisionedIopsNotAvailableInAZFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ProvisionedIopsNotAvailableInAZFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        13 =>
         [
           'shape' => 'OptionGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'OptionGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        14 =>
         [
           'shape' => 'DBSubnetGroupNotAllowedFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSubnetGroupNotAllowedFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        15 =>
         [
           'shape' => 'InvalidDBSubnetGroupFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidDBSubnetGroupFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        16 =>
         [
           'shape' => 'StorageTypeNotSupportedFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'StorageTypeNotSupported',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -721,42 +581,33 @@ return [
         ],
       ],
     ],
-    'CreateDBParameterGroup' =>
-    [
+    'CreateDBParameterGroup' => [
       'name' => 'CreateDBParameterGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateDBParameterGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateDBParameterGroupResult',
         'wrapper' => true,
         'resultWrapper' => 'CreateDBParameterGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBParameterGroupQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBParameterGroupQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DBParameterGroupAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBParameterGroupAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -765,53 +616,42 @@ return [
         ],
       ],
     ],
-    'CreateDBSecurityGroup' =>
-    [
+    'CreateDBSecurityGroup' => [
       'name' => 'CreateDBSecurityGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateDBSecurityGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateDBSecurityGroupResult',
         'wrapper' => true,
         'resultWrapper' => 'CreateDBSecurityGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBSecurityGroupAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSecurityGroupAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DBSecurityGroupQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'QuotaExceeded.DBSecurityGroup',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'DBSecurityGroupNotSupportedFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSecurityGroupNotSupported',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -820,64 +660,51 @@ return [
         ],
       ],
     ],
-    'CreateDBSnapshot' =>
-    [
+    'CreateDBSnapshot' => [
       'name' => 'CreateDBSnapshot',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateDBSnapshotMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateDBSnapshotResult',
         'wrapper' => true,
         'resultWrapper' => 'CreateDBSnapshotResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBSnapshotAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSnapshotAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidDBInstanceStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidDBInstanceState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'DBInstanceNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBInstanceNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'SnapshotQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SnapshotQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -886,75 +713,60 @@ return [
         ],
       ],
     ],
-    'CreateDBSubnetGroup' =>
-    [
+    'CreateDBSubnetGroup' => [
       'name' => 'CreateDBSubnetGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateDBSubnetGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateDBSubnetGroupResult',
         'wrapper' => true,
         'resultWrapper' => 'CreateDBSubnetGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBSubnetGroupAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSubnetGroupAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DBSubnetGroupQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSubnetGroupQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'DBSubnetQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSubnetQuotaExceededFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'DBSubnetGroupDoesNotCoverEnoughAZs',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSubnetGroupDoesNotCoverEnoughAZs',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InvalidSubnet',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidSubnet',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -963,97 +775,78 @@ return [
         ],
       ],
     ],
-    'CreateEventSubscription' =>
-    [
+    'CreateEventSubscription' => [
       'name' => 'CreateEventSubscription',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateEventSubscriptionMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateEventSubscriptionResult',
         'wrapper' => true,
         'resultWrapper' => 'CreateEventSubscriptionResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'EventSubscriptionQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EventSubscriptionQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'SubscriptionAlreadyExistFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubscriptionAlreadyExist',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'SNSInvalidTopicFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SNSInvalidTopic',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'SNSNoAuthorizationFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SNSNoAuthorization',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'SNSTopicArnNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SNSTopicArnNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'SubscriptionCategoryNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubscriptionCategoryNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'SourceNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SourceNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1062,42 +855,33 @@ return [
         ],
       ],
     ],
-    'CreateOptionGroup' =>
-    [
+    'CreateOptionGroup' => [
       'name' => 'CreateOptionGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateOptionGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateOptionGroupResult',
         'wrapper' => true,
         'resultWrapper' => 'CreateOptionGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'OptionGroupAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'OptionGroupAlreadyExistsFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'OptionGroupQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'OptionGroupQuotaExceededFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1106,64 +890,51 @@ return [
         ],
       ],
     ],
-    'DeleteDBInstance' =>
-    [
+    'DeleteDBInstance' => [
       'name' => 'DeleteDBInstance',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteDBInstanceMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteDBInstanceResult',
         'wrapper' => true,
         'resultWrapper' => 'DeleteDBInstanceResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBInstanceNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBInstanceNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidDBInstanceStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidDBInstanceState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'DBSnapshotAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSnapshotAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'SnapshotQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SnapshotQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1172,36 +943,28 @@ return [
         ],
       ],
     ],
-    'DeleteDBParameterGroup' =>
-    [
+    'DeleteDBParameterGroup' => [
       'name' => 'DeleteDBParameterGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteDBParameterGroupMessage',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidDBParameterGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidDBParameterGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DBParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1210,36 +973,28 @@ return [
         ],
       ],
     ],
-    'DeleteDBSecurityGroup' =>
-    [
+    'DeleteDBSecurityGroup' => [
       'name' => 'DeleteDBSecurityGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteDBSecurityGroupMessage',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidDBSecurityGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidDBSecurityGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DBSecurityGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSecurityGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1248,42 +1003,33 @@ return [
         ],
       ],
     ],
-    'DeleteDBSnapshot' =>
-    [
+    'DeleteDBSnapshot' => [
       'name' => 'DeleteDBSnapshot',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteDBSnapshotMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteDBSnapshotResult',
         'wrapper' => true,
         'resultWrapper' => 'DeleteDBSnapshotResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidDBSnapshotStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidDBSnapshotState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DBSnapshotNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSnapshotNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1292,47 +1038,37 @@ return [
         ],
       ],
     ],
-    'DeleteDBSubnetGroup' =>
-    [
+    'DeleteDBSubnetGroup' => [
       'name' => 'DeleteDBSubnetGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteDBSubnetGroupMessage',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidDBSubnetGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidDBSubnetGroupStateFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidDBSubnetStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidDBSubnetStateFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'DBSubnetGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSubnetGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1341,42 +1077,33 @@ return [
         ],
       ],
     ],
-    'DeleteEventSubscription' =>
-    [
+    'DeleteEventSubscription' => [
       'name' => 'DeleteEventSubscription',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteEventSubscriptionMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteEventSubscriptionResult',
         'wrapper' => true,
         'resultWrapper' => 'DeleteEventSubscriptionResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'SubscriptionNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubscriptionNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidEventSubscriptionStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidEventSubscriptionState',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1385,36 +1112,28 @@ return [
         ],
       ],
     ],
-    'DeleteOptionGroup' =>
-    [
+    'DeleteOptionGroup' => [
       'name' => 'DeleteOptionGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteOptionGroupMessage',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'OptionGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'OptionGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidOptionGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidOptionGroupStateFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1423,48 +1142,37 @@ return [
         ],
       ],
     ],
-    'DescribeDBEngineVersions' =>
-    [
+    'DescribeDBEngineVersions' => [
       'name' => 'DescribeDBEngineVersions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeDBEngineVersionsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DBEngineVersionMessage',
         'resultWrapper' => 'DescribeDBEngineVersionsResult',
       ],
     ],
-    'DescribeDBInstances' =>
-    [
+    'DescribeDBInstances' => [
       'name' => 'DescribeDBInstances',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeDBInstancesMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DBInstanceMessage',
         'resultWrapper' => 'DescribeDBInstancesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBInstanceNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBInstanceNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1473,30 +1181,23 @@ return [
         ],
       ],
     ],
-    'DescribeDBLogFiles' =>
-    [
+    'DescribeDBLogFiles' => [
       'name' => 'DescribeDBLogFiles',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeDBLogFilesMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeDBLogFilesResponse',
         'resultWrapper' => 'DescribeDBLogFilesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBInstanceNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBInstanceNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1505,30 +1206,23 @@ return [
         ],
       ],
     ],
-    'DescribeDBParameterGroups' =>
-    [
+    'DescribeDBParameterGroups' => [
       'name' => 'DescribeDBParameterGroups',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeDBParameterGroupsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DBParameterGroupsMessage',
         'resultWrapper' => 'DescribeDBParameterGroupsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1537,30 +1231,23 @@ return [
         ],
       ],
     ],
-    'DescribeDBParameters' =>
-    [
+    'DescribeDBParameters' => [
       'name' => 'DescribeDBParameters',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeDBParametersMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DBParameterGroupDetails',
         'resultWrapper' => 'DescribeDBParametersResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1569,30 +1256,23 @@ return [
         ],
       ],
     ],
-    'DescribeDBSecurityGroups' =>
-    [
+    'DescribeDBSecurityGroups' => [
       'name' => 'DescribeDBSecurityGroups',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeDBSecurityGroupsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DBSecurityGroupMessage',
         'resultWrapper' => 'DescribeDBSecurityGroupsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBSecurityGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSecurityGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1601,30 +1281,23 @@ return [
         ],
       ],
     ],
-    'DescribeDBSnapshots' =>
-    [
+    'DescribeDBSnapshots' => [
       'name' => 'DescribeDBSnapshots',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeDBSnapshotsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DBSnapshotMessage',
         'resultWrapper' => 'DescribeDBSnapshotsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBSnapshotNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSnapshotNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1633,30 +1306,23 @@ return [
         ],
       ],
     ],
-    'DescribeDBSubnetGroups' =>
-    [
+    'DescribeDBSubnetGroups' => [
       'name' => 'DescribeDBSubnetGroups',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeDBSubnetGroupsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DBSubnetGroupMessage',
         'resultWrapper' => 'DescribeDBSubnetGroupsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBSubnetGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSubnetGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1665,67 +1331,52 @@ return [
         ],
       ],
     ],
-    'DescribeEngineDefaultParameters' =>
-    [
+    'DescribeEngineDefaultParameters' => [
       'name' => 'DescribeEngineDefaultParameters',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeEngineDefaultParametersMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeEngineDefaultParametersResult',
         'wrapper' => true,
         'resultWrapper' => 'DescribeEngineDefaultParametersResult',
       ],
     ],
-    'DescribeEventCategories' =>
-    [
+    'DescribeEventCategories' => [
       'name' => 'DescribeEventCategories',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeEventCategoriesMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'EventCategoriesMessage',
         'resultWrapper' => 'DescribeEventCategoriesResult',
       ],
     ],
-    'DescribeEventSubscriptions' =>
-    [
+    'DescribeEventSubscriptions' => [
       'name' => 'DescribeEventSubscriptions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeEventSubscriptionsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'EventSubscriptionsMessage',
         'resultWrapper' => 'DescribeEventSubscriptionsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'SubscriptionNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubscriptionNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1734,66 +1385,51 @@ return [
         ],
       ],
     ],
-    'DescribeEvents' =>
-    [
+    'DescribeEvents' => [
       'name' => 'DescribeEvents',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeEventsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'EventsMessage',
         'resultWrapper' => 'DescribeEventsResult',
       ],
     ],
-    'DescribeOptionGroupOptions' =>
-    [
+    'DescribeOptionGroupOptions' => [
       'name' => 'DescribeOptionGroupOptions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeOptionGroupOptionsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'OptionGroupOptionsMessage',
         'resultWrapper' => 'DescribeOptionGroupOptionsResult',
       ],
     ],
-    'DescribeOptionGroups' =>
-    [
+    'DescribeOptionGroups' => [
       'name' => 'DescribeOptionGroups',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeOptionGroupsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'OptionGroups',
         'resultWrapper' => 'DescribeOptionGroupsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'OptionGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'OptionGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -1802,48 +1438,37 @@ return [
         ],
       ],
     ],
-    'DescribeOrderableDBInstanceOptions' =>
-    [
+    'DescribeOrderableDBInstanceOptions' => [
       'name' => 'DescribeOrderableDBInstanceOptions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeOrderableDBInstanceOptionsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'OrderableDBInstanceOptionsMessage',
         'resultWrapper' => 'DescribeOrderableDBInstanceOptionsResult',
       ],
     ],
-    'DescribeReservedDBInstances' =>
-    [
+    'DescribeReservedDBInstances' => [
       'name' => 'DescribeReservedDBInstances',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeReservedDBInstancesMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ReservedDBInstanceMessage',
         'resultWrapper' => 'DescribeReservedDBInstancesResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ReservedDBInstanceNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ReservedDBInstanceNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1852,30 +1477,23 @@ return [
         ],
       ],
     ],
-    'DescribeReservedDBInstancesOfferings' =>
-    [
+    'DescribeReservedDBInstancesOfferings' => [
       'name' => 'DescribeReservedDBInstancesOfferings',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeReservedDBInstancesOfferingsMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ReservedDBInstancesOfferingMessage',
         'resultWrapper' => 'DescribeReservedDBInstancesOfferingsResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ReservedDBInstancesOfferingNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ReservedDBInstancesOfferingNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1884,30 +1502,23 @@ return [
         ],
       ],
     ],
-    'DownloadDBLogFilePortion' =>
-    [
+    'DownloadDBLogFilePortion' => [
       'name' => 'DownloadDBLogFilePortion',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DownloadDBLogFilePortionMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DownloadDBLogFilePortionDetails',
         'resultWrapper' => 'DownloadDBLogFilePortionResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBInstanceNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBInstanceNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1916,41 +1527,32 @@ return [
         ],
       ],
     ],
-    'ListTagsForResource' =>
-    [
+    'ListTagsForResource' => [
       'name' => 'ListTagsForResource',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListTagsForResourceMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'TagListMessage',
         'resultWrapper' => 'ListTagsForResourceResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBInstanceNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBInstanceNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DBSnapshotNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSnapshotNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -1959,174 +1561,141 @@ return [
         ],
       ],
     ],
-    'ModifyDBInstance' =>
-    [
+    'ModifyDBInstance' => [
       'name' => 'ModifyDBInstance',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ModifyDBInstanceMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ModifyDBInstanceResult',
         'wrapper' => true,
         'resultWrapper' => 'ModifyDBInstanceResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidDBInstanceStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidDBInstanceState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidDBSecurityGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidDBSecurityGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'DBInstanceAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBInstanceAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'DBInstanceNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBInstanceNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'DBSecurityGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSecurityGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'DBParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'InsufficientDBInstanceCapacityFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientDBInstanceCapacity',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'StorageQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'StorageQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        8 =>
         [
           'shape' => 'InvalidVPCNetworkStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidVPCNetworkStateFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        9 =>
         [
           'shape' => 'ProvisionedIopsNotAvailableInAZFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ProvisionedIopsNotAvailableInAZFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        10 =>
         [
           'shape' => 'OptionGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'OptionGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        11 =>
         [
           'shape' => 'DBUpgradeDependencyFailureFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBUpgradeDependencyFailure',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        12 =>
         [
           'shape' => 'StorageTypeNotSupportedFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'StorageTypeNotSupported',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        13 =>
         [
           'shape' => 'AuthorizationNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -2135,41 +1704,32 @@ return [
         ],
       ],
     ],
-    'ModifyDBParameterGroup' =>
-    [
+    'ModifyDBParameterGroup' => [
       'name' => 'ModifyDBParameterGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ModifyDBParameterGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DBParameterGroupNameMessage',
         'resultWrapper' => 'ModifyDBParameterGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidDBParameterGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidDBParameterGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -2178,75 +1738,60 @@ return [
         ],
       ],
     ],
-    'ModifyDBSubnetGroup' =>
-    [
+    'ModifyDBSubnetGroup' => [
       'name' => 'ModifyDBSubnetGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ModifyDBSubnetGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ModifyDBSubnetGroupResult',
         'wrapper' => true,
         'resultWrapper' => 'ModifyDBSubnetGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBSubnetGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSubnetGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DBSubnetQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSubnetQuotaExceededFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'SubnetAlreadyInUse',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubnetAlreadyInUse',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'DBSubnetGroupDoesNotCoverEnoughAZs',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSubnetGroupDoesNotCoverEnoughAZs',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InvalidSubnet',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidSubnet',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -2255,86 +1800,69 @@ return [
         ],
       ],
     ],
-    'ModifyEventSubscription' =>
-    [
+    'ModifyEventSubscription' => [
       'name' => 'ModifyEventSubscription',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ModifyEventSubscriptionMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ModifyEventSubscriptionResult',
         'wrapper' => true,
         'resultWrapper' => 'ModifyEventSubscriptionResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'EventSubscriptionQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'EventSubscriptionQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'SubscriptionNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubscriptionNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'SNSInvalidTopicFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SNSInvalidTopic',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'SNSNoAuthorizationFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SNSNoAuthorization',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'SNSTopicArnNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SNSTopicArnNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'SubscriptionCategoryNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubscriptionCategoryNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -2343,42 +1871,33 @@ return [
         ],
       ],
     ],
-    'ModifyOptionGroup' =>
-    [
+    'ModifyOptionGroup' => [
       'name' => 'ModifyOptionGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ModifyOptionGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ModifyOptionGroupResult',
         'wrapper' => true,
         'resultWrapper' => 'ModifyOptionGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidOptionGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidOptionGroupStateFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'OptionGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'OptionGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -2387,42 +1906,33 @@ return [
         ],
       ],
     ],
-    'PromoteReadReplica' =>
-    [
+    'PromoteReadReplica' => [
       'name' => 'PromoteReadReplica',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PromoteReadReplicaMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'PromoteReadReplicaResult',
         'wrapper' => true,
         'resultWrapper' => 'PromoteReadReplicaResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidDBInstanceStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidDBInstanceState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DBInstanceNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBInstanceNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -2431,53 +1941,42 @@ return [
         ],
       ],
     ],
-    'PurchaseReservedDBInstancesOffering' =>
-    [
+    'PurchaseReservedDBInstancesOffering' => [
       'name' => 'PurchaseReservedDBInstancesOffering',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PurchaseReservedDBInstancesOfferingMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'PurchaseReservedDBInstancesOfferingResult',
         'wrapper' => true,
         'resultWrapper' => 'PurchaseReservedDBInstancesOfferingResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ReservedDBInstancesOfferingNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ReservedDBInstancesOfferingNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ReservedDBInstanceAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ReservedDBInstanceAlreadyExists',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ReservedDBInstanceQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ReservedDBInstanceQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -2486,42 +1985,33 @@ return [
         ],
       ],
     ],
-    'RebootDBInstance' =>
-    [
+    'RebootDBInstance' => [
       'name' => 'RebootDBInstance',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RebootDBInstanceMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RebootDBInstanceResult',
         'wrapper' => true,
         'resultWrapper' => 'RebootDBInstanceResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidDBInstanceStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidDBInstanceState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DBInstanceNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBInstanceNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -2530,42 +2020,33 @@ return [
         ],
       ],
     ],
-    'RemoveSourceIdentifierFromSubscription' =>
-    [
+    'RemoveSourceIdentifierFromSubscription' => [
       'name' => 'RemoveSourceIdentifierFromSubscription',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RemoveSourceIdentifierFromSubscriptionMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RemoveSourceIdentifierFromSubscriptionResult',
         'wrapper' => true,
         'resultWrapper' => 'RemoveSourceIdentifierFromSubscriptionResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'SubscriptionNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SubscriptionNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'SourceNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'SourceNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -2574,36 +2055,28 @@ return [
         ],
       ],
     ],
-    'RemoveTagsFromResource' =>
-    [
+    'RemoveTagsFromResource' => [
       'name' => 'RemoveTagsFromResource',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RemoveTagsFromResourceMessage',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBInstanceNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBInstanceNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DBSnapshotNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSnapshotNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -2612,41 +2085,32 @@ return [
         ],
       ],
     ],
-    'ResetDBParameterGroup' =>
-    [
+    'ResetDBParameterGroup' => [
       'name' => 'ResetDBParameterGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ResetDBParameterGroupMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DBParameterGroupNameMessage',
         'resultWrapper' => 'ResetDBParameterGroupResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidDBParameterGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidDBParameterGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DBParameterGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBParameterGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -2655,185 +2119,150 @@ return [
         ],
       ],
     ],
-    'RestoreDBInstanceFromDBSnapshot' =>
-    [
+    'RestoreDBInstanceFromDBSnapshot' => [
       'name' => 'RestoreDBInstanceFromDBSnapshot',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RestoreDBInstanceFromDBSnapshotMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RestoreDBInstanceFromDBSnapshotResult',
         'wrapper' => true,
         'resultWrapper' => 'RestoreDBInstanceFromDBSnapshotResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBInstanceAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBInstanceAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DBSnapshotNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSnapshotNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InstanceQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InstanceQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InsufficientDBInstanceCapacityFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientDBInstanceCapacity',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InvalidDBSnapshotStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidDBSnapshotState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'StorageQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'StorageQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'InvalidVPCNetworkStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidVPCNetworkStateFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'InvalidRestoreFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidRestoreFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        8 =>
         [
           'shape' => 'DBSubnetGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSubnetGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        9 =>
         [
           'shape' => 'DBSubnetGroupDoesNotCoverEnoughAZs',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSubnetGroupDoesNotCoverEnoughAZs',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        10 =>
         [
           'shape' => 'InvalidSubnet',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidSubnet',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        11 =>
         [
           'shape' => 'ProvisionedIopsNotAvailableInAZFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ProvisionedIopsNotAvailableInAZFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        12 =>
         [
           'shape' => 'OptionGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'OptionGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        13 =>
         [
           'shape' => 'StorageTypeNotSupportedFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'StorageTypeNotSupported',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        14 =>
         [
           'shape' => 'AuthorizationNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -2842,196 +2271,159 @@ return [
         ],
       ],
     ],
-    'RestoreDBInstanceToPointInTime' =>
-    [
+    'RestoreDBInstanceToPointInTime' => [
       'name' => 'RestoreDBInstanceToPointInTime',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RestoreDBInstanceToPointInTimeMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RestoreDBInstanceToPointInTimeResult',
         'wrapper' => true,
         'resultWrapper' => 'RestoreDBInstanceToPointInTimeResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBInstanceAlreadyExistsFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBInstanceAlreadyExists',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'DBInstanceNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBInstanceNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InstanceQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InstanceQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InsufficientDBInstanceCapacityFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InsufficientDBInstanceCapacity',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InvalidDBInstanceStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidDBInstanceState',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'PointInTimeRestoreNotEnabledFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'PointInTimeRestoreNotEnabled',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        6 =>
         [
           'shape' => 'StorageQuotaExceededFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'StorageQuotaExceeded',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        7 =>
         [
           'shape' => 'InvalidVPCNetworkStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidVPCNetworkStateFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        8 =>
         [
           'shape' => 'InvalidRestoreFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidRestoreFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        9 =>
         [
           'shape' => 'DBSubnetGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSubnetGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        10 =>
         [
           'shape' => 'DBSubnetGroupDoesNotCoverEnoughAZs',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSubnetGroupDoesNotCoverEnoughAZs',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        11 =>
         [
           'shape' => 'InvalidSubnet',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidSubnet',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        12 =>
         [
           'shape' => 'ProvisionedIopsNotAvailableInAZFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ProvisionedIopsNotAvailableInAZFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        13 =>
         [
           'shape' => 'OptionGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'OptionGroupNotFoundFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        14 =>
         [
           'shape' => 'StorageTypeNotSupportedFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'StorageTypeNotSupported',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        15 =>
         [
           'shape' => 'AuthorizationNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
@@ -3040,53 +2432,42 @@ return [
         ],
       ],
     ],
-    'RevokeDBSecurityGroupIngress' =>
-    [
+    'RevokeDBSecurityGroupIngress' => [
       'name' => 'RevokeDBSecurityGroupIngress',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RevokeDBSecurityGroupIngressMessage',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RevokeDBSecurityGroupIngressResult',
         'wrapper' => true,
         'resultWrapper' => 'RevokeDBSecurityGroupIngressResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'DBSecurityGroupNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'DBSecurityGroupNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'AuthorizationNotFoundFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'AuthorizationNotFound',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'InvalidDBSecurityGroupStateFault',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidDBSecurityGroupState',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -3096,4758 +2477,3585 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'AddSourceIdentifierToSubscriptionMessage' =>
-    [
+  'shapes' => [
+    'AddSourceIdentifierToSubscriptionMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SubscriptionName',
-        1 => 'SourceIdentifier',
+      'required' => [
+        'SubscriptionName',
+        'SourceIdentifier',
       ],
-      'members' =>
-      [
-        'SubscriptionName' =>
-        [
+      'members' => [
+        'SubscriptionName' => [
           'shape' => 'String',
         ],
-        'SourceIdentifier' =>
-        [
+        'SourceIdentifier' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'AddTagsToResourceMessage' =>
-    [
+    'AddTagsToResourceMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ResourceName',
-        1 => 'Tags',
+      'required' => [
+        'ResourceName',
+        'Tags',
       ],
-      'members' =>
-      [
-        'ResourceName' =>
-        [
+      'members' => [
+        'ResourceName' => [
           'shape' => 'String',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
         ],
       ],
     ],
-    'ApplyMethod' =>
-    [
+    'ApplyMethod' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'immediate',
-        1 => 'pending-reboot',
+      'enum' => [
+        'immediate',
+        'pending-reboot',
       ],
     ],
-    'AuthorizationAlreadyExistsFault' =>
-    [
+    'AuthorizationAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'AuthorizationAlreadyExists',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'AuthorizationNotFoundFault' =>
-    [
+    'AuthorizationNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'AuthorizationNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'AuthorizationQuotaExceededFault' =>
-    [
+    'AuthorizationQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'AuthorizationQuotaExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'AuthorizeDBSecurityGroupIngressMessage' =>
-    [
+    'AuthorizeDBSecurityGroupIngressMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DBSecurityGroupName',
+      'required' => [
+        'DBSecurityGroupName',
       ],
-      'members' =>
-      [
-        'DBSecurityGroupName' =>
-        [
+      'members' => [
+        'DBSecurityGroupName' => [
           'shape' => 'String',
         ],
-        'CIDRIP' =>
-        [
+        'CIDRIP' => [
           'shape' => 'String',
         ],
-        'EC2SecurityGroupName' =>
-        [
+        'EC2SecurityGroupName' => [
           'shape' => 'String',
         ],
-        'EC2SecurityGroupId' =>
-        [
+        'EC2SecurityGroupId' => [
           'shape' => 'String',
         ],
-        'EC2SecurityGroupOwnerId' =>
-        [
+        'EC2SecurityGroupOwnerId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'AvailabilityZone' =>
-    [
+    'AvailabilityZone' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
       ],
       'wrapper' => true,
     ],
-    'AvailabilityZoneList' =>
-    [
+    'AvailabilityZoneList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AvailabilityZone',
         'locationName' => 'AvailabilityZone',
       ],
     ],
-    'Boolean' =>
-    [
+    'Boolean' => [
       'type' => 'boolean',
     ],
-    'BooleanOptional' =>
-    [
+    'BooleanOptional' => [
       'type' => 'boolean',
     ],
-    'CharacterSet' =>
-    [
+    'CharacterSet' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CharacterSetName' =>
-        [
+      'members' => [
+        'CharacterSetName' => [
           'shape' => 'String',
         ],
-        'CharacterSetDescription' =>
-        [
+        'CharacterSetDescription' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CopyDBParameterGroupMessage' =>
-    [
+    'CopyDBParameterGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SourceDBParameterGroupIdentifier',
-        1 => 'TargetDBParameterGroupIdentifier',
-        2 => 'TargetDBParameterGroupDescription',
+      'required' => [
+        'SourceDBParameterGroupIdentifier',
+        'TargetDBParameterGroupIdentifier',
+        'TargetDBParameterGroupDescription',
       ],
-      'members' =>
-      [
-        'SourceDBParameterGroupIdentifier' =>
-        [
+      'members' => [
+        'SourceDBParameterGroupIdentifier' => [
           'shape' => 'String',
         ],
-        'TargetDBParameterGroupIdentifier' =>
-        [
+        'TargetDBParameterGroupIdentifier' => [
           'shape' => 'String',
         ],
-        'TargetDBParameterGroupDescription' =>
-        [
+        'TargetDBParameterGroupDescription' => [
           'shape' => 'String',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
         ],
       ],
     ],
-    'CopyDBSnapshotMessage' =>
-    [
+    'CopyDBSnapshotMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SourceDBSnapshotIdentifier',
-        1 => 'TargetDBSnapshotIdentifier',
+      'required' => [
+        'SourceDBSnapshotIdentifier',
+        'TargetDBSnapshotIdentifier',
       ],
-      'members' =>
-      [
-        'SourceDBSnapshotIdentifier' =>
-        [
+      'members' => [
+        'SourceDBSnapshotIdentifier' => [
           'shape' => 'String',
         ],
-        'TargetDBSnapshotIdentifier' =>
-        [
+        'TargetDBSnapshotIdentifier' => [
           'shape' => 'String',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
         ],
       ],
     ],
-    'CopyOptionGroupMessage' =>
-    [
+    'CopyOptionGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SourceOptionGroupIdentifier',
-        1 => 'TargetOptionGroupIdentifier',
-        2 => 'TargetOptionGroupDescription',
+      'required' => [
+        'SourceOptionGroupIdentifier',
+        'TargetOptionGroupIdentifier',
+        'TargetOptionGroupDescription',
       ],
-      'members' =>
-      [
-        'SourceOptionGroupIdentifier' =>
-        [
+      'members' => [
+        'SourceOptionGroupIdentifier' => [
           'shape' => 'String',
         ],
-        'TargetOptionGroupIdentifier' =>
-        [
+        'TargetOptionGroupIdentifier' => [
           'shape' => 'String',
         ],
-        'TargetOptionGroupDescription' =>
-        [
+        'TargetOptionGroupDescription' => [
           'shape' => 'String',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
         ],
       ],
     ],
-    'CreateDBInstanceMessage' =>
-    [
+    'CreateDBInstanceMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DBInstanceIdentifier',
-        1 => 'AllocatedStorage',
-        2 => 'DBInstanceClass',
-        3 => 'Engine',
-        4 => 'MasterUsername',
-        5 => 'MasterUserPassword',
+      'required' => [
+        'DBInstanceIdentifier',
+        'AllocatedStorage',
+        'DBInstanceClass',
+        'Engine',
+        'MasterUsername',
+        'MasterUserPassword',
       ],
-      'members' =>
-      [
-        'DBName' =>
-        [
+      'members' => [
+        'DBName' => [
           'shape' => 'String',
         ],
-        'DBInstanceIdentifier' =>
-        [
+        'DBInstanceIdentifier' => [
           'shape' => 'String',
         ],
-        'AllocatedStorage' =>
-        [
+        'AllocatedStorage' => [
           'shape' => 'IntegerOptional',
         ],
-        'DBInstanceClass' =>
-        [
+        'DBInstanceClass' => [
           'shape' => 'String',
         ],
-        'Engine' =>
-        [
+        'Engine' => [
           'shape' => 'String',
         ],
-        'MasterUsername' =>
-        [
+        'MasterUsername' => [
           'shape' => 'String',
         ],
-        'MasterUserPassword' =>
-        [
+        'MasterUserPassword' => [
           'shape' => 'String',
         ],
-        'DBSecurityGroups' =>
-        [
+        'DBSecurityGroups' => [
           'shape' => 'DBSecurityGroupNameList',
         ],
-        'VpcSecurityGroupIds' =>
-        [
+        'VpcSecurityGroupIds' => [
           'shape' => 'VpcSecurityGroupIdList',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
         ],
-        'DBSubnetGroupName' =>
-        [
+        'DBSubnetGroupName' => [
           'shape' => 'String',
         ],
-        'PreferredMaintenanceWindow' =>
-        [
+        'PreferredMaintenanceWindow' => [
           'shape' => 'String',
         ],
-        'DBParameterGroupName' =>
-        [
+        'DBParameterGroupName' => [
           'shape' => 'String',
         ],
-        'BackupRetentionPeriod' =>
-        [
+        'BackupRetentionPeriod' => [
           'shape' => 'IntegerOptional',
         ],
-        'PreferredBackupWindow' =>
-        [
+        'PreferredBackupWindow' => [
           'shape' => 'String',
         ],
-        'Port' =>
-        [
+        'Port' => [
           'shape' => 'IntegerOptional',
         ],
-        'MultiAZ' =>
-        [
+        'MultiAZ' => [
           'shape' => 'BooleanOptional',
         ],
-        'EngineVersion' =>
-        [
+        'EngineVersion' => [
           'shape' => 'String',
         ],
-        'AutoMinorVersionUpgrade' =>
-        [
+        'AutoMinorVersionUpgrade' => [
           'shape' => 'BooleanOptional',
         ],
-        'LicenseModel' =>
-        [
+        'LicenseModel' => [
           'shape' => 'String',
         ],
-        'Iops' =>
-        [
+        'Iops' => [
           'shape' => 'IntegerOptional',
         ],
-        'OptionGroupName' =>
-        [
+        'OptionGroupName' => [
           'shape' => 'String',
         ],
-        'CharacterSetName' =>
-        [
+        'CharacterSetName' => [
           'shape' => 'String',
         ],
-        'PubliclyAccessible' =>
-        [
+        'PubliclyAccessible' => [
           'shape' => 'BooleanOptional',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
         ],
-        'StorageType' =>
-        [
+        'StorageType' => [
           'shape' => 'String',
         ],
-        'TdeCredentialArn' =>
-        [
+        'TdeCredentialArn' => [
           'shape' => 'String',
         ],
-        'TdeCredentialPassword' =>
-        [
+        'TdeCredentialPassword' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreateDBInstanceReadReplicaMessage' =>
-    [
+    'CreateDBInstanceReadReplicaMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DBInstanceIdentifier',
-        1 => 'SourceDBInstanceIdentifier',
+      'required' => [
+        'DBInstanceIdentifier',
+        'SourceDBInstanceIdentifier',
       ],
-      'members' =>
-      [
-        'DBInstanceIdentifier' =>
-        [
+      'members' => [
+        'DBInstanceIdentifier' => [
           'shape' => 'String',
         ],
-        'SourceDBInstanceIdentifier' =>
-        [
+        'SourceDBInstanceIdentifier' => [
           'shape' => 'String',
         ],
-        'DBInstanceClass' =>
-        [
+        'DBInstanceClass' => [
           'shape' => 'String',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
         ],
-        'Port' =>
-        [
+        'Port' => [
           'shape' => 'IntegerOptional',
         ],
-        'AutoMinorVersionUpgrade' =>
-        [
+        'AutoMinorVersionUpgrade' => [
           'shape' => 'BooleanOptional',
         ],
-        'Iops' =>
-        [
+        'Iops' => [
           'shape' => 'IntegerOptional',
         ],
-        'OptionGroupName' =>
-        [
+        'OptionGroupName' => [
           'shape' => 'String',
         ],
-        'PubliclyAccessible' =>
-        [
+        'PubliclyAccessible' => [
           'shape' => 'BooleanOptional',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
         ],
-        'DBSubnetGroupName' =>
-        [
+        'DBSubnetGroupName' => [
           'shape' => 'String',
         ],
-        'StorageType' =>
-        [
+        'StorageType' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreateDBParameterGroupMessage' =>
-    [
+    'CreateDBParameterGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DBParameterGroupName',
-        1 => 'DBParameterGroupFamily',
-        2 => 'Description',
+      'required' => [
+        'DBParameterGroupName',
+        'DBParameterGroupFamily',
+        'Description',
       ],
-      'members' =>
-      [
-        'DBParameterGroupName' =>
-        [
+      'members' => [
+        'DBParameterGroupName' => [
           'shape' => 'String',
         ],
-        'DBParameterGroupFamily' =>
-        [
+        'DBParameterGroupFamily' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
         ],
       ],
     ],
-    'CreateDBSecurityGroupMessage' =>
-    [
+    'CreateDBSecurityGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DBSecurityGroupName',
-        1 => 'DBSecurityGroupDescription',
+      'required' => [
+        'DBSecurityGroupName',
+        'DBSecurityGroupDescription',
       ],
-      'members' =>
-      [
-        'DBSecurityGroupName' =>
-        [
+      'members' => [
+        'DBSecurityGroupName' => [
           'shape' => 'String',
         ],
-        'DBSecurityGroupDescription' =>
-        [
+        'DBSecurityGroupDescription' => [
           'shape' => 'String',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
         ],
       ],
     ],
-    'CreateDBSnapshotMessage' =>
-    [
+    'CreateDBSnapshotMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DBSnapshotIdentifier',
-        1 => 'DBInstanceIdentifier',
+      'required' => [
+        'DBSnapshotIdentifier',
+        'DBInstanceIdentifier',
       ],
-      'members' =>
-      [
-        'DBSnapshotIdentifier' =>
-        [
+      'members' => [
+        'DBSnapshotIdentifier' => [
           'shape' => 'String',
         ],
-        'DBInstanceIdentifier' =>
-        [
+        'DBInstanceIdentifier' => [
           'shape' => 'String',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
         ],
       ],
     ],
-    'CreateDBSubnetGroupMessage' =>
-    [
+    'CreateDBSubnetGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DBSubnetGroupName',
-        1 => 'DBSubnetGroupDescription',
-        2 => 'SubnetIds',
+      'required' => [
+        'DBSubnetGroupName',
+        'DBSubnetGroupDescription',
+        'SubnetIds',
       ],
-      'members' =>
-      [
-        'DBSubnetGroupName' =>
-        [
+      'members' => [
+        'DBSubnetGroupName' => [
           'shape' => 'String',
         ],
-        'DBSubnetGroupDescription' =>
-        [
+        'DBSubnetGroupDescription' => [
           'shape' => 'String',
         ],
-        'SubnetIds' =>
-        [
+        'SubnetIds' => [
           'shape' => 'SubnetIdentifierList',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
         ],
       ],
     ],
-    'CreateEventSubscriptionMessage' =>
-    [
+    'CreateEventSubscriptionMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SubscriptionName',
-        1 => 'SnsTopicArn',
+      'required' => [
+        'SubscriptionName',
+        'SnsTopicArn',
       ],
-      'members' =>
-      [
-        'SubscriptionName' =>
-        [
+      'members' => [
+        'SubscriptionName' => [
           'shape' => 'String',
         ],
-        'SnsTopicArn' =>
-        [
+        'SnsTopicArn' => [
           'shape' => 'String',
         ],
-        'SourceType' =>
-        [
+        'SourceType' => [
           'shape' => 'String',
         ],
-        'EventCategories' =>
-        [
+        'EventCategories' => [
           'shape' => 'EventCategoriesList',
         ],
-        'SourceIds' =>
-        [
+        'SourceIds' => [
           'shape' => 'SourceIdsList',
         ],
-        'Enabled' =>
-        [
+        'Enabled' => [
           'shape' => 'BooleanOptional',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
         ],
       ],
     ],
-    'CreateOptionGroupMessage' =>
-    [
+    'CreateOptionGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'OptionGroupName',
-        1 => 'EngineName',
-        2 => 'MajorEngineVersion',
-        3 => 'OptionGroupDescription',
+      'required' => [
+        'OptionGroupName',
+        'EngineName',
+        'MajorEngineVersion',
+        'OptionGroupDescription',
       ],
-      'members' =>
-      [
-        'OptionGroupName' =>
-        [
+      'members' => [
+        'OptionGroupName' => [
           'shape' => 'String',
         ],
-        'EngineName' =>
-        [
+        'EngineName' => [
           'shape' => 'String',
         ],
-        'MajorEngineVersion' =>
-        [
+        'MajorEngineVersion' => [
           'shape' => 'String',
         ],
-        'OptionGroupDescription' =>
-        [
+        'OptionGroupDescription' => [
           'shape' => 'String',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
         ],
       ],
     ],
-    'DBEngineVersion' =>
-    [
+    'DBEngineVersion' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Engine' =>
-        [
+      'members' => [
+        'Engine' => [
           'shape' => 'String',
         ],
-        'EngineVersion' =>
-        [
+        'EngineVersion' => [
           'shape' => 'String',
         ],
-        'DBParameterGroupFamily' =>
-        [
+        'DBParameterGroupFamily' => [
           'shape' => 'String',
         ],
-        'DBEngineDescription' =>
-        [
+        'DBEngineDescription' => [
           'shape' => 'String',
         ],
-        'DBEngineVersionDescription' =>
-        [
+        'DBEngineVersionDescription' => [
           'shape' => 'String',
         ],
-        'DefaultCharacterSet' =>
-        [
+        'DefaultCharacterSet' => [
           'shape' => 'CharacterSet',
         ],
-        'SupportedCharacterSets' =>
-        [
+        'SupportedCharacterSets' => [
           'shape' => 'SupportedCharacterSetsList',
         ],
       ],
     ],
-    'DBEngineVersionList' =>
-    [
+    'DBEngineVersionList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DBEngineVersion',
         'locationName' => 'DBEngineVersion',
       ],
     ],
-    'DBEngineVersionMessage' =>
-    [
+    'DBEngineVersionMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'DBEngineVersions' =>
-        [
+        'DBEngineVersions' => [
           'shape' => 'DBEngineVersionList',
         ],
       ],
     ],
-    'DBInstance' =>
-    [
+    'DBInstance' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBInstanceIdentifier' =>
-        [
+      'members' => [
+        'DBInstanceIdentifier' => [
           'shape' => 'String',
         ],
-        'DBInstanceClass' =>
-        [
+        'DBInstanceClass' => [
           'shape' => 'String',
         ],
-        'Engine' =>
-        [
+        'Engine' => [
           'shape' => 'String',
         ],
-        'DBInstanceStatus' =>
-        [
+        'DBInstanceStatus' => [
           'shape' => 'String',
         ],
-        'MasterUsername' =>
-        [
+        'MasterUsername' => [
           'shape' => 'String',
         ],
-        'DBName' =>
-        [
+        'DBName' => [
           'shape' => 'String',
         ],
-        'Endpoint' =>
-        [
+        'Endpoint' => [
           'shape' => 'Endpoint',
         ],
-        'AllocatedStorage' =>
-        [
+        'AllocatedStorage' => [
           'shape' => 'Integer',
         ],
-        'InstanceCreateTime' =>
-        [
+        'InstanceCreateTime' => [
           'shape' => 'TStamp',
         ],
-        'PreferredBackupWindow' =>
-        [
+        'PreferredBackupWindow' => [
           'shape' => 'String',
         ],
-        'BackupRetentionPeriod' =>
-        [
+        'BackupRetentionPeriod' => [
           'shape' => 'Integer',
         ],
-        'DBSecurityGroups' =>
-        [
+        'DBSecurityGroups' => [
           'shape' => 'DBSecurityGroupMembershipList',
         ],
-        'VpcSecurityGroups' =>
-        [
+        'VpcSecurityGroups' => [
           'shape' => 'VpcSecurityGroupMembershipList',
         ],
-        'DBParameterGroups' =>
-        [
+        'DBParameterGroups' => [
           'shape' => 'DBParameterGroupStatusList',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
         ],
-        'DBSubnetGroup' =>
-        [
+        'DBSubnetGroup' => [
           'shape' => 'DBSubnetGroup',
         ],
-        'PreferredMaintenanceWindow' =>
-        [
+        'PreferredMaintenanceWindow' => [
           'shape' => 'String',
         ],
-        'PendingModifiedValues' =>
-        [
+        'PendingModifiedValues' => [
           'shape' => 'PendingModifiedValues',
         ],
-        'LatestRestorableTime' =>
-        [
+        'LatestRestorableTime' => [
           'shape' => 'TStamp',
         ],
-        'MultiAZ' =>
-        [
+        'MultiAZ' => [
           'shape' => 'Boolean',
         ],
-        'EngineVersion' =>
-        [
+        'EngineVersion' => [
           'shape' => 'String',
         ],
-        'AutoMinorVersionUpgrade' =>
-        [
+        'AutoMinorVersionUpgrade' => [
           'shape' => 'Boolean',
         ],
-        'ReadReplicaSourceDBInstanceIdentifier' =>
-        [
+        'ReadReplicaSourceDBInstanceIdentifier' => [
           'shape' => 'String',
         ],
-        'ReadReplicaDBInstanceIdentifiers' =>
-        [
+        'ReadReplicaDBInstanceIdentifiers' => [
           'shape' => 'ReadReplicaDBInstanceIdentifierList',
         ],
-        'LicenseModel' =>
-        [
+        'LicenseModel' => [
           'shape' => 'String',
         ],
-        'Iops' =>
-        [
+        'Iops' => [
           'shape' => 'IntegerOptional',
         ],
-        'OptionGroupMemberships' =>
-        [
+        'OptionGroupMemberships' => [
           'shape' => 'OptionGroupMembershipList',
         ],
-        'CharacterSetName' =>
-        [
+        'CharacterSetName' => [
           'shape' => 'String',
         ],
-        'SecondaryAvailabilityZone' =>
-        [
+        'SecondaryAvailabilityZone' => [
           'shape' => 'String',
         ],
-        'PubliclyAccessible' =>
-        [
+        'PubliclyAccessible' => [
           'shape' => 'Boolean',
         ],
-        'StatusInfos' =>
-        [
+        'StatusInfos' => [
           'shape' => 'DBInstanceStatusInfoList',
         ],
-        'StorageType' =>
-        [
+        'StorageType' => [
           'shape' => 'String',
         ],
-        'TdeCredentialArn' =>
-        [
+        'TdeCredentialArn' => [
           'shape' => 'String',
         ],
       ],
       'wrapper' => true,
     ],
-    'DBInstanceAlreadyExistsFault' =>
-    [
+    'DBInstanceAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DBInstanceAlreadyExists',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'DBInstanceList' =>
-    [
+    'DBInstanceList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DBInstance',
         'locationName' => 'DBInstance',
       ],
     ],
-    'DBInstanceMessage' =>
-    [
+    'DBInstanceMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'DBInstances' =>
-        [
+        'DBInstances' => [
           'shape' => 'DBInstanceList',
         ],
       ],
     ],
-    'DBInstanceNotFoundFault' =>
-    [
+    'DBInstanceNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DBInstanceNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'DBInstanceStatusInfo' =>
-    [
+    'DBInstanceStatusInfo' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StatusType' =>
-        [
+      'members' => [
+        'StatusType' => [
           'shape' => 'String',
         ],
-        'Normal' =>
-        [
+        'Normal' => [
           'shape' => 'Boolean',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'String',
         ],
-        'Message' =>
-        [
+        'Message' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DBInstanceStatusInfoList' =>
-    [
+    'DBInstanceStatusInfoList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DBInstanceStatusInfo',
         'locationName' => 'DBInstanceStatusInfo',
       ],
     ],
-    'DBParameterGroup' =>
-    [
+    'DBParameterGroup' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBParameterGroupName' =>
-        [
+      'members' => [
+        'DBParameterGroupName' => [
           'shape' => 'String',
         ],
-        'DBParameterGroupFamily' =>
-        [
+        'DBParameterGroupFamily' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
       ],
       'wrapper' => true,
     ],
-    'DBParameterGroupAlreadyExistsFault' =>
-    [
+    'DBParameterGroupAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DBParameterGroupAlreadyExists',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'DBParameterGroupDetails' =>
-    [
+    'DBParameterGroupDetails' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Parameters' =>
-        [
+      'members' => [
+        'Parameters' => [
           'shape' => 'ParametersList',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DBParameterGroupList' =>
-    [
+    'DBParameterGroupList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DBParameterGroup',
         'locationName' => 'DBParameterGroup',
       ],
     ],
-    'DBParameterGroupNameMessage' =>
-    [
+    'DBParameterGroupNameMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBParameterGroupName' =>
-        [
+      'members' => [
+        'DBParameterGroupName' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DBParameterGroupNotFoundFault' =>
-    [
+    'DBParameterGroupNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DBParameterGroupNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'DBParameterGroupQuotaExceededFault' =>
-    [
+    'DBParameterGroupQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DBParameterGroupQuotaExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'DBParameterGroupStatus' =>
-    [
+    'DBParameterGroupStatus' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBParameterGroupName' =>
-        [
+      'members' => [
+        'DBParameterGroupName' => [
           'shape' => 'String',
         ],
-        'ParameterApplyStatus' =>
-        [
+        'ParameterApplyStatus' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DBParameterGroupStatusList' =>
-    [
+    'DBParameterGroupStatusList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DBParameterGroupStatus',
         'locationName' => 'DBParameterGroup',
       ],
     ],
-    'DBParameterGroupsMessage' =>
-    [
+    'DBParameterGroupsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'DBParameterGroups' =>
-        [
+        'DBParameterGroups' => [
           'shape' => 'DBParameterGroupList',
         ],
       ],
     ],
-    'DBSecurityGroup' =>
-    [
+    'DBSecurityGroup' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'OwnerId' =>
-        [
+      'members' => [
+        'OwnerId' => [
           'shape' => 'String',
         ],
-        'DBSecurityGroupName' =>
-        [
+        'DBSecurityGroupName' => [
           'shape' => 'String',
         ],
-        'DBSecurityGroupDescription' =>
-        [
+        'DBSecurityGroupDescription' => [
           'shape' => 'String',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
         ],
-        'EC2SecurityGroups' =>
-        [
+        'EC2SecurityGroups' => [
           'shape' => 'EC2SecurityGroupList',
         ],
-        'IPRanges' =>
-        [
+        'IPRanges' => [
           'shape' => 'IPRangeList',
         ],
       ],
       'wrapper' => true,
     ],
-    'DBSecurityGroupAlreadyExistsFault' =>
-    [
+    'DBSecurityGroupAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DBSecurityGroupAlreadyExists',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'DBSecurityGroupMembership' =>
-    [
+    'DBSecurityGroupMembership' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBSecurityGroupName' =>
-        [
+      'members' => [
+        'DBSecurityGroupName' => [
           'shape' => 'String',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DBSecurityGroupMembershipList' =>
-    [
+    'DBSecurityGroupMembershipList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DBSecurityGroupMembership',
         'locationName' => 'DBSecurityGroup',
       ],
     ],
-    'DBSecurityGroupMessage' =>
-    [
+    'DBSecurityGroupMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'DBSecurityGroups' =>
-        [
+        'DBSecurityGroups' => [
           'shape' => 'DBSecurityGroups',
         ],
       ],
     ],
-    'DBSecurityGroupNameList' =>
-    [
+    'DBSecurityGroupNameList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'DBSecurityGroupName',
       ],
     ],
-    'DBSecurityGroupNotFoundFault' =>
-    [
+    'DBSecurityGroupNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DBSecurityGroupNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'DBSecurityGroupNotSupportedFault' =>
-    [
+    'DBSecurityGroupNotSupportedFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DBSecurityGroupNotSupported',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'DBSecurityGroupQuotaExceededFault' =>
-    [
+    'DBSecurityGroupQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'QuotaExceeded.DBSecurityGroup',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'DBSecurityGroups' =>
-    [
+    'DBSecurityGroups' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DBSecurityGroup',
         'locationName' => 'DBSecurityGroup',
       ],
     ],
-    'DBSnapshot' =>
-    [
+    'DBSnapshot' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBSnapshotIdentifier' =>
-        [
+      'members' => [
+        'DBSnapshotIdentifier' => [
           'shape' => 'String',
         ],
-        'DBInstanceIdentifier' =>
-        [
+        'DBInstanceIdentifier' => [
           'shape' => 'String',
         ],
-        'SnapshotCreateTime' =>
-        [
+        'SnapshotCreateTime' => [
           'shape' => 'TStamp',
         ],
-        'Engine' =>
-        [
+        'Engine' => [
           'shape' => 'String',
         ],
-        'AllocatedStorage' =>
-        [
+        'AllocatedStorage' => [
           'shape' => 'Integer',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'String',
         ],
-        'Port' =>
-        [
+        'Port' => [
           'shape' => 'Integer',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
         ],
-        'InstanceCreateTime' =>
-        [
+        'InstanceCreateTime' => [
           'shape' => 'TStamp',
         ],
-        'MasterUsername' =>
-        [
+        'MasterUsername' => [
           'shape' => 'String',
         ],
-        'EngineVersion' =>
-        [
+        'EngineVersion' => [
           'shape' => 'String',
         ],
-        'LicenseModel' =>
-        [
+        'LicenseModel' => [
           'shape' => 'String',
         ],
-        'SnapshotType' =>
-        [
+        'SnapshotType' => [
           'shape' => 'String',
         ],
-        'Iops' =>
-        [
+        'Iops' => [
           'shape' => 'IntegerOptional',
         ],
-        'OptionGroupName' =>
-        [
+        'OptionGroupName' => [
           'shape' => 'String',
         ],
-        'PercentProgress' =>
-        [
+        'PercentProgress' => [
           'shape' => 'Integer',
         ],
-        'SourceRegion' =>
-        [
+        'SourceRegion' => [
           'shape' => 'String',
         ],
-        'StorageType' =>
-        [
+        'StorageType' => [
           'shape' => 'String',
         ],
-        'TdeCredentialArn' =>
-        [
+        'TdeCredentialArn' => [
           'shape' => 'String',
         ],
       ],
       'wrapper' => true,
     ],
-    'DBSnapshotAlreadyExistsFault' =>
-    [
+    'DBSnapshotAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DBSnapshotAlreadyExists',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'DBSnapshotList' =>
-    [
+    'DBSnapshotList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DBSnapshot',
         'locationName' => 'DBSnapshot',
       ],
     ],
-    'DBSnapshotMessage' =>
-    [
+    'DBSnapshotMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'DBSnapshots' =>
-        [
+        'DBSnapshots' => [
           'shape' => 'DBSnapshotList',
         ],
       ],
     ],
-    'DBSnapshotNotFoundFault' =>
-    [
+    'DBSnapshotNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DBSnapshotNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'DBSubnetGroup' =>
-    [
+    'DBSubnetGroup' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBSubnetGroupName' =>
-        [
+      'members' => [
+        'DBSubnetGroupName' => [
           'shape' => 'String',
         ],
-        'DBSubnetGroupDescription' =>
-        [
+        'DBSubnetGroupDescription' => [
           'shape' => 'String',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
         ],
-        'SubnetGroupStatus' =>
-        [
+        'SubnetGroupStatus' => [
           'shape' => 'String',
         ],
-        'Subnets' =>
-        [
+        'Subnets' => [
           'shape' => 'SubnetList',
         ],
       ],
       'wrapper' => true,
     ],
-    'DBSubnetGroupAlreadyExistsFault' =>
-    [
+    'DBSubnetGroupAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DBSubnetGroupAlreadyExists',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'DBSubnetGroupDoesNotCoverEnoughAZs' =>
-    [
+    'DBSubnetGroupDoesNotCoverEnoughAZs' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DBSubnetGroupDoesNotCoverEnoughAZs',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'DBSubnetGroupMessage' =>
-    [
+    'DBSubnetGroupMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'DBSubnetGroups' =>
-        [
+        'DBSubnetGroups' => [
           'shape' => 'DBSubnetGroups',
         ],
       ],
     ],
-    'DBSubnetGroupNotAllowedFault' =>
-    [
+    'DBSubnetGroupNotAllowedFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DBSubnetGroupNotAllowedFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'DBSubnetGroupNotFoundFault' =>
-    [
+    'DBSubnetGroupNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DBSubnetGroupNotFoundFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'DBSubnetGroupQuotaExceededFault' =>
-    [
+    'DBSubnetGroupQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DBSubnetGroupQuotaExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'DBSubnetGroups' =>
-    [
+    'DBSubnetGroups' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DBSubnetGroup',
         'locationName' => 'DBSubnetGroup',
       ],
     ],
-    'DBSubnetQuotaExceededFault' =>
-    [
+    'DBSubnetQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DBSubnetQuotaExceededFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'DBUpgradeDependencyFailureFault' =>
-    [
+    'DBUpgradeDependencyFailureFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'DBUpgradeDependencyFailure',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'DeleteDBInstanceMessage' =>
-    [
+    'DeleteDBInstanceMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DBInstanceIdentifier',
+      'required' => [
+        'DBInstanceIdentifier',
       ],
-      'members' =>
-      [
-        'DBInstanceIdentifier' =>
-        [
+      'members' => [
+        'DBInstanceIdentifier' => [
           'shape' => 'String',
         ],
-        'SkipFinalSnapshot' =>
-        [
+        'SkipFinalSnapshot' => [
           'shape' => 'Boolean',
         ],
-        'FinalDBSnapshotIdentifier' =>
-        [
+        'FinalDBSnapshotIdentifier' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteDBParameterGroupMessage' =>
-    [
+    'DeleteDBParameterGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DBParameterGroupName',
+      'required' => [
+        'DBParameterGroupName',
       ],
-      'members' =>
-      [
-        'DBParameterGroupName' =>
-        [
+      'members' => [
+        'DBParameterGroupName' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteDBSecurityGroupMessage' =>
-    [
+    'DeleteDBSecurityGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DBSecurityGroupName',
+      'required' => [
+        'DBSecurityGroupName',
       ],
-      'members' =>
-      [
-        'DBSecurityGroupName' =>
-        [
+      'members' => [
+        'DBSecurityGroupName' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteDBSnapshotMessage' =>
-    [
+    'DeleteDBSnapshotMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DBSnapshotIdentifier',
+      'required' => [
+        'DBSnapshotIdentifier',
       ],
-      'members' =>
-      [
-        'DBSnapshotIdentifier' =>
-        [
+      'members' => [
+        'DBSnapshotIdentifier' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteDBSubnetGroupMessage' =>
-    [
+    'DeleteDBSubnetGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DBSubnetGroupName',
+      'required' => [
+        'DBSubnetGroupName',
       ],
-      'members' =>
-      [
-        'DBSubnetGroupName' =>
-        [
+      'members' => [
+        'DBSubnetGroupName' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteEventSubscriptionMessage' =>
-    [
+    'DeleteEventSubscriptionMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SubscriptionName',
+      'required' => [
+        'SubscriptionName',
       ],
-      'members' =>
-      [
-        'SubscriptionName' =>
-        [
+      'members' => [
+        'SubscriptionName' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteOptionGroupMessage' =>
-    [
+    'DeleteOptionGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'OptionGroupName',
+      'required' => [
+        'OptionGroupName',
       ],
-      'members' =>
-      [
-        'OptionGroupName' =>
-        [
+      'members' => [
+        'OptionGroupName' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeDBEngineVersionsMessage' =>
-    [
+    'DescribeDBEngineVersionsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Engine' =>
-        [
+      'members' => [
+        'Engine' => [
           'shape' => 'String',
         ],
-        'EngineVersion' =>
-        [
+        'EngineVersion' => [
           'shape' => 'String',
         ],
-        'DBParameterGroupFamily' =>
-        [
+        'DBParameterGroupFamily' => [
           'shape' => 'String',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'DefaultOnly' =>
-        [
+        'DefaultOnly' => [
           'shape' => 'Boolean',
         ],
-        'ListSupportedCharacterSets' =>
-        [
+        'ListSupportedCharacterSets' => [
           'shape' => 'BooleanOptional',
         ],
       ],
     ],
-    'DescribeDBInstancesMessage' =>
-    [
+    'DescribeDBInstancesMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBInstanceIdentifier' =>
-        [
+      'members' => [
+        'DBInstanceIdentifier' => [
           'shape' => 'String',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeDBLogFilesDetails' =>
-    [
+    'DescribeDBLogFilesDetails' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LogFileName' =>
-        [
+      'members' => [
+        'LogFileName' => [
           'shape' => 'String',
         ],
-        'LastWritten' =>
-        [
+        'LastWritten' => [
           'shape' => 'Long',
         ],
-        'Size' =>
-        [
+        'Size' => [
           'shape' => 'Long',
         ],
       ],
     ],
-    'DescribeDBLogFilesList' =>
-    [
+    'DescribeDBLogFilesList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DescribeDBLogFilesDetails',
         'locationName' => 'DescribeDBLogFilesDetails',
       ],
     ],
-    'DescribeDBLogFilesMessage' =>
-    [
+    'DescribeDBLogFilesMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DBInstanceIdentifier',
+      'required' => [
+        'DBInstanceIdentifier',
       ],
-      'members' =>
-      [
-        'DBInstanceIdentifier' =>
-        [
+      'members' => [
+        'DBInstanceIdentifier' => [
           'shape' => 'String',
         ],
-        'FilenameContains' =>
-        [
+        'FilenameContains' => [
           'shape' => 'String',
         ],
-        'FileLastWritten' =>
-        [
+        'FileLastWritten' => [
           'shape' => 'Long',
         ],
-        'FileSize' =>
-        [
+        'FileSize' => [
           'shape' => 'Long',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeDBLogFilesResponse' =>
-    [
+    'DescribeDBLogFilesResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DescribeDBLogFiles' =>
-        [
+      'members' => [
+        'DescribeDBLogFiles' => [
           'shape' => 'DescribeDBLogFilesList',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeDBParameterGroupsMessage' =>
-    [
+    'DescribeDBParameterGroupsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBParameterGroupName' =>
-        [
+      'members' => [
+        'DBParameterGroupName' => [
           'shape' => 'String',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeDBParametersMessage' =>
-    [
+    'DescribeDBParametersMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DBParameterGroupName',
+      'required' => [
+        'DBParameterGroupName',
       ],
-      'members' =>
-      [
-        'DBParameterGroupName' =>
-        [
+      'members' => [
+        'DBParameterGroupName' => [
           'shape' => 'String',
         ],
-        'Source' =>
-        [
+        'Source' => [
           'shape' => 'String',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeDBSecurityGroupsMessage' =>
-    [
+    'DescribeDBSecurityGroupsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBSecurityGroupName' =>
-        [
+      'members' => [
+        'DBSecurityGroupName' => [
           'shape' => 'String',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeDBSnapshotsMessage' =>
-    [
+    'DescribeDBSnapshotsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBInstanceIdentifier' =>
-        [
+      'members' => [
+        'DBInstanceIdentifier' => [
           'shape' => 'String',
         ],
-        'DBSnapshotIdentifier' =>
-        [
+        'DBSnapshotIdentifier' => [
           'shape' => 'String',
         ],
-        'SnapshotType' =>
-        [
+        'SnapshotType' => [
           'shape' => 'String',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeDBSubnetGroupsMessage' =>
-    [
+    'DescribeDBSubnetGroupsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBSubnetGroupName' =>
-        [
+      'members' => [
+        'DBSubnetGroupName' => [
           'shape' => 'String',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeEngineDefaultParametersMessage' =>
-    [
+    'DescribeEngineDefaultParametersMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DBParameterGroupFamily',
+      'required' => [
+        'DBParameterGroupFamily',
       ],
-      'members' =>
-      [
-        'DBParameterGroupFamily' =>
-        [
+      'members' => [
+        'DBParameterGroupFamily' => [
           'shape' => 'String',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeEventCategoriesMessage' =>
-    [
+    'DescribeEventCategoriesMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SourceType' =>
-        [
+      'members' => [
+        'SourceType' => [
           'shape' => 'String',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
         ],
       ],
     ],
-    'DescribeEventSubscriptionsMessage' =>
-    [
+    'DescribeEventSubscriptionsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SubscriptionName' =>
-        [
+      'members' => [
+        'SubscriptionName' => [
           'shape' => 'String',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeEventsMessage' =>
-    [
+    'DescribeEventsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SourceIdentifier' =>
-        [
+      'members' => [
+        'SourceIdentifier' => [
           'shape' => 'String',
         ],
-        'SourceType' =>
-        [
+        'SourceType' => [
           'shape' => 'SourceType',
         ],
-        'StartTime' =>
-        [
+        'StartTime' => [
           'shape' => 'TStamp',
         ],
-        'EndTime' =>
-        [
+        'EndTime' => [
           'shape' => 'TStamp',
         ],
-        'Duration' =>
-        [
+        'Duration' => [
           'shape' => 'IntegerOptional',
         ],
-        'EventCategories' =>
-        [
+        'EventCategories' => [
           'shape' => 'EventCategoriesList',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeOptionGroupOptionsMessage' =>
-    [
+    'DescribeOptionGroupOptionsMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'EngineName',
+      'required' => [
+        'EngineName',
       ],
-      'members' =>
-      [
-        'EngineName' =>
-        [
+      'members' => [
+        'EngineName' => [
           'shape' => 'String',
         ],
-        'MajorEngineVersion' =>
-        [
+        'MajorEngineVersion' => [
           'shape' => 'String',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeOptionGroupsMessage' =>
-    [
+    'DescribeOptionGroupsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'OptionGroupName' =>
-        [
+      'members' => [
+        'OptionGroupName' => [
           'shape' => 'String',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'EngineName' =>
-        [
+        'EngineName' => [
           'shape' => 'String',
         ],
-        'MajorEngineVersion' =>
-        [
+        'MajorEngineVersion' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeOrderableDBInstanceOptionsMessage' =>
-    [
+    'DescribeOrderableDBInstanceOptionsMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Engine',
+      'required' => [
+        'Engine',
       ],
-      'members' =>
-      [
-        'Engine' =>
-        [
+      'members' => [
+        'Engine' => [
           'shape' => 'String',
         ],
-        'EngineVersion' =>
-        [
+        'EngineVersion' => [
           'shape' => 'String',
         ],
-        'DBInstanceClass' =>
-        [
+        'DBInstanceClass' => [
           'shape' => 'String',
         ],
-        'LicenseModel' =>
-        [
+        'LicenseModel' => [
           'shape' => 'String',
         ],
-        'Vpc' =>
-        [
+        'Vpc' => [
           'shape' => 'BooleanOptional',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeReservedDBInstancesMessage' =>
-    [
+    'DescribeReservedDBInstancesMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedDBInstanceId' =>
-        [
+      'members' => [
+        'ReservedDBInstanceId' => [
           'shape' => 'String',
         ],
-        'ReservedDBInstancesOfferingId' =>
-        [
+        'ReservedDBInstancesOfferingId' => [
           'shape' => 'String',
         ],
-        'DBInstanceClass' =>
-        [
+        'DBInstanceClass' => [
           'shape' => 'String',
         ],
-        'Duration' =>
-        [
+        'Duration' => [
           'shape' => 'String',
         ],
-        'ProductDescription' =>
-        [
+        'ProductDescription' => [
           'shape' => 'String',
         ],
-        'OfferingType' =>
-        [
+        'OfferingType' => [
           'shape' => 'String',
         ],
-        'MultiAZ' =>
-        [
+        'MultiAZ' => [
           'shape' => 'BooleanOptional',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeReservedDBInstancesOfferingsMessage' =>
-    [
+    'DescribeReservedDBInstancesOfferingsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedDBInstancesOfferingId' =>
-        [
+      'members' => [
+        'ReservedDBInstancesOfferingId' => [
           'shape' => 'String',
         ],
-        'DBInstanceClass' =>
-        [
+        'DBInstanceClass' => [
           'shape' => 'String',
         ],
-        'Duration' =>
-        [
+        'Duration' => [
           'shape' => 'String',
         ],
-        'ProductDescription' =>
-        [
+        'ProductDescription' => [
           'shape' => 'String',
         ],
-        'OfferingType' =>
-        [
+        'OfferingType' => [
           'shape' => 'String',
         ],
-        'MultiAZ' =>
-        [
+        'MultiAZ' => [
           'shape' => 'BooleanOptional',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
         ],
-        'MaxRecords' =>
-        [
+        'MaxRecords' => [
           'shape' => 'IntegerOptional',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'Double' =>
-    [
+    'Double' => [
       'type' => 'double',
     ],
-    'DownloadDBLogFilePortionDetails' =>
-    [
+    'DownloadDBLogFilePortionDetails' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LogFileData' =>
-        [
+      'members' => [
+        'LogFileData' => [
           'shape' => 'String',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'AdditionalDataPending' =>
-        [
+        'AdditionalDataPending' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'DownloadDBLogFilePortionMessage' =>
-    [
+    'DownloadDBLogFilePortionMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DBInstanceIdentifier',
-        1 => 'LogFileName',
+      'required' => [
+        'DBInstanceIdentifier',
+        'LogFileName',
       ],
-      'members' =>
-      [
-        'DBInstanceIdentifier' =>
-        [
+      'members' => [
+        'DBInstanceIdentifier' => [
           'shape' => 'String',
         ],
-        'LogFileName' =>
-        [
+        'LogFileName' => [
           'shape' => 'String',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'NumberOfLines' =>
-        [
+        'NumberOfLines' => [
           'shape' => 'Integer',
         ],
       ],
     ],
-    'EC2SecurityGroup' =>
-    [
+    'EC2SecurityGroup' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Status' =>
-        [
+      'members' => [
+        'Status' => [
           'shape' => 'String',
         ],
-        'EC2SecurityGroupName' =>
-        [
+        'EC2SecurityGroupName' => [
           'shape' => 'String',
         ],
-        'EC2SecurityGroupId' =>
-        [
+        'EC2SecurityGroupId' => [
           'shape' => 'String',
         ],
-        'EC2SecurityGroupOwnerId' =>
-        [
+        'EC2SecurityGroupOwnerId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'EC2SecurityGroupList' =>
-    [
+    'EC2SecurityGroupList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'EC2SecurityGroup',
         'locationName' => 'EC2SecurityGroup',
       ],
     ],
-    'Endpoint' =>
-    [
+    'Endpoint' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Address' =>
-        [
+      'members' => [
+        'Address' => [
           'shape' => 'String',
         ],
-        'Port' =>
-        [
+        'Port' => [
           'shape' => 'Integer',
         ],
       ],
     ],
-    'EngineDefaults' =>
-    [
+    'EngineDefaults' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBParameterGroupFamily' =>
-        [
+      'members' => [
+        'DBParameterGroupFamily' => [
           'shape' => 'String',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'Parameters' =>
-        [
+        'Parameters' => [
           'shape' => 'ParametersList',
         ],
       ],
       'wrapper' => true,
     ],
-    'Event' =>
-    [
+    'Event' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SourceIdentifier' =>
-        [
+      'members' => [
+        'SourceIdentifier' => [
           'shape' => 'String',
         ],
-        'SourceType' =>
-        [
+        'SourceType' => [
           'shape' => 'SourceType',
         ],
-        'Message' =>
-        [
+        'Message' => [
           'shape' => 'String',
         ],
-        'EventCategories' =>
-        [
+        'EventCategories' => [
           'shape' => 'EventCategoriesList',
         ],
-        'Date' =>
-        [
+        'Date' => [
           'shape' => 'TStamp',
         ],
       ],
     ],
-    'EventCategoriesList' =>
-    [
+    'EventCategoriesList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'EventCategory',
       ],
     ],
-    'EventCategoriesMap' =>
-    [
+    'EventCategoriesMap' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SourceType' =>
-        [
+      'members' => [
+        'SourceType' => [
           'shape' => 'String',
         ],
-        'EventCategories' =>
-        [
+        'EventCategories' => [
           'shape' => 'EventCategoriesList',
         ],
       ],
       'wrapper' => true,
     ],
-    'EventCategoriesMapList' =>
-    [
+    'EventCategoriesMapList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'EventCategoriesMap',
         'locationName' => 'EventCategoriesMap',
       ],
     ],
-    'EventCategoriesMessage' =>
-    [
+    'EventCategoriesMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EventCategoriesMapList' =>
-        [
+      'members' => [
+        'EventCategoriesMapList' => [
           'shape' => 'EventCategoriesMapList',
         ],
       ],
     ],
-    'EventList' =>
-    [
+    'EventList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Event',
         'locationName' => 'Event',
       ],
     ],
-    'EventSubscription' =>
-    [
+    'EventSubscription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CustomerAwsId' =>
-        [
+      'members' => [
+        'CustomerAwsId' => [
           'shape' => 'String',
         ],
-        'CustSubscriptionId' =>
-        [
+        'CustSubscriptionId' => [
           'shape' => 'String',
         ],
-        'SnsTopicArn' =>
-        [
+        'SnsTopicArn' => [
           'shape' => 'String',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'String',
         ],
-        'SubscriptionCreationTime' =>
-        [
+        'SubscriptionCreationTime' => [
           'shape' => 'String',
         ],
-        'SourceType' =>
-        [
+        'SourceType' => [
           'shape' => 'String',
         ],
-        'SourceIdsList' =>
-        [
+        'SourceIdsList' => [
           'shape' => 'SourceIdsList',
         ],
-        'EventCategoriesList' =>
-        [
+        'EventCategoriesList' => [
           'shape' => 'EventCategoriesList',
         ],
-        'Enabled' =>
-        [
+        'Enabled' => [
           'shape' => 'Boolean',
         ],
       ],
       'wrapper' => true,
     ],
-    'EventSubscriptionQuotaExceededFault' =>
-    [
+    'EventSubscriptionQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'EventSubscriptionQuotaExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'EventSubscriptionsList' =>
-    [
+    'EventSubscriptionsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'EventSubscription',
         'locationName' => 'EventSubscription',
       ],
     ],
-    'EventSubscriptionsMessage' =>
-    [
+    'EventSubscriptionsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'EventSubscriptionsList' =>
-        [
+        'EventSubscriptionsList' => [
           'shape' => 'EventSubscriptionsList',
         ],
       ],
     ],
-    'EventsMessage' =>
-    [
+    'EventsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'Events' =>
-        [
+        'Events' => [
           'shape' => 'EventList',
         ],
       ],
     ],
-    'Filter' =>
-    [
+    'Filter' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
-        1 => 'Values',
+      'required' => [
+        'Name',
+        'Values',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Values' =>
-        [
+        'Values' => [
           'shape' => 'FilterValueList',
         ],
       ],
     ],
-    'FilterList' =>
-    [
+    'FilterList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Filter',
         'locationName' => 'Filter',
       ],
     ],
-    'FilterValueList' =>
-    [
+    'FilterValueList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'Value',
       ],
     ],
-    'IPRange' =>
-    [
+    'IPRange' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Status' =>
-        [
+      'members' => [
+        'Status' => [
           'shape' => 'String',
         ],
-        'CIDRIP' =>
-        [
+        'CIDRIP' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'IPRangeList' =>
-    [
+    'IPRangeList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'IPRange',
         'locationName' => 'IPRange',
       ],
     ],
-    'InstanceQuotaExceededFault' =>
-    [
+    'InstanceQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InstanceQuotaExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InsufficientDBInstanceCapacityFault' =>
-    [
+    'InsufficientDBInstanceCapacityFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InsufficientDBInstanceCapacity',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'Integer' =>
-    [
+    'Integer' => [
       'type' => 'integer',
     ],
-    'IntegerOptional' =>
-    [
+    'IntegerOptional' => [
       'type' => 'integer',
     ],
-    'InvalidDBInstanceStateFault' =>
-    [
+    'InvalidDBInstanceStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidDBInstanceState',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidDBParameterGroupStateFault' =>
-    [
+    'InvalidDBParameterGroupStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidDBParameterGroupState',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidDBSecurityGroupStateFault' =>
-    [
+    'InvalidDBSecurityGroupStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidDBSecurityGroupState',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidDBSnapshotStateFault' =>
-    [
+    'InvalidDBSnapshotStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidDBSnapshotState',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidDBSubnetGroupFault' =>
-    [
+    'InvalidDBSubnetGroupFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidDBSubnetGroupFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidDBSubnetGroupStateFault' =>
-    [
+    'InvalidDBSubnetGroupStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidDBSubnetGroupStateFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidDBSubnetStateFault' =>
-    [
+    'InvalidDBSubnetStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidDBSubnetStateFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidEventSubscriptionStateFault' =>
-    [
+    'InvalidEventSubscriptionStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidEventSubscriptionState',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidOptionGroupStateFault' =>
-    [
+    'InvalidOptionGroupStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidOptionGroupStateFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidRestoreFault' =>
-    [
+    'InvalidRestoreFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidRestoreFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidSubnet' =>
-    [
+    'InvalidSubnet' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidSubnet',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidVPCNetworkStateFault' =>
-    [
+    'InvalidVPCNetworkStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidVPCNetworkStateFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'KeyList' =>
-    [
+    'KeyList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
       ],
     ],
-    'ListTagsForResourceMessage' =>
-    [
+    'ListTagsForResourceMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ResourceName',
+      'required' => [
+        'ResourceName',
       ],
-      'members' =>
-      [
-        'ResourceName' =>
-        [
+      'members' => [
+        'ResourceName' => [
           'shape' => 'String',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
         ],
       ],
     ],
-    'Long' =>
-    [
+    'Long' => [
       'type' => 'long',
     ],
-    'ModifyDBInstanceMessage' =>
-    [
+    'ModifyDBInstanceMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DBInstanceIdentifier',
+      'required' => [
+        'DBInstanceIdentifier',
       ],
-      'members' =>
-      [
-        'DBInstanceIdentifier' =>
-        [
+      'members' => [
+        'DBInstanceIdentifier' => [
           'shape' => 'String',
         ],
-        'AllocatedStorage' =>
-        [
+        'AllocatedStorage' => [
           'shape' => 'IntegerOptional',
         ],
-        'DBInstanceClass' =>
-        [
+        'DBInstanceClass' => [
           'shape' => 'String',
         ],
-        'DBSecurityGroups' =>
-        [
+        'DBSecurityGroups' => [
           'shape' => 'DBSecurityGroupNameList',
         ],
-        'VpcSecurityGroupIds' =>
-        [
+        'VpcSecurityGroupIds' => [
           'shape' => 'VpcSecurityGroupIdList',
         ],
-        'ApplyImmediately' =>
-        [
+        'ApplyImmediately' => [
           'shape' => 'Boolean',
         ],
-        'MasterUserPassword' =>
-        [
+        'MasterUserPassword' => [
           'shape' => 'String',
         ],
-        'DBParameterGroupName' =>
-        [
+        'DBParameterGroupName' => [
           'shape' => 'String',
         ],
-        'BackupRetentionPeriod' =>
-        [
+        'BackupRetentionPeriod' => [
           'shape' => 'IntegerOptional',
         ],
-        'PreferredBackupWindow' =>
-        [
+        'PreferredBackupWindow' => [
           'shape' => 'String',
         ],
-        'PreferredMaintenanceWindow' =>
-        [
+        'PreferredMaintenanceWindow' => [
           'shape' => 'String',
         ],
-        'MultiAZ' =>
-        [
+        'MultiAZ' => [
           'shape' => 'BooleanOptional',
         ],
-        'EngineVersion' =>
-        [
+        'EngineVersion' => [
           'shape' => 'String',
         ],
-        'AllowMajorVersionUpgrade' =>
-        [
+        'AllowMajorVersionUpgrade' => [
           'shape' => 'Boolean',
         ],
-        'AutoMinorVersionUpgrade' =>
-        [
+        'AutoMinorVersionUpgrade' => [
           'shape' => 'BooleanOptional',
         ],
-        'Iops' =>
-        [
+        'Iops' => [
           'shape' => 'IntegerOptional',
         ],
-        'OptionGroupName' =>
-        [
+        'OptionGroupName' => [
           'shape' => 'String',
         ],
-        'NewDBInstanceIdentifier' =>
-        [
+        'NewDBInstanceIdentifier' => [
           'shape' => 'String',
         ],
-        'StorageType' =>
-        [
+        'StorageType' => [
           'shape' => 'String',
         ],
-        'TdeCredentialArn' =>
-        [
+        'TdeCredentialArn' => [
           'shape' => 'String',
         ],
-        'TdeCredentialPassword' =>
-        [
+        'TdeCredentialPassword' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ModifyDBParameterGroupMessage' =>
-    [
+    'ModifyDBParameterGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DBParameterGroupName',
-        1 => 'Parameters',
+      'required' => [
+        'DBParameterGroupName',
+        'Parameters',
       ],
-      'members' =>
-      [
-        'DBParameterGroupName' =>
-        [
+      'members' => [
+        'DBParameterGroupName' => [
           'shape' => 'String',
         ],
-        'Parameters' =>
-        [
+        'Parameters' => [
           'shape' => 'ParametersList',
         ],
       ],
     ],
-    'ModifyDBSubnetGroupMessage' =>
-    [
+    'ModifyDBSubnetGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DBSubnetGroupName',
-        1 => 'SubnetIds',
+      'required' => [
+        'DBSubnetGroupName',
+        'SubnetIds',
       ],
-      'members' =>
-      [
-        'DBSubnetGroupName' =>
-        [
+      'members' => [
+        'DBSubnetGroupName' => [
           'shape' => 'String',
         ],
-        'DBSubnetGroupDescription' =>
-        [
+        'DBSubnetGroupDescription' => [
           'shape' => 'String',
         ],
-        'SubnetIds' =>
-        [
+        'SubnetIds' => [
           'shape' => 'SubnetIdentifierList',
         ],
       ],
     ],
-    'ModifyEventSubscriptionMessage' =>
-    [
+    'ModifyEventSubscriptionMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SubscriptionName',
+      'required' => [
+        'SubscriptionName',
       ],
-      'members' =>
-      [
-        'SubscriptionName' =>
-        [
+      'members' => [
+        'SubscriptionName' => [
           'shape' => 'String',
         ],
-        'SnsTopicArn' =>
-        [
+        'SnsTopicArn' => [
           'shape' => 'String',
         ],
-        'SourceType' =>
-        [
+        'SourceType' => [
           'shape' => 'String',
         ],
-        'EventCategories' =>
-        [
+        'EventCategories' => [
           'shape' => 'EventCategoriesList',
         ],
-        'Enabled' =>
-        [
+        'Enabled' => [
           'shape' => 'BooleanOptional',
         ],
       ],
     ],
-    'ModifyOptionGroupMessage' =>
-    [
+    'ModifyOptionGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'OptionGroupName',
+      'required' => [
+        'OptionGroupName',
       ],
-      'members' =>
-      [
-        'OptionGroupName' =>
-        [
+      'members' => [
+        'OptionGroupName' => [
           'shape' => 'String',
         ],
-        'OptionsToInclude' =>
-        [
+        'OptionsToInclude' => [
           'shape' => 'OptionConfigurationList',
         ],
-        'OptionsToRemove' =>
-        [
+        'OptionsToRemove' => [
           'shape' => 'OptionNamesList',
         ],
-        'ApplyImmediately' =>
-        [
+        'ApplyImmediately' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'Option' =>
-    [
+    'Option' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'OptionName' =>
-        [
+      'members' => [
+        'OptionName' => [
           'shape' => 'String',
         ],
-        'OptionDescription' =>
-        [
+        'OptionDescription' => [
           'shape' => 'String',
         ],
-        'Persistent' =>
-        [
+        'Persistent' => [
           'shape' => 'Boolean',
         ],
-        'Permanent' =>
-        [
+        'Permanent' => [
           'shape' => 'Boolean',
         ],
-        'Port' =>
-        [
+        'Port' => [
           'shape' => 'IntegerOptional',
         ],
-        'OptionSettings' =>
-        [
+        'OptionSettings' => [
           'shape' => 'OptionSettingConfigurationList',
         ],
-        'DBSecurityGroupMemberships' =>
-        [
+        'DBSecurityGroupMemberships' => [
           'shape' => 'DBSecurityGroupMembershipList',
         ],
-        'VpcSecurityGroupMemberships' =>
-        [
+        'VpcSecurityGroupMemberships' => [
           'shape' => 'VpcSecurityGroupMembershipList',
         ],
       ],
     ],
-    'OptionConfiguration' =>
-    [
+    'OptionConfiguration' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'OptionName',
+      'required' => [
+        'OptionName',
       ],
-      'members' =>
-      [
-        'OptionName' =>
-        [
+      'members' => [
+        'OptionName' => [
           'shape' => 'String',
         ],
-        'Port' =>
-        [
+        'Port' => [
           'shape' => 'IntegerOptional',
         ],
-        'DBSecurityGroupMemberships' =>
-        [
+        'DBSecurityGroupMemberships' => [
           'shape' => 'DBSecurityGroupNameList',
         ],
-        'VpcSecurityGroupMemberships' =>
-        [
+        'VpcSecurityGroupMemberships' => [
           'shape' => 'VpcSecurityGroupIdList',
         ],
-        'OptionSettings' =>
-        [
+        'OptionSettings' => [
           'shape' => 'OptionSettingsList',
         ],
       ],
     ],
-    'OptionConfigurationList' =>
-    [
+    'OptionConfigurationList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'OptionConfiguration',
         'locationName' => 'OptionConfiguration',
       ],
     ],
-    'OptionGroup' =>
-    [
+    'OptionGroup' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'OptionGroupName' =>
-        [
+      'members' => [
+        'OptionGroupName' => [
           'shape' => 'String',
         ],
-        'OptionGroupDescription' =>
-        [
+        'OptionGroupDescription' => [
           'shape' => 'String',
         ],
-        'EngineName' =>
-        [
+        'EngineName' => [
           'shape' => 'String',
         ],
-        'MajorEngineVersion' =>
-        [
+        'MajorEngineVersion' => [
           'shape' => 'String',
         ],
-        'Options' =>
-        [
+        'Options' => [
           'shape' => 'OptionsList',
         ],
-        'AllowsVpcAndNonVpcInstanceMemberships' =>
-        [
+        'AllowsVpcAndNonVpcInstanceMemberships' => [
           'shape' => 'Boolean',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
         ],
       ],
       'wrapper' => true,
     ],
-    'OptionGroupAlreadyExistsFault' =>
-    [
+    'OptionGroupAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'OptionGroupAlreadyExistsFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'OptionGroupMembership' =>
-    [
+    'OptionGroupMembership' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'OptionGroupName' =>
-        [
+      'members' => [
+        'OptionGroupName' => [
           'shape' => 'String',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'OptionGroupMembershipList' =>
-    [
+    'OptionGroupMembershipList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'OptionGroupMembership',
         'locationName' => 'OptionGroupMembership',
       ],
     ],
-    'OptionGroupNotFoundFault' =>
-    [
+    'OptionGroupNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'OptionGroupNotFoundFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'OptionGroupOption' =>
-    [
+    'OptionGroupOption' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
-        'EngineName' =>
-        [
+        'EngineName' => [
           'shape' => 'String',
         ],
-        'MajorEngineVersion' =>
-        [
+        'MajorEngineVersion' => [
           'shape' => 'String',
         ],
-        'MinimumRequiredMinorEngineVersion' =>
-        [
+        'MinimumRequiredMinorEngineVersion' => [
           'shape' => 'String',
         ],
-        'PortRequired' =>
-        [
+        'PortRequired' => [
           'shape' => 'Boolean',
         ],
-        'DefaultPort' =>
-        [
+        'DefaultPort' => [
           'shape' => 'IntegerOptional',
         ],
-        'OptionsDependedOn' =>
-        [
+        'OptionsDependedOn' => [
           'shape' => 'OptionsDependedOn',
         ],
-        'Persistent' =>
-        [
+        'Persistent' => [
           'shape' => 'Boolean',
         ],
-        'Permanent' =>
-        [
+        'Permanent' => [
           'shape' => 'Boolean',
         ],
-        'OptionGroupOptionSettings' =>
-        [
+        'OptionGroupOptionSettings' => [
           'shape' => 'OptionGroupOptionSettingsList',
         ],
       ],
     ],
-    'OptionGroupOptionSetting' =>
-    [
+    'OptionGroupOptionSetting' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SettingName' =>
-        [
+      'members' => [
+        'SettingName' => [
           'shape' => 'String',
         ],
-        'SettingDescription' =>
-        [
+        'SettingDescription' => [
           'shape' => 'String',
         ],
-        'DefaultValue' =>
-        [
+        'DefaultValue' => [
           'shape' => 'String',
         ],
-        'ApplyType' =>
-        [
+        'ApplyType' => [
           'shape' => 'String',
         ],
-        'AllowedValues' =>
-        [
+        'AllowedValues' => [
           'shape' => 'String',
         ],
-        'IsModifiable' =>
-        [
+        'IsModifiable' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'OptionGroupOptionSettingsList' =>
-    [
+    'OptionGroupOptionSettingsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'OptionGroupOptionSetting',
         'locationName' => 'OptionGroupOptionSetting',
       ],
     ],
-    'OptionGroupOptionsList' =>
-    [
+    'OptionGroupOptionsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'OptionGroupOption',
         'locationName' => 'OptionGroupOption',
       ],
     ],
-    'OptionGroupOptionsMessage' =>
-    [
+    'OptionGroupOptionsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'OptionGroupOptions' =>
-        [
+      'members' => [
+        'OptionGroupOptions' => [
           'shape' => 'OptionGroupOptionsList',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'OptionGroupQuotaExceededFault' =>
-    [
+    'OptionGroupQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'OptionGroupQuotaExceededFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'OptionGroups' =>
-    [
+    'OptionGroups' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'OptionGroupsList' =>
-        [
+      'members' => [
+        'OptionGroupsList' => [
           'shape' => 'OptionGroupsList',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'OptionGroupsList' =>
-    [
+    'OptionGroupsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'OptionGroup',
         'locationName' => 'OptionGroup',
       ],
     ],
-    'OptionNamesList' =>
-    [
+    'OptionNamesList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
       ],
     ],
-    'OptionSetting' =>
-    [
+    'OptionSetting' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'String',
         ],
-        'DefaultValue' =>
-        [
+        'DefaultValue' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
-        'ApplyType' =>
-        [
+        'ApplyType' => [
           'shape' => 'String',
         ],
-        'DataType' =>
-        [
+        'DataType' => [
           'shape' => 'String',
         ],
-        'AllowedValues' =>
-        [
+        'AllowedValues' => [
           'shape' => 'String',
         ],
-        'IsModifiable' =>
-        [
+        'IsModifiable' => [
           'shape' => 'Boolean',
         ],
-        'IsCollection' =>
-        [
+        'IsCollection' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'OptionSettingConfigurationList' =>
-    [
+    'OptionSettingConfigurationList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'OptionSetting',
         'locationName' => 'OptionSetting',
       ],
     ],
-    'OptionSettingsList' =>
-    [
+    'OptionSettingsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'OptionSetting',
         'locationName' => 'OptionSetting',
       ],
     ],
-    'OptionsDependedOn' =>
-    [
+    'OptionsDependedOn' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'OptionName',
       ],
     ],
-    'OptionsList' =>
-    [
+    'OptionsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Option',
         'locationName' => 'Option',
       ],
     ],
-    'OrderableDBInstanceOption' =>
-    [
+    'OrderableDBInstanceOption' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Engine' =>
-        [
+      'members' => [
+        'Engine' => [
           'shape' => 'String',
         ],
-        'EngineVersion' =>
-        [
+        'EngineVersion' => [
           'shape' => 'String',
         ],
-        'DBInstanceClass' =>
-        [
+        'DBInstanceClass' => [
           'shape' => 'String',
         ],
-        'LicenseModel' =>
-        [
+        'LicenseModel' => [
           'shape' => 'String',
         ],
-        'AvailabilityZones' =>
-        [
+        'AvailabilityZones' => [
           'shape' => 'AvailabilityZoneList',
         ],
-        'MultiAZCapable' =>
-        [
+        'MultiAZCapable' => [
           'shape' => 'Boolean',
         ],
-        'ReadReplicaCapable' =>
-        [
+        'ReadReplicaCapable' => [
           'shape' => 'Boolean',
         ],
-        'Vpc' =>
-        [
+        'Vpc' => [
           'shape' => 'Boolean',
         ],
-        'StorageType' =>
-        [
+        'StorageType' => [
           'shape' => 'String',
         ],
-        'SupportsIops' =>
-        [
+        'SupportsIops' => [
           'shape' => 'Boolean',
         ],
       ],
       'wrapper' => true,
     ],
-    'OrderableDBInstanceOptionsList' =>
-    [
+    'OrderableDBInstanceOptionsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'OrderableDBInstanceOption',
         'locationName' => 'OrderableDBInstanceOption',
       ],
     ],
-    'OrderableDBInstanceOptionsMessage' =>
-    [
+    'OrderableDBInstanceOptionsMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'OrderableDBInstanceOptions' =>
-        [
+      'members' => [
+        'OrderableDBInstanceOptions' => [
           'shape' => 'OrderableDBInstanceOptionsList',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'Parameter' =>
-    [
+    'Parameter' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ParameterName' =>
-        [
+      'members' => [
+        'ParameterName' => [
           'shape' => 'String',
         ],
-        'ParameterValue' =>
-        [
+        'ParameterValue' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
-        'Source' =>
-        [
+        'Source' => [
           'shape' => 'String',
         ],
-        'ApplyType' =>
-        [
+        'ApplyType' => [
           'shape' => 'String',
         ],
-        'DataType' =>
-        [
+        'DataType' => [
           'shape' => 'String',
         ],
-        'AllowedValues' =>
-        [
+        'AllowedValues' => [
           'shape' => 'String',
         ],
-        'IsModifiable' =>
-        [
+        'IsModifiable' => [
           'shape' => 'Boolean',
         ],
-        'MinimumEngineVersion' =>
-        [
+        'MinimumEngineVersion' => [
           'shape' => 'String',
         ],
-        'ApplyMethod' =>
-        [
+        'ApplyMethod' => [
           'shape' => 'ApplyMethod',
         ],
       ],
     ],
-    'ParametersList' =>
-    [
+    'ParametersList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Parameter',
         'locationName' => 'Parameter',
       ],
     ],
-    'PendingModifiedValues' =>
-    [
+    'PendingModifiedValues' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBInstanceClass' =>
-        [
+      'members' => [
+        'DBInstanceClass' => [
           'shape' => 'String',
         ],
-        'AllocatedStorage' =>
-        [
+        'AllocatedStorage' => [
           'shape' => 'IntegerOptional',
         ],
-        'MasterUserPassword' =>
-        [
+        'MasterUserPassword' => [
           'shape' => 'String',
         ],
-        'Port' =>
-        [
+        'Port' => [
           'shape' => 'IntegerOptional',
         ],
-        'BackupRetentionPeriod' =>
-        [
+        'BackupRetentionPeriod' => [
           'shape' => 'IntegerOptional',
         ],
-        'MultiAZ' =>
-        [
+        'MultiAZ' => [
           'shape' => 'BooleanOptional',
         ],
-        'EngineVersion' =>
-        [
+        'EngineVersion' => [
           'shape' => 'String',
         ],
-        'Iops' =>
-        [
+        'Iops' => [
           'shape' => 'IntegerOptional',
         ],
-        'DBInstanceIdentifier' =>
-        [
+        'DBInstanceIdentifier' => [
           'shape' => 'String',
         ],
-        'StorageType' =>
-        [
+        'StorageType' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'PointInTimeRestoreNotEnabledFault' =>
-    [
+    'PointInTimeRestoreNotEnabledFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'PointInTimeRestoreNotEnabled',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'PromoteReadReplicaMessage' =>
-    [
+    'PromoteReadReplicaMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DBInstanceIdentifier',
+      'required' => [
+        'DBInstanceIdentifier',
       ],
-      'members' =>
-      [
-        'DBInstanceIdentifier' =>
-        [
+      'members' => [
+        'DBInstanceIdentifier' => [
           'shape' => 'String',
         ],
-        'BackupRetentionPeriod' =>
-        [
+        'BackupRetentionPeriod' => [
           'shape' => 'IntegerOptional',
         ],
-        'PreferredBackupWindow' =>
-        [
+        'PreferredBackupWindow' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ProvisionedIopsNotAvailableInAZFault' =>
-    [
+    'ProvisionedIopsNotAvailableInAZFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ProvisionedIopsNotAvailableInAZFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'PurchaseReservedDBInstancesOfferingMessage' =>
-    [
+    'PurchaseReservedDBInstancesOfferingMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ReservedDBInstancesOfferingId',
+      'required' => [
+        'ReservedDBInstancesOfferingId',
       ],
-      'members' =>
-      [
-        'ReservedDBInstancesOfferingId' =>
-        [
+      'members' => [
+        'ReservedDBInstancesOfferingId' => [
           'shape' => 'String',
         ],
-        'ReservedDBInstanceId' =>
-        [
+        'ReservedDBInstanceId' => [
           'shape' => 'String',
         ],
-        'DBInstanceCount' =>
-        [
+        'DBInstanceCount' => [
           'shape' => 'IntegerOptional',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
         ],
       ],
     ],
-    'ReadReplicaDBInstanceIdentifierList' =>
-    [
+    'ReadReplicaDBInstanceIdentifierList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'ReadReplicaDBInstanceIdentifier',
       ],
     ],
-    'RebootDBInstanceMessage' =>
-    [
+    'RebootDBInstanceMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DBInstanceIdentifier',
+      'required' => [
+        'DBInstanceIdentifier',
       ],
-      'members' =>
-      [
-        'DBInstanceIdentifier' =>
-        [
+      'members' => [
+        'DBInstanceIdentifier' => [
           'shape' => 'String',
         ],
-        'ForceFailover' =>
-        [
+        'ForceFailover' => [
           'shape' => 'BooleanOptional',
         ],
       ],
     ],
-    'RecurringCharge' =>
-    [
+    'RecurringCharge' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'RecurringChargeAmount' =>
-        [
+      'members' => [
+        'RecurringChargeAmount' => [
           'shape' => 'Double',
         ],
-        'RecurringChargeFrequency' =>
-        [
+        'RecurringChargeFrequency' => [
           'shape' => 'String',
         ],
       ],
       'wrapper' => true,
     ],
-    'RecurringChargeList' =>
-    [
+    'RecurringChargeList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'RecurringCharge',
         'locationName' => 'RecurringCharge',
       ],
     ],
-    'RemoveSourceIdentifierFromSubscriptionMessage' =>
-    [
+    'RemoveSourceIdentifierFromSubscriptionMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SubscriptionName',
-        1 => 'SourceIdentifier',
+      'required' => [
+        'SubscriptionName',
+        'SourceIdentifier',
       ],
-      'members' =>
-      [
-        'SubscriptionName' =>
-        [
+      'members' => [
+        'SubscriptionName' => [
           'shape' => 'String',
         ],
-        'SourceIdentifier' =>
-        [
+        'SourceIdentifier' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'RemoveTagsFromResourceMessage' =>
-    [
+    'RemoveTagsFromResourceMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ResourceName',
-        1 => 'TagKeys',
+      'required' => [
+        'ResourceName',
+        'TagKeys',
       ],
-      'members' =>
-      [
-        'ResourceName' =>
-        [
+      'members' => [
+        'ResourceName' => [
           'shape' => 'String',
         ],
-        'TagKeys' =>
-        [
+        'TagKeys' => [
           'shape' => 'KeyList',
         ],
       ],
     ],
-    'ReservedDBInstance' =>
-    [
+    'ReservedDBInstance' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedDBInstanceId' =>
-        [
+      'members' => [
+        'ReservedDBInstanceId' => [
           'shape' => 'String',
         ],
-        'ReservedDBInstancesOfferingId' =>
-        [
+        'ReservedDBInstancesOfferingId' => [
           'shape' => 'String',
         ],
-        'DBInstanceClass' =>
-        [
+        'DBInstanceClass' => [
           'shape' => 'String',
         ],
-        'StartTime' =>
-        [
+        'StartTime' => [
           'shape' => 'TStamp',
         ],
-        'Duration' =>
-        [
+        'Duration' => [
           'shape' => 'Integer',
         ],
-        'FixedPrice' =>
-        [
+        'FixedPrice' => [
           'shape' => 'Double',
         ],
-        'UsagePrice' =>
-        [
+        'UsagePrice' => [
           'shape' => 'Double',
         ],
-        'CurrencyCode' =>
-        [
+        'CurrencyCode' => [
           'shape' => 'String',
         ],
-        'DBInstanceCount' =>
-        [
+        'DBInstanceCount' => [
           'shape' => 'Integer',
         ],
-        'ProductDescription' =>
-        [
+        'ProductDescription' => [
           'shape' => 'String',
         ],
-        'OfferingType' =>
-        [
+        'OfferingType' => [
           'shape' => 'String',
         ],
-        'MultiAZ' =>
-        [
+        'MultiAZ' => [
           'shape' => 'Boolean',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'String',
         ],
-        'RecurringCharges' =>
-        [
+        'RecurringCharges' => [
           'shape' => 'RecurringChargeList',
         ],
       ],
       'wrapper' => true,
     ],
-    'ReservedDBInstanceAlreadyExistsFault' =>
-    [
+    'ReservedDBInstanceAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ReservedDBInstanceAlreadyExists',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ReservedDBInstanceList' =>
-    [
+    'ReservedDBInstanceList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ReservedDBInstance',
         'locationName' => 'ReservedDBInstance',
       ],
     ],
-    'ReservedDBInstanceMessage' =>
-    [
+    'ReservedDBInstanceMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'ReservedDBInstances' =>
-        [
+        'ReservedDBInstances' => [
           'shape' => 'ReservedDBInstanceList',
         ],
       ],
     ],
-    'ReservedDBInstanceNotFoundFault' =>
-    [
+    'ReservedDBInstanceNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ReservedDBInstanceNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ReservedDBInstanceQuotaExceededFault' =>
-    [
+    'ReservedDBInstanceQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ReservedDBInstanceQuotaExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ReservedDBInstancesOffering' =>
-    [
+    'ReservedDBInstancesOffering' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedDBInstancesOfferingId' =>
-        [
+      'members' => [
+        'ReservedDBInstancesOfferingId' => [
           'shape' => 'String',
         ],
-        'DBInstanceClass' =>
-        [
+        'DBInstanceClass' => [
           'shape' => 'String',
         ],
-        'Duration' =>
-        [
+        'Duration' => [
           'shape' => 'Integer',
         ],
-        'FixedPrice' =>
-        [
+        'FixedPrice' => [
           'shape' => 'Double',
         ],
-        'UsagePrice' =>
-        [
+        'UsagePrice' => [
           'shape' => 'Double',
         ],
-        'CurrencyCode' =>
-        [
+        'CurrencyCode' => [
           'shape' => 'String',
         ],
-        'ProductDescription' =>
-        [
+        'ProductDescription' => [
           'shape' => 'String',
         ],
-        'OfferingType' =>
-        [
+        'OfferingType' => [
           'shape' => 'String',
         ],
-        'MultiAZ' =>
-        [
+        'MultiAZ' => [
           'shape' => 'Boolean',
         ],
-        'RecurringCharges' =>
-        [
+        'RecurringCharges' => [
           'shape' => 'RecurringChargeList',
         ],
       ],
       'wrapper' => true,
     ],
-    'ReservedDBInstancesOfferingList' =>
-    [
+    'ReservedDBInstancesOfferingList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ReservedDBInstancesOffering',
         'locationName' => 'ReservedDBInstancesOffering',
       ],
     ],
-    'ReservedDBInstancesOfferingMessage' =>
-    [
+    'ReservedDBInstancesOfferingMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Marker' =>
-        [
+      'members' => [
+        'Marker' => [
           'shape' => 'String',
         ],
-        'ReservedDBInstancesOfferings' =>
-        [
+        'ReservedDBInstancesOfferings' => [
           'shape' => 'ReservedDBInstancesOfferingList',
         ],
       ],
     ],
-    'ReservedDBInstancesOfferingNotFoundFault' =>
-    [
+    'ReservedDBInstancesOfferingNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ReservedDBInstancesOfferingNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'ResetDBParameterGroupMessage' =>
-    [
+    'ResetDBParameterGroupMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DBParameterGroupName',
+      'required' => [
+        'DBParameterGroupName',
       ],
-      'members' =>
-      [
-        'DBParameterGroupName' =>
-        [
+      'members' => [
+        'DBParameterGroupName' => [
           'shape' => 'String',
         ],
-        'ResetAllParameters' =>
-        [
+        'ResetAllParameters' => [
           'shape' => 'Boolean',
         ],
-        'Parameters' =>
-        [
+        'Parameters' => [
           'shape' => 'ParametersList',
         ],
       ],
     ],
-    'RestoreDBInstanceFromDBSnapshotMessage' =>
-    [
+    'RestoreDBInstanceFromDBSnapshotMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DBInstanceIdentifier',
-        1 => 'DBSnapshotIdentifier',
+      'required' => [
+        'DBInstanceIdentifier',
+        'DBSnapshotIdentifier',
       ],
-      'members' =>
-      [
-        'DBInstanceIdentifier' =>
-        [
+      'members' => [
+        'DBInstanceIdentifier' => [
           'shape' => 'String',
         ],
-        'DBSnapshotIdentifier' =>
-        [
+        'DBSnapshotIdentifier' => [
           'shape' => 'String',
         ],
-        'DBInstanceClass' =>
-        [
+        'DBInstanceClass' => [
           'shape' => 'String',
         ],
-        'Port' =>
-        [
+        'Port' => [
           'shape' => 'IntegerOptional',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
         ],
-        'DBSubnetGroupName' =>
-        [
+        'DBSubnetGroupName' => [
           'shape' => 'String',
         ],
-        'MultiAZ' =>
-        [
+        'MultiAZ' => [
           'shape' => 'BooleanOptional',
         ],
-        'PubliclyAccessible' =>
-        [
+        'PubliclyAccessible' => [
           'shape' => 'BooleanOptional',
         ],
-        'AutoMinorVersionUpgrade' =>
-        [
+        'AutoMinorVersionUpgrade' => [
           'shape' => 'BooleanOptional',
         ],
-        'LicenseModel' =>
-        [
+        'LicenseModel' => [
           'shape' => 'String',
         ],
-        'DBName' =>
-        [
+        'DBName' => [
           'shape' => 'String',
         ],
-        'Engine' =>
-        [
+        'Engine' => [
           'shape' => 'String',
         ],
-        'Iops' =>
-        [
+        'Iops' => [
           'shape' => 'IntegerOptional',
         ],
-        'OptionGroupName' =>
-        [
+        'OptionGroupName' => [
           'shape' => 'String',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
         ],
-        'StorageType' =>
-        [
+        'StorageType' => [
           'shape' => 'String',
         ],
-        'TdeCredentialArn' =>
-        [
+        'TdeCredentialArn' => [
           'shape' => 'String',
         ],
-        'TdeCredentialPassword' =>
-        [
+        'TdeCredentialPassword' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'RestoreDBInstanceToPointInTimeMessage' =>
-    [
+    'RestoreDBInstanceToPointInTimeMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SourceDBInstanceIdentifier',
-        1 => 'TargetDBInstanceIdentifier',
+      'required' => [
+        'SourceDBInstanceIdentifier',
+        'TargetDBInstanceIdentifier',
       ],
-      'members' =>
-      [
-        'SourceDBInstanceIdentifier' =>
-        [
+      'members' => [
+        'SourceDBInstanceIdentifier' => [
           'shape' => 'String',
         ],
-        'TargetDBInstanceIdentifier' =>
-        [
+        'TargetDBInstanceIdentifier' => [
           'shape' => 'String',
         ],
-        'RestoreTime' =>
-        [
+        'RestoreTime' => [
           'shape' => 'TStamp',
         ],
-        'UseLatestRestorableTime' =>
-        [
+        'UseLatestRestorableTime' => [
           'shape' => 'Boolean',
         ],
-        'DBInstanceClass' =>
-        [
+        'DBInstanceClass' => [
           'shape' => 'String',
         ],
-        'Port' =>
-        [
+        'Port' => [
           'shape' => 'IntegerOptional',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
         ],
-        'DBSubnetGroupName' =>
-        [
+        'DBSubnetGroupName' => [
           'shape' => 'String',
         ],
-        'MultiAZ' =>
-        [
+        'MultiAZ' => [
           'shape' => 'BooleanOptional',
         ],
-        'PubliclyAccessible' =>
-        [
+        'PubliclyAccessible' => [
           'shape' => 'BooleanOptional',
         ],
-        'AutoMinorVersionUpgrade' =>
-        [
+        'AutoMinorVersionUpgrade' => [
           'shape' => 'BooleanOptional',
         ],
-        'LicenseModel' =>
-        [
+        'LicenseModel' => [
           'shape' => 'String',
         ],
-        'DBName' =>
-        [
+        'DBName' => [
           'shape' => 'String',
         ],
-        'Engine' =>
-        [
+        'Engine' => [
           'shape' => 'String',
         ],
-        'Iops' =>
-        [
+        'Iops' => [
           'shape' => 'IntegerOptional',
         ],
-        'OptionGroupName' =>
-        [
+        'OptionGroupName' => [
           'shape' => 'String',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
         ],
-        'StorageType' =>
-        [
+        'StorageType' => [
           'shape' => 'String',
         ],
-        'TdeCredentialArn' =>
-        [
+        'TdeCredentialArn' => [
           'shape' => 'String',
         ],
-        'TdeCredentialPassword' =>
-        [
+        'TdeCredentialPassword' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'RevokeDBSecurityGroupIngressMessage' =>
-    [
+    'RevokeDBSecurityGroupIngressMessage' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DBSecurityGroupName',
+      'required' => [
+        'DBSecurityGroupName',
       ],
-      'members' =>
-      [
-        'DBSecurityGroupName' =>
-        [
+      'members' => [
+        'DBSecurityGroupName' => [
           'shape' => 'String',
         ],
-        'CIDRIP' =>
-        [
+        'CIDRIP' => [
           'shape' => 'String',
         ],
-        'EC2SecurityGroupName' =>
-        [
+        'EC2SecurityGroupName' => [
           'shape' => 'String',
         ],
-        'EC2SecurityGroupId' =>
-        [
+        'EC2SecurityGroupId' => [
           'shape' => 'String',
         ],
-        'EC2SecurityGroupOwnerId' =>
-        [
+        'EC2SecurityGroupOwnerId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'SNSInvalidTopicFault' =>
-    [
+    'SNSInvalidTopicFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SNSInvalidTopic',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SNSNoAuthorizationFault' =>
-    [
+    'SNSNoAuthorizationFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SNSNoAuthorization',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SNSTopicArnNotFoundFault' =>
-    [
+    'SNSTopicArnNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SNSTopicArnNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SnapshotQuotaExceededFault' =>
-    [
+    'SnapshotQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SnapshotQuotaExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SourceIdsList' =>
-    [
+    'SourceIdsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'SourceId',
       ],
     ],
-    'SourceNotFoundFault' =>
-    [
+    'SourceNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SourceNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SourceType' =>
-    [
+    'SourceType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'db-instance',
-        1 => 'db-parameter-group',
-        2 => 'db-security-group',
-        3 => 'db-snapshot',
+      'enum' => [
+        'db-instance',
+        'db-parameter-group',
+        'db-security-group',
+        'db-snapshot',
       ],
     ],
-    'StorageQuotaExceededFault' =>
-    [
+    'StorageQuotaExceededFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'StorageQuotaExceeded',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'StorageTypeNotSupportedFault' =>
-    [
+    'StorageTypeNotSupportedFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'StorageTypeNotSupported',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'String' =>
-    [
+    'String' => [
       'type' => 'string',
     ],
-    'Subnet' =>
-    [
+    'Subnet' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SubnetIdentifier' =>
-        [
+      'members' => [
+        'SubnetIdentifier' => [
           'shape' => 'String',
         ],
-        'SubnetAvailabilityZone' =>
-        [
+        'SubnetAvailabilityZone' => [
           'shape' => 'AvailabilityZone',
         ],
-        'SubnetStatus' =>
-        [
+        'SubnetStatus' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'SubnetAlreadyInUse' =>
-    [
+    'SubnetAlreadyInUse' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SubnetAlreadyInUse',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SubnetIdentifierList' =>
-    [
+    'SubnetIdentifierList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'SubnetIdentifier',
       ],
     ],
-    'SubnetList' =>
-    [
+    'SubnetList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Subnet',
         'locationName' => 'Subnet',
       ],
     ],
-    'SubscriptionAlreadyExistFault' =>
-    [
+    'SubscriptionAlreadyExistFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SubscriptionAlreadyExist',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SubscriptionCategoryNotFoundFault' =>
-    [
+    'SubscriptionCategoryNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SubscriptionCategoryNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SubscriptionNotFoundFault' =>
-    [
+    'SubscriptionNotFoundFault' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'SubscriptionNotFound',
         'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SupportedCharacterSetsList' =>
-    [
+    'SupportedCharacterSetsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CharacterSet',
         'locationName' => 'CharacterSet',
       ],
     ],
-    'TStamp' =>
-    [
+    'TStamp' => [
       'type' => 'timestamp',
     ],
-    'Tag' =>
-    [
+    'Tag' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Key' =>
-        [
+      'members' => [
+        'Key' => [
           'shape' => 'String',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'TagList' =>
-    [
+    'TagList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Tag',
         'locationName' => 'Tag',
       ],
     ],
-    'TagListMessage' =>
-    [
+    'TagListMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TagList' =>
-        [
+      'members' => [
+        'TagList' => [
           'shape' => 'TagList',
         ],
       ],
     ],
-    'VpcSecurityGroupIdList' =>
-    [
+    'VpcSecurityGroupIdList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'VpcSecurityGroupId',
       ],
     ],
-    'VpcSecurityGroupMembership' =>
-    [
+    'VpcSecurityGroupMembership' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VpcSecurityGroupId' =>
-        [
+      'members' => [
+        'VpcSecurityGroupId' => [
           'shape' => 'String',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'VpcSecurityGroupMembershipList' =>
-    [
+    'VpcSecurityGroupMembershipList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'VpcSecurityGroupMembership',
         'locationName' => 'VpcSecurityGroupMembership',
       ],
     ],
-    'AddSourceIdentifierToSubscriptionResult' =>
-    [
+    'AddSourceIdentifierToSubscriptionResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EventSubscription' =>
-        [
+      'members' => [
+        'EventSubscription' => [
           'shape' => 'EventSubscription',
         ],
       ],
     ],
-    'AuthorizeDBSecurityGroupIngressResult' =>
-    [
+    'AuthorizeDBSecurityGroupIngressResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBSecurityGroup' =>
-        [
+      'members' => [
+        'DBSecurityGroup' => [
           'shape' => 'DBSecurityGroup',
         ],
       ],
     ],
-    'CopyDBParameterGroupResult' =>
-    [
+    'CopyDBParameterGroupResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBParameterGroup' =>
-        [
+      'members' => [
+        'DBParameterGroup' => [
           'shape' => 'DBParameterGroup',
         ],
       ],
     ],
-    'CopyDBSnapshotResult' =>
-    [
+    'CopyDBSnapshotResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBSnapshot' =>
-        [
+      'members' => [
+        'DBSnapshot' => [
           'shape' => 'DBSnapshot',
         ],
       ],
     ],
-    'CopyOptionGroupResult' =>
-    [
+    'CopyOptionGroupResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'OptionGroup' =>
-        [
+      'members' => [
+        'OptionGroup' => [
           'shape' => 'OptionGroup',
         ],
       ],
     ],
-    'CreateDBInstanceResult' =>
-    [
+    'CreateDBInstanceResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBInstance' =>
-        [
+      'members' => [
+        'DBInstance' => [
           'shape' => 'DBInstance',
         ],
       ],
     ],
-    'CreateDBInstanceReadReplicaResult' =>
-    [
+    'CreateDBInstanceReadReplicaResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBInstance' =>
-        [
+      'members' => [
+        'DBInstance' => [
           'shape' => 'DBInstance',
         ],
       ],
     ],
-    'CreateDBParameterGroupResult' =>
-    [
+    'CreateDBParameterGroupResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBParameterGroup' =>
-        [
+      'members' => [
+        'DBParameterGroup' => [
           'shape' => 'DBParameterGroup',
         ],
       ],
     ],
-    'CreateDBSecurityGroupResult' =>
-    [
+    'CreateDBSecurityGroupResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBSecurityGroup' =>
-        [
+      'members' => [
+        'DBSecurityGroup' => [
           'shape' => 'DBSecurityGroup',
         ],
       ],
     ],
-    'CreateDBSnapshotResult' =>
-    [
+    'CreateDBSnapshotResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBSnapshot' =>
-        [
+      'members' => [
+        'DBSnapshot' => [
           'shape' => 'DBSnapshot',
         ],
       ],
     ],
-    'CreateDBSubnetGroupResult' =>
-    [
+    'CreateDBSubnetGroupResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBSubnetGroup' =>
-        [
+      'members' => [
+        'DBSubnetGroup' => [
           'shape' => 'DBSubnetGroup',
         ],
       ],
     ],
-    'CreateEventSubscriptionResult' =>
-    [
+    'CreateEventSubscriptionResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EventSubscription' =>
-        [
+      'members' => [
+        'EventSubscription' => [
           'shape' => 'EventSubscription',
         ],
       ],
     ],
-    'CreateOptionGroupResult' =>
-    [
+    'CreateOptionGroupResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'OptionGroup' =>
-        [
+      'members' => [
+        'OptionGroup' => [
           'shape' => 'OptionGroup',
         ],
       ],
     ],
-    'DeleteDBInstanceResult' =>
-    [
+    'DeleteDBInstanceResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBInstance' =>
-        [
+      'members' => [
+        'DBInstance' => [
           'shape' => 'DBInstance',
         ],
       ],
     ],
-    'DeleteDBSnapshotResult' =>
-    [
+    'DeleteDBSnapshotResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBSnapshot' =>
-        [
+      'members' => [
+        'DBSnapshot' => [
           'shape' => 'DBSnapshot',
         ],
       ],
     ],
-    'DeleteEventSubscriptionResult' =>
-    [
+    'DeleteEventSubscriptionResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EventSubscription' =>
-        [
+      'members' => [
+        'EventSubscription' => [
           'shape' => 'EventSubscription',
         ],
       ],
     ],
-    'DescribeEngineDefaultParametersResult' =>
-    [
+    'DescribeEngineDefaultParametersResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EngineDefaults' =>
-        [
+      'members' => [
+        'EngineDefaults' => [
           'shape' => 'EngineDefaults',
         ],
       ],
     ],
-    'ModifyDBInstanceResult' =>
-    [
+    'ModifyDBInstanceResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBInstance' =>
-        [
+      'members' => [
+        'DBInstance' => [
           'shape' => 'DBInstance',
         ],
       ],
     ],
-    'ModifyDBSubnetGroupResult' =>
-    [
+    'ModifyDBSubnetGroupResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBSubnetGroup' =>
-        [
+      'members' => [
+        'DBSubnetGroup' => [
           'shape' => 'DBSubnetGroup',
         ],
       ],
     ],
-    'ModifyEventSubscriptionResult' =>
-    [
+    'ModifyEventSubscriptionResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EventSubscription' =>
-        [
+      'members' => [
+        'EventSubscription' => [
           'shape' => 'EventSubscription',
         ],
       ],
     ],
-    'ModifyOptionGroupResult' =>
-    [
+    'ModifyOptionGroupResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'OptionGroup' =>
-        [
+      'members' => [
+        'OptionGroup' => [
           'shape' => 'OptionGroup',
         ],
       ],
     ],
-    'PromoteReadReplicaResult' =>
-    [
+    'PromoteReadReplicaResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBInstance' =>
-        [
+      'members' => [
+        'DBInstance' => [
           'shape' => 'DBInstance',
         ],
       ],
     ],
-    'PurchaseReservedDBInstancesOfferingResult' =>
-    [
+    'PurchaseReservedDBInstancesOfferingResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedDBInstance' =>
-        [
+      'members' => [
+        'ReservedDBInstance' => [
           'shape' => 'ReservedDBInstance',
         ],
       ],
     ],
-    'RebootDBInstanceResult' =>
-    [
+    'RebootDBInstanceResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBInstance' =>
-        [
+      'members' => [
+        'DBInstance' => [
           'shape' => 'DBInstance',
         ],
       ],
     ],
-    'RemoveSourceIdentifierFromSubscriptionResult' =>
-    [
+    'RemoveSourceIdentifierFromSubscriptionResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EventSubscription' =>
-        [
+      'members' => [
+        'EventSubscription' => [
           'shape' => 'EventSubscription',
         ],
       ],
     ],
-    'RestoreDBInstanceFromDBSnapshotResult' =>
-    [
+    'RestoreDBInstanceFromDBSnapshotResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBInstance' =>
-        [
+      'members' => [
+        'DBInstance' => [
           'shape' => 'DBInstance',
         ],
       ],
     ],
-    'RestoreDBInstanceToPointInTimeResult' =>
-    [
+    'RestoreDBInstanceToPointInTimeResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBInstance' =>
-        [
+      'members' => [
+        'DBInstance' => [
           'shape' => 'DBInstance',
         ],
       ],
     ],
-    'RevokeDBSecurityGroupIngressResult' =>
-    [
+    'RevokeDBSecurityGroupIngressResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DBSecurityGroup' =>
-        [
+      'members' => [
+        'DBSecurityGroup' => [
           'shape' => 'DBSecurityGroup',
         ],
       ],

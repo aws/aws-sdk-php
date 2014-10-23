@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2014-06-15',
     'endpointPrefix' => 'ec2',
     'serviceAbbreviation' => 'Amazon EC2',
@@ -10,14075 +8,10897 @@ return [
     'xmlNamespace' => 'http://ec2.amazonaws.com/doc/2014-06-15',
     'protocol' => 'ec2',
   ],
-  'operations' =>
-  [
-    'AcceptVpcPeeringConnection' =>
-    [
+  'operations' => [
+    'AcceptVpcPeeringConnection' => [
       'name' => 'AcceptVpcPeeringConnection',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AcceptVpcPeeringConnectionRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AcceptVpcPeeringConnectionResult',
       ],
     ],
-    'AllocateAddress' =>
-    [
+    'AllocateAddress' => [
       'name' => 'AllocateAddress',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AllocateAddressRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AllocateAddressResult',
       ],
     ],
-    'AssignPrivateIpAddresses' =>
-    [
+    'AssignPrivateIpAddresses' => [
       'name' => 'AssignPrivateIpAddresses',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AssignPrivateIpAddressesRequest',
       ],
     ],
-    'AssociateAddress' =>
-    [
+    'AssociateAddress' => [
       'name' => 'AssociateAddress',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AssociateAddressRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AssociateAddressResult',
       ],
     ],
-    'AssociateDhcpOptions' =>
-    [
+    'AssociateDhcpOptions' => [
       'name' => 'AssociateDhcpOptions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AssociateDhcpOptionsRequest',
       ],
     ],
-    'AssociateRouteTable' =>
-    [
+    'AssociateRouteTable' => [
       'name' => 'AssociateRouteTable',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AssociateRouteTableRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AssociateRouteTableResult',
       ],
     ],
-    'AttachInternetGateway' =>
-    [
+    'AttachInternetGateway' => [
       'name' => 'AttachInternetGateway',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AttachInternetGatewayRequest',
       ],
     ],
-    'AttachNetworkInterface' =>
-    [
+    'AttachNetworkInterface' => [
       'name' => 'AttachNetworkInterface',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AttachNetworkInterfaceRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AttachNetworkInterfaceResult',
       ],
     ],
-    'AttachVolume' =>
-    [
+    'AttachVolume' => [
       'name' => 'AttachVolume',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AttachVolumeRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'VolumeAttachment',
         'locationName' => 'attachment',
       ],
     ],
-    'AttachVpnGateway' =>
-    [
+    'AttachVpnGateway' => [
       'name' => 'AttachVpnGateway',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AttachVpnGatewayRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AttachVpnGatewayResult',
       ],
     ],
-    'AuthorizeSecurityGroupEgress' =>
-    [
+    'AuthorizeSecurityGroupEgress' => [
       'name' => 'AuthorizeSecurityGroupEgress',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AuthorizeSecurityGroupEgressRequest',
       ],
     ],
-    'AuthorizeSecurityGroupIngress' =>
-    [
+    'AuthorizeSecurityGroupIngress' => [
       'name' => 'AuthorizeSecurityGroupIngress',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AuthorizeSecurityGroupIngressRequest',
       ],
     ],
-    'BundleInstance' =>
-    [
+    'BundleInstance' => [
       'name' => 'BundleInstance',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'BundleInstanceRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'BundleInstanceResult',
       ],
     ],
-    'CancelBundleTask' =>
-    [
+    'CancelBundleTask' => [
       'name' => 'CancelBundleTask',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CancelBundleTaskRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CancelBundleTaskResult',
       ],
     ],
-    'CancelConversionTask' =>
-    [
+    'CancelConversionTask' => [
       'name' => 'CancelConversionTask',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CancelConversionRequest',
       ],
     ],
-    'CancelExportTask' =>
-    [
+    'CancelExportTask' => [
       'name' => 'CancelExportTask',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CancelExportTaskRequest',
       ],
     ],
-    'CancelReservedInstancesListing' =>
-    [
+    'CancelReservedInstancesListing' => [
       'name' => 'CancelReservedInstancesListing',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CancelReservedInstancesListingRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CancelReservedInstancesListingResult',
       ],
     ],
-    'CancelSpotInstanceRequests' =>
-    [
+    'CancelSpotInstanceRequests' => [
       'name' => 'CancelSpotInstanceRequests',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CancelSpotInstanceRequestsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CancelSpotInstanceRequestsResult',
       ],
     ],
-    'ConfirmProductInstance' =>
-    [
+    'ConfirmProductInstance' => [
       'name' => 'ConfirmProductInstance',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ConfirmProductInstanceRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ConfirmProductInstanceResult',
       ],
     ],
-    'CopyImage' =>
-    [
+    'CopyImage' => [
       'name' => 'CopyImage',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CopyImageRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CopyImageResult',
       ],
     ],
-    'CopySnapshot' =>
-    [
+    'CopySnapshot' => [
       'name' => 'CopySnapshot',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CopySnapshotRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CopySnapshotResult',
       ],
     ],
-    'CreateCustomerGateway' =>
-    [
+    'CreateCustomerGateway' => [
       'name' => 'CreateCustomerGateway',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateCustomerGatewayRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateCustomerGatewayResult',
       ],
     ],
-    'CreateDhcpOptions' =>
-    [
+    'CreateDhcpOptions' => [
       'name' => 'CreateDhcpOptions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateDhcpOptionsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateDhcpOptionsResult',
       ],
     ],
-    'CreateImage' =>
-    [
+    'CreateImage' => [
       'name' => 'CreateImage',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateImageRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateImageResult',
       ],
     ],
-    'CreateInstanceExportTask' =>
-    [
+    'CreateInstanceExportTask' => [
       'name' => 'CreateInstanceExportTask',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateInstanceExportTaskRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateInstanceExportTaskResult',
       ],
     ],
-    'CreateInternetGateway' =>
-    [
+    'CreateInternetGateway' => [
       'name' => 'CreateInternetGateway',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateInternetGatewayRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateInternetGatewayResult',
       ],
     ],
-    'CreateKeyPair' =>
-    [
+    'CreateKeyPair' => [
       'name' => 'CreateKeyPair',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateKeyPairRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'KeyPair',
         'locationName' => 'keyPair',
       ],
     ],
-    'CreateNetworkAcl' =>
-    [
+    'CreateNetworkAcl' => [
       'name' => 'CreateNetworkAcl',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateNetworkAclRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateNetworkAclResult',
       ],
     ],
-    'CreateNetworkAclEntry' =>
-    [
+    'CreateNetworkAclEntry' => [
       'name' => 'CreateNetworkAclEntry',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateNetworkAclEntryRequest',
       ],
     ],
-    'CreateNetworkInterface' =>
-    [
+    'CreateNetworkInterface' => [
       'name' => 'CreateNetworkInterface',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateNetworkInterfaceRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateNetworkInterfaceResult',
       ],
     ],
-    'CreatePlacementGroup' =>
-    [
+    'CreatePlacementGroup' => [
       'name' => 'CreatePlacementGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreatePlacementGroupRequest',
       ],
     ],
-    'CreateReservedInstancesListing' =>
-    [
+    'CreateReservedInstancesListing' => [
       'name' => 'CreateReservedInstancesListing',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateReservedInstancesListingRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateReservedInstancesListingResult',
       ],
     ],
-    'CreateRoute' =>
-    [
+    'CreateRoute' => [
       'name' => 'CreateRoute',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateRouteRequest',
       ],
     ],
-    'CreateRouteTable' =>
-    [
+    'CreateRouteTable' => [
       'name' => 'CreateRouteTable',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateRouteTableRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateRouteTableResult',
       ],
     ],
-    'CreateSecurityGroup' =>
-    [
+    'CreateSecurityGroup' => [
       'name' => 'CreateSecurityGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateSecurityGroupRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateSecurityGroupResult',
       ],
     ],
-    'CreateSnapshot' =>
-    [
+    'CreateSnapshot' => [
       'name' => 'CreateSnapshot',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateSnapshotRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'Snapshot',
         'locationName' => 'snapshot',
       ],
     ],
-    'CreateSpotDatafeedSubscription' =>
-    [
+    'CreateSpotDatafeedSubscription' => [
       'name' => 'CreateSpotDatafeedSubscription',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateSpotDatafeedSubscriptionRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateSpotDatafeedSubscriptionResult',
       ],
     ],
-    'CreateSubnet' =>
-    [
+    'CreateSubnet' => [
       'name' => 'CreateSubnet',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateSubnetRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateSubnetResult',
       ],
     ],
-    'CreateTags' =>
-    [
+    'CreateTags' => [
       'name' => 'CreateTags',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateTagsRequest',
       ],
     ],
-    'CreateVolume' =>
-    [
+    'CreateVolume' => [
       'name' => 'CreateVolume',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateVolumeRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'Volume',
         'locationName' => 'volume',
       ],
     ],
-    'CreateVpc' =>
-    [
+    'CreateVpc' => [
       'name' => 'CreateVpc',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateVpcRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateVpcResult',
       ],
     ],
-    'CreateVpcPeeringConnection' =>
-    [
+    'CreateVpcPeeringConnection' => [
       'name' => 'CreateVpcPeeringConnection',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateVpcPeeringConnectionRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateVpcPeeringConnectionResult',
       ],
     ],
-    'CreateVpnConnection' =>
-    [
+    'CreateVpnConnection' => [
       'name' => 'CreateVpnConnection',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateVpnConnectionRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateVpnConnectionResult',
       ],
     ],
-    'CreateVpnConnectionRoute' =>
-    [
+    'CreateVpnConnectionRoute' => [
       'name' => 'CreateVpnConnectionRoute',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateVpnConnectionRouteRequest',
       ],
     ],
-    'CreateVpnGateway' =>
-    [
+    'CreateVpnGateway' => [
       'name' => 'CreateVpnGateway',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateVpnGatewayRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateVpnGatewayResult',
       ],
     ],
-    'DeleteCustomerGateway' =>
-    [
+    'DeleteCustomerGateway' => [
       'name' => 'DeleteCustomerGateway',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteCustomerGatewayRequest',
       ],
     ],
-    'DeleteDhcpOptions' =>
-    [
+    'DeleteDhcpOptions' => [
       'name' => 'DeleteDhcpOptions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteDhcpOptionsRequest',
       ],
     ],
-    'DeleteInternetGateway' =>
-    [
+    'DeleteInternetGateway' => [
       'name' => 'DeleteInternetGateway',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteInternetGatewayRequest',
       ],
     ],
-    'DeleteKeyPair' =>
-    [
+    'DeleteKeyPair' => [
       'name' => 'DeleteKeyPair',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteKeyPairRequest',
       ],
     ],
-    'DeleteNetworkAcl' =>
-    [
+    'DeleteNetworkAcl' => [
       'name' => 'DeleteNetworkAcl',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteNetworkAclRequest',
       ],
     ],
-    'DeleteNetworkAclEntry' =>
-    [
+    'DeleteNetworkAclEntry' => [
       'name' => 'DeleteNetworkAclEntry',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteNetworkAclEntryRequest',
       ],
     ],
-    'DeleteNetworkInterface' =>
-    [
+    'DeleteNetworkInterface' => [
       'name' => 'DeleteNetworkInterface',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteNetworkInterfaceRequest',
       ],
     ],
-    'DeletePlacementGroup' =>
-    [
+    'DeletePlacementGroup' => [
       'name' => 'DeletePlacementGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeletePlacementGroupRequest',
       ],
     ],
-    'DeleteRoute' =>
-    [
+    'DeleteRoute' => [
       'name' => 'DeleteRoute',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteRouteRequest',
       ],
     ],
-    'DeleteRouteTable' =>
-    [
+    'DeleteRouteTable' => [
       'name' => 'DeleteRouteTable',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteRouteTableRequest',
       ],
     ],
-    'DeleteSecurityGroup' =>
-    [
+    'DeleteSecurityGroup' => [
       'name' => 'DeleteSecurityGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteSecurityGroupRequest',
       ],
     ],
-    'DeleteSnapshot' =>
-    [
+    'DeleteSnapshot' => [
       'name' => 'DeleteSnapshot',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteSnapshotRequest',
       ],
     ],
-    'DeleteSpotDatafeedSubscription' =>
-    [
+    'DeleteSpotDatafeedSubscription' => [
       'name' => 'DeleteSpotDatafeedSubscription',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteSpotDatafeedSubscriptionRequest',
       ],
     ],
-    'DeleteSubnet' =>
-    [
+    'DeleteSubnet' => [
       'name' => 'DeleteSubnet',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteSubnetRequest',
       ],
     ],
-    'DeleteTags' =>
-    [
+    'DeleteTags' => [
       'name' => 'DeleteTags',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteTagsRequest',
       ],
     ],
-    'DeleteVolume' =>
-    [
+    'DeleteVolume' => [
       'name' => 'DeleteVolume',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteVolumeRequest',
       ],
     ],
-    'DeleteVpc' =>
-    [
+    'DeleteVpc' => [
       'name' => 'DeleteVpc',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteVpcRequest',
       ],
     ],
-    'DeleteVpcPeeringConnection' =>
-    [
+    'DeleteVpcPeeringConnection' => [
       'name' => 'DeleteVpcPeeringConnection',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteVpcPeeringConnectionRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteVpcPeeringConnectionResult',
       ],
     ],
-    'DeleteVpnConnection' =>
-    [
+    'DeleteVpnConnection' => [
       'name' => 'DeleteVpnConnection',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteVpnConnectionRequest',
       ],
     ],
-    'DeleteVpnConnectionRoute' =>
-    [
+    'DeleteVpnConnectionRoute' => [
       'name' => 'DeleteVpnConnectionRoute',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteVpnConnectionRouteRequest',
       ],
     ],
-    'DeleteVpnGateway' =>
-    [
+    'DeleteVpnGateway' => [
       'name' => 'DeleteVpnGateway',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteVpnGatewayRequest',
       ],
     ],
-    'DeregisterImage' =>
-    [
+    'DeregisterImage' => [
       'name' => 'DeregisterImage',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeregisterImageRequest',
       ],
     ],
-    'DescribeAccountAttributes' =>
-    [
+    'DescribeAccountAttributes' => [
       'name' => 'DescribeAccountAttributes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeAccountAttributesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeAccountAttributesResult',
       ],
     ],
-    'DescribeAddresses' =>
-    [
+    'DescribeAddresses' => [
       'name' => 'DescribeAddresses',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeAddressesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeAddressesResult',
       ],
     ],
-    'DescribeAvailabilityZones' =>
-    [
+    'DescribeAvailabilityZones' => [
       'name' => 'DescribeAvailabilityZones',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeAvailabilityZonesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeAvailabilityZonesResult',
       ],
     ],
-    'DescribeBundleTasks' =>
-    [
+    'DescribeBundleTasks' => [
       'name' => 'DescribeBundleTasks',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeBundleTasksRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeBundleTasksResult',
       ],
     ],
-    'DescribeConversionTasks' =>
-    [
+    'DescribeConversionTasks' => [
       'name' => 'DescribeConversionTasks',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeConversionTasksRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeConversionTasksResult',
       ],
     ],
-    'DescribeCustomerGateways' =>
-    [
+    'DescribeCustomerGateways' => [
       'name' => 'DescribeCustomerGateways',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeCustomerGatewaysRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeCustomerGatewaysResult',
       ],
     ],
-    'DescribeDhcpOptions' =>
-    [
+    'DescribeDhcpOptions' => [
       'name' => 'DescribeDhcpOptions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeDhcpOptionsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeDhcpOptionsResult',
       ],
     ],
-    'DescribeExportTasks' =>
-    [
+    'DescribeExportTasks' => [
       'name' => 'DescribeExportTasks',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeExportTasksRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeExportTasksResult',
       ],
     ],
-    'DescribeImageAttribute' =>
-    [
+    'DescribeImageAttribute' => [
       'name' => 'DescribeImageAttribute',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeImageAttributeRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ImageAttribute',
         'locationName' => 'imageAttribute',
       ],
     ],
-    'DescribeImages' =>
-    [
+    'DescribeImages' => [
       'name' => 'DescribeImages',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeImagesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeImagesResult',
       ],
     ],
-    'DescribeInstanceAttribute' =>
-    [
+    'DescribeInstanceAttribute' => [
       'name' => 'DescribeInstanceAttribute',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeInstanceAttributeRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'InstanceAttribute',
       ],
     ],
-    'DescribeInstanceStatus' =>
-    [
+    'DescribeInstanceStatus' => [
       'name' => 'DescribeInstanceStatus',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeInstanceStatusRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeInstanceStatusResult',
       ],
     ],
-    'DescribeInstances' =>
-    [
+    'DescribeInstances' => [
       'name' => 'DescribeInstances',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeInstancesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeInstancesResult',
       ],
     ],
-    'DescribeInternetGateways' =>
-    [
+    'DescribeInternetGateways' => [
       'name' => 'DescribeInternetGateways',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeInternetGatewaysRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeInternetGatewaysResult',
       ],
     ],
-    'DescribeKeyPairs' =>
-    [
+    'DescribeKeyPairs' => [
       'name' => 'DescribeKeyPairs',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeKeyPairsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeKeyPairsResult',
       ],
     ],
-    'DescribeNetworkAcls' =>
-    [
+    'DescribeNetworkAcls' => [
       'name' => 'DescribeNetworkAcls',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeNetworkAclsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeNetworkAclsResult',
       ],
     ],
-    'DescribeNetworkInterfaceAttribute' =>
-    [
+    'DescribeNetworkInterfaceAttribute' => [
       'name' => 'DescribeNetworkInterfaceAttribute',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeNetworkInterfaceAttributeRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeNetworkInterfaceAttributeResult',
       ],
     ],
-    'DescribeNetworkInterfaces' =>
-    [
+    'DescribeNetworkInterfaces' => [
       'name' => 'DescribeNetworkInterfaces',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeNetworkInterfacesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeNetworkInterfacesResult',
       ],
     ],
-    'DescribePlacementGroups' =>
-    [
+    'DescribePlacementGroups' => [
       'name' => 'DescribePlacementGroups',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribePlacementGroupsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribePlacementGroupsResult',
       ],
     ],
-    'DescribeRegions' =>
-    [
+    'DescribeRegions' => [
       'name' => 'DescribeRegions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeRegionsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeRegionsResult',
       ],
     ],
-    'DescribeReservedInstances' =>
-    [
+    'DescribeReservedInstances' => [
       'name' => 'DescribeReservedInstances',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeReservedInstancesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeReservedInstancesResult',
       ],
     ],
-    'DescribeReservedInstancesListings' =>
-    [
+    'DescribeReservedInstancesListings' => [
       'name' => 'DescribeReservedInstancesListings',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeReservedInstancesListingsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeReservedInstancesListingsResult',
       ],
     ],
-    'DescribeReservedInstancesModifications' =>
-    [
+    'DescribeReservedInstancesModifications' => [
       'name' => 'DescribeReservedInstancesModifications',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeReservedInstancesModificationsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeReservedInstancesModificationsResult',
       ],
     ],
-    'DescribeReservedInstancesOfferings' =>
-    [
+    'DescribeReservedInstancesOfferings' => [
       'name' => 'DescribeReservedInstancesOfferings',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeReservedInstancesOfferingsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeReservedInstancesOfferingsResult',
       ],
     ],
-    'DescribeRouteTables' =>
-    [
+    'DescribeRouteTables' => [
       'name' => 'DescribeRouteTables',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeRouteTablesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeRouteTablesResult',
       ],
     ],
-    'DescribeSecurityGroups' =>
-    [
+    'DescribeSecurityGroups' => [
       'name' => 'DescribeSecurityGroups',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeSecurityGroupsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeSecurityGroupsResult',
       ],
     ],
-    'DescribeSnapshotAttribute' =>
-    [
+    'DescribeSnapshotAttribute' => [
       'name' => 'DescribeSnapshotAttribute',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeSnapshotAttributeRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeSnapshotAttributeResult',
       ],
     ],
-    'DescribeSnapshots' =>
-    [
+    'DescribeSnapshots' => [
       'name' => 'DescribeSnapshots',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeSnapshotsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeSnapshotsResult',
       ],
     ],
-    'DescribeSpotDatafeedSubscription' =>
-    [
+    'DescribeSpotDatafeedSubscription' => [
       'name' => 'DescribeSpotDatafeedSubscription',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeSpotDatafeedSubscriptionRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeSpotDatafeedSubscriptionResult',
       ],
     ],
-    'DescribeSpotInstanceRequests' =>
-    [
+    'DescribeSpotInstanceRequests' => [
       'name' => 'DescribeSpotInstanceRequests',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeSpotInstanceRequestsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeSpotInstanceRequestsResult',
       ],
     ],
-    'DescribeSpotPriceHistory' =>
-    [
+    'DescribeSpotPriceHistory' => [
       'name' => 'DescribeSpotPriceHistory',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeSpotPriceHistoryRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeSpotPriceHistoryResult',
       ],
     ],
-    'DescribeSubnets' =>
-    [
+    'DescribeSubnets' => [
       'name' => 'DescribeSubnets',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeSubnetsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeSubnetsResult',
       ],
     ],
-    'DescribeTags' =>
-    [
+    'DescribeTags' => [
       'name' => 'DescribeTags',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeTagsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeTagsResult',
       ],
     ],
-    'DescribeVolumeAttribute' =>
-    [
+    'DescribeVolumeAttribute' => [
       'name' => 'DescribeVolumeAttribute',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeVolumeAttributeRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeVolumeAttributeResult',
       ],
     ],
-    'DescribeVolumeStatus' =>
-    [
+    'DescribeVolumeStatus' => [
       'name' => 'DescribeVolumeStatus',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeVolumeStatusRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeVolumeStatusResult',
       ],
     ],
-    'DescribeVolumes' =>
-    [
+    'DescribeVolumes' => [
       'name' => 'DescribeVolumes',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeVolumesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeVolumesResult',
       ],
     ],
-    'DescribeVpcAttribute' =>
-    [
+    'DescribeVpcAttribute' => [
       'name' => 'DescribeVpcAttribute',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeVpcAttributeRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeVpcAttributeResult',
       ],
     ],
-    'DescribeVpcPeeringConnections' =>
-    [
+    'DescribeVpcPeeringConnections' => [
       'name' => 'DescribeVpcPeeringConnections',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeVpcPeeringConnectionsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeVpcPeeringConnectionsResult',
       ],
     ],
-    'DescribeVpcs' =>
-    [
+    'DescribeVpcs' => [
       'name' => 'DescribeVpcs',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeVpcsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeVpcsResult',
       ],
     ],
-    'DescribeVpnConnections' =>
-    [
+    'DescribeVpnConnections' => [
       'name' => 'DescribeVpnConnections',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeVpnConnectionsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeVpnConnectionsResult',
       ],
     ],
-    'DescribeVpnGateways' =>
-    [
+    'DescribeVpnGateways' => [
       'name' => 'DescribeVpnGateways',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeVpnGatewaysRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeVpnGatewaysResult',
       ],
     ],
-    'DetachInternetGateway' =>
-    [
+    'DetachInternetGateway' => [
       'name' => 'DetachInternetGateway',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DetachInternetGatewayRequest',
       ],
     ],
-    'DetachNetworkInterface' =>
-    [
+    'DetachNetworkInterface' => [
       'name' => 'DetachNetworkInterface',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DetachNetworkInterfaceRequest',
       ],
     ],
-    'DetachVolume' =>
-    [
+    'DetachVolume' => [
       'name' => 'DetachVolume',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DetachVolumeRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'VolumeAttachment',
         'locationName' => 'attachment',
       ],
     ],
-    'DetachVpnGateway' =>
-    [
+    'DetachVpnGateway' => [
       'name' => 'DetachVpnGateway',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DetachVpnGatewayRequest',
       ],
     ],
-    'DisableVgwRoutePropagation' =>
-    [
+    'DisableVgwRoutePropagation' => [
       'name' => 'DisableVgwRoutePropagation',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DisableVgwRoutePropagationRequest',
       ],
     ],
-    'DisassociateAddress' =>
-    [
+    'DisassociateAddress' => [
       'name' => 'DisassociateAddress',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DisassociateAddressRequest',
       ],
     ],
-    'DisassociateRouteTable' =>
-    [
+    'DisassociateRouteTable' => [
       'name' => 'DisassociateRouteTable',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DisassociateRouteTableRequest',
       ],
     ],
-    'EnableVgwRoutePropagation' =>
-    [
+    'EnableVgwRoutePropagation' => [
       'name' => 'EnableVgwRoutePropagation',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'EnableVgwRoutePropagationRequest',
       ],
     ],
-    'EnableVolumeIO' =>
-    [
+    'EnableVolumeIO' => [
       'name' => 'EnableVolumeIO',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'EnableVolumeIORequest',
       ],
     ],
-    'GetConsoleOutput' =>
-    [
+    'GetConsoleOutput' => [
       'name' => 'GetConsoleOutput',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetConsoleOutputRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetConsoleOutputResult',
       ],
     ],
-    'GetPasswordData' =>
-    [
+    'GetPasswordData' => [
       'name' => 'GetPasswordData',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetPasswordDataRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetPasswordDataResult',
       ],
     ],
-    'ImportInstance' =>
-    [
+    'ImportInstance' => [
       'name' => 'ImportInstance',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ImportInstanceRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ImportInstanceResult',
       ],
     ],
-    'ImportKeyPair' =>
-    [
+    'ImportKeyPair' => [
       'name' => 'ImportKeyPair',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ImportKeyPairRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ImportKeyPairResult',
       ],
     ],
-    'ImportVolume' =>
-    [
+    'ImportVolume' => [
       'name' => 'ImportVolume',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ImportVolumeRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ImportVolumeResult',
       ],
     ],
-    'ModifyImageAttribute' =>
-    [
+    'ModifyImageAttribute' => [
       'name' => 'ModifyImageAttribute',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ModifyImageAttributeRequest',
       ],
     ],
-    'ModifyInstanceAttribute' =>
-    [
+    'ModifyInstanceAttribute' => [
       'name' => 'ModifyInstanceAttribute',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ModifyInstanceAttributeRequest',
       ],
     ],
-    'ModifyNetworkInterfaceAttribute' =>
-    [
+    'ModifyNetworkInterfaceAttribute' => [
       'name' => 'ModifyNetworkInterfaceAttribute',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ModifyNetworkInterfaceAttributeRequest',
       ],
     ],
-    'ModifyReservedInstances' =>
-    [
+    'ModifyReservedInstances' => [
       'name' => 'ModifyReservedInstances',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ModifyReservedInstancesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ModifyReservedInstancesResult',
       ],
     ],
-    'ModifySnapshotAttribute' =>
-    [
+    'ModifySnapshotAttribute' => [
       'name' => 'ModifySnapshotAttribute',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ModifySnapshotAttributeRequest',
       ],
     ],
-    'ModifySubnetAttribute' =>
-    [
+    'ModifySubnetAttribute' => [
       'name' => 'ModifySubnetAttribute',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ModifySubnetAttributeRequest',
       ],
     ],
-    'ModifyVolumeAttribute' =>
-    [
+    'ModifyVolumeAttribute' => [
       'name' => 'ModifyVolumeAttribute',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ModifyVolumeAttributeRequest',
       ],
     ],
-    'ModifyVpcAttribute' =>
-    [
+    'ModifyVpcAttribute' => [
       'name' => 'ModifyVpcAttribute',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ModifyVpcAttributeRequest',
       ],
     ],
-    'MonitorInstances' =>
-    [
+    'MonitorInstances' => [
       'name' => 'MonitorInstances',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'MonitorInstancesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'MonitorInstancesResult',
       ],
     ],
-    'PurchaseReservedInstancesOffering' =>
-    [
+    'PurchaseReservedInstancesOffering' => [
       'name' => 'PurchaseReservedInstancesOffering',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PurchaseReservedInstancesOfferingRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'PurchaseReservedInstancesOfferingResult',
       ],
     ],
-    'RebootInstances' =>
-    [
+    'RebootInstances' => [
       'name' => 'RebootInstances',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RebootInstancesRequest',
       ],
     ],
-    'RegisterImage' =>
-    [
+    'RegisterImage' => [
       'name' => 'RegisterImage',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RegisterImageRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RegisterImageResult',
       ],
     ],
-    'RejectVpcPeeringConnection' =>
-    [
+    'RejectVpcPeeringConnection' => [
       'name' => 'RejectVpcPeeringConnection',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RejectVpcPeeringConnectionRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RejectVpcPeeringConnectionResult',
       ],
     ],
-    'ReleaseAddress' =>
-    [
+    'ReleaseAddress' => [
       'name' => 'ReleaseAddress',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ReleaseAddressRequest',
       ],
     ],
-    'ReplaceNetworkAclAssociation' =>
-    [
+    'ReplaceNetworkAclAssociation' => [
       'name' => 'ReplaceNetworkAclAssociation',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ReplaceNetworkAclAssociationRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ReplaceNetworkAclAssociationResult',
       ],
     ],
-    'ReplaceNetworkAclEntry' =>
-    [
+    'ReplaceNetworkAclEntry' => [
       'name' => 'ReplaceNetworkAclEntry',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ReplaceNetworkAclEntryRequest',
       ],
     ],
-    'ReplaceRoute' =>
-    [
+    'ReplaceRoute' => [
       'name' => 'ReplaceRoute',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ReplaceRouteRequest',
       ],
     ],
-    'ReplaceRouteTableAssociation' =>
-    [
+    'ReplaceRouteTableAssociation' => [
       'name' => 'ReplaceRouteTableAssociation',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ReplaceRouteTableAssociationRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ReplaceRouteTableAssociationResult',
       ],
     ],
-    'ReportInstanceStatus' =>
-    [
+    'ReportInstanceStatus' => [
       'name' => 'ReportInstanceStatus',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ReportInstanceStatusRequest',
       ],
     ],
-    'RequestSpotInstances' =>
-    [
+    'RequestSpotInstances' => [
       'name' => 'RequestSpotInstances',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RequestSpotInstancesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'RequestSpotInstancesResult',
       ],
     ],
-    'ResetImageAttribute' =>
-    [
+    'ResetImageAttribute' => [
       'name' => 'ResetImageAttribute',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ResetImageAttributeRequest',
       ],
     ],
-    'ResetInstanceAttribute' =>
-    [
+    'ResetInstanceAttribute' => [
       'name' => 'ResetInstanceAttribute',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ResetInstanceAttributeRequest',
       ],
     ],
-    'ResetNetworkInterfaceAttribute' =>
-    [
+    'ResetNetworkInterfaceAttribute' => [
       'name' => 'ResetNetworkInterfaceAttribute',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ResetNetworkInterfaceAttributeRequest',
       ],
     ],
-    'ResetSnapshotAttribute' =>
-    [
+    'ResetSnapshotAttribute' => [
       'name' => 'ResetSnapshotAttribute',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ResetSnapshotAttributeRequest',
       ],
     ],
-    'RevokeSecurityGroupEgress' =>
-    [
+    'RevokeSecurityGroupEgress' => [
       'name' => 'RevokeSecurityGroupEgress',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RevokeSecurityGroupEgressRequest',
       ],
     ],
-    'RevokeSecurityGroupIngress' =>
-    [
+    'RevokeSecurityGroupIngress' => [
       'name' => 'RevokeSecurityGroupIngress',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RevokeSecurityGroupIngressRequest',
       ],
     ],
-    'RunInstances' =>
-    [
+    'RunInstances' => [
       'name' => 'RunInstances',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RunInstancesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'Reservation',
         'locationName' => 'reservation',
       ],
     ],
-    'StartInstances' =>
-    [
+    'StartInstances' => [
       'name' => 'StartInstances',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'StartInstancesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'StartInstancesResult',
       ],
     ],
-    'StopInstances' =>
-    [
+    'StopInstances' => [
       'name' => 'StopInstances',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'StopInstancesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'StopInstancesResult',
       ],
     ],
-    'TerminateInstances' =>
-    [
+    'TerminateInstances' => [
       'name' => 'TerminateInstances',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'TerminateInstancesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'TerminateInstancesResult',
       ],
     ],
-    'UnassignPrivateIpAddresses' =>
-    [
+    'UnassignPrivateIpAddresses' => [
       'name' => 'UnassignPrivateIpAddresses',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UnassignPrivateIpAddressesRequest',
       ],
     ],
-    'UnmonitorInstances' =>
-    [
+    'UnmonitorInstances' => [
       'name' => 'UnmonitorInstances',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UnmonitorInstancesRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UnmonitorInstancesResult',
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'AcceptVpcPeeringConnectionRequest' =>
-    [
+  'shapes' => [
+    'AcceptVpcPeeringConnectionRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VpcPeeringConnectionId' =>
-        [
+        'VpcPeeringConnectionId' => [
           'shape' => 'String',
           'locationName' => 'vpcPeeringConnectionId',
         ],
       ],
     ],
-    'AcceptVpcPeeringConnectionResult' =>
-    [
+    'AcceptVpcPeeringConnectionResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VpcPeeringConnection' =>
-        [
+      'members' => [
+        'VpcPeeringConnection' => [
           'shape' => 'VpcPeeringConnection',
           'locationName' => 'vpcPeeringConnection',
         ],
       ],
     ],
-    'AccountAttribute' =>
-    [
+    'AccountAttribute' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AttributeName' =>
-        [
+      'members' => [
+        'AttributeName' => [
           'shape' => 'String',
           'locationName' => 'attributeName',
         ],
-        'AttributeValues' =>
-        [
+        'AttributeValues' => [
           'shape' => 'AccountAttributeValueList',
           'locationName' => 'attributeValueSet',
         ],
       ],
     ],
-    'AccountAttributeList' =>
-    [
+    'AccountAttributeList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AccountAttribute',
         'locationName' => 'item',
       ],
     ],
-    'AccountAttributeName' =>
-    [
+    'AccountAttributeName' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'supported-platforms',
-        1 => 'default-vpc',
+      'enum' => [
+        'supported-platforms',
+        'default-vpc',
       ],
     ],
-    'AccountAttributeNameStringList' =>
-    [
+    'AccountAttributeNameStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AccountAttributeName',
         'locationName' => 'attributeName',
       ],
     ],
-    'AccountAttributeValue' =>
-    [
+    'AccountAttributeValue' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AttributeValue' =>
-        [
+      'members' => [
+        'AttributeValue' => [
           'shape' => 'String',
           'locationName' => 'attributeValue',
         ],
       ],
     ],
-    'AccountAttributeValueList' =>
-    [
+    'AccountAttributeValueList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AccountAttributeValue',
         'locationName' => 'item',
       ],
     ],
-    'Address' =>
-    [
+    'Address' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'String',
           'locationName' => 'instanceId',
         ],
-        'PublicIp' =>
-        [
+        'PublicIp' => [
           'shape' => 'String',
           'locationName' => 'publicIp',
         ],
-        'AllocationId' =>
-        [
+        'AllocationId' => [
           'shape' => 'String',
           'locationName' => 'allocationId',
         ],
-        'AssociationId' =>
-        [
+        'AssociationId' => [
           'shape' => 'String',
           'locationName' => 'associationId',
         ],
-        'Domain' =>
-        [
+        'Domain' => [
           'shape' => 'DomainType',
           'locationName' => 'domain',
         ],
-        'NetworkInterfaceId' =>
-        [
+        'NetworkInterfaceId' => [
           'shape' => 'String',
           'locationName' => 'networkInterfaceId',
         ],
-        'NetworkInterfaceOwnerId' =>
-        [
+        'NetworkInterfaceOwnerId' => [
           'shape' => 'String',
           'locationName' => 'networkInterfaceOwnerId',
         ],
-        'PrivateIpAddress' =>
-        [
+        'PrivateIpAddress' => [
           'shape' => 'String',
           'locationName' => 'privateIpAddress',
         ],
       ],
     ],
-    'AddressList' =>
-    [
+    'AddressList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Address',
         'locationName' => 'item',
       ],
     ],
-    'AllocateAddressRequest' =>
-    [
+    'AllocateAddressRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'Domain' =>
-        [
+        'Domain' => [
           'shape' => 'DomainType',
         ],
       ],
     ],
-    'AllocateAddressResult' =>
-    [
+    'AllocateAddressResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PublicIp' =>
-        [
+      'members' => [
+        'PublicIp' => [
           'shape' => 'String',
           'locationName' => 'publicIp',
         ],
-        'Domain' =>
-        [
+        'Domain' => [
           'shape' => 'DomainType',
           'locationName' => 'domain',
         ],
-        'AllocationId' =>
-        [
+        'AllocationId' => [
           'shape' => 'String',
           'locationName' => 'allocationId',
         ],
       ],
     ],
-    'AllocationIdList' =>
-    [
+    'AllocationIdList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'AllocationId',
       ],
     ],
-    'ArchitectureValues' =>
-    [
+    'ArchitectureValues' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'i386',
-        1 => 'x86_64',
+      'enum' => [
+        'i386',
+        'x86_64',
       ],
     ],
-    'AssignPrivateIpAddressesRequest' =>
-    [
+    'AssignPrivateIpAddressesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'NetworkInterfaceId',
+      'required' => [
+        'NetworkInterfaceId',
       ],
-      'members' =>
-      [
-        'NetworkInterfaceId' =>
-        [
+      'members' => [
+        'NetworkInterfaceId' => [
           'shape' => 'String',
           'locationName' => 'networkInterfaceId',
         ],
-        'PrivateIpAddresses' =>
-        [
+        'PrivateIpAddresses' => [
           'shape' => 'PrivateIpAddressStringList',
           'locationName' => 'privateIpAddress',
         ],
-        'SecondaryPrivateIpAddressCount' =>
-        [
+        'SecondaryPrivateIpAddressCount' => [
           'shape' => 'Integer',
           'locationName' => 'secondaryPrivateIpAddressCount',
         ],
-        'AllowReassignment' =>
-        [
+        'AllowReassignment' => [
           'shape' => 'Boolean',
           'locationName' => 'allowReassignment',
         ],
       ],
     ],
-    'AssociateAddressRequest' =>
-    [
+    'AssociateAddressRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
         ],
-        'PublicIp' =>
-        [
+        'PublicIp' => [
           'shape' => 'String',
         ],
-        'AllocationId' =>
-        [
+        'AllocationId' => [
           'shape' => 'String',
         ],
-        'NetworkInterfaceId' =>
-        [
+        'NetworkInterfaceId' => [
           'shape' => 'String',
           'locationName' => 'networkInterfaceId',
         ],
-        'PrivateIpAddress' =>
-        [
+        'PrivateIpAddress' => [
           'shape' => 'String',
           'locationName' => 'privateIpAddress',
         ],
-        'AllowReassociation' =>
-        [
+        'AllowReassociation' => [
           'shape' => 'Boolean',
           'locationName' => 'allowReassociation',
         ],
       ],
     ],
-    'AssociateAddressResult' =>
-    [
+    'AssociateAddressResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AssociationId' =>
-        [
+      'members' => [
+        'AssociationId' => [
           'shape' => 'String',
           'locationName' => 'associationId',
         ],
       ],
     ],
-    'AssociateDhcpOptionsRequest' =>
-    [
+    'AssociateDhcpOptionsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DhcpOptionsId',
-        1 => 'VpcId',
+      'required' => [
+        'DhcpOptionsId',
+        'VpcId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'DhcpOptionsId' =>
-        [
+        'DhcpOptionsId' => [
           'shape' => 'String',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'AssociateRouteTableRequest' =>
-    [
+    'AssociateRouteTableRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SubnetId',
-        1 => 'RouteTableId',
+      'required' => [
+        'SubnetId',
+        'RouteTableId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'SubnetId' =>
-        [
+        'SubnetId' => [
           'shape' => 'String',
           'locationName' => 'subnetId',
         ],
-        'RouteTableId' =>
-        [
+        'RouteTableId' => [
           'shape' => 'String',
           'locationName' => 'routeTableId',
         ],
       ],
     ],
-    'AssociateRouteTableResult' =>
-    [
+    'AssociateRouteTableResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AssociationId' =>
-        [
+      'members' => [
+        'AssociationId' => [
           'shape' => 'String',
           'locationName' => 'associationId',
         ],
       ],
     ],
-    'AttachInternetGatewayRequest' =>
-    [
+    'AttachInternetGatewayRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InternetGatewayId',
-        1 => 'VpcId',
+      'required' => [
+        'InternetGatewayId',
+        'VpcId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'InternetGatewayId' =>
-        [
+        'InternetGatewayId' => [
           'shape' => 'String',
           'locationName' => 'internetGatewayId',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
           'locationName' => 'vpcId',
         ],
       ],
     ],
-    'AttachNetworkInterfaceRequest' =>
-    [
+    'AttachNetworkInterfaceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'NetworkInterfaceId',
-        1 => 'InstanceId',
-        2 => 'DeviceIndex',
+      'required' => [
+        'NetworkInterfaceId',
+        'InstanceId',
+        'DeviceIndex',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'NetworkInterfaceId' =>
-        [
+        'NetworkInterfaceId' => [
           'shape' => 'String',
           'locationName' => 'networkInterfaceId',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
           'locationName' => 'instanceId',
         ],
-        'DeviceIndex' =>
-        [
+        'DeviceIndex' => [
           'shape' => 'Integer',
           'locationName' => 'deviceIndex',
         ],
       ],
     ],
-    'AttachNetworkInterfaceResult' =>
-    [
+    'AttachNetworkInterfaceResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AttachmentId' =>
-        [
+      'members' => [
+        'AttachmentId' => [
           'shape' => 'String',
           'locationName' => 'attachmentId',
         ],
       ],
     ],
-    'AttachVolumeRequest' =>
-    [
+    'AttachVolumeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VolumeId',
-        1 => 'InstanceId',
-        2 => 'Device',
+      'required' => [
+        'VolumeId',
+        'InstanceId',
+        'Device',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VolumeId' =>
-        [
+        'VolumeId' => [
           'shape' => 'String',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
         ],
-        'Device' =>
-        [
+        'Device' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'AttachVpnGatewayRequest' =>
-    [
+    'AttachVpnGatewayRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VpnGatewayId',
-        1 => 'VpcId',
+      'required' => [
+        'VpnGatewayId',
+        'VpcId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VpnGatewayId' =>
-        [
+        'VpnGatewayId' => [
           'shape' => 'String',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'AttachVpnGatewayResult' =>
-    [
+    'AttachVpnGatewayResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VpcAttachment' =>
-        [
+      'members' => [
+        'VpcAttachment' => [
           'shape' => 'VpcAttachment',
           'locationName' => 'attachment',
         ],
       ],
     ],
-    'AttachmentStatus' =>
-    [
+    'AttachmentStatus' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'attaching',
-        1 => 'attached',
-        2 => 'detaching',
-        3 => 'detached',
+      'enum' => [
+        'attaching',
+        'attached',
+        'detaching',
+        'detached',
       ],
     ],
-    'AttributeBooleanValue' =>
-    [
+    'AttributeBooleanValue' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Value' =>
-        [
+      'members' => [
+        'Value' => [
           'shape' => 'Boolean',
           'locationName' => 'value',
         ],
       ],
     ],
-    'AttributeValue' =>
-    [
+    'AttributeValue' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Value' =>
-        [
+      'members' => [
+        'Value' => [
           'shape' => 'String',
           'locationName' => 'value',
         ],
       ],
     ],
-    'AuthorizeSecurityGroupEgressRequest' =>
-    [
+    'AuthorizeSecurityGroupEgressRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GroupId',
+      'required' => [
+        'GroupId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'GroupId' =>
-        [
+        'GroupId' => [
           'shape' => 'String',
           'locationName' => 'groupId',
         ],
-        'SourceSecurityGroupName' =>
-        [
+        'SourceSecurityGroupName' => [
           'shape' => 'String',
           'locationName' => 'sourceSecurityGroupName',
         ],
-        'SourceSecurityGroupOwnerId' =>
-        [
+        'SourceSecurityGroupOwnerId' => [
           'shape' => 'String',
           'locationName' => 'sourceSecurityGroupOwnerId',
         ],
-        'IpProtocol' =>
-        [
+        'IpProtocol' => [
           'shape' => 'String',
           'locationName' => 'ipProtocol',
         ],
-        'FromPort' =>
-        [
+        'FromPort' => [
           'shape' => 'Integer',
           'locationName' => 'fromPort',
         ],
-        'ToPort' =>
-        [
+        'ToPort' => [
           'shape' => 'Integer',
           'locationName' => 'toPort',
         ],
-        'CidrIp' =>
-        [
+        'CidrIp' => [
           'shape' => 'String',
           'locationName' => 'cidrIp',
         ],
-        'IpPermissions' =>
-        [
+        'IpPermissions' => [
           'shape' => 'IpPermissionList',
           'locationName' => 'ipPermissions',
         ],
       ],
     ],
-    'AuthorizeSecurityGroupIngressRequest' =>
-    [
+    'AuthorizeSecurityGroupIngressRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'GroupName' =>
-        [
+        'GroupName' => [
           'shape' => 'String',
         ],
-        'GroupId' =>
-        [
+        'GroupId' => [
           'shape' => 'String',
         ],
-        'SourceSecurityGroupName' =>
-        [
+        'SourceSecurityGroupName' => [
           'shape' => 'String',
         ],
-        'SourceSecurityGroupOwnerId' =>
-        [
+        'SourceSecurityGroupOwnerId' => [
           'shape' => 'String',
         ],
-        'IpProtocol' =>
-        [
+        'IpProtocol' => [
           'shape' => 'String',
         ],
-        'FromPort' =>
-        [
+        'FromPort' => [
           'shape' => 'Integer',
         ],
-        'ToPort' =>
-        [
+        'ToPort' => [
           'shape' => 'Integer',
         ],
-        'CidrIp' =>
-        [
+        'CidrIp' => [
           'shape' => 'String',
         ],
-        'IpPermissions' =>
-        [
+        'IpPermissions' => [
           'shape' => 'IpPermissionList',
         ],
       ],
     ],
-    'AvailabilityZone' =>
-    [
+    'AvailabilityZone' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ZoneName' =>
-        [
+      'members' => [
+        'ZoneName' => [
           'shape' => 'String',
           'locationName' => 'zoneName',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'AvailabilityZoneState',
           'locationName' => 'zoneState',
         ],
-        'RegionName' =>
-        [
+        'RegionName' => [
           'shape' => 'String',
           'locationName' => 'regionName',
         ],
-        'Messages' =>
-        [
+        'Messages' => [
           'shape' => 'AvailabilityZoneMessageList',
           'locationName' => 'messageSet',
         ],
       ],
     ],
-    'AvailabilityZoneList' =>
-    [
+    'AvailabilityZoneList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AvailabilityZone',
         'locationName' => 'item',
       ],
     ],
-    'AvailabilityZoneMessage' =>
-    [
+    'AvailabilityZoneMessage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Message' =>
-        [
+      'members' => [
+        'Message' => [
           'shape' => 'String',
           'locationName' => 'message',
         ],
       ],
     ],
-    'AvailabilityZoneMessageList' =>
-    [
+    'AvailabilityZoneMessageList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AvailabilityZoneMessage',
         'locationName' => 'item',
       ],
     ],
-    'AvailabilityZoneState' =>
-    [
+    'AvailabilityZoneState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'available',
+      'enum' => [
+        'available',
       ],
     ],
-    'BlockDeviceMapping' =>
-    [
+    'BlockDeviceMapping' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VirtualName' =>
-        [
+      'members' => [
+        'VirtualName' => [
           'shape' => 'String',
           'locationName' => 'virtualName',
         ],
-        'DeviceName' =>
-        [
+        'DeviceName' => [
           'shape' => 'String',
           'locationName' => 'deviceName',
         ],
-        'Ebs' =>
-        [
+        'Ebs' => [
           'shape' => 'EbsBlockDevice',
           'locationName' => 'ebs',
         ],
-        'NoDevice' =>
-        [
+        'NoDevice' => [
           'shape' => 'String',
           'locationName' => 'noDevice',
         ],
       ],
     ],
-    'BlockDeviceMappingList' =>
-    [
+    'BlockDeviceMappingList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'BlockDeviceMapping',
         'locationName' => 'item',
       ],
     ],
-    'BlockDeviceMappingRequestList' =>
-    [
+    'BlockDeviceMappingRequestList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'BlockDeviceMapping',
         'locationName' => 'BlockDeviceMapping',
       ],
     ],
-    'Boolean' =>
-    [
+    'Boolean' => [
       'type' => 'boolean',
     ],
-    'BundleIdStringList' =>
-    [
+    'BundleIdStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'BundleId',
       ],
     ],
-    'BundleInstanceRequest' =>
-    [
+    'BundleInstanceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceId',
-        1 => 'Storage',
+      'required' => [
+        'InstanceId',
+        'Storage',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
         ],
-        'Storage' =>
-        [
+        'Storage' => [
           'shape' => 'Storage',
         ],
       ],
     ],
-    'BundleInstanceResult' =>
-    [
+    'BundleInstanceResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'BundleTask' =>
-        [
+      'members' => [
+        'BundleTask' => [
           'shape' => 'BundleTask',
           'locationName' => 'bundleInstanceTask',
         ],
       ],
     ],
-    'BundleTask' =>
-    [
+    'BundleTask' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'String',
           'locationName' => 'instanceId',
         ],
-        'BundleId' =>
-        [
+        'BundleId' => [
           'shape' => 'String',
           'locationName' => 'bundleId',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'BundleTaskState',
           'locationName' => 'state',
         ],
-        'StartTime' =>
-        [
+        'StartTime' => [
           'shape' => 'DateTime',
           'locationName' => 'startTime',
         ],
-        'UpdateTime' =>
-        [
+        'UpdateTime' => [
           'shape' => 'DateTime',
           'locationName' => 'updateTime',
         ],
-        'Storage' =>
-        [
+        'Storage' => [
           'shape' => 'Storage',
           'locationName' => 'storage',
         ],
-        'Progress' =>
-        [
+        'Progress' => [
           'shape' => 'String',
           'locationName' => 'progress',
         ],
-        'BundleTaskError' =>
-        [
+        'BundleTaskError' => [
           'shape' => 'BundleTaskError',
           'locationName' => 'error',
         ],
       ],
     ],
-    'BundleTaskError' =>
-    [
+    'BundleTaskError' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Code' =>
-        [
+      'members' => [
+        'Code' => [
           'shape' => 'String',
           'locationName' => 'code',
         ],
-        'Message' =>
-        [
+        'Message' => [
           'shape' => 'String',
           'locationName' => 'message',
         ],
       ],
     ],
-    'BundleTaskList' =>
-    [
+    'BundleTaskList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'BundleTask',
         'locationName' => 'item',
       ],
     ],
-    'BundleTaskState' =>
-    [
+    'BundleTaskState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'pending',
-        1 => 'waiting-for-shutdown',
-        2 => 'bundling',
-        3 => 'storing',
-        4 => 'cancelling',
-        5 => 'complete',
-        6 => 'failed',
+      'enum' => [
+        'pending',
+        'waiting-for-shutdown',
+        'bundling',
+        'storing',
+        'cancelling',
+        'complete',
+        'failed',
       ],
     ],
-    'CancelBundleTaskRequest' =>
-    [
+    'CancelBundleTaskRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'BundleId',
+      'required' => [
+        'BundleId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'BundleId' =>
-        [
+        'BundleId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CancelBundleTaskResult' =>
-    [
+    'CancelBundleTaskResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'BundleTask' =>
-        [
+      'members' => [
+        'BundleTask' => [
           'shape' => 'BundleTask',
           'locationName' => 'bundleInstanceTask',
         ],
       ],
     ],
-    'CancelConversionRequest' =>
-    [
+    'CancelConversionRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ConversionTaskId',
+      'required' => [
+        'ConversionTaskId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'ConversionTaskId' =>
-        [
+        'ConversionTaskId' => [
           'shape' => 'String',
           'locationName' => 'conversionTaskId',
         ],
-        'ReasonMessage' =>
-        [
+        'ReasonMessage' => [
           'shape' => 'String',
           'locationName' => 'reasonMessage',
         ],
       ],
     ],
-    'CancelExportTaskRequest' =>
-    [
+    'CancelExportTaskRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ExportTaskId',
+      'required' => [
+        'ExportTaskId',
       ],
-      'members' =>
-      [
-        'ExportTaskId' =>
-        [
+      'members' => [
+        'ExportTaskId' => [
           'shape' => 'String',
           'locationName' => 'exportTaskId',
         ],
       ],
     ],
-    'CancelReservedInstancesListingRequest' =>
-    [
+    'CancelReservedInstancesListingRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ReservedInstancesListingId',
+      'required' => [
+        'ReservedInstancesListingId',
       ],
-      'members' =>
-      [
-        'ReservedInstancesListingId' =>
-        [
+      'members' => [
+        'ReservedInstancesListingId' => [
           'shape' => 'String',
           'locationName' => 'reservedInstancesListingId',
         ],
       ],
     ],
-    'CancelReservedInstancesListingResult' =>
-    [
+    'CancelReservedInstancesListingResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedInstancesListings' =>
-        [
+      'members' => [
+        'ReservedInstancesListings' => [
           'shape' => 'ReservedInstancesListingList',
           'locationName' => 'reservedInstancesListingsSet',
         ],
       ],
     ],
-    'CancelSpotInstanceRequestState' =>
-    [
+    'CancelSpotInstanceRequestState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'active',
-        1 => 'open',
-        2 => 'closed',
-        3 => 'cancelled',
-        4 => 'completed',
+      'enum' => [
+        'active',
+        'open',
+        'closed',
+        'cancelled',
+        'completed',
       ],
     ],
-    'CancelSpotInstanceRequestsRequest' =>
-    [
+    'CancelSpotInstanceRequestsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SpotInstanceRequestIds',
+      'required' => [
+        'SpotInstanceRequestIds',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'SpotInstanceRequestIds' =>
-        [
+        'SpotInstanceRequestIds' => [
           'shape' => 'SpotInstanceRequestIdList',
           'locationName' => 'SpotInstanceRequestId',
         ],
       ],
     ],
-    'CancelSpotInstanceRequestsResult' =>
-    [
+    'CancelSpotInstanceRequestsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CancelledSpotInstanceRequests' =>
-        [
+      'members' => [
+        'CancelledSpotInstanceRequests' => [
           'shape' => 'CancelledSpotInstanceRequestList',
           'locationName' => 'spotInstanceRequestSet',
         ],
       ],
     ],
-    'CancelledSpotInstanceRequest' =>
-    [
+    'CancelledSpotInstanceRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SpotInstanceRequestId' =>
-        [
+      'members' => [
+        'SpotInstanceRequestId' => [
           'shape' => 'String',
           'locationName' => 'spotInstanceRequestId',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'CancelSpotInstanceRequestState',
           'locationName' => 'state',
         ],
       ],
     ],
-    'CancelledSpotInstanceRequestList' =>
-    [
+    'CancelledSpotInstanceRequestList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CancelledSpotInstanceRequest',
         'locationName' => 'item',
       ],
     ],
-    'ConfirmProductInstanceRequest' =>
-    [
+    'ConfirmProductInstanceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ProductCode',
-        1 => 'InstanceId',
+      'required' => [
+        'ProductCode',
+        'InstanceId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'ProductCode' =>
-        [
+        'ProductCode' => [
           'shape' => 'String',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ConfirmProductInstanceResult' =>
-    [
+    'ConfirmProductInstanceResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'OwnerId' =>
-        [
+      'members' => [
+        'OwnerId' => [
           'shape' => 'String',
           'locationName' => 'ownerId',
         ],
       ],
     ],
-    'ContainerFormat' =>
-    [
+    'ContainerFormat' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'ova',
+      'enum' => [
+        'ova',
       ],
     ],
-    'ConversionIdStringList' =>
-    [
+    'ConversionIdStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'item',
       ],
     ],
-    'ConversionTask' =>
-    [
+    'ConversionTask' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ConversionTaskId',
-        1 => 'State',
+      'required' => [
+        'ConversionTaskId',
+        'State',
       ],
-      'members' =>
-      [
-        'ConversionTaskId' =>
-        [
+      'members' => [
+        'ConversionTaskId' => [
           'shape' => 'String',
           'locationName' => 'conversionTaskId',
         ],
-        'ExpirationTime' =>
-        [
+        'ExpirationTime' => [
           'shape' => 'String',
           'locationName' => 'expirationTime',
         ],
-        'ImportInstance' =>
-        [
+        'ImportInstance' => [
           'shape' => 'ImportInstanceTaskDetails',
           'locationName' => 'importInstance',
         ],
-        'ImportVolume' =>
-        [
+        'ImportVolume' => [
           'shape' => 'ImportVolumeTaskDetails',
           'locationName' => 'importVolume',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'ConversionTaskState',
           'locationName' => 'state',
         ],
-        'StatusMessage' =>
-        [
+        'StatusMessage' => [
           'shape' => 'String',
           'locationName' => 'statusMessage',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
           'locationName' => 'tagSet',
         ],
       ],
     ],
-    'ConversionTaskState' =>
-    [
+    'ConversionTaskState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'active',
-        1 => 'cancelling',
-        2 => 'cancelled',
-        3 => 'completed',
+      'enum' => [
+        'active',
+        'cancelling',
+        'cancelled',
+        'completed',
       ],
     ],
-    'CopyImageRequest' =>
-    [
+    'CopyImageRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SourceRegion',
-        1 => 'SourceImageId',
-        2 => 'Name',
+      'required' => [
+        'SourceRegion',
+        'SourceImageId',
+        'Name',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'SourceRegion' =>
-        [
+        'SourceRegion' => [
           'shape' => 'String',
         ],
-        'SourceImageId' =>
-        [
+        'SourceImageId' => [
           'shape' => 'String',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
-        'ClientToken' =>
-        [
+        'ClientToken' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CopyImageResult' =>
-    [
+    'CopyImageResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ImageId' =>
-        [
+      'members' => [
+        'ImageId' => [
           'shape' => 'String',
           'locationName' => 'imageId',
         ],
       ],
     ],
-    'CopySnapshotRequest' =>
-    [
+    'CopySnapshotRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SourceRegion',
-        1 => 'SourceSnapshotId',
+      'required' => [
+        'SourceRegion',
+        'SourceSnapshotId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'SourceRegion' =>
-        [
+        'SourceRegion' => [
           'shape' => 'String',
         ],
-        'SourceSnapshotId' =>
-        [
+        'SourceSnapshotId' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
-        'DestinationRegion' =>
-        [
+        'DestinationRegion' => [
           'shape' => 'String',
           'locationName' => 'destinationRegion',
         ],
-        'PresignedUrl' =>
-        [
+        'PresignedUrl' => [
           'shape' => 'String',
           'locationName' => 'presignedUrl',
         ],
       ],
     ],
-    'CopySnapshotResult' =>
-    [
+    'CopySnapshotResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SnapshotId' =>
-        [
+      'members' => [
+        'SnapshotId' => [
           'shape' => 'String',
           'locationName' => 'snapshotId',
         ],
       ],
     ],
-    'CreateCustomerGatewayRequest' =>
-    [
+    'CreateCustomerGatewayRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Type',
-        1 => 'PublicIp',
-        2 => 'BgpAsn',
+      'required' => [
+        'Type',
+        'PublicIp',
+        'BgpAsn',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'Type' =>
-        [
+        'Type' => [
           'shape' => 'GatewayType',
         ],
-        'PublicIp' =>
-        [
+        'PublicIp' => [
           'shape' => 'String',
           'locationName' => 'IpAddress',
         ],
-        'BgpAsn' =>
-        [
+        'BgpAsn' => [
           'shape' => 'Integer',
         ],
       ],
     ],
-    'CreateCustomerGatewayResult' =>
-    [
+    'CreateCustomerGatewayResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CustomerGateway' =>
-        [
+      'members' => [
+        'CustomerGateway' => [
           'shape' => 'CustomerGateway',
           'locationName' => 'customerGateway',
         ],
       ],
     ],
-    'CreateDhcpOptionsRequest' =>
-    [
+    'CreateDhcpOptionsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DhcpConfigurations',
+      'required' => [
+        'DhcpConfigurations',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'DhcpConfigurations' =>
-        [
+        'DhcpConfigurations' => [
           'shape' => 'NewDhcpConfigurationList',
           'locationName' => 'dhcpConfiguration',
         ],
       ],
     ],
-    'CreateDhcpOptionsResult' =>
-    [
+    'CreateDhcpOptionsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DhcpOptions' =>
-        [
+      'members' => [
+        'DhcpOptions' => [
           'shape' => 'DhcpOptions',
           'locationName' => 'dhcpOptions',
         ],
       ],
     ],
-    'CreateImageRequest' =>
-    [
+    'CreateImageRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceId',
-        1 => 'Name',
+      'required' => [
+        'InstanceId',
+        'Name',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
           'locationName' => 'instanceId',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
           'locationName' => 'name',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
           'locationName' => 'description',
         ],
-        'NoReboot' =>
-        [
+        'NoReboot' => [
           'shape' => 'Boolean',
           'locationName' => 'noReboot',
         ],
-        'BlockDeviceMappings' =>
-        [
+        'BlockDeviceMappings' => [
           'shape' => 'BlockDeviceMappingRequestList',
           'locationName' => 'blockDeviceMapping',
         ],
       ],
     ],
-    'CreateImageResult' =>
-    [
+    'CreateImageResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ImageId' =>
-        [
+      'members' => [
+        'ImageId' => [
           'shape' => 'String',
           'locationName' => 'imageId',
         ],
       ],
     ],
-    'CreateInstanceExportTaskRequest' =>
-    [
+    'CreateInstanceExportTaskRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceId',
+      'required' => [
+        'InstanceId',
       ],
-      'members' =>
-      [
-        'Description' =>
-        [
+      'members' => [
+        'Description' => [
           'shape' => 'String',
           'locationName' => 'description',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
           'locationName' => 'instanceId',
         ],
-        'TargetEnvironment' =>
-        [
+        'TargetEnvironment' => [
           'shape' => 'ExportEnvironment',
           'locationName' => 'targetEnvironment',
         ],
-        'ExportToS3Task' =>
-        [
+        'ExportToS3Task' => [
           'shape' => 'ExportToS3TaskSpecification',
           'locationName' => 'exportToS3',
         ],
       ],
     ],
-    'CreateInstanceExportTaskResult' =>
-    [
+    'CreateInstanceExportTaskResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ExportTask' =>
-        [
+      'members' => [
+        'ExportTask' => [
           'shape' => 'ExportTask',
           'locationName' => 'exportTask',
         ],
       ],
     ],
-    'CreateInternetGatewayRequest' =>
-    [
+    'CreateInternetGatewayRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
       ],
     ],
-    'CreateInternetGatewayResult' =>
-    [
+    'CreateInternetGatewayResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InternetGateway' =>
-        [
+      'members' => [
+        'InternetGateway' => [
           'shape' => 'InternetGateway',
           'locationName' => 'internetGateway',
         ],
       ],
     ],
-    'CreateKeyPairRequest' =>
-    [
+    'CreateKeyPairRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'KeyName',
+      'required' => [
+        'KeyName',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'KeyName' =>
-        [
+        'KeyName' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreateNetworkAclEntryRequest' =>
-    [
+    'CreateNetworkAclEntryRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'NetworkAclId',
-        1 => 'RuleNumber',
-        2 => 'Protocol',
-        3 => 'RuleAction',
-        4 => 'Egress',
-        5 => 'CidrBlock',
+      'required' => [
+        'NetworkAclId',
+        'RuleNumber',
+        'Protocol',
+        'RuleAction',
+        'Egress',
+        'CidrBlock',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'NetworkAclId' =>
-        [
+        'NetworkAclId' => [
           'shape' => 'String',
           'locationName' => 'networkAclId',
         ],
-        'RuleNumber' =>
-        [
+        'RuleNumber' => [
           'shape' => 'Integer',
           'locationName' => 'ruleNumber',
         ],
-        'Protocol' =>
-        [
+        'Protocol' => [
           'shape' => 'String',
           'locationName' => 'protocol',
         ],
-        'RuleAction' =>
-        [
+        'RuleAction' => [
           'shape' => 'RuleAction',
           'locationName' => 'ruleAction',
         ],
-        'Egress' =>
-        [
+        'Egress' => [
           'shape' => 'Boolean',
           'locationName' => 'egress',
         ],
-        'CidrBlock' =>
-        [
+        'CidrBlock' => [
           'shape' => 'String',
           'locationName' => 'cidrBlock',
         ],
-        'IcmpTypeCode' =>
-        [
+        'IcmpTypeCode' => [
           'shape' => 'IcmpTypeCode',
           'locationName' => 'Icmp',
         ],
-        'PortRange' =>
-        [
+        'PortRange' => [
           'shape' => 'PortRange',
           'locationName' => 'portRange',
         ],
       ],
     ],
-    'CreateNetworkAclRequest' =>
-    [
+    'CreateNetworkAclRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VpcId',
+      'required' => [
+        'VpcId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
           'locationName' => 'vpcId',
         ],
       ],
     ],
-    'CreateNetworkAclResult' =>
-    [
+    'CreateNetworkAclResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'NetworkAcl' =>
-        [
+      'members' => [
+        'NetworkAcl' => [
           'shape' => 'NetworkAcl',
           'locationName' => 'networkAcl',
         ],
       ],
     ],
-    'CreateNetworkInterfaceRequest' =>
-    [
+    'CreateNetworkInterfaceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SubnetId',
+      'required' => [
+        'SubnetId',
       ],
-      'members' =>
-      [
-        'SubnetId' =>
-        [
+      'members' => [
+        'SubnetId' => [
           'shape' => 'String',
           'locationName' => 'subnetId',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
           'locationName' => 'description',
         ],
-        'PrivateIpAddress' =>
-        [
+        'PrivateIpAddress' => [
           'shape' => 'String',
           'locationName' => 'privateIpAddress',
         ],
-        'Groups' =>
-        [
+        'Groups' => [
           'shape' => 'SecurityGroupIdStringList',
           'locationName' => 'SecurityGroupId',
         ],
-        'PrivateIpAddresses' =>
-        [
+        'PrivateIpAddresses' => [
           'shape' => 'PrivateIpAddressSpecificationList',
           'locationName' => 'privateIpAddresses',
         ],
-        'SecondaryPrivateIpAddressCount' =>
-        [
+        'SecondaryPrivateIpAddressCount' => [
           'shape' => 'Integer',
           'locationName' => 'secondaryPrivateIpAddressCount',
         ],
-        'DryRun' =>
-        [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
       ],
     ],
-    'CreateNetworkInterfaceResult' =>
-    [
+    'CreateNetworkInterfaceResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'NetworkInterface' =>
-        [
+      'members' => [
+        'NetworkInterface' => [
           'shape' => 'NetworkInterface',
           'locationName' => 'networkInterface',
         ],
       ],
     ],
-    'CreatePlacementGroupRequest' =>
-    [
+    'CreatePlacementGroupRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GroupName',
-        1 => 'Strategy',
+      'required' => [
+        'GroupName',
+        'Strategy',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'GroupName' =>
-        [
+        'GroupName' => [
           'shape' => 'String',
           'locationName' => 'groupName',
         ],
-        'Strategy' =>
-        [
+        'Strategy' => [
           'shape' => 'PlacementStrategy',
           'locationName' => 'strategy',
         ],
       ],
     ],
-    'CreateReservedInstancesListingRequest' =>
-    [
+    'CreateReservedInstancesListingRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ReservedInstancesId',
-        1 => 'InstanceCount',
-        2 => 'PriceSchedules',
-        3 => 'ClientToken',
+      'required' => [
+        'ReservedInstancesId',
+        'InstanceCount',
+        'PriceSchedules',
+        'ClientToken',
       ],
-      'members' =>
-      [
-        'ReservedInstancesId' =>
-        [
+      'members' => [
+        'ReservedInstancesId' => [
           'shape' => 'String',
           'locationName' => 'reservedInstancesId',
         ],
-        'InstanceCount' =>
-        [
+        'InstanceCount' => [
           'shape' => 'Integer',
           'locationName' => 'instanceCount',
         ],
-        'PriceSchedules' =>
-        [
+        'PriceSchedules' => [
           'shape' => 'PriceScheduleSpecificationList',
           'locationName' => 'priceSchedules',
         ],
-        'ClientToken' =>
-        [
+        'ClientToken' => [
           'shape' => 'String',
           'locationName' => 'clientToken',
         ],
       ],
     ],
-    'CreateReservedInstancesListingResult' =>
-    [
+    'CreateReservedInstancesListingResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedInstancesListings' =>
-        [
+      'members' => [
+        'ReservedInstancesListings' => [
           'shape' => 'ReservedInstancesListingList',
           'locationName' => 'reservedInstancesListingsSet',
         ],
       ],
     ],
-    'CreateRouteRequest' =>
-    [
+    'CreateRouteRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RouteTableId',
-        1 => 'DestinationCidrBlock',
+      'required' => [
+        'RouteTableId',
+        'DestinationCidrBlock',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'RouteTableId' =>
-        [
+        'RouteTableId' => [
           'shape' => 'String',
           'locationName' => 'routeTableId',
         ],
-        'DestinationCidrBlock' =>
-        [
+        'DestinationCidrBlock' => [
           'shape' => 'String',
           'locationName' => 'destinationCidrBlock',
         ],
-        'GatewayId' =>
-        [
+        'GatewayId' => [
           'shape' => 'String',
           'locationName' => 'gatewayId',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
           'locationName' => 'instanceId',
         ],
-        'NetworkInterfaceId' =>
-        [
+        'NetworkInterfaceId' => [
           'shape' => 'String',
           'locationName' => 'networkInterfaceId',
         ],
-        'VpcPeeringConnectionId' =>
-        [
+        'VpcPeeringConnectionId' => [
           'shape' => 'String',
           'locationName' => 'vpcPeeringConnectionId',
         ],
       ],
     ],
-    'CreateRouteTableRequest' =>
-    [
+    'CreateRouteTableRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VpcId',
+      'required' => [
+        'VpcId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
           'locationName' => 'vpcId',
         ],
       ],
     ],
-    'CreateRouteTableResult' =>
-    [
+    'CreateRouteTableResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'RouteTable' =>
-        [
+      'members' => [
+        'RouteTable' => [
           'shape' => 'RouteTable',
           'locationName' => 'routeTable',
         ],
       ],
     ],
-    'CreateSecurityGroupRequest' =>
-    [
+    'CreateSecurityGroupRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GroupName',
-        1 => 'Description',
+      'required' => [
+        'GroupName',
+        'Description',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'GroupName' =>
-        [
+        'GroupName' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
           'locationName' => 'GroupDescription',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreateSecurityGroupResult' =>
-    [
+    'CreateSecurityGroupResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GroupId' =>
-        [
+      'members' => [
+        'GroupId' => [
           'shape' => 'String',
           'locationName' => 'groupId',
         ],
       ],
     ],
-    'CreateSnapshotRequest' =>
-    [
+    'CreateSnapshotRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VolumeId',
+      'required' => [
+        'VolumeId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VolumeId' =>
-        [
+        'VolumeId' => [
           'shape' => 'String',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreateSpotDatafeedSubscriptionRequest' =>
-    [
+    'CreateSpotDatafeedSubscriptionRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'Bucket' =>
-        [
+        'Bucket' => [
           'shape' => 'String',
           'locationName' => 'bucket',
         ],
-        'Prefix' =>
-        [
+        'Prefix' => [
           'shape' => 'String',
           'locationName' => 'prefix',
         ],
       ],
     ],
-    'CreateSpotDatafeedSubscriptionResult' =>
-    [
+    'CreateSpotDatafeedSubscriptionResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SpotDatafeedSubscription' =>
-        [
+      'members' => [
+        'SpotDatafeedSubscription' => [
           'shape' => 'SpotDatafeedSubscription',
           'locationName' => 'spotDatafeedSubscription',
         ],
       ],
     ],
-    'CreateSubnetRequest' =>
-    [
+    'CreateSubnetRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VpcId',
-        1 => 'CidrBlock',
+      'required' => [
+        'VpcId',
+        'CidrBlock',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
         ],
-        'CidrBlock' =>
-        [
+        'CidrBlock' => [
           'shape' => 'String',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreateSubnetResult' =>
-    [
+    'CreateSubnetResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Subnet' =>
-        [
+      'members' => [
+        'Subnet' => [
           'shape' => 'Subnet',
           'locationName' => 'subnet',
         ],
       ],
     ],
-    'CreateTagsRequest' =>
-    [
+    'CreateTagsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Resources',
-        1 => 'Tags',
+      'required' => [
+        'Resources',
+        'Tags',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'Resources' =>
-        [
+        'Resources' => [
           'shape' => 'ResourceIdList',
           'locationName' => 'ResourceId',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
           'locationName' => 'Tag',
         ],
       ],
     ],
-    'CreateVolumePermission' =>
-    [
+    'CreateVolumePermission' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'UserId' =>
-        [
+      'members' => [
+        'UserId' => [
           'shape' => 'String',
           'locationName' => 'userId',
         ],
-        'Group' =>
-        [
+        'Group' => [
           'shape' => 'PermissionGroup',
           'locationName' => 'group',
         ],
       ],
     ],
-    'CreateVolumePermissionList' =>
-    [
+    'CreateVolumePermissionList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CreateVolumePermission',
         'locationName' => 'item',
       ],
     ],
-    'CreateVolumePermissionModifications' =>
-    [
+    'CreateVolumePermissionModifications' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Add' =>
-        [
+      'members' => [
+        'Add' => [
           'shape' => 'CreateVolumePermissionList',
         ],
-        'Remove' =>
-        [
+        'Remove' => [
           'shape' => 'CreateVolumePermissionList',
         ],
       ],
     ],
-    'CreateVolumeRequest' =>
-    [
+    'CreateVolumeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AvailabilityZone',
+      'required' => [
+        'AvailabilityZone',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'Size' =>
-        [
+        'Size' => [
           'shape' => 'Integer',
         ],
-        'SnapshotId' =>
-        [
+        'SnapshotId' => [
           'shape' => 'String',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
         ],
-        'VolumeType' =>
-        [
+        'VolumeType' => [
           'shape' => 'VolumeType',
         ],
-        'Iops' =>
-        [
+        'Iops' => [
           'shape' => 'Integer',
         ],
-        'Encrypted' =>
-        [
+        'Encrypted' => [
           'shape' => 'Boolean',
           'locationName' => 'encrypted',
         ],
       ],
     ],
-    'CreateVpcPeeringConnectionRequest' =>
-    [
+    'CreateVpcPeeringConnectionRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
           'locationName' => 'vpcId',
         ],
-        'PeerVpcId' =>
-        [
+        'PeerVpcId' => [
           'shape' => 'String',
           'locationName' => 'peerVpcId',
         ],
-        'PeerOwnerId' =>
-        [
+        'PeerOwnerId' => [
           'shape' => 'String',
           'locationName' => 'peerOwnerId',
         ],
       ],
     ],
-    'CreateVpcPeeringConnectionResult' =>
-    [
+    'CreateVpcPeeringConnectionResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VpcPeeringConnection' =>
-        [
+      'members' => [
+        'VpcPeeringConnection' => [
           'shape' => 'VpcPeeringConnection',
           'locationName' => 'vpcPeeringConnection',
         ],
       ],
     ],
-    'CreateVpcRequest' =>
-    [
+    'CreateVpcRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CidrBlock',
+      'required' => [
+        'CidrBlock',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'CidrBlock' =>
-        [
+        'CidrBlock' => [
           'shape' => 'String',
         ],
-        'InstanceTenancy' =>
-        [
+        'InstanceTenancy' => [
           'shape' => 'Tenancy',
           'locationName' => 'instanceTenancy',
         ],
       ],
     ],
-    'CreateVpcResult' =>
-    [
+    'CreateVpcResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Vpc' =>
-        [
+      'members' => [
+        'Vpc' => [
           'shape' => 'Vpc',
           'locationName' => 'vpc',
         ],
       ],
     ],
-    'CreateVpnConnectionRequest' =>
-    [
+    'CreateVpnConnectionRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Type',
-        1 => 'CustomerGatewayId',
-        2 => 'VpnGatewayId',
+      'required' => [
+        'Type',
+        'CustomerGatewayId',
+        'VpnGatewayId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'Type' =>
-        [
+        'Type' => [
           'shape' => 'String',
         ],
-        'CustomerGatewayId' =>
-        [
+        'CustomerGatewayId' => [
           'shape' => 'String',
         ],
-        'VpnGatewayId' =>
-        [
+        'VpnGatewayId' => [
           'shape' => 'String',
         ],
-        'Options' =>
-        [
+        'Options' => [
           'shape' => 'VpnConnectionOptionsSpecification',
           'locationName' => 'options',
         ],
       ],
     ],
-    'CreateVpnConnectionResult' =>
-    [
+    'CreateVpnConnectionResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VpnConnection' =>
-        [
+      'members' => [
+        'VpnConnection' => [
           'shape' => 'VpnConnection',
           'locationName' => 'vpnConnection',
         ],
       ],
     ],
-    'CreateVpnConnectionRouteRequest' =>
-    [
+    'CreateVpnConnectionRouteRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VpnConnectionId',
-        1 => 'DestinationCidrBlock',
+      'required' => [
+        'VpnConnectionId',
+        'DestinationCidrBlock',
       ],
-      'members' =>
-      [
-        'VpnConnectionId' =>
-        [
+      'members' => [
+        'VpnConnectionId' => [
           'shape' => 'String',
         ],
-        'DestinationCidrBlock' =>
-        [
+        'DestinationCidrBlock' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreateVpnGatewayRequest' =>
-    [
+    'CreateVpnGatewayRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Type',
+      'required' => [
+        'Type',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'Type' =>
-        [
+        'Type' => [
           'shape' => 'GatewayType',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'CreateVpnGatewayResult' =>
-    [
+    'CreateVpnGatewayResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VpnGateway' =>
-        [
+      'members' => [
+        'VpnGateway' => [
           'shape' => 'VpnGateway',
           'locationName' => 'vpnGateway',
         ],
       ],
     ],
-    'CurrencyCodeValues' =>
-    [
+    'CurrencyCodeValues' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'USD',
+      'enum' => [
+        'USD',
       ],
     ],
-    'CustomerGateway' =>
-    [
+    'CustomerGateway' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CustomerGatewayId' =>
-        [
+      'members' => [
+        'CustomerGatewayId' => [
           'shape' => 'String',
           'locationName' => 'customerGatewayId',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'String',
           'locationName' => 'state',
         ],
-        'Type' =>
-        [
+        'Type' => [
           'shape' => 'String',
           'locationName' => 'type',
         ],
-        'IpAddress' =>
-        [
+        'IpAddress' => [
           'shape' => 'String',
           'locationName' => 'ipAddress',
         ],
-        'BgpAsn' =>
-        [
+        'BgpAsn' => [
           'shape' => 'String',
           'locationName' => 'bgpAsn',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
           'locationName' => 'tagSet',
         ],
       ],
     ],
-    'CustomerGatewayIdStringList' =>
-    [
+    'CustomerGatewayIdStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'CustomerGatewayId',
       ],
     ],
-    'CustomerGatewayList' =>
-    [
+    'CustomerGatewayList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CustomerGateway',
         'locationName' => 'item',
       ],
     ],
-    'DatafeedSubscriptionState' =>
-    [
+    'DatafeedSubscriptionState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'Active',
-        1 => 'Inactive',
+      'enum' => [
+        'Active',
+        'Inactive',
       ],
     ],
-    'DateTime' =>
-    [
+    'DateTime' => [
       'type' => 'timestamp',
     ],
-    'DeleteCustomerGatewayRequest' =>
-    [
+    'DeleteCustomerGatewayRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'CustomerGatewayId',
+      'required' => [
+        'CustomerGatewayId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'CustomerGatewayId' =>
-        [
+        'CustomerGatewayId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteDhcpOptionsRequest' =>
-    [
+    'DeleteDhcpOptionsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'DhcpOptionsId',
+      'required' => [
+        'DhcpOptionsId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'DhcpOptionsId' =>
-        [
+        'DhcpOptionsId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteInternetGatewayRequest' =>
-    [
+    'DeleteInternetGatewayRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InternetGatewayId',
+      'required' => [
+        'InternetGatewayId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'InternetGatewayId' =>
-        [
+        'InternetGatewayId' => [
           'shape' => 'String',
           'locationName' => 'internetGatewayId',
         ],
       ],
     ],
-    'DeleteKeyPairRequest' =>
-    [
+    'DeleteKeyPairRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'KeyName',
+      'required' => [
+        'KeyName',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'KeyName' =>
-        [
+        'KeyName' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteNetworkAclEntryRequest' =>
-    [
+    'DeleteNetworkAclEntryRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'NetworkAclId',
-        1 => 'RuleNumber',
-        2 => 'Egress',
+      'required' => [
+        'NetworkAclId',
+        'RuleNumber',
+        'Egress',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'NetworkAclId' =>
-        [
+        'NetworkAclId' => [
           'shape' => 'String',
           'locationName' => 'networkAclId',
         ],
-        'RuleNumber' =>
-        [
+        'RuleNumber' => [
           'shape' => 'Integer',
           'locationName' => 'ruleNumber',
         ],
-        'Egress' =>
-        [
+        'Egress' => [
           'shape' => 'Boolean',
           'locationName' => 'egress',
         ],
       ],
     ],
-    'DeleteNetworkAclRequest' =>
-    [
+    'DeleteNetworkAclRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'NetworkAclId',
+      'required' => [
+        'NetworkAclId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'NetworkAclId' =>
-        [
+        'NetworkAclId' => [
           'shape' => 'String',
           'locationName' => 'networkAclId',
         ],
       ],
     ],
-    'DeleteNetworkInterfaceRequest' =>
-    [
+    'DeleteNetworkInterfaceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'NetworkInterfaceId',
+      'required' => [
+        'NetworkInterfaceId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'NetworkInterfaceId' =>
-        [
+        'NetworkInterfaceId' => [
           'shape' => 'String',
           'locationName' => 'networkInterfaceId',
         ],
       ],
     ],
-    'DeletePlacementGroupRequest' =>
-    [
+    'DeletePlacementGroupRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GroupName',
+      'required' => [
+        'GroupName',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'GroupName' =>
-        [
+        'GroupName' => [
           'shape' => 'String',
           'locationName' => 'groupName',
         ],
       ],
     ],
-    'DeleteRouteRequest' =>
-    [
+    'DeleteRouteRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RouteTableId',
-        1 => 'DestinationCidrBlock',
+      'required' => [
+        'RouteTableId',
+        'DestinationCidrBlock',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'RouteTableId' =>
-        [
+        'RouteTableId' => [
           'shape' => 'String',
           'locationName' => 'routeTableId',
         ],
-        'DestinationCidrBlock' =>
-        [
+        'DestinationCidrBlock' => [
           'shape' => 'String',
           'locationName' => 'destinationCidrBlock',
         ],
       ],
     ],
-    'DeleteRouteTableRequest' =>
-    [
+    'DeleteRouteTableRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RouteTableId',
+      'required' => [
+        'RouteTableId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'RouteTableId' =>
-        [
+        'RouteTableId' => [
           'shape' => 'String',
           'locationName' => 'routeTableId',
         ],
       ],
     ],
-    'DeleteSecurityGroupRequest' =>
-    [
+    'DeleteSecurityGroupRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'GroupName' =>
-        [
+        'GroupName' => [
           'shape' => 'String',
         ],
-        'GroupId' =>
-        [
+        'GroupId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteSnapshotRequest' =>
-    [
+    'DeleteSnapshotRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SnapshotId',
+      'required' => [
+        'SnapshotId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'SnapshotId' =>
-        [
+        'SnapshotId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteSpotDatafeedSubscriptionRequest' =>
-    [
+    'DeleteSpotDatafeedSubscriptionRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
       ],
     ],
-    'DeleteSubnetRequest' =>
-    [
+    'DeleteSubnetRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SubnetId',
+      'required' => [
+        'SubnetId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'SubnetId' =>
-        [
+        'SubnetId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteTagsRequest' =>
-    [
+    'DeleteTagsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Resources',
+      'required' => [
+        'Resources',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'Resources' =>
-        [
+        'Resources' => [
           'shape' => 'ResourceIdList',
           'locationName' => 'resourceId',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
           'locationName' => 'tag',
         ],
       ],
     ],
-    'DeleteVolumeRequest' =>
-    [
+    'DeleteVolumeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VolumeId',
+      'required' => [
+        'VolumeId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VolumeId' =>
-        [
+        'VolumeId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteVpcPeeringConnectionRequest' =>
-    [
+    'DeleteVpcPeeringConnectionRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VpcPeeringConnectionId',
+      'required' => [
+        'VpcPeeringConnectionId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VpcPeeringConnectionId' =>
-        [
+        'VpcPeeringConnectionId' => [
           'shape' => 'String',
           'locationName' => 'vpcPeeringConnectionId',
         ],
       ],
     ],
-    'DeleteVpcPeeringConnectionResult' =>
-    [
+    'DeleteVpcPeeringConnectionResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Return' =>
-        [
+      'members' => [
+        'Return' => [
           'shape' => 'Boolean',
           'locationName' => 'return',
         ],
       ],
     ],
-    'DeleteVpcRequest' =>
-    [
+    'DeleteVpcRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VpcId',
+      'required' => [
+        'VpcId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteVpnConnectionRequest' =>
-    [
+    'DeleteVpnConnectionRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VpnConnectionId',
+      'required' => [
+        'VpnConnectionId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VpnConnectionId' =>
-        [
+        'VpnConnectionId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteVpnConnectionRouteRequest' =>
-    [
+    'DeleteVpnConnectionRouteRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VpnConnectionId',
-        1 => 'DestinationCidrBlock',
+      'required' => [
+        'VpnConnectionId',
+        'DestinationCidrBlock',
       ],
-      'members' =>
-      [
-        'VpnConnectionId' =>
-        [
+      'members' => [
+        'VpnConnectionId' => [
           'shape' => 'String',
         ],
-        'DestinationCidrBlock' =>
-        [
+        'DestinationCidrBlock' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeleteVpnGatewayRequest' =>
-    [
+    'DeleteVpnGatewayRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VpnGatewayId',
+      'required' => [
+        'VpnGatewayId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VpnGatewayId' =>
-        [
+        'VpnGatewayId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeregisterImageRequest' =>
-    [
+    'DeregisterImageRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ImageId',
+      'required' => [
+        'ImageId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'ImageId' =>
-        [
+        'ImageId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DescribeAccountAttributesRequest' =>
-    [
+    'DescribeAccountAttributesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'AttributeNames' =>
-        [
+        'AttributeNames' => [
           'shape' => 'AccountAttributeNameStringList',
           'locationName' => 'attributeName',
         ],
       ],
     ],
-    'DescribeAccountAttributesResult' =>
-    [
+    'DescribeAccountAttributesResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AccountAttributes' =>
-        [
+      'members' => [
+        'AccountAttributes' => [
           'shape' => 'AccountAttributeList',
           'locationName' => 'accountAttributeSet',
         ],
       ],
     ],
-    'DescribeAddressesRequest' =>
-    [
+    'DescribeAddressesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'PublicIps' =>
-        [
+        'PublicIps' => [
           'shape' => 'PublicIpStringList',
           'locationName' => 'PublicIp',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
-        'AllocationIds' =>
-        [
+        'AllocationIds' => [
           'shape' => 'AllocationIdList',
           'locationName' => 'AllocationId',
         ],
       ],
     ],
-    'DescribeAddressesResult' =>
-    [
+    'DescribeAddressesResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Addresses' =>
-        [
+      'members' => [
+        'Addresses' => [
           'shape' => 'AddressList',
           'locationName' => 'addressesSet',
         ],
       ],
     ],
-    'DescribeAvailabilityZonesRequest' =>
-    [
+    'DescribeAvailabilityZonesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'ZoneNames' =>
-        [
+        'ZoneNames' => [
           'shape' => 'ZoneNameStringList',
           'locationName' => 'ZoneName',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
       ],
     ],
-    'DescribeAvailabilityZonesResult' =>
-    [
+    'DescribeAvailabilityZonesResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AvailabilityZones' =>
-        [
+      'members' => [
+        'AvailabilityZones' => [
           'shape' => 'AvailabilityZoneList',
           'locationName' => 'availabilityZoneInfo',
         ],
       ],
     ],
-    'DescribeBundleTasksRequest' =>
-    [
+    'DescribeBundleTasksRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'BundleIds' =>
-        [
+        'BundleIds' => [
           'shape' => 'BundleIdStringList',
           'locationName' => 'BundleId',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
       ],
     ],
-    'DescribeBundleTasksResult' =>
-    [
+    'DescribeBundleTasksResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'BundleTasks' =>
-        [
+      'members' => [
+        'BundleTasks' => [
           'shape' => 'BundleTaskList',
           'locationName' => 'bundleInstanceTasksSet',
         ],
       ],
     ],
-    'DescribeConversionTaskList' =>
-    [
+    'DescribeConversionTaskList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ConversionTask',
         'locationName' => 'item',
       ],
     ],
-    'DescribeConversionTasksRequest' =>
-    [
+    'DescribeConversionTasksRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'filter',
         ],
-        'ConversionTaskIds' =>
-        [
+        'ConversionTaskIds' => [
           'shape' => 'ConversionIdStringList',
           'locationName' => 'conversionTaskId',
         ],
       ],
     ],
-    'DescribeConversionTasksResult' =>
-    [
+    'DescribeConversionTasksResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ConversionTasks' =>
-        [
+      'members' => [
+        'ConversionTasks' => [
           'shape' => 'DescribeConversionTaskList',
           'locationName' => 'conversionTasks',
         ],
       ],
     ],
-    'DescribeCustomerGatewaysRequest' =>
-    [
+    'DescribeCustomerGatewaysRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'CustomerGatewayIds' =>
-        [
+        'CustomerGatewayIds' => [
           'shape' => 'CustomerGatewayIdStringList',
           'locationName' => 'CustomerGatewayId',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
       ],
     ],
-    'DescribeCustomerGatewaysResult' =>
-    [
+    'DescribeCustomerGatewaysResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CustomerGateways' =>
-        [
+      'members' => [
+        'CustomerGateways' => [
           'shape' => 'CustomerGatewayList',
           'locationName' => 'customerGatewaySet',
         ],
       ],
     ],
-    'DescribeDhcpOptionsRequest' =>
-    [
+    'DescribeDhcpOptionsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'DhcpOptionsIds' =>
-        [
+        'DhcpOptionsIds' => [
           'shape' => 'DhcpOptionsIdStringList',
           'locationName' => 'DhcpOptionsId',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
       ],
     ],
-    'DescribeDhcpOptionsResult' =>
-    [
+    'DescribeDhcpOptionsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DhcpOptions' =>
-        [
+      'members' => [
+        'DhcpOptions' => [
           'shape' => 'DhcpOptionsList',
           'locationName' => 'dhcpOptionsSet',
         ],
       ],
     ],
-    'DescribeExportTasksRequest' =>
-    [
+    'DescribeExportTasksRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ExportTaskIds' =>
-        [
+      'members' => [
+        'ExportTaskIds' => [
           'shape' => 'ExportTaskIdStringList',
           'locationName' => 'exportTaskId',
         ],
       ],
     ],
-    'DescribeExportTasksResult' =>
-    [
+    'DescribeExportTasksResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ExportTasks' =>
-        [
+      'members' => [
+        'ExportTasks' => [
           'shape' => 'ExportTaskList',
           'locationName' => 'exportTaskSet',
         ],
       ],
     ],
-    'DescribeImageAttributeRequest' =>
-    [
+    'DescribeImageAttributeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ImageId',
-        1 => 'Attribute',
+      'required' => [
+        'ImageId',
+        'Attribute',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'ImageId' =>
-        [
+        'ImageId' => [
           'shape' => 'String',
         ],
-        'Attribute' =>
-        [
+        'Attribute' => [
           'shape' => 'ImageAttributeName',
         ],
       ],
     ],
-    'DescribeImagesRequest' =>
-    [
+    'DescribeImagesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'ImageIds' =>
-        [
+        'ImageIds' => [
           'shape' => 'ImageIdStringList',
           'locationName' => 'ImageId',
         ],
-        'Owners' =>
-        [
+        'Owners' => [
           'shape' => 'OwnerStringList',
           'locationName' => 'Owner',
         ],
-        'ExecutableUsers' =>
-        [
+        'ExecutableUsers' => [
           'shape' => 'ExecutableByStringList',
           'locationName' => 'ExecutableBy',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
       ],
     ],
-    'DescribeImagesResult' =>
-    [
+    'DescribeImagesResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Images' =>
-        [
+      'members' => [
+        'Images' => [
           'shape' => 'ImageList',
           'locationName' => 'imagesSet',
         ],
       ],
     ],
-    'DescribeInstanceAttributeRequest' =>
-    [
+    'DescribeInstanceAttributeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceId',
-        1 => 'Attribute',
+      'required' => [
+        'InstanceId',
+        'Attribute',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
           'locationName' => 'instanceId',
         ],
-        'Attribute' =>
-        [
+        'Attribute' => [
           'shape' => 'InstanceAttributeName',
           'locationName' => 'attribute',
         ],
       ],
     ],
-    'DescribeInstanceStatusRequest' =>
-    [
+    'DescribeInstanceStatusRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'InstanceIds' =>
-        [
+        'InstanceIds' => [
           'shape' => 'InstanceIdStringList',
           'locationName' => 'InstanceId',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
         ],
-        'MaxResults' =>
-        [
+        'MaxResults' => [
           'shape' => 'Integer',
         ],
-        'IncludeAllInstances' =>
-        [
+        'IncludeAllInstances' => [
           'shape' => 'Boolean',
           'locationName' => 'includeAllInstances',
         ],
       ],
     ],
-    'DescribeInstanceStatusResult' =>
-    [
+    'DescribeInstanceStatusResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceStatuses' =>
-        [
+      'members' => [
+        'InstanceStatuses' => [
           'shape' => 'InstanceStatusList',
           'locationName' => 'instanceStatusSet',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
           'locationName' => 'nextToken',
         ],
       ],
     ],
-    'DescribeInstancesRequest' =>
-    [
+    'DescribeInstancesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'InstanceIds' =>
-        [
+        'InstanceIds' => [
           'shape' => 'InstanceIdStringList',
           'locationName' => 'InstanceId',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
           'locationName' => 'nextToken',
         ],
-        'MaxResults' =>
-        [
+        'MaxResults' => [
           'shape' => 'Integer',
           'locationName' => 'maxResults',
         ],
       ],
     ],
-    'DescribeInstancesResult' =>
-    [
+    'DescribeInstancesResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Reservations' =>
-        [
+      'members' => [
+        'Reservations' => [
           'shape' => 'ReservationList',
           'locationName' => 'reservationSet',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
           'locationName' => 'nextToken',
         ],
       ],
     ],
-    'DescribeInternetGatewaysRequest' =>
-    [
+    'DescribeInternetGatewaysRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'InternetGatewayIds' =>
-        [
+        'InternetGatewayIds' => [
           'shape' => 'ValueStringList',
           'locationName' => 'internetGatewayId',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
       ],
     ],
-    'DescribeInternetGatewaysResult' =>
-    [
+    'DescribeInternetGatewaysResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InternetGateways' =>
-        [
+      'members' => [
+        'InternetGateways' => [
           'shape' => 'InternetGatewayList',
           'locationName' => 'internetGatewaySet',
         ],
       ],
     ],
-    'DescribeKeyPairsRequest' =>
-    [
+    'DescribeKeyPairsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'KeyNames' =>
-        [
+        'KeyNames' => [
           'shape' => 'KeyNameStringList',
           'locationName' => 'KeyName',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
       ],
     ],
-    'DescribeKeyPairsResult' =>
-    [
+    'DescribeKeyPairsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'KeyPairs' =>
-        [
+      'members' => [
+        'KeyPairs' => [
           'shape' => 'KeyPairList',
           'locationName' => 'keySet',
         ],
       ],
     ],
-    'DescribeNetworkAclsRequest' =>
-    [
+    'DescribeNetworkAclsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'NetworkAclIds' =>
-        [
+        'NetworkAclIds' => [
           'shape' => 'ValueStringList',
           'locationName' => 'NetworkAclId',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
       ],
     ],
-    'DescribeNetworkAclsResult' =>
-    [
+    'DescribeNetworkAclsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'NetworkAcls' =>
-        [
+      'members' => [
+        'NetworkAcls' => [
           'shape' => 'NetworkAclList',
           'locationName' => 'networkAclSet',
         ],
       ],
     ],
-    'DescribeNetworkInterfaceAttributeRequest' =>
-    [
+    'DescribeNetworkInterfaceAttributeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'NetworkInterfaceId',
+      'required' => [
+        'NetworkInterfaceId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'NetworkInterfaceId' =>
-        [
+        'NetworkInterfaceId' => [
           'shape' => 'String',
           'locationName' => 'networkInterfaceId',
         ],
-        'Attribute' =>
-        [
+        'Attribute' => [
           'shape' => 'NetworkInterfaceAttribute',
           'locationName' => 'attribute',
         ],
       ],
     ],
-    'DescribeNetworkInterfaceAttributeResult' =>
-    [
+    'DescribeNetworkInterfaceAttributeResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'NetworkInterfaceId' =>
-        [
+      'members' => [
+        'NetworkInterfaceId' => [
           'shape' => 'String',
           'locationName' => 'networkInterfaceId',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'AttributeValue',
           'locationName' => 'description',
         ],
-        'SourceDestCheck' =>
-        [
+        'SourceDestCheck' => [
           'shape' => 'AttributeBooleanValue',
           'locationName' => 'sourceDestCheck',
         ],
-        'Groups' =>
-        [
+        'Groups' => [
           'shape' => 'GroupIdentifierList',
           'locationName' => 'groupSet',
         ],
-        'Attachment' =>
-        [
+        'Attachment' => [
           'shape' => 'NetworkInterfaceAttachment',
           'locationName' => 'attachment',
         ],
       ],
     ],
-    'DescribeNetworkInterfacesRequest' =>
-    [
+    'DescribeNetworkInterfacesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'NetworkInterfaceIds' =>
-        [
+        'NetworkInterfaceIds' => [
           'shape' => 'NetworkInterfaceIdList',
           'locationName' => 'NetworkInterfaceId',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'filter',
         ],
       ],
     ],
-    'DescribeNetworkInterfacesResult' =>
-    [
+    'DescribeNetworkInterfacesResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'NetworkInterfaces' =>
-        [
+      'members' => [
+        'NetworkInterfaces' => [
           'shape' => 'NetworkInterfaceList',
           'locationName' => 'networkInterfaceSet',
         ],
       ],
     ],
-    'DescribePlacementGroupsRequest' =>
-    [
+    'DescribePlacementGroupsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'GroupNames' =>
-        [
+        'GroupNames' => [
           'shape' => 'PlacementGroupStringList',
           'locationName' => 'groupName',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
       ],
     ],
-    'DescribePlacementGroupsResult' =>
-    [
+    'DescribePlacementGroupsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PlacementGroups' =>
-        [
+      'members' => [
+        'PlacementGroups' => [
           'shape' => 'PlacementGroupList',
           'locationName' => 'placementGroupSet',
         ],
       ],
     ],
-    'DescribeRegionsRequest' =>
-    [
+    'DescribeRegionsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'RegionNames' =>
-        [
+        'RegionNames' => [
           'shape' => 'RegionNameStringList',
           'locationName' => 'RegionName',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
       ],
     ],
-    'DescribeRegionsResult' =>
-    [
+    'DescribeRegionsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Regions' =>
-        [
+      'members' => [
+        'Regions' => [
           'shape' => 'RegionList',
           'locationName' => 'regionInfo',
         ],
       ],
     ],
-    'DescribeReservedInstancesListingsRequest' =>
-    [
+    'DescribeReservedInstancesListingsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedInstancesId' =>
-        [
+      'members' => [
+        'ReservedInstancesId' => [
           'shape' => 'String',
           'locationName' => 'reservedInstancesId',
         ],
-        'ReservedInstancesListingId' =>
-        [
+        'ReservedInstancesListingId' => [
           'shape' => 'String',
           'locationName' => 'reservedInstancesListingId',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'filters',
         ],
       ],
     ],
-    'DescribeReservedInstancesListingsResult' =>
-    [
+    'DescribeReservedInstancesListingsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedInstancesListings' =>
-        [
+      'members' => [
+        'ReservedInstancesListings' => [
           'shape' => 'ReservedInstancesListingList',
           'locationName' => 'reservedInstancesListingsSet',
         ],
       ],
     ],
-    'DescribeReservedInstancesModificationsRequest' =>
-    [
+    'DescribeReservedInstancesModificationsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedInstancesModificationIds' =>
-        [
+      'members' => [
+        'ReservedInstancesModificationIds' => [
           'shape' => 'ReservedInstancesModificationIdStringList',
           'locationName' => 'ReservedInstancesModificationId',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
           'locationName' => 'nextToken',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
       ],
     ],
-    'DescribeReservedInstancesModificationsResult' =>
-    [
+    'DescribeReservedInstancesModificationsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedInstancesModifications' =>
-        [
+      'members' => [
+        'ReservedInstancesModifications' => [
           'shape' => 'ReservedInstancesModificationList',
           'locationName' => 'reservedInstancesModificationsSet',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
           'locationName' => 'nextToken',
         ],
       ],
     ],
-    'DescribeReservedInstancesOfferingsRequest' =>
-    [
+    'DescribeReservedInstancesOfferingsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'ReservedInstancesOfferingIds' =>
-        [
+        'ReservedInstancesOfferingIds' => [
           'shape' => 'ReservedInstancesOfferingIdStringList',
           'locationName' => 'ReservedInstancesOfferingId',
         ],
-        'InstanceType' =>
-        [
+        'InstanceType' => [
           'shape' => 'InstanceType',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
         ],
-        'ProductDescription' =>
-        [
+        'ProductDescription' => [
           'shape' => 'RIProductDescription',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
-        'InstanceTenancy' =>
-        [
+        'InstanceTenancy' => [
           'shape' => 'Tenancy',
           'locationName' => 'instanceTenancy',
         ],
-        'OfferingType' =>
-        [
+        'OfferingType' => [
           'shape' => 'OfferingTypeValues',
           'locationName' => 'offeringType',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
           'locationName' => 'nextToken',
         ],
-        'MaxResults' =>
-        [
+        'MaxResults' => [
           'shape' => 'Integer',
           'locationName' => 'maxResults',
         ],
-        'IncludeMarketplace' =>
-        [
+        'IncludeMarketplace' => [
           'shape' => 'Boolean',
         ],
-        'MinDuration' =>
-        [
+        'MinDuration' => [
           'shape' => 'Long',
         ],
-        'MaxDuration' =>
-        [
+        'MaxDuration' => [
           'shape' => 'Long',
         ],
-        'MaxInstanceCount' =>
-        [
+        'MaxInstanceCount' => [
           'shape' => 'Integer',
         ],
       ],
     ],
-    'DescribeReservedInstancesOfferingsResult' =>
-    [
+    'DescribeReservedInstancesOfferingsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedInstancesOfferings' =>
-        [
+      'members' => [
+        'ReservedInstancesOfferings' => [
           'shape' => 'ReservedInstancesOfferingList',
           'locationName' => 'reservedInstancesOfferingsSet',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
           'locationName' => 'nextToken',
         ],
       ],
     ],
-    'DescribeReservedInstancesRequest' =>
-    [
+    'DescribeReservedInstancesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'ReservedInstancesIds' =>
-        [
+        'ReservedInstancesIds' => [
           'shape' => 'ReservedInstancesIdStringList',
           'locationName' => 'ReservedInstancesId',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
-        'OfferingType' =>
-        [
+        'OfferingType' => [
           'shape' => 'OfferingTypeValues',
           'locationName' => 'offeringType',
         ],
       ],
     ],
-    'DescribeReservedInstancesResult' =>
-    [
+    'DescribeReservedInstancesResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedInstances' =>
-        [
+      'members' => [
+        'ReservedInstances' => [
           'shape' => 'ReservedInstancesList',
           'locationName' => 'reservedInstancesSet',
         ],
       ],
     ],
-    'DescribeRouteTablesRequest' =>
-    [
+    'DescribeRouteTablesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'RouteTableIds' =>
-        [
+        'RouteTableIds' => [
           'shape' => 'ValueStringList',
           'locationName' => 'RouteTableId',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
       ],
     ],
-    'DescribeRouteTablesResult' =>
-    [
+    'DescribeRouteTablesResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'RouteTables' =>
-        [
+      'members' => [
+        'RouteTables' => [
           'shape' => 'RouteTableList',
           'locationName' => 'routeTableSet',
         ],
       ],
     ],
-    'DescribeSecurityGroupsRequest' =>
-    [
+    'DescribeSecurityGroupsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'GroupNames' =>
-        [
+        'GroupNames' => [
           'shape' => 'GroupNameStringList',
           'locationName' => 'GroupName',
         ],
-        'GroupIds' =>
-        [
+        'GroupIds' => [
           'shape' => 'GroupIdStringList',
           'locationName' => 'GroupId',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
       ],
     ],
-    'DescribeSecurityGroupsResult' =>
-    [
+    'DescribeSecurityGroupsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SecurityGroups' =>
-        [
+      'members' => [
+        'SecurityGroups' => [
           'shape' => 'SecurityGroupList',
           'locationName' => 'securityGroupInfo',
         ],
       ],
     ],
-    'DescribeSnapshotAttributeRequest' =>
-    [
+    'DescribeSnapshotAttributeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SnapshotId',
-        1 => 'Attribute',
+      'required' => [
+        'SnapshotId',
+        'Attribute',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'SnapshotId' =>
-        [
+        'SnapshotId' => [
           'shape' => 'String',
         ],
-        'Attribute' =>
-        [
+        'Attribute' => [
           'shape' => 'SnapshotAttributeName',
         ],
       ],
     ],
-    'DescribeSnapshotAttributeResult' =>
-    [
+    'DescribeSnapshotAttributeResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SnapshotId' =>
-        [
+      'members' => [
+        'SnapshotId' => [
           'shape' => 'String',
           'locationName' => 'snapshotId',
         ],
-        'CreateVolumePermissions' =>
-        [
+        'CreateVolumePermissions' => [
           'shape' => 'CreateVolumePermissionList',
           'locationName' => 'createVolumePermission',
         ],
-        'ProductCodes' =>
-        [
+        'ProductCodes' => [
           'shape' => 'ProductCodeList',
           'locationName' => 'productCodes',
         ],
       ],
     ],
-    'DescribeSnapshotsRequest' =>
-    [
+    'DescribeSnapshotsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'SnapshotIds' =>
-        [
+        'SnapshotIds' => [
           'shape' => 'SnapshotIdStringList',
           'locationName' => 'SnapshotId',
         ],
-        'OwnerIds' =>
-        [
+        'OwnerIds' => [
           'shape' => 'OwnerStringList',
           'locationName' => 'Owner',
         ],
-        'RestorableByUserIds' =>
-        [
+        'RestorableByUserIds' => [
           'shape' => 'RestorableByStringList',
           'locationName' => 'RestorableBy',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
       ],
     ],
-    'DescribeSnapshotsResult' =>
-    [
+    'DescribeSnapshotsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Snapshots' =>
-        [
+      'members' => [
+        'Snapshots' => [
           'shape' => 'SnapshotList',
           'locationName' => 'snapshotSet',
         ],
       ],
     ],
-    'DescribeSpotDatafeedSubscriptionRequest' =>
-    [
+    'DescribeSpotDatafeedSubscriptionRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
       ],
     ],
-    'DescribeSpotDatafeedSubscriptionResult' =>
-    [
+    'DescribeSpotDatafeedSubscriptionResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SpotDatafeedSubscription' =>
-        [
+      'members' => [
+        'SpotDatafeedSubscription' => [
           'shape' => 'SpotDatafeedSubscription',
           'locationName' => 'spotDatafeedSubscription',
         ],
       ],
     ],
-    'DescribeSpotInstanceRequestsRequest' =>
-    [
+    'DescribeSpotInstanceRequestsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'SpotInstanceRequestIds' =>
-        [
+        'SpotInstanceRequestIds' => [
           'shape' => 'SpotInstanceRequestIdList',
           'locationName' => 'SpotInstanceRequestId',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
       ],
     ],
-    'DescribeSpotInstanceRequestsResult' =>
-    [
+    'DescribeSpotInstanceRequestsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SpotInstanceRequests' =>
-        [
+      'members' => [
+        'SpotInstanceRequests' => [
           'shape' => 'SpotInstanceRequestList',
           'locationName' => 'spotInstanceRequestSet',
         ],
       ],
     ],
-    'DescribeSpotPriceHistoryRequest' =>
-    [
+    'DescribeSpotPriceHistoryRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'StartTime' =>
-        [
+        'StartTime' => [
           'shape' => 'DateTime',
           'locationName' => 'startTime',
         ],
-        'EndTime' =>
-        [
+        'EndTime' => [
           'shape' => 'DateTime',
           'locationName' => 'endTime',
         ],
-        'InstanceTypes' =>
-        [
+        'InstanceTypes' => [
           'shape' => 'InstanceTypeList',
           'locationName' => 'InstanceType',
         ],
-        'ProductDescriptions' =>
-        [
+        'ProductDescriptions' => [
           'shape' => 'ProductDescriptionList',
           'locationName' => 'ProductDescription',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
           'locationName' => 'availabilityZone',
         ],
-        'MaxResults' =>
-        [
+        'MaxResults' => [
           'shape' => 'Integer',
           'locationName' => 'maxResults',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
           'locationName' => 'nextToken',
         ],
       ],
     ],
-    'DescribeSpotPriceHistoryResult' =>
-    [
+    'DescribeSpotPriceHistoryResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SpotPriceHistory' =>
-        [
+      'members' => [
+        'SpotPriceHistory' => [
           'shape' => 'SpotPriceHistoryList',
           'locationName' => 'spotPriceHistorySet',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
           'locationName' => 'nextToken',
         ],
       ],
     ],
-    'DescribeSubnetsRequest' =>
-    [
+    'DescribeSubnetsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'SubnetIds' =>
-        [
+        'SubnetIds' => [
           'shape' => 'SubnetIdStringList',
           'locationName' => 'SubnetId',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
       ],
     ],
-    'DescribeSubnetsResult' =>
-    [
+    'DescribeSubnetsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Subnets' =>
-        [
+      'members' => [
+        'Subnets' => [
           'shape' => 'SubnetList',
           'locationName' => 'subnetSet',
         ],
       ],
     ],
-    'DescribeTagsRequest' =>
-    [
+    'DescribeTagsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
-        'MaxResults' =>
-        [
+        'MaxResults' => [
           'shape' => 'Integer',
           'locationName' => 'maxResults',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
           'locationName' => 'nextToken',
         ],
       ],
     ],
-    'DescribeTagsResult' =>
-    [
+    'DescribeTagsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Tags' =>
-        [
+      'members' => [
+        'Tags' => [
           'shape' => 'TagDescriptionList',
           'locationName' => 'tagSet',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
           'locationName' => 'nextToken',
         ],
       ],
     ],
-    'DescribeVolumeAttributeRequest' =>
-    [
+    'DescribeVolumeAttributeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VolumeId',
+      'required' => [
+        'VolumeId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VolumeId' =>
-        [
+        'VolumeId' => [
           'shape' => 'String',
         ],
-        'Attribute' =>
-        [
+        'Attribute' => [
           'shape' => 'VolumeAttributeName',
         ],
       ],
     ],
-    'DescribeVolumeAttributeResult' =>
-    [
+    'DescribeVolumeAttributeResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VolumeId' =>
-        [
+      'members' => [
+        'VolumeId' => [
           'shape' => 'String',
           'locationName' => 'volumeId',
         ],
-        'AutoEnableIO' =>
-        [
+        'AutoEnableIO' => [
           'shape' => 'AttributeBooleanValue',
           'locationName' => 'autoEnableIO',
         ],
-        'ProductCodes' =>
-        [
+        'ProductCodes' => [
           'shape' => 'ProductCodeList',
           'locationName' => 'productCodes',
         ],
       ],
     ],
-    'DescribeVolumeStatusRequest' =>
-    [
+    'DescribeVolumeStatusRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VolumeIds' =>
-        [
+        'VolumeIds' => [
           'shape' => 'VolumeIdStringList',
           'locationName' => 'VolumeId',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
         ],
-        'MaxResults' =>
-        [
+        'MaxResults' => [
           'shape' => 'Integer',
         ],
       ],
     ],
-    'DescribeVolumeStatusResult' =>
-    [
+    'DescribeVolumeStatusResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VolumeStatuses' =>
-        [
+      'members' => [
+        'VolumeStatuses' => [
           'shape' => 'VolumeStatusList',
           'locationName' => 'volumeStatusSet',
         ],
-        'NextToken' =>
-        [
+        'NextToken' => [
           'shape' => 'String',
           'locationName' => 'nextToken',
         ],
       ],
     ],
-    'DescribeVolumesRequest' =>
-    [
+    'DescribeVolumesRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VolumeIds' =>
-        [
+        'VolumeIds' => [
           'shape' => 'VolumeIdStringList',
           'locationName' => 'VolumeId',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
       ],
     ],
-    'DescribeVolumesResult' =>
-    [
+    'DescribeVolumesResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Volumes' =>
-        [
+      'members' => [
+        'Volumes' => [
           'shape' => 'VolumeList',
           'locationName' => 'volumeSet',
         ],
       ],
     ],
-    'DescribeVpcAttributeRequest' =>
-    [
+    'DescribeVpcAttributeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VpcId',
+      'required' => [
+        'VpcId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
         ],
-        'Attribute' =>
-        [
+        'Attribute' => [
           'shape' => 'VpcAttributeName',
         ],
       ],
     ],
-    'DescribeVpcAttributeResult' =>
-    [
+    'DescribeVpcAttributeResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VpcId' =>
-        [
+      'members' => [
+        'VpcId' => [
           'shape' => 'String',
           'locationName' => 'vpcId',
         ],
-        'EnableDnsSupport' =>
-        [
+        'EnableDnsSupport' => [
           'shape' => 'AttributeBooleanValue',
           'locationName' => 'enableDnsSupport',
         ],
-        'EnableDnsHostnames' =>
-        [
+        'EnableDnsHostnames' => [
           'shape' => 'AttributeBooleanValue',
           'locationName' => 'enableDnsHostnames',
         ],
       ],
     ],
-    'DescribeVpcPeeringConnectionsRequest' =>
-    [
+    'DescribeVpcPeeringConnectionsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VpcPeeringConnectionIds' =>
-        [
+        'VpcPeeringConnectionIds' => [
           'shape' => 'ValueStringList',
           'locationName' => 'VpcPeeringConnectionId',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
       ],
     ],
-    'DescribeVpcPeeringConnectionsResult' =>
-    [
+    'DescribeVpcPeeringConnectionsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VpcPeeringConnections' =>
-        [
+      'members' => [
+        'VpcPeeringConnections' => [
           'shape' => 'VpcPeeringConnectionList',
           'locationName' => 'vpcPeeringConnectionSet',
         ],
       ],
     ],
-    'DescribeVpcsRequest' =>
-    [
+    'DescribeVpcsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VpcIds' =>
-        [
+        'VpcIds' => [
           'shape' => 'VpcIdStringList',
           'locationName' => 'VpcId',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
       ],
     ],
-    'DescribeVpcsResult' =>
-    [
+    'DescribeVpcsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Vpcs' =>
-        [
+      'members' => [
+        'Vpcs' => [
           'shape' => 'VpcList',
           'locationName' => 'vpcSet',
         ],
       ],
     ],
-    'DescribeVpnConnectionsRequest' =>
-    [
+    'DescribeVpnConnectionsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VpnConnectionIds' =>
-        [
+        'VpnConnectionIds' => [
           'shape' => 'VpnConnectionIdStringList',
           'locationName' => 'VpnConnectionId',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
       ],
     ],
-    'DescribeVpnConnectionsResult' =>
-    [
+    'DescribeVpnConnectionsResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VpnConnections' =>
-        [
+      'members' => [
+        'VpnConnections' => [
           'shape' => 'VpnConnectionList',
           'locationName' => 'vpnConnectionSet',
         ],
       ],
     ],
-    'DescribeVpnGatewaysRequest' =>
-    [
+    'DescribeVpnGatewaysRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VpnGatewayIds' =>
-        [
+        'VpnGatewayIds' => [
           'shape' => 'VpnGatewayIdStringList',
           'locationName' => 'VpnGatewayId',
         ],
-        'Filters' =>
-        [
+        'Filters' => [
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
       ],
     ],
-    'DescribeVpnGatewaysResult' =>
-    [
+    'DescribeVpnGatewaysResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VpnGateways' =>
-        [
+      'members' => [
+        'VpnGateways' => [
           'shape' => 'VpnGatewayList',
           'locationName' => 'vpnGatewaySet',
         ],
       ],
     ],
-    'DetachInternetGatewayRequest' =>
-    [
+    'DetachInternetGatewayRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InternetGatewayId',
-        1 => 'VpcId',
+      'required' => [
+        'InternetGatewayId',
+        'VpcId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'InternetGatewayId' =>
-        [
+        'InternetGatewayId' => [
           'shape' => 'String',
           'locationName' => 'internetGatewayId',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
           'locationName' => 'vpcId',
         ],
       ],
     ],
-    'DetachNetworkInterfaceRequest' =>
-    [
+    'DetachNetworkInterfaceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AttachmentId',
+      'required' => [
+        'AttachmentId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'AttachmentId' =>
-        [
+        'AttachmentId' => [
           'shape' => 'String',
           'locationName' => 'attachmentId',
         ],
-        'Force' =>
-        [
+        'Force' => [
           'shape' => 'Boolean',
           'locationName' => 'force',
         ],
       ],
     ],
-    'DetachVolumeRequest' =>
-    [
+    'DetachVolumeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VolumeId',
+      'required' => [
+        'VolumeId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VolumeId' =>
-        [
+        'VolumeId' => [
           'shape' => 'String',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
         ],
-        'Device' =>
-        [
+        'Device' => [
           'shape' => 'String',
         ],
-        'Force' =>
-        [
+        'Force' => [
           'shape' => 'Boolean',
         ],
       ],
     ],
-    'DetachVpnGatewayRequest' =>
-    [
+    'DetachVpnGatewayRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VpnGatewayId',
-        1 => 'VpcId',
+      'required' => [
+        'VpnGatewayId',
+        'VpcId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VpnGatewayId' =>
-        [
+        'VpnGatewayId' => [
           'shape' => 'String',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DeviceType' =>
-    [
+    'DeviceType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'ebs',
-        1 => 'instance-store',
+      'enum' => [
+        'ebs',
+        'instance-store',
       ],
     ],
-    'DhcpConfiguration' =>
-    [
+    'DhcpConfiguration' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Key' =>
-        [
+      'members' => [
+        'Key' => [
           'shape' => 'String',
           'locationName' => 'key',
         ],
-        'Values' =>
-        [
+        'Values' => [
           'shape' => 'DhcpConfigurationValueList',
           'locationName' => 'valueSet',
         ],
       ],
     ],
-    'DhcpConfigurationList' =>
-    [
+    'DhcpConfigurationList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DhcpConfiguration',
         'locationName' => 'item',
       ],
     ],
-    'DhcpOptions' =>
-    [
+    'DhcpOptions' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DhcpOptionsId' =>
-        [
+      'members' => [
+        'DhcpOptionsId' => [
           'shape' => 'String',
           'locationName' => 'dhcpOptionsId',
         ],
-        'DhcpConfigurations' =>
-        [
+        'DhcpConfigurations' => [
           'shape' => 'DhcpConfigurationList',
           'locationName' => 'dhcpConfigurationSet',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
           'locationName' => 'tagSet',
         ],
       ],
     ],
-    'DhcpOptionsIdStringList' =>
-    [
+    'DhcpOptionsIdStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'DhcpOptionsId',
       ],
     ],
-    'DhcpOptionsList' =>
-    [
+    'DhcpOptionsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DhcpOptions',
         'locationName' => 'item',
       ],
     ],
-    'DisableVgwRoutePropagationRequest' =>
-    [
+    'DisableVgwRoutePropagationRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RouteTableId',
-        1 => 'GatewayId',
+      'required' => [
+        'RouteTableId',
+        'GatewayId',
       ],
-      'members' =>
-      [
-        'RouteTableId' =>
-        [
+      'members' => [
+        'RouteTableId' => [
           'shape' => 'String',
         ],
-        'GatewayId' =>
-        [
+        'GatewayId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DisassociateAddressRequest' =>
-    [
+    'DisassociateAddressRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'PublicIp' =>
-        [
+        'PublicIp' => [
           'shape' => 'String',
         ],
-        'AssociationId' =>
-        [
+        'AssociationId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'DisassociateRouteTableRequest' =>
-    [
+    'DisassociateRouteTableRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AssociationId',
+      'required' => [
+        'AssociationId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'AssociationId' =>
-        [
+        'AssociationId' => [
           'shape' => 'String',
           'locationName' => 'associationId',
         ],
       ],
     ],
-    'DiskImage' =>
-    [
+    'DiskImage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Image' =>
-        [
+      'members' => [
+        'Image' => [
           'shape' => 'DiskImageDetail',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
         ],
-        'Volume' =>
-        [
+        'Volume' => [
           'shape' => 'VolumeDetail',
         ],
       ],
     ],
-    'DiskImageDescription' =>
-    [
+    'DiskImageDescription' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Format',
-        1 => 'Size',
-        2 => 'ImportManifestUrl',
+      'required' => [
+        'Format',
+        'Size',
+        'ImportManifestUrl',
       ],
-      'members' =>
-      [
-        'Format' =>
-        [
+      'members' => [
+        'Format' => [
           'shape' => 'DiskImageFormat',
           'locationName' => 'format',
         ],
-        'Size' =>
-        [
+        'Size' => [
           'shape' => 'Long',
           'locationName' => 'size',
         ],
-        'ImportManifestUrl' =>
-        [
+        'ImportManifestUrl' => [
           'shape' => 'String',
           'locationName' => 'importManifestUrl',
         ],
-        'Checksum' =>
-        [
+        'Checksum' => [
           'shape' => 'String',
           'locationName' => 'checksum',
         ],
       ],
     ],
-    'DiskImageDetail' =>
-    [
+    'DiskImageDetail' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Format',
-        1 => 'Bytes',
-        2 => 'ImportManifestUrl',
+      'required' => [
+        'Format',
+        'Bytes',
+        'ImportManifestUrl',
       ],
-      'members' =>
-      [
-        'Format' =>
-        [
+      'members' => [
+        'Format' => [
           'shape' => 'DiskImageFormat',
           'locationName' => 'format',
         ],
-        'Bytes' =>
-        [
+        'Bytes' => [
           'shape' => 'Long',
           'locationName' => 'bytes',
         ],
-        'ImportManifestUrl' =>
-        [
+        'ImportManifestUrl' => [
           'shape' => 'String',
           'locationName' => 'importManifestUrl',
         ],
       ],
     ],
-    'DiskImageFormat' =>
-    [
+    'DiskImageFormat' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'VMDK',
-        1 => 'RAW',
-        2 => 'VHD',
+      'enum' => [
+        'VMDK',
+        'RAW',
+        'VHD',
       ],
     ],
-    'DiskImageList' =>
-    [
+    'DiskImageList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DiskImage',
       ],
     ],
-    'DiskImageVolumeDescription' =>
-    [
+    'DiskImageVolumeDescription' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Id',
+      'required' => [
+        'Id',
       ],
-      'members' =>
-      [
-        'Size' =>
-        [
+      'members' => [
+        'Size' => [
           'shape' => 'Long',
           'locationName' => 'size',
         ],
-        'Id' =>
-        [
+        'Id' => [
           'shape' => 'String',
           'locationName' => 'id',
         ],
       ],
     ],
-    'DomainType' =>
-    [
+    'DomainType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'vpc',
-        1 => 'standard',
+      'enum' => [
+        'vpc',
+        'standard',
       ],
     ],
-    'Double' =>
-    [
+    'Double' => [
       'type' => 'double',
     ],
-    'EbsBlockDevice' =>
-    [
+    'EbsBlockDevice' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SnapshotId' =>
-        [
+      'members' => [
+        'SnapshotId' => [
           'shape' => 'String',
           'locationName' => 'snapshotId',
         ],
-        'VolumeSize' =>
-        [
+        'VolumeSize' => [
           'shape' => 'Integer',
           'locationName' => 'volumeSize',
         ],
-        'DeleteOnTermination' =>
-        [
+        'DeleteOnTermination' => [
           'shape' => 'Boolean',
           'locationName' => 'deleteOnTermination',
         ],
-        'VolumeType' =>
-        [
+        'VolumeType' => [
           'shape' => 'VolumeType',
           'locationName' => 'volumeType',
         ],
-        'Iops' =>
-        [
+        'Iops' => [
           'shape' => 'Integer',
           'locationName' => 'iops',
         ],
-        'Encrypted' =>
-        [
+        'Encrypted' => [
           'shape' => 'Boolean',
           'locationName' => 'encrypted',
         ],
       ],
     ],
-    'EbsInstanceBlockDevice' =>
-    [
+    'EbsInstanceBlockDevice' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VolumeId' =>
-        [
+      'members' => [
+        'VolumeId' => [
           'shape' => 'String',
           'locationName' => 'volumeId',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'AttachmentStatus',
           'locationName' => 'status',
         ],
-        'AttachTime' =>
-        [
+        'AttachTime' => [
           'shape' => 'DateTime',
           'locationName' => 'attachTime',
         ],
-        'DeleteOnTermination' =>
-        [
+        'DeleteOnTermination' => [
           'shape' => 'Boolean',
           'locationName' => 'deleteOnTermination',
         ],
       ],
     ],
-    'EbsInstanceBlockDeviceSpecification' =>
-    [
+    'EbsInstanceBlockDeviceSpecification' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VolumeId' =>
-        [
+      'members' => [
+        'VolumeId' => [
           'shape' => 'String',
           'locationName' => 'volumeId',
         ],
-        'DeleteOnTermination' =>
-        [
+        'DeleteOnTermination' => [
           'shape' => 'Boolean',
           'locationName' => 'deleteOnTermination',
         ],
       ],
     ],
-    'EnableVgwRoutePropagationRequest' =>
-    [
+    'EnableVgwRoutePropagationRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RouteTableId',
-        1 => 'GatewayId',
+      'required' => [
+        'RouteTableId',
+        'GatewayId',
       ],
-      'members' =>
-      [
-        'RouteTableId' =>
-        [
+      'members' => [
+        'RouteTableId' => [
           'shape' => 'String',
         ],
-        'GatewayId' =>
-        [
+        'GatewayId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'EnableVolumeIORequest' =>
-    [
+    'EnableVolumeIORequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VolumeId',
+      'required' => [
+        'VolumeId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VolumeId' =>
-        [
+        'VolumeId' => [
           'shape' => 'String',
           'locationName' => 'volumeId',
         ],
       ],
     ],
-    'EventCode' =>
-    [
+    'EventCode' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'instance-reboot',
-        1 => 'system-reboot',
-        2 => 'system-maintenance',
-        3 => 'instance-retirement',
-        4 => 'instance-stop',
+      'enum' => [
+        'instance-reboot',
+        'system-reboot',
+        'system-maintenance',
+        'instance-retirement',
+        'instance-stop',
       ],
     ],
-    'ExecutableByStringList' =>
-    [
+    'ExecutableByStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'ExecutableBy',
       ],
     ],
-    'ExportEnvironment' =>
-    [
+    'ExportEnvironment' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'citrix',
-        1 => 'vmware',
-        2 => 'microsoft',
+      'enum' => [
+        'citrix',
+        'vmware',
+        'microsoft',
       ],
     ],
-    'ExportTask' =>
-    [
+    'ExportTask' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ExportTaskId' =>
-        [
+      'members' => [
+        'ExportTaskId' => [
           'shape' => 'String',
           'locationName' => 'exportTaskId',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
           'locationName' => 'description',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'ExportTaskState',
           'locationName' => 'state',
         ],
-        'StatusMessage' =>
-        [
+        'StatusMessage' => [
           'shape' => 'String',
           'locationName' => 'statusMessage',
         ],
-        'InstanceExportDetails' =>
-        [
+        'InstanceExportDetails' => [
           'shape' => 'InstanceExportDetails',
           'locationName' => 'instanceExport',
         ],
-        'ExportToS3Task' =>
-        [
+        'ExportToS3Task' => [
           'shape' => 'ExportToS3Task',
           'locationName' => 'exportToS3',
         ],
       ],
     ],
-    'ExportTaskIdStringList' =>
-    [
+    'ExportTaskIdStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'ExportTaskId',
       ],
     ],
-    'ExportTaskList' =>
-    [
+    'ExportTaskList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ExportTask',
         'locationName' => 'item',
       ],
     ],
-    'ExportTaskState' =>
-    [
+    'ExportTaskState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'active',
-        1 => 'cancelling',
-        2 => 'cancelled',
-        3 => 'completed',
+      'enum' => [
+        'active',
+        'cancelling',
+        'cancelled',
+        'completed',
       ],
     ],
-    'ExportToS3Task' =>
-    [
+    'ExportToS3Task' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DiskImageFormat' =>
-        [
+      'members' => [
+        'DiskImageFormat' => [
           'shape' => 'DiskImageFormat',
           'locationName' => 'diskImageFormat',
         ],
-        'ContainerFormat' =>
-        [
+        'ContainerFormat' => [
           'shape' => 'ContainerFormat',
           'locationName' => 'containerFormat',
         ],
-        'S3Bucket' =>
-        [
+        'S3Bucket' => [
           'shape' => 'String',
           'locationName' => 's3Bucket',
         ],
-        'S3Key' =>
-        [
+        'S3Key' => [
           'shape' => 'String',
           'locationName' => 's3Key',
         ],
       ],
     ],
-    'ExportToS3TaskSpecification' =>
-    [
+    'ExportToS3TaskSpecification' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DiskImageFormat' =>
-        [
+      'members' => [
+        'DiskImageFormat' => [
           'shape' => 'DiskImageFormat',
           'locationName' => 'diskImageFormat',
         ],
-        'ContainerFormat' =>
-        [
+        'ContainerFormat' => [
           'shape' => 'ContainerFormat',
           'locationName' => 'containerFormat',
         ],
-        'S3Bucket' =>
-        [
+        'S3Bucket' => [
           'shape' => 'String',
           'locationName' => 's3Bucket',
         ],
-        'S3Prefix' =>
-        [
+        'S3Prefix' => [
           'shape' => 'String',
           'locationName' => 's3Prefix',
         ],
       ],
     ],
-    'Filter' =>
-    [
+    'Filter' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'String',
         ],
-        'Values' =>
-        [
+        'Values' => [
           'shape' => 'ValueStringList',
           'locationName' => 'Value',
         ],
       ],
     ],
-    'FilterList' =>
-    [
+    'FilterList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Filter',
         'locationName' => 'Filter',
       ],
     ],
-    'Float' =>
-    [
+    'Float' => [
       'type' => 'float',
     ],
-    'GatewayType' =>
-    [
+    'GatewayType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'ipsec.1',
+      'enum' => [
+        'ipsec.1',
       ],
     ],
-    'GetConsoleOutputRequest' =>
-    [
+    'GetConsoleOutputRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceId',
+      'required' => [
+        'InstanceId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'GetConsoleOutputResult' =>
-    [
+    'GetConsoleOutputResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'String',
           'locationName' => 'instanceId',
         ],
-        'Timestamp' =>
-        [
+        'Timestamp' => [
           'shape' => 'DateTime',
           'locationName' => 'timestamp',
         ],
-        'Output' =>
-        [
+        'Output' => [
           'shape' => 'String',
           'locationName' => 'output',
         ],
       ],
     ],
-    'GetPasswordDataRequest' =>
-    [
+    'GetPasswordDataRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceId',
+      'required' => [
+        'InstanceId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'GetPasswordDataResult' =>
-    [
+    'GetPasswordDataResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'String',
           'locationName' => 'instanceId',
         ],
-        'Timestamp' =>
-        [
+        'Timestamp' => [
           'shape' => 'DateTime',
           'locationName' => 'timestamp',
         ],
-        'PasswordData' =>
-        [
+        'PasswordData' => [
           'shape' => 'String',
           'locationName' => 'passwordData',
         ],
       ],
     ],
-    'GroupIdStringList' =>
-    [
+    'GroupIdStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'groupId',
       ],
     ],
-    'GroupIdentifier' =>
-    [
+    'GroupIdentifier' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GroupName' =>
-        [
+      'members' => [
+        'GroupName' => [
           'shape' => 'String',
           'locationName' => 'groupName',
         ],
-        'GroupId' =>
-        [
+        'GroupId' => [
           'shape' => 'String',
           'locationName' => 'groupId',
         ],
       ],
     ],
-    'GroupIdentifierList' =>
-    [
+    'GroupIdentifierList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'GroupIdentifier',
         'locationName' => 'item',
       ],
     ],
-    'GroupNameStringList' =>
-    [
+    'GroupNameStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'GroupName',
       ],
     ],
-    'HypervisorType' =>
-    [
+    'HypervisorType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'ovm',
-        1 => 'xen',
+      'enum' => [
+        'ovm',
+        'xen',
       ],
     ],
-    'IamInstanceProfile' =>
-    [
+    'IamInstanceProfile' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Arn' =>
-        [
+      'members' => [
+        'Arn' => [
           'shape' => 'String',
           'locationName' => 'arn',
         ],
-        'Id' =>
-        [
+        'Id' => [
           'shape' => 'String',
           'locationName' => 'id',
         ],
       ],
     ],
-    'IamInstanceProfileSpecification' =>
-    [
+    'IamInstanceProfileSpecification' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Arn' =>
-        [
+      'members' => [
+        'Arn' => [
           'shape' => 'String',
           'locationName' => 'arn',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
           'locationName' => 'name',
         ],
       ],
     ],
-    'IcmpTypeCode' =>
-    [
+    'IcmpTypeCode' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Type' =>
-        [
+      'members' => [
+        'Type' => [
           'shape' => 'Integer',
           'locationName' => 'type',
         ],
-        'Code' =>
-        [
+        'Code' => [
           'shape' => 'Integer',
           'locationName' => 'code',
         ],
       ],
     ],
-    'Image' =>
-    [
+    'Image' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ImageId' =>
-        [
+      'members' => [
+        'ImageId' => [
           'shape' => 'String',
           'locationName' => 'imageId',
         ],
-        'ImageLocation' =>
-        [
+        'ImageLocation' => [
           'shape' => 'String',
           'locationName' => 'imageLocation',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'ImageState',
           'locationName' => 'imageState',
         ],
-        'OwnerId' =>
-        [
+        'OwnerId' => [
           'shape' => 'String',
           'locationName' => 'imageOwnerId',
         ],
-        'Public' =>
-        [
+        'Public' => [
           'shape' => 'Boolean',
           'locationName' => 'isPublic',
         ],
-        'ProductCodes' =>
-        [
+        'ProductCodes' => [
           'shape' => 'ProductCodeList',
           'locationName' => 'productCodes',
         ],
-        'Architecture' =>
-        [
+        'Architecture' => [
           'shape' => 'ArchitectureValues',
           'locationName' => 'architecture',
         ],
-        'ImageType' =>
-        [
+        'ImageType' => [
           'shape' => 'ImageTypeValues',
           'locationName' => 'imageType',
         ],
-        'KernelId' =>
-        [
+        'KernelId' => [
           'shape' => 'String',
           'locationName' => 'kernelId',
         ],
-        'RamdiskId' =>
-        [
+        'RamdiskId' => [
           'shape' => 'String',
           'locationName' => 'ramdiskId',
         ],
-        'Platform' =>
-        [
+        'Platform' => [
           'shape' => 'PlatformValues',
           'locationName' => 'platform',
         ],
-        'SriovNetSupport' =>
-        [
+        'SriovNetSupport' => [
           'shape' => 'String',
           'locationName' => 'sriovNetSupport',
         ],
-        'StateReason' =>
-        [
+        'StateReason' => [
           'shape' => 'StateReason',
           'locationName' => 'stateReason',
         ],
-        'ImageOwnerAlias' =>
-        [
+        'ImageOwnerAlias' => [
           'shape' => 'String',
           'locationName' => 'imageOwnerAlias',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
           'locationName' => 'name',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
           'locationName' => 'description',
         ],
-        'RootDeviceType' =>
-        [
+        'RootDeviceType' => [
           'shape' => 'DeviceType',
           'locationName' => 'rootDeviceType',
         ],
-        'RootDeviceName' =>
-        [
+        'RootDeviceName' => [
           'shape' => 'String',
           'locationName' => 'rootDeviceName',
         ],
-        'BlockDeviceMappings' =>
-        [
+        'BlockDeviceMappings' => [
           'shape' => 'BlockDeviceMappingList',
           'locationName' => 'blockDeviceMapping',
         ],
-        'VirtualizationType' =>
-        [
+        'VirtualizationType' => [
           'shape' => 'VirtualizationType',
           'locationName' => 'virtualizationType',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
           'locationName' => 'tagSet',
         ],
-        'Hypervisor' =>
-        [
+        'Hypervisor' => [
           'shape' => 'HypervisorType',
           'locationName' => 'hypervisor',
         ],
       ],
     ],
-    'ImageAttribute' =>
-    [
+    'ImageAttribute' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ImageId' =>
-        [
+      'members' => [
+        'ImageId' => [
           'shape' => 'String',
           'locationName' => 'imageId',
         ],
-        'LaunchPermissions' =>
-        [
+        'LaunchPermissions' => [
           'shape' => 'LaunchPermissionList',
           'locationName' => 'launchPermission',
         ],
-        'ProductCodes' =>
-        [
+        'ProductCodes' => [
           'shape' => 'ProductCodeList',
           'locationName' => 'productCodes',
         ],
-        'KernelId' =>
-        [
+        'KernelId' => [
           'shape' => 'AttributeValue',
           'locationName' => 'kernel',
         ],
-        'RamdiskId' =>
-        [
+        'RamdiskId' => [
           'shape' => 'AttributeValue',
           'locationName' => 'ramdisk',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'AttributeValue',
           'locationName' => 'description',
         ],
-        'SriovNetSupport' =>
-        [
+        'SriovNetSupport' => [
           'shape' => 'AttributeValue',
           'locationName' => 'sriovNetSupport',
         ],
-        'BlockDeviceMappings' =>
-        [
+        'BlockDeviceMappings' => [
           'shape' => 'BlockDeviceMappingList',
           'locationName' => 'blockDeviceMapping',
         ],
       ],
     ],
-    'ImageAttributeName' =>
-    [
+    'ImageAttributeName' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'description',
-        1 => 'kernel',
-        2 => 'ramdisk',
-        3 => 'launchPermission',
-        4 => 'productCodes',
-        5 => 'blockDeviceMapping',
+      'enum' => [
+        'description',
+        'kernel',
+        'ramdisk',
+        'launchPermission',
+        'productCodes',
+        'blockDeviceMapping',
       ],
     ],
-    'ImageIdStringList' =>
-    [
+    'ImageIdStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'ImageId',
       ],
     ],
-    'ImageList' =>
-    [
+    'ImageList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Image',
         'locationName' => 'item',
       ],
     ],
-    'ImageState' =>
-    [
+    'ImageState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'available',
-        1 => 'deregistered',
+      'enum' => [
+        'available',
+        'deregistered',
       ],
     ],
-    'ImageTypeValues' =>
-    [
+    'ImageTypeValues' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'machine',
-        1 => 'kernel',
-        2 => 'ramdisk',
+      'enum' => [
+        'machine',
+        'kernel',
+        'ramdisk',
       ],
     ],
-    'ImportInstanceLaunchSpecification' =>
-    [
+    'ImportInstanceLaunchSpecification' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Architecture' =>
-        [
+      'members' => [
+        'Architecture' => [
           'shape' => 'ArchitectureValues',
           'locationName' => 'architecture',
         ],
-        'GroupNames' =>
-        [
+        'GroupNames' => [
           'shape' => 'SecurityGroupStringList',
           'locationName' => 'GroupName',
         ],
-        'AdditionalInfo' =>
-        [
+        'AdditionalInfo' => [
           'shape' => 'String',
           'locationName' => 'additionalInfo',
         ],
-        'UserData' =>
-        [
+        'UserData' => [
           'shape' => 'String',
           'locationName' => 'userData',
         ],
-        'InstanceType' =>
-        [
+        'InstanceType' => [
           'shape' => 'InstanceType',
           'locationName' => 'instanceType',
         ],
-        'Placement' =>
-        [
+        'Placement' => [
           'shape' => 'Placement',
           'locationName' => 'placement',
         ],
-        'Monitoring' =>
-        [
+        'Monitoring' => [
           'shape' => 'Boolean',
           'locationName' => 'monitoring',
         ],
-        'SubnetId' =>
-        [
+        'SubnetId' => [
           'shape' => 'String',
           'locationName' => 'subnetId',
         ],
-        'InstanceInitiatedShutdownBehavior' =>
-        [
+        'InstanceInitiatedShutdownBehavior' => [
           'shape' => 'ShutdownBehavior',
           'locationName' => 'instanceInitiatedShutdownBehavior',
         ],
-        'PrivateIpAddress' =>
-        [
+        'PrivateIpAddress' => [
           'shape' => 'String',
           'locationName' => 'privateIpAddress',
         ],
       ],
     ],
-    'ImportInstanceRequest' =>
-    [
+    'ImportInstanceRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Platform',
+      'required' => [
+        'Platform',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
           'locationName' => 'description',
         ],
-        'LaunchSpecification' =>
-        [
+        'LaunchSpecification' => [
           'shape' => 'ImportInstanceLaunchSpecification',
           'locationName' => 'launchSpecification',
         ],
-        'DiskImages' =>
-        [
+        'DiskImages' => [
           'shape' => 'DiskImageList',
           'locationName' => 'diskImage',
         ],
-        'Platform' =>
-        [
+        'Platform' => [
           'shape' => 'PlatformValues',
           'locationName' => 'platform',
         ],
       ],
     ],
-    'ImportInstanceResult' =>
-    [
+    'ImportInstanceResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ConversionTask' =>
-        [
+      'members' => [
+        'ConversionTask' => [
           'shape' => 'ConversionTask',
           'locationName' => 'conversionTask',
         ],
       ],
     ],
-    'ImportInstanceTaskDetails' =>
-    [
+    'ImportInstanceTaskDetails' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Volumes',
+      'required' => [
+        'Volumes',
       ],
-      'members' =>
-      [
-        'Volumes' =>
-        [
+      'members' => [
+        'Volumes' => [
           'shape' => 'ImportInstanceVolumeDetailSet',
           'locationName' => 'volumes',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
           'locationName' => 'instanceId',
         ],
-        'Platform' =>
-        [
+        'Platform' => [
           'shape' => 'PlatformValues',
           'locationName' => 'platform',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
           'locationName' => 'description',
         ],
       ],
     ],
-    'ImportInstanceVolumeDetailItem' =>
-    [
+    'ImportInstanceVolumeDetailItem' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'BytesConverted',
-        1 => 'AvailabilityZone',
-        2 => 'Image',
-        3 => 'Volume',
-        4 => 'Status',
+      'required' => [
+        'BytesConverted',
+        'AvailabilityZone',
+        'Image',
+        'Volume',
+        'Status',
       ],
-      'members' =>
-      [
-        'BytesConverted' =>
-        [
+      'members' => [
+        'BytesConverted' => [
           'shape' => 'Long',
           'locationName' => 'bytesConverted',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
           'locationName' => 'availabilityZone',
         ],
-        'Image' =>
-        [
+        'Image' => [
           'shape' => 'DiskImageDescription',
           'locationName' => 'image',
         ],
-        'Volume' =>
-        [
+        'Volume' => [
           'shape' => 'DiskImageVolumeDescription',
           'locationName' => 'volume',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'String',
           'locationName' => 'status',
         ],
-        'StatusMessage' =>
-        [
+        'StatusMessage' => [
           'shape' => 'String',
           'locationName' => 'statusMessage',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
           'locationName' => 'description',
         ],
       ],
     ],
-    'ImportInstanceVolumeDetailSet' =>
-    [
+    'ImportInstanceVolumeDetailSet' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ImportInstanceVolumeDetailItem',
         'locationName' => 'item',
       ],
     ],
-    'ImportKeyPairRequest' =>
-    [
+    'ImportKeyPairRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'KeyName',
-        1 => 'PublicKeyMaterial',
+      'required' => [
+        'KeyName',
+        'PublicKeyMaterial',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'KeyName' =>
-        [
+        'KeyName' => [
           'shape' => 'String',
           'locationName' => 'keyName',
         ],
-        'PublicKeyMaterial' =>
-        [
+        'PublicKeyMaterial' => [
           'shape' => 'Blob',
           'locationName' => 'publicKeyMaterial',
         ],
       ],
     ],
-    'ImportKeyPairResult' =>
-    [
+    'ImportKeyPairResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'KeyName' =>
-        [
+      'members' => [
+        'KeyName' => [
           'shape' => 'String',
           'locationName' => 'keyName',
         ],
-        'KeyFingerprint' =>
-        [
+        'KeyFingerprint' => [
           'shape' => 'String',
           'locationName' => 'keyFingerprint',
         ],
       ],
     ],
-    'ImportVolumeRequest' =>
-    [
+    'ImportVolumeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AvailabilityZone',
-        1 => 'Image',
-        2 => 'Volume',
+      'required' => [
+        'AvailabilityZone',
+        'Image',
+        'Volume',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
           'locationName' => 'availabilityZone',
         ],
-        'Image' =>
-        [
+        'Image' => [
           'shape' => 'DiskImageDetail',
           'locationName' => 'image',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
           'locationName' => 'description',
         ],
-        'Volume' =>
-        [
+        'Volume' => [
           'shape' => 'VolumeDetail',
           'locationName' => 'volume',
         ],
       ],
     ],
-    'ImportVolumeResult' =>
-    [
+    'ImportVolumeResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ConversionTask' =>
-        [
+      'members' => [
+        'ConversionTask' => [
           'shape' => 'ConversionTask',
           'locationName' => 'conversionTask',
         ],
       ],
     ],
-    'ImportVolumeTaskDetails' =>
-    [
+    'ImportVolumeTaskDetails' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'BytesConverted',
-        1 => 'AvailabilityZone',
-        2 => 'Image',
-        3 => 'Volume',
+      'required' => [
+        'BytesConverted',
+        'AvailabilityZone',
+        'Image',
+        'Volume',
       ],
-      'members' =>
-      [
-        'BytesConverted' =>
-        [
+      'members' => [
+        'BytesConverted' => [
           'shape' => 'Long',
           'locationName' => 'bytesConverted',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
           'locationName' => 'availabilityZone',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
           'locationName' => 'description',
         ],
-        'Image' =>
-        [
+        'Image' => [
           'shape' => 'DiskImageDescription',
           'locationName' => 'image',
         ],
-        'Volume' =>
-        [
+        'Volume' => [
           'shape' => 'DiskImageVolumeDescription',
           'locationName' => 'volume',
         ],
       ],
     ],
-    'Instance' =>
-    [
+    'Instance' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'String',
           'locationName' => 'instanceId',
         ],
-        'ImageId' =>
-        [
+        'ImageId' => [
           'shape' => 'String',
           'locationName' => 'imageId',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'InstanceState',
           'locationName' => 'instanceState',
         ],
-        'PrivateDnsName' =>
-        [
+        'PrivateDnsName' => [
           'shape' => 'String',
           'locationName' => 'privateDnsName',
         ],
-        'PublicDnsName' =>
-        [
+        'PublicDnsName' => [
           'shape' => 'String',
           'locationName' => 'dnsName',
         ],
-        'StateTransitionReason' =>
-        [
+        'StateTransitionReason' => [
           'shape' => 'String',
           'locationName' => 'reason',
         ],
-        'KeyName' =>
-        [
+        'KeyName' => [
           'shape' => 'String',
           'locationName' => 'keyName',
         ],
-        'AmiLaunchIndex' =>
-        [
+        'AmiLaunchIndex' => [
           'shape' => 'Integer',
           'locationName' => 'amiLaunchIndex',
         ],
-        'ProductCodes' =>
-        [
+        'ProductCodes' => [
           'shape' => 'ProductCodeList',
           'locationName' => 'productCodes',
         ],
-        'InstanceType' =>
-        [
+        'InstanceType' => [
           'shape' => 'InstanceType',
           'locationName' => 'instanceType',
         ],
-        'LaunchTime' =>
-        [
+        'LaunchTime' => [
           'shape' => 'DateTime',
           'locationName' => 'launchTime',
         ],
-        'Placement' =>
-        [
+        'Placement' => [
           'shape' => 'Placement',
           'locationName' => 'placement',
         ],
-        'KernelId' =>
-        [
+        'KernelId' => [
           'shape' => 'String',
           'locationName' => 'kernelId',
         ],
-        'RamdiskId' =>
-        [
+        'RamdiskId' => [
           'shape' => 'String',
           'locationName' => 'ramdiskId',
         ],
-        'Platform' =>
-        [
+        'Platform' => [
           'shape' => 'PlatformValues',
           'locationName' => 'platform',
         ],
-        'Monitoring' =>
-        [
+        'Monitoring' => [
           'shape' => 'Monitoring',
           'locationName' => 'monitoring',
         ],
-        'SubnetId' =>
-        [
+        'SubnetId' => [
           'shape' => 'String',
           'locationName' => 'subnetId',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
           'locationName' => 'vpcId',
         ],
-        'PrivateIpAddress' =>
-        [
+        'PrivateIpAddress' => [
           'shape' => 'String',
           'locationName' => 'privateIpAddress',
         ],
-        'PublicIpAddress' =>
-        [
+        'PublicIpAddress' => [
           'shape' => 'String',
           'locationName' => 'ipAddress',
         ],
-        'StateReason' =>
-        [
+        'StateReason' => [
           'shape' => 'StateReason',
           'locationName' => 'stateReason',
         ],
-        'Architecture' =>
-        [
+        'Architecture' => [
           'shape' => 'ArchitectureValues',
           'locationName' => 'architecture',
         ],
-        'RootDeviceType' =>
-        [
+        'RootDeviceType' => [
           'shape' => 'DeviceType',
           'locationName' => 'rootDeviceType',
         ],
-        'RootDeviceName' =>
-        [
+        'RootDeviceName' => [
           'shape' => 'String',
           'locationName' => 'rootDeviceName',
         ],
-        'BlockDeviceMappings' =>
-        [
+        'BlockDeviceMappings' => [
           'shape' => 'InstanceBlockDeviceMappingList',
           'locationName' => 'blockDeviceMapping',
         ],
-        'VirtualizationType' =>
-        [
+        'VirtualizationType' => [
           'shape' => 'VirtualizationType',
           'locationName' => 'virtualizationType',
         ],
-        'InstanceLifecycle' =>
-        [
+        'InstanceLifecycle' => [
           'shape' => 'InstanceLifecycleType',
           'locationName' => 'instanceLifecycle',
         ],
-        'SpotInstanceRequestId' =>
-        [
+        'SpotInstanceRequestId' => [
           'shape' => 'String',
           'locationName' => 'spotInstanceRequestId',
         ],
-        'ClientToken' =>
-        [
+        'ClientToken' => [
           'shape' => 'String',
           'locationName' => 'clientToken',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
           'locationName' => 'tagSet',
         ],
-        'SecurityGroups' =>
-        [
+        'SecurityGroups' => [
           'shape' => 'GroupIdentifierList',
           'locationName' => 'groupSet',
         ],
-        'SourceDestCheck' =>
-        [
+        'SourceDestCheck' => [
           'shape' => 'Boolean',
           'locationName' => 'sourceDestCheck',
         ],
-        'Hypervisor' =>
-        [
+        'Hypervisor' => [
           'shape' => 'HypervisorType',
           'locationName' => 'hypervisor',
         ],
-        'NetworkInterfaces' =>
-        [
+        'NetworkInterfaces' => [
           'shape' => 'InstanceNetworkInterfaceList',
           'locationName' => 'networkInterfaceSet',
         ],
-        'IamInstanceProfile' =>
-        [
+        'IamInstanceProfile' => [
           'shape' => 'IamInstanceProfile',
           'locationName' => 'iamInstanceProfile',
         ],
-        'EbsOptimized' =>
-        [
+        'EbsOptimized' => [
           'shape' => 'Boolean',
           'locationName' => 'ebsOptimized',
         ],
-        'SriovNetSupport' =>
-        [
+        'SriovNetSupport' => [
           'shape' => 'String',
           'locationName' => 'sriovNetSupport',
         ],
       ],
     ],
-    'InstanceAttribute' =>
-    [
+    'InstanceAttribute' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'String',
           'locationName' => 'instanceId',
         ],
-        'InstanceType' =>
-        [
+        'InstanceType' => [
           'shape' => 'AttributeValue',
           'locationName' => 'instanceType',
         ],
-        'KernelId' =>
-        [
+        'KernelId' => [
           'shape' => 'AttributeValue',
           'locationName' => 'kernel',
         ],
-        'RamdiskId' =>
-        [
+        'RamdiskId' => [
           'shape' => 'AttributeValue',
           'locationName' => 'ramdisk',
         ],
-        'UserData' =>
-        [
+        'UserData' => [
           'shape' => 'AttributeValue',
           'locationName' => 'userData',
         ],
-        'DisableApiTermination' =>
-        [
+        'DisableApiTermination' => [
           'shape' => 'AttributeBooleanValue',
           'locationName' => 'disableApiTermination',
         ],
-        'InstanceInitiatedShutdownBehavior' =>
-        [
+        'InstanceInitiatedShutdownBehavior' => [
           'shape' => 'AttributeValue',
           'locationName' => 'instanceInitiatedShutdownBehavior',
         ],
-        'RootDeviceName' =>
-        [
+        'RootDeviceName' => [
           'shape' => 'AttributeValue',
           'locationName' => 'rootDeviceName',
         ],
-        'BlockDeviceMappings' =>
-        [
+        'BlockDeviceMappings' => [
           'shape' => 'InstanceBlockDeviceMappingList',
           'locationName' => 'blockDeviceMapping',
         ],
-        'ProductCodes' =>
-        [
+        'ProductCodes' => [
           'shape' => 'ProductCodeList',
           'locationName' => 'productCodes',
         ],
-        'EbsOptimized' =>
-        [
+        'EbsOptimized' => [
           'shape' => 'AttributeBooleanValue',
           'locationName' => 'ebsOptimized',
         ],
-        'SriovNetSupport' =>
-        [
+        'SriovNetSupport' => [
           'shape' => 'AttributeValue',
           'locationName' => 'sriovNetSupport',
         ],
-        'SourceDestCheck' =>
-        [
+        'SourceDestCheck' => [
           'shape' => 'AttributeBooleanValue',
           'locationName' => 'sourceDestCheck',
         ],
-        'Groups' =>
-        [
+        'Groups' => [
           'shape' => 'GroupIdentifierList',
           'locationName' => 'groupSet',
         ],
       ],
     ],
-    'InstanceAttributeName' =>
-    [
+    'InstanceAttributeName' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'instanceType',
-        1 => 'kernel',
-        2 => 'ramdisk',
-        3 => 'userData',
-        4 => 'disableApiTermination',
-        5 => 'instanceInitiatedShutdownBehavior',
-        6 => 'rootDeviceName',
-        7 => 'blockDeviceMapping',
-        8 => 'productCodes',
-        9 => 'sourceDestCheck',
-        10 => 'groupSet',
-        11 => 'ebsOptimized',
-        12 => 'sriovNetSupport',
+      'enum' => [
+        'instanceType',
+        'kernel',
+        'ramdisk',
+        'userData',
+        'disableApiTermination',
+        'instanceInitiatedShutdownBehavior',
+        'rootDeviceName',
+        'blockDeviceMapping',
+        'productCodes',
+        'sourceDestCheck',
+        'groupSet',
+        'ebsOptimized',
+        'sriovNetSupport',
       ],
     ],
-    'InstanceBlockDeviceMapping' =>
-    [
+    'InstanceBlockDeviceMapping' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DeviceName' =>
-        [
+      'members' => [
+        'DeviceName' => [
           'shape' => 'String',
           'locationName' => 'deviceName',
         ],
-        'Ebs' =>
-        [
+        'Ebs' => [
           'shape' => 'EbsInstanceBlockDevice',
           'locationName' => 'ebs',
         ],
       ],
     ],
-    'InstanceBlockDeviceMappingList' =>
-    [
+    'InstanceBlockDeviceMappingList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'InstanceBlockDeviceMapping',
         'locationName' => 'item',
       ],
     ],
-    'InstanceBlockDeviceMappingSpecification' =>
-    [
+    'InstanceBlockDeviceMappingSpecification' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DeviceName' =>
-        [
+      'members' => [
+        'DeviceName' => [
           'shape' => 'String',
           'locationName' => 'deviceName',
         ],
-        'Ebs' =>
-        [
+        'Ebs' => [
           'shape' => 'EbsInstanceBlockDeviceSpecification',
           'locationName' => 'ebs',
         ],
-        'VirtualName' =>
-        [
+        'VirtualName' => [
           'shape' => 'String',
           'locationName' => 'virtualName',
         ],
-        'NoDevice' =>
-        [
+        'NoDevice' => [
           'shape' => 'String',
           'locationName' => 'noDevice',
         ],
       ],
     ],
-    'InstanceBlockDeviceMappingSpecificationList' =>
-    [
+    'InstanceBlockDeviceMappingSpecificationList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'InstanceBlockDeviceMappingSpecification',
         'locationName' => 'item',
       ],
     ],
-    'InstanceCount' =>
-    [
+    'InstanceCount' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'State' =>
-        [
+      'members' => [
+        'State' => [
           'shape' => 'ListingState',
           'locationName' => 'state',
         ],
-        'InstanceCount' =>
-        [
+        'InstanceCount' => [
           'shape' => 'Integer',
           'locationName' => 'instanceCount',
         ],
       ],
     ],
-    'InstanceCountList' =>
-    [
+    'InstanceCountList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'InstanceCount',
         'locationName' => 'item',
       ],
     ],
-    'InstanceExportDetails' =>
-    [
+    'InstanceExportDetails' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'String',
           'locationName' => 'instanceId',
         ],
-        'TargetEnvironment' =>
-        [
+        'TargetEnvironment' => [
           'shape' => 'ExportEnvironment',
           'locationName' => 'targetEnvironment',
         ],
       ],
     ],
-    'InstanceIdStringList' =>
-    [
+    'InstanceIdStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'InstanceId',
       ],
     ],
-    'InstanceLifecycleType' =>
-    [
+    'InstanceLifecycleType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'spot',
+      'enum' => [
+        'spot',
       ],
     ],
-    'InstanceList' =>
-    [
+    'InstanceList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Instance',
         'locationName' => 'item',
       ],
     ],
-    'InstanceMonitoring' =>
-    [
+    'InstanceMonitoring' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'String',
           'locationName' => 'instanceId',
         ],
-        'Monitoring' =>
-        [
+        'Monitoring' => [
           'shape' => 'Monitoring',
           'locationName' => 'monitoring',
         ],
       ],
     ],
-    'InstanceMonitoringList' =>
-    [
+    'InstanceMonitoringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'InstanceMonitoring',
         'locationName' => 'item',
       ],
     ],
-    'InstanceNetworkInterface' =>
-    [
+    'InstanceNetworkInterface' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'NetworkInterfaceId' =>
-        [
+      'members' => [
+        'NetworkInterfaceId' => [
           'shape' => 'String',
           'locationName' => 'networkInterfaceId',
         ],
-        'SubnetId' =>
-        [
+        'SubnetId' => [
           'shape' => 'String',
           'locationName' => 'subnetId',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
           'locationName' => 'vpcId',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
           'locationName' => 'description',
         ],
-        'OwnerId' =>
-        [
+        'OwnerId' => [
           'shape' => 'String',
           'locationName' => 'ownerId',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'NetworkInterfaceStatus',
           'locationName' => 'status',
         ],
-        'PrivateIpAddress' =>
-        [
+        'PrivateIpAddress' => [
           'shape' => 'String',
           'locationName' => 'privateIpAddress',
         ],
-        'PrivateDnsName' =>
-        [
+        'PrivateDnsName' => [
           'shape' => 'String',
           'locationName' => 'privateDnsName',
         ],
-        'SourceDestCheck' =>
-        [
+        'SourceDestCheck' => [
           'shape' => 'Boolean',
           'locationName' => 'sourceDestCheck',
         ],
-        'Groups' =>
-        [
+        'Groups' => [
           'shape' => 'GroupIdentifierList',
           'locationName' => 'groupSet',
         ],
-        'Attachment' =>
-        [
+        'Attachment' => [
           'shape' => 'InstanceNetworkInterfaceAttachment',
           'locationName' => 'attachment',
         ],
-        'Association' =>
-        [
+        'Association' => [
           'shape' => 'InstanceNetworkInterfaceAssociation',
           'locationName' => 'association',
         ],
-        'PrivateIpAddresses' =>
-        [
+        'PrivateIpAddresses' => [
           'shape' => 'InstancePrivateIpAddressList',
           'locationName' => 'privateIpAddressesSet',
         ],
       ],
     ],
-    'InstanceNetworkInterfaceAssociation' =>
-    [
+    'InstanceNetworkInterfaceAssociation' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PublicIp' =>
-        [
+      'members' => [
+        'PublicIp' => [
           'shape' => 'String',
           'locationName' => 'publicIp',
         ],
-        'PublicDnsName' =>
-        [
+        'PublicDnsName' => [
           'shape' => 'String',
           'locationName' => 'publicDnsName',
         ],
-        'IpOwnerId' =>
-        [
+        'IpOwnerId' => [
           'shape' => 'String',
           'locationName' => 'ipOwnerId',
         ],
       ],
     ],
-    'InstanceNetworkInterfaceAttachment' =>
-    [
+    'InstanceNetworkInterfaceAttachment' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AttachmentId' =>
-        [
+      'members' => [
+        'AttachmentId' => [
           'shape' => 'String',
           'locationName' => 'attachmentId',
         ],
-        'DeviceIndex' =>
-        [
+        'DeviceIndex' => [
           'shape' => 'Integer',
           'locationName' => 'deviceIndex',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'AttachmentStatus',
           'locationName' => 'status',
         ],
-        'AttachTime' =>
-        [
+        'AttachTime' => [
           'shape' => 'DateTime',
           'locationName' => 'attachTime',
         ],
-        'DeleteOnTermination' =>
-        [
+        'DeleteOnTermination' => [
           'shape' => 'Boolean',
           'locationName' => 'deleteOnTermination',
         ],
       ],
     ],
-    'InstanceNetworkInterfaceList' =>
-    [
+    'InstanceNetworkInterfaceList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'InstanceNetworkInterface',
         'locationName' => 'item',
       ],
     ],
-    'InstanceNetworkInterfaceSpecification' =>
-    [
+    'InstanceNetworkInterfaceSpecification' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'NetworkInterfaceId' =>
-        [
+      'members' => [
+        'NetworkInterfaceId' => [
           'shape' => 'String',
           'locationName' => 'networkInterfaceId',
         ],
-        'DeviceIndex' =>
-        [
+        'DeviceIndex' => [
           'shape' => 'Integer',
           'locationName' => 'deviceIndex',
         ],
-        'SubnetId' =>
-        [
+        'SubnetId' => [
           'shape' => 'String',
           'locationName' => 'subnetId',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
           'locationName' => 'description',
         ],
-        'PrivateIpAddress' =>
-        [
+        'PrivateIpAddress' => [
           'shape' => 'String',
           'locationName' => 'privateIpAddress',
         ],
-        'Groups' =>
-        [
+        'Groups' => [
           'shape' => 'SecurityGroupIdStringList',
           'locationName' => 'SecurityGroupId',
         ],
-        'DeleteOnTermination' =>
-        [
+        'DeleteOnTermination' => [
           'shape' => 'Boolean',
           'locationName' => 'deleteOnTermination',
         ],
-        'PrivateIpAddresses' =>
-        [
+        'PrivateIpAddresses' => [
           'shape' => 'PrivateIpAddressSpecificationList',
           'locationName' => 'privateIpAddressesSet',
           'queryName' => 'PrivateIpAddresses',
         ],
-        'SecondaryPrivateIpAddressCount' =>
-        [
+        'SecondaryPrivateIpAddressCount' => [
           'shape' => 'Integer',
           'locationName' => 'secondaryPrivateIpAddressCount',
         ],
-        'AssociatePublicIpAddress' =>
-        [
+        'AssociatePublicIpAddress' => [
           'shape' => 'Boolean',
           'locationName' => 'associatePublicIpAddress',
         ],
       ],
     ],
-    'InstanceNetworkInterfaceSpecificationList' =>
-    [
+    'InstanceNetworkInterfaceSpecificationList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'InstanceNetworkInterfaceSpecification',
         'locationName' => 'item',
       ],
     ],
-    'InstancePrivateIpAddress' =>
-    [
+    'InstancePrivateIpAddress' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PrivateIpAddress' =>
-        [
+      'members' => [
+        'PrivateIpAddress' => [
           'shape' => 'String',
           'locationName' => 'privateIpAddress',
         ],
-        'PrivateDnsName' =>
-        [
+        'PrivateDnsName' => [
           'shape' => 'String',
           'locationName' => 'privateDnsName',
         ],
-        'Primary' =>
-        [
+        'Primary' => [
           'shape' => 'Boolean',
           'locationName' => 'primary',
         ],
-        'Association' =>
-        [
+        'Association' => [
           'shape' => 'InstanceNetworkInterfaceAssociation',
           'locationName' => 'association',
         ],
       ],
     ],
-    'InstancePrivateIpAddressList' =>
-    [
+    'InstancePrivateIpAddressList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'InstancePrivateIpAddress',
         'locationName' => 'item',
       ],
     ],
-    'InstanceState' =>
-    [
+    'InstanceState' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Code' =>
-        [
+      'members' => [
+        'Code' => [
           'shape' => 'Integer',
           'locationName' => 'code',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'InstanceStateName',
           'locationName' => 'name',
         ],
       ],
     ],
-    'InstanceStateChange' =>
-    [
+    'InstanceStateChange' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'String',
           'locationName' => 'instanceId',
         ],
-        'CurrentState' =>
-        [
+        'CurrentState' => [
           'shape' => 'InstanceState',
           'locationName' => 'currentState',
         ],
-        'PreviousState' =>
-        [
+        'PreviousState' => [
           'shape' => 'InstanceState',
           'locationName' => 'previousState',
         ],
       ],
     ],
-    'InstanceStateChangeList' =>
-    [
+    'InstanceStateChangeList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'InstanceStateChange',
         'locationName' => 'item',
       ],
     ],
-    'InstanceStateName' =>
-    [
+    'InstanceStateName' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'pending',
-        1 => 'running',
-        2 => 'shutting-down',
-        3 => 'terminated',
-        4 => 'stopping',
-        5 => 'stopped',
+      'enum' => [
+        'pending',
+        'running',
+        'shutting-down',
+        'terminated',
+        'stopping',
+        'stopped',
       ],
     ],
-    'InstanceStatus' =>
-    [
+    'InstanceStatus' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceId' =>
-        [
+      'members' => [
+        'InstanceId' => [
           'shape' => 'String',
           'locationName' => 'instanceId',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
           'locationName' => 'availabilityZone',
         ],
-        'Events' =>
-        [
+        'Events' => [
           'shape' => 'InstanceStatusEventList',
           'locationName' => 'eventsSet',
         ],
-        'InstanceState' =>
-        [
+        'InstanceState' => [
           'shape' => 'InstanceState',
           'locationName' => 'instanceState',
         ],
-        'SystemStatus' =>
-        [
+        'SystemStatus' => [
           'shape' => 'InstanceStatusSummary',
           'locationName' => 'systemStatus',
         ],
-        'InstanceStatus' =>
-        [
+        'InstanceStatus' => [
           'shape' => 'InstanceStatusSummary',
           'locationName' => 'instanceStatus',
         ],
       ],
     ],
-    'InstanceStatusDetails' =>
-    [
+    'InstanceStatusDetails' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'StatusName',
           'locationName' => 'name',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'StatusType',
           'locationName' => 'status',
         ],
-        'ImpairedSince' =>
-        [
+        'ImpairedSince' => [
           'shape' => 'DateTime',
           'locationName' => 'impairedSince',
         ],
       ],
     ],
-    'InstanceStatusDetailsList' =>
-    [
+    'InstanceStatusDetailsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'InstanceStatusDetails',
         'locationName' => 'item',
       ],
     ],
-    'InstanceStatusEvent' =>
-    [
+    'InstanceStatusEvent' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Code' =>
-        [
+      'members' => [
+        'Code' => [
           'shape' => 'EventCode',
           'locationName' => 'code',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
           'locationName' => 'description',
         ],
-        'NotBefore' =>
-        [
+        'NotBefore' => [
           'shape' => 'DateTime',
           'locationName' => 'notBefore',
         ],
-        'NotAfter' =>
-        [
+        'NotAfter' => [
           'shape' => 'DateTime',
           'locationName' => 'notAfter',
         ],
       ],
     ],
-    'InstanceStatusEventList' =>
-    [
+    'InstanceStatusEventList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'InstanceStatusEvent',
         'locationName' => 'item',
       ],
     ],
-    'InstanceStatusList' =>
-    [
+    'InstanceStatusList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'InstanceStatus',
         'locationName' => 'item',
       ],
     ],
-    'InstanceStatusSummary' =>
-    [
+    'InstanceStatusSummary' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Status' =>
-        [
+      'members' => [
+        'Status' => [
           'shape' => 'SummaryStatus',
           'locationName' => 'status',
         ],
-        'Details' =>
-        [
+        'Details' => [
           'shape' => 'InstanceStatusDetailsList',
           'locationName' => 'details',
         ],
       ],
     ],
-    'InstanceType' =>
-    [
+    'InstanceType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 't1.micro',
-        1 => 'm1.small',
-        2 => 'm1.medium',
-        3 => 'm1.large',
-        4 => 'm1.xlarge',
-        5 => 'm3.medium',
-        6 => 'm3.large',
-        7 => 'm3.xlarge',
-        8 => 'm3.2xlarge',
-        9 => 't2.micro',
-        10 => 't2.small',
-        11 => 't2.medium',
-        12 => 'm2.xlarge',
-        13 => 'm2.2xlarge',
-        14 => 'm2.4xlarge',
-        15 => 'cr1.8xlarge',
-        16 => 'i2.xlarge',
-        17 => 'i2.2xlarge',
-        18 => 'i2.4xlarge',
-        19 => 'i2.8xlarge',
-        20 => 'hi1.4xlarge',
-        21 => 'hs1.8xlarge',
-        22 => 'c1.medium',
-        23 => 'c1.xlarge',
-        24 => 'c3.large',
-        25 => 'c3.xlarge',
-        26 => 'c3.2xlarge',
-        27 => 'c3.4xlarge',
-        28 => 'c3.8xlarge',
-        29 => 'cc1.4xlarge',
-        30 => 'cc2.8xlarge',
-        31 => 'g2.2xlarge',
-        32 => 'cg1.4xlarge',
-        33 => 'r3.large',
-        34 => 'r3.xlarge',
-        35 => 'r3.2xlarge',
-        36 => 'r3.4xlarge',
-        37 => 'r3.8xlarge',
+      'enum' => [
+        't1.micro',
+        'm1.small',
+        'm1.medium',
+        'm1.large',
+        'm1.xlarge',
+        'm3.medium',
+        'm3.large',
+        'm3.xlarge',
+        'm3.2xlarge',
+        't2.micro',
+        't2.small',
+        't2.medium',
+        'm2.xlarge',
+        'm2.2xlarge',
+        'm2.4xlarge',
+        'cr1.8xlarge',
+        'i2.xlarge',
+        'i2.2xlarge',
+        'i2.4xlarge',
+        'i2.8xlarge',
+        'hi1.4xlarge',
+        'hs1.8xlarge',
+        'c1.medium',
+        'c1.xlarge',
+        'c3.large',
+        'c3.xlarge',
+        'c3.2xlarge',
+        'c3.4xlarge',
+        'c3.8xlarge',
+        'cc1.4xlarge',
+        'cc2.8xlarge',
+        'g2.2xlarge',
+        'cg1.4xlarge',
+        'r3.large',
+        'r3.xlarge',
+        'r3.2xlarge',
+        'r3.4xlarge',
+        'r3.8xlarge',
       ],
     ],
-    'InstanceTypeList' =>
-    [
+    'InstanceTypeList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'InstanceType',
       ],
     ],
-    'Integer' =>
-    [
+    'Integer' => [
       'type' => 'integer',
     ],
-    'InternetGateway' =>
-    [
+    'InternetGateway' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InternetGatewayId' =>
-        [
+      'members' => [
+        'InternetGatewayId' => [
           'shape' => 'String',
           'locationName' => 'internetGatewayId',
         ],
-        'Attachments' =>
-        [
+        'Attachments' => [
           'shape' => 'InternetGatewayAttachmentList',
           'locationName' => 'attachmentSet',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
           'locationName' => 'tagSet',
         ],
       ],
     ],
-    'InternetGatewayAttachment' =>
-    [
+    'InternetGatewayAttachment' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VpcId' =>
-        [
+      'members' => [
+        'VpcId' => [
           'shape' => 'String',
           'locationName' => 'vpcId',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'AttachmentStatus',
           'locationName' => 'state',
         ],
       ],
     ],
-    'InternetGatewayAttachmentList' =>
-    [
+    'InternetGatewayAttachmentList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'InternetGatewayAttachment',
         'locationName' => 'item',
       ],
     ],
-    'InternetGatewayList' =>
-    [
+    'InternetGatewayList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'InternetGateway',
         'locationName' => 'item',
       ],
     ],
-    'IpPermission' =>
-    [
+    'IpPermission' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IpProtocol' =>
-        [
+      'members' => [
+        'IpProtocol' => [
           'shape' => 'String',
           'locationName' => 'ipProtocol',
         ],
-        'FromPort' =>
-        [
+        'FromPort' => [
           'shape' => 'Integer',
           'locationName' => 'fromPort',
         ],
-        'ToPort' =>
-        [
+        'ToPort' => [
           'shape' => 'Integer',
           'locationName' => 'toPort',
         ],
-        'UserIdGroupPairs' =>
-        [
+        'UserIdGroupPairs' => [
           'shape' => 'UserIdGroupPairList',
           'locationName' => 'groups',
         ],
-        'IpRanges' =>
-        [
+        'IpRanges' => [
           'shape' => 'IpRangeList',
           'locationName' => 'ipRanges',
         ],
       ],
     ],
-    'IpPermissionList' =>
-    [
+    'IpPermissionList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'IpPermission',
         'locationName' => 'item',
       ],
     ],
-    'IpRange' =>
-    [
+    'IpRange' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CidrIp' =>
-        [
+      'members' => [
+        'CidrIp' => [
           'shape' => 'String',
           'locationName' => 'cidrIp',
         ],
       ],
     ],
-    'IpRangeList' =>
-    [
+    'IpRangeList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'IpRange',
         'locationName' => 'item',
       ],
     ],
-    'KeyNameStringList' =>
-    [
+    'KeyNameStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'KeyName',
       ],
     ],
-    'KeyPair' =>
-    [
+    'KeyPair' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'KeyName' =>
-        [
+      'members' => [
+        'KeyName' => [
           'shape' => 'String',
           'locationName' => 'keyName',
         ],
-        'KeyFingerprint' =>
-        [
+        'KeyFingerprint' => [
           'shape' => 'String',
           'locationName' => 'keyFingerprint',
         ],
-        'KeyMaterial' =>
-        [
+        'KeyMaterial' => [
           'shape' => 'String',
           'locationName' => 'keyMaterial',
         ],
       ],
     ],
-    'KeyPairInfo' =>
-    [
+    'KeyPairInfo' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'KeyName' =>
-        [
+      'members' => [
+        'KeyName' => [
           'shape' => 'String',
           'locationName' => 'keyName',
         ],
-        'KeyFingerprint' =>
-        [
+        'KeyFingerprint' => [
           'shape' => 'String',
           'locationName' => 'keyFingerprint',
         ],
       ],
     ],
-    'KeyPairList' =>
-    [
+    'KeyPairList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'KeyPairInfo',
         'locationName' => 'item',
       ],
     ],
-    'LaunchPermission' =>
-    [
+    'LaunchPermission' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'UserId' =>
-        [
+      'members' => [
+        'UserId' => [
           'shape' => 'String',
           'locationName' => 'userId',
         ],
-        'Group' =>
-        [
+        'Group' => [
           'shape' => 'PermissionGroup',
           'locationName' => 'group',
         ],
       ],
     ],
-    'LaunchPermissionList' =>
-    [
+    'LaunchPermissionList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'LaunchPermission',
         'locationName' => 'item',
       ],
     ],
-    'LaunchPermissionModifications' =>
-    [
+    'LaunchPermissionModifications' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Add' =>
-        [
+      'members' => [
+        'Add' => [
           'shape' => 'LaunchPermissionList',
         ],
-        'Remove' =>
-        [
+        'Remove' => [
           'shape' => 'LaunchPermissionList',
         ],
       ],
     ],
-    'LaunchSpecification' =>
-    [
+    'LaunchSpecification' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ImageId' =>
-        [
+      'members' => [
+        'ImageId' => [
           'shape' => 'String',
           'locationName' => 'imageId',
         ],
-        'KeyName' =>
-        [
+        'KeyName' => [
           'shape' => 'String',
           'locationName' => 'keyName',
         ],
-        'SecurityGroups' =>
-        [
+        'SecurityGroups' => [
           'shape' => 'GroupIdentifierList',
           'locationName' => 'groupSet',
         ],
-        'UserData' =>
-        [
+        'UserData' => [
           'shape' => 'String',
           'locationName' => 'userData',
         ],
-        'AddressingType' =>
-        [
+        'AddressingType' => [
           'shape' => 'String',
           'locationName' => 'addressingType',
         ],
-        'InstanceType' =>
-        [
+        'InstanceType' => [
           'shape' => 'InstanceType',
           'locationName' => 'instanceType',
         ],
-        'Placement' =>
-        [
+        'Placement' => [
           'shape' => 'SpotPlacement',
           'locationName' => 'placement',
         ],
-        'KernelId' =>
-        [
+        'KernelId' => [
           'shape' => 'String',
           'locationName' => 'kernelId',
         ],
-        'RamdiskId' =>
-        [
+        'RamdiskId' => [
           'shape' => 'String',
           'locationName' => 'ramdiskId',
         ],
-        'BlockDeviceMappings' =>
-        [
+        'BlockDeviceMappings' => [
           'shape' => 'BlockDeviceMappingList',
           'locationName' => 'blockDeviceMapping',
         ],
-        'SubnetId' =>
-        [
+        'SubnetId' => [
           'shape' => 'String',
           'locationName' => 'subnetId',
         ],
-        'NetworkInterfaces' =>
-        [
+        'NetworkInterfaces' => [
           'shape' => 'InstanceNetworkInterfaceSpecificationList',
           'locationName' => 'networkInterfaceSet',
         ],
-        'IamInstanceProfile' =>
-        [
+        'IamInstanceProfile' => [
           'shape' => 'IamInstanceProfileSpecification',
           'locationName' => 'iamInstanceProfile',
         ],
-        'EbsOptimized' =>
-        [
+        'EbsOptimized' => [
           'shape' => 'Boolean',
           'locationName' => 'ebsOptimized',
         ],
-        'Monitoring' =>
-        [
+        'Monitoring' => [
           'shape' => 'RunInstancesMonitoringEnabled',
           'locationName' => 'monitoring',
         ],
       ],
     ],
-    'ListingState' =>
-    [
+    'ListingState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'available',
-        1 => 'sold',
-        2 => 'cancelled',
-        3 => 'pending',
+      'enum' => [
+        'available',
+        'sold',
+        'cancelled',
+        'pending',
       ],
     ],
-    'ListingStatus' =>
-    [
+    'ListingStatus' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'active',
-        1 => 'pending',
-        2 => 'cancelled',
-        3 => 'closed',
+      'enum' => [
+        'active',
+        'pending',
+        'cancelled',
+        'closed',
       ],
     ],
-    'Long' =>
-    [
+    'Long' => [
       'type' => 'long',
     ],
-    'ModifyImageAttributeRequest' =>
-    [
+    'ModifyImageAttributeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ImageId',
+      'required' => [
+        'ImageId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'ImageId' =>
-        [
+        'ImageId' => [
           'shape' => 'String',
         ],
-        'Attribute' =>
-        [
+        'Attribute' => [
           'shape' => 'String',
         ],
-        'OperationType' =>
-        [
+        'OperationType' => [
           'shape' => 'String',
         ],
-        'UserIds' =>
-        [
+        'UserIds' => [
           'shape' => 'UserIdStringList',
           'locationName' => 'UserId',
         ],
-        'UserGroups' =>
-        [
+        'UserGroups' => [
           'shape' => 'UserGroupStringList',
           'locationName' => 'UserGroup',
         ],
-        'ProductCodes' =>
-        [
+        'ProductCodes' => [
           'shape' => 'ProductCodeStringList',
           'locationName' => 'ProductCode',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'String',
         ],
-        'LaunchPermission' =>
-        [
+        'LaunchPermission' => [
           'shape' => 'LaunchPermissionModifications',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'AttributeValue',
         ],
       ],
     ],
-    'ModifyInstanceAttributeRequest' =>
-    [
+    'ModifyInstanceAttributeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceId',
+      'required' => [
+        'InstanceId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
           'locationName' => 'instanceId',
         ],
-        'Attribute' =>
-        [
+        'Attribute' => [
           'shape' => 'InstanceAttributeName',
           'locationName' => 'attribute',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'String',
           'locationName' => 'value',
         ],
-        'BlockDeviceMappings' =>
-        [
+        'BlockDeviceMappings' => [
           'shape' => 'InstanceBlockDeviceMappingSpecificationList',
           'locationName' => 'blockDeviceMapping',
         ],
-        'SourceDestCheck' =>
-        [
+        'SourceDestCheck' => [
           'shape' => 'AttributeBooleanValue',
         ],
-        'DisableApiTermination' =>
-        [
+        'DisableApiTermination' => [
           'shape' => 'AttributeBooleanValue',
           'locationName' => 'disableApiTermination',
         ],
-        'InstanceType' =>
-        [
+        'InstanceType' => [
           'shape' => 'AttributeValue',
           'locationName' => 'instanceType',
         ],
-        'Kernel' =>
-        [
+        'Kernel' => [
           'shape' => 'AttributeValue',
           'locationName' => 'kernel',
         ],
-        'Ramdisk' =>
-        [
+        'Ramdisk' => [
           'shape' => 'AttributeValue',
           'locationName' => 'ramdisk',
         ],
-        'UserData' =>
-        [
+        'UserData' => [
           'shape' => 'BlobAttributeValue',
           'locationName' => 'userData',
         ],
-        'InstanceInitiatedShutdownBehavior' =>
-        [
+        'InstanceInitiatedShutdownBehavior' => [
           'shape' => 'AttributeValue',
           'locationName' => 'instanceInitiatedShutdownBehavior',
         ],
-        'Groups' =>
-        [
+        'Groups' => [
           'shape' => 'GroupIdStringList',
           'locationName' => 'GroupId',
         ],
-        'EbsOptimized' =>
-        [
+        'EbsOptimized' => [
           'shape' => 'AttributeBooleanValue',
           'locationName' => 'ebsOptimized',
         ],
-        'SriovNetSupport' =>
-        [
+        'SriovNetSupport' => [
           'shape' => 'AttributeValue',
           'locationName' => 'sriovNetSupport',
         ],
       ],
     ],
-    'ModifyNetworkInterfaceAttributeRequest' =>
-    [
+    'ModifyNetworkInterfaceAttributeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'NetworkInterfaceId',
+      'required' => [
+        'NetworkInterfaceId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'NetworkInterfaceId' =>
-        [
+        'NetworkInterfaceId' => [
           'shape' => 'String',
           'locationName' => 'networkInterfaceId',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'AttributeValue',
           'locationName' => 'description',
         ],
-        'SourceDestCheck' =>
-        [
+        'SourceDestCheck' => [
           'shape' => 'AttributeBooleanValue',
           'locationName' => 'sourceDestCheck',
         ],
-        'Groups' =>
-        [
+        'Groups' => [
           'shape' => 'SecurityGroupIdStringList',
           'locationName' => 'SecurityGroupId',
         ],
-        'Attachment' =>
-        [
+        'Attachment' => [
           'shape' => 'NetworkInterfaceAttachmentChanges',
           'locationName' => 'attachment',
         ],
       ],
     ],
-    'ModifyReservedInstancesRequest' =>
-    [
+    'ModifyReservedInstancesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ReservedInstancesIds',
-        1 => 'TargetConfigurations',
+      'required' => [
+        'ReservedInstancesIds',
+        'TargetConfigurations',
       ],
-      'members' =>
-      [
-        'ClientToken' =>
-        [
+      'members' => [
+        'ClientToken' => [
           'shape' => 'String',
           'locationName' => 'clientToken',
         ],
-        'ReservedInstancesIds' =>
-        [
+        'ReservedInstancesIds' => [
           'shape' => 'ReservedInstancesIdStringList',
           'locationName' => 'ReservedInstancesId',
         ],
-        'TargetConfigurations' =>
-        [
+        'TargetConfigurations' => [
           'shape' => 'ReservedInstancesConfigurationList',
           'locationName' => 'ReservedInstancesConfigurationSetItemType',
         ],
       ],
     ],
-    'ModifyReservedInstancesResult' =>
-    [
+    'ModifyReservedInstancesResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedInstancesModificationId' =>
-        [
+      'members' => [
+        'ReservedInstancesModificationId' => [
           'shape' => 'String',
           'locationName' => 'reservedInstancesModificationId',
         ],
       ],
     ],
-    'ModifySnapshotAttributeRequest' =>
-    [
+    'ModifySnapshotAttributeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SnapshotId',
+      'required' => [
+        'SnapshotId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'SnapshotId' =>
-        [
+        'SnapshotId' => [
           'shape' => 'String',
         ],
-        'Attribute' =>
-        [
+        'Attribute' => [
           'shape' => 'SnapshotAttributeName',
         ],
-        'OperationType' =>
-        [
+        'OperationType' => [
           'shape' => 'String',
         ],
-        'UserIds' =>
-        [
+        'UserIds' => [
           'shape' => 'UserIdStringList',
           'locationName' => 'UserId',
         ],
-        'GroupNames' =>
-        [
+        'GroupNames' => [
           'shape' => 'GroupNameStringList',
           'locationName' => 'UserGroup',
         ],
-        'CreateVolumePermission' =>
-        [
+        'CreateVolumePermission' => [
           'shape' => 'CreateVolumePermissionModifications',
         ],
       ],
     ],
-    'ModifySubnetAttributeRequest' =>
-    [
+    'ModifySubnetAttributeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SubnetId',
+      'required' => [
+        'SubnetId',
       ],
-      'members' =>
-      [
-        'SubnetId' =>
-        [
+      'members' => [
+        'SubnetId' => [
           'shape' => 'String',
           'locationName' => 'subnetId',
         ],
-        'MapPublicIpOnLaunch' =>
-        [
+        'MapPublicIpOnLaunch' => [
           'shape' => 'AttributeBooleanValue',
         ],
       ],
     ],
-    'ModifyVolumeAttributeRequest' =>
-    [
+    'ModifyVolumeAttributeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VolumeId',
+      'required' => [
+        'VolumeId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VolumeId' =>
-        [
+        'VolumeId' => [
           'shape' => 'String',
         ],
-        'AutoEnableIO' =>
-        [
+        'AutoEnableIO' => [
           'shape' => 'AttributeBooleanValue',
         ],
       ],
     ],
-    'ModifyVpcAttributeRequest' =>
-    [
+    'ModifyVpcAttributeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VpcId',
+      'required' => [
+        'VpcId',
       ],
-      'members' =>
-      [
-        'VpcId' =>
-        [
+      'members' => [
+        'VpcId' => [
           'shape' => 'String',
           'locationName' => 'vpcId',
         ],
-        'EnableDnsSupport' =>
-        [
+        'EnableDnsSupport' => [
           'shape' => 'AttributeBooleanValue',
         ],
-        'EnableDnsHostnames' =>
-        [
+        'EnableDnsHostnames' => [
           'shape' => 'AttributeBooleanValue',
         ],
       ],
     ],
-    'MonitorInstancesRequest' =>
-    [
+    'MonitorInstancesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceIds',
+      'required' => [
+        'InstanceIds',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'InstanceIds' =>
-        [
+        'InstanceIds' => [
           'shape' => 'InstanceIdStringList',
           'locationName' => 'InstanceId',
         ],
       ],
     ],
-    'MonitorInstancesResult' =>
-    [
+    'MonitorInstancesResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceMonitorings' =>
-        [
+      'members' => [
+        'InstanceMonitorings' => [
           'shape' => 'InstanceMonitoringList',
           'locationName' => 'instancesSet',
         ],
       ],
     ],
-    'Monitoring' =>
-    [
+    'Monitoring' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'State' =>
-        [
+      'members' => [
+        'State' => [
           'shape' => 'MonitoringState',
           'locationName' => 'state',
         ],
       ],
     ],
-    'MonitoringState' =>
-    [
+    'MonitoringState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'disabled',
-        1 => 'enabled',
-        2 => 'pending',
+      'enum' => [
+        'disabled',
+        'enabled',
+        'pending',
       ],
     ],
-    'NetworkAcl' =>
-    [
+    'NetworkAcl' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'NetworkAclId' =>
-        [
+      'members' => [
+        'NetworkAclId' => [
           'shape' => 'String',
           'locationName' => 'networkAclId',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
           'locationName' => 'vpcId',
         ],
-        'IsDefault' =>
-        [
+        'IsDefault' => [
           'shape' => 'Boolean',
           'locationName' => 'default',
         ],
-        'Entries' =>
-        [
+        'Entries' => [
           'shape' => 'NetworkAclEntryList',
           'locationName' => 'entrySet',
         ],
-        'Associations' =>
-        [
+        'Associations' => [
           'shape' => 'NetworkAclAssociationList',
           'locationName' => 'associationSet',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
           'locationName' => 'tagSet',
         ],
       ],
     ],
-    'NetworkAclAssociation' =>
-    [
+    'NetworkAclAssociation' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'NetworkAclAssociationId' =>
-        [
+      'members' => [
+        'NetworkAclAssociationId' => [
           'shape' => 'String',
           'locationName' => 'networkAclAssociationId',
         ],
-        'NetworkAclId' =>
-        [
+        'NetworkAclId' => [
           'shape' => 'String',
           'locationName' => 'networkAclId',
         ],
-        'SubnetId' =>
-        [
+        'SubnetId' => [
           'shape' => 'String',
           'locationName' => 'subnetId',
         ],
       ],
     ],
-    'NetworkAclAssociationList' =>
-    [
+    'NetworkAclAssociationList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'NetworkAclAssociation',
         'locationName' => 'item',
       ],
     ],
-    'NetworkAclEntry' =>
-    [
+    'NetworkAclEntry' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'RuleNumber' =>
-        [
+      'members' => [
+        'RuleNumber' => [
           'shape' => 'Integer',
           'locationName' => 'ruleNumber',
         ],
-        'Protocol' =>
-        [
+        'Protocol' => [
           'shape' => 'String',
           'locationName' => 'protocol',
         ],
-        'RuleAction' =>
-        [
+        'RuleAction' => [
           'shape' => 'RuleAction',
           'locationName' => 'ruleAction',
         ],
-        'Egress' =>
-        [
+        'Egress' => [
           'shape' => 'Boolean',
           'locationName' => 'egress',
         ],
-        'CidrBlock' =>
-        [
+        'CidrBlock' => [
           'shape' => 'String',
           'locationName' => 'cidrBlock',
         ],
-        'IcmpTypeCode' =>
-        [
+        'IcmpTypeCode' => [
           'shape' => 'IcmpTypeCode',
           'locationName' => 'icmpTypeCode',
         ],
-        'PortRange' =>
-        [
+        'PortRange' => [
           'shape' => 'PortRange',
           'locationName' => 'portRange',
         ],
       ],
     ],
-    'NetworkAclEntryList' =>
-    [
+    'NetworkAclEntryList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'NetworkAclEntry',
         'locationName' => 'item',
       ],
     ],
-    'NetworkAclList' =>
-    [
+    'NetworkAclList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'NetworkAcl',
         'locationName' => 'item',
       ],
     ],
-    'NetworkInterface' =>
-    [
+    'NetworkInterface' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'NetworkInterfaceId' =>
-        [
+      'members' => [
+        'NetworkInterfaceId' => [
           'shape' => 'String',
           'locationName' => 'networkInterfaceId',
         ],
-        'SubnetId' =>
-        [
+        'SubnetId' => [
           'shape' => 'String',
           'locationName' => 'subnetId',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
           'locationName' => 'vpcId',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
           'locationName' => 'availabilityZone',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
           'locationName' => 'description',
         ],
-        'OwnerId' =>
-        [
+        'OwnerId' => [
           'shape' => 'String',
           'locationName' => 'ownerId',
         ],
-        'RequesterId' =>
-        [
+        'RequesterId' => [
           'shape' => 'String',
           'locationName' => 'requesterId',
         ],
-        'RequesterManaged' =>
-        [
+        'RequesterManaged' => [
           'shape' => 'Boolean',
           'locationName' => 'requesterManaged',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'NetworkInterfaceStatus',
           'locationName' => 'status',
         ],
-        'MacAddress' =>
-        [
+        'MacAddress' => [
           'shape' => 'String',
           'locationName' => 'macAddress',
         ],
-        'PrivateIpAddress' =>
-        [
+        'PrivateIpAddress' => [
           'shape' => 'String',
           'locationName' => 'privateIpAddress',
         ],
-        'PrivateDnsName' =>
-        [
+        'PrivateDnsName' => [
           'shape' => 'String',
           'locationName' => 'privateDnsName',
         ],
-        'SourceDestCheck' =>
-        [
+        'SourceDestCheck' => [
           'shape' => 'Boolean',
           'locationName' => 'sourceDestCheck',
         ],
-        'Groups' =>
-        [
+        'Groups' => [
           'shape' => 'GroupIdentifierList',
           'locationName' => 'groupSet',
         ],
-        'Attachment' =>
-        [
+        'Attachment' => [
           'shape' => 'NetworkInterfaceAttachment',
           'locationName' => 'attachment',
         ],
-        'Association' =>
-        [
+        'Association' => [
           'shape' => 'NetworkInterfaceAssociation',
           'locationName' => 'association',
         ],
-        'TagSet' =>
-        [
+        'TagSet' => [
           'shape' => 'TagList',
           'locationName' => 'tagSet',
         ],
-        'PrivateIpAddresses' =>
-        [
+        'PrivateIpAddresses' => [
           'shape' => 'NetworkInterfacePrivateIpAddressList',
           'locationName' => 'privateIpAddressesSet',
         ],
       ],
     ],
-    'NetworkInterfaceAssociation' =>
-    [
+    'NetworkInterfaceAssociation' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PublicIp' =>
-        [
+      'members' => [
+        'PublicIp' => [
           'shape' => 'String',
           'locationName' => 'publicIp',
         ],
-        'PublicDnsName' =>
-        [
+        'PublicDnsName' => [
           'shape' => 'String',
           'locationName' => 'publicDnsName',
         ],
-        'IpOwnerId' =>
-        [
+        'IpOwnerId' => [
           'shape' => 'String',
           'locationName' => 'ipOwnerId',
         ],
-        'AllocationId' =>
-        [
+        'AllocationId' => [
           'shape' => 'String',
           'locationName' => 'allocationId',
         ],
-        'AssociationId' =>
-        [
+        'AssociationId' => [
           'shape' => 'String',
           'locationName' => 'associationId',
         ],
       ],
     ],
-    'NetworkInterfaceAttachment' =>
-    [
+    'NetworkInterfaceAttachment' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AttachmentId' =>
-        [
+      'members' => [
+        'AttachmentId' => [
           'shape' => 'String',
           'locationName' => 'attachmentId',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
           'locationName' => 'instanceId',
         ],
-        'InstanceOwnerId' =>
-        [
+        'InstanceOwnerId' => [
           'shape' => 'String',
           'locationName' => 'instanceOwnerId',
         ],
-        'DeviceIndex' =>
-        [
+        'DeviceIndex' => [
           'shape' => 'Integer',
           'locationName' => 'deviceIndex',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'AttachmentStatus',
           'locationName' => 'status',
         ],
-        'AttachTime' =>
-        [
+        'AttachTime' => [
           'shape' => 'DateTime',
           'locationName' => 'attachTime',
         ],
-        'DeleteOnTermination' =>
-        [
+        'DeleteOnTermination' => [
           'shape' => 'Boolean',
           'locationName' => 'deleteOnTermination',
         ],
       ],
     ],
-    'NetworkInterfaceAttachmentChanges' =>
-    [
+    'NetworkInterfaceAttachmentChanges' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AttachmentId' =>
-        [
+      'members' => [
+        'AttachmentId' => [
           'shape' => 'String',
           'locationName' => 'attachmentId',
         ],
-        'DeleteOnTermination' =>
-        [
+        'DeleteOnTermination' => [
           'shape' => 'Boolean',
           'locationName' => 'deleteOnTermination',
         ],
       ],
     ],
-    'NetworkInterfaceAttribute' =>
-    [
+    'NetworkInterfaceAttribute' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'description',
-        1 => 'groupSet',
-        2 => 'sourceDestCheck',
-        3 => 'attachment',
+      'enum' => [
+        'description',
+        'groupSet',
+        'sourceDestCheck',
+        'attachment',
       ],
     ],
-    'NetworkInterfaceIdList' =>
-    [
+    'NetworkInterfaceIdList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'item',
       ],
     ],
-    'NetworkInterfaceList' =>
-    [
+    'NetworkInterfaceList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'NetworkInterface',
         'locationName' => 'item',
       ],
     ],
-    'NetworkInterfacePrivateIpAddress' =>
-    [
+    'NetworkInterfacePrivateIpAddress' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PrivateIpAddress' =>
-        [
+      'members' => [
+        'PrivateIpAddress' => [
           'shape' => 'String',
           'locationName' => 'privateIpAddress',
         ],
-        'PrivateDnsName' =>
-        [
+        'PrivateDnsName' => [
           'shape' => 'String',
           'locationName' => 'privateDnsName',
         ],
-        'Primary' =>
-        [
+        'Primary' => [
           'shape' => 'Boolean',
           'locationName' => 'primary',
         ],
-        'Association' =>
-        [
+        'Association' => [
           'shape' => 'NetworkInterfaceAssociation',
           'locationName' => 'association',
         ],
       ],
     ],
-    'NetworkInterfacePrivateIpAddressList' =>
-    [
+    'NetworkInterfacePrivateIpAddressList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'NetworkInterfacePrivateIpAddress',
         'locationName' => 'item',
       ],
     ],
-    'NetworkInterfaceStatus' =>
-    [
+    'NetworkInterfaceStatus' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'available',
-        1 => 'attaching',
-        2 => 'in-use',
-        3 => 'detaching',
+      'enum' => [
+        'available',
+        'attaching',
+        'in-use',
+        'detaching',
       ],
     ],
-    'OfferingTypeValues' =>
-    [
+    'OfferingTypeValues' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'Heavy Utilization',
-        1 => 'Medium Utilization',
-        2 => 'Light Utilization',
+      'enum' => [
+        'Heavy Utilization',
+        'Medium Utilization',
+        'Light Utilization',
       ],
     ],
-    'OwnerStringList' =>
-    [
+    'OwnerStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'Owner',
       ],
     ],
-    'PermissionGroup' =>
-    [
+    'PermissionGroup' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'all',
+      'enum' => [
+        'all',
       ],
     ],
-    'Placement' =>
-    [
+    'Placement' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AvailabilityZone' =>
-        [
+      'members' => [
+        'AvailabilityZone' => [
           'shape' => 'String',
           'locationName' => 'availabilityZone',
         ],
-        'GroupName' =>
-        [
+        'GroupName' => [
           'shape' => 'String',
           'locationName' => 'groupName',
         ],
-        'Tenancy' =>
-        [
+        'Tenancy' => [
           'shape' => 'Tenancy',
           'locationName' => 'tenancy',
         ],
       ],
     ],
-    'PlacementGroup' =>
-    [
+    'PlacementGroup' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GroupName' =>
-        [
+      'members' => [
+        'GroupName' => [
           'shape' => 'String',
           'locationName' => 'groupName',
         ],
-        'Strategy' =>
-        [
+        'Strategy' => [
           'shape' => 'PlacementStrategy',
           'locationName' => 'strategy',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'PlacementGroupState',
           'locationName' => 'state',
         ],
       ],
     ],
-    'PlacementGroupList' =>
-    [
+    'PlacementGroupList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'PlacementGroup',
         'locationName' => 'item',
       ],
     ],
-    'PlacementGroupState' =>
-    [
+    'PlacementGroupState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'pending',
-        1 => 'available',
-        2 => 'deleting',
-        3 => 'deleted',
+      'enum' => [
+        'pending',
+        'available',
+        'deleting',
+        'deleted',
       ],
     ],
-    'PlacementGroupStringList' =>
-    [
+    'PlacementGroupStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
       ],
     ],
-    'PlacementStrategy' =>
-    [
+    'PlacementStrategy' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'cluster',
+      'enum' => [
+        'cluster',
       ],
     ],
-    'PlatformValues' =>
-    [
+    'PlatformValues' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'Windows',
+      'enum' => [
+        'Windows',
       ],
     ],
-    'PortRange' =>
-    [
+    'PortRange' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'From' =>
-        [
+      'members' => [
+        'From' => [
           'shape' => 'Integer',
           'locationName' => 'from',
         ],
-        'To' =>
-        [
+        'To' => [
           'shape' => 'Integer',
           'locationName' => 'to',
         ],
       ],
     ],
-    'PriceSchedule' =>
-    [
+    'PriceSchedule' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Term' =>
-        [
+      'members' => [
+        'Term' => [
           'shape' => 'Long',
           'locationName' => 'term',
         ],
-        'Price' =>
-        [
+        'Price' => [
           'shape' => 'Double',
           'locationName' => 'price',
         ],
-        'CurrencyCode' =>
-        [
+        'CurrencyCode' => [
           'shape' => 'CurrencyCodeValues',
           'locationName' => 'currencyCode',
         ],
-        'Active' =>
-        [
+        'Active' => [
           'shape' => 'Boolean',
           'locationName' => 'active',
         ],
       ],
     ],
-    'PriceScheduleList' =>
-    [
+    'PriceScheduleList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'PriceSchedule',
         'locationName' => 'item',
       ],
     ],
-    'PriceScheduleSpecification' =>
-    [
+    'PriceScheduleSpecification' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Term' =>
-        [
+      'members' => [
+        'Term' => [
           'shape' => 'Long',
           'locationName' => 'term',
         ],
-        'Price' =>
-        [
+        'Price' => [
           'shape' => 'Double',
           'locationName' => 'price',
         ],
-        'CurrencyCode' =>
-        [
+        'CurrencyCode' => [
           'shape' => 'CurrencyCodeValues',
           'locationName' => 'currencyCode',
         ],
       ],
     ],
-    'PriceScheduleSpecificationList' =>
-    [
+    'PriceScheduleSpecificationList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'PriceScheduleSpecification',
         'locationName' => 'item',
       ],
     ],
-    'PricingDetail' =>
-    [
+    'PricingDetail' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Price' =>
-        [
+      'members' => [
+        'Price' => [
           'shape' => 'Double',
           'locationName' => 'price',
         ],
-        'Count' =>
-        [
+        'Count' => [
           'shape' => 'Integer',
           'locationName' => 'count',
         ],
       ],
     ],
-    'PricingDetailsList' =>
-    [
+    'PricingDetailsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'PricingDetail',
         'locationName' => 'item',
       ],
     ],
-    'PrivateIpAddressSpecification' =>
-    [
+    'PrivateIpAddressSpecification' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'PrivateIpAddress',
+      'required' => [
+        'PrivateIpAddress',
       ],
-      'members' =>
-      [
-        'PrivateIpAddress' =>
-        [
+      'members' => [
+        'PrivateIpAddress' => [
           'shape' => 'String',
           'locationName' => 'privateIpAddress',
         ],
-        'Primary' =>
-        [
+        'Primary' => [
           'shape' => 'Boolean',
           'locationName' => 'primary',
         ],
       ],
     ],
-    'PrivateIpAddressSpecificationList' =>
-    [
+    'PrivateIpAddressSpecificationList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'PrivateIpAddressSpecification',
         'locationName' => 'item',
       ],
     ],
-    'PrivateIpAddressStringList' =>
-    [
+    'PrivateIpAddressStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'PrivateIpAddress',
       ],
     ],
-    'ProductCode' =>
-    [
+    'ProductCode' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ProductCodeId' =>
-        [
+      'members' => [
+        'ProductCodeId' => [
           'shape' => 'String',
           'locationName' => 'productCode',
         ],
-        'ProductCodeType' =>
-        [
+        'ProductCodeType' => [
           'shape' => 'ProductCodeValues',
           'locationName' => 'type',
         ],
       ],
     ],
-    'ProductCodeList' =>
-    [
+    'ProductCodeList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ProductCode',
         'locationName' => 'item',
       ],
     ],
-    'ProductCodeStringList' =>
-    [
+    'ProductCodeStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'ProductCode',
       ],
     ],
-    'ProductCodeValues' =>
-    [
+    'ProductCodeValues' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'devpay',
-        1 => 'marketplace',
+      'enum' => [
+        'devpay',
+        'marketplace',
       ],
     ],
-    'ProductDescriptionList' =>
-    [
+    'ProductDescriptionList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
       ],
     ],
-    'PropagatingVgw' =>
-    [
+    'PropagatingVgw' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'GatewayId' =>
-        [
+      'members' => [
+        'GatewayId' => [
           'shape' => 'String',
           'locationName' => 'gatewayId',
         ],
       ],
     ],
-    'PropagatingVgwList' =>
-    [
+    'PropagatingVgwList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'PropagatingVgw',
         'locationName' => 'item',
       ],
     ],
-    'PublicIpStringList' =>
-    [
+    'PublicIpStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'PublicIp',
       ],
     ],
-    'PurchaseReservedInstancesOfferingRequest' =>
-    [
+    'PurchaseReservedInstancesOfferingRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ReservedInstancesOfferingId',
-        1 => 'InstanceCount',
+      'required' => [
+        'ReservedInstancesOfferingId',
+        'InstanceCount',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'ReservedInstancesOfferingId' =>
-        [
+        'ReservedInstancesOfferingId' => [
           'shape' => 'String',
         ],
-        'InstanceCount' =>
-        [
+        'InstanceCount' => [
           'shape' => 'Integer',
         ],
-        'LimitPrice' =>
-        [
+        'LimitPrice' => [
           'shape' => 'ReservedInstanceLimitPrice',
           'locationName' => 'limitPrice',
         ],
       ],
     ],
-    'PurchaseReservedInstancesOfferingResult' =>
-    [
+    'PurchaseReservedInstancesOfferingResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedInstancesId' =>
-        [
+      'members' => [
+        'ReservedInstancesId' => [
           'shape' => 'String',
           'locationName' => 'reservedInstancesId',
         ],
       ],
     ],
-    'RIProductDescription' =>
-    [
+    'RIProductDescription' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'Linux/UNIX',
-        1 => 'Linux/UNIX (Amazon VPC]',
-        2 => 'Windows',
-        3 => 'Windows (Amazon VPC]',
+      'enum' => [
+        'Linux/UNIX',
+        'Linux/UNIX (Amazon VPC]',
+        'Windows',
+        'Windows (Amazon VPC]',
       ],
     ],
-    'ReasonCodesList' =>
-    [
+    'ReasonCodesList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ReportInstanceReasonCodes',
         'locationName' => 'item',
       ],
     ],
-    'RebootInstancesRequest' =>
-    [
+    'RebootInstancesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceIds',
+      'required' => [
+        'InstanceIds',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'InstanceIds' =>
-        [
+        'InstanceIds' => [
           'shape' => 'InstanceIdStringList',
           'locationName' => 'InstanceId',
         ],
       ],
     ],
-    'RecurringCharge' =>
-    [
+    'RecurringCharge' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Frequency' =>
-        [
+      'members' => [
+        'Frequency' => [
           'shape' => 'RecurringChargeFrequency',
           'locationName' => 'frequency',
         ],
-        'Amount' =>
-        [
+        'Amount' => [
           'shape' => 'Double',
           'locationName' => 'amount',
         ],
       ],
     ],
-    'RecurringChargeFrequency' =>
-    [
+    'RecurringChargeFrequency' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'Hourly',
+      'enum' => [
+        'Hourly',
       ],
     ],
-    'RecurringChargesList' =>
-    [
+    'RecurringChargesList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'RecurringCharge',
         'locationName' => 'item',
       ],
     ],
-    'Region' =>
-    [
+    'Region' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'RegionName' =>
-        [
+      'members' => [
+        'RegionName' => [
           'shape' => 'String',
           'locationName' => 'regionName',
         ],
-        'Endpoint' =>
-        [
+        'Endpoint' => [
           'shape' => 'String',
           'locationName' => 'regionEndpoint',
         ],
       ],
     ],
-    'RegionList' =>
-    [
+    'RegionList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Region',
         'locationName' => 'item',
       ],
     ],
-    'RegionNameStringList' =>
-    [
+    'RegionNameStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'RegionName',
       ],
     ],
-    'RegisterImageRequest' =>
-    [
+    'RegisterImageRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
+      'required' => [
+        'Name',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'ImageLocation' =>
-        [
+        'ImageLocation' => [
           'shape' => 'String',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'String',
           'locationName' => 'name',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
           'locationName' => 'description',
         ],
-        'Architecture' =>
-        [
+        'Architecture' => [
           'shape' => 'ArchitectureValues',
           'locationName' => 'architecture',
         ],
-        'KernelId' =>
-        [
+        'KernelId' => [
           'shape' => 'String',
           'locationName' => 'kernelId',
         ],
-        'RamdiskId' =>
-        [
+        'RamdiskId' => [
           'shape' => 'String',
           'locationName' => 'ramdiskId',
         ],
-        'RootDeviceName' =>
-        [
+        'RootDeviceName' => [
           'shape' => 'String',
           'locationName' => 'rootDeviceName',
         ],
-        'BlockDeviceMappings' =>
-        [
+        'BlockDeviceMappings' => [
           'shape' => 'BlockDeviceMappingRequestList',
           'locationName' => 'BlockDeviceMapping',
         ],
-        'VirtualizationType' =>
-        [
+        'VirtualizationType' => [
           'shape' => 'String',
           'locationName' => 'virtualizationType',
         ],
-        'SriovNetSupport' =>
-        [
+        'SriovNetSupport' => [
           'shape' => 'String',
           'locationName' => 'sriovNetSupport',
         ],
       ],
     ],
-    'RegisterImageResult' =>
-    [
+    'RegisterImageResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ImageId' =>
-        [
+      'members' => [
+        'ImageId' => [
           'shape' => 'String',
           'locationName' => 'imageId',
         ],
       ],
     ],
-    'RejectVpcPeeringConnectionRequest' =>
-    [
+    'RejectVpcPeeringConnectionRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'VpcPeeringConnectionId',
+      'required' => [
+        'VpcPeeringConnectionId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'VpcPeeringConnectionId' =>
-        [
+        'VpcPeeringConnectionId' => [
           'shape' => 'String',
           'locationName' => 'vpcPeeringConnectionId',
         ],
       ],
     ],
-    'RejectVpcPeeringConnectionResult' =>
-    [
+    'RejectVpcPeeringConnectionResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Return' =>
-        [
+      'members' => [
+        'Return' => [
           'shape' => 'Boolean',
           'locationName' => 'return',
         ],
       ],
     ],
-    'ReleaseAddressRequest' =>
-    [
+    'ReleaseAddressRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'PublicIp' =>
-        [
+        'PublicIp' => [
           'shape' => 'String',
         ],
-        'AllocationId' =>
-        [
+        'AllocationId' => [
           'shape' => 'String',
         ],
       ],
     ],
-    'ReplaceNetworkAclAssociationRequest' =>
-    [
+    'ReplaceNetworkAclAssociationRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AssociationId',
-        1 => 'NetworkAclId',
+      'required' => [
+        'AssociationId',
+        'NetworkAclId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'AssociationId' =>
-        [
+        'AssociationId' => [
           'shape' => 'String',
           'locationName' => 'associationId',
         ],
-        'NetworkAclId' =>
-        [
+        'NetworkAclId' => [
           'shape' => 'String',
           'locationName' => 'networkAclId',
         ],
       ],
     ],
-    'ReplaceNetworkAclAssociationResult' =>
-    [
+    'ReplaceNetworkAclAssociationResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'NewAssociationId' =>
-        [
+      'members' => [
+        'NewAssociationId' => [
           'shape' => 'String',
           'locationName' => 'newAssociationId',
         ],
       ],
     ],
-    'ReplaceNetworkAclEntryRequest' =>
-    [
+    'ReplaceNetworkAclEntryRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'NetworkAclId',
-        1 => 'RuleNumber',
-        2 => 'Protocol',
-        3 => 'RuleAction',
-        4 => 'Egress',
-        5 => 'CidrBlock',
+      'required' => [
+        'NetworkAclId',
+        'RuleNumber',
+        'Protocol',
+        'RuleAction',
+        'Egress',
+        'CidrBlock',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'NetworkAclId' =>
-        [
+        'NetworkAclId' => [
           'shape' => 'String',
           'locationName' => 'networkAclId',
         ],
-        'RuleNumber' =>
-        [
+        'RuleNumber' => [
           'shape' => 'Integer',
           'locationName' => 'ruleNumber',
         ],
-        'Protocol' =>
-        [
+        'Protocol' => [
           'shape' => 'String',
           'locationName' => 'protocol',
         ],
-        'RuleAction' =>
-        [
+        'RuleAction' => [
           'shape' => 'RuleAction',
           'locationName' => 'ruleAction',
         ],
-        'Egress' =>
-        [
+        'Egress' => [
           'shape' => 'Boolean',
           'locationName' => 'egress',
         ],
-        'CidrBlock' =>
-        [
+        'CidrBlock' => [
           'shape' => 'String',
           'locationName' => 'cidrBlock',
         ],
-        'IcmpTypeCode' =>
-        [
+        'IcmpTypeCode' => [
           'shape' => 'IcmpTypeCode',
           'locationName' => 'Icmp',
         ],
-        'PortRange' =>
-        [
+        'PortRange' => [
           'shape' => 'PortRange',
           'locationName' => 'portRange',
         ],
       ],
     ],
-    'ReplaceRouteRequest' =>
-    [
+    'ReplaceRouteRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RouteTableId',
-        1 => 'DestinationCidrBlock',
+      'required' => [
+        'RouteTableId',
+        'DestinationCidrBlock',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'RouteTableId' =>
-        [
+        'RouteTableId' => [
           'shape' => 'String',
           'locationName' => 'routeTableId',
         ],
-        'DestinationCidrBlock' =>
-        [
+        'DestinationCidrBlock' => [
           'shape' => 'String',
           'locationName' => 'destinationCidrBlock',
         ],
-        'GatewayId' =>
-        [
+        'GatewayId' => [
           'shape' => 'String',
           'locationName' => 'gatewayId',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
           'locationName' => 'instanceId',
         ],
-        'NetworkInterfaceId' =>
-        [
+        'NetworkInterfaceId' => [
           'shape' => 'String',
           'locationName' => 'networkInterfaceId',
         ],
-        'VpcPeeringConnectionId' =>
-        [
+        'VpcPeeringConnectionId' => [
           'shape' => 'String',
           'locationName' => 'vpcPeeringConnectionId',
         ],
       ],
     ],
-    'ReplaceRouteTableAssociationRequest' =>
-    [
+    'ReplaceRouteTableAssociationRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AssociationId',
-        1 => 'RouteTableId',
+      'required' => [
+        'AssociationId',
+        'RouteTableId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'AssociationId' =>
-        [
+        'AssociationId' => [
           'shape' => 'String',
           'locationName' => 'associationId',
         ],
-        'RouteTableId' =>
-        [
+        'RouteTableId' => [
           'shape' => 'String',
           'locationName' => 'routeTableId',
         ],
       ],
     ],
-    'ReplaceRouteTableAssociationResult' =>
-    [
+    'ReplaceRouteTableAssociationResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'NewAssociationId' =>
-        [
+      'members' => [
+        'NewAssociationId' => [
           'shape' => 'String',
           'locationName' => 'newAssociationId',
         ],
       ],
     ],
-    'ReportInstanceReasonCodes' =>
-    [
+    'ReportInstanceReasonCodes' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'instance-stuck-in-state',
-        1 => 'unresponsive',
-        2 => 'not-accepting-credentials',
-        3 => 'password-not-available',
-        4 => 'performance-network',
-        5 => 'performance-instance-store',
-        6 => 'performance-ebs-volume',
-        7 => 'performance-other',
-        8 => 'other',
+      'enum' => [
+        'instance-stuck-in-state',
+        'unresponsive',
+        'not-accepting-credentials',
+        'password-not-available',
+        'performance-network',
+        'performance-instance-store',
+        'performance-ebs-volume',
+        'performance-other',
+        'other',
       ],
     ],
-    'ReportInstanceStatusRequest' =>
-    [
+    'ReportInstanceStatusRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Instances',
-        1 => 'Status',
-        2 => 'ReasonCodes',
+      'required' => [
+        'Instances',
+        'Status',
+        'ReasonCodes',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'Instances' =>
-        [
+        'Instances' => [
           'shape' => 'InstanceIdStringList',
           'locationName' => 'instanceId',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'ReportStatusType',
           'locationName' => 'status',
         ],
-        'StartTime' =>
-        [
+        'StartTime' => [
           'shape' => 'DateTime',
           'locationName' => 'startTime',
         ],
-        'EndTime' =>
-        [
+        'EndTime' => [
           'shape' => 'DateTime',
           'locationName' => 'endTime',
         ],
-        'ReasonCodes' =>
-        [
+        'ReasonCodes' => [
           'shape' => 'ReasonCodesList',
           'locationName' => 'reasonCode',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
           'locationName' => 'description',
         ],
       ],
     ],
-    'ReportStatusType' =>
-    [
+    'ReportStatusType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'ok',
-        1 => 'impaired',
+      'enum' => [
+        'ok',
+        'impaired',
       ],
     ],
-    'RequestSpotInstancesRequest' =>
-    [
+    'RequestSpotInstancesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SpotPrice',
+      'required' => [
+        'SpotPrice',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'SpotPrice' =>
-        [
+        'SpotPrice' => [
           'shape' => 'String',
           'locationName' => 'spotPrice',
         ],
-        'InstanceCount' =>
-        [
+        'InstanceCount' => [
           'shape' => 'Integer',
           'locationName' => 'instanceCount',
         ],
-        'Type' =>
-        [
+        'Type' => [
           'shape' => 'SpotInstanceType',
           'locationName' => 'type',
         ],
-        'ValidFrom' =>
-        [
+        'ValidFrom' => [
           'shape' => 'DateTime',
           'locationName' => 'validFrom',
         ],
-        'ValidUntil' =>
-        [
+        'ValidUntil' => [
           'shape' => 'DateTime',
           'locationName' => 'validUntil',
         ],
-        'LaunchGroup' =>
-        [
+        'LaunchGroup' => [
           'shape' => 'String',
           'locationName' => 'launchGroup',
         ],
-        'AvailabilityZoneGroup' =>
-        [
+        'AvailabilityZoneGroup' => [
           'shape' => 'String',
           'locationName' => 'availabilityZoneGroup',
         ],
-        'LaunchSpecification' =>
-        [
+        'LaunchSpecification' => [
           'shape' => 'RequestSpotLaunchSpecification',
         ],
       ],
     ],
-    'RequestSpotInstancesResult' =>
-    [
+    'RequestSpotInstancesResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SpotInstanceRequests' =>
-        [
+      'members' => [
+        'SpotInstanceRequests' => [
           'shape' => 'SpotInstanceRequestList',
           'locationName' => 'spotInstanceRequestSet',
         ],
       ],
     ],
-    'Reservation' =>
-    [
+    'Reservation' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservationId' =>
-        [
+      'members' => [
+        'ReservationId' => [
           'shape' => 'String',
           'locationName' => 'reservationId',
         ],
-        'OwnerId' =>
-        [
+        'OwnerId' => [
           'shape' => 'String',
           'locationName' => 'ownerId',
         ],
-        'RequesterId' =>
-        [
+        'RequesterId' => [
           'shape' => 'String',
           'locationName' => 'requesterId',
         ],
-        'Groups' =>
-        [
+        'Groups' => [
           'shape' => 'GroupIdentifierList',
           'locationName' => 'groupSet',
         ],
-        'Instances' =>
-        [
+        'Instances' => [
           'shape' => 'InstanceList',
           'locationName' => 'instancesSet',
         ],
       ],
     ],
-    'ReservationList' =>
-    [
+    'ReservationList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Reservation',
         'locationName' => 'item',
       ],
     ],
-    'ReservedInstanceLimitPrice' =>
-    [
+    'ReservedInstanceLimitPrice' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Amount' =>
-        [
+      'members' => [
+        'Amount' => [
           'shape' => 'Double',
           'locationName' => 'amount',
         ],
-        'CurrencyCode' =>
-        [
+        'CurrencyCode' => [
           'shape' => 'CurrencyCodeValues',
           'locationName' => 'currencyCode',
         ],
       ],
     ],
-    'ReservedInstanceState' =>
-    [
+    'ReservedInstanceState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'payment-pending',
-        1 => 'active',
-        2 => 'payment-failed',
-        3 => 'retired',
+      'enum' => [
+        'payment-pending',
+        'active',
+        'payment-failed',
+        'retired',
       ],
     ],
-    'ReservedInstances' =>
-    [
+    'ReservedInstances' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedInstancesId' =>
-        [
+      'members' => [
+        'ReservedInstancesId' => [
           'shape' => 'String',
           'locationName' => 'reservedInstancesId',
         ],
-        'InstanceType' =>
-        [
+        'InstanceType' => [
           'shape' => 'InstanceType',
           'locationName' => 'instanceType',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
           'locationName' => 'availabilityZone',
         ],
-        'Start' =>
-        [
+        'Start' => [
           'shape' => 'DateTime',
           'locationName' => 'start',
         ],
-        'End' =>
-        [
+        'End' => [
           'shape' => 'DateTime',
           'locationName' => 'end',
         ],
-        'Duration' =>
-        [
+        'Duration' => [
           'shape' => 'Long',
           'locationName' => 'duration',
         ],
-        'UsagePrice' =>
-        [
+        'UsagePrice' => [
           'shape' => 'Float',
           'locationName' => 'usagePrice',
         ],
-        'FixedPrice' =>
-        [
+        'FixedPrice' => [
           'shape' => 'Float',
           'locationName' => 'fixedPrice',
         ],
-        'InstanceCount' =>
-        [
+        'InstanceCount' => [
           'shape' => 'Integer',
           'locationName' => 'instanceCount',
         ],
-        'ProductDescription' =>
-        [
+        'ProductDescription' => [
           'shape' => 'RIProductDescription',
           'locationName' => 'productDescription',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'ReservedInstanceState',
           'locationName' => 'state',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
           'locationName' => 'tagSet',
         ],
-        'InstanceTenancy' =>
-        [
+        'InstanceTenancy' => [
           'shape' => 'Tenancy',
           'locationName' => 'instanceTenancy',
         ],
-        'CurrencyCode' =>
-        [
+        'CurrencyCode' => [
           'shape' => 'CurrencyCodeValues',
           'locationName' => 'currencyCode',
         ],
-        'OfferingType' =>
-        [
+        'OfferingType' => [
           'shape' => 'OfferingTypeValues',
           'locationName' => 'offeringType',
         ],
-        'RecurringCharges' =>
-        [
+        'RecurringCharges' => [
           'shape' => 'RecurringChargesList',
           'locationName' => 'recurringCharges',
         ],
       ],
     ],
-    'ReservedInstancesConfiguration' =>
-    [
+    'ReservedInstancesConfiguration' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AvailabilityZone' =>
-        [
+      'members' => [
+        'AvailabilityZone' => [
           'shape' => 'String',
           'locationName' => 'availabilityZone',
         ],
-        'Platform' =>
-        [
+        'Platform' => [
           'shape' => 'String',
           'locationName' => 'platform',
         ],
-        'InstanceCount' =>
-        [
+        'InstanceCount' => [
           'shape' => 'Integer',
           'locationName' => 'instanceCount',
         ],
-        'InstanceType' =>
-        [
+        'InstanceType' => [
           'shape' => 'InstanceType',
           'locationName' => 'instanceType',
         ],
       ],
     ],
-    'ReservedInstancesConfigurationList' =>
-    [
+    'ReservedInstancesConfigurationList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ReservedInstancesConfiguration',
         'locationName' => 'item',
       ],
     ],
-    'ReservedInstancesId' =>
-    [
+    'ReservedInstancesId' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedInstancesId' =>
-        [
+      'members' => [
+        'ReservedInstancesId' => [
           'shape' => 'String',
           'locationName' => 'reservedInstancesId',
         ],
       ],
     ],
-    'ReservedInstancesIdStringList' =>
-    [
+    'ReservedInstancesIdStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'ReservedInstancesId',
       ],
     ],
-    'ReservedInstancesList' =>
-    [
+    'ReservedInstancesList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ReservedInstances',
         'locationName' => 'item',
       ],
     ],
-    'ReservedInstancesListing' =>
-    [
+    'ReservedInstancesListing' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedInstancesListingId' =>
-        [
+      'members' => [
+        'ReservedInstancesListingId' => [
           'shape' => 'String',
           'locationName' => 'reservedInstancesListingId',
         ],
-        'ReservedInstancesId' =>
-        [
+        'ReservedInstancesId' => [
           'shape' => 'String',
           'locationName' => 'reservedInstancesId',
         ],
-        'CreateDate' =>
-        [
+        'CreateDate' => [
           'shape' => 'DateTime',
           'locationName' => 'createDate',
         ],
-        'UpdateDate' =>
-        [
+        'UpdateDate' => [
           'shape' => 'DateTime',
           'locationName' => 'updateDate',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'ListingStatus',
           'locationName' => 'status',
         ],
-        'StatusMessage' =>
-        [
+        'StatusMessage' => [
           'shape' => 'String',
           'locationName' => 'statusMessage',
         ],
-        'InstanceCounts' =>
-        [
+        'InstanceCounts' => [
           'shape' => 'InstanceCountList',
           'locationName' => 'instanceCounts',
         ],
-        'PriceSchedules' =>
-        [
+        'PriceSchedules' => [
           'shape' => 'PriceScheduleList',
           'locationName' => 'priceSchedules',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
           'locationName' => 'tagSet',
         ],
-        'ClientToken' =>
-        [
+        'ClientToken' => [
           'shape' => 'String',
           'locationName' => 'clientToken',
         ],
       ],
     ],
-    'ReservedInstancesListingList' =>
-    [
+    'ReservedInstancesListingList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ReservedInstancesListing',
         'locationName' => 'item',
       ],
     ],
-    'ReservedInstancesModification' =>
-    [
+    'ReservedInstancesModification' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedInstancesModificationId' =>
-        [
+      'members' => [
+        'ReservedInstancesModificationId' => [
           'shape' => 'String',
           'locationName' => 'reservedInstancesModificationId',
         ],
-        'ReservedInstancesIds' =>
-        [
+        'ReservedInstancesIds' => [
           'shape' => 'ReservedIntancesIds',
           'locationName' => 'reservedInstancesSet',
         ],
-        'ModificationResults' =>
-        [
+        'ModificationResults' => [
           'shape' => 'ReservedInstancesModificationResultList',
           'locationName' => 'modificationResultSet',
         ],
-        'CreateDate' =>
-        [
+        'CreateDate' => [
           'shape' => 'DateTime',
           'locationName' => 'createDate',
         ],
-        'UpdateDate' =>
-        [
+        'UpdateDate' => [
           'shape' => 'DateTime',
           'locationName' => 'updateDate',
         ],
-        'EffectiveDate' =>
-        [
+        'EffectiveDate' => [
           'shape' => 'DateTime',
           'locationName' => 'effectiveDate',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'String',
           'locationName' => 'status',
         ],
-        'StatusMessage' =>
-        [
+        'StatusMessage' => [
           'shape' => 'String',
           'locationName' => 'statusMessage',
         ],
-        'ClientToken' =>
-        [
+        'ClientToken' => [
           'shape' => 'String',
           'locationName' => 'clientToken',
         ],
       ],
     ],
-    'ReservedInstancesModificationIdStringList' =>
-    [
+    'ReservedInstancesModificationIdStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'ReservedInstancesModificationId',
       ],
     ],
-    'ReservedInstancesModificationList' =>
-    [
+    'ReservedInstancesModificationList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ReservedInstancesModification',
         'locationName' => 'item',
       ],
     ],
-    'ReservedInstancesModificationResult' =>
-    [
+    'ReservedInstancesModificationResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedInstancesId' =>
-        [
+      'members' => [
+        'ReservedInstancesId' => [
           'shape' => 'String',
           'locationName' => 'reservedInstancesId',
         ],
-        'TargetConfiguration' =>
-        [
+        'TargetConfiguration' => [
           'shape' => 'ReservedInstancesConfiguration',
           'locationName' => 'targetConfiguration',
         ],
       ],
     ],
-    'ReservedInstancesModificationResultList' =>
-    [
+    'ReservedInstancesModificationResultList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ReservedInstancesModificationResult',
         'locationName' => 'item',
       ],
     ],
-    'ReservedInstancesOffering' =>
-    [
+    'ReservedInstancesOffering' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ReservedInstancesOfferingId' =>
-        [
+      'members' => [
+        'ReservedInstancesOfferingId' => [
           'shape' => 'String',
           'locationName' => 'reservedInstancesOfferingId',
         ],
-        'InstanceType' =>
-        [
+        'InstanceType' => [
           'shape' => 'InstanceType',
           'locationName' => 'instanceType',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
           'locationName' => 'availabilityZone',
         ],
-        'Duration' =>
-        [
+        'Duration' => [
           'shape' => 'Long',
           'locationName' => 'duration',
         ],
-        'UsagePrice' =>
-        [
+        'UsagePrice' => [
           'shape' => 'Float',
           'locationName' => 'usagePrice',
         ],
-        'FixedPrice' =>
-        [
+        'FixedPrice' => [
           'shape' => 'Float',
           'locationName' => 'fixedPrice',
         ],
-        'ProductDescription' =>
-        [
+        'ProductDescription' => [
           'shape' => 'RIProductDescription',
           'locationName' => 'productDescription',
         ],
-        'InstanceTenancy' =>
-        [
+        'InstanceTenancy' => [
           'shape' => 'Tenancy',
           'locationName' => 'instanceTenancy',
         ],
-        'CurrencyCode' =>
-        [
+        'CurrencyCode' => [
           'shape' => 'CurrencyCodeValues',
           'locationName' => 'currencyCode',
         ],
-        'OfferingType' =>
-        [
+        'OfferingType' => [
           'shape' => 'OfferingTypeValues',
           'locationName' => 'offeringType',
         ],
-        'RecurringCharges' =>
-        [
+        'RecurringCharges' => [
           'shape' => 'RecurringChargesList',
           'locationName' => 'recurringCharges',
         ],
-        'Marketplace' =>
-        [
+        'Marketplace' => [
           'shape' => 'Boolean',
           'locationName' => 'marketplace',
         ],
-        'PricingDetails' =>
-        [
+        'PricingDetails' => [
           'shape' => 'PricingDetailsList',
           'locationName' => 'pricingDetailsSet',
         ],
       ],
     ],
-    'ReservedInstancesOfferingIdStringList' =>
-    [
+    'ReservedInstancesOfferingIdStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
       ],
     ],
-    'ReservedInstancesOfferingList' =>
-    [
+    'ReservedInstancesOfferingList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ReservedInstancesOffering',
         'locationName' => 'item',
       ],
     ],
-    'ReservedIntancesIds' =>
-    [
+    'ReservedIntancesIds' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ReservedInstancesId',
         'locationName' => 'item',
       ],
     ],
-    'ResetImageAttributeName' =>
-    [
+    'ResetImageAttributeName' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'launchPermission',
+      'enum' => [
+        'launchPermission',
       ],
     ],
-    'ResetImageAttributeRequest' =>
-    [
+    'ResetImageAttributeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ImageId',
-        1 => 'Attribute',
+      'required' => [
+        'ImageId',
+        'Attribute',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'ImageId' =>
-        [
+        'ImageId' => [
           'shape' => 'String',
         ],
-        'Attribute' =>
-        [
+        'Attribute' => [
           'shape' => 'ResetImageAttributeName',
         ],
       ],
     ],
-    'ResetInstanceAttributeRequest' =>
-    [
+    'ResetInstanceAttributeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceId',
-        1 => 'Attribute',
+      'required' => [
+        'InstanceId',
+        'Attribute',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
           'locationName' => 'instanceId',
         ],
-        'Attribute' =>
-        [
+        'Attribute' => [
           'shape' => 'InstanceAttributeName',
           'locationName' => 'attribute',
         ],
       ],
     ],
-    'ResetNetworkInterfaceAttributeRequest' =>
-    [
+    'ResetNetworkInterfaceAttributeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'NetworkInterfaceId',
+      'required' => [
+        'NetworkInterfaceId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'NetworkInterfaceId' =>
-        [
+        'NetworkInterfaceId' => [
           'shape' => 'String',
           'locationName' => 'networkInterfaceId',
         ],
-        'SourceDestCheck' =>
-        [
+        'SourceDestCheck' => [
           'shape' => 'String',
           'locationName' => 'sourceDestCheck',
         ],
       ],
     ],
-    'ResetSnapshotAttributeRequest' =>
-    [
+    'ResetSnapshotAttributeRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'SnapshotId',
-        1 => 'Attribute',
+      'required' => [
+        'SnapshotId',
+        'Attribute',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'SnapshotId' =>
-        [
+        'SnapshotId' => [
           'shape' => 'String',
         ],
-        'Attribute' =>
-        [
+        'Attribute' => [
           'shape' => 'SnapshotAttributeName',
         ],
       ],
     ],
-    'ResourceIdList' =>
-    [
+    'ResourceIdList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
       ],
     ],
-    'ResourceType' =>
-    [
+    'ResourceType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'customer-gateway',
-        1 => 'dhcp-options',
-        2 => 'image',
-        3 => 'instance',
-        4 => 'internet-gateway',
-        5 => 'network-acl',
-        6 => 'network-interface',
-        7 => 'reserved-instances',
-        8 => 'route-table',
-        9 => 'snapshot',
-        10 => 'spot-instances-request',
-        11 => 'subnet',
-        12 => 'security-group',
-        13 => 'volume',
-        14 => 'vpc',
-        15 => 'vpn-connection',
-        16 => 'vpn-gateway',
+      'enum' => [
+        'customer-gateway',
+        'dhcp-options',
+        'image',
+        'instance',
+        'internet-gateway',
+        'network-acl',
+        'network-interface',
+        'reserved-instances',
+        'route-table',
+        'snapshot',
+        'spot-instances-request',
+        'subnet',
+        'security-group',
+        'volume',
+        'vpc',
+        'vpn-connection',
+        'vpn-gateway',
       ],
     ],
-    'RestorableByStringList' =>
-    [
+    'RestorableByStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
       ],
     ],
-    'RevokeSecurityGroupEgressRequest' =>
-    [
+    'RevokeSecurityGroupEgressRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'GroupId',
+      'required' => [
+        'GroupId',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'GroupId' =>
-        [
+        'GroupId' => [
           'shape' => 'String',
           'locationName' => 'groupId',
         ],
-        'SourceSecurityGroupName' =>
-        [
+        'SourceSecurityGroupName' => [
           'shape' => 'String',
           'locationName' => 'sourceSecurityGroupName',
         ],
-        'SourceSecurityGroupOwnerId' =>
-        [
+        'SourceSecurityGroupOwnerId' => [
           'shape' => 'String',
           'locationName' => 'sourceSecurityGroupOwnerId',
         ],
-        'IpProtocol' =>
-        [
+        'IpProtocol' => [
           'shape' => 'String',
           'locationName' => 'ipProtocol',
         ],
-        'FromPort' =>
-        [
+        'FromPort' => [
           'shape' => 'Integer',
           'locationName' => 'fromPort',
         ],
-        'ToPort' =>
-        [
+        'ToPort' => [
           'shape' => 'Integer',
           'locationName' => 'toPort',
         ],
-        'CidrIp' =>
-        [
+        'CidrIp' => [
           'shape' => 'String',
           'locationName' => 'cidrIp',
         ],
-        'IpPermissions' =>
-        [
+        'IpPermissions' => [
           'shape' => 'IpPermissionList',
           'locationName' => 'ipPermissions',
         ],
       ],
     ],
-    'RevokeSecurityGroupIngressRequest' =>
-    [
+    'RevokeSecurityGroupIngressRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'GroupName' =>
-        [
+        'GroupName' => [
           'shape' => 'String',
         ],
-        'GroupId' =>
-        [
+        'GroupId' => [
           'shape' => 'String',
         ],
-        'SourceSecurityGroupName' =>
-        [
+        'SourceSecurityGroupName' => [
           'shape' => 'String',
         ],
-        'SourceSecurityGroupOwnerId' =>
-        [
+        'SourceSecurityGroupOwnerId' => [
           'shape' => 'String',
         ],
-        'IpProtocol' =>
-        [
+        'IpProtocol' => [
           'shape' => 'String',
         ],
-        'FromPort' =>
-        [
+        'FromPort' => [
           'shape' => 'Integer',
         ],
-        'ToPort' =>
-        [
+        'ToPort' => [
           'shape' => 'Integer',
         ],
-        'CidrIp' =>
-        [
+        'CidrIp' => [
           'shape' => 'String',
         ],
-        'IpPermissions' =>
-        [
+        'IpPermissions' => [
           'shape' => 'IpPermissionList',
         ],
       ],
     ],
-    'Route' =>
-    [
+    'Route' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DestinationCidrBlock' =>
-        [
+      'members' => [
+        'DestinationCidrBlock' => [
           'shape' => 'String',
           'locationName' => 'destinationCidrBlock',
         ],
-        'GatewayId' =>
-        [
+        'GatewayId' => [
           'shape' => 'String',
           'locationName' => 'gatewayId',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
           'locationName' => 'instanceId',
         ],
-        'InstanceOwnerId' =>
-        [
+        'InstanceOwnerId' => [
           'shape' => 'String',
           'locationName' => 'instanceOwnerId',
         ],
-        'NetworkInterfaceId' =>
-        [
+        'NetworkInterfaceId' => [
           'shape' => 'String',
           'locationName' => 'networkInterfaceId',
         ],
-        'VpcPeeringConnectionId' =>
-        [
+        'VpcPeeringConnectionId' => [
           'shape' => 'String',
           'locationName' => 'vpcPeeringConnectionId',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'RouteState',
           'locationName' => 'state',
         ],
-        'Origin' =>
-        [
+        'Origin' => [
           'shape' => 'RouteOrigin',
           'locationName' => 'origin',
         ],
       ],
     ],
-    'RouteList' =>
-    [
+    'RouteList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Route',
         'locationName' => 'item',
       ],
     ],
-    'RouteOrigin' =>
-    [
+    'RouteOrigin' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'CreateRouteTable',
-        1 => 'CreateRoute',
-        2 => 'EnableVgwRoutePropagation',
+      'enum' => [
+        'CreateRouteTable',
+        'CreateRoute',
+        'EnableVgwRoutePropagation',
       ],
     ],
-    'RouteState' =>
-    [
+    'RouteState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'active',
-        1 => 'blackhole',
+      'enum' => [
+        'active',
+        'blackhole',
       ],
     ],
-    'RouteTable' =>
-    [
+    'RouteTable' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'RouteTableId' =>
-        [
+      'members' => [
+        'RouteTableId' => [
           'shape' => 'String',
           'locationName' => 'routeTableId',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
           'locationName' => 'vpcId',
         ],
-        'Routes' =>
-        [
+        'Routes' => [
           'shape' => 'RouteList',
           'locationName' => 'routeSet',
         ],
-        'Associations' =>
-        [
+        'Associations' => [
           'shape' => 'RouteTableAssociationList',
           'locationName' => 'associationSet',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
           'locationName' => 'tagSet',
         ],
-        'PropagatingVgws' =>
-        [
+        'PropagatingVgws' => [
           'shape' => 'PropagatingVgwList',
           'locationName' => 'propagatingVgwSet',
         ],
       ],
     ],
-    'RouteTableAssociation' =>
-    [
+    'RouteTableAssociation' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'RouteTableAssociationId' =>
-        [
+      'members' => [
+        'RouteTableAssociationId' => [
           'shape' => 'String',
           'locationName' => 'routeTableAssociationId',
         ],
-        'RouteTableId' =>
-        [
+        'RouteTableId' => [
           'shape' => 'String',
           'locationName' => 'routeTableId',
         ],
-        'SubnetId' =>
-        [
+        'SubnetId' => [
           'shape' => 'String',
           'locationName' => 'subnetId',
         ],
-        'Main' =>
-        [
+        'Main' => [
           'shape' => 'Boolean',
           'locationName' => 'main',
         ],
       ],
     ],
-    'RouteTableAssociationList' =>
-    [
+    'RouteTableAssociationList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'RouteTableAssociation',
         'locationName' => 'item',
       ],
     ],
-    'RouteTableList' =>
-    [
+    'RouteTableList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'RouteTable',
         'locationName' => 'item',
       ],
     ],
-    'RuleAction' =>
-    [
+    'RuleAction' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'allow',
-        1 => 'deny',
+      'enum' => [
+        'allow',
+        'deny',
       ],
     ],
-    'RunInstancesMonitoringEnabled' =>
-    [
+    'RunInstancesMonitoringEnabled' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Enabled',
+      'required' => [
+        'Enabled',
       ],
-      'members' =>
-      [
-        'Enabled' =>
-        [
+      'members' => [
+        'Enabled' => [
           'shape' => 'Boolean',
           'locationName' => 'enabled',
         ],
       ],
     ],
-    'RunInstancesRequest' =>
-    [
+    'RunInstancesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'ImageId',
-        1 => 'MinCount',
-        2 => 'MaxCount',
+      'required' => [
+        'ImageId',
+        'MinCount',
+        'MaxCount',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'ImageId' =>
-        [
+        'ImageId' => [
           'shape' => 'String',
         ],
-        'MinCount' =>
-        [
+        'MinCount' => [
           'shape' => 'Integer',
         ],
-        'MaxCount' =>
-        [
+        'MaxCount' => [
           'shape' => 'Integer',
         ],
-        'KeyName' =>
-        [
+        'KeyName' => [
           'shape' => 'String',
         ],
-        'SecurityGroups' =>
-        [
+        'SecurityGroups' => [
           'shape' => 'SecurityGroupStringList',
           'locationName' => 'SecurityGroup',
         ],
-        'SecurityGroupIds' =>
-        [
+        'SecurityGroupIds' => [
           'shape' => 'SecurityGroupIdStringList',
           'locationName' => 'SecurityGroupId',
         ],
-        'UserData' =>
-        [
+        'UserData' => [
           'shape' => 'String',
         ],
-        'InstanceType' =>
-        [
+        'InstanceType' => [
           'shape' => 'InstanceType',
         ],
-        'Placement' =>
-        [
+        'Placement' => [
           'shape' => 'Placement',
         ],
-        'KernelId' =>
-        [
+        'KernelId' => [
           'shape' => 'String',
         ],
-        'RamdiskId' =>
-        [
+        'RamdiskId' => [
           'shape' => 'String',
         ],
-        'BlockDeviceMappings' =>
-        [
+        'BlockDeviceMappings' => [
           'shape' => 'BlockDeviceMappingRequestList',
           'locationName' => 'BlockDeviceMapping',
         ],
-        'Monitoring' =>
-        [
+        'Monitoring' => [
           'shape' => 'RunInstancesMonitoringEnabled',
         ],
-        'SubnetId' =>
-        [
+        'SubnetId' => [
           'shape' => 'String',
         ],
-        'DisableApiTermination' =>
-        [
+        'DisableApiTermination' => [
           'shape' => 'Boolean',
           'locationName' => 'disableApiTermination',
         ],
-        'InstanceInitiatedShutdownBehavior' =>
-        [
+        'InstanceInitiatedShutdownBehavior' => [
           'shape' => 'ShutdownBehavior',
           'locationName' => 'instanceInitiatedShutdownBehavior',
         ],
-        'PrivateIpAddress' =>
-        [
+        'PrivateIpAddress' => [
           'shape' => 'String',
           'locationName' => 'privateIpAddress',
         ],
-        'ClientToken' =>
-        [
+        'ClientToken' => [
           'shape' => 'String',
           'locationName' => 'clientToken',
         ],
-        'AdditionalInfo' =>
-        [
+        'AdditionalInfo' => [
           'shape' => 'String',
           'locationName' => 'additionalInfo',
         ],
-        'NetworkInterfaces' =>
-        [
+        'NetworkInterfaces' => [
           'shape' => 'InstanceNetworkInterfaceSpecificationList',
           'locationName' => 'networkInterface',
         ],
-        'IamInstanceProfile' =>
-        [
+        'IamInstanceProfile' => [
           'shape' => 'IamInstanceProfileSpecification',
           'locationName' => 'iamInstanceProfile',
         ],
-        'EbsOptimized' =>
-        [
+        'EbsOptimized' => [
           'shape' => 'Boolean',
           'locationName' => 'ebsOptimized',
         ],
       ],
     ],
-    'S3Storage' =>
-    [
+    'S3Storage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'String',
           'locationName' => 'bucket',
         ],
-        'Prefix' =>
-        [
+        'Prefix' => [
           'shape' => 'String',
           'locationName' => 'prefix',
         ],
-        'AWSAccessKeyId' =>
-        [
+        'AWSAccessKeyId' => [
           'shape' => 'String',
         ],
-        'UploadPolicy' =>
-        [
+        'UploadPolicy' => [
           'shape' => 'Blob',
           'locationName' => 'uploadPolicy',
         ],
-        'UploadPolicySignature' =>
-        [
+        'UploadPolicySignature' => [
           'shape' => 'String',
           'locationName' => 'uploadPolicySignature',
         ],
       ],
     ],
-    'SecurityGroup' =>
-    [
+    'SecurityGroup' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'OwnerId' =>
-        [
+      'members' => [
+        'OwnerId' => [
           'shape' => 'String',
           'locationName' => 'ownerId',
         ],
-        'GroupName' =>
-        [
+        'GroupName' => [
           'shape' => 'String',
           'locationName' => 'groupName',
         ],
-        'GroupId' =>
-        [
+        'GroupId' => [
           'shape' => 'String',
           'locationName' => 'groupId',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
           'locationName' => 'groupDescription',
         ],
-        'IpPermissions' =>
-        [
+        'IpPermissions' => [
           'shape' => 'IpPermissionList',
           'locationName' => 'ipPermissions',
         ],
-        'IpPermissionsEgress' =>
-        [
+        'IpPermissionsEgress' => [
           'shape' => 'IpPermissionList',
           'locationName' => 'ipPermissionsEgress',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
           'locationName' => 'vpcId',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
           'locationName' => 'tagSet',
         ],
       ],
     ],
-    'SecurityGroupIdStringList' =>
-    [
+    'SecurityGroupIdStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'SecurityGroupId',
       ],
     ],
-    'SecurityGroupList' =>
-    [
+    'SecurityGroupList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'SecurityGroup',
         'locationName' => 'item',
       ],
     ],
-    'SecurityGroupStringList' =>
-    [
+    'SecurityGroupStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'SecurityGroup',
       ],
     ],
-    'ShutdownBehavior' =>
-    [
+    'ShutdownBehavior' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'stop',
-        1 => 'terminate',
+      'enum' => [
+        'stop',
+        'terminate',
       ],
     ],
-    'Snapshot' =>
-    [
+    'Snapshot' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SnapshotId' =>
-        [
+      'members' => [
+        'SnapshotId' => [
           'shape' => 'String',
           'locationName' => 'snapshotId',
         ],
-        'VolumeId' =>
-        [
+        'VolumeId' => [
           'shape' => 'String',
           'locationName' => 'volumeId',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'SnapshotState',
           'locationName' => 'status',
         ],
-        'StartTime' =>
-        [
+        'StartTime' => [
           'shape' => 'DateTime',
           'locationName' => 'startTime',
         ],
-        'Progress' =>
-        [
+        'Progress' => [
           'shape' => 'String',
           'locationName' => 'progress',
         ],
-        'OwnerId' =>
-        [
+        'OwnerId' => [
           'shape' => 'String',
           'locationName' => 'ownerId',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
           'locationName' => 'description',
         ],
-        'VolumeSize' =>
-        [
+        'VolumeSize' => [
           'shape' => 'Integer',
           'locationName' => 'volumeSize',
         ],
-        'OwnerAlias' =>
-        [
+        'OwnerAlias' => [
           'shape' => 'String',
           'locationName' => 'ownerAlias',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
           'locationName' => 'tagSet',
         ],
-        'Encrypted' =>
-        [
+        'Encrypted' => [
           'shape' => 'Boolean',
           'locationName' => 'encrypted',
         ],
       ],
     ],
-    'SnapshotAttributeName' =>
-    [
+    'SnapshotAttributeName' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'productCodes',
-        1 => 'createVolumePermission',
+      'enum' => [
+        'productCodes',
+        'createVolumePermission',
       ],
     ],
-    'SnapshotIdStringList' =>
-    [
+    'SnapshotIdStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'SnapshotId',
       ],
     ],
-    'SnapshotList' =>
-    [
+    'SnapshotList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Snapshot',
         'locationName' => 'item',
       ],
     ],
-    'SnapshotState' =>
-    [
+    'SnapshotState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'pending',
-        1 => 'completed',
-        2 => 'error',
+      'enum' => [
+        'pending',
+        'completed',
+        'error',
       ],
     ],
-    'SpotDatafeedSubscription' =>
-    [
+    'SpotDatafeedSubscription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'OwnerId' =>
-        [
+      'members' => [
+        'OwnerId' => [
           'shape' => 'String',
           'locationName' => 'ownerId',
         ],
-        'Bucket' =>
-        [
+        'Bucket' => [
           'shape' => 'String',
           'locationName' => 'bucket',
         ],
-        'Prefix' =>
-        [
+        'Prefix' => [
           'shape' => 'String',
           'locationName' => 'prefix',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'DatafeedSubscriptionState',
           'locationName' => 'state',
         ],
-        'Fault' =>
-        [
+        'Fault' => [
           'shape' => 'SpotInstanceStateFault',
           'locationName' => 'fault',
         ],
       ],
     ],
-    'SpotInstanceRequest' =>
-    [
+    'SpotInstanceRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SpotInstanceRequestId' =>
-        [
+      'members' => [
+        'SpotInstanceRequestId' => [
           'shape' => 'String',
           'locationName' => 'spotInstanceRequestId',
         ],
-        'SpotPrice' =>
-        [
+        'SpotPrice' => [
           'shape' => 'String',
           'locationName' => 'spotPrice',
         ],
-        'Type' =>
-        [
+        'Type' => [
           'shape' => 'SpotInstanceType',
           'locationName' => 'type',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'SpotInstanceState',
           'locationName' => 'state',
         ],
-        'Fault' =>
-        [
+        'Fault' => [
           'shape' => 'SpotInstanceStateFault',
           'locationName' => 'fault',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'SpotInstanceStatus',
           'locationName' => 'status',
         ],
-        'ValidFrom' =>
-        [
+        'ValidFrom' => [
           'shape' => 'DateTime',
           'locationName' => 'validFrom',
         ],
-        'ValidUntil' =>
-        [
+        'ValidUntil' => [
           'shape' => 'DateTime',
           'locationName' => 'validUntil',
         ],
-        'LaunchGroup' =>
-        [
+        'LaunchGroup' => [
           'shape' => 'String',
           'locationName' => 'launchGroup',
         ],
-        'AvailabilityZoneGroup' =>
-        [
+        'AvailabilityZoneGroup' => [
           'shape' => 'String',
           'locationName' => 'availabilityZoneGroup',
         ],
-        'LaunchSpecification' =>
-        [
+        'LaunchSpecification' => [
           'shape' => 'LaunchSpecification',
           'locationName' => 'launchSpecification',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
           'locationName' => 'instanceId',
         ],
-        'CreateTime' =>
-        [
+        'CreateTime' => [
           'shape' => 'DateTime',
           'locationName' => 'createTime',
         ],
-        'ProductDescription' =>
-        [
+        'ProductDescription' => [
           'shape' => 'RIProductDescription',
           'locationName' => 'productDescription',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
           'locationName' => 'tagSet',
         ],
-        'LaunchedAvailabilityZone' =>
-        [
+        'LaunchedAvailabilityZone' => [
           'shape' => 'String',
           'locationName' => 'launchedAvailabilityZone',
         ],
       ],
     ],
-    'SpotInstanceRequestIdList' =>
-    [
+    'SpotInstanceRequestIdList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'SpotInstanceRequestId',
       ],
     ],
-    'SpotInstanceRequestList' =>
-    [
+    'SpotInstanceRequestList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'SpotInstanceRequest',
         'locationName' => 'item',
       ],
     ],
-    'SpotInstanceState' =>
-    [
+    'SpotInstanceState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'open',
-        1 => 'active',
-        2 => 'closed',
-        3 => 'cancelled',
-        4 => 'failed',
+      'enum' => [
+        'open',
+        'active',
+        'closed',
+        'cancelled',
+        'failed',
       ],
     ],
-    'SpotInstanceStateFault' =>
-    [
+    'SpotInstanceStateFault' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Code' =>
-        [
+      'members' => [
+        'Code' => [
           'shape' => 'String',
           'locationName' => 'code',
         ],
-        'Message' =>
-        [
+        'Message' => [
           'shape' => 'String',
           'locationName' => 'message',
         ],
       ],
     ],
-    'SpotInstanceStatus' =>
-    [
+    'SpotInstanceStatus' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Code' =>
-        [
+      'members' => [
+        'Code' => [
           'shape' => 'String',
           'locationName' => 'code',
         ],
-        'UpdateTime' =>
-        [
+        'UpdateTime' => [
           'shape' => 'DateTime',
           'locationName' => 'updateTime',
         ],
-        'Message' =>
-        [
+        'Message' => [
           'shape' => 'String',
           'locationName' => 'message',
         ],
       ],
     ],
-    'SpotInstanceType' =>
-    [
+    'SpotInstanceType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'one-time',
-        1 => 'persistent',
+      'enum' => [
+        'one-time',
+        'persistent',
       ],
     ],
-    'SpotPlacement' =>
-    [
+    'SpotPlacement' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AvailabilityZone' =>
-        [
+      'members' => [
+        'AvailabilityZone' => [
           'shape' => 'String',
           'locationName' => 'availabilityZone',
         ],
-        'GroupName' =>
-        [
+        'GroupName' => [
           'shape' => 'String',
           'locationName' => 'groupName',
         ],
       ],
     ],
-    'SpotPrice' =>
-    [
+    'SpotPrice' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceType' =>
-        [
+      'members' => [
+        'InstanceType' => [
           'shape' => 'InstanceType',
           'locationName' => 'instanceType',
         ],
-        'ProductDescription' =>
-        [
+        'ProductDescription' => [
           'shape' => 'RIProductDescription',
           'locationName' => 'productDescription',
         ],
-        'SpotPrice' =>
-        [
+        'SpotPrice' => [
           'shape' => 'String',
           'locationName' => 'spotPrice',
         ],
-        'Timestamp' =>
-        [
+        'Timestamp' => [
           'shape' => 'DateTime',
           'locationName' => 'timestamp',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
           'locationName' => 'availabilityZone',
         ],
       ],
     ],
-    'SpotPriceHistoryList' =>
-    [
+    'SpotPriceHistoryList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'SpotPrice',
         'locationName' => 'item',
       ],
     ],
-    'StartInstancesRequest' =>
-    [
+    'StartInstancesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceIds',
+      'required' => [
+        'InstanceIds',
       ],
-      'members' =>
-      [
-        'InstanceIds' =>
-        [
+      'members' => [
+        'InstanceIds' => [
           'shape' => 'InstanceIdStringList',
           'locationName' => 'InstanceId',
         ],
-        'AdditionalInfo' =>
-        [
+        'AdditionalInfo' => [
           'shape' => 'String',
           'locationName' => 'additionalInfo',
         ],
-        'DryRun' =>
-        [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
       ],
     ],
-    'StartInstancesResult' =>
-    [
+    'StartInstancesResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StartingInstances' =>
-        [
+      'members' => [
+        'StartingInstances' => [
           'shape' => 'InstanceStateChangeList',
           'locationName' => 'instancesSet',
         ],
       ],
     ],
-    'StateReason' =>
-    [
+    'StateReason' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Code' =>
-        [
+      'members' => [
+        'Code' => [
           'shape' => 'String',
           'locationName' => 'code',
         ],
-        'Message' =>
-        [
+        'Message' => [
           'shape' => 'String',
           'locationName' => 'message',
         ],
       ],
     ],
-    'StatusName' =>
-    [
+    'StatusName' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'reachability',
+      'enum' => [
+        'reachability',
       ],
     ],
-    'StatusType' =>
-    [
+    'StatusType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'passed',
-        1 => 'failed',
-        2 => 'insufficient-data',
+      'enum' => [
+        'passed',
+        'failed',
+        'insufficient-data',
       ],
     ],
-    'StopInstancesRequest' =>
-    [
+    'StopInstancesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceIds',
+      'required' => [
+        'InstanceIds',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'InstanceIds' =>
-        [
+        'InstanceIds' => [
           'shape' => 'InstanceIdStringList',
           'locationName' => 'InstanceId',
         ],
-        'Force' =>
-        [
+        'Force' => [
           'shape' => 'Boolean',
           'locationName' => 'force',
         ],
       ],
     ],
-    'StopInstancesResult' =>
-    [
+    'StopInstancesResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StoppingInstances' =>
-        [
+      'members' => [
+        'StoppingInstances' => [
           'shape' => 'InstanceStateChangeList',
           'locationName' => 'instancesSet',
         ],
       ],
     ],
-    'Storage' =>
-    [
+    'Storage' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'S3' =>
-        [
+      'members' => [
+        'S3' => [
           'shape' => 'S3Storage',
         ],
       ],
     ],
-    'String' =>
-    [
+    'String' => [
       'type' => 'string',
     ],
-    'Subnet' =>
-    [
+    'Subnet' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'SubnetId' =>
-        [
+      'members' => [
+        'SubnetId' => [
           'shape' => 'String',
           'locationName' => 'subnetId',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'SubnetState',
           'locationName' => 'state',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
           'locationName' => 'vpcId',
         ],
-        'CidrBlock' =>
-        [
+        'CidrBlock' => [
           'shape' => 'String',
           'locationName' => 'cidrBlock',
         ],
-        'AvailableIpAddressCount' =>
-        [
+        'AvailableIpAddressCount' => [
           'shape' => 'Integer',
           'locationName' => 'availableIpAddressCount',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
           'locationName' => 'availabilityZone',
         ],
-        'DefaultForAz' =>
-        [
+        'DefaultForAz' => [
           'shape' => 'Boolean',
           'locationName' => 'defaultForAz',
         ],
-        'MapPublicIpOnLaunch' =>
-        [
+        'MapPublicIpOnLaunch' => [
           'shape' => 'Boolean',
           'locationName' => 'mapPublicIpOnLaunch',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
           'locationName' => 'tagSet',
         ],
       ],
     ],
-    'SubnetIdStringList' =>
-    [
+    'SubnetIdStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'SubnetId',
       ],
     ],
-    'SubnetList' =>
-    [
+    'SubnetList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Subnet',
         'locationName' => 'item',
       ],
     ],
-    'SubnetState' =>
-    [
+    'SubnetState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'pending',
-        1 => 'available',
+      'enum' => [
+        'pending',
+        'available',
       ],
     ],
-    'SummaryStatus' =>
-    [
+    'SummaryStatus' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'ok',
-        1 => 'impaired',
-        2 => 'insufficient-data',
-        3 => 'not-applicable',
+      'enum' => [
+        'ok',
+        'impaired',
+        'insufficient-data',
+        'not-applicable',
       ],
     ],
-    'Tag' =>
-    [
+    'Tag' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Key' =>
-        [
+      'members' => [
+        'Key' => [
           'shape' => 'String',
           'locationName' => 'key',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'String',
           'locationName' => 'value',
         ],
       ],
     ],
-    'TagDescription' =>
-    [
+    'TagDescription' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ResourceId' =>
-        [
+      'members' => [
+        'ResourceId' => [
           'shape' => 'String',
           'locationName' => 'resourceId',
         ],
-        'ResourceType' =>
-        [
+        'ResourceType' => [
           'shape' => 'ResourceType',
           'locationName' => 'resourceType',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'String',
           'locationName' => 'key',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'String',
           'locationName' => 'value',
         ],
       ],
     ],
-    'TagDescriptionList' =>
-    [
+    'TagDescriptionList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'TagDescription',
         'locationName' => 'item',
       ],
     ],
-    'TagList' =>
-    [
+    'TagList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Tag',
         'locationName' => 'item',
       ],
     ],
-    'TelemetryStatus' =>
-    [
+    'TelemetryStatus' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'UP',
-        1 => 'DOWN',
+      'enum' => [
+        'UP',
+        'DOWN',
       ],
     ],
-    'Tenancy' =>
-    [
+    'Tenancy' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'default',
-        1 => 'dedicated',
+      'enum' => [
+        'default',
+        'dedicated',
       ],
     ],
-    'TerminateInstancesRequest' =>
-    [
+    'TerminateInstancesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceIds',
+      'required' => [
+        'InstanceIds',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'InstanceIds' =>
-        [
+        'InstanceIds' => [
           'shape' => 'InstanceIdStringList',
           'locationName' => 'InstanceId',
         ],
       ],
     ],
-    'TerminateInstancesResult' =>
-    [
+    'TerminateInstancesResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TerminatingInstances' =>
-        [
+      'members' => [
+        'TerminatingInstances' => [
           'shape' => 'InstanceStateChangeList',
           'locationName' => 'instancesSet',
         ],
       ],
     ],
-    'UnassignPrivateIpAddressesRequest' =>
-    [
+    'UnassignPrivateIpAddressesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'NetworkInterfaceId',
-        1 => 'PrivateIpAddresses',
+      'required' => [
+        'NetworkInterfaceId',
+        'PrivateIpAddresses',
       ],
-      'members' =>
-      [
-        'NetworkInterfaceId' =>
-        [
+      'members' => [
+        'NetworkInterfaceId' => [
           'shape' => 'String',
           'locationName' => 'networkInterfaceId',
         ],
-        'PrivateIpAddresses' =>
-        [
+        'PrivateIpAddresses' => [
           'shape' => 'PrivateIpAddressStringList',
           'locationName' => 'privateIpAddress',
         ],
       ],
     ],
-    'UnmonitorInstancesRequest' =>
-    [
+    'UnmonitorInstancesRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'InstanceIds',
+      'required' => [
+        'InstanceIds',
       ],
-      'members' =>
-      [
-        'DryRun' =>
-        [
+      'members' => [
+        'DryRun' => [
           'shape' => 'Boolean',
           'locationName' => 'dryRun',
         ],
-        'InstanceIds' =>
-        [
+        'InstanceIds' => [
           'shape' => 'InstanceIdStringList',
           'locationName' => 'InstanceId',
         ],
       ],
     ],
-    'UnmonitorInstancesResult' =>
-    [
+    'UnmonitorInstancesResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'InstanceMonitorings' =>
-        [
+      'members' => [
+        'InstanceMonitorings' => [
           'shape' => 'InstanceMonitoringList',
           'locationName' => 'instancesSet',
         ],
       ],
     ],
-    'UserGroupStringList' =>
-    [
+    'UserGroupStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'UserGroup',
       ],
     ],
-    'UserIdGroupPair' =>
-    [
+    'UserIdGroupPair' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'UserId' =>
-        [
+      'members' => [
+        'UserId' => [
           'shape' => 'String',
           'locationName' => 'userId',
         ],
-        'GroupName' =>
-        [
+        'GroupName' => [
           'shape' => 'String',
           'locationName' => 'groupName',
         ],
-        'GroupId' =>
-        [
+        'GroupId' => [
           'shape' => 'String',
           'locationName' => 'groupId',
         ],
       ],
     ],
-    'UserIdGroupPairList' =>
-    [
+    'UserIdGroupPairList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'UserIdGroupPair',
         'locationName' => 'item',
       ],
     ],
-    'UserIdStringList' =>
-    [
+    'UserIdStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'UserId',
       ],
     ],
-    'ValueStringList' =>
-    [
+    'ValueStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'item',
       ],
     ],
-    'VgwTelemetry' =>
-    [
+    'VgwTelemetry' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'OutsideIpAddress' =>
-        [
+      'members' => [
+        'OutsideIpAddress' => [
           'shape' => 'String',
           'locationName' => 'outsideIpAddress',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'TelemetryStatus',
           'locationName' => 'status',
         ],
-        'LastStatusChange' =>
-        [
+        'LastStatusChange' => [
           'shape' => 'DateTime',
           'locationName' => 'lastStatusChange',
         ],
-        'StatusMessage' =>
-        [
+        'StatusMessage' => [
           'shape' => 'String',
           'locationName' => 'statusMessage',
         ],
-        'AcceptedRouteCount' =>
-        [
+        'AcceptedRouteCount' => [
           'shape' => 'Integer',
           'locationName' => 'acceptedRouteCount',
         ],
       ],
     ],
-    'VgwTelemetryList' =>
-    [
+    'VgwTelemetryList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'VgwTelemetry',
         'locationName' => 'item',
       ],
     ],
-    'VirtualizationType' =>
-    [
+    'VirtualizationType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'hvm',
-        1 => 'paravirtual',
+      'enum' => [
+        'hvm',
+        'paravirtual',
       ],
     ],
-    'Volume' =>
-    [
+    'Volume' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VolumeId' =>
-        [
+      'members' => [
+        'VolumeId' => [
           'shape' => 'String',
           'locationName' => 'volumeId',
         ],
-        'Size' =>
-        [
+        'Size' => [
           'shape' => 'Integer',
           'locationName' => 'size',
         ],
-        'SnapshotId' =>
-        [
+        'SnapshotId' => [
           'shape' => 'String',
           'locationName' => 'snapshotId',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
           'locationName' => 'availabilityZone',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'VolumeState',
           'locationName' => 'status',
         ],
-        'CreateTime' =>
-        [
+        'CreateTime' => [
           'shape' => 'DateTime',
           'locationName' => 'createTime',
         ],
-        'Attachments' =>
-        [
+        'Attachments' => [
           'shape' => 'VolumeAttachmentList',
           'locationName' => 'attachmentSet',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
           'locationName' => 'tagSet',
         ],
-        'VolumeType' =>
-        [
+        'VolumeType' => [
           'shape' => 'VolumeType',
           'locationName' => 'volumeType',
         ],
-        'Iops' =>
-        [
+        'Iops' => [
           'shape' => 'Integer',
           'locationName' => 'iops',
         ],
-        'Encrypted' =>
-        [
+        'Encrypted' => [
           'shape' => 'Boolean',
           'locationName' => 'encrypted',
         ],
       ],
     ],
-    'VolumeAttachment' =>
-    [
+    'VolumeAttachment' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VolumeId' =>
-        [
+      'members' => [
+        'VolumeId' => [
           'shape' => 'String',
           'locationName' => 'volumeId',
         ],
-        'InstanceId' =>
-        [
+        'InstanceId' => [
           'shape' => 'String',
           'locationName' => 'instanceId',
         ],
-        'Device' =>
-        [
+        'Device' => [
           'shape' => 'String',
           'locationName' => 'device',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'VolumeAttachmentState',
           'locationName' => 'status',
         ],
-        'AttachTime' =>
-        [
+        'AttachTime' => [
           'shape' => 'DateTime',
           'locationName' => 'attachTime',
         ],
-        'DeleteOnTermination' =>
-        [
+        'DeleteOnTermination' => [
           'shape' => 'Boolean',
           'locationName' => 'deleteOnTermination',
         ],
       ],
     ],
-    'VolumeAttachmentList' =>
-    [
+    'VolumeAttachmentList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'VolumeAttachment',
         'locationName' => 'item',
       ],
     ],
-    'VolumeAttachmentState' =>
-    [
+    'VolumeAttachmentState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'attaching',
-        1 => 'attached',
-        2 => 'detaching',
-        3 => 'detached',
+      'enum' => [
+        'attaching',
+        'attached',
+        'detaching',
+        'detached',
       ],
     ],
-    'VolumeAttributeName' =>
-    [
+    'VolumeAttributeName' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'autoEnableIO',
-        1 => 'productCodes',
+      'enum' => [
+        'autoEnableIO',
+        'productCodes',
       ],
     ],
-    'VolumeDetail' =>
-    [
+    'VolumeDetail' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Size',
+      'required' => [
+        'Size',
       ],
-      'members' =>
-      [
-        'Size' =>
-        [
+      'members' => [
+        'Size' => [
           'shape' => 'Long',
           'locationName' => 'size',
         ],
       ],
     ],
-    'VolumeIdStringList' =>
-    [
+    'VolumeIdStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'VolumeId',
       ],
     ],
-    'VolumeList' =>
-    [
+    'VolumeList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Volume',
         'locationName' => 'item',
       ],
     ],
-    'VolumeState' =>
-    [
+    'VolumeState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'creating',
-        1 => 'available',
-        2 => 'in-use',
-        3 => 'deleting',
-        4 => 'deleted',
-        5 => 'error',
+      'enum' => [
+        'creating',
+        'available',
+        'in-use',
+        'deleting',
+        'deleted',
+        'error',
       ],
     ],
-    'VolumeStatusAction' =>
-    [
+    'VolumeStatusAction' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Code' =>
-        [
+      'members' => [
+        'Code' => [
           'shape' => 'String',
           'locationName' => 'code',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
           'locationName' => 'description',
         ],
-        'EventType' =>
-        [
+        'EventType' => [
           'shape' => 'String',
           'locationName' => 'eventType',
         ],
-        'EventId' =>
-        [
+        'EventId' => [
           'shape' => 'String',
           'locationName' => 'eventId',
         ],
       ],
     ],
-    'VolumeStatusActionsList' =>
-    [
+    'VolumeStatusActionsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'VolumeStatusAction',
         'locationName' => 'item',
       ],
     ],
-    'VolumeStatusDetails' =>
-    [
+    'VolumeStatusDetails' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'VolumeStatusName',
           'locationName' => 'name',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'String',
           'locationName' => 'status',
         ],
       ],
     ],
-    'VolumeStatusDetailsList' =>
-    [
+    'VolumeStatusDetailsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'VolumeStatusDetails',
         'locationName' => 'item',
       ],
     ],
-    'VolumeStatusEvent' =>
-    [
+    'VolumeStatusEvent' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'EventType' =>
-        [
+      'members' => [
+        'EventType' => [
           'shape' => 'String',
           'locationName' => 'eventType',
         ],
-        'Description' =>
-        [
+        'Description' => [
           'shape' => 'String',
           'locationName' => 'description',
         ],
-        'NotBefore' =>
-        [
+        'NotBefore' => [
           'shape' => 'DateTime',
           'locationName' => 'notBefore',
         ],
-        'NotAfter' =>
-        [
+        'NotAfter' => [
           'shape' => 'DateTime',
           'locationName' => 'notAfter',
         ],
-        'EventId' =>
-        [
+        'EventId' => [
           'shape' => 'String',
           'locationName' => 'eventId',
         ],
       ],
     ],
-    'VolumeStatusEventsList' =>
-    [
+    'VolumeStatusEventsList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'VolumeStatusEvent',
         'locationName' => 'item',
       ],
     ],
-    'VolumeStatusInfo' =>
-    [
+    'VolumeStatusInfo' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Status' =>
-        [
+      'members' => [
+        'Status' => [
           'shape' => 'VolumeStatusInfoStatus',
           'locationName' => 'status',
         ],
-        'Details' =>
-        [
+        'Details' => [
           'shape' => 'VolumeStatusDetailsList',
           'locationName' => 'details',
         ],
       ],
     ],
-    'VolumeStatusInfoStatus' =>
-    [
+    'VolumeStatusInfoStatus' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'ok',
-        1 => 'impaired',
-        2 => 'insufficient-data',
+      'enum' => [
+        'ok',
+        'impaired',
+        'insufficient-data',
       ],
     ],
-    'VolumeStatusItem' =>
-    [
+    'VolumeStatusItem' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VolumeId' =>
-        [
+      'members' => [
+        'VolumeId' => [
           'shape' => 'String',
           'locationName' => 'volumeId',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
           'locationName' => 'availabilityZone',
         ],
-        'VolumeStatus' =>
-        [
+        'VolumeStatus' => [
           'shape' => 'VolumeStatusInfo',
           'locationName' => 'volumeStatus',
         ],
-        'Events' =>
-        [
+        'Events' => [
           'shape' => 'VolumeStatusEventsList',
           'locationName' => 'eventsSet',
         ],
-        'Actions' =>
-        [
+        'Actions' => [
           'shape' => 'VolumeStatusActionsList',
           'locationName' => 'actionsSet',
         ],
       ],
     ],
-    'VolumeStatusList' =>
-    [
+    'VolumeStatusList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'VolumeStatusItem',
         'locationName' => 'item',
       ],
     ],
-    'VolumeStatusName' =>
-    [
+    'VolumeStatusName' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'io-enabled',
-        1 => 'io-performance',
+      'enum' => [
+        'io-enabled',
+        'io-performance',
       ],
     ],
-    'VolumeType' =>
-    [
+    'VolumeType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'standard',
-        1 => 'io1',
-        2 => 'gp2',
+      'enum' => [
+        'standard',
+        'io1',
+        'gp2',
       ],
     ],
-    'Vpc' =>
-    [
+    'Vpc' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VpcId' =>
-        [
+      'members' => [
+        'VpcId' => [
           'shape' => 'String',
           'locationName' => 'vpcId',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'VpcState',
           'locationName' => 'state',
         ],
-        'CidrBlock' =>
-        [
+        'CidrBlock' => [
           'shape' => 'String',
           'locationName' => 'cidrBlock',
         ],
-        'DhcpOptionsId' =>
-        [
+        'DhcpOptionsId' => [
           'shape' => 'String',
           'locationName' => 'dhcpOptionsId',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
           'locationName' => 'tagSet',
         ],
-        'InstanceTenancy' =>
-        [
+        'InstanceTenancy' => [
           'shape' => 'Tenancy',
           'locationName' => 'instanceTenancy',
         ],
-        'IsDefault' =>
-        [
+        'IsDefault' => [
           'shape' => 'Boolean',
           'locationName' => 'isDefault',
         ],
       ],
     ],
-    'VpcAttachment' =>
-    [
+    'VpcAttachment' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VpcId' =>
-        [
+      'members' => [
+        'VpcId' => [
           'shape' => 'String',
           'locationName' => 'vpcId',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'AttachmentStatus',
           'locationName' => 'state',
         ],
       ],
     ],
-    'VpcAttachmentList' =>
-    [
+    'VpcAttachmentList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'VpcAttachment',
         'locationName' => 'item',
       ],
     ],
-    'VpcAttributeName' =>
-    [
+    'VpcAttributeName' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'enableDnsSupport',
-        1 => 'enableDnsHostnames',
+      'enum' => [
+        'enableDnsSupport',
+        'enableDnsHostnames',
       ],
     ],
-    'VpcIdStringList' =>
-    [
+    'VpcIdStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'VpcId',
       ],
     ],
-    'VpcList' =>
-    [
+    'VpcList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Vpc',
         'locationName' => 'item',
       ],
     ],
-    'VpcPeeringConnection' =>
-    [
+    'VpcPeeringConnection' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AccepterVpcInfo' =>
-        [
+      'members' => [
+        'AccepterVpcInfo' => [
           'shape' => 'VpcPeeringConnectionVpcInfo',
           'locationName' => 'accepterVpcInfo',
         ],
-        'ExpirationTime' =>
-        [
+        'ExpirationTime' => [
           'shape' => 'DateTime',
           'locationName' => 'expirationTime',
         ],
-        'RequesterVpcInfo' =>
-        [
+        'RequesterVpcInfo' => [
           'shape' => 'VpcPeeringConnectionVpcInfo',
           'locationName' => 'requesterVpcInfo',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'VpcPeeringConnectionStateReason',
           'locationName' => 'status',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
           'locationName' => 'tagSet',
         ],
-        'VpcPeeringConnectionId' =>
-        [
+        'VpcPeeringConnectionId' => [
           'shape' => 'String',
           'locationName' => 'vpcPeeringConnectionId',
         ],
       ],
     ],
-    'VpcPeeringConnectionList' =>
-    [
+    'VpcPeeringConnectionList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'VpcPeeringConnection',
         'locationName' => 'item',
       ],
     ],
-    'VpcPeeringConnectionStateReason' =>
-    [
+    'VpcPeeringConnectionStateReason' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Code' =>
-        [
+      'members' => [
+        'Code' => [
           'shape' => 'String',
           'locationName' => 'code',
         ],
-        'Message' =>
-        [
+        'Message' => [
           'shape' => 'String',
           'locationName' => 'message',
         ],
       ],
     ],
-    'VpcPeeringConnectionVpcInfo' =>
-    [
+    'VpcPeeringConnectionVpcInfo' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CidrBlock' =>
-        [
+      'members' => [
+        'CidrBlock' => [
           'shape' => 'String',
           'locationName' => 'cidrBlock',
         ],
-        'OwnerId' =>
-        [
+        'OwnerId' => [
           'shape' => 'String',
           'locationName' => 'ownerId',
         ],
-        'VpcId' =>
-        [
+        'VpcId' => [
           'shape' => 'String',
           'locationName' => 'vpcId',
         ],
       ],
     ],
-    'VpcState' =>
-    [
+    'VpcState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'pending',
-        1 => 'available',
+      'enum' => [
+        'pending',
+        'available',
       ],
     ],
-    'VpnConnection' =>
-    [
+    'VpnConnection' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VpnConnectionId' =>
-        [
+      'members' => [
+        'VpnConnectionId' => [
           'shape' => 'String',
           'locationName' => 'vpnConnectionId',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'VpnState',
           'locationName' => 'state',
         ],
-        'CustomerGatewayConfiguration' =>
-        [
+        'CustomerGatewayConfiguration' => [
           'shape' => 'String',
           'locationName' => 'customerGatewayConfiguration',
         ],
-        'Type' =>
-        [
+        'Type' => [
           'shape' => 'GatewayType',
           'locationName' => 'type',
         ],
-        'CustomerGatewayId' =>
-        [
+        'CustomerGatewayId' => [
           'shape' => 'String',
           'locationName' => 'customerGatewayId',
         ],
-        'VpnGatewayId' =>
-        [
+        'VpnGatewayId' => [
           'shape' => 'String',
           'locationName' => 'vpnGatewayId',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
           'locationName' => 'tagSet',
         ],
-        'VgwTelemetry' =>
-        [
+        'VgwTelemetry' => [
           'shape' => 'VgwTelemetryList',
           'locationName' => 'vgwTelemetry',
         ],
-        'Options' =>
-        [
+        'Options' => [
           'shape' => 'VpnConnectionOptions',
           'locationName' => 'options',
         ],
-        'Routes' =>
-        [
+        'Routes' => [
           'shape' => 'VpnStaticRouteList',
           'locationName' => 'routes',
         ],
       ],
     ],
-    'VpnConnectionIdStringList' =>
-    [
+    'VpnConnectionIdStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'VpnConnectionId',
       ],
     ],
-    'VpnConnectionList' =>
-    [
+    'VpnConnectionList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'VpnConnection',
         'locationName' => 'item',
       ],
     ],
-    'VpnConnectionOptions' =>
-    [
+    'VpnConnectionOptions' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StaticRoutesOnly' =>
-        [
+      'members' => [
+        'StaticRoutesOnly' => [
           'shape' => 'Boolean',
           'locationName' => 'staticRoutesOnly',
         ],
       ],
     ],
-    'VpnConnectionOptionsSpecification' =>
-    [
+    'VpnConnectionOptionsSpecification' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'StaticRoutesOnly' =>
-        [
+      'members' => [
+        'StaticRoutesOnly' => [
           'shape' => 'Boolean',
           'locationName' => 'staticRoutesOnly',
         ],
       ],
     ],
-    'VpnGateway' =>
-    [
+    'VpnGateway' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'VpnGatewayId' =>
-        [
+      'members' => [
+        'VpnGatewayId' => [
           'shape' => 'String',
           'locationName' => 'vpnGatewayId',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'VpnState',
           'locationName' => 'state',
         ],
-        'Type' =>
-        [
+        'Type' => [
           'shape' => 'GatewayType',
           'locationName' => 'type',
         ],
-        'AvailabilityZone' =>
-        [
+        'AvailabilityZone' => [
           'shape' => 'String',
           'locationName' => 'availabilityZone',
         ],
-        'VpcAttachments' =>
-        [
+        'VpcAttachments' => [
           'shape' => 'VpcAttachmentList',
           'locationName' => 'attachments',
         ],
-        'Tags' =>
-        [
+        'Tags' => [
           'shape' => 'TagList',
           'locationName' => 'tagSet',
         ],
       ],
     ],
-    'VpnGatewayIdStringList' =>
-    [
+    'VpnGatewayIdStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'VpnGatewayId',
       ],
     ],
-    'VpnGatewayList' =>
-    [
+    'VpnGatewayList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'VpnGateway',
         'locationName' => 'item',
       ],
     ],
-    'VpnState' =>
-    [
+    'VpnState' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'pending',
-        1 => 'available',
-        2 => 'deleting',
-        3 => 'deleted',
+      'enum' => [
+        'pending',
+        'available',
+        'deleting',
+        'deleted',
       ],
     ],
-    'VpnStaticRoute' =>
-    [
+    'VpnStaticRoute' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DestinationCidrBlock' =>
-        [
+      'members' => [
+        'DestinationCidrBlock' => [
           'shape' => 'String',
           'locationName' => 'destinationCidrBlock',
         ],
-        'Source' =>
-        [
+        'Source' => [
           'shape' => 'VpnStaticRouteSource',
           'locationName' => 'source',
         ],
-        'State' =>
-        [
+        'State' => [
           'shape' => 'VpnState',
           'locationName' => 'state',
         ],
       ],
     ],
-    'VpnStaticRouteList' =>
-    [
+    'VpnStaticRouteList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'VpnStaticRoute',
         'locationName' => 'item',
       ],
     ],
-    'VpnStaticRouteSource' =>
-    [
+    'VpnStaticRouteSource' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'Static',
+      'enum' => [
+        'Static',
       ],
     ],
-    'ZoneNameStringList' =>
-    [
+    'ZoneNameStringList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'String',
         'locationName' => 'ZoneName',
       ],
     ],
-    'NewDhcpConfigurationList' =>
-    [
+    'NewDhcpConfigurationList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'NewDhcpConfiguration',
         'locationName' => 'item',
       ],
     ],
-    'NewDhcpConfiguration' =>
-    [
+    'NewDhcpConfiguration' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Key' =>
-        [
+      'members' => [
+        'Key' => [
           'shape' => 'String',
           'locationName' => 'key',
         ],
-        'Values' =>
-        [
+        'Values' => [
           'shape' => 'ValueStringList',
           'locationName' => 'Value',
         ],
       ],
     ],
-    'DhcpConfigurationValueList' =>
-    [
+    'DhcpConfigurationValueList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AttributeValue',
         'locationName' => 'item',
       ],
     ],
-    'Blob' =>
-    [
+    'Blob' => [
       'type' => 'blob',
     ],
-    'BlobAttributeValue' =>
-    [
+    'BlobAttributeValue' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Value' =>
-        [
+      'members' => [
+        'Value' => [
           'shape' => 'Blob',
           'locationName' => 'value',
         ],
       ],
     ],
-    'RequestSpotLaunchSpecification' =>
-    [
+    'RequestSpotLaunchSpecification' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ImageId' =>
-        [
+      'members' => [
+        'ImageId' => [
           'shape' => 'String',
           'locationName' => 'imageId',
         ],
-        'KeyName' =>
-        [
+        'KeyName' => [
           'shape' => 'String',
           'locationName' => 'keyName',
         ],
-        'SecurityGroups' =>
-        [
+        'SecurityGroups' => [
           'shape' => 'ValueStringList',
           'locationName' => 'SecurityGroup',
         ],
-        'UserData' =>
-        [
+        'UserData' => [
           'shape' => 'String',
           'locationName' => 'userData',
         ],
-        'AddressingType' =>
-        [
+        'AddressingType' => [
           'shape' => 'String',
           'locationName' => 'addressingType',
         ],
-        'InstanceType' =>
-        [
+        'InstanceType' => [
           'shape' => 'InstanceType',
           'locationName' => 'instanceType',
         ],
-        'Placement' =>
-        [
+        'Placement' => [
           'shape' => 'SpotPlacement',
           'locationName' => 'placement',
         ],
-        'KernelId' =>
-        [
+        'KernelId' => [
           'shape' => 'String',
           'locationName' => 'kernelId',
         ],
-        'RamdiskId' =>
-        [
+        'RamdiskId' => [
           'shape' => 'String',
           'locationName' => 'ramdiskId',
         ],
-        'BlockDeviceMappings' =>
-        [
+        'BlockDeviceMappings' => [
           'shape' => 'BlockDeviceMappingList',
           'locationName' => 'blockDeviceMapping',
         ],
-        'SubnetId' =>
-        [
+        'SubnetId' => [
           'shape' => 'String',
           'locationName' => 'subnetId',
         ],
-        'NetworkInterfaces' =>
-        [
+        'NetworkInterfaces' => [
           'shape' => 'InstanceNetworkInterfaceSpecificationList',
           'locationName' => 'NetworkInterface',
         ],
-        'IamInstanceProfile' =>
-        [
+        'IamInstanceProfile' => [
           'shape' => 'IamInstanceProfileSpecification',
           'locationName' => 'iamInstanceProfile',
         ],
-        'EbsOptimized' =>
-        [
+        'EbsOptimized' => [
           'shape' => 'Boolean',
           'locationName' => 'ebsOptimized',
         ],
-        'Monitoring' =>
-        [
+        'Monitoring' => [
           'shape' => 'RunInstancesMonitoringEnabled',
           'locationName' => 'monitoring',
         ],
-        'SecurityGroupIds' =>
-        [
+        'SecurityGroupIds' => [
           'shape' => 'ValueStringList',
           'locationName' => 'SecurityGroupId',
         ],

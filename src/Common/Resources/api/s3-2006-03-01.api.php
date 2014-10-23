@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2006-03-01',
     'checksumFormat' => 'md5',
     'endpointPrefix' => 's3',
@@ -12,23 +10,17 @@ return [
     'timestampFormat' => 'rfc822',
     'protocol' => 'rest-xml',
   ],
-  'operations' =>
-  [
-    'AbortMultipartUpload' =>
-    [
+  'operations' => [
+    'AbortMultipartUpload' => [
       'name' => 'AbortMultipartUpload',
-      'http' =>
-      [
+      'http' => [
         'method' => 'DELETE',
         'requestUri' => '/{Bucket}/{Key+}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AbortMultipartUploadRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchUpload',
           'exception' => true,
@@ -36,43 +28,33 @@ return [
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadAbort.html',
     ],
-    'CompleteMultipartUpload' =>
-    [
+    'CompleteMultipartUpload' => [
       'name' => 'CompleteMultipartUpload',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/{Bucket}/{Key+}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CompleteMultipartUploadRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CompleteMultipartUploadOutput',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadComplete.html',
     ],
-    'CopyObject' =>
-    [
+    'CopyObject' => [
       'name' => 'CopyObject',
-      'http' =>
-      [
+      'http' => [
         'method' => 'PUT',
         'requestUri' => '/{Bucket}/{Key+}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CopyObjectRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CopyObjectOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ObjectNotInActiveTierError',
           'exception' => true,
@@ -81,25 +63,19 @@ return [
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectCOPY.html',
       'alias' => 'PutObjectCopy',
     ],
-    'CreateBucket' =>
-    [
+    'CreateBucket' => [
       'name' => 'CreateBucket',
-      'http' =>
-      [
+      'http' => [
         'method' => 'PUT',
         'requestUri' => '/{Bucket}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateBucketRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateBucketOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'BucketAlreadyExists',
           'exception' => true,
@@ -108,363 +84,283 @@ return [
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUT.html',
       'alias' => 'PutBucket',
     ],
-    'CreateMultipartUpload' =>
-    [
+    'CreateMultipartUpload' => [
       'name' => 'CreateMultipartUpload',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/{Bucket}/{Key+}?uploads',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateMultipartUploadRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'CreateMultipartUploadOutput',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadInitiate.html',
       'alias' => 'InitiateMultipartUpload',
     ],
-    'DeleteBucket' =>
-    [
+    'DeleteBucket' => [
       'name' => 'DeleteBucket',
-      'http' =>
-      [
+      'http' => [
         'method' => 'DELETE',
         'requestUri' => '/{Bucket}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteBucketRequest',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETE.html',
     ],
-    'DeleteBucketCors' =>
-    [
+    'DeleteBucketCors' => [
       'name' => 'DeleteBucketCors',
-      'http' =>
-      [
+      'http' => [
         'method' => 'DELETE',
         'requestUri' => '/{Bucket}?cors',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteBucketCorsRequest',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEcors.html',
     ],
-    'DeleteBucketLifecycle' =>
-    [
+    'DeleteBucketLifecycle' => [
       'name' => 'DeleteBucketLifecycle',
-      'http' =>
-      [
+      'http' => [
         'method' => 'DELETE',
         'requestUri' => '/{Bucket}?lifecycle',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteBucketLifecycleRequest',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETElifecycle.html',
     ],
-    'DeleteBucketPolicy' =>
-    [
+    'DeleteBucketPolicy' => [
       'name' => 'DeleteBucketPolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'DELETE',
         'requestUri' => '/{Bucket}?policy',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteBucketPolicyRequest',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEpolicy.html',
     ],
-    'DeleteBucketTagging' =>
-    [
+    'DeleteBucketTagging' => [
       'name' => 'DeleteBucketTagging',
-      'http' =>
-      [
+      'http' => [
         'method' => 'DELETE',
         'requestUri' => '/{Bucket}?tagging',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteBucketTaggingRequest',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEtagging.html',
     ],
-    'DeleteBucketWebsite' =>
-    [
+    'DeleteBucketWebsite' => [
       'name' => 'DeleteBucketWebsite',
-      'http' =>
-      [
+      'http' => [
         'method' => 'DELETE',
         'requestUri' => '/{Bucket}?website',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteBucketWebsiteRequest',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEwebsite.html',
     ],
-    'DeleteObject' =>
-    [
+    'DeleteObject' => [
       'name' => 'DeleteObject',
-      'http' =>
-      [
+      'http' => [
         'method' => 'DELETE',
         'requestUri' => '/{Bucket}/{Key+}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteObjectRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteObjectOutput',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectDELETE.html',
     ],
-    'DeleteObjects' =>
-    [
+    'DeleteObjects' => [
       'name' => 'DeleteObjects',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/{Bucket}?delete',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteObjectsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DeleteObjectsOutput',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/multiobjectdeleteapi.html',
       'alias' => 'DeleteMultipleObjects',
     ],
-    'GetBucketAcl' =>
-    [
+    'GetBucketAcl' => [
       'name' => 'GetBucketAcl',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{Bucket}?acl',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetBucketAclRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetBucketAclOutput',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETacl.html',
     ],
-    'GetBucketCors' =>
-    [
+    'GetBucketCors' => [
       'name' => 'GetBucketCors',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{Bucket}?cors',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetBucketCorsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetBucketCorsOutput',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETcors.html',
     ],
-    'GetBucketLifecycle' =>
-    [
+    'GetBucketLifecycle' => [
       'name' => 'GetBucketLifecycle',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{Bucket}?lifecycle',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetBucketLifecycleRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetBucketLifecycleOutput',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETlifecycle.html',
     ],
-    'GetBucketLocation' =>
-    [
+    'GetBucketLocation' => [
       'name' => 'GetBucketLocation',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{Bucket}?location',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetBucketLocationRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetBucketLocationOutput',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETlocation.html',
     ],
-    'GetBucketLogging' =>
-    [
+    'GetBucketLogging' => [
       'name' => 'GetBucketLogging',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{Bucket}?logging',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetBucketLoggingRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetBucketLoggingOutput',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETlogging.html',
     ],
-    'GetBucketNotification' =>
-    [
+    'GetBucketNotification' => [
       'name' => 'GetBucketNotification',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{Bucket}?notification',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetBucketNotificationRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetBucketNotificationOutput',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETnotification.html',
     ],
-    'GetBucketPolicy' =>
-    [
+    'GetBucketPolicy' => [
       'name' => 'GetBucketPolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{Bucket}?policy',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetBucketPolicyRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetBucketPolicyOutput',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETpolicy.html',
     ],
-    'GetBucketRequestPayment' =>
-    [
+    'GetBucketRequestPayment' => [
       'name' => 'GetBucketRequestPayment',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{Bucket}?requestPayment',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetBucketRequestPaymentRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetBucketRequestPaymentOutput',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTrequestPaymentGET.html',
     ],
-    'GetBucketTagging' =>
-    [
+    'GetBucketTagging' => [
       'name' => 'GetBucketTagging',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{Bucket}?tagging',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetBucketTaggingRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetBucketTaggingOutput',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETtagging.html',
     ],
-    'GetBucketVersioning' =>
-    [
+    'GetBucketVersioning' => [
       'name' => 'GetBucketVersioning',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{Bucket}?versioning',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetBucketVersioningRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetBucketVersioningOutput',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETversioningStatus.html',
     ],
-    'GetBucketWebsite' =>
-    [
+    'GetBucketWebsite' => [
       'name' => 'GetBucketWebsite',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{Bucket}?website',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetBucketWebsiteRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetBucketWebsiteOutput',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETwebsite.html',
     ],
-    'GetObject' =>
-    [
+    'GetObject' => [
       'name' => 'GetObject',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{Bucket}/{Key+}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetObjectRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetObjectOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchKey',
           'exception' => true,
@@ -472,25 +368,19 @@ return [
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectGET.html',
     ],
-    'GetObjectAcl' =>
-    [
+    'GetObjectAcl' => [
       'name' => 'GetObjectAcl',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{Bucket}/{Key+}?acl',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetObjectAclRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetObjectAclOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchKey',
           'exception' => true,
@@ -498,39 +388,30 @@ return [
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectGETacl.html',
     ],
-    'GetObjectTorrent' =>
-    [
+    'GetObjectTorrent' => [
       'name' => 'GetObjectTorrent',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{Bucket}/{Key+}?torrent',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetObjectTorrentRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetObjectTorrentOutput',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectGETtorrent.html',
     ],
-    'HeadBucket' =>
-    [
+    'HeadBucket' => [
       'name' => 'HeadBucket',
-      'http' =>
-      [
+      'http' => [
         'method' => 'HEAD',
         'requestUri' => '/{Bucket}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'HeadBucketRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchBucket',
           'exception' => true,
@@ -538,25 +419,19 @@ return [
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketHEAD.html',
     ],
-    'HeadObject' =>
-    [
+    'HeadObject' => [
       'name' => 'HeadObject',
-      'http' =>
-      [
+      'http' => [
         'method' => 'HEAD',
         'requestUri' => '/{Bucket}/{Key+}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'HeadObjectRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'HeadObjectOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchKey',
           'exception' => true,
@@ -564,77 +439,60 @@ return [
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectHEAD.html',
     ],
-    'ListBuckets' =>
-    [
+    'ListBuckets' => [
       'name' => 'ListBuckets',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListBucketsOutput',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTServiceGET.html',
       'alias' => 'GetService',
     ],
-    'ListMultipartUploads' =>
-    [
+    'ListMultipartUploads' => [
       'name' => 'ListMultipartUploads',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{Bucket}?uploads',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListMultipartUploadsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListMultipartUploadsOutput',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadListMPUpload.html',
     ],
-    'ListObjectVersions' =>
-    [
+    'ListObjectVersions' => [
       'name' => 'ListObjectVersions',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{Bucket}?versions',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListObjectVersionsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListObjectVersionsOutput',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETVersion.html',
       'alias' => 'GetBucketObjectVersions',
     ],
-    'ListObjects' =>
-    [
+    'ListObjects' => [
       'name' => 'ListObjects',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{Bucket}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListObjectsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListObjectsOutput',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchBucket',
           'exception' => true,
@@ -643,197 +501,154 @@ return [
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGET.html',
       'alias' => 'GetBucket',
     ],
-    'ListParts' =>
-    [
+    'ListParts' => [
       'name' => 'ListParts',
-      'http' =>
-      [
+      'http' => [
         'method' => 'GET',
         'requestUri' => '/{Bucket}/{Key+}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'ListPartsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'ListPartsOutput',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadListParts.html',
     ],
-    'PutBucketAcl' =>
-    [
+    'PutBucketAcl' => [
       'name' => 'PutBucketAcl',
-      'http' =>
-      [
+      'http' => [
         'method' => 'PUT',
         'requestUri' => '/{Bucket}?acl',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutBucketAclRequest',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTacl.html',
     ],
-    'PutBucketCors' =>
-    [
+    'PutBucketCors' => [
       'name' => 'PutBucketCors',
-      'http' =>
-      [
+      'http' => [
         'method' => 'PUT',
         'requestUri' => '/{Bucket}?cors',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutBucketCorsRequest',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTcors.html',
     ],
-    'PutBucketLifecycle' =>
-    [
+    'PutBucketLifecycle' => [
       'name' => 'PutBucketLifecycle',
-      'http' =>
-      [
+      'http' => [
         'method' => 'PUT',
         'requestUri' => '/{Bucket}?lifecycle',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutBucketLifecycleRequest',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTlifecycle.html',
     ],
-    'PutBucketLogging' =>
-    [
+    'PutBucketLogging' => [
       'name' => 'PutBucketLogging',
-      'http' =>
-      [
+      'http' => [
         'method' => 'PUT',
         'requestUri' => '/{Bucket}?logging',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutBucketLoggingRequest',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTlogging.html',
     ],
-    'PutBucketNotification' =>
-    [
+    'PutBucketNotification' => [
       'name' => 'PutBucketNotification',
-      'http' =>
-      [
+      'http' => [
         'method' => 'PUT',
         'requestUri' => '/{Bucket}?notification',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutBucketNotificationRequest',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTnotification.html',
     ],
-    'PutBucketPolicy' =>
-    [
+    'PutBucketPolicy' => [
       'name' => 'PutBucketPolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'PUT',
         'requestUri' => '/{Bucket}?policy',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutBucketPolicyRequest',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTpolicy.html',
     ],
-    'PutBucketRequestPayment' =>
-    [
+    'PutBucketRequestPayment' => [
       'name' => 'PutBucketRequestPayment',
-      'http' =>
-      [
+      'http' => [
         'method' => 'PUT',
         'requestUri' => '/{Bucket}?requestPayment',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutBucketRequestPaymentRequest',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTrequestPaymentPUT.html',
     ],
-    'PutBucketTagging' =>
-    [
+    'PutBucketTagging' => [
       'name' => 'PutBucketTagging',
-      'http' =>
-      [
+      'http' => [
         'method' => 'PUT',
         'requestUri' => '/{Bucket}?tagging',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutBucketTaggingRequest',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTtagging.html',
     ],
-    'PutBucketVersioning' =>
-    [
+    'PutBucketVersioning' => [
       'name' => 'PutBucketVersioning',
-      'http' =>
-      [
+      'http' => [
         'method' => 'PUT',
         'requestUri' => '/{Bucket}?versioning',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutBucketVersioningRequest',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTVersioningStatus.html',
     ],
-    'PutBucketWebsite' =>
-    [
+    'PutBucketWebsite' => [
       'name' => 'PutBucketWebsite',
-      'http' =>
-      [
+      'http' => [
         'method' => 'PUT',
         'requestUri' => '/{Bucket}?website',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutBucketWebsiteRequest',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTwebsite.html',
     ],
-    'PutObject' =>
-    [
+    'PutObject' => [
       'name' => 'PutObject',
-      'http' =>
-      [
+      'http' => [
         'method' => 'PUT',
         'requestUri' => '/{Bucket}/{Key+}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutObjectRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'PutObjectOutput',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectPUT.html',
     ],
-    'PutObjectAcl' =>
-    [
+    'PutObjectAcl' => [
       'name' => 'PutObjectAcl',
-      'http' =>
-      [
+      'http' => [
         'method' => 'PUT',
         'requestUri' => '/{Bucket}/{Key+}?acl',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutObjectAclRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'NoSuchKey',
           'exception' => true,
@@ -841,21 +656,16 @@ return [
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectPUTacl.html',
     ],
-    'RestoreObject' =>
-    [
+    'RestoreObject' => [
       'name' => 'RestoreObject',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/{Bucket}/{Key+}?restore',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'RestoreObjectRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'ObjectAlreadyInActiveTierError',
           'exception' => true,
@@ -864,387 +674,301 @@ return [
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectRestore.html',
       'alias' => 'PostObjectRestore',
     ],
-    'UploadPart' =>
-    [
+    'UploadPart' => [
       'name' => 'UploadPart',
-      'http' =>
-      [
+      'http' => [
         'method' => 'PUT',
         'requestUri' => '/{Bucket}/{Key+}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UploadPartRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UploadPartOutput',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadUploadPart.html',
     ],
-    'UploadPartCopy' =>
-    [
+    'UploadPartCopy' => [
       'name' => 'UploadPartCopy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'PUT',
         'requestUri' => '/{Bucket}/{Key+}',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'UploadPartCopyRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'UploadPartCopyOutput',
       ],
       'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadUploadPartCopy.html',
     ],
   ],
-  'shapes' =>
-  [
-    'AbortMultipartUploadRequest' =>
-    [
+  'shapes' => [
+    'AbortMultipartUploadRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
-        1 => 'Key',
-        2 => 'UploadId',
+      'required' => [
+        'Bucket',
+        'Key',
+        'UploadId',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'ObjectKey',
           'location' => 'uri',
           'locationName' => 'Key',
         ],
-        'UploadId' =>
-        [
+        'UploadId' => [
           'shape' => 'MultipartUploadId',
           'location' => 'querystring',
           'locationName' => 'uploadId',
         ],
       ],
     ],
-    'AcceptRanges' =>
-    [
+    'AcceptRanges' => [
       'type' => 'string',
     ],
-    'AccessControlPolicy' =>
-    [
+    'AccessControlPolicy' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Grants' =>
-        [
+      'members' => [
+        'Grants' => [
           'shape' => 'Grants',
           'locationName' => 'AccessControlList',
         ],
-        'Owner' =>
-        [
+        'Owner' => [
           'shape' => 'Owner',
         ],
       ],
     ],
-    'AllowedHeader' =>
-    [
+    'AllowedHeader' => [
       'type' => 'string',
     ],
-    'AllowedHeaders' =>
-    [
+    'AllowedHeaders' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AllowedHeader',
       ],
       'flattened' => true,
     ],
-    'AllowedMethod' =>
-    [
+    'AllowedMethod' => [
       'type' => 'string',
     ],
-    'AllowedMethods' =>
-    [
+    'AllowedMethods' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AllowedMethod',
       ],
       'flattened' => true,
     ],
-    'AllowedOrigin' =>
-    [
+    'AllowedOrigin' => [
       'type' => 'string',
     ],
-    'AllowedOrigins' =>
-    [
+    'AllowedOrigins' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'AllowedOrigin',
       ],
       'flattened' => true,
     ],
-    'Body' =>
-    [
+    'Body' => [
       'type' => 'blob',
     ],
-    'Bucket' =>
-    [
+    'Bucket' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'BucketName',
         ],
-        'CreationDate' =>
-        [
+        'CreationDate' => [
           'shape' => 'CreationDate',
         ],
       ],
     ],
-    'BucketAlreadyExists' =>
-    [
+    'BucketAlreadyExists' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
       'exception' => true,
     ],
-    'BucketCannedACL' =>
-    [
+    'BucketCannedACL' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'private',
-        1 => 'public-read',
-        2 => 'public-read-write',
-        3 => 'authenticated-read',
+      'enum' => [
+        'private',
+        'public-read',
+        'public-read-write',
+        'authenticated-read',
       ],
     ],
-    'BucketLocationConstraint' =>
-    [
+    'BucketLocationConstraint' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'EU',
-        1 => 'eu-west-1',
-        2 => 'us-west-1',
-        3 => 'us-west-2',
-        4 => 'ap-southeast-1',
-        5 => 'ap-southeast-2',
-        6 => 'ap-northeast-1',
-        7 => 'sa-east-1',
-        8 => '',
+      'enum' => [
+        'EU',
+        'eu-west-1',
+        'us-west-1',
+        'us-west-2',
+        'ap-southeast-1',
+        'ap-southeast-2',
+        'ap-northeast-1',
+        'sa-east-1',
+        '',
       ],
     ],
-    'BucketLoggingStatus' =>
-    [
+    'BucketLoggingStatus' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LoggingEnabled' =>
-        [
+      'members' => [
+        'LoggingEnabled' => [
           'shape' => 'LoggingEnabled',
         ],
       ],
     ],
-    'BucketLogsPermission' =>
-    [
+    'BucketLogsPermission' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'FULL_CONTROL',
-        1 => 'READ',
-        2 => 'WRITE',
+      'enum' => [
+        'FULL_CONTROL',
+        'READ',
+        'WRITE',
       ],
     ],
-    'BucketName' =>
-    [
+    'BucketName' => [
       'type' => 'string',
     ],
-    'BucketVersioningStatus' =>
-    [
+    'BucketVersioningStatus' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'Enabled',
-        1 => 'Suspended',
+      'enum' => [
+        'Enabled',
+        'Suspended',
       ],
     ],
-    'Buckets' =>
-    [
+    'Buckets' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Bucket',
         'locationName' => 'Bucket',
       ],
     ],
-    'CORSConfiguration' =>
-    [
+    'CORSConfiguration' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CORSRules' =>
-        [
+      'members' => [
+        'CORSRules' => [
           'shape' => 'CORSRules',
           'locationName' => 'CORSRule',
         ],
       ],
     ],
-    'CORSRule' =>
-    [
+    'CORSRule' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'AllowedHeaders' =>
-        [
+      'members' => [
+        'AllowedHeaders' => [
           'shape' => 'AllowedHeaders',
           'locationName' => 'AllowedHeader',
         ],
-        'AllowedMethods' =>
-        [
+        'AllowedMethods' => [
           'shape' => 'AllowedMethods',
           'locationName' => 'AllowedMethod',
         ],
-        'AllowedOrigins' =>
-        [
+        'AllowedOrigins' => [
           'shape' => 'AllowedOrigins',
           'locationName' => 'AllowedOrigin',
         ],
-        'ExposeHeaders' =>
-        [
+        'ExposeHeaders' => [
           'shape' => 'ExposeHeaders',
           'locationName' => 'ExposeHeader',
         ],
-        'MaxAgeSeconds' =>
-        [
+        'MaxAgeSeconds' => [
           'shape' => 'MaxAgeSeconds',
         ],
       ],
     ],
-    'CORSRules' =>
-    [
+    'CORSRules' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CORSRule',
       ],
       'flattened' => true,
     ],
-    'CacheControl' =>
-    [
+    'CacheControl' => [
       'type' => 'string',
     ],
-    'Code' =>
-    [
+    'Code' => [
       'type' => 'string',
     ],
-    'CommonPrefix' =>
-    [
+    'CommonPrefix' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Prefix' =>
-        [
+      'members' => [
+        'Prefix' => [
           'shape' => 'Prefix',
         ],
       ],
     ],
-    'CommonPrefixList' =>
-    [
+    'CommonPrefixList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CommonPrefix',
       ],
       'flattened' => true,
     ],
-    'CompleteMultipartUploadOutput' =>
-    [
+    'CompleteMultipartUploadOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Location' =>
-        [
+      'members' => [
+        'Location' => [
           'shape' => 'Location',
         ],
-        'Bucket' =>
-        [
+        'Bucket' => [
           'shape' => 'BucketName',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'ObjectKey',
         ],
-        'Expiration' =>
-        [
+        'Expiration' => [
           'shape' => 'Expiration',
           'location' => 'header',
           'locationName' => 'x-amz-expiration',
         ],
-        'ETag' =>
-        [
+        'ETag' => [
           'shape' => 'ETag',
         ],
-        'ServerSideEncryption' =>
-        [
+        'ServerSideEncryption' => [
           'shape' => 'ServerSideEncryption',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption',
         ],
-        'VersionId' =>
-        [
+        'VersionId' => [
           'shape' => 'ObjectVersionId',
           'location' => 'header',
           'locationName' => 'x-amz-version-id',
         ],
       ],
     ],
-    'CompleteMultipartUploadRequest' =>
-    [
+    'CompleteMultipartUploadRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
-        1 => 'Key',
-        2 => 'UploadId',
+      'required' => [
+        'Bucket',
+        'Key',
+        'UploadId',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'ObjectKey',
           'location' => 'uri',
           'locationName' => 'Key',
         ],
-        'MultipartUpload' =>
-        [
+        'MultipartUpload' => [
           'shape' => 'CompletedMultipartUpload',
           'locationName' => 'CompleteMultipartUpload',
-          'xmlNamespace' =>
-          [
+          'xmlNamespace' => [
             'uri' => 'http://s3.amazonaws.com/doc/2006-03-01/',
           ],
         ],
-        'UploadId' =>
-        [
+        'UploadId' => [
           'shape' => 'MultipartUploadId',
           'location' => 'querystring',
           'locationName' => 'uploadId',
@@ -1252,116 +976,89 @@ return [
       ],
       'payload' => 'MultipartUpload',
     ],
-    'CompletedMultipartUpload' =>
-    [
+    'CompletedMultipartUpload' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Parts' =>
-        [
+      'members' => [
+        'Parts' => [
           'shape' => 'CompletedPartList',
           'locationName' => 'Part',
         ],
       ],
     ],
-    'CompletedPart' =>
-    [
+    'CompletedPart' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ETag' =>
-        [
+      'members' => [
+        'ETag' => [
           'shape' => 'ETag',
         ],
-        'PartNumber' =>
-        [
+        'PartNumber' => [
           'shape' => 'PartNumber',
         ],
       ],
     ],
-    'CompletedPartList' =>
-    [
+    'CompletedPartList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'CompletedPart',
       ],
       'flattened' => true,
     ],
-    'Condition' =>
-    [
+    'Condition' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'HttpErrorCodeReturnedEquals' =>
-        [
+      'members' => [
+        'HttpErrorCodeReturnedEquals' => [
           'shape' => 'HttpErrorCodeReturnedEquals',
         ],
-        'KeyPrefixEquals' =>
-        [
+        'KeyPrefixEquals' => [
           'shape' => 'KeyPrefixEquals',
         ],
       ],
     ],
-    'ContentDisposition' =>
-    [
+    'ContentDisposition' => [
       'type' => 'string',
     ],
-    'ContentEncoding' =>
-    [
+    'ContentEncoding' => [
       'type' => 'string',
     ],
-    'ContentLanguage' =>
-    [
+    'ContentLanguage' => [
       'type' => 'string',
     ],
-    'ContentLength' =>
-    [
+    'ContentLength' => [
       'type' => 'integer',
     ],
-    'ContentMD5' =>
-    [
+    'ContentMD5' => [
       'type' => 'string',
     ],
-    'ContentType' =>
-    [
+    'ContentType' => [
       'type' => 'string',
     ],
-    'CopyObjectOutput' =>
-    [
+    'CopyObjectOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CopyObjectResult' =>
-        [
+      'members' => [
+        'CopyObjectResult' => [
           'shape' => 'CopyObjectResult',
         ],
-        'Expiration' =>
-        [
+        'Expiration' => [
           'shape' => 'Expiration',
           'location' => 'header',
           'locationName' => 'x-amz-expiration',
         ],
-        'CopySourceVersionId' =>
-        [
+        'CopySourceVersionId' => [
           'shape' => 'CopySourceVersionId',
           'location' => 'header',
           'locationName' => 'x-amz-copy-source-version-id',
         ],
-        'ServerSideEncryption' =>
-        [
+        'ServerSideEncryption' => [
           'shape' => 'ServerSideEncryption',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption',
         ],
-        'SSECustomerAlgorithm' =>
-        [
+        'SSECustomerAlgorithm' => [
           'shape' => 'SSECustomerAlgorithm',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-algorithm',
         ],
-        'SSECustomerKeyMD5' =>
-        [
+        'SSECustomerKeyMD5' => [
           'shape' => 'SSECustomerKeyMD5',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key-MD5',
@@ -1369,345 +1066,277 @@ return [
       ],
       'payload' => 'CopyObjectResult',
     ],
-    'CopyObjectRequest' =>
-    [
+    'CopyObjectRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
-        1 => 'CopySource',
-        2 => 'Key',
+      'required' => [
+        'Bucket',
+        'CopySource',
+        'Key',
       ],
-      'members' =>
-      [
-        'ACL' =>
-        [
+      'members' => [
+        'ACL' => [
           'shape' => 'ObjectCannedACL',
           'location' => 'header',
           'locationName' => 'x-amz-acl',
         ],
-        'Bucket' =>
-        [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'CacheControl' =>
-        [
+        'CacheControl' => [
           'shape' => 'CacheControl',
           'location' => 'header',
           'locationName' => 'Cache-Control',
         ],
-        'ContentDisposition' =>
-        [
+        'ContentDisposition' => [
           'shape' => 'ContentDisposition',
           'location' => 'header',
           'locationName' => 'Content-Disposition',
         ],
-        'ContentEncoding' =>
-        [
+        'ContentEncoding' => [
           'shape' => 'ContentEncoding',
           'location' => 'header',
           'locationName' => 'Content-Encoding',
         ],
-        'ContentLanguage' =>
-        [
+        'ContentLanguage' => [
           'shape' => 'ContentLanguage',
           'location' => 'header',
           'locationName' => 'Content-Language',
         ],
-        'ContentType' =>
-        [
+        'ContentType' => [
           'shape' => 'ContentType',
           'location' => 'header',
           'locationName' => 'Content-Type',
         ],
-        'CopySource' =>
-        [
+        'CopySource' => [
           'shape' => 'CopySource',
           'location' => 'header',
           'locationName' => 'x-amz-copy-source',
         ],
-        'CopySourceIfMatch' =>
-        [
+        'CopySourceIfMatch' => [
           'shape' => 'CopySourceIfMatch',
           'location' => 'header',
           'locationName' => 'x-amz-copy-source-if-match',
         ],
-        'CopySourceIfModifiedSince' =>
-        [
+        'CopySourceIfModifiedSince' => [
           'shape' => 'CopySourceIfModifiedSince',
           'location' => 'header',
           'locationName' => 'x-amz-copy-source-if-modified-since',
         ],
-        'CopySourceIfNoneMatch' =>
-        [
+        'CopySourceIfNoneMatch' => [
           'shape' => 'CopySourceIfNoneMatch',
           'location' => 'header',
           'locationName' => 'x-amz-copy-source-if-none-match',
         ],
-        'CopySourceIfUnmodifiedSince' =>
-        [
+        'CopySourceIfUnmodifiedSince' => [
           'shape' => 'CopySourceIfUnmodifiedSince',
           'location' => 'header',
           'locationName' => 'x-amz-copy-source-if-unmodified-since',
         ],
-        'Expires' =>
-        [
+        'Expires' => [
           'shape' => 'Expires',
           'location' => 'header',
           'locationName' => 'Expires',
         ],
-        'GrantFullControl' =>
-        [
+        'GrantFullControl' => [
           'shape' => 'GrantFullControl',
           'location' => 'header',
           'locationName' => 'x-amz-grant-full-control',
         ],
-        'GrantRead' =>
-        [
+        'GrantRead' => [
           'shape' => 'GrantRead',
           'location' => 'header',
           'locationName' => 'x-amz-grant-read',
         ],
-        'GrantReadACP' =>
-        [
+        'GrantReadACP' => [
           'shape' => 'GrantReadACP',
           'location' => 'header',
           'locationName' => 'x-amz-grant-read-acp',
         ],
-        'GrantWriteACP' =>
-        [
+        'GrantWriteACP' => [
           'shape' => 'GrantWriteACP',
           'location' => 'header',
           'locationName' => 'x-amz-grant-write-acp',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'ObjectKey',
           'location' => 'uri',
           'locationName' => 'Key',
         ],
-        'Metadata' =>
-        [
+        'Metadata' => [
           'shape' => 'Metadata',
           'location' => 'headers',
           'locationName' => 'x-amz-meta-',
         ],
-        'MetadataDirective' =>
-        [
+        'MetadataDirective' => [
           'shape' => 'MetadataDirective',
           'location' => 'header',
           'locationName' => 'x-amz-metadata-directive',
         ],
-        'ServerSideEncryption' =>
-        [
+        'ServerSideEncryption' => [
           'shape' => 'ServerSideEncryption',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption',
         ],
-        'StorageClass' =>
-        [
+        'StorageClass' => [
           'shape' => 'StorageClass',
           'location' => 'header',
           'locationName' => 'x-amz-storage-class',
         ],
-        'WebsiteRedirectLocation' =>
-        [
+        'WebsiteRedirectLocation' => [
           'shape' => 'WebsiteRedirectLocation',
           'location' => 'header',
           'locationName' => 'x-amz-website-redirect-location',
         ],
-        'SSECustomerAlgorithm' =>
-        [
+        'SSECustomerAlgorithm' => [
           'shape' => 'SSECustomerAlgorithm',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-algorithm',
         ],
-        'SSECustomerKey' =>
-        [
+        'SSECustomerKey' => [
           'shape' => 'SSECustomerKey',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key',
         ],
-        'SSECustomerKeyMD5' =>
-        [
+        'SSECustomerKeyMD5' => [
           'shape' => 'SSECustomerKeyMD5',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key-MD5',
         ],
-        'CopySourceSSECustomerAlgorithm' =>
-        [
+        'CopySourceSSECustomerAlgorithm' => [
           'shape' => 'CopySourceSSECustomerAlgorithm',
           'location' => 'header',
           'locationName' => 'x-amz-copy-source-server-side-encryption-customer-algorithm',
         ],
-        'CopySourceSSECustomerKey' =>
-        [
+        'CopySourceSSECustomerKey' => [
           'shape' => 'CopySourceSSECustomerKey',
           'location' => 'header',
           'locationName' => 'x-amz-copy-source-server-side-encryption-customer-key',
         ],
-        'CopySourceSSECustomerKeyMD5' =>
-        [
+        'CopySourceSSECustomerKeyMD5' => [
           'shape' => 'CopySourceSSECustomerKeyMD5',
           'location' => 'header',
           'locationName' => 'x-amz-copy-source-server-side-encryption-customer-key-MD5',
         ],
       ],
     ],
-    'CopyObjectResult' =>
-    [
+    'CopyObjectResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ETag' =>
-        [
+      'members' => [
+        'ETag' => [
           'shape' => 'ETag',
         ],
-        'LastModified' =>
-        [
+        'LastModified' => [
           'shape' => 'LastModified',
         ],
       ],
     ],
-    'CopyPartResult' =>
-    [
+    'CopyPartResult' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ETag' =>
-        [
+      'members' => [
+        'ETag' => [
           'shape' => 'ETag',
         ],
-        'LastModified' =>
-        [
+        'LastModified' => [
           'shape' => 'LastModified',
         ],
       ],
     ],
-    'CopySource' =>
-    [
+    'CopySource' => [
       'type' => 'string',
       'pattern' => '\\/.+\\/.+',
     ],
-    'CopySourceIfMatch' =>
-    [
+    'CopySourceIfMatch' => [
       'type' => 'string',
     ],
-    'CopySourceIfModifiedSince' =>
-    [
+    'CopySourceIfModifiedSince' => [
       'type' => 'timestamp',
     ],
-    'CopySourceIfNoneMatch' =>
-    [
+    'CopySourceIfNoneMatch' => [
       'type' => 'string',
     ],
-    'CopySourceIfUnmodifiedSince' =>
-    [
+    'CopySourceIfUnmodifiedSince' => [
       'type' => 'timestamp',
     ],
-    'CopySourceRange' =>
-    [
+    'CopySourceRange' => [
       'type' => 'string',
     ],
-    'CopySourceSSECustomerAlgorithm' =>
-    [
+    'CopySourceSSECustomerAlgorithm' => [
       'type' => 'string',
     ],
-    'CopySourceSSECustomerKey' =>
-    [
+    'CopySourceSSECustomerKey' => [
       'type' => 'string',
       'sensitive' => true,
     ],
-    'CopySourceSSECustomerKeyMD5' =>
-    [
+    'CopySourceSSECustomerKeyMD5' => [
       'type' => 'string',
     ],
-    'CopySourceVersionId' =>
-    [
+    'CopySourceVersionId' => [
       'type' => 'string',
     ],
-    'CreateBucketConfiguration' =>
-    [
+    'CreateBucketConfiguration' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LocationConstraint' =>
-        [
+      'members' => [
+        'LocationConstraint' => [
           'shape' => 'BucketLocationConstraint',
         ],
       ],
     ],
-    'CreateBucketOutput' =>
-    [
+    'CreateBucketOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Location' =>
-        [
+      'members' => [
+        'Location' => [
           'shape' => 'Location',
           'location' => 'header',
           'locationName' => 'Location',
         ],
       ],
     ],
-    'CreateBucketRequest' =>
-    [
+    'CreateBucketRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'ACL' =>
-        [
+      'members' => [
+        'ACL' => [
           'shape' => 'BucketCannedACL',
           'location' => 'header',
           'locationName' => 'x-amz-acl',
         ],
-        'Bucket' =>
-        [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'CreateBucketConfiguration' =>
-        [
+        'CreateBucketConfiguration' => [
           'shape' => 'CreateBucketConfiguration',
-          'xmlNamespace' =>
-          [
+          'xmlNamespace' => [
             'uri' => 'http://s3.amazonaws.com/doc/2006-03-01/',
           ],
           'locationName' => 'CreateBucketConfiguration',
         ],
-        'GrantFullControl' =>
-        [
+        'GrantFullControl' => [
           'shape' => 'GrantFullControl',
           'location' => 'header',
           'locationName' => 'x-amz-grant-full-control',
         ],
-        'GrantRead' =>
-        [
+        'GrantRead' => [
           'shape' => 'GrantRead',
           'location' => 'header',
           'locationName' => 'x-amz-grant-read',
         ],
-        'GrantReadACP' =>
-        [
+        'GrantReadACP' => [
           'shape' => 'GrantReadACP',
           'location' => 'header',
           'locationName' => 'x-amz-grant-read-acp',
         ],
-        'GrantWrite' =>
-        [
+        'GrantWrite' => [
           'shape' => 'GrantWrite',
           'location' => 'header',
           'locationName' => 'x-amz-grant-write',
         ],
-        'GrantWriteACP' =>
-        [
+        'GrantWriteACP' => [
           'shape' => 'GrantWriteACP',
           'location' => 'header',
           'locationName' => 'x-amz-grant-write-acp',
@@ -1715,453 +1344,357 @@ return [
       ],
       'payload' => 'CreateBucketConfiguration',
     ],
-    'CreateMultipartUploadOutput' =>
-    [
+    'CreateMultipartUploadOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'locationName' => 'Bucket',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'ObjectKey',
         ],
-        'UploadId' =>
-        [
+        'UploadId' => [
           'shape' => 'MultipartUploadId',
         ],
-        'ServerSideEncryption' =>
-        [
+        'ServerSideEncryption' => [
           'shape' => 'ServerSideEncryption',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption',
         ],
-        'SSECustomerAlgorithm' =>
-        [
+        'SSECustomerAlgorithm' => [
           'shape' => 'SSECustomerAlgorithm',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-algorithm',
         ],
-        'SSECustomerKeyMD5' =>
-        [
+        'SSECustomerKeyMD5' => [
           'shape' => 'SSECustomerKeyMD5',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key-MD5',
         ],
       ],
     ],
-    'CreateMultipartUploadRequest' =>
-    [
+    'CreateMultipartUploadRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
-        1 => 'Key',
+      'required' => [
+        'Bucket',
+        'Key',
       ],
-      'members' =>
-      [
-        'ACL' =>
-        [
+      'members' => [
+        'ACL' => [
           'shape' => 'ObjectCannedACL',
           'location' => 'header',
           'locationName' => 'x-amz-acl',
         ],
-        'Bucket' =>
-        [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'CacheControl' =>
-        [
+        'CacheControl' => [
           'shape' => 'CacheControl',
           'location' => 'header',
           'locationName' => 'Cache-Control',
         ],
-        'ContentDisposition' =>
-        [
+        'ContentDisposition' => [
           'shape' => 'ContentDisposition',
           'location' => 'header',
           'locationName' => 'Content-Disposition',
         ],
-        'ContentEncoding' =>
-        [
+        'ContentEncoding' => [
           'shape' => 'ContentEncoding',
           'location' => 'header',
           'locationName' => 'Content-Encoding',
         ],
-        'ContentLanguage' =>
-        [
+        'ContentLanguage' => [
           'shape' => 'ContentLanguage',
           'location' => 'header',
           'locationName' => 'Content-Language',
         ],
-        'ContentType' =>
-        [
+        'ContentType' => [
           'shape' => 'ContentType',
           'location' => 'header',
           'locationName' => 'Content-Type',
         ],
-        'Expires' =>
-        [
+        'Expires' => [
           'shape' => 'Expires',
           'location' => 'header',
           'locationName' => 'Expires',
         ],
-        'GrantFullControl' =>
-        [
+        'GrantFullControl' => [
           'shape' => 'GrantFullControl',
           'location' => 'header',
           'locationName' => 'x-amz-grant-full-control',
         ],
-        'GrantRead' =>
-        [
+        'GrantRead' => [
           'shape' => 'GrantRead',
           'location' => 'header',
           'locationName' => 'x-amz-grant-read',
         ],
-        'GrantReadACP' =>
-        [
+        'GrantReadACP' => [
           'shape' => 'GrantReadACP',
           'location' => 'header',
           'locationName' => 'x-amz-grant-read-acp',
         ],
-        'GrantWriteACP' =>
-        [
+        'GrantWriteACP' => [
           'shape' => 'GrantWriteACP',
           'location' => 'header',
           'locationName' => 'x-amz-grant-write-acp',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'ObjectKey',
           'location' => 'uri',
           'locationName' => 'Key',
         ],
-        'Metadata' =>
-        [
+        'Metadata' => [
           'shape' => 'Metadata',
           'location' => 'headers',
           'locationName' => 'x-amz-meta-',
         ],
-        'ServerSideEncryption' =>
-        [
+        'ServerSideEncryption' => [
           'shape' => 'ServerSideEncryption',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption',
         ],
-        'StorageClass' =>
-        [
+        'StorageClass' => [
           'shape' => 'StorageClass',
           'location' => 'header',
           'locationName' => 'x-amz-storage-class',
         ],
-        'WebsiteRedirectLocation' =>
-        [
+        'WebsiteRedirectLocation' => [
           'shape' => 'WebsiteRedirectLocation',
           'location' => 'header',
           'locationName' => 'x-amz-website-redirect-location',
         ],
-        'SSECustomerAlgorithm' =>
-        [
+        'SSECustomerAlgorithm' => [
           'shape' => 'SSECustomerAlgorithm',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-algorithm',
         ],
-        'SSECustomerKey' =>
-        [
+        'SSECustomerKey' => [
           'shape' => 'SSECustomerKey',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key',
         ],
-        'SSECustomerKeyMD5' =>
-        [
+        'SSECustomerKeyMD5' => [
           'shape' => 'SSECustomerKeyMD5',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key-MD5',
         ],
       ],
     ],
-    'CreationDate' =>
-    [
+    'CreationDate' => [
       'type' => 'timestamp',
     ],
-    'Date' =>
-    [
+    'Date' => [
       'type' => 'timestamp',
       'timestampFormat' => 'iso8601',
     ],
-    'Days' =>
-    [
+    'Days' => [
       'type' => 'integer',
     ],
-    'Delete' =>
-    [
+    'Delete' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Objects',
+      'required' => [
+        'Objects',
       ],
-      'members' =>
-      [
-        'Objects' =>
-        [
+      'members' => [
+        'Objects' => [
           'shape' => 'ObjectIdentifierList',
           'locationName' => 'Object',
         ],
-        'Quiet' =>
-        [
+        'Quiet' => [
           'shape' => 'Quiet',
         ],
       ],
     ],
-    'DeleteBucketCorsRequest' =>
-    [
+    'DeleteBucketCorsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
       ],
     ],
-    'DeleteBucketLifecycleRequest' =>
-    [
+    'DeleteBucketLifecycleRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
       ],
     ],
-    'DeleteBucketPolicyRequest' =>
-    [
+    'DeleteBucketPolicyRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
       ],
     ],
-    'DeleteBucketRequest' =>
-    [
+    'DeleteBucketRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
       ],
     ],
-    'DeleteBucketTaggingRequest' =>
-    [
+    'DeleteBucketTaggingRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
       ],
     ],
-    'DeleteBucketWebsiteRequest' =>
-    [
+    'DeleteBucketWebsiteRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
       ],
     ],
-    'DeleteMarker' =>
-    [
+    'DeleteMarker' => [
       'type' => 'boolean',
     ],
-    'DeleteMarkerEntry' =>
-    [
+    'DeleteMarkerEntry' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Owner' =>
-        [
+      'members' => [
+        'Owner' => [
           'shape' => 'Owner',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'ObjectKey',
         ],
-        'VersionId' =>
-        [
+        'VersionId' => [
           'shape' => 'ObjectVersionId',
         ],
-        'IsLatest' =>
-        [
+        'IsLatest' => [
           'shape' => 'IsLatest',
         ],
-        'LastModified' =>
-        [
+        'LastModified' => [
           'shape' => 'LastModified',
         ],
       ],
     ],
-    'DeleteMarkerVersionId' =>
-    [
+    'DeleteMarkerVersionId' => [
       'type' => 'string',
     ],
-    'DeleteMarkers' =>
-    [
+    'DeleteMarkers' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DeleteMarkerEntry',
       ],
       'flattened' => true,
     ],
-    'DeleteObjectOutput' =>
-    [
+    'DeleteObjectOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DeleteMarker' =>
-        [
+      'members' => [
+        'DeleteMarker' => [
           'shape' => 'DeleteMarker',
           'location' => 'header',
           'locationName' => 'x-amz-delete-marker',
         ],
-        'VersionId' =>
-        [
+        'VersionId' => [
           'shape' => 'ObjectVersionId',
           'location' => 'header',
           'locationName' => 'x-amz-version-id',
         ],
       ],
     ],
-    'DeleteObjectRequest' =>
-    [
+    'DeleteObjectRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
-        1 => 'Key',
+      'required' => [
+        'Bucket',
+        'Key',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'ObjectKey',
           'location' => 'uri',
           'locationName' => 'Key',
         ],
-        'MFA' =>
-        [
+        'MFA' => [
           'shape' => 'MFA',
           'location' => 'header',
           'locationName' => 'x-amz-mfa',
         ],
-        'VersionId' =>
-        [
+        'VersionId' => [
           'shape' => 'ObjectVersionId',
           'location' => 'querystring',
           'locationName' => 'versionId',
         ],
       ],
     ],
-    'DeleteObjectsOutput' =>
-    [
+    'DeleteObjectsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Deleted' =>
-        [
+      'members' => [
+        'Deleted' => [
           'shape' => 'DeletedObjects',
         ],
-        'Errors' =>
-        [
+        'Errors' => [
           'shape' => 'Errors',
           'locationName' => 'Error',
         ],
       ],
     ],
-    'DeleteObjectsRequest' =>
-    [
+    'DeleteObjectsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
-        1 => 'Delete',
+      'required' => [
+        'Bucket',
+        'Delete',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'Delete' =>
-        [
+        'Delete' => [
           'shape' => 'Delete',
-          'xmlNamespace' =>
-          [
+          'xmlNamespace' => [
             'uri' => 'http://s3.amazonaws.com/doc/2006-03-01/',
           ],
           'locationName' => 'Delete',
         ],
-        'MFA' =>
-        [
+        'MFA' => [
           'shape' => 'MFA',
           'location' => 'header',
           'locationName' => 'x-amz-mfa',
@@ -2169,656 +1702,505 @@ return [
       ],
       'payload' => 'Delete',
     ],
-    'DeletedObject' =>
-    [
+    'DeletedObject' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Key' =>
-        [
+      'members' => [
+        'Key' => [
           'shape' => 'ObjectKey',
         ],
-        'VersionId' =>
-        [
+        'VersionId' => [
           'shape' => 'ObjectVersionId',
         ],
-        'DeleteMarker' =>
-        [
+        'DeleteMarker' => [
           'shape' => 'DeleteMarker',
         ],
-        'DeleteMarkerVersionId' =>
-        [
+        'DeleteMarkerVersionId' => [
           'shape' => 'DeleteMarkerVersionId',
         ],
       ],
     ],
-    'DeletedObjects' =>
-    [
+    'DeletedObjects' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'DeletedObject',
       ],
       'flattened' => true,
     ],
-    'Delimiter' =>
-    [
+    'Delimiter' => [
       'type' => 'string',
     ],
-    'DisplayName' =>
-    [
+    'DisplayName' => [
       'type' => 'string',
     ],
-    'ETag' =>
-    [
+    'ETag' => [
       'type' => 'string',
     ],
-    'EmailAddress' =>
-    [
+    'EmailAddress' => [
       'type' => 'string',
     ],
-    'EncodingType' =>
-    [
+    'EncodingType' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'url',
+      'enum' => [
+        'url',
       ],
     ],
-    'Error' =>
-    [
+    'Error' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Key' =>
-        [
+      'members' => [
+        'Key' => [
           'shape' => 'ObjectKey',
         ],
-        'VersionId' =>
-        [
+        'VersionId' => [
           'shape' => 'ObjectVersionId',
         ],
-        'Code' =>
-        [
+        'Code' => [
           'shape' => 'Code',
         ],
-        'Message' =>
-        [
+        'Message' => [
           'shape' => 'Message',
         ],
       ],
     ],
-    'ErrorDocument' =>
-    [
+    'ErrorDocument' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Key',
+      'required' => [
+        'Key',
       ],
-      'members' =>
-      [
-        'Key' =>
-        [
+      'members' => [
+        'Key' => [
           'shape' => 'ObjectKey',
         ],
       ],
     ],
-    'Errors' =>
-    [
+    'Errors' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Error',
       ],
       'flattened' => true,
     ],
-    'Event' =>
-    [
+    'Event' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 's3:ReducedRedundancyLostObject',
+      'enum' => [
+        's3:ReducedRedundancyLostObject',
       ],
     ],
-    'Expiration' =>
-    [
+    'Expiration' => [
       'type' => 'timestamp',
     ],
-    'ExpirationStatus' =>
-    [
+    'ExpirationStatus' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'Enabled',
-        1 => 'Disabled',
+      'enum' => [
+        'Enabled',
+        'Disabled',
       ],
     ],
-    'Expires' =>
-    [
+    'Expires' => [
       'type' => 'timestamp',
     ],
-    'ExposeHeader' =>
-    [
+    'ExposeHeader' => [
       'type' => 'string',
     ],
-    'ExposeHeaders' =>
-    [
+    'ExposeHeaders' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ExposeHeader',
       ],
       'flattened' => true,
     ],
-    'GetBucketAclOutput' =>
-    [
+    'GetBucketAclOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Owner' =>
-        [
+      'members' => [
+        'Owner' => [
           'shape' => 'Owner',
         ],
-        'Grants' =>
-        [
+        'Grants' => [
           'shape' => 'Grants',
           'locationName' => 'AccessControlList',
         ],
       ],
     ],
-    'GetBucketAclRequest' =>
-    [
+    'GetBucketAclRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
       ],
     ],
-    'GetBucketCorsOutput' =>
-    [
+    'GetBucketCorsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CORSRules' =>
-        [
+      'members' => [
+        'CORSRules' => [
           'shape' => 'CORSRules',
           'locationName' => 'CORSRule',
         ],
       ],
     ],
-    'GetBucketCorsRequest' =>
-    [
+    'GetBucketCorsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
       ],
     ],
-    'GetBucketLifecycleOutput' =>
-    [
+    'GetBucketLifecycleOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Rules' =>
-        [
+      'members' => [
+        'Rules' => [
           'shape' => 'Rules',
           'locationName' => 'Rule',
         ],
       ],
     ],
-    'GetBucketLifecycleRequest' =>
-    [
+    'GetBucketLifecycleRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
       ],
     ],
-    'GetBucketLocationOutput' =>
-    [
+    'GetBucketLocationOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LocationConstraint' =>
-        [
+      'members' => [
+        'LocationConstraint' => [
           'shape' => 'BucketLocationConstraint',
         ],
       ],
     ],
-    'GetBucketLocationRequest' =>
-    [
+    'GetBucketLocationRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
       ],
     ],
-    'GetBucketLoggingOutput' =>
-    [
+    'GetBucketLoggingOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'LoggingEnabled' =>
-        [
+      'members' => [
+        'LoggingEnabled' => [
           'shape' => 'LoggingEnabled',
         ],
       ],
     ],
-    'GetBucketLoggingRequest' =>
-    [
+    'GetBucketLoggingRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
       ],
     ],
-    'GetBucketNotificationOutput' =>
-    [
+    'GetBucketNotificationOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TopicConfiguration' =>
-        [
+      'members' => [
+        'TopicConfiguration' => [
           'shape' => 'TopicConfiguration',
         ],
       ],
     ],
-    'GetBucketNotificationRequest' =>
-    [
+    'GetBucketNotificationRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
       ],
     ],
-    'GetBucketPolicyOutput' =>
-    [
+    'GetBucketPolicyOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Policy' =>
-        [
+      'members' => [
+        'Policy' => [
           'shape' => 'Policy',
         ],
       ],
       'payload' => 'Policy',
     ],
-    'GetBucketPolicyRequest' =>
-    [
+    'GetBucketPolicyRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
       ],
     ],
-    'GetBucketRequestPaymentOutput' =>
-    [
+    'GetBucketRequestPaymentOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Payer' =>
-        [
+      'members' => [
+        'Payer' => [
           'shape' => 'Payer',
         ],
       ],
     ],
-    'GetBucketRequestPaymentRequest' =>
-    [
+    'GetBucketRequestPaymentRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
       ],
     ],
-    'GetBucketTaggingOutput' =>
-    [
+    'GetBucketTaggingOutput' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TagSet',
+      'required' => [
+        'TagSet',
       ],
-      'members' =>
-      [
-        'TagSet' =>
-        [
+      'members' => [
+        'TagSet' => [
           'shape' => 'TagSet',
         ],
       ],
     ],
-    'GetBucketTaggingRequest' =>
-    [
+    'GetBucketTaggingRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
       ],
     ],
-    'GetBucketVersioningOutput' =>
-    [
+    'GetBucketVersioningOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Status' =>
-        [
+      'members' => [
+        'Status' => [
           'shape' => 'BucketVersioningStatus',
         ],
-        'MFADelete' =>
-        [
+        'MFADelete' => [
           'shape' => 'MFADeleteStatus',
           'locationName' => 'MfaDelete',
         ],
       ],
     ],
-    'GetBucketVersioningRequest' =>
-    [
+    'GetBucketVersioningRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
       ],
     ],
-    'GetBucketWebsiteOutput' =>
-    [
+    'GetBucketWebsiteOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'RedirectAllRequestsTo' =>
-        [
+      'members' => [
+        'RedirectAllRequestsTo' => [
           'shape' => 'RedirectAllRequestsTo',
         ],
-        'IndexDocument' =>
-        [
+        'IndexDocument' => [
           'shape' => 'IndexDocument',
         ],
-        'ErrorDocument' =>
-        [
+        'ErrorDocument' => [
           'shape' => 'ErrorDocument',
         ],
-        'RoutingRules' =>
-        [
+        'RoutingRules' => [
           'shape' => 'RoutingRules',
         ],
       ],
     ],
-    'GetBucketWebsiteRequest' =>
-    [
+    'GetBucketWebsiteRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
       ],
     ],
-    'GetObjectAclOutput' =>
-    [
+    'GetObjectAclOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Owner' =>
-        [
+      'members' => [
+        'Owner' => [
           'shape' => 'Owner',
         ],
-        'Grants' =>
-        [
+        'Grants' => [
           'shape' => 'Grants',
           'locationName' => 'AccessControlList',
         ],
       ],
     ],
-    'GetObjectAclRequest' =>
-    [
+    'GetObjectAclRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
-        1 => 'Key',
+      'required' => [
+        'Bucket',
+        'Key',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'ObjectKey',
           'location' => 'uri',
           'locationName' => 'Key',
         ],
-        'VersionId' =>
-        [
+        'VersionId' => [
           'shape' => 'ObjectVersionId',
           'location' => 'querystring',
           'locationName' => 'versionId',
         ],
       ],
     ],
-    'GetObjectOutput' =>
-    [
+    'GetObjectOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Body' =>
-        [
+      'members' => [
+        'Body' => [
           'shape' => 'Body',
           'streaming' => true,
         ],
-        'DeleteMarker' =>
-        [
+        'DeleteMarker' => [
           'shape' => 'DeleteMarker',
           'location' => 'header',
           'locationName' => 'x-amz-delete-marker',
         ],
-        'AcceptRanges' =>
-        [
+        'AcceptRanges' => [
           'shape' => 'AcceptRanges',
           'location' => 'header',
           'locationName' => 'accept-ranges',
         ],
-        'Expiration' =>
-        [
+        'Expiration' => [
           'shape' => 'Expiration',
           'location' => 'header',
           'locationName' => 'x-amz-expiration',
         ],
-        'Restore' =>
-        [
+        'Restore' => [
           'shape' => 'Restore',
           'location' => 'header',
           'locationName' => 'x-amz-restore',
         ],
-        'LastModified' =>
-        [
+        'LastModified' => [
           'shape' => 'LastModified',
           'location' => 'header',
           'locationName' => 'Last-Modified',
         ],
-        'ContentLength' =>
-        [
+        'ContentLength' => [
           'shape' => 'ContentLength',
           'location' => 'header',
           'locationName' => 'Content-Length',
         ],
-        'ETag' =>
-        [
+        'ETag' => [
           'shape' => 'ETag',
           'location' => 'header',
           'locationName' => 'ETag',
         ],
-        'MissingMeta' =>
-        [
+        'MissingMeta' => [
           'shape' => 'MissingMeta',
           'location' => 'header',
           'locationName' => 'x-amz-missing-meta',
         ],
-        'VersionId' =>
-        [
+        'VersionId' => [
           'shape' => 'ObjectVersionId',
           'location' => 'header',
           'locationName' => 'x-amz-version-id',
         ],
-        'CacheControl' =>
-        [
+        'CacheControl' => [
           'shape' => 'CacheControl',
           'location' => 'header',
           'locationName' => 'Cache-Control',
         ],
-        'ContentDisposition' =>
-        [
+        'ContentDisposition' => [
           'shape' => 'ContentDisposition',
           'location' => 'header',
           'locationName' => 'Content-Disposition',
         ],
-        'ContentEncoding' =>
-        [
+        'ContentEncoding' => [
           'shape' => 'ContentEncoding',
           'location' => 'header',
           'locationName' => 'Content-Encoding',
         ],
-        'ContentLanguage' =>
-        [
+        'ContentLanguage' => [
           'shape' => 'ContentLanguage',
           'location' => 'header',
           'locationName' => 'Content-Language',
         ],
-        'ContentType' =>
-        [
+        'ContentType' => [
           'shape' => 'ContentType',
           'location' => 'header',
           'locationName' => 'Content-Type',
         ],
-        'Expires' =>
-        [
+        'Expires' => [
           'shape' => 'Expires',
           'location' => 'header',
           'locationName' => 'Expires',
         ],
-        'WebsiteRedirectLocation' =>
-        [
+        'WebsiteRedirectLocation' => [
           'shape' => 'WebsiteRedirectLocation',
           'location' => 'header',
           'locationName' => 'x-amz-website-redirect-location',
         ],
-        'ServerSideEncryption' =>
-        [
+        'ServerSideEncryption' => [
           'shape' => 'ServerSideEncryption',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption',
         ],
-        'Metadata' =>
-        [
+        'Metadata' => [
           'shape' => 'Metadata',
           'location' => 'headers',
           'locationName' => 'x-amz-meta-',
         ],
-        'SSECustomerAlgorithm' =>
-        [
+        'SSECustomerAlgorithm' => [
           'shape' => 'SSECustomerAlgorithm',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-algorithm',
         ],
-        'SSECustomerKeyMD5' =>
-        [
+        'SSECustomerKeyMD5' => [
           'shape' => 'SSECustomerKeyMD5',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key-MD5',
@@ -2826,1548 +2208,1204 @@ return [
       ],
       'payload' => 'Body',
     ],
-    'GetObjectRequest' =>
-    [
+    'GetObjectRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
-        1 => 'Key',
+      'required' => [
+        'Bucket',
+        'Key',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'IfMatch' =>
-        [
+        'IfMatch' => [
           'shape' => 'IfMatch',
           'location' => 'header',
           'locationName' => 'If-Match',
         ],
-        'IfModifiedSince' =>
-        [
+        'IfModifiedSince' => [
           'shape' => 'IfModifiedSince',
           'location' => 'header',
           'locationName' => 'If-Modified-Since',
         ],
-        'IfNoneMatch' =>
-        [
+        'IfNoneMatch' => [
           'shape' => 'IfNoneMatch',
           'location' => 'header',
           'locationName' => 'If-None-Match',
         ],
-        'IfUnmodifiedSince' =>
-        [
+        'IfUnmodifiedSince' => [
           'shape' => 'IfUnmodifiedSince',
           'location' => 'header',
           'locationName' => 'If-Unmodified-Since',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'ObjectKey',
           'location' => 'uri',
           'locationName' => 'Key',
         ],
-        'Range' =>
-        [
+        'Range' => [
           'shape' => 'Range',
           'location' => 'header',
           'locationName' => 'Range',
         ],
-        'ResponseCacheControl' =>
-        [
+        'ResponseCacheControl' => [
           'shape' => 'ResponseCacheControl',
           'location' => 'querystring',
           'locationName' => 'response-cache-control',
         ],
-        'ResponseContentDisposition' =>
-        [
+        'ResponseContentDisposition' => [
           'shape' => 'ResponseContentDisposition',
           'location' => 'querystring',
           'locationName' => 'response-content-disposition',
         ],
-        'ResponseContentEncoding' =>
-        [
+        'ResponseContentEncoding' => [
           'shape' => 'ResponseContentEncoding',
           'location' => 'querystring',
           'locationName' => 'response-content-encoding',
         ],
-        'ResponseContentLanguage' =>
-        [
+        'ResponseContentLanguage' => [
           'shape' => 'ResponseContentLanguage',
           'location' => 'querystring',
           'locationName' => 'response-content-language',
         ],
-        'ResponseContentType' =>
-        [
+        'ResponseContentType' => [
           'shape' => 'ResponseContentType',
           'location' => 'querystring',
           'locationName' => 'response-content-type',
         ],
-        'ResponseExpires' =>
-        [
+        'ResponseExpires' => [
           'shape' => 'ResponseExpires',
           'location' => 'querystring',
           'locationName' => 'response-expires',
         ],
-        'VersionId' =>
-        [
+        'VersionId' => [
           'shape' => 'ObjectVersionId',
           'location' => 'querystring',
           'locationName' => 'versionId',
         ],
-        'SSECustomerAlgorithm' =>
-        [
+        'SSECustomerAlgorithm' => [
           'shape' => 'SSECustomerAlgorithm',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-algorithm',
         ],
-        'SSECustomerKey' =>
-        [
+        'SSECustomerKey' => [
           'shape' => 'SSECustomerKey',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key',
         ],
-        'SSECustomerKeyMD5' =>
-        [
+        'SSECustomerKeyMD5' => [
           'shape' => 'SSECustomerKeyMD5',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key-MD5',
         ],
       ],
     ],
-    'GetObjectTorrentOutput' =>
-    [
+    'GetObjectTorrentOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Body' =>
-        [
+      'members' => [
+        'Body' => [
           'shape' => 'Body',
           'streaming' => true,
         ],
       ],
       'payload' => 'Body',
     ],
-    'GetObjectTorrentRequest' =>
-    [
+    'GetObjectTorrentRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
-        1 => 'Key',
+      'required' => [
+        'Bucket',
+        'Key',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'ObjectKey',
           'location' => 'uri',
           'locationName' => 'Key',
         ],
       ],
     ],
-    'Grant' =>
-    [
+    'Grant' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Grantee' =>
-        [
+      'members' => [
+        'Grantee' => [
           'shape' => 'Grantee',
         ],
-        'Permission' =>
-        [
+        'Permission' => [
           'shape' => 'Permission',
         ],
       ],
     ],
-    'GrantFullControl' =>
-    [
+    'GrantFullControl' => [
       'type' => 'string',
     ],
-    'GrantRead' =>
-    [
+    'GrantRead' => [
       'type' => 'string',
     ],
-    'GrantReadACP' =>
-    [
+    'GrantReadACP' => [
       'type' => 'string',
     ],
-    'GrantWrite' =>
-    [
+    'GrantWrite' => [
       'type' => 'string',
     ],
-    'GrantWriteACP' =>
-    [
+    'GrantWriteACP' => [
       'type' => 'string',
     ],
-    'Grantee' =>
-    [
+    'Grantee' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Type',
+      'required' => [
+        'Type',
       ],
-      'members' =>
-      [
-        'DisplayName' =>
-        [
+      'members' => [
+        'DisplayName' => [
           'shape' => 'DisplayName',
         ],
-        'EmailAddress' =>
-        [
+        'EmailAddress' => [
           'shape' => 'EmailAddress',
         ],
-        'ID' =>
-        [
+        'ID' => [
           'shape' => 'ID',
         ],
-        'Type' =>
-        [
+        'Type' => [
           'shape' => 'Type',
         ],
-        'URI' =>
-        [
+        'URI' => [
           'shape' => 'URI',
         ],
       ],
-      'xmlNamespace' =>
-      [
+      'xmlNamespace' => [
         'prefix' => 'xsi',
         'uri' => 'http://www.w3.org/2001/XMLSchema-instance',
       ],
     ],
-    'Grants' =>
-    [
+    'Grants' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Grant',
         'locationName' => 'Grant',
       ],
     ],
-    'HeadBucketRequest' =>
-    [
+    'HeadBucketRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
       ],
     ],
-    'HeadObjectOutput' =>
-    [
+    'HeadObjectOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DeleteMarker' =>
-        [
+      'members' => [
+        'DeleteMarker' => [
           'shape' => 'DeleteMarker',
           'location' => 'header',
           'locationName' => 'x-amz-delete-marker',
         ],
-        'AcceptRanges' =>
-        [
+        'AcceptRanges' => [
           'shape' => 'AcceptRanges',
           'location' => 'header',
           'locationName' => 'accept-ranges',
         ],
-        'Expiration' =>
-        [
+        'Expiration' => [
           'shape' => 'Expiration',
           'location' => 'header',
           'locationName' => 'x-amz-expiration',
         ],
-        'Restore' =>
-        [
+        'Restore' => [
           'shape' => 'Restore',
           'location' => 'header',
           'locationName' => 'x-amz-restore',
         ],
-        'LastModified' =>
-        [
+        'LastModified' => [
           'shape' => 'LastModified',
           'location' => 'header',
           'locationName' => 'Last-Modified',
         ],
-        'ContentLength' =>
-        [
+        'ContentLength' => [
           'shape' => 'ContentLength',
           'location' => 'header',
           'locationName' => 'Content-Length',
         ],
-        'ETag' =>
-        [
+        'ETag' => [
           'shape' => 'ETag',
           'location' => 'header',
           'locationName' => 'ETag',
         ],
-        'MissingMeta' =>
-        [
+        'MissingMeta' => [
           'shape' => 'MissingMeta',
           'location' => 'header',
           'locationName' => 'x-amz-missing-meta',
         ],
-        'VersionId' =>
-        [
+        'VersionId' => [
           'shape' => 'ObjectVersionId',
           'location' => 'header',
           'locationName' => 'x-amz-version-id',
         ],
-        'CacheControl' =>
-        [
+        'CacheControl' => [
           'shape' => 'CacheControl',
           'location' => 'header',
           'locationName' => 'Cache-Control',
         ],
-        'ContentDisposition' =>
-        [
+        'ContentDisposition' => [
           'shape' => 'ContentDisposition',
           'location' => 'header',
           'locationName' => 'Content-Disposition',
         ],
-        'ContentEncoding' =>
-        [
+        'ContentEncoding' => [
           'shape' => 'ContentEncoding',
           'location' => 'header',
           'locationName' => 'Content-Encoding',
         ],
-        'ContentLanguage' =>
-        [
+        'ContentLanguage' => [
           'shape' => 'ContentLanguage',
           'location' => 'header',
           'locationName' => 'Content-Language',
         ],
-        'ContentType' =>
-        [
+        'ContentType' => [
           'shape' => 'ContentType',
           'location' => 'header',
           'locationName' => 'Content-Type',
         ],
-        'Expires' =>
-        [
+        'Expires' => [
           'shape' => 'Expires',
           'location' => 'header',
           'locationName' => 'Expires',
         ],
-        'WebsiteRedirectLocation' =>
-        [
+        'WebsiteRedirectLocation' => [
           'shape' => 'WebsiteRedirectLocation',
           'location' => 'header',
           'locationName' => 'x-amz-website-redirect-location',
         ],
-        'ServerSideEncryption' =>
-        [
+        'ServerSideEncryption' => [
           'shape' => 'ServerSideEncryption',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption',
         ],
-        'Metadata' =>
-        [
+        'Metadata' => [
           'shape' => 'Metadata',
           'location' => 'headers',
           'locationName' => 'x-amz-meta-',
         ],
-        'SSECustomerAlgorithm' =>
-        [
+        'SSECustomerAlgorithm' => [
           'shape' => 'SSECustomerAlgorithm',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-algorithm',
         ],
-        'SSECustomerKeyMD5' =>
-        [
+        'SSECustomerKeyMD5' => [
           'shape' => 'SSECustomerKeyMD5',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key-MD5',
         ],
       ],
     ],
-    'HeadObjectRequest' =>
-    [
+    'HeadObjectRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
-        1 => 'Key',
+      'required' => [
+        'Bucket',
+        'Key',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'IfMatch' =>
-        [
+        'IfMatch' => [
           'shape' => 'IfMatch',
           'location' => 'header',
           'locationName' => 'If-Match',
         ],
-        'IfModifiedSince' =>
-        [
+        'IfModifiedSince' => [
           'shape' => 'IfModifiedSince',
           'location' => 'header',
           'locationName' => 'If-Modified-Since',
         ],
-        'IfNoneMatch' =>
-        [
+        'IfNoneMatch' => [
           'shape' => 'IfNoneMatch',
           'location' => 'header',
           'locationName' => 'If-None-Match',
         ],
-        'IfUnmodifiedSince' =>
-        [
+        'IfUnmodifiedSince' => [
           'shape' => 'IfUnmodifiedSince',
           'location' => 'header',
           'locationName' => 'If-Unmodified-Since',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'ObjectKey',
           'location' => 'uri',
           'locationName' => 'Key',
         ],
-        'Range' =>
-        [
+        'Range' => [
           'shape' => 'Range',
           'location' => 'header',
           'locationName' => 'Range',
         ],
-        'VersionId' =>
-        [
+        'VersionId' => [
           'shape' => 'ObjectVersionId',
           'location' => 'querystring',
           'locationName' => 'versionId',
         ],
-        'SSECustomerAlgorithm' =>
-        [
+        'SSECustomerAlgorithm' => [
           'shape' => 'SSECustomerAlgorithm',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-algorithm',
         ],
-        'SSECustomerKey' =>
-        [
+        'SSECustomerKey' => [
           'shape' => 'SSECustomerKey',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key',
         ],
-        'SSECustomerKeyMD5' =>
-        [
+        'SSECustomerKeyMD5' => [
           'shape' => 'SSECustomerKeyMD5',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key-MD5',
         ],
       ],
     ],
-    'HostName' =>
-    [
+    'HostName' => [
       'type' => 'string',
     ],
-    'HttpErrorCodeReturnedEquals' =>
-    [
+    'HttpErrorCodeReturnedEquals' => [
       'type' => 'string',
     ],
-    'HttpRedirectCode' =>
-    [
+    'HttpRedirectCode' => [
       'type' => 'string',
     ],
-    'ID' =>
-    [
+    'ID' => [
       'type' => 'string',
     ],
-    'IfMatch' =>
-    [
+    'IfMatch' => [
       'type' => 'string',
     ],
-    'IfModifiedSince' =>
-    [
+    'IfModifiedSince' => [
       'type' => 'timestamp',
     ],
-    'IfNoneMatch' =>
-    [
+    'IfNoneMatch' => [
       'type' => 'string',
     ],
-    'IfUnmodifiedSince' =>
-    [
+    'IfUnmodifiedSince' => [
       'type' => 'timestamp',
     ],
-    'IndexDocument' =>
-    [
+    'IndexDocument' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Suffix',
+      'required' => [
+        'Suffix',
       ],
-      'members' =>
-      [
-        'Suffix' =>
-        [
+      'members' => [
+        'Suffix' => [
           'shape' => 'Suffix',
         ],
       ],
     ],
-    'Initiated' =>
-    [
+    'Initiated' => [
       'type' => 'timestamp',
     ],
-    'Initiator' =>
-    [
+    'Initiator' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ID' =>
-        [
+      'members' => [
+        'ID' => [
           'shape' => 'ID',
         ],
-        'DisplayName' =>
-        [
+        'DisplayName' => [
           'shape' => 'DisplayName',
         ],
       ],
     ],
-    'IsLatest' =>
-    [
+    'IsLatest' => [
       'type' => 'boolean',
     ],
-    'IsTruncated' =>
-    [
+    'IsTruncated' => [
       'type' => 'boolean',
     ],
-    'KeyMarker' =>
-    [
+    'KeyMarker' => [
       'type' => 'string',
     ],
-    'KeyPrefixEquals' =>
-    [
+    'KeyPrefixEquals' => [
       'type' => 'string',
     ],
-    'LastModified' =>
-    [
+    'LastModified' => [
       'type' => 'timestamp',
     ],
-    'LifecycleConfiguration' =>
-    [
+    'LifecycleConfiguration' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Rules',
+      'required' => [
+        'Rules',
       ],
-      'members' =>
-      [
-        'Rules' =>
-        [
+      'members' => [
+        'Rules' => [
           'shape' => 'Rules',
           'locationName' => 'Rule',
         ],
       ],
     ],
-    'LifecycleExpiration' =>
-    [
+    'LifecycleExpiration' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Date' =>
-        [
+      'members' => [
+        'Date' => [
           'shape' => 'Date',
         ],
-        'Days' =>
-        [
+        'Days' => [
           'shape' => 'Days',
         ],
       ],
     ],
-    'ListBucketsOutput' =>
-    [
+    'ListBucketsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Buckets' =>
-        [
+      'members' => [
+        'Buckets' => [
           'shape' => 'Buckets',
         ],
-        'Owner' =>
-        [
+        'Owner' => [
           'shape' => 'Owner',
         ],
       ],
     ],
-    'ListMultipartUploadsOutput' =>
-    [
+    'ListMultipartUploadsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
         ],
-        'KeyMarker' =>
-        [
+        'KeyMarker' => [
           'shape' => 'KeyMarker',
         ],
-        'UploadIdMarker' =>
-        [
+        'UploadIdMarker' => [
           'shape' => 'UploadIdMarker',
         ],
-        'NextKeyMarker' =>
-        [
+        'NextKeyMarker' => [
           'shape' => 'NextKeyMarker',
         ],
-        'Prefix' =>
-        [
+        'Prefix' => [
           'shape' => 'Prefix',
         ],
-        'NextUploadIdMarker' =>
-        [
+        'NextUploadIdMarker' => [
           'shape' => 'NextUploadIdMarker',
         ],
-        'MaxUploads' =>
-        [
+        'MaxUploads' => [
           'shape' => 'MaxUploads',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'IsTruncated',
         ],
-        'Uploads' =>
-        [
+        'Uploads' => [
           'shape' => 'MultipartUploadList',
           'locationName' => 'Upload',
         ],
-        'CommonPrefixes' =>
-        [
+        'CommonPrefixes' => [
           'shape' => 'CommonPrefixList',
         ],
-        'EncodingType' =>
-        [
+        'EncodingType' => [
           'shape' => 'EncodingType',
         ],
       ],
     ],
-    'ListMultipartUploadsRequest' =>
-    [
+    'ListMultipartUploadsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'Delimiter' =>
-        [
+        'Delimiter' => [
           'shape' => 'Delimiter',
           'location' => 'querystring',
           'locationName' => 'delimiter',
         ],
-        'EncodingType' =>
-        [
+        'EncodingType' => [
           'shape' => 'EncodingType',
           'location' => 'querystring',
           'locationName' => 'encoding-type',
         ],
-        'KeyMarker' =>
-        [
+        'KeyMarker' => [
           'shape' => 'KeyMarker',
           'location' => 'querystring',
           'locationName' => 'key-marker',
         ],
-        'MaxUploads' =>
-        [
+        'MaxUploads' => [
           'shape' => 'MaxUploads',
           'location' => 'querystring',
           'locationName' => 'max-uploads',
         ],
-        'Prefix' =>
-        [
+        'Prefix' => [
           'shape' => 'Prefix',
           'location' => 'querystring',
           'locationName' => 'prefix',
         ],
-        'UploadIdMarker' =>
-        [
+        'UploadIdMarker' => [
           'shape' => 'UploadIdMarker',
           'location' => 'querystring',
           'locationName' => 'upload-id-marker',
         ],
       ],
     ],
-    'ListObjectVersionsOutput' =>
-    [
+    'ListObjectVersionsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IsTruncated' =>
-        [
+      'members' => [
+        'IsTruncated' => [
           'shape' => 'IsTruncated',
         ],
-        'KeyMarker' =>
-        [
+        'KeyMarker' => [
           'shape' => 'KeyMarker',
         ],
-        'VersionIdMarker' =>
-        [
+        'VersionIdMarker' => [
           'shape' => 'VersionIdMarker',
         ],
-        'NextKeyMarker' =>
-        [
+        'NextKeyMarker' => [
           'shape' => 'NextKeyMarker',
         ],
-        'NextVersionIdMarker' =>
-        [
+        'NextVersionIdMarker' => [
           'shape' => 'NextVersionIdMarker',
         ],
-        'Versions' =>
-        [
+        'Versions' => [
           'shape' => 'ObjectVersionList',
           'locationName' => 'Version',
         ],
-        'DeleteMarkers' =>
-        [
+        'DeleteMarkers' => [
           'shape' => 'DeleteMarkers',
           'locationName' => 'DeleteMarker',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'BucketName',
         ],
-        'Prefix' =>
-        [
+        'Prefix' => [
           'shape' => 'Prefix',
         ],
-        'MaxKeys' =>
-        [
+        'MaxKeys' => [
           'shape' => 'MaxKeys',
         ],
-        'CommonPrefixes' =>
-        [
+        'CommonPrefixes' => [
           'shape' => 'CommonPrefixList',
         ],
-        'EncodingType' =>
-        [
+        'EncodingType' => [
           'shape' => 'EncodingType',
         ],
       ],
     ],
-    'ListObjectVersionsRequest' =>
-    [
+    'ListObjectVersionsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'Delimiter' =>
-        [
+        'Delimiter' => [
           'shape' => 'Delimiter',
           'location' => 'querystring',
           'locationName' => 'delimiter',
         ],
-        'EncodingType' =>
-        [
+        'EncodingType' => [
           'shape' => 'EncodingType',
           'location' => 'querystring',
           'locationName' => 'encoding-type',
         ],
-        'KeyMarker' =>
-        [
+        'KeyMarker' => [
           'shape' => 'KeyMarker',
           'location' => 'querystring',
           'locationName' => 'key-marker',
         ],
-        'MaxKeys' =>
-        [
+        'MaxKeys' => [
           'shape' => 'MaxKeys',
           'location' => 'querystring',
           'locationName' => 'max-keys',
         ],
-        'Prefix' =>
-        [
+        'Prefix' => [
           'shape' => 'Prefix',
           'location' => 'querystring',
           'locationName' => 'prefix',
         ],
-        'VersionIdMarker' =>
-        [
+        'VersionIdMarker' => [
           'shape' => 'VersionIdMarker',
           'location' => 'querystring',
           'locationName' => 'version-id-marker',
         ],
       ],
     ],
-    'ListObjectsOutput' =>
-    [
+    'ListObjectsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'IsTruncated' =>
-        [
+      'members' => [
+        'IsTruncated' => [
           'shape' => 'IsTruncated',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
         ],
-        'NextMarker' =>
-        [
+        'NextMarker' => [
           'shape' => 'NextMarker',
         ],
-        'Contents' =>
-        [
+        'Contents' => [
           'shape' => 'ObjectList',
         ],
-        'Name' =>
-        [
+        'Name' => [
           'shape' => 'BucketName',
         ],
-        'Prefix' =>
-        [
+        'Prefix' => [
           'shape' => 'Prefix',
         ],
-        'MaxKeys' =>
-        [
+        'MaxKeys' => [
           'shape' => 'MaxKeys',
         ],
-        'CommonPrefixes' =>
-        [
+        'CommonPrefixes' => [
           'shape' => 'CommonPrefixList',
         ],
-        'EncodingType' =>
-        [
+        'EncodingType' => [
           'shape' => 'EncodingType',
         ],
       ],
     ],
-    'ListObjectsRequest' =>
-    [
+    'ListObjectsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'Delimiter' =>
-        [
+        'Delimiter' => [
           'shape' => 'Delimiter',
           'location' => 'querystring',
           'locationName' => 'delimiter',
         ],
-        'EncodingType' =>
-        [
+        'EncodingType' => [
           'shape' => 'EncodingType',
           'location' => 'querystring',
           'locationName' => 'encoding-type',
         ],
-        'Marker' =>
-        [
+        'Marker' => [
           'shape' => 'Marker',
           'location' => 'querystring',
           'locationName' => 'marker',
         ],
-        'MaxKeys' =>
-        [
+        'MaxKeys' => [
           'shape' => 'MaxKeys',
           'location' => 'querystring',
           'locationName' => 'max-keys',
         ],
-        'Prefix' =>
-        [
+        'Prefix' => [
           'shape' => 'Prefix',
           'location' => 'querystring',
           'locationName' => 'prefix',
         ],
       ],
     ],
-    'ListPartsOutput' =>
-    [
+    'ListPartsOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'ObjectKey',
         ],
-        'UploadId' =>
-        [
+        'UploadId' => [
           'shape' => 'MultipartUploadId',
         ],
-        'PartNumberMarker' =>
-        [
+        'PartNumberMarker' => [
           'shape' => 'PartNumberMarker',
         ],
-        'NextPartNumberMarker' =>
-        [
+        'NextPartNumberMarker' => [
           'shape' => 'NextPartNumberMarker',
         ],
-        'MaxParts' =>
-        [
+        'MaxParts' => [
           'shape' => 'MaxParts',
         ],
-        'IsTruncated' =>
-        [
+        'IsTruncated' => [
           'shape' => 'IsTruncated',
         ],
-        'Parts' =>
-        [
+        'Parts' => [
           'shape' => 'Parts',
           'locationName' => 'Part',
         ],
-        'Initiator' =>
-        [
+        'Initiator' => [
           'shape' => 'Initiator',
         ],
-        'Owner' =>
-        [
+        'Owner' => [
           'shape' => 'Owner',
         ],
-        'StorageClass' =>
-        [
+        'StorageClass' => [
           'shape' => 'StorageClass',
         ],
       ],
     ],
-    'ListPartsRequest' =>
-    [
+    'ListPartsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
-        1 => 'Key',
-        2 => 'UploadId',
+      'required' => [
+        'Bucket',
+        'Key',
+        'UploadId',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'ObjectKey',
           'location' => 'uri',
           'locationName' => 'Key',
         ],
-        'MaxParts' =>
-        [
+        'MaxParts' => [
           'shape' => 'MaxParts',
           'location' => 'querystring',
           'locationName' => 'max-parts',
         ],
-        'PartNumberMarker' =>
-        [
+        'PartNumberMarker' => [
           'shape' => 'PartNumberMarker',
           'location' => 'querystring',
           'locationName' => 'part-number-marker',
         ],
-        'UploadId' =>
-        [
+        'UploadId' => [
           'shape' => 'MultipartUploadId',
           'location' => 'querystring',
           'locationName' => 'uploadId',
         ],
       ],
     ],
-    'Location' =>
-    [
+    'Location' => [
       'type' => 'string',
     ],
-    'LoggingEnabled' =>
-    [
+    'LoggingEnabled' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'TargetBucket' =>
-        [
+      'members' => [
+        'TargetBucket' => [
           'shape' => 'TargetBucket',
         ],
-        'TargetGrants' =>
-        [
+        'TargetGrants' => [
           'shape' => 'TargetGrants',
         ],
-        'TargetPrefix' =>
-        [
+        'TargetPrefix' => [
           'shape' => 'TargetPrefix',
         ],
       ],
     ],
-    'MFA' =>
-    [
+    'MFA' => [
       'type' => 'string',
     ],
-    'MFADelete' =>
-    [
+    'MFADelete' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'Enabled',
-        1 => 'Disabled',
+      'enum' => [
+        'Enabled',
+        'Disabled',
       ],
     ],
-    'MFADeleteStatus' =>
-    [
+    'MFADeleteStatus' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'Enabled',
-        1 => 'Disabled',
+      'enum' => [
+        'Enabled',
+        'Disabled',
       ],
     ],
-    'Marker' =>
-    [
+    'Marker' => [
       'type' => 'string',
     ],
-    'MaxAgeSeconds' =>
-    [
+    'MaxAgeSeconds' => [
       'type' => 'integer',
     ],
-    'MaxKeys' =>
-    [
+    'MaxKeys' => [
       'type' => 'integer',
     ],
-    'MaxParts' =>
-    [
+    'MaxParts' => [
       'type' => 'integer',
     ],
-    'MaxUploads' =>
-    [
+    'MaxUploads' => [
       'type' => 'integer',
     ],
-    'Message' =>
-    [
+    'Message' => [
       'type' => 'string',
     ],
-    'Metadata' =>
-    [
+    'Metadata' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'MetadataKey',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'MetadataValue',
       ],
     ],
-    'MetadataDirective' =>
-    [
+    'MetadataDirective' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'COPY',
-        1 => 'REPLACE',
+      'enum' => [
+        'COPY',
+        'REPLACE',
       ],
     ],
-    'MetadataKey' =>
-    [
+    'MetadataKey' => [
       'type' => 'string',
     ],
-    'MetadataValue' =>
-    [
+    'MetadataValue' => [
       'type' => 'string',
     ],
-    'MissingMeta' =>
-    [
+    'MissingMeta' => [
       'type' => 'integer',
     ],
-    'MultipartUpload' =>
-    [
+    'MultipartUpload' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'UploadId' =>
-        [
+      'members' => [
+        'UploadId' => [
           'shape' => 'MultipartUploadId',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'ObjectKey',
         ],
-        'Initiated' =>
-        [
+        'Initiated' => [
           'shape' => 'Initiated',
         ],
-        'StorageClass' =>
-        [
+        'StorageClass' => [
           'shape' => 'StorageClass',
         ],
-        'Owner' =>
-        [
+        'Owner' => [
           'shape' => 'Owner',
         ],
-        'Initiator' =>
-        [
+        'Initiator' => [
           'shape' => 'Initiator',
         ],
       ],
     ],
-    'MultipartUploadId' =>
-    [
+    'MultipartUploadId' => [
       'type' => 'string',
     ],
-    'MultipartUploadList' =>
-    [
+    'MultipartUploadList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'MultipartUpload',
       ],
       'flattened' => true,
     ],
-    'NextKeyMarker' =>
-    [
+    'NextKeyMarker' => [
       'type' => 'string',
     ],
-    'NextMarker' =>
-    [
+    'NextMarker' => [
       'type' => 'string',
     ],
-    'NextPartNumberMarker' =>
-    [
+    'NextPartNumberMarker' => [
       'type' => 'integer',
     ],
-    'NextUploadIdMarker' =>
-    [
+    'NextUploadIdMarker' => [
       'type' => 'string',
     ],
-    'NextVersionIdMarker' =>
-    [
+    'NextVersionIdMarker' => [
       'type' => 'string',
     ],
-    'NoSuchBucket' =>
-    [
+    'NoSuchBucket' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
       'exception' => true,
     ],
-    'NoSuchKey' =>
-    [
+    'NoSuchKey' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
       'exception' => true,
     ],
-    'NoSuchUpload' =>
-    [
+    'NoSuchUpload' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
       'exception' => true,
     ],
-    'NoncurrentVersionExpiration' =>
-    [
+    'NoncurrentVersionExpiration' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'NoncurrentDays' =>
-        [
+      'members' => [
+        'NoncurrentDays' => [
           'shape' => 'Days',
         ],
       ],
     ],
-    'NoncurrentVersionTransition' =>
-    [
+    'NoncurrentVersionTransition' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'NoncurrentDays' =>
-        [
+      'members' => [
+        'NoncurrentDays' => [
           'shape' => 'Days',
         ],
-        'StorageClass' =>
-        [
+        'StorageClass' => [
           'shape' => 'TransitionStorageClass',
         ],
       ],
     ],
-    'NotificationConfiguration' =>
-    [
+    'NotificationConfiguration' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TopicConfiguration',
+      'required' => [
+        'TopicConfiguration',
       ],
-      'members' =>
-      [
-        'TopicConfiguration' =>
-        [
+      'members' => [
+        'TopicConfiguration' => [
           'shape' => 'TopicConfiguration',
         ],
       ],
     ],
-    'Object' =>
-    [
+    'Object' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Key' =>
-        [
+      'members' => [
+        'Key' => [
           'shape' => 'ObjectKey',
         ],
-        'LastModified' =>
-        [
+        'LastModified' => [
           'shape' => 'LastModified',
         ],
-        'ETag' =>
-        [
+        'ETag' => [
           'shape' => 'ETag',
         ],
-        'Size' =>
-        [
+        'Size' => [
           'shape' => 'Size',
         ],
-        'StorageClass' =>
-        [
+        'StorageClass' => [
           'shape' => 'ObjectStorageClass',
         ],
-        'Owner' =>
-        [
+        'Owner' => [
           'shape' => 'Owner',
         ],
       ],
     ],
-    'ObjectAlreadyInActiveTierError' =>
-    [
+    'ObjectAlreadyInActiveTierError' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
       'exception' => true,
     ],
-    'ObjectCannedACL' =>
-    [
+    'ObjectCannedACL' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'private',
-        1 => 'public-read',
-        2 => 'public-read-write',
-        3 => 'authenticated-read',
-        4 => 'bucket-owner-read',
-        5 => 'bucket-owner-full-control',
+      'enum' => [
+        'private',
+        'public-read',
+        'public-read-write',
+        'authenticated-read',
+        'bucket-owner-read',
+        'bucket-owner-full-control',
       ],
     ],
-    'ObjectIdentifier' =>
-    [
+    'ObjectIdentifier' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Key',
+      'required' => [
+        'Key',
       ],
-      'members' =>
-      [
-        'Key' =>
-        [
+      'members' => [
+        'Key' => [
           'shape' => 'ObjectKey',
         ],
-        'VersionId' =>
-        [
+        'VersionId' => [
           'shape' => 'ObjectVersionId',
         ],
       ],
     ],
-    'ObjectIdentifierList' =>
-    [
+    'ObjectIdentifierList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ObjectIdentifier',
       ],
       'flattened' => true,
     ],
-    'ObjectKey' =>
-    [
+    'ObjectKey' => [
       'type' => 'string',
     ],
-    'ObjectList' =>
-    [
+    'ObjectList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Object',
       ],
       'flattened' => true,
     ],
-    'ObjectNotInActiveTierError' =>
-    [
+    'ObjectNotInActiveTierError' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
       'exception' => true,
     ],
-    'ObjectStorageClass' =>
-    [
+    'ObjectStorageClass' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'STANDARD',
-        1 => 'REDUCED_REDUNDANCY',
-        2 => 'GLACIER',
+      'enum' => [
+        'STANDARD',
+        'REDUCED_REDUNDANCY',
+        'GLACIER',
       ],
     ],
-    'ObjectVersion' =>
-    [
+    'ObjectVersion' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ETag' =>
-        [
+      'members' => [
+        'ETag' => [
           'shape' => 'ETag',
         ],
-        'Size' =>
-        [
+        'Size' => [
           'shape' => 'Size',
         ],
-        'StorageClass' =>
-        [
+        'StorageClass' => [
           'shape' => 'ObjectVersionStorageClass',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'ObjectKey',
         ],
-        'VersionId' =>
-        [
+        'VersionId' => [
           'shape' => 'ObjectVersionId',
         ],
-        'IsLatest' =>
-        [
+        'IsLatest' => [
           'shape' => 'IsLatest',
         ],
-        'LastModified' =>
-        [
+        'LastModified' => [
           'shape' => 'LastModified',
         ],
-        'Owner' =>
-        [
+        'Owner' => [
           'shape' => 'Owner',
         ],
       ],
     ],
-    'ObjectVersionId' =>
-    [
+    'ObjectVersionId' => [
       'type' => 'string',
     ],
-    'ObjectVersionList' =>
-    [
+    'ObjectVersionList' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'ObjectVersion',
       ],
       'flattened' => true,
     ],
-    'ObjectVersionStorageClass' =>
-    [
+    'ObjectVersionStorageClass' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'STANDARD',
+      'enum' => [
+        'STANDARD',
       ],
     ],
-    'Owner' =>
-    [
+    'Owner' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DisplayName' =>
-        [
+      'members' => [
+        'DisplayName' => [
           'shape' => 'DisplayName',
         ],
-        'ID' =>
-        [
+        'ID' => [
           'shape' => 'ID',
         ],
       ],
     ],
-    'Part' =>
-    [
+    'Part' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'PartNumber' =>
-        [
+      'members' => [
+        'PartNumber' => [
           'shape' => 'PartNumber',
         ],
-        'LastModified' =>
-        [
+        'LastModified' => [
           'shape' => 'LastModified',
         ],
-        'ETag' =>
-        [
+        'ETag' => [
           'shape' => 'ETag',
         ],
-        'Size' =>
-        [
+        'Size' => [
           'shape' => 'Size',
         ],
       ],
     ],
-    'PartNumber' =>
-    [
+    'PartNumber' => [
       'type' => 'integer',
     ],
-    'PartNumberMarker' =>
-    [
+    'PartNumberMarker' => [
       'type' => 'integer',
     ],
-    'Parts' =>
-    [
+    'Parts' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Part',
       ],
       'flattened' => true,
     ],
-    'Payer' =>
-    [
+    'Payer' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'Requester',
-        1 => 'BucketOwner',
+      'enum' => [
+        'Requester',
+        'BucketOwner',
       ],
     ],
-    'Permission' =>
-    [
+    'Permission' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'FULL_CONTROL',
-        1 => 'WRITE',
-        2 => 'WRITE_ACP',
-        3 => 'READ',
-        4 => 'READ_ACP',
+      'enum' => [
+        'FULL_CONTROL',
+        'WRITE',
+        'WRITE_ACP',
+        'READ',
+        'READ_ACP',
       ],
     ],
-    'Policy' =>
-    [
+    'Policy' => [
       'type' => 'string',
     ],
-    'Prefix' =>
-    [
+    'Prefix' => [
       'type' => 'string',
     ],
-    'Protocol' =>
-    [
+    'Protocol' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'http',
-        1 => 'https',
+      'enum' => [
+        'http',
+        'https',
       ],
     ],
-    'PutBucketAclRequest' =>
-    [
+    'PutBucketAclRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'ACL' =>
-        [
+      'members' => [
+        'ACL' => [
           'shape' => 'BucketCannedACL',
           'location' => 'header',
           'locationName' => 'x-amz-acl',
         ],
-        'AccessControlPolicy' =>
-        [
+        'AccessControlPolicy' => [
           'shape' => 'AccessControlPolicy',
-          'xmlNamespace' =>
-          [
+          'xmlNamespace' => [
             'uri' => 'http://s3.amazonaws.com/doc/2006-03-01/',
           ],
           'locationName' => 'AccessControlPolicy',
         ],
-        'Bucket' =>
-        [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'ContentMD5' =>
-        [
+        'ContentMD5' => [
           'shape' => 'ContentMD5',
           'location' => 'header',
           'locationName' => 'Content-MD5',
         ],
-        'GrantFullControl' =>
-        [
+        'GrantFullControl' => [
           'shape' => 'GrantFullControl',
           'location' => 'header',
           'locationName' => 'x-amz-grant-full-control',
         ],
-        'GrantRead' =>
-        [
+        'GrantRead' => [
           'shape' => 'GrantRead',
           'location' => 'header',
           'locationName' => 'x-amz-grant-read',
         ],
-        'GrantReadACP' =>
-        [
+        'GrantReadACP' => [
           'shape' => 'GrantReadACP',
           'location' => 'header',
           'locationName' => 'x-amz-grant-read-acp',
         ],
-        'GrantWrite' =>
-        [
+        'GrantWrite' => [
           'shape' => 'GrantWrite',
           'location' => 'header',
           'locationName' => 'x-amz-grant-write',
         ],
-        'GrantWriteACP' =>
-        [
+        'GrantWriteACP' => [
           'shape' => 'GrantWriteACP',
           'location' => 'header',
           'locationName' => 'x-amz-grant-write-acp',
@@ -4375,32 +3413,25 @@ return [
       ],
       'payload' => 'AccessControlPolicy',
     ],
-    'PutBucketCorsRequest' =>
-    [
+    'PutBucketCorsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'CORSConfiguration' =>
-        [
+        'CORSConfiguration' => [
           'shape' => 'CORSConfiguration',
-          'xmlNamespace' =>
-          [
+          'xmlNamespace' => [
             'uri' => 'http://s3.amazonaws.com/doc/2006-03-01/',
           ],
           'locationName' => 'CORSConfiguration',
         ],
-        'ContentMD5' =>
-        [
+        'ContentMD5' => [
           'shape' => 'ContentMD5',
           'location' => 'header',
           'locationName' => 'Content-MD5',
@@ -4408,32 +3439,25 @@ return [
       ],
       'payload' => 'CORSConfiguration',
     ],
-    'PutBucketLifecycleRequest' =>
-    [
+    'PutBucketLifecycleRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
+      'required' => [
+        'Bucket',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'ContentMD5' =>
-        [
+        'ContentMD5' => [
           'shape' => 'ContentMD5',
           'location' => 'header',
           'locationName' => 'Content-MD5',
         ],
-        'LifecycleConfiguration' =>
-        [
+        'LifecycleConfiguration' => [
           'shape' => 'LifecycleConfiguration',
-          'xmlNamespace' =>
-          [
+          'xmlNamespace' => [
             'uri' => 'http://s3.amazonaws.com/doc/2006-03-01/',
           ],
           'locationName' => 'LifecycleConfiguration',
@@ -4441,33 +3465,26 @@ return [
       ],
       'payload' => 'LifecycleConfiguration',
     ],
-    'PutBucketLoggingRequest' =>
-    [
+    'PutBucketLoggingRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
-        1 => 'BucketLoggingStatus',
+      'required' => [
+        'Bucket',
+        'BucketLoggingStatus',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'BucketLoggingStatus' =>
-        [
+        'BucketLoggingStatus' => [
           'shape' => 'BucketLoggingStatus',
-          'xmlNamespace' =>
-          [
+          'xmlNamespace' => [
             'uri' => 'http://s3.amazonaws.com/doc/2006-03-01/',
           ],
           'locationName' => 'BucketLoggingStatus',
         ],
-        'ContentMD5' =>
-        [
+        'ContentMD5' => [
           'shape' => 'ContentMD5',
           'location' => 'header',
           'locationName' => 'Content-MD5',
@@ -4475,33 +3492,26 @@ return [
       ],
       'payload' => 'BucketLoggingStatus',
     ],
-    'PutBucketNotificationRequest' =>
-    [
+    'PutBucketNotificationRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
-        1 => 'NotificationConfiguration',
+      'required' => [
+        'Bucket',
+        'NotificationConfiguration',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'ContentMD5' =>
-        [
+        'ContentMD5' => [
           'shape' => 'ContentMD5',
           'location' => 'header',
           'locationName' => 'Content-MD5',
         ],
-        'NotificationConfiguration' =>
-        [
+        'NotificationConfiguration' => [
           'shape' => 'NotificationConfiguration',
-          'xmlNamespace' =>
-          [
+          'xmlNamespace' => [
             'uri' => 'http://s3.amazonaws.com/doc/2006-03-01/',
           ],
           'locationName' => 'NotificationConfiguration',
@@ -4509,62 +3519,49 @@ return [
       ],
       'payload' => 'NotificationConfiguration',
     ],
-    'PutBucketPolicyRequest' =>
-    [
+    'PutBucketPolicyRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
-        1 => 'Policy',
+      'required' => [
+        'Bucket',
+        'Policy',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'ContentMD5' =>
-        [
+        'ContentMD5' => [
           'shape' => 'ContentMD5',
           'location' => 'header',
           'locationName' => 'Content-MD5',
         ],
-        'Policy' =>
-        [
+        'Policy' => [
           'shape' => 'Policy',
         ],
       ],
       'payload' => 'Policy',
     ],
-    'PutBucketRequestPaymentRequest' =>
-    [
+    'PutBucketRequestPaymentRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
-        1 => 'RequestPaymentConfiguration',
+      'required' => [
+        'Bucket',
+        'RequestPaymentConfiguration',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'ContentMD5' =>
-        [
+        'ContentMD5' => [
           'shape' => 'ContentMD5',
           'location' => 'header',
           'locationName' => 'Content-MD5',
         ],
-        'RequestPaymentConfiguration' =>
-        [
+        'RequestPaymentConfiguration' => [
           'shape' => 'RequestPaymentConfiguration',
-          'xmlNamespace' =>
-          [
+          'xmlNamespace' => [
             'uri' => 'http://s3.amazonaws.com/doc/2006-03-01/',
           ],
           'locationName' => 'RequestPaymentConfiguration',
@@ -4572,33 +3569,26 @@ return [
       ],
       'payload' => 'RequestPaymentConfiguration',
     ],
-    'PutBucketTaggingRequest' =>
-    [
+    'PutBucketTaggingRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
-        1 => 'Tagging',
+      'required' => [
+        'Bucket',
+        'Tagging',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'ContentMD5' =>
-        [
+        'ContentMD5' => [
           'shape' => 'ContentMD5',
           'location' => 'header',
           'locationName' => 'Content-MD5',
         ],
-        'Tagging' =>
-        [
+        'Tagging' => [
           'shape' => 'Tagging',
-          'xmlNamespace' =>
-          [
+          'xmlNamespace' => [
             'uri' => 'http://s3.amazonaws.com/doc/2006-03-01/',
           ],
           'locationName' => 'Tagging',
@@ -4606,39 +3596,31 @@ return [
       ],
       'payload' => 'Tagging',
     ],
-    'PutBucketVersioningRequest' =>
-    [
+    'PutBucketVersioningRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
-        1 => 'VersioningConfiguration',
+      'required' => [
+        'Bucket',
+        'VersioningConfiguration',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'ContentMD5' =>
-        [
+        'ContentMD5' => [
           'shape' => 'ContentMD5',
           'location' => 'header',
           'locationName' => 'Content-MD5',
         ],
-        'MFA' =>
-        [
+        'MFA' => [
           'shape' => 'MFA',
           'location' => 'header',
           'locationName' => 'x-amz-mfa',
         ],
-        'VersioningConfiguration' =>
-        [
+        'VersioningConfiguration' => [
           'shape' => 'VersioningConfiguration',
-          'xmlNamespace' =>
-          [
+          'xmlNamespace' => [
             'uri' => 'http://s3.amazonaws.com/doc/2006-03-01/',
           ],
           'locationName' => 'VersioningConfiguration',
@@ -4646,33 +3628,26 @@ return [
       ],
       'payload' => 'VersioningConfiguration',
     ],
-    'PutBucketWebsiteRequest' =>
-    [
+    'PutBucketWebsiteRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
-        1 => 'WebsiteConfiguration',
+      'required' => [
+        'Bucket',
+        'WebsiteConfiguration',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'ContentMD5' =>
-        [
+        'ContentMD5' => [
           'shape' => 'ContentMD5',
           'location' => 'header',
           'locationName' => 'Content-MD5',
         ],
-        'WebsiteConfiguration' =>
-        [
+        'WebsiteConfiguration' => [
           'shape' => 'WebsiteConfiguration',
-          'xmlNamespace' =>
-          [
+          'xmlNamespace' => [
             'uri' => 'http://s3.amazonaws.com/doc/2006-03-01/',
           ],
           'locationName' => 'WebsiteConfiguration',
@@ -4680,75 +3655,61 @@ return [
       ],
       'payload' => 'WebsiteConfiguration',
     ],
-    'PutObjectAclRequest' =>
-    [
+    'PutObjectAclRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
-        1 => 'Key',
+      'required' => [
+        'Bucket',
+        'Key',
       ],
-      'members' =>
-      [
-        'ACL' =>
-        [
+      'members' => [
+        'ACL' => [
           'shape' => 'ObjectCannedACL',
           'location' => 'header',
           'locationName' => 'x-amz-acl',
         ],
-        'AccessControlPolicy' =>
-        [
+        'AccessControlPolicy' => [
           'shape' => 'AccessControlPolicy',
-          'xmlNamespace' =>
-          [
+          'xmlNamespace' => [
             'uri' => 'http://s3.amazonaws.com/doc/2006-03-01/',
           ],
           'locationName' => 'AccessControlPolicy',
         ],
-        'Bucket' =>
-        [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'ContentMD5' =>
-        [
+        'ContentMD5' => [
           'shape' => 'ContentMD5',
           'location' => 'header',
           'locationName' => 'Content-MD5',
         ],
-        'GrantFullControl' =>
-        [
+        'GrantFullControl' => [
           'shape' => 'GrantFullControl',
           'location' => 'header',
           'locationName' => 'x-amz-grant-full-control',
         ],
-        'GrantRead' =>
-        [
+        'GrantRead' => [
           'shape' => 'GrantRead',
           'location' => 'header',
           'locationName' => 'x-amz-grant-read',
         ],
-        'GrantReadACP' =>
-        [
+        'GrantReadACP' => [
           'shape' => 'GrantReadACP',
           'location' => 'header',
           'locationName' => 'x-amz-grant-read-acp',
         ],
-        'GrantWrite' =>
-        [
+        'GrantWrite' => [
           'shape' => 'GrantWrite',
           'location' => 'header',
           'locationName' => 'x-amz-grant-write',
         ],
-        'GrantWriteACP' =>
-        [
+        'GrantWriteACP' => [
           'shape' => 'GrantWriteACP',
           'location' => 'header',
           'locationName' => 'x-amz-grant-write-acp',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'ObjectKey',
           'location' => 'uri',
           'locationName' => 'Key',
@@ -4756,192 +3717,158 @@ return [
       ],
       'payload' => 'AccessControlPolicy',
     ],
-    'PutObjectOutput' =>
-    [
+    'PutObjectOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Expiration' =>
-        [
+      'members' => [
+        'Expiration' => [
           'shape' => 'Expiration',
           'location' => 'header',
           'locationName' => 'x-amz-expiration',
         ],
-        'ETag' =>
-        [
+        'ETag' => [
           'shape' => 'ETag',
           'location' => 'header',
           'locationName' => 'ETag',
         ],
-        'ServerSideEncryption' =>
-        [
+        'ServerSideEncryption' => [
           'shape' => 'ServerSideEncryption',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption',
         ],
-        'VersionId' =>
-        [
+        'VersionId' => [
           'shape' => 'ObjectVersionId',
           'location' => 'header',
           'locationName' => 'x-amz-version-id',
         ],
-        'SSECustomerAlgorithm' =>
-        [
+        'SSECustomerAlgorithm' => [
           'shape' => 'SSECustomerAlgorithm',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-algorithm',
         ],
-        'SSECustomerKeyMD5' =>
-        [
+        'SSECustomerKeyMD5' => [
           'shape' => 'SSECustomerKeyMD5',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key-MD5',
         ],
       ],
     ],
-    'PutObjectRequest' =>
-    [
+    'PutObjectRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
-        1 => 'Key',
+      'required' => [
+        'Bucket',
+        'Key',
       ],
-      'members' =>
-      [
-        'ACL' =>
-        [
+      'members' => [
+        'ACL' => [
           'shape' => 'ObjectCannedACL',
           'location' => 'header',
           'locationName' => 'x-amz-acl',
         ],
-        'Body' =>
-        [
+        'Body' => [
           'shape' => 'Body',
           'streaming' => true,
         ],
-        'Bucket' =>
-        [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'CacheControl' =>
-        [
+        'CacheControl' => [
           'shape' => 'CacheControl',
           'location' => 'header',
           'locationName' => 'Cache-Control',
         ],
-        'ContentDisposition' =>
-        [
+        'ContentDisposition' => [
           'shape' => 'ContentDisposition',
           'location' => 'header',
           'locationName' => 'Content-Disposition',
         ],
-        'ContentEncoding' =>
-        [
+        'ContentEncoding' => [
           'shape' => 'ContentEncoding',
           'location' => 'header',
           'locationName' => 'Content-Encoding',
         ],
-        'ContentLanguage' =>
-        [
+        'ContentLanguage' => [
           'shape' => 'ContentLanguage',
           'location' => 'header',
           'locationName' => 'Content-Language',
         ],
-        'ContentLength' =>
-        [
+        'ContentLength' => [
           'shape' => 'ContentLength',
           'location' => 'header',
           'locationName' => 'Content-Length',
         ],
-        'ContentMD5' =>
-        [
+        'ContentMD5' => [
           'shape' => 'ContentMD5',
           'location' => 'header',
           'locationName' => 'Content-MD5',
         ],
-        'ContentType' =>
-        [
+        'ContentType' => [
           'shape' => 'ContentType',
           'location' => 'header',
           'locationName' => 'Content-Type',
         ],
-        'Expires' =>
-        [
+        'Expires' => [
           'shape' => 'Expires',
           'location' => 'header',
           'locationName' => 'Expires',
         ],
-        'GrantFullControl' =>
-        [
+        'GrantFullControl' => [
           'shape' => 'GrantFullControl',
           'location' => 'header',
           'locationName' => 'x-amz-grant-full-control',
         ],
-        'GrantRead' =>
-        [
+        'GrantRead' => [
           'shape' => 'GrantRead',
           'location' => 'header',
           'locationName' => 'x-amz-grant-read',
         ],
-        'GrantReadACP' =>
-        [
+        'GrantReadACP' => [
           'shape' => 'GrantReadACP',
           'location' => 'header',
           'locationName' => 'x-amz-grant-read-acp',
         ],
-        'GrantWriteACP' =>
-        [
+        'GrantWriteACP' => [
           'shape' => 'GrantWriteACP',
           'location' => 'header',
           'locationName' => 'x-amz-grant-write-acp',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'ObjectKey',
           'location' => 'uri',
           'locationName' => 'Key',
         ],
-        'Metadata' =>
-        [
+        'Metadata' => [
           'shape' => 'Metadata',
           'location' => 'headers',
           'locationName' => 'x-amz-meta-',
         ],
-        'ServerSideEncryption' =>
-        [
+        'ServerSideEncryption' => [
           'shape' => 'ServerSideEncryption',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption',
         ],
-        'StorageClass' =>
-        [
+        'StorageClass' => [
           'shape' => 'StorageClass',
           'location' => 'header',
           'locationName' => 'x-amz-storage-class',
         ],
-        'WebsiteRedirectLocation' =>
-        [
+        'WebsiteRedirectLocation' => [
           'shape' => 'WebsiteRedirectLocation',
           'location' => 'header',
           'locationName' => 'x-amz-website-redirect-location',
         ],
-        'SSECustomerAlgorithm' =>
-        [
+        'SSECustomerAlgorithm' => [
           'shape' => 'SSECustomerAlgorithm',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-algorithm',
         ],
-        'SSECustomerKey' =>
-        [
+        'SSECustomerKey' => [
           'shape' => 'SSECustomerKey',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key',
         ],
-        'SSECustomerKeyMD5' =>
-        [
+        'SSECustomerKeyMD5' => [
           'shape' => 'SSECustomerKeyMD5',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key-MD5',
@@ -4949,144 +3876,109 @@ return [
       ],
       'payload' => 'Body',
     ],
-    'Quiet' =>
-    [
+    'Quiet' => [
       'type' => 'boolean',
     ],
-    'Range' =>
-    [
+    'Range' => [
       'type' => 'string',
     ],
-    'Redirect' =>
-    [
+    'Redirect' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'HostName' =>
-        [
+      'members' => [
+        'HostName' => [
           'shape' => 'HostName',
         ],
-        'HttpRedirectCode' =>
-        [
+        'HttpRedirectCode' => [
           'shape' => 'HttpRedirectCode',
         ],
-        'Protocol' =>
-        [
+        'Protocol' => [
           'shape' => 'Protocol',
         ],
-        'ReplaceKeyPrefixWith' =>
-        [
+        'ReplaceKeyPrefixWith' => [
           'shape' => 'ReplaceKeyPrefixWith',
         ],
-        'ReplaceKeyWith' =>
-        [
+        'ReplaceKeyWith' => [
           'shape' => 'ReplaceKeyWith',
         ],
       ],
     ],
-    'RedirectAllRequestsTo' =>
-    [
+    'RedirectAllRequestsTo' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'HostName',
+      'required' => [
+        'HostName',
       ],
-      'members' =>
-      [
-        'HostName' =>
-        [
+      'members' => [
+        'HostName' => [
           'shape' => 'HostName',
         ],
-        'Protocol' =>
-        [
+        'Protocol' => [
           'shape' => 'Protocol',
         ],
       ],
     ],
-    'ReplaceKeyPrefixWith' =>
-    [
+    'ReplaceKeyPrefixWith' => [
       'type' => 'string',
     ],
-    'ReplaceKeyWith' =>
-    [
+    'ReplaceKeyWith' => [
       'type' => 'string',
     ],
-    'RequestPaymentConfiguration' =>
-    [
+    'RequestPaymentConfiguration' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Payer',
+      'required' => [
+        'Payer',
       ],
-      'members' =>
-      [
-        'Payer' =>
-        [
+      'members' => [
+        'Payer' => [
           'shape' => 'Payer',
         ],
       ],
     ],
-    'ResponseCacheControl' =>
-    [
+    'ResponseCacheControl' => [
       'type' => 'string',
     ],
-    'ResponseContentDisposition' =>
-    [
+    'ResponseContentDisposition' => [
       'type' => 'string',
     ],
-    'ResponseContentEncoding' =>
-    [
+    'ResponseContentEncoding' => [
       'type' => 'string',
     ],
-    'ResponseContentLanguage' =>
-    [
+    'ResponseContentLanguage' => [
       'type' => 'string',
     ],
-    'ResponseContentType' =>
-    [
+    'ResponseContentType' => [
       'type' => 'string',
     ],
-    'ResponseExpires' =>
-    [
+    'ResponseExpires' => [
       'type' => 'timestamp',
     ],
-    'Restore' =>
-    [
+    'Restore' => [
       'type' => 'string',
     ],
-    'RestoreObjectRequest' =>
-    [
+    'RestoreObjectRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
-        1 => 'Key',
+      'required' => [
+        'Bucket',
+        'Key',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'ObjectKey',
           'location' => 'uri',
           'locationName' => 'Key',
         ],
-        'VersionId' =>
-        [
+        'VersionId' => [
           'shape' => 'ObjectVersionId',
           'location' => 'querystring',
           'locationName' => 'versionId',
         ],
-        'RestoreRequest' =>
-        [
+        'RestoreRequest' => [
           'shape' => 'RestoreRequest',
-          'xmlNamespace' =>
-          [
+          'xmlNamespace' => [
             'uri' => 'http://s3.amazonaws.com/doc/2006-03-01/',
           ],
           'locationName' => 'RestoreRequest',
@@ -5094,307 +3986,233 @@ return [
       ],
       'payload' => 'RestoreRequest',
     ],
-    'RestoreRequest' =>
-    [
+    'RestoreRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Days',
+      'required' => [
+        'Days',
       ],
-      'members' =>
-      [
-        'Days' =>
-        [
+      'members' => [
+        'Days' => [
           'shape' => 'Days',
         ],
       ],
     ],
-    'RoutingRule' =>
-    [
+    'RoutingRule' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Redirect',
+      'required' => [
+        'Redirect',
       ],
-      'members' =>
-      [
-        'Condition' =>
-        [
+      'members' => [
+        'Condition' => [
           'shape' => 'Condition',
         ],
-        'Redirect' =>
-        [
+        'Redirect' => [
           'shape' => 'Redirect',
         ],
       ],
     ],
-    'RoutingRules' =>
-    [
+    'RoutingRules' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'RoutingRule',
         'locationName' => 'RoutingRule',
       ],
     ],
-    'Rule' =>
-    [
+    'Rule' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Prefix',
-        1 => 'Status',
+      'required' => [
+        'Prefix',
+        'Status',
       ],
-      'members' =>
-      [
-        'Expiration' =>
-        [
+      'members' => [
+        'Expiration' => [
           'shape' => 'LifecycleExpiration',
         ],
-        'ID' =>
-        [
+        'ID' => [
           'shape' => 'ID',
         ],
-        'Prefix' =>
-        [
+        'Prefix' => [
           'shape' => 'Prefix',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'ExpirationStatus',
         ],
-        'Transition' =>
-        [
+        'Transition' => [
           'shape' => 'Transition',
         ],
-        'NoncurrentVersionTransition' =>
-        [
+        'NoncurrentVersionTransition' => [
           'shape' => 'NoncurrentVersionTransition',
         ],
-        'NoncurrentVersionExpiration' =>
-        [
+        'NoncurrentVersionExpiration' => [
           'shape' => 'NoncurrentVersionExpiration',
         ],
       ],
     ],
-    'Rules' =>
-    [
+    'Rules' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Rule',
       ],
       'flattened' => true,
     ],
-    'SSECustomerAlgorithm' =>
-    [
+    'SSECustomerAlgorithm' => [
       'type' => 'string',
     ],
-    'SSECustomerKey' =>
-    [
+    'SSECustomerKey' => [
       'type' => 'string',
       'sensitive' => true,
     ],
-    'SSECustomerKeyMD5' =>
-    [
+    'SSECustomerKeyMD5' => [
       'type' => 'string',
     ],
-    'ServerSideEncryption' =>
-    [
+    'ServerSideEncryption' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'AES256',
+      'enum' => [
+        'AES256',
       ],
     ],
-    'Size' =>
-    [
+    'Size' => [
       'type' => 'integer',
     ],
-    'StorageClass' =>
-    [
+    'StorageClass' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'STANDARD',
-        1 => 'REDUCED_REDUNDANCY',
+      'enum' => [
+        'STANDARD',
+        'REDUCED_REDUNDANCY',
       ],
     ],
-    'Suffix' =>
-    [
+    'Suffix' => [
       'type' => 'string',
     ],
-    'Tag' =>
-    [
+    'Tag' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Key',
-        1 => 'Value',
+      'required' => [
+        'Key',
+        'Value',
       ],
-      'members' =>
-      [
-        'Key' =>
-        [
+      'members' => [
+        'Key' => [
           'shape' => 'ObjectKey',
         ],
-        'Value' =>
-        [
+        'Value' => [
           'shape' => 'Value',
         ],
       ],
     ],
-    'TagSet' =>
-    [
+    'TagSet' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'Tag',
         'locationName' => 'Tag',
       ],
     ],
-    'Tagging' =>
-    [
+    'Tagging' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'TagSet',
+      'required' => [
+        'TagSet',
       ],
-      'members' =>
-      [
-        'TagSet' =>
-        [
+      'members' => [
+        'TagSet' => [
           'shape' => 'TagSet',
         ],
       ],
     ],
-    'TargetBucket' =>
-    [
+    'TargetBucket' => [
       'type' => 'string',
     ],
-    'TargetGrant' =>
-    [
+    'TargetGrant' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Grantee' =>
-        [
+      'members' => [
+        'Grantee' => [
           'shape' => 'Grantee',
         ],
-        'Permission' =>
-        [
+        'Permission' => [
           'shape' => 'BucketLogsPermission',
         ],
       ],
     ],
-    'TargetGrants' =>
-    [
+    'TargetGrants' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'TargetGrant',
         'locationName' => 'Grant',
       ],
     ],
-    'TargetPrefix' =>
-    [
+    'TargetPrefix' => [
       'type' => 'string',
     ],
-    'Topic' =>
-    [
+    'Topic' => [
       'type' => 'string',
     ],
-    'TopicConfiguration' =>
-    [
+    'TopicConfiguration' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Event' =>
-        [
+      'members' => [
+        'Event' => [
           'shape' => 'Event',
         ],
-        'Topic' =>
-        [
+        'Topic' => [
           'shape' => 'Topic',
         ],
       ],
     ],
-    'Transition' =>
-    [
+    'Transition' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Date' =>
-        [
+      'members' => [
+        'Date' => [
           'shape' => 'Date',
         ],
-        'Days' =>
-        [
+        'Days' => [
           'shape' => 'Days',
         ],
-        'StorageClass' =>
-        [
+        'StorageClass' => [
           'shape' => 'TransitionStorageClass',
         ],
       ],
     ],
-    'TransitionStorageClass' =>
-    [
+    'TransitionStorageClass' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'GLACIER',
+      'enum' => [
+        'GLACIER',
       ],
     ],
-    'Type' =>
-    [
+    'Type' => [
       'type' => 'string',
-      'enum' =>
-      [
-        0 => 'CanonicalUser',
-        1 => 'AmazonCustomerByEmail',
-        2 => 'Group',
+      'enum' => [
+        'CanonicalUser',
+        'AmazonCustomerByEmail',
+        'Group',
       ],
       'xmlAttribute' => true,
       'locationName' => 'xsi:type',
     ],
-    'URI' =>
-    [
+    'URI' => [
       'type' => 'string',
     ],
-    'UploadIdMarker' =>
-    [
+    'UploadIdMarker' => [
       'type' => 'string',
     ],
-    'UploadPartCopyOutput' =>
-    [
+    'UploadPartCopyOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'CopySourceVersionId' =>
-        [
+      'members' => [
+        'CopySourceVersionId' => [
           'shape' => 'CopySourceVersionId',
           'location' => 'header',
           'locationName' => 'x-amz-copy-source-version-id',
         ],
-        'CopyPartResult' =>
-        [
+        'CopyPartResult' => [
           'shape' => 'CopyPartResult',
         ],
-        'ServerSideEncryption' =>
-        [
+        'ServerSideEncryption' => [
           'shape' => 'ServerSideEncryption',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption',
         ],
-        'SSECustomerAlgorithm' =>
-        [
+        'SSECustomerAlgorithm' => [
           'shape' => 'SSECustomerAlgorithm',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-algorithm',
         ],
-        'SSECustomerKeyMD5' =>
-        [
+        'SSECustomerKeyMD5' => [
           'shape' => 'SSECustomerKeyMD5',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key-MD5',
@@ -5402,215 +4220,177 @@ return [
       ],
       'payload' => 'CopyPartResult',
     ],
-    'UploadPartCopyRequest' =>
-    [
+    'UploadPartCopyRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
-        1 => 'CopySource',
-        2 => 'Key',
-        3 => 'PartNumber',
-        4 => 'UploadId',
+      'required' => [
+        'Bucket',
+        'CopySource',
+        'Key',
+        'PartNumber',
+        'UploadId',
       ],
-      'members' =>
-      [
-        'Bucket' =>
-        [
+      'members' => [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'CopySource' =>
-        [
+        'CopySource' => [
           'shape' => 'CopySource',
           'location' => 'header',
           'locationName' => 'x-amz-copy-source',
         ],
-        'CopySourceIfMatch' =>
-        [
+        'CopySourceIfMatch' => [
           'shape' => 'CopySourceIfMatch',
           'location' => 'header',
           'locationName' => 'x-amz-copy-source-if-match',
         ],
-        'CopySourceIfModifiedSince' =>
-        [
+        'CopySourceIfModifiedSince' => [
           'shape' => 'CopySourceIfModifiedSince',
           'location' => 'header',
           'locationName' => 'x-amz-copy-source-if-modified-since',
         ],
-        'CopySourceIfNoneMatch' =>
-        [
+        'CopySourceIfNoneMatch' => [
           'shape' => 'CopySourceIfNoneMatch',
           'location' => 'header',
           'locationName' => 'x-amz-copy-source-if-none-match',
         ],
-        'CopySourceIfUnmodifiedSince' =>
-        [
+        'CopySourceIfUnmodifiedSince' => [
           'shape' => 'CopySourceIfUnmodifiedSince',
           'location' => 'header',
           'locationName' => 'x-amz-copy-source-if-unmodified-since',
         ],
-        'CopySourceRange' =>
-        [
+        'CopySourceRange' => [
           'shape' => 'CopySourceRange',
           'location' => 'header',
           'locationName' => 'x-amz-copy-source-range',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'ObjectKey',
           'location' => 'uri',
           'locationName' => 'Key',
         ],
-        'PartNumber' =>
-        [
+        'PartNumber' => [
           'shape' => 'PartNumber',
           'location' => 'querystring',
           'locationName' => 'partNumber',
         ],
-        'UploadId' =>
-        [
+        'UploadId' => [
           'shape' => 'MultipartUploadId',
           'location' => 'querystring',
           'locationName' => 'uploadId',
         ],
-        'SSECustomerAlgorithm' =>
-        [
+        'SSECustomerAlgorithm' => [
           'shape' => 'SSECustomerAlgorithm',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-algorithm',
         ],
-        'SSECustomerKey' =>
-        [
+        'SSECustomerKey' => [
           'shape' => 'SSECustomerKey',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key',
         ],
-        'SSECustomerKeyMD5' =>
-        [
+        'SSECustomerKeyMD5' => [
           'shape' => 'SSECustomerKeyMD5',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key-MD5',
         ],
-        'CopySourceSSECustomerAlgorithm' =>
-        [
+        'CopySourceSSECustomerAlgorithm' => [
           'shape' => 'CopySourceSSECustomerAlgorithm',
           'location' => 'header',
           'locationName' => 'x-amz-copy-source-server-side-encryption-customer-algorithm',
         ],
-        'CopySourceSSECustomerKey' =>
-        [
+        'CopySourceSSECustomerKey' => [
           'shape' => 'CopySourceSSECustomerKey',
           'location' => 'header',
           'locationName' => 'x-amz-copy-source-server-side-encryption-customer-key',
         ],
-        'CopySourceSSECustomerKeyMD5' =>
-        [
+        'CopySourceSSECustomerKeyMD5' => [
           'shape' => 'CopySourceSSECustomerKeyMD5',
           'location' => 'header',
           'locationName' => 'x-amz-copy-source-server-side-encryption-customer-key-MD5',
         ],
       ],
     ],
-    'UploadPartOutput' =>
-    [
+    'UploadPartOutput' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ServerSideEncryption' =>
-        [
+      'members' => [
+        'ServerSideEncryption' => [
           'shape' => 'ServerSideEncryption',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption',
         ],
-        'ETag' =>
-        [
+        'ETag' => [
           'shape' => 'ETag',
           'location' => 'header',
           'locationName' => 'ETag',
         ],
-        'SSECustomerAlgorithm' =>
-        [
+        'SSECustomerAlgorithm' => [
           'shape' => 'SSECustomerAlgorithm',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-algorithm',
         ],
-        'SSECustomerKeyMD5' =>
-        [
+        'SSECustomerKeyMD5' => [
           'shape' => 'SSECustomerKeyMD5',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key-MD5',
         ],
       ],
     ],
-    'UploadPartRequest' =>
-    [
+    'UploadPartRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Bucket',
-        1 => 'Key',
-        2 => 'PartNumber',
-        3 => 'UploadId',
+      'required' => [
+        'Bucket',
+        'Key',
+        'PartNumber',
+        'UploadId',
       ],
-      'members' =>
-      [
-        'Body' =>
-        [
+      'members' => [
+        'Body' => [
           'shape' => 'Body',
           'streaming' => true,
         ],
-        'Bucket' =>
-        [
+        'Bucket' => [
           'shape' => 'BucketName',
           'location' => 'uri',
           'locationName' => 'Bucket',
         ],
-        'ContentLength' =>
-        [
+        'ContentLength' => [
           'shape' => 'ContentLength',
           'location' => 'header',
           'locationName' => 'Content-Length',
         ],
-        'ContentMD5' =>
-        [
+        'ContentMD5' => [
           'shape' => 'ContentMD5',
           'location' => 'header',
           'locationName' => 'Content-MD5',
         ],
-        'Key' =>
-        [
+        'Key' => [
           'shape' => 'ObjectKey',
           'location' => 'uri',
           'locationName' => 'Key',
         ],
-        'PartNumber' =>
-        [
+        'PartNumber' => [
           'shape' => 'PartNumber',
           'location' => 'querystring',
           'locationName' => 'partNumber',
         ],
-        'UploadId' =>
-        [
+        'UploadId' => [
           'shape' => 'MultipartUploadId',
           'location' => 'querystring',
           'locationName' => 'uploadId',
         ],
-        'SSECustomerAlgorithm' =>
-        [
+        'SSECustomerAlgorithm' => [
           'shape' => 'SSECustomerAlgorithm',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-algorithm',
         ],
-        'SSECustomerKey' =>
-        [
+        'SSECustomerKey' => [
           'shape' => 'SSECustomerKey',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key',
         ],
-        'SSECustomerKeyMD5' =>
-        [
+        'SSECustomerKeyMD5' => [
           'shape' => 'SSECustomerKeyMD5',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key-MD5',
@@ -5618,55 +4398,42 @@ return [
       ],
       'payload' => 'Body',
     ],
-    'Value' =>
-    [
+    'Value' => [
       'type' => 'string',
     ],
-    'VersionIdMarker' =>
-    [
+    'VersionIdMarker' => [
       'type' => 'string',
     ],
-    'VersioningConfiguration' =>
-    [
+    'VersioningConfiguration' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'MFADelete' =>
-        [
+      'members' => [
+        'MFADelete' => [
           'shape' => 'MFADelete',
           'locationName' => 'MfaDelete',
         ],
-        'Status' =>
-        [
+        'Status' => [
           'shape' => 'BucketVersioningStatus',
         ],
       ],
     ],
-    'WebsiteConfiguration' =>
-    [
+    'WebsiteConfiguration' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'ErrorDocument' =>
-        [
+      'members' => [
+        'ErrorDocument' => [
           'shape' => 'ErrorDocument',
         ],
-        'IndexDocument' =>
-        [
+        'IndexDocument' => [
           'shape' => 'IndexDocument',
         ],
-        'RedirectAllRequestsTo' =>
-        [
+        'RedirectAllRequestsTo' => [
           'shape' => 'RedirectAllRequestsTo',
         ],
-        'RoutingRules' =>
-        [
+        'RoutingRules' => [
           'shape' => 'RoutingRules',
         ],
       ],
     ],
-    'WebsiteRedirectLocation' =>
-    [
+    'WebsiteRedirectLocation' => [
       'type' => 'string',
     ],
   ],

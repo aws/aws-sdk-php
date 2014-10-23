@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2014-03-28',
     'endpointPrefix' => 'logs',
     'jsonVersion' => '1.1',
@@ -10,43 +8,33 @@ return [
     'targetPrefix' => 'Logs_20140328',
     'protocol' => 'json',
   ],
-  'operations' =>
-  [
-    'CreateLogGroup' =>
-    [
+  'operations' => [
+    'CreateLogGroup' => [
       'name' => 'CreateLogGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateLogGroupRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceAlreadyExistsException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'LimitExceededException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'OperationAbortedException',
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'ServiceUnavailableException',
           'exception' => true,
@@ -54,36 +42,28 @@ return [
         ],
       ],
     ],
-    'CreateLogStream' =>
-    [
+    'CreateLogStream' => [
       'name' => 'CreateLogStream',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'CreateLogStreamRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceAlreadyExistsException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ServiceUnavailableException',
           'exception' => true,
@@ -91,36 +71,28 @@ return [
         ],
       ],
     ],
-    'DeleteLogGroup' =>
-    [
+    'DeleteLogGroup' => [
       'name' => 'DeleteLogGroup',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteLogGroupRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'OperationAbortedException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ServiceUnavailableException',
           'exception' => true,
@@ -128,36 +100,28 @@ return [
         ],
       ],
     ],
-    'DeleteLogStream' =>
-    [
+    'DeleteLogStream' => [
       'name' => 'DeleteLogStream',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteLogStreamRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'OperationAbortedException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ServiceUnavailableException',
           'exception' => true,
@@ -165,36 +129,28 @@ return [
         ],
       ],
     ],
-    'DeleteMetricFilter' =>
-    [
+    'DeleteMetricFilter' => [
       'name' => 'DeleteMetricFilter',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteMetricFilterRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'OperationAbortedException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ServiceUnavailableException',
           'exception' => true,
@@ -202,36 +158,28 @@ return [
         ],
       ],
     ],
-    'DeleteRetentionPolicy' =>
-    [
+    'DeleteRetentionPolicy' => [
       'name' => 'DeleteRetentionPolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DeleteRetentionPolicyRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'OperationAbortedException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ServiceUnavailableException',
           'exception' => true,
@@ -239,30 +187,23 @@ return [
         ],
       ],
     ],
-    'DescribeLogGroups' =>
-    [
+    'DescribeLogGroups' => [
       'name' => 'DescribeLogGroups',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeLogGroupsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeLogGroupsResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ServiceUnavailableException',
           'exception' => true,
@@ -270,35 +211,27 @@ return [
         ],
       ],
     ],
-    'DescribeLogStreams' =>
-    [
+    'DescribeLogStreams' => [
       'name' => 'DescribeLogStreams',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeLogStreamsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeLogStreamsResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ServiceUnavailableException',
           'exception' => true,
@@ -306,35 +239,27 @@ return [
         ],
       ],
     ],
-    'DescribeMetricFilters' =>
-    [
+    'DescribeMetricFilters' => [
       'name' => 'DescribeMetricFilters',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DescribeMetricFiltersRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DescribeMetricFiltersResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ServiceUnavailableException',
           'exception' => true,
@@ -342,35 +267,27 @@ return [
         ],
       ],
     ],
-    'GetLogEvents' =>
-    [
+    'GetLogEvents' => [
       'name' => 'GetLogEvents',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetLogEventsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetLogEventsResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'ServiceUnavailableException',
           'exception' => true,
@@ -378,50 +295,39 @@ return [
         ],
       ],
     ],
-    'PutLogEvents' =>
-    [
+    'PutLogEvents' => [
       'name' => 'PutLogEvents',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutLogEventsRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'PutLogEventsResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'InvalidSequenceTokenException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'DataAlreadyAcceptedException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'OperationAbortedException',
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'ServiceUnavailableException',
           'exception' => true,
@@ -429,41 +335,32 @@ return [
         ],
       ],
     ],
-    'PutMetricFilter' =>
-    [
+    'PutMetricFilter' => [
       'name' => 'PutMetricFilter',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutMetricFilterRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'OperationAbortedException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'LimitExceededException',
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'ServiceUnavailableException',
           'exception' => true,
@@ -471,36 +368,28 @@ return [
         ],
       ],
     ],
-    'PutRetentionPolicy' =>
-    [
+    'PutRetentionPolicy' => [
       'name' => 'PutRetentionPolicy',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'PutRetentionPolicyRequest',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ResourceNotFoundException',
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'OperationAbortedException',
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'ServiceUnavailableException',
           'exception' => true,
@@ -508,30 +397,23 @@ return [
         ],
       ],
     ],
-    'TestMetricFilter' =>
-    [
+    'TestMetricFilter' => [
       'name' => 'TestMetricFilter',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'TestMetricFilterRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'TestMetricFilterResponse',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidParameterException',
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'ServiceUnavailableException',
           'exception' => true,
@@ -540,849 +422,642 @@ return [
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'Arn' =>
-    [
+  'shapes' => [
+    'Arn' => [
       'type' => 'string',
     ],
-    'CreateLogGroupRequest' =>
-    [
+    'CreateLogGroupRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'logGroupName',
+      'required' => [
+        'logGroupName',
       ],
-      'members' =>
-      [
-        'logGroupName' =>
-        [
+      'members' => [
+        'logGroupName' => [
           'shape' => 'LogGroupName',
         ],
       ],
     ],
-    'CreateLogStreamRequest' =>
-    [
+    'CreateLogStreamRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'logGroupName',
-        1 => 'logStreamName',
+      'required' => [
+        'logGroupName',
+        'logStreamName',
       ],
-      'members' =>
-      [
-        'logGroupName' =>
-        [
+      'members' => [
+        'logGroupName' => [
           'shape' => 'LogGroupName',
         ],
-        'logStreamName' =>
-        [
+        'logStreamName' => [
           'shape' => 'LogStreamName',
         ],
       ],
     ],
-    'DataAlreadyAcceptedException' =>
-    [
+    'DataAlreadyAcceptedException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'expectedSequenceToken' =>
-        [
+      'members' => [
+        'expectedSequenceToken' => [
           'shape' => 'SequenceToken',
         ],
       ],
       'exception' => true,
     ],
-    'Days' =>
-    [
+    'Days' => [
       'type' => 'integer',
     ],
-    'DeleteLogGroupRequest' =>
-    [
+    'DeleteLogGroupRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'logGroupName',
+      'required' => [
+        'logGroupName',
       ],
-      'members' =>
-      [
-        'logGroupName' =>
-        [
+      'members' => [
+        'logGroupName' => [
           'shape' => 'LogGroupName',
         ],
       ],
     ],
-    'DeleteLogStreamRequest' =>
-    [
+    'DeleteLogStreamRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'logGroupName',
-        1 => 'logStreamName',
+      'required' => [
+        'logGroupName',
+        'logStreamName',
       ],
-      'members' =>
-      [
-        'logGroupName' =>
-        [
+      'members' => [
+        'logGroupName' => [
           'shape' => 'LogGroupName',
         ],
-        'logStreamName' =>
-        [
+        'logStreamName' => [
           'shape' => 'LogStreamName',
         ],
       ],
     ],
-    'DeleteMetricFilterRequest' =>
-    [
+    'DeleteMetricFilterRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'logGroupName',
-        1 => 'filterName',
+      'required' => [
+        'logGroupName',
+        'filterName',
       ],
-      'members' =>
-      [
-        'logGroupName' =>
-        [
+      'members' => [
+        'logGroupName' => [
           'shape' => 'LogGroupName',
         ],
-        'filterName' =>
-        [
+        'filterName' => [
           'shape' => 'FilterName',
         ],
       ],
     ],
-    'DeleteRetentionPolicyRequest' =>
-    [
+    'DeleteRetentionPolicyRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'logGroupName',
+      'required' => [
+        'logGroupName',
       ],
-      'members' =>
-      [
-        'logGroupName' =>
-        [
+      'members' => [
+        'logGroupName' => [
           'shape' => 'LogGroupName',
         ],
       ],
     ],
-    'DescribeLimit' =>
-    [
+    'DescribeLimit' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 50,
     ],
-    'DescribeLogGroupsRequest' =>
-    [
+    'DescribeLogGroupsRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'logGroupNamePrefix' =>
-        [
+      'members' => [
+        'logGroupNamePrefix' => [
           'shape' => 'LogGroupName',
         ],
-        'nextToken' =>
-        [
+        'nextToken' => [
           'shape' => 'NextToken',
         ],
-        'limit' =>
-        [
+        'limit' => [
           'shape' => 'DescribeLimit',
         ],
       ],
     ],
-    'DescribeLogGroupsResponse' =>
-    [
+    'DescribeLogGroupsResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'logGroups' =>
-        [
+      'members' => [
+        'logGroups' => [
           'shape' => 'LogGroups',
         ],
-        'nextToken' =>
-        [
+        'nextToken' => [
           'shape' => 'NextToken',
         ],
       ],
     ],
-    'DescribeLogStreamsRequest' =>
-    [
+    'DescribeLogStreamsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'logGroupName',
+      'required' => [
+        'logGroupName',
       ],
-      'members' =>
-      [
-        'logGroupName' =>
-        [
+      'members' => [
+        'logGroupName' => [
           'shape' => 'LogGroupName',
         ],
-        'logStreamNamePrefix' =>
-        [
+        'logStreamNamePrefix' => [
           'shape' => 'LogStreamName',
         ],
-        'nextToken' =>
-        [
+        'nextToken' => [
           'shape' => 'NextToken',
         ],
-        'limit' =>
-        [
+        'limit' => [
           'shape' => 'DescribeLimit',
         ],
       ],
     ],
-    'DescribeLogStreamsResponse' =>
-    [
+    'DescribeLogStreamsResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'logStreams' =>
-        [
+      'members' => [
+        'logStreams' => [
           'shape' => 'LogStreams',
         ],
-        'nextToken' =>
-        [
+        'nextToken' => [
           'shape' => 'NextToken',
         ],
       ],
     ],
-    'DescribeMetricFiltersRequest' =>
-    [
+    'DescribeMetricFiltersRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'logGroupName',
+      'required' => [
+        'logGroupName',
       ],
-      'members' =>
-      [
-        'logGroupName' =>
-        [
+      'members' => [
+        'logGroupName' => [
           'shape' => 'LogGroupName',
         ],
-        'filterNamePrefix' =>
-        [
+        'filterNamePrefix' => [
           'shape' => 'FilterName',
         ],
-        'nextToken' =>
-        [
+        'nextToken' => [
           'shape' => 'NextToken',
         ],
-        'limit' =>
-        [
+        'limit' => [
           'shape' => 'DescribeLimit',
         ],
       ],
     ],
-    'DescribeMetricFiltersResponse' =>
-    [
+    'DescribeMetricFiltersResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'metricFilters' =>
-        [
+      'members' => [
+        'metricFilters' => [
           'shape' => 'MetricFilters',
         ],
-        'nextToken' =>
-        [
+        'nextToken' => [
           'shape' => 'NextToken',
         ],
       ],
     ],
-    'EventMessage' =>
-    [
+    'EventMessage' => [
       'type' => 'string',
       'min' => 1,
       'max' => 32768,
     ],
-    'EventNumber' =>
-    [
+    'EventNumber' => [
       'type' => 'long',
     ],
-    'EventsLimit' =>
-    [
+    'EventsLimit' => [
       'type' => 'integer',
       'min' => 1,
       'max' => 10000,
     ],
-    'ExtractedValues' =>
-    [
+    'ExtractedValues' => [
       'type' => 'map',
-      'key' =>
-      [
+      'key' => [
         'shape' => 'Token',
       ],
-      'value' =>
-      [
+      'value' => [
         'shape' => 'Value',
       ],
     ],
-    'FilterCount' =>
-    [
+    'FilterCount' => [
       'type' => 'integer',
     ],
-    'FilterName' =>
-    [
+    'FilterName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 512,
       'pattern' => '[^:*]*',
     ],
-    'FilterPattern' =>
-    [
+    'FilterPattern' => [
       'type' => 'string',
       'min' => 0,
       'max' => 512,
     ],
-    'GetLogEventsRequest' =>
-    [
+    'GetLogEventsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'logGroupName',
-        1 => 'logStreamName',
+      'required' => [
+        'logGroupName',
+        'logStreamName',
       ],
-      'members' =>
-      [
-        'logGroupName' =>
-        [
+      'members' => [
+        'logGroupName' => [
           'shape' => 'LogGroupName',
         ],
-        'logStreamName' =>
-        [
+        'logStreamName' => [
           'shape' => 'LogStreamName',
         ],
-        'startTime' =>
-        [
+        'startTime' => [
           'shape' => 'Timestamp',
         ],
-        'endTime' =>
-        [
+        'endTime' => [
           'shape' => 'Timestamp',
         ],
-        'nextToken' =>
-        [
+        'nextToken' => [
           'shape' => 'NextToken',
         ],
-        'limit' =>
-        [
+        'limit' => [
           'shape' => 'EventsLimit',
         ],
-        'startFromHead' =>
-        [
+        'startFromHead' => [
           'shape' => 'StartFromHead',
         ],
       ],
     ],
-    'GetLogEventsResponse' =>
-    [
+    'GetLogEventsResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'events' =>
-        [
+      'members' => [
+        'events' => [
           'shape' => 'OutputLogEvents',
         ],
-        'nextForwardToken' =>
-        [
+        'nextForwardToken' => [
           'shape' => 'NextToken',
         ],
-        'nextBackwardToken' =>
-        [
+        'nextBackwardToken' => [
           'shape' => 'NextToken',
         ],
       ],
     ],
-    'InputLogEvent' =>
-    [
+    'InputLogEvent' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'timestamp',
-        1 => 'message',
+      'required' => [
+        'timestamp',
+        'message',
       ],
-      'members' =>
-      [
-        'timestamp' =>
-        [
+      'members' => [
+        'timestamp' => [
           'shape' => 'Timestamp',
         ],
-        'message' =>
-        [
+        'message' => [
           'shape' => 'EventMessage',
         ],
       ],
     ],
-    'InputLogEvents' =>
-    [
+    'InputLogEvents' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'InputLogEvent',
       ],
       'min' => 1,
       'max' => 1000,
     ],
-    'InvalidParameterException' =>
-    [
+    'InvalidParameterException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
       'exception' => true,
     ],
-    'InvalidSequenceTokenException' =>
-    [
+    'InvalidSequenceTokenException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'expectedSequenceToken' =>
-        [
+      'members' => [
+        'expectedSequenceToken' => [
           'shape' => 'SequenceToken',
         ],
       ],
       'exception' => true,
     ],
-    'LimitExceededException' =>
-    [
+    'LimitExceededException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
       'exception' => true,
     ],
-    'LogGroup' =>
-    [
+    'LogGroup' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'logGroupName' =>
-        [
+      'members' => [
+        'logGroupName' => [
           'shape' => 'LogGroupName',
         ],
-        'creationTime' =>
-        [
+        'creationTime' => [
           'shape' => 'Timestamp',
         ],
-        'retentionInDays' =>
-        [
+        'retentionInDays' => [
           'shape' => 'Days',
         ],
-        'metricFilterCount' =>
-        [
+        'metricFilterCount' => [
           'shape' => 'FilterCount',
         ],
-        'arn' =>
-        [
+        'arn' => [
           'shape' => 'Arn',
         ],
-        'storedBytes' =>
-        [
+        'storedBytes' => [
           'shape' => 'StoredBytes',
         ],
       ],
     ],
-    'LogGroupName' =>
-    [
+    'LogGroupName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 512,
       'pattern' => '[\\.\\-_/#A-Za-z0-9]+',
     ],
-    'LogGroups' =>
-    [
+    'LogGroups' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'LogGroup',
       ],
     ],
-    'LogStream' =>
-    [
+    'LogStream' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'logStreamName' =>
-        [
+      'members' => [
+        'logStreamName' => [
           'shape' => 'LogStreamName',
         ],
-        'creationTime' =>
-        [
+        'creationTime' => [
           'shape' => 'Timestamp',
         ],
-        'firstEventTimestamp' =>
-        [
+        'firstEventTimestamp' => [
           'shape' => 'Timestamp',
         ],
-        'lastEventTimestamp' =>
-        [
+        'lastEventTimestamp' => [
           'shape' => 'Timestamp',
         ],
-        'lastIngestionTime' =>
-        [
+        'lastIngestionTime' => [
           'shape' => 'Timestamp',
         ],
-        'uploadSequenceToken' =>
-        [
+        'uploadSequenceToken' => [
           'shape' => 'SequenceToken',
         ],
-        'arn' =>
-        [
+        'arn' => [
           'shape' => 'Arn',
         ],
-        'storedBytes' =>
-        [
+        'storedBytes' => [
           'shape' => 'StoredBytes',
         ],
       ],
     ],
-    'LogStreamName' =>
-    [
+    'LogStreamName' => [
       'type' => 'string',
       'min' => 1,
       'max' => 512,
       'pattern' => '[^:*]*',
     ],
-    'LogStreams' =>
-    [
+    'LogStreams' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'LogStream',
       ],
     ],
-    'MetricFilter' =>
-    [
+    'MetricFilter' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'filterName' =>
-        [
+      'members' => [
+        'filterName' => [
           'shape' => 'FilterName',
         ],
-        'filterPattern' =>
-        [
+        'filterPattern' => [
           'shape' => 'FilterPattern',
         ],
-        'metricTransformations' =>
-        [
+        'metricTransformations' => [
           'shape' => 'MetricTransformations',
         ],
-        'creationTime' =>
-        [
+        'creationTime' => [
           'shape' => 'Timestamp',
         ],
       ],
     ],
-    'MetricFilterMatchRecord' =>
-    [
+    'MetricFilterMatchRecord' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'eventNumber' =>
-        [
+      'members' => [
+        'eventNumber' => [
           'shape' => 'EventNumber',
         ],
-        'eventMessage' =>
-        [
+        'eventMessage' => [
           'shape' => 'EventMessage',
         ],
-        'extractedValues' =>
-        [
+        'extractedValues' => [
           'shape' => 'ExtractedValues',
         ],
       ],
     ],
-    'MetricFilterMatches' =>
-    [
+    'MetricFilterMatches' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'MetricFilterMatchRecord',
       ],
     ],
-    'MetricFilters' =>
-    [
+    'MetricFilters' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'MetricFilter',
       ],
     ],
-    'MetricName' =>
-    [
+    'MetricName' => [
       'type' => 'string',
       'max' => 255,
       'pattern' => '[^:*$]*',
     ],
-    'MetricNamespace' =>
-    [
+    'MetricNamespace' => [
       'type' => 'string',
       'max' => 255,
       'pattern' => '[^:*$]*',
     ],
-    'MetricTransformation' =>
-    [
+    'MetricTransformation' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'metricName',
-        1 => 'metricNamespace',
-        2 => 'metricValue',
+      'required' => [
+        'metricName',
+        'metricNamespace',
+        'metricValue',
       ],
-      'members' =>
-      [
-        'metricName' =>
-        [
+      'members' => [
+        'metricName' => [
           'shape' => 'MetricName',
         ],
-        'metricNamespace' =>
-        [
+        'metricNamespace' => [
           'shape' => 'MetricNamespace',
         ],
-        'metricValue' =>
-        [
+        'metricValue' => [
           'shape' => 'MetricValue',
         ],
       ],
     ],
-    'MetricTransformations' =>
-    [
+    'MetricTransformations' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'MetricTransformation',
       ],
       'min' => 1,
       'max' => 1,
     ],
-    'MetricValue' =>
-    [
+    'MetricValue' => [
       'type' => 'string',
       'max' => 100,
     ],
-    'NextToken' =>
-    [
+    'NextToken' => [
       'type' => 'string',
     ],
-    'OperationAbortedException' =>
-    [
+    'OperationAbortedException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
       'exception' => true,
     ],
-    'OutputLogEvent' =>
-    [
+    'OutputLogEvent' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'timestamp' =>
-        [
+      'members' => [
+        'timestamp' => [
           'shape' => 'Timestamp',
         ],
-        'message' =>
-        [
+        'message' => [
           'shape' => 'EventMessage',
         ],
-        'ingestionTime' =>
-        [
+        'ingestionTime' => [
           'shape' => 'Timestamp',
         ],
       ],
     ],
-    'OutputLogEvents' =>
-    [
+    'OutputLogEvents' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'OutputLogEvent',
       ],
     ],
-    'PutLogEventsRequest' =>
-    [
+    'PutLogEventsRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'logGroupName',
-        1 => 'logStreamName',
-        2 => 'logEvents',
+      'required' => [
+        'logGroupName',
+        'logStreamName',
+        'logEvents',
       ],
-      'members' =>
-      [
-        'logGroupName' =>
-        [
+      'members' => [
+        'logGroupName' => [
           'shape' => 'LogGroupName',
         ],
-        'logStreamName' =>
-        [
+        'logStreamName' => [
           'shape' => 'LogStreamName',
         ],
-        'logEvents' =>
-        [
+        'logEvents' => [
           'shape' => 'InputLogEvents',
         ],
-        'sequenceToken' =>
-        [
+        'sequenceToken' => [
           'shape' => 'SequenceToken',
         ],
       ],
     ],
-    'PutLogEventsResponse' =>
-    [
+    'PutLogEventsResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'nextSequenceToken' =>
-        [
+      'members' => [
+        'nextSequenceToken' => [
           'shape' => 'SequenceToken',
         ],
       ],
     ],
-    'PutMetricFilterRequest' =>
-    [
+    'PutMetricFilterRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'logGroupName',
-        1 => 'filterName',
-        2 => 'filterPattern',
-        3 => 'metricTransformations',
+      'required' => [
+        'logGroupName',
+        'filterName',
+        'filterPattern',
+        'metricTransformations',
       ],
-      'members' =>
-      [
-        'logGroupName' =>
-        [
+      'members' => [
+        'logGroupName' => [
           'shape' => 'LogGroupName',
         ],
-        'filterName' =>
-        [
+        'filterName' => [
           'shape' => 'FilterName',
         ],
-        'filterPattern' =>
-        [
+        'filterPattern' => [
           'shape' => 'FilterPattern',
         ],
-        'metricTransformations' =>
-        [
+        'metricTransformations' => [
           'shape' => 'MetricTransformations',
         ],
       ],
     ],
-    'PutRetentionPolicyRequest' =>
-    [
+    'PutRetentionPolicyRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'logGroupName',
-        1 => 'retentionInDays',
+      'required' => [
+        'logGroupName',
+        'retentionInDays',
       ],
-      'members' =>
-      [
-        'logGroupName' =>
-        [
+      'members' => [
+        'logGroupName' => [
           'shape' => 'LogGroupName',
         ],
-        'retentionInDays' =>
-        [
+        'retentionInDays' => [
           'shape' => 'Days',
         ],
       ],
     ],
-    'ResourceAlreadyExistsException' =>
-    [
+    'ResourceAlreadyExistsException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
       'exception' => true,
     ],
-    'ResourceNotFoundException' =>
-    [
+    'ResourceNotFoundException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
       'exception' => true,
     ],
-    'SequenceToken' =>
-    [
+    'SequenceToken' => [
       'type' => 'string',
       'min' => 1,
     ],
-    'ServiceUnavailableException' =>
-    [
+    'ServiceUnavailableException' => [
       'type' => 'structure',
-      'members' =>
-      [
+      'members' => [
       ],
       'exception' => true,
       'fault' => true,
     ],
-    'StartFromHead' =>
-    [
+    'StartFromHead' => [
       'type' => 'boolean',
     ],
-    'StoredBytes' =>
-    [
+    'StoredBytes' => [
       'type' => 'long',
       'min' => 0,
     ],
-    'TestEventMessages' =>
-    [
+    'TestEventMessages' => [
       'type' => 'list',
-      'member' =>
-      [
+      'member' => [
         'shape' => 'EventMessage',
       ],
       'min' => 1,
       'max' => 50,
     ],
-    'TestMetricFilterRequest' =>
-    [
+    'TestMetricFilterRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'filterPattern',
-        1 => 'logEventMessages',
+      'required' => [
+        'filterPattern',
+        'logEventMessages',
       ],
-      'members' =>
-      [
-        'filterPattern' =>
-        [
+      'members' => [
+        'filterPattern' => [
           'shape' => 'FilterPattern',
         ],
-        'logEventMessages' =>
-        [
+        'logEventMessages' => [
           'shape' => 'TestEventMessages',
         ],
       ],
     ],
-    'TestMetricFilterResponse' =>
-    [
+    'TestMetricFilterResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'matches' =>
-        [
+      'members' => [
+        'matches' => [
           'shape' => 'MetricFilterMatches',
         ],
       ],
     ],
-    'Timestamp' =>
-    [
+    'Timestamp' => [
       'type' => 'long',
       'min' => 0,
     ],
-    'Token' =>
-    [
+    'Token' => [
       'type' => 'string',
     ],
-    'Value' =>
-    [
+    'Value' => [
       'type' => 'string',
     ],
   ],

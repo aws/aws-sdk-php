@@ -1,27 +1,21 @@
-<?php
-return [
-  'pagination' =>
-  [
-    'ListJobsByPipeline' =>
-    [
+<?php return [
+  'pagination' => [
+    'ListJobsByPipeline' => [
       'input_token' => 'PageToken',
       'output_token' => 'NextPageToken',
       'result_key' => 'Jobs',
     ],
-    'ListJobsByStatus' =>
-    [
+    'ListJobsByStatus' => [
       'input_token' => 'PageToken',
       'output_token' => 'NextPageToken',
       'result_key' => 'Jobs',
     ],
-    'ListPipelines' =>
-    [
+    'ListPipelines' => [
       'input_token' => 'PageToken',
       'output_token' => 'NextPageToken',
       'result_key' => 'Pipelines',
     ],
-    'ListPresets' =>
-    [
+    'ListPresets' => [
       'input_token' => 'PageToken',
       'output_token' => 'NextPageToken',
       'result_key' => 'Presets',

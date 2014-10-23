@@ -1,7 +1,5 @@
-<?php
-return [
-  'metadata' =>
-  [
+<?php return [
+  'metadata' => [
     'apiVersion' => '2011-06-15',
     'endpointPrefix' => 'sts',
     'globalEndpoint' => 'sts.amazonaws.com',
@@ -11,43 +9,33 @@ return [
     'xmlNamespace' => 'https://sts.amazonaws.com/doc/2011-06-15/',
     'protocol' => 'query',
   ],
-  'operations' =>
-  [
-    'AssumeRole' =>
-    [
+  'operations' => [
+    'AssumeRole' => [
       'name' => 'AssumeRole',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AssumeRoleRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AssumeRoleResponse',
         'resultWrapper' => 'AssumeRoleResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'MalformedPolicyDocumentException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MalformedPolicyDocument',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'PackedPolicyTooLargeException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'PackedPolicyTooLarge',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -56,74 +44,59 @@ return [
         ],
       ],
     ],
-    'AssumeRoleWithSAML' =>
-    [
+    'AssumeRoleWithSAML' => [
       'name' => 'AssumeRoleWithSAML',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AssumeRoleWithSAMLRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AssumeRoleWithSAMLResponse',
         'resultWrapper' => 'AssumeRoleWithSAMLResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'MalformedPolicyDocumentException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MalformedPolicyDocument',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'PackedPolicyTooLargeException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'PackedPolicyTooLarge',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'IDPRejectedClaimException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'IDPRejectedClaim',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'InvalidIdentityTokenException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidIdentityToken',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'ExpiredTokenException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ExpiredTokenException',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -132,85 +105,68 @@ return [
         ],
       ],
     ],
-    'AssumeRoleWithWebIdentity' =>
-    [
+    'AssumeRoleWithWebIdentity' => [
       'name' => 'AssumeRoleWithWebIdentity',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'AssumeRoleWithWebIdentityRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'AssumeRoleWithWebIdentityResponse',
         'resultWrapper' => 'AssumeRoleWithWebIdentityResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'MalformedPolicyDocumentException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MalformedPolicyDocument',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'PackedPolicyTooLargeException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'PackedPolicyTooLarge',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        2 =>
         [
           'shape' => 'IDPRejectedClaimException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'IDPRejectedClaim',
             'httpStatusCode' => 403,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        3 =>
         [
           'shape' => 'IDPCommunicationErrorException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'IDPCommunicationError',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        4 =>
         [
           'shape' => 'InvalidIdentityTokenException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidIdentityToken',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        5 =>
         [
           'shape' => 'ExpiredTokenException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'ExpiredTokenException',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -219,30 +175,23 @@ return [
         ],
       ],
     ],
-    'DecodeAuthorizationMessage' =>
-    [
+    'DecodeAuthorizationMessage' => [
       'name' => 'DecodeAuthorizationMessage',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'DecodeAuthorizationMessageRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'DecodeAuthorizationMessageResponse',
         'resultWrapper' => 'DecodeAuthorizationMessageResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'InvalidAuthorizationMessageException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'InvalidAuthorizationMessageException',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -251,41 +200,32 @@ return [
         ],
       ],
     ],
-    'GetFederationToken' =>
-    [
+    'GetFederationToken' => [
       'name' => 'GetFederationToken',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetFederationTokenRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetFederationTokenResponse',
         'resultWrapper' => 'GetFederationTokenResult',
       ],
-      'errors' =>
-      [
-        0 =>
+      'errors' => [
         [
           'shape' => 'MalformedPolicyDocumentException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'MalformedPolicyDocument',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
         ],
-        1 =>
         [
           'shape' => 'PackedPolicyTooLargeException',
-          'error' =>
-          [
+          'error' => [
             'code' => 'PackedPolicyTooLarge',
             'httpStatusCode' => 400,
             'senderFault' => true,
@@ -294,689 +234,530 @@ return [
         ],
       ],
     ],
-    'GetSessionToken' =>
-    [
+    'GetSessionToken' => [
       'name' => 'GetSessionToken',
-      'http' =>
-      [
+      'http' => [
         'method' => 'POST',
         'requestUri' => '/',
       ],
-      'input' =>
-      [
+      'input' => [
         'shape' => 'GetSessionTokenRequest',
       ],
-      'output' =>
-      [
+      'output' => [
         'shape' => 'GetSessionTokenResponse',
         'resultWrapper' => 'GetSessionTokenResult',
       ],
     ],
   ],
-  'shapes' =>
-  [
-    'AssumeRoleRequest' =>
-    [
+  'shapes' => [
+    'AssumeRoleRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RoleArn',
-        1 => 'RoleSessionName',
+      'required' => [
+        'RoleArn',
+        'RoleSessionName',
       ],
-      'members' =>
-      [
-        'RoleArn' =>
-        [
+      'members' => [
+        'RoleArn' => [
           'shape' => 'arnType',
         ],
-        'RoleSessionName' =>
-        [
+        'RoleSessionName' => [
           'shape' => 'userNameType',
         ],
-        'Policy' =>
-        [
+        'Policy' => [
           'shape' => 'sessionPolicyDocumentType',
         ],
-        'DurationSeconds' =>
-        [
+        'DurationSeconds' => [
           'shape' => 'roleDurationSecondsType',
         ],
-        'ExternalId' =>
-        [
+        'ExternalId' => [
           'shape' => 'externalIdType',
         ],
-        'SerialNumber' =>
-        [
+        'SerialNumber' => [
           'shape' => 'serialNumberType',
         ],
-        'TokenCode' =>
-        [
+        'TokenCode' => [
           'shape' => 'tokenCodeType',
         ],
       ],
     ],
-    'AssumeRoleResponse' =>
-    [
+    'AssumeRoleResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Credentials' =>
-        [
+      'members' => [
+        'Credentials' => [
           'shape' => 'Credentials',
         ],
-        'AssumedRoleUser' =>
-        [
+        'AssumedRoleUser' => [
           'shape' => 'AssumedRoleUser',
         ],
-        'PackedPolicySize' =>
-        [
+        'PackedPolicySize' => [
           'shape' => 'nonNegativeIntegerType',
         ],
       ],
     ],
-    'AssumeRoleWithSAMLRequest' =>
-    [
+    'AssumeRoleWithSAMLRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RoleArn',
-        1 => 'PrincipalArn',
-        2 => 'SAMLAssertion',
+      'required' => [
+        'RoleArn',
+        'PrincipalArn',
+        'SAMLAssertion',
       ],
-      'members' =>
-      [
-        'RoleArn' =>
-        [
+      'members' => [
+        'RoleArn' => [
           'shape' => 'arnType',
         ],
-        'PrincipalArn' =>
-        [
+        'PrincipalArn' => [
           'shape' => 'arnType',
         ],
-        'SAMLAssertion' =>
-        [
+        'SAMLAssertion' => [
           'shape' => 'SAMLAssertionType',
         ],
-        'Policy' =>
-        [
+        'Policy' => [
           'shape' => 'sessionPolicyDocumentType',
         ],
-        'DurationSeconds' =>
-        [
+        'DurationSeconds' => [
           'shape' => 'durationSecondsType',
         ],
       ],
     ],
-    'AssumeRoleWithSAMLResponse' =>
-    [
+    'AssumeRoleWithSAMLResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Credentials' =>
-        [
+      'members' => [
+        'Credentials' => [
           'shape' => 'Credentials',
         ],
-        'AssumedRoleUser' =>
-        [
+        'AssumedRoleUser' => [
           'shape' => 'AssumedRoleUser',
         ],
-        'PackedPolicySize' =>
-        [
+        'PackedPolicySize' => [
           'shape' => 'nonNegativeIntegerType',
         ],
-        'Subject' =>
-        [
+        'Subject' => [
           'shape' => 'Subject',
         ],
-        'SubjectType' =>
-        [
+        'SubjectType' => [
           'shape' => 'SubjectType',
         ],
-        'Issuer' =>
-        [
+        'Issuer' => [
           'shape' => 'Issuer',
         ],
-        'Audience' =>
-        [
+        'Audience' => [
           'shape' => 'Audience',
         ],
-        'NameQualifier' =>
-        [
+        'NameQualifier' => [
           'shape' => 'NameQualifier',
         ],
       ],
     ],
-    'AssumeRoleWithWebIdentityRequest' =>
-    [
+    'AssumeRoleWithWebIdentityRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'RoleArn',
-        1 => 'RoleSessionName',
-        2 => 'WebIdentityToken',
+      'required' => [
+        'RoleArn',
+        'RoleSessionName',
+        'WebIdentityToken',
       ],
-      'members' =>
-      [
-        'RoleArn' =>
-        [
+      'members' => [
+        'RoleArn' => [
           'shape' => 'arnType',
         ],
-        'RoleSessionName' =>
-        [
+        'RoleSessionName' => [
           'shape' => 'userNameType',
         ],
-        'WebIdentityToken' =>
-        [
+        'WebIdentityToken' => [
           'shape' => 'clientTokenType',
         ],
-        'ProviderId' =>
-        [
+        'ProviderId' => [
           'shape' => 'urlType',
         ],
-        'Policy' =>
-        [
+        'Policy' => [
           'shape' => 'sessionPolicyDocumentType',
         ],
-        'DurationSeconds' =>
-        [
+        'DurationSeconds' => [
           'shape' => 'durationSecondsType',
         ],
       ],
     ],
-    'AssumeRoleWithWebIdentityResponse' =>
-    [
+    'AssumeRoleWithWebIdentityResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Credentials' =>
-        [
+      'members' => [
+        'Credentials' => [
           'shape' => 'Credentials',
         ],
-        'SubjectFromWebIdentityToken' =>
-        [
+        'SubjectFromWebIdentityToken' => [
           'shape' => 'webIdentitySubjectType',
         ],
-        'AssumedRoleUser' =>
-        [
+        'AssumedRoleUser' => [
           'shape' => 'AssumedRoleUser',
         ],
-        'PackedPolicySize' =>
-        [
+        'PackedPolicySize' => [
           'shape' => 'nonNegativeIntegerType',
         ],
-        'Provider' =>
-        [
+        'Provider' => [
           'shape' => 'Issuer',
         ],
-        'Audience' =>
-        [
+        'Audience' => [
           'shape' => 'Audience',
         ],
       ],
     ],
-    'AssumedRoleUser' =>
-    [
+    'AssumedRoleUser' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AssumedRoleId',
-        1 => 'Arn',
+      'required' => [
+        'AssumedRoleId',
+        'Arn',
       ],
-      'members' =>
-      [
-        'AssumedRoleId' =>
-        [
+      'members' => [
+        'AssumedRoleId' => [
           'shape' => 'assumedRoleIdType',
         ],
-        'Arn' =>
-        [
+        'Arn' => [
           'shape' => 'arnType',
         ],
       ],
     ],
-    'Audience' =>
-    [
+    'Audience' => [
       'type' => 'string',
     ],
-    'Credentials' =>
-    [
+    'Credentials' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'AccessKeyId',
-        1 => 'SecretAccessKey',
-        2 => 'SessionToken',
-        3 => 'Expiration',
+      'required' => [
+        'AccessKeyId',
+        'SecretAccessKey',
+        'SessionToken',
+        'Expiration',
       ],
-      'members' =>
-      [
-        'AccessKeyId' =>
-        [
+      'members' => [
+        'AccessKeyId' => [
           'shape' => 'accessKeyIdType',
         ],
-        'SecretAccessKey' =>
-        [
+        'SecretAccessKey' => [
           'shape' => 'accessKeySecretType',
         ],
-        'SessionToken' =>
-        [
+        'SessionToken' => [
           'shape' => 'tokenType',
         ],
-        'Expiration' =>
-        [
+        'Expiration' => [
           'shape' => 'dateType',
         ],
       ],
     ],
-    'DecodeAuthorizationMessageRequest' =>
-    [
+    'DecodeAuthorizationMessageRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'EncodedMessage',
+      'required' => [
+        'EncodedMessage',
       ],
-      'members' =>
-      [
-        'EncodedMessage' =>
-        [
+      'members' => [
+        'EncodedMessage' => [
           'shape' => 'encodedMessageType',
         ],
       ],
     ],
-    'DecodeAuthorizationMessageResponse' =>
-    [
+    'DecodeAuthorizationMessageResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DecodedMessage' =>
-        [
+      'members' => [
+        'DecodedMessage' => [
           'shape' => 'decodedMessageType',
         ],
       ],
     ],
-    'ExpiredTokenException' =>
-    [
+    'ExpiredTokenException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'expiredIdentityTokenMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'ExpiredTokenException',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'FederatedUser' =>
-    [
+    'FederatedUser' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'FederatedUserId',
-        1 => 'Arn',
+      'required' => [
+        'FederatedUserId',
+        'Arn',
       ],
-      'members' =>
-      [
-        'FederatedUserId' =>
-        [
+      'members' => [
+        'FederatedUserId' => [
           'shape' => 'federatedIdType',
         ],
-        'Arn' =>
-        [
+        'Arn' => [
           'shape' => 'arnType',
         ],
       ],
     ],
-    'GetFederationTokenRequest' =>
-    [
+    'GetFederationTokenRequest' => [
       'type' => 'structure',
-      'required' =>
-      [
-        0 => 'Name',
+      'required' => [
+        'Name',
       ],
-      'members' =>
-      [
-        'Name' =>
-        [
+      'members' => [
+        'Name' => [
           'shape' => 'userNameType',
         ],
-        'Policy' =>
-        [
+        'Policy' => [
           'shape' => 'sessionPolicyDocumentType',
         ],
-        'DurationSeconds' =>
-        [
+        'DurationSeconds' => [
           'shape' => 'durationSecondsType',
         ],
       ],
     ],
-    'GetFederationTokenResponse' =>
-    [
+    'GetFederationTokenResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Credentials' =>
-        [
+      'members' => [
+        'Credentials' => [
           'shape' => 'Credentials',
         ],
-        'FederatedUser' =>
-        [
+        'FederatedUser' => [
           'shape' => 'FederatedUser',
         ],
-        'PackedPolicySize' =>
-        [
+        'PackedPolicySize' => [
           'shape' => 'nonNegativeIntegerType',
         ],
       ],
     ],
-    'GetSessionTokenRequest' =>
-    [
+    'GetSessionTokenRequest' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'DurationSeconds' =>
-        [
+      'members' => [
+        'DurationSeconds' => [
           'shape' => 'durationSecondsType',
         ],
-        'SerialNumber' =>
-        [
+        'SerialNumber' => [
           'shape' => 'serialNumberType',
         ],
-        'TokenCode' =>
-        [
+        'TokenCode' => [
           'shape' => 'tokenCodeType',
         ],
       ],
     ],
-    'GetSessionTokenResponse' =>
-    [
+    'GetSessionTokenResponse' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'Credentials' =>
-        [
+      'members' => [
+        'Credentials' => [
           'shape' => 'Credentials',
         ],
       ],
     ],
-    'IDPCommunicationErrorException' =>
-    [
+    'IDPCommunicationErrorException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'idpCommunicationErrorMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'IDPCommunicationError',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'IDPRejectedClaimException' =>
-    [
+    'IDPRejectedClaimException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'idpRejectedClaimMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'IDPRejectedClaim',
         'httpStatusCode' => 403,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidAuthorizationMessageException' =>
-    [
+    'InvalidAuthorizationMessageException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'invalidAuthorizationMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidAuthorizationMessageException',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'InvalidIdentityTokenException' =>
-    [
+    'InvalidIdentityTokenException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'invalidIdentityTokenMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'InvalidIdentityToken',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'Issuer' =>
-    [
+    'Issuer' => [
       'type' => 'string',
     ],
-    'MalformedPolicyDocumentException' =>
-    [
+    'MalformedPolicyDocumentException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'malformedPolicyDocumentMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'MalformedPolicyDocument',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'NameQualifier' =>
-    [
+    'NameQualifier' => [
       'type' => 'string',
     ],
-    'PackedPolicyTooLargeException' =>
-    [
+    'PackedPolicyTooLargeException' => [
       'type' => 'structure',
-      'members' =>
-      [
-        'message' =>
-        [
+      'members' => [
+        'message' => [
           'shape' => 'packedPolicyTooLargeMessage',
         ],
       ],
-      'error' =>
-      [
+      'error' => [
         'code' => 'PackedPolicyTooLarge',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
-    'SAMLAssertionType' =>
-    [
+    'SAMLAssertionType' => [
       'type' => 'string',
       'min' => 4,
       'max' => 50000,
     ],
-    'Subject' =>
-    [
+    'Subject' => [
       'type' => 'string',
     ],
-    'SubjectType' =>
-    [
+    'SubjectType' => [
       'type' => 'string',
     ],
-    'accessKeyIdType' =>
-    [
+    'accessKeyIdType' => [
       'type' => 'string',
       'min' => 16,
       'max' => 32,
       'pattern' => '[\\w]*',
     ],
-    'accessKeySecretType' =>
-    [
+    'accessKeySecretType' => [
       'type' => 'string',
     ],
-    'arnType' =>
-    [
+    'arnType' => [
       'type' => 'string',
       'min' => 20,
       'max' => 2048,
     ],
-    'assumedRoleIdType' =>
-    [
+    'assumedRoleIdType' => [
       'type' => 'string',
       'min' => 2,
       'max' => 96,
       'pattern' => '[\\w+=,.@:-]*',
     ],
-    'clientTokenType' =>
-    [
+    'clientTokenType' => [
       'type' => 'string',
       'min' => 4,
       'max' => 2048,
     ],
-    'dateType' =>
-    [
+    'dateType' => [
       'type' => 'timestamp',
     ],
-    'decodedMessageType' =>
-    [
+    'decodedMessageType' => [
       'type' => 'string',
     ],
-    'durationSecondsType' =>
-    [
+    'durationSecondsType' => [
       'type' => 'integer',
       'min' => 900,
       'max' => 129600,
     ],
-    'encodedMessageType' =>
-    [
+    'encodedMessageType' => [
       'type' => 'string',
       'min' => 1,
       'max' => 10240,
     ],
-    'expiredIdentityTokenMessage' =>
-    [
+    'expiredIdentityTokenMessage' => [
       'type' => 'string',
     ],
-    'externalIdType' =>
-    [
+    'externalIdType' => [
       'type' => 'string',
       'min' => 2,
       'max' => 96,
       'pattern' => '[\\w+=,.@:-]*',
     ],
-    'federatedIdType' =>
-    [
+    'federatedIdType' => [
       'type' => 'string',
       'min' => 2,
       'max' => 96,
       'pattern' => '[\\w+=,.@\\:-]*',
     ],
-    'idpCommunicationErrorMessage' =>
-    [
+    'idpCommunicationErrorMessage' => [
       'type' => 'string',
     ],
-    'idpRejectedClaimMessage' =>
-    [
+    'idpRejectedClaimMessage' => [
       'type' => 'string',
     ],
-    'invalidAuthorizationMessage' =>
-    [
+    'invalidAuthorizationMessage' => [
       'type' => 'string',
     ],
-    'invalidIdentityTokenMessage' =>
-    [
+    'invalidIdentityTokenMessage' => [
       'type' => 'string',
     ],
-    'malformedPolicyDocumentMessage' =>
-    [
+    'malformedPolicyDocumentMessage' => [
       'type' => 'string',
     ],
-    'nonNegativeIntegerType' =>
-    [
+    'nonNegativeIntegerType' => [
       'type' => 'integer',
       'min' => 0,
     ],
-    'packedPolicyTooLargeMessage' =>
-    [
+    'packedPolicyTooLargeMessage' => [
       'type' => 'string',
     ],
-    'roleDurationSecondsType' =>
-    [
+    'roleDurationSecondsType' => [
       'type' => 'integer',
       'min' => 900,
       'max' => 3600,
     ],
-    'serialNumberType' =>
-    [
+    'serialNumberType' => [
       'type' => 'string',
       'min' => 9,
       'max' => 256,
       'pattern' => '[\\w+=/:,.@-]*',
     ],
-    'sessionPolicyDocumentType' =>
-    [
+    'sessionPolicyDocumentType' => [
       'type' => 'string',
       'min' => 1,
       'max' => 2048,
       'pattern' => '[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+',
     ],
-    'tokenCodeType' =>
-    [
+    'tokenCodeType' => [
       'type' => 'string',
       'min' => 6,
       'max' => 6,
       'pattern' => '[\\d]*',
     ],
-    'tokenType' =>
-    [
+    'tokenType' => [
       'type' => 'string',
     ],
-    'urlType' =>
-    [
+    'urlType' => [
       'type' => 'string',
       'min' => 4,
       'max' => 2048,
     ],
-    'userNameType' =>
-    [
+    'userNameType' => [
       'type' => 'string',
       'min' => 2,
       'max' => 32,
       'pattern' => '[\\w+=,.@-]*',
     ],
-    'webIdentitySubjectType' =>
-    [
+    'webIdentitySubjectType' => [
       'type' => 'string',
       'min' => 6,
       'max' => 255,

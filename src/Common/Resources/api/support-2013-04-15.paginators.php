@@ -1,31 +1,24 @@
-<?php
-return [
-  'pagination' =>
-  [
-    'DescribeCases' =>
-    [
+<?php return [
+  'pagination' => [
+    'DescribeCases' => [
       'input_token' => 'nextToken',
       'output_token' => 'nextToken',
       'limit_key' => 'maxResults',
       'result_key' => 'cases',
     ],
-    'DescribeCommunications' =>
-    [
+    'DescribeCommunications' => [
       'input_token' => 'nextToken',
       'output_token' => 'nextToken',
       'limit_key' => 'maxResults',
       'result_key' => 'communications',
     ],
-    'DescribeServices' =>
-    [
+    'DescribeServices' => [
       'result_key' => 'services',
     ],
-    'DescribeTrustedAdvisorCheckRefreshStatuses' =>
-    [
+    'DescribeTrustedAdvisorCheckRefreshStatuses' => [
       'result_key' => 'statuses',
     ],
-    'DescribeTrustedAdvisorCheckSummaries' =>
-    [
+    'DescribeTrustedAdvisorCheckSummaries' => [
       'result_key' => 'summaries',
     ],
   ],

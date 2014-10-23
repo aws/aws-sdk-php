@@ -1,58 +1,48 @@
-<?php
-return [
-  'pagination' =>
-  [
-    'DescribeAutoScalingGroups' =>
-    [
+<?php return [
+  'pagination' => [
+    'DescribeAutoScalingGroups' => [
       'input_token' => 'NextToken',
       'output_token' => 'NextToken',
       'limit_key' => 'MaxRecords',
       'result_key' => 'AutoScalingGroups',
     ],
-    'DescribeAutoScalingInstances' =>
-    [
+    'DescribeAutoScalingInstances' => [
       'input_token' => 'NextToken',
       'output_token' => 'NextToken',
       'limit_key' => 'MaxRecords',
       'result_key' => 'AutoScalingInstances',
     ],
-    'DescribeLaunchConfigurations' =>
-    [
+    'DescribeLaunchConfigurations' => [
       'input_token' => 'NextToken',
       'output_token' => 'NextToken',
       'limit_key' => 'MaxRecords',
       'result_key' => 'LaunchConfigurations',
     ],
-    'DescribeNotificationConfigurations' =>
-    [
+    'DescribeNotificationConfigurations' => [
       'input_token' => 'NextToken',
       'output_token' => 'NextToken',
       'limit_key' => 'MaxRecords',
       'result_key' => 'NotificationConfigurations',
     ],
-    'DescribePolicies' =>
-    [
+    'DescribePolicies' => [
       'input_token' => 'NextToken',
       'output_token' => 'NextToken',
       'limit_key' => 'MaxRecords',
       'result_key' => 'ScalingPolicies',
     ],
-    'DescribeScalingActivities' =>
-    [
+    'DescribeScalingActivities' => [
       'input_token' => 'NextToken',
       'output_token' => 'NextToken',
       'limit_key' => 'MaxRecords',
       'result_key' => 'Activities',
     ],
-    'DescribeScheduledActions' =>
-    [
+    'DescribeScheduledActions' => [
       'input_token' => 'NextToken',
       'output_token' => 'NextToken',
       'limit_key' => 'MaxRecords',
       'result_key' => 'ScheduledUpdateGroupActions',
     ],
-    'DescribeTags' =>
-    [
+    'DescribeTags' => [
       'input_token' => 'NextToken',
       'output_token' => 'NextToken',
       'limit_key' => 'MaxRecords',
