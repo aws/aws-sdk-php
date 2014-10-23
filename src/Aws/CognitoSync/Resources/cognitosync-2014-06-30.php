@@ -408,7 +408,7 @@ return array (
                                     'string',
                                     'integer',
                                 ),
-                                'format' => 'date-time',
+                                'format' => 'timestamp',
                             ),
                         ),
                     ),
