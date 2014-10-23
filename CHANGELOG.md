@@ -1,8 +1,8 @@
 CHANGELOG
 =========
 
-2.7.2 (TBD)
------------
+2.7.2 (2014-10-23)
+------------------
 
 * Updated AWS Identity and Access Management (IAM) to the latest version.
 * Updated Amazon Cognito Identity client to the latest version.
