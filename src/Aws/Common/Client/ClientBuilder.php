@@ -38,7 +38,6 @@ use Guzzle\Plugin\Backoff\CurlBackoffStrategy;
 use Guzzle\Plugin\Backoff\ExponentialBackoffStrategy;
 use Guzzle\Plugin\Backoff\HttpBackoffStrategy;
 use Guzzle\Plugin\Backoff\TruncatedBackoffStrategy;
-use Guzzle\Service\Client;
 use Guzzle\Service\Description\ServiceDescription;
 use Guzzle\Service\Resource\ResourceIteratorClassFactory;
 use Guzzle\Log\LogAdapterInterface;

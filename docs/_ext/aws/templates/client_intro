@@ -24,7 +24,9 @@ and provide your credential profile (via the ``profile`` option), which identifi
 use from your ``~/.aws/credentials`` file (see :ref:`credential_profiles`).
 
 {% if not globalEndpoint -%}
-A ``region`` parameter is also required and must be set to one of the following values: ``{{ regions|join("``, ``") }}``
+A ``region`` parameter is required. You can find a list of available regions
+using the `Regions and Endpoints <http://docs.aws.amazon.com/general/latest/gr/rande.html>`_
+reference.
 {% endif %}
 
 .. code-block:: php

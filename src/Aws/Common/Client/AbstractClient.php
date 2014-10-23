@@ -17,7 +17,6 @@
 namespace Aws\Common\Client;
 
 use Aws\Common\Aws;
-use Aws\Common\Credentials\Credentials;
 use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Credentials\NullCredentials;
 use Aws\Common\Enum\ClientOptions as Options;
