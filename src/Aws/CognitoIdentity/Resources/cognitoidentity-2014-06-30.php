@@ -78,6 +78,22 @@ return array (
                         ),
                     ),
                 ),
+                'DeveloperProviderName' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 128,
+                ),
+                'OpenIdConnectProviderARNs' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'OIDCProviderARN',
+                        'type' => 'string',
+                        'minLength' => 20,
+                        'maxLength' => 2048,
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -251,7 +267,7 @@ return array (
                     'additionalProperties' => array(
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 1024,
+                        'maxLength' => 2048,
                         'data' => array(
                             'shape_name' => 'IdentityProviderName',
                             'key_pattern' => '/[\\w._-]+/',
@@ -324,7 +340,7 @@ return array (
                     'additionalProperties' => array(
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 1024,
+                        'maxLength' => 2048,
                         'data' => array(
                             'shape_name' => 'IdentityProviderName',
                             'key_pattern' => '/[\\w._-]+/',
@@ -356,6 +372,92 @@ return array (
                 array(
                     'reason' => 'Thrown when the service encounters an error during processing the request.',
                     'class' => 'InternalErrorException',
+                ),
+            ),
+        ),
+        'GetOpenIdTokenForDeveloperIdentity' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'GetOpenIdTokenForDeveloperIdentityResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AWSCognitoIdentityService.GetOpenIdTokenForDeveloperIdentity',
+                ),
+                'IdentityPoolId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 50,
+                ),
+                'IdentityId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 50,
+                ),
+                'Logins' => array(
+                    'required' => true,
+                    'type' => 'object',
+                    'location' => 'json',
+                    'additionalProperties' => array(
+                        'type' => 'string',
+                        'minLength' => 1,
+                        'maxLength' => 2048,
+                        'data' => array(
+                            'shape_name' => 'IdentityProviderName',
+                            'key_pattern' => '/[\\w._-]+/',
+                        ),
+                    ),
+                ),
+                'TokenDuration' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'minimum' => 1,
+                    'maximum' => 86400,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Thrown for missing or bad input parameter(s).',
+                    'class' => 'InvalidParameterException',
+                ),
+                array(
+                    'reason' => 'Thrown when the requested resource (for example, a dataset or record) does not exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'Thrown when a user is not authorized to access the requested resource.',
+                    'class' => 'NotAuthorizedException',
+                ),
+                array(
+                    'reason' => 'Thrown when a user tries to use a login which is already linked to another account.',
+                    'class' => 'ResourceConflictException',
+                ),
+                array(
+                    'reason' => 'Thrown when a request is throttled.',
+                    'class' => 'TooManyRequestsException',
+                ),
+                array(
+                    'reason' => 'Thrown when the service encounters an error during processing the request.',
+                    'class' => 'InternalErrorException',
+                ),
+                array(
+                    'reason' => 'The provided developer user identifier is already registered with Cognito under a different identity ID.',
+                    'class' => 'DeveloperUserAlreadyRegisteredException',
                 ),
             ),
         ),
@@ -476,6 +578,231 @@ return array (
                 ),
             ),
         ),
+        'LookupDeveloperIdentity' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'LookupDeveloperIdentityResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AWSCognitoIdentityService.LookupDeveloperIdentity',
+                ),
+                'IdentityPoolId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 50,
+                ),
+                'IdentityId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 50,
+                ),
+                'DeveloperUserIdentifier' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'MaxResults' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'minimum' => 1,
+                    'maximum' => 60,
+                ),
+                'NextToken' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Thrown for missing or bad input parameter(s).',
+                    'class' => 'InvalidParameterException',
+                ),
+                array(
+                    'reason' => 'Thrown when the requested resource (for example, a dataset or record) does not exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'Thrown when a user is not authorized to access the requested resource.',
+                    'class' => 'NotAuthorizedException',
+                ),
+                array(
+                    'reason' => 'Thrown when a user tries to use a login which is already linked to another account.',
+                    'class' => 'ResourceConflictException',
+                ),
+                array(
+                    'reason' => 'Thrown when a request is throttled.',
+                    'class' => 'TooManyRequestsException',
+                ),
+                array(
+                    'reason' => 'Thrown when the service encounters an error during processing the request.',
+                    'class' => 'InternalErrorException',
+                ),
+            ),
+        ),
+        'MergeDeveloperIdentities' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'MergeDeveloperIdentitiesResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AWSCognitoIdentityService.MergeDeveloperIdentities',
+                ),
+                'SourceUserIdentifier' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'DestinationUserIdentifier' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'DeveloperProviderName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 128,
+                ),
+                'IdentityPoolId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 50,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Thrown for missing or bad input parameter(s).',
+                    'class' => 'InvalidParameterException',
+                ),
+                array(
+                    'reason' => 'Thrown when the requested resource (for example, a dataset or record) does not exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'Thrown when a user is not authorized to access the requested resource.',
+                    'class' => 'NotAuthorizedException',
+                ),
+                array(
+                    'reason' => 'Thrown when a user tries to use a login which is already linked to another account.',
+                    'class' => 'ResourceConflictException',
+                ),
+                array(
+                    'reason' => 'Thrown when a request is throttled.',
+                    'class' => 'TooManyRequestsException',
+                ),
+                array(
+                    'reason' => 'Thrown when the service encounters an error during processing the request.',
+                    'class' => 'InternalErrorException',
+                ),
+            ),
+        ),
+        'UnlinkDeveloperIdentity' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AWSCognitoIdentityService.UnlinkDeveloperIdentity',
+                ),
+                'IdentityId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 50,
+                ),
+                'IdentityPoolId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 50,
+                ),
+                'DeveloperProviderName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 128,
+                ),
+                'DeveloperUserIdentifier' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Thrown for missing or bad input parameter(s).',
+                    'class' => 'InvalidParameterException',
+                ),
+                array(
+                    'reason' => 'Thrown when the requested resource (for example, a dataset or record) does not exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'Thrown when a user is not authorized to access the requested resource.',
+                    'class' => 'NotAuthorizedException',
+                ),
+                array(
+                    'reason' => 'Thrown when a user tries to use a login which is already linked to another account.',
+                    'class' => 'ResourceConflictException',
+                ),
+                array(
+                    'reason' => 'Thrown when a request is throttled.',
+                    'class' => 'TooManyRequestsException',
+                ),
+                array(
+                    'reason' => 'Thrown when the service encounters an error during processing the request.',
+                    'class' => 'InternalErrorException',
+                ),
+            ),
+        ),
         'UnlinkIdentity' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -511,7 +838,7 @@ return array (
                     'additionalProperties' => array(
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 1024,
+                        'maxLength' => 2048,
                         'data' => array(
                             'shape_name' => 'IdentityProviderName',
                             'key_pattern' => '/[\\w._-]+/',
@@ -611,6 +938,22 @@ return array (
                         ),
                     ),
                 ),
+                'DeveloperProviderName' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 128,
+                ),
+                'OpenIdConnectProviderARNs' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'OIDCProviderARN',
+                        'type' => 'string',
+                        'minLength' => 20,
+                        'maxLength' => 2048,
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -664,6 +1007,18 @@ return array (
                         'type' => 'string',
                     ),
                 ),
+                'DeveloperProviderName' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'OpenIdConnectProviderARNs' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'OIDCProviderARN',
+                        'type' => 'string',
+                    ),
+                ),
             ),
         ),
         'EmptyOutput' => array(
@@ -681,6 +1036,20 @@ return array (
             ),
         ),
         'GetOpenIdTokenResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'IdentityId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'Token' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'GetOpenIdTokenForDeveloperIdentityResponse' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
@@ -749,6 +1118,38 @@ return array (
                     ),
                 ),
                 'NextToken' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'LookupDeveloperIdentityResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'IdentityId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'DeveloperUserIdentifierList' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'DeveloperUserIdentifier',
+                        'type' => 'string',
+                    ),
+                ),
+                'NextToken' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'MergeDeveloperIdentitiesResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'IdentityId' => array(
                     'type' => 'string',
                     'location' => 'json',
                 ),

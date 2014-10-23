@@ -5,6 +5,7 @@ CHANGELOG
 ------------------
 
 * Updated AWS Identity and Access Management (IAM) to the latest version.
+* Updated Amazon Cognito Identity client to the latest version.
 
 2.7.1 (2014-10-16)
 ------------------

@@ -21,8 +21,12 @@ use Symfony\Component\EventDispatcher\Event;
  * @method Model describeIdentityPool(array $args = array()) {@command CognitoIdentity DescribeIdentityPool}
  * @method Model getId(array $args = array()) {@command CognitoIdentity GetId}
  * @method Model getOpenIdToken(array $args = array()) {@command CognitoIdentity GetOpenIdToken}
+ * @method Model getOpenIdTokenForDeveloperIdentity(array $args = array()) {@command CognitoIdentity GetOpenIdTokenForDeveloperIdentity}
  * @method Model listIdentities(array $args = array()) {@command CognitoIdentity ListIdentities}
  * @method Model listIdentityPools(array $args = array()) {@command CognitoIdentity ListIdentityPools}
+ * @method Model lookupDeveloperIdentity(array $args = array()) {@command CognitoIdentity LookupDeveloperIdentity}
+ * @method Model mergeDeveloperIdentities(array $args = array()) {@command CognitoIdentity MergeDeveloperIdentities}
+ * @method Model unlinkDeveloperIdentity(array $args = array()) {@command CognitoIdentity UnlinkDeveloperIdentity}
  * @method Model unlinkIdentity(array $args = array()) {@command CognitoIdentity UnlinkIdentity}
  * @method Model updateIdentityPool(array $args = array()) {@command CognitoIdentity UpdateIdentityPool}
  *
