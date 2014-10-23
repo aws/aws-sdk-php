@@ -20,7 +20,7 @@ isset($argv[1]) or die('Usage php gh-release.php X.Y.Z');
 $tag = $argv[1];
 
 // Grab and validate the tag annotation
-chdir("..");
+chdir(dirname(__DIR__));
 $message = `chag contents -t "$tag"` or die('Chag could not find or parse the tag');
 
 // Create a GitHub client.
