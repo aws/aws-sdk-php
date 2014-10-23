@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+2.7.2 (TBD)
+------------------
+
+* Updated AWS Identity and Access Management (IAM) to the latest version.
+
 2.7.1 (2014-10-16)
 ------------------
 

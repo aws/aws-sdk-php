@@ -26,6 +26,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
 /**
  * Client to interact with AWS Identity and Access Management
  *
+ * @method Model addClientIDToOpenIDConnectProvider(array $args = array()) {@command Iam AddClientIDToOpenIDConnectProvider}
  * @method Model addRoleToInstanceProfile(array $args = array()) {@command Iam AddRoleToInstanceProfile}
  * @method Model addUserToGroup(array $args = array()) {@command Iam AddUserToGroup}
  * @method Model changePassword(array $args = array()) {@command Iam ChangePassword}
@@ -34,6 +35,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model createGroup(array $args = array()) {@command Iam CreateGroup}
  * @method Model createInstanceProfile(array $args = array()) {@command Iam CreateInstanceProfile}
  * @method Model createLoginProfile(array $args = array()) {@command Iam CreateLoginProfile}
+ * @method Model createOpenIDConnectProvider(array $args = array()) {@command Iam CreateOpenIDConnectProvider}
  * @method Model createRole(array $args = array()) {@command Iam CreateRole}
  * @method Model createSAMLProvider(array $args = array()) {@command Iam CreateSAMLProvider}
  * @method Model createUser(array $args = array()) {@command Iam CreateUser}
@@ -46,6 +48,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model deleteGroupPolicy(array $args = array()) {@command Iam DeleteGroupPolicy}
  * @method Model deleteInstanceProfile(array $args = array()) {@command Iam DeleteInstanceProfile}
  * @method Model deleteLoginProfile(array $args = array()) {@command Iam DeleteLoginProfile}
+ * @method Model deleteOpenIDConnectProvider(array $args = array()) {@command Iam DeleteOpenIDConnectProvider}
  * @method Model deleteRole(array $args = array()) {@command Iam DeleteRole}
  * @method Model deleteRolePolicy(array $args = array()) {@command Iam DeleteRolePolicy}
  * @method Model deleteSAMLProvider(array $args = array()) {@command Iam DeleteSAMLProvider}
@@ -63,6 +66,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model getGroupPolicy(array $args = array()) {@command Iam GetGroupPolicy}
  * @method Model getInstanceProfile(array $args = array()) {@command Iam GetInstanceProfile}
  * @method Model getLoginProfile(array $args = array()) {@command Iam GetLoginProfile}
+ * @method Model getOpenIDConnectProvider(array $args = array()) {@command Iam GetOpenIDConnectProvider}
  * @method Model getRole(array $args = array()) {@command Iam GetRole}
  * @method Model getRolePolicy(array $args = array()) {@command Iam GetRolePolicy}
  * @method Model getSAMLProvider(array $args = array()) {@command Iam GetSAMLProvider}
@@ -77,6 +81,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model listInstanceProfiles(array $args = array()) {@command Iam ListInstanceProfiles}
  * @method Model listInstanceProfilesForRole(array $args = array()) {@command Iam ListInstanceProfilesForRole}
  * @method Model listMFADevices(array $args = array()) {@command Iam ListMFADevices}
+ * @method Model listOpenIDConnectProviders(array $args = array()) {@command Iam ListOpenIDConnectProviders}
  * @method Model listRolePolicies(array $args = array()) {@command Iam ListRolePolicies}
  * @method Model listRoles(array $args = array()) {@command Iam ListRoles}
  * @method Model listSAMLProviders(array $args = array()) {@command Iam ListSAMLProviders}
@@ -88,6 +93,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model putGroupPolicy(array $args = array()) {@command Iam PutGroupPolicy}
  * @method Model putRolePolicy(array $args = array()) {@command Iam PutRolePolicy}
  * @method Model putUserPolicy(array $args = array()) {@command Iam PutUserPolicy}
+ * @method Model removeClientIDFromOpenIDConnectProvider(array $args = array()) {@command Iam RemoveClientIDFromOpenIDConnectProvider}
  * @method Model removeRoleFromInstanceProfile(array $args = array()) {@command Iam RemoveRoleFromInstanceProfile}
  * @method Model removeUserFromGroup(array $args = array()) {@command Iam RemoveUserFromGroup}
  * @method Model resyncMFADevice(array $args = array()) {@command Iam ResyncMFADevice}
@@ -96,6 +102,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model updateAssumeRolePolicy(array $args = array()) {@command Iam UpdateAssumeRolePolicy}
  * @method Model updateGroup(array $args = array()) {@command Iam UpdateGroup}
  * @method Model updateLoginProfile(array $args = array()) {@command Iam UpdateLoginProfile}
+ * @method Model updateOpenIDConnectProviderThumbprint(array $args = array()) {@command Iam UpdateOpenIDConnectProviderThumbprint}
  * @method Model updateSAMLProvider(array $args = array()) {@command Iam UpdateSAMLProvider}
  * @method Model updateServerCertificate(array $args = array()) {@command Iam UpdateServerCertificate}
  * @method Model updateSigningCertificate(array $args = array()) {@command Iam UpdateSigningCertificate}
