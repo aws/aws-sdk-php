@@ -24,7 +24,6 @@ use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\RuntimeException;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Signature\SignatureV4;
-use Aws\Common\Signature\SignatureInterface;
 use Aws\Common\Model\MultipartUpload\AbstractTransfer;
 use Aws\S3\Exception\AccessDeniedException;
 use Aws\S3\Exception\Parser\S3ExceptionParser;
@@ -266,11 +265,16 @@ class S3Client extends AbstractClient
     {
         $currentValue = isset($config[Options::SIGNATURE]) ? $config[Options::SIGNATURE] : null;
 
+        // Force v4 if no value is provided, a region is in the config, and
+        // the region starts with "cn-" or "eu-central-".
+        $requiresV4 = !$currentValue
+            && isset($config['region'])
+            && (strpos($config['region'], 'eu-central-') === 0
+                || strpos($config['region'], 'cn-') === 0);
+
         // Use the Amazon S3 signature V4 when the value is set to "v4" or when
         // the value is not set and the region starts with "cn-".
-        if ($currentValue == 'v4' ||
-            (!$currentValue && isset($config['region']) && substr($config['region'], 0, 3) == 'cn-')
-        ) {
+        if ($currentValue == 'v4' || $requiresV4) {
             // Force SignatureV4 for specific regions or if specified in the config
             $currentValue = new S3SignatureV4('s3');
         } elseif (!$currentValue || $currentValue == 's3') {

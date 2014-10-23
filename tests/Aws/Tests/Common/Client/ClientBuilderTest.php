@@ -125,7 +125,7 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage No regions found in the
+     * @expectedExceptionMessage A region is required
      */
     public function testEnsuresDescriptionsContainRegions()
     {
