@@ -177,6 +177,38 @@ for specific error codes. This is functionally equivalent to catching different
 exception classes, but provides that function without adding bloat to the SDK or
 setting false expectations.
 
+### Some API results have changed
+
+In order to provide consistency in how the SDK parses the result of an API
+operation, Amazon ElastiCache, Amazon RDS, and Amazon RedShift now have a
+wrapping element on each API response. The wrapping element in each operation
+is named after the name of the operation followed by the string "Result".
+
+For example, calling Amazon ElastiCache's
+[DescribeCacheClusters](http://docs.aws.amazon.com/AmazonElastiCache/latest/APIReference/API_DescribeCacheClusters.html)
+operation will now return a result object that has an outermost wrapping
+element of "DescribeCacheClustersResult" that contains the "CacheClusters"
+key.
+
+```php
+$client = Aws\ElastiCache\ElastiCacheClient::factory([
+    'region'  => 'us-west-1',
+    'version' => '2014-07-15'
+]);
+
+// Version 2:
+$result = $client->describeCacheClusters();
+foreach ($result['CacheClusters'] as $cluster) {
+    /* ... */
+}
+
+// Version 3:
+$result = $client->describeCacheClusters();
+foreach ($result['DescribeCacheClustersResult']['CacheClusters'] as $cluster) {
+   /* ... */
+};
+```
+
 ### @TODO
 
 More will be added to the UPGRADING guide soon about:
