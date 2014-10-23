@@ -45,12 +45,12 @@ class RulesEndpointProviderTest extends \PHPUnit_Framework_TestCase
                 ['endpoint' => 'https://foo.bar.amazonaws.com']
             ],
             [
-                ['region' => 'us-gov-west-3', 'service' => 'iam'],
+                ['region' => 'us-gov-west-1', 'service' => 'iam'],
                 ['endpoint' => 'https://iam.us-gov.amazonaws.com']
             ],
             [
-                ['region' => 'us-gov-west-10', 'service' => 's3'],
-                ['endpoint' => 'https://s3-us-gov-west-10.amazonaws.com']
+                ['region' => 'us-gov-west-1', 'service' => 's3'],
+                ['endpoint' => 'https://s3-us-gov-west-1.amazonaws.com']
             ],
             [
                 ['region' => 'us-gov-baz', 'service' => 'foo'],
@@ -81,22 +81,6 @@ class RulesEndpointProviderTest extends \PHPUnit_Framework_TestCase
         // Use the default endpoints file
         $p = RulesEndpointProvider::fromDefaults();
         $this->assertEquals($output, call_user_func($p, $input));
-    }
-
-    public function testCanLoadFromJson()
-    {
-        $f = sys_get_temp_dir() . '/test.json';
-        file_put_contents($f, '[]');
-        RulesEndpointProvider::fromJsonFile($f);
-        unlink($f);
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testEnsuresJsonFileExists()
-    {
-        RulesEndpointProvider::fromJsonFile('/does/not/exist.json');
     }
 
     /**
