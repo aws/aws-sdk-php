@@ -1,11 +1,11 @@
 <?php return [
   'metadata' => [
-    'apiVersion' => '2014-06-15',
+    'apiVersion' => '2014-09-01',
     'endpointPrefix' => 'ec2',
     'serviceAbbreviation' => 'Amazon EC2',
     'serviceFullName' => 'Amazon Elastic Compute Cloud',
-    'signatureVersion' => 'v2',
-    'xmlNamespace' => 'http://ec2.amazonaws.com/doc/2014-06-15',
+    'signatureVersion' => 'v4',
+    'xmlNamespace' => 'http://ec2.amazonaws.com/doc/2014-09-01',
     'protocol' => 'ec2',
   ],
   'operations' => [
@@ -5049,6 +5049,14 @@
           'shape' => 'FilterList',
           'locationName' => 'Filter',
         ],
+        'NextToken' => [
+          'shape' => 'String',
+          'locationName' => 'nextToken',
+        ],
+        'MaxResults' => [
+          'shape' => 'Integer',
+          'locationName' => 'maxResults',
+        ],
       ],
     ],
     'DescribeVolumesResult' => [
@@ -5057,6 +5065,10 @@
         'Volumes' => [
           'shape' => 'VolumeList',
           'locationName' => 'volumeSet',
+        ],
+        'NextToken' => [
+          'shape' => 'String',
+          'locationName' => 'nextToken',
         ],
       ],
     ],
@@ -6055,6 +6067,10 @@
           'shape' => 'SecurityGroupStringList',
           'locationName' => 'GroupName',
         ],
+        'GroupIds' => [
+          'shape' => 'SecurityGroupIdStringList',
+          'locationName' => 'GroupId',
+        ],
         'AdditionalInfo' => [
           'shape' => 'String',
           'locationName' => 'additionalInfo',
@@ -6680,6 +6696,10 @@
         'Status' => [
           'shape' => 'NetworkInterfaceStatus',
           'locationName' => 'status',
+        ],
+        'MacAddress' => [
+          'shape' => 'String',
+          'locationName' => 'macAddress',
         ],
         'PrivateIpAddress' => [
           'shape' => 'String',

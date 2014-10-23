@@ -58,7 +58,7 @@
     ],
     '__VolumeStatus' => [
       'operation' => 'DescribeVolumes',
-      'acceptor_path' => 'VolumeStatuses[].VolumeStatus.Status',
+      'acceptor_path' => 'Volumes[].State',
     ],
     'VolumeAvailable' => [
       'extends' => '__VolumeStatus',
@@ -141,6 +141,20 @@
     'ConversionTaskDeleted' => [
       'extends' => '__CustomerGatewayState',
       'success_value' => 'deleted',
+    ],
+    '__SpotInstanceRequestState' => [
+      'operation' => 'DescribeSpotInstanceRequests',
+      'acceptor.path' => 'SpotInstanceRequests[].Status.Code',
+    ],
+    'SpotInstanceRequestFulfilled' => [
+      'extends' => '__SpotInstanceRequestState',
+      'success.value' => 'fulfilled',
+      'failure.value' => [
+        'schedule-expired',
+        'canceled-before-fulfillment',
+        'bad-parameters',
+        'system-error',
+      ],
     ],
   ],
 ];

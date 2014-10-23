@@ -274,6 +274,68 @@
         ],
       ],
     ],
+    'GetOpenIdTokenForDeveloperIdentity' => [
+      'name' => 'GetOpenIdTokenForDeveloperIdentity',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'GetOpenIdTokenForDeveloperIdentityInput',
+      ],
+      'output' => [
+        'shape' => 'GetOpenIdTokenForDeveloperIdentityResponse',
+      ],
+      'errors' => [
+        [
+          'shape' => 'InvalidParameterException',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceNotFoundException',
+          'error' => [
+            'httpStatusCode' => 404,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'NotAuthorizedException',
+          'error' => [
+            'httpStatusCode' => 403,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceConflictException',
+          'error' => [
+            'httpStatusCode' => 409,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'TooManyRequestsException',
+          'error' => [
+            'httpStatusCode' => 429,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InternalErrorException',
+          'exception' => true,
+          'fault' => true,
+        ],
+        [
+          'shape' => 'DeveloperUserAlreadyRegisteredException',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
     'ListIdentities' => [
       'name' => 'ListIdentities',
       'http' => [
@@ -346,6 +408,168 @@
           'shape' => 'NotAuthorizedException',
           'error' => [
             'httpStatusCode' => 403,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'TooManyRequestsException',
+          'error' => [
+            'httpStatusCode' => 429,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InternalErrorException',
+          'exception' => true,
+          'fault' => true,
+        ],
+      ],
+    ],
+    'LookupDeveloperIdentity' => [
+      'name' => 'LookupDeveloperIdentity',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'LookupDeveloperIdentityInput',
+      ],
+      'output' => [
+        'shape' => 'LookupDeveloperIdentityResponse',
+      ],
+      'errors' => [
+        [
+          'shape' => 'InvalidParameterException',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceNotFoundException',
+          'error' => [
+            'httpStatusCode' => 404,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'NotAuthorizedException',
+          'error' => [
+            'httpStatusCode' => 403,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceConflictException',
+          'error' => [
+            'httpStatusCode' => 409,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'TooManyRequestsException',
+          'error' => [
+            'httpStatusCode' => 429,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InternalErrorException',
+          'exception' => true,
+          'fault' => true,
+        ],
+      ],
+    ],
+    'MergeDeveloperIdentities' => [
+      'name' => 'MergeDeveloperIdentities',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'MergeDeveloperIdentitiesInput',
+      ],
+      'output' => [
+        'shape' => 'MergeDeveloperIdentitiesResponse',
+      ],
+      'errors' => [
+        [
+          'shape' => 'InvalidParameterException',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceNotFoundException',
+          'error' => [
+            'httpStatusCode' => 404,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'NotAuthorizedException',
+          'error' => [
+            'httpStatusCode' => 403,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceConflictException',
+          'error' => [
+            'httpStatusCode' => 409,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'TooManyRequestsException',
+          'error' => [
+            'httpStatusCode' => 429,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InternalErrorException',
+          'exception' => true,
+          'fault' => true,
+        ],
+      ],
+    ],
+    'UnlinkDeveloperIdentity' => [
+      'name' => 'UnlinkDeveloperIdentity',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'UnlinkDeveloperIdentityInput',
+      ],
+      'errors' => [
+        [
+          'shape' => 'InvalidParameterException',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceNotFoundException',
+          'error' => [
+            'httpStatusCode' => 404,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'NotAuthorizedException',
+          'error' => [
+            'httpStatusCode' => 403,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceConflictException',
+          'error' => [
+            'httpStatusCode' => 409,
           ],
           'exception' => true,
         ],
@@ -494,6 +718,12 @@
         'SupportedLoginProviders' => [
           'shape' => 'IdentityProviders',
         ],
+        'DeveloperProviderName' => [
+          'shape' => 'DeveloperProviderName',
+        ],
+        'OpenIdConnectProviderARNs' => [
+          'shape' => 'OIDCProviderList',
+        ],
       ],
     ],
     'DeleteIdentityPoolInput' => [
@@ -516,6 +746,33 @@
         'IdentityPoolId' => [
           'shape' => 'IdentityPoolId',
         ],
+      ],
+    ],
+    'DeveloperProviderName' => [
+      'type' => 'string',
+      'min' => 1,
+      'max' => 128,
+      'pattern' => '[\\w._-]+',
+    ],
+    'DeveloperUserAlreadyRegisteredException' => [
+      'type' => 'structure',
+      'members' => [
+        'message' => [
+          'shape' => 'String',
+        ],
+      ],
+      'error' => [
+        'httpStatusCode' => 400,
+      ],
+      'exception' => true,
+    ],
+    'DeveloperUserIdentifier' => [
+      'type' => 'string',
+    ],
+    'DeveloperUserIdentifierList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'DeveloperUserIdentifier',
       ],
     ],
     'GetIdInput' => [
@@ -541,6 +798,38 @@
       'members' => [
         'IdentityId' => [
           'shape' => 'IdentityId',
+        ],
+      ],
+    ],
+    'GetOpenIdTokenForDeveloperIdentityInput' => [
+      'type' => 'structure',
+      'required' => [
+        'IdentityPoolId',
+        'Logins',
+      ],
+      'members' => [
+        'IdentityPoolId' => [
+          'shape' => 'IdentityPoolId',
+        ],
+        'IdentityId' => [
+          'shape' => 'IdentityId',
+        ],
+        'Logins' => [
+          'shape' => 'LoginsMap',
+        ],
+        'TokenDuration' => [
+          'shape' => 'TokenDuration',
+        ],
+      ],
+    ],
+    'GetOpenIdTokenForDeveloperIdentityResponse' => [
+      'type' => 'structure',
+      'members' => [
+        'IdentityId' => [
+          'shape' => 'IdentityId',
+        ],
+        'Token' => [
+          'shape' => 'OIDCToken',
         ],
       ],
     ],
@@ -612,6 +901,12 @@
         'SupportedLoginProviders' => [
           'shape' => 'IdentityProviders',
         ],
+        'DeveloperProviderName' => [
+          'shape' => 'DeveloperProviderName',
+        ],
+        'OpenIdConnectProviderARNs' => [
+          'shape' => 'OIDCProviderList',
+        ],
       ],
     ],
     'IdentityPoolId' => [
@@ -661,7 +956,7 @@
     'IdentityProviderToken' => [
       'type' => 'string',
       'min' => 1,
-      'max' => 1024,
+      'max' => 2048,
       'pattern' => '[\\S]+',
     ],
     'IdentityProviders' => [
@@ -672,7 +967,7 @@
       'value' => [
         'shape' => 'IdentityProviderId',
       ],
-      'max' => 3,
+      'max' => 10,
     ],
     'InternalErrorException' => [
       'type' => 'structure',
@@ -779,7 +1074,75 @@
       'value' => [
         'shape' => 'IdentityProviderToken',
       ],
-      'max' => 3,
+      'max' => 10,
+    ],
+    'LookupDeveloperIdentityInput' => [
+      'type' => 'structure',
+      'required' => [
+        'IdentityPoolId',
+      ],
+      'members' => [
+        'IdentityPoolId' => [
+          'shape' => 'IdentityPoolId',
+        ],
+        'IdentityId' => [
+          'shape' => 'IdentityId',
+        ],
+        'DeveloperUserIdentifier' => [
+          'shape' => 'DeveloperUserIdentifier',
+        ],
+        'MaxResults' => [
+          'shape' => 'QueryLimit',
+        ],
+        'NextToken' => [
+          'shape' => 'PaginationKey',
+        ],
+      ],
+    ],
+    'LookupDeveloperIdentityResponse' => [
+      'type' => 'structure',
+      'members' => [
+        'IdentityId' => [
+          'shape' => 'IdentityId',
+        ],
+        'DeveloperUserIdentifierList' => [
+          'shape' => 'DeveloperUserIdentifierList',
+        ],
+        'NextToken' => [
+          'shape' => 'PaginationKey',
+        ],
+      ],
+    ],
+    'MergeDeveloperIdentitiesInput' => [
+      'type' => 'structure',
+      'required' => [
+        'SourceUserIdentifier',
+        'DestinationUserIdentifier',
+        'DeveloperProviderName',
+        'IdentityPoolId',
+      ],
+      'members' => [
+        'SourceUserIdentifier' => [
+          'shape' => 'DeveloperUserIdentifier',
+        ],
+        'DestinationUserIdentifier' => [
+          'shape' => 'DeveloperUserIdentifier',
+        ],
+        'DeveloperProviderName' => [
+          'shape' => 'DeveloperProviderName',
+        ],
+        'IdentityPoolId' => [
+          'shape' => 'IdentityPoolId',
+        ],
+      ],
+    ],
+    'MergeDeveloperIdentitiesResponse' => [
+      'type' => 'structure',
+      'members' => [
+        'IdentityId' => [
+          'shape' => 'IdentityId',
+        ],
+      ],
     ],
     'NotAuthorizedException' => [
       'type' => 'structure',
@@ -793,12 +1156,24 @@
       ],
       'exception' => true,
     ],
+    'OIDCProviderARN' => [
+      'type' => 'string',
+      'min' => 20,
+      'max' => 2048,
+    ],
+    'OIDCProviderList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'OIDCProviderARN',
+      ],
+    ],
     'OIDCToken' => [
       'type' => 'string',
     ],
     'PaginationKey' => [
       'type' => 'string',
       'min' => 1,
+      'pattern' => '[\\S]+',
     ],
     'QueryLimit' => [
       'type' => 'integer',
@@ -832,6 +1207,11 @@
     'String' => [
       'type' => 'string',
     ],
+    'TokenDuration' => [
+      'type' => 'long',
+      'min' => 1,
+      'max' => 86400,
+    ],
     'TooManyRequestsException' => [
       'type' => 'structure',
       'members' => [
@@ -843,6 +1223,29 @@
         'httpStatusCode' => 429,
       ],
       'exception' => true,
+    ],
+    'UnlinkDeveloperIdentityInput' => [
+      'type' => 'structure',
+      'required' => [
+        'IdentityId',
+        'IdentityPoolId',
+        'DeveloperProviderName',
+        'DeveloperUserIdentifier',
+      ],
+      'members' => [
+        'IdentityId' => [
+          'shape' => 'IdentityId',
+        ],
+        'IdentityPoolId' => [
+          'shape' => 'IdentityPoolId',
+        ],
+        'DeveloperProviderName' => [
+          'shape' => 'DeveloperProviderName',
+        ],
+        'DeveloperUserIdentifier' => [
+          'shape' => 'DeveloperUserIdentifier',
+        ],
+      ],
     ],
     'UnlinkIdentityInput' => [
       'type' => 'structure',

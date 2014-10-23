@@ -10,6 +10,45 @@
     'protocol' => 'query',
   ],
   'operations' => [
+    'AddClientIDToOpenIDConnectProvider' => [
+      'name' => 'AddClientIDToOpenIDConnectProvider',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'AddClientIDToOpenIDConnectProviderRequest',
+      ],
+      'errors' => [
+        [
+          'shape' => 'InvalidInputException',
+          'error' => [
+            'code' => 'InvalidInput',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'NoSuchEntityException',
+          'error' => [
+            'code' => 'NoSuchEntity',
+            'httpStatusCode' => 404,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'LimitExceededException',
+          'error' => [
+            'code' => 'LimitExceeded',
+            'httpStatusCode' => 409,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
     'AddRoleToInstanceProfile' => [
       'name' => 'AddRoleToInstanceProfile',
       'http' => [
@@ -314,6 +353,49 @@
           'error' => [
             'code' => 'PasswordPolicyViolation',
             'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'LimitExceededException',
+          'error' => [
+            'code' => 'LimitExceeded',
+            'httpStatusCode' => 409,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
+    'CreateOpenIDConnectProvider' => [
+      'name' => 'CreateOpenIDConnectProvider',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'CreateOpenIDConnectProviderRequest',
+      ],
+      'output' => [
+        'shape' => 'CreateOpenIDConnectProviderResponse',
+        'resultWrapper' => 'CreateOpenIDConnectProviderResult',
+      ],
+      'errors' => [
+        [
+          'shape' => 'InvalidInputException',
+          'error' => [
+            'code' => 'InvalidInput',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'EntityAlreadyExistsException',
+          'error' => [
+            'code' => 'EntityAlreadyExists',
+            'httpStatusCode' => 409,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -759,6 +841,36 @@
           'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
+    'DeleteOpenIDConnectProvider' => [
+      'name' => 'DeleteOpenIDConnectProvider',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'DeleteOpenIDConnectProviderRequest',
+      ],
+      'errors' => [
+        [
+          'shape' => 'InvalidInputException',
+          'error' => [
+            'code' => 'InvalidInput',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'NoSuchEntityException',
+          'error' => [
+            'code' => 'NoSuchEntity',
+            'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -1302,6 +1414,40 @@
         ],
       ],
     ],
+    'GetOpenIDConnectProvider' => [
+      'name' => 'GetOpenIDConnectProvider',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'GetOpenIDConnectProviderRequest',
+      ],
+      'output' => [
+        'shape' => 'GetOpenIDConnectProviderResponse',
+        'resultWrapper' => 'GetOpenIDConnectProviderResult',
+      ],
+      'errors' => [
+        [
+          'shape' => 'InvalidInputException',
+          'error' => [
+            'code' => 'InvalidInput',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'NoSuchEntityException',
+          'error' => [
+            'code' => 'NoSuchEntity',
+            'httpStatusCode' => 404,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
     'GetRole' => [
       'name' => 'GetRole',
       'http' => [
@@ -1628,6 +1774,20 @@
         ],
       ],
     ],
+    'ListOpenIDConnectProviders' => [
+      'name' => 'ListOpenIDConnectProviders',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'ListOpenIDConnectProvidersRequest',
+      ],
+      'output' => [
+        'shape' => 'ListOpenIDConnectProvidersResponse',
+        'resultWrapper' => 'ListOpenIDConnectProvidersResult',
+      ],
+    ],
     'ListRolePolicies' => [
       'name' => 'ListRolePolicies',
       'http' => [
@@ -1874,6 +2034,36 @@
           'shape' => 'MalformedPolicyDocumentException',
           'error' => [
             'code' => 'MalformedPolicyDocument',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'NoSuchEntityException',
+          'error' => [
+            'code' => 'NoSuchEntity',
+            'httpStatusCode' => 404,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
+    'RemoveClientIDFromOpenIDConnectProvider' => [
+      'name' => 'RemoveClientIDFromOpenIDConnectProvider',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'RemoveClientIDFromOpenIDConnectProviderRequest',
+      ],
+      'errors' => [
+        [
+          'shape' => 'InvalidInputException',
+          'error' => [
+            'code' => 'InvalidInput',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
@@ -2178,6 +2368,36 @@
           'error' => [
             'code' => 'LimitExceeded',
             'httpStatusCode' => 409,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
+    'UpdateOpenIDConnectProviderThumbprint' => [
+      'name' => 'UpdateOpenIDConnectProviderThumbprint',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'UpdateOpenIDConnectProviderThumbprintRequest',
+      ],
+      'errors' => [
+        [
+          'shape' => 'InvalidInputException',
+          'error' => [
+            'code' => 'InvalidInput',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'NoSuchEntityException',
+          'error' => [
+            'code' => 'NoSuchEntity',
+            'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -2511,6 +2731,21 @@
         ],
       ],
     ],
+    'AddClientIDToOpenIDConnectProviderRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'OpenIDConnectProviderArn',
+        'ClientID',
+      ],
+      'members' => [
+        'OpenIDConnectProviderArn' => [
+          'shape' => 'arnType',
+        ],
+        'ClientID' => [
+          'shape' => 'clientIDType',
+        ],
+      ],
+    ],
     'AddRoleToInstanceProfileRequest' => [
       'type' => 'structure',
       'required' => [
@@ -2666,6 +2901,32 @@
       'members' => [
         'LoginProfile' => [
           'shape' => 'LoginProfile',
+        ],
+      ],
+    ],
+    'CreateOpenIDConnectProviderRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'Url',
+        'ThumbprintList',
+      ],
+      'members' => [
+        'Url' => [
+          'shape' => 'OpenIDConnectProviderUrlType',
+        ],
+        'ClientIDList' => [
+          'shape' => 'clientIDListType',
+        ],
+        'ThumbprintList' => [
+          'shape' => 'thumbprintListType',
+        ],
+      ],
+    ],
+    'CreateOpenIDConnectProviderResponse' => [
+      'type' => 'structure',
+      'members' => [
+        'OpenIDConnectProviderArn' => [
+          'shape' => 'arnType',
         ],
       ],
     ],
@@ -2909,6 +3170,17 @@
       'members' => [
         'UserName' => [
           'shape' => 'userNameType',
+        ],
+      ],
+    ],
+    'DeleteOpenIDConnectProviderRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'OpenIDConnectProviderArn',
+      ],
+      'members' => [
+        'OpenIDConnectProviderArn' => [
+          'shape' => 'arnType',
         ],
       ],
     ],
@@ -3233,6 +3505,34 @@
       'members' => [
         'LoginProfile' => [
           'shape' => 'LoginProfile',
+        ],
+      ],
+    ],
+    'GetOpenIDConnectProviderRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'OpenIDConnectProviderArn',
+      ],
+      'members' => [
+        'OpenIDConnectProviderArn' => [
+          'shape' => 'arnType',
+        ],
+      ],
+    ],
+    'GetOpenIDConnectProviderResponse' => [
+      'type' => 'structure',
+      'members' => [
+        'Url' => [
+          'shape' => 'OpenIDConnectProviderUrlType',
+        ],
+        'ClientIDList' => [
+          'shape' => 'clientIDListType',
+        ],
+        'ThumbprintList' => [
+          'shape' => 'thumbprintListType',
+        ],
+        'CreateDate' => [
+          'shape' => 'dateType',
         ],
       ],
     ],
@@ -3788,6 +4088,19 @@
         ],
       ],
     ],
+    'ListOpenIDConnectProvidersRequest' => [
+      'type' => 'structure',
+      'members' => [
+      ],
+    ],
+    'ListOpenIDConnectProvidersResponse' => [
+      'type' => 'structure',
+      'members' => [
+        'OpenIDConnectProviderList' => [
+          'shape' => 'OpenIDConnectProviderListType',
+        ],
+      ],
+    ],
     'ListRolePoliciesRequest' => [
       'type' => 'structure',
       'required' => [
@@ -4103,6 +4416,25 @@
       ],
       'exception' => true,
     ],
+    'OpenIDConnectProviderListEntry' => [
+      'type' => 'structure',
+      'members' => [
+        'Arn' => [
+          'shape' => 'arnType',
+        ],
+      ],
+    ],
+    'OpenIDConnectProviderListType' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'OpenIDConnectProviderListEntry',
+      ],
+    ],
+    'OpenIDConnectProviderUrlType' => [
+      'type' => 'string',
+      'min' => 1,
+      'max' => 255,
+    ],
     'PasswordPolicy' => [
       'type' => 'structure',
       'members' => [
@@ -4206,6 +4538,21 @@
         ],
         'PolicyDocument' => [
           'shape' => 'policyDocumentType',
+        ],
+      ],
+    ],
+    'RemoveClientIDFromOpenIDConnectProviderRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'OpenIDConnectProviderArn',
+        'ClientID',
+      ],
+      'members' => [
+        'OpenIDConnectProviderArn' => [
+          'shape' => 'arnType',
+        ],
+        'ClientID' => [
+          'shape' => 'clientIDType',
         ],
       ],
     ],
@@ -4515,6 +4862,21 @@
         ],
       ],
     ],
+    'UpdateOpenIDConnectProviderThumbprintRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'OpenIDConnectProviderArn',
+        'ThumbprintList',
+      ],
+      'members' => [
+        'OpenIDConnectProviderArn' => [
+          'shape' => 'arnType',
+        ],
+        'ThumbprintList' => [
+          'shape' => 'thumbprintListType',
+        ],
+      ],
+    ],
     'UpdateSAMLProviderRequest' => [
       'type' => 'structure',
       'required' => [
@@ -4673,6 +5035,9 @@
         'CreateDate' => [
           'shape' => 'dateType',
         ],
+        'PasswordLastUsed' => [
+          'shape' => 'dateType',
+        ],
       ],
     ],
     'VirtualMFADevice' => [
@@ -4775,6 +5140,17 @@
       'member' => [
         'shape' => 'SigningCertificate',
       ],
+    ],
+    'clientIDListType' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'clientIDType',
+      ],
+    ],
+    'clientIDType' => [
+      'type' => 'string',
+      'min' => 1,
+      'max' => 255,
     ],
     'credentialReportExpiredExceptionMessage' => [
       'type' => 'string',
@@ -5011,6 +5387,17 @@
     ],
     'summaryValueType' => [
       'type' => 'integer',
+    ],
+    'thumbprintListType' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'thumbprintType',
+      ],
+    ],
+    'thumbprintType' => [
+      'type' => 'string',
+      'min' => 40,
+      'max' => 40,
     ],
     'userListType' => [
       'type' => 'list',

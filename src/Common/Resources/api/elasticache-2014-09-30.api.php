@@ -1,10 +1,10 @@
 <?php return [
   'metadata' => [
-    'apiVersion' => '2014-07-15',
+    'apiVersion' => '2014-09-30',
     'endpointPrefix' => 'elasticache',
     'serviceFullName' => 'Amazon ElastiCache',
     'signatureVersion' => 'v4',
-    'xmlNamespace' => 'http://elasticache.amazonaws.com/doc/2014-07-15/',
+    'xmlNamespace' => 'http://elasticache.amazonaws.com/doc/2014-09-30/',
     'protocol' => 'query',
   ],
   'operations' => [
@@ -480,6 +480,78 @@
           'shape' => 'ReplicationGroupAlreadyExistsFault',
           'error' => [
             'code' => 'ReplicationGroupAlreadyExists',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InsufficientCacheClusterCapacityFault',
+          'error' => [
+            'code' => 'InsufficientCacheClusterCapacity',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'CacheSecurityGroupNotFoundFault',
+          'error' => [
+            'code' => 'CacheSecurityGroupNotFound',
+            'httpStatusCode' => 404,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'CacheSubnetGroupNotFoundFault',
+          'error' => [
+            'code' => 'CacheSubnetGroupNotFoundFault',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ClusterQuotaForCustomerExceededFault',
+          'error' => [
+            'code' => 'ClusterQuotaForCustomerExceeded',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'NodeQuotaForClusterExceededFault',
+          'error' => [
+            'code' => 'NodeQuotaForClusterExceeded',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'NodeQuotaForCustomerExceededFault',
+          'error' => [
+            'code' => 'NodeQuotaForCustomerExceeded',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'CacheParameterGroupNotFoundFault',
+          'error' => [
+            'code' => 'CacheParameterGroupNotFound',
+            'httpStatusCode' => 404,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidVPCNetworkStateFault',
+          'error' => [
+            'code' => 'InvalidVPCNetworkStateFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
@@ -1658,10 +1730,37 @@
           'exception' => true,
         ],
         [
+          'shape' => 'InsufficientCacheClusterCapacityFault',
+          'error' => [
+            'code' => 'InsufficientCacheClusterCapacity',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
           'shape' => 'CacheClusterNotFoundFault',
           'error' => [
             'code' => 'CacheClusterNotFound',
             'httpStatusCode' => 404,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'NodeQuotaForClusterExceededFault',
+          'error' => [
+            'code' => 'NodeQuotaForClusterExceeded',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'NodeQuotaForCustomerExceededFault',
+          'error' => [
+            'code' => 'NodeQuotaForCustomerExceeded',
+            'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -1926,6 +2025,13 @@
     ],
   ],
   'shapes' => [
+    'AZMode' => [
+      'type' => 'string',
+      'enum' => [
+        'single-az',
+        'cross-az',
+      ],
+    ],
     'AuthorizationAlreadyExistsFault' => [
       'type' => 'structure',
       'members' => [
@@ -1967,6 +2073,15 @@
         ],
       ],
     ],
+    'AutomaticFailoverStatus' => [
+      'type' => 'string',
+      'enum' => [
+        'enabled',
+        'disabled',
+        'enabling',
+        'disabling',
+      ],
+    ],
     'AvailabilityZone' => [
       'type' => 'structure',
       'members' => [
@@ -1975,6 +2090,13 @@
         ],
       ],
       'wrapper' => true,
+    ],
+    'AvailabilityZonesList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'String',
+        'locationName' => 'AvailabilityZone',
+      ],
     ],
     'AwsQueryErrorMessage' => [
       'type' => 'string',
@@ -2561,6 +2683,15 @@
         'ReplicationGroupId' => [
           'shape' => 'String',
         ],
+        'AZMode' => [
+          'shape' => 'AZMode',
+        ],
+        'PreferredAvailabilityZone' => [
+          'shape' => 'String',
+        ],
+        'PreferredAvailabilityZones' => [
+          'shape' => 'PreferredAvailabilityZoneList',
+        ],
         'NumCacheNodes' => [
           'shape' => 'IntegerOptional',
         ],
@@ -2590,15 +2721,6 @@
         ],
         'SnapshotName' => [
           'shape' => 'String',
-        ],
-        'AZMode' => [
-          'shape' => 'String',
-        ],
-        'PreferredAvailabilityZone' => [
-          'shape' => 'String',
-        ],
-        'PreferredAvailabilityZones' => [
-          'shape' => 'PreferredAvailabilityZoneList',
         ],
         'PreferredMaintenanceWindow' => [
           'shape' => 'String',
@@ -2677,17 +2799,70 @@
       'type' => 'structure',
       'required' => [
         'ReplicationGroupId',
-        'PrimaryClusterId',
         'ReplicationGroupDescription',
       ],
       'members' => [
         'ReplicationGroupId' => [
           'shape' => 'String',
         ],
+        'ReplicationGroupDescription' => [
+          'shape' => 'String',
+        ],
         'PrimaryClusterId' => [
           'shape' => 'String',
         ],
-        'ReplicationGroupDescription' => [
+        'AutomaticFailoverEnabled' => [
+          'shape' => 'BooleanOptional',
+        ],
+        'NumCacheClusters' => [
+          'shape' => 'IntegerOptional',
+        ],
+        'PreferredCacheClusterAZs' => [
+          'shape' => 'AvailabilityZonesList',
+        ],
+        'CacheNodeType' => [
+          'shape' => 'String',
+        ],
+        'Engine' => [
+          'shape' => 'String',
+        ],
+        'EngineVersion' => [
+          'shape' => 'String',
+        ],
+        'CacheParameterGroupName' => [
+          'shape' => 'String',
+        ],
+        'CacheSubnetGroupName' => [
+          'shape' => 'String',
+        ],
+        'CacheSecurityGroupNames' => [
+          'shape' => 'CacheSecurityGroupNameList',
+        ],
+        'SecurityGroupIds' => [
+          'shape' => 'SecurityGroupIdsList',
+        ],
+        'SnapshotArns' => [
+          'shape' => 'SnapshotArnsList',
+        ],
+        'SnapshotName' => [
+          'shape' => 'String',
+        ],
+        'PreferredMaintenanceWindow' => [
+          'shape' => 'String',
+        ],
+        'Port' => [
+          'shape' => 'IntegerOptional',
+        ],
+        'NotificationTopicArn' => [
+          'shape' => 'String',
+        ],
+        'AutoMinorVersionUpgrade' => [
+          'shape' => 'BooleanOptional',
+        ],
+        'SnapshotRetentionLimit' => [
+          'shape' => 'IntegerOptional',
+        ],
+        'SnapshotWindow' => [
           'shape' => 'String',
         ],
       ],
@@ -3252,6 +3427,12 @@
         'CacheNodeIdsToRemove' => [
           'shape' => 'CacheNodeIdsList',
         ],
+        'AZMode' => [
+          'shape' => 'AZMode',
+        ],
+        'NewAvailabilityZones' => [
+          'shape' => 'PreferredAvailabilityZoneList',
+        ],
         'CacheSecurityGroupNames' => [
           'shape' => 'CacheSecurityGroupNameList',
         ],
@@ -3284,12 +3465,6 @@
         ],
         'SnapshotWindow' => [
           'shape' => 'String',
-        ],
-        'AZMode' => [
-          'shape' => 'String',
-        ],
-        'NewAvailabilityZones' => [
-          'shape' => 'PreferredAvailabilityZoneList',
         ],
       ],
     ],
@@ -3337,6 +3512,15 @@
         'ReplicationGroupDescription' => [
           'shape' => 'String',
         ],
+        'PrimaryClusterId' => [
+          'shape' => 'String',
+        ],
+        'SnapshottingClusterId' => [
+          'shape' => 'String',
+        ],
+        'AutomaticFailoverEnabled' => [
+          'shape' => 'BooleanOptional',
+        ],
         'CacheSecurityGroupNames' => [
           'shape' => 'CacheSecurityGroupNameList',
         ],
@@ -3364,16 +3548,10 @@
         'AutoMinorVersionUpgrade' => [
           'shape' => 'BooleanOptional',
         ],
-        'PrimaryClusterId' => [
-          'shape' => 'String',
-        ],
         'SnapshotRetentionLimit' => [
           'shape' => 'IntegerOptional',
         ],
         'SnapshotWindow' => [
-          'shape' => 'String',
-        ],
-        'SnapshottingClusterId' => [
           'shape' => 'String',
         ],
       ],
@@ -3541,6 +3719,13 @@
         'locationName' => 'Parameter',
       ],
     ],
+    'PendingAutomaticFailoverStatus' => [
+      'type' => 'string',
+      'enum' => [
+        'enabled',
+        'disabled',
+      ],
+    ],
     'PendingModifiedValues' => [
       'type' => 'structure',
       'members' => [
@@ -3637,6 +3822,9 @@
         'SnapshottingClusterId' => [
           'shape' => 'String',
         ],
+        'AutomaticFailover' => [
+          'shape' => 'AutomaticFailoverStatus',
+        ],
       ],
       'wrapper' => true,
     ],
@@ -3685,6 +3873,9 @@
       'members' => [
         'PrimaryClusterId' => [
           'shape' => 'String',
+        ],
+        'AutomaticFailoverStatus' => [
+          'shape' => 'PendingAutomaticFailoverStatus',
         ],
       ],
     ],
