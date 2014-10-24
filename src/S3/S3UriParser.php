@@ -10,6 +10,13 @@ class S3UriParser
 {
     private $pattern = '/^(.+\\.)?s3[.-]([a-z0-9-]+)\\./';
 
+    private static $defaultResult = [
+        'path_style' => true,
+        'bucket'     => null,
+        'key'        => null,
+        'region'     => null
+    ];
+
     /**
      * Parses a URL into an associative array of Amazon S3 data including:
      *
@@ -32,8 +39,7 @@ class S3UriParser
         }
 
         if (!preg_match($this->pattern, $url->getHost(), $matches)) {
-            throw new \InvalidArgumentException('Not a valid S3 endpoint: '
-                . $uri);
+            return $this->parseCustomEndpoint($url);
         }
 
         // Parse the URI based on the matched format (path / virtual)
@@ -42,10 +48,21 @@ class S3UriParser
             : $this->parseVirtualHosted($url, $matches);
 
         // Add the region if one was found and not the classic endpoint
-        if ($matches[2] == 'amazonaws') {
-            $result['region'] = null;
-        } else {
-            $result['region'] = $matches[2];
+        $result['region'] = $matches[2] == 'amazonaws' ? null : $matches[2];
+
+        return $result;
+    }
+
+    private function parseCustomEndpoint(Url $url)
+    {
+        $result = $result = self::$defaultResult;
+        $segments = $url->getPathSegments();
+
+        if (isset($segments[1])) {
+            $result['bucket'] = $segments[1];
+            if (isset($segments[2])) {
+                $result['key'] = $segments[2];
+            }
         }
 
         return $result;
@@ -53,11 +70,7 @@ class S3UriParser
 
     private function parsePathStyle(Url $url)
     {
-        $result = [
-            'path_style' => true,
-            'bucket'     => null,
-            'key'        => null
-        ];
+        $result = self::$defaultResult;
 
         if ($url->getPath() != '/') {
             $path = ltrim($url->getPath(), '/');
@@ -82,17 +95,13 @@ class S3UriParser
 
     private function parseVirtualHosted(Url $url, array $matches)
     {
-        $result = [
-            'path_style' => false,
-            // Remove trailing "." from the prefix to get the bucket
-            'bucket'     => substr($matches[1], 0, -1)
-        ];
-
+        $result = self::$defaultResult;
+        $result['path_style'] = false;
+        // Remove trailing "." from the prefix to get the bucket
+        $result['bucket'] = substr($matches[1], 0, -1);
         $path = $url->getPath();
         // Check if a key was present, and if so, removing the leading "/"
-        $result['key'] = !$path || $path == '/'
-            ? null
-            : substr($path, 1);
+        $result['key'] = !$path || $path == '/' ? null : substr($path, 1);
 
         return $result;
     }

@@ -15,6 +15,13 @@ use GuzzleHttp\Message\ResponseInterface;
 use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
 
 /**
+ * In addition to the default client factory configuration options, the Amazon
+ * S3 factory supports the following additional key value pairs:
+ *
+ * - calculate_md5: Set to false to disable optional MD5 calculations.
+ * - force_path_style: Set to true to force all Amazon S3 requests to be sent
+ *   using path-style addressing rather than bucket style addressing.
+ *
  * @internal
  */
 class S3Factory extends ClientFactory
@@ -36,15 +43,21 @@ class S3Factory extends ClientFactory
     protected function createClient(array $args)
     {
         $this->enableErrorParserToHandleHeadRequests($args);
-
         $client = parent::createClient($args);
 
         // S3Client should calculate MD5 checksums for uploads unless explicitly
         // disabled or using SignatureV4.
-        $client->setConfig('calculate_md5', isset($args['calculate_md5'])
-            ? $args['calculate_md5']
-            : (!$client->getSignature() instanceof SignatureV4)
+        $client->setConfig(
+            'calculate_md5',
+            isset($args['calculate_md5'])
+                ? $args['calculate_md5']
+                : (!$client->getSignature() instanceof SignatureV4)
         );
+
+        // Force path style on all requests.
+        if (!empty($args['force_path_style'])) {
+            $client->setConfig('defaults/PathStyle', true);
+        }
 
         $emitter = $client->getEmitter();
         $emitter->attach(new BucketStyle());

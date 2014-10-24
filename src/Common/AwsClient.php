@@ -176,6 +176,9 @@ class AwsClient extends AbstractClient implements AwsClientInterface
             }
         }
 
+        // Merge in default configuration options.
+        $args += $this->getConfig('defaults');
+
         if (isset($args['@future'])) {
             $future = $args['@future'];
             unset($args['@future']);

@@ -36,6 +36,17 @@ class S3FactoryTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testCanForcePathStyleOnAllOperations()
+    {
+        $c = (new S3Factory())->create([
+            'service'          => 's3',
+            'version'          => 'latest',
+            'force_path_style' => true
+        ]);
+        $command = $c->getCommand('GetObject');
+        $this->assertTrue($command['PathStyle']);
+    }
+
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Amazon S3 supports signature version "s3" or "v4"

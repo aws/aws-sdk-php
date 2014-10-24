@@ -74,6 +74,17 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testMergesDefaultCommandParameters()
+    {
+        $client = $this->createClient(
+            ['operations' => ['foo' => ['http' => ['method' => 'POST']]]],
+            ['defaults' => ['test' => '123']]
+        );
+        $command = $client->getCommand('foo', ['bam' => 'boozled']);
+        $this->assertEquals('123', $command['test']);
+        $this->assertEquals('boozled', $command['bam']);
+    }
+
     public function errorProvider()
     {
         return [

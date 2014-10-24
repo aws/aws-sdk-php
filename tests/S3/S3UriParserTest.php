@@ -48,8 +48,8 @@ class S3UriParserTest extends \PHPUnit_Framework_TestCase
             ['http://foo.baz.s3-us-west-2.amazonaws.com/bar/baz', ['region' => 'us-west-2', 'bucket' => 'foo.baz', 'key' => 'bar/baz', 'path_style' => false]],
             ['http://foo.baz.s3-us-west-2.amazonaws.com/bar/baz/', ['region' => 'us-west-2', 'bucket' => 'foo.baz', 'key' => 'bar/baz/', 'path_style' => false]],
 
-            ['http://jarjar.binks.com/foo/bar', [], true],
-            ['http://amazonaws.com/foo', [], true],
+            ['http://jarjar.binks.com/foo/bar', ['bucket' => 'foo', 'key' => 'bar', 'path_style' => true, 'region' => null], true],
+            ['http://amazonaws.com/foo', ['bucket' => 'foo', 'key' => null, 'path_style' => true, 'region' => null], true],
             ['/foo/bar', [], true],
         ];
     }
