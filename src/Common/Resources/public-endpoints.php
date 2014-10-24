@@ -59,6 +59,10 @@ return [
         ],
         'sa-east-1/s3' => [
             'endpoint' => 's3-{region}.amazonaws.com'
-        ]
+        ],
+        'eu-central-1/s3' => [
+            'endpoint' => '{service}.{region}.amazonaws.com',
+            'signatureVersion' => 'v4'
+        ],
     ]
 ];
