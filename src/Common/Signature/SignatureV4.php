@@ -181,6 +181,12 @@ class SignatureV4 extends AbstractSignature
      */
     private function createContext(RequestInterface $request, $payload)
     {
+        static $signable = [
+            'host'        => true,
+            'date'        => true,
+            'content-md5' => true
+        ];
+
         // Normalize the path as required by SigV4 and ensure it's absolute
         $canon = $request->getMethod() . "\n"
             . '/' . ltrim($request->getPath(), '/') . "\n"
@@ -191,10 +197,7 @@ class SignatureV4 extends AbstractSignature
         // Always include the "host", "date", and "x-amz-" headers.
         foreach ($request->getHeaders() as $key => $values) {
             $key = strtolower($key);
-            if ($key == 'host'
-                || $key == 'date'
-                || substr($key, 0, 6) === 'x-amz-'
-            ) {
+            if (isset($signable[$key]) || substr($key, 0, 6) === 'x-amz-') {
                 if (count($values) == 1) {
                     $values = $values[0];
                 } else {

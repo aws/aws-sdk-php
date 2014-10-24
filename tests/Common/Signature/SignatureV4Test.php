@@ -290,4 +290,19 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         $request = new Request('PUT', 'http://foo.com');
         SignatureV4::convertPostToGet($request);
     }
+
+    public function testSignSpecificHeaders()
+    {
+        $sig = new SignatureV4('foo', 'bar');
+        $creds = new Credentials('a', 'b');
+        $req = new Request('PUT', 'http://foo.com', [
+            'date' => 'today',
+            'host' => 'foo.com',
+            'x-amz-foo' => '123',
+            'content-md5' => 'bogus'
+        ]);
+        $sig->signRequest($req, $creds);
+        $creq = $req->getConfig()->get('aws.signature')['creq'];
+        $this->assertContains('content-md5;date;host;x-amz-foo', $creq);
+    }
 }
