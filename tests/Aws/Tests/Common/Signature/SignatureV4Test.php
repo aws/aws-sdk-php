@@ -357,5 +357,20 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
         $request = new EntityEnclosingRequest('PUT', 'http://foo.com');
         SignatureV4::convertPostToGet($request);
     }
+
+    public function testSignSpecificHeaders()
+    {
+        $sig = new SignatureV4('foo', 'bar');
+        $creds = new Credentials('a', 'b');
+        $req = new Request('PUT', 'http://foo.com', array(
+            'date' => 'today',
+            'host' => 'foo.com',
+            'x-amz-foo' => '123',
+            'content-md5' => 'bogus'
+        ));
+        $sig->signRequest($req, $creds);
+        $creq = $req->getParams()->getPath('aws.signature/canonical_request');
+        $this->assertContains('content-md5;date;host;x-amz-foo', $creq);
+    }
 }
 }
