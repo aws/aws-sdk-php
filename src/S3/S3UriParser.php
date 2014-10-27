@@ -56,12 +56,13 @@ class S3UriParser
     private function parseCustomEndpoint(Url $url)
     {
         $result = $result = self::$defaultResult;
-        $segments = $url->getPathSegments();
+        $path = ltrim($url->getPath(), '/ ');
+        $segments = explode('/', $path, 2);
 
-        if (isset($segments[1])) {
-            $result['bucket'] = $segments[1];
-            if (isset($segments[2])) {
-                $result['key'] = $segments[2];
+        if (isset($segments[0])) {
+            $result['bucket'] = $segments[0];
+            if (isset($segments[1])) {
+                $result['key'] = $segments[1];
             }
         }
 
