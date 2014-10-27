@@ -62,7 +62,7 @@ check_tag:
 # prints out a diff of the last commit.
 tag: check_tag
 	@echo Tagging $(TAG)
-	chag update -m '$(TAG) ()'
+	chag update $(TAG)
 	sed -i '' -e "s/VERSION = '.*'/VERSION = '$(TAG)'/" src/Sdk.php
 	php -l src/Sdk.php
 	git commit -a -m '$(TAG) release'
