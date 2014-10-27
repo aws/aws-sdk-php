@@ -29,7 +29,7 @@ downloading a single zip or phar file from our [latest release][latest-release].
 * Provides easy-to-use HTTP clients for all supported AWS
   [services][docs-services], [regions][docs-rande], and authentication
   protocols.
-* Is built for PHP 5.4.1+ and is compliant with [PSR-1], [PSR-2], and [PSR-4].
+* Compliant with [PSR-1], [PSR-2], and [PSR-4].
 * Is easy to install through [Composer][install-packagist], or by downloading
   the phar or zip file of our [latest release][latest-release].
 * Is built on [Guzzle v5][guzzle-docs], and utilizes many of its features, including
@@ -52,9 +52,9 @@ downloading a single zip or phar file from our [latest release][latest-release].
 1. **Sign up for AWS** – Before you begin, you need to
    [sign up for an AWS account][docs-signup] and retrieve your AWS credentials.
 1. **Minimum requirements** – To run the SDK, your system will need to meet the
-   [minimum requirements][docs-requirements], including having **PHP 5.4.1+**
-   compiled with the cURL extension and cURL 7.16.2+ compiled with OpenSSL and
-   zlib.
+   [minimum requirements][docs-requirements], including having **PHP >= 5.4.0**
+   compiled with the cURL extension and cURL 7.16.2+ compiled with a TLS
+   backend (e.g., NSS or OpenSSL).
 1. **Install the SDK** – Using [Composer] is the recommended way to install the
    AWS SDK for PHP. The SDK is available via [Packagist] under the
    [`aws/aws-sdk-php`][install-packagist] package. Please see the
