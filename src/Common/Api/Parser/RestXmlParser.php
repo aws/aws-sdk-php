@@ -10,7 +10,7 @@ use GuzzleHttp\Message\ResponseInterface;
  */
 class RestXmlParser extends AbstractRestParser
 {
-    /** @var JsonParser */
+    /** @var XmlParser */
     private $parser;
 
     /**
