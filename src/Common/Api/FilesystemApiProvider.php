@@ -97,6 +97,9 @@ class FilesystemApiProvider
         return $results;
     }
 
+    /**
+     * @return array
+     */
     private function load($service, $version, $type)
     {
         // First check for PHP files, then fall back to JSON.
