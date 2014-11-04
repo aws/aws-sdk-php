@@ -189,7 +189,7 @@ abstract class RestSerializer
         // Expand path place holders using Amazon's slightly different URI
         // template syntax.
         return preg_replace_callback(
-            '/\{([^\}]+)\}/',
+            '/%7B([^%7D]+)%7D/',
             function (array $matches) use ($varspecs) {
                 $isGreedy = substr($matches[1], -1, 1) == '+';
                 $k = $isGreedy ? substr($matches[1], 0, -1) : $matches[1];
