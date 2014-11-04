@@ -58,6 +58,6 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
         $trans = new CommandTransaction($client, new Command('foo'));
         $trans->response = new Response(400);
         $e = new AwsException('Foo', $trans);
-        $this->assertSame('400', $e->getStatusCode());
+        $this->assertEquals(400, $e->getStatusCode());
     }
 }

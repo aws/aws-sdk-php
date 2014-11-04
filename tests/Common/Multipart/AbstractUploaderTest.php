@@ -157,7 +157,10 @@ class AbstractUploaderTest extends \PHPUnit_Framework_TestCase
             ->getMockForAbstractClass();
         $uploader->expects($this->any())
             ->method('getCompleteCommand')
-            ->willReturn($client->getCommand(AbstractUploader::COMPLETE));
+            ->willReturn($client->getCommand(AbstractUploader::COMPLETE, [
+                'Bucket' => 'foo',
+                'Key'    => 'bar'
+            ]));
 
         /** @var AbstractUploader $uploader */
         return $uploader;
