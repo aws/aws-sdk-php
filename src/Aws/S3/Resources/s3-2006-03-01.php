@@ -45,6 +45,11 @@ return array (
             'https' => true,
             'hostname' => 's3-eu-west-1.amazonaws.com',
         ),
+        'eu-central-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 's3-eu-central-1.amazonaws.com',
+        ),
         'ap-northeast-1' => array(
             'http' => true,
             'https' => true,
