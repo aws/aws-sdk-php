@@ -175,7 +175,6 @@ abstract class RestSerializer
      */
     private function buildEndpoint(Operation $operation, array $args)
     {
-        $uri = $this->endpoint->combine($operation['http']['requestUri']);
         $varspecs = [];
 
         // Create an associative array of varspecs used in expansions
@@ -188,7 +187,7 @@ abstract class RestSerializer
 
         // Expand path place holders using Amazon's slightly different URI
         // template syntax.
-        return preg_replace_callback(
+        return $this->endpoint->combine(preg_replace_callback(
             '/\{([^\}]+)\}/',
             function (array $matches) use ($varspecs) {
                 $isGreedy = substr($matches[1], -1, 1) == '+';
@@ -201,7 +200,7 @@ abstract class RestSerializer
                     return rawurlencode($varspecs[$k]);
                 }
             },
-            $uri
-        );
+            $operation['http']['requestUri']
+        ));
     }
 }
