@@ -1,7 +1,8 @@
 <?php
 namespace Aws\S3;
 
-use Aws\Common\Paginator\ResourceIterator;
+use Aws\Common\FlatMapIterator;
+use Aws\Common\Result;
 use Aws\S3\Exception\S3Exception;
 use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Stream\StreamInterface;
@@ -72,7 +73,7 @@ class StreamWrapper
     /** @var string Mode in which the stream was opened */
     private $mode;
 
-    /** @var ResourceIterator Iterator used with opendir() related calls */
+    /** @var \Iterator Iterator used with opendir() related calls */
     private $objectIterator;
 
     /** @var string The bucket that was opened when opendir() was called */
@@ -327,8 +328,9 @@ class StreamWrapper
         $this->clearStatInfo();
         $params = $this->withPath($path);
         $delimiter = $this->getOption('delimiter');
+        /** @var callable $filterFn */
         $filterFn = $this->getOption('listFilter');
-        $operationParams = ['Bucket' => $params['Bucket']];
+        $op = ['Bucket' => $params['Bucket']];
         $this->openedBucket = $params['Bucket'];
 
         if ($delimiter === null) {
@@ -336,20 +338,28 @@ class StreamWrapper
         }
 
         if ($delimiter) {
-            $operationParams['Delimiter'] = $delimiter;
+            $op['Delimiter'] = $delimiter;
         }
 
         if ($params['Key']) {
             $params['Key'] = rtrim($params['Key'], $delimiter) . $delimiter;
-            $operationParams['Prefix'] = $params['Key'];
+            $op['Prefix'] = $params['Key'];
         }
 
         $this->openedBucketPrefix = $params['Key'];
 
         // Filter our "/" keys added by the console as directories, and ensure
         // that if a filter function is provided that it passes the filter.
+        $flatMap = new FlatMapIterator(
+            $this->getClient()->getPaginator('ListObjects', $op),
+            function (Result $result) {
+                return $result->search('[Contents[], CommonPrefixes[]][]');
+            }
+        );
+
+        // Filter each key returned by the iterator using the filter function.
         $this->objectIterator = new \CallbackFilterIterator(
-            $this->getClient()->getIterator('ListObjects', $operationParams),
+            $flatMap,
             function ($key) use ($filterFn) {
                 // Each yielded results can contain a "Key" or "Prefix"
                 return (!$filterFn || call_user_func($filterFn, $key)) &&
@@ -357,6 +367,7 @@ class StreamWrapper
             }
         );
 
+        // The CallbackFilterIterator requires you to call next() to initialize
         $this->objectIterator->next();
 
         return true;

@@ -5,8 +5,6 @@ use Aws\Common\Exception\AwsException;
 use Aws\Sdk;
 use Aws\Common\Api\Service;
 use Aws\Common\Credentials\CredentialsInterface;
-use Aws\Common\Paginator\ResourceIterator;
-use Aws\Common\Paginator\ResultPaginator;
 use Aws\Common\Signature\SignatureInterface;
 use Aws\Common\Waiter\ResourceWaiter;
 use Aws\Common\Waiter\Waiter;
@@ -192,19 +190,27 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         ]);
     }
 
-    public function getIterator($name, array $args = [], array $config = [])
+    public function getIterator($name, array $args = [])
     {
-        $config += $this->api->getPaginatorConfig($name);
-
-        if ($config['result_key']) {
-            return new ResourceIterator(
-                new ResultPaginator($this, $name, $args, $config),
-                $config
-            );
+        $config = $this->api->getPaginatorConfig($name);
+        if (!$config['result_key']) {
+            throw new \UnexpectedValueException(sprintf(
+                'There are no resources to iterate for the %s operation of %s',
+                $name, $this->api['serviceFullName']
+            ));
         }
 
-        throw new \UnexpectedValueException("There are no resources to iterate "
-            . "for the {$name} operation of {$this->api['serviceFullName']}.");
+        $key = is_array($config['result_key'])
+            ? $config['result_key'][0]
+            : $config['result_key'];
+
+        if ($config['output_token'] && $config['input_token']) {
+            return $this->getPaginator($name, $args)->search($key);
+        }
+
+        $result = $this->getCommand($name, $args)->search($key);
+
+        return new \ArrayIterator((array) $result);
     }
 
     public function getPaginator($name, array $args = [], array $config = [])

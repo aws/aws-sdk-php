@@ -47,24 +47,20 @@ interface AwsClientInterface extends ServiceClientInterface
     /**
      * Get a resource iterator for the specified operation.
      *
-     * @param string $name   Name of the command used for iterator
-     * @param array  $args   Command args to be used with each command
-     * @param array  $config Hash of options:
-     *     - result_key: A jmespath expression that yields the resources to be
-     *       iterated. If this is not provided, the default expression for the
-     *       given operation will be used.
+     * @param string $name Name of the iterator to retrieve.
+     * @param array  $args Command arguments to use with each command.
      *
      * @return \Aws\Common\Paginator\ResourceIterator
      * @throws \UnexpectedValueException if the iterator config is invalid.
      */
-    public function getIterator($name, array $args = [], array $config = []);
+    public function getIterator($name, array $args = []);
 
     /**
      * Get a result paginator for the specified operation.
      *
-     * @param string $name   Name of the command used for iterator
+     * @param string $name   Name of the operation used for iterator
      * @param array  $args   Command args to be used with each command
-     * @param array  $config Hash of options
+     * @param array  $config Hash of paginator options.
      *
      * @return \Aws\Common\Paginator\ResultPaginator
      * @throws \UnexpectedValueException if the iterator config is invalid.

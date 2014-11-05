@@ -81,7 +81,7 @@ class ClearBucketTest extends \PHPUnit_Framework_TestCase
     {
         $c = new ClearBucket($this->client, 'foo');
         $i = $this->readAttribute($c, 'iterator');
-        $this->assertInstanceOf('Aws\Common\Paginator\ResourceIterator', $i);
+        $this->assertInstanceOf('Aws\Common\FlatMapIterator', $i);
     }
 
     public function testAddsMfaOptions()

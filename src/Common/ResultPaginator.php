@@ -1,10 +1,11 @@
 <?php
-namespace Aws\Common\Paginator;
+namespace Aws\Common;
 
-use Aws\Common\AwsClientInterface;
-use Aws\Common\Result;
 use GuzzleHttp\Event\ListenerAttacherTrait;
 
+/**
+ * Iterator that yields each page of results of a pageable operation.
+ */
 class ResultPaginator implements \Iterator
 {
     use ListenerAttacherTrait;
@@ -52,6 +53,24 @@ class ResultPaginator implements \Iterator
         $this->listeners = $this->prepareListeners(
             $config,
             ['prepared', 'process', 'error']
+        );
+    }
+
+    /**
+     * Returns an iterator that iterates over the values of applying a JMESPath
+     * search to each result yielded by the iterator as a flat sequence.
+     *
+     * @param string $expression JMESPath expression to apply to each result.
+     *
+     * @return \Iterator
+     */
+    public function search($expression)
+    {
+        return new FlatMapIterator(
+            $this,
+            function (Result $result) use ($expression) {
+                return (array) $result->search($expression);
+            }
         );
     }
 

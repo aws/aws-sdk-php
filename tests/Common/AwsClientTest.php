@@ -209,13 +209,9 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
 
     public function testCanGetIterator()
     {
-        $client = $this->createClient(['pagination' => [
-            'ListObjects' => [
-                'result_key' => 'foo',
-            ]
-        ]]);
+        $client = $this->getTestClient('s3');
         $this->assertInstanceOf(
-            'Aws\Common\Paginator\ResourceIterator',
+            'Aws\Common\FlatMapIterator',
             $client->getIterator('ListObjects', ['Bucket' => 'foobar'])
         );
     }
@@ -239,7 +235,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         ]]);
 
         $this->assertInstanceOf(
-            'Aws\Common\Paginator\ResultPaginator',
+            'Aws\Common\ResultPaginator',
             $client->getPaginator('ListObjects', ['Bucket' => 'foobar'])
         );
     }

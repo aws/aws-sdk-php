@@ -1,11 +1,11 @@
 <?php
-namespace Aws\Test\Common\Paginator;
+namespace Aws\Test\Common;
 
 use Aws\Common\Result;
 use Aws\Test\UsesServiceTrait;
 
 /**
- * @covers Aws\Common\Paginator\ResultPaginator
+ * @covers Aws\Common\ResultPaginator
  */
 class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
 {
@@ -102,5 +102,54 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
                 ['test1', 'test2', 'test3'],
             ]
         ];
+    }
+
+    public function testCanSearchOverResultsUsingFlatMap()
+    {
+        $requestCount = 0;
+        $client = $this->getTestClient('dynamodb');
+        $this->addMockResults($client, [
+            new Result(['LastToken' => 'b2', 'TableNames' => ['a1', 'b2']]),
+            new Result(['LastToken' => 'b2', 'TableNames' => []]),
+            new Result(['TableNames' => ['c3']]),
+        ]);
+
+        $paginator = $client->getPaginator('ListTables', [], [
+            'input_token'  => 'NextToken',
+            'output_token' => 'LastToken',
+            'process'      => function () use (&$requestCount) {
+                $requestCount++;
+            }
+        ]);
+
+        $tableNames = [];
+        foreach ($paginator->search('TableNames[][::-1]') as $table) {
+            $tableNames[] = $table;
+        }
+
+        $this->assertEquals(3, $requestCount);
+        $this->assertEquals(['1a', '2b', '3c'], $tableNames);
+    }
+
+    public function testGracefullyHandlesSingleValueResults()
+    {
+        $client = $this->getTestClient('dynamodb');
+        $this->addMockResults($client, [
+            new Result(['LastToken' => 'b2', 'TableNames' => ['a1', 'b2']]),
+            new Result(['LastToken' => 'b2', 'TableNames' => []]),
+            new Result(['TableNames' => ['c3']]),
+        ]);
+
+        $paginator = $client->getPaginator('ListTables', [], [
+            'input_token'  => 'NextToken',
+            'output_token' => 'LastToken'
+        ]);
+
+        $tableNames = [];
+        foreach ($paginator->search('TableNames[0]') as $table) {
+            $tableNames[] = $table;
+        }
+
+        $this->assertEquals(['a1', 'c3'], $tableNames);
     }
 }
