@@ -1306,6 +1306,22 @@ return array (
                                 ),
                             ),
                         ),
+                        'AdditionalAttributes' => array(
+                            'type' => 'array',
+                            'sentAs' => 'AdditionalAttributes.member',
+                            'items' => array(
+                                'name' => 'AdditionalAttribute',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'Key' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Value' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -1762,6 +1778,22 @@ return array (
                                 ),
                             ),
                         ),
+                        'AdditionalAttributes' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'AdditionalAttribute',
+                                'type' => 'object',
+                                'sentAs' => 'member',
+                                'properties' => array(
+                                    'Key' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Value' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -2201,6 +2233,22 @@ return array (
                             'properties' => array(
                                 'IdleTimeout' => array(
                                     'type' => 'numeric',
+                                ),
+                            ),
+                        ),
+                        'AdditionalAttributes' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'AdditionalAttribute',
+                                'type' => 'object',
+                                'sentAs' => 'member',
+                                'properties' => array(
+                                    'Key' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Value' => array(
+                                        'type' => 'string',
+                                    ),
                                 ),
                             ),
                         ),
