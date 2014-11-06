@@ -5,7 +5,8 @@
 * Added support for private DNS for Amazon Virtual Private Clouds, health check
   failure reasons, and reusable delegation sets to the Amazon Route 53 client.
 * Updated the CloudFront model.
-
+* Added support for configuring push synchronization to the Cognito Sync client.
+* Updated docblocks in a few S3 and Glacier classes to improve IDE experience.
 
 ## 2.7.2 - 2014-10-23
 
@@ -19,7 +20,6 @@
 * Updated the Amazon RDS client to the 2014-09-01 API version.
 * Added support for advanced Japanese language processing to the Amazon
   CloudSearch client.
-* Added support for configuring push synchronization to the Cognito Sync client.
 
 ## 2.7.0 - 2014-10-08
 
