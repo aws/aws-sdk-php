@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Unreleased
+
+* Added support for private DNS for Amazon Virtual Private Clouds, health check
+  failure reasons, and reusable delegation sets to the Amazon Route 53 client.
+
 ## 2.7.2 - 2014-10-23
 
 * Updated AWS Identity and Access Management (IAM) to the latest version.

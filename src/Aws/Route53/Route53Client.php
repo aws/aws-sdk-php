@@ -28,22 +28,30 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
 /**
  * Client to interact with Amazon Route 53
  *
+ * @method Model associateVPCWithHostedZone(array $args = array()) {@command Route53 AssociateVPCWithHostedZone}
  * @method Model changeResourceRecordSets(array $args = array()) {@command Route53 ChangeResourceRecordSets}
  * @method Model changeTagsForResource(array $args = array()) {@command Route53 ChangeTagsForResource}
  * @method Model createHealthCheck(array $args = array()) {@command Route53 CreateHealthCheck}
  * @method Model createHostedZone(array $args = array()) {@command Route53 CreateHostedZone}
+ * @method Model createReusableDelegationSet(array $args = array()) {@command Route53 CreateReusableDelegationSet}
  * @method Model deleteHealthCheck(array $args = array()) {@command Route53 DeleteHealthCheck}
  * @method Model deleteHostedZone(array $args = array()) {@command Route53 DeleteHostedZone}
+ * @method Model deleteReusableDelegationSet(array $args = array()) {@command Route53 DeleteReusableDelegationSet}
+ * @method Model disassociateVPCFromHostedZone(array $args = array()) {@command Route53 DisassociateVPCFromHostedZone}
  * @method Model getChange(array $args = array()) {@command Route53 GetChange}
  * @method Model getCheckerIpRanges(array $args = array()) {@command Route53 GetCheckerIpRanges}
  * @method Model getGeoLocation(array $args = array()) {@command Route53 GetGeoLocation}
  * @method Model getHealthCheck(array $args = array()) {@command Route53 GetHealthCheck}
  * @method Model getHealthCheckCount(array $args = array()) {@command Route53 GetHealthCheckCount}
+ * @method Model getHealthCheckLastFailureReason(array $args = array()) {@command Route53 GetHealthCheckLastFailureReason}
+ * @method Model getHealthCheckStatus(array $args = array()) {@command Route53 GetHealthCheckStatus}
  * @method Model getHostedZone(array $args = array()) {@command Route53 GetHostedZone}
+ * @method Model getReusableDelegationSet(array $args = array()) {@command Route53 GetReusableDelegationSet}
  * @method Model listGeoLocations(array $args = array()) {@command Route53 ListGeoLocations}
  * @method Model listHealthChecks(array $args = array()) {@command Route53 ListHealthChecks}
  * @method Model listHostedZones(array $args = array()) {@command Route53 ListHostedZones}
  * @method Model listResourceRecordSets(array $args = array()) {@command Route53 ListResourceRecordSets}
+ * @method Model listReusableDelegationSets(array $args = array()) {@command Route53 ListReusableDelegationSets}
  * @method Model listTagsForResource(array $args = array()) {@command Route53 ListTagsForResource}
  * @method Model listTagsForResources(array $args = array()) {@command Route53 ListTagsForResources}
  * @method Model updateHealthCheck(array $args = array()) {@command Route53 UpdateHealthCheck}
@@ -108,6 +116,6 @@ class Route53Client extends AbstractClient
      */
     public static function cleanId($id)
     {
-        return str_replace(array('/hostedzone/', '/change/'), '', $id);
+        return str_replace(array('/hostedzone/', '/change/', '/delegationset/'), '', $id);
     }
 }
