@@ -103,7 +103,7 @@ For more complex logging or logging to a file, you can build a LogPlugin manuall
 
 .. code-block:: php
 
-    use Guzzle\Common\Log\MonologLogAdapter;
+    use Guzzle\Log\MonologLogAdapter;
     use Guzzle\Plugin\Log\LogPlugin;
     use Monolog\Logger;
     use Monolog\Handler\StreamHandler;
