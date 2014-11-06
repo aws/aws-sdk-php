@@ -201,6 +201,40 @@ return array (
                 ),
             ),
         ),
+        'GetIdentityPoolConfiguration' => array(
+            'httpMethod' => 'GET',
+            'uri' => '/identitypools/{IdentityPoolId}/configuration',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'GetIdentityPoolConfigurationResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'IdentityPoolId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 50,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Thrown when a user is not authorized to access the requested resource.',
+                    'class' => 'NotAuthorizedException',
+                ),
+                array(
+                    'reason' => 'Thrown when a request parameter does not comply with the associated constraints.',
+                    'class' => 'InvalidParameterException',
+                ),
+                array(
+                    'reason' => 'Thrown if the resource doesn\'t exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'Indicates an internal service error.',
+                    'class' => 'InternalErrorException',
+                ),
+            ),
+        ),
         'ListDatasets' => array(
             'httpMethod' => 'GET',
             'uri' => '/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets',
@@ -349,6 +383,228 @@ return array (
                 ),
             ),
         ),
+        'RegisterDevice' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/identitypools/{IdentityPoolId}/identity/{IdentityId}/device',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'RegisterDeviceResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'IdentityPoolId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 50,
+                ),
+                'IdentityId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 50,
+                ),
+                'Platform' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'Token' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Thrown when a user is not authorized to access the requested resource.',
+                    'class' => 'NotAuthorizedException',
+                ),
+                array(
+                    'reason' => 'Thrown when a request parameter does not comply with the associated constraints.',
+                    'class' => 'InvalidParameterException',
+                ),
+                array(
+                    'reason' => 'Thrown if the resource doesn\'t exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'Indicates an internal service error.',
+                    'class' => 'InternalErrorException',
+                ),
+                array(
+                    'class' => 'InvalidConfigurationException',
+                ),
+            ),
+        ),
+        'SetIdentityPoolConfiguration' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/identitypools/{IdentityPoolId}/configuration',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'SetIdentityPoolConfigurationResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'IdentityPoolId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 50,
+                ),
+                'PushSync' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'ApplicationArns' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'ApplicationArn',
+                                'type' => 'string',
+                            ),
+                        ),
+                        'RoleArn' => array(
+                            'type' => 'string',
+                            'minLength' => 20,
+                            'maxLength' => 2048,
+                        ),
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Thrown when a user is not authorized to access the requested resource.',
+                    'class' => 'NotAuthorizedException',
+                ),
+                array(
+                    'reason' => 'Thrown when a request parameter does not comply with the associated constraints.',
+                    'class' => 'InvalidParameterException',
+                ),
+                array(
+                    'reason' => 'Thrown if the resource doesn\'t exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'Indicates an internal service error.',
+                    'class' => 'InternalErrorException',
+                ),
+            ),
+        ),
+        'SubscribeToDataset' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}/subscriptions/{DeviceId}',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'IdentityPoolId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 50,
+                ),
+                'IdentityId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 50,
+                ),
+                'DatasetName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 128,
+                ),
+                'DeviceId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 256,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Thrown when a user is not authorized to access the requested resource.',
+                    'class' => 'NotAuthorizedException',
+                ),
+                array(
+                    'reason' => 'Thrown when a request parameter does not comply with the associated constraints.',
+                    'class' => 'InvalidParameterException',
+                ),
+                array(
+                    'reason' => 'Thrown if the resource doesn\'t exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'Indicates an internal service error.',
+                    'class' => 'InternalErrorException',
+                ),
+                array(
+                    'class' => 'InvalidConfigurationException',
+                ),
+            ),
+        ),
+        'UnsubscribeFromDataset' => array(
+            'httpMethod' => 'DELETE',
+            'uri' => '/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}/subscriptions/{DeviceId}',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'IdentityPoolId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 50,
+                ),
+                'IdentityId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 50,
+                ),
+                'DatasetName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 128,
+                ),
+                'DeviceId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 256,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Thrown when a user is not authorized to access the requested resource.',
+                    'class' => 'NotAuthorizedException',
+                ),
+                array(
+                    'reason' => 'Thrown when a request parameter does not comply with the associated constraints.',
+                    'class' => 'InvalidParameterException',
+                ),
+                array(
+                    'reason' => 'Thrown if the resource doesn\'t exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'Indicates an internal service error.',
+                    'class' => 'InternalErrorException',
+                ),
+                array(
+                    'class' => 'InvalidConfigurationException',
+                ),
+            ),
+        ),
         'UpdateRecords' => array(
             'httpMethod' => 'POST',
             'uri' => '/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}',
@@ -376,6 +632,12 @@ return array (
                     'location' => 'uri',
                     'minLength' => 1,
                     'maxLength' => 128,
+                ),
+                'DeviceId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 256,
                 ),
                 'RecordPatches' => array(
                     'type' => 'array',
@@ -408,7 +670,7 @@ return array (
                                     'string',
                                     'integer',
                                 ),
-                                'format' => 'timestamp',
+                                'format' => 'date-time',
                             ),
                         ),
                     ),
@@ -574,6 +836,32 @@ return array (
                 ),
             ),
         ),
+        'GetIdentityPoolConfigurationResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'IdentityPoolId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'PushSync' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'ApplicationArns' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'ApplicationArn',
+                                'type' => 'string',
+                            ),
+                        ),
+                        'RoleArn' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+            ),
+        ),
         'ListDatasetsResponse' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -728,6 +1016,46 @@ return array (
                     'location' => 'json',
                 ),
             ),
+        ),
+        'RegisterDeviceResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'DeviceId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'SetIdentityPoolConfigurationResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'IdentityPoolId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'PushSync' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'ApplicationArns' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'ApplicationArn',
+                                'type' => 'string',
+                            ),
+                        ),
+                        'RoleArn' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'EmptyOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
         ),
         'UpdateRecordsResponse' => array(
             'type' => 'object',

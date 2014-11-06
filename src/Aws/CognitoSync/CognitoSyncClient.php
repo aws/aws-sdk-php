@@ -16,9 +16,14 @@ use Guzzle\Service\Resource\Model;
  * @method Model describeDataset(array $args = array()) {@command CognitoSync DescribeDataset}
  * @method Model describeIdentityPoolUsage(array $args = array()) {@command CognitoSync DescribeIdentityPoolUsage}
  * @method Model describeIdentityUsage(array $args = array()) {@command CognitoSync DescribeIdentityUsage}
+ * @method Model getIdentityPoolConfiguration(array $args = array()) {@command CognitoSync GetIdentityPoolConfiguration}
  * @method Model listDatasets(array $args = array()) {@command CognitoSync ListDatasets}
  * @method Model listIdentityPoolUsage(array $args = array()) {@command CognitoSync ListIdentityPoolUsage}
  * @method Model listRecords(array $args = array()) {@command CognitoSync ListRecords}
+ * @method Model registerDevice(array $args = array()) {@command CognitoSync RegisterDevice}
+ * @method Model setIdentityPoolConfiguration(array $args = array()) {@command CognitoSync SetIdentityPoolConfiguration}
+ * @method Model subscribeToDataset(array $args = array()) {@command CognitoSync SubscribeToDataset}
+ * @method Model unsubscribeFromDataset(array $args = array()) {@command CognitoSync UnsubscribeFromDataset}
  * @method Model updateRecords(array $args = array()) {@command CognitoSync UpdateRecords}
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-cognitosync.html User guide
