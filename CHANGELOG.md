@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## 2.7.3 - 2014-11-06
 
 * Added support for private DNS for Amazon Virtual Private Clouds, health check
   failure reasons, and reusable delegation sets to the Amazon Route 53 client.
