@@ -64,8 +64,8 @@ class DynamoDbClientTest extends \Guzzle\Tests\GuzzleTestCase
         $expected = array(
             'N'  => array('N' => '1'),
             'S'  => array('S' => 'S'),
-            'NS' => array('NS' => array('1', '2', '3', '4')),
-            'SS' => array('SS' => array('N', 'S', 'NS', 'SS')),
+            'NS' => array('NS' => array('L' => array('1', '2', '3', '4'))),
+            'SS' => array('SS' => array('L' => array('N', 'S', 'NS', 'SS'))),
         );
 
         $actual = $client->formatAttributes(array(
