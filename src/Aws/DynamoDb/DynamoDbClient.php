@@ -159,16 +159,16 @@ class DynamoDbClient extends AbstractClient
 
         foreach ($values as $key => $value) {
             if (is_bool($value)) {
-                $formatted[$key] = ['BOOL' => $value];
+                $formatted[$key] = array('BOOL' => $value);
             } elseif (is_scalar($value)) {
                 $formatted[$key] = $this->formatValue($value, $format);
             } elseif (is_null($value)) {
-                $formatted[$key] = ['NULL' => true];
+                $formatted[$key] = array('NULL' => true);
             } elseif (is_array($value)) {
                 if (is_hash($value)) {
-                    $formatted[$key] = ['M' => $this->formatAttributes($value, $format)];
+                    $formatted[$key] = array('M' => $this->formatAttributes($value, $format));
                 } else {
-                    $formatted[$key] = ['L' => $this->formatAttributes($value, $format)];
+                    $formatted[$key] = array('L' => $this->formatAttributes($value, $format));
                 }
             } else {
                 $formatted[$key] = $this->formatValue($value, $format); // Exception will be happened.
