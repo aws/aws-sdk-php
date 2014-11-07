@@ -11,7 +11,7 @@ travis:
 	vendor/bin/phpunit --colors --testsuite=unit --coverage-text
 
 coverage:
-	vendor/bin/phpunit --testsuite=unit --coverage-html=build/artifacts/coverage
+	vendor/bin/phpunit --testsuite=unit --coverage-html=build/artifacts/coverage $(TEST)
 
 coverage-show:
 	open build/artifacts/coverage/index.html
