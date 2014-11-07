@@ -34,6 +34,11 @@ use Guzzle\Service\Command\AbstractCommand as Cmd;
 use Guzzle\Service\Resource\Model;
 use Guzzle\Service\Resource\ResourceIteratorInterface;
 
+function is_hash(array $array)
+{
+        foreach($array as $key => $value) return $key !== 0;
+}
+
 /**
  * Client to interact with Amazon DynamoDB
  *
@@ -134,8 +139,6 @@ class DynamoDbClient extends AbstractClient
      * @param string $format The type of format (e.g. put, update).
      *
      * @return array The formatted value.
-     * @deprecated The new DynamoDB document model, including the new types
-     *             (L, M, BOOL, NULL), is not supported by this method.
      */
     public function formatValue($value, $format = Attribute::FORMAT_PUT)
     {
@@ -149,15 +152,27 @@ class DynamoDbClient extends AbstractClient
      * @param string $format The type of format (e.g. put, update).
      *
      * @return array The formatted values.
-     * @deprecated The new DynamoDB document model, including the new types
-     *             (L, M, BOOL, NULL), is not supported by this method.
      */
     public function formatAttributes(array $values, $format = Attribute::FORMAT_PUT)
     {
         $formatted = array();
 
         foreach ($values as $key => $value) {
-            $formatted[$key] = $this->formatValue($value, $format);
+            if (is_bool($value)) {
+                $formatted[$key] = array('BOOL' => $value);
+            } elseif (is_scalar($value)) {
+                $formatted[$key] = $this->formatValue($value, $format);
+            } elseif (is_null($value)) {
+                $formatted[$key] = array('NULL' => true);
+            } elseif (is_array($value)) {
+                if (is_hash($value)) {
+                    $formatted[$key] = array('M' => $this->formatAttributes($value, $format));
+                } else {
+                    $formatted[$key] = array('L' => $this->formatAttributes($value, $format));
+                }
+            } else {
+                $formatted[$key] = $this->formatValue($value, $format); // Exception will be happened.
+            }
         }
 
         return $formatted;
