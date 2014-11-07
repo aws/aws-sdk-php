@@ -62,17 +62,43 @@ class DynamoDbClientTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client = $this->getServiceBuilder()->get('dynamodb', true);
         $expected = array(
-            'N'  => array('N' => '1'),
-            'S'  => array('S' => 'S'),
-            'NS' => array('NS' => array('L' => array('1', '2', '3', '4'))),
-            'SS' => array('SS' => array('L' => array('N', 'S', 'NS', 'SS'))),
+            'N'    => array('N'    => '1'),
+            'S'    => array('S'    => 'S'),
+            'NS'   => array('L'    => array(
+                array('N' => '1'),
+                array('N' => '2'),
+                array('N' => '3'),
+                array('N' => '4'),
+            )),
+            'SS'   => array('L'    => array(
+                array('S' => 'N'),
+                array('S' => 'S'),
+                array('S' => 'NS'),
+                array('S' => 'SS'),
+            )),
+            'L'    => array('L'    => array(
+                array('S' => 'A'),
+                array('S' => 'B'),
+                array('S' => 'C'),
+            )),
+            'M'    => array('M'    => array(
+                'foo' => array('S' => 'hoge'),
+                'bar' => array('S' => 'fuga'),
+                'baz' => array('S' => 'piyo'),
+            )),
+            'BOOL' => array('BOOL' => false),
+            'NULL' => array('NULL' => true),
         );
 
         $actual = $client->formatAttributes(array(
-            'N'  => 1,
-            'S'  => 'S',
-            'NS' => array(1, 2, 3, 4),
-            'SS' => array('N', 'S', 'NS', 'SS'),
+            'N'    => 1,
+            'S'    => 'S',
+            'NS'   => array(1, 2, 3, 4),
+            'SS'   => array('N', 'S', 'NS', 'SS'),
+            'L'    => array('A', 'B', 'C'),
+            'M'    => array('foo' => 'hoge', 'bar' => 'fuga', 'baz' => 'piyo'),
+            'BOOL' => false,
+            'NULL' => null,
         ));
 
         $this->assertSame($expected, $actual);
