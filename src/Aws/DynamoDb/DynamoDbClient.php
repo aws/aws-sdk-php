@@ -156,6 +156,7 @@ class DynamoDbClient extends AbstractClient
     public function formatAttributes(array $values, $format = Attribute::FORMAT_PUT)
     {
         $formatted = array();
+
         foreach ($values as $key => $value) {
             if (is_bool($value)) {
                 $formatted[$key] = ['BOOL' => $value];
@@ -173,6 +174,7 @@ class DynamoDbClient extends AbstractClient
                 $formatted[$key] = $this->formatValue($value, $format); // Exception will be happened.
             }
         }
+
         return $formatted;
     }
 
