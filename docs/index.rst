@@ -31,9 +31,10 @@ AWS SDK for PHP
     service-cloudsearchdomain
     service-cloudtrail
     service-cloudwatch
+    service-cloudwatchlogs
     service-cognitoidentity
     service-cognitosync
-    service-cloudwatchlogs
+    service-codedeploy
     service-datapipeline
     service-directconnect
     service-dynamodb
@@ -132,6 +133,10 @@ Service-Specific Guides
 
   .. indexlinks:: CloudWatch
 
+* Amazon CloudWatch Logs
+
+  .. indexlinks:: CloudWatchLogs
+
 * Amazon Cognito Identity
 
   .. indexlinks:: CognitoIdentity
@@ -139,10 +144,6 @@ Service-Specific Guides
 * Amazon Cognito Sync
 
   .. indexlinks:: CognitoSync
-
-* Amazon CloudWatch Logs
-
-  .. indexlinks:: CloudWatchLogs
 
 * Amazon DynamoDB
 
@@ -228,6 +229,10 @@ Service-Specific Guides
 * AWS CloudTrail
 
   .. indexlinks:: CloudTrail
+
+* AWS CodeDeploy
+
+  .. indexlinks:: CodeDeploy
 
 * AWS Data Pipeline
 
