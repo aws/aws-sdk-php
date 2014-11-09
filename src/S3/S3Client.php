@@ -248,6 +248,44 @@ class S3Client extends AwsClient
     }
 
     /**
+     * Recursively uploads all files in a given directory to a given bucket.
+     *
+     * @param string $directory Full path to a directory to upload
+     * @param string $bucket    Name of the bucket
+     * @param string $keyPrefix Virtual directory key prefix to add to each upload
+     * @param array  $options   Options available in Aws\S3\Transfer::__construct
+     *
+     * @see Aws\S3\Transfer for more options and customization
+     */
+    public function uploadDirectory(
+        $directory,
+        $bucket,
+        $keyPrefix = null,
+        array $options = []
+    ) {
+        $d = "s3://$bucket" . ($keyPrefix ? '/' . ltrim($keyPrefix, '/') : '');
+        (new Transfer($this, $directory, $d, $options))->transfer();
+    }
+
+    /**
+     * Downloads a bucket to the local filesystem
+     *
+     * @param string $directory Directory to download to
+     * @param string $bucket    Bucket to download from
+     * @param string $keyPrefix Only download objects that use this key prefix
+     * @param array  $options   Options available in Aws\S3\Transfer::__construct
+     */
+    public function downloadBucket(
+        $directory,
+        $bucket,
+        $keyPrefix = '',
+        array $options = []
+    ) {
+        $s = "s3://$bucket" . ($keyPrefix ? '/' . ltrim($keyPrefix, '/') : '');
+        (new Transfer($this, $s, $directory, $options))->transfer();
+    }
+
+    /**
      * Determines if the body should be uploaded using PutObject or the
      * Multipart Upload System. It also modifies the passed-in $body as needed
      * to support the upload.
@@ -314,24 +352,6 @@ class S3Client extends AwsClient
             }
             return false;
         }
-    }
-
-    /** @deprecated */
-    public function uploadDirectory()
-    {
-        $this->syncProxy();
-    }
-
-    /** @deprecated */
-    public function downloadBucket()
-    {
-        $this->syncProxy();
-    }
-
-    private function syncProxy()
-    {
-        throw new \RuntimeException("uploadDirectory() and downloadBucket() "
-            . "have been moved into a separate project: aws/s3-sync.");
     }
 
     /**

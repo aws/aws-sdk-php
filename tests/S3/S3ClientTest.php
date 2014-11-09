@@ -96,22 +96,6 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
         $s3->clearBucket('foo');
     }
 
-    public function syncProvider()
-    {
-        return [['uploadDirectory'], ['downloadBucket']];
-    }
-
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage aws/s3-sync
-     * @dataProvider syncProvider
-     */
-    public function testThrowsForSync($meth)
-    {
-        $s3 = $this->getTestClient('s3', ['region' => 'us-east-1']);
-        $s3->{$meth}([]);
-    }
-
     public function testRegistersStreamWrapper()
     {
         $s3 = $this->getTestClient('s3', ['region' => 'us-east-1']);
@@ -302,5 +286,33 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
                 return (bool) $seekable;
             }
         ]);
+    }
+
+    public function testProxiesToTransferObjectPut()
+    {
+        $client = $this->getTestClient('s3');
+        $c = null;
+        $client->getEmitter()->on('prepared', function (PreparedEvent $e) use (&$c) {
+            $this->assertEquals('PutObject', $e->getCommand()->getName());
+            $this->assertEquals('test', $e->getCommand()['Bucket']);
+            $e->intercept(new Result([]));
+            $c = true;
+        });
+        $client->uploadDirectory(__DIR__, 'test');
+        $this->assertTrue($c);
+    }
+
+    public function testProxiesToTransferObjectGet()
+    {
+        $client = $this->getTestClient('s3');
+        $c = null;
+        $client->getEmitter()->on('prepared', function (PreparedEvent $e) use (&$c) {
+            $n = $e->getCommand()->getName();
+            $this->assertTrue($n == 'GetObject' || $n == 'ListObjects');
+            $e->intercept(new Result([]));
+            $c = true;
+        });
+        $client->downloadBucket(__DIR__, 'test');
+        $this->assertTrue($c);
     }
 }

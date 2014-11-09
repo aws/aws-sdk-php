@@ -97,6 +97,16 @@ class FlatMapIteratorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([1, 2], iterator_to_array($flat));
     }
 
+    public function testCanRewindMidIter()
+    {
+        $iter = new \ArrayIterator([[1, 2, 3, 4], [2]]);
+        $flat = new FlatMapIterator($iter, function ($value) { return $value; });
+        $flat->next();
+        $flat->next();
+        $flat->rewind();
+        $this->assertEquals([1, 2, 3, 4, 2], iterator_to_array($flat));
+    }
+
     public function testCanHandleEmptyArrays()
     {
         $iter = new \ArrayIterator([[1], [], [], [2], [], [3], []]);

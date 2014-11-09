@@ -46,6 +46,7 @@ class FlatMapIterator implements \Iterator
 
         $this->currentIterator = null;
         $this->pos = 0;
+        $this->next();
     }
 
     public function next()
@@ -83,7 +84,7 @@ class FlatMapIterator implements \Iterator
     {
         // Create the current iterator the first time current/valid is called.
         if (!$this->currentIterator) {
-            $this->valid();
+            return $this->valid() ? $this->currentIterator->current() : false;
         }
 
         return $this->currentIterator->current();

@@ -122,12 +122,9 @@ class StreamWrapper
         }
 
         switch ($this->mode) {
-            case 'r':
-                return $this->openReadStream($path);
-            case 'a':
-                return $this->openAppendStream($path);
-            default:
-                return $this->openWriteStream($path);
+            case 'r': return $this->openReadStream($path);
+            case 'a': return $this->openAppendStream($path);
+            default: return $this->openWriteStream($path);
         }
     }
 
@@ -204,6 +201,9 @@ class StreamWrapper
      */
     public function url_stat($path, $flags)
     {
+        // Some paths come through as S3:// for some reason.
+        $path = str_replace('S3://', 's3://', $path);
+
         // Check if this path is in the url_stat cache
         if (isset(self::$nextStat[$path])) {
             return self::$nextStat[$path];
@@ -350,25 +350,22 @@ class StreamWrapper
 
         // Filter our "/" keys added by the console as directories, and ensure
         // that if a filter function is provided that it passes the filter.
-        $flatMap = new FlatMapIterator(
+        $this->objectIterator = new FlatMapIterator(
             $this->getClient()->getPaginator('ListObjects', $op),
-            function (Result $result) {
-                return $result->search('[Contents[], CommonPrefixes[]][]');
+            function (Result $result) use ($filterFn) {
+                // Filter out dir place holder keys and use the filter fn.
+                return array_filter(
+                    $result->search('[Contents[], CommonPrefixes[]][]'),
+                    function ($key) use ($filterFn) {
+                        return (!$filterFn || call_user_func($filterFn, $key))
+                            && (!isset($key['Key'])
+                                || substr($key['Key'], -1, 1) !== '/');
+                    }
+                );
             }
         );
 
-        // Filter each key returned by the iterator using the filter function.
-        $this->objectIterator = new \CallbackFilterIterator(
-            $flatMap,
-            function ($key) use ($filterFn) {
-                // Each yielded results can contain a "Key" or "Prefix"
-                return (!$filterFn || call_user_func($filterFn, $key)) &&
-                    (!isset($key['Key']) || substr($key['Key'], -1, 1) !== '/');
-            }
-        );
-
-        // The CallbackFilterIterator requires you to call next() to initialize
-        $this->objectIterator->next();
+        $this->objectIterator->rewind();
 
         return true;
     }
@@ -418,14 +415,14 @@ class StreamWrapper
             // Include "directories". Be sure to strip a trailing "/"
             // on prefixes.
             $prefix = rtrim($cur['Prefix'], '/');
+            $key = $this->formatKey($prefix);
             $result = str_replace($this->openedBucketPrefix, '', $prefix);
-            $key = "s3://{$this->openedBucket}/{$prefix}";
             $stat = $this->formatUrlStat($prefix);
         } else {
             // Remove the prefix from the result to emulate other
             // stream wrappers.
             $result = str_replace($this->openedBucketPrefix, '', $cur['Key']);
-            $key = "s3://{$this->openedBucket}/{$cur['Key']}";
+            $key = $this->formatKey($cur['Key']);
             $stat = $this->formatUrlStat($cur);
         }
 
@@ -435,6 +432,16 @@ class StreamWrapper
         $this->objectIterator->next();
 
         return $result;
+    }
+
+    private function formatKey($key)
+    {
+        $k = "s3://{$this->openedBucket}/";
+        if ($this->openedBucketPrefix) {
+            $k .= rtrim($this->openedBucketPrefix, '/') . '/';
+        }
+
+        return $k . $key;
     }
 
     /**
