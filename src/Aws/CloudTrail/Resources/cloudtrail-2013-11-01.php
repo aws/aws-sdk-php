@@ -111,6 +111,14 @@ return array (
                     'format' => 'boolean-string',
                     'location' => 'json',
                 ),
+                'CloudWatchLogsLogGroupArn' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'CloudWatchLogsRoleArn' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -148,6 +156,18 @@ return array (
                 array(
                     'reason' => 'This exception is thrown when the provided trail name is not valid.',
                     'class' => 'InvalidTrailNameException',
+                ),
+                array(
+                    'reason' => 'This exception is thrown when the provided CloudWatch log group is not valid.',
+                    'class' => 'InvalidCloudWatchLogsLogGroupArnException',
+                ),
+                array(
+                    'reason' => 'This exception is thrown when the provided role is not valid.',
+                    'class' => 'InvalidCloudWatchLogsRoleArnException',
+                ),
+                array(
+                    'reason' => 'Cannot set a CloudWatch Logs delivery for this region.',
+                    'class' => 'CloudWatchLogsDeliveryUnavailableException',
                 ),
             ),
         ),
@@ -377,6 +397,14 @@ return array (
                     'format' => 'boolean-string',
                     'location' => 'json',
                 ),
+                'CloudWatchLogsLogGroupArn' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'CloudWatchLogsRoleArn' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -411,6 +439,18 @@ return array (
                     'reason' => 'This exception is thrown when the provided trail name is not valid.',
                     'class' => 'InvalidTrailNameException',
                 ),
+                array(
+                    'reason' => 'This exception is thrown when the provided CloudWatch log group is not valid.',
+                    'class' => 'InvalidCloudWatchLogsLogGroupArnException',
+                ),
+                array(
+                    'reason' => 'This exception is thrown when the provided role is not valid.',
+                    'class' => 'InvalidCloudWatchLogsRoleArnException',
+                ),
+                array(
+                    'reason' => 'Cannot set a CloudWatch Logs delivery for this region.',
+                    'class' => 'CloudWatchLogsDeliveryUnavailableException',
+                ),
             ),
         ),
     ),
@@ -437,6 +477,14 @@ return array (
                 ),
                 'IncludeGlobalServiceEvents' => array(
                     'type' => 'boolean',
+                    'location' => 'json',
+                ),
+                'CloudWatchLogsLogGroupArn' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'CloudWatchLogsRoleArn' => array(
+                    'type' => 'string',
                     'location' => 'json',
                 ),
             ),
@@ -470,6 +518,12 @@ return array (
                             ),
                             'IncludeGlobalServiceEvents' => array(
                                 'type' => 'boolean',
+                            ),
+                            'CloudWatchLogsLogGroupArn' => array(
+                                'type' => 'string',
+                            ),
+                            'CloudWatchLogsRoleArn' => array(
+                                'type' => 'string',
                             ),
                         ),
                     ),
@@ -508,6 +562,14 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'LatestCloudWatchLogsDeliveryError' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'LatestCloudWatchLogsDeliveryTime' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
             ),
         ),
         'UpdateTrailResponse' => array(
@@ -532,6 +594,14 @@ return array (
                 ),
                 'IncludeGlobalServiceEvents' => array(
                     'type' => 'boolean',
+                    'location' => 'json',
+                ),
+                'CloudWatchLogsLogGroupArn' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'CloudWatchLogsRoleArn' => array(
+                    'type' => 'string',
                     'location' => 'json',
                 ),
             ),

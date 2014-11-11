@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2.7.4 - 2014-11-12
+
+* Added support for Amazon KMS encryption to the Amazon EC2 client.
+* Added support for Amazon CloudWatch Logs delivery to the AWS CloudTrail
+  client.
+* Added the GetTemplateSummary operation to the AWS CloudFormation client.
+
 ## 2.7.3 - 2014-11-06
 
 * Added support for private DNS for Amazon Virtual Private Clouds, health check

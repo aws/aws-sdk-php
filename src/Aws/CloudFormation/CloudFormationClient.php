@@ -36,9 +36,11 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model estimateTemplateCost(array $args = array()) {@command CloudFormation EstimateTemplateCost}
  * @method Model getStackPolicy(array $args = array()) {@command CloudFormation GetStackPolicy}
  * @method Model getTemplate(array $args = array()) {@command CloudFormation GetTemplate}
+ * @method Model getTemplateSummary(array $args = array()) {@command CloudFormation GetTemplateSummary}
  * @method Model listStackResources(array $args = array()) {@command CloudFormation ListStackResources}
  * @method Model listStacks(array $args = array()) {@command CloudFormation ListStacks}
  * @method Model setStackPolicy(array $args = array()) {@command CloudFormation SetStackPolicy}
+ * @method Model signalResource(array $args = array()) {@command CloudFormation SignalResource}
  * @method Model updateStack(array $args = array()) {@command CloudFormation UpdateStack}
  * @method Model validateTemplate(array $args = array()) {@command CloudFormation ValidateTemplate}
  * @method ResourceIteratorInterface getDescribeStackEventsIterator(array $args = array()) The input array uses the parameters of the DescribeStackEvents operation
