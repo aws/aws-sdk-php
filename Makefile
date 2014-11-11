@@ -1,13 +1,13 @@
 all: clean coverage docs
 
 test:
-	vendor/bin/phpunit
+	vendor/bin/phpunit $(TEST)
 
 coverage:
-	vendor/bin/phpunit --coverage-html=build/artifacts/coverage
+	vendor/bin/phpunit --coverage-html=build/artifacts/coverage $(TEST)
 
 integration:
-	vendor/bin/phpunit -c phpunit.functional.xml
+	vendor/bin/phpunit -c phpunit.functional.xml $(TEST)
 
 view-coverage:
 	open build/artifacts/coverage/index.html

@@ -78,6 +78,12 @@ return array(
             'class'   => 'Aws\CloudWatch\CloudWatchClient'
         ),
 
+        'cloudwatchlogs' => array(
+            'alias'   => 'CloudWatchLogs',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\CloudWatchLogs\CloudWatchLogsClient'
+        ),
+
         'cognito-identity' => array(
             'alias'   => 'CognitoIdentity',
             'extends' => 'default_settings',
@@ -94,10 +100,10 @@ return array(
 
         'cognitosync' => array('extends' => 'cognito-sync'),
 
-        'cloudwatchlogs' => array(
-            'alias'   => 'CloudWatchLogs',
+        'codedeploy' => array(
+            'alias'   => 'CodeDeploy',
             'extends' => 'default_settings',
-            'class'   => 'Aws\CloudWatchLogs\CloudWatchLogsClient'
+            'class'   => 'Aws\CodeDeploy\CodeDeployClient'
         ),
 
         'datapipeline' => array(
