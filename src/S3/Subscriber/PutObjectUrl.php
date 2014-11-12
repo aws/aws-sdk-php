@@ -24,7 +24,7 @@ class PutObjectUrl implements SubscriberInterface
 
         $name = $e->getCommand()->getName();
 
-        if ($name === 'PutObject') {
+        if ($name === 'PutObject' || $name === 'CopyObject') {
             $e->getResult()['ObjectURL'] = $e->getRequest()->getUrl();
         } elseif ($name === 'CompleteMultipartUpload') {
             $e->getResult()['ObjectURL'] = $e->getResult()['Location'];
