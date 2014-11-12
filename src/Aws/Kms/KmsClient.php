@@ -74,7 +74,6 @@ class KmsClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SSL_CERT            => 'system',
                 Options::VERSION             => self::LATEST_API_VERSION,
                 Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/kms-%s.php'
             ))

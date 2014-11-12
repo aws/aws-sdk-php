@@ -61,8 +61,7 @@ class ConfigServiceClient extends AbstractClient
             ->setConfig($config)
             ->setConfigDefaults(array(
                 Options::VERSION             => self::LATEST_API_VERSION,
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/configservice-%s.php',
-                Options::SSL_CERT            => 'system'
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/configservice-%s.php'
             ))
             ->setExceptionParser(new JsonQueryExceptionParser())
             ->build();
