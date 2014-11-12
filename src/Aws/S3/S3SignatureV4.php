@@ -32,7 +32,10 @@ class S3SignatureV4 extends SignatureV4 implements S3SignatureInterface
     public function signRequest(RequestInterface $request, CredentialsInterface $credentials)
     {
         if (!$request->hasHeader('x-amz-content-sha256')) {
-            $request->setHeader('x-amz-content-sha256', $this->getPresignedPayload($request));
+            $request->setHeader(
+                'x-amz-content-sha256',
+                parent::getPresignedPayload($request)
+            );
         }
 
         parent::signRequest($request, $credentials);
