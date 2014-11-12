@@ -61,7 +61,8 @@ copyright = u'2013, Amazon Web Services'
 # built documents.
 #
 # The short X.Y version.
-version = subprocess.check_output('git describe --abbrev=0 --tags', shell=True).strip()
+git_verson = subprocess.check_output('git describe --abbrev=0 --tags', shell=True).strip()
+version = os.getenv('VERSION', git_verson)
 # The full version, including alpha/beta/rc tags.
 release = version
 

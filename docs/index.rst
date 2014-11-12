@@ -35,7 +35,7 @@ AWS SDK for PHP
     service-codedeploy
     service-cognitoidentity
     service-cognitosync
-    service-config
+    service-configservice
     service-datapipeline
     service-directconnect
     service-dynamodb
