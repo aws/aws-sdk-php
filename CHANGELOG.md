@@ -4,7 +4,8 @@
 
 * Added support for the AWS Key Management Service.
 * Added support for AWS CodeDeploy.
-* Added support for Amazon KMS encryption to the Amazon EC2 client.
+* Added support for AWS KMS encryption to the Amazon S3 client.
+* Added support for AWS KMS encryption to the Amazon EC2 client.
 * Added support for Amazon CloudWatch Logs delivery to the AWS CloudTrail
   client.
 * Added the GetTemplateSummary operation to the AWS CloudFormation client.
