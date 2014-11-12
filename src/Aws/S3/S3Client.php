@@ -169,12 +169,20 @@ class S3Client extends AbstractClient
 
         $config[Options::SIGNATURE] = $signature = static::createSignature($config);
 
+        $configDefaults = array(
+            Options::VERSION => self::LATEST_API_VERSION,
+            Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/s3-%s.php'
+        );
+
+        // Use the system cert for now. This change will possibly be applied by
+        // default across all clients and regions.
+        if (isset($config['region']) && $config['region'] == 'eu-central-1') {
+            $configDefaults[Options::SSL_CERT] = 'system';
+        }
+
         $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
-            ->setConfigDefaults(array(
-                Options::VERSION => self::LATEST_API_VERSION,
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/s3-%s.php'
-            ))
+            ->setConfigDefaults($configDefaults)
             ->setExceptionParser($exceptionParser)
             ->setIteratorsConfig(array(
                 'more_key' => 'IsTruncated',
