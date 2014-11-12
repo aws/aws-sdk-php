@@ -179,6 +179,12 @@ return array(
             'class'   => 'Aws\Kinesis\KinesisClient'
         ),
 
+        'kms' => array(
+            'alias'   => 'Kms',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\Kms\KmsClient'
+        ),
+
         'iam' => array(
             'alias'   => 'Iam',
             'extends' => 'default_settings',

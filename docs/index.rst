@@ -49,6 +49,7 @@ AWS SDK for PHP
     service-iam
     service-importexport
     service-kinesis
+    service-kms
     service-opsworks
     service-rds
     service-redshift
@@ -175,6 +176,10 @@ Service-Specific Guides
 * Amazon Kinesis
 
   .. indexlinks:: Kinesis
+
+* AWS Key Management Service
+
+  .. indexlinks:: Kms
 
 * Amazon Redshift
 
