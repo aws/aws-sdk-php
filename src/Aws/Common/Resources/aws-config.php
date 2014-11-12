@@ -106,6 +106,12 @@ return array(
             'class'   => 'Aws\CodeDeploy\CodeDeployClient'
         ),
 
+        'config' => array(
+            'alias'   => 'ConfigService',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\ConfigService\ConfigServiceClient'
+        ),
+
         'datapipeline' => array(
             'alias'   => 'DataPipeline',
             'extends' => 'default_settings',

@@ -32,9 +32,10 @@ AWS SDK for PHP
     service-cloudtrail
     service-cloudwatch
     service-cloudwatchlogs
+    service-codedeploy
     service-cognitoidentity
     service-cognitosync
-    service-codedeploy
+    service-config
     service-datapipeline
     service-directconnect
     service-dynamodb
@@ -145,6 +146,10 @@ Service-Specific Guides
 * Amazon Cognito Sync
 
   .. indexlinks:: CognitoSync
+
+* AWS Config
+
+  .. indexlinks:: ConfigService
 
 * Amazon DynamoDB
 
