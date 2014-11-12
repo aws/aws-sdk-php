@@ -10,6 +10,8 @@
 * Added support for Amazon CloudWatch Logs delivery to the AWS CloudTrail
   client.
 * Added the GetTemplateSummary operation to the AWS CloudFormation client.
+* Fixed an issue with sending signature version 4 Amazon S3 requests that
+  contained a 0 length body.
 
 ## 2.7.3 - 2014-11-06
 
