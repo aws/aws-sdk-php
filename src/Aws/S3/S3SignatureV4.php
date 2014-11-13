@@ -34,7 +34,7 @@ class S3SignatureV4 extends SignatureV4 implements S3SignatureInterface
         if (!$request->hasHeader('x-amz-content-sha256')) {
             $request->setHeader(
                 'x-amz-content-sha256',
-                parent::getPresignedPayload($request)
+                $this->getPayload($request)
             );
         }
 
@@ -47,14 +47,7 @@ class S3SignatureV4 extends SignatureV4 implements S3SignatureInterface
      */
     protected function getPresignedPayload(RequestInterface $request)
     {
-        $result = parent::getPresignedPayload($request);
-
-        // If the body is empty, then sign with 'UNSIGNED-PAYLOAD'
-        if ($result === self::DEFAULT_PAYLOAD) {
-            $result = hash('sha256', 'UNSIGNED-PAYLOAD');
-        }
-
-        return $result;
+        return 'UNSIGNED-PAYLOAD';
     }
 
     /**
