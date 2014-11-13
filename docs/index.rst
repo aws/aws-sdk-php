@@ -51,6 +51,7 @@ AWS SDK for PHP
     service-importexport
     service-kinesis
     service-kms
+    service-lambda
     service-opsworks
     service-rds
     service-redshift
@@ -263,6 +264,10 @@ Service-Specific Guides
 * AWS Import/Export
 
   .. indexlinks:: ImportExport
+
+* AWS Lambda
+
+  .. indexlinks:: Lambda
 
 * AWS OpsWorks
 

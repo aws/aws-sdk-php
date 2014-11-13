@@ -191,6 +191,12 @@ return array(
             'class'   => 'Aws\Kms\KmsClient'
         ),
 
+        'lambda' => array(
+            'alias'   => 'Lambda',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\Lambda\LambdaClient'
+        ),
+
         'iam' => array(
             'alias'   => 'Iam',
             'extends' => 'default_settings',

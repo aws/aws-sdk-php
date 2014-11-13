@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* Added support for AWS Lambda.
 * Added support for event notifications to the Amazon S3 client.
 * Fixed an issue with S3 pre-signed URLs when using Signature V4.
 
