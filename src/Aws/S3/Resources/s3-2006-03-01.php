@@ -1868,14 +1868,79 @@ return array (
                     'location' => 'uri',
                 ),
                 'TopicConfiguration' => array(
-                    'required' => true,
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
+                        'Id' => array(
+                            'type' => 'string',
+                        ),
+                        'Events' => array(
+                            'type' => 'array',
+                            'data' => array(
+                                'xmlFlattened' => true,
+                            ),
+                            'items' => array(
+                                'name' => 'Event',
+                                'type' => 'string',
+                            ),
+                        ),
                         'Event' => array(
                             'type' => 'string',
                         ),
                         'Topic' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+                'QueueConfiguration' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'Id' => array(
+                            'type' => 'string',
+                        ),
+                        'Event' => array(
+                            'type' => 'string',
+                        ),
+                        'Events' => array(
+                            'type' => 'array',
+                            'data' => array(
+                                'xmlFlattened' => true,
+                            ),
+                            'items' => array(
+                                'name' => 'Event',
+                                'type' => 'string',
+                            ),
+                        ),
+                        'Queue' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+                'CloudFunctionConfiguration' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'Id' => array(
+                            'type' => 'string',
+                        ),
+                        'Event' => array(
+                            'type' => 'string',
+                        ),
+                        'Events' => array(
+                            'type' => 'array',
+                            'data' => array(
+                                'xmlFlattened' => true,
+                            ),
+                            'items' => array(
+                                'name' => 'Event',
+                                'type' => 'string',
+                            ),
+                        ),
+                        'CloudFunction' => array(
+                            'type' => 'string',
+                        ),
+                        'InvocationRole' => array(
                             'type' => 'string',
                         ),
                     ),
@@ -3257,10 +3322,82 @@ return array (
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
+                        'Id' => array(
+                            'type' => 'string',
+                        ),
+                        'Events' => array(
+                            'type' => 'array',
+                            'sentAs' => 'Event',
+                            'data' => array(
+                                'xmlFlattened' => true,
+                            ),
+                            'items' => array(
+                                'name' => 'Event',
+                                'type' => 'string',
+                                'sentAs' => 'Event',
+                            ),
+                        ),
                         'Event' => array(
                             'type' => 'string',
                         ),
                         'Topic' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+                'QueueConfiguration' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'Id' => array(
+                            'type' => 'string',
+                        ),
+                        'Event' => array(
+                            'type' => 'string',
+                        ),
+                        'Events' => array(
+                            'type' => 'array',
+                            'sentAs' => 'Event',
+                            'data' => array(
+                                'xmlFlattened' => true,
+                            ),
+                            'items' => array(
+                                'name' => 'Event',
+                                'type' => 'string',
+                                'sentAs' => 'Event',
+                            ),
+                        ),
+                        'Queue' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+                'CloudFunctionConfiguration' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'Id' => array(
+                            'type' => 'string',
+                        ),
+                        'Event' => array(
+                            'type' => 'string',
+                        ),
+                        'Events' => array(
+                            'type' => 'array',
+                            'sentAs' => 'Event',
+                            'data' => array(
+                                'xmlFlattened' => true,
+                            ),
+                            'items' => array(
+                                'name' => 'Event',
+                                'type' => 'string',
+                                'sentAs' => 'Event',
+                            ),
+                        ),
+                        'CloudFunction' => array(
+                            'type' => 'string',
+                        ),
+                        'InvocationRole' => array(
                             'type' => 'string',
                         ),
                     ),

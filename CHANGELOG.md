@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Unreleased
+
+* Added support for event notifications to the Amazon S3 client.
+* Fixed an issue with S3 pre-signed URLs when using Signature V4.
+
 ## 2.7.4 - 2014-11-12
 
 * Added support for the AWS Key Management Service.
