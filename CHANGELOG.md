@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## 2.7.5 - 2014-11-13
 
 * Added support for AWS Lambda.
 * Added support for event notifications to the Amazon S3 client.
