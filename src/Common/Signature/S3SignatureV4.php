@@ -30,13 +30,6 @@ class S3SignatureV4 extends SignatureV4
      */
     protected function getPresignedPayload(RequestInterface $request)
     {
-        $result = parent::getPresignedPayload($request);
-
-        // If the body is empty, then sign with 'UNSIGNED-PAYLOAD'
-        if ($result === self::EMPTY_PAYLOAD) {
-            $result = 'UNSIGNED-PAYLOAD';
-        }
-
-        return $result;
+        return 'UNSIGNED-PAYLOAD';
     }
 }
