@@ -11,6 +11,20 @@ use Aws\Common\Command\JsonCommand;
  */
 class DynamoDbCommand extends JsonCommand
 {
+    protected function build()
+    {
+        // Remove the values that should be appended to the user agent.
+        // (Note: Because validation is off, this doesn't happen automatically.)
+        $uaAppend = $this['ua.append'];
+        unset($this['ua.append']);
+
+        // Build the request.
+        parent::build();
+
+        // Put the values back, so the UA listener add them to the UA header.
+        $this['ua.append'] = $uaAppend;
+    }
+
     protected function validate()
     {
         // No validation for DynamoDB ever. This is because the service
