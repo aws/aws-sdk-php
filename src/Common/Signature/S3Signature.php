@@ -159,7 +159,10 @@ class S3Signature extends AbstractSignature
         $buffer = '/';
 
         if ($data['bucket']) {
-            $buffer .= $data['bucket'] . '/' . $data['key'];
+            $buffer .= $data['bucket'];
+            if (!empty($data['key']) || !$data['path_style']) {
+                $buffer .= '/' . $data['key'];
+            }
         }
 
         // Add sub resource parameters

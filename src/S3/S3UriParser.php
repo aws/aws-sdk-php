@@ -8,7 +8,7 @@ use GuzzleHttp\Url;
  */
 class S3UriParser
 {
-    private $pattern = '/^(.+\\.)?s3[.-]([a-z0-9-]+)\\./';
+    private $pattern = '/^(.+\\.)?s3[.-]([A-Za-z0-9-]+)\\./';
 
     private static $defaultResult = [
         'path_style' => true,

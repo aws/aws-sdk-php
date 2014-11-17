@@ -214,7 +214,7 @@ class S3SignatureTest extends \PHPUnit_Framework_TestCase
                         'Host' => 's3.amazonaws.com',
                         'Date' => 'Tue, 27 Mar 2007 19:36:42 +0000'
                     ]
-                ], "PUT\n\n\nTue, 27 Mar 2007 19:36:42 +0000\n/johnsmith/?acl"
+                ], "PUT\n\n\nTue, 27 Mar 2007 19:36:42 +0000\n/johnsmith?acl"
             ],
             // Set the ACL of a path hosted bucket with an erroneous path value
             [
@@ -225,7 +225,7 @@ class S3SignatureTest extends \PHPUnit_Framework_TestCase
                         'Host' => 's3.amazonaws.com',
                         'Date' => 'Tue, 27 Mar 2007 19:36:42 +0000'
                     ],
-                ], "PUT\n\n\nTue, 27 Mar 2007 19:36:42 +0000\n/johnsmith/?acl"
+                ], "PUT\n\n\nTue, 27 Mar 2007 19:36:42 +0000\n/johnsmith?acl"
             ],
             // Send a request to the EU region
             [
@@ -259,6 +259,26 @@ class S3SignatureTest extends \PHPUnit_Framework_TestCase
                         'Date' => 'Tue, 27 Mar 2007 19:36:42 +0000'
                     ],
                 ], "GET\n\n\nTue, 27 Mar 2007 19:36:42 +0000\n/foo-s3-test-bucket/bar"
+            ],
+            [
+                [
+                    'verb' => 'GET',
+                    'path' => '/',
+                    'headers' => [
+                        'Host' => 'foo.s3.amazonaws.com',
+                        'Date' => 'Tue, 27 Mar 2007 19:36:42 +0000'
+                    ],
+                ], "GET\n\n\nTue, 27 Mar 2007 19:36:42 +0000\n/foo/"
+            ],
+            [
+                [
+                    'verb' => 'GET',
+                    'path' => '/foo',
+                    'headers' => [
+                        'Host' => 's3.amazonaws.com',
+                        'Date' => 'Tue, 27 Mar 2007 19:36:42 +0000'
+                    ],
+                ], "GET\n\n\nTue, 27 Mar 2007 19:36:42 +0000\n/foo"
             ],
         ];
     }
