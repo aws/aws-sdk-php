@@ -78,4 +78,14 @@ class BucketStyleListenerTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals('foo.s3.amazonaws.com', $command->getRequest()->getHost());
         $this->assertEquals('/Bar', $command->getRequest()->getResource());
     }
+
+    public function testIgnoresExcludedCommands()
+    {
+        $s3 = $this->getServiceBuilder()->get('s3');
+        $this->setMockResponse($s3, array(new Response(200)));
+        $command = $s3->getCommand('GetBucketLocation', array('Bucket' => 'foo'));
+        $command->execute();
+        $this->assertEquals('s3.amazonaws.com', $command->getRequest()->getHost());
+        $this->assertEquals('/foo?location', $command->getRequest()->getResource());
+    }
 }

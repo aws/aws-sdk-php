@@ -24,9 +24,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class BucketStyleListener implements EventSubscriberInterface
 {
-    /**
-     * {@inheritdoc}
-     */
+    private static $exclusions = array('GetBucketLocation' => true);
+
     public static function getSubscribedEvents()
     {
         return array('command.after_prepare' => array('onCommandAfterPrepare', -255));
@@ -43,6 +42,11 @@ class BucketStyleListener implements EventSubscriberInterface
         $bucket = $command['Bucket'];
         $request = $command->getRequest();
         $pathStyle = false;
+
+        // Skip operations that do not need the bucket moved to the host.
+        if (isset(self::$exclusions[$command->getName()])) {
+            return;
+        }
 
         if ($key = $command['Key']) {
             // Modify the command Key to account for the {/Key*} explosion into an array
