@@ -75,4 +75,16 @@ class BucketStyleTest extends \PHPUnit_Framework_TestCase
         });
         $s3->execute($command);
     }
+
+    public function testIgnoresExcludedCommands()
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResponses($s3, [new Response(200)]);
+        $command = $s3->getCommand('GetBucketLocation', ['Bucket' => 'foo']);
+        $command->getEmitter()->on('process', function (ProcessEvent $e) {
+            $this->assertEquals('s3.amazonaws.com', $e->getRequest()->getHost());
+            $this->assertEquals('/foo?location', $e->getRequest()->getResource());
+        });
+        $s3->execute($command);
+    }
 }

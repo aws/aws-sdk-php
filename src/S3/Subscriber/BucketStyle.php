@@ -1,5 +1,4 @@
 <?php
-
 namespace Aws\S3\Subscriber;
 
 use Aws\S3\S3Client;
@@ -14,6 +13,8 @@ use GuzzleHttp\Event\SubscriberInterface;
  */
 class BucketStyle implements SubscriberInterface
 {
+    private static $exclusions = ['GetBucketLocation' => true];
+
     public function getEvents()
     {
         return ['prepared' => ['setBucketStyle', 'last']];
@@ -30,6 +31,10 @@ class BucketStyle implements SubscriberInterface
         $request = $event->getRequest();
         $bucket = $command['Bucket'];
         $path = $request->getPath();
+
+        if (isset(self::$exclusions[$command->getName()])) {
+            return;
+        }
 
         // Switch to virtual if PathStyle is disabled, or not a DNS compatible
         // bucket name, or the scheme is https and there are no dots in the host
