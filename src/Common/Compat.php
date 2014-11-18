@@ -28,9 +28,9 @@ class Compat
      */
     public function convertConfig(array &$config)
     {
-        foreach (array_keys($config) as $key) {
+        foreach ($config as $key => $value) {
             if (isset(self::$mapping[$key])) {
-                $this->{self::$mapping[$key]}($config[$key], $config);
+                $this->{self::$mapping[$key]}($value, $config);
             }
         }
     }
