@@ -1,8 +1,6 @@
 <?php
 namespace Aws;
 
-use Aws\Common\ClientFactory;
-
 /**
  * Builds AWS clients based on configuration settings.
  *
@@ -109,16 +107,6 @@ class Sdk
         'swf'                  => 'Swf',
     ];
 
-    private static $factories = [
-        'cloudsearchdomain' => 'Aws\CloudSearchDomain\CloudSearchDomainFactory',
-        'dynamodb'          => 'Aws\DynamoDb\DynamoDbFactory',
-        'glacier'           => 'Aws\Glacier\GlacierFactory',
-        'route53'           => 'Aws\Route53\Route53Factory',
-        's3'                => 'Aws\S3\S3Factory',
-        'sts'               => 'Aws\Sts\StsFactory',
-        'sqs'               => 'Aws\Sqs\SqsFactory',
-    ];
-
     /** @var array Arguments for creating clients */
     private $args;
 
@@ -207,15 +195,15 @@ class Sdk
         // Set the service name and determine if it is linked to a known class
         $args['service'] = $name;
         $args['class_name'] = false;
+        $factoryName = 'Aws\Common\ClientFactory';
+
         if (isset(self::$services[$name])) {
             $args['class_name'] = self::$services[$name];
+            if (class_exists("Aws\\{$args['class_name']}\\{$args['class_name']}Factory")) {
+                $factoryName = "Aws\\{$args['class_name']}\\{$args['class_name']}Factory";
+            }
         }
 
-        // Get the client factory for the service
-        $factory = isset(self::$factories[$name])
-            ? new self::$factories[$name]
-            : new ClientFactory;
-
-        return $factory->create($args);
+        return (new $factoryName)->create($args);
     }
 }
