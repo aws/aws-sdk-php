@@ -5,6 +5,8 @@ use Aws\Common\Credentials\NullCredentials;
 use Aws\Common\Result;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
+use GuzzleHttp\Command\Event\PreparedEvent;
+use GuzzleHttp\Event\BeforeEvent;
 use GuzzleHttp\Stream\FnStream;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Stream\StreamInterface;
@@ -200,6 +202,47 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
         $this->addMockResults($client, $mockedResults);
         $result = $client->upload('bucket', 'key', $body, 'private', $options);
         $this->assertEquals('https://bucket.s3.amazonaws.com/key', $result['ObjectURL']);
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testEnsuresPrefixOrRegexSuppliedForDeleteMatchingObjects()
+    {
+        $client = $this->getTestClient('s3');
+        $client->deleteMatchingObjects('foo');
+    }
+
+    public function testDeletesMatchingObjectsByPrefixAndRegex()
+    {
+        $client = $this->getTestClient('s3');
+
+        $client->getEmitter()->on('prepared', function (PreparedEvent $e) {
+            $this->assertEquals('bucket', $e->getCommand()['Bucket']);
+            $e->intercept(new Result([
+                'IsTruncated' => false,
+                'Marker' => '',
+                'Contents' => [
+                    ['Key' => 'foo/bar'],
+                    ['Key' => 'foo/bar/baz'],
+                    ['Key' => 'foo/test'],
+                    ['Key' => 'foo/bar/bam'],
+                    ['Key' => 'foo/bar/001'],
+                    ['Key' => 'foo/other']
+                ]
+            ]));
+        });
+
+        $agg = [];
+        $client->deleteMatchingObjects('bucket', 'foo/bar/', '/^foo\/bar\/[a-z]+$/', [
+            'before' => function ($iter, array $keys) use (&$agg) {
+                foreach ($keys as $k) {
+                    $agg[] = $k['Key'];
+                }
+            }
+        ]);
+
+        $this->assertEquals(['foo/bar/baz', 'foo/bar/bam'], $agg);
     }
 
     public function getUploadTestCases()

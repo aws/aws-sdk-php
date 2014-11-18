@@ -137,6 +137,51 @@ class S3Client extends AwsClient
     }
 
     /**
+     * Deletes objects from Amazon S3 that match the result of a ListObjects
+     * operation. For example, this allows you to do things like delete all
+     * objects that match a specific key prefix.
+     *
+     * @param string $bucket  Bucket that contains the object keys
+     * @param string $prefix  Optionally delete only objects under this key prefix
+     * @param string $regex   Delete only objects that match this regex
+     * @param array  $options Options used when deleting the object:
+     *       - before: Callable to invoke before each delete is called. This
+     *       callable accepts the underlying iterator being used and an array
+     *       of the keys that are about to be deleted.
+     *
+     * @see Aws\S3\S3Client::listObjects
+     * @see Aws\S3\ClearBucket For more options or customization
+     * @throws \RuntimeException if no prefix and no regex is given
+     */
+    public function deleteMatchingObjects(
+        $bucket,
+        $prefix = '',
+        $regex = '',
+        array $options = []
+    ) {
+        if (!$prefix && !$regex) {
+            throw new \RuntimeException('A prefix or regex is required.');
+        }
+
+        $options['iterator'] = $this->getIterator('ListObjects', [
+            'Bucket' => $bucket,
+            'Prefix' => $prefix
+        ]);
+
+        if ($regex) {
+            $options['iterator'] = new \CallbackFilterIterator(
+                $options['iterator'],
+                function ($c) use ($regex) {
+                    return preg_match($regex, $c['Key']);
+                }
+            );
+            $options['iterator']->rewind();
+        }
+
+        (new ClearBucket($this, $bucket, $options))->clear();
+    }
+
+    /**
      * Upload a file, stream, or string to a bucket.
      *
      * If the upload size exceeds the specified threshold, the upload will be
