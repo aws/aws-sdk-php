@@ -16,11 +16,11 @@
 
 namespace Aws\Tests\Common\Client;
 
+use Aws\Common\Aws;
 use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 use Aws\Common\Credentials\Credentials;
-use Aws\Common\Iterator\AwsResourceIterator;
 use Aws\DynamoDb\DynamoDbClient;
 use Guzzle\Common\Collection;
 use Guzzle\Plugin\Backoff\BackoffPlugin;
@@ -68,8 +68,18 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
                 'service.description' => $this->stsDescription
             ))
             ->build();
-
         $this->assertInstanceOf('Aws\Sts\StsClient', $client);
+        $this->assertEquals('https://sts.amazonaws.com', $client->getBaseUrl());
+
+        $client = ClientBuilder::factory('Aws\\Sts')
+            ->setConfig(array('region' => 'cn-north-1'))
+            ->setConfigDefaults(array(
+                'service' => 'sts',
+                'service.description' => $this->stsDescription
+            ))
+            ->build();
+        $this->assertInstanceOf('Aws\Sts\StsClient', $client);
+        $this->assertEquals('https://sts.cn-north-1.amazonaws.com.cn', $client->getBaseUrl());
     }
 
     public function testBuildAlternate()
@@ -381,5 +391,12 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
             ->build();
         $this->assertInstanceOf('Aws\\Common\\Signature\\SignatureV4', $client->getSignature());
         $this->assertInstanceOf('Aws\\Common\\Credentials\\NullCredentials', $client->getCredentials());
+    }
+
+    public function testCanUseCnNorth1AndIam()
+    {
+        $sdk = Aws::factory();
+        $c = $sdk->get('iam', array('region' => 'cn-north-1'));
+        $this->assertEquals('https://iam.cn-north-1.amazonaws.com.cn', $c->getBaseUrl());
     }
 }

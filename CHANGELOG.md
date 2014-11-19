@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Next Release
+
+* Fixing cn-north-1 endpoint for AWS Identity and Access Management.
+
 ## 2.7.5 - 2014-11-13
 
 * Added support for AWS Lambda.

@@ -377,7 +377,7 @@ class ClientBuilder
             throw new InvalidArgumentException(
                 'A region is required when using ' . $description->getData('serviceFullName')
             );
-        } elseif ($global && (!$region || $description->getData('namespace') !== 'S3')) {
+        } elseif ($global && !$region) {
             $region = 'us-east-1';
             $config->set(Options::REGION, 'us-east-1');
         }
