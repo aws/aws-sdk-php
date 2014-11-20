@@ -4,6 +4,10 @@
 
 * Added support for AWS KMS integration to the Amazon Redshift Client.
 * Fixed cn-north-1 endpoint for AWS Identity and Access Management.
+* Updated `S3Client::getBucketLocation` method to work cross-region regardless
+  of the region's signature requirements.
+* Fixed an issue with the DynamoDbClient that allows it to work better with
+  with DynamoDB Local.
 
 ## 2.7.5 - 2014-11-13
 
