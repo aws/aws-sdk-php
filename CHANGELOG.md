@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next Release
+## 2.7.6 - 2014-11-20
 
 * Added support for AWS KMS integration to the Amazon Redshift Client.
 * Fixed cn-north-1 endpoint for AWS Identity and Access Management.
