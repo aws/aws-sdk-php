@@ -301,11 +301,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The named Auto Scaling group or launch configuration already exists.',
+                    'reason' => 'You already have an Auto Scaling group or launch configuration with this name.',
                     'class' => 'AlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'The quota for capacity groups or launch configurations for this customer has already been reached.',
+                    'reason' => 'The limit for the number of Auto Scaling groups or launch configurations has already been reached.',
                     'class' => 'LimitExceededException',
                 ),
             ),
@@ -480,11 +480,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The named Auto Scaling group or launch configuration already exists.',
+                    'reason' => 'You already have an Auto Scaling group or launch configuration with this name.',
                     'class' => 'AlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'The quota for capacity groups or launch configurations for this customer has already been reached.',
+                    'reason' => 'The limit for the number of Auto Scaling groups or launch configurations has already been reached.',
                     'class' => 'LimitExceededException',
                 ),
             ),
@@ -541,11 +541,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The quota for capacity groups or launch configurations for this customer has already been reached.',
+                    'reason' => 'The limit for the number of Auto Scaling groups or launch configurations has already been reached.',
                     'class' => 'LimitExceededException',
                 ),
                 array(
-                    'reason' => 'The named Auto Scaling group or launch configuration already exists.',
+                    'reason' => 'You already have an Auto Scaling group or launch configuration with this name.',
                     'class' => 'AlreadyExistsException',
                 ),
             ),
@@ -582,11 +582,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'You cannot delete an Auto Scaling group while there are scaling activities in progress for that group.',
+                    'reason' => 'The Auto Scaling group can\'t be deleted because there are scaling activities in progress.',
                     'class' => 'ScalingActivityInProgressException',
                 ),
                 array(
-                    'reason' => 'This is returned when you cannot delete a launch configuration or Auto Scaling group because it is being used.',
+                    'reason' => 'The Auto Scaling group or launch configuration can\'t be deleted because it is in use.',
                     'class' => 'ResourceInUseException',
                 ),
             ),
@@ -618,7 +618,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'This is returned when you cannot delete a launch configuration or Auto Scaling group because it is being used.',
+                    'reason' => 'The Auto Scaling group or launch configuration can\'t be deleted because it is in use.',
                     'class' => 'ResourceInUseException',
                 ),
             ),
@@ -881,7 +881,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The NextToken value is invalid.',
+                    'reason' => 'The NextToken value is not valid.',
                     'class' => 'InvalidNextTokenException',
                 ),
             ),
@@ -925,7 +925,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The NextToken value is invalid.',
+                    'reason' => 'The NextToken value is not valid.',
                     'class' => 'InvalidNextTokenException',
                 ),
             ),
@@ -988,7 +988,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The NextToken value is invalid.',
+                    'reason' => 'The NextToken value is not valid.',
                     'class' => 'InvalidNextTokenException',
                 ),
             ),
@@ -1107,7 +1107,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The NextToken value is invalid.',
+                    'reason' => 'The NextToken value is not valid.',
                     'class' => 'InvalidNextTokenException',
                 ),
             ),
@@ -1157,7 +1157,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The NextToken value is invalid.',
+                    'reason' => 'The NextToken value is not valid.',
                     'class' => 'InvalidNextTokenException',
                 ),
             ),
@@ -1205,7 +1205,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The NextToken value is invalid.',
+                    'reason' => 'The NextToken value is not valid.',
                     'class' => 'InvalidNextTokenException',
                 ),
             ),
@@ -1292,7 +1292,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The NextToken value is invalid.',
+                    'reason' => 'The NextToken value is not valid.',
                     'class' => 'InvalidNextTokenException',
                 ),
             ),
@@ -1347,7 +1347,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The NextToken value is invalid.',
+                    'reason' => 'The NextToken value is not valid.',
                     'class' => 'InvalidNextTokenException',
                 ),
             ),
@@ -1576,7 +1576,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'You cannot delete an Auto Scaling group while there are scaling activities in progress for that group.',
+                    'reason' => 'The Auto Scaling group can\'t be deleted because there are scaling activities in progress.',
                     'class' => 'ScalingActivityInProgressException',
                 ),
             ),
@@ -1682,7 +1682,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The quota for capacity groups or launch configurations for this customer has already been reached.',
+                    'reason' => 'The limit for the number of Auto Scaling groups or launch configurations has already been reached.',
                     'class' => 'LimitExceededException',
                 ),
             ),
@@ -1733,7 +1733,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The quota for capacity groups or launch configurations for this customer has already been reached.',
+                    'reason' => 'The limit for the number of Auto Scaling groups or launch configurations has already been reached.',
                     'class' => 'LimitExceededException',
                 ),
             ),
@@ -1792,7 +1792,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The quota for capacity groups or launch configurations for this customer has already been reached.',
+                    'reason' => 'The limit for the number of Auto Scaling groups or launch configurations has already been reached.',
                     'class' => 'LimitExceededException',
                 ),
             ),
@@ -1876,11 +1876,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The named Auto Scaling group or launch configuration already exists.',
+                    'reason' => 'You already have an Auto Scaling group or launch configuration with this name.',
                     'class' => 'AlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'The quota for capacity groups or launch configurations for this customer has already been reached.',
+                    'reason' => 'The limit for the number of Auto Scaling groups or launch configurations has already been reached.',
                     'class' => 'LimitExceededException',
                 ),
             ),
@@ -1999,7 +1999,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'You cannot delete an Auto Scaling group while there are scaling activities in progress for that group.',
+                    'reason' => 'The Auto Scaling group can\'t be deleted because there are scaling activities in progress.',
                     'class' => 'ScalingActivityInProgressException',
                 ),
             ),
@@ -2112,7 +2112,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'You cannot delete an Auto Scaling group while there are scaling activities in progress for that group.',
+                    'reason' => 'The Auto Scaling group can\'t be deleted because there are scaling activities in progress.',
                     'class' => 'ScalingActivityInProgressException',
                 ),
             ),
@@ -2211,7 +2211,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'You cannot delete an Auto Scaling group while there are scaling activities in progress for that group.',
+                    'reason' => 'The Auto Scaling group can\'t be deleted because there are scaling activities in progress.',
                     'class' => 'ScalingActivityInProgressException',
                 ),
             ),
