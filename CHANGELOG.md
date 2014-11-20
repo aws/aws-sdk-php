@@ -2,7 +2,8 @@
 
 ## Next Release
 
-* Fixing cn-north-1 endpoint for AWS Identity and Access Management.
+* Added support for AWS KMS integration to the Amazon Redshift Client.
+* Fixed cn-north-1 endpoint for AWS Identity and Access Management.
 
 ## 2.7.5 - 2014-11-13
 
@@ -12,7 +13,7 @@
 
 ## 2.7.4 - 2014-11-12
 
-* Added support for the AWS Key Management Service.
+* Added support for the AWS Key Management Service (AWS KMS).
 * Added support for AWS CodeDeploy.
 * Added support for AWS Config.
 * Added support for AWS KMS encryption to the Amazon S3 client.

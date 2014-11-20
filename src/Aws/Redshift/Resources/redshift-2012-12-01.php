@@ -329,6 +329,27 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+                'KmsKeyId' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -348,11 +369,11 @@ return array (
                     'class' => 'ClusterSecurityGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'The request would exceed the allowed number of cluster instances for this account. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
+                    'reason' => 'The request would exceed the allowed number of cluster instances for this account. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Cluster Management Guide.',
                     'class' => 'ClusterQuotaExceededException',
                 ),
                 array(
-                    'reason' => 'The operation would exceed the number of nodes allotted to the account. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
+                    'reason' => 'The operation would exceed the number of nodes allotted to the account. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Cluster Management Guide.',
                     'class' => 'NumberOfNodesQuotaExceededException',
                 ),
                 array(
@@ -391,6 +412,14 @@ return array (
                     'reason' => 'The Elastic IP (EIP) is invalid or cannot be found.',
                     'class' => 'InvalidElasticIpException',
                 ),
+                array(
+                    'reason' => 'The request exceeds the limit of 10 tags for the resource.',
+                    'class' => 'TagLimitExceededException',
+                ),
+                array(
+                    'reason' => 'The tag is invalid.',
+                    'class' => 'InvalidTagException',
+                ),
             ),
         ),
         'CreateClusterParameterGroup' => array(
@@ -425,15 +454,40 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The request would result in the user exceeding the allowed number of cluster parameter groups. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
+                    'reason' => 'The request would result in the user exceeding the allowed number of cluster parameter groups. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Cluster Management Guide.',
                     'class' => 'ClusterParameterGroupQuotaExceededException',
                 ),
                 array(
                     'reason' => 'A cluster parameter group with the same name already exists.',
                     'class' => 'ClusterParameterGroupAlreadyExistsException',
+                ),
+                array(
+                    'reason' => 'The request exceeds the limit of 10 tags for the resource.',
+                    'class' => 'TagLimitExceededException',
+                ),
+                array(
+                    'reason' => 'The tag is invalid.',
+                    'class' => 'InvalidTagException',
                 ),
             ),
         ),
@@ -464,6 +518,23 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -471,8 +542,16 @@ return array (
                     'class' => 'ClusterSecurityGroupAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'The request would result in the user exceeding the allowed number of cluster security groups. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
+                    'reason' => 'The request would result in the user exceeding the allowed number of cluster security groups. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Cluster Management Guide.',
                     'class' => 'ClusterSecurityGroupQuotaExceededException',
+                ),
+                array(
+                    'reason' => 'The request exceeds the limit of 10 tags for the resource.',
+                    'class' => 'TagLimitExceededException',
+                ),
+                array(
+                    'reason' => 'The tag is invalid.',
+                    'class' => 'InvalidTagException',
                 ),
             ),
         ),
@@ -503,6 +582,23 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -520,6 +616,14 @@ return array (
                 array(
                     'reason' => 'The request would result in the user exceeding the allowed number of cluster snapshots.',
                     'class' => 'ClusterSnapshotQuotaExceededException',
+                ),
+                array(
+                    'reason' => 'The request exceeds the limit of 10 tags for the resource.',
+                    'class' => 'TagLimitExceededException',
+                ),
+                array(
+                    'reason' => 'The tag is invalid.',
+                    'class' => 'InvalidTagException',
                 ),
             ),
         ),
@@ -560,6 +664,23 @@ return array (
                         'type' => 'string',
                     ),
                 ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -567,11 +688,11 @@ return array (
                     'class' => 'ClusterSubnetGroupAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'The request would result in user exceeding the allowed number of cluster subnet groups. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
+                    'reason' => 'The request would result in user exceeding the allowed number of cluster subnet groups. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Cluster Management Guide.',
                     'class' => 'ClusterSubnetGroupQuotaExceededException',
                 ),
                 array(
-                    'reason' => 'The request would result in user exceeding the allowed number of subnets in a cluster subnet groups. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
+                    'reason' => 'The request would result in user exceeding the allowed number of subnets in a cluster subnet groups. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Cluster Management Guide.',
                     'class' => 'ClusterSubnetQuotaExceededException',
                 ),
                 array(
@@ -581,6 +702,14 @@ return array (
                 array(
                     'reason' => 'Your account is not authorized to perform the requested operation.',
                     'class' => 'UnauthorizedOperationException',
+                ),
+                array(
+                    'reason' => 'The request exceeds the limit of 10 tags for the resource.',
+                    'class' => 'TagLimitExceededException',
+                ),
+                array(
+                    'reason' => 'The tag is invalid.',
+                    'class' => 'InvalidTagException',
                 ),
             ),
         ),
@@ -642,10 +771,27 @@ return array (
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The request would exceed the allowed number of event subscriptions for this account. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
+                    'reason' => 'The request would exceed the allowed number of event subscriptions for this account. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Cluster Management Guide.',
                     'class' => 'EventSubscriptionQuotaExceededException',
                 ),
                 array(
@@ -680,6 +826,14 @@ return array (
                     'reason' => 'The specified Amazon Redshift event source could not be found.',
                     'class' => 'SourceNotFoundException',
                 ),
+                array(
+                    'reason' => 'The request exceeds the limit of 10 tags for the resource.',
+                    'class' => 'TagLimitExceededException',
+                ),
+                array(
+                    'reason' => 'The tag is invalid.',
+                    'class' => 'InvalidTagException',
+                ),
             ),
         ),
         'CreateHsmClientCertificate' => array(
@@ -704,6 +858,23 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -711,8 +882,16 @@ return array (
                     'class' => 'HsmClientCertificateAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'The quota for HSM client certificates has been reached. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
+                    'reason' => 'The quota for HSM client certificates has been reached. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Cluster Management Guide.',
                     'class' => 'HsmClientCertificateQuotaExceededException',
+                ),
+                array(
+                    'reason' => 'The request exceeds the limit of 10 tags for the resource.',
+                    'class' => 'TagLimitExceededException',
+                ),
+                array(
+                    'reason' => 'The tag is invalid.',
+                    'class' => 'InvalidTagException',
                 ),
             ),
         ),
@@ -763,6 +942,23 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -770,8 +966,72 @@ return array (
                     'class' => 'HsmConfigurationAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'The quota for HSM configurations has been reached. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
+                    'reason' => 'The quota for HSM configurations has been reached. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Cluster Management Guide.',
                     'class' => 'HsmConfigurationQuotaExceededException',
+                ),
+                array(
+                    'reason' => 'The request exceeds the limit of 10 tags for the resource.',
+                    'class' => 'TagLimitExceededException',
+                ),
+                array(
+                    'reason' => 'The tag is invalid.',
+                    'class' => 'InvalidTagException',
+                ),
+            ),
+        ),
+        'CreateTags' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'CreateTags',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2012-12-01',
+                ),
+                'ResourceName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Tags' => array(
+                    'required' => true,
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The request exceeds the limit of 10 tags for the resource.',
+                    'class' => 'TagLimitExceededException',
+                ),
+                array(
+                    'reason' => 'The resource could not be found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'The tag is invalid.',
+                    'class' => 'InvalidTagException',
                 ),
             ),
         ),
@@ -1072,6 +1332,46 @@ return array (
                 ),
             ),
         ),
+        'DeleteTags' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DeleteTags',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2012-12-01',
+                ),
+                'ResourceName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'TagKeys' => array(
+                    'required' => true,
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'TagKeys.member',
+                    'items' => array(
+                        'name' => 'TagKey',
+                        'type' => 'string',
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The resource could not be found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+            ),
+        ),
         'DescribeClusterParameterGroups' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -1100,6 +1400,24 @@ return array (
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
+                ),
+                'TagKeys' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'TagKeys.member',
+                    'items' => array(
+                        'name' => 'TagKey',
+                        'type' => 'string',
+                    ),
+                ),
+                'TagValues' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'TagValues.member',
+                    'items' => array(
+                        'name' => 'TagValue',
+                        'type' => 'string',
+                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -1180,6 +1498,24 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'TagKeys' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'TagKeys.member',
+                    'items' => array(
+                        'name' => 'TagKey',
+                        'type' => 'string',
+                    ),
+                ),
+                'TagValues' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'TagValues.member',
+                    'items' => array(
+                        'name' => 'TagValue',
+                        'type' => 'string',
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -1247,6 +1583,24 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'TagKeys' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'TagKeys.member',
+                    'items' => array(
+                        'name' => 'TagKey',
+                        'type' => 'string',
+                    ),
+                ),
+                'TagValues' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'TagValues.member',
+                    'items' => array(
+                        'name' => 'TagValue',
+                        'type' => 'string',
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -1283,6 +1637,24 @@ return array (
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
+                ),
+                'TagKeys' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'TagKeys.member',
+                    'items' => array(
+                        'name' => 'TagKey',
+                        'type' => 'string',
+                    ),
+                ),
+                'TagValues' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'TagValues.member',
+                    'items' => array(
+                        'name' => 'TagValue',
+                        'type' => 'string',
+                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -1355,6 +1727,24 @@ return array (
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
+                ),
+                'TagKeys' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'TagKeys.member',
+                    'items' => array(
+                        'name' => 'TagKey',
+                        'type' => 'string',
+                    ),
+                ),
+                'TagValues' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'TagValues.member',
+                    'items' => array(
+                        'name' => 'TagValue',
+                        'type' => 'string',
+                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -1542,6 +1932,24 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'TagKeys' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'TagKeys.member',
+                    'items' => array(
+                        'name' => 'TagKey',
+                        'type' => 'string',
+                    ),
+                ),
+                'TagValues' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'TagValues.member',
+                    'items' => array(
+                        'name' => 'TagValue',
+                        'type' => 'string',
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -1578,6 +1986,24 @@ return array (
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
+                ),
+                'TagKeys' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'TagKeys.member',
+                    'items' => array(
+                        'name' => 'TagKey',
+                        'type' => 'string',
+                    ),
+                ),
+                'TagValues' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'TagValues.member',
+                    'items' => array(
+                        'name' => 'TagValue',
+                        'type' => 'string',
+                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -1757,6 +2183,65 @@ return array (
                 array(
                     'reason' => 'A resize operation for the specified cluster is not found.',
                     'class' => 'ResizeNotFoundException',
+                ),
+            ),
+        ),
+        'DescribeTags' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'TaggedResourceListMessage',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeTags',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2012-12-01',
+                ),
+                'ResourceName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'ResourceType' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'MaxRecords' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'TagKeys' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'TagKeys.member',
+                    'items' => array(
+                        'name' => 'TagKey',
+                        'type' => 'string',
+                    ),
+                ),
+                'TagValues' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'TagValues.member',
+                    'items' => array(
+                        'name' => 'TagValue',
+                        'type' => 'string',
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The resource could not be found.',
+                    'class' => 'ResourceNotFoundException',
                 ),
             ),
         ),
@@ -2054,7 +2539,7 @@ return array (
                     'class' => 'ClusterNotFoundException',
                 ),
                 array(
-                    'reason' => 'The operation would exceed the number of nodes allotted to the account. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
+                    'reason' => 'The operation would exceed the number of nodes allotted to the account. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Cluster Management Guide.',
                     'class' => 'NumberOfNodesQuotaExceededException',
                 ),
                 array(
@@ -2205,7 +2690,7 @@ return array (
                     'class' => 'ClusterSubnetGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'The request would result in user exceeding the allowed number of subnets in a cluster subnet groups. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
+                    'reason' => 'The request would result in user exceeding the allowed number of subnets in a cluster subnet groups. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Cluster Management Guide.',
                     'class' => 'ClusterSubnetQuotaExceededException',
                 ),
                 array(
@@ -2403,7 +2888,7 @@ return array (
                     'class' => 'ReservedNodeAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'Request would exceed the user\'s compute node quota. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
+                    'reason' => 'Request would exceed the user\'s compute node quota. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Cluster Management Guide.',
                     'class' => 'ReservedNodeQuotaExceededException',
                 ),
             ),
@@ -2616,6 +3101,10 @@ return array (
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
+                'KmsKeyId' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -2631,7 +3120,7 @@ return array (
                     'class' => 'ClusterSnapshotNotFoundException',
                 ),
                 array(
-                    'reason' => 'The request would exceed the allowed number of cluster instances for this account. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
+                    'reason' => 'The request would exceed the allowed number of cluster instances for this account. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Cluster Management Guide.',
                     'class' => 'ClusterQuotaExceededException',
                 ),
                 array(
@@ -2647,7 +3136,7 @@ return array (
                     'class' => 'InvalidRestoreException',
                 ),
                 array(
-                    'reason' => 'The operation would exceed the number of nodes allotted to the account. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
+                    'reason' => 'The operation would exceed the number of nodes allotted to the account. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Cluster Management Guide.',
                     'class' => 'NumberOfNodesQuotaExceededException',
                 ),
                 array(
@@ -2862,6 +3351,22 @@ return array (
                                     'EC2SecurityGroupOwnerId' => array(
                                         'type' => 'string',
                                     ),
+                                    'Tags' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'Tag',
+                                            'type' => 'object',
+                                            'sentAs' => 'Tag',
+                                            'properties' => array(
+                                                'Key' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Value' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
                                 ),
                             ),
                         ),
@@ -2876,6 +3381,38 @@ return array (
                                         'type' => 'string',
                                     ),
                                     'CIDRIP' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Tags' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'Tag',
+                                            'type' => 'object',
+                                            'sentAs' => 'Tag',
+                                            'properties' => array(
+                                                'Key' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Value' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'Tags' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Tag',
+                                'type' => 'object',
+                                'sentAs' => 'Tag',
+                                'properties' => array(
+                                    'Key' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Value' => array(
                                         'type' => 'string',
                                     ),
                                 ),
@@ -2941,6 +3478,9 @@ return array (
                         'Encrypted' => array(
                             'type' => 'boolean',
                         ),
+                        'KmsKeyId' => array(
+                            'type' => 'string',
+                        ),
                         'EncryptedWithHSM' => array(
                             'type' => 'boolean',
                         ),
@@ -2980,6 +3520,22 @@ return array (
                         ),
                         'SourceRegion' => array(
                             'type' => 'string',
+                        ),
+                        'Tags' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Tag',
+                                'type' => 'object',
+                                'sentAs' => 'Tag',
+                                'properties' => array(
+                                    'Key' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Value' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -3216,6 +3772,25 @@ return array (
                         'ClusterRevisionNumber' => array(
                             'type' => 'string',
                         ),
+                        'Tags' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Tag',
+                                'type' => 'object',
+                                'sentAs' => 'Tag',
+                                'properties' => array(
+                                    'Key' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Value' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'KmsKeyId' => array(
+                            'type' => 'string',
+                        ),
                     ),
                 ),
             ),
@@ -3239,6 +3814,22 @@ return array (
                         ),
                         'Description' => array(
                             'type' => 'string',
+                        ),
+                        'Tags' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Tag',
+                                'type' => 'object',
+                                'sentAs' => 'Tag',
+                                'properties' => array(
+                                    'Key' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Value' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -3286,6 +3877,22 @@ return array (
                                         ),
                                     ),
                                     'SubnetStatus' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'Tags' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Tag',
+                                'type' => 'object',
+                                'sentAs' => 'Tag',
+                                'properties' => array(
+                                    'Key' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Value' => array(
                                         'type' => 'string',
                                     ),
                                 ),
@@ -3346,6 +3953,22 @@ return array (
                         'Enabled' => array(
                             'type' => 'boolean',
                         ),
+                        'Tags' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Tag',
+                                'type' => 'object',
+                                'sentAs' => 'Tag',
+                                'properties' => array(
+                                    'Key' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Value' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -3366,6 +3989,22 @@ return array (
                         ),
                         'HsmClientCertificatePublicKey' => array(
                             'type' => 'string',
+                        ),
+                        'Tags' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Tag',
+                                'type' => 'object',
+                                'sentAs' => 'Tag',
+                                'properties' => array(
+                                    'Key' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Value' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -3393,6 +4032,22 @@ return array (
                         ),
                         'HsmPartitionName' => array(
                             'type' => 'string',
+                        ),
+                        'Tags' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Tag',
+                                'type' => 'object',
+                                'sentAs' => 'Tag',
+                                'properties' => array(
+                                    'Key' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Value' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -3426,6 +4081,22 @@ return array (
                             ),
                             'Description' => array(
                                 'type' => 'string',
+                            ),
+                            'Tags' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'Tag',
+                                    'type' => 'object',
+                                    'sentAs' => 'Tag',
+                                    'properties' => array(
+                                        'Key' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Value' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                     ),
@@ -3515,6 +4186,22 @@ return array (
                                         'EC2SecurityGroupOwnerId' => array(
                                             'type' => 'string',
                                         ),
+                                        'Tags' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'Tag',
+                                                'type' => 'object',
+                                                'sentAs' => 'Tag',
+                                                'properties' => array(
+                                                    'Key' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'Value' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
                                     ),
                                 ),
                             ),
@@ -3529,6 +4216,38 @@ return array (
                                             'type' => 'string',
                                         ),
                                         'CIDRIP' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Tags' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'Tag',
+                                                'type' => 'object',
+                                                'sentAs' => 'Tag',
+                                                'properties' => array(
+                                                    'Key' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'Value' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'Tags' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'Tag',
+                                    'type' => 'object',
+                                    'sentAs' => 'Tag',
+                                    'properties' => array(
+                                        'Key' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Value' => array(
                                             'type' => 'string',
                                         ),
                                     ),
@@ -3600,6 +4319,9 @@ return array (
                             'Encrypted' => array(
                                 'type' => 'boolean',
                             ),
+                            'KmsKeyId' => array(
+                                'type' => 'string',
+                            ),
                             'EncryptedWithHSM' => array(
                                 'type' => 'boolean',
                             ),
@@ -3639,6 +4361,22 @@ return array (
                             ),
                             'SourceRegion' => array(
                                 'type' => 'string',
+                            ),
+                            'Tags' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'Tag',
+                                    'type' => 'object',
+                                    'sentAs' => 'Tag',
+                                    'properties' => array(
+                                        'Key' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Value' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                     ),
@@ -3692,6 +4430,22 @@ return array (
                                             ),
                                         ),
                                         'SubnetStatus' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'Tags' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'Tag',
+                                    'type' => 'object',
+                                    'sentAs' => 'Tag',
+                                    'properties' => array(
+                                        'Key' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Value' => array(
                                             'type' => 'string',
                                         ),
                                     ),
@@ -3968,6 +4722,25 @@ return array (
                             'ClusterRevisionNumber' => array(
                                 'type' => 'string',
                             ),
+                            'Tags' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'Tag',
+                                    'type' => 'object',
+                                    'sentAs' => 'Tag',
+                                    'properties' => array(
+                                        'Key' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Value' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'KmsKeyId' => array(
+                                'type' => 'string',
+                            ),
                         ),
                     ),
                 ),
@@ -4131,6 +4904,22 @@ return array (
                             'Enabled' => array(
                                 'type' => 'boolean',
                             ),
+                            'Tags' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'Tag',
+                                    'type' => 'object',
+                                    'sentAs' => 'Tag',
+                                    'properties' => array(
+                                        'Key' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Value' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -4205,6 +4994,22 @@ return array (
                             'HsmClientCertificatePublicKey' => array(
                                 'type' => 'string',
                             ),
+                            'Tags' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'Tag',
+                                    'type' => 'object',
+                                    'sentAs' => 'Tag',
+                                    'properties' => array(
+                                        'Key' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Value' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -4237,6 +5042,22 @@ return array (
                             ),
                             'HsmPartitionName' => array(
                                 'type' => 'string',
+                            ),
+                            'Tags' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'Tag',
+                                    'type' => 'object',
+                                    'sentAs' => 'Tag',
+                                    'properties' => array(
+                                        'Key' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Value' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                     ),
@@ -4513,6 +5334,44 @@ return array (
                 ),
             ),
         ),
+        'TaggedResourceListMessage' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'TaggedResources' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'TaggedResource',
+                        'type' => 'object',
+                        'sentAs' => 'TaggedResource',
+                        'properties' => array(
+                            'Tag' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'Key' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Value' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                            'ResourceName' => array(
+                                'type' => 'string',
+                            ),
+                            'ResourceType' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+            ),
+        ),
         'ClusterParameterGroupNameMessage' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -4682,6 +5541,12 @@ return array (
             'output_token' => 'Marker',
             'limit_key' => 'MaxRecords',
             'result_key' => 'ReservedNodes',
+        ),
+        'DescribeTags' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'Marker',
+            'limit_key' => 'MaxRecords',
+            'result_key' => 'TaggedResources',
         ),
     ),
     'waiters' => array(
