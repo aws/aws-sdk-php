@@ -18,6 +18,7 @@ namespace Aws\DynamoDb\Integration;
 
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\DynamoDb\Iterator\ItemIterator;
+use Aws\DynamoDb\Marshaler;
 
 /**
  * @group example
@@ -203,22 +204,22 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
-     * Put an item in a table using the formatAttributes() client helper method
+     * Put an item in a table using the marshaler helper
      *
      * @depends testListTablesWithIterator
      * @example Aws\DynamoDb\DynamoDbClient::putItem 2012-08-10
-     * @example Aws\DynamoDb\DynamoDbClient::formatAttributes 2012-08-10
      */
     public function testAddItem()
     {
         $client = $this->client;
         // @begin
 
+        $m = new Marshaler();
         $time = time();
 
         $result = $client->putItem(array(
             'TableName' => 'errors',
-            'Item' => $client->formatAttributes(array(
+            'Item' => $m->marshalItem(array(
                 'id'      => 1201,
                 'time'    => $time,
                 'error'   => 'Executive overflow',
@@ -570,6 +571,41 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
                 )
             ));
         }
+    }
+
+    /**
+     * Put a JSON document in a table using the marshaler helper
+     *
+     * @depends testWaitUntilTableExists
+     */
+    public function testMarshaler()
+    {
+        $client = $this->client;
+        // @begin
+
+        $m = new Marshaler();
+        $time = time();
+        $json = '{"id":1500,"time":'.$time.',"people":[{"name":"Jim","alive":tr'
+            . 'ue},{"name":"Bob","alive":false},{"name":"Amy","alive":true}]}';
+
+        $client->putItem(array(
+            'TableName' => 'errors',
+            'Item' => $m->marshalJson($json)
+        ));
+
+        $result = $client->getItem(array(
+            'TableName' => 'errors',
+            'Key' => $m->marshalItem(array(
+                'id'   => 1500,
+                'time' => $time
+            ))
+        ));
+
+        // @end
+        $this->assertEquals(
+            json_decode($json, true),
+            json_decode($m->unmarshalJson($result['Item']), true)
+        );
     }
 
     /**
