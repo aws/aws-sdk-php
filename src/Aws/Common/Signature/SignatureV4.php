@@ -24,6 +24,7 @@ use Guzzle\Http\Message\RequestFactory;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\QueryString;
 use Guzzle\Http\Url;
+use Guzzle\Stream\Stream;
 
 /**
  * Signature Version 4
@@ -230,12 +231,9 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
         }
 
         if ($request instanceof EntityEnclosingRequestInterface) {
-            return hash(
-                'sha256',
-                $request->getMethod() == 'POST' && count($request->getPostFields())
-                    ? (string) $request->getPostFields()
-                    : (string) $request->getBody()
-            );
+            return $request->getMethod() == 'POST' && count($request->getPostFields())
+                ? hash('sha256', (string) $request->getPostFields())
+                : Stream::getHash($request->getBody(), 'sha256');
         }
 
         return self::DEFAULT_PAYLOAD;
