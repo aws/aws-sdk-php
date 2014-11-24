@@ -25,7 +25,7 @@ class Transfer
 
     // Available options.
     private $concurrency = 5;
-    private $mup_size = 20000000;
+    private $mup_threshold = 20971520;
     private $base_dir;
     private $before;
     private $debug = false;
@@ -50,8 +50,8 @@ class Transfer
      *   source, dest, command; where command is an instance of a Command
      *   object. The provided command will be either a GetObject, PutObject,
      *   InitiateMultipartUpload, or UploadPart command.
-     * - mup_size: Size in bytes in which a multipart upload should be used
-     *   instead of PutObject. Defaults to 20000000 (20 MB).
+     * - mup_threshold: Size in bytes in which a multipart upload should be
+     *   used instead of PutObject. Defaults to 20971520 (20 MB).
      * - concurrency: Number of files to upload concurrently. Defaults to 5.
      * - debug: Set to true to print out debug information for transfers. Set
      *   to an fopen() resource to write to a specific stream.
@@ -79,15 +79,15 @@ class Transfer
                 . 'argument as a string or provide the "base_dir" option.');
         }
 
-        $valid = ['mup_size', 'base_dir', 'before', 'concurrency', 'debug'];
+        $valid = ['mup_threshold', 'base_dir', 'before', 'concurrency', 'debug'];
         foreach ($valid as $opt) {
             if (isset($options[$opt])) {
                 $this->{$opt} = $options[$opt];
             }
         }
 
-        if ($this->mup_size < 5000000) {
-            throw new \InvalidArgumentException('mup_size must be > 5000000');
+        if ($this->mup_threshold < 5248000) {
+            throw new \InvalidArgumentException('mup_threshold must be >= 5248000');
         }
 
         // Normalize the destination and source directory.
@@ -168,7 +168,7 @@ class Transfer
         if ($this->destScheme == 's3' && $this->sourceScheme == 'file') {
             $iter = new \CallbackFilterIterator($iter, function ($file) {
                 if ($this->sourceScheme == 'file'
-                    && filesize($file) >= $this->mup_size
+                    && filesize($file) >= $this->mup_threshold
                 ) {
                     $this->mup($file);
                     return false;

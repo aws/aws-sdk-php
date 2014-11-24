@@ -50,12 +50,12 @@ class TransferTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage mup_size must be > 5000000
+     * @expectedExceptionMessage mup_threshold must be >= 5248000
      */
     public function testEnsuresMupSizeIsValid()
     {
         $s3 = $this->getTestClient('s3');
-        (new Transfer($s3, __DIR__, 's3://foo/bar', ['mup_size' => 10]));
+        (new Transfer($s3, __DIR__, 's3://foo/bar', ['mup_threshold' => 10]));
     }
 
     /**
@@ -86,9 +86,9 @@ class TransferTest extends \PHPUnit_Framework_TestCase
     public function testCanSetCustomOptions()
     {
         $opts = [
-            'mup_size' => 5000000,
-            'base_dir' => 'foo!',
-            'concurrency' => 12
+            'mup_threshold' => 5248000,
+            'base_dir'      => 'foo!',
+            'concurrency'   => 12
         ];
         $s3 = $this->getTestClient('s3');
         $t = new Transfer($s3, __DIR__, 's3://foo/bar', $opts);
@@ -152,8 +152,8 @@ class TransferTest extends \PHPUnit_Framework_TestCase
 
         $res = fopen('php://temp', 'r+');
         $t = new Transfer($s3, $dir, 's3://foo/bar', [
-            'mup_size' => 5000000,
-            'debug'    => $res
+            'mup_threshold' => 5248000,
+            'debug' => $res
         ]);
 
         $t->transfer();
