@@ -231,9 +231,11 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
         }
 
         if ($request instanceof EntityEnclosingRequestInterface) {
-            return $request->getMethod() == 'POST' && count($request->getPostFields())
-                ? hash('sha256', (string) $request->getPostFields())
-                : Stream::getHash($request->getBody(), 'sha256');
+            if ($request->getMethod() == 'POST' && count($request->getPostFields())) {
+                return hash('sha256', (string) $request->getPostFields());
+            } elseif ($body = $request->getBody()) {
+                return Stream::getHash($request->getBody(), 'sha256');
+            }
         }
 
         return self::DEFAULT_PAYLOAD;
