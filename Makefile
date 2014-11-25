@@ -6,7 +6,7 @@ test:
 coverage:
 	vendor/bin/phpunit --coverage-html=build/artifacts/coverage $(TEST)
 
-integration:
+integ:
 	vendor/bin/phpunit -c phpunit.functional.xml $(TEST)
 
 view-coverage:
