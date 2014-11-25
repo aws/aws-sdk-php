@@ -345,6 +345,11 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5',
                 ),
+                'SSEKMSKeyId' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id',
+                ),
                 'CopySourceSSECustomerAlgorithm' => array(
                     'type' => 'string',
                     'location' => 'header',
@@ -359,11 +364,6 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-copy-source-server-side-encryption-customer-key-MD5',
-                ),
-                'CopySourceSSEKMSKeyId' => array(
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-copy-source-server-side-encryption-aws-kms-key-id',
                 ),
                 'ACP' => array(
                     'type' => 'object',
@@ -1083,11 +1083,6 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5',
                 ),
-                'SSEKMSKeyId' => array(
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id',
-                ),
                 'SaveAs' => array(
                     'location' => 'response_body',
                 ),
@@ -1255,11 +1250,6 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5',
-                ),
-                'SSEKMSKeyId' => array(
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id',
                 ),
             ),
             'errorResponses' => array(
@@ -2588,11 +2578,6 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5',
                 ),
-                'SSEKMSKeyId' => array(
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id',
-                ),
             ),
         ),
         'UploadPartCopy' => array(
@@ -2706,11 +2691,6 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-copy-source-server-side-encryption-customer-key-MD5',
-                ),
-                'CopySourceSSEKMSKeyId' => array(
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id',
                 ),
                 'command.expects' => array(
                     'static' => true,

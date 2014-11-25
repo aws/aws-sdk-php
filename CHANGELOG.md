@@ -7,6 +7,8 @@
   unmarshal item data from operation results back into JSON documents or native
   PHP arrays.
 * Adding support for media file encryption to Amazon Elastic Transcoder.
+* Removing a few superfluous `x-amz-server-side-encryption-aws-kms-key-id` from
+  the Amazon S3 model.
 
 ## 2.7.6 - 2014-11-20
 
