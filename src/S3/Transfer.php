@@ -285,7 +285,7 @@ class Transfer
             };
         }
 
-        $uploader->upload(5, $fn);
+        $uploader->upload($this->concurrency, $fn);
     }
 
     private function wrapDebug()
