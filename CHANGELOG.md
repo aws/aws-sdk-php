@@ -6,6 +6,7 @@
   or native PHP arrays to the format that DynamoDB requires. You can also
   unmarshal item data from operation results back into JSON documents or native
   PHP arrays.
+* Adding support for media file encryption to Amazon Elastic Transcoder.
 
 ## 2.7.6 - 2014-11-20
 
