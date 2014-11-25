@@ -6,6 +6,7 @@ use Aws\Common\Exception\AwsException;
 use Aws\Common\ClientFactory;
 use Aws\Test\SdkTest;
 use Aws\Test\UsesServiceTrait;
+use GuzzleHttp\Client;
 
 /**
  * @covers Aws\Common\ClientFactory
@@ -458,5 +459,40 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
             $e->intercept(false);
         });
         $c->execute($command);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage You cannot provide both a client option and a ringphp_handler option.
+     */
+    public function testCannotProvideClientAndHandler()
+    {
+        $f = new ClientFactory();
+        $f->create([
+            'service' => 'dynamodb',
+            'region'  => 'x',
+            'version' => 'latest',
+            'client'  => new Client(),
+            'ringphp_handler' => function () {}
+        ]);
+    }
+
+    /**
+     * @expectedException \GuzzleHttp\Exception\RequestException
+     * @expectedExceptionMessage foo
+     */
+    public function testCanProvideRingPHPHandler()
+    {
+        $f = new ClientFactory();
+        $c = $f->create([
+            'service' => 'dynamodb',
+            'region'  => 'x',
+            'version' => 'latest',
+            'ringphp_handler' => function () {
+                throw new \UnexpectedValueException('foo');
+            }
+        ]);
+
+        $c->getHttpClient()->get('http://localhost:123');
     }
 }

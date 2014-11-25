@@ -54,6 +54,7 @@ class ClientFactory
         'credentials'       => 1,
         'signature'         => 1,
         'client'            => 1,
+        'ringphp_handler'   => 1,
         'retries'           => 2,
         'validate'          => 2,
         'debug'             => 2
@@ -146,7 +147,12 @@ class ClientFactory
     protected function addDefaultArgs(&$args)
     {
         if (!isset($args['client'])) {
-            $args['client'] = new Client();
+            $clientArgs = [];
+            if (isset($args['ringphp_handler'])) {
+                $clientArgs['handler'] = $args['ringphp_handler'];
+                unset($args['ringphp_handler']);
+            }
+            $args['client'] = new Client($clientArgs);
         }
 
         if (!isset($args['api_provider'])) {
@@ -379,6 +385,12 @@ class ClientFactory
             'headers/User-Agent',
             'aws-sdk-php/' . Sdk::VERSION . ' ' . Client::getDefaultUserAgent()
         );
+    }
+
+    private function handle_ringphp_handler($value, array &$args)
+    {
+        throw new \InvalidArgumentException('You cannot provide both a client '
+            . 'option and a ringphp_handler option.');
     }
 
     private function handle_api_provider($value, array &$args)

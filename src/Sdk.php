@@ -1,6 +1,8 @@
 <?php
 namespace Aws;
 
+use GuzzleHttp\Client;
+
 /**
  * Builds AWS clients based on configuration settings.
  *
@@ -110,6 +112,9 @@ class Sdk
     /** @var array Arguments for creating clients */
     private $args;
 
+    /** @var callable|null Shared RingPHP handler */
+    private $handler;
+
     /**
      * Constructs a new SDK object with an associative array of default
      * client settings.
@@ -159,7 +164,10 @@ class Sdk
      * - defaults: Optional associative array of command parameters to pass to
      *   each command created by the client.
      * - client: Optional {@see GuzzleHttp\ClientInterface} used to transfer
-     *   requests over the wire.
+     *   requests over the wire. If not specified, the SDK will create a new
+     *   client that uses a shared Ring HTTP handler with other clients.
+     * - ringphp_handler: callable RingPHP handler used to transfer HTTP
+     *   requests (see http://ringphp.readthedocs.org/en/latest/).
      * - api_provider: Optional service description API provider as a callable
      *   that accepts a type, service name, and version and returns an
      *   associative array of configuration data.
@@ -180,6 +188,7 @@ class Sdk
     {
         // Normalize service name to lower case
         $name = strtolower($name);
+        $this->createSharedHandlerIfNeeded($args);
 
         // Resolve service aliases
         if (isset(self::$aliases[$name])) {
@@ -205,5 +214,15 @@ class Sdk
         }
 
         return (new $factoryName)->create($args);
+    }
+
+    private function createSharedHandlerIfNeeded(array $args)
+    {
+        if (!isset($this->args['ringphp_handler'])
+            && !isset($args['client'])
+            && !isset($args['ringphp_handler'])
+        ) {
+            $this->args['ringphp_handler'] = Client::getDefaultHandler();
+        }
     }
 }
