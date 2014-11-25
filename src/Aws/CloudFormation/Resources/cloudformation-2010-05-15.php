@@ -1309,4 +1309,58 @@ return array (
             'result_key' => 'StackSummaries',
         ),
     ),
+    'waiters' => array(
+        '__default__' => array(
+            'interval' => 15,
+            'max_attempts' => 60,
+            'acceptor.type' => 'output',
+        ),
+        '__StackState' => array(
+            'operation' => 'DescribeStacks',
+            'acceptor.path' => 'Stacks/*/StackStatus',
+        ),
+        'StackDeleted' => array(
+            'extends' => '__StackState',
+            'success.value' => array(
+                'DELETE_COMPLETE',
+                'DELETE_FAILED',
+            ),
+        ),
+        'StackUpdated' => array(
+            'extends' => '__StackState',
+            'success.value' => array(
+                'UPDATE_COMPLETE',
+                'UPDATE_ROLLBACK_COMPLETE',
+                'UPDATE_ROLLBACK_FAILED',
+            ),
+            'failure.value' => array(
+                'DELETE_IN_PROGRESS',
+                'DELETE_FAILED',
+                'DELETE_COMPLETE',
+
+                'CREATE_FAILED',
+                'ROLLBACK_IN_PROGRESS',
+                'ROLLBACK_FAILED',
+                'ROLLBACK_COMPLETE',
+            ),
+        ),
+        'StackCreated' => array(
+            'extends' => '__StackState',
+            'success.value' => array(
+                'CREATE_COMPLETE',
+                'CREATE_FAILED',
+                'ROLLBACK_COMPLETE',
+                'ROLLBACK_FAILED',
+            ),
+            'failure.value' => array(
+                'DELETE_IN_PROGRESS',
+                'DELETE_FAILED',
+                'DELETE_COMPLETE',
+
+                'UPDATE_IN_PROGRESS',
+                'UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS',
+                'UPDATE_ROLLBACK_FAILED',
+            ),
+        ),
+    ),
 );
