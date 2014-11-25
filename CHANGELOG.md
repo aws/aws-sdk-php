@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## Unreleased
+
+* Added a DynamoDB `Marshaler` class, that allows you to marshal JSON documents
+  or native PHP arrays to the format that DynamoDB requires. You can also
+  unmarshal item data from operation results back into JSON documents or native
+  PHP arrays.
+
 ## 2.7.6 - 2014-11-20
 
 * Added support for AWS KMS integration to the Amazon Redshift Client.
