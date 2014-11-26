@@ -9,24 +9,16 @@ class Credentials implements CredentialsInterface
 {
     const ENV_KEY = 'AWS_ACCESS_KEY_ID';
     const ENV_SECRET = 'AWS_SECRET_ACCESS_KEY';
+    const ENV_SESSION = 'AWS_SESSION_TOKEN';
     const ENV_PROFILE = 'AWS_PROFILE';
 
-    /** @var string AWS Access Key ID */
     private $key;
-
-    /** @var string AWS Secret Access Key */
     private $secret;
-
-    /** @var string AWS Security Token */
     private $token;
-
-    /** @var int Time to die (TTD) of the token */
     private $expires;
 
     /**
-     * Factory method for creating new credentials. This factory method will
-     * create the appropriate credentials object based on the passed
-     * configuration options.
+     * Creates credentials using a hash of options.
      *
      * - key: Your AWS Access Key ID
      * - secret: Your AWS Secret Access Key
@@ -49,78 +41,11 @@ class Credentials implements CredentialsInterface
             );
         }
 
-        // Use credentials from environment variables, if available
-        $key = getenv(self::ENV_KEY);
-        $secret = getenv(self::ENV_SECRET);
-
-        if ($key & $secret) {
-            return new self($key, $secret);
-        }
-
-        // Use credentials from the ~/.aws/credentials INI file, if available
-        $home = self::getHomeDir();
-        if ($home && file_exists("{$home}/.aws/credentials")) {
-            return self::fromIni(null, "{$home}/.aws/credentials");
-        }
-
-        // Use IAM Instance Profile credentials, if hosted on Amazon EC2
-        return new InstanceProfileCredentials($config);
-    }
-
-    /**
-     * Create credentials from the credentials ini file in the HOME directory.
-     *
-     * @param string|null $profile  Pass a specific profile to use. If no
-     *                              profile is specified we will attempt to use
-     *                              the value specified in the AWS_PROFILE
-     *                              environment variable. If AWS_PROFILE is not
-     *                              set, the "default" profile is used.
-     * @param string|null $filename Pass a string to specify the location of the
-     *                              credentials files. If null is passed, the
-     *                              SDK will attempt to find the configuration
-     *                              file at in your HOME directory at
-     *                              ~/.aws/credentials.
-     * @return Credentials
-     * @throws \RuntimeException if the file cannot be found, if the file is
-     *                           invalid, or if the profile is invalid.
-     */
-    public static function fromIni($profile = null, $filename = null)
-    {
-        // Determine the path to the credentials file and make sure it exists
-        if (!$filename) {
-            $filename = self::getHomeDir() . '/.aws/credentials';
-        }
-        if (!is_readable($filename)) {
-            throw new \RuntimeException("Credentials file not found: {$filename}");
-        }
-
-        // Parse the credentials file
-        if (!($data = parse_ini_file($filename, true))) {
-            throw new \RuntimeException("Invalid credentials file: {$filename}");
-        }
-
-        // Determine the profile name and make sure it contains correct data
-        if (!$profile) {
-            $profile = getenv(self::ENV_PROFILE) ?: 'default';
-        }
-
-        if (empty($data[$profile])
-            || !isset($data[$profile]['aws_access_key_id'])
-            || !isset($data[$profile]['aws_secret_access_key'])
-        ) {
-            throw new \RuntimeException(
-                "Invalid AWS credentials profile \"{$profile}\" in {$filename}."
-            );
-        }
-
-        // Create the credentials object from the profile data
-        return new self(
-            $data[$profile]['aws_access_key_id'],
-            $data[$profile]['aws_secret_access_key'],
-            isset($data[$profile]['aws_security_token'])
-                ? $data[$profile]['aws_security_token']
-                : null
-        );
+        return Provider::fromChain([
+            Provider::env(),
+            Provider::ini(),
+            Provider::instanceProfile($config)
+        ]);
     }
 
     /**
@@ -173,24 +98,5 @@ class Credentials implements CredentialsInterface
             'token'   => $this->token,
             'expires' => $this->expires
         ];
-    }
-
-    /**
-     * Gets the environment's HOME directory
-     *
-     * @return null|string
-     */
-    private static function getHomeDir()
-    {
-        // On Linux/Unix-like systems, use the HOME environment variable
-        if ($homeDir = getenv('HOME')) {
-            return $homeDir;
-        }
-
-        // Get the HOMEDRIVE and HOMEPATH values for Windows hosts
-        $homeDrive = getenv('HOMEDRIVE');
-        $homePath = getenv('HOMEPATH');
-
-        return ($homeDrive && $homePath) ? $homeDrive . $homePath : null;
     }
 }

@@ -1,14 +1,15 @@
 <?php
 namespace Aws\Common\Credentials;
 
-use Aws\Common\Exception\InstanceProfileCredentialsException;
+use Aws\Common\Exception\CredentialsException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Utils;
 
 /**
- * Uses credentials from the EC2 metadata server.
+ * Loads credentials from the EC2 metadata server. If the profile cannot bef
+ * found, the provider returns null.
  */
-class InstanceProfileCredentials extends AbstractRefreshableCredentials
+class InstanceProfileProvider
 {
     /** @var string */
     private $profile;
@@ -43,57 +44,57 @@ class InstanceProfileCredentials extends AbstractRefreshableCredentials
                 'defaults' => ['connect_timeout' => 1]
             ]);
         }
-
-        $this->refresh();
     }
 
-    public function refresh()
+    /**
+     * Loads refreshable profile credentials if they are available, otherwise
+     * returns null.
+     *
+     * @return RefreshableCredentials|null
+     */
+    public function __invoke()
     {
-        $result = $this->getCreds();
-
-        if ($result['Code'] !== 'Success') {
-            throw new \RuntimeException('Unexpected instance profile response '
-                . 'code: ' . $result['Code']);
-        }
-
-        $this->credentials = new Credentials(
-            $result['AccessKeyId'],
-            $result['SecretAccessKey'],
-            $result['Token'],
-            strtotime($result['Expiration'])
-        );
-    }
-
-    private function getCreds()
-    {
-        return Utils::jsonDecode(
-            $this->request('meta-data/iam/security-credentials/' . $this->getProfile()),
-            true
-        );
-    }
-
-    private function getProfile()
-    {
+        // Pass if the profile cannot be loaded or was not provided.
         if (!$this->profile) {
-            $this->profile = $this->request('meta-data/iam/security-credentials/');
+            try {
+                $this->profile = $this->request('meta-data/iam/security-credentials/');
+            } catch (CredentialsException $e) {
+                return null;
+            }
         }
 
-        return $this->profile;
+        return new RefreshableCredentials(function () {
+            $response = $this->request("meta-data/iam/security-credentials/$this->profile");
+            $result = Utils::jsonDecode($response, true);
+            if ($result['Code'] !== 'Success') {
+                throw new CredentialsException('Unexpected instance profile response'
+                    . " code: {$result['Code']}");
+            }
+            return new Credentials(
+                $result['AccessKeyId'],
+                $result['SecretAccessKey'],
+                $result['Token'],
+                strtotime($result['Expiration'])
+            );
+        });
     }
 
+    /**
+     * @return array
+     */
     private function request($url)
     {
         $retryCount = 0;
-        do {
-            try {
-                return (string) $this->client->get($url)->getBody();
-            } catch (\Exception $e) {
-                if (++$retryCount > $this->retries) {
-                    $message = $this->createErrorMessage($e->getMessage());
-                    throw new InstanceProfileCredentialsException($message, $e->getCode());
-                }
+        start_over:
+        try {
+            return (string) $this->client->get($url)->getBody();
+        } catch (\Exception $e) {
+            if (++$retryCount > $this->retries) {
+                $message = $this->createErrorMessage($e->getMessage());
+                throw new CredentialsException($message, $e->getCode());
             }
-        } while (1);
+        }
+        goto start_over;
     }
 
     private function createErrorMessage($previous)

@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\Common\Credentials;
-use Aws\Common\Credentials\InstanceProfileCredentials;
+
+use Aws\Common\Credentials\InstanceProfileProvider;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Message\Request;
@@ -9,9 +10,9 @@ use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Subscriber\Mock;
 
 /**
- * @covers Aws\Common\Credentials\InstanceProfileCredentials
+ * @covers Aws\Common\Credentials\InstanceProfileProvider
  */
-class InstanceProfileCredentialsTest extends \PHPUnit_Framework_TestCase
+class InstanceProfileProviderTest extends \PHPUnit_Framework_TestCase
 {
     private function getCredentialArray(
         $key, $secret, $token = null, $time = null, $success = true
@@ -33,7 +34,7 @@ class InstanceProfileCredentialsTest extends \PHPUnit_Framework_TestCase
 
         $responses = [];
         if (!$profile) {
-            $responses[] = new Response(200, [], Stream::factory($profile));
+            $responses[] = new Response(200, [], Stream::factory('test'));
         }
         $responses[] = new Response(200, [], Stream::factory(json_encode($result)));
         if ($more) {
@@ -43,8 +44,9 @@ class InstanceProfileCredentialsTest extends \PHPUnit_Framework_TestCase
 
         $args = ['profile' => $profile];
         $args['client'] = $client;
+        $provider = new InstanceProfileProvider($args);
 
-        return new InstanceProfileCredentials($args);
+        return $provider();
     }
 
     public function testSeedsInitialCredentials()
@@ -60,24 +62,20 @@ class InstanceProfileCredentialsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($t, $c->getExpiration());
     }
 
-    public function testRefreshesCredentials()
+    public function testReturnsNullIfProfileIsNotAvailable()
     {
-        $t = time() - 1000;
-        $t2 = time() + 1000;
-        $c = $this->getTestCreds(
-            $this->getCredentialArray('foo', 'baz', null, "@{$t}"),
-            'foo',
-            new Response(200, [], Stream::factory(json_encode(
-                $this->getCredentialArray('abc', '123', null, '@' . $t2)
-            )))
+        $client = new Client(['base_url' => 'http://169.254.169.254/latest/']);
+        $client->getEmitter()->attach(
+            new Mock([
+                new RequestException('foo', new Request('GET', 'http://foo'))
+            ])
         );
-        $this->assertEquals('abc', $c->getAccessKeyId());
-        $this->assertEquals('123', $c->getSecretKey());
-        $this->assertEquals($t2, $c->getExpiration());
+        $p = new InstanceProfileProvider(['client' => $client]);
+        $this->assertNull($p());
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException \Aws\Common\Exception\CredentialsException
      * @expectedExceptionMessage Error retrieving credentials from the instance
      */
     public function testThrowsExceptionIfCredentialsNotAvailable()
@@ -89,11 +87,16 @@ class InstanceProfileCredentialsTest extends \PHPUnit_Framework_TestCase
             ])
         );
         $args['client'] = $client;
-        new InstanceProfileCredentials($args);
+        $args['profile'] = 'foo';
+        $p = new InstanceProfileProvider([
+            'client'  => $client,
+            'profile' => 'foo'
+        ]);
+        $p();
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException \Aws\Common\Exception\CredentialsException
      * @expectedExceptionMessage Unexpected instance profile response
      */
     public function testThrowsExceptionOnInvalidMetadata()
@@ -102,5 +105,22 @@ class InstanceProfileCredentialsTest extends \PHPUnit_Framework_TestCase
             $this->getCredentialArray(null, null, null, null, false),
             'foo'
         );
+    }
+
+    public function testLoadsCredentialsAndProfile()
+    {
+        $t = time() + 1000;
+        $c = $this->getTestCreds(
+            $this->getCredentialArray('foo', 'baz', null, "@{$t}")
+        );
+        $this->assertEquals('foo', $c->getAccessKeyId());
+        $this->assertEquals('baz', $c->getSecretKey());
+        $this->assertEquals(null, $c->getSecurityToken());
+        $this->assertEquals($t, $c->getExpiration());
+    }
+
+    public function testDoesNotRequireConfig()
+    {
+        new InstanceProfileProvider();
     }
 }
