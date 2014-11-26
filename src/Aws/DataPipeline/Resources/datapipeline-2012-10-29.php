@@ -79,6 +79,27 @@ return array (
                     'minLength' => 1,
                     'maxLength' => 1024,
                 ),
+                'parameterValues' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'ParameterValue',
+                        'type' => 'object',
+                        'properties' => array(
+                            'id' => array(
+                                'required' => true,
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 256,
+                            ),
+                            'stringValue' => array(
+                                'required' => true,
+                                'type' => 'string',
+                                'maxLength' => 10240,
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -611,6 +632,64 @@ return array (
                         ),
                     ),
                 ),
+                'parameterObjects' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'ParameterObject',
+                        'type' => 'object',
+                        'properties' => array(
+                            'id' => array(
+                                'required' => true,
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 256,
+                            ),
+                            'attributes' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'ParameterAttribute',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'key' => array(
+                                            'required' => true,
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 256,
+                                        ),
+                                        'stringValue' => array(
+                                            'required' => true,
+                                            'type' => 'string',
+                                            'maxLength' => 10240,
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'parameterValues' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'ParameterValue',
+                        'type' => 'object',
+                        'properties' => array(
+                            'id' => array(
+                                'required' => true,
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 256,
+                            ),
+                            'stringValue' => array(
+                                'required' => true,
+                                'type' => 'string',
+                                'maxLength' => 10240,
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -747,6 +826,31 @@ return array (
                     'location' => 'json',
                     'minLength' => 1,
                     'maxLength' => 2048,
+                ),
+                'fields' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'Field',
+                        'type' => 'object',
+                        'properties' => array(
+                            'key' => array(
+                                'required' => true,
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 256,
+                            ),
+                            'stringValue' => array(
+                                'type' => 'string',
+                                'maxLength' => 10240,
+                            ),
+                            'refValue' => array(
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 256,
+                            ),
+                        ),
+                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -1035,6 +1139,64 @@ return array (
                         ),
                     ),
                 ),
+                'parameterObjects' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'ParameterObject',
+                        'type' => 'object',
+                        'properties' => array(
+                            'id' => array(
+                                'required' => true,
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 256,
+                            ),
+                            'attributes' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'ParameterAttribute',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'key' => array(
+                                            'required' => true,
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 256,
+                                        ),
+                                        'stringValue' => array(
+                                            'required' => true,
+                                            'type' => 'string',
+                                            'maxLength' => 10240,
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'parameterValues' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'ParameterValue',
+                        'type' => 'object',
+                        'properties' => array(
+                            'id' => array(
+                                'required' => true,
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 256,
+                            ),
+                            'stringValue' => array(
+                                'required' => true,
+                                'type' => 'string',
+                                'maxLength' => 10240,
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -1206,6 +1368,50 @@ return array (
                                         ),
                                     ),
                                 ),
+                            ),
+                        ),
+                    ),
+                ),
+                'parameterObjects' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'ParameterObject',
+                        'type' => 'object',
+                        'properties' => array(
+                            'id' => array(
+                                'type' => 'string',
+                            ),
+                            'attributes' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'ParameterAttribute',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'key' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'stringValue' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'parameterValues' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'ParameterValue',
+                        'type' => 'object',
+                        'properties' => array(
+                            'id' => array(
+                                'type' => 'string',
+                            ),
+                            'stringValue' => array(
+                                'type' => 'string',
                             ),
                         ),
                     ),

@@ -1,14 +1,16 @@
 # CHANGELOG
 
-## Unreleased
+## 2.7.7 - 2014-11-25
 
 * Added a DynamoDB `Marshaler` class, that allows you to marshal JSON documents
   or native PHP arrays to the format that DynamoDB requires. You can also
   unmarshal item data from operation results back into JSON documents or native
   PHP arrays.
-* Adding support for media file encryption to Amazon Elastic Transcoder.
+* Added support for media file encryption to Amazon Elastic Transcoder.
 * Removing a few superfluous `x-amz-server-side-encryption-aws-kms-key-id` from
   the Amazon S3 model.
+* Added support for using AWS Data Pipeline templates to create pipelines and
+  bind values to parameters in the pipeline.
 
 ## 2.7.6 - 2014-11-20
 
