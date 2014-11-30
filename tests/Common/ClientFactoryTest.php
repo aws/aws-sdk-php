@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\Common;
 
+use Aws\Common\Credentials\Credentials;
 use Aws\Common\Credentials\NullCredentials;
 use Aws\Common\Exception\AwsException;
 use Aws\Common\ClientFactory;
@@ -280,6 +281,49 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
             'Aws\Common\Credentials\NullCredentials',
             $c->getCredentials()
         );
+    }
+
+    public function testCanCreateCredentialsFromProvider()
+    {
+        $f = new ClientFactory();
+        $c = new Credentials('foo', 'bar');
+        $client = $f->create([
+            'service'     => 'sqs',
+            'region'      => 'x',
+            'credentials' => function () use ($c) { return $c; },
+            'version'     => 'latest'
+        ]);
+        $this->assertSame($c, $client->getCredentials());
+    }
+
+    public function testCanCreateCredentialsFromProfile()
+    {
+        $dir = sys_get_temp_dir() . '/.aws';
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+        $ini = <<<EOT
+[foo]
+aws_access_key_id = foo
+aws_secret_access_key = baz
+aws_security_token = tok
+EOT;
+        file_put_contents($dir . '/credentials', $ini);
+        $home = getenv('HOME');
+        putenv('HOME=' . dirname($dir));
+        $f = new ClientFactory();
+        $client = $f->create([
+            'service'     => 'sqs',
+            'region'      => 'x',
+            'profile'     => 'foo',
+            'version'     => 'latest'
+        ]);
+        $creds = $client->getCredentials();
+        $this->assertEquals('foo', $creds->getAccessKeyId());
+        $this->assertEquals('baz', $creds->getSecretKey());
+        $this->assertEquals('tok', $creds->getSecurityToken());
+        unlink($dir . '/credentials');
+        putenv("HOME=$home");
     }
 
     public function testCanUseCredentialsObject()

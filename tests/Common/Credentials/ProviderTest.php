@@ -43,7 +43,7 @@ class ProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testEnsuresCredentialsAreFound()
     {
-        Provider::fromChain([]);
+        Provider::resolve(function () {});
     }
 
     public function testCreatesFromEnvironmentVariables()
@@ -51,7 +51,7 @@ class ProviderTest extends \PHPUnit_Framework_TestCase
         $this->clearEnv();
         putenv(Credentials::ENV_KEY . '=abc');
         putenv(Credentials::ENV_SECRET . '=123');
-        $creds = Provider::fromChain([Provider::env()]);
+        $creds = Provider::resolve(Provider::env());
         $this->assertEquals('abc', $creds->getAccessKeyId());
         $this->assertEquals('abc', $creds->getAccessKeyId());
     }
@@ -72,7 +72,7 @@ aws_security_token = tok
 EOT;
         file_put_contents($dir . '/credentials', $ini);
         putenv('HOME=' . dirname($dir));
-        $creds = Provider::fromChain([Provider::ini()]);
+        $creds = Provider::resolve(Provider::ini());
         $this->assertEquals('foo', $creds->getAccessKeyId());
         $this->assertEquals('baz', $creds->getSecretKey());
         $this->assertEquals('tok', $creds->getSecurityToken());
@@ -96,7 +96,7 @@ EOT;
         putenv('HOME=' . dirname($dir));
 
         try {
-            @Provider::fromChain([Provider::ini()]);
+            @Provider::resolve(Provider::ini());
         } catch (\Exception $e) {
             unlink($dir . '/credentials');
             throw $e;
@@ -110,7 +110,7 @@ EOT;
     {
         $this->clearEnv();
         putenv('HOME=/does/not/exist');
-        Provider::fromChain([Provider::ini()]);
+        Provider::resolve(Provider::ini());
     }
 
     /**
@@ -129,7 +129,7 @@ EOT;
         putenv('HOME=' . dirname($dir));
 
         try {
-            Provider::fromChain([Provider::ini('foo')]);
+            Provider::resolve(Provider::ini('foo'));
         } catch (\Exception $e) {
             unlink($dir . '/credentials');
             throw $e;
@@ -153,11 +153,46 @@ EOT;
         $this->assertEquals('C:\\Michael\\Home', $meth->invoke(null));
     }
 
-    public function testReturnsHardcodedCreds()
+    public function testMemoizes()
     {
-        $p = Provider::hardcoded('a', 'b');
-        $c = $p();
-        $this->assertEquals('a', $c->getAccessKeyId());
-        $this->assertEquals('b', $c->getSecretKey());
+        $called = 0;
+        $creds = new Credentials('foo', 'bar');
+        $f = function () use (&$called, $creds) {
+            $called++;
+            return $creds;
+        };
+        $p = Provider::memoize($f);
+        $this->assertSame($creds, $p());
+        $this->assertEquals(1, $called);
+        $this->assertSame($creds, $p());
+        $this->assertEquals(1, $called);
+    }
+
+    public function testProvidesChains()
+    {
+        $ar = [];
+        $creds = new Credentials('a', 'b');
+        $a = function () use (&$ar) { $ar[] = 'a'; };
+        $b = function () use (&$ar) { $ar[] = 'b'; };
+        $c = function () use (&$ar) { $ar[] = 'c'; };
+        $d = function () use ($creds) { return $creds; };
+        $chain = Provider::chain($a, $b, $c, $d);
+        $result = $chain();
+        $this->assertSame($result, $creds);
+        $this->assertEquals(['a', 'b', 'c'], $ar);
+    }
+
+    public function testCallsDefaultsCreds()
+    {
+        $k = getenv(Credentials::ENV_KEY);
+        $s = getenv(Credentials::ENV_SECRET);
+        putenv(Credentials::ENV_KEY . '=abc');
+        putenv(Credentials::ENV_SECRET . '=123');
+        $provider = Provider::defaultProvider();
+        $creds = $provider();
+        putenv(Credentials::ENV_KEY . "={$k}");
+        putenv(Credentials::ENV_SECRET . "={$s}");
+        $this->assertEquals('abc', $creds->getAccessKeyId());
+        $this->assertEquals('123', $creds->getSecretKey());
     }
 }

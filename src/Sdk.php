@@ -147,9 +147,11 @@ class Sdk
      * - region: The region to use of the service.
      * - version: API version of the service.
      * - credentials: An {@see Aws\Common\Credentials\CredentialsInterface}
-     *   object to use with each client OR an associative array of 'key',
-     *   'secret', and 'token' key value pairs. If no credentials are provided,
-     *   the SDK will attempt to load them from the environment.
+     *   object to use with each, an associative array of 'key', 'secret', and
+     *   'token' key value pairs, `false` to utilize null credentials, or a
+     *   callable credentials provider function to create credentials using a
+     *   function. If no credentials are provided, the SDK will attempt to load
+     *   them from the environment.
      * - profile: Allows you to specify which profile to use when credentials
      *   are created from the AWS credentials file in your home directory. This
      *   setting overrides the AWS_PROFILE environment variable. Specifying

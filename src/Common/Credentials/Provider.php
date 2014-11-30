@@ -4,26 +4,26 @@ namespace Aws\Common\Credentials;
 use Aws\Common\Exception\CredentialsException;
 
 /**
- * Credential provider functions provide credentials or null when invoked. This
- * allows you compose credential provider functions to create shareable
+ * Credential provider functions provide credentials or null when invoked.
+ *
+ * This allows you compose credential provider functions to create shareable
  * conditional logic used to load credentials in different environments.
  */
 class Provider
 {
     /**
-     * Creates a chain from an array of providers and calls the chain to
-     * retrieve credentials.
+     * Invokes a credential provider and ensures that the provider returns a
+     * CredentialsInterface object.
      *
-     * @param callable[] $providers Array of callables that return
-     *                              CredentialsInterface or null.
+     * @param callable $provider Credential provider function
      *
      * @return CredentialsInterface
      * @throws CredentialsException
      */
-    public static function fromChain(array $providers)
+    public static function resolve(callable $provider)
     {
-        if (!$result = call_user_func(self::chain($providers))) {
-            throw new CredentialsException('Could not load credentials from chain');
+        if (!$result = $provider()) {
+            throw new CredentialsException('Could not load credentials.');
         }
 
         return $result;
@@ -33,12 +33,20 @@ class Provider
      * Credential provider that attempts to load credentials from multiple
      * credential providers.
      *
-     * @param callable[] $providers Array of credential providers.
+     *     // Providers are supplied using variadic arguments.
+     *     $provider = Provider::chain(
+     *         Provider::ini(),
+     *         Provider::env()
+     *     );
+     *     $credsOrNull = $provider();
+     *
+     * @param callable ... Credential providers pass as variadic arguments.
      *
      * @return callable
      */
-    public static function chain(array $providers)
+    public static function chain()
     {
+        $providers = func_get_args();
         return function () use ($providers) {
             foreach ($providers as $provider) {
                 $result = $provider();
@@ -65,22 +73,6 @@ class Provider
             return $key && $secret
                 ? new Credentials($key, $secret, getenv(Credentials::ENV_SESSION))
                 : null;
-        };
-    }
-
-    /**
-     * Credential provider that creates credentials from hardcoded values.
-     *
-     * @param string      $key    AWS access key ID
-     * @param string      $secret AWS secret key
-     * @param string|null $token  optional Session token
-     *
-     * @return callable
-     */
-    public static function hardcoded($key, $secret, $token = null)
-    {
-        return function () use ($key, $secret, $token) {
-            return new Credentials($key, $secret, $token);
         };
     }
 
@@ -135,6 +127,45 @@ class Provider
                     : null
             );
         };
+    }
+
+    /**
+     * Wraps a credentials provider and caches previously provided credentials.
+     *
+     * Ensures that cached credentials are refreshed when they expire.
+     *
+     * @param callable $provider Credentials provider function to wrap.
+     *
+     * @return callable
+     */
+    public static function memoize(callable $provider)
+    {
+        $result = null;
+        return function () use (&$result, $provider) {
+            if (!$result || ($result && $result->isExpired())) {
+                $result = $provider();
+            }
+            return $result;
+        };
+    }
+
+    /**
+     * Create a default credentials provider that first checks for environment
+     * variables, then checks for the "default" profile in ~/.aws/credentials,
+     * and finally checks for credentials using EC2 instance profile
+     * credentials.
+     *
+     * @param array $config Optional array of instance profile credentials
+     *                      provider options.
+     * @return callable
+     */
+    public static function defaultProvider(array $config = [])
+    {
+        return self::chain(
+            self::env(),
+            self::ini(),
+            self::instanceProfile($config)
+        );
     }
 
     /**

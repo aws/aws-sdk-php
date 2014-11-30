@@ -18,14 +18,18 @@ class Credentials implements CredentialsInterface
     private $expires;
 
     /**
-     * Creates credentials using a hash of options.
+     * Creates credentials using a hash of options or the default credentials
+     * provider chain.
+     *
+     * If the hash does not contain 'key', and 'secret' key value pairs, then
+     * credentials are loaded using the default credentials provider chain.
      *
      * - key: Your AWS Access Key ID
      * - secret: Your AWS Secret Access Key
      * - token: An AWS Security Access Token (for temporary credentials)
      * - expires: The TTD for the credentials (for temporary credentials)
      *
-     * @param array $config Options to use when instantiating the credentials
+     * @param array $config Options to use when instantiating the credentials.
      *
      * @return CredentialsInterface
      */
@@ -41,11 +45,7 @@ class Credentials implements CredentialsInterface
             );
         }
 
-        return Provider::fromChain([
-            Provider::env(),
-            Provider::ini(),
-            Provider::instanceProfile($config)
-        ]);
+        return Provider::resolve(Provider::defaultProvider($config));
     }
 
     /**

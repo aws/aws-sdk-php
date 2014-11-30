@@ -7,6 +7,7 @@ use Aws\Common\Api\Validator;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Credentials\NullCredentials;
+use Aws\Common\Credentials\Provider;
 use Aws\Common\Retry\ThrottlingFilter;
 use Aws\Common\Signature\SignatureInterface;
 use Aws\Common\Signature\SignatureV2;
@@ -51,6 +52,7 @@ class ClientFactory
         'api_provider'      => 1,
         'class_name'        => 1,
         'exception_class'   => 1,
+        'profile'           => 1,
         'credentials'       => 1,
         'signature'         => 1,
         'client'            => 1,
@@ -355,12 +357,18 @@ class ClientFactory
         $args['exception_class'] = $value;
     }
 
+    private function handle_profile($value, array &$args)
+    {
+        $provider = Provider::ini($args['profile']);
+        $args['credentials'] = $provider();
+    }
+
     private function handle_credentials($value, array &$args)
     {
-        if (isset($args['profile'])) {
-            $args['credentials'] = Credentials::fromIni($args['profile']);
-        } elseif ($value instanceof CredentialsInterface) {
+        if ($value instanceof CredentialsInterface) {
             return;
+        } elseif (is_callable($value)) {
+            $args['credentials'] = Provider::resolve($value);
         } elseif (is_array($value)) {
             $args['credentials'] = Credentials::factory($value);
         } elseif ($value === false) {
@@ -369,7 +377,8 @@ class ClientFactory
             throw new \InvalidArgumentException('Credentials must be an '
                 . 'instance of Aws\Common\Credentials\CredentialsInterface, an '
                 . 'associative array that contains "key", "secret", and '
-                . 'an optional "token" key-value pairs, or false.');
+                . 'an optional "token" key-value pairs, a credentials provider '
+                . 'function, or false.');
         }
     }
 
