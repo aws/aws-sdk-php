@@ -359,8 +359,7 @@ class ClientFactory
 
     private function handle_profile($value, array &$args)
     {
-        $provider = Provider::ini($args['profile']);
-        $args['credentials'] = $provider();
+        $args['credentials'] = Provider::ini($args['profile']);
     }
 
     private function handle_credentials($value, array &$args)
