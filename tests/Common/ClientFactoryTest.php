@@ -8,6 +8,7 @@ use Aws\Common\ClientFactory;
 use Aws\Test\SdkTest;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Client;
+use Aws\Common\Credentials\Provider;
 
 /**
  * @covers Aws\Common\ClientFactory
@@ -538,5 +539,47 @@ EOT;
         ]);
 
         $c->getHttpClient()->get('http://localhost:123');
+    }
+
+    public function testLoadsFromDefaultChainIfNeeded()
+    {
+        $key = getenv(Provider::ENV_KEY);
+        $secret = getenv(Provider::ENV_SECRET);
+        putenv(Provider::ENV_KEY . '=foo');
+        putenv(Provider::ENV_SECRET . '=bar');
+        $f = new ClientFactory();
+        $client = $f->create([
+            'service' => 'sqs',
+            'region' => 'x',
+            'version' => 'latest'
+        ]);
+        $c = $client->getCredentials();
+        $this->assertInstanceOf('Aws\Common\Credentials\CredentialsInterface', $c);
+        $this->assertEquals('foo', $c->getAccessKeyId());
+        $this->assertEquals('bar', $c->getSecretKey());
+        putenv(Provider::ENV_KEY . "=$key");
+        putenv(Provider::ENV_SECRET . "=$secret");
+    }
+
+    public function testCreatesFromArray()
+    {
+        $exp = time() + 500;
+        $f = new ClientFactory();
+        $client = $f->create([
+            'service'     => 'sqs',
+            'region'      => 'x',
+            'version'     => 'latest',
+            'credentials' => [
+                'key'     => 'foo',
+                'secret'  => 'baz',
+                'token'   => 'tok',
+                'expires' => $exp
+            ]
+        ]);
+        $creds = $client->getCredentials();
+        $this->assertEquals('foo', $creds->getAccessKeyId());
+        $this->assertEquals('baz', $creds->getSecretKey());
+        $this->assertEquals('tok', $creds->getSecurityToken());
+        $this->assertEquals($exp, $creds->getExpiration());
     }
 }

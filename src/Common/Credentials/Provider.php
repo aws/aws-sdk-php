@@ -11,6 +11,11 @@ use Aws\Common\Exception\CredentialsException;
  */
 class Provider
 {
+    const ENV_KEY = 'AWS_ACCESS_KEY_ID';
+    const ENV_SECRET = 'AWS_SECRET_ACCESS_KEY';
+    const ENV_SESSION = 'AWS_SESSION_TOKEN';
+    const ENV_PROFILE = 'AWS_PROFILE';
+
     /**
      * Invokes a credential provider and ensures that the provider returns a
      * CredentialsInterface object.
@@ -68,10 +73,10 @@ class Provider
     {
         return function () {
             // Use credentials from environment variables, if available
-            $key = getenv(Credentials::ENV_KEY);
-            $secret = getenv(Credentials::ENV_SECRET);
+            $key = getenv(self::ENV_KEY);
+            $secret = getenv(self::ENV_SECRET);
             return $key && $secret
-                ? new Credentials($key, $secret, getenv(Credentials::ENV_SESSION))
+                ? new Credentials($key, $secret, getenv(self::ENV_SESSION))
                 : null;
         };
     }
@@ -104,7 +109,7 @@ class Provider
     public static function ini($profile = null, $filename = null)
     {
         $filename = $filename ?: (self::getHomeDir() . '/.aws/credentials');
-        $profile = $profile ?: (getenv(Credentials::ENV_PROFILE) ?: 'default');
+        $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');
 
         return function () use ($profile, $filename) {
             if (!file_exists($filename)) {

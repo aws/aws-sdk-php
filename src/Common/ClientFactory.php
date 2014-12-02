@@ -82,7 +82,7 @@ class ClientFactory
         ];
 
         static $defaultArgs = [
-            'credentials'       => [],
+            'credentials'       => null,
             'region'            => null,
             'retries'           => true,
             'scheme'            => 'https',
@@ -107,7 +107,7 @@ class ClientFactory
         // Process each argument and keep track of deferred ones
         $deferred = [];
         foreach ($this->validArguments as $key => $type) {
-            if (isset($args[$key])) {
+            if (array_key_exists($key, $args)) {
                 if ($type === 1) {
                     $this->{"handle_{$key}"}($args[$key], $args);
                 } elseif ($type === 2) {
@@ -368,8 +368,15 @@ class ClientFactory
             return;
         } elseif (is_callable($value)) {
             $args['credentials'] = Provider::resolve($value);
-        } elseif (is_array($value)) {
-            $args['credentials'] = Credentials::factory($value);
+        } elseif ($value === null) {
+            $args['credentials'] = Provider::resolve(Provider::defaultProvider());
+        } elseif (is_array($value) && isset($value['key']) && isset($value['secret'])) {
+            $args['credentials'] = new Credentials(
+                $value['key'],
+                $value['secret'],
+                isset($value['token']) ? $value['token'] : null,
+                isset($value['expires']) ? $value['expires'] : null
+            );
         } elseif ($value === false) {
             $args['credentials'] = new NullCredentials();
         } else {

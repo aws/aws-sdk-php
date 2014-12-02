@@ -13,9 +13,9 @@ class ProviderTest extends \PHPUnit_Framework_TestCase
 
     private function clearEnv()
     {
-        putenv(Credentials::ENV_KEY . '=');
-        putenv(Credentials::ENV_SECRET . '=');
-        putenv(Credentials::ENV_PROFILE . '=');
+        putenv(Provider::ENV_KEY . '=');
+        putenv(Provider::ENV_SECRET . '=');
+        putenv(Provider::ENV_PROFILE . '=');
     }
 
     public function setUp()
@@ -23,9 +23,9 @@ class ProviderTest extends \PHPUnit_Framework_TestCase
         $this->home = getenv('HOME');
         $this->homedrive = getenv('HOMEDRIVE');
         $this->homepath = getenv('HOMEPATH');
-        $this->key = getenv(Credentials::ENV_KEY);
-        $this->secret = getenv(Credentials::ENV_SECRET);
-        $this->profile = getenv(Credentials::ENV_PROFILE);
+        $this->key = getenv(Provider::ENV_KEY);
+        $this->secret = getenv(Provider::ENV_SECRET);
+        $this->profile = getenv(Provider::ENV_PROFILE);
     }
 
     public function tearDown()
@@ -33,9 +33,9 @@ class ProviderTest extends \PHPUnit_Framework_TestCase
         putenv('HOME=' . $this->home);
         putenv('HOMEDRIVE=' . $this->homedrive);
         putenv('HOMEPATH=' . $this->homepath);
-        putenv(Credentials::ENV_KEY . '=' . $this->key);
-        putenv(Credentials::ENV_SECRET . '=' . $this->secret);
-        putenv(Credentials::ENV_PROFILE . '=' . $this->profile);
+        putenv(Provider::ENV_KEY . '=' . $this->key);
+        putenv(Provider::ENV_SECRET . '=' . $this->secret);
+        putenv(Provider::ENV_PROFILE . '=' . $this->profile);
     }
 
     /**
@@ -49,8 +49,8 @@ class ProviderTest extends \PHPUnit_Framework_TestCase
     public function testCreatesFromEnvironmentVariables()
     {
         $this->clearEnv();
-        putenv(Credentials::ENV_KEY . '=abc');
-        putenv(Credentials::ENV_SECRET . '=123');
+        putenv(Provider::ENV_KEY . '=abc');
+        putenv(Provider::ENV_SECRET . '=123');
         $creds = Provider::resolve(Provider::env());
         $this->assertEquals('abc', $creds->getAccessKeyId());
         $this->assertEquals('abc', $creds->getAccessKeyId());
@@ -184,14 +184,14 @@ EOT;
 
     public function testCallsDefaultsCreds()
     {
-        $k = getenv(Credentials::ENV_KEY);
-        $s = getenv(Credentials::ENV_SECRET);
-        putenv(Credentials::ENV_KEY . '=abc');
-        putenv(Credentials::ENV_SECRET . '=123');
+        $k = getenv(Provider::ENV_KEY);
+        $s = getenv(Provider::ENV_SECRET);
+        putenv(Provider::ENV_KEY . '=abc');
+        putenv(Provider::ENV_SECRET . '=123');
         $provider = Provider::defaultProvider();
         $creds = $provider();
-        putenv(Credentials::ENV_KEY . "={$k}");
-        putenv(Credentials::ENV_SECRET . "={$s}");
+        putenv(Provider::ENV_KEY . "={$k}");
+        putenv(Provider::ENV_SECRET . "={$s}");
         $this->assertEquals('abc', $creds->getAccessKeyId());
         $this->assertEquals('123', $creds->getSecretKey());
     }
