@@ -94,18 +94,20 @@ class Provider
      * Credentials provider that creates credentials using an ini file stored
      * in the current user's home directory.
      *
-     * @param string|null $profile Profile to use. If not specified will use
-     *                             the "default" profile.
+     * @param string|null $profile  Profile to use. If not specified will use
+     *                              the "default" profile.
+     * @param string|null $filename If provided, uses a custom filename rather
+     *                              than looking in the home directory for the
+     *
      * @return callable
      */
-    public static function ini($profile = null)
+    public static function ini($profile = null, $filename = null)
     {
-        $home = self::getHomeDir();
+        $filename = $filename ?: (self::getHomeDir() . '/.aws/credentials');
         $profile = $profile ?: (getenv(Credentials::ENV_PROFILE) ?: 'default');
 
-        return function () use ($home, $profile) {
-            $filename = "{$home}/.aws/credentials";
-            if (!$home || !file_exists($filename)) {
+        return function () use ($profile, $filename) {
+            if (!file_exists($filename)) {
                 return null;
             }
             if (!is_readable($filename)) {
