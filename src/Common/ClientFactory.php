@@ -231,7 +231,7 @@ class ClientFactory
             'filter' => RetrySubscriber::createChainFilter([
                 new ThrottlingFilter($args['error_parser']),
                 RetrySubscriber::createStatusFilter(),
-                RetrySubscriber::createCurlFilter()
+                RetrySubscriber::createConnectFilter()
             ])
         ];
     }

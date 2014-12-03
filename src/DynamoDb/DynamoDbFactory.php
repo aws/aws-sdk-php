@@ -32,7 +32,7 @@ class DynamoDbFactory extends ClientFactory
                 new ThrottlingFilter($args['error_parser']),
                 new Crc32Filter($args['error_parser']),
                 RetrySubscriber::createStatusFilter(),
-                RetrySubscriber::createCurlFilter()
+                RetrySubscriber::createConnectFilter()
             ])
         ];
     }
