@@ -411,7 +411,7 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
 
     private function convertExpires($expires)
     {
-        if ($expires instanceof \DateTime) {
+        if ($expires instanceof \DateTimeInterface) {
             $expires = $expires->getTimestamp();
         } elseif (!is_numeric($expires)) {
             $expires = strtotime($expires);

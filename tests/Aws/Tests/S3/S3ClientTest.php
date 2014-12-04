@@ -126,6 +126,14 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertTrue(time() < $url->getQuery()->get('Expires'));
     }
 
+    public function testCreatesPresignedUrlsWithDateTimeImmutable()
+    {
+        /** @var $client S3Client */
+        $client = $this->getServiceBuilder()->get('s3', true);
+        $url = Url::factory($client->createPresignedUrl($client->get('/foobar'), new \DateTimeImmutable('+10 minutes')));
+        $this->assertTrue(time() < $url->getQuery()->get('Expires'));
+    }
+
     public function testCreatesPresignedUrlsWithSessionToken()
     {
         /** @var $client S3Client */
