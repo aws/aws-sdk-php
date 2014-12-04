@@ -38,10 +38,11 @@ interface SignatureInterface
     /**
      * Create a pre-signed URL
      *
-     * @param RequestInterface     $request Request to sign
-     * @param CredentialsInterface $credentials Credentials used to sign
-     * @param int|string|\DateTime $expires The time at which the URL should expire. This can be a Unix timestamp, a
-     *                                      PHP DateTime object, or a string that can be evaluated by strtotime
+     * @param RequestInterface              $request     Request to sign
+     * @param CredentialsInterface          $credentials Credentials used to sign
+     * @param int|string|\DateTimeInterface $expires     The time at which the URL should expire. This can be a Unix
+	 *                                                   timestamp, a PHP DateTime object, or a string that can be
+	 *                                                   evaluated by strtotime
      * @return string
      */
     public function createPresignedUrl(

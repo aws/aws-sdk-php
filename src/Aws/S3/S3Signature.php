@@ -90,7 +90,7 @@ class S3Signature implements S3SignatureInterface
         CredentialsInterface $credentials,
         $expires
     ) {
-        if ($expires instanceof \DateTime) {
+        if ($expires instanceof \DateTimeInterface) {
             $expires = $expires->getTimestamp();
         } elseif (!is_numeric($expires)) {
             $expires = strtotime($expires);
