@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next Release
+## 2.7.8 - 2014-12-04
 
 * Added support for the `PutRecords` batch operation to `KinesisClient`.
 * Added support for the `GetAccountAuthorizationDetails` operation to the
