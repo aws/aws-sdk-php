@@ -319,10 +319,10 @@ class S3Client extends AbstractClient
      * Create a pre-signed URL for a request
      *
      * @param RequestInterface              $request Request to generate the URL for. Use the factory methods of the
-	 *                                               client to create this request object
+     *                                               client to create this request object
      * @param int|string|\DateTimeInterface $expires The time at which the URL should expire. This can be a Unix
-	 *                                               timestamp, a PHP DateTime object, or a string that can be
-	 *                                               evaluated by strtotime
+     *                                               timestamp, a PHP DateTime object, or a string that can be
+     *                                               evaluated by strtotime
      *
      * @return string
      * @throws InvalidArgumentException if the request is not associated with this client object
