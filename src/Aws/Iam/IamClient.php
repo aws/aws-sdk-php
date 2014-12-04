@@ -59,6 +59,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model deleteVirtualMFADevice(array $args = array()) {@command Iam DeleteVirtualMFADevice}
  * @method Model enableMFADevice(array $args = array()) {@command Iam EnableMFADevice}
  * @method Model generateCredentialReport(array $args = array()) {@command Iam GenerateCredentialReport}
+ * @method Model getAccountAuthorizationDetails(array $args = array()) {@command Iam GetAccountAuthorizationDetails}
  * @method Model getAccountPasswordPolicy(array $args = array()) {@command Iam GetAccountPasswordPolicy}
  * @method Model getAccountSummary(array $args = array()) {@command Iam GetAccountSummary}
  * @method Model getCredentialReport(array $args = array()) {@command Iam GetCredentialReport}
@@ -109,6 +110,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model updateUser(array $args = array()) {@command Iam UpdateUser}
  * @method Model uploadServerCertificate(array $args = array()) {@command Iam UploadServerCertificate}
  * @method Model uploadSigningCertificate(array $args = array()) {@command Iam UploadSigningCertificate}
+ * @method ResourceIteratorInterface getGetAccountAuthorizationDetailsIterator(array $args = array()) The input array uses the parameters of the GetAccountAuthorizationDetails operation
  * @method ResourceIteratorInterface getGetGroupIterator(array $args = array()) The input array uses the parameters of the GetGroup operation
  * @method ResourceIteratorInterface getListAccessKeysIterator(array $args = array()) The input array uses the parameters of the ListAccessKeys operation
  * @method ResourceIteratorInterface getListAccountAliasesIterator(array $args = array()) The input array uses the parameters of the ListAccountAliases operation

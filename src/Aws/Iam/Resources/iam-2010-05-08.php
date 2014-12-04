@@ -1509,6 +1509,46 @@ return array (
                 ),
             ),
         ),
+        'GetAccountAuthorizationDetails' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'GetAccountAuthorizationDetailsResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'GetAccountAuthorizationDetails',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-05-08',
+                ),
+                'Filter' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filter.member',
+                    'items' => array(
+                        'name' => 'EntityType',
+                        'type' => 'string',
+                    ),
+                ),
+                'MaxItems' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                    'minimum' => 1,
+                    'maximum' => 1000,
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 320,
+                ),
+            ),
+        ),
         'GetAccountPasswordPolicy' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -3905,6 +3945,210 @@ return array (
                 ),
             ),
         ),
+        'GetAccountAuthorizationDetailsResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'UserDetailList' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'UserDetail',
+                        'type' => 'object',
+                        'sentAs' => 'member',
+                        'properties' => array(
+                            'Path' => array(
+                                'type' => 'string',
+                            ),
+                            'UserName' => array(
+                                'type' => 'string',
+                            ),
+                            'UserId' => array(
+                                'type' => 'string',
+                            ),
+                            'Arn' => array(
+                                'type' => 'string',
+                            ),
+                            'CreateDate' => array(
+                                'type' => 'string',
+                            ),
+                            'UserPolicyList' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'PolicyDetail',
+                                    'type' => 'object',
+                                    'sentAs' => 'member',
+                                    'properties' => array(
+                                        'PolicyName' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'PolicyDocument' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'GroupList' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'groupNameType',
+                                    'type' => 'string',
+                                    'sentAs' => 'member',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'GroupDetailList' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'GroupDetail',
+                        'type' => 'object',
+                        'sentAs' => 'member',
+                        'properties' => array(
+                            'Path' => array(
+                                'type' => 'string',
+                            ),
+                            'GroupName' => array(
+                                'type' => 'string',
+                            ),
+                            'GroupId' => array(
+                                'type' => 'string',
+                            ),
+                            'Arn' => array(
+                                'type' => 'string',
+                            ),
+                            'CreateDate' => array(
+                                'type' => 'string',
+                            ),
+                            'GroupPolicyList' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'PolicyDetail',
+                                    'type' => 'object',
+                                    'sentAs' => 'member',
+                                    'properties' => array(
+                                        'PolicyName' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'PolicyDocument' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'RoleDetailList' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'RoleDetail',
+                        'type' => 'object',
+                        'sentAs' => 'member',
+                        'properties' => array(
+                            'Path' => array(
+                                'type' => 'string',
+                            ),
+                            'RoleName' => array(
+                                'type' => 'string',
+                            ),
+                            'RoleId' => array(
+                                'type' => 'string',
+                            ),
+                            'Arn' => array(
+                                'type' => 'string',
+                            ),
+                            'CreateDate' => array(
+                                'type' => 'string',
+                            ),
+                            'AssumeRolePolicyDocument' => array(
+                                'type' => 'string',
+                            ),
+                            'InstanceProfileList' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'InstanceProfile',
+                                    'type' => 'object',
+                                    'sentAs' => 'member',
+                                    'properties' => array(
+                                        'Path' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'InstanceProfileName' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'InstanceProfileId' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Arn' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'CreateDate' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Roles' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'Role',
+                                                'type' => 'object',
+                                                'sentAs' => 'member',
+                                                'properties' => array(
+                                                    'Path' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'RoleName' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'RoleId' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'Arn' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'CreateDate' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'AssumeRolePolicyDocument' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'RolePolicyList' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'PolicyDetail',
+                                    'type' => 'object',
+                                    'sentAs' => 'member',
+                                    'properties' => array(
+                                        'PolicyName' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'PolicyDocument' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'IsTruncated' => array(
+                    'type' => 'boolean',
+                    'location' => 'xml',
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+            ),
+        ),
         'GetAccountPasswordPolicyResponse' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -5087,6 +5331,13 @@ return array (
         ),
     ),
     'iterators' => array(
+        'GetAccountAuthorizationDetails' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'Marker',
+            'more_results' => 'IsTruncated',
+            'limit_key' => 'MaxItems',
+            'result_key' => 'UserDetailList || GroupDetailList || RoleDetailList',
+        ),
         'GetGroup' => array(
             'input_token' => 'Marker',
             'output_token' => 'Marker',

@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## Next Release
+
+* Added support for the `PutRecords` batch operation to `KinesisClient`.
+* Added support for the `GetAccountAuthorizationDetails` operation to the
+  `IamClient`.
+* Added support for the `UpdateHostedZoneComment` operation to `Route53Client`.
+* Added iterators for `ListEventSources` and `ListFunctions` operations the
+  `LambdaClient`.
+
 ## 2.7.7 - 2014-11-25
 
 * Added a DynamoDB `Marshaler` class, that allows you to marshal JSON documents

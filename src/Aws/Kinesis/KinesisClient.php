@@ -36,6 +36,7 @@ use Guzzle\Service\Resource\Model;
  * @method Model listTagsForStream(array $args = array()) {@command Kinesis ListTagsForStream}
  * @method Model mergeShards(array $args = array()) {@command Kinesis MergeShards}
  * @method Model putRecord(array $args = array()) {@command Kinesis PutRecord}
+ * @method Model putRecords(array $args = array()) {@command Kinesis PutRecords}
  * @method Model removeTagsFromStream(array $args = array()) {@command Kinesis RemoveTagsFromStream}
  * @method Model splitShard(array $args = array()) {@command Kinesis SplitShard}
  * @method ResourceIteratorInterface getDescribeStreamIterator(array $args = array()) The input array uses the parameters of the DescribeStream operation

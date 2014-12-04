@@ -599,6 +599,79 @@ return array (
                 ),
             ),
         ),
+        'PutRecords' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'PutRecordsOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'Kinesis_20131202.PutRecords',
+                ),
+                'Records' => array(
+                    'required' => true,
+                    'type' => 'array',
+                    'location' => 'json',
+                    'minItems' => 1,
+                    'maxItems' => 500,
+                    'items' => array(
+                        'name' => 'PutRecordsRequestEntry',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Data' => array(
+                                'required' => true,
+                                'type' => 'string',
+                                'filters' => array(
+                                    'base64_encode',
+                                ),
+                            ),
+                            'ExplicitHashKey' => array(
+                                'type' => 'string',
+                            ),
+                            'PartitionKey' => array(
+                                'required' => true,
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 256,
+                            ),
+                        ),
+                    ),
+                ),
+                'StreamName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 128,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The requested resource could not be found. It might not be specified correctly, or it might not be in the ACTIVE state.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'A specified parameter exceeds its restrictions, is not supported, or can\'t be used. For more information, see the returned message.',
+                    'class' => 'InvalidArgumentException',
+                ),
+                array(
+                    'reason' => 'The request rate is too high, or the requested data is too large for the available throughput. Reduce the frequency or size of your requests. For more information, see Error Retries and Exponential Backoff in AWS in the AWS General Reference.',
+                    'class' => 'ProvisionedThroughputExceededException',
+                ),
+            ),
+        ),
         'RemoveTagsFromStream' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -887,6 +960,38 @@ return array (
                 'SequenceNumber' => array(
                     'type' => 'string',
                     'location' => 'json',
+                ),
+            ),
+        ),
+        'PutRecordsOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'FailedRecordCount' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                ),
+                'Records' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'PutRecordsResultEntry',
+                        'type' => 'object',
+                        'properties' => array(
+                            'SequenceNumber' => array(
+                                'type' => 'string',
+                            ),
+                            'ShardId' => array(
+                                'type' => 'string',
+                            ),
+                            'ErrorCode' => array(
+                                'type' => 'string',
+                            ),
+                            'ErrorMessage' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
                 ),
             ),
         ),

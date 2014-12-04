@@ -373,6 +373,9 @@ return array (
                     'class' => 'NoSuchHealthCheckException',
                 ),
                 array(
+                    'class' => 'NoSuchHostedZoneException',
+                ),
+                array(
                     'reason' => 'The request was rejected because Route 53 was still processing a prior request.',
                     'class' => 'PriorRequestNotCompleteException',
                 ),
@@ -1289,6 +1292,9 @@ return array (
                     'class' => 'NoSuchHealthCheckException',
                 ),
                 array(
+                    'class' => 'NoSuchHostedZoneException',
+                ),
+                array(
                     'reason' => 'The request was rejected because Route 53 was still processing a prior request.',
                     'class' => 'PriorRequestNotCompleteException',
                 ),
@@ -1342,6 +1348,9 @@ return array (
                 array(
                     'reason' => 'The health check you are trying to get or delete does not exist.',
                     'class' => 'NoSuchHealthCheckException',
+                ),
+                array(
+                    'class' => 'NoSuchHostedZoneException',
                 ),
                 array(
                     'reason' => 'The request was rejected because Route 53 was still processing a prior request.',
@@ -1426,6 +1435,47 @@ return array (
                 ),
                 array(
                     'class' => 'HealthCheckVersionMismatchException',
+                ),
+            ),
+        ),
+        'UpdateHostedZoneComment' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/2013-04-01/hostedzone/{Id}',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'UpdateHostedZoneCommentResponse',
+            'responseType' => 'model',
+            'data' => array(
+                'xmlRoot' => array(
+                    'name' => 'UpdateHostedZoneCommentRequest',
+                    'namespaces' => array(
+                        'https://route53.amazonaws.com/doc/2013-04-01/',
+                    ),
+                ),
+            ),
+            'parameters' => array(
+                'Id' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'maxLength' => 32,
+                ),
+                'Comment' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'maxLength' => 256,
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'class' => 'NoSuchHostedZoneException',
+                ),
+                array(
+                    'reason' => 'Some value specified in the request is invalid or the XML document is malformed.',
+                    'class' => 'InvalidInputException',
                 ),
             ),
         ),
@@ -2568,6 +2618,45 @@ return array (
                 ),
             ),
         ),
+        'UpdateHostedZoneCommentResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'HostedZone' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'Id' => array(
+                            'type' => 'string',
+                        ),
+                        'Name' => array(
+                            'type' => 'string',
+                        ),
+                        'CallerReference' => array(
+                            'type' => 'string',
+                        ),
+                        'Config' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Comment' => array(
+                                    'type' => 'string',
+                                ),
+                                'PrivateZone' => array(
+                                    'type' => 'boolean',
+                                ),
+                            ),
+                        ),
+                        'ResourceRecordSetCount' => array(
+                            'type' => 'numeric',
+                        ),
+                    ),
+                ),
+                'RequestId' => array(
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
     ),
     'iterators' => array(
         'ListHealthChecks' => array(
@@ -2598,13 +2687,6 @@ return array (
                 'NextRecordType',
                 'NextRecordIdentifier',
             ),
-        ),
-        'ListReusableDelegationSets' => array(
-            'input_token' => 'Marker',
-            'output_token' => 'NextMarker',
-            'more_results' => 'IsTruncated',
-            'limit_key' => 'MaxItems',
-            'result_key' => 'DelegationSets',
         ),
     ),
 );

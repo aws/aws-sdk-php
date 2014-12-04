@@ -725,4 +725,18 @@ return array (
             ),
         ),
     ),
+    'iterators' => array(
+        'ListEventSources' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'NextMarker',
+            'limit_key' => 'MaxItems',
+            'result_key' => 'EventSources',
+        ),
+        'ListFunctions' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'NextMarker',
+            'limit_key' => 'MaxItems',
+            'result_key' => 'Functions',
+        ),
+    ),
 );

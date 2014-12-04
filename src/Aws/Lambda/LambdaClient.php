@@ -37,6 +37,8 @@ use Guzzle\Service\Resource\Model;
  * @method Model removeEventSource(array $args = array()) {@command Lambda RemoveEventSource}
  * @method Model updateFunctionConfiguration(array $args = array()) {@command Lambda UpdateFunctionConfiguration}
  * @method Model uploadFunction(array $args = array()) {@command Lambda UploadFunction}
+ * @method ResourceIteratorInterface getListEventSourcesIterator(array $args = array()) The input array uses the parameters of the ListEventSources operation
+ * @method ResourceIteratorInterface getListFunctionsIterator(array $args = array()) The input array uses the parameters of the ListFunctions operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-lambda.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Lambda.LambdaClient.html API docs

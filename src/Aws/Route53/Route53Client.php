@@ -55,6 +55,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model listTagsForResource(array $args = array()) {@command Route53 ListTagsForResource}
  * @method Model listTagsForResources(array $args = array()) {@command Route53 ListTagsForResources}
  * @method Model updateHealthCheck(array $args = array()) {@command Route53 UpdateHealthCheck}
+ * @method Model updateHostedZoneComment(array $args = array()) {@command Route53 UpdateHostedZoneComment}
  * @method ResourceIteratorInterface getListHealthChecksIterator(array $args = array()) The input array uses the parameters of the ListHealthChecks operation
  * @method ResourceIteratorInterface getListHostedZonesIterator(array $args = array()) The input array uses the parameters of the ListHostedZones operation
  * @method ResourceIteratorInterface getListResourceRecordSetsIterator(array $args = array()) The input array uses the parameters of the ListResourceRecordSets operation
