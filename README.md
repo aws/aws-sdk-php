@@ -1,8 +1,8 @@
 # AWS SDK for PHP
 
-[![Latest Stable Version](https://poser.pugx.org/aws/aws-sdk-php/version.svg)](https://packagist.org/packages/aws/aws-sdk-php)
-[![Total Downloads](https://poser.pugx.org/aws/aws-sdk-php/d/total.svg)](https://packagist.org/packages/aws/aws-sdk-php)
-[![Build Status](https://travis-ci.org/aws/aws-sdk-php.png)](https://travis-ci.org/aws/aws-sdk-php)
+[![Apache 2 License](https://img.shields.io/packagist/l/aws/aws-sdk-php.svg?style=flat)]()
+[![Total Downloads](https://img.shields.io/packagist/dt/aws/aws-sdk-php.svg?style=flat)](https://packagist.org/packages/aws/aws-sdk-php)
+[![Build Status](https://img.shields.io/travis/aws/aws-sdk-php.svg?style=flat)](https://travis-ci.org/aws/aws-sdk-php)
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/aws/aws-sdk-php?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 The **AWS SDK for PHP** enables PHP developers to use [Amazon Web Services][aws]
@@ -21,8 +21,8 @@ downloading a single zip or phar file from our [latest release][latest-release].
 * [Issues][sdk-issues] – Report issues and submit pull requests
   (see [Apache 2.0 License][sdk-license])
 * [@awsforphp][sdk-twitter] – Follow us on Twitter
-* [Mastering the AWS SDK for PHP](http://youtu.be/_zaW2VZB1ok) video from AWS
-  re:Invent 2013
+* [Building Apps with Version 3 of the AWS SDK for PHP](http://youtu.be/STrtR89f5Pc) video from AWS
+  re:Invent 2014
 
 ## Features
 
