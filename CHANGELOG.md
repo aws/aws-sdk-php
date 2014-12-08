@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2.7.9 - 2014-12-08
+
+* The Amazon Simple Queue Service client adds support for the PurgeQueue
+  operation.
+* You can now use AWS OpsWorks with existing EC2 instances and on-premises
+  servers.
+
 ## 2.7.8 - 2014-12-04
 
 * Added support for the `PutRecords` batch operation to `KinesisClient`.

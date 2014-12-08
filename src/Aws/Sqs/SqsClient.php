@@ -37,6 +37,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model getQueueUrl(array $args = array()) {@command Sqs GetQueueUrl}
  * @method Model listDeadLetterSourceQueues(array $args = array()) {@command Sqs ListDeadLetterSourceQueues}
  * @method Model listQueues(array $args = array()) {@command Sqs ListQueues}
+ * @method Model purgeQueue(array $args = array()) {@command Sqs PurgeQueue}
  * @method Model receiveMessage(array $args = array()) {@command Sqs ReceiveMessage}
  * @method Model removePermission(array $args = array()) {@command Sqs RemovePermission}
  * @method Model sendMessage(array $args = array()) {@command Sqs SendMessage}

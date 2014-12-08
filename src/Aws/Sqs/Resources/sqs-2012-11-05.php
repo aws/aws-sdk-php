@@ -540,6 +540,40 @@ return array (
                 ),
             ),
         ),
+        'PurgeQueue' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'PurgeQueue',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2012-11-05',
+                ),
+                'QueueUrl' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The queue referred to does not exist.',
+                    'class' => 'QueueDoesNotExistException',
+                ),
+                array(
+                    'reason' => 'Indicates that the specified queue previously received a PurgeQueue request within the last 60 seconds, the time it can take to delete the messages in the queue.',
+                    'class' => 'PurgeQueueInProgressException',
+                ),
+            ),
+        ),
         'ReceiveMessage' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
