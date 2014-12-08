@@ -390,11 +390,12 @@ class StreamWrapper
      * Remove a bucket from Amazon S3
      *
      * @param string $path the directory path
+     * @param int    $options A bitwise mask of values
      *
      * @return bool true if directory was successfully removed
      * @link http://www.php.net/manual/en/streamwrapper.rmdir.php
      */
-    public function rmdir($path)
+    public function rmdir($path, $options)
     {
         $params = $this->getParams($path);
         if (!$params['Bucket']) {
