@@ -13,7 +13,7 @@ return array(
             'endpoint' => 'iam.us-gov.amazonaws.com'
         ),
         'us-gov-west-1/sts' => array(
-            'endpoint' => 'sts.us-gov.amazonaws.com'
+            'endpoint' => 'sts.us-gov-west-1.amazonaws.com'
         ),
         'us-gov-west-1/s3' => array(
             'endpoint' => 's3-{region}.amazonaws.com'
