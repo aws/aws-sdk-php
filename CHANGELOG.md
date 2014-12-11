@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.7.10 - Unreleased
+
+* Added support for user data to Amazon Elastic Transcoder.
+
 ## 2.7.9 - 2014-12-08
 
 * The Amazon Simple Queue Service client adds support for the PurgeQueue

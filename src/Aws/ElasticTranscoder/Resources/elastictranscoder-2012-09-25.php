@@ -721,6 +721,16 @@ return array (
                         ),
                     ),
                 ),
+                'UserMetadata' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'additionalProperties' => array(
+                        'type' => 'string',
+                        'data' => array(
+                            'shape_name' => 'String',
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -2353,6 +2363,12 @@ return array (
                         'Status' => array(
                             'type' => 'string',
                         ),
+                        'UserMetadata' => array(
+                            'type' => 'object',
+                            'additionalProperties' => array(
+                                'type' => 'string',
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -3259,6 +3275,12 @@ return array (
                             'Status' => array(
                                 'type' => 'string',
                             ),
+                            'UserMetadata' => array(
+                                'type' => 'object',
+                                'additionalProperties' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -3873,6 +3895,12 @@ return array (
                             ),
                             'Status' => array(
                                 'type' => 'string',
+                            ),
+                            'UserMetadata' => array(
+                                'type' => 'object',
+                                'additionalProperties' => array(
+                                    'type' => 'string',
+                                ),
                             ),
                         ),
                     ),
@@ -4793,6 +4821,12 @@ return array (
                         ),
                         'Status' => array(
                             'type' => 'string',
+                        ),
+                        'UserMetadata' => array(
+                            'type' => 'object',
+                            'additionalProperties' => array(
+                                'type' => 'string',
+                            ),
                         ),
                     ),
                 ),
