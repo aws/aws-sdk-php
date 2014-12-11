@@ -110,7 +110,7 @@ For more complex logging or logging to a file, you can build a LogPlugin manuall
 
     // Create a log channel
     $log = new Logger('aws');
-    $log->pushHandler(new StreamHandler('/path/to/your.log', Logger::WARNING));
+    $log->pushHandler(new StreamHandler('/path/to/your.log', Logger::DEBUG));
 
     // Create a log adapter for Monolog
     $logger = new MonologLogAdapter($log);
