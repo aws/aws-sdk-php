@@ -31,6 +31,7 @@ use Aws\Common\Waiter\WaiterFactoryInterface;
 use Aws\Common\Waiter\WaiterConfigFactory;
 use Guzzle\Common\Collection;
 use Guzzle\Http\Exception\CurlException;
+use Guzzle\Http\QueryAggregator\DuplicateAggregator;
 use Guzzle\Service\Client;
 use Guzzle\Service\Description\ServiceDescriptionInterface;
 
@@ -39,20 +40,17 @@ use Guzzle\Service\Description\ServiceDescriptionInterface;
  */
 abstract class AbstractClient extends Client implements AwsClientInterface
 {
-    /**
-     * @var CredentialsInterface AWS credentials
-     */
+    /** @var CredentialsInterface AWS credentials */
     protected $credentials;
 
-    /**
-     * @var SignatureInterface Signature implementation of the service
-     */
+    /** @var SignatureInterface Signature implementation of the service */
     protected $signature;
 
-    /**
-     * @var WaiterFactoryInterface Factory used to create waiter classes
-     */
+    /** @var WaiterFactoryInterface Factory used to create waiter classes */
     protected $waiterFactory;
+
+    /** @var DuplicateAggregator Cached query aggregator*/
+    protected $aggregator;
 
     /**
      * {@inheritdoc}
@@ -78,6 +76,7 @@ abstract class AbstractClient extends Client implements AwsClientInterface
         parent::__construct($config->get(Options::BASE_URL), $config);
         $this->credentials = $credentials;
         $this->signature = $signature;
+        $this->aggregator = new DuplicateAggregator();
 
         // Make sure the user agent is prefixed by the SDK version
         $this->setUserAgent('aws-sdk-php2/' . Aws::VERSION, true);
@@ -268,5 +267,22 @@ abstract class AbstractClient extends Client implements AwsClientInterface
                 ->setRequest($e->getRequest());
             throw $wrapped;
         }
+    }
+
+    /**
+     * Ensures that the duplicate query string aggregator is used so that
+     * query string values are sent over the wire as foo=bar&foo=baz.
+     * {@inheritdoc}
+     */
+    public function createRequest(
+        $method = 'GET',
+        $uri = null,
+        $headers = null,
+        $body = null,
+        array $options = array()
+    ) {
+        $request = parent::createRequest($method, $uri, $headers, $body, $options);
+        $request->getQuery()->setAggregator($this->aggregator);
+        return $request;
     }
 }
