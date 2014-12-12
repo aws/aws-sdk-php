@@ -506,6 +506,9 @@
         'pipelineId' => [
           'shape' => 'id',
         ],
+        'parameterValues' => [
+          'shape' => 'ParameterValueList',
+        ],
       ],
     ],
     'ActivatePipelineOutput' => [
@@ -680,6 +683,12 @@
         'pipelineObjects' => [
           'shape' => 'PipelineObjectList',
         ],
+        'parameterObjects' => [
+          'shape' => 'ParameterObjectList',
+        ],
+        'parameterValues' => [
+          'shape' => 'ParameterValueList',
+        ],
       ],
     ],
     'InstanceIdentity' => [
@@ -756,6 +765,69 @@
         'LE',
         'GE',
         'BETWEEN',
+      ],
+    ],
+    'ParameterAttribute' => [
+      'type' => 'structure',
+      'required' => [
+        'key',
+        'stringValue',
+      ],
+      'members' => [
+        'key' => [
+          'shape' => 'attributeNameString',
+        ],
+        'stringValue' => [
+          'shape' => 'attributeValueString',
+        ],
+      ],
+    ],
+    'ParameterAttributeList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'ParameterAttribute',
+      ],
+    ],
+    'ParameterObject' => [
+      'type' => 'structure',
+      'required' => [
+        'id',
+        'attributes',
+      ],
+      'members' => [
+        'id' => [
+          'shape' => 'fieldNameString',
+        ],
+        'attributes' => [
+          'shape' => 'ParameterAttributeList',
+        ],
+      ],
+    ],
+    'ParameterObjectList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'ParameterObject',
+      ],
+    ],
+    'ParameterValue' => [
+      'type' => 'structure',
+      'required' => [
+        'id',
+        'stringValue',
+      ],
+      'members' => [
+        'id' => [
+          'shape' => 'fieldNameString',
+        ],
+        'stringValue' => [
+          'shape' => 'fieldStringValue',
+        ],
+      ],
+    ],
+    'ParameterValueList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'ParameterValue',
       ],
     ],
     'PipelineDeletedException' => [
@@ -887,6 +959,12 @@
         'pipelineObjects' => [
           'shape' => 'PipelineObjectList',
         ],
+        'parameterObjects' => [
+          'shape' => 'ParameterObjectList',
+        ],
+        'parameterValues' => [
+          'shape' => 'ParameterValueList',
+        ],
       ],
     ],
     'PutPipelineDefinitionOutput' => [
@@ -960,6 +1038,9 @@
       'members' => [
         'taskId' => [
           'shape' => 'taskId',
+        ],
+        'fields' => [
+          'shape' => 'fieldList',
         ],
       ],
     ],
@@ -1114,6 +1195,12 @@
         'pipelineObjects' => [
           'shape' => 'PipelineObjectList',
         ],
+        'parameterObjects' => [
+          'shape' => 'ParameterObjectList',
+        ],
+        'parameterValues' => [
+          'shape' => 'ParameterValueList',
+        ],
       ],
     ],
     'ValidatePipelineDefinitionOutput' => [
@@ -1166,6 +1253,18 @@
       'member' => [
         'shape' => 'ValidationWarning',
       ],
+    ],
+    'attributeNameString' => [
+      'type' => 'string',
+      'min' => 1,
+      'max' => 256,
+      'pattern' => '[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*',
+    ],
+    'attributeValueString' => [
+      'type' => 'string',
+      'min' => 0,
+      'max' => 10240,
+      'pattern' => '[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*',
     ],
     'boolean' => [
       'type' => 'boolean',

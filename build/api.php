@@ -14,7 +14,9 @@ if (is_file($dir)) {
     copyJson($dir);
 } elseif (is_dir($dir)) {
     foreach (scandir($dir) as $file) {
-        copyJson($dir . '/' . $file);
+        if ($file != '.' && $file != '..') {
+            copyJson($dir . '/' . $file);
+        }
     }
 } else {
     die('Invalid file/directory');

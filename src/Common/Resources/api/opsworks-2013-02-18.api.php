@@ -9,6 +9,26 @@
     'protocol' => 'json',
   ],
   'operations' => [
+    'AssignInstance' => [
+      'name' => 'AssignInstance',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'AssignInstanceRequest',
+      ],
+      'errors' => [
+        [
+          'shape' => 'ValidationException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceNotFoundException',
+          'exception' => true,
+        ],
+      ],
+    ],
     'AssignVolume' => [
       'name' => 'AssignVolume',
       'http' => [
@@ -330,6 +350,26 @@
       ],
       'input' => [
         'shape' => 'DeregisterElasticIpRequest',
+      ],
+      'errors' => [
+        [
+          'shape' => 'ValidationException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceNotFoundException',
+          'exception' => true,
+        ],
+      ],
+    ],
+    'DeregisterInstance' => [
+      'name' => 'DeregisterInstance',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'DeregisterInstanceRequest',
       ],
       'errors' => [
         [
@@ -668,6 +708,29 @@
         ],
       ],
     ],
+    'DescribeStackProvisioningParameters' => [
+      'name' => 'DescribeStackProvisioningParameters',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'DescribeStackProvisioningParametersRequest',
+      ],
+      'output' => [
+        'shape' => 'DescribeStackProvisioningParametersResult',
+      ],
+      'errors' => [
+        [
+          'shape' => 'ValidationException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceNotFoundException',
+          'exception' => true,
+        ],
+      ],
+    ],
     'DescribeStackSummary' => [
       'name' => 'DescribeStackSummary',
       'http' => [
@@ -885,6 +948,29 @@
         ],
       ],
     ],
+    'RegisterInstance' => [
+      'name' => 'RegisterInstance',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'RegisterInstanceRequest',
+      ],
+      'output' => [
+        'shape' => 'RegisterInstanceResult',
+      ],
+      'errors' => [
+        [
+          'shape' => 'ValidationException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceNotFoundException',
+          'exception' => true,
+        ],
+      ],
+    ],
     'RegisterRdsDbInstance' => [
       'name' => 'RegisterRdsDbInstance',
       'http' => [
@@ -1056,6 +1142,26 @@
       ],
       'input' => [
         'shape' => 'StopStackRequest',
+      ],
+      'errors' => [
+        [
+          'shape' => 'ValidationException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceNotFoundException',
+          'exception' => true,
+        ],
+      ],
+    ],
+    'UnassignInstance' => [
+      'name' => 'UnassignInstance',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'UnassignInstanceRequest',
       ],
       'errors' => [
         [
@@ -1308,6 +1414,9 @@
         'CreatedAt' => [
           'shape' => 'String',
         ],
+        'Environment' => [
+          'shape' => 'EnvironmentVariables',
+        ],
       ],
     ],
     'AppAttributes' => [
@@ -1330,6 +1439,7 @@
     'AppType' => [
       'type' => 'string',
       'enum' => [
+        'java',
         'rails',
         'php',
         'nodejs',
@@ -1348,6 +1458,21 @@
       'enum' => [
         'x86_64',
         'i386',
+      ],
+    ],
+    'AssignInstanceRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'InstanceId',
+        'LayerIds',
+      ],
+      'members' => [
+        'InstanceId' => [
+          'shape' => 'String',
+        ],
+        'LayerIds' => [
+          'shape' => 'Strings',
+        ],
       ],
     ],
     'AssignVolumeRequest' => [
@@ -1600,6 +1725,9 @@
         'Attributes' => [
           'shape' => 'AppAttributes',
         ],
+        'Environment' => [
+          'shape' => 'EnvironmentVariables',
+        ],
       ],
     ],
     'CreateAppResult' => [
@@ -1761,6 +1889,9 @@
         ],
         'UseEbsOptimizedInstances' => [
           'shape' => 'Boolean',
+        ],
+        'LifecycleEventConfiguration' => [
+          'shape' => 'LifecycleEventConfiguration',
         ],
       ],
     ],
@@ -2062,6 +2193,17 @@
         ],
       ],
     ],
+    'DeregisterInstanceRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'InstanceId',
+      ],
+      'members' => [
+        'InstanceId' => [
+          'shape' => 'String',
+        ],
+      ],
+    ],
     'DeregisterRdsDbInstanceRequest' => [
       'type' => 'structure',
       'required' => [
@@ -2281,6 +2423,9 @@
         'InstanceId' => [
           'shape' => 'String',
         ],
+        'StackId' => [
+          'shape' => 'String',
+        ],
         'RaidArrayIds' => [
           'shape' => 'Strings',
         ],
@@ -2335,6 +2480,28 @@
       'members' => [
         'ServiceErrors' => [
           'shape' => 'ServiceErrors',
+        ],
+      ],
+    ],
+    'DescribeStackProvisioningParametersRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'StackId',
+      ],
+      'members' => [
+        'StackId' => [
+          'shape' => 'String',
+        ],
+      ],
+    ],
+    'DescribeStackProvisioningParametersResult' => [
+      'type' => 'structure',
+      'members' => [
+        'AgentInstallerUrl' => [
+          'shape' => 'String',
+        ],
+        'Parameters' => [
+          'shape' => 'Parameters',
         ],
       ],
     ],
@@ -2527,6 +2694,30 @@
         'shape' => 'ElasticLoadBalancer',
       ],
     ],
+    'EnvironmentVariable' => [
+      'type' => 'structure',
+      'required' => [
+        'Key',
+        'Value',
+      ],
+      'members' => [
+        'Key' => [
+          'shape' => 'String',
+        ],
+        'Value' => [
+          'shape' => 'String',
+        ],
+        'Secure' => [
+          'shape' => 'Boolean',
+        ],
+      ],
+    ],
+    'EnvironmentVariables' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'EnvironmentVariable',
+      ],
+    ],
     'GetHostnameSuggestionRequest' => [
       'type' => 'structure',
       'required' => [
@@ -2562,7 +2753,7 @@
           'shape' => 'String',
         ],
         'VirtualizationType' => [
-          'shape' => 'String',
+          'shape' => 'VirtualizationType',
         ],
         'Hostname' => [
           'shape' => 'String',
@@ -2645,6 +2836,26 @@
         'EbsOptimized' => [
           'shape' => 'Boolean',
         ],
+        'ReportedOs' => [
+          'shape' => 'ReportedOs',
+        ],
+        'InfrastructureClass' => [
+          'shape' => 'String',
+        ],
+        'RegisteredBy' => [
+          'shape' => 'String',
+        ],
+      ],
+    ],
+    'InstanceIdentity' => [
+      'type' => 'structure',
+      'members' => [
+        'Document' => [
+          'shape' => 'String',
+        ],
+        'Signature' => [
+          'shape' => 'String',
+        ],
       ],
     ],
     'Instances' => [
@@ -2656,10 +2867,16 @@
     'InstancesCount' => [
       'type' => 'structure',
       'members' => [
+        'Assigning' => [
+          'shape' => 'Integer',
+        ],
         'Booting' => [
           'shape' => 'Integer',
         ],
         'ConnectionLost' => [
+          'shape' => 'Integer',
+        ],
+        'Deregistering' => [
           'shape' => 'Integer',
         ],
         'Online' => [
@@ -2669,6 +2886,12 @@
           'shape' => 'Integer',
         ],
         'Rebooting' => [
+          'shape' => 'Integer',
+        ],
+        'Registered' => [
+          'shape' => 'Integer',
+        ],
+        'Registering' => [
           'shape' => 'Integer',
         ],
         'Requested' => [
@@ -2696,6 +2919,9 @@
           'shape' => 'Integer',
         ],
         'Terminating' => [
+          'shape' => 'Integer',
+        ],
+        'Unassigning' => [
           'shape' => 'Integer',
         ],
       ],
@@ -2764,6 +2990,9 @@
         'UseEbsOptimizedInstances' => [
           'shape' => 'Boolean',
         ],
+        'LifecycleEventConfiguration' => [
+          'shape' => 'LifecycleEventConfiguration',
+        ],
       ],
     ],
     'LayerAttributes' => [
@@ -2807,6 +3036,7 @@
     'LayerType' => [
       'type' => 'string',
       'enum' => [
+        'java-app',
         'lb',
         'web',
         'php-app',
@@ -2822,6 +3052,14 @@
       'type' => 'list',
       'member' => [
         'shape' => 'Layer',
+      ],
+    ],
+    'LifecycleEventConfiguration' => [
+      'type' => 'structure',
+      'members' => [
+        'Shutdown' => [
+          'shape' => 'ShutdownEventConfiguration',
+        ],
       ],
     ],
     'LoadBasedAutoScalingConfiguration' => [
@@ -2851,6 +3089,16 @@
       'type' => 'integer',
       'min' => 1,
       'max' => 100,
+      'box' => true,
+    ],
+    'Parameters' => [
+      'type' => 'map',
+      'key' => [
+        'shape' => 'String',
+      ],
+      'value' => [
+        'shape' => 'String',
+      ],
     ],
     'Permission' => [
       'type' => 'structure',
@@ -2910,6 +3158,9 @@
         ],
         'CreatedAt' => [
           'shape' => 'DateTime',
+        ],
+        'StackId' => [
+          'shape' => 'String',
         ],
         'VolumeType' => [
           'shape' => 'String',
@@ -3017,6 +3268,43 @@
         ],
       ],
     ],
+    'RegisterInstanceRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'StackId',
+      ],
+      'members' => [
+        'StackId' => [
+          'shape' => 'String',
+        ],
+        'Hostname' => [
+          'shape' => 'String',
+        ],
+        'PublicIp' => [
+          'shape' => 'String',
+        ],
+        'PrivateIp' => [
+          'shape' => 'String',
+        ],
+        'RsaPublicKey' => [
+          'shape' => 'String',
+        ],
+        'RsaPublicKeyFingerprint' => [
+          'shape' => 'String',
+        ],
+        'InstanceIdentity' => [
+          'shape' => 'InstanceIdentity',
+        ],
+      ],
+    ],
+    'RegisterInstanceResult' => [
+      'type' => 'structure',
+      'members' => [
+        'InstanceId' => [
+          'shape' => 'String',
+        ],
+      ],
+    ],
     'RegisterRdsDbInstanceRequest' => [
       'type' => 'structure',
       'required' => [
@@ -3058,6 +3346,20 @@
       'type' => 'structure',
       'members' => [
         'VolumeId' => [
+          'shape' => 'String',
+        ],
+      ],
+    ],
+    'ReportedOs' => [
+      'type' => 'structure',
+      'members' => [
+        'Family' => [
+          'shape' => 'String',
+        ],
+        'Name' => [
+          'shape' => 'String',
+        ],
+        'Version' => [
           'shape' => 'String',
         ],
       ],
@@ -3179,6 +3481,17 @@
         ],
         'AutoScalingSchedule' => [
           'shape' => 'WeeklyAutoScalingSchedule',
+        ],
+      ],
+    ],
+    'ShutdownEventConfiguration' => [
+      'type' => 'structure',
+      'members' => [
+        'ExecutionTimeout' => [
+          'shape' => 'Integer',
+        ],
+        'DelayUntilElbConnectionsDrained' => [
+          'shape' => 'Boolean',
         ],
       ],
     ],
@@ -3428,6 +3741,17 @@
         'shape' => 'TimeBasedAutoScalingConfiguration',
       ],
     ],
+    'UnassignInstanceRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'InstanceId',
+      ],
+      'members' => [
+        'InstanceId' => [
+          'shape' => 'String',
+        ],
+      ],
+    ],
     'UnassignVolumeRequest' => [
       'type' => 'structure',
       'required' => [
@@ -3474,6 +3798,9 @@
         ],
         'Attributes' => [
           'shape' => 'AppAttributes',
+        ],
+        'Environment' => [
+          'shape' => 'EnvironmentVariables',
         ],
       ],
     ],
@@ -3579,6 +3906,9 @@
         ],
         'UseEbsOptimizedInstances' => [
           'shape' => 'Boolean',
+        ],
+        'LifecycleEventConfiguration' => [
+          'shape' => 'LifecycleEventConfiguration',
         ],
       ],
     ],
@@ -3737,6 +4067,13 @@
         ],
       ],
       'exception' => true,
+    ],
+    'VirtualizationType' => [
+      'type' => 'string',
+      'enum' => [
+        'paravirtual',
+        'hvm',
+      ],
     ],
     'Volume' => [
       'type' => 'structure',

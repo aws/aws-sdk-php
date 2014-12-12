@@ -307,6 +307,36 @@
         'resultWrapper' => 'ListQueuesResult',
       ],
     ],
+    'PurgeQueue' => [
+      'name' => 'PurgeQueue',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'PurgeQueueRequest',
+      ],
+      'errors' => [
+        [
+          'shape' => 'QueueDoesNotExist',
+          'error' => [
+            'code' => 'AWS.SimpleQueueService.NonExistentQueue',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'PurgeQueueInProgress',
+          'error' => [
+            'code' => 'AWS.SimpleQueueService.PurgeQueueInProgress',
+            'httpStatusCode' => 403,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
     'ReceiveMessage' => [
       'name' => 'ReceiveMessage',
       'http' => [
@@ -1032,6 +1062,28 @@
         'senderFault' => true,
       ],
       'exception' => true,
+    ],
+    'PurgeQueueInProgress' => [
+      'type' => 'structure',
+      'members' => [
+      ],
+      'error' => [
+        'code' => 'AWS.SimpleQueueService.PurgeQueueInProgress',
+        'httpStatusCode' => 403,
+        'senderFault' => true,
+      ],
+      'exception' => true,
+    ],
+    'PurgeQueueRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'QueueUrl',
+      ],
+      'members' => [
+        'QueueUrl' => [
+          'shape' => 'String',
+        ],
+      ],
     ],
     'QueueAttributeName' => [
       'type' => 'string',

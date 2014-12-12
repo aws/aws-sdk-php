@@ -1,6 +1,6 @@
 <?php return [
   'metadata' => [
-    'apiVersion' => '2014-05-31',
+    'apiVersion' => '2014-10-21',
     'endpointPrefix' => 'cloudfront',
     'globalEndpoint' => 'cloudfront.amazonaws.com',
     'serviceAbbreviation' => 'CloudFront',
@@ -10,10 +10,10 @@
   ],
   'operations' => [
     'CreateCloudFrontOriginAccessIdentity' => [
-      'name' => 'CreateCloudFrontOriginAccessIdentity2014_05_31',
+      'name' => 'CreateCloudFrontOriginAccessIdentity2014_10_21',
       'http' => [
         'method' => 'POST',
-        'requestUri' => '/2014-05-31/origin-access-identity/cloudfront',
+        'requestUri' => '/2014-10-21/origin-access-identity/cloudfront',
         'responseCode' => 201,
       ],
       'input' => [
@@ -61,10 +61,10 @@
       ],
     ],
     'CreateDistribution' => [
-      'name' => 'CreateDistribution2014_05_31',
+      'name' => 'CreateDistribution2014_10_21',
       'http' => [
         'method' => 'POST',
-        'requestUri' => '/2014-05-31/distribution',
+        'requestUri' => '/2014-10-21/distribution',
         'responseCode' => 201,
       ],
       'input' => [
@@ -270,13 +270,20 @@
           ],
           'exception' => true,
         ],
+        [
+          'shape' => 'InvalidProtocolSettings',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
       ],
     ],
     'CreateInvalidation' => [
-      'name' => 'CreateInvalidation2014_05_31',
+      'name' => 'CreateInvalidation2014_10_21',
       'http' => [
         'method' => 'POST',
-        'requestUri' => '/2014-05-31/distribution/{DistributionId}/invalidation',
+        'requestUri' => '/2014-10-21/distribution/{DistributionId}/invalidation',
         'responseCode' => 201,
       ],
       'input' => [
@@ -338,10 +345,10 @@
       ],
     ],
     'CreateStreamingDistribution' => [
-      'name' => 'CreateStreamingDistribution2014_05_31',
+      'name' => 'CreateStreamingDistribution2014_10_21',
       'http' => [
         'method' => 'POST',
-        'requestUri' => '/2014-05-31/streaming-distribution',
+        'requestUri' => '/2014-10-21/streaming-distribution',
         'responseCode' => 201,
       ],
       'input' => [
@@ -438,10 +445,10 @@
       ],
     ],
     'DeleteCloudFrontOriginAccessIdentity' => [
-      'name' => 'DeleteCloudFrontOriginAccessIdentity2014_05_31',
+      'name' => 'DeleteCloudFrontOriginAccessIdentity2014_10_21',
       'http' => [
         'method' => 'DELETE',
-        'requestUri' => '/2014-05-31/origin-access-identity/cloudfront/{Id}',
+        'requestUri' => '/2014-10-21/origin-access-identity/cloudfront/{Id}',
         'responseCode' => 204,
       ],
       'input' => [
@@ -486,10 +493,10 @@
       ],
     ],
     'DeleteDistribution' => [
-      'name' => 'DeleteDistribution2014_05_31',
+      'name' => 'DeleteDistribution2014_10_21',
       'http' => [
         'method' => 'DELETE',
-        'requestUri' => '/2014-05-31/distribution/{Id}',
+        'requestUri' => '/2014-10-21/distribution/{Id}',
         'responseCode' => 204,
       ],
       'input' => [
@@ -534,10 +541,10 @@
       ],
     ],
     'DeleteStreamingDistribution' => [
-      'name' => 'DeleteStreamingDistribution2014_05_31',
+      'name' => 'DeleteStreamingDistribution2014_10_21',
       'http' => [
         'method' => 'DELETE',
-        'requestUri' => '/2014-05-31/streaming-distribution/{Id}',
+        'requestUri' => '/2014-10-21/streaming-distribution/{Id}',
         'responseCode' => 204,
       ],
       'input' => [
@@ -582,10 +589,10 @@
       ],
     ],
     'GetCloudFrontOriginAccessIdentity' => [
-      'name' => 'GetCloudFrontOriginAccessIdentity2014_05_31',
+      'name' => 'GetCloudFrontOriginAccessIdentity2014_10_21',
       'http' => [
         'method' => 'GET',
-        'requestUri' => '/2014-05-31/origin-access-identity/cloudfront/{Id}',
+        'requestUri' => '/2014-10-21/origin-access-identity/cloudfront/{Id}',
       ],
       'input' => [
         'shape' => 'GetCloudFrontOriginAccessIdentityRequest',
@@ -611,10 +618,10 @@
       ],
     ],
     'GetCloudFrontOriginAccessIdentityConfig' => [
-      'name' => 'GetCloudFrontOriginAccessIdentityConfig2014_05_31',
+      'name' => 'GetCloudFrontOriginAccessIdentityConfig2014_10_21',
       'http' => [
         'method' => 'GET',
-        'requestUri' => '/2014-05-31/origin-access-identity/cloudfront/{Id}/config',
+        'requestUri' => '/2014-10-21/origin-access-identity/cloudfront/{Id}/config',
       ],
       'input' => [
         'shape' => 'GetCloudFrontOriginAccessIdentityConfigRequest',
@@ -640,10 +647,10 @@
       ],
     ],
     'GetDistribution' => [
-      'name' => 'GetDistribution2014_05_31',
+      'name' => 'GetDistribution2014_10_21',
       'http' => [
         'method' => 'GET',
-        'requestUri' => '/2014-05-31/distribution/{Id}',
+        'requestUri' => '/2014-10-21/distribution/{Id}',
       ],
       'input' => [
         'shape' => 'GetDistributionRequest',
@@ -669,10 +676,10 @@
       ],
     ],
     'GetDistributionConfig' => [
-      'name' => 'GetDistributionConfig2014_05_31',
+      'name' => 'GetDistributionConfig2014_10_21',
       'http' => [
         'method' => 'GET',
-        'requestUri' => '/2014-05-31/distribution/{Id}/config',
+        'requestUri' => '/2014-10-21/distribution/{Id}/config',
       ],
       'input' => [
         'shape' => 'GetDistributionConfigRequest',
@@ -698,10 +705,10 @@
       ],
     ],
     'GetInvalidation' => [
-      'name' => 'GetInvalidation2014_05_31',
+      'name' => 'GetInvalidation2014_10_21',
       'http' => [
         'method' => 'GET',
-        'requestUri' => '/2014-05-31/distribution/{DistributionId}/invalidation/{Id}',
+        'requestUri' => '/2014-10-21/distribution/{DistributionId}/invalidation/{Id}',
       ],
       'input' => [
         'shape' => 'GetInvalidationRequest',
@@ -734,10 +741,10 @@
       ],
     ],
     'GetStreamingDistribution' => [
-      'name' => 'GetStreamingDistribution2014_05_31',
+      'name' => 'GetStreamingDistribution2014_10_21',
       'http' => [
         'method' => 'GET',
-        'requestUri' => '/2014-05-31/streaming-distribution/{Id}',
+        'requestUri' => '/2014-10-21/streaming-distribution/{Id}',
       ],
       'input' => [
         'shape' => 'GetStreamingDistributionRequest',
@@ -763,10 +770,10 @@
       ],
     ],
     'GetStreamingDistributionConfig' => [
-      'name' => 'GetStreamingDistributionConfig2014_05_31',
+      'name' => 'GetStreamingDistributionConfig2014_10_21',
       'http' => [
         'method' => 'GET',
-        'requestUri' => '/2014-05-31/streaming-distribution/{Id}/config',
+        'requestUri' => '/2014-10-21/streaming-distribution/{Id}/config',
       ],
       'input' => [
         'shape' => 'GetStreamingDistributionConfigRequest',
@@ -792,10 +799,10 @@
       ],
     ],
     'ListCloudFrontOriginAccessIdentities' => [
-      'name' => 'ListCloudFrontOriginAccessIdentities2014_05_31',
+      'name' => 'ListCloudFrontOriginAccessIdentities2014_10_21',
       'http' => [
         'method' => 'GET',
-        'requestUri' => '/2014-05-31/origin-access-identity/cloudfront',
+        'requestUri' => '/2014-10-21/origin-access-identity/cloudfront',
       ],
       'input' => [
         'shape' => 'ListCloudFrontOriginAccessIdentitiesRequest',
@@ -814,10 +821,10 @@
       ],
     ],
     'ListDistributions' => [
-      'name' => 'ListDistributions2014_05_31',
+      'name' => 'ListDistributions2014_10_21',
       'http' => [
         'method' => 'GET',
-        'requestUri' => '/2014-05-31/distribution',
+        'requestUri' => '/2014-10-21/distribution',
       ],
       'input' => [
         'shape' => 'ListDistributionsRequest',
@@ -836,10 +843,10 @@
       ],
     ],
     'ListInvalidations' => [
-      'name' => 'ListInvalidations2014_05_31',
+      'name' => 'ListInvalidations2014_10_21',
       'http' => [
         'method' => 'GET',
-        'requestUri' => '/2014-05-31/distribution/{DistributionId}/invalidation',
+        'requestUri' => '/2014-10-21/distribution/{DistributionId}/invalidation',
       ],
       'input' => [
         'shape' => 'ListInvalidationsRequest',
@@ -872,10 +879,10 @@
       ],
     ],
     'ListStreamingDistributions' => [
-      'name' => 'ListStreamingDistributions2014_05_31',
+      'name' => 'ListStreamingDistributions2014_10_21',
       'http' => [
         'method' => 'GET',
-        'requestUri' => '/2014-05-31/streaming-distribution',
+        'requestUri' => '/2014-10-21/streaming-distribution',
       ],
       'input' => [
         'shape' => 'ListStreamingDistributionsRequest',
@@ -894,10 +901,10 @@
       ],
     ],
     'UpdateCloudFrontOriginAccessIdentity' => [
-      'name' => 'UpdateCloudFrontOriginAccessIdentity2014_05_31',
+      'name' => 'UpdateCloudFrontOriginAccessIdentity2014_10_21',
       'http' => [
         'method' => 'PUT',
-        'requestUri' => '/2014-05-31/origin-access-identity/cloudfront/{Id}/config',
+        'requestUri' => '/2014-10-21/origin-access-identity/cloudfront/{Id}/config',
       ],
       'input' => [
         'shape' => 'UpdateCloudFrontOriginAccessIdentityRequest',
@@ -965,10 +972,10 @@
       ],
     ],
     'UpdateDistribution' => [
-      'name' => 'UpdateDistribution2014_05_31',
+      'name' => 'UpdateDistribution2014_10_21',
       'http' => [
         'method' => 'PUT',
-        'requestUri' => '/2014-05-31/distribution/{Id}/config',
+        'requestUri' => '/2014-10-21/distribution/{Id}/config',
       ],
       'input' => [
         'shape' => 'UpdateDistributionRequest',
@@ -1183,10 +1190,10 @@
       ],
     ],
     'UpdateStreamingDistribution' => [
-      'name' => 'UpdateStreamingDistribution2014_05_31',
+      'name' => 'UpdateStreamingDistribution2014_10_21',
       'http' => [
         'method' => 'PUT',
-        'requestUri' => '/2014-05-31/streaming-distribution/{Id}/config',
+        'requestUri' => '/2014-10-21/streaming-distribution/{Id}/config',
       ],
       'input' => [
         'shape' => 'UpdateStreamingDistributionRequest',
@@ -1345,21 +1352,18 @@
       'type' => 'structure',
       'required' => [
         'Quantity',
+        'Items',
       ],
       'members' => [
         'Quantity' => [
           'shape' => 'integer',
         ],
         'Items' => [
-          'shape' => 'AllowedMethodsList',
+          'shape' => 'MethodsList',
         ],
-      ],
-    ],
-    'AllowedMethodsList' => [
-      'type' => 'list',
-      'member' => [
-        'shape' => 'Method',
-        'locationName' => 'Method',
+        'CachedMethods' => [
+          'shape' => 'CachedMethods',
+        ],
       ],
     ],
     'AwsAccountNumberList' => [
@@ -1448,6 +1452,21 @@
         ],
         'Items' => [
           'shape' => 'CacheBehaviorList',
+        ],
+      ],
+    ],
+    'CachedMethods' => [
+      'type' => 'structure',
+      'required' => [
+        'Quantity',
+        'Items',
+      ],
+      'members' => [
+        'Quantity' => [
+          'shape' => 'integer',
+        ],
+        'Items' => [
+          'shape' => 'MethodsList',
         ],
       ],
     ],
@@ -1607,7 +1626,7 @@
         'CloudFrontOriginAccessIdentityConfig' => [
           'shape' => 'CloudFrontOriginAccessIdentityConfig',
           'xmlNamespace' => [
-            'uri' => 'http://cloudfront.amazonaws.com/doc/2014-05-31/',
+            'uri' => 'http://cloudfront.amazonaws.com/doc/2014-10-21/',
           ],
           'locationName' => 'CloudFrontOriginAccessIdentityConfig',
         ],
@@ -1642,7 +1661,7 @@
         'DistributionConfig' => [
           'shape' => 'DistributionConfig',
           'xmlNamespace' => [
-            'uri' => 'http://cloudfront.amazonaws.com/doc/2014-05-31/',
+            'uri' => 'http://cloudfront.amazonaws.com/doc/2014-10-21/',
           ],
           'locationName' => 'DistributionConfig',
         ],
@@ -1683,7 +1702,7 @@
         'InvalidationBatch' => [
           'shape' => 'InvalidationBatch',
           'xmlNamespace' => [
-            'uri' => 'http://cloudfront.amazonaws.com/doc/2014-05-31/',
+            'uri' => 'http://cloudfront.amazonaws.com/doc/2014-10-21/',
           ],
           'locationName' => 'InvalidationBatch',
         ],
@@ -1713,7 +1732,7 @@
         'StreamingDistributionConfig' => [
           'shape' => 'StreamingDistributionConfig',
           'xmlNamespace' => [
-            'uri' => 'http://cloudfront.amazonaws.com/doc/2014-05-31/',
+            'uri' => 'http://cloudfront.amazonaws.com/doc/2014-10-21/',
           ],
           'locationName' => 'StreamingDistributionConfig',
         ],
@@ -2499,6 +2518,18 @@
       ],
       'exception' => true,
     ],
+    'InvalidProtocolSettings' => [
+      'type' => 'structure',
+      'members' => [
+        'Message' => [
+          'shape' => 'string',
+        ],
+      ],
+      'error' => [
+        'httpStatusCode' => 400,
+      ],
+      'exception' => true,
+    ],
     'InvalidRelativePath' => [
       'type' => 'structure',
       'members' => [
@@ -2813,6 +2844,20 @@
         'PATCH',
         'OPTIONS',
         'DELETE',
+      ],
+    ],
+    'MethodsList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'Method',
+        'locationName' => 'Method',
+      ],
+    ],
+    'MinimumProtocolVersion' => [
+      'type' => 'string',
+      'enum' => [
+        'SSLv3',
+        'TLSv1',
       ],
     ],
     'MissingBody' => [
@@ -3419,7 +3464,7 @@
         'CloudFrontOriginAccessIdentityConfig' => [
           'shape' => 'CloudFrontOriginAccessIdentityConfig',
           'xmlNamespace' => [
-            'uri' => 'http://cloudfront.amazonaws.com/doc/2014-05-31/',
+            'uri' => 'http://cloudfront.amazonaws.com/doc/2014-10-21/',
           ],
           'locationName' => 'CloudFrontOriginAccessIdentityConfig',
         ],
@@ -3460,7 +3505,7 @@
         'DistributionConfig' => [
           'shape' => 'DistributionConfig',
           'xmlNamespace' => [
-            'uri' => 'http://cloudfront.amazonaws.com/doc/2014-05-31/',
+            'uri' => 'http://cloudfront.amazonaws.com/doc/2014-10-21/',
           ],
           'locationName' => 'DistributionConfig',
         ],
@@ -3501,7 +3546,7 @@
         'StreamingDistributionConfig' => [
           'shape' => 'StreamingDistributionConfig',
           'xmlNamespace' => [
-            'uri' => 'http://cloudfront.amazonaws.com/doc/2014-05-31/',
+            'uri' => 'http://cloudfront.amazonaws.com/doc/2014-10-21/',
           ],
           'locationName' => 'StreamingDistributionConfig',
         ],
@@ -3543,6 +3588,9 @@
         ],
         'SSLSupportMethod' => [
           'shape' => 'SSLSupportMethod',
+        ],
+        'MinimumProtocolVersion' => [
+          'shape' => 'MinimumProtocolVersion',
         ],
       ],
     ],

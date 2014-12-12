@@ -1392,6 +1392,7 @@
       'type' => 'string',
       'enum' => [
         'tail',
+        'bundle',
       ],
     ],
     'EnvironmentName' => [

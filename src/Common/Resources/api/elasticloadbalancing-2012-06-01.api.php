@@ -1211,6 +1211,23 @@
       'members' => [
       ],
     ],
+    'AdditionalAttribute' => [
+      'type' => 'structure',
+      'members' => [
+        'Key' => [
+          'shape' => 'StringVal',
+        ],
+        'Value' => [
+          'shape' => 'StringVal',
+        ],
+      ],
+    ],
+    'AdditionalAttributes' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'AdditionalAttribute',
+      ],
+    ],
     'AppCookieStickinessPolicies' => [
       'type' => 'list',
       'member' => [
@@ -2062,6 +2079,9 @@
         'ConnectionSettings' => [
           'shape' => 'ConnectionSettings',
         ],
+        'AdditionalAttributes' => [
+          'shape' => 'AdditionalAttributes',
+        ],
       ],
     ],
     'LoadBalancerDescription' => [
@@ -2511,6 +2531,9 @@
       ],
     ],
     'State' => [
+      'type' => 'string',
+    ],
+    'StringVal' => [
       'type' => 'string',
     ],
     'SubnetId' => [

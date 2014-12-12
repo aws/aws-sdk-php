@@ -1241,6 +1241,20 @@
         ],
       ],
     ],
+    'GetAccountAuthorizationDetails' => [
+      'name' => 'GetAccountAuthorizationDetails',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'GetAccountAuthorizationDetailsRequest',
+      ],
+      'output' => [
+        'shape' => 'GetAccountAuthorizationDetailsResponse',
+        'resultWrapper' => 'GetAccountAuthorizationDetailsResult',
+      ],
+    ],
     'GetAccountPasswordPolicy' => [
       'name' => 'GetAccountPasswordPolicy',
       'http' => [
@@ -3348,6 +3362,14 @@
       ],
       'exception' => true,
     ],
+    'EntityType' => [
+      'type' => 'string',
+      'enum' => [
+        'User',
+        'Role',
+        'Group',
+      ],
+    ],
     'GenerateCredentialReportResponse' => [
       'type' => 'structure',
       'members' => [
@@ -3356,6 +3378,40 @@
         ],
         'Description' => [
           'shape' => 'ReportStateDescriptionType',
+        ],
+      ],
+    ],
+    'GetAccountAuthorizationDetailsRequest' => [
+      'type' => 'structure',
+      'members' => [
+        'Filter' => [
+          'shape' => 'entityListType',
+        ],
+        'MaxItems' => [
+          'shape' => 'maxItemsType',
+        ],
+        'Marker' => [
+          'shape' => 'markerType',
+        ],
+      ],
+    ],
+    'GetAccountAuthorizationDetailsResponse' => [
+      'type' => 'structure',
+      'members' => [
+        'UserDetailList' => [
+          'shape' => 'userDetailListType',
+        ],
+        'GroupDetailList' => [
+          'shape' => 'groupDetailListType',
+        ],
+        'RoleDetailList' => [
+          'shape' => 'roleDetailListType',
+        ],
+        'IsTruncated' => [
+          'shape' => 'booleanType',
+        ],
+        'Marker' => [
+          'shape' => 'markerType',
         ],
       ],
     ],
@@ -3716,6 +3772,29 @@
         ],
         'CreateDate' => [
           'shape' => 'dateType',
+        ],
+      ],
+    ],
+    'GroupDetail' => [
+      'type' => 'structure',
+      'members' => [
+        'Path' => [
+          'shape' => 'pathType',
+        ],
+        'GroupName' => [
+          'shape' => 'groupNameType',
+        ],
+        'GroupId' => [
+          'shape' => 'idType',
+        ],
+        'Arn' => [
+          'shape' => 'arnType',
+        ],
+        'CreateDate' => [
+          'shape' => 'dateType',
+        ],
+        'GroupPolicyList' => [
+          'shape' => 'policyDetailListType',
         ],
       ],
     ],
@@ -4484,6 +4563,17 @@
       ],
       'exception' => true,
     ],
+    'PolicyDetail' => [
+      'type' => 'structure',
+      'members' => [
+        'PolicyName' => [
+          'shape' => 'policyNameType',
+        ],
+        'PolicyDocument' => [
+          'shape' => 'policyDocumentType',
+        ],
+      ],
+    ],
     'PutGroupPolicyRequest' => [
       'type' => 'structure',
       'required' => [
@@ -4656,6 +4746,35 @@
         ],
         'AssumeRolePolicyDocument' => [
           'shape' => 'policyDocumentType',
+        ],
+      ],
+    ],
+    'RoleDetail' => [
+      'type' => 'structure',
+      'members' => [
+        'Path' => [
+          'shape' => 'pathType',
+        ],
+        'RoleName' => [
+          'shape' => 'roleNameType',
+        ],
+        'RoleId' => [
+          'shape' => 'idType',
+        ],
+        'Arn' => [
+          'shape' => 'arnType',
+        ],
+        'CreateDate' => [
+          'shape' => 'dateType',
+        ],
+        'AssumeRolePolicyDocument' => [
+          'shape' => 'policyDocumentType',
+        ],
+        'InstanceProfileList' => [
+          'shape' => 'instanceProfileListType',
+        ],
+        'RolePolicyList' => [
+          'shape' => 'policyDetailListType',
         ],
       ],
     ],
@@ -5040,6 +5159,32 @@
         ],
       ],
     ],
+    'UserDetail' => [
+      'type' => 'structure',
+      'members' => [
+        'Path' => [
+          'shape' => 'pathType',
+        ],
+        'UserName' => [
+          'shape' => 'userNameType',
+        ],
+        'UserId' => [
+          'shape' => 'idType',
+        ],
+        'Arn' => [
+          'shape' => 'arnType',
+        ],
+        'CreateDate' => [
+          'shape' => 'dateType',
+        ],
+        'UserPolicyList' => [
+          'shape' => 'policyDetailListType',
+        ],
+        'GroupList' => [
+          'shape' => 'groupNameListType',
+        ],
+      ],
+    ],
     'VirtualMFADevice' => [
       'type' => 'structure',
       'required' => [
@@ -5173,6 +5318,12 @@
     'entityAlreadyExistsMessage' => [
       'type' => 'string',
     ],
+    'entityListType' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'EntityType',
+      ],
+    ],
     'entityTemporarilyUnmodifiableMessage' => [
       'type' => 'string',
     ],
@@ -5182,10 +5333,22 @@
       'max' => 128,
       'pattern' => '[\\w+=,.@-]*',
     ],
+    'groupDetailListType' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'GroupDetail',
+      ],
+    ],
     'groupListType' => [
       'type' => 'list',
       'member' => [
         'shape' => 'Group',
+      ],
+    ],
+    'groupNameListType' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'groupNameType',
       ],
     ],
     'groupNameType' => [
@@ -5295,6 +5458,12 @@
       'max' => 512,
       'pattern' => '(\\u002F]|(\\u002F[\\u0021-\\u007F]+\\u002F]',
     ],
+    'policyDetailListType' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'PolicyDetail',
+      ],
+    ],
     'policyDocumentType' => [
       'type' => 'string',
       'min' => 1,
@@ -5319,6 +5488,12 @@
       'max' => 16384,
       'pattern' => '[\\u0009\\u000A\\u000D\\u0020-\\u00FF]*',
       'sensitive' => true,
+    ],
+    'roleDetailListType' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'RoleDetail',
+      ],
     ],
     'roleListType' => [
       'type' => 'list',
@@ -5398,6 +5573,12 @@
       'type' => 'string',
       'min' => 40,
       'max' => 40,
+    ],
+    'userDetailListType' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'UserDetail',
+      ],
     ],
     'userListType' => [
       'type' => 'list',

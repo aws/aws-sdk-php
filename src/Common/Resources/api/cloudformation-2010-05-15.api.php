@@ -169,6 +169,20 @@
         'resultWrapper' => 'GetTemplateResult',
       ],
     ],
+    'GetTemplateSummary' => [
+      'name' => 'GetTemplateSummary',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'GetTemplateSummaryInput',
+      ],
+      'output' => [
+        'shape' => 'GetTemplateSummaryOutput',
+        'resultWrapper' => 'GetTemplateSummaryResult',
+      ],
+    ],
     'ListStackResources' => [
       'name' => 'ListStackResources',
       'http' => [
@@ -205,6 +219,16 @@
       ],
       'input' => [
         'shape' => 'SetStackPolicyInput',
+      ],
+    ],
+    'SignalResource' => [
+      'name' => 'SignalResource',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'SignalResourceInput',
       ],
     ],
     'UpdateStack' => [
@@ -512,6 +536,40 @@
         ],
       ],
     ],
+    'GetTemplateSummaryInput' => [
+      'type' => 'structure',
+      'members' => [
+        'TemplateBody' => [
+          'shape' => 'TemplateBody',
+        ],
+        'TemplateURL' => [
+          'shape' => 'TemplateURL',
+        ],
+        'StackName' => [
+          'shape' => 'StackNameOrId',
+        ],
+      ],
+    ],
+    'GetTemplateSummaryOutput' => [
+      'type' => 'structure',
+      'members' => [
+        'Parameters' => [
+          'shape' => 'ParameterDeclarations',
+        ],
+        'Description' => [
+          'shape' => 'Description',
+        ],
+        'Capabilities' => [
+          'shape' => 'Capabilities',
+        ],
+        'CapabilitiesReason' => [
+          'shape' => 'CapabilitiesReason',
+        ],
+        'Version' => [
+          'shape' => 'Version',
+        ],
+      ],
+    ],
     'InsufficientCapabilitiesException' => [
       'type' => 'structure',
       'members' => [
@@ -656,7 +714,36 @@
         ],
       ],
     ],
+    'ParameterDeclaration' => [
+      'type' => 'structure',
+      'members' => [
+        'ParameterKey' => [
+          'shape' => 'ParameterKey',
+        ],
+        'DefaultValue' => [
+          'shape' => 'ParameterValue',
+        ],
+        'ParameterType' => [
+          'shape' => 'ParameterType',
+        ],
+        'NoEcho' => [
+          'shape' => 'NoEcho',
+        ],
+        'Description' => [
+          'shape' => 'Description',
+        ],
+      ],
+    ],
+    'ParameterDeclarations' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'ParameterDeclaration',
+      ],
+    ],
     'ParameterKey' => [
+      'type' => 'string',
+    ],
+    'ParameterType' => [
       'type' => 'string',
     ],
     'ParameterValue' => [
@@ -674,6 +761,18 @@
     'ResourceProperties' => [
       'type' => 'string',
     ],
+    'ResourceSignalStatus' => [
+      'type' => 'string',
+      'enum' => [
+        'SUCCESS',
+        'FAILURE',
+      ],
+    ],
+    'ResourceSignalUniqueId' => [
+      'type' => 'string',
+      'min' => 1,
+      'max' => 64,
+    ],
     'ResourceStatus' => [
       'type' => 'string',
       'enum' => [
@@ -683,6 +782,7 @@
         'DELETE_IN_PROGRESS',
         'DELETE_FAILED',
         'DELETE_COMPLETE',
+        'DELETE_SKIPPED',
         'UPDATE_IN_PROGRESS',
         'UPDATE_FAILED',
         'UPDATE_COMPLETE',
@@ -708,6 +808,29 @@
         ],
         'StackPolicyURL' => [
           'shape' => 'StackPolicyURL',
+        ],
+      ],
+    ],
+    'SignalResourceInput' => [
+      'type' => 'structure',
+      'required' => [
+        'StackName',
+        'LogicalResourceId',
+        'UniqueId',
+        'Status',
+      ],
+      'members' => [
+        'StackName' => [
+          'shape' => 'StackNameOrId',
+        ],
+        'LogicalResourceId' => [
+          'shape' => 'LogicalResourceId',
+        ],
+        'UniqueId' => [
+          'shape' => 'ResourceSignalUniqueId',
+        ],
+        'Status' => [
+          'shape' => 'ResourceSignalStatus',
         ],
       ],
     ],
@@ -815,6 +938,11 @@
     ],
     'StackName' => [
       'type' => 'string',
+    ],
+    'StackNameOrId' => [
+      'type' => 'string',
+      'min' => 1,
+      'pattern' => '([a-zA-Z][-a-zA-Z0-9]*]|(arn:\\b(aws|aws-us-gov|aws-cn]\\b:[-a-zA-Z0-9:/._+]*]',
     ],
     'StackPolicyBody' => [
       'type' => 'string',
@@ -1182,6 +1310,9 @@
           'shape' => 'CapabilitiesReason',
         ],
       ],
+    ],
+    'Version' => [
+      'type' => 'string',
     ],
   ],
 ];

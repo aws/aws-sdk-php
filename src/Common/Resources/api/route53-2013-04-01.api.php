@@ -9,6 +9,57 @@
     'protocol' => 'rest-xml',
   ],
   'operations' => [
+    'AssociateVPCWithHostedZone' => [
+      'name' => 'AssociateVPCWithHostedZone',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/2013-04-01/hostedzone/{Id}/associatevpc',
+      ],
+      'input' => [
+        'shape' => 'AssociateVPCWithHostedZoneRequest',
+        'xmlNamespace' => [
+          'uri' => 'https://route53.amazonaws.com/doc/2013-04-01/',
+        ],
+        'locationName' => 'AssociateVPCWithHostedZoneRequest',
+      ],
+      'output' => [
+        'shape' => 'AssociateVPCWithHostedZoneResponse',
+      ],
+      'errors' => [
+        [
+          'shape' => 'NoSuchHostedZone',
+          'error' => [
+            'httpStatusCode' => 404,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidVPCId',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidInput',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'PublicZoneVPCAssociation',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ConflictingDomainExists',
+          'exception' => true,
+        ],
+      ],
+    ],
     'ChangeResourceRecordSets' => [
       'name' => 'ChangeResourceRecordSets',
       'http' => [
@@ -17,10 +68,6 @@
       ],
       'input' => [
         'shape' => 'ChangeResourceRecordSetsRequest',
-        'xmlOrder' => [
-          'HostedZoneId',
-          'ChangeBatch',
-        ],
         'xmlNamespace' => [
           'uri' => 'https://route53.amazonaws.com/doc/2013-04-01/',
         ],
@@ -28,9 +75,6 @@
       ],
       'output' => [
         'shape' => 'ChangeResourceRecordSetsResponse',
-        'xmlOrder' => [
-          'ChangeInfo',
-        ],
       ],
       'errors' => [
         [
@@ -75,12 +119,6 @@
       ],
       'input' => [
         'shape' => 'ChangeTagsForResourceRequest',
-        'xmlOrder' => [
-          'ResourceType',
-          'ResourceId',
-          'AddTags',
-          'RemoveTagKeys',
-        ],
         'xmlNamespace' => [
           'uri' => 'https://route53.amazonaws.com/doc/2013-04-01/',
         ],
@@ -99,6 +137,13 @@
         ],
         [
           'shape' => 'NoSuchHealthCheck',
+          'error' => [
+            'httpStatusCode' => 404,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'NoSuchHostedZone',
           'error' => [
             'httpStatusCode' => 404,
           ],
@@ -129,10 +174,6 @@
       ],
       'input' => [
         'shape' => 'CreateHealthCheckRequest',
-        'xmlOrder' => [
-          'CallerReference',
-          'HealthCheckConfig',
-        ],
         'xmlNamespace' => [
           'uri' => 'https://route53.amazonaws.com/doc/2013-04-01/',
         ],
@@ -140,10 +181,6 @@
       ],
       'output' => [
         'shape' => 'CreateHealthCheckResponse',
-        'xmlOrder' => [
-          'HealthCheck',
-          'Location',
-        ],
       ],
       'errors' => [
         [
@@ -175,11 +212,6 @@
       ],
       'input' => [
         'shape' => 'CreateHostedZoneRequest',
-        'xmlOrder' => [
-          'Name',
-          'CallerReference',
-          'HostedZoneConfig',
-        ],
         'xmlNamespace' => [
           'uri' => 'https://route53.amazonaws.com/doc/2013-04-01/',
         ],
@@ -187,12 +219,6 @@
       ],
       'output' => [
         'shape' => 'CreateHostedZoneResponse',
-        'xmlOrder' => [
-          'HostedZone',
-          'ChangeInfo',
-          'DelegationSet',
-          'Location',
-        ],
       ],
       'errors' => [
         [
@@ -217,6 +243,13 @@
           'exception' => true,
         ],
         [
+          'shape' => 'InvalidVPCId',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+        [
           'shape' => 'InvalidInput',
           'error' => [
             'httpStatusCode' => 400,
@@ -225,6 +258,69 @@
         ],
         [
           'shape' => 'DelegationSetNotAvailable',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ConflictingDomainExists',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'NoSuchDelegationSet',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'DelegationSetNotReusable',
+          'exception' => true,
+        ],
+      ],
+    ],
+    'CreateReusableDelegationSet' => [
+      'name' => 'CreateReusableDelegationSet',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/2013-04-01/delegationset',
+        'responseCode' => 201,
+      ],
+      'input' => [
+        'shape' => 'CreateReusableDelegationSetRequest',
+        'xmlNamespace' => [
+          'uri' => 'https://route53.amazonaws.com/doc/2013-04-01/',
+        ],
+        'locationName' => 'CreateReusableDelegationSetRequest',
+      ],
+      'output' => [
+        'shape' => 'CreateReusableDelegationSetResponse',
+      ],
+      'errors' => [
+        [
+          'shape' => 'DelegationSetAlreadyCreated',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'LimitsExceeded',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'HostedZoneNotFound',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidArgument',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidInput',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'DelegationSetNotAvailable',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'DelegationSetAlreadyReusable',
           'exception' => true,
         ],
       ],
@@ -237,9 +333,6 @@
       ],
       'input' => [
         'shape' => 'DeleteHealthCheckRequest',
-        'xmlOrder' => [
-          'HealthCheckId',
-        ],
       ],
       'output' => [
         'shape' => 'DeleteHealthCheckResponse',
@@ -276,15 +369,9 @@
       ],
       'input' => [
         'shape' => 'DeleteHostedZoneRequest',
-        'xmlOrder' => [
-          'Id',
-        ],
       ],
       'output' => [
         'shape' => 'DeleteHostedZoneResponse',
-        'xmlOrder' => [
-          'ChangeInfo',
-        ],
       ],
       'errors' => [
         [
@@ -317,6 +404,94 @@
         ],
       ],
     ],
+    'DeleteReusableDelegationSet' => [
+      'name' => 'DeleteReusableDelegationSet',
+      'http' => [
+        'method' => 'DELETE',
+        'requestUri' => '/2013-04-01/delegationset/{Id}',
+      ],
+      'input' => [
+        'shape' => 'DeleteReusableDelegationSetRequest',
+      ],
+      'output' => [
+        'shape' => 'DeleteReusableDelegationSetResponse',
+      ],
+      'errors' => [
+        [
+          'shape' => 'NoSuchDelegationSet',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'DelegationSetInUse',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'DelegationSetNotReusable',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidInput',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
+    'DisassociateVPCFromHostedZone' => [
+      'name' => 'DisassociateVPCFromHostedZone',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/2013-04-01/hostedzone/{Id}/disassociatevpc',
+      ],
+      'input' => [
+        'shape' => 'DisassociateVPCFromHostedZoneRequest',
+        'xmlNamespace' => [
+          'uri' => 'https://route53.amazonaws.com/doc/2013-04-01/',
+        ],
+        'locationName' => 'DisassociateVPCFromHostedZoneRequest',
+      ],
+      'output' => [
+        'shape' => 'DisassociateVPCFromHostedZoneResponse',
+      ],
+      'errors' => [
+        [
+          'shape' => 'NoSuchHostedZone',
+          'error' => [
+            'httpStatusCode' => 404,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidVPCId',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'VPCAssociationNotFound',
+          'error' => [
+            'httpStatusCode' => 404,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'LastVPCAssociation',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidInput',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
     'GetChange' => [
       'name' => 'GetChange',
       'http' => [
@@ -325,15 +500,9 @@
       ],
       'input' => [
         'shape' => 'GetChangeRequest',
-        'xmlOrder' => [
-          'Id',
-        ],
       ],
       'output' => [
         'shape' => 'GetChangeResponse',
-        'xmlOrder' => [
-          'ChangeInfo',
-        ],
       ],
       'errors' => [
         [
@@ -373,17 +542,9 @@
       ],
       'input' => [
         'shape' => 'GetGeoLocationRequest',
-        'xmlOrder' => [
-          'ContinentCode',
-          'CountryCode',
-          'SubdivisionCode',
-        ],
       ],
       'output' => [
         'shape' => 'GetGeoLocationResponse',
-        'xmlOrder' => [
-          'GeoLocationDetails',
-        ],
       ],
       'errors' => [
         [
@@ -410,15 +571,9 @@
       ],
       'input' => [
         'shape' => 'GetHealthCheckRequest',
-        'xmlOrder' => [
-          'HealthCheckId',
-        ],
       ],
       'output' => [
         'shape' => 'GetHealthCheckResponse',
-        'xmlOrder' => [
-          'HealthCheck',
-        ],
       ],
       'errors' => [
         [
@@ -457,6 +612,50 @@
         'shape' => 'GetHealthCheckCountResponse',
       ],
     ],
+    'GetHealthCheckLastFailureReason' => [
+      'name' => 'GetHealthCheckLastFailureReason',
+      'http' => [
+        'method' => 'GET',
+        'requestUri' => '/2013-04-01/healthcheck/{HealthCheckId}/lastfailurereason',
+      ],
+      'input' => [
+        'shape' => 'GetHealthCheckLastFailureReasonRequest',
+      ],
+      'output' => [
+        'shape' => 'GetHealthCheckLastFailureReasonResponse',
+      ],
+      'errors' => [
+        [
+          'shape' => 'NoSuchHealthCheck',
+          'error' => [
+            'httpStatusCode' => 404,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
+    'GetHealthCheckStatus' => [
+      'name' => 'GetHealthCheckStatus',
+      'http' => [
+        'method' => 'GET',
+        'requestUri' => '/2013-04-01/healthcheck/{HealthCheckId}/status',
+      ],
+      'input' => [
+        'shape' => 'GetHealthCheckStatusRequest',
+      ],
+      'output' => [
+        'shape' => 'GetHealthCheckStatusResponse',
+      ],
+      'errors' => [
+        [
+          'shape' => 'NoSuchHealthCheck',
+          'error' => [
+            'httpStatusCode' => 404,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
     'GetHostedZone' => [
       'name' => 'GetHostedZone',
       'http' => [
@@ -465,16 +664,9 @@
       ],
       'input' => [
         'shape' => 'GetHostedZoneRequest',
-        'xmlOrder' => [
-          'Id',
-        ],
       ],
       'output' => [
         'shape' => 'GetHostedZoneResponse',
-        'xmlOrder' => [
-          'HostedZone',
-          'DelegationSet',
-        ],
       ],
       'errors' => [
         [
@@ -482,6 +674,36 @@
           'error' => [
             'httpStatusCode' => 404,
           ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidInput',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
+    'GetReusableDelegationSet' => [
+      'name' => 'GetReusableDelegationSet',
+      'http' => [
+        'method' => 'GET',
+        'requestUri' => '/2013-04-01/delegationset/{Id}',
+      ],
+      'input' => [
+        'shape' => 'GetReusableDelegationSetRequest',
+      ],
+      'output' => [
+        'shape' => 'GetReusableDelegationSetResponse',
+      ],
+      'errors' => [
+        [
+          'shape' => 'NoSuchDelegationSet',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'DelegationSetNotReusable',
           'exception' => true,
         ],
         [
@@ -501,23 +723,9 @@
       ],
       'input' => [
         'shape' => 'ListGeoLocationsRequest',
-        'xmlOrder' => [
-          'StartContinentCode',
-          'StartCountryCode',
-          'StartSubdivisionCode',
-          'MaxItems',
-        ],
       ],
       'output' => [
         'shape' => 'ListGeoLocationsResponse',
-        'xmlOrder' => [
-          'GeoLocationDetailsList',
-          'IsTruncated',
-          'NextContinentCode',
-          'NextCountryCode',
-          'NextSubdivisionCode',
-          'MaxItems',
-        ],
       ],
       'errors' => [
         [
@@ -537,20 +745,9 @@
       ],
       'input' => [
         'shape' => 'ListHealthChecksRequest',
-        'xmlOrder' => [
-          'Marker',
-          'MaxItems',
-        ],
       ],
       'output' => [
         'shape' => 'ListHealthChecksResponse',
-        'xmlOrder' => [
-          'HealthChecks',
-          'Marker',
-          'IsTruncated',
-          'NextMarker',
-          'MaxItems',
-        ],
       ],
       'errors' => [
         [
@@ -577,20 +774,9 @@
       ],
       'input' => [
         'shape' => 'ListHostedZonesRequest',
-        'xmlOrder' => [
-          'Marker',
-          'MaxItems',
-        ],
       ],
       'output' => [
         'shape' => 'ListHostedZonesResponse',
-        'xmlOrder' => [
-          'HostedZones',
-          'Marker',
-          'IsTruncated',
-          'NextMarker',
-          'MaxItems',
-        ],
       ],
       'errors' => [
         [
@@ -598,6 +784,14 @@
           'error' => [
             'httpStatusCode' => 400,
           ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'NoSuchDelegationSet',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'DelegationSetNotReusable',
           'exception' => true,
         ],
       ],
@@ -610,24 +804,9 @@
       ],
       'input' => [
         'shape' => 'ListResourceRecordSetsRequest',
-        'xmlOrder' => [
-          'HostedZoneId',
-          'StartRecordName',
-          'StartRecordType',
-          'StartRecordIdentifier',
-          'MaxItems',
-        ],
       ],
       'output' => [
         'shape' => 'ListResourceRecordSetsResponse',
-        'xmlOrder' => [
-          'ResourceRecordSets',
-          'IsTruncated',
-          'NextRecordName',
-          'NextRecordType',
-          'NextRecordIdentifier',
-          'MaxItems',
-        ],
       ],
       'errors' => [
         [
@@ -646,6 +825,28 @@
         ],
       ],
     ],
+    'ListReusableDelegationSets' => [
+      'name' => 'ListReusableDelegationSets',
+      'http' => [
+        'method' => 'GET',
+        'requestUri' => '/2013-04-01/delegationset',
+      ],
+      'input' => [
+        'shape' => 'ListReusableDelegationSetsRequest',
+      ],
+      'output' => [
+        'shape' => 'ListReusableDelegationSetsResponse',
+      ],
+      'errors' => [
+        [
+          'shape' => 'InvalidInput',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
     'ListTagsForResource' => [
       'name' => 'ListTagsForResource',
       'http' => [
@@ -654,16 +855,9 @@
       ],
       'input' => [
         'shape' => 'ListTagsForResourceRequest',
-        'xmlOrder' => [
-          'ResourceType',
-          'ResourceId',
-        ],
       ],
       'output' => [
         'shape' => 'ListTagsForResourceResponse',
-        'xmlOrder' => [
-          'ResourceTagSet',
-        ],
       ],
       'errors' => [
         [
@@ -675,6 +869,13 @@
         ],
         [
           'shape' => 'NoSuchHealthCheck',
+          'error' => [
+            'httpStatusCode' => 404,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'NoSuchHostedZone',
           'error' => [
             'httpStatusCode' => 404,
           ],
@@ -704,10 +905,6 @@
       ],
       'input' => [
         'shape' => 'ListTagsForResourcesRequest',
-        'xmlOrder' => [
-          'ResourceType',
-          'ResourceIds',
-        ],
         'xmlNamespace' => [
           'uri' => 'https://route53.amazonaws.com/doc/2013-04-01/',
         ],
@@ -715,9 +912,6 @@
       ],
       'output' => [
         'shape' => 'ListTagsForResourcesResponse',
-        'xmlOrder' => [
-          'ResourceTagSets',
-        ],
       ],
       'errors' => [
         [
@@ -729,6 +923,13 @@
         ],
         [
           'shape' => 'NoSuchHealthCheck',
+          'error' => [
+            'httpStatusCode' => 404,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'NoSuchHostedZone',
           'error' => [
             'httpStatusCode' => 404,
           ],
@@ -758,16 +959,6 @@
       ],
       'input' => [
         'shape' => 'UpdateHealthCheckRequest',
-        'xmlOrder' => [
-          'HealthCheckId',
-          'HealthCheckVersion',
-          'IPAddress',
-          'Port',
-          'ResourcePath',
-          'FullyQualifiedDomainName',
-          'SearchString',
-          'FailureThreshold',
-        ],
         'xmlNamespace' => [
           'uri' => 'https://route53.amazonaws.com/doc/2013-04-01/',
         ],
@@ -775,9 +966,6 @@
       ],
       'output' => [
         'shape' => 'UpdateHealthCheckResponse',
-        'xmlOrder' => [
-          'HealthCheck',
-        ],
       ],
       'errors' => [
         [
@@ -798,6 +986,39 @@
           'shape' => 'HealthCheckVersionMismatch',
           'error' => [
             'httpStatusCode' => 409,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
+    'UpdateHostedZoneComment' => [
+      'name' => 'UpdateHostedZoneComment',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/2013-04-01/hostedzone/{Id}',
+      ],
+      'input' => [
+        'shape' => 'UpdateHostedZoneCommentRequest',
+        'xmlNamespace' => [
+          'uri' => 'https://route53.amazonaws.com/doc/2013-04-01/',
+        ],
+        'locationName' => 'UpdateHostedZoneCommentRequest',
+      ],
+      'output' => [
+        'shape' => 'UpdateHostedZoneCommentResponse',
+      ],
+      'errors' => [
+        [
+          'shape' => 'NoSuchHostedZone',
+          'error' => [
+            'httpStatusCode' => 404,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidInput',
+          'error' => [
+            'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
@@ -826,10 +1047,39 @@
           'shape' => 'AliasHealthEnabled',
         ],
       ],
-      'xmlOrder' => [
+    ],
+    'AssociateVPCComment' => [
+      'type' => 'string',
+    ],
+    'AssociateVPCWithHostedZoneRequest' => [
+      'type' => 'structure',
+      'required' => [
         'HostedZoneId',
-        'DNSName',
-        'EvaluateTargetHealth',
+        'VPC',
+      ],
+      'members' => [
+        'HostedZoneId' => [
+          'shape' => 'ResourceId',
+          'location' => 'uri',
+          'locationName' => 'Id',
+        ],
+        'VPC' => [
+          'shape' => 'VPC',
+        ],
+        'Comment' => [
+          'shape' => 'AssociateVPCComment',
+        ],
+      ],
+    ],
+    'AssociateVPCWithHostedZoneResponse' => [
+      'type' => 'structure',
+      'required' => [
+        'ChangeInfo',
+      ],
+      'members' => [
+        'ChangeInfo' => [
+          'shape' => 'ChangeInfo',
+        ],
       ],
     ],
     'Change' => [
@@ -845,10 +1095,6 @@
         'ResourceRecordSet' => [
           'shape' => 'ResourceRecordSet',
         ],
-      ],
-      'xmlOrder' => [
-        'Action',
-        'ResourceRecordSet',
       ],
     ],
     'ChangeAction' => [
@@ -872,10 +1118,6 @@
           'shape' => 'Changes',
         ],
       ],
-      'xmlOrder' => [
-        'Comment',
-        'Changes',
-      ],
     ],
     'ChangeInfo' => [
       'type' => 'structure',
@@ -898,12 +1140,6 @@
           'shape' => 'ResourceDescription',
         ],
       ],
-      'xmlOrder' => [
-        'Id',
-        'Status',
-        'SubmittedAt',
-        'Comment',
-      ],
     ],
     'ChangeResourceRecordSetsRequest' => [
       'type' => 'structure',
@@ -921,10 +1157,6 @@
           'shape' => 'ChangeBatch',
         ],
       ],
-      'xmlOrder' => [
-        'HostedZoneId',
-        'ChangeBatch',
-      ],
     ],
     'ChangeResourceRecordSetsResponse' => [
       'type' => 'structure',
@@ -935,9 +1167,6 @@
         'ChangeInfo' => [
           'shape' => 'ChangeInfo',
         ],
-      ],
-      'xmlOrder' => [
-        'ChangeInfo',
       ],
     ],
     'ChangeStatus' => [
@@ -971,12 +1200,6 @@
           'shape' => 'TagKeyList',
         ],
       ],
-      'xmlOrder' => [
-        'ResourceType',
-        'ResourceId',
-        'AddTags',
-        'RemoveTagKeys',
-      ],
     ],
     'ChangeTagsForResourceResponse' => [
       'type' => 'structure',
@@ -997,6 +1220,15 @@
         'shape' => 'IPAddressCidr',
       ],
     ],
+    'ConflictingDomainExists' => [
+      'type' => 'structure',
+      'members' => [
+        'message' => [
+          'shape' => 'ErrorMessage',
+        ],
+      ],
+      'exception' => true,
+    ],
     'CreateHealthCheckRequest' => [
       'type' => 'structure',
       'required' => [
@@ -1010,10 +1242,6 @@
         'HealthCheckConfig' => [
           'shape' => 'HealthCheckConfig',
         ],
-      ],
-      'xmlOrder' => [
-        'CallerReference',
-        'HealthCheckConfig',
       ],
     ],
     'CreateHealthCheckResponse' => [
@@ -1032,10 +1260,6 @@
           'locationName' => 'Location',
         ],
       ],
-      'xmlOrder' => [
-        'HealthCheck',
-        'Location',
-      ],
     ],
     'CreateHostedZoneRequest' => [
       'type' => 'structure',
@@ -1047,17 +1271,18 @@
         'Name' => [
           'shape' => 'DNSName',
         ],
+        'VPC' => [
+          'shape' => 'VPC',
+        ],
         'CallerReference' => [
           'shape' => 'Nonce',
         ],
         'HostedZoneConfig' => [
           'shape' => 'HostedZoneConfig',
         ],
-      ],
-      'xmlOrder' => [
-        'Name',
-        'CallerReference',
-        'HostedZoneConfig',
+        'DelegationSetId' => [
+          'shape' => 'ResourceId',
+        ],
       ],
     ],
     'CreateHostedZoneResponse' => [
@@ -1078,17 +1303,45 @@
         'DelegationSet' => [
           'shape' => 'DelegationSet',
         ],
+        'VPC' => [
+          'shape' => 'VPC',
+        ],
         'Location' => [
           'shape' => 'ResourceURI',
           'location' => 'header',
           'locationName' => 'Location',
         ],
       ],
-      'xmlOrder' => [
-        'HostedZone',
-        'ChangeInfo',
+    ],
+    'CreateReusableDelegationSetRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'CallerReference',
+      ],
+      'members' => [
+        'CallerReference' => [
+          'shape' => 'Nonce',
+        ],
+        'HostedZoneId' => [
+          'shape' => 'ResourceId',
+        ],
+      ],
+    ],
+    'CreateReusableDelegationSetResponse' => [
+      'type' => 'structure',
+      'required' => [
         'DelegationSet',
         'Location',
+      ],
+      'members' => [
+        'DelegationSet' => [
+          'shape' => 'DelegationSet',
+        ],
+        'Location' => [
+          'shape' => 'ResourceURI',
+          'location' => 'header',
+          'locationName' => 'Location',
+        ],
       ],
     ],
     'DNSName' => [
@@ -1101,13 +1354,43 @@
         'NameServers',
       ],
       'members' => [
+        'Id' => [
+          'shape' => 'ResourceId',
+        ],
+        'CallerReference' => [
+          'shape' => 'Nonce',
+        ],
         'NameServers' => [
           'shape' => 'DelegationSetNameServers',
         ],
       ],
-      'xmlOrder' => [
-        'NameServers',
+    ],
+    'DelegationSetAlreadyCreated' => [
+      'type' => 'structure',
+      'members' => [
+        'message' => [
+          'shape' => 'ErrorMessage',
+        ],
       ],
+      'exception' => true,
+    ],
+    'DelegationSetAlreadyReusable' => [
+      'type' => 'structure',
+      'members' => [
+        'message' => [
+          'shape' => 'ErrorMessage',
+        ],
+      ],
+      'exception' => true,
+    ],
+    'DelegationSetInUse' => [
+      'type' => 'structure',
+      'members' => [
+        'message' => [
+          'shape' => 'ErrorMessage',
+        ],
+      ],
+      'exception' => true,
     ],
     'DelegationSetNameServers' => [
       'type' => 'list',
@@ -1126,6 +1409,22 @@
       ],
       'exception' => true,
     ],
+    'DelegationSetNotReusable' => [
+      'type' => 'structure',
+      'members' => [
+        'message' => [
+          'shape' => 'ErrorMessage',
+        ],
+      ],
+      'exception' => true,
+    ],
+    'DelegationSets' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'DelegationSet',
+        'locationName' => 'DelegationSet',
+      ],
+    ],
     'DeleteHealthCheckRequest' => [
       'type' => 'structure',
       'required' => [
@@ -1137,9 +1436,6 @@
           'location' => 'uri',
           'locationName' => 'HealthCheckId',
         ],
-      ],
-      'xmlOrder' => [
-        'HealthCheckId',
       ],
     ],
     'DeleteHealthCheckResponse' => [
@@ -1159,9 +1455,6 @@
           'locationName' => 'Id',
         ],
       ],
-      'xmlOrder' => [
-        'Id',
-      ],
     ],
     'DeleteHostedZoneResponse' => [
       'type' => 'structure',
@@ -1173,8 +1466,57 @@
           'shape' => 'ChangeInfo',
         ],
       ],
-      'xmlOrder' => [
+    ],
+    'DeleteReusableDelegationSetRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'Id',
+      ],
+      'members' => [
+        'Id' => [
+          'shape' => 'ResourceId',
+          'location' => 'uri',
+          'locationName' => 'Id',
+        ],
+      ],
+    ],
+    'DeleteReusableDelegationSetResponse' => [
+      'type' => 'structure',
+      'members' => [
+      ],
+    ],
+    'DisassociateVPCComment' => [
+      'type' => 'string',
+    ],
+    'DisassociateVPCFromHostedZoneRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'HostedZoneId',
+        'VPC',
+      ],
+      'members' => [
+        'HostedZoneId' => [
+          'shape' => 'ResourceId',
+          'location' => 'uri',
+          'locationName' => 'Id',
+        ],
+        'VPC' => [
+          'shape' => 'VPC',
+        ],
+        'Comment' => [
+          'shape' => 'DisassociateVPCComment',
+        ],
+      ],
+    ],
+    'DisassociateVPCFromHostedZoneResponse' => [
+      'type' => 'structure',
+      'required' => [
         'ChangeInfo',
+      ],
+      'members' => [
+        'ChangeInfo' => [
+          'shape' => 'ChangeInfo',
+        ],
       ],
     ],
     'ErrorMessage' => [
@@ -1208,11 +1550,6 @@
         'SubdivisionCode' => [
           'shape' => 'GeoLocationSubdivisionCode',
         ],
-      ],
-      'xmlOrder' => [
-        'ContinentCode',
-        'CountryCode',
-        'SubdivisionCode',
       ],
     ],
     'GeoLocationContinentCode' => [
@@ -1257,14 +1594,6 @@
           'shape' => 'GeoLocationSubdivisionName',
         ],
       ],
-      'xmlOrder' => [
-        'ContinentCode',
-        'ContinentName',
-        'CountryCode',
-        'CountryName',
-        'SubdivisionCode',
-        'SubdivisionName',
-      ],
     ],
     'GeoLocationDetailsList' => [
       'type' => 'list',
@@ -1295,9 +1624,6 @@
           'locationName' => 'Id',
         ],
       ],
-      'xmlOrder' => [
-        'Id',
-      ],
     ],
     'GetChangeResponse' => [
       'type' => 'structure',
@@ -1308,9 +1634,6 @@
         'ChangeInfo' => [
           'shape' => 'ChangeInfo',
         ],
-      ],
-      'xmlOrder' => [
-        'ChangeInfo',
       ],
     ],
     'GetCheckerIpRangesRequest' => [
@@ -1348,11 +1671,6 @@
           'locationName' => 'subdivisioncode',
         ],
       ],
-      'xmlOrder' => [
-        'ContinentCode',
-        'CountryCode',
-        'SubdivisionCode',
-      ],
     ],
     'GetGeoLocationResponse' => [
       'type' => 'structure',
@@ -1363,9 +1681,6 @@
         'GeoLocationDetails' => [
           'shape' => 'GeoLocationDetails',
         ],
-      ],
-      'xmlOrder' => [
-        'GeoLocationDetails',
       ],
     ],
     'GetHealthCheckCountRequest' => [
@@ -1384,6 +1699,30 @@
         ],
       ],
     ],
+    'GetHealthCheckLastFailureReasonRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'HealthCheckId',
+      ],
+      'members' => [
+        'HealthCheckId' => [
+          'shape' => 'HealthCheckId',
+          'location' => 'uri',
+          'locationName' => 'HealthCheckId',
+        ],
+      ],
+    ],
+    'GetHealthCheckLastFailureReasonResponse' => [
+      'type' => 'structure',
+      'required' => [
+        'HealthCheckObservations',
+      ],
+      'members' => [
+        'HealthCheckObservations' => [
+          'shape' => 'HealthCheckObservations',
+        ],
+      ],
+    ],
     'GetHealthCheckRequest' => [
       'type' => 'structure',
       'required' => [
@@ -1396,9 +1735,6 @@
           'locationName' => 'HealthCheckId',
         ],
       ],
-      'xmlOrder' => [
-        'HealthCheckId',
-      ],
     ],
     'GetHealthCheckResponse' => [
       'type' => 'structure',
@@ -1410,8 +1746,29 @@
           'shape' => 'HealthCheck',
         ],
       ],
-      'xmlOrder' => [
-        'HealthCheck',
+    ],
+    'GetHealthCheckStatusRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'HealthCheckId',
+      ],
+      'members' => [
+        'HealthCheckId' => [
+          'shape' => 'HealthCheckId',
+          'location' => 'uri',
+          'locationName' => 'HealthCheckId',
+        ],
+      ],
+    ],
+    'GetHealthCheckStatusResponse' => [
+      'type' => 'structure',
+      'required' => [
+        'HealthCheckObservations',
+      ],
+      'members' => [
+        'HealthCheckObservations' => [
+          'shape' => 'HealthCheckObservations',
+        ],
       ],
     ],
     'GetHostedZoneRequest' => [
@@ -1426,15 +1783,11 @@
           'locationName' => 'Id',
         ],
       ],
-      'xmlOrder' => [
-        'Id',
-      ],
     ],
     'GetHostedZoneResponse' => [
       'type' => 'structure',
       'required' => [
         'HostedZone',
-        'DelegationSet',
       ],
       'members' => [
         'HostedZone' => [
@@ -1443,10 +1796,33 @@
         'DelegationSet' => [
           'shape' => 'DelegationSet',
         ],
+        'VPCs' => [
+          'shape' => 'VPCs',
+        ],
       ],
-      'xmlOrder' => [
-        'HostedZone',
+    ],
+    'GetReusableDelegationSetRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'Id',
+      ],
+      'members' => [
+        'Id' => [
+          'shape' => 'ResourceId',
+          'location' => 'uri',
+          'locationName' => 'Id',
+        ],
+      ],
+    ],
+    'GetReusableDelegationSetResponse' => [
+      'type' => 'structure',
+      'required' => [
         'DelegationSet',
+      ],
+      'members' => [
+        'DelegationSet' => [
+          'shape' => 'DelegationSet',
+        ],
       ],
     ],
     'HealthCheck' => [
@@ -1470,12 +1846,6 @@
         'HealthCheckVersion' => [
           'shape' => 'HealthCheckVersion',
         ],
-      ],
-      'xmlOrder' => [
-        'Id',
-        'CallerReference',
-        'HealthCheckConfig',
-        'HealthCheckVersion',
       ],
     ],
     'HealthCheckAlreadyExists' => [
@@ -1521,16 +1891,6 @@
           'shape' => 'FailureThreshold',
         ],
       ],
-      'xmlOrder' => [
-        'IPAddress',
-        'Port',
-        'Type',
-        'ResourcePath',
-        'FullyQualifiedDomainName',
-        'SearchString',
-        'RequestInterval',
-        'FailureThreshold',
-      ],
     ],
     'HealthCheckCount' => [
       'type' => 'long',
@@ -1555,6 +1915,24 @@
       'type' => 'string',
       'min' => 1,
       'max' => 64,
+    ],
+    'HealthCheckObservation' => [
+      'type' => 'structure',
+      'members' => [
+        'IPAddress' => [
+          'shape' => 'IPAddress',
+        ],
+        'StatusReport' => [
+          'shape' => 'StatusReport',
+        ],
+      ],
+    ],
+    'HealthCheckObservations' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'HealthCheckObservation',
+        'locationName' => 'HealthCheckObservation',
+      ],
     ],
     'HealthCheckType' => [
       'type' => 'string',
@@ -1613,13 +1991,6 @@
           'shape' => 'HostedZoneRRSetCount',
         ],
       ],
-      'xmlOrder' => [
-        'Id',
-        'Name',
-        'CallerReference',
-        'Config',
-        'ResourceRecordSetCount',
-      ],
     ],
     'HostedZoneAlreadyExists' => [
       'type' => 'structure',
@@ -1639,9 +2010,9 @@
         'Comment' => [
           'shape' => 'ResourceDescription',
         ],
-      ],
-      'xmlOrder' => [
-        'Comment',
+        'PrivateZone' => [
+          'shape' => 'IsPrivateZone',
+        ],
       ],
     ],
     'HostedZoneNotEmpty' => [
@@ -1653,6 +2024,15 @@
       ],
       'error' => [
         'httpStatusCode' => 400,
+      ],
+      'exception' => true,
+    ],
+    'HostedZoneNotFound' => [
+      'type' => 'structure',
+      'members' => [
+        'message' => [
+          'shape' => 'ErrorMessage',
+        ],
       ],
       'exception' => true,
     ],
@@ -1683,6 +2063,15 @@
       ],
       'error' => [
         'httpStatusCode' => 400,
+      ],
+      'exception' => true,
+    ],
+    'InvalidArgument' => [
+      'type' => 'structure',
+      'members' => [
+        'message' => [
+          'shape' => 'ErrorMessage',
+        ],
       ],
       'exception' => true,
     ],
@@ -1719,6 +2108,42 @@
       ],
       'exception' => true,
     ],
+    'InvalidVPCId' => [
+      'type' => 'structure',
+      'members' => [
+        'message' => [
+          'shape' => 'ErrorMessage',
+        ],
+      ],
+      'error' => [
+        'httpStatusCode' => 400,
+      ],
+      'exception' => true,
+    ],
+    'IsPrivateZone' => [
+      'type' => 'boolean',
+    ],
+    'LastVPCAssociation' => [
+      'type' => 'structure',
+      'members' => [
+        'message' => [
+          'shape' => 'ErrorMessage',
+        ],
+      ],
+      'error' => [
+        'httpStatusCode' => 400,
+      ],
+      'exception' => true,
+    ],
+    'LimitsExceeded' => [
+      'type' => 'structure',
+      'members' => [
+        'message' => [
+          'shape' => 'ErrorMessage',
+        ],
+      ],
+      'exception' => true,
+    ],
     'ListGeoLocationsRequest' => [
       'type' => 'structure',
       'members' => [
@@ -1742,12 +2167,6 @@
           'location' => 'querystring',
           'locationName' => 'maxitems',
         ],
-      ],
-      'xmlOrder' => [
-        'StartContinentCode',
-        'StartCountryCode',
-        'StartSubdivisionCode',
-        'MaxItems',
       ],
     ],
     'ListGeoLocationsResponse' => [
@@ -1777,14 +2196,6 @@
           'shape' => 'PageMaxItems',
         ],
       ],
-      'xmlOrder' => [
-        'GeoLocationDetailsList',
-        'IsTruncated',
-        'NextContinentCode',
-        'NextCountryCode',
-        'NextSubdivisionCode',
-        'MaxItems',
-      ],
     ],
     'ListHealthChecksRequest' => [
       'type' => 'structure',
@@ -1799,10 +2210,6 @@
           'location' => 'querystring',
           'locationName' => 'maxitems',
         ],
-      ],
-      'xmlOrder' => [
-        'Marker',
-        'MaxItems',
       ],
     ],
     'ListHealthChecksResponse' => [
@@ -1830,13 +2237,6 @@
           'shape' => 'PageMaxItems',
         ],
       ],
-      'xmlOrder' => [
-        'HealthChecks',
-        'Marker',
-        'IsTruncated',
-        'NextMarker',
-        'MaxItems',
-      ],
     ],
     'ListHostedZonesRequest' => [
       'type' => 'structure',
@@ -1851,10 +2251,11 @@
           'location' => 'querystring',
           'locationName' => 'maxitems',
         ],
-      ],
-      'xmlOrder' => [
-        'Marker',
-        'MaxItems',
+        'DelegationSetId' => [
+          'shape' => 'ResourceId',
+          'location' => 'querystring',
+          'locationName' => 'delegationsetid',
+        ],
       ],
     ],
     'ListHostedZonesResponse' => [
@@ -1881,13 +2282,6 @@
         'MaxItems' => [
           'shape' => 'PageMaxItems',
         ],
-      ],
-      'xmlOrder' => [
-        'HostedZones',
-        'Marker',
-        'IsTruncated',
-        'NextMarker',
-        'MaxItems',
       ],
     ],
     'ListResourceRecordSetsRequest' => [
@@ -1922,13 +2316,6 @@
           'locationName' => 'maxitems',
         ],
       ],
-      'xmlOrder' => [
-        'HostedZoneId',
-        'StartRecordName',
-        'StartRecordType',
-        'StartRecordIdentifier',
-        'MaxItems',
-      ],
     ],
     'ListResourceRecordSetsResponse' => [
       'type' => 'structure',
@@ -1957,13 +2344,46 @@
           'shape' => 'PageMaxItems',
         ],
       ],
-      'xmlOrder' => [
-        'ResourceRecordSets',
+    ],
+    'ListReusableDelegationSetsRequest' => [
+      'type' => 'structure',
+      'members' => [
+        'Marker' => [
+          'shape' => 'PageMarker',
+          'location' => 'querystring',
+          'locationName' => 'marker',
+        ],
+        'MaxItems' => [
+          'shape' => 'PageMaxItems',
+          'location' => 'querystring',
+          'locationName' => 'maxitems',
+        ],
+      ],
+    ],
+    'ListReusableDelegationSetsResponse' => [
+      'type' => 'structure',
+      'required' => [
+        'DelegationSets',
+        'Marker',
         'IsTruncated',
-        'NextRecordName',
-        'NextRecordType',
-        'NextRecordIdentifier',
         'MaxItems',
+      ],
+      'members' => [
+        'DelegationSets' => [
+          'shape' => 'DelegationSets',
+        ],
+        'Marker' => [
+          'shape' => 'PageMarker',
+        ],
+        'IsTruncated' => [
+          'shape' => 'PageTruncated',
+        ],
+        'NextMarker' => [
+          'shape' => 'PageMarker',
+        ],
+        'MaxItems' => [
+          'shape' => 'PageMaxItems',
+        ],
       ],
     ],
     'ListTagsForResourceRequest' => [
@@ -1984,10 +2404,6 @@
           'locationName' => 'ResourceId',
         ],
       ],
-      'xmlOrder' => [
-        'ResourceType',
-        'ResourceId',
-      ],
     ],
     'ListTagsForResourceResponse' => [
       'type' => 'structure',
@@ -1998,9 +2414,6 @@
         'ResourceTagSet' => [
           'shape' => 'ResourceTagSet',
         ],
-      ],
-      'xmlOrder' => [
-        'ResourceTagSet',
       ],
     ],
     'ListTagsForResourcesRequest' => [
@@ -2019,10 +2432,6 @@
           'shape' => 'TagResourceIdList',
         ],
       ],
-      'xmlOrder' => [
-        'ResourceType',
-        'ResourceIds',
-      ],
     ],
     'ListTagsForResourcesResponse' => [
       'type' => 'structure',
@@ -2034,9 +2443,6 @@
           'shape' => 'ResourceTagSetList',
         ],
       ],
-      'xmlOrder' => [
-        'ResourceTagSets',
-      ],
     ],
     'NoSuchChange' => [
       'type' => 'structure',
@@ -2047,6 +2453,15 @@
       ],
       'error' => [
         'httpStatusCode' => 404,
+      ],
+      'exception' => true,
+    ],
+    'NoSuchDelegationSet' => [
+      'type' => 'structure',
+      'members' => [
+        'message' => [
+          'shape' => 'ErrorMessage',
+        ],
       ],
       'exception' => true,
     ],
@@ -2118,6 +2533,18 @@
       ],
       'exception' => true,
     ],
+    'PublicZoneVPCAssociation' => [
+      'type' => 'structure',
+      'members' => [
+        'message' => [
+          'shape' => 'ErrorMessage',
+        ],
+      ],
+      'error' => [
+        'httpStatusCode' => 400,
+      ],
+      'exception' => true,
+    ],
     'RData' => [
       'type' => 'string',
       'max' => 4000,
@@ -2164,9 +2591,6 @@
           'shape' => 'RData',
         ],
       ],
-      'xmlOrder' => [
-        'Value',
-      ],
     ],
     'ResourceRecordSet' => [
       'type' => 'structure',
@@ -2209,19 +2633,6 @@
           'shape' => 'HealthCheckId',
         ],
       ],
-      'xmlOrder' => [
-        'Name',
-        'Type',
-        'SetIdentifier',
-        'Weight',
-        'Region',
-        'GeoLocation',
-        'Failover',
-        'TTL',
-        'ResourceRecords',
-        'AliasTarget',
-        'HealthCheckId',
-      ],
     ],
     'ResourceRecordSetFailover' => [
       'type' => 'string',
@@ -2242,6 +2653,7 @@
         'us-west-1',
         'us-west-2',
         'eu-west-1',
+        'eu-central-1',
         'ap-southeast-1',
         'ap-southeast-2',
         'ap-northeast-1',
@@ -2300,6 +2712,20 @@
       'type' => 'string',
       'max' => 255,
     ],
+    'Status' => [
+      'type' => 'string',
+    ],
+    'StatusReport' => [
+      'type' => 'structure',
+      'members' => [
+        'Status' => [
+          'shape' => 'Status',
+        ],
+        'CheckedTime' => [
+          'shape' => 'TimeStamp',
+        ],
+      ],
+    ],
     'TTL' => [
       'type' => 'long',
       'min' => 0,
@@ -2355,6 +2781,7 @@
       'type' => 'string',
       'enum' => [
         'healthcheck',
+        'hostedzone',
       ],
     ],
     'TagValue' => [
@@ -2430,16 +2857,6 @@
           'shape' => 'FailureThreshold',
         ],
       ],
-      'xmlOrder' => [
-        'HealthCheckId',
-        'HealthCheckVersion',
-        'IPAddress',
-        'Port',
-        'ResourcePath',
-        'FullyQualifiedDomainName',
-        'SearchString',
-        'FailureThreshold',
-      ],
     ],
     'UpdateHealthCheckResponse' => [
       'type' => 'structure',
@@ -2451,9 +2868,85 @@
           'shape' => 'HealthCheck',
         ],
       ],
-      'xmlOrder' => [
-        'HealthCheck',
+    ],
+    'UpdateHostedZoneCommentRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'Id',
       ],
+      'members' => [
+        'Id' => [
+          'shape' => 'ResourceId',
+          'location' => 'uri',
+          'locationName' => 'Id',
+        ],
+        'Comment' => [
+          'shape' => 'ResourceDescription',
+        ],
+      ],
+    ],
+    'UpdateHostedZoneCommentResponse' => [
+      'type' => 'structure',
+      'required' => [
+        'HostedZone',
+      ],
+      'members' => [
+        'HostedZone' => [
+          'shape' => 'HostedZone',
+        ],
+      ],
+    ],
+    'VPC' => [
+      'type' => 'structure',
+      'members' => [
+        'VPCRegion' => [
+          'shape' => 'VPCRegion',
+        ],
+        'VPCId' => [
+          'shape' => 'VPCId',
+        ],
+      ],
+    ],
+    'VPCAssociationNotFound' => [
+      'type' => 'structure',
+      'members' => [
+        'message' => [
+          'shape' => 'ErrorMessage',
+        ],
+      ],
+      'error' => [
+        'httpStatusCode' => 404,
+      ],
+      'exception' => true,
+    ],
+    'VPCId' => [
+      'type' => 'string',
+      'max' => 1024,
+    ],
+    'VPCRegion' => [
+      'type' => 'string',
+      'enum' => [
+        'us-east-1',
+        'us-west-1',
+        'us-west-2',
+        'eu-west-1',
+        'eu-central-1',
+        'ap-southeast-1',
+        'ap-southeast-2',
+        'ap-northeast-1',
+        'sa-east-1',
+        'cn-north-1',
+      ],
+      'min' => 1,
+      'max' => 64,
+    ],
+    'VPCs' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'VPC',
+        'locationName' => 'VPC',
+      ],
+      'min' => 1,
     ],
   ],
 ];

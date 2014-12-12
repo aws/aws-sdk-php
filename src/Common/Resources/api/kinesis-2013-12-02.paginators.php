@@ -7,12 +7,6 @@
       'output_token' => 'StreamDescription.Shards[-1].ShardId',
       'result_key' => 'StreamDescription.Shards',
     ],
-    'GetRecords' => [
-      'input_token' => 'ShardIterator',
-      'limit_key' => 'Limit',
-      'output_token' => 'NextShardIterator',
-      'result_key' => 'Records',
-    ],
     'ListStreams' => [
       'input_token' => 'ExclusiveStartStreamName',
       'limit_key' => 'Limit',

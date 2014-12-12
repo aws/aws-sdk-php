@@ -104,6 +104,33 @@
           ],
           'exception' => true,
         ],
+        [
+          'shape' => 'InvalidCloudWatchLogsLogGroupArnException',
+          'error' => [
+            'code' => 'InvalidCloudWatchLogsLogGroupArn',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidCloudWatchLogsRoleArnException',
+          'error' => [
+            'code' => 'InvalidCloudWatchLogsRoleArn',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'CloudWatchLogsDeliveryUnavailableException',
+          'error' => [
+            'code' => 'CloudWatchLogsDeliveryUnavailable',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
       ],
     ],
     'DeleteTrail' => [
@@ -336,12 +363,50 @@
           ],
           'exception' => true,
         ],
+        [
+          'shape' => 'InvalidCloudWatchLogsLogGroupArnException',
+          'error' => [
+            'code' => 'InvalidCloudWatchLogsLogGroupArn',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidCloudWatchLogsRoleArnException',
+          'error' => [
+            'code' => 'InvalidCloudWatchLogsRoleArn',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'CloudWatchLogsDeliveryUnavailableException',
+          'error' => [
+            'code' => 'CloudWatchLogsDeliveryUnavailable',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
       ],
     ],
   ],
   'shapes' => [
     'Boolean' => [
       'type' => 'boolean',
+    ],
+    'CloudWatchLogsDeliveryUnavailableException' => [
+      'type' => 'structure',
+      'members' => [
+      ],
+      'error' => [
+        'code' => 'CloudWatchLogsDeliveryUnavailable',
+        'httpStatusCode' => 400,
+        'senderFault' => true,
+      ],
+      'exception' => true,
     ],
     'CreateTrailRequest' => [
       'type' => 'structure',
@@ -365,6 +430,12 @@
         'IncludeGlobalServiceEvents' => [
           'shape' => 'Boolean',
         ],
+        'CloudWatchLogsLogGroupArn' => [
+          'shape' => 'String',
+        ],
+        'CloudWatchLogsRoleArn' => [
+          'shape' => 'String',
+        ],
       ],
     ],
     'CreateTrailResponse' => [
@@ -384,6 +455,12 @@
         ],
         'IncludeGlobalServiceEvents' => [
           'shape' => 'Boolean',
+        ],
+        'CloudWatchLogsLogGroupArn' => [
+          'shape' => 'String',
+        ],
+        'CloudWatchLogsRoleArn' => [
+          'shape' => 'String',
         ],
       ],
     ],
@@ -457,6 +534,12 @@
         'StopLoggingTime' => [
           'shape' => 'Date',
         ],
+        'LatestCloudWatchLogsDeliveryError' => [
+          'shape' => 'String',
+        ],
+        'LatestCloudWatchLogsDeliveryTime' => [
+          'shape' => 'Date',
+        ],
       ],
     ],
     'InsufficientS3BucketPolicyException' => [
@@ -477,6 +560,28 @@
       'error' => [
         'code' => 'InsufficientSnsTopicPolicy',
         'httpStatusCode' => 403,
+        'senderFault' => true,
+      ],
+      'exception' => true,
+    ],
+    'InvalidCloudWatchLogsLogGroupArnException' => [
+      'type' => 'structure',
+      'members' => [
+      ],
+      'error' => [
+        'code' => 'InvalidCloudWatchLogsLogGroupArn',
+        'httpStatusCode' => 400,
+        'senderFault' => true,
+      ],
+      'exception' => true,
+    ],
+    'InvalidCloudWatchLogsRoleArnException' => [
+      'type' => 'structure',
+      'members' => [
+      ],
+      'error' => [
+        'code' => 'InvalidCloudWatchLogsRoleArn',
+        'httpStatusCode' => 400,
         'senderFault' => true,
       ],
       'exception' => true,
@@ -600,6 +705,12 @@
         'IncludeGlobalServiceEvents' => [
           'shape' => 'Boolean',
         ],
+        'CloudWatchLogsLogGroupArn' => [
+          'shape' => 'String',
+        ],
+        'CloudWatchLogsRoleArn' => [
+          'shape' => 'String',
+        ],
       ],
     ],
     'TrailAlreadyExistsException' => [
@@ -657,6 +768,12 @@
         'IncludeGlobalServiceEvents' => [
           'shape' => 'Boolean',
         ],
+        'CloudWatchLogsLogGroupArn' => [
+          'shape' => 'String',
+        ],
+        'CloudWatchLogsRoleArn' => [
+          'shape' => 'String',
+        ],
       ],
     ],
     'UpdateTrailResponse' => [
@@ -676,6 +793,12 @@
         ],
         'IncludeGlobalServiceEvents' => [
           'shape' => 'Boolean',
+        ],
+        'CloudWatchLogsLogGroupArn' => [
+          'shape' => 'String',
+        ],
+        'CloudWatchLogsRoleArn' => [
+          'shape' => 'String',
         ],
       ],
     ],

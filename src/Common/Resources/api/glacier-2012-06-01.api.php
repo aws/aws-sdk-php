@@ -346,6 +346,42 @@
         ],
       ],
     ],
+    'GetDataRetrievalPolicy' => [
+      'name' => 'GetDataRetrievalPolicy',
+      'http' => [
+        'method' => 'GET',
+        'requestUri' => '/{accountId}/policies/data-retrieval',
+      ],
+      'input' => [
+        'shape' => 'GetDataRetrievalPolicyInput',
+      ],
+      'output' => [
+        'shape' => 'GetDataRetrievalPolicyOutput',
+      ],
+      'errors' => [
+        [
+          'shape' => 'InvalidParameterValueException',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'MissingParameterValueException',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ServiceUnavailableException',
+          'error' => [
+            'httpStatusCode' => 500,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
     'GetJobOutput' => [
       'name' => 'GetJobOutput',
       'http' => [
@@ -450,6 +486,13 @@
           'shape' => 'ResourceNotFoundException',
           'error' => [
             'httpStatusCode' => 404,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'PolicyEnforcedException',
+          'error' => [
+            'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
@@ -669,6 +712,40 @@
           ],
           'exception' => true,
         ],
+        [
+          'shape' => 'InvalidParameterValueException',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'MissingParameterValueException',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ServiceUnavailableException',
+          'error' => [
+            'httpStatusCode' => 500,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
+    'SetDataRetrievalPolicy' => [
+      'name' => 'SetDataRetrievalPolicy',
+      'http' => [
+        'method' => 'PUT',
+        'requestUri' => '/{accountId}/policies/data-retrieval',
+        'responseCode' => 204,
+      ],
+      'input' => [
+        'shape' => 'SetDataRetrievalPolicyInput',
+      ],
+      'errors' => [
         [
           'shape' => 'InvalidParameterValueException',
           'error' => [
@@ -953,6 +1030,31 @@
         ],
       ],
     ],
+    'DataRetrievalPolicy' => [
+      'type' => 'structure',
+      'members' => [
+        'Rules' => [
+          'shape' => 'DataRetrievalRulesList',
+        ],
+      ],
+    ],
+    'DataRetrievalRule' => [
+      'type' => 'structure',
+      'members' => [
+        'Strategy' => [
+          'shape' => 'string',
+        ],
+        'BytesPerHour' => [
+          'shape' => 'NullableLong',
+        ],
+      ],
+    ],
+    'DataRetrievalRulesList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'DataRetrievalRule',
+      ],
+    ],
     'DateTime' => [
       'type' => 'string',
     ],
@@ -1083,6 +1185,27 @@
         ],
         'SizeInBytes' => [
           'shape' => 'long',
+        ],
+      ],
+    ],
+    'GetDataRetrievalPolicyInput' => [
+      'type' => 'structure',
+      'members' => [
+        'accountId' => [
+          'shape' => 'string',
+          'location' => 'uri',
+          'locationName' => 'accountId',
+        ],
+      ],
+      'required' => [
+        'accountId',
+      ],
+    ],
+    'GetDataRetrievalPolicyOutput' => [
+      'type' => 'structure',
+      'members' => [
+        'Policy' => [
+          'shape' => 'DataRetrievalPolicy',
         ],
       ],
     ],
@@ -1634,6 +1757,9 @@
         'shape' => 'string',
       ],
     ],
+    'NullableLong' => [
+      'type' => 'long',
+    ],
     'PartList' => [
       'type' => 'list',
       'member' => [
@@ -1650,6 +1776,24 @@
           'shape' => 'string',
         ],
       ],
+    ],
+    'PolicyEnforcedException' => [
+      'type' => 'structure',
+      'members' => [
+        'type' => [
+          'shape' => 'string',
+        ],
+        'code' => [
+          'shape' => 'string',
+        ],
+        'message' => [
+          'shape' => 'string',
+        ],
+      ],
+      'error' => [
+        'httpStatusCode' => 400,
+      ],
+      'exception' => true,
     ],
     'RequestTimeoutException' => [
       'type' => 'structure',
@@ -1704,6 +1848,22 @@
         'httpStatusCode' => 500,
       ],
       'exception' => true,
+    ],
+    'SetDataRetrievalPolicyInput' => [
+      'type' => 'structure',
+      'members' => [
+        'accountId' => [
+          'shape' => 'string',
+          'location' => 'uri',
+          'locationName' => 'accountId',
+        ],
+        'Policy' => [
+          'shape' => 'DataRetrievalPolicy',
+        ],
+      ],
+      'required' => [
+        'accountId',
+      ],
     ],
     'SetVaultNotificationsInput' => [
       'type' => 'structure',

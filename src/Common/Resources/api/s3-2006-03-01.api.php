@@ -815,6 +815,8 @@
         'ap-northeast-1',
         'sa-east-1',
         '',
+        'cn-north-1',
+        'eu-central-1',
       ],
     ],
     'BucketLoggingStatus' => [
@@ -893,6 +895,34 @@
     'CacheControl' => [
       'type' => 'string',
     ],
+    'CloudFunction' => [
+      'type' => 'string',
+    ],
+    'CloudFunctionConfiguration' => [
+      'type' => 'structure',
+      'members' => [
+        'Id' => [
+          'shape' => 'NotificationId',
+        ],
+        'Event' => [
+          'shape' => 'Event',
+          'deprecated' => true,
+        ],
+        'Events' => [
+          'shape' => 'Events',
+          'locationName' => 'Event',
+        ],
+        'CloudFunction' => [
+          'shape' => 'CloudFunction',
+        ],
+        'InvocationRole' => [
+          'shape' => 'CloudFunctionInvocationRole',
+        ],
+      ],
+    ],
+    'CloudFunctionInvocationRole' => [
+      'type' => 'string',
+    ],
     'Code' => [
       'type' => 'string',
     ],
@@ -940,6 +970,11 @@
           'shape' => 'ObjectVersionId',
           'location' => 'header',
           'locationName' => 'x-amz-version-id',
+        ],
+        'SSEKMSKeyId' => [
+          'shape' => 'SSEKMSKeyId',
+          'location' => 'header',
+          'locationName' => 'x-amz-server-side-encryption-aws-kms-key-id',
         ],
       ],
     ],
@@ -1062,6 +1097,11 @@
           'shape' => 'SSECustomerKeyMD5',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key-MD5',
+        ],
+        'SSEKMSKeyId' => [
+          'shape' => 'SSEKMSKeyId',
+          'location' => 'header',
+          'locationName' => 'x-amz-server-side-encryption-aws-kms-key-id',
         ],
       ],
       'payload' => 'CopyObjectResult',
@@ -1203,6 +1243,11 @@
           'shape' => 'SSECustomerKeyMD5',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key-MD5',
+        ],
+        'SSEKMSKeyId' => [
+          'shape' => 'SSEKMSKeyId',
+          'location' => 'header',
+          'locationName' => 'x-amz-server-side-encryption-aws-kms-key-id',
         ],
         'CopySourceSSECustomerAlgorithm' => [
           'shape' => 'CopySourceSSECustomerAlgorithm',
@@ -1372,6 +1417,11 @@
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key-MD5',
         ],
+        'SSEKMSKeyId' => [
+          'shape' => 'SSEKMSKeyId',
+          'location' => 'header',
+          'locationName' => 'x-amz-server-side-encryption-aws-kms-key-id',
+        ],
       ],
     ],
     'CreateMultipartUploadRequest' => [
@@ -1480,6 +1530,11 @@
           'shape' => 'SSECustomerKeyMD5',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key-MD5',
+        ],
+        'SSEKMSKeyId' => [
+          'shape' => 'SSEKMSKeyId',
+          'location' => 'header',
+          'locationName' => 'x-amz-server-side-encryption-aws-kms-key-id',
         ],
       ],
     ],
@@ -1783,10 +1838,21 @@
       'type' => 'string',
       'enum' => [
         's3:ReducedRedundancyLostObject',
+        's3:ObjectCreated:Put',
+        's3:ObjectCreated:Post',
+        's3:ObjectCreated:Copy',
+        's3:ObjectCreated:CompleteMultipartUpload',
       ],
     ],
+    'Events' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'Event',
+      ],
+      'flattened' => true,
+    ],
     'Expiration' => [
-      'type' => 'timestamp',
+      'type' => 'string',
     ],
     'ExpirationStatus' => [
       'type' => 'string',
@@ -1924,6 +1990,12 @@
       'members' => [
         'TopicConfiguration' => [
           'shape' => 'TopicConfiguration',
+        ],
+        'QueueConfiguration' => [
+          'shape' => 'QueueConfiguration',
+        ],
+        'CloudFunctionConfiguration' => [
+          'shape' => 'CloudFunctionConfiguration',
         ],
       ],
     ],
@@ -2204,6 +2276,11 @@
           'shape' => 'SSECustomerKeyMD5',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key-MD5',
+        ],
+        'SSEKMSKeyId' => [
+          'shape' => 'SSEKMSKeyId',
+          'location' => 'header',
+          'locationName' => 'x-amz-server-side-encryption-aws-kms-key-id',
         ],
       ],
       'payload' => 'Body',
@@ -2507,6 +2584,11 @@
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key-MD5',
         ],
+        'SSEKMSKeyId' => [
+          'shape' => 'SSEKMSKeyId',
+          'location' => 'header',
+          'locationName' => 'x-amz-server-side-encryption-aws-kms-key-id',
+        ],
       ],
     ],
     'HeadObjectRequest' => [
@@ -2689,6 +2771,9 @@
         'Prefix' => [
           'shape' => 'Prefix',
         ],
+        'Delimiter' => [
+          'shape' => 'Delimiter',
+        ],
         'NextUploadIdMarker' => [
           'shape' => 'NextUploadIdMarker',
         ],
@@ -2785,6 +2870,9 @@
         'Prefix' => [
           'shape' => 'Prefix',
         ],
+        'Delimiter' => [
+          'shape' => 'Delimiter',
+        ],
         'MaxKeys' => [
           'shape' => 'MaxKeys',
         ],
@@ -2859,6 +2947,9 @@
         ],
         'Prefix' => [
           'shape' => 'Prefix',
+        ],
+        'Delimiter' => [
+          'shape' => 'Delimiter',
         ],
         'MaxKeys' => [
           'shape' => 'MaxKeys',
@@ -3147,14 +3238,20 @@
     ],
     'NotificationConfiguration' => [
       'type' => 'structure',
-      'required' => [
-        'TopicConfiguration',
-      ],
       'members' => [
         'TopicConfiguration' => [
           'shape' => 'TopicConfiguration',
         ],
+        'QueueConfiguration' => [
+          'shape' => 'QueueConfiguration',
+        ],
+        'CloudFunctionConfiguration' => [
+          'shape' => 'CloudFunctionConfiguration',
+        ],
       ],
+    ],
+    'NotificationId' => [
+      'type' => 'string',
     ],
     'Object' => [
       'type' => 'structure',
@@ -3750,6 +3847,11 @@
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key-MD5',
         ],
+        'SSEKMSKeyId' => [
+          'shape' => 'SSEKMSKeyId',
+          'location' => 'header',
+          'locationName' => 'x-amz-server-side-encryption-aws-kms-key-id',
+        ],
       ],
     ],
     'PutObjectRequest' => [
@@ -3873,8 +3975,35 @@
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key-MD5',
         ],
+        'SSEKMSKeyId' => [
+          'shape' => 'SSEKMSKeyId',
+          'location' => 'header',
+          'locationName' => 'x-amz-server-side-encryption-aws-kms-key-id',
+        ],
       ],
       'payload' => 'Body',
+    ],
+    'Queue' => [
+      'type' => 'string',
+    ],
+    'QueueConfiguration' => [
+      'type' => 'structure',
+      'members' => [
+        'Id' => [
+          'shape' => 'NotificationId',
+        ],
+        'Event' => [
+          'shape' => 'Event',
+          'deprecated' => true,
+        ],
+        'Events' => [
+          'shape' => 'Events',
+          'locationName' => 'Event',
+        ],
+        'Queue' => [
+          'shape' => 'Queue',
+        ],
+      ],
     ],
     'Quiet' => [
       'type' => 'boolean',
@@ -4065,6 +4194,10 @@
     'SSECustomerKeyMD5' => [
       'type' => 'string',
     ],
+    'SSEKMSKeyId' => [
+      'type' => 'string',
+      'sensitive' => true,
+    ],
     'ServerSideEncryption' => [
       'type' => 'string',
       'enum' => [
@@ -4147,8 +4280,16 @@
     'TopicConfiguration' => [
       'type' => 'structure',
       'members' => [
+        'Id' => [
+          'shape' => 'NotificationId',
+        ],
+        'Events' => [
+          'shape' => 'Events',
+          'locationName' => 'Event',
+        ],
         'Event' => [
           'shape' => 'Event',
+          'deprecated' => true,
         ],
         'Topic' => [
           'shape' => 'Topic',
@@ -4216,6 +4357,11 @@
           'shape' => 'SSECustomerKeyMD5',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key-MD5',
+        ],
+        'SSEKMSKeyId' => [
+          'shape' => 'SSEKMSKeyId',
+          'location' => 'header',
+          'locationName' => 'x-amz-server-side-encryption-aws-kms-key-id',
         ],
       ],
       'payload' => 'CopyPartResult',
@@ -4334,6 +4480,11 @@
           'shape' => 'SSECustomerKeyMD5',
           'location' => 'header',
           'locationName' => 'x-amz-server-side-encryption-customer-key-MD5',
+        ],
+        'SSEKMSKeyId' => [
+          'shape' => 'SSEKMSKeyId',
+          'location' => 'header',
+          'locationName' => 'x-amz-server-side-encryption-aws-kms-key-id',
         ],
       ],
     ],

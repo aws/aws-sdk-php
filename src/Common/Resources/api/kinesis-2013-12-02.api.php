@@ -10,6 +10,34 @@
     'protocol' => 'json',
   ],
   'operations' => [
+    'AddTagsToStream' => [
+      'name' => 'AddTagsToStream',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'AddTagsToStreamInput',
+      ],
+      'errors' => [
+        [
+          'shape' => 'ResourceNotFoundException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceInUseException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidArgumentException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'LimitExceededException',
+          'exception' => true,
+        ],
+      ],
+    ],
     'CreateStream' => [
       'name' => 'CreateStream',
       'http' => [
@@ -154,6 +182,33 @@
         ],
       ],
     ],
+    'ListTagsForStream' => [
+      'name' => 'ListTagsForStream',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'ListTagsForStreamInput',
+      ],
+      'output' => [
+        'shape' => 'ListTagsForStreamOutput',
+      ],
+      'errors' => [
+        [
+          'shape' => 'ResourceNotFoundException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidArgumentException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'LimitExceededException',
+          'exception' => true,
+        ],
+      ],
+    ],
     'MergeShards' => [
       'name' => 'MergeShards',
       'http' => [
@@ -209,6 +264,61 @@
         ],
       ],
     ],
+    'PutRecords' => [
+      'name' => 'PutRecords',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'PutRecordsInput',
+      ],
+      'output' => [
+        'shape' => 'PutRecordsOutput',
+      ],
+      'errors' => [
+        [
+          'shape' => 'ResourceNotFoundException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidArgumentException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ProvisionedThroughputExceededException',
+          'exception' => true,
+        ],
+      ],
+    ],
+    'RemoveTagsFromStream' => [
+      'name' => 'RemoveTagsFromStream',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'RemoveTagsFromStreamInput',
+      ],
+      'errors' => [
+        [
+          'shape' => 'ResourceNotFoundException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceInUseException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidArgumentException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'LimitExceededException',
+          'exception' => true,
+        ],
+      ],
+    ],
     'SplitShard' => [
       'name' => 'SplitShard',
       'http' => [
@@ -239,6 +349,21 @@
     ],
   ],
   'shapes' => [
+    'AddTagsToStreamInput' => [
+      'type' => 'structure',
+      'required' => [
+        'StreamName',
+        'Tags',
+      ],
+      'members' => [
+        'StreamName' => [
+          'shape' => 'StreamName',
+        ],
+        'Tags' => [
+          'shape' => 'TagMap',
+        ],
+      ],
+    ],
     'BooleanObject' => [
       'type' => 'boolean',
     ],
@@ -305,6 +430,9 @@
           'shape' => 'StreamDescription',
         ],
       ],
+    ],
+    'ErrorCode' => [
+      'type' => 'string',
     ],
     'ErrorMessage' => [
       'type' => 'string',
@@ -449,6 +577,43 @@
         ],
       ],
     ],
+    'ListTagsForStreamInput' => [
+      'type' => 'structure',
+      'required' => [
+        'StreamName',
+      ],
+      'members' => [
+        'StreamName' => [
+          'shape' => 'StreamName',
+        ],
+        'ExclusiveStartTagKey' => [
+          'shape' => 'TagKey',
+        ],
+        'Limit' => [
+          'shape' => 'ListTagsForStreamInputLimit',
+        ],
+      ],
+    ],
+    'ListTagsForStreamInputLimit' => [
+      'type' => 'integer',
+      'min' => 1,
+      'max' => 10,
+    ],
+    'ListTagsForStreamOutput' => [
+      'type' => 'structure',
+      'required' => [
+        'Tags',
+        'HasMoreTags',
+      ],
+      'members' => [
+        'Tags' => [
+          'shape' => 'TagList',
+        ],
+        'HasMoreTags' => [
+          'shape' => 'BooleanObject',
+        ],
+      ],
+    ],
     'MergeShardsInput' => [
       'type' => 'structure',
       'required' => [
@@ -526,6 +691,86 @@
         ],
       ],
     ],
+    'PutRecordsInput' => [
+      'type' => 'structure',
+      'required' => [
+        'Records',
+        'StreamName',
+      ],
+      'members' => [
+        'Records' => [
+          'shape' => 'PutRecordsRequestEntryList',
+        ],
+        'StreamName' => [
+          'shape' => 'StreamName',
+        ],
+      ],
+    ],
+    'PutRecordsOutput' => [
+      'type' => 'structure',
+      'required' => [
+        'Records',
+      ],
+      'members' => [
+        'FailedRecordCount' => [
+          'shape' => 'PositiveIntegerObject',
+        ],
+        'Records' => [
+          'shape' => 'PutRecordsResultEntryList',
+        ],
+      ],
+    ],
+    'PutRecordsRequestEntry' => [
+      'type' => 'structure',
+      'required' => [
+        'Data',
+        'PartitionKey',
+      ],
+      'members' => [
+        'Data' => [
+          'shape' => 'Data',
+        ],
+        'ExplicitHashKey' => [
+          'shape' => 'HashKey',
+        ],
+        'PartitionKey' => [
+          'shape' => 'PartitionKey',
+        ],
+      ],
+    ],
+    'PutRecordsRequestEntryList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'PutRecordsRequestEntry',
+      ],
+      'min' => 1,
+      'max' => 500,
+    ],
+    'PutRecordsResultEntry' => [
+      'type' => 'structure',
+      'members' => [
+        'SequenceNumber' => [
+          'shape' => 'SequenceNumber',
+        ],
+        'ShardId' => [
+          'shape' => 'ShardId',
+        ],
+        'ErrorCode' => [
+          'shape' => 'ErrorCode',
+        ],
+        'ErrorMessage' => [
+          'shape' => 'ErrorMessage',
+        ],
+      ],
+    ],
+    'PutRecordsResultEntryList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'PutRecordsResultEntry',
+      ],
+      'min' => 1,
+      'max' => 500,
+    ],
     'Record' => [
       'type' => 'structure',
       'required' => [
@@ -549,6 +794,21 @@
       'type' => 'list',
       'member' => [
         'shape' => 'Record',
+      ],
+    ],
+    'RemoveTagsFromStreamInput' => [
+      'type' => 'structure',
+      'required' => [
+        'StreamName',
+        'TagKeys',
+      ],
+      'members' => [
+        'StreamName' => [
+          'shape' => 'StreamName',
+        ],
+        'TagKeys' => [
+          'shape' => 'TagKeyList',
+        ],
       ],
     ],
     'ResourceInUseException' => [
@@ -707,6 +967,56 @@
         'ACTIVE',
         'UPDATING',
       ],
+    ],
+    'Tag' => [
+      'type' => 'structure',
+      'required' => [
+        'Key',
+      ],
+      'members' => [
+        'Key' => [
+          'shape' => 'TagKey',
+        ],
+        'Value' => [
+          'shape' => 'TagValue',
+        ],
+      ],
+    ],
+    'TagKey' => [
+      'type' => 'string',
+      'min' => 1,
+      'max' => 128,
+    ],
+    'TagKeyList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'TagKey',
+      ],
+      'min' => 1,
+      'max' => 10,
+    ],
+    'TagList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'Tag',
+      ],
+      'min' => 0,
+    ],
+    'TagMap' => [
+      'type' => 'map',
+      'key' => [
+        'shape' => 'TagKey',
+      ],
+      'value' => [
+        'shape' => 'TagValue',
+      ],
+      'min' => 1,
+      'max' => 10,
+    ],
+    'TagValue' => [
+      'type' => 'string',
+      'min' => 0,
+      'max' => 256,
     ],
   ],
 ];

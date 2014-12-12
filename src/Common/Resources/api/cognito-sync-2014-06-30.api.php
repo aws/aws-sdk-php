@@ -25,30 +25,38 @@
         [
           'shape' => 'NotAuthorizedException',
           'error' => [
+            'code' => 'NotAuthorizedError',
             'httpStatusCode' => 403,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'InvalidParameterException',
           'error' => [
+            'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'ResourceNotFoundException',
           'error' => [
+            'code' => 'ResourceNotFound',
             'httpStatusCode' => 404,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'InternalErrorException',
           'error' => [
+            'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
+          'fault' => true,
         ],
       ],
     ],
@@ -69,30 +77,38 @@
         [
           'shape' => 'NotAuthorizedException',
           'error' => [
+            'code' => 'NotAuthorizedError',
             'httpStatusCode' => 403,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'InvalidParameterException',
           'error' => [
+            'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'ResourceNotFoundException',
           'error' => [
+            'code' => 'ResourceNotFound',
             'httpStatusCode' => 404,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'InternalErrorException',
           'error' => [
+            'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
+          'fault' => true,
         ],
       ],
     ],
@@ -113,30 +129,38 @@
         [
           'shape' => 'NotAuthorizedException',
           'error' => [
+            'code' => 'NotAuthorizedError',
             'httpStatusCode' => 403,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'InvalidParameterException',
           'error' => [
+            'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'ResourceNotFoundException',
           'error' => [
+            'code' => 'ResourceNotFound',
             'httpStatusCode' => 404,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'InternalErrorException',
           'error' => [
+            'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
+          'fault' => true,
         ],
       ],
     ],
@@ -157,30 +181,90 @@
         [
           'shape' => 'NotAuthorizedException',
           'error' => [
+            'code' => 'NotAuthorizedError',
             'httpStatusCode' => 403,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'InvalidParameterException',
           'error' => [
+            'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'ResourceNotFoundException',
           'error' => [
+            'code' => 'ResourceNotFound',
             'httpStatusCode' => 404,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'InternalErrorException',
           'error' => [
+            'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
+          'fault' => true,
+        ],
+      ],
+    ],
+    'GetIdentityPoolConfiguration' => [
+      'name' => 'GetIdentityPoolConfiguration',
+      'http' => [
+        'method' => 'GET',
+        'requestUri' => '/identitypools/{IdentityPoolId}/configuration',
+        'responseCode' => 200,
+      ],
+      'input' => [
+        'shape' => 'GetIdentityPoolConfigurationRequest',
+      ],
+      'output' => [
+        'shape' => 'GetIdentityPoolConfigurationResponse',
+      ],
+      'errors' => [
+        [
+          'shape' => 'NotAuthorizedException',
+          'error' => [
+            'code' => 'NotAuthorizedError',
+            'httpStatusCode' => 403,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidParameterException',
+          'error' => [
+            'code' => 'InvalidParameter',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceNotFoundException',
+          'error' => [
+            'code' => 'ResourceNotFound',
+            'httpStatusCode' => 404,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InternalErrorException',
+          'error' => [
+            'code' => 'InternalError',
+            'httpStatusCode' => 500,
+          ],
+          'exception' => true,
+          'fault' => true,
         ],
       ],
     ],
@@ -201,23 +285,29 @@
         [
           'shape' => 'NotAuthorizedException',
           'error' => [
+            'code' => 'NotAuthorizedError',
             'httpStatusCode' => 403,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'InvalidParameterException',
           'error' => [
+            'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'InternalErrorException',
           'error' => [
+            'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
+          'fault' => true,
         ],
       ],
     ],
@@ -238,23 +328,29 @@
         [
           'shape' => 'NotAuthorizedException',
           'error' => [
+            'code' => 'NotAuthorizedError',
             'httpStatusCode' => 403,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'InvalidParameterException',
           'error' => [
+            'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'InternalErrorException',
           'error' => [
+            'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
+          'fault' => true,
         ],
       ],
     ],
@@ -275,28 +371,271 @@
         [
           'shape' => 'InvalidParameterException',
           'error' => [
+            'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'NotAuthorizedException',
           'error' => [
+            'code' => 'NotAuthorizedError',
             'httpStatusCode' => 403,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'TooManyRequestsException',
           'error' => [
+            'code' => 'TooManyRequests',
             'httpStatusCode' => 429,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'InternalErrorException',
           'error' => [
+            'code' => 'InternalError',
             'httpStatusCode' => 500,
+          ],
+          'exception' => true,
+          'fault' => true,
+        ],
+      ],
+    ],
+    'RegisterDevice' => [
+      'name' => 'RegisterDevice',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/identitypools/{IdentityPoolId}/identity/{IdentityId}/device',
+        'responseCode' => 200,
+      ],
+      'input' => [
+        'shape' => 'RegisterDeviceRequest',
+      ],
+      'output' => [
+        'shape' => 'RegisterDeviceResponse',
+      ],
+      'errors' => [
+        [
+          'shape' => 'NotAuthorizedException',
+          'error' => [
+            'code' => 'NotAuthorizedError',
+            'httpStatusCode' => 403,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidParameterException',
+          'error' => [
+            'code' => 'InvalidParameter',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceNotFoundException',
+          'error' => [
+            'code' => 'ResourceNotFound',
+            'httpStatusCode' => 404,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InternalErrorException',
+          'error' => [
+            'code' => 'InternalError',
+            'httpStatusCode' => 500,
+          ],
+          'exception' => true,
+          'fault' => true,
+        ],
+        [
+          'shape' => 'InvalidConfigurationException',
+          'error' => [
+            'code' => 'InvalidConfiguration',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
+    'SetIdentityPoolConfiguration' => [
+      'name' => 'SetIdentityPoolConfiguration',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/identitypools/{IdentityPoolId}/configuration',
+        'responseCode' => 200,
+      ],
+      'input' => [
+        'shape' => 'SetIdentityPoolConfigurationRequest',
+      ],
+      'output' => [
+        'shape' => 'SetIdentityPoolConfigurationResponse',
+      ],
+      'errors' => [
+        [
+          'shape' => 'NotAuthorizedException',
+          'error' => [
+            'code' => 'NotAuthorizedError',
+            'httpStatusCode' => 403,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidParameterException',
+          'error' => [
+            'code' => 'InvalidParameter',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceNotFoundException',
+          'error' => [
+            'code' => 'ResourceNotFound',
+            'httpStatusCode' => 404,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InternalErrorException',
+          'error' => [
+            'code' => 'InternalError',
+            'httpStatusCode' => 500,
+          ],
+          'exception' => true,
+          'fault' => true,
+        ],
+      ],
+    ],
+    'SubscribeToDataset' => [
+      'name' => 'SubscribeToDataset',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}/subscriptions/{DeviceId}',
+        'responseCode' => 200,
+      ],
+      'input' => [
+        'shape' => 'SubscribeToDatasetRequest',
+      ],
+      'output' => [
+        'shape' => 'SubscribeToDatasetResponse',
+      ],
+      'errors' => [
+        [
+          'shape' => 'NotAuthorizedException',
+          'error' => [
+            'code' => 'NotAuthorizedError',
+            'httpStatusCode' => 403,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidParameterException',
+          'error' => [
+            'code' => 'InvalidParameter',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceNotFoundException',
+          'error' => [
+            'code' => 'ResourceNotFound',
+            'httpStatusCode' => 404,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InternalErrorException',
+          'error' => [
+            'code' => 'InternalError',
+            'httpStatusCode' => 500,
+          ],
+          'exception' => true,
+          'fault' => true,
+        ],
+        [
+          'shape' => 'InvalidConfigurationException',
+          'error' => [
+            'code' => 'InvalidConfiguration',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
+    'UnsubscribeFromDataset' => [
+      'name' => 'UnsubscribeFromDataset',
+      'http' => [
+        'method' => 'DELETE',
+        'requestUri' => '/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}/subscriptions/{DeviceId}',
+        'responseCode' => 200,
+      ],
+      'input' => [
+        'shape' => 'UnsubscribeFromDatasetRequest',
+      ],
+      'output' => [
+        'shape' => 'UnsubscribeFromDatasetResponse',
+      ],
+      'errors' => [
+        [
+          'shape' => 'NotAuthorizedException',
+          'error' => [
+            'code' => 'NotAuthorizedError',
+            'httpStatusCode' => 403,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidParameterException',
+          'error' => [
+            'code' => 'InvalidParameter',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceNotFoundException',
+          'error' => [
+            'code' => 'ResourceNotFound',
+            'httpStatusCode' => 404,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InternalErrorException',
+          'error' => [
+            'code' => 'InternalError',
+            'httpStatusCode' => 500,
+          ],
+          'exception' => true,
+          'fault' => true,
+        ],
+        [
+          'shape' => 'InvalidConfigurationException',
+          'error' => [
+            'code' => 'InvalidConfiguration',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
@@ -319,56 +658,86 @@
         [
           'shape' => 'InvalidParameterException',
           'error' => [
+            'code' => 'InvalidParameter',
             'httpStatusCode' => 400,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'LimitExceededException',
           'error' => [
+            'code' => 'LimitExceeded',
             'httpStatusCode' => 400,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'NotAuthorizedException',
           'error' => [
+            'code' => 'NotAuthorizedError',
             'httpStatusCode' => 403,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'ResourceNotFoundException',
           'error' => [
+            'code' => 'ResourceNotFound',
             'httpStatusCode' => 404,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'ResourceConflictException',
           'error' => [
+            'code' => 'ResourceConflict',
             'httpStatusCode' => 409,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'TooManyRequestsException',
           'error' => [
+            'code' => 'TooManyRequests',
             'httpStatusCode' => 429,
+            'senderFault' => true,
           ],
           'exception' => true,
         ],
         [
           'shape' => 'InternalErrorException',
           'error' => [
+            'code' => 'InternalError',
             'httpStatusCode' => 500,
           ],
           'exception' => true,
+          'fault' => true,
         ],
       ],
     ],
   ],
   'shapes' => [
+    'ApplicationArn' => [
+      'type' => 'string',
+      'pattern' => 'arn:aws:sns:[-0-9a-z]+:\\d+:app/[A-Z_]+/[a-zA-Z0-9_.-]+',
+    ],
+    'ApplicationArnList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'ApplicationArn',
+      ],
+    ],
+    'AssumeRoleArn' => [
+      'type' => 'string',
+      'min' => 20,
+      'max' => 2048,
+      'pattern' => 'arn:aws:iam::\\d+:role/.*',
+    ],
     'Boolean' => [
       'type' => 'boolean',
     ],
@@ -530,8 +899,37 @@
         ],
       ],
     ],
+    'DeviceId' => [
+      'type' => 'string',
+      'min' => 1,
+      'max' => 256,
+    ],
     'ExceptionMessage' => [
       'type' => 'string',
+    ],
+    'GetIdentityPoolConfigurationRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'IdentityPoolId',
+      ],
+      'members' => [
+        'IdentityPoolId' => [
+          'shape' => 'IdentityPoolId',
+          'location' => 'uri',
+          'locationName' => 'IdentityPoolId',
+        ],
+      ],
+    ],
+    'GetIdentityPoolConfigurationResponse' => [
+      'type' => 'structure',
+      'members' => [
+        'IdentityPoolId' => [
+          'shape' => 'IdentityPoolId',
+        ],
+        'PushSync' => [
+          'shape' => 'PushSync',
+        ],
+      ],
     ],
     'IdentityId' => [
       'type' => 'string',
@@ -605,7 +1003,26 @@
         ],
       ],
       'error' => [
+        'code' => 'InternalError',
         'httpStatusCode' => 500,
+      ],
+      'exception' => true,
+      'fault' => true,
+    ],
+    'InvalidConfigurationException' => [
+      'type' => 'structure',
+      'required' => [
+        'message',
+      ],
+      'members' => [
+        'message' => [
+          'shape' => 'ExceptionMessage',
+        ],
+      ],
+      'error' => [
+        'code' => 'InvalidConfiguration',
+        'httpStatusCode' => 400,
+        'senderFault' => true,
       ],
       'exception' => true,
     ],
@@ -620,7 +1037,9 @@
         ],
       ],
       'error' => [
+        'code' => 'InvalidParameter',
         'httpStatusCode' => 400,
+        'senderFault' => true,
       ],
       'exception' => true,
     ],
@@ -635,7 +1054,9 @@
         ],
       ],
       'error' => [
+        'code' => 'LimitExceeded',
         'httpStatusCode' => 400,
+        'senderFault' => true,
       ],
       'exception' => true,
     ],
@@ -811,7 +1232,9 @@
         ],
       ],
       'error' => [
+        'code' => 'NotAuthorizedError',
         'httpStatusCode' => 403,
+        'senderFault' => true,
       ],
       'exception' => true,
     ],
@@ -821,6 +1244,29 @@
         'replace',
         'remove',
       ],
+    ],
+    'Platform' => [
+      'type' => 'string',
+      'enum' => [
+        'APNS',
+        'APNS_SANDBOX',
+        'GCM',
+        'ADM',
+      ],
+    ],
+    'PushSync' => [
+      'type' => 'structure',
+      'members' => [
+        'ApplicationArns' => [
+          'shape' => 'ApplicationArnList',
+        ],
+        'RoleArn' => [
+          'shape' => 'AssumeRoleArn',
+        ],
+      ],
+    ],
+    'PushToken' => [
+      'type' => 'string',
     ],
     'Record' => [
       'type' => 'structure',
@@ -891,6 +1337,41 @@
       'type' => 'string',
       'max' => 1048575,
     ],
+    'RegisterDeviceRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'IdentityPoolId',
+        'IdentityId',
+        'Platform',
+        'Token',
+      ],
+      'members' => [
+        'IdentityPoolId' => [
+          'shape' => 'IdentityPoolId',
+          'location' => 'uri',
+          'locationName' => 'IdentityPoolId',
+        ],
+        'IdentityId' => [
+          'shape' => 'IdentityId',
+          'location' => 'uri',
+          'locationName' => 'IdentityId',
+        ],
+        'Platform' => [
+          'shape' => 'Platform',
+        ],
+        'Token' => [
+          'shape' => 'PushToken',
+        ],
+      ],
+    ],
+    'RegisterDeviceResponse' => [
+      'type' => 'structure',
+      'members' => [
+        'DeviceId' => [
+          'shape' => 'DeviceId',
+        ],
+      ],
+    ],
     'ResourceConflictException' => [
       'type' => 'structure',
       'required' => [
@@ -902,7 +1383,9 @@
         ],
       ],
       'error' => [
+        'code' => 'ResourceConflict',
         'httpStatusCode' => 409,
+        'senderFault' => true,
       ],
       'exception' => true,
     ],
@@ -917,12 +1400,77 @@
         ],
       ],
       'error' => [
+        'code' => 'ResourceNotFound',
         'httpStatusCode' => 404,
+        'senderFault' => true,
       ],
       'exception' => true,
     ],
+    'SetIdentityPoolConfigurationRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'IdentityPoolId',
+      ],
+      'members' => [
+        'IdentityPoolId' => [
+          'shape' => 'IdentityPoolId',
+          'location' => 'uri',
+          'locationName' => 'IdentityPoolId',
+        ],
+        'PushSync' => [
+          'shape' => 'PushSync',
+        ],
+      ],
+    ],
+    'SetIdentityPoolConfigurationResponse' => [
+      'type' => 'structure',
+      'members' => [
+        'IdentityPoolId' => [
+          'shape' => 'IdentityPoolId',
+        ],
+        'PushSync' => [
+          'shape' => 'PushSync',
+        ],
+      ],
+    ],
     'String' => [
       'type' => 'string',
+    ],
+    'SubscribeToDatasetRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'IdentityPoolId',
+        'IdentityId',
+        'DatasetName',
+        'DeviceId',
+      ],
+      'members' => [
+        'IdentityPoolId' => [
+          'shape' => 'IdentityPoolId',
+          'location' => 'uri',
+          'locationName' => 'IdentityPoolId',
+        ],
+        'IdentityId' => [
+          'shape' => 'IdentityId',
+          'location' => 'uri',
+          'locationName' => 'IdentityId',
+        ],
+        'DatasetName' => [
+          'shape' => 'DatasetName',
+          'location' => 'uri',
+          'locationName' => 'DatasetName',
+        ],
+        'DeviceId' => [
+          'shape' => 'DeviceId',
+          'location' => 'uri',
+          'locationName' => 'DeviceId',
+        ],
+      ],
+    ],
+    'SubscribeToDatasetResponse' => [
+      'type' => 'structure',
+      'members' => [
+      ],
     ],
     'SyncSessionToken' => [
       'type' => 'string',
@@ -938,9 +1486,47 @@
         ],
       ],
       'error' => [
+        'code' => 'TooManyRequests',
         'httpStatusCode' => 429,
+        'senderFault' => true,
       ],
       'exception' => true,
+    ],
+    'UnsubscribeFromDatasetRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'IdentityPoolId',
+        'IdentityId',
+        'DatasetName',
+        'DeviceId',
+      ],
+      'members' => [
+        'IdentityPoolId' => [
+          'shape' => 'IdentityPoolId',
+          'location' => 'uri',
+          'locationName' => 'IdentityPoolId',
+        ],
+        'IdentityId' => [
+          'shape' => 'IdentityId',
+          'location' => 'uri',
+          'locationName' => 'IdentityId',
+        ],
+        'DatasetName' => [
+          'shape' => 'DatasetName',
+          'location' => 'uri',
+          'locationName' => 'DatasetName',
+        ],
+        'DeviceId' => [
+          'shape' => 'DeviceId',
+          'location' => 'uri',
+          'locationName' => 'DeviceId',
+        ],
+      ],
+    ],
+    'UnsubscribeFromDatasetResponse' => [
+      'type' => 'structure',
+      'members' => [
+      ],
     ],
     'UpdateRecordsRequest' => [
       'type' => 'structure',
@@ -965,6 +1551,9 @@
           'shape' => 'DatasetName',
           'location' => 'uri',
           'locationName' => 'DatasetName',
+        ],
+        'DeviceId' => [
+          'shape' => 'DeviceId',
         ],
         'RecordPatches' => [
           'shape' => 'RecordPatchList',

@@ -38,6 +38,28 @@
         ],
       ],
     ],
+    'DisableDomainAutoRenew' => [
+      'name' => 'DisableDomainAutoRenew',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'DisableDomainAutoRenewRequest',
+      ],
+      'output' => [
+        'shape' => 'DisableDomainAutoRenewResponse',
+      ],
+      'errors' => [
+        [
+          'shape' => 'InvalidInput',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
     'DisableDomainTransferLock' => [
       'name' => 'DisableDomainTransferLock',
       'http' => [
@@ -74,6 +96,28 @@
         ],
         [
           'shape' => 'OperationLimitExceeded',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
+    'EnableDomainAutoRenew' => [
+      'name' => 'EnableDomainAutoRenew',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'EnableDomainAutoRenewRequest',
+      ],
+      'output' => [
+        'shape' => 'EnableDomainAutoRenewResponse',
+      ],
+      'errors' => [
+        [
+          'shape' => 'InvalidInput',
           'error' => [
             'httpStatusCode' => 400,
           ],
@@ -818,6 +862,22 @@
     'DNSSec' => [
       'type' => 'string',
     ],
+    'DisableDomainAutoRenewRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'DomainName',
+      ],
+      'members' => [
+        'DomainName' => [
+          'shape' => 'DomainName',
+        ],
+      ],
+    ],
+    'DisableDomainAutoRenewResponse' => [
+      'type' => 'structure',
+      'members' => [
+      ],
+    ],
     'DisableDomainTransferLockRequest' => [
       'type' => 'structure',
       'required' => [
@@ -929,6 +989,22 @@
     'Email' => [
       'type' => 'string',
       'max' => 254,
+    ],
+    'EnableDomainAutoRenewRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'DomainName',
+      ],
+      'members' => [
+        'DomainName' => [
+          'shape' => 'DomainName',
+        ],
+      ],
+    ],
+    'EnableDomainAutoRenewResponse' => [
+      'type' => 'structure',
+      'members' => [
+      ],
     ],
     'EnableDomainTransferLockRequest' => [
       'type' => 'structure',

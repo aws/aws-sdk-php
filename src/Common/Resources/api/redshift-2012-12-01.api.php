@@ -308,6 +308,24 @@
           ],
           'exception' => true,
         ],
+        [
+          'shape' => 'TagLimitExceededFault',
+          'error' => [
+            'code' => 'TagLimitExceededFault',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidTagFault',
+          'error' => [
+            'code' => 'InvalidTagFault',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
       ],
     ],
     'CreateClusterParameterGroup' => [
@@ -343,6 +361,24 @@
           ],
           'exception' => true,
         ],
+        [
+          'shape' => 'TagLimitExceededFault',
+          'error' => [
+            'code' => 'TagLimitExceededFault',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidTagFault',
+          'error' => [
+            'code' => 'InvalidTagFault',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
       ],
     ],
     'CreateClusterSecurityGroup' => [
@@ -373,6 +409,24 @@
           'shape' => 'ClusterSecurityGroupQuotaExceededFault',
           'error' => [
             'code' => 'QuotaExceeded.ClusterSecurityGroup',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'TagLimitExceededFault',
+          'error' => [
+            'code' => 'TagLimitExceededFault',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidTagFault',
+          'error' => [
+            'code' => 'InvalidTagFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
@@ -426,6 +480,24 @@
           'shape' => 'ClusterSnapshotQuotaExceededFault',
           'error' => [
             'code' => 'ClusterSnapshotQuotaExceeded',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'TagLimitExceededFault',
+          'error' => [
+            'code' => 'TagLimitExceededFault',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidTagFault',
+          'error' => [
+            'code' => 'InvalidTagFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
@@ -488,6 +560,24 @@
           'shape' => 'UnauthorizedOperation',
           'error' => [
             'code' => 'UnauthorizedOperation',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'TagLimitExceededFault',
+          'error' => [
+            'code' => 'TagLimitExceededFault',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidTagFault',
+          'error' => [
+            'code' => 'InvalidTagFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
@@ -591,6 +681,24 @@
           ],
           'exception' => true,
         ],
+        [
+          'shape' => 'TagLimitExceededFault',
+          'error' => [
+            'code' => 'TagLimitExceededFault',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidTagFault',
+          'error' => [
+            'code' => 'InvalidTagFault',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
       ],
     ],
     'CreateHsmClientCertificate' => [
@@ -626,6 +734,24 @@
           ],
           'exception' => true,
         ],
+        [
+          'shape' => 'TagLimitExceededFault',
+          'error' => [
+            'code' => 'TagLimitExceededFault',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidTagFault',
+          'error' => [
+            'code' => 'InvalidTagFault',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
       ],
     ],
     'CreateHsmConfiguration' => [
@@ -656,6 +782,63 @@
           'shape' => 'HsmConfigurationQuotaExceededFault',
           'error' => [
             'code' => 'HsmConfigurationQuotaExceededFault',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'TagLimitExceededFault',
+          'error' => [
+            'code' => 'TagLimitExceededFault',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidTagFault',
+          'error' => [
+            'code' => 'InvalidTagFault',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
+    'CreateTags' => [
+      'name' => 'CreateTags',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'CreateTagsMessage',
+      ],
+      'errors' => [
+        [
+          'shape' => 'TagLimitExceededFault',
+          'error' => [
+            'code' => 'TagLimitExceededFault',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceNotFoundFault',
+          'error' => [
+            'code' => 'ResourceNotFoundFault',
+            'httpStatusCode' => 404,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidTagFault',
+          'error' => [
+            'code' => 'InvalidTagFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
@@ -934,6 +1117,27 @@
           'error' => [
             'code' => 'HsmConfigurationNotFoundFault',
             'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
+    'DeleteTags' => [
+      'name' => 'DeleteTags',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'DeleteTagsMessage',
+      ],
+      'errors' => [
+        [
+          'shape' => 'ResourceNotFoundFault',
+          'error' => [
+            'code' => 'ResourceNotFoundFault',
+            'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -1338,6 +1542,31 @@
           'shape' => 'ResizeNotFoundFault',
           'error' => [
             'code' => 'ResizeNotFound',
+            'httpStatusCode' => 404,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
+    'DescribeTags' => [
+      'name' => 'DescribeTags',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'DescribeTagsMessage',
+      ],
+      'output' => [
+        'shape' => 'TaggedResourceListMessage',
+        'resultWrapper' => 'DescribeTagsResult',
+      ],
+      'errors' => [
+        [
+          'shape' => 'ResourceNotFoundFault',
+          'error' => [
+            'code' => 'ResourceNotFoundFault',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
@@ -2582,6 +2811,12 @@
         'ClusterRevisionNumber' => [
           'shape' => 'String',
         ],
+        'Tags' => [
+          'shape' => 'TagList',
+        ],
+        'KmsKeyId' => [
+          'shape' => 'String',
+        ],
       ],
       'wrapper' => true,
     ],
@@ -2645,6 +2880,9 @@
         ],
         'Description' => [
           'shape' => 'String',
+        ],
+        'Tags' => [
+          'shape' => 'TagList',
         ],
       ],
       'wrapper' => true,
@@ -2758,6 +2996,9 @@
         ],
         'IPRanges' => [
           'shape' => 'IPRangeList',
+        ],
+        'Tags' => [
+          'shape' => 'TagList',
         ],
       ],
       'wrapper' => true,
@@ -2899,6 +3140,9 @@
         ],
         'Subnets' => [
           'shape' => 'SubnetList',
+        ],
+        'Tags' => [
+          'shape' => 'TagList',
         ],
       ],
       'wrapper' => true,
@@ -3112,6 +3356,12 @@
         'ElasticIp' => [
           'shape' => 'String',
         ],
+        'Tags' => [
+          'shape' => 'TagList',
+        ],
+        'KmsKeyId' => [
+          'shape' => 'String',
+        ],
       ],
     ],
     'CreateClusterParameterGroupMessage' => [
@@ -3131,6 +3381,9 @@
         'Description' => [
           'shape' => 'String',
         ],
+        'Tags' => [
+          'shape' => 'TagList',
+        ],
       ],
     ],
     'CreateClusterSecurityGroupMessage' => [
@@ -3146,6 +3399,9 @@
         'Description' => [
           'shape' => 'String',
         ],
+        'Tags' => [
+          'shape' => 'TagList',
+        ],
       ],
     ],
     'CreateClusterSnapshotMessage' => [
@@ -3160,6 +3416,9 @@
         ],
         'ClusterIdentifier' => [
           'shape' => 'String',
+        ],
+        'Tags' => [
+          'shape' => 'TagList',
         ],
       ],
     ],
@@ -3179,6 +3438,9 @@
         ],
         'SubnetIds' => [
           'shape' => 'SubnetIdentifierList',
+        ],
+        'Tags' => [
+          'shape' => 'TagList',
         ],
       ],
     ],
@@ -3210,6 +3472,9 @@
         'Enabled' => [
           'shape' => 'BooleanOptional',
         ],
+        'Tags' => [
+          'shape' => 'TagList',
+        ],
       ],
     ],
     'CreateHsmClientCertificateMessage' => [
@@ -3220,6 +3485,9 @@
       'members' => [
         'HsmClientCertificateIdentifier' => [
           'shape' => 'String',
+        ],
+        'Tags' => [
+          'shape' => 'TagList',
         ],
       ],
     ],
@@ -3251,6 +3519,24 @@
         ],
         'HsmServerPublicCertificate' => [
           'shape' => 'String',
+        ],
+        'Tags' => [
+          'shape' => 'TagList',
+        ],
+      ],
+    ],
+    'CreateTagsMessage' => [
+      'type' => 'structure',
+      'required' => [
+        'ResourceName',
+        'Tags',
+      ],
+      'members' => [
+        'ResourceName' => [
+          'shape' => 'String',
+        ],
+        'Tags' => [
+          'shape' => 'TagList',
         ],
       ],
     ],
@@ -3366,6 +3652,21 @@
         ],
       ],
     ],
+    'DeleteTagsMessage' => [
+      'type' => 'structure',
+      'required' => [
+        'ResourceName',
+        'TagKeys',
+      ],
+      'members' => [
+        'ResourceName' => [
+          'shape' => 'String',
+        ],
+        'TagKeys' => [
+          'shape' => 'TagKeyList',
+        ],
+      ],
+    ],
     'DescribeClusterParameterGroupsMessage' => [
       'type' => 'structure',
       'members' => [
@@ -3377,6 +3678,12 @@
         ],
         'Marker' => [
           'shape' => 'String',
+        ],
+        'TagKeys' => [
+          'shape' => 'TagKeyList',
+        ],
+        'TagValues' => [
+          'shape' => 'TagValueList',
         ],
       ],
     ],
@@ -3412,6 +3719,12 @@
         'Marker' => [
           'shape' => 'String',
         ],
+        'TagKeys' => [
+          'shape' => 'TagKeyList',
+        ],
+        'TagValues' => [
+          'shape' => 'TagValueList',
+        ],
       ],
     ],
     'DescribeClusterSnapshotsMessage' => [
@@ -3441,6 +3754,12 @@
         'OwnerAccount' => [
           'shape' => 'String',
         ],
+        'TagKeys' => [
+          'shape' => 'TagKeyList',
+        ],
+        'TagValues' => [
+          'shape' => 'TagValueList',
+        ],
       ],
     ],
     'DescribeClusterSubnetGroupsMessage' => [
@@ -3454,6 +3773,12 @@
         ],
         'Marker' => [
           'shape' => 'String',
+        ],
+        'TagKeys' => [
+          'shape' => 'TagKeyList',
+        ],
+        'TagValues' => [
+          'shape' => 'TagValueList',
         ],
       ],
     ],
@@ -3485,6 +3810,12 @@
         ],
         'Marker' => [
           'shape' => 'String',
+        ],
+        'TagKeys' => [
+          'shape' => 'TagKeyList',
+        ],
+        'TagValues' => [
+          'shape' => 'TagValueList',
         ],
       ],
     ],
@@ -3565,6 +3896,12 @@
         'Marker' => [
           'shape' => 'String',
         ],
+        'TagKeys' => [
+          'shape' => 'TagKeyList',
+        ],
+        'TagValues' => [
+          'shape' => 'TagValueList',
+        ],
       ],
     ],
     'DescribeHsmConfigurationsMessage' => [
@@ -3578,6 +3915,12 @@
         ],
         'Marker' => [
           'shape' => 'String',
+        ],
+        'TagKeys' => [
+          'shape' => 'TagKeyList',
+        ],
+        'TagValues' => [
+          'shape' => 'TagValueList',
         ],
       ],
     ],
@@ -3648,6 +3991,29 @@
         ],
       ],
     ],
+    'DescribeTagsMessage' => [
+      'type' => 'structure',
+      'members' => [
+        'ResourceName' => [
+          'shape' => 'String',
+        ],
+        'ResourceType' => [
+          'shape' => 'String',
+        ],
+        'MaxRecords' => [
+          'shape' => 'IntegerOptional',
+        ],
+        'Marker' => [
+          'shape' => 'String',
+        ],
+        'TagKeys' => [
+          'shape' => 'TagKeyList',
+        ],
+        'TagValues' => [
+          'shape' => 'TagValueList',
+        ],
+      ],
+    ],
     'DisableLoggingMessage' => [
       'type' => 'structure',
       'required' => [
@@ -3687,6 +4053,9 @@
         ],
         'EC2SecurityGroupOwnerId' => [
           'shape' => 'String',
+        ],
+        'Tags' => [
+          'shape' => 'TagList',
         ],
       ],
     ],
@@ -3880,6 +4249,9 @@
         'Enabled' => [
           'shape' => 'Boolean',
         ],
+        'Tags' => [
+          'shape' => 'TagList',
+        ],
       ],
       'wrapper' => true,
     ],
@@ -3931,6 +4303,9 @@
         ],
         'HsmClientCertificatePublicKey' => [
           'shape' => 'String',
+        ],
+        'Tags' => [
+          'shape' => 'TagList',
         ],
       ],
       'wrapper' => true,
@@ -4000,6 +4375,9 @@
         ],
         'HsmPartitionName' => [
           'shape' => 'String',
+        ],
+        'Tags' => [
+          'shape' => 'TagList',
         ],
       ],
       'wrapper' => true,
@@ -4077,6 +4455,9 @@
         ],
         'CIDRIP' => [
           'shape' => 'String',
+        ],
+        'Tags' => [
+          'shape' => 'TagList',
         ],
       ],
     ],
@@ -4293,6 +4674,17 @@
       ],
       'error' => [
         'code' => 'InvalidSubscriptionStateFault',
+        'httpStatusCode' => 400,
+        'senderFault' => true,
+      ],
+      'exception' => true,
+    ],
+    'InvalidTagFault' => [
+      'type' => 'structure',
+      'members' => [
+      ],
+      'error' => [
+        'code' => 'InvalidTagFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
@@ -4860,6 +5252,17 @@
         ],
       ],
     ],
+    'ResourceNotFoundFault' => [
+      'type' => 'structure',
+      'members' => [
+      ],
+      'error' => [
+        'code' => 'ResourceNotFoundFault',
+        'httpStatusCode' => 404,
+        'senderFault' => true,
+      ],
+      'exception' => true,
+    ],
     'RestoreFromClusterSnapshotMessage' => [
       'type' => 'structure',
       'required' => [
@@ -4917,6 +5320,9 @@
         ],
         'AutomatedSnapshotRetentionPeriod' => [
           'shape' => 'IntegerOptional',
+        ],
+        'KmsKeyId' => [
+          'shape' => 'String',
         ],
       ],
     ],
@@ -5073,6 +5479,9 @@
         'Encrypted' => [
           'shape' => 'Boolean',
         ],
+        'KmsKeyId' => [
+          'shape' => 'String',
+        ],
         'EncryptedWithHSM' => [
           'shape' => 'Boolean',
         ],
@@ -5102,6 +5511,9 @@
         ],
         'SourceRegion' => [
           'shape' => 'String',
+        ],
+        'Tags' => [
+          'shape' => 'TagList',
         ],
       ],
       'wrapper' => true,
@@ -5283,6 +5695,81 @@
     ],
     'TStamp' => [
       'type' => 'timestamp',
+    ],
+    'Tag' => [
+      'type' => 'structure',
+      'members' => [
+        'Key' => [
+          'shape' => 'String',
+        ],
+        'Value' => [
+          'shape' => 'String',
+        ],
+      ],
+    ],
+    'TagKeyList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'String',
+        'locationName' => 'TagKey',
+      ],
+    ],
+    'TagLimitExceededFault' => [
+      'type' => 'structure',
+      'members' => [
+      ],
+      'error' => [
+        'code' => 'TagLimitExceededFault',
+        'httpStatusCode' => 400,
+        'senderFault' => true,
+      ],
+      'exception' => true,
+    ],
+    'TagList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'Tag',
+        'locationName' => 'Tag',
+      ],
+    ],
+    'TagValueList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'String',
+        'locationName' => 'TagValue',
+      ],
+    ],
+    'TaggedResource' => [
+      'type' => 'structure',
+      'members' => [
+        'Tag' => [
+          'shape' => 'Tag',
+        ],
+        'ResourceName' => [
+          'shape' => 'String',
+        ],
+        'ResourceType' => [
+          'shape' => 'String',
+        ],
+      ],
+    ],
+    'TaggedResourceList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'TaggedResource',
+        'locationName' => 'TaggedResource',
+      ],
+    ],
+    'TaggedResourceListMessage' => [
+      'type' => 'structure',
+      'members' => [
+        'TaggedResources' => [
+          'shape' => 'TaggedResourceList',
+        ],
+        'Marker' => [
+          'shape' => 'String',
+        ],
+      ],
     ],
     'UnauthorizedOperation' => [
       'type' => 'structure',

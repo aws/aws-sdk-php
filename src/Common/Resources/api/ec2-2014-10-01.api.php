@@ -1,11 +1,11 @@
 <?php return [
   'metadata' => [
-    'apiVersion' => '2014-09-01',
+    'apiVersion' => '2014-10-01',
     'endpointPrefix' => 'ec2',
     'serviceAbbreviation' => 'Amazon EC2',
     'serviceFullName' => 'Amazon Elastic Compute Cloud',
     'signatureVersion' => 'v4',
-    'xmlNamespace' => 'http://ec2.amazonaws.com/doc/2014-09-01',
+    'xmlNamespace' => 'http://ec2.amazonaws.com/doc/2014-10-01',
     'protocol' => 'ec2',
   ],
   'operations' => [
@@ -3407,6 +3407,9 @@
         'Encrypted' => [
           'shape' => 'Boolean',
           'locationName' => 'encrypted',
+        ],
+        'KmsKeyId' => [
+          'shape' => 'String',
         ],
       ],
     ],
@@ -9606,6 +9609,10 @@
           'shape' => 'Boolean',
           'locationName' => 'encrypted',
         ],
+        'KmsKeyId' => [
+          'shape' => 'String',
+          'locationName' => 'kmsKeyId',
+        ],
       ],
     ],
     'SnapshotAttributeName' => [
@@ -10263,6 +10270,10 @@
         'Encrypted' => [
           'shape' => 'Boolean',
           'locationName' => 'encrypted',
+        ],
+        'KmsKeyId' => [
+          'shape' => 'String',
+          'locationName' => 'kmsKeyId',
         ],
       ],
     ],

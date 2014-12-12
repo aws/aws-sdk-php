@@ -909,6 +909,9 @@
         'AlbumArtFormat' => [
           'shape' => 'JpgOrPng',
         ],
+        'Encryption' => [
+          'shape' => 'Encryption',
+        ],
       ],
     ],
     'Artworks' => [
@@ -973,6 +976,10 @@
       'type' => 'string',
       'pattern' => '(^auto$]|(^22050$]|(^32000$]|(^44100$]|(^48000$]|(^96000$]',
     ],
+    'Base64EncodedString' => [
+      'type' => 'string',
+      'pattern' => '^(?:[A-Za-z0-9\\+/]{4}]*(?:[A-Za-z0-9\\+/]{2}==|[A-Za-z0-9\\+/]{3}=]?$',
+    ],
     'BucketName' => [
       'type' => 'string',
       'pattern' => '^(\\w|\\.|-]{1,255}$',
@@ -1004,11 +1011,14 @@
         'Pattern' => [
           'shape' => 'CaptionFormatPattern',
         ],
+        'Encryption' => [
+          'shape' => 'Encryption',
+        ],
       ],
     ],
     'CaptionFormatFormat' => [
       'type' => 'string',
-      'pattern' => '(^mov-text$]|(^cea-608$]|(^cea-708$]|(^srt$]|(^scc$]|(^webvtt$]|(^dfxp$]',
+      'pattern' => '(^mov-text$]|(^srt$]|(^scc$]|(^webvtt$]|(^dfxp$]',
     ],
     'CaptionFormatPattern' => [
       'type' => 'string',
@@ -1039,6 +1049,9 @@
         ],
         'Label' => [
           'shape' => 'Name',
+        ],
+        'Encryption' => [
+          'shape' => 'Encryption',
         ],
       ],
     ],
@@ -1101,6 +1114,9 @@
         'ThumbnailPattern' => [
           'shape' => 'ThumbnailPattern',
         ],
+        'ThumbnailEncryption' => [
+          'shape' => 'Encryption',
+        ],
         'Rotate' => [
           'shape' => 'Rotate',
         ],
@@ -1121,6 +1137,9 @@
         ],
         'Captions' => [
           'shape' => 'Captions',
+        ],
+        'Encryption' => [
+          'shape' => 'Encryption',
         ],
       ],
     ],
@@ -1177,6 +1196,9 @@
         'Playlists' => [
           'shape' => 'CreateJobPlaylists',
         ],
+        'UserMetadata' => [
+          'shape' => 'UserMetadata',
+        ],
       ],
     ],
     'CreateJobResponse' => [
@@ -1206,6 +1228,9 @@
         ],
         'Role' => [
           'shape' => 'Role',
+        ],
+        'AwsKmsKeyArn' => [
+          'shape' => 'KeyArn',
         ],
         'Notifications' => [
           'shape' => 'Notifications',
@@ -1313,6 +1338,27 @@
       'type' => 'string',
       'pattern' => '(^auto$]|(^\\d{2,4}$]',
     ],
+    'Encryption' => [
+      'type' => 'structure',
+      'members' => [
+        'Mode' => [
+          'shape' => 'EncryptionMode',
+        ],
+        'Key' => [
+          'shape' => 'Base64EncodedString',
+        ],
+        'KeyMd5' => [
+          'shape' => 'Base64EncodedString',
+        ],
+        'InitializationVector' => [
+          'shape' => 'Key',
+        ],
+      ],
+    ],
+    'EncryptionMode' => [
+      'type' => 'string',
+      'pattern' => '(^s3$]|(^s3-aws-kms$]|(^aes-cbc-pkcs7$]|(^aes-ctr$]|(^aes-gcm$]',
+    ],
     'ExceptionMessages' => [
       'type' => 'list',
       'member' => [
@@ -1403,6 +1449,9 @@
         'Status' => [
           'shape' => 'JobStatus',
         ],
+        'UserMetadata' => [
+          'shape' => 'UserMetadata',
+        ],
       ],
     ],
     'JobAlbumArt' => [
@@ -1441,6 +1490,9 @@
         'Container' => [
           'shape' => 'JobContainer',
         ],
+        'Encryption' => [
+          'shape' => 'Encryption',
+        ],
       ],
     ],
     'JobOutput' => [
@@ -1454,6 +1506,9 @@
         ],
         'ThumbnailPattern' => [
           'shape' => 'ThumbnailPattern',
+        ],
+        'ThumbnailEncryption' => [
+          'shape' => 'Encryption',
         ],
         'Rotate' => [
           'shape' => 'Rotate',
@@ -1491,6 +1546,9 @@
         'Captions' => [
           'shape' => 'Captions',
         ],
+        'Encryption' => [
+          'shape' => 'Encryption',
+        ],
       ],
     ],
     'JobOutputs' => [
@@ -1511,6 +1569,9 @@
         ],
         'InputKey' => [
           'shape' => 'WatermarkKey',
+        ],
+        'Encryption' => [
+          'shape' => 'Encryption',
         ],
       ],
     ],
@@ -1533,6 +1594,11 @@
     'Key' => [
       'type' => 'string',
       'min' => 1,
+      'max' => 255,
+    ],
+    'KeyArn' => [
+      'type' => 'string',
+      'min' => 0,
       'max' => 255,
     ],
     'KeyframesMaxDist' => [
@@ -1764,6 +1830,9 @@
         'Role' => [
           'shape' => 'Role',
         ],
+        'AwsKmsKeyArn' => [
+          'shape' => 'KeyArn',
+        ],
         'Notifications' => [
           'shape' => 'Notifications',
         ],
@@ -1825,7 +1894,7 @@
     ],
     'PlaylistFormat' => [
       'type' => 'string',
-      'pattern' => '(^HLSv3$]',
+      'pattern' => '(^HLSv3$]|(^HLSv4$]|(^Smooth$]',
     ],
     'Playlists' => [
       'type' => 'list',
@@ -1867,7 +1936,7 @@
     ],
     'PresetContainer' => [
       'type' => 'string',
-      'pattern' => '(^mp4$]|(^ts$]|(^webm$]|(^mp3$]|(^ogg$]',
+      'pattern' => '(^mp4$]|(^ts$]|(^webm$]|(^mp3$]|(^ogg$]|(^fmp4$]',
     ],
     'PresetType' => [
       'type' => 'string',
@@ -2183,6 +2252,9 @@
         'Role' => [
           'shape' => 'Role',
         ],
+        'AwsKmsKeyArn' => [
+          'shape' => 'KeyArn',
+        ],
         'Notifications' => [
           'shape' => 'Notifications',
         ],
@@ -2196,9 +2268,6 @@
     ],
     'UpdatePipelineResponse' => [
       'type' => 'structure',
-      'required' => [
-        'Pipeline',
-      ],
       'members' => [
         'Pipeline' => [
           'shape' => 'Pipeline',
@@ -2228,6 +2297,15 @@
         'Pipeline' => [
           'shape' => 'Pipeline',
         ],
+      ],
+    ],
+    'UserMetadata' => [
+      'type' => 'map',
+      'key' => [
+        'shape' => 'String',
+      ],
+      'value' => [
+        'shape' => 'String',
       ],
     ],
     'ValidationException' => [
