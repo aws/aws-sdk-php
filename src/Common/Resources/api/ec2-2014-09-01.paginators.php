@@ -34,7 +34,10 @@
       'result_key' => 'InstanceStatuses',
     ],
     'DescribeInstances' => [
-      'result_key' => 'Reservations',
+      'input_token' => 'NextToken',
+      'output_token' => 'NextToken',
+      'result_key' => 'Reservations[].Instances[]',
+      'limit_key' => 'MaxResults',
     ],
     'DescribeInternetGateways' => [
       'result_key' => 'InternetGateways',
