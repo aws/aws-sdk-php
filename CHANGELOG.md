@@ -1,9 +1,11 @@
 # CHANGELOG
 
-## 2.7.10 - Unreleased
+## 2.7.10 - 2014-12-12
 
 * Added support for user data to Amazon Elastic Transcoder.
-* Corrected the AWS Security Token Service endpoint. 
+* Added support for data retrieval policies and audit logging to the Amazon
+  Glacier client.
+* Corrected the AWS Security Token Service endpoint.
 
 ## 2.7.9 - 2014-12-08
 

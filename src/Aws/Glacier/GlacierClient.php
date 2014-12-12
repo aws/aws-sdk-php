@@ -36,6 +36,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model deleteVaultNotifications(array $args = array()) {@command Glacier DeleteVaultNotifications}
  * @method Model describeJob(array $args = array()) {@command Glacier DescribeJob}
  * @method Model describeVault(array $args = array()) {@command Glacier DescribeVault}
+ * @method Model getDataRetrievalPolicy(array $args = array()) {@command Glacier GetDataRetrievalPolicy}
  * @method Model getJobOutput(array $args = array()) {@command Glacier GetJobOutput}
  * @method Model getVaultNotifications(array $args = array()) {@command Glacier GetVaultNotifications}
  * @method Model initiateJob(array $args = array()) {@command Glacier InitiateJob}
@@ -44,6 +45,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model listMultipartUploads(array $args = array()) {@command Glacier ListMultipartUploads}
  * @method Model listParts(array $args = array()) {@command Glacier ListParts}
  * @method Model listVaults(array $args = array()) {@command Glacier ListVaults}
+ * @method Model setDataRetrievalPolicy(array $args = array()) {@command Glacier SetDataRetrievalPolicy}
  * @method Model setVaultNotifications(array $args = array()) {@command Glacier SetVaultNotifications}
  * @method Model uploadArchive(array $args = array()) {@command Glacier UploadArchive}
  * @method Model uploadMultipartPart(array $args = array()) {@command Glacier UploadMultipartPart}
