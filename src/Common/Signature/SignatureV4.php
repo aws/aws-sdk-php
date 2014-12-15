@@ -5,6 +5,7 @@ use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Exception\CouldNotCreateChecksumException;
 use GuzzleHttp\Message\RequestInterface;
 use GuzzleHttp\Post\PostBodyInterface;
+use GuzzleHttp\Stream\Utils;
 
 /**
  * Signature Version 4
@@ -138,8 +139,7 @@ class SignatureV4 extends AbstractSignature
             if (!$body->isSeekable()) {
                 throw new CouldNotCreateChecksumException('sha256');
             }
-
-            return hash('sha256', $body);
+            return Utils::hash($body, 'sha256');
         }
 
         return self::EMPTY_PAYLOAD;
