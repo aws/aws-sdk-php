@@ -289,7 +289,7 @@ class StreamWrapper
             : $this->createSubfolder($path, $params);
     }
 
-    public function rmdir($path)
+    public function rmdir($path, $options)
     {
         $this->clearStatInfo($path);
         $params = $this->withPath($path);
