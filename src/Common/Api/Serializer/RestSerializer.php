@@ -8,6 +8,7 @@ use Aws\Common\Api\StructureShape;
 use Aws\Common\Api\TimestampShape;
 use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Message\RequestInterface;
+use GuzzleHttp\Query;
 use GuzzleHttp\Url;
 use GuzzleHttp\Stream\Stream;
 
@@ -23,6 +24,9 @@ abstract class RestSerializer
     /** @var Url */
     private $endpoint;
 
+    /** @var callable */
+    private $aggregator;
+
     /**
      * @param Service $api      Service API description
      * @param string  $endpoint Endpoint to connect to
@@ -31,6 +35,7 @@ abstract class RestSerializer
     {
         $this->api = $api;
         $this->endpoint = Url::fromString($endpoint);
+        $this->aggregator = Query::duplicateAggregator();
     }
 
     public function getEvents()
@@ -49,6 +54,9 @@ abstract class RestSerializer
             $this->buildEndpoint($operation, $args),
             ['config' => ['command' => $command]]
         );
+
+        // Ensure that query string lists are serialized as duplicates.
+        $request->getQuery()->setAggregator($this->aggregator);
 
         return $this->serialize($request, $operation, $args);
     }
