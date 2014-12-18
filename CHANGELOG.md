@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## 2.7.12 - 2014-12-18
 
 * Added support for task priorities to Amazon Simple Workflow Service.
 
