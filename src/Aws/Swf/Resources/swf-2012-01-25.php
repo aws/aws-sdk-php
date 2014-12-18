@@ -1589,6 +1589,11 @@ return array (
                         ),
                     ),
                 ),
+                'defaultTaskPriority' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'maxLength' => 11,
+                ),
                 'defaultTaskScheduleToStartTimeout' => array(
                     'type' => 'string',
                     'location' => 'json',
@@ -1743,6 +1748,11 @@ return array (
                             'maxLength' => 256,
                         ),
                     ),
+                ),
+                'defaultTaskPriority' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'maxLength' => 11,
                 ),
                 'defaultChildPolicy' => array(
                     'type' => 'string',
@@ -2049,6 +2059,10 @@ return array (
                                             ),
                                         ),
                                     ),
+                                    'taskPriority' => array(
+                                        'type' => 'string',
+                                        'maxLength' => 11,
+                                    ),
                                     'scheduleToStartTimeout' => array(
                                         'type' => 'string',
                                         'maxLength' => 8,
@@ -2126,6 +2140,10 @@ return array (
                                                 'maxLength' => 256,
                                             ),
                                         ),
+                                    ),
+                                    'taskPriority' => array(
+                                        'type' => 'string',
+                                        'maxLength' => 11,
                                     ),
                                     'taskStartToCloseTimeout' => array(
                                         'type' => 'string',
@@ -2296,6 +2314,10 @@ return array (
                                             ),
                                         ),
                                     ),
+                                    'taskPriority' => array(
+                                        'type' => 'string',
+                                        'maxLength' => 11,
+                                    ),
                                     'taskStartToCloseTimeout' => array(
                                         'type' => 'string',
                                         'maxLength' => 8,
@@ -2464,6 +2486,11 @@ return array (
                             'maxLength' => 256,
                         ),
                     ),
+                ),
+                'taskPriority' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'maxLength' => 11,
                 ),
                 'input' => array(
                     'type' => 'string',
@@ -2673,6 +2700,9 @@ return array (
                                 ),
                             ),
                         ),
+                        'defaultTaskPriority' => array(
+                            'type' => 'string',
+                        ),
                         'defaultTaskScheduleToStartTimeout' => array(
                             'type' => 'string',
                         ),
@@ -2796,6 +2826,9 @@ return array (
                                 ),
                             ),
                         ),
+                        'taskPriority' => array(
+                            'type' => 'string',
+                        ),
                         'childPolicy' => array(
                             'type' => 'string',
                         ),
@@ -2880,6 +2913,9 @@ return array (
                                 ),
                             ),
                         ),
+                        'defaultTaskPriority' => array(
+                            'type' => 'string',
+                        ),
                         'defaultChildPolicy' => array(
                             'type' => 'string',
                         ),
@@ -2947,6 +2983,9 @@ return array (
                                             'name' => 'Tag',
                                             'type' => 'string',
                                         ),
+                                    ),
+                                    'taskPriority' => array(
+                                        'type' => 'string',
                                     ),
                                     'continuedExecutionRunId' => array(
                                         'type' => 'string',
@@ -3070,6 +3109,9 @@ return array (
                                             ),
                                         ),
                                     ),
+                                    'taskPriority' => array(
+                                        'type' => 'string',
+                                    ),
                                     'taskStartToCloseTimeout' => array(
                                         'type' => 'string',
                                     ),
@@ -3157,6 +3199,9 @@ return array (
                                             ),
                                         ),
                                     ),
+                                    'taskPriority' => array(
+                                        'type' => 'string',
+                                    ),
                                     'startToCloseTimeout' => array(
                                         'type' => 'string',
                                     ),
@@ -3240,6 +3285,9 @@ return array (
                                                 'type' => 'string',
                                             ),
                                         ),
+                                    ),
+                                    'taskPriority' => array(
+                                        'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
                                         'type' => 'numeric',
@@ -3464,6 +3512,9 @@ return array (
                                                 'type' => 'string',
                                             ),
                                         ),
+                                    ),
+                                    'taskPriority' => array(
+                                        'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
                                         'type' => 'numeric',
@@ -4253,6 +4304,9 @@ return array (
                                             'type' => 'string',
                                         ),
                                     ),
+                                    'taskPriority' => array(
+                                        'type' => 'string',
+                                    ),
                                     'continuedExecutionRunId' => array(
                                         'type' => 'string',
                                     ),
@@ -4375,6 +4429,9 @@ return array (
                                             ),
                                         ),
                                     ),
+                                    'taskPriority' => array(
+                                        'type' => 'string',
+                                    ),
                                     'taskStartToCloseTimeout' => array(
                                         'type' => 'string',
                                     ),
@@ -4462,6 +4519,9 @@ return array (
                                             ),
                                         ),
                                     ),
+                                    'taskPriority' => array(
+                                        'type' => 'string',
+                                    ),
                                     'startToCloseTimeout' => array(
                                         'type' => 'string',
                                     ),
@@ -4545,6 +4605,9 @@ return array (
                                                 'type' => 'string',
                                             ),
                                         ),
+                                    ),
+                                    'taskPriority' => array(
+                                        'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
                                         'type' => 'numeric',
@@ -4769,6 +4832,9 @@ return array (
                                                 'type' => 'string',
                                             ),
                                         ),
+                                    ),
+                                    'taskPriority' => array(
+                                        'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
                                         'type' => 'numeric',

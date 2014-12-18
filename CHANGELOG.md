@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Unreleased
+
+* Added support for task priorities to Amazon Simple Workflow Service.
+
 ## 2.7.11 - 2014-12-17
 
 * Updated Amazon EMR to the latest API version.
