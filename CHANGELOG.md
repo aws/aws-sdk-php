@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.7.11 - 2014-12-17
+
+* Updated Amazon EMR to the latest API version.
+
 ## 2.7.10 - 2014-12-12
 
 * Added support for user data to Amazon Elastic Transcoder.

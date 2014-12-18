@@ -678,6 +678,15 @@ return array (
                         'type' => 'string',
                     ),
                 ),
+                'StepIds' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'XmlString',
+                        'type' => 'string',
+                        'maxLength' => 10280,
+                    ),
+                ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'json',
@@ -1378,6 +1387,12 @@ return array (
                         'ServiceRole' => array(
                             'type' => 'string',
                         ),
+                        'NormalizedInstanceHours' => array(
+                            'type' => 'numeric',
+                        ),
+                        'MasterPublicDnsName' => array(
+                            'type' => 'string',
+                        ),
                     ),
                 ),
             ),
@@ -1812,6 +1827,9 @@ return array (
                                     ),
                                 ),
                             ),
+                            'NormalizedInstanceHours' => array(
+                                'type' => 'numeric',
+                            ),
                         ),
                     ),
                 ),
@@ -1984,6 +2002,33 @@ return array (
                                 'type' => 'string',
                             ),
                             'Name' => array(
+                                'type' => 'string',
+                            ),
+                            'Config' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'Jar' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Properties' => array(
+                                        'type' => 'object',
+                                        'additionalProperties' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                    'MainClass' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Args' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'String',
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'ActionOnFailure' => array(
                                 'type' => 'string',
                             ),
                             'Status' => array(
