@@ -3,6 +3,7 @@
 ## 2.7.11 - 2014-12-17
 
 * Updated Amazon EMR to the latest API version.
+* Added support for for the new ResetCache API operation to AWS Storage Gateway.
 
 ## 2.7.10 - 2014-12-12
 

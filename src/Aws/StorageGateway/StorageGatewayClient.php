@@ -64,6 +64,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model listLocalDisks(array $args = array()) {@command StorageGateway ListLocalDisks}
  * @method Model listVolumeRecoveryPoints(array $args = array()) {@command StorageGateway ListVolumeRecoveryPoints}
  * @method Model listVolumes(array $args = array()) {@command StorageGateway ListVolumes}
+ * @method Model resetCache(array $args = array()) {@command StorageGateway ResetCache}
  * @method Model retrieveTapeArchive(array $args = array()) {@command StorageGateway RetrieveTapeArchive}
  * @method Model retrieveTapeRecoveryPoint(array $args = array()) {@command StorageGateway RetrieveTapeRecoveryPoint}
  * @method Model shutdownGateway(array $args = array()) {@command StorageGateway ShutdownGateway}
@@ -74,6 +75,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model updateGatewaySoftwareNow(array $args = array()) {@command StorageGateway UpdateGatewaySoftwareNow}
  * @method Model updateMaintenanceStartTime(array $args = array()) {@command StorageGateway UpdateMaintenanceStartTime}
  * @method Model updateSnapshotSchedule(array $args = array()) {@command StorageGateway UpdateSnapshotSchedule}
+ * @method Model updateVTLDeviceType(array $args = array()) {@command StorageGateway UpdateVTLDeviceType}
  * @method ResourceIteratorInterface getDescribeCachediSCSIVolumesIterator(array $args = array()) The input array uses the parameters of the DescribeCachediSCSIVolumes operation
  * @method ResourceIteratorInterface getDescribeStorediSCSIVolumesIterator(array $args = array()) The input array uses the parameters of the DescribeStorediSCSIVolumes operation
  * @method ResourceIteratorInterface getDescribeTapeArchivesIterator(array $args = array()) The input array uses the parameters of the DescribeTapeArchives operation
