@@ -172,6 +172,9 @@ class Sdk
      * - client: Optional {@see GuzzleHttp\ClientInterface} used to transfer
      *   requests over the wire. If not specified, the SDK will create a new
      *   client that uses a shared Ring HTTP handler with other clients.
+     * - client_defaults: Associative array of default Guzzle client options to
+     *   apply to the client after it is constructed. See http://docs.guzzlephp.org/en/latest/clients.html#request-options
+     *   for a list of request options.
      * - ringphp_handler: callable RingPHP handler used to transfer HTTP
      *   requests (see http://ringphp.readthedocs.org/en/latest/).
      * - api_provider: Optional service description API provider as a callable

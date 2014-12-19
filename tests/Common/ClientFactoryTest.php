@@ -208,6 +208,21 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage client_defaults must be an array
+     */
+    public function testValidatesClientDefaults()
+    {
+        $f = new ClientFactory();
+        $f->create([
+            'service' => 'dynamodb',
+            'region'  => 'x',
+            'client_defaults'  => 'foo',
+            'version' => 'latest'
+        ]);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage api_provider must be callable
      */
     public function testValidatesApiProvider()
@@ -581,5 +596,17 @@ EOT;
         $this->assertEquals('baz', $creds->getSecretKey());
         $this->assertEquals('tok', $creds->getSecurityToken());
         $this->assertEquals($exp, $creds->getExpiration());
+    }
+
+    public function testCanAddClientDefaultOptions()
+    {
+        $f = new ClientFactory();
+        $client = $f->create([
+            'service'         => 'sqs',
+            'region'          => 'x',
+            'version'         => 'latest',
+            'client_defaults' => ['foo' => 'bar']
+        ]);
+        $this->assertEquals('bar', $client->getHttpClient()->getDefaultOption('foo'));
     }
 }

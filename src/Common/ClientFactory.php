@@ -59,7 +59,8 @@ class ClientFactory
         'ringphp_handler'   => 1,
         'retries'           => 2,
         'validate'          => 2,
-        'debug'             => 2
+        'debug'             => 2,
+        'client_defaults'   => 2,
     ];
 
     /**
@@ -400,6 +401,17 @@ class ClientFactory
             'headers/User-Agent',
             'aws-sdk-php/' . Sdk::VERSION . ' ' . Client::getDefaultUserAgent()
         );
+    }
+
+    private function handle_client_defaults($value, array &$args)
+    {
+        if (!is_array($value)) {
+            throw new \InvalidArgumentException('client_defaults must be an array');
+        }
+
+        foreach ($value as $k => $v) {
+            $args['client']->setDefaultOption($k, $v);
+        }
     }
 
     private function handle_ringphp_handler($value, array &$args)
