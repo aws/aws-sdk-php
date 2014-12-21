@@ -240,7 +240,7 @@ class Ec2Client extends AbstractClient
     const LATEST_API_VERSION = '2014-10-01';
 
     /**
-     * Factory method to create a new AWS Elastic Beanstalk client using an array of configuration options.
+     * Factory method to create a new AWS Elastic Compute Cloud client using an array of configuration options.
      *
      * @param array|Collection $config Client configuration data
      *
