@@ -19,6 +19,7 @@ namespace Aws\Tests\Common\Client;
 use Aws\Common\Aws;
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\AwsClientInterface;
+use Aws\Common\Credentials\NullCredentials;
 use Aws\Common\Enum\Region;
 use Aws\Common\Signature\SignatureV4;
 use Aws\Common\Signature\SignatureListener;
@@ -47,17 +48,37 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertSame($config, $client->getConfig());
 
         // Ensure a signature event dispatcher was added
-        $this->assertGreaterThan(0, array_filter(
+        $this->assertGreaterThan(0, count(array_filter(
             $client->getEventDispatcher()->getListeners('request.before_send'),
             function($e) {
                 return $e[0] instanceof SignatureListener;
             }
-        ));
+        )));
 
         // Ensure that the user agent string is correct
         $expectedUserAgent = 'aws-sdk-php2/' . Aws::VERSION;
         $actualUserAgent = $this->readAttribute($client, 'userAgent');
         $this->assertRegExp("@^{$expectedUserAgent}@", $actualUserAgent);
+    }
+
+    public function testConstructorAlwaysConfiguresSignatureListener()
+    {
+        $signature = new SignatureV4();
+        $credentials = new NullCredentials();
+        $config = new Collection();
+
+        $client = $this->getMockBuilder('Aws\Common\Client\AbstractClient')
+          ->setConstructorArgs(array($credentials, $signature, $config))
+          ->getMockForAbstractClass();
+
+        // Ensure a signature event dispatcher was added
+        $this->assertGreaterThan(0, count(array_filter(
+          $client->getEventDispatcher()->getListeners('request.before_send'),
+          function($e) {
+              return $e[0] instanceof SignatureListener;
+          }
+        )));
+
     }
 
     public function testUsesDefaultWaiterFactory()
