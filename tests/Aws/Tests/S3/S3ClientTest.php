@@ -495,4 +495,5 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
         $s3 = S3Client::factory(array(Options::REGION => 'cn-north-1'));
         $this->assertInstanceOf('Aws\S3\S3SignatureV4', $s3->getSignature());
     }
+    
 }
