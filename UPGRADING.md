@@ -180,34 +180,108 @@ setting false expectations.
 ### Some API results have changed
 
 In order to provide consistency in how the SDK parses the result of an API
-operation, Amazon ElastiCache, Amazon RDS, and Amazon RedShift now have a
-wrapping element on each API response. The wrapping element in each operation
-is named after the name of the operation followed by the string "Result".
+operation, Amazon ElastiCache, Amazon RDS, and Amazon RedShift now have an
+additional wrapping element on some API responses.
 
-For example, calling Amazon ElastiCache's
-[DescribeCacheClusters](http://docs.aws.amazon.com/AmazonElastiCache/latest/APIReference/API_DescribeCacheClusters.html)
-operation will now return a result object that has an outermost wrapping
-element of "DescribeCacheClustersResult" that contains the "CacheClusters"
-key.
+For example, calling Amazon RDS's [DescribeEngineDefaultParameters](http://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_DescribeEngineDefaultParameters.html)
+result in v3 now includes a wrapping "EngineDefaults" element whereas in v2
+this element was not present.
 
 ```php
-$client = Aws\ElastiCache\ElastiCacheClient::factory([
+$client = Aws\Rds\RdsClient::factory([
     'region'  => 'us-west-1',
-    'version' => '2014-07-15'
+    'version' => '2014-09-01'
 ]);
 
 // Version 2:
-$result = $client->describeCacheClusters();
-foreach ($result['CacheClusters'] as $cluster) {
-    /* ... */
-}
+$result = $client->describeEngineDefaultParameters();
+$family = $result['DBParameterGroupFamily'];
+$marker = $result['Marker'];
 
 // Version 3:
-$result = $client->describeCacheClusters();
-foreach ($result['DescribeCacheClustersResult']['CacheClusters'] as $cluster) {
-   /* ... */
-};
+$result = $client->describeEngineDefaultParameters();
+$family = $result['EngineDefaults']['DBParameterGroupFamily'];
+$marker = $result['EngineDefaults']['Marker'];
 ```
+
+The following operations are affected and now contain a wrapping element in the
+output of the result (provided below in parenthesis):
+
+- Amazon ElastiCache
+  - AuthorizeCacheSecurityGroupIngress (CacheSecurityGroup)
+  - CopySnapshot (Snapshot)
+  - CreateCacheCluster (CacheCluster)
+  - CreateCacheParameterGroup (CacheParameterGroup)
+  - CreateCacheSecurityGroup (CacheSecurityGroup)
+  - CreateCacheSubnetGroup (CacheSubnetGroup)
+  - CreateReplicationGroup (ReplicationGroup)
+  - CreateSnapshot (Snapshot)
+  - DeleteCacheCluster (CacheCluster)
+  - DeleteReplicationGroup (ReplicationGroup)
+  - DeleteSnapshot (Snapshot)
+  - DescribeEngineDefaultParameters (EngineDefaults)
+  - ModifyCacheCluster (CacheCluster)
+  - ModifyCacheSubnetGroup (CacheSubnetGroup)
+  - ModifyReplicationGroup (ReplicationGroup)
+  - PurchaseReservedCacheNodesOffering (ReservedCacheNode)
+  - RebootCacheCluster (CacheCluster)
+  - RevokeCacheSecurityGroupIngress (CacheSecurityGroup)
+- Amazon RDS
+  - AddSourceIdentifierToSubscription (EventSubscription)
+  - AuthorizeDBSecurityGroupIngress (DBSecurityGroup)
+  - CopyDBParameterGroup (DBParameterGroup)
+  - CopyDBSnapshot (DBSnapshot)
+  - CopyOptionGroup (OptionGroup)
+  - CreateDBInstance (DBInstance)
+  - CreateDBInstanceReadReplica (DBInstance)
+  - CreateDBParameterGroup (DBParameterGroup)
+  - CreateDBSecurityGroup (DBSecurityGroup)
+  - CreateDBSnapshot (DBSnapshot)
+  - CreateDBSubnetGroup (DBSubnetGroup)
+  - CreateEventSubscription (EventSubscription)
+  - CreateOptionGroup (OptionGroup)
+  - DeleteDBInstance (DBInstance)
+  - DeleteDBSnapshot (DBSnapshot)
+  - DeleteEventSubscription (EventSubscription)
+  - DescribeEngineDefaultParameters (EngineDefaults)
+  - ModifyDBInstance (DBInstance)
+  - ModifyDBSubnetGroup (DBSubnetGroup)
+  - ModifyEventSubscription (EventSubscription)
+  - ModifyOptionGroup (OptionGroup)
+  - PromoteReadReplica (DBInstance)
+  - PurchaseReservedDBInstancesOffering (ReservedDBInstance)
+  - RebootDBInstance (DBInstance)
+  - RemoveSourceIdentifierFromSubscription (EventSubscription)
+  - RestoreDBInstanceFromDBSnapshot (DBInstance)
+  - RestoreDBInstanceToPointInTime (DBInstance)
+  - RevokeDBSecurityGroupIngress (DBSecurityGroup)
+- Amazon Redshift
+  - AuthorizeClusterSecurityGroupIngress (ClusterSecurityGroup)
+  - AuthorizeSnapshotAccess (Snapshot)
+  - CopyClusterSnapshot (Snapshot)
+  - CreateCluster (Cluster)
+  - CreateClusterParameterGroup (ClusterParameterGroup)
+  - CreateClusterSecurityGroup (ClusterSecurityGroup)
+  - CreateClusterSnapshot (Snapshot)
+  - CreateClusterSubnetGroup (ClusterSubnetGroup)
+  - CreateEventSubscription (EventSubscription)
+  - CreateHsmClientCertificate (HsmClientCertificate)
+  - CreateHsmConfiguration (HsmConfiguration)
+  - DeleteCluster (Cluster)
+  - DeleteClusterSnapshot (Snapshot)
+  - DescribeDefaultClusterParameters (DefaultClusterParameters)
+  - DisableSnapshotCopy (Cluster)
+  - EnableSnapshotCopy (Cluster)
+  - ModifyCluster (Cluster)
+  - ModifyClusterSubnetGroup (ClusterSubnetGroup)
+  - ModifyEventSubscription (EventSubscription)
+  - ModifySnapshotCopyRetentionPeriod (Cluster)
+  - PurchaseReservedNodeOffering (ReservedNode)
+  - RebootCluster (Cluster)
+  - RestoreFromClusterSnapshot (Cluster)
+  - RevokeClusterSecurityGroupIngress (ClusterSecurityGroup)
+  - RevokeSnapshotAccess (Snapshot)
+  - RotateEncryptionKey (Cluster)
 
 ### @TODO
 
