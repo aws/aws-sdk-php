@@ -20,6 +20,7 @@ use GuzzleHttp\Client;
  * @method \Aws\DirectConnect\DirectConnectClient getDirectConnect(array $args = [])
  * @method \Aws\DynamoDb\DynamoDbClient getDynamoDb(array $args = [])
  * @method \Aws\Ec2\Ec2Client getEc2(array $args = [])
+ * @method \Aws\Ecs\EcsClient getEcs(array $args = [])
  * @method \Aws\ElastiCache\ElastiCacheClient getElastiCache(array $args = [])
  * @method \Aws\ElasticBeanstalk\ElasticBeanstalkClient getElasticBeanstalk(array $args = [])
  * @method \Aws\ElasticLoadBalancing\ElasticLoadBalancingClient getElasticLoadBalancing(array $args = [])
@@ -84,6 +85,7 @@ class Sdk
         'directconnect'        => 'DirectConnect',
         'dynamodb'             => 'DynamoDb',
         'ec2'                  => 'Ec2',
+        'ecs'                  => 'Ecs',
         'elasticache'          => 'ElastiCache',
         'elasticbeanstalk'     => 'ElasticBeanstalk',
         'elasticloadbalancing' => 'ElasticLoadBalancing',
