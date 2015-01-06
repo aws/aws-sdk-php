@@ -258,6 +258,7 @@ class S3SignatureTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client->getSignature()->signRequest($request, $client->getCredentials());
         $this->assertTrue($request->hasHeader('Date'));
+        $this->assertFalse($request->hasHeader('x-amz-date'));
         $this->assertTrue($request->hasHeader('Authorization'));
         $this->assertContains(
             $client->getCredentials()->getAccessKeyId() . ':',

@@ -71,10 +71,8 @@ class S3Signature implements S3SignatureInterface
             $request->setHeader('x-amz-security-token', $token);
         }
 
-        // Add a date header if one is not set
-        if (!$request->hasHeader('date') && !$request->hasHeader('x-amz-date')) {
-            $request->setHeader('Date', gmdate(\DateTime::RFC2822));
-        }
+        $request->removeHeader('x-amz-date');
+        $request->setHeader('Date', gmdate(\DateTime::RFC2822));
 
         $stringToSign = $this->createCanonicalizedString($request);
         $request->getParams()->set('aws.string_to_sign', $stringToSign);
