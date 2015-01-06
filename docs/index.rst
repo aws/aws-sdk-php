@@ -41,6 +41,7 @@ AWS SDK for PHP
     service-dynamodb
     service-dynamodb-20111205
     service-ec2
+    service-ecs
     service-elasticache
     service-elasticbeanstalk
     service-elasticloadbalancing
@@ -162,6 +163,10 @@ Service-Specific Guides
 * Amazon Elastic Compute Cloud (Amazon EC2)
 
   .. indexlinks:: Ec2
+
+* Amazon EC2 Container Service (Amazon ECS)
+
+  .. indexlinks:: Ecs
 
 * Amazon Elastic MapReduce (Amazon EMR)
 

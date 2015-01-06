@@ -143,6 +143,12 @@ return array(
             'class'   => 'Aws\Ec2\Ec2Client'
         ),
 
+        'ecs' => array(
+            'alias'   => 'Ecs',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\Ecs\EcsClient'
+        ),
+
         'elasticache' => array(
             'alias'   => 'ElastiCache',
             'extends' => 'default_settings',

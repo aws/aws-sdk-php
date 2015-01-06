@@ -2,6 +2,7 @@
 
 ## Next release
 
+* Added the Amazon EC2 Container Service client.
 * Amazon S3 retries are now resigned with a new Date header on each retry.
 
 ## 2.7.12 - 2014-12-18
