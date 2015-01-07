@@ -11,18 +11,14 @@ class DocsBuilder
     private $themeSource;
 
     /** @var string */
-    private $docModelsDir;
-
-    /** @var string */
     private $apiModelsDir;
 
     /** @var string */
     private $outputDir;
 
-    public function __construct($apiModelsDir, $docModelsDir, $outputDir)
+    public function __construct($apiModelsDir, $outputDir)
     {
         $this->apiModelsDir = $apiModelsDir;
-        $this->docModelsDir = $docModelsDir;
         $this->outputDir = $outputDir;
         $this->themeSource = realpath(__DIR__ . '/../theme');
     }
@@ -60,7 +56,7 @@ class DocsBuilder
                 $service = new Service(
                     $name,
                     new Api($apiProvider, $name, $version),
-                    new DocModel($this->docModelsDir, $name, $version)
+                    new DocModel($this->apiModelsDir, $name, $version)
                 );
 
                 $indexes .= $this->createIndexEntryForService($service);
