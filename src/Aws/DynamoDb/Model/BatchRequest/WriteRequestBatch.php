@@ -84,7 +84,7 @@ class WriteRequestBatch extends AbstractBatchDecorator
         }
 
         if (!($item instanceof WriteRequestInterface)) {
-            throw new InvalidArgumentException('The item are are trying to add to the batch queue is invalid.');
+            throw new InvalidArgumentException('The item you are trying to add to the batch queue is invalid.');
         }
 
         return $this->decoratedBatch->add($item);

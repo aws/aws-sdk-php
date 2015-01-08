@@ -3,7 +3,11 @@
 ## Next release
 
 * Added the Amazon EC2 Container Service client.
-* Amazon S3 retries are now resigned with a new Date header on each retry.
+* Added the Amazon CloudHSM client.
+* Added support for dynamic fields to the Amazon CloudSearch client.
+* Added support for the ClassicLink feature to the Amazon EC2 client.
+* Updated the Amazon RDS client to use the latest 2014-10-31 API.
+* Updated S3 signature so retries use a new Date header on each attempt.
 
 ## 2.7.12 - 2014-12-18
 
