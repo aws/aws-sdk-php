@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next release
+## 2.7.13 - 2015-01-08
 
 * Added the Amazon EC2 Container Service client.
 * Added the Amazon CloudHSM client.
