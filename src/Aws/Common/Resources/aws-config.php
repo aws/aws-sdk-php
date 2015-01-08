@@ -47,6 +47,12 @@ return array(
             )
         ),
 
+        'cloudhsm' => array(
+            'alias'   => 'CloudHsm',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\CloudHsm\CloudHsmClient'
+        ),
+
         'cloudsearch' => array(
             'alias'   => 'CloudSearch',
             'extends' => 'default_settings',

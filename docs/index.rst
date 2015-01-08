@@ -26,6 +26,7 @@ AWS SDK for PHP
     service-cloudformation
     service-cloudfront
     service-cloudfront-20120505
+    service-cloudhsm
     service-cloudsearch
     service-cloudsearch-20110201
     service-cloudsearchdomain
@@ -122,6 +123,10 @@ Service-Specific Guides
   .. indexlinks:: CloudFront
 
   * :doc:`Using the older 2012-05-05 API version <service-cloudfront-20120505>`
+
+* Amazon CloudHSM
+
+  .. indexlinks:: CloudHsm
 
 * Amazon CloudSearch
 
