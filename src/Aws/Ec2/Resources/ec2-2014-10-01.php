@@ -290,6 +290,50 @@ return array (
                 ),
             ),
         ),
+        'AttachClassicLinkVpc' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'AttachClassicLinkVpcResult',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'AttachClassicLinkVpc',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-01',
+                ),
+                'DryRun' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
+                'InstanceId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'VpcId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Groups' => array(
+                    'required' => true,
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'SecurityGroupId',
+                    'items' => array(
+                        'name' => 'SecurityGroupId',
+                        'type' => 'string',
+                    ),
+                ),
+            ),
+        ),
         'AttachInternetGateway' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -2905,6 +2949,69 @@ return array (
                 ),
             ),
         ),
+        'DescribeClassicLinkInstances' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DescribeClassicLinkInstancesResult',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeClassicLinkInstances',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-01',
+                ),
+                'DryRun' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
+                'InstanceIds' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'InstanceId',
+                    'items' => array(
+                        'name' => 'InstanceId',
+                        'type' => 'string',
+                    ),
+                ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filter',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Name' => array(
+                                'type' => 'string',
+                            ),
+                            'Values' => array(
+                                'type' => 'array',
+                                'sentAs' => 'Value',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'NextToken' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'MaxResults' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+            ),
+        ),
         'DescribeConversionTasks' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -4694,6 +4801,61 @@ return array (
                 ),
             ),
         ),
+        'DescribeVpcClassicLink' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DescribeVpcClassicLinkResult',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeVpcClassicLink',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-01',
+                ),
+                'DryRun' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
+                'VpcIds' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'VpcId',
+                    'items' => array(
+                        'name' => 'VpcId',
+                        'type' => 'string',
+                    ),
+                ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filter',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Name' => array(
+                                'type' => 'string',
+                            ),
+                            'Values' => array(
+                                'type' => 'array',
+                                'sentAs' => 'Value',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
         'DescribeVpcPeeringConnections' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -4914,6 +5076,40 @@ return array (
                 ),
             ),
         ),
+        'DetachClassicLinkVpc' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DetachClassicLinkVpcResult',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DetachClassicLinkVpc',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-01',
+                ),
+                'DryRun' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
+                'InstanceId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'VpcId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+        ),
         'DetachInternetGateway' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -5087,6 +5283,35 @@ return array (
                 ),
             ),
         ),
+        'DisableVpcClassicLink' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DisableVpcClassicLinkResult',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DisableVpcClassicLink',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-01',
+                ),
+                'DryRun' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
+                'VpcId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+        ),
         'DisassociateAddress' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -5206,6 +5431,35 @@ return array (
                 ),
             ),
         ),
+        'EnableVpcClassicLink' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EnableVpcClassicLinkResult',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'EnableVpcClassicLink',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-01',
+                ),
+                'DryRun' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
+                'VpcId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+        ),
         'GetConsoleOutput' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -5317,7 +5571,12 @@ return array (
                             'type' => 'string',
                         ),
                         'UserData' => array(
-                            'type' => 'string',
+                            'type' => 'object',
+                            'properties' => array(
+                                'Data' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
                         ),
                         'InstanceType' => array(
                             'type' => 'string',
@@ -7822,6 +8081,17 @@ return array (
                 ),
             ),
         ),
+        'AttachClassicLinkVpcResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Return' => array(
+                    'type' => 'boolean',
+                    'location' => 'xml',
+                    'sentAs' => 'return',
+                ),
+            ),
+        ),
         'AttachNetworkInterfaceResult' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -9913,6 +10183,75 @@ return array (
                 ),
             ),
         ),
+        'DescribeClassicLinkInstancesResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Instances' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'sentAs' => 'instancesSet',
+                    'items' => array(
+                        'name' => 'item',
+                        'type' => 'object',
+                        'sentAs' => 'item',
+                        'properties' => array(
+                            'InstanceId' => array(
+                                'type' => 'string',
+                                'sentAs' => 'instanceId',
+                            ),
+                            'VpcId' => array(
+                                'type' => 'string',
+                                'sentAs' => 'vpcId',
+                            ),
+                            'Groups' => array(
+                                'type' => 'array',
+                                'sentAs' => 'groupSet',
+                                'items' => array(
+                                    'name' => 'item',
+                                    'type' => 'object',
+                                    'sentAs' => 'item',
+                                    'properties' => array(
+                                        'GroupName' => array(
+                                            'type' => 'string',
+                                            'sentAs' => 'groupName',
+                                        ),
+                                        'GroupId' => array(
+                                            'type' => 'string',
+                                            'sentAs' => 'groupId',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'Tags' => array(
+                                'type' => 'array',
+                                'sentAs' => 'tagSet',
+                                'items' => array(
+                                    'name' => 'item',
+                                    'type' => 'object',
+                                    'sentAs' => 'item',
+                                    'properties' => array(
+                                        'Key' => array(
+                                            'type' => 'string',
+                                            'sentAs' => 'key',
+                                        ),
+                                        'Value' => array(
+                                            'type' => 'string',
+                                            'sentAs' => 'value',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'NextToken' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'nextToken',
+                ),
+            ),
+        ),
         'DescribeConversionTasksResult' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -10474,6 +10813,10 @@ return array (
                             'OwnerId' => array(
                                 'type' => 'string',
                                 'sentAs' => 'imageOwnerId',
+                            ),
+                            'CreationDate' => array(
+                                'type' => 'string',
+                                'sentAs' => 'creationDate',
                             ),
                             'Public' => array(
                                 'type' => 'boolean',
@@ -13758,6 +14101,51 @@ return array (
                 ),
             ),
         ),
+        'DescribeVpcClassicLinkResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Vpcs' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'sentAs' => 'vpcSet',
+                    'items' => array(
+                        'name' => 'item',
+                        'type' => 'object',
+                        'sentAs' => 'item',
+                        'properties' => array(
+                            'VpcId' => array(
+                                'type' => 'string',
+                                'sentAs' => 'vpcId',
+                            ),
+                            'ClassicLinkEnabled' => array(
+                                'type' => 'boolean',
+                                'sentAs' => 'classicLinkEnabled',
+                            ),
+                            'Tags' => array(
+                                'type' => 'array',
+                                'sentAs' => 'tagSet',
+                                'items' => array(
+                                    'name' => 'item',
+                                    'type' => 'object',
+                                    'sentAs' => 'item',
+                                    'properties' => array(
+                                        'Key' => array(
+                                            'type' => 'string',
+                                            'sentAs' => 'key',
+                                        ),
+                                        'Value' => array(
+                                            'type' => 'string',
+                                            'sentAs' => 'value',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
         'DescribeVpcPeeringConnectionsResult' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -14108,6 +14496,39 @@ return array (
                             ),
                         ),
                     ),
+                ),
+            ),
+        ),
+        'DetachClassicLinkVpcResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Return' => array(
+                    'type' => 'boolean',
+                    'location' => 'xml',
+                    'sentAs' => 'return',
+                ),
+            ),
+        ),
+        'DisableVpcClassicLinkResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Return' => array(
+                    'type' => 'boolean',
+                    'location' => 'xml',
+                    'sentAs' => 'return',
+                ),
+            ),
+        ),
+        'EnableVpcClassicLinkResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Return' => array(
+                    'type' => 'boolean',
+                    'location' => 'xml',
+                    'sentAs' => 'return',
                 ),
             ),
         ),

@@ -28,6 +28,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  *
  * @method Model addSourceIdentifierToSubscription(array $args = array()) {@command Rds AddSourceIdentifierToSubscription}
  * @method Model addTagsToResource(array $args = array()) {@command Rds AddTagsToResource}
+ * @method Model applyPendingMaintenanceAction(array $args = array()) {@command Rds ApplyPendingMaintenanceAction}
  * @method Model authorizeDBSecurityGroupIngress(array $args = array()) {@command Rds AuthorizeDBSecurityGroupIngress}
  * @method Model copyDBParameterGroup(array $args = array()) {@command Rds CopyDBParameterGroup}
  * @method Model copyDBSnapshot(array $args = array()) {@command Rds CopyDBSnapshot}
@@ -62,6 +63,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model describeOptionGroupOptions(array $args = array()) {@command Rds DescribeOptionGroupOptions}
  * @method Model describeOptionGroups(array $args = array()) {@command Rds DescribeOptionGroups}
  * @method Model describeOrderableDBInstanceOptions(array $args = array()) {@command Rds DescribeOrderableDBInstanceOptions}
+ * @method Model describePendingMaintenanceActions(array $args = array()) {@command Rds DescribePendingMaintenanceActions}
  * @method Model describeReservedDBInstances(array $args = array()) {@command Rds DescribeReservedDBInstances}
  * @method Model describeReservedDBInstancesOfferings(array $args = array()) {@command Rds DescribeReservedDBInstancesOfferings}
  * @method Model downloadDBLogFilePortion(array $args = array()) {@command Rds DownloadDBLogFilePortion}
@@ -105,7 +107,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  */
 class RdsClient extends AbstractClient
 {
-    const LATEST_API_VERSION = '2014-09-01';
+    const LATEST_API_VERSION = '2014-10-31';
 
     /**
      * Factory method to create a new Amazon Relational Database Service client using an array of configuration options.

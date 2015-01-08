@@ -32,6 +32,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model associateAddress(array $args = array()) {@command Ec2 AssociateAddress}
  * @method Model associateDhcpOptions(array $args = array()) {@command Ec2 AssociateDhcpOptions}
  * @method Model associateRouteTable(array $args = array()) {@command Ec2 AssociateRouteTable}
+ * @method Model attachClassicLinkVpc(array $args = array()) {@command Ec2 AttachClassicLinkVpc}
  * @method Model attachInternetGateway(array $args = array()) {@command Ec2 AttachInternetGateway}
  * @method Model attachNetworkInterface(array $args = array()) {@command Ec2 AttachNetworkInterface}
  * @method Model attachVolume(array $args = array()) {@command Ec2 AttachVolume}
@@ -97,6 +98,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model describeAddresses(array $args = array()) {@command Ec2 DescribeAddresses}
  * @method Model describeAvailabilityZones(array $args = array()) {@command Ec2 DescribeAvailabilityZones}
  * @method Model describeBundleTasks(array $args = array()) {@command Ec2 DescribeBundleTasks}
+ * @method Model describeClassicLinkInstances(array $args = array()) {@command Ec2 DescribeClassicLinkInstances}
  * @method Model describeConversionTasks(array $args = array()) {@command Ec2 DescribeConversionTasks}
  * @method Model describeCustomerGateways(array $args = array()) {@command Ec2 DescribeCustomerGateways}
  * @method Model describeDhcpOptions(array $args = array()) {@command Ec2 DescribeDhcpOptions}
@@ -130,19 +132,23 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model describeVolumeStatus(array $args = array()) {@command Ec2 DescribeVolumeStatus}
  * @method Model describeVolumes(array $args = array()) {@command Ec2 DescribeVolumes}
  * @method Model describeVpcAttribute(array $args = array()) {@command Ec2 DescribeVpcAttribute}
+ * @method Model describeVpcClassicLink(array $args = array()) {@command Ec2 DescribeVpcClassicLink}
  * @method Model describeVpcPeeringConnections(array $args = array()) {@command Ec2 DescribeVpcPeeringConnections}
  * @method Model describeVpcs(array $args = array()) {@command Ec2 DescribeVpcs}
  * @method Model describeVpnConnections(array $args = array()) {@command Ec2 DescribeVpnConnections}
  * @method Model describeVpnGateways(array $args = array()) {@command Ec2 DescribeVpnGateways}
+ * @method Model detachClassicLinkVpc(array $args = array()) {@command Ec2 DetachClassicLinkVpc}
  * @method Model detachInternetGateway(array $args = array()) {@command Ec2 DetachInternetGateway}
  * @method Model detachNetworkInterface(array $args = array()) {@command Ec2 DetachNetworkInterface}
  * @method Model detachVolume(array $args = array()) {@command Ec2 DetachVolume}
  * @method Model detachVpnGateway(array $args = array()) {@command Ec2 DetachVpnGateway}
  * @method Model disableVgwRoutePropagation(array $args = array()) {@command Ec2 DisableVgwRoutePropagation}
+ * @method Model disableVpcClassicLink(array $args = array()) {@command Ec2 DisableVpcClassicLink}
  * @method Model disassociateAddress(array $args = array()) {@command Ec2 DisassociateAddress}
  * @method Model disassociateRouteTable(array $args = array()) {@command Ec2 DisassociateRouteTable}
  * @method Model enableVgwRoutePropagation(array $args = array()) {@command Ec2 EnableVgwRoutePropagation}
  * @method Model enableVolumeIO(array $args = array()) {@command Ec2 EnableVolumeIO}
+ * @method Model enableVpcClassicLink(array $args = array()) {@command Ec2 EnableVpcClassicLink}
  * @method Model getConsoleOutput(array $args = array()) {@command Ec2 GetConsoleOutput}
  * @method Model getPasswordData(array $args = array()) {@command Ec2 GetPasswordData}
  * @method Model importInstance(array $args = array()) {@command Ec2 ImportInstance}
@@ -180,7 +186,6 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model terminateInstances(array $args = array()) {@command Ec2 TerminateInstances}
  * @method Model unassignPrivateIpAddresses(array $args = array()) {@command Ec2 UnassignPrivateIpAddresses}
  * @method Model unmonitorInstances(array $args = array()) {@command Ec2 UnmonitorInstances}
- * @method waitUntilSpotInstanceRequestFulfilled(array $input) The input array uses the parameters of the DescribeSpotInstanceRequests operation and waiter specific settings
  * @method waitUntilInstanceRunning(array $input) The input array uses the parameters of the DescribeInstances operation and waiter specific settings
  * @method waitUntilInstanceStopped(array $input) The input array uses the parameters of the DescribeInstances operation and waiter specific settings
  * @method waitUntilInstanceTerminated(array $input) The input array uses the parameters of the DescribeInstances operation and waiter specific settings

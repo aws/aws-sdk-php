@@ -15,7 +15,7 @@
  */
 
 return array (
-    'apiVersion' => '2014-09-01',
+    'apiVersion' => '2014-10-31',
     'endpointPrefix' => 'rds',
     'serviceFullName' => 'Amazon Relational Database Service',
     'serviceAbbreviation' => 'Amazon RDS',
@@ -91,7 +91,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -130,7 +130,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'ResourceName' => array(
                     'required' => true,
@@ -167,6 +167,46 @@ return array (
                 ),
             ),
         ),
+        'ApplyPendingMaintenanceAction' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'ResourcePendingMaintenanceActionsWrapper',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'ApplyPendingMaintenanceAction',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-31',
+                ),
+                'ResourceIdentifier' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'ApplyAction' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'OptInType' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The specified Resource ID was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+            ),
+        ),
         'AuthorizeDBSecurityGroupIngress' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -182,7 +222,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBSecurityGroupName' => array(
                     'required' => true,
@@ -240,7 +280,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'SourceDBParameterGroupIdentifier' => array(
                     'required' => true,
@@ -305,7 +345,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'SourceDBSnapshotIdentifier' => array(
                     'required' => true,
@@ -369,7 +409,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'SourceOptionGroupIdentifier' => array(
                     'required' => true,
@@ -434,7 +474,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBName' => array(
                     'type' => 'string',
@@ -580,6 +620,15 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'StorageEncrypted' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
+                'KmsKeyId' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -638,6 +687,10 @@ return array (
                     'reason' => 'Specified CIDRIP or EC2 security group is not authorized for the specified DB security group.    RDS may not also be authorized via IAM to perform necessary actions on your behalf.',
                     'class' => 'AuthorizationNotFoundException',
                 ),
+                array(
+                    'reason' => 'Error accessing KMS key.',
+                    'class' => 'KMSKeyNotAccessibleException',
+                ),
             ),
         ),
         'CreateDBInstanceReadReplica' => array(
@@ -655,7 +708,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -792,6 +845,10 @@ return array (
                     'reason' => 'StorageType specified cannot be associated with the DB Instance.',
                     'class' => 'StorageTypeNotSupportedException',
                 ),
+                array(
+                    'reason' => 'Error accessing KMS key.',
+                    'class' => 'KMSKeyNotAccessibleException',
+                ),
             ),
         ),
         'CreateDBParameterGroup' => array(
@@ -809,7 +866,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -870,7 +927,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBSecurityGroupName' => array(
                     'required' => true,
@@ -930,7 +987,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBSnapshotIdentifier' => array(
                     'required' => true,
@@ -994,7 +1051,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBSubnetGroupName' => array(
                     'required' => true,
@@ -1072,7 +1129,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -1175,7 +1232,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'OptionGroupName' => array(
                     'required' => true,
@@ -1241,7 +1298,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -1292,7 +1349,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -1326,7 +1383,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBSecurityGroupName' => array(
                     'required' => true,
@@ -1360,7 +1417,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBSnapshotIdentifier' => array(
                     'required' => true,
@@ -1394,7 +1451,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBSubnetGroupName' => array(
                     'required' => true,
@@ -1432,7 +1489,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -1466,7 +1523,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'OptionGroupName' => array(
                     'required' => true,
@@ -1500,7 +1557,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'Engine' => array(
                     'type' => 'string',
@@ -1573,7 +1630,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBInstanceIdentifier' => array(
                     'type' => 'string',
@@ -1634,7 +1691,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -1708,7 +1765,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBParameterGroupName' => array(
                     'type' => 'string',
@@ -1769,7 +1826,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -1835,7 +1892,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBSecurityGroupName' => array(
                     'type' => 'string',
@@ -1896,7 +1953,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBInstanceIdentifier' => array(
                     'type' => 'string',
@@ -1965,7 +2022,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBSubnetGroupName' => array(
                     'type' => 'string',
@@ -2026,7 +2083,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBParameterGroupFamily' => array(
                     'required' => true,
@@ -2082,7 +2139,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'SourceType' => array(
                     'type' => 'string',
@@ -2129,7 +2186,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'SubscriptionName' => array(
                     'type' => 'string',
@@ -2190,7 +2247,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'SourceIdentifier' => array(
                     'type' => 'string',
@@ -2280,7 +2337,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'EngineName' => array(
                     'required' => true,
@@ -2340,7 +2397,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'OptionGroupName' => array(
                     'type' => 'string',
@@ -2409,7 +2466,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'Engine' => array(
                     'required' => true,
@@ -2467,6 +2524,67 @@ return array (
                 ),
             ),
         ),
+        'DescribePendingMaintenanceActions' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'PendingMaintenanceActionsMessage',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribePendingMaintenanceActions',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-31',
+                ),
+                'ResourceIdentifier' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Name' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'Values' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'Values.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'MaxRecords' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The specified Resource ID was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+            ),
+        ),
         'DescribeReservedDBInstances' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -2482,7 +2600,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'ReservedDBInstanceId' => array(
                     'type' => 'string',
@@ -2568,7 +2686,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'ReservedDBInstancesOfferingId' => array(
                     'type' => 'string',
@@ -2650,7 +2768,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -2693,7 +2811,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'ResourceName' => array(
                     'required' => true,
@@ -2751,7 +2869,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -2927,7 +3045,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -3004,7 +3122,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBSubnetGroupName' => array(
                     'required' => true,
@@ -3064,7 +3182,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -3136,7 +3254,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'OptionGroupName' => array(
                     'required' => true,
@@ -3257,7 +3375,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -3299,7 +3417,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'ReservedDBInstancesOfferingId' => array(
                     'required' => true,
@@ -3362,7 +3480,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -3401,7 +3519,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -3440,7 +3558,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'ResourceName' => array(
                     'required' => true,
@@ -3484,7 +3602,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -3565,7 +3683,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -3719,6 +3837,10 @@ return array (
                     'reason' => 'Specified CIDRIP or EC2 security group is not authorized for the specified DB security group.    RDS may not also be authorized via IAM to perform necessary actions on your behalf.',
                     'class' => 'AuthorizationNotFoundException',
                 ),
+                array(
+                    'reason' => 'Error accessing KMS key.',
+                    'class' => 'KMSKeyNotAccessibleException',
+                ),
             ),
         ),
         'RestoreDBInstanceToPointInTime' => array(
@@ -3736,7 +3858,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'SourceDBInstanceIdentifier' => array(
                     'required' => true,
@@ -3908,6 +4030,10 @@ return array (
                     'reason' => 'Specified CIDRIP or EC2 security group is not authorized for the specified DB security group.    RDS may not also be authorized via IAM to perform necessary actions on your behalf.',
                     'class' => 'AuthorizationNotFoundException',
                 ),
+                array(
+                    'reason' => 'Error accessing KMS key.',
+                    'class' => 'KMSKeyNotAccessibleException',
+                ),
             ),
         ),
         'RevokeDBSecurityGroupIngress' => array(
@@ -3925,7 +4051,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-01',
+                    'default' => '2014-10-31',
                 ),
                 'DBSecurityGroupName' => array(
                     'required' => true,
@@ -4021,6 +4147,49 @@ return array (
         'EmptyOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
+        ),
+        'ResourcePendingMaintenanceActionsWrapper' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'ResourcePendingMaintenanceActions' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'data' => array(
+                        'wrapper' => true,
+                    ),
+                    'properties' => array(
+                        'ResourceIdentifier' => array(
+                            'type' => 'string',
+                        ),
+                        'PendingMaintenanceActionDetails' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'PendingMaintenanceAction',
+                                'type' => 'object',
+                                'sentAs' => 'PendingMaintenanceAction',
+                                'properties' => array(
+                                    'Action' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'AutoAppliedAfterDate' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'ForcedApplyDate' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'OptInStatus' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'CurrentApplyDate' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
         ),
         'DBSecurityGroupWrapper' => array(
             'type' => 'object',
@@ -4180,6 +4349,12 @@ return array (
                             'type' => 'string',
                         ),
                         'TdeCredentialArn' => array(
+                            'type' => 'string',
+                        ),
+                        'Encrypted' => array(
+                            'type' => 'boolean',
+                        ),
+                        'KmsKeyId' => array(
                             'type' => 'string',
                         ),
                     ),
@@ -4577,6 +4752,15 @@ return array (
                         'TdeCredentialArn' => array(
                             'type' => 'string',
                         ),
+                        'StorageEncrypted' => array(
+                            'type' => 'boolean',
+                        ),
+                        'KmsKeyId' => array(
+                            'type' => 'string',
+                        ),
+                        'DbiResourceId' => array(
+                            'type' => 'string',
+                        ),
                     ),
                 ),
             ),
@@ -4964,6 +5148,15 @@ return array (
                             'TdeCredentialArn' => array(
                                 'type' => 'string',
                             ),
+                            'StorageEncrypted' => array(
+                                'type' => 'boolean',
+                            ),
+                            'KmsKeyId' => array(
+                                'type' => 'string',
+                            ),
+                            'DbiResourceId' => array(
+                                'type' => 'string',
+                            ),
                         ),
                     ),
                 ),
@@ -5225,6 +5418,12 @@ return array (
                                 'type' => 'string',
                             ),
                             'TdeCredentialArn' => array(
+                                'type' => 'string',
+                            ),
+                            'Encrypted' => array(
+                                'type' => 'boolean',
+                            ),
+                            'KmsKeyId' => array(
                                 'type' => 'string',
                             ),
                         ),
@@ -5740,11 +5939,63 @@ return array (
                             'Vpc' => array(
                                 'type' => 'boolean',
                             ),
+                            'SupportsStorageEncryption' => array(
+                                'type' => 'boolean',
+                            ),
                             'StorageType' => array(
                                 'type' => 'string',
                             ),
                             'SupportsIops' => array(
                                 'type' => 'boolean',
+                            ),
+                        ),
+                    ),
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+            ),
+        ),
+        'PendingMaintenanceActionsMessage' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'PendingMaintenanceActions' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'ResourcePendingMaintenanceActions',
+                        'type' => 'object',
+                        'sentAs' => 'ResourcePendingMaintenanceActions',
+                        'properties' => array(
+                            'ResourceIdentifier' => array(
+                                'type' => 'string',
+                            ),
+                            'PendingMaintenanceActionDetails' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'PendingMaintenanceAction',
+                                    'type' => 'object',
+                                    'sentAs' => 'PendingMaintenanceAction',
+                                    'properties' => array(
+                                        'Action' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'AutoAppliedAfterDate' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'ForcedApplyDate' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'OptInStatus' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'CurrentApplyDate' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                     ),
@@ -6018,104 +6269,9 @@ return array (
         ),
     ),
     'iterators' => array(
-        'DescribeDBEngineVersions' => array(
-            'input_token' => 'Marker',
-            'output_token' => 'Marker',
-            'limit_key' => 'MaxRecords',
-            'result_key' => 'DBEngineVersions',
-        ),
-        'DescribeDBInstances' => array(
-            'input_token' => 'Marker',
-            'output_token' => 'Marker',
-            'limit_key' => 'MaxRecords',
-            'result_key' => 'DBInstances',
-        ),
-        'DescribeDBLogFiles' => array(
-            'input_token' => 'Marker',
-            'output_token' => 'Marker',
-            'limit_key' => 'MaxRecords',
-            'result_key' => 'DescribeDBLogFiles',
-        ),
-        'DescribeDBParameterGroups' => array(
-            'input_token' => 'Marker',
-            'output_token' => 'Marker',
-            'limit_key' => 'MaxRecords',
-            'result_key' => 'DBParameterGroups',
-        ),
-        'DescribeDBParameters' => array(
-            'input_token' => 'Marker',
-            'output_token' => 'Marker',
-            'limit_key' => 'MaxRecords',
-            'result_key' => 'Parameters',
-        ),
-        'DescribeDBSecurityGroups' => array(
-            'input_token' => 'Marker',
-            'output_token' => 'Marker',
-            'limit_key' => 'MaxRecords',
-            'result_key' => 'DBSecurityGroups',
-        ),
-        'DescribeDBSnapshots' => array(
-            'input_token' => 'Marker',
-            'output_token' => 'Marker',
-            'limit_key' => 'MaxRecords',
-            'result_key' => 'DBSnapshots',
-        ),
-        'DescribeDBSubnetGroups' => array(
-            'input_token' => 'Marker',
-            'output_token' => 'Marker',
-            'limit_key' => 'MaxRecords',
-            'result_key' => 'DBSubnetGroups',
-        ),
         'DescribeEngineDefaultParameters' => array(
-            'input_token' => 'Marker',
             'output_token' => 'Marker',
-            'limit_key' => 'MaxRecords',
             'result_key' => 'Parameters',
-        ),
-        'DescribeEventSubscriptions' => array(
-            'input_token' => 'Marker',
-            'output_token' => 'Marker',
-            'limit_key' => 'MaxRecords',
-            'result_key' => 'EventSubscriptionsList',
-        ),
-        'DescribeEvents' => array(
-            'input_token' => 'Marker',
-            'output_token' => 'Marker',
-            'limit_key' => 'MaxRecords',
-            'result_key' => 'Events',
-        ),
-        'DescribeOptionGroupOptions' => array(
-            'input_token' => 'Marker',
-            'output_token' => 'Marker',
-            'limit_key' => 'MaxRecords',
-            'result_key' => 'OptionGroupOptions',
-        ),
-        'DescribeOptionGroups' => array(
-            'input_token' => 'Marker',
-            'output_token' => 'Marker',
-            'limit_key' => 'MaxRecords',
-            'result_key' => 'OptionGroupsList',
-        ),
-        'DescribeOrderableDBInstanceOptions' => array(
-            'input_token' => 'Marker',
-            'output_token' => 'Marker',
-            'limit_key' => 'MaxRecords',
-            'result_key' => 'OrderableDBInstanceOptions',
-        ),
-        'DescribeReservedDBInstances' => array(
-            'input_token' => 'Marker',
-            'output_token' => 'Marker',
-            'limit_key' => 'MaxRecords',
-            'result_key' => 'ReservedDBInstances',
-        ),
-        'DescribeReservedDBInstancesOfferings' => array(
-            'input_token' => 'Marker',
-            'output_token' => 'Marker',
-            'limit_key' => 'MaxRecords',
-            'result_key' => 'ReservedDBInstancesOfferings',
-        ),
-        'ListTagsForResource' => array(
-            'result_key' => 'TagList',
         ),
     ),
     'waiters' => array(
