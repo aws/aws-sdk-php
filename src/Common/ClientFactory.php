@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Common;
 
+use InvalidArgumentException as IAE;
 use Aws\Common\Api\FilesystemApiProvider;
 use Aws\Common\Api\Service;
 use Aws\Common\Api\Validator;
@@ -28,39 +29,36 @@ use GuzzleHttp\Command\Subscriber\Debug;
  */
 class ClientFactory
 {
-    /**
-     * Represents how provided key value pairs are processed.
-     *
-     * - true: The value is passed through to the underlying client unchanged.
-     * - 1: There is a handle_<key> function that handles this specific key
-     *   before the client is constructed. The handler receives the value of
-     *   the key and the provided arguments by reference.
-     * - 2: There is a handle_<key> function that handles this specific key
-     *   after the client is constructed. The handler function receives the
-     *   value of the key, the provided arguments by reference, and the client.
-     *
-     * @var array
-     */
-    protected $validArguments = [
-        'scheme'            => true,
-        'region'            => true,
-        'service'           => true,
-        'endpoint'          => true,
-        'version'           => true,
-        'defaults'          => true,
-        'endpoint_provider' => 1,
-        'api_provider'      => 1,
-        'class_name'        => 1,
-        'exception_class'   => 1,
-        'profile'           => 1,
-        'credentials'       => 1,
-        'signature'         => 1,
-        'client'            => 1,
-        'ringphp_handler'   => 1,
-        'retries'           => 2,
-        'validate'          => 2,
-        'debug'             => 2,
-        'client_defaults'   => 2,
+    private $validArguments = [
+        'key' => ['type' => 'deprecated'],
+        'ssl.certificate_authority' => ['type' => 'deprecated'],
+        'curl.options' => ['type' => 'deprecated'],
+        'scheme' => [
+            'type'     => 'value',
+            'default'  => 'https',
+            'required' => true
+        ],
+        'region' => [
+            'type'     => 'value',
+            'required' => true,
+            'default'  => true
+        ],
+        'service' => ['type' => 'value', 'required' => true],
+        'endpoint' => ['type' => 'value'],
+        'version' => ['type' => 'value', 'required' => true],
+        'defaults' => ['type' => 'value'],
+        'endpoint_provider' => ['type' => 'pre', 'required' => true],
+        'api_provider' => ['type' => 'pre', 'required' => true],
+        'class_name' => ['type' => 'pre', 'default' => true],
+        'profile' => ['type' => 'pre'],
+        'credentials' => ['type' => 'pre', 'default' => true],
+        'signature' => ['type' => 'pre', 'default' => false],
+        'client' => ['type' => 'pre', 'default' => true],
+        'ringphp_handler' => ['type' => 'pre'],
+        'retries' => ['type' => 'post', 'default' => true],
+        'validate' => ['type' => 'post', 'default' => true],
+        'debug' => ['type' => 'post'],
+        'client_defaults' => ['type' => 'post'],
     ];
 
     /**
@@ -74,52 +72,33 @@ class ClientFactory
      */
     public function create(array $args = [])
     {
-        static $required = [
-            'service',
-            'region',
-            'api_provider',
-            'endpoint_provider',
-            'version'
-        ];
-
-        static $defaultArgs = [
-            'credentials'       => null,
-            'region'            => null,
-            'retries'           => true,
-            'scheme'            => 'https',
-            'signature'         => false,
-            'exception_class'   => true,
-            'validate'          => true,
-            'class_name'        => false
-        ];
-
-        // Merge in and handle default arguments
-        $args += $defaultArgs;
+        $post = [];
         $this->addDefaultArgs($args);
 
-        // Ensure required arguments are provided.
-        foreach ($required as $r) {
-            if (!isset($args[$r])) {
-                throw new \InvalidArgumentException("{$r} is a required "
-                    . "configuration setting when creating a client.");
-            }
-        }
-
-        // Process each argument and keep track of deferred ones
-        $deferred = [];
-        foreach ($this->validArguments as $key => $type) {
-            if (array_key_exists($key, $args)) {
-                if ($type === 1) {
-                    $this->{"handle_{$key}"}($args[$key], $args);
-                } elseif ($type === 2) {
-                    $deferred[$key] = $args[$key];
+        foreach ($this->validArguments as $key => $a) {
+            if (!array_key_exists($key, $args)) {
+                if (isset($a['default'])) {
+                    // Merge defaults in when not present.
+                    $args[$key] = $a['default'];
+                } elseif (!empty($a['required'])) {
+                    throw new IAE("{$key} is a required client setting");
+                } else {
+                    continue;
                 }
+            }
+            if ($a['type'] === 'pre') {
+                $this->{"handle_{$key}"}($args[$key], $args);
+            } elseif ($a['type'] === 'post') {
+                $post[$key] = $args[$key];
+            } elseif ($a['type'] === 'deprecated') {
+                $meth = 'deprecated_' . str_replace('.', '_', $key);
+                $this->{$meth}($args[$key], $args);
             }
         }
 
         // Create the client and then handle deferred and post-create logic
         $client = $this->createClient($args);
-        foreach ($deferred as $key => $value) {
+        foreach ($post as $key => $value) {
             $this->{"handle_{$key}"}($value, $args, $client);
         }
 
@@ -177,7 +156,6 @@ class ClientFactory
      * @param int|bool           $value  User-provided value (must be validated)
      * @param array              $args   Provided arguments reference
      * @param AwsClientInterface $client Client to modify
-     *
      * @throws \InvalidArgumentException if the value provided is invalid.
      */
     private function handle_retries(
@@ -196,8 +174,7 @@ class ClientFactory
             $conf['max'] = $value;
         } elseif ($value !== true) {
             // If retry value was not an int or bool, throw an exception.
-            throw new \InvalidArgumentException('retries must be a boolean or'
-            . ' an integer');
+            throw new IAE('retries must be a boolean or an integer');
         }
 
         // Add retry logger
@@ -276,13 +253,10 @@ class ClientFactory
      */
     protected function validateRetries($value)
     {
-        if ($value === true) {
-            $value = static::DEFAULT_MAX_RETRIES;
-        } elseif (!$value) {
+        if (!$value) {
             return false;
         } elseif (!is_integer($value)) {
-            throw new \InvalidArgumentException('retries must be a boolean or'
-                . ' an integer');
+            throw new IAE('retries must be a boolean or an integer');
         }
 
         return $value;
@@ -290,72 +264,20 @@ class ClientFactory
 
     private function handle_class_name($value, array &$args)
     {
-        if ($value !== false) {
+        if ($value === true) {
+            $args['client_class'] = 'Aws\Common\AwsClient';
+            $args['exception_class'] = 'Aws\Common\Exception\AwsException';
+        } else {
             // An explicitly provided class_name must be found.
             $args['client_class'] = "Aws\\{$value}\\{$value}Client";
             if (!class_exists($args['client_class'])) {
                 throw new \RuntimeException("Client not found for $value");
             }
-            return;
-        }
-
-        $fullName = $args['api']->getMetadata('serviceFullName');
-        $value = $this->convertServiceName($fullName);
-
-        // If the dynamically created exception cannot be found, then use the
-        // default client class.
-        $args['client_class'] = "Aws\\{$value}\\{$value}Client";
-        if (!class_exists($args['client_class'])) {
-            $args['client_class'] = 'Aws\Common\AwsClient';
-        }
-
-        $args['class_name'] = $value;
-    }
-
-    private function convertServiceName($serviceFullName)
-    {
-        static $search = ['Amazon ', 'AWS ', ' (Beta)', ' '];
-        static $map = ['A' => 'a', 'B' => 'b', 'C' => 'c', 'D' => 'd',
-           'E' => 'e', 'F' => 'f', 'G' => 'g', 'H' => 'h', 'I' => 'i',
-           'J' => 'j', 'K' => 'k', 'L' => 'l', 'M' => 'm', 'N' => 'n',
-           'O' => 'o', 'P' => 'p', 'Q' => 'q', 'R' => 'r', 'S' => 's',
-           'T' => 't', 'U' => 'u', 'V' => 'v', 'W' => 'w', 'X' => 'x',
-           'Y' => 'y', 'Z' => 'z'];
-
-        // Convert to a strict PascalCase
-        $value = str_replace($search, '', $serviceFullName);
-
-        $i = -1;
-        while (isset($value[++$i])) {
-            if (isset($map[$value[$i]])) {
-                while (isset($value[++$i]) && isset($map[$value[$i]])) {
-                    $value[$i] = $map[$value[$i]];
-                }
+            $args['exception_class']  = "Aws\\{$args['class_name']}\\Exception\\{$args['class_name']}Exception";
+            if (!class_exists($args['exception_class'] )) {
+                throw new \RuntimeException("Exception class not found $value");
             }
         }
-
-        return $value;
-    }
-
-    private function handle_exception_class($value, array &$args)
-    {
-        if ($value !== true) {
-            // An explicitly provided exception must be found.
-            if (class_exists($value)) {
-                return;
-            }
-            throw new \InvalidArgumentException("Exception not found when "
-                . "evaluating the exception_class argument: $value");
-        }
-
-        $value = "Aws\\{$args['class_name']}\\Exception\\{$args['class_name']}Exception";
-        // If the dynamically created exception cannot be found, then use the
-        // default exception class.
-        if (!class_exists($value)) {
-            $value = 'Aws\Common\Exception\AwsException';
-        }
-
-        $args['exception_class'] = $value;
     }
 
     private function handle_profile($value, array &$args)
@@ -369,7 +291,7 @@ class ClientFactory
             return;
         } elseif (is_callable($value)) {
             $args['credentials'] = Provider::resolve($value);
-        } elseif ($value === null) {
+        } elseif ($value === true) {
             $args['credentials'] = Provider::resolve(Provider::defaultProvider());
         } elseif (is_array($value) && isset($value['key']) && isset($value['secret'])) {
             $args['credentials'] = new Credentials(
@@ -381,19 +303,17 @@ class ClientFactory
         } elseif ($value === false) {
             $args['credentials'] = new NullCredentials();
         } else {
-            throw new \InvalidArgumentException('Credentials must be an '
-                . 'instance of Aws\Common\Credentials\CredentialsInterface, an '
-                . 'associative array that contains "key", "secret", and '
-                . 'an optional "token" key-value pairs, a credentials provider '
-                . 'function, or false.');
+            throw new IAE('Credentials must be an instance of '
+                . 'Aws\Common\Credentials\CredentialsInterface, an associative '
+                . 'array that contains "key", "secret", and an optional "token" '
+                . 'key-value pairs, a credentials provider function, or false.');
         }
     }
 
     private function handle_client($value, array &$args)
     {
         if (!($value instanceof ClientInterface)) {
-            throw new \InvalidArgumentException('client must be an instance of'
-                . ' GuzzleHttp\ClientInterface');
+            throw new IAE('client must be an instance of GuzzleHttp\ClientInterface');
         }
 
         // Make sure the user agent is prefixed by the SDK version
@@ -406,7 +326,7 @@ class ClientFactory
     private function handle_client_defaults($value, array &$args)
     {
         if (!is_array($value)) {
-            throw new \InvalidArgumentException('client_defaults must be an array');
+            throw new IAE('client_defaults must be an array');
         }
 
         foreach ($value as $k => $v) {
@@ -416,14 +336,13 @@ class ClientFactory
 
     private function handle_ringphp_handler($value, array &$args)
     {
-        throw new \InvalidArgumentException('You cannot provide both a client '
-            . 'option and a ringphp_handler option.');
+        throw new IAE('You cannot provide both a client option and a ringphp_handler option.');
     }
 
     private function handle_api_provider($value, array &$args)
     {
         if (!is_callable($value)) {
-            throw new \InvalidArgumentException('api_provider must be callable');
+            throw new IAE('api_provider must be callable');
         }
 
         $api = new Service($value, $args['service'], $args['version']);
@@ -435,8 +354,7 @@ class ClientFactory
     private function handle_endpoint_provider($value, array &$args)
     {
         if (!is_callable($value)) {
-            throw new \InvalidArgumentException('endpoint_provider must be a '
-                . 'callable that returns an endpoint array.');
+            throw new IAE('endpoint_provider must be a callable that returns an endpoint array.');
         }
 
         if (!isset($args['endpoint'])) {
@@ -466,7 +384,7 @@ class ClientFactory
                 $region
             );
         } elseif (!($version instanceof SignatureInterface)) {
-            throw new \InvalidArgumentException('Invalid signature option.');
+            throw new IAE('Invalid signature option.');
         }
     }
 
@@ -491,7 +409,7 @@ class ClientFactory
                 return new SignatureV3Https();
         }
 
-        throw new \InvalidArgumentException('Unable to create the signature.');
+        throw new IAE('Unable to create the signature.');
     }
 
     protected function postCreate(AwsClientInterface $client, array $args)
@@ -538,5 +456,35 @@ class ClientFactory
                 $e->setResult($parser($e->getCommand(), $response));
             }
         );
+    }
+
+    private function deprecated_key($value, array &$args)
+    {
+        trigger_error('You provided key, secret, or token in a top-level '
+            . 'configuration value. In v3, credentials should be provided '
+            . 'in an associative array under the "credentials" key (i.e., '
+            . "['credentials' => ['key' => 'abc', 'secret' => '123']]).");
+        $args['credentials'] = [
+            'key'    => $args['key'],
+            'secret' => $args['secret'],
+            'token'  => isset($args['token']) ? $args['token'] : null
+        ];
+        unset($args['key'], $args['secret'], $args['token']);
+    }
+
+    private function deprecated_ssl_certificate_authority($value, array &$args)
+    {
+        trigger_error('ssl.certificate_authority should be provided using '
+            . "\$config['client_defaults']['verify']' (i.e., S3Client::factory(['client_defaults' => ['verify' => true]]). ");
+        $args['client_defaults']['verify'] = $value;
+        unset($args['ssl.certificate_authority']);
+    }
+
+    private function deprecated_curl_options($value, array &$args)
+    {
+        trigger_error("curl.options should be provided using \$config['client_defaults']['config']['curl']' "
+            . "(i.e., S3Client::factory(['client_defaults' => ['config' => ['curl' => []]]]). ");
+        $args['client_defaults']['config']['curl'] = $value;
+        unset($args['curl.options']);
     }
 }

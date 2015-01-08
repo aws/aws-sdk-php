@@ -26,7 +26,7 @@ class CloudSearchDomainFactory extends ClientFactory
         if (strpos($args['endpoint'], 'http') !== 0) {
             $args['endpoint'] = Url::buildUrl([
                 'host'   => $args['endpoint'],
-                'scheme' => $args['scheme'],
+                'scheme' => 'https',
             ]);
         }
 

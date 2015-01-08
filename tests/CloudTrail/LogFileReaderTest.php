@@ -20,9 +20,8 @@ class LogFileReaderTest extends \PHPUnit_Framework_TestCase
     {
         $mock = new Mock([new Response(200, [], Stream::factory($responseBody))]);
         $s3Client = S3Client::factory([
-            'version' => 'latest',
-            'key'     => 'foo',
-            'secret'  => 'bar',
+            'version'     => 'latest',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar'],
         ]);
         $s3Client->getHttpClient()->getEmitter()->attach($mock);
         $reader = new LogFileReader($s3Client);

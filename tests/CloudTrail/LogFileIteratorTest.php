@@ -17,10 +17,9 @@ class LogFileIteratorTest extends \PHPUnit_Framework_TestCase
     {
         $s3Client = $this->getMockS3Client();
         $cloudTrailClient = CloudTrailClient::factory([
-            'key'     => 'foo',
-            'secret'  => 'bar',
-            'region'  => 'us-west-2',
-            'version' => 'latest'
+            'credentials' => ['key' => 'foo', 'secret' => 'bar'],
+            'region'      => 'us-west-2',
+            'version'     => 'latest'
         ]);
         $json = '{"trailList":[{"IncludeGlobalServiceEvents":true,"Name":"Default","S3BucketName":"log-bucket"}]}';
         $mock = new Mock([new Response(200, [], Stream::factory($json))]);
@@ -34,10 +33,9 @@ class LogFileIteratorTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('InvalidArgumentException');
         $s3Client = $this->getMockS3Client();
         $cloudTrailClient = CloudTrailClient::factory([
-            'key'     => 'foo',
-            'secret'  => 'bar',
-            'version' => 'latest',
-            'region'  => 'us-west-2',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar'],
+            'version'     => 'latest',
+            'region'      => 'us-west-2',
         ]);
         $mock = new Mock([new Response(200, [], Stream::factory('{"trailList":[]}'))]);
         $cloudTrailClient->getHttpClient()->getEmitter()->attach($mock);
@@ -118,9 +116,8 @@ class LogFileIteratorTest extends \PHPUnit_Framework_TestCase
 XML;
 
         $client = S3Client::factory([
-            'key'     => 'foo',
-            'secret'  => 'bar',
-            'version' => 'latest'
+            'credentials' => ['key' => 'foo', 'secret' => 'bar'],
+            'version'     => 'latest'
         ]);
         $mock = new Mock([new Response(200, [], Stream::factory($xml))]);
         $client->getHttpClient()->getEmitter()->attach($mock);
