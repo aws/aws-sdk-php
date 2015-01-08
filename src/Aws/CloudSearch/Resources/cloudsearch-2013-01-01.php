@@ -1004,7 +1004,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'AnalysisSchemeNames.member',
                     'items' => array(
-                        'name' => 'FieldName',
+                        'name' => 'StandardName',
                         'type' => 'string',
                         'minLength' => 1,
                         'maxLength' => 64,
@@ -1157,7 +1157,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'ExpressionNames.member',
                     'items' => array(
-                        'name' => 'FieldName',
+                        'name' => 'StandardName',
                         'type' => 'string',
                         'minLength' => 1,
                         'maxLength' => 64,
@@ -1213,7 +1213,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'FieldNames.member',
                     'items' => array(
-                        'name' => 'FieldName',
+                        'name' => 'DynamicFieldName',
                         'type' => 'string',
                         'minLength' => 1,
                         'maxLength' => 64,
@@ -1354,7 +1354,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'SuggesterNames.member',
                     'items' => array(
-                        'name' => 'FieldName',
+                        'name' => 'StandardName',
                         'type' => 'string',
                         'minLength' => 1,
                         'maxLength' => 64,
