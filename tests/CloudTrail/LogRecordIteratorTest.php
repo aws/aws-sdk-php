@@ -18,15 +18,13 @@ class LogRecordIteratorTest extends \PHPUnit_Framework_TestCase
     public function testFactoryCanCreateForTrail()
     {
         $s3 = S3Client::factory([
-            'key'     => 'foo',
-            'secret'  => 'bar',
-            'version' => 'latest'
+            'credentials' => ['key' => 'foo', 'secret' => 'bar'],
+            'version'     => 'latest'
         ]);
         $cloudTrailClient = CloudTrailClient::factory([
-            'key'     => 'foo',
-            'secret'  => 'bar',
-            'region'  => 'us-west-2',
-            'version' => 'latest'
+            'credentials' => ['key' => 'foo', 'secret' => 'bar'],
+            'region'      => 'us-west-2',
+            'version'     => 'latest'
         ]);
         $json = '{"trailList":[{"IncludeGlobalServiceEvents":true,"Name":"Default","S3BucketName":"log-bucket"}]}';
         $mock = new Mock([new Response(200, [], Stream::factory($json))]);
@@ -38,9 +36,8 @@ class LogRecordIteratorTest extends \PHPUnit_Framework_TestCase
     public function testFactoryCanCreateForBucket()
     {
         $s3 = S3Client::factory([
-            'key'     => 'foo',
-            'secret'  => 'bar',
-            'version' => 'latest'
+            'credentials' => ['key' => 'foo', 'secret' => 'bar'],
+            'version'     => 'latest'
         ]);
         $records = LogRecordIterator::forBucket($s3, 'test-bucket');
         $this->assertInstanceOf('Aws\CloudTrail\LogRecordIterator', $records);
@@ -49,9 +46,8 @@ class LogRecordIteratorTest extends \PHPUnit_Framework_TestCase
     public function testFactoryCanCreateForFile()
     {
         $s3 = S3Client::factory([
-            'key'     => 'foo',
-            'secret'  => 'bar',
-            'version' => 'latest'
+            'credentials' => ['key' => 'foo', 'secret' => 'bar'],
+            'version'     => 'latest'
         ]);
         $records = LogRecordIterator::forFile($s3, 'test-bucket', 'test-key');
         $this->assertInstanceOf('Aws\CloudTrail\LogRecordIterator', $records);
@@ -94,10 +90,9 @@ class LogRecordIteratorTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $client = S3Client::factory([
-            'key'     => 'foo',
-            'secret'  => 'bar',
-            'region'  => 'foo',
-            'version' => 'latest'
+            'credentials' => ['key' => 'foo', 'secret' => 'bar'],
+            'region'      => 'foo',
+            'version'     => 'latest'
         ]);
         $client->getHttpClient()->getEmitter()->attach($mock);
 

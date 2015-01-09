@@ -147,21 +147,6 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Exception not found when evaluating the exception_class argument: MissingFoo
-     */
-    public function testValidatesExceptionClass()
-    {
-        $f = new ClientFactory();
-        $f->create([
-            'service' => 'dynamodb',
-            'region' => 'x',
-            'exception_class' => 'MissingFoo',
-            'version' => 'latest'
-        ]);
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Invalid signature option
      */
     public function testValidatesSignatureOption()
@@ -374,18 +359,6 @@ EOT;
             'Aws\Common\Signature\SignatureV2',
             $c->getSignature()
         );
-    }
-
-    public function testConvertsServiceNames()
-    {
-        $f = new ClientFactory();
-        $c = $f->create([
-            'service'  => 'sdb',
-            'region'   => 'x',
-            'endpoint' => 'http://us-east-1.foo.amazonaws.com',
-            'version' => 'latest'
-        ]);
-        $this->assertInstanceOf('Aws\SimpleDb\SimpleDbClient', $c);
     }
 
     public function testAddsLogger()

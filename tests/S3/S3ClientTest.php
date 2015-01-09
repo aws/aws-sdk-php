@@ -53,9 +53,8 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
     public function testCreatesPresignedUrls()
     {
         $client = $this->getTestClient('s3', [
-            'region' => 'us-east-1',
-            'key'    => 'foo',
-            'secret' => 'bar'
+            'region'      => 'us-east-1',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar']
         ]);
         $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
         $url = $client->createPresignedUrl($command, 1342138769);
@@ -73,10 +72,9 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
     public function testCreatesPresignedUrlsWithSpecialCharacters()
     {
         $client = S3Client::factory([
-            'region'  => 'us-east-1',
-            'key'     => 'foo',
-            'secret'  => 'bar',
-            'version' => 'latest'
+            'region'      => 'us-east-1',
+            'version'     => 'latest',
+            'credentials' => ['key' => 'foo', 'secret'  => 'bar']
         ]);
         $command = $client->getCommand('GetObject', [
             'Bucket' => 'foobar test: abc',

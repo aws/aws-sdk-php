@@ -100,9 +100,6 @@ class AwsClient extends AbstractClient implements AwsClientInterface
      */
     public static function factory(array $config = [])
     {
-        // Convert SDKv2 configuration options to SDKv3 configuration options.
-        (new Compat)->convertConfig($config);
-
         // Determine the service being called
         $class = get_called_class();
         $service = substr($class, strrpos($class, '\\') + 1, -6);
