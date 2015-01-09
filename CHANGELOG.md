@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.7.14 - 2015-01-09
+
+* Fixed a regression in the CloudSearch Domain client (#448).
+
 ## 2.7.13 - 2015-01-08
 
 * Added the Amazon EC2 Container Service client.
