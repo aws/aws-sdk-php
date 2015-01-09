@@ -22,17 +22,11 @@ class CloudSearchDomainFactory extends ClientFactory
                 . 'for the CloudSearch domain.');
         }
 
-        // Make sure the endpoint includes a scheme
-        if (strpos($args['endpoint'], 'http') !== 0) {
-            $args['endpoint'] = Url::buildUrl([
-                'host'   => $args['endpoint'],
-                'scheme' => 'https',
-            ]);
+        if (!isset($args['region'])) {
+            // Determine the region from the provided endpoint.
+            // (e.g. http://search-blah.{region}.cloudsearch.amazonaws.com)
+            list(,$args['region']) = explode('.', Url::fromString($args['endpoint']));
         }
-
-        // Determine the region from the provided endpoint.
-        // (e.g. http://search-blah.{region}.cloudsearch.amazonaws.com)
-        list(,$args['region']) = explode('.', Url::fromString($args['endpoint']));
 
         parent::addDefaultArgs($args);
     }
