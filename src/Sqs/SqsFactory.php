@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Sqs;
 
-use Aws\Common\ClientFactory;
+use Aws\ClientFactory;
 
 /**
  * Modifies the host used when connecting to queues and validates the MD5 body

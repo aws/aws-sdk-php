@@ -1,7 +1,7 @@
 <?php
 namespace Aws\CloudSearchDomain;
 
-use Aws\Common\ClientFactory;
+use Aws\ClientFactory;
 use GuzzleHttp\Url;
 
 /**

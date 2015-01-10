@@ -1,8 +1,7 @@
 <?php
-
 namespace Aws\S3;
 
-use Aws\Common\AwsClientInterface;
+use Aws\AwsClientInterface;
 use GuzzleHttp\Command\Event\InitEvent;
 use GuzzleHttp\Event\SubscriberInterface;
 use GuzzleHttp\Command\CommandInterface;

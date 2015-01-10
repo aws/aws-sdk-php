@@ -1,9 +1,9 @@
 <?php
 namespace Aws\DynamoDb;
 
-use Aws\Common\Retry\ThrottlingFilter;
-use Aws\Common\Retry\Crc32Filter;
-use Aws\Common\ClientFactory;
+use Aws\ClientFactory;
+use Aws\Retry\ThrottlingFilter;
+use Aws\Retry\Crc32Filter;
 use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
 
 /**

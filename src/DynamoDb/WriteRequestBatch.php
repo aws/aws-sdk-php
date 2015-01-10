@@ -2,6 +2,7 @@
 
 namespace Aws\DynamoDb;
 
+use Aws\DynamoDbClient;
 use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Command\Event\ProcessEvent;
 

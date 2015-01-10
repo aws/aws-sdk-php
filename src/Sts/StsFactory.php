@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Sts;
 
-use Aws\Common\ClientFactory;
+use Aws\ClientFactory;
 
 /**
  * @internal

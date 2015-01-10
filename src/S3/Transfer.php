@@ -1,11 +1,11 @@
 <?php
 namespace Aws\S3;
 
-use Aws\Common\MapIterator;
 use Aws\S3\Multipart\UploadBuilder;
 use GuzzleHttp\Command\Command;
 use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Command\Event\PreparedEvent;
+use transducers as t;
 
 /**
  * Transfers files from the local filesystem to S3 or from S3 to the local
@@ -119,9 +119,7 @@ class Transfer
     {
         $iter = new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS);
         $iter = new \RecursiveIteratorIterator($iter);
-        $iter = new MapIterator($iter, 'strval');
-        $iter->rewind();
-        return new \NoRewindIterator($iter);
+        return t\to_iter($iter, t\map('strval'));
     }
 
     /**
@@ -180,9 +178,8 @@ class Transfer
         }
 
         $fn = $this->getTransferFunction($this->sourceScheme, $this->destScheme);
-        $iter = new MapIterator($iter, $fn);
 
-        return $iter;
+        return t\to_iter($iter, t\map($fn));
     }
 
     /**

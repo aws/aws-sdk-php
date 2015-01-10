@@ -1,12 +1,12 @@
 <?php
 namespace Aws\S3;
 
-use Aws\Common\ClientFactory;
-use Aws\Common\Signature\S3Signature;
-use Aws\Common\Signature\S3SignatureV4;
-use Aws\Common\Signature\SignatureV4;
-use Aws\Common\Subscriber\SaveAs;
-use Aws\Common\Subscriber\SourceFile;
+use Aws\ClientFactory;
+use Aws\Signature\S3Signature;
+use Aws\Signature\S3SignatureV4;
+use Aws\Signature\SignatureV4;
+use Aws\Subscriber\SaveAs;
+use Aws\Subscriber\SourceFile;
 use Aws\S3\Subscriber\ApplyMd5;
 use Aws\S3\Subscriber\BucketStyle;
 use Aws\S3\Subscriber\PermanentRedirect;

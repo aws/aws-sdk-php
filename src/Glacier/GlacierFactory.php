@@ -1,8 +1,8 @@
 <?php
 namespace Aws\Glacier;
 
-use Aws\Common\ClientFactory;
-use Aws\Common\Subscriber\SourceFile;
+use Aws\ClientFactory;
+use Aws\Subscriber\SourceFile;
 
 /**
  * @internal

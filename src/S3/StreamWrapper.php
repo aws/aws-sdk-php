@@ -1,14 +1,14 @@
 <?php
 namespace Aws\S3;
 
-use Aws\Common\FlatMapIterator;
-use Aws\Common\Result;
-use Aws\S3\Exception\S3Exception;
+use Aws\Result;
+use Aws\Exception\S3Exception;
 use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Stream\StreamInterface;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Mimetypes;
 use GuzzleHttp\Stream\CachingStream;
+use transducers as t;
 
 /**
  * Amazon S3 stream wrapper to use "s3://<bucket>/<key>" files with PHP
@@ -350,9 +350,9 @@ class StreamWrapper
 
         // Filter our "/" keys added by the console as directories, and ensure
         // that if a filter function is provided that it passes the filter.
-        $this->objectIterator = new FlatMapIterator(
+        $this->objectIterator = t\to_iter(
             $this->getClient()->getPaginator('ListObjects', $op),
-            function (Result $result) use ($filterFn) {
+            t\mapcat(function (Result $result) use ($filterFn) {
                 // Filter out dir place holder keys and use the filter fn.
                 return array_filter(
                     $result->search('[Contents[], CommonPrefixes[]][]'),
@@ -362,7 +362,7 @@ class StreamWrapper
                                 || substr($key['Key'], -1, 1) !== '/');
                     }
                 );
-            }
+            })
         );
 
         $this->objectIterator->rewind();
