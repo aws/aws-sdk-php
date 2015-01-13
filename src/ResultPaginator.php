@@ -76,22 +76,6 @@ class ResultPaginator implements \Iterator
     }
 
     /**
-     * Returns either a single config value or entire paginator's config.
-     *
-     * @param string $key
-     *
-     * @return string|array|null
-     */
-    public function getConfig($key = null)
-    {
-        if ($key === null) {
-            return $this->config;
-        } else {
-            return isset($this->config[$key]) ? $this->config[$key] : null;
-        }
-    }
-
-    /**
      * Returns the next token that will be used for pagination.
      *
      * @return array|string
@@ -99,25 +83,6 @@ class ResultPaginator implements \Iterator
     public function getNextToken()
     {
         return $this->nextToken;
-    }
-
-    /**
-     * Fetch the next result for the command managed by the paginator. You may
-     * pass additional arguments, the most appropriate being a limiter.
-     *
-     * @param array $args
-     * @return Result|null
-     */
-    public function getNext(array $args = [])
-    {
-        $this->result = null;
-
-        // Load next result if there's a next token or it's the first request.
-        if (!$this->requestCount || $this->nextToken) {
-            $this->loadNextResult($args);
-        }
-
-        return $this->result ?: null;
     }
 
     /**
@@ -135,34 +100,28 @@ class ResultPaginator implements \Iterator
 
     public function next()
     {
-        $this->result = null;
+        $this->getNext();
     }
 
     public function valid()
     {
-        if ($this->result) {
-            return true;
-        }
-
-        return (bool) $this->getNext();
+        return (bool) $this->result;
     }
 
     public function rewind()
     {
-        $this->result = null;
         $this->requestCount = 0;
         $this->nextToken = null;
+        $this->next();
     }
 
     /**
      * Loads the next result by executing another command using the next token.
-     *
-     * @param array $args
      */
-    private function loadNextResult(array $args = [])
+    private function loadNextResult()
     {
         // Create the command
-        $args = $args + $this->args;
+        $args = $this->args;
         $command = $this->client->getCommand($this->operation, $args);
         $this->attachListeners($command, $this->listeners);
 
@@ -197,5 +156,21 @@ class ResultPaginator implements \Iterator
                 }
             }
         }
+    }
+
+    /**
+     * Fetch the next result for the command managed by the paginator.
+     *
+     * @return Result|null
+     */
+    private function getNext()
+    {
+        $this->result = null;
+        // Load next result if there's a next token or it's the first request.
+        if (!$this->requestCount || $this->nextToken) {
+            $this->loadNextResult();
+        }
+
+        return $this->result;
     }
 }

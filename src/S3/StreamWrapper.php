@@ -83,6 +83,9 @@ class StreamWrapper
     /** @var string The prefix of the bucket that was opened with opendir() */
     private $openedBucketPrefix;
 
+    /** @var string Opened bucket path */
+    private $openedPath;
+
     /**
      * The next key to retrieve when using a directory iterator. Helps for
      * fast directory traversal.
@@ -326,7 +329,7 @@ class StreamWrapper
      */
     public function dir_opendir($path, $options)
     {
-        $this->clearStatInfo();
+        $this->openedPath = $path;
         $params = $this->withPath($path);
         $delimiter = $this->getOption('delimiter');
         /** @var callable $filterFn */
@@ -354,19 +357,17 @@ class StreamWrapper
         $this->objectIterator = t\to_iter(
             $this->getClient()->getPaginator('ListObjects', $op),
             t\mapcat(function (Result $result) use ($filterFn) {
+                $contentsAndPrefixes = $result->search('[Contents[], CommonPrefixes[]][]');
                 // Filter out dir place holder keys and use the filter fn.
                 return array_filter(
-                    $result->search('[Contents[], CommonPrefixes[]][]'),
+                    $contentsAndPrefixes,
                     function ($key) use ($filterFn) {
                         return (!$filterFn || call_user_func($filterFn, $key))
-                            && (!isset($key['Key'])
-                                || substr($key['Key'], -1, 1) !== '/');
+                            && (!isset($key['Key']) || substr($key['Key'], -1, 1) !== '/');
                     }
                 );
             })
         );
-
-        $this->objectIterator = new \NoRewindIterator($this->objectIterator);
 
         return true;
     }
@@ -378,6 +379,7 @@ class StreamWrapper
      */
     public function dir_closedir()
     {
+        $this->clearStatInfo();
         $this->objectIterator = null;
 
         return true;
@@ -390,8 +392,8 @@ class StreamWrapper
      */
     public function dir_rewinddir()
     {
-        return $this->boolCall(function () {
-            $this->clearStatInfo();
+        $this->boolCall(function() {
+            $this->dir_opendir($this->openedPath, null);
             return true;
         });
     }
@@ -428,7 +430,7 @@ class StreamWrapper
 
         // Cache the object data for quick url_stat lookups used with
         // RecursiveDirectoryIterator.
-        self::$nextStat = [$key => $stat];
+        self::$nextStat[$key] = $stat;
         $this->objectIterator->next();
 
         return $result;
@@ -436,12 +438,7 @@ class StreamWrapper
 
     private function formatKey($key)
     {
-        $k = "s3://{$this->openedBucket}/";
-        if ($this->openedBucketPrefix) {
-            $k .= rtrim($this->openedBucketPrefix, '/') . '/';
-        }
-
-        return $k . $key;
+        return "s3://{$this->openedBucket}/{$key}";
     }
 
     /**
@@ -708,9 +705,13 @@ class StreamWrapper
      */
     private function clearStatInfo()
     {
-        self::$nextStat = [];
-        foreach (func_get_args() as $path) {
-            clearstatcache(true, $path);
+        if (!func_get_args()) {
+            self::$nextStat = [];
+        } else {
+            foreach (func_get_args() as $path) {
+                unset(self::$nextStat[$path]);
+                clearstatcache(true, $path);
+            }
         }
     }
 
@@ -805,12 +806,9 @@ class StreamWrapper
     private function determineAcl($mode)
     {
         switch (substr(decoct($mode), 0, 1)) {
-            case '7':
-                return 'public-read';
-            case '6':
-                return 'authenticated-read';
-            default:
-                return 'private';
+            case '7': return 'public-read';
+            case '6': return 'authenticated-read';
+            default: return 'private';
         }
     }
 

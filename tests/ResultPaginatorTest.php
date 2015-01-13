@@ -54,15 +54,14 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
         $client = $this->getTestClient('dynamodb');
         $this->addMockResults($client, $results);
         $paginator = $client->getPaginator('ListTables', [], $config);
-
-        // Test getConfig, getNext, and getNextToken methods
-        $this->assertEquals('Limit', $paginator->getConfig('limit_key'));
-        $this->assertContains('Limit', $paginator->getConfig());
-        $this->assertEquals(['test1', 'test2'], $paginator->getNext()['TableNames']);
+        $paginator->next();
+        $this->assertEquals(['test1', 'test2'], $paginator->current()['TableNames']);
         $this->assertEquals('test2', $paginator->getNextToken());
-        $this->assertEquals([], $paginator->getNext()['TableNames']);
+        $paginator->next();
+        $this->assertEquals([], $paginator->current()['TableNames']);
         $this->assertEquals('test2', $paginator->getNextToken());
-        $this->assertEquals(['test3'], $paginator->getNext()['TableNames']);
+        $paginator->next();
+        $this->assertEquals(['test3'], $paginator->current()['TableNames']);
         $this->assertNull($paginator->getNextToken());
     }
 

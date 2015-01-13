@@ -70,7 +70,7 @@ class Transfer
         $client->registerStreamWrapper();
         if (is_string($source)) {
             $this->base_dir = $source;
-            $source = self::fileIterator($source, $client);
+            $source = self::recursiveDirIterator($source, $client);
         } elseif (!$source instanceof \Iterator) {
             throw new \InvalidArgumentException('source must be the path to a '
                 . 'directory or an iterator that yields file names.');
@@ -109,17 +109,32 @@ class Transfer
     }
 
     /**
-     * Creates an iterator that recursively yields all filenames in a directory
+     * Returns a recursive directory iterator that yields filenames only and
+     * is not broken like PHP's built-in DirectoryIterator (which will read
+     * the first file from a stream wrapper, then rewind, then read it again).
      *
      * @param string $path Path on disk to traverse
      *
      * @return \Iterator Returns an iterator that yields absolute filenames.
      */
-    public static function fileIterator($path)
+    public static function recursiveDirIterator($path)
     {
-        $iter = new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS);
-        $iter = new \RecursiveIteratorIterator($iter);
-        return t\to_iter($iter, t\map('strval'));
+        $invalid = ['.' => true, '..' => true];
+        $queue = scandir($path);
+        $pathLen = strlen($path) + 1;
+
+        while ($file = array_shift($queue)) {
+            if (isset($invalid[basename($file)])) {
+                continue;
+            }
+            $fullPath = $path . '/' . $file;
+            yield $fullPath;
+            if (is_dir($fullPath)) {
+                foreach (scandir($fullPath) as $subFile) {
+                    $queue[] = substr("$fullPath/$subFile", $pathLen);
+                }
+            }
+        }
     }
 
     /**
