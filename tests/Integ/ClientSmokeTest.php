@@ -90,7 +90,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],*/
             [
                 'autoscaling',
-                'Aws\\AutoScaling\\AutoScalingClient',
+                'Aws\\AutoScalingClient',
                 [],
                 'autoscaling.us-east-1.amazonaws.com',
                 'DescribeAccountLimits',
@@ -100,7 +100,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'cloudformation',
-                'Aws\\CloudFormation\\CloudFormationClient',
+                'Aws\\CloudFormationClient',
                 [],
                 'cloudformation.us-east-1.amazonaws.com',
                 'DescribeStacks',
@@ -110,7 +110,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'cloudfront',
-                'Aws\\CloudFront\\CloudFrontClient',
+                'Aws\\CloudFrontClient',
                 [],
                 'cloudfront.amazonaws.com',
                 'ListDistributions',
@@ -120,7 +120,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'cloudsearch',
-                'Aws\\CloudSearch\\CloudSearchClient',
+                'Aws\\CloudSearchClient',
                 [],
                 'cloudsearch.us-east-1.amazonaws.com',
                 'DescribeDomains',
@@ -130,8 +130,8 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'cloudsearchdomain',
-                'Aws\\CloudSearchDomain\\CloudSearchDomainClient',
-                ['endpoint' => 'search-foo.cloudsearch.us-east-1.amazonaws.com'],
+                'Aws\\CloudSearchDomainClient',
+                ['endpoint' => 'https://search-foo.cloudsearch.us-east-1.amazonaws.com'],
                 'search-foo.cloudsearch.us-east-1.amazonaws.com',
                 'Search',
                 ['query' => 'foo'],
@@ -140,7 +140,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'cloudtrail',
-                'Aws\\CloudTrail\\CloudTrailClient',
+                'Aws\\CloudTrailClient',
                 [],
                 'cloudtrail.us-east-1.amazonaws.com',
                 'DeleteTrail',
@@ -150,7 +150,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'cloudwatch',
-                'Aws\\CloudWatch\\CloudWatchClient',
+                'Aws\\CloudWatchClient',
                 [],
                 'monitoring.us-east-1.amazonaws.com',
                 'DescribeAlarms',
@@ -160,7 +160,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'cloudwatchlogs',
-                'Aws\\CloudWatchLogs\\CloudWatchLogsClient',
+                'Aws\\CloudWatchLogsClient',
                 [],
                 'logs.us-east-1.amazonaws.com',
                 'DescribeLogGroups',
@@ -170,7 +170,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'cognitoidentity',
-                'Aws\\CognitoIdentity\\CognitoIdentityClient',
+                'Aws\\CognitoIdentityClient',
                 [],
                 'cognito-identity.us-east-1.amazonaws.com',
                 'ListIdentityPools',
@@ -180,7 +180,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'cognitosync',
-                'Aws\\CognitoSync\\CognitoSyncClient',
+                'Aws\\CognitoSyncClient',
                 [],
                 'cognito-sync.us-east-1.amazonaws.com',
                 'ListIdentityPoolUsage',
@@ -190,7 +190,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'datapipeline',
-                'Aws\\DataPipeline\\DataPipelineClient',
+                'Aws\\DataPipelineClient',
                 [],
                 'datapipeline.us-east-1.amazonaws.com',
                 'DescribePipelines',
@@ -200,7 +200,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'directconnect',
-                'Aws\\DirectConnect\\DirectConnectClient',
+                'Aws\\DirectConnectClient',
                 [],
                 'directconnect.us-east-1.amazonaws.com',
                 'DescribeConnections',
@@ -210,7 +210,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'dynamodb',
-                'Aws\\DynamoDb\\DynamoDbClient',
+                'Aws\\DynamoDbClient',
                 [],
                 'dynamodb.us-east-1.amazonaws.com',
                 'ListTables',
@@ -220,7 +220,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'ec2',
-                'Aws\\Ec2\\Ec2Client',
+                'Aws\\Ec2Client',
                 [],
                 'ec2.us-east-1.amazonaws.com',
                 'DescribeInstances',
@@ -230,7 +230,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'elasticache',
-                'Aws\\ElastiCache\\ElastiCacheClient',
+                'Aws\\ElastiCacheClient',
                 [],
                 'elasticache.us-east-1.amazonaws.com',
                 'DescribeCacheClusters',
@@ -240,7 +240,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'elasticbeanstalk',
-                'Aws\\ElasticBeanstalk\\ElasticBeanstalkClient',
+                'Aws\\ElasticBeanstalkClient',
                 [],
                 'elasticbeanstalk.us-east-1.amazonaws.com',
                 'DescribeApplications',
@@ -250,7 +250,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'elastictranscoder',
-                'Aws\\ElasticTranscoder\\ElasticTranscoderClient',
+                'Aws\\ElasticTranscoderClient',
                 [],
                 'elastictranscoder.us-east-1.amazonaws.com',
                 'CancelJob',
@@ -260,7 +260,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'elb',
-                'Aws\\ElasticLoadBalancing\\ElasticLoadBalancingClient',
+                'Aws\\ElasticLoadBalancingClient',
                 [],
                 'elasticloadbalancing.us-east-1.amazonaws.com',
                 'DescribeLoadBalancers',
@@ -270,7 +270,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'emr',
-                'Aws\\Emr\\EmrClient',
+                'Aws\\EmrClient',
                 [],
                 'elasticmapreduce.us-east-1.amazonaws.com',
                 'ListClusters',
@@ -280,7 +280,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'glacier',
-                'Aws\\Glacier\\GlacierClient',
+                'Aws\\GlacierClient',
                 [],
                 'glacier.us-east-1.amazonaws.com',
                 'DescribeJob',
@@ -290,7 +290,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'iam',
-                'Aws\\Iam\\IamClient',
+                'Aws\\IamClient',
                 [],
                 'iam.amazonaws.com',
                 'ListGroups',
@@ -300,7 +300,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'importexport',
-                'Aws\\ImportExport\\ImportExportClient',
+                'Aws\\ImportExportClient',
                 [],
                 'importexport.amazonaws.com',
                 'GetStatus',
@@ -310,7 +310,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'kinesis',
-                'Aws\\Kinesis\\KinesisClient',
+                'Aws\\KinesisClient',
                 [],
                 'kinesis.us-east-1.amazonaws.com',
                 'ListStreams',
@@ -320,7 +320,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'opsworks',
-                'Aws\\OpsWorks\\OpsWorksClient',
+                'Aws\\OpsWorksClient',
                 [],
                 'opsworks.us-east-1.amazonaws.com',
                 'DescribeStacks',
@@ -330,7 +330,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'rds',
-                'Aws\\Rds\\RdsClient',
+                'Aws\\RdsClient',
                 [],
                 'rds.us-east-1.amazonaws.com',
                 'DescribeDBInstances',
@@ -340,7 +340,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'redshift',
-                'Aws\\Redshift\\RedshiftClient',
+                'Aws\\RedshiftClient',
                 [],
                 'redshift.us-east-1.amazonaws.com',
                 'DescribeClusters',
@@ -350,7 +350,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'route53',
-                'Aws\\Route53\\Route53Client',
+                'Aws\\Route53Client',
                 [],
                 'route53.amazonaws.com',
                 'ListHostedZones',
@@ -360,7 +360,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'route53domains',
-                'Aws\\Route53Domains\\Route53DomainsClient',
+                'Aws\\Route53DomainsClient',
                 [],
                 'route53domains.us-east-1.amazonaws.com',
                 'ListDomains',
@@ -370,7 +370,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 's3',
-                'Aws\\S3\\S3Client',
+                'Aws\\S3Client',
                 [],
                 't0tally-1nval1d-8uck3t-nam3.s3.amazonaws.com',
                 'ListObjects',
@@ -380,7 +380,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'sdb',
-                'Aws\\SimpleDb\\SimpleDbClient',
+                'Aws\\SimpleDbClient',
                 [],
                 'sdb.amazonaws.com',
                 'ListDomains',
@@ -390,7 +390,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'ses',
-                'Aws\\Ses\\SesClient',
+                'Aws\\SesClient',
                 [],
                 'email.us-east-1.amazonaws.com',
                 'ListIdentities',
@@ -400,7 +400,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'sns',
-                'Aws\\Sns\\snsClient',
+                'Aws\\SnsClient',
                 [],
                 'sns.us-east-1.amazonaws.com',
                 'ListTopics',
@@ -410,7 +410,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'sqs',
-                'Aws\\Sqs\\SqsClient',
+                'Aws\\SqsClient',
                 [],
                 'sqs.us-east-1.amazonaws.com',
                 'ListQueues',
@@ -420,7 +420,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'storagegateway',
-                'Aws\\StorageGateway\\StorageGatewayClient',
+                'Aws\\StorageGatewayClient',
                 [],
                 'storagegateway.us-east-1.amazonaws.com',
                 'DeleteVolume',
@@ -430,7 +430,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'sts',
-                'Aws\\Sts\\StsClient',
+                'Aws\\StsClient',
                 [],
                 'sts.amazonaws.com',
                 'GetSessionToken',
@@ -440,7 +440,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'support',
-                'Aws\\Support\\SupportClient',
+                'Aws\\SupportClient',
                 [],
                 'support.us-east-1.amazonaws.com',
                 'DescribeCases',
@@ -450,7 +450,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'swf',
-                'Aws\\Swf\\SwfClient',
+                'Aws\\SwfClient',
                 [],
                 'swf.us-east-1.amazonaws.com',
                 'DescribeDomain',

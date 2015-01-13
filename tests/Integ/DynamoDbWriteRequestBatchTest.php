@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Test\Integ;
 
-use Aws\DynamoDbClient;
 use Aws\Exception\DynamoDbException;
 use Aws\DynamoDb\WriteRequestBatch;
 use GuzzleHttp\Command\Event\ProcessEvent;
@@ -40,7 +39,7 @@ class DynamoDbWriteRequestBatchTest extends \PHPUnit_Framework_TestCase
         $actualItems = $this->client->getIterator('Scan', ['TableName' => $this->table]);
 
         // Assert that all the items were actually written.
-        $this->assertCount($itemCount, $actualItems);
+        $this->assertEquals($itemCount, iterator_count($actualItems));
         // Assert that there were the correct number of auto-flushes.
         $this->assertEquals(3, $autoFlushCount);
     }
@@ -84,8 +83,6 @@ class DynamoDbWriteRequestBatchTest extends \PHPUnit_Framework_TestCase
         self::log("Deleting table {$this->table}.");
         try {
             $this->client->deleteTable(['TableName' => $this->table]);
-            self::log("Waiting until table {$this->table} has been deleted.");
-            $this->client->waitUntil('TableNotExists', ['TableName' => $this->table]);
         } catch (DynamoDbException $e) {
             self::log("Table {$this->table} does not exist.");
         }
