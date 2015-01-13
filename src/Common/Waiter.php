@@ -95,9 +95,6 @@ class Waiter implements FutureInterface
         // Configure the asynchronous behavior.
         $this->deferred = new Deferred();
         $this->wrappedPromise = $this->deferred->promise();
-        if (!isset($this->args['@future'])) {
-            $this->args['@future'] = false;
-        }
 
         // Setup callbacks.
         $this->processfn = $this->getProcessFn();
@@ -115,8 +112,8 @@ class Waiter implements FutureInterface
             }
         };
 
-        // Start it up.
-        if ($this->args['@future']) {
+        // If async, begin waiting.
+        if (!empty($this->args['@future'])) {
             $this->pollResource();
         }
     }

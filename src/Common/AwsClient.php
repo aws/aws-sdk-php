@@ -224,15 +224,12 @@ class AwsClient extends AbstractClient implements AwsClientInterface
 
     public function waitUntil($name, array $args = [], array $config = [])
     {
-        // Prepare waiter config and args.
-        $config += $this->api->getWaiterConfig($name);
-        $args += ['@future' => false];
-
         // Create the waiter. If async, then waiting begins immediately.
+        $config += $this->api->getWaiterConfig($name);
         $waiter = new Waiter($this, $name, $args, $config);
 
         // If async, return the future, for access to then()/wait()/cancel().
-        if ($args['@future']) {
+        if (!empty($args['@future'])) {
             return $waiter;
         }
 
