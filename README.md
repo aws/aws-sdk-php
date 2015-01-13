@@ -28,16 +28,16 @@ The recommended way to install the AWS SDK for PHP is through Composer.
 
 1. Install Composer
 
-       curl -sS https://getcomposer.org/installer | php
+        curl -sS https://getcomposer.org/installer | php
 
 2. Next, run the Composer command to install the latest stable version of
    Guzzle:
 
-       composer require guzzlehttp/guzzle
+        composer require guzzlehttp/guzzle
 
 3. After installing, you need to require Composer's autoloader in your app:
 
-       require 'vendor/autoload.php';
+        require 'vendor/autoload.php';
 
 More installation instructions can be found in the
 [User Guide][docs-installation].
