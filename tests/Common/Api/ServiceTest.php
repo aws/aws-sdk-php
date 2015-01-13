@@ -98,91 +98,22 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function dataForWaiterConfigTest()
+    public function testLoadWaiterConfigs()
     {
-        return [
-            ['Test', [
-                'success_path'  => 'Foo/Baz',
-                'success_type'  => 'output',
-                'success_value' => 'foo',
-                'failure_path'  => 'Foo/Baz',
-                'failure_type'  => 'output',
-                'max_attempts'  => 10,
-                'ignore_errors' => ['1', '2'],
-            ]],
-            ['Extending', [
-                'extends'       => 'Test',
-                'success_path'  => 'Foo/Baz',
-                'success_type'  => 'output',
-                'success_value' => 'foo',
-                'failure_path'  => 'Foo/Baz',
-                'failure_type'  => 'output',
-                'failure_value' => 'fail',
-                'max_attempts'  => 10,
-                'ignore_errors' => ['1', '2'],
-            ]],
-            ['Overwrite', [
-                'extends'       => 'Test',
-                'success_path'  => 'Foo/Baz',
-                'success_type'  => 'output',
-                'success_value' => 'abc',
-                'failure_path'  => 'Foo/Baz',
-                'failure_type'  => 'baz',
-                'max_attempts'  => 20,
-                'ignore_errors' => ['1', '2'],
-            ]],
-            ['Error', 'UnexpectedValueException']
-        ];
-    }
+        $api = new Service(
+            function () {
+                return ['waiters' => ['Foo' => ['bar' => 'baz']]];
+            },
+            '',
+            ''
+        );
 
-//    /**
-//     * @dataProvider dataForWaiterConfigTest
-//     */
-//    public function testLoadAndResolvesWaiterConfigs($name, $expected)
-//    {
-//        $api = new Service(
-//            function () {
-//                return [
-//                    'waiters' => [
-//                        '__default__' => [
-//                            'acceptor_path' => 'Foo/Baz',
-//                            'acceptor_type' => 'output',
-//                            'max_attempts' => 10,
-//                        ],
-//                        'Test' => [
-//                            'success_value' => 'foo',
-//                            'ignore_errors' => ['1', '2'],
-//                        ],
-//                        'Extending' => [
-//                            'extends' => 'Test',
-//                            'failure_value' => 'fail',
-//                        ],
-//                        'Overwrite' => [
-//                            'extends' => 'Test',
-//                            'max_attempts' => 20,
-//                            'success_value' => 'abc',
-//                            'failure_type' => 'baz',
-//                        ]
-//                    ]
-//                ];
-//            },
-//            '',
-//            ''
-//        );
-//
-//        // Handle exception test cases
-//        if (is_string($expected)) {
-//            $this->setExpectedException($expected);
-//        }
-//
-//        // Get the resolved config and verify its correctness
-//        $actual = $api->getWaiterConfig($name);
-//        /** @var array $expected */
-//        foreach ($expected as $key => $value) {
-//            $this->assertEquals($value, $actual[$key]);
-//            $this->assertEquals($name, $actual['waiter_name']);
-//        }
-//    }
+        $config = $api->getWaiterConfig('Foo');
+        $this->assertEquals(['bar' => 'baz'], $config);
+
+        $this->setExpectedException('UnexpectedValueException');
+        $config = $api->getWaiterConfig('Fizz');
+    }
 
     public function errorParserProvider()
     {
