@@ -2,7 +2,7 @@
 namespace Aws;
 
 use Aws\Exception\S3Exception;
-use Aws\S3\Multipart\UploadBuilder;
+use Aws\S3\UploadBuilder;
 use GuzzleHttp\Stream\AppendStream;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Command\CommandInterface;

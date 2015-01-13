@@ -1,7 +1,7 @@
 <?php
 namespace Aws;
 
-use Aws\Common\Exception\UnresolvedEndpointException;
+use Aws\Exception\UnresolvedEndpointException;
 use GuzzleHttp\Utils;
 
 /**

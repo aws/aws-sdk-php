@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Test\Sqs;
 
-use Aws\Sqs\SqsClient;
+use Aws\SqsClient;
 use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Message\Request;

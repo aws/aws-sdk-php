@@ -17,7 +17,7 @@ class S3FactoryTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $this->assertInstanceOf(
-            'Aws\Common\Signature\S3Signature',
+            'Aws\Signature\S3Signature',
             $c->getSignature()
         );
     }
@@ -31,7 +31,7 @@ class S3FactoryTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $this->assertInstanceOf(
-            'Aws\Common\Signature\SignatureV4',
+            'Aws\Signature\SignatureV4',
             $c->getSignature()
         );
     }
@@ -77,10 +77,10 @@ class S3FactoryTest extends \PHPUnit_Framework_TestCase
             }
         }
 
-        $this->assertContains('Aws\Common\Subscriber\SourceFile', $found);
-        $this->assertContains('Aws\S3\Subscriber\BucketStyle', $found);
-        $this->assertContains('Aws\S3\Subscriber\ApplyMd5', $found);
-        $this->assertContains('Aws\S3\Subscriber\PermanentRedirect', $found);
-        $this->assertContains('Aws\S3\Subscriber\PutObjectUrl', $found);
+        $this->assertContains('Aws\Subscriber\SourceFile', $found);
+        $this->assertContains('Aws\S3\BucketStyleSubscriber', $found);
+        $this->assertContains('Aws\S3\ApplyMd5Subscriber', $found);
+        $this->assertContains('Aws\S3\PermanentRedirectSubscriber', $found);
+        $this->assertContains('Aws\S3\PutObjectUrlSubscriber', $found);
     }
 }

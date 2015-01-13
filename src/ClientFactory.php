@@ -137,9 +137,7 @@ class ClientFactory
         }
 
         if (!isset($args['api_provider'])) {
-            $args['api_provider'] = new FilesystemApiProvider(
-                __DIR__ . '/Resources/api'
-            );
+            $args['api_provider'] = new FilesystemApiProvider(__DIR__ . '/data');
         }
 
         if (!isset($args['endpoint_provider'])) {
@@ -268,11 +266,11 @@ class ClientFactory
             $args['exception_class'] = 'Aws\Exception\AwsException';
         } else {
             // An explicitly provided class_name must be found.
-            $args['client_class'] = "Aws\\{$value}\\{$value}Client";
+            $args['client_class'] = "Aws\\{$value}Client";
             if (!class_exists($args['client_class'])) {
                 throw new \RuntimeException("Client not found for $value");
             }
-            $args['exception_class']  = "Aws\\{$args['class_name']}\\Exception\\{$args['class_name']}Exception";
+            $args['exception_class']  = "Aws\\Exception\\{$args['class_name']}Exception";
             if (!class_exists($args['exception_class'] )) {
                 throw new \RuntimeException("Exception class not found $value");
             }

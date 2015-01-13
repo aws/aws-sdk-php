@@ -2,7 +2,7 @@
 namespace Aws\Test\S3;
 
 use Aws\S3\Exception\ClearBucketException;
-use Aws\S3\S3Client;
+use Aws\S3Client;
 use Aws\S3\ClearBucket;
 use Aws\Test\UsesServiceTrait;
 
@@ -81,7 +81,7 @@ class ClearBucketTest extends \PHPUnit_Framework_TestCase
     {
         $c = new ClearBucket($this->client, 'foo');
         $i = $this->readAttribute($c, 'iterator');
-        $this->assertInstanceOf('Aws\Common\FlatMapIterator', $i);
+        $this->assertInstanceOf('Generator', $i);
     }
 
     public function testAddsMfaOptions()

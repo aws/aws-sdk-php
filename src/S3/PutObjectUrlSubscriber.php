@@ -1,5 +1,5 @@
 <?php
-namespace Aws\S3\Subscriber;
+namespace Aws\S3;
 
 use GuzzleHttp\Command\Event\ProcessEvent;
 use GuzzleHttp\Event\SubscriberInterface;
@@ -9,7 +9,7 @@ use GuzzleHttp\Event\SubscriberInterface;
  *
  * @internal
  */
-class PutObjectUrl implements SubscriberInterface
+class PutObjectUrlSubscriber implements SubscriberInterface
 {
     public function getEvents()
     {

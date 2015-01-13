@@ -2,7 +2,7 @@
 namespace Aws\Api\Parser;
 
 use Aws\Api\Service;
-use Aws\Common\Result;
+use Aws\Result;
 use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Message\ResponseInterface;
 

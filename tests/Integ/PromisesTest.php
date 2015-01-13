@@ -9,7 +9,7 @@ class PromisesTest extends \PHPUnit_Framework_TestCase
     {
         $client = $this->getSdk()->getClient('s3');
         $result = $client->listBuckets();
-        $this->assertInstanceOf('Aws\Common\Result', $result);
+        $this->assertInstanceOf('Aws\Result', $result);
         $this->assertInternalType('string', $result['Owner']['ID']);
     }
 
@@ -17,7 +17,7 @@ class PromisesTest extends \PHPUnit_Framework_TestCase
     {
         $client = $this->getSdk()->getClient('s3');
         $result = $client->listBuckets(['@future' => true]);
-        $this->assertInstanceOf('Aws\Common\FutureResult', $result);
+        $this->assertInstanceOf('Aws\FutureResult', $result);
         // Block until it's ready
         $this->assertInternalType('string', $result['Owner']['ID']);
     }
@@ -30,12 +30,12 @@ class PromisesTest extends \PHPUnit_Framework_TestCase
         $result
             ->then(function ($result) use (&$resolved) {
                 $resolved = $result;
-                $this->assertInstanceOf('Aws\Common\Result', $result);
+                $this->assertInstanceOf('Aws\Result', $result);
             });
         // Block to trigger the promise resolution.
         $result->wait();
-        $this->assertInstanceOf('Aws\Common\FutureResult', $result);
-        $this->assertInstanceOf('Aws\Common\Result', $resolved);
+        $this->assertInstanceOf('Aws\FutureResult', $result);
+        $this->assertInstanceOf('Aws\Result', $resolved);
         $this->assertInternalType('string', $resolved['Owner']['ID']);
     }
 }

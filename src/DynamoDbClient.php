@@ -1,7 +1,7 @@
 <?php
 namespace Aws;
 
-use Aws\DynamoDb\Session\SessionHandler;
+use Aws\DynamoDb\SessionHandler;
 
 /**
  * This client is used to interact with the **Amazon DynamoDB** service.

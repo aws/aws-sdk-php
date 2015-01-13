@@ -1,7 +1,7 @@
 <?php
 namespace Aws;
 
-use Aws\Common\Credentials\Credentials;
+use Aws\Credentials\Credentials;
 
 /**
  * This client is used to interact with the **AWS Security Token Service (AWS STS)**.

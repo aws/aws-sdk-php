@@ -1,5 +1,5 @@
 <?php
-namespace Aws\S3\Multipart;
+namespace Aws\S3;
 
 use Aws\Multipart\PartGenerator;
 use Aws\Multipart\AbstractUploadBuilder;

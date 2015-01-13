@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Test\Integ;
 
-use Aws\Common\Exception\AwsException;
+use Aws\Exception\AwsException;
 use GuzzleHttp\Event\BeforeEvent;
 
 class ClientSmokeTest extends \PHPUnit_Framework_TestCase

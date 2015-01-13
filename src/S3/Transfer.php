@@ -1,7 +1,7 @@
 <?php
 namespace Aws\S3;
 
-use Aws\S3\Multipart\UploadBuilder;
+use Aws\S3Client;
 use GuzzleHttp\Command\Command;
 use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Command\Event\PreparedEvent;
@@ -127,7 +127,7 @@ class Transfer
      */
     public function transfer()
     {
-        if (!$this->source->valid() && !($this->source instanceof \Generator)) {
+        if (!$this->source->valid()) {
             $this->source->rewind();
         }
 
@@ -162,9 +162,10 @@ class Transfer
      */
     private function wrapIterator(\Iterator $iter)
     {
+        $comp = [];
         // Filter out MUP uploads to send separate operations.
         if ($this->destScheme == 's3' && $this->sourceScheme == 'file') {
-            $iter = new \CallbackFilterIterator($iter, function ($file) {
+            $comp[] = t\filter(function ($file) {
                 if ($this->sourceScheme == 'file'
                     && filesize($file) >= $this->mup_threshold
                 ) {
@@ -174,12 +175,10 @@ class Transfer
                 // Filter out "/" files stored on S3 as buckets.
                 return substr($file, -1, 1) != '/';
             });
-            $iter->rewind();
         }
+        $comp[] = t\map($this->getTransferFunction($this->sourceScheme, $this->destScheme));
 
-        $fn = $this->getTransferFunction($this->sourceScheme, $this->destScheme);
-
-        return t\to_iter($iter, t\map($fn));
+        return t\to_iter($iter, call_user_func_array('transducers\comp', $comp));
     }
 
     /**

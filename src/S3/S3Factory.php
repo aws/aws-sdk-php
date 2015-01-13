@@ -7,10 +7,6 @@ use Aws\Signature\S3SignatureV4;
 use Aws\Signature\SignatureV4;
 use Aws\Subscriber\SaveAs;
 use Aws\Subscriber\SourceFile;
-use Aws\S3\Subscriber\ApplyMd5;
-use Aws\S3\Subscriber\BucketStyle;
-use Aws\S3\Subscriber\PermanentRedirect;
-use Aws\S3\Subscriber\PutObjectUrl;
 use GuzzleHttp\Message\ResponseInterface;
 use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
 
@@ -60,12 +56,12 @@ class S3Factory extends ClientFactory
         }
 
         $emitter = $client->getEmitter();
-        $emitter->attach(new BucketStyle());
-        $emitter->attach(new PermanentRedirect());
-        $emitter->attach(new SSECListener());
-        $emitter->attach(new PutObjectUrl());
+        $emitter->attach(new BucketStyleSubscriber());
+        $emitter->attach(new PermanentRedirectSubscriber());
+        $emitter->attach(new SSECSubscriber());
+        $emitter->attach(new PutObjectUrlSubscriber());
         $emitter->attach(new SourceFile($client->getApi()));
-        $emitter->attach(new ApplyMd5());
+        $emitter->attach(new ApplyMd5Subscriber());
         $emitter->attach(new SaveAs());
 
         return $client;

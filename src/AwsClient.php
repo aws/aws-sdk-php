@@ -55,7 +55,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
      * - region: (optional) Region used to interact with the service
      * - error_parser: A callable that parses response exceptions
      * - exception_class: (optional) A specific exception class to throw that
-     *   extends from {@see Aws\Common\Exception\AwsException}.
+     *   extends from {@see Aws\Exception\AwsException}.
      * - serializer: callable used to serialize a request for a provided
      *   CommandTransaction argument. The callable must return a
      *   RequestInterface object.
@@ -85,7 +85,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         $this->defaults = isset($config['defaults']) ? $config['defaults'] : [];
         $this->commandException = isset($config['exception_class'])
             ? $config['exception_class']
-            : 'Aws\Common\Exception\AwsException';
+            : 'Aws\Exception\AwsException';
 
         parent::__construct($config['client']);
     }

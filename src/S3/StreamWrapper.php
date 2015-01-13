@@ -2,6 +2,7 @@
 namespace Aws\S3;
 
 use Aws\Result;
+use Aws\S3Client;
 use Aws\Exception\S3Exception;
 use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Stream\StreamInterface;
@@ -365,7 +366,7 @@ class StreamWrapper
             })
         );
 
-        $this->objectIterator->rewind();
+        $this->objectIterator = new \NoRewindIterator($this->objectIterator);
 
         return true;
     }
@@ -391,7 +392,6 @@ class StreamWrapper
     {
         return $this->boolCall(function () {
             $this->clearStatInfo();
-            $this->objectIterator->rewind();
             return true;
         });
     }

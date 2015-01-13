@@ -35,7 +35,9 @@ class AwsException extends CommandException
      */
     public function getStatusCode()
     {
-        return $this->getTransaction()->response->getStatusCode();
+        return $this->getTransaction()->response
+            ? $this->getTransaction()->response->getStatusCode()
+            : null;
     }
 
     /**

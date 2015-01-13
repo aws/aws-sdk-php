@@ -1,8 +1,8 @@
 <?php
 namespace Aws\Subscriber;
 
-use Aws\Common\Signature\SignatureInterface;
-use Aws\Common\Credentials\CredentialsInterface;
+use Aws\Signature\SignatureInterface;
+use Aws\Credentials\CredentialsInterface;
 use GuzzleHttp\Event\RequestEvents;
 use GuzzleHttp\Event\SubscriberInterface;
 use GuzzleHttp\Event\BeforeEvent;

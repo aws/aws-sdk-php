@@ -1,5 +1,5 @@
 <?php
-namespace Aws\S3\Subscriber;
+namespace Aws\S3;
 
 use Aws\S3\Exception\PermanentRedirectException;
 use GuzzleHttp\Command\Event\ProcessEvent;
@@ -11,7 +11,7 @@ use GuzzleHttp\Event\SubscriberInterface;
  *
  * @internal
  */
-class PermanentRedirect implements SubscriberInterface
+class PermanentRedirectSubscriber implements SubscriberInterface
 {
     public function getEvents()
     {

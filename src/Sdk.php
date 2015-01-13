@@ -152,7 +152,7 @@ class Sdk
      *
      * - region: The region to use of the service.
      * - version: API version of the service.
-     * - credentials: An {@see Aws\Common\Credentials\CredentialsInterface}
+     * - credentials: An {@see Aws\Credentials\CredentialsInterface}
      *   object to use with each, an associative array of 'key', 'secret', and
      *   'token' key value pairs, `false` to utilize null credentials, or a
      *   callable credentials provider function to create credentials using a
@@ -215,7 +215,7 @@ class Sdk
         // Set the service name and determine if it is linked to a known class
         $args['service'] = $name;
         $args['class_name'] = false;
-        $factoryName = 'Aws\Common\ClientFactory';
+        $factoryName = 'Aws\ClientFactory';
 
         if (isset(self::$services[$name])) {
             $args['class_name'] = self::$services[$name];

@@ -1,5 +1,5 @@
 <?php
-namespace Aws\DynamoDb\Session;
+namespace Aws\DynamoDb;
 
 use Aws\DynamoDbClient;
 use Aws\Exception\DynamoDbException;

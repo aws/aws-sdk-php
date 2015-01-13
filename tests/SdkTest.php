@@ -65,7 +65,7 @@ class SdkTest extends \PHPUnit_Framework_TestCase
     public function testCreatesClients()
     {
         $this->assertInstanceOf(
-            'Aws\Common\AwsClientInterface',
+            'Aws\AwsClientInterface',
             (new Sdk())->getDynamoDb([
                 'region'  => 'us-east-1',
                 'version' => 'latest'
@@ -76,7 +76,7 @@ class SdkTest extends \PHPUnit_Framework_TestCase
     public function testCreatesClientsWithAlias()
     {
         $this->assertInstanceOf(
-            'Aws\Common\AwsClientInterface',
+            'Aws\AwsClientInterface',
             (new Sdk())->getCloudWatch([
                 'region'  => 'us-east-1',
                 'version' => 'latest'

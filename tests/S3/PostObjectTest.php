@@ -17,7 +17,7 @@ class PostObjectTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $credentials = $this->getMockBuilder('Aws\Common\Credentials\Credentials')
+        $credentials = $this->getMockBuilder('Aws\Credentials\Credentials')
             ->disableOriginalConstructor()
             ->getMock();
         $credentials->expects($this->any())

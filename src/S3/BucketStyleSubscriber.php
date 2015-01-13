@@ -1,5 +1,5 @@
 <?php
-namespace Aws\S3\Subscriber;
+namespace Aws\S3;
 
 use Aws\S3Client;
 use GuzzleHttp\Command\Event\PreparedEvent;
@@ -11,7 +11,7 @@ use GuzzleHttp\Event\SubscriberInterface;
  *
  * @internal
  */
-class BucketStyle implements SubscriberInterface
+class BucketStyleSubscriber implements SubscriberInterface
 {
     private static $exclusions = ['GetBucketLocation' => true];
 

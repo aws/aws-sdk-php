@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Test\DynamoDb;
 
-use Aws\Common\Result;
+use Aws\Result;
 use Aws\DynamoDb\WriteRequestBatch;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Message\Response;
@@ -161,7 +161,7 @@ class WriteRequestBatchTest extends \PHPUnit_Framework_TestCase
 
     private function getMockClient()
     {
-        return $this->getMockBuilder('Aws\DynamoDb\DynamoDbClient')
+        return $this->getMockBuilder('Aws\DynamoDbClient')
             ->disableOriginalConstructor()
             ->getMock();
     }

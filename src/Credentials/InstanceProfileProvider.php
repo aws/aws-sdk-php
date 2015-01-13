@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Credentials;
 
-use Aws\Common\Exception\CredentialsException;
+use Aws\Exception\CredentialsException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Utils;
 

@@ -1,5 +1,5 @@
 <?php
-namespace Aws\S3\Subscriber;
+namespace Aws\S3;
 
 use Aws\Exception\CouldNotCreateChecksumException;
 use GuzzleHttp\Command\Event\PreparedEvent;
@@ -11,7 +11,7 @@ use GuzzleHttp\Stream\Utils;
  *
  * @internal
  */
-class ApplyMd5 implements SubscriberInterface
+class ApplyMd5Subscriber implements SubscriberInterface
 {
     private static $requireMd5 = [
         'DeleteObjects',

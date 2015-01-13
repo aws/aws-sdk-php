@@ -1,10 +1,10 @@
 <?php
 namespace Aws\Test;
 
-use Aws\Common\AwsClientInterface;
-use Aws\Common\Result;
+use Aws\AwsClientInterface;
+use Aws\Result;
 use Aws\Sdk;
-use Aws\Common\Api\Service;
+use Aws\Api\Service;
 use GuzzleHttp\Ring\Client\MockHandler;
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\CommandTransaction;
@@ -120,10 +120,10 @@ trait UsesServiceTrait
      */
     private function createMockAwsException(
         $code = 'ERROR',
-        $type = 'Aws\Common\Exception\AwsException',
+        $type = 'Aws\Exception\AwsException',
         $message = null
     ) {
-        $client = $this->getMockBuilder('Aws\Common\AwsClientInterface')
+        $client = $this->getMockBuilder('Aws\AwsClientInterface')
             ->setMethods(['getApi'])
             ->getMockForAbstractClass();
 

@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Tests\S3;
 
-use Aws\Common\Result;
+use Aws\Result;
 use Aws\S3\Transfer;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Command\CommandInterface;
