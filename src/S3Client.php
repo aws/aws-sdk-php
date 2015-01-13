@@ -150,7 +150,7 @@ class S3Client extends AwsClient
      *       callable accepts the underlying iterator being used and an array
      *       of the keys that are about to be deleted.
      *
-     * @see Aws\S3\S3Client::listObjects
+     * @see Aws\S3Client::listObjects
      * @see Aws\S3\ClearBucket For more options or customization
      * @throws \RuntimeException if no prefix and no regex is given
      */
@@ -364,7 +364,7 @@ class S3Client extends AwsClient
     }
 
     /**
-     * @deprecated Use Aws\S3\S3Client::isBucketDnsCompatible() directly
+     * @deprecated Use Aws\S3Client::isBucketDnsCompatible() directly
      */
     public static function isValidBucketName($bucket)
     {
