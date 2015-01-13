@@ -10,11 +10,6 @@
 * Removed `Aws\S3\ResumableDownload`.
 * More information to follow.
 
-**Known Issues**
-
-* `Aws\S3\S3Client::uploadDirectory()` and `downloadBucket()` have been removed
-  for now while we rewrite this functionality to be more generic.
-
 ## 2.7.2 - 2014-10-23
 
 * Updated AWS Identity and Access Management (IAM) to the latest version.
