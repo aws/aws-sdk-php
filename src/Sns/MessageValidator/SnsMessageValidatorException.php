@@ -1,5 +1,4 @@
 <?php
-
 namespace Aws\Sns\MessageValidator;
 
 /**

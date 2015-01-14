@@ -16,25 +16,33 @@
         "issues": "https://github.com/aws/aws-sdk-php/issues"
     },
     "require": {
-        "php": ">=5.4",
+        "php": ">=5.5",
         "guzzlehttp/guzzle": "~5.1",
         "guzzlehttp/command": "0.7.*",
         "guzzlehttp/message-integrity-subscriber": "0.2.*",
         "guzzlehttp/retry-subscriber": "~2.0",
         "guzzlehttp/log-subscriber": "~1.0",
-        "mtdowling/jmespath.php": "~1.1"
+        "mtdowling/jmespath.php": "~2.1",
+        "mtdowling/transducers": "0.3.*"
     },
     "require-dev": {
         "ext-openssl": "*",
+        "ext-pcre": "*",
+        "ext-spl": "*",
+        "ext-json": "*",
+        "ext-dom": "*",
+        "ext-simplexml": "*",
         "phpunit/phpunit": "~4.0"
     },
     "suggest": {
-        "ext-openssl": "Allows working with CloudFront private distributions and verifying received SNS messages"
+        "ext-openssl": "Allows working with CloudFront private distributions and verifying received SNS messages",
+        "ext-curl": "To send requests using cURL"
     },
     "autoload": {
         "psr-4": {
             "Aws\\": "src/"
-        }
+        },
+        "files": ["src/legacy-bootstrap.php"]
     },
     "extra": {
         "branch-alias": {

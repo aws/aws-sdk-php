@@ -6,44 +6,44 @@ use GuzzleHttp\Client;
 /**
  * Builds AWS clients based on configuration settings.
  *
- * @method \Aws\AutoScaling\AutoScalingClient getAutoScaling(array $args = [])
- * @method \Aws\CloudFormation\CloudFormationClient getCloudFormation(array $args = [])
- * @method \Aws\CloudFront\CloudFrontClient getCloudFront(array $args = [])
- * @method \Aws\CloudSearch\CloudSearchClient getCloudSearch(array $args = [])
- * @method \Aws\CloudSearchDomain\CloudSearchDomainClient getCloudSearchDomain(array $args = [])
- * @method \Aws\CloudTrail\CloudTrailClient getCloudTrail(array $args = [])
- * @method \Aws\CloudWatch\CloudWatchClient getCloudWatch(array $args = [])
- * @method \Aws\CloudWatchLogs\CloudWatchLogsClient getCloudWatchLogs(array $args = [])
- * @method \Aws\CognitoIdentity\CognitoIdentityClient getCognitoIdentity(array $args = [])
- * @method \Aws\CognitoSync\CognitoSyncClient getCognitoSync(array $args = [])
- * @method \Aws\DataPipeline\DataPipelineClient getDataPipeline(array $args = [])
- * @method \Aws\DirectConnect\DirectConnectClient getDirectConnect(array $args = [])
- * @method \Aws\DynamoDb\DynamoDbClient getDynamoDb(array $args = [])
- * @method \Aws\Ec2\Ec2Client getEc2(array $args = [])
- * @method \Aws\Ecs\EcsClient getEcs(array $args = [])
- * @method \Aws\ElastiCache\ElastiCacheClient getElastiCache(array $args = [])
- * @method \Aws\ElasticBeanstalk\ElasticBeanstalkClient getElasticBeanstalk(array $args = [])
- * @method \Aws\ElasticLoadBalancing\ElasticLoadBalancingClient getElasticLoadBalancing(array $args = [])
- * @method \Aws\ElasticTranscoder\ElasticTranscoderClient getElasticTranscoder(array $args = [])
- * @method \Aws\Emr\EmrClient getEmr(array $args = [])
- * @method \Aws\Glacier\GlacierClient getGlacier(array $args = [])
- * @method \Aws\Iam\IamClient getIam(array $args = [])
- * @method \Aws\ImportExport\ImportExportClient getImportExport(array $args = [])
- * @method \Aws\Kinesis\KinesisClient getKinesis(array $args = [])
- * @method \Aws\OpsWorks\OpsWorksClient getOpsWorks(array $args = [])
- * @method \Aws\Rds\RdsClient getRds(array $args = [])
- * @method \Aws\Redshift\RedshiftClient getRedshift(array $args = [])
- * @method \Aws\Route53\Route53Client getRoute53(array $args = [])
- * @method \Aws\Route53Domains\Route53DomainsClient getRoute53Domains(array $args = [])
- * @method \Aws\S3\S3Client getS3(array $args = [])
- * @method \Aws\Ses\SesClient getSes(array $args = [])
- * @method \Aws\SimpleDb\SimpleDbClient getSimpleDb(array $args = [])
- * @method \Aws\Sns\SnsClient getSns(array $args = [])
- * @method \Aws\Sqs\SqsClient getSqs(array $args = [])
- * @method \Aws\StorageGateway\StorageGatewayClient getStorageGateway(array $args = [])
- * @method \Aws\Sts\StsClient getSts(array $args = [])
- * @method \Aws\Support\SupportClient getSupport(array $args = [])
- * @method \Aws\Swf\SwfClient getSwf(array $args = [])
+ * @method \Aws\AutoScalingClient getAutoScaling(array $args = [])
+ * @method \Aws\CloudFormationClient getCloudFormation(array $args = [])
+ * @method \Aws\CloudFrontClient getCloudFront(array $args = [])
+ * @method \Aws\CloudSearchClient getCloudSearch(array $args = [])
+ * @method \Aws\CloudSearchDomainClient getCloudSearchDomain(array $args = [])
+ * @method \Aws\CloudTrailClient getCloudTrail(array $args = [])
+ * @method \Aws\CloudWatchClient getCloudWatch(array $args = [])
+ * @method \Aws\CloudWatchLogsClient getCloudWatchLogs(array $args = [])
+ * @method \Aws\CognitoIdentityClient getCognitoIdentity(array $args = [])
+ * @method \Aws\CognitoSyncClient getCognitoSync(array $args = [])
+ * @method \Aws\DataPipelineClient getDataPipeline(array $args = [])
+ * @method \Aws\DirectConnectClient getDirectConnect(array $args = [])
+ * @method \Aws\DynamoDbClient getDynamoDb(array $args = [])
+ * @method \Aws\Ec2Client getEc2(array $args = [])
+ * @method \Aws\EcsClient getEcs(array $args = [])
+ * @method \Aws\ElastiCacheClient getElastiCache(array $args = [])
+ * @method \Aws\ElasticBeanstalkClient getElasticBeanstalk(array $args = [])
+ * @method \Aws\ElasticLoadBalancingClient getElasticLoadBalancing(array $args = [])
+ * @method \Aws\ElasticTranscoderClient getElasticTranscoder(array $args = [])
+ * @method \Aws\EmrClient getEmr(array $args = [])
+ * @method \Aws\GlacierClient getGlacier(array $args = [])
+ * @method \Aws\IamClient getIam(array $args = [])
+ * @method \Aws\ImportExportClient getImportExport(array $args = [])
+ * @method \Aws\KinesisClient getKinesis(array $args = [])
+ * @method \Aws\OpsWorksClient getOpsWorks(array $args = [])
+ * @method \Aws\RdsClient getRds(array $args = [])
+ * @method \Aws\RedshiftClient getRedshift(array $args = [])
+ * @method \Aws\Route53Client getRoute53(array $args = [])
+ * @method \Aws\Route53DomainsClient getRoute53Domains(array $args = [])
+ * @method \Aws\S3Client getS3(array $args = [])
+ * @method \Aws\SesClient getSes(array $args = [])
+ * @method \Aws\SimpleDbClient getSimpleDb(array $args = [])
+ * @method \Aws\SnsClient getSns(array $args = [])
+ * @method \Aws\SqsClient getSqs(array $args = [])
+ * @method \Aws\StorageGatewayClient getStorageGateway(array $args = [])
+ * @method \Aws\StsClient getSts(array $args = [])
+ * @method \Aws\SupportClient getSupport(array $args = [])
+ * @method \Aws\SwfClient getSwf(array $args = [])
  */
 class Sdk
 {
@@ -152,7 +152,7 @@ class Sdk
      *
      * - region: The region to use of the service.
      * - version: API version of the service.
-     * - credentials: An {@see Aws\Common\Credentials\CredentialsInterface}
+     * - credentials: An {@see Aws\Credentials\CredentialsInterface}
      *   object to use with each, an associative array of 'key', 'secret', and
      *   'token' key value pairs, `false` to utilize null credentials, or a
      *   callable credentials provider function to create credentials using a
@@ -192,7 +192,7 @@ class Sdk
      * @param string $name Client name
      * @param array  $args Custom arguments to provide to the client.
      *
-     * @return \Aws\Common\AwsClientInterface
+     * @return AwsClientInterface
      * @throws \InvalidArgumentException
      */
     public function getClient($name, array $args = [])
@@ -215,7 +215,7 @@ class Sdk
         // Set the service name and determine if it is linked to a known class
         $args['service'] = $name;
         $args['class_name'] = false;
-        $factoryName = 'Aws\Common\ClientFactory';
+        $factoryName = 'Aws\ClientFactory';
 
         if (isset(self::$services[$name])) {
             $args['class_name'] = self::$services[$name];

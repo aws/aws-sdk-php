@@ -2,7 +2,7 @@
 namespace Aws\Test\Glacier;
 
 use Aws\Glacier\GlacierFactory;
-use Aws\Common\Result;
+use Aws\Result;
 use GuzzleHttp\Command\Event\PreparedEvent;
 
 /**
@@ -47,7 +47,7 @@ class GlacierFactoryTest extends \PHPUnit_Framework_TestCase
             }
         }
 
-        $this->assertContains('Aws\Common\Subscriber\SourceFile', $found);
+        $this->assertContains('Aws\Subscriber\SourceFile', $found);
         $this->assertContains('Aws\Glacier\ApplyChecksums', $found);
     }
 }

@@ -738,13 +738,6 @@ EOT;
         $expected = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
         $this->assertEquals($expected, $files);
 
-        rewinddir($r);
-        $files = [];
-        while (($file = readdir($r)) !== false) {
-            $files[] = $file;
-        }
-
-        $this->assertEquals($expected, $files);
         closedir($r);
     }
 

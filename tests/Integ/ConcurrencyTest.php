@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Test\Integ;
 
-use JmesPath\Env as Jp;
 use GuzzleHttp\Command\Event\ProcessEvent;
 
 class ConcurrencyTest extends \PHPUnit_Framework_TestCase
@@ -24,7 +23,7 @@ class ConcurrencyTest extends \PHPUnit_Framework_TestCase
             }
         ]);
         $this->assertCount(3, $results);
-        $this->assertCount(1, array_unique(Jp::search('[*].Owner.ID', $results)));
+        $this->assertCount(1, array_unique(\JmesPath\search('[*].Owner.ID', $results)));
     }
 
     public function testSendsRequestsConcurrentlyWithPool()

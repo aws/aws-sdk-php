@@ -1,7 +1,7 @@
 <?php
 namespace Aws\S3;
 
-use Aws\Common\AwsClientInterface;
+use Aws\AwsClientInterface;
 use Aws\S3\Exception\ClearBucketException;
 use Aws\S3\Exception\DeleteMultipleObjectsException;
 

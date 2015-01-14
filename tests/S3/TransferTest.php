@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Tests\S3;
 
-use Aws\Common\Result;
+use Aws\Result;
 use Aws\S3\Transfer;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Command\CommandInterface;
@@ -70,7 +70,7 @@ class TransferTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatesFileIteratorThatContainsStrings()
     {
-        $iter = Transfer::fileIterator(__DIR__);
+        $iter = Transfer::recursiveDirIterator(__DIR__);
         $this->assertInstanceOf('Iterator', $iter);
         $files = iterator_to_array($iter);
         $this->assertContains(__FILE__, $files);

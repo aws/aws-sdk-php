@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Test\Route53;
 
-use Aws\Route53\Route53Client;
+use Aws\Route53Client;
 use Aws\Route53\CleanIdListener;
 use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Event\InitEvent;

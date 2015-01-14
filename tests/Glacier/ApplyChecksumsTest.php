@@ -1,9 +1,8 @@
 <?php
-
 namespace Aws\Test\Glacier;
 
-use Aws\Glacier\Exception\GlacierException;
-use Aws\Common\Result;
+use Aws\Exception\GlacierException;
+use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Message\Response;
@@ -29,7 +28,7 @@ class ApplyChecksumsTest extends \PHPUnit_Framework_TestCase
             $this->fail('An exception should have been thrown.');
         } catch (GlacierException $e) {
             $this->assertInstanceOf(
-                'Aws\Common\Exception\CouldNotCreateChecksumException',
+                'Aws\Exception\CouldNotCreateChecksumException',
                 $e->getPrevious()
             );
         }

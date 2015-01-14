@@ -1,9 +1,8 @@
 <?php
-
 namespace Aws\Test\CloudTrail;
 
 use Aws\CloudTrail\LogFileReader;
-use Aws\S3\S3Client;
+use Aws\S3Client;
 use GuzzleHttp\Subscriber\Mock;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Stream\Stream;

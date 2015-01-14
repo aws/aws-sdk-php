@@ -1,11 +1,11 @@
 <?php
 namespace Aws\S3;
 
-use Aws\Common\MapIterator;
-use Aws\S3\Multipart\UploadBuilder;
+use Aws\S3Client;
 use GuzzleHttp\Command\Command;
 use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Command\Event\PreparedEvent;
+use transducers as t;
 
 /**
  * Transfers files from the local filesystem to S3 or from S3 to the local
@@ -70,7 +70,7 @@ class Transfer
         $client->registerStreamWrapper();
         if (is_string($source)) {
             $this->base_dir = $source;
-            $source = self::fileIterator($source, $client);
+            $source = self::recursiveDirIterator($source, $client);
         } elseif (!$source instanceof \Iterator) {
             throw new \InvalidArgumentException('source must be the path to a '
                 . 'directory or an iterator that yields file names.');
@@ -109,19 +109,32 @@ class Transfer
     }
 
     /**
-     * Creates an iterator that recursively yields all filenames in a directory
+     * Returns a recursive directory iterator that yields filenames only and
+     * is not broken like PHP's built-in DirectoryIterator (which will read
+     * the first file from a stream wrapper, then rewind, then read it again).
      *
      * @param string $path Path on disk to traverse
      *
      * @return \Iterator Returns an iterator that yields absolute filenames.
      */
-    public static function fileIterator($path)
+    public static function recursiveDirIterator($path)
     {
-        $iter = new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS);
-        $iter = new \RecursiveIteratorIterator($iter);
-        $iter = new MapIterator($iter, 'strval');
-        $iter->rewind();
-        return new \NoRewindIterator($iter);
+        $invalid = ['.' => true, '..' => true];
+        $queue = scandir($path);
+        $pathLen = strlen($path) + 1;
+
+        while ($file = array_shift($queue)) {
+            if (isset($invalid[basename($file)])) {
+                continue;
+            }
+            $fullPath = $path . '/' . $file;
+            yield $fullPath;
+            if (is_dir($fullPath)) {
+                foreach (scandir($fullPath) as $subFile) {
+                    $queue[] = substr("$fullPath/$subFile", $pathLen);
+                }
+            }
+        }
     }
 
     /**
@@ -129,7 +142,7 @@ class Transfer
      */
     public function transfer()
     {
-        if (!$this->source->valid() && !($this->source instanceof \Generator)) {
+        if (!$this->source->valid()) {
             $this->source->rewind();
         }
 
@@ -164,9 +177,10 @@ class Transfer
      */
     private function wrapIterator(\Iterator $iter)
     {
+        $comp = [];
         // Filter out MUP uploads to send separate operations.
         if ($this->destScheme == 's3' && $this->sourceScheme == 'file') {
-            $iter = new \CallbackFilterIterator($iter, function ($file) {
+            $comp[] = t\filter(function ($file) {
                 if ($this->sourceScheme == 'file'
                     && filesize($file) >= $this->mup_threshold
                 ) {
@@ -176,13 +190,10 @@ class Transfer
                 // Filter out "/" files stored on S3 as buckets.
                 return substr($file, -1, 1) != '/';
             });
-            $iter->rewind();
         }
+        $comp[] = t\map($this->getTransferFunction($this->sourceScheme, $this->destScheme));
 
-        $fn = $this->getTransferFunction($this->sourceScheme, $this->destScheme);
-        $iter = new MapIterator($iter, $fn);
-
-        return $iter;
+        return t\to_iter($iter, call_user_func_array('transducers\comp', $comp));
     }
 
     /**

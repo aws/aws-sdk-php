@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Glacier;
 
-use Aws\Common\Exception\CouldNotCreateChecksumException;
+use Aws\Exception\CouldNotCreateChecksumException;
 use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Event\SubscriberInterface;
 use GuzzleHttp\Subscriber\MessageIntegrity\HashingStream;

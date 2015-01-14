@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Route53;
 
-use Aws\Common\ClientFactory;
+use Aws\ClientFactory;
 
 /**
  * @internal

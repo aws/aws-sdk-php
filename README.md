@@ -21,17 +21,32 @@ downloading a single zip or phar file from our [latest release][latest-release].
 * [Issues][sdk-issues] – Report issues and submit pull requests
   (see [Apache 2.0 License][sdk-license])
 * [@awsforphp][sdk-twitter] – Follow us on Twitter
-* [Mastering the AWS SDK for PHP](http://youtu.be/_zaW2VZB1ok) video from AWS
-  re:Invent 2013
+
+## Installing
+
+The recommended way to install the AWS SDK for PHP is through Composer.
+
+1. Install Composer:
+
+        curl -sS https://getcomposer.org/installer | php
+
+2. Next, run the Composer command to install the latest stable version of
+   the AWS SDK for PHP:
+
+        composer require aws/aws-sdk-php
+
+3. After installing, you need to require Composer's autoloader in your app:
+
+        require 'vendor/autoload.php';
+
+More installation instructions can be found in the
+[User Guide][docs-installation].
 
 ## Features
 
 * Provides easy-to-use HTTP clients for all supported AWS
   [services][docs-services], [regions][docs-rande], and authentication
   protocols.
-* Compliant with [PSR-1], [PSR-2], and [PSR-4].
-* Is easy to install through [Composer][install-packagist], or by downloading
-  the phar or zip file of our [latest release][latest-release].
 * Is built on [Guzzle v5][guzzle-docs], and utilizes many of its features, including
   persistent connections, concurrent requests, events and plugins, etc.
 * Provides convenience features including easy response pagination via
@@ -52,7 +67,7 @@ downloading a single zip or phar file from our [latest release][latest-release].
 1. **Sign up for AWS** – Before you begin, you need to
    [sign up for an AWS account][docs-signup] and retrieve your AWS credentials.
 1. **Minimum requirements** – To run the SDK, your system will need to meet the
-   [minimum requirements][docs-requirements], including having **PHP >= 5.4.0**
+   [minimum requirements][docs-requirements], including having **PHP >= 5.5.0**
    compiled with the cURL extension and cURL 7.16.2+ compiled with a TLS
    backend (e.g., NSS or OpenSSL).
 1. **Install the SDK** – Using [Composer] is the recommended way to install the
@@ -69,18 +84,27 @@ downloading a single zip or phar file from our [latest release][latest-release].
 
 ## Quick Example
 
-### Upload a File to Amazon S3
+### Create an Amazon S3 client
 
 ```php
 <?php
+// Require the Composer autoloader.
 require 'vendor/autoload.php';
 
-use Aws\S3\S3Client;
-use Aws\S3\Exception\S3Exception;
+use Aws\S3Client;
+use Aws\Exception\S3Exception;
 
-// Instantiate an S3 client
-$s3 = S3Client::factory(['version' => 'latest']);
+// Instantiate an Amazon S3 client.
+$s3 = S3Client::factory([
+    'version' => 'latest',
+    'region'  => 'us-west-2'
+]);
+```
 
+### Upload a file to Amazon S3
+
+```php
+<?php
 // Upload a publicly accessible file. The file size, file type, and MD5 hash
 // are automatically calculated by the SDK.
 try {
@@ -94,28 +118,6 @@ try {
     echo "There was an error uploading the file.\n";
 }
 ```
-
-You can also use the even easier `upload()` method, which will automatically do
-either single or multipart uploads, as needed.
-
-```php
-try {
-    $resource = fopen('/path/to/file', 'r');
-    $s3->upload('my-bucket', 'my-object', $resource, 'public-read');
-} catch (S3Exception $e) {
-    echo "There was an error uploading the file.\n";
-}
-```
-
-### More Examples
-
-* [Get an object from Amazon S3 and save it to a file][example-s3-getobject]
-* [Upload a large file to Amazon S3 in parts][example-s3-multipart]
-* [Put an item in your Amazon DynamoDB table][example-dynamodb-putitem]
-* [Send a message to your Amazon SQS queue][example-sqs-sendmessage]
-* Please browse the [User Guide][docs-guide] and [API docs][docs-api] or check
-  out our [AWS SDK Development Blog][sdk-blog] for even more examples and
-  tutorials.
 
 ### Related Projects
 
@@ -167,11 +169,6 @@ try {
 [psr-4]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md
 [psr-1]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md
 [psr-2]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
-
-[example-sqs-sendmessage]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-sqs.html#sending-messages
-[example-s3-getobject]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-s3.html#saving-objects-to-a-file
-[example-s3-multipart]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-s3.html#uploading-large-files-using-multipart-uploads
-[example-dynamodb-putitem]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-dynamodb.html#adding-items
 
 [mod-laravel]: https://github.com/aws/aws-sdk-php-laravel
 [mod-zf2]: https://github.com/aws/aws-sdk-php-zf2
