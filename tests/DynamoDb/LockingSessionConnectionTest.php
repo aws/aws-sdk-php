@@ -6,7 +6,7 @@ use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 
 /**
- * @covers Aws\DynamoDb\Session\LockingSessionConnection
+ * @covers Aws\DynamoDb\LockingSessionConnection
  */
 class LockingSessionConnectionTest extends \PHPUnit_Framework_TestCase
 {

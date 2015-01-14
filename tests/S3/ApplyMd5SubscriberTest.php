@@ -9,7 +9,7 @@ use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Stream\NoSeekStream;
 
 /**
- * @covers Aws\S3\Subscriber\ApplyMd5
+ * @covers Aws\S3\ApplyMd5Subscriber
  */
 class ApplyMd5Test extends \PHPUnit_Framework_TestCase
 {

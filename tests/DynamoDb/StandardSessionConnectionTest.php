@@ -7,7 +7,7 @@ use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Command\Event\PreparedEvent;
 
 /**
- * @covers Aws\DynamoDb\Session\StandardSessionConnection
+ * @covers Aws\DynamoDb\StandardSessionConnection
  */
 class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
 {

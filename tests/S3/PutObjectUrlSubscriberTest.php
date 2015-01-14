@@ -7,7 +7,7 @@ use GuzzleHttp\Event\BeforeEvent;
 use GuzzleHttp\Message\Response;
 
 /**
- * @covers Aws\S3\Subscriber\PutObjectUrl
+ * @covers Aws\S3\PutObjectUrlSubscriber
  */
 class PutObjectUrlTest extends \PHPUnit_Framework_TestCase
 {

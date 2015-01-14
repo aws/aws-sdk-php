@@ -1,6 +1,7 @@
 <?php
 namespace Aws;
 
+use Aws\CloudFront\UrlSigner;
 use GuzzleHttp\Collection;
 
 /**

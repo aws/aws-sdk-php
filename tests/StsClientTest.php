@@ -6,7 +6,7 @@ use Aws\StsClient;
 
 /**
  * @covers Aws\StsClient
- * @covers Aws\StsFactory
+ * @covers Aws\Sts\StsFactory
  */
 class StsClientTest extends \PHPUnit_Framework_TestCase
 {

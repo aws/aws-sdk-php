@@ -7,7 +7,7 @@ use GuzzleHttp\Event\BeforeEvent;
 use GuzzleHttp\Message\Response;
 
 /**
- * @covers Aws\S3\Subscriber\PermanentRedirect
+ * @covers Aws\S3\PermanentRedirectSubscriber
  */
 class PermanentRedirectTest extends \PHPUnit_Framework_TestCase
 {

@@ -7,7 +7,7 @@ use GuzzleHttp\Command\Event\ProcessEvent;
 use GuzzleHttp\Message\Response;
 
 /**
- * @covers Aws\S3\Subscriber\BucketStyle
+ * @covers Aws\S3\BucketStyleSubscriber
  */
 class BucketStyleTest extends \PHPUnit_Framework_TestCase
 {

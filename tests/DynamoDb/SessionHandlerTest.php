@@ -5,7 +5,7 @@ use Aws\DynamoDb\SessionHandler;
 use Aws\Test\UsesServiceTrait;
 
 /**
- * @covers Aws\DynamoDb\Session\SessionHandler
+ * @covers Aws\DynamoDb\SessionHandler
  */
 class SessionHandlerTest extends \PHPUnit_Framework_TestCase
 {
