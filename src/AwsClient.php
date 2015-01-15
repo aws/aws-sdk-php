@@ -5,8 +5,7 @@ use Aws\Exception\AwsException;
 use Aws\Api\Service;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Signature\SignatureInterface;
-use Aws\Waiter\ResourceWaiter;
-use Aws\Waiter\Waiter;
+use Aws\Waiter;
 use GuzzleHttp\Command\AbstractClient;
 use GuzzleHttp\Command\Command;
 use GuzzleHttp\Command\CommandInterface;
@@ -216,19 +215,18 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         return new ResultPaginator($this, $name, $args, $config);
     }
 
-    public function getWaiter($name, array $args = [], array $config = [])
-    {
-        $config += $this->api->getWaiterConfig($name);
-
-        return new ResourceWaiter($this, $name, $args, $config);
-    }
-
     public function waitUntil($name, array $args = [], array $config = [])
     {
-        $waiter = is_callable($name)
-            ? new Waiter($name, $config + $args)
-            : $this->getWaiter($name, $args, $config);
+        // Create the waiter. If async, then waiting begins immediately.
+        $config += $this->api->getWaiterConfig($name);
+        $waiter = new Waiter($this, $name, $args, $config);
 
+        // If async, return the future, for access to then()/wait()/cancel().
+        if (!empty($args['@future'])) {
+            return $waiter;
+        }
+
+        // For synchronous waiting, call wait() and don't return anything.
         $waiter->wait();
     }
 

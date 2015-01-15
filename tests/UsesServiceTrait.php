@@ -6,7 +6,6 @@ use Aws\Result;
 use Aws\Sdk;
 use Aws\Api\Service;
 use GuzzleHttp\Ring\Client\MockHandler;
-use GuzzleHttp\Client;
 use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Command\Exception\CommandException;
@@ -47,12 +46,13 @@ trait UsesServiceTrait
     {
         // Disable network access. If the INTEGRATION envvar is set, then this
         // disabling is not done.
-        if (!isset($args['client']) && !isset($_SERVER['INTEGRATION'])) {
-            $args['client'] = new Client([
-                'handler' => new MockHandler(function () {
-                    return ['error' => new \RuntimeException('No network access')];
-                })
-            ]);
+        if (!isset($_SERVER['INTEGRATION'])
+            && !isset($args['client'])
+            && !isset($args['ringphp_handler'])
+        ) {
+            $args['ringphp_handler'] = new MockHandler(function () {
+                return ['error' => new \RuntimeException('No network access')];
+            });
         }
 
         return $this->getTestSdk()->getClient($service, $args);
@@ -73,8 +73,10 @@ trait UsesServiceTrait
                 $result = array_shift($results);
                 if (is_array($result)) {
                     $event->intercept(new Result($result));
+                    $event->getTransaction()->response = new Response(200);
                 } elseif ($result instanceof Result) {
                     $event->intercept($result);
+                    $event->getTransaction()->response = new Response(200);
                 } elseif ($result instanceof CommandException) {
                     throw $result;
                 } else {
@@ -119,10 +121,13 @@ trait UsesServiceTrait
      * @return CommandException
      */
     private function createMockAwsException(
-        $code = 'ERROR',
-        $type = 'Aws\Exception\AwsException',
+        $code = null,
+        $type = null,
         $message = null
     ) {
+        $code = $code ?: 'ERROR';
+        $type = $type ?: 'Aws\Exception\AwsException';
+
         $client = $this->getMockBuilder('Aws\AwsClientInterface')
             ->setMethods(['getApi'])
             ->getMockForAbstractClass();

@@ -34,37 +34,30 @@ class LockingSessionConnection extends StandardSessionConnection
             'ReturnValues'     => 'ALL_NEW',
         ];
 
-        // Acquire the lock and fetch the item data
+        // Acquire the lock and fetch the item data.
         $timeout  = time() + $this->config['max_lock_wait_time'];
-        $this->client->waitUntil(
-            function () use (&$item, $params, $timeout) {
+        while (true) {
+            try {
                 $item = [];
-                try {
-                    $result = $this->client->updateItem($params);
-                    if (isset($result['Attributes'])) {
-                        foreach ($result['Attributes'] as $key => $value) {
-                            $item[$key] = current($value);
-                        }
-                    }
-                } catch (DynamoDbException $e) {
-                    if ($e->getAwsErrorCode() === 'ConditionalCheckFailedException'
-                        && time() < $timeout
-                    ) {
-                        return false;
+                $result = $this->client->updateItem($params);
+                if (isset($result['Attributes'])) {
+                    foreach ($result['Attributes'] as $key => $value) {
+                        $item[$key] = current($value);
                     }
                 }
-                return true;
-            },
-            [
-                'interval' => function () {
-                    return pow(10, -6) * rand(
+                return $item;
+            } catch (DynamoDbException $e) {
+                if ($e->getAwsErrorCode() === 'ConditionalCheckFailedException'
+                    && time() < $timeout
+                ) {
+                    usleep(pow(10, -6) * rand(
                         $this->config['min_lock_retry_microtime'],
                         $this->config['max_lock_retry_microtime']
-                    );
+                    ));
+                } else {
+                    break;
                 }
-            ]
-        );
-
-        return $item;
+            }
+        }
     }
 }

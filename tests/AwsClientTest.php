@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Test\Common;
+namespace Aws\Test;
 
 use Aws\Test\UsesServiceTrait;
 use Aws\Api\Service;
@@ -249,32 +249,26 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         $client->getPaginator('ListObjects');
     }
 
-    public function testCanGetWaiter()
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Operation not found
+     */
+    public function testCanWaitSynchronously()
     {
-        $client = $this->createClient(['waiters' => ['PigsFly' => []]]);
+        $client = $this->createClient(['waiters' => ['PigsFly' => [
+            'acceptors'   => [],
+            'delay'       => 1,
+            'maxAttempts' => 1,
+            'operation'   => 'DescribePigs',
+        ]]]);
 
-        $this->assertInstanceOf(
-            'Aws\Waiter\ResourceWaiter',
-            $client->getWaiter('PigsFly', ['PigId' => 4])
-        );
-    }
-
-    public function testCanWait()
-    {
-        $flag = false;
-        $client = $this->createClient();
-
-        $client->waitUntil(function () use (&$flag) {
-            return $flag = true;
-        });
-
-        $this->assertTrue($flag);
+        $client->waitUntil('PigsFly');
     }
 
     /**
      * @expectedException \UnexpectedValueException
      */
-    public function testGetWaiterRequiresWaiterFactory()
+    public function testGetWaiterFailsForMissingConfig()
     {
         $client = $this->createClient();
         $client->waitUntil('PigsFly');
