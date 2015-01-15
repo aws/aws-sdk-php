@@ -2,14 +2,14 @@
 namespace Aws\Test\Route53;
 
 use Aws\Route53Client;
-use Aws\Route53\CleanIdListener;
+use Aws\Route53\CleanIdSubscriber;
 use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Event\InitEvent;
 
 /**
- * @covers Aws\Route53\CleanIdListener
+ * @covers Aws\Route53\CleanIdSubscriber
  */
-class CleanIdListenerTest extends \PHPUnit_Framework_TestCase
+class CleanIdSubscriberTest extends \PHPUnit_Framework_TestCase
 {
     public function testCleansIds()
     {
@@ -22,7 +22,7 @@ class CleanIdListenerTest extends \PHPUnit_Framework_TestCase
         ]);
         $trans = new CommandTransaction($client, $command);
         $event = new InitEvent($trans);
-        $listener = new CleanIdListener();
+        $listener = new CleanIdSubscriber();
         $listener->onInit($event);
         $this->assertEquals('foo', $command['HostedZoneId']);
         unset($command['HostedZoneId']);

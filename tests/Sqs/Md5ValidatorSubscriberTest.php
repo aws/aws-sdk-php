@@ -2,15 +2,15 @@
 namespace Aws\Test\Sqs;
 
 use Aws\Result;
-use Aws\Sqs\Md5ValidatorListener;
+use Aws\Sqs\Md5ValidatorSubscriber;
 use Aws\SqsClient;
 use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Event\ProcessEvent;
 
 /**
- * @covers Aws\Sqs\Md5ValidatorListener
+ * @covers Aws\Sqs\Md5ValidatorSubscriber
  */
-class Md5ValidatorListenerTest extends \PHPUnit_Framework_TestCase
+class Md5ValidatorSubscriberTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @expectedException \Aws\Exception\SqsException
@@ -27,7 +27,7 @@ class Md5ValidatorListenerTest extends \PHPUnit_Framework_TestCase
         $command = $client->getCommand('ReceiveMessage');
         $event = new ProcessEvent(new CommandTransaction($client, $command));
         $event->setResult($model);
-        $listener = new Md5ValidatorListener();
+        $listener = new Md5ValidatorSubscriber();
         $listener->onProcess($event);
     }
 
@@ -49,7 +49,7 @@ class Md5ValidatorListenerTest extends \PHPUnit_Framework_TestCase
         $command = $client->getCommand('ReceiveMessage');
         $event = new ProcessEvent(new CommandTransaction($client, $command));
         $event->setResult($model);
-        $listener = new Md5ValidatorListener();
+        $listener = new Md5ValidatorSubscriber();
         $listener->onProcess($event);
     }
 
@@ -63,7 +63,7 @@ class Md5ValidatorListenerTest extends \PHPUnit_Framework_TestCase
         $command = $client->getCommand('ListQueues');
         $event = new ProcessEvent(new CommandTransaction($client, $command));
         $event->setResult($model);
-        $listener = new Md5ValidatorListener();
+        $listener = new Md5ValidatorSubscriber();
         $listener->onProcess($event);
     }
 }

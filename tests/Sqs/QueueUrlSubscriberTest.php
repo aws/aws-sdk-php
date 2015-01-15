@@ -7,7 +7,7 @@ use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Message\Request;
 
 /**
- * @covers Aws\Sqs\QueueUrlListener
+ * @covers Aws\Sqs\QueueUrlSubscriber
  */
 class QueueUrlListenerTest extends \PHPUnit_Framework_TestCase
 {

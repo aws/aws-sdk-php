@@ -9,7 +9,7 @@ use GuzzleHttp\Url;
 /**
  * Listener used to change the endpoint to the queue URL
  */
-class QueueUrlListener implements SubscriberInterface
+class QueueUrlSubscriber implements SubscriberInterface
 {
     public function getEvents()
     {

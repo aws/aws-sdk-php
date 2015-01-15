@@ -13,8 +13,8 @@ class SqsFactory extends ClientFactory
     {
         $client = parent::createClient($args);
         $emitter = $client->getEmitter();
-        $emitter->attach(new QueueUrlListener());
-        $emitter->attach(new Md5ValidatorListener());
+        $emitter->attach(new QueueUrlSubscriber());
+        $emitter->attach(new Md5ValidatorSubscriber());
 
         return $client;
     }

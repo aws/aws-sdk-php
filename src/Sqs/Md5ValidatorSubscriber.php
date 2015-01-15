@@ -9,7 +9,7 @@ use GuzzleHttp\Event\SubscriberInterface;
 /**
  * Listener used to validate the MD5 of the ReceiveMessage body.
  */
-class Md5ValidatorListener implements SubscriberInterface
+class Md5ValidatorSubscriber implements SubscriberInterface
 {
     public function getEvents()
     {
