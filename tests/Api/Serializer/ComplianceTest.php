@@ -3,7 +3,7 @@ namespace Aws\Test\Api\Serializer;
 
 use Aws\Api\Service;
 use Aws\AwsClient;
-use Aws\ClientFactory;
+use Aws\ClientFactory\ClientFactory;
 use Aws\Credentials\NullCredentials;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Client;
@@ -72,7 +72,7 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
             'api' => $service,
             'credentials' => new NullCredentials(),
             'client' => new Client(),
-            'signature' => $this->getMock('Aws\Commom\Signature\SignatureInterface'),
+            'signature' => $this->getMock('Aws\Signature\SignatureInterface'),
             'region' => 'us-west-2',
             'endpoint' => $ep,
             'error_parser' => Service::createErrorParser($service->getProtocol()),

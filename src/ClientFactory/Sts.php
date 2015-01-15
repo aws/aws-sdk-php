@@ -1,12 +1,10 @@
 <?php
-namespace Aws\Sts;
-
-use Aws\ClientFactory;
+namespace Aws\ClientFactory;
 
 /**
  * @internal
  */
-class StsFactory extends ClientFactory
+class Sts extends ClientFactory
 {
     /**
      * {@inheritdoc}

@@ -1,13 +1,16 @@
 <?php
-namespace Aws\Sqs;
+namespace Aws\ClientFactory;
 
-use Aws\ClientFactory;
+use Aws\Sqs\QueueUrlSubscriber;
+use Aws\Sqs\Md5ValidatorSubscriber;
 
 /**
  * Modifies the host used when connecting to queues and validates the MD5 body
  * of received messages.
+ *
+ * @internal
  */
-class SqsFactory extends ClientFactory
+class Sqs extends ClientFactory
 {
     protected function createClient(array $args)
     {

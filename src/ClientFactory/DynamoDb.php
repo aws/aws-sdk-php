@@ -1,7 +1,6 @@
 <?php
-namespace Aws\DynamoDb;
+namespace Aws\ClientFactory;
 
-use Aws\ClientFactory;
 use Aws\Retry\ThrottlingFilter;
 use Aws\Retry\Crc32Filter;
 use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
@@ -9,7 +8,7 @@ use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
 /**
  * @internal
  */
-class DynamoDbFactory extends ClientFactory
+class DynamoDb extends ClientFactory
 {
     protected function createClient(array $args)
     {

@@ -217,12 +217,12 @@ class Sdk
         // Set the service name and determine if it is linked to a known class
         $args['service'] = $name;
         $args['class_name'] = false;
-        $factoryName = 'Aws\ClientFactory';
+        $factoryName = 'Aws\\ClientFactory\\ClientFactory';
 
         if (isset(self::$services[$name])) {
             $args['class_name'] = self::$services[$name];
-            if (class_exists("Aws\\{$args['class_name']}\\{$args['class_name']}Factory")) {
-                $factoryName = "Aws\\{$args['class_name']}\\{$args['class_name']}Factory";
+            if (class_exists("Aws\\ClientFactory\\{$args['class_name']}")) {
+                $factoryName = "Aws\\ClientFactory\\{$args['class_name']}";
             }
         }
 

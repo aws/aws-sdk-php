@@ -1,13 +1,12 @@
 <?php
-namespace Aws\CloudSearchDomain;
+namespace Aws\ClientFactory;
 
-use Aws\ClientFactory;
 use GuzzleHttp\Url;
 
 /**
  * @internal
  */
-class CloudSearchDomainFactory extends ClientFactory
+class CloudSearchDomain extends ClientFactory
 {
     /**
      * {@inheritdoc}

@@ -1,16 +1,16 @@
 <?php
-namespace Aws\Test\S3;
+namespace Aws\Test\ClientFactory;
 
-use Aws\S3\S3Factory;
+use Aws\ClientFactory\S3;
 
 /**
- * @covers Aws\S3\S3Factory
+ * @covers Aws\ClientFactory\S3
  */
 class S3FactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreatesS3Signature()
     {
-        $c = (new S3Factory())->create([
+        $c = (new S3())->create([
             'service'   => 's3',
             'signature' => 's3',
             'version'   => 'latest'
@@ -24,7 +24,7 @@ class S3FactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatesRegularSignature()
     {
-        $c = (new S3Factory())->create([
+        $c = (new S3())->create([
             'service'   => 's3',
             'signature' => 'v4',
             'version'   => 'latest'
@@ -38,7 +38,7 @@ class S3FactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCanForcePathStyleOnAllOperations()
     {
-        $c = (new S3Factory())->create([
+        $c = (new S3())->create([
             'service'          => 's3',
             'version'          => 'latest',
             'force_path_style' => true
@@ -53,7 +53,7 @@ class S3FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidatesSignature()
     {
-        (new S3Factory())->create([
+        (new S3())->create([
             'service'   => 's3',
             'signature' => 'foo',
             'version'   => 'latest'
@@ -62,7 +62,7 @@ class S3FactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatesClientWithSubscribers()
     {
-        $c = (new S3Factory())->create([
+        $c = (new S3())->create([
             'service' => 's3',
             'version' => 'latest'
         ]);

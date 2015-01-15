@@ -1,12 +1,12 @@
 <?php
-namespace Aws\Route53;
+namespace Aws\ClientFactory;
 
-use Aws\ClientFactory;
+use Aws\Route53\CleanIdSubscriber;
 
 /**
  * @internal
  */
-class Route53Factory extends ClientFactory
+class Route53 extends ClientFactory
 {
     protected function createClient(array $args)
     {
