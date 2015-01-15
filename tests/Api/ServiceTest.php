@@ -94,6 +94,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $service = new Service(function () use ($expected) {
             return ['pagination' => ['foo' => $expected]];
         }, '', '');
+        $this->assertTrue($service->hasPaginator('foo'));
         $actual = $service->getPaginatorConfig('foo');
         $this->assertSame($expected, $actual);
     }
@@ -174,6 +175,8 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         // Handle exception test cases
         if (is_string($expected)) {
             $this->setExpectedException($expected);
+        } else {
+            $this->assertTrue($api->hasWaiter($name));
         }
 
         // Get the resolved config and verify its correctness
