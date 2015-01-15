@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Test\Common;
+namespace Aws\Test;
 
 use Aws\EndpointProvider;
 

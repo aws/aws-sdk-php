@@ -88,7 +88,7 @@ class Provider
      * @param array $config Array of configuration data.
      *
      * @return InstanceProfileProvider
-     * @see Aws\Common\Credentials\InstanceProfileProvider for $config details.
+     * @see Aws\Credentials\InstanceProfileProvider for $config details.
      */
     public static function instanceProfile(array $config = [])
     {

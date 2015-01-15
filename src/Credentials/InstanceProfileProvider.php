@@ -80,7 +80,10 @@ class InstanceProfileProvider
     }
 
     /**
-     * @return array
+     * @param string $url
+     *
+     * @throws CredentialsException
+     * @return string
      */
     private function request($url)
     {
@@ -103,7 +106,7 @@ class InstanceProfileProvider
 Error retrieving credentials from the instance profile metadata server. When
 you are not running inside of Amazon EC2, you must provide your AWS Access Key
 ID and Secret Access Key in the "key" and "secret" options when creating a
-client or provide an instantiated Aws\\Common\\Credentials\\CredentialsInterface
+client or provide an instantiated Aws\\Credentials\\CredentialsInterface
 object. ({$previous})
 EOT;
     }
