@@ -125,11 +125,13 @@ class StreamWrapper
             return $this->triggerError($errors);
         }
 
-        switch ($this->mode) {
-            case 'r': return $this->openReadStream($path);
-            case 'a': return $this->openAppendStream($path);
-            default: return $this->openWriteStream($path);
-        }
+        return $this->boolCall(function() use ($path) {
+            switch ($this->mode) {
+                case 'r': return $this->openReadStream($path);
+                case 'a': return $this->openAppendStream($path);
+                default: return $this->openWriteStream($path);
+            }
+        });
     }
 
     public function stream_eof()

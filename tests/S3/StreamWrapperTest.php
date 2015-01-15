@@ -644,7 +644,7 @@ EOT;
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException \PHPUnit_Framework_Error_Warning
      * @expectedExceptionMessage No client in stream context
      */
     public function testEnsuresClientIsSet()
