@@ -9,6 +9,7 @@ use GuzzleHttp\Client;
  * @method \Aws\AutoScalingClient getAutoScaling(array $args = [])
  * @method \Aws\CloudFormationClient getCloudFormation(array $args = [])
  * @method \Aws\CloudFrontClient getCloudFront(array $args = [])
+ * @method \Aws\CloudHsmClient getCloudHsm(array $args = [])
  * @method \Aws\CloudSearchClient getCloudSearch(array $args = [])
  * @method \Aws\CloudSearchDomainClient getCloudSearchDomain(array $args = [])
  * @method \Aws\CloudTrailClient getCloudTrail(array $args = [])
@@ -74,6 +75,7 @@ class Sdk
         'autoscaling'          => 'AutoScaling',
         'cloudformation'       => 'CloudFormation',
         'cloudfront'           => 'CloudFront',
+        'cloudhsm'             => 'CloudHsm',
         'cloudsearch'          => 'CloudSearch',
         'cloudsearchdomain'    => 'CloudSearchDomain',
         'cloudtrail'           => 'CloudTrail',

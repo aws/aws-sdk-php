@@ -119,6 +119,16 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
                 'DistributionList'
             ],
             [
+                'cloudhsm',
+                'Aws\\CloudHsmClient',
+                [],
+                'cloudhsm.us-east-1.amazonaws.com',
+                'listAvailableZones',
+                [],
+                true,
+                'AZList'
+            ],
+            [
                 'cloudsearch',
                 'Aws\\CloudSearchClient',
                 [],
