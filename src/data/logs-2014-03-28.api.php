@@ -713,8 +713,7 @@
     ],
     'InvalidParameterException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidSequenceTokenException' => [
@@ -728,8 +727,7 @@
     ],
     'LimitExceededException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'LogGroup' => [
@@ -897,8 +895,7 @@
     ],
     'OperationAbortedException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'OutputLogEvent' => [
@@ -991,14 +988,12 @@
     ],
     'ResourceAlreadyExistsException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'ResourceNotFoundException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'SequenceToken' => [
@@ -1007,8 +1002,7 @@
     ],
     'ServiceUnavailableException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
       'fault' => true,
     ],

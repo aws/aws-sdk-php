@@ -399,8 +399,7 @@
     ],
     'CloudWatchLogsDeliveryUnavailableException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'CloudWatchLogsDeliveryUnavailable',
         'httpStatusCode' => 400,
@@ -480,8 +479,7 @@
     ],
     'DeleteTrailResponse' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'DescribeTrailsRequest' => [
       'type' => 'structure',
@@ -544,8 +542,7 @@
     ],
     'InsufficientS3BucketPolicyException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InsufficientS3BucketPolicy',
         'httpStatusCode' => 403,
@@ -555,8 +552,7 @@
     ],
     'InsufficientSnsTopicPolicyException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InsufficientSnsTopicPolicy',
         'httpStatusCode' => 403,
@@ -566,8 +562,7 @@
     ],
     'InvalidCloudWatchLogsLogGroupArnException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidCloudWatchLogsLogGroupArn',
         'httpStatusCode' => 400,
@@ -577,8 +572,7 @@
     ],
     'InvalidCloudWatchLogsRoleArnException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidCloudWatchLogsRoleArn',
         'httpStatusCode' => 400,
@@ -588,8 +582,7 @@
     ],
     'InvalidS3BucketNameException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidS3BucketName',
         'httpStatusCode' => 400,
@@ -599,8 +592,7 @@
     ],
     'InvalidS3PrefixException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidS3Prefix',
         'httpStatusCode' => 400,
@@ -610,8 +602,7 @@
     ],
     'InvalidSnsTopicNameException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidSnsTopicName',
         'httpStatusCode' => 400,
@@ -621,8 +612,7 @@
     ],
     'InvalidTrailNameException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidTrailName',
         'httpStatusCode' => 400,
@@ -632,8 +622,7 @@
     ],
     'MaximumNumberOfTrailsExceededException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'MaximumNumberOfTrailsExceeded',
         'httpStatusCode' => 403,
@@ -643,8 +632,7 @@
     ],
     'S3BucketDoesNotExistException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'S3BucketDoesNotExist',
         'httpStatusCode' => 404,
@@ -665,8 +653,7 @@
     ],
     'StartLoggingResponse' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'StopLoggingRequest' => [
       'type' => 'structure',
@@ -681,8 +668,7 @@
     ],
     'StopLoggingResponse' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'String' => [
       'type' => 'string',
@@ -715,8 +701,7 @@
     ],
     'TrailAlreadyExistsException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'TrailAlreadyExists',
         'httpStatusCode' => 400,
@@ -738,8 +723,7 @@
     ],
     'TrailNotFoundException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'TrailNotFound',
         'httpStatusCode' => 404,

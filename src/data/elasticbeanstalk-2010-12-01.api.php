@@ -1562,8 +1562,7 @@
     ],
     'InsufficientPrivilegesException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InsufficientPrivilegesException',
         'httpStatusCode' => 403,
@@ -1654,8 +1653,7 @@
     ],
     'OperationInProgressException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'OperationInProgressFailure',
         'httpStatusCode' => 400,
@@ -1817,8 +1815,7 @@
     ],
     'S3LocationNotInServiceRegionException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'S3LocationNotInServiceRegionException',
         'httpStatusCode' => 400,
@@ -1828,8 +1825,7 @@
     ],
     'S3SubscriptionRequiredException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'S3SubscriptionRequiredException',
         'httpStatusCode' => 400,
@@ -1863,8 +1859,7 @@
     ],
     'SourceBundleDeletionException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SourceBundleDeletionFailure',
         'httpStatusCode' => 400,
@@ -1961,14 +1956,12 @@
     ],
     'TooManyApplicationVersionsException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'TooManyApplicationsException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'TooManyApplicationsException',
         'httpStatusCode' => 400,
@@ -1978,8 +1971,7 @@
     ],
     'TooManyBucketsException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'TooManyBucketsException',
         'httpStatusCode' => 400,
@@ -1989,8 +1981,7 @@
     ],
     'TooManyConfigurationTemplatesException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'TooManyConfigurationTemplatesException',
         'httpStatusCode' => 400,
@@ -2000,8 +1991,7 @@
     ],
     'TooManyEnvironmentsException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'TooManyEnvironmentsException',
         'httpStatusCode' => 400,

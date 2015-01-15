@@ -881,8 +881,7 @@
     ],
     'AccessDeniedException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'httpStatusCode' => 403,
       ],
@@ -999,8 +998,7 @@
     ],
     'CancelJobResponse' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'CaptionFormat' => [
       'type' => 'structure',
@@ -1304,8 +1302,7 @@
     ],
     'DeletePipelineResponse' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'DeletePresetRequest' => [
       'type' => 'structure',
@@ -1322,8 +1319,7 @@
     ],
     'DeletePresetResponse' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'Description' => [
       'type' => 'string',
@@ -1401,8 +1397,7 @@
     ],
     'IncompatibleVersionException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'httpStatusCode' => 400,
       ],
@@ -1414,8 +1409,7 @@
     ],
     'InternalServiceException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
       'fault' => true,
     ],
@@ -1607,8 +1601,7 @@
     ],
     'LimitExceededException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'httpStatusCode' => 429,
       ],
@@ -2063,8 +2056,7 @@
     ],
     'ResourceInUseException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'httpStatusCode' => 409,
       ],
@@ -2072,8 +2064,7 @@
     ],
     'ResourceNotFoundException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'httpStatusCode' => 404,
       ],
@@ -2310,8 +2301,7 @@
     ],
     'ValidationException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'httpStatusCode' => 400,
       ],

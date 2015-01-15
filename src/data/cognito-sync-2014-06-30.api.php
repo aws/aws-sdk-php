@@ -1469,8 +1469,7 @@
     ],
     'SubscribeToDatasetResponse' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'SyncSessionToken' => [
       'type' => 'string',
@@ -1525,8 +1524,7 @@
     ],
     'UnsubscribeFromDatasetResponse' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'UpdateRecordsRequest' => [
       'type' => 'structure',

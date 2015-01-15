@@ -49,7 +49,7 @@ api-package:
 api-all: api-clean api api-package api-show
 
 build-apis:
-	. build/build-apis $(SRC)
+	cd build && . build-apis $(SRC)
 
 # Ensures that the TAG variable was passed to the make command
 check_tag:

@@ -1,11 +1,11 @@
 <?php return [
   'metadata' => [
-    'apiVersion' => '2014-09-01',
+    'apiVersion' => '2014-10-31',
     'endpointPrefix' => 'rds',
     'serviceAbbreviation' => 'Amazon RDS',
     'serviceFullName' => 'Amazon Relational Database Service',
     'signatureVersion' => 'v4',
-    'xmlNamespace' => 'http://rds.amazonaws.com/doc/2014-09-01/',
+    'xmlNamespace' => 'http://rds.amazonaws.com/doc/2014-10-31/',
     'protocol' => 'query',
   ],
   'operations' => [
@@ -67,6 +67,32 @@
           'shape' => 'DBSnapshotNotFoundFault',
           'error' => [
             'code' => 'DBSnapshotNotFound',
+            'httpStatusCode' => 404,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
+    'ApplyPendingMaintenanceAction' => [
+      'name' => 'ApplyPendingMaintenanceAction',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'ApplyPendingMaintenanceActionMessage',
+      ],
+      'output' => [
+        'shape' => 'ApplyPendingMaintenanceActionResult',
+        'wrapper' => true,
+        'resultWrapper' => 'ApplyPendingMaintenanceActionResult',
+      ],
+      'errors' => [
+        [
+          'shape' => 'ResourceNotFoundFault',
+          'error' => [
+            'code' => 'ResourceNotFoundFault',
             'httpStatusCode' => 404,
             'senderFault' => true,
           ],
@@ -252,7 +278,7 @@
           'shape' => 'OptionGroupNotFoundFault',
           'error' => [
             'code' => 'OptionGroupNotFoundFault',
-            'httpStatusCode' => 400,
+            'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -341,7 +367,7 @@
           'shape' => 'DBSubnetGroupNotFoundFault',
           'error' => [
             'code' => 'DBSubnetGroupNotFoundFault',
-            'httpStatusCode' => 400,
+            'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -386,7 +412,7 @@
           'shape' => 'OptionGroupNotFoundFault',
           'error' => [
             'code' => 'OptionGroupNotFoundFault',
-            'httpStatusCode' => 400,
+            'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -405,6 +431,15 @@
           'error' => [
             'code' => 'AuthorizationNotFound',
             'httpStatusCode' => 404,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'KMSKeyNotAccessibleFault',
+          'error' => [
+            'code' => 'KMSKeyNotAccessibleFault',
+            'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -502,7 +537,7 @@
           'shape' => 'DBSubnetGroupNotFoundFault',
           'error' => [
             'code' => 'DBSubnetGroupNotFoundFault',
-            'httpStatusCode' => 400,
+            'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -547,7 +582,7 @@
           'shape' => 'OptionGroupNotFoundFault',
           'error' => [
             'code' => 'OptionGroupNotFoundFault',
-            'httpStatusCode' => 400,
+            'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -574,6 +609,15 @@
           'shape' => 'StorageTypeNotSupportedFault',
           'error' => [
             'code' => 'StorageTypeNotSupported',
+            'httpStatusCode' => 400,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'KMSKeyNotAccessibleFault',
+          'error' => [
+            'code' => 'KMSKeyNotAccessibleFault',
             'httpStatusCode' => 400,
             'senderFault' => true,
           ],
@@ -1070,7 +1114,7 @@
           'shape' => 'DBSubnetGroupNotFoundFault',
           'error' => [
             'code' => 'DBSubnetGroupNotFoundFault',
-            'httpStatusCode' => 400,
+            'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -1126,7 +1170,7 @@
           'shape' => 'OptionGroupNotFoundFault',
           'error' => [
             'code' => 'OptionGroupNotFoundFault',
-            'httpStatusCode' => 400,
+            'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -1324,7 +1368,7 @@
           'shape' => 'DBSubnetGroupNotFoundFault',
           'error' => [
             'code' => 'DBSubnetGroupNotFoundFault',
-            'httpStatusCode' => 400,
+            'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -1431,7 +1475,7 @@
           'shape' => 'OptionGroupNotFoundFault',
           'error' => [
             'code' => 'OptionGroupNotFoundFault',
-            'httpStatusCode' => 400,
+            'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -1450,6 +1494,31 @@
       'output' => [
         'shape' => 'OrderableDBInstanceOptionsMessage',
         'resultWrapper' => 'DescribeOrderableDBInstanceOptionsResult',
+      ],
+    ],
+    'DescribePendingMaintenanceActions' => [
+      'name' => 'DescribePendingMaintenanceActions',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'DescribePendingMaintenanceActionsMessage',
+      ],
+      'output' => [
+        'shape' => 'PendingMaintenanceActionsMessage',
+        'resultWrapper' => 'DescribePendingMaintenanceActionsResult',
+      ],
+      'errors' => [
+        [
+          'shape' => 'ResourceNotFoundFault',
+          'error' => [
+            'code' => 'ResourceNotFoundFault',
+            'httpStatusCode' => 404,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
       ],
     ],
     'DescribeReservedDBInstances' => [
@@ -1670,7 +1739,7 @@
           'shape' => 'OptionGroupNotFoundFault',
           'error' => [
             'code' => 'OptionGroupNotFoundFault',
-            'httpStatusCode' => 400,
+            'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -1757,7 +1826,7 @@
           'shape' => 'DBSubnetGroupNotFoundFault',
           'error' => [
             'code' => 'DBSubnetGroupNotFoundFault',
-            'httpStatusCode' => 400,
+            'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -1899,7 +1968,7 @@
           'shape' => 'OptionGroupNotFoundFault',
           'error' => [
             'code' => 'OptionGroupNotFoundFault',
-            'httpStatusCode' => 400,
+            'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -2210,7 +2279,7 @@
           'shape' => 'DBSubnetGroupNotFoundFault',
           'error' => [
             'code' => 'DBSubnetGroupNotFoundFault',
-            'httpStatusCode' => 400,
+            'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -2246,7 +2315,7 @@
           'shape' => 'OptionGroupNotFoundFault',
           'error' => [
             'code' => 'OptionGroupNotFoundFault',
-            'httpStatusCode' => 400,
+            'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -2265,6 +2334,15 @@
           'error' => [
             'code' => 'AuthorizationNotFound',
             'httpStatusCode' => 404,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'KMSKeyNotAccessibleFault',
+          'error' => [
+            'code' => 'KMSKeyNotAccessibleFault',
+            'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -2371,7 +2449,7 @@
           'shape' => 'DBSubnetGroupNotFoundFault',
           'error' => [
             'code' => 'DBSubnetGroupNotFoundFault',
-            'httpStatusCode' => 400,
+            'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -2407,7 +2485,7 @@
           'shape' => 'OptionGroupNotFoundFault',
           'error' => [
             'code' => 'OptionGroupNotFoundFault',
-            'httpStatusCode' => 400,
+            'httpStatusCode' => 404,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -2426,6 +2504,15 @@
           'error' => [
             'code' => 'AuthorizationNotFound',
             'httpStatusCode' => 404,
+            'senderFault' => true,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'KMSKeyNotAccessibleFault',
+          'error' => [
+            'code' => 'KMSKeyNotAccessibleFault',
+            'httpStatusCode' => 400,
             'senderFault' => true,
           ],
           'exception' => true,
@@ -2515,10 +2602,28 @@
         'pending-reboot',
       ],
     ],
+    'ApplyPendingMaintenanceActionMessage' => [
+      'type' => 'structure',
+      'required' => [
+        'ResourceIdentifier',
+        'ApplyAction',
+        'OptInType',
+      ],
+      'members' => [
+        'ResourceIdentifier' => [
+          'shape' => 'String',
+        ],
+        'ApplyAction' => [
+          'shape' => 'String',
+        ],
+        'OptInType' => [
+          'shape' => 'String',
+        ],
+      ],
+    ],
     'AuthorizationAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'AuthorizationAlreadyExists',
         'httpStatusCode' => 400,
@@ -2528,8 +2633,7 @@
     ],
     'AuthorizationNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'AuthorizationNotFound',
         'httpStatusCode' => 404,
@@ -2539,8 +2643,7 @@
     ],
     'AuthorizationQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'AuthorizationQuotaExceeded',
         'httpStatusCode' => 400,
@@ -2759,6 +2862,12 @@
           'shape' => 'String',
         ],
         'TdeCredentialPassword' => [
+          'shape' => 'String',
+        ],
+        'StorageEncrypted' => [
+          'shape' => 'BooleanOptional',
+        ],
+        'KmsKeyId' => [
           'shape' => 'String',
         ],
       ],
@@ -3090,13 +3199,21 @@
         'TdeCredentialArn' => [
           'shape' => 'String',
         ],
+        'StorageEncrypted' => [
+          'shape' => 'Boolean',
+        ],
+        'KmsKeyId' => [
+          'shape' => 'String',
+        ],
+        'DbiResourceId' => [
+          'shape' => 'String',
+        ],
       ],
       'wrapper' => true,
     ],
     'DBInstanceAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'DBInstanceAlreadyExists',
         'httpStatusCode' => 400,
@@ -3124,8 +3241,7 @@
     ],
     'DBInstanceNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'DBInstanceNotFound',
         'httpStatusCode' => 404,
@@ -3174,8 +3290,7 @@
     ],
     'DBParameterGroupAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'DBParameterGroupAlreadyExists',
         'httpStatusCode' => 400,
@@ -3211,8 +3326,7 @@
     ],
     'DBParameterGroupNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'DBParameterGroupNotFound',
         'httpStatusCode' => 404,
@@ -3222,8 +3336,7 @@
     ],
     'DBParameterGroupQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'DBParameterGroupQuotaExceeded',
         'httpStatusCode' => 400,
@@ -3286,8 +3399,7 @@
     ],
     'DBSecurityGroupAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'DBSecurityGroupAlreadyExists',
         'httpStatusCode' => 400,
@@ -3333,8 +3445,7 @@
     ],
     'DBSecurityGroupNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'DBSecurityGroupNotFound',
         'httpStatusCode' => 404,
@@ -3344,8 +3455,7 @@
     ],
     'DBSecurityGroupNotSupportedFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'DBSecurityGroupNotSupported',
         'httpStatusCode' => 400,
@@ -3355,8 +3465,7 @@
     ],
     'DBSecurityGroupQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'QuotaExceeded.DBSecurityGroup',
         'httpStatusCode' => 400,
@@ -3434,13 +3543,18 @@
         'TdeCredentialArn' => [
           'shape' => 'String',
         ],
+        'Encrypted' => [
+          'shape' => 'Boolean',
+        ],
+        'KmsKeyId' => [
+          'shape' => 'String',
+        ],
       ],
       'wrapper' => true,
     ],
     'DBSnapshotAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'DBSnapshotAlreadyExists',
         'httpStatusCode' => 400,
@@ -3468,8 +3582,7 @@
     ],
     'DBSnapshotNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'DBSnapshotNotFound',
         'httpStatusCode' => 404,
@@ -3500,8 +3613,7 @@
     ],
     'DBSubnetGroupAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'DBSubnetGroupAlreadyExists',
         'httpStatusCode' => 400,
@@ -3511,8 +3623,7 @@
     ],
     'DBSubnetGroupDoesNotCoverEnoughAZs' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'DBSubnetGroupDoesNotCoverEnoughAZs',
         'httpStatusCode' => 400,
@@ -3533,8 +3644,7 @@
     ],
     'DBSubnetGroupNotAllowedFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'DBSubnetGroupNotAllowedFault',
         'httpStatusCode' => 400,
@@ -3544,19 +3654,17 @@
     ],
     'DBSubnetGroupNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'DBSubnetGroupNotFoundFault',
-        'httpStatusCode' => 400,
+        'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
     ],
     'DBSubnetGroupQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'DBSubnetGroupQuotaExceeded',
         'httpStatusCode' => 400,
@@ -3573,8 +3681,7 @@
     ],
     'DBSubnetQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'DBSubnetQuotaExceededFault',
         'httpStatusCode' => 400,
@@ -3584,8 +3691,7 @@
     ],
     'DBUpgradeDependencyFailureFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'DBUpgradeDependencyFailure',
         'httpStatusCode' => 400,
@@ -4038,6 +4144,23 @@
         ],
       ],
     ],
+    'DescribePendingMaintenanceActionsMessage' => [
+      'type' => 'structure',
+      'members' => [
+        'ResourceIdentifier' => [
+          'shape' => 'String',
+        ],
+        'Filters' => [
+          'shape' => 'FilterList',
+        ],
+        'Marker' => [
+          'shape' => 'String',
+        ],
+        'MaxRecords' => [
+          'shape' => 'IntegerOptional',
+        ],
+      ],
+    ],
     'DescribeReservedDBInstancesMessage' => [
       'type' => 'structure',
       'members' => [
@@ -4289,8 +4412,7 @@
     ],
     'EventSubscriptionQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'EventSubscriptionQuotaExceeded',
         'httpStatusCode' => 400,
@@ -4376,8 +4498,7 @@
     ],
     'InstanceQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InstanceQuotaExceeded',
         'httpStatusCode' => 400,
@@ -4387,8 +4508,7 @@
     ],
     'InsufficientDBInstanceCapacityFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InsufficientDBInstanceCapacity',
         'httpStatusCode' => 400,
@@ -4404,8 +4524,7 @@
     ],
     'InvalidDBInstanceStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidDBInstanceState',
         'httpStatusCode' => 400,
@@ -4415,8 +4534,7 @@
     ],
     'InvalidDBParameterGroupStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidDBParameterGroupState',
         'httpStatusCode' => 400,
@@ -4426,8 +4544,7 @@
     ],
     'InvalidDBSecurityGroupStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidDBSecurityGroupState',
         'httpStatusCode' => 400,
@@ -4437,8 +4554,7 @@
     ],
     'InvalidDBSnapshotStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidDBSnapshotState',
         'httpStatusCode' => 400,
@@ -4448,8 +4564,7 @@
     ],
     'InvalidDBSubnetGroupFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidDBSubnetGroupFault',
         'httpStatusCode' => 400,
@@ -4459,8 +4574,7 @@
     ],
     'InvalidDBSubnetGroupStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidDBSubnetGroupStateFault',
         'httpStatusCode' => 400,
@@ -4470,8 +4584,7 @@
     ],
     'InvalidDBSubnetStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidDBSubnetStateFault',
         'httpStatusCode' => 400,
@@ -4481,8 +4594,7 @@
     ],
     'InvalidEventSubscriptionStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidEventSubscriptionState',
         'httpStatusCode' => 400,
@@ -4492,8 +4604,7 @@
     ],
     'InvalidOptionGroupStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidOptionGroupStateFault',
         'httpStatusCode' => 400,
@@ -4503,8 +4614,7 @@
     ],
     'InvalidRestoreFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidRestoreFault',
         'httpStatusCode' => 400,
@@ -4514,8 +4624,7 @@
     ],
     'InvalidSubnet' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidSubnet',
         'httpStatusCode' => 400,
@@ -4525,10 +4634,19 @@
     ],
     'InvalidVPCNetworkStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidVPCNetworkStateFault',
+        'httpStatusCode' => 400,
+        'senderFault' => true,
+      ],
+      'exception' => true,
+    ],
+    'KMSKeyNotAccessibleFault' => [
+      'type' => 'structure',
+      'members' => [],
+      'error' => [
+        'code' => 'KMSKeyNotAccessibleFault',
         'httpStatusCode' => 400,
         'senderFault' => true,
       ],
@@ -4792,8 +4910,7 @@
     ],
     'OptionGroupAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'OptionGroupAlreadyExistsFault',
         'httpStatusCode' => 400,
@@ -4821,11 +4938,10 @@
     ],
     'OptionGroupNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'OptionGroupNotFoundFault',
-        'httpStatusCode' => 400,
+        'httpStatusCode' => 404,
         'senderFault' => true,
       ],
       'exception' => true,
@@ -4918,8 +5034,7 @@
     ],
     'OptionGroupQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'OptionGroupQuotaExceededFault',
         'httpStatusCode' => 400,
@@ -5038,6 +5153,9 @@
         'Vpc' => [
           'shape' => 'Boolean',
         ],
+        'SupportsStorageEncryption' => [
+          'shape' => 'Boolean',
+        ],
         'StorageType' => [
           'shape' => 'String',
         ],
@@ -5107,6 +5225,51 @@
         'locationName' => 'Parameter',
       ],
     ],
+    'PendingMaintenanceAction' => [
+      'type' => 'structure',
+      'members' => [
+        'Action' => [
+          'shape' => 'String',
+        ],
+        'AutoAppliedAfterDate' => [
+          'shape' => 'TStamp',
+        ],
+        'ForcedApplyDate' => [
+          'shape' => 'TStamp',
+        ],
+        'OptInStatus' => [
+          'shape' => 'String',
+        ],
+        'CurrentApplyDate' => [
+          'shape' => 'TStamp',
+        ],
+      ],
+    ],
+    'PendingMaintenanceActionDetails' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'PendingMaintenanceAction',
+        'locationName' => 'PendingMaintenanceAction',
+      ],
+    ],
+    'PendingMaintenanceActions' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'ResourcePendingMaintenanceActions',
+        'locationName' => 'ResourcePendingMaintenanceActions',
+      ],
+    ],
+    'PendingMaintenanceActionsMessage' => [
+      'type' => 'structure',
+      'members' => [
+        'PendingMaintenanceActions' => [
+          'shape' => 'PendingMaintenanceActions',
+        ],
+        'Marker' => [
+          'shape' => 'String',
+        ],
+      ],
+    ],
     'PendingModifiedValues' => [
       'type' => 'structure',
       'members' => [
@@ -5144,8 +5307,7 @@
     ],
     'PointInTimeRestoreNotEnabledFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'PointInTimeRestoreNotEnabled',
         'httpStatusCode' => 400,
@@ -5172,8 +5334,7 @@
     ],
     'ProvisionedIopsNotAvailableInAZFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ProvisionedIopsNotAvailableInAZFault',
         'httpStatusCode' => 400,
@@ -5321,8 +5482,7 @@
     ],
     'ReservedDBInstanceAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ReservedDBInstanceAlreadyExists',
         'httpStatusCode' => 404,
@@ -5350,8 +5510,7 @@
     ],
     'ReservedDBInstanceNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ReservedDBInstanceNotFound',
         'httpStatusCode' => 404,
@@ -5361,8 +5520,7 @@
     ],
     'ReservedDBInstanceQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ReservedDBInstanceQuotaExceeded',
         'httpStatusCode' => 400,
@@ -5426,8 +5584,7 @@
     ],
     'ReservedDBInstancesOfferingNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ReservedDBInstancesOfferingNotFound',
         'httpStatusCode' => 404,
@@ -5451,6 +5608,28 @@
           'shape' => 'ParametersList',
         ],
       ],
+    ],
+    'ResourceNotFoundFault' => [
+      'type' => 'structure',
+      'members' => [],
+      'error' => [
+        'code' => 'ResourceNotFoundFault',
+        'httpStatusCode' => 404,
+        'senderFault' => true,
+      ],
+      'exception' => true,
+    ],
+    'ResourcePendingMaintenanceActions' => [
+      'type' => 'structure',
+      'members' => [
+        'ResourceIdentifier' => [
+          'shape' => 'String',
+        ],
+        'PendingMaintenanceActionDetails' => [
+          'shape' => 'PendingMaintenanceActionDetails',
+        ],
+      ],
+      'wrapper' => true,
     ],
     'RestoreDBInstanceFromDBSnapshotMessage' => [
       'type' => 'structure',
@@ -5609,8 +5788,7 @@
     ],
     'SNSInvalidTopicFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SNSInvalidTopic',
         'httpStatusCode' => 400,
@@ -5620,8 +5798,7 @@
     ],
     'SNSNoAuthorizationFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SNSNoAuthorization',
         'httpStatusCode' => 400,
@@ -5631,8 +5808,7 @@
     ],
     'SNSTopicArnNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SNSTopicArnNotFound',
         'httpStatusCode' => 404,
@@ -5642,8 +5818,7 @@
     ],
     'SnapshotQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SnapshotQuotaExceeded',
         'httpStatusCode' => 400,
@@ -5660,8 +5835,7 @@
     ],
     'SourceNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SourceNotFound',
         'httpStatusCode' => 404,
@@ -5680,8 +5854,7 @@
     ],
     'StorageQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'StorageQuotaExceeded',
         'httpStatusCode' => 400,
@@ -5691,8 +5864,7 @@
     ],
     'StorageTypeNotSupportedFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'StorageTypeNotSupported',
         'httpStatusCode' => 400,
@@ -5719,8 +5891,7 @@
     ],
     'SubnetAlreadyInUse' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SubnetAlreadyInUse',
         'httpStatusCode' => 400,
@@ -5744,8 +5915,7 @@
     ],
     'SubscriptionAlreadyExistFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SubscriptionAlreadyExist',
         'httpStatusCode' => 400,
@@ -5755,8 +5925,7 @@
     ],
     'SubscriptionCategoryNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SubscriptionCategoryNotFound',
         'httpStatusCode' => 404,
@@ -5766,8 +5935,7 @@
     ],
     'SubscriptionNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SubscriptionNotFound',
         'httpStatusCode' => 404,
@@ -5841,6 +6009,14 @@
       'members' => [
         'EventSubscription' => [
           'shape' => 'EventSubscription',
+        ],
+      ],
+    ],
+    'ApplyPendingMaintenanceActionResult' => [
+      'type' => 'structure',
+      'members' => [
+        'ResourcePendingMaintenanceActions' => [
+          'shape' => 'ResourcePendingMaintenanceActions',
         ],
       ],
     ],

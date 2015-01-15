@@ -19,7 +19,6 @@
     'Scan' => [
       'input_token' => 'ExclusiveStartKey',
       'output_token' => 'LastEvaluatedKey',
-      'limit_key' => 'Limit',
       'result_key' => 'Items',
     ],
   ],

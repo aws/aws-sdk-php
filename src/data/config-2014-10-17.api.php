@@ -1,12 +1,11 @@
 <?php return [
   'metadata' => [
-    'apiVersion' => '2014-11-12',
+    'apiVersion' => '2014-10-17',
     'endpointPrefix' => 'config',
     'jsonVersion' => '1.1',
     'serviceAbbreviation' => 'Config Service',
     'serviceFullName' => 'AWS Config',
     'signatureVersion' => 'v4',
-    'signingName' => 'config',
     'targetPrefix' => 'StarlingDoveService',
     'protocol' => 'json',
   ],
@@ -673,62 +672,52 @@
     ],
     'InsufficientDeliveryPolicyException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidConfigurationRecorderNameException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidDeliveryChannelNameException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidLimitException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidNextTokenException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidRoleException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidS3KeyPrefixException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidSNSTopicARNException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidTimeRangeException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'LastDeliveryChannelDeleteFailedException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'LaterTime' => [
@@ -741,14 +730,12 @@
     ],
     'MaxNumberOfConfigurationRecordersExceededException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'MaxNumberOfDeliveryChannelsExceededException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'Name' => [
@@ -759,38 +746,32 @@
     ],
     'NoAvailableConfigurationRecorderException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'NoAvailableDeliveryChannelException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'NoRunningConfigurationRecorderException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'NoSuchBucketException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'NoSuchConfigurationRecorderException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'NoSuchDeliveryChannelException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'PutConfigurationRecorderRequest' => [
@@ -868,8 +849,7 @@
     ],
     'ResourceNotDiscoveredException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'ResourceType' => [
@@ -927,8 +907,7 @@
     ],
     'ValidationException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'Value' => [

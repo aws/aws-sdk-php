@@ -274,8 +274,7 @@
   'shapes' => [
     'AlreadyExistsException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'AlreadyExistsException',
         'httpStatusCode' => 400,
@@ -572,8 +571,7 @@
     ],
     'InsufficientCapabilitiesException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InsufficientCapabilitiesException',
         'httpStatusCode' => 400,
@@ -586,8 +584,7 @@
     ],
     'LimitExceededException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'LimitExceededException',
         'httpStatusCode' => 400,

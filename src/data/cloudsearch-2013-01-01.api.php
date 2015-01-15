@@ -1116,7 +1116,7 @@
       ],
       'members' => [
         'AnalysisSchemeName' => [
-          'shape' => 'FieldName',
+          'shape' => 'StandardName',
         ],
         'AnalysisSchemeLanguage' => [
           'shape' => 'AnalysisSchemeLanguage',
@@ -1413,7 +1413,7 @@
           'shape' => 'DomainName',
         ],
         'AnalysisSchemeName' => [
-          'shape' => 'FieldName',
+          'shape' => 'StandardName',
         ],
       ],
     ],
@@ -1458,7 +1458,7 @@
           'shape' => 'DomainName',
         ],
         'ExpressionName' => [
-          'shape' => 'FieldName',
+          'shape' => 'StandardName',
         ],
       ],
     ],
@@ -1484,7 +1484,7 @@
           'shape' => 'DomainName',
         ],
         'IndexFieldName' => [
-          'shape' => 'FieldName',
+          'shape' => 'DynamicFieldName',
         ],
       ],
     ],
@@ -1510,7 +1510,7 @@
           'shape' => 'DomainName',
         ],
         'SuggesterName' => [
-          'shape' => 'FieldName',
+          'shape' => 'StandardName',
         ],
       ],
     ],
@@ -1535,7 +1535,7 @@
           'shape' => 'DomainName',
         ],
         'AnalysisSchemeNames' => [
-          'shape' => 'FieldNameList',
+          'shape' => 'StandardNameList',
         ],
         'Deployed' => [
           'shape' => 'Boolean',
@@ -1604,7 +1604,7 @@
           'shape' => 'DomainName',
         ],
         'ExpressionNames' => [
-          'shape' => 'FieldNameList',
+          'shape' => 'StandardNameList',
         ],
         'Deployed' => [
           'shape' => 'Boolean',
@@ -1632,7 +1632,7 @@
           'shape' => 'DomainName',
         ],
         'FieldNames' => [
-          'shape' => 'FieldNameList',
+          'shape' => 'DynamicFieldNameList',
         ],
         'Deployed' => [
           'shape' => 'Boolean',
@@ -1707,7 +1707,7 @@
           'shape' => 'DomainName',
         ],
         'SuggesterNames' => [
-          'shape' => 'FieldNameList',
+          'shape' => 'StandardNameList',
         ],
         'Deployed' => [
           'shape' => 'Boolean',
@@ -1727,8 +1727,7 @@
     ],
     'DisabledOperationException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'DisabledAction',
         'httpStatusCode' => 409,
@@ -1880,6 +1879,18 @@
         ],
       ],
     ],
+    'DynamicFieldName' => [
+      'type' => 'string',
+      'min' => 1,
+      'max' => 64,
+      'pattern' => '([a-z][a-z0-9_]*\\*?|\\*[a-z0-9_]*]',
+    ],
+    'DynamicFieldNameList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'DynamicFieldName',
+      ],
+    ],
     'ErrorCode' => [
       'type' => 'string',
     ],
@@ -1894,7 +1905,7 @@
       ],
       'members' => [
         'ExpressionName' => [
-          'shape' => 'FieldName',
+          'shape' => 'StandardName',
         ],
         'ExpressionValue' => [
           'shape' => 'ExpressionValue',
@@ -1935,7 +1946,7 @@
     ],
     'FieldNameCommaList' => [
       'type' => 'string',
-      'pattern' => '\\s*[a-z][a-z0-9_]*\\s*(,\\s*[a-z][a-z0-9_]*\\s*]*',
+      'pattern' => '\\s*[a-z*][a-z0-9_]*\\*?\\s*(,\\s*[a-z*][a-z0-9_]*\\*?\\s*]*',
     ],
     'FieldNameList' => [
       'type' => 'list',
@@ -1975,7 +1986,7 @@
       ],
       'members' => [
         'IndexFieldName' => [
-          'shape' => 'FieldName',
+          'shape' => 'DynamicFieldName',
         ],
         'IndexFieldType' => [
           'shape' => 'IndexFieldType',
@@ -2101,8 +2112,7 @@
     ],
     'InternalException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InternalException',
         'httpStatusCode' => 500,
@@ -2111,8 +2121,7 @@
     ],
     'InvalidTypeException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidType',
         'httpStatusCode' => 409,
@@ -2145,8 +2154,7 @@
     ],
     'LimitExceededException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'LimitExceeded',
         'httpStatusCode' => 409,
@@ -2286,8 +2294,7 @@
     ],
     'ResourceNotFoundException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ResourceNotFound',
         'httpStatusCode' => 409,
@@ -2338,6 +2345,18 @@
     'ServiceUrl' => [
       'type' => 'string',
     ],
+    'StandardName' => [
+      'type' => 'string',
+      'min' => 1,
+      'max' => 64,
+      'pattern' => '[a-z][a-z0-9_]*',
+    ],
+    'StandardNameList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'StandardName',
+      ],
+    ],
     'String' => [
       'type' => 'string',
     ],
@@ -2349,7 +2368,7 @@
       ],
       'members' => [
         'SuggesterName' => [
-          'shape' => 'FieldName',
+          'shape' => 'StandardName',
         ],
         'DocumentSuggesterOptions' => [
           'shape' => 'DocumentSuggesterOptions',

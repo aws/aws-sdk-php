@@ -1082,6 +1082,35 @@
         ],
       ],
     ],
+    'ResetCache' => [
+      'name' => 'ResetCache',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'ResetCacheInput',
+      ],
+      'output' => [
+        'shape' => 'ResetCacheOutput',
+      ],
+      'errors' => [
+        [
+          'shape' => 'InvalidGatewayRequestException',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InternalServerError',
+          'error' => [
+            'httpStatusCode' => 500,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
     'RetrieveTapeArchive' => [
       'name' => 'RetrieveTapeArchive',
       'http' => [
@@ -1354,6 +1383,35 @@
       ],
       'output' => [
         'shape' => 'UpdateSnapshotScheduleOutput',
+      ],
+      'errors' => [
+        [
+          'shape' => 'InvalidGatewayRequestException',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InternalServerError',
+          'error' => [
+            'httpStatusCode' => 500,
+          ],
+          'exception' => true,
+        ],
+      ],
+    ],
+    'UpdateVTLDeviceType' => [
+      'name' => 'UpdateVTLDeviceType',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'UpdateVTLDeviceTypeInput',
+      ],
+      'output' => [
+        'shape' => 'UpdateVTLDeviceTypeOutput',
       ],
       'errors' => [
         [
@@ -2343,6 +2401,11 @@
       'min' => 1,
       'max' => 255,
     ],
+    'DeviceType' => [
+      'type' => 'string',
+      'min' => 2,
+      'max' => 50,
+    ],
     'DeviceiSCSIAttributes' => [
       'type' => 'structure',
       'members' => [
@@ -2389,6 +2452,9 @@
           'shape' => 'string',
         ],
         'DiskNode' => [
+          'shape' => 'string',
+        ],
+        'DiskStatus' => [
           'shape' => 'string',
         ],
         'DiskSizeInBytes' => [
@@ -2750,6 +2816,25 @@
       'min' => 1,
       'max' => 25,
     ],
+    'ResetCacheInput' => [
+      'type' => 'structure',
+      'required' => [
+        'GatewayARN',
+      ],
+      'members' => [
+        'GatewayARN' => [
+          'shape' => 'GatewayARN',
+        ],
+      ],
+    ],
+    'ResetCacheOutput' => [
+      'type' => 'structure',
+      'members' => [
+        'GatewayARN' => [
+          'shape' => 'GatewayARN',
+        ],
+      ],
+    ],
     'RetrieveTapeArchiveInput' => [
       'type' => 'structure',
       'required' => [
@@ -3006,8 +3091,6 @@
     ],
     'TapeSize' => [
       'type' => 'long',
-      'min' => 107374182400,
-      'max' => 2748779069440,
     ],
     'TapeStatus' => [
       'type' => 'string',
@@ -3192,6 +3275,29 @@
       'members' => [
         'VolumeARN' => [
           'shape' => 'VolumeARN',
+        ],
+      ],
+    ],
+    'UpdateVTLDeviceTypeInput' => [
+      'type' => 'structure',
+      'required' => [
+        'VTLDeviceARN',
+        'DeviceType',
+      ],
+      'members' => [
+        'VTLDeviceARN' => [
+          'shape' => 'VTLDeviceARN',
+        ],
+        'DeviceType' => [
+          'shape' => 'DeviceType',
+        ],
+      ],
+    ],
+    'UpdateVTLDeviceTypeOutput' => [
+      'type' => 'structure',
+      'members' => [
+        'VTLDeviceARN' => [
+          'shape' => 'VTLDeviceARN',
         ],
       ],
     ],

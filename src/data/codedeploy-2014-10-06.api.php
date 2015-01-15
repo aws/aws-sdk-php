@@ -3,7 +3,7 @@
     'apiVersion' => '2014-10-06',
     'endpointPrefix' => 'codedeploy',
     'jsonVersion' => '1.1',
-    'serviceAbbreviation' => 'codedeploy',
+    'serviceAbbreviation' => 'CodeDeploy',
     'serviceFullName' => 'AWS CodeDeploy',
     'signatureVersion' => 'v4',
     'targetPrefix' => 'CodeDeploy_20141006',
@@ -906,14 +906,12 @@
   'shapes' => [
     'ApplicationAlreadyExistsException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'ApplicationDoesNotExistException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'ApplicationId' => [
@@ -938,8 +936,7 @@
     ],
     'ApplicationLimitExceededException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'ApplicationName' => [
@@ -949,8 +946,7 @@
     ],
     'ApplicationNameRequiredException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'ApplicationRevisionSortBy' => [
@@ -1039,8 +1035,7 @@
     ],
     'BucketNameFilterRequiredException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'BundleType' => [
@@ -1211,20 +1206,17 @@
     ],
     'DeploymentAlreadyCompletedException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'DeploymentConfigAlreadyExistsException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'DeploymentConfigDoesNotExistException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'DeploymentConfigId' => [
@@ -1232,8 +1224,7 @@
     ],
     'DeploymentConfigInUseException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'DeploymentConfigInfo' => [
@@ -1255,8 +1246,7 @@
     ],
     'DeploymentConfigLimitExceededException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'DeploymentConfigName' => [
@@ -1266,8 +1256,7 @@
     ],
     'DeploymentConfigNameRequiredException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'DeploymentConfigsList' => [
@@ -1285,20 +1274,17 @@
     ],
     'DeploymentDoesNotExistException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'DeploymentGroupAlreadyExistsException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'DeploymentGroupDoesNotExistException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'DeploymentGroupId' => [
@@ -1335,8 +1321,7 @@
     ],
     'DeploymentGroupLimitExceededException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'DeploymentGroupName' => [
@@ -1346,8 +1331,7 @@
     ],
     'DeploymentGroupNameRequiredException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'DeploymentGroupsList' => [
@@ -1361,8 +1345,7 @@
     ],
     'DeploymentIdRequiredException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'DeploymentInfo' => [
@@ -1414,14 +1397,12 @@
     ],
     'DeploymentLimitExceededException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'DeploymentNotStartedException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'DeploymentOverview' => [
@@ -1478,8 +1459,7 @@
     ],
     'DescriptionTooLongException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'Diagnostics' => [
@@ -1728,8 +1708,7 @@
     ],
     'InstanceDoesNotExistException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InstanceId' => [
@@ -1737,8 +1716,7 @@
     ],
     'InstanceIdRequiredException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InstanceStatus' => [
@@ -1786,116 +1764,97 @@
     ],
     'InvalidApplicationNameException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidAutoScalingGroupException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidBucketNameFilterException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidDeployedStateFilterException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidDeploymentConfigNameException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidDeploymentGroupNameException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidDeploymentIdException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidDeploymentStatusException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidEC2TagException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidInstanceStatusException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidKeyPrefixFilterException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidMinimumHealthyHostValueException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidNextTokenException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidOperationException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidRevisionException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidRoleException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidSortByException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidSortOrderException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidTimeRangeException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'Key' => [
@@ -2181,8 +2140,7 @@
     ],
     'RevisionDoesNotExistException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'RevisionLocation' => [
@@ -2214,8 +2172,7 @@
     ],
     'RevisionRequiredException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'Role' => [
@@ -2223,8 +2180,7 @@
     ],
     'RoleRequiredException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'S3Bucket' => [

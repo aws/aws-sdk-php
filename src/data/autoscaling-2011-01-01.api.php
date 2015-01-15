@@ -1151,12 +1151,12 @@
     'BlockDeviceEbsIops' => [
       'type' => 'integer',
       'min' => 100,
-      'max' => 30000,
+      'max' => 4000,
     ],
     'BlockDeviceEbsVolumeSize' => [
       'type' => 'integer',
       'min' => 1,
-      'max' => 16384,
+      'max' => 1024,
     ],
     'BlockDeviceEbsVolumeType' => [
       'type' => 'string',
@@ -1189,16 +1189,9 @@
         'shape' => 'BlockDeviceMapping',
       ],
     ],
-    'ClassicLinkVPCSecurityGroups' => [
-      'type' => 'list',
-      'member' => [
-        'shape' => 'XmlStringMaxLen255',
-      ],
-    ],
     'CompleteLifecycleActionAnswer' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'CompleteLifecycleActionType' => [
       'type' => 'structure',
@@ -1299,12 +1292,6 @@
         'SecurityGroups' => [
           'shape' => 'SecurityGroups',
         ],
-        'ClassicLinkVPCId' => [
-          'shape' => 'XmlStringMaxLen255',
-        ],
-        'ClassicLinkVPCSecurityGroups' => [
-          'shape' => 'ClassicLinkVPCSecurityGroups',
-        ],
         'UserData' => [
           'shape' => 'XmlStringUserData',
         ],
@@ -1370,8 +1357,7 @@
     ],
     'DeleteLifecycleHookAnswer' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'DeleteLifecycleHookType' => [
       'type' => 'structure',
@@ -1911,12 +1897,6 @@
         'SecurityGroups' => [
           'shape' => 'SecurityGroups',
         ],
-        'ClassicLinkVPCId' => [
-          'shape' => 'XmlStringMaxLen255',
-        ],
-        'ClassicLinkVPCSecurityGroups' => [
-          'shape' => 'ClassicLinkVPCSecurityGroups',
-        ],
         'UserData' => [
           'shape' => 'XmlStringUserData',
         ],
@@ -2238,8 +2218,7 @@
     ],
     'PutLifecycleHookAnswer' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'PutLifecycleHookType' => [
       'type' => 'structure',
@@ -2360,8 +2339,7 @@
     ],
     'RecordLifecycleActionHeartbeatAnswer' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'RecordLifecycleActionHeartbeatType' => [
       'type' => 'structure',

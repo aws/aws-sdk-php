@@ -477,8 +477,7 @@
     ],
     'AddTagsOutput' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'Application' => [
       'type' => 'structure',
@@ -583,6 +582,12 @@
         'ServiceRole' => [
           'shape' => 'String',
         ],
+        'NormalizedInstanceHours' => [
+          'shape' => 'Integer',
+        ],
+        'MasterPublicDnsName' => [
+          'shape' => 'String',
+        ],
       ],
     ],
     'ClusterId' => [
@@ -654,6 +659,9 @@
         ],
         'Status' => [
           'shape' => 'ClusterStatus',
+        ],
+        'NormalizedInstanceHours' => [
+          'shape' => 'Integer',
         ],
       ],
     ],
@@ -1191,8 +1199,7 @@
     ],
     'InternalServerError' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InternalFailure',
         'httpStatusCode' => 500,
@@ -1542,6 +1549,9 @@
         'StepStates' => [
           'shape' => 'StepStateList',
         ],
+        'StepIds' => [
+          'shape' => 'XmlStringList',
+        ],
         'Marker' => [
           'shape' => 'Marker',
         ],
@@ -1610,8 +1620,7 @@
     ],
     'RemoveTagsOutput' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'ResourceId' => [
       'type' => 'string',
@@ -1882,6 +1891,12 @@
         ],
         'Name' => [
           'shape' => 'String',
+        ],
+        'Config' => [
+          'shape' => 'HadoopStepConfig',
+        ],
+        'ActionOnFailure' => [
+          'shape' => 'ActionOnFailure',
         ],
         'Status' => [
           'shape' => 'StepStatus',

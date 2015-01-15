@@ -322,8 +322,7 @@
     ],
     'DeleteIdentityResponse' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'DeleteVerifiedEmailAddressRequest' => [
       'type' => 'structure',
@@ -592,8 +591,7 @@
     ],
     'MessageRejected' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'MessageRejected',
         'httpStatusCode' => 400,
@@ -748,8 +746,7 @@
     ],
     'SetIdentityDkimEnabledResponse' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'SetIdentityFeedbackForwardingEnabledRequest' => [
       'type' => 'structure',
@@ -768,8 +765,7 @@
     ],
     'SetIdentityFeedbackForwardingEnabledResponse' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'SetIdentityNotificationTopicRequest' => [
       'type' => 'structure',
@@ -791,8 +787,7 @@
     ],
     'SetIdentityNotificationTopicResponse' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'Timestamp' => [
       'type' => 'timestamp',
@@ -893,8 +888,7 @@
     ],
     'VerifyEmailIdentityResponse' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
   ],
 ];

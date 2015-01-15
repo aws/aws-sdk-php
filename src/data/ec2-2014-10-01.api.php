@@ -81,6 +81,19 @@
         'shape' => 'AssociateRouteTableResult',
       ],
     ],
+    'AttachClassicLinkVpc' => [
+      'name' => 'AttachClassicLinkVpc',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'AttachClassicLinkVpcRequest',
+      ],
+      'output' => [
+        'shape' => 'AttachClassicLinkVpcResult',
+      ],
+    ],
     'AttachInternetGateway' => [
       'name' => 'AttachInternetGateway',
       'http' => [
@@ -837,6 +850,19 @@
         'shape' => 'DescribeBundleTasksResult',
       ],
     ],
+    'DescribeClassicLinkInstances' => [
+      'name' => 'DescribeClassicLinkInstances',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'DescribeClassicLinkInstancesRequest',
+      ],
+      'output' => [
+        'shape' => 'DescribeClassicLinkInstancesResult',
+      ],
+    ],
     'DescribeConversionTasks' => [
       'name' => 'DescribeConversionTasks',
       'http' => [
@@ -1267,6 +1293,19 @@
         'shape' => 'DescribeVpcAttributeResult',
       ],
     ],
+    'DescribeVpcClassicLink' => [
+      'name' => 'DescribeVpcClassicLink',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'DescribeVpcClassicLinkRequest',
+      ],
+      'output' => [
+        'shape' => 'DescribeVpcClassicLinkResult',
+      ],
+    ],
     'DescribeVpcPeeringConnections' => [
       'name' => 'DescribeVpcPeeringConnections',
       'http' => [
@@ -1317,6 +1356,19 @@
       ],
       'output' => [
         'shape' => 'DescribeVpnGatewaysResult',
+      ],
+    ],
+    'DetachClassicLinkVpc' => [
+      'name' => 'DetachClassicLinkVpc',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'DetachClassicLinkVpcRequest',
+      ],
+      'output' => [
+        'shape' => 'DetachClassicLinkVpcResult',
       ],
     ],
     'DetachInternetGateway' => [
@@ -1373,6 +1425,19 @@
         'shape' => 'DisableVgwRoutePropagationRequest',
       ],
     ],
+    'DisableVpcClassicLink' => [
+      'name' => 'DisableVpcClassicLink',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'DisableVpcClassicLinkRequest',
+      ],
+      'output' => [
+        'shape' => 'DisableVpcClassicLinkResult',
+      ],
+    ],
     'DisassociateAddress' => [
       'name' => 'DisassociateAddress',
       'http' => [
@@ -1411,6 +1476,19 @@
       ],
       'input' => [
         'shape' => 'EnableVolumeIORequest',
+      ],
+    ],
+    'EnableVpcClassicLink' => [
+      'name' => 'EnableVpcClassicLink',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'EnableVpcClassicLinkRequest',
+      ],
+      'output' => [
+        'shape' => 'EnableVpcClassicLinkResult',
       ],
     ],
     'GetConsoleOutput' => [
@@ -2111,6 +2189,41 @@
         ],
       ],
     ],
+    'AttachClassicLinkVpcRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'InstanceId',
+        'VpcId',
+        'Groups',
+      ],
+      'members' => [
+        'DryRun' => [
+          'shape' => 'Boolean',
+          'locationName' => 'dryRun',
+        ],
+        'InstanceId' => [
+          'shape' => 'String',
+          'locationName' => 'instanceId',
+        ],
+        'VpcId' => [
+          'shape' => 'String',
+          'locationName' => 'vpcId',
+        ],
+        'Groups' => [
+          'shape' => 'GroupIdStringList',
+          'locationName' => 'SecurityGroupId',
+        ],
+      ],
+    ],
+    'AttachClassicLinkVpcResult' => [
+      'type' => 'structure',
+      'members' => [
+        'Return' => [
+          'shape' => 'Boolean',
+          'locationName' => 'return',
+        ],
+      ],
+    ],
     'AttachInternetGatewayRequest' => [
       'type' => 'structure',
       'required' => [
@@ -2646,6 +2759,34 @@
       'type' => 'list',
       'member' => [
         'shape' => 'CancelledSpotInstanceRequest',
+        'locationName' => 'item',
+      ],
+    ],
+    'ClassicLinkInstance' => [
+      'type' => 'structure',
+      'members' => [
+        'InstanceId' => [
+          'shape' => 'String',
+          'locationName' => 'instanceId',
+        ],
+        'VpcId' => [
+          'shape' => 'String',
+          'locationName' => 'vpcId',
+        ],
+        'Groups' => [
+          'shape' => 'GroupIdentifierList',
+          'locationName' => 'groupSet',
+        ],
+        'Tags' => [
+          'shape' => 'TagList',
+          'locationName' => 'tagSet',
+        ],
+      ],
+    ],
+    'ClassicLinkInstanceList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'ClassicLinkInstance',
         'locationName' => 'item',
       ],
     ],
@@ -4073,6 +4214,44 @@
         ],
       ],
     ],
+    'DescribeClassicLinkInstancesRequest' => [
+      'type' => 'structure',
+      'members' => [
+        'DryRun' => [
+          'shape' => 'Boolean',
+          'locationName' => 'dryRun',
+        ],
+        'InstanceIds' => [
+          'shape' => 'InstanceIdStringList',
+          'locationName' => 'InstanceId',
+        ],
+        'Filters' => [
+          'shape' => 'FilterList',
+          'locationName' => 'Filter',
+        ],
+        'NextToken' => [
+          'shape' => 'String',
+          'locationName' => 'nextToken',
+        ],
+        'MaxResults' => [
+          'shape' => 'Integer',
+          'locationName' => 'maxResults',
+        ],
+      ],
+    ],
+    'DescribeClassicLinkInstancesResult' => [
+      'type' => 'structure',
+      'members' => [
+        'Instances' => [
+          'shape' => 'ClassicLinkInstanceList',
+          'locationName' => 'instancesSet',
+        ],
+        'NextToken' => [
+          'shape' => 'String',
+          'locationName' => 'nextToken',
+        ],
+      ],
+    ],
     'DescribeConversionTaskList' => [
       'type' => 'list',
       'member' => [
@@ -5110,6 +5289,32 @@
         ],
       ],
     ],
+    'DescribeVpcClassicLinkRequest' => [
+      'type' => 'structure',
+      'members' => [
+        'DryRun' => [
+          'shape' => 'Boolean',
+          'locationName' => 'dryRun',
+        ],
+        'VpcIds' => [
+          'shape' => 'VpcClassicLinkIdList',
+          'locationName' => 'VpcId',
+        ],
+        'Filters' => [
+          'shape' => 'FilterList',
+          'locationName' => 'Filter',
+        ],
+      ],
+    ],
+    'DescribeVpcClassicLinkResult' => [
+      'type' => 'structure',
+      'members' => [
+        'Vpcs' => [
+          'shape' => 'VpcClassicLinkList',
+          'locationName' => 'vpcSet',
+        ],
+      ],
+    ],
     'DescribeVpcPeeringConnectionsRequest' => [
       'type' => 'structure',
       'members' => [
@@ -5211,6 +5416,36 @@
         'VpnGateways' => [
           'shape' => 'VpnGatewayList',
           'locationName' => 'vpnGatewaySet',
+        ],
+      ],
+    ],
+    'DetachClassicLinkVpcRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'InstanceId',
+        'VpcId',
+      ],
+      'members' => [
+        'DryRun' => [
+          'shape' => 'Boolean',
+          'locationName' => 'dryRun',
+        ],
+        'InstanceId' => [
+          'shape' => 'String',
+          'locationName' => 'instanceId',
+        ],
+        'VpcId' => [
+          'shape' => 'String',
+          'locationName' => 'vpcId',
+        ],
+      ],
+    ],
+    'DetachClassicLinkVpcResult' => [
+      'type' => 'structure',
+      'members' => [
+        'Return' => [
+          'shape' => 'Boolean',
+          'locationName' => 'return',
         ],
       ],
     ],
@@ -5368,6 +5603,31 @@
         ],
         'GatewayId' => [
           'shape' => 'String',
+        ],
+      ],
+    ],
+    'DisableVpcClassicLinkRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'VpcId',
+      ],
+      'members' => [
+        'DryRun' => [
+          'shape' => 'Boolean',
+          'locationName' => 'dryRun',
+        ],
+        'VpcId' => [
+          'shape' => 'String',
+          'locationName' => 'vpcId',
+        ],
+      ],
+    ],
+    'DisableVpcClassicLinkResult' => [
+      'type' => 'structure',
+      'members' => [
+        'Return' => [
+          'shape' => 'Boolean',
+          'locationName' => 'return',
         ],
       ],
     ],
@@ -5595,6 +5855,31 @@
         'VolumeId' => [
           'shape' => 'String',
           'locationName' => 'volumeId',
+        ],
+      ],
+    ],
+    'EnableVpcClassicLinkRequest' => [
+      'type' => 'structure',
+      'required' => [
+        'VpcId',
+      ],
+      'members' => [
+        'DryRun' => [
+          'shape' => 'Boolean',
+          'locationName' => 'dryRun',
+        ],
+        'VpcId' => [
+          'shape' => 'String',
+          'locationName' => 'vpcId',
+        ],
+      ],
+    ],
+    'EnableVpcClassicLinkResult' => [
+      'type' => 'structure',
+      'members' => [
+        'Return' => [
+          'shape' => 'Boolean',
+          'locationName' => 'return',
         ],
       ],
     ],
@@ -5908,6 +6193,10 @@
           'shape' => 'String',
           'locationName' => 'imageOwnerId',
         ],
+        'CreationDate' => [
+          'shape' => 'String',
+          'locationName' => 'creationDate',
+        ],
         'Public' => [
           'shape' => 'Boolean',
           'locationName' => 'isPublic',
@@ -6079,7 +6368,7 @@
           'locationName' => 'additionalInfo',
         ],
         'UserData' => [
-          'shape' => 'String',
+          'shape' => 'UserData',
           'locationName' => 'userData',
         ],
         'InstanceType' => [
@@ -10140,6 +10429,15 @@
         ],
       ],
     ],
+    'UserData' => [
+      'type' => 'structure',
+      'members' => [
+        'Data' => [
+          'shape' => 'String',
+          'locationName' => 'data',
+        ],
+      ],
+    ],
     'UserGroupStringList' => [
       'type' => 'list',
       'member' => [
@@ -10572,6 +10870,37 @@
       'enum' => [
         'enableDnsSupport',
         'enableDnsHostnames',
+      ],
+    ],
+    'VpcClassicLink' => [
+      'type' => 'structure',
+      'members' => [
+        'VpcId' => [
+          'shape' => 'String',
+          'locationName' => 'vpcId',
+        ],
+        'ClassicLinkEnabled' => [
+          'shape' => 'Boolean',
+          'locationName' => 'classicLinkEnabled',
+        ],
+        'Tags' => [
+          'shape' => 'TagList',
+          'locationName' => 'tagSet',
+        ],
+      ],
+    ],
+    'VpcClassicLinkIdList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'String',
+        'locationName' => 'VpcId',
+      ],
+    ],
+    'VpcClassicLinkList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'VpcClassicLink',
+        'locationName' => 'item',
       ],
     ],
     'VpcIdStringList' => [

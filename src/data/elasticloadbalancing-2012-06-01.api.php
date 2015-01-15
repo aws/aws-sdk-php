@@ -1156,8 +1156,7 @@
     ],
     'AccessPointNotFoundException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'LoadBalancerNotFound',
         'httpStatusCode' => 400,
@@ -1208,8 +1207,7 @@
     ],
     'AddTagsOutput' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'AdditionalAttribute' => [
       'type' => 'structure',
@@ -1331,8 +1329,7 @@
     ],
     'CertificateNotFoundException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'CertificateNotFound',
         'httpStatusCode' => 400,
@@ -1459,8 +1456,7 @@
     ],
     'CreateAppCookieStickinessPolicyOutput' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'CreateLBCookieStickinessPolicyInput' => [
       'type' => 'structure',
@@ -1482,8 +1478,7 @@
     ],
     'CreateLBCookieStickinessPolicyOutput' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'CreateLoadBalancerListenerInput' => [
       'type' => 'structure',
@@ -1502,8 +1497,7 @@
     ],
     'CreateLoadBalancerListenerOutput' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'CreateLoadBalancerPolicyInput' => [
       'type' => 'structure',
@@ -1529,8 +1523,7 @@
     ],
     'CreateLoadBalancerPolicyOutput' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'CreatedTime' => [
       'type' => 'timestamp',
@@ -1568,8 +1561,7 @@
     ],
     'DeleteAccessPointOutput' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'DeleteLoadBalancerListenerInput' => [
       'type' => 'structure',
@@ -1588,8 +1580,7 @@
     ],
     'DeleteLoadBalancerListenerOutput' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'DeleteLoadBalancerPolicyInput' => [
       'type' => 'structure',
@@ -1608,8 +1599,7 @@
     ],
     'DeleteLoadBalancerPolicyOutput' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'DeregisterEndPointsInput' => [
       'type' => 'structure',
@@ -1782,8 +1772,7 @@
     ],
     'DuplicateAccessPointNameException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'DuplicateLoadBalancerName',
         'httpStatusCode' => 400,
@@ -1793,8 +1782,7 @@
     ],
     'DuplicateListenerException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'DuplicateListener',
         'httpStatusCode' => 400,
@@ -1804,8 +1792,7 @@
     ],
     'DuplicatePolicyNameException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'DuplicatePolicyName',
         'httpStatusCode' => 400,
@@ -1815,8 +1802,7 @@
     ],
     'DuplicateTagKeysException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'DuplicateTagKeys',
         'httpStatusCode' => 400,
@@ -1924,8 +1910,7 @@
     ],
     'InvalidConfigurationRequestException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidConfigurationRequest',
         'httpStatusCode' => 409,
@@ -1935,8 +1920,7 @@
     ],
     'InvalidEndPointException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidInstance',
         'httpStatusCode' => 400,
@@ -1946,8 +1930,7 @@
     ],
     'InvalidSchemeException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidScheme',
         'httpStatusCode' => 400,
@@ -1957,8 +1940,7 @@
     ],
     'InvalidSecurityGroupException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidSecurityGroup',
         'httpStatusCode' => 400,
@@ -1968,8 +1950,7 @@
     ],
     'InvalidSubnetException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidSubnet',
         'httpStatusCode' => 400,
@@ -2038,8 +2019,7 @@
     ],
     'ListenerNotFoundException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ListenerNotFound',
         'httpStatusCode' => 400,
@@ -2055,8 +2035,7 @@
     ],
     'LoadBalancerAttributeNotFoundException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'LoadBalancerAttributeNotFound',
         'httpStatusCode' => 400,
@@ -2299,8 +2278,7 @@
     ],
     'PolicyNotFoundException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'PolicyNotFound',
         'httpStatusCode' => 400,
@@ -2339,8 +2317,7 @@
     ],
     'PolicyTypeNotFoundException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'PolicyTypeNotFound',
         'httpStatusCode' => 400,
@@ -2423,8 +2400,7 @@
     ],
     'RemoveTagsOutput' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'S3BucketName' => [
       'type' => 'string',
@@ -2468,8 +2444,7 @@
     ],
     'SetLoadBalancerListenerSSLCertificateOutput' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'SetLoadBalancerPoliciesForBackendServerInput' => [
       'type' => 'structure',
@@ -2492,8 +2467,7 @@
     ],
     'SetLoadBalancerPoliciesForBackendServerOutput' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'SetLoadBalancerPoliciesOfListenerInput' => [
       'type' => 'structure',
@@ -2516,8 +2490,7 @@
     ],
     'SetLoadBalancerPoliciesOfListenerOutput' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'SourceSecurityGroup' => [
       'type' => 'structure',
@@ -2541,8 +2514,7 @@
     ],
     'SubnetNotFoundException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SubnetNotFound',
         'httpStatusCode' => 400,
@@ -2623,8 +2595,7 @@
     ],
     'TooManyAccessPointsException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'TooManyLoadBalancers',
         'httpStatusCode' => 400,
@@ -2634,8 +2605,7 @@
     ],
     'TooManyPoliciesException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'TooManyPolicies',
         'httpStatusCode' => 400,
@@ -2645,8 +2615,7 @@
     ],
     'TooManyTagsException' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'TooManyTags',
         'httpStatusCode' => 400,

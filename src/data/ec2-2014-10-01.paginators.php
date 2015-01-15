@@ -66,6 +66,11 @@
       'limit_key' => 'MaxResults',
       'result_key' => 'ReservedInstancesOfferings',
     ],
+    'DescribeReservedInstancesModifications' => [
+      'input_token' => 'NextToken',
+      'output_token' => 'NextToken',
+      'result_key' => 'ReservedInstancesModifications',
+    ],
     'DescribeRouteTables' => [
       'result_key' => 'RouteTables',
     ],

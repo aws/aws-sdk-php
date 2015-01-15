@@ -2034,8 +2034,7 @@
     ],
     'AuthorizationAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'AuthorizationAlreadyExists',
         'httpStatusCode' => 400,
@@ -2045,8 +2044,7 @@
     ],
     'AuthorizationNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'AuthorizationNotFound',
         'httpStatusCode' => 404,
@@ -2181,8 +2179,7 @@
     ],
     'CacheClusterAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'CacheClusterAlreadyExists',
         'httpStatusCode' => 400,
@@ -2210,8 +2207,7 @@
     ],
     'CacheClusterNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'CacheClusterNotFound',
         'httpStatusCode' => 404,
@@ -2368,8 +2364,7 @@
     ],
     'CacheParameterGroupAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'CacheParameterGroupAlreadyExists',
         'httpStatusCode' => 400,
@@ -2408,8 +2403,7 @@
     ],
     'CacheParameterGroupNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'CacheParameterGroupNotFound',
         'httpStatusCode' => 404,
@@ -2419,8 +2413,7 @@
     ],
     'CacheParameterGroupQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'CacheParameterGroupQuotaExceeded',
         'httpStatusCode' => 400,
@@ -2473,8 +2466,7 @@
     ],
     'CacheSecurityGroupAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'CacheSecurityGroupAlreadyExists',
         'httpStatusCode' => 400,
@@ -2520,8 +2512,7 @@
     ],
     'CacheSecurityGroupNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'CacheSecurityGroupNotFound',
         'httpStatusCode' => 404,
@@ -2531,8 +2522,7 @@
     ],
     'CacheSecurityGroupQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'QuotaExceeded.CacheSecurityGroup',
         'httpStatusCode' => 400,
@@ -2567,8 +2557,7 @@
     ],
     'CacheSubnetGroupAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'CacheSubnetGroupAlreadyExists',
         'httpStatusCode' => 400,
@@ -2578,8 +2567,7 @@
     ],
     'CacheSubnetGroupInUse' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'CacheSubnetGroupInUse',
         'httpStatusCode' => 400,
@@ -2600,8 +2588,7 @@
     ],
     'CacheSubnetGroupNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'CacheSubnetGroupNotFoundFault',
         'httpStatusCode' => 400,
@@ -2611,8 +2598,7 @@
     ],
     'CacheSubnetGroupQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'CacheSubnetGroupQuotaExceeded',
         'httpStatusCode' => 400,
@@ -2629,8 +2615,7 @@
     ],
     'CacheSubnetQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'CacheSubnetQuotaExceededFault',
         'httpStatusCode' => 400,
@@ -2647,8 +2632,7 @@
     ],
     'ClusterQuotaForCustomerExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ClusterQuotaForCustomerExceeded',
         'httpStatusCode' => 400,
@@ -3292,8 +3276,7 @@
     ],
     'InsufficientCacheClusterCapacityFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InsufficientCacheClusterCapacity',
         'httpStatusCode' => 400,
@@ -3309,8 +3292,7 @@
     ],
     'InvalidCacheClusterStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidCacheClusterState',
         'httpStatusCode' => 400,
@@ -3320,8 +3302,7 @@
     ],
     'InvalidCacheParameterGroupStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidCacheParameterGroupState',
         'httpStatusCode' => 400,
@@ -3331,8 +3312,7 @@
     ],
     'InvalidCacheSecurityGroupStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidCacheSecurityGroupState',
         'httpStatusCode' => 400,
@@ -3370,8 +3350,7 @@
     ],
     'InvalidReplicationGroupStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidReplicationGroupState',
         'httpStatusCode' => 400,
@@ -3381,8 +3360,7 @@
     ],
     'InvalidSnapshotStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidSnapshotState',
         'httpStatusCode' => 400,
@@ -3392,8 +3370,7 @@
     ],
     'InvalidSubnet' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidSubnet',
         'httpStatusCode' => 400,
@@ -3403,8 +3380,7 @@
     ],
     'InvalidVPCNetworkStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidVPCNetworkStateFault',
         'httpStatusCode' => 400,
@@ -3609,8 +3585,7 @@
     ],
     'NodeQuotaForClusterExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'NodeQuotaForClusterExceeded',
         'httpStatusCode' => 400,
@@ -3620,8 +3595,7 @@
     ],
     'NodeQuotaForCustomerExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'NodeQuotaForCustomerExceeded',
         'httpStatusCode' => 400,
@@ -3830,8 +3804,7 @@
     ],
     'ReplicationGroupAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ReplicationGroupAlreadyExists',
         'httpStatusCode' => 400,
@@ -3859,8 +3832,7 @@
     ],
     'ReplicationGroupNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ReplicationGroupNotFoundFault',
         'httpStatusCode' => 404,
@@ -3923,8 +3895,7 @@
     ],
     'ReservedCacheNodeAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ReservedCacheNodeAlreadyExists',
         'httpStatusCode' => 404,
@@ -3952,8 +3923,7 @@
     ],
     'ReservedCacheNodeNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ReservedCacheNodeNotFound',
         'httpStatusCode' => 404,
@@ -3963,8 +3933,7 @@
     ],
     'ReservedCacheNodeQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ReservedCacheNodeQuotaExceeded',
         'httpStatusCode' => 400,
@@ -4022,8 +3991,7 @@
     ],
     'ReservedCacheNodesOfferingNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ReservedCacheNodesOfferingNotFound',
         'httpStatusCode' => 404,
@@ -4160,8 +4128,7 @@
     ],
     'SnapshotAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SnapshotAlreadyExistsFault',
         'httpStatusCode' => 400,
@@ -4178,8 +4145,7 @@
     ],
     'SnapshotFeatureNotSupportedFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SnapshotFeatureNotSupportedFault',
         'httpStatusCode' => 400,
@@ -4196,8 +4162,7 @@
     ],
     'SnapshotNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SnapshotNotFoundFault',
         'httpStatusCode' => 404,
@@ -4207,8 +4172,7 @@
     ],
     'SnapshotQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SnapshotQuotaExceededFault',
         'httpStatusCode' => 400,
@@ -4248,8 +4212,7 @@
     ],
     'SubnetInUse' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SubnetInUse',
         'httpStatusCode' => 400,

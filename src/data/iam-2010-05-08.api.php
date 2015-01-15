@@ -4169,8 +4169,7 @@
     ],
     'ListOpenIDConnectProvidersRequest' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'ListOpenIDConnectProvidersResponse' => [
       'type' => 'structure',
@@ -4247,8 +4246,7 @@
     ],
     'ListSAMLProvidersRequest' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'ListSAMLProvidersResponse' => [
       'type' => 'structure',

@@ -882,6 +882,9 @@
         'taskList' => [
           'shape' => 'TaskList',
         ],
+        'taskPriority' => [
+          'shape' => 'TaskPriority',
+        ],
         'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
@@ -972,6 +975,9 @@
         ],
         'defaultTaskList' => [
           'shape' => 'TaskList',
+        ],
+        'defaultTaskPriority' => [
+          'shape' => 'TaskPriority',
         ],
         'defaultTaskScheduleToStartTimeout' => [
           'shape' => 'DurationInSecondsOptional',
@@ -1333,6 +1339,9 @@
         'taskList' => [
           'shape' => 'TaskList',
         ],
+        'taskPriority' => [
+          'shape' => 'TaskPriority',
+        ],
         'taskStartToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
@@ -1357,6 +1366,7 @@
         'DEFAULT_TASK_START_TO_CLOSE_TIMEOUT_UNDEFINED',
         'DEFAULT_TASK_LIST_UNDEFINED',
         'DEFAULT_CHILD_POLICY_UNDEFINED',
+        'CONTINUE_AS_NEW_WORKFLOW_EXECUTION_RATE_EXCEEDED',
         'OPERATION_NOT_PERMITTED',
       ],
     ],
@@ -1578,6 +1588,9 @@
       'members' => [
         'taskList' => [
           'shape' => 'TaskList',
+        ],
+        'taskPriority' => [
+          'shape' => 'TaskPriority',
         ],
         'startToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
@@ -2555,6 +2568,9 @@
         'defaultTaskList' => [
           'shape' => 'TaskList',
         ],
+        'defaultTaskPriority' => [
+          'shape' => 'TaskPriority',
+        ],
         'defaultTaskScheduleToStartTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
@@ -2609,6 +2625,9 @@
         ],
         'defaultTaskList' => [
           'shape' => 'TaskList',
+        ],
+        'defaultTaskPriority' => [
+          'shape' => 'TaskPriority',
         ],
         'defaultChildPolicy' => [
           'shape' => 'ChildPolicy',
@@ -2859,6 +2878,9 @@
         'taskList' => [
           'shape' => 'TaskList',
         ],
+        'taskPriority' => [
+          'shape' => 'TaskPriority',
+        ],
         'scheduleToStartTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
@@ -3053,6 +3075,9 @@
         'taskList' => [
           'shape' => 'TaskList',
         ],
+        'taskPriority' => [
+          'shape' => 'TaskPriority',
+        ],
         'taskStartToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
         ],
@@ -3138,6 +3163,9 @@
         'taskList' => [
           'shape' => 'TaskList',
         ],
+        'taskPriority' => [
+          'shape' => 'TaskPriority',
+        ],
         'decisionTaskCompletedEventId' => [
           'shape' => 'EventId',
         ],
@@ -3218,6 +3246,9 @@
         'taskList' => [
           'shape' => 'TaskList',
         ],
+        'taskPriority' => [
+          'shape' => 'TaskPriority',
+        ],
         'input' => [
           'shape' => 'Data',
         ],
@@ -3268,6 +3299,10 @@
           'shape' => 'Name',
         ],
       ],
+    ],
+    'TaskPriority' => [
+      'type' => 'string',
+      'max' => 11,
     ],
     'TaskToken' => [
       'type' => 'string',
@@ -3498,6 +3533,9 @@
         'taskList' => [
           'shape' => 'TaskList',
         ],
+        'taskPriority' => [
+          'shape' => 'TaskPriority',
+        ],
         'childPolicy' => [
           'shape' => 'ChildPolicy',
         ],
@@ -3527,6 +3565,9 @@
         ],
         'taskList' => [
           'shape' => 'TaskList',
+        ],
+        'taskPriority' => [
+          'shape' => 'TaskPriority',
         ],
         'taskStartToCloseTimeout' => [
           'shape' => 'DurationInSecondsOptional',
@@ -3739,6 +3780,9 @@
         'tagList' => [
           'shape' => 'TagList',
         ],
+        'taskPriority' => [
+          'shape' => 'TaskPriority',
+        ],
         'continuedExecutionRunId' => [
           'shape' => 'RunIdOptional',
         ],
@@ -3830,6 +3874,9 @@
         ],
         'defaultTaskList' => [
           'shape' => 'TaskList',
+        ],
+        'defaultTaskPriority' => [
+          'shape' => 'TaskPriority',
         ],
         'defaultChildPolicy' => [
           'shape' => 'ChildPolicy',

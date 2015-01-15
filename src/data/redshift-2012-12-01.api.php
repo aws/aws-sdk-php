@@ -2593,8 +2593,7 @@
   'shapes' => [
     'AccessToSnapshotDeniedFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'AccessToSnapshotDenied',
         'httpStatusCode' => 400,
@@ -2619,8 +2618,7 @@
     ],
     'AuthorizationAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'AuthorizationAlreadyExists',
         'httpStatusCode' => 400,
@@ -2630,8 +2628,7 @@
     ],
     'AuthorizationNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'AuthorizationNotFound',
         'httpStatusCode' => 404,
@@ -2641,8 +2638,7 @@
     ],
     'AuthorizationQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'AuthorizationQuotaExceeded',
         'httpStatusCode' => 400,
@@ -2712,8 +2708,7 @@
     ],
     'BucketNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'BucketNotFoundFault',
         'httpStatusCode' => 400,
@@ -2822,8 +2817,7 @@
     ],
     'ClusterAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ClusterAlreadyExists',
         'httpStatusCode' => 400,
@@ -2860,8 +2854,7 @@
     ],
     'ClusterNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ClusterNotFound',
         'httpStatusCode' => 404,
@@ -2889,8 +2882,7 @@
     ],
     'ClusterParameterGroupAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ClusterParameterGroupAlreadyExists',
         'httpStatusCode' => 400,
@@ -2922,8 +2914,7 @@
     ],
     'ClusterParameterGroupNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ClusterParameterGroupNotFound',
         'httpStatusCode' => 404,
@@ -2933,8 +2924,7 @@
     ],
     'ClusterParameterGroupQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ClusterParameterGroupQuotaExceeded',
         'httpStatusCode' => 400,
@@ -2973,8 +2963,7 @@
     ],
     'ClusterQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ClusterQuotaExceeded',
         'httpStatusCode' => 400,
@@ -3005,8 +2994,7 @@
     ],
     'ClusterSecurityGroupAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ClusterSecurityGroupAlreadyExists',
         'httpStatusCode' => 400,
@@ -3052,8 +3040,7 @@
     ],
     'ClusterSecurityGroupNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ClusterSecurityGroupNotFound',
         'httpStatusCode' => 404,
@@ -3063,8 +3050,7 @@
     ],
     'ClusterSecurityGroupQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'QuotaExceeded.ClusterSecurityGroup',
         'httpStatusCode' => 400,
@@ -3081,8 +3067,7 @@
     ],
     'ClusterSnapshotAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ClusterSnapshotAlreadyExists',
         'httpStatusCode' => 400,
@@ -3103,8 +3088,7 @@
     ],
     'ClusterSnapshotNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ClusterSnapshotNotFound',
         'httpStatusCode' => 404,
@@ -3114,8 +3098,7 @@
     ],
     'ClusterSnapshotQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ClusterSnapshotQuotaExceeded',
         'httpStatusCode' => 400,
@@ -3149,8 +3132,7 @@
     ],
     'ClusterSubnetGroupAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ClusterSubnetGroupAlreadyExists',
         'httpStatusCode' => 400,
@@ -3171,8 +3153,7 @@
     ],
     'ClusterSubnetGroupNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ClusterSubnetGroupNotFoundFault',
         'httpStatusCode' => 400,
@@ -3182,8 +3163,7 @@
     ],
     'ClusterSubnetGroupQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ClusterSubnetGroupQuotaExceeded',
         'httpStatusCode' => 400,
@@ -3200,8 +3180,7 @@
     ],
     'ClusterSubnetQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ClusterSubnetQuotaExceededFault',
         'httpStatusCode' => 400,
@@ -3272,8 +3251,7 @@
     ],
     'CopyToRegionDisabledFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'CopyToRegionDisabledFault',
         'httpStatusCode' => 400,
@@ -4257,8 +4235,7 @@
     ],
     'EventSubscriptionQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'EventSubscriptionQuotaExceeded',
         'httpStatusCode' => 400,
@@ -4312,8 +4289,7 @@
     ],
     'HsmClientCertificateAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'HsmClientCertificateAlreadyExistsFault',
         'httpStatusCode' => 400,
@@ -4341,8 +4317,7 @@
     ],
     'HsmClientCertificateNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'HsmClientCertificateNotFoundFault',
         'httpStatusCode' => 400,
@@ -4352,8 +4327,7 @@
     ],
     'HsmClientCertificateQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'HsmClientCertificateQuotaExceededFault',
         'httpStatusCode' => 400,
@@ -4384,8 +4358,7 @@
     ],
     'HsmConfigurationAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'HsmConfigurationAlreadyExistsFault',
         'httpStatusCode' => 400,
@@ -4413,8 +4386,7 @@
     ],
     'HsmConfigurationNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'HsmConfigurationNotFoundFault',
         'httpStatusCode' => 400,
@@ -4424,8 +4396,7 @@
     ],
     'HsmConfigurationQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'HsmConfigurationQuotaExceededFault',
         'httpStatusCode' => 400,
@@ -4488,8 +4459,7 @@
     ],
     'IncompatibleOrderableOptions' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'IncompatibleOrderableOptions',
         'httpStatusCode' => 400,
@@ -4499,8 +4469,7 @@
     ],
     'InsufficientClusterCapacityFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InsufficientClusterCapacity',
         'httpStatusCode' => 400,
@@ -4510,8 +4479,7 @@
     ],
     'InsufficientS3BucketPolicyFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InsufficientS3BucketPolicyFault',
         'httpStatusCode' => 400,
@@ -4527,8 +4495,7 @@
     ],
     'InvalidClusterParameterGroupStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidClusterParameterGroupState',
         'httpStatusCode' => 400,
@@ -4538,8 +4505,7 @@
     ],
     'InvalidClusterSecurityGroupStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidClusterSecurityGroupState',
         'httpStatusCode' => 400,
@@ -4549,8 +4515,7 @@
     ],
     'InvalidClusterSnapshotStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidClusterSnapshotState',
         'httpStatusCode' => 400,
@@ -4560,8 +4525,7 @@
     ],
     'InvalidClusterStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidClusterState',
         'httpStatusCode' => 400,
@@ -4571,8 +4535,7 @@
     ],
     'InvalidClusterSubnetGroupStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidClusterSubnetGroupStateFault',
         'httpStatusCode' => 400,
@@ -4582,8 +4545,7 @@
     ],
     'InvalidClusterSubnetStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidClusterSubnetStateFault',
         'httpStatusCode' => 400,
@@ -4593,8 +4555,7 @@
     ],
     'InvalidElasticIpFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidElasticIpFault',
         'httpStatusCode' => 400,
@@ -4604,8 +4565,7 @@
     ],
     'InvalidHsmClientCertificateStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidHsmClientCertificateStateFault',
         'httpStatusCode' => 400,
@@ -4615,8 +4575,7 @@
     ],
     'InvalidHsmConfigurationStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidHsmConfigurationStateFault',
         'httpStatusCode' => 400,
@@ -4626,8 +4585,7 @@
     ],
     'InvalidRestoreFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidRestore',
         'httpStatusCode' => 406,
@@ -4637,8 +4595,7 @@
     ],
     'InvalidS3BucketNameFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidS3BucketNameFault',
         'httpStatusCode' => 400,
@@ -4648,8 +4605,7 @@
     ],
     'InvalidS3KeyPrefixFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidS3KeyPrefixFault',
         'httpStatusCode' => 400,
@@ -4659,8 +4615,7 @@
     ],
     'InvalidSubnet' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidSubnet',
         'httpStatusCode' => 400,
@@ -4670,8 +4625,7 @@
     ],
     'InvalidSubscriptionStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidSubscriptionStateFault',
         'httpStatusCode' => 400,
@@ -4681,8 +4635,7 @@
     ],
     'InvalidTagFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidTagFault',
         'httpStatusCode' => 400,
@@ -4692,8 +4645,7 @@
     ],
     'InvalidVPCNetworkStateFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'InvalidVPCNetworkStateFault',
         'httpStatusCode' => 400,
@@ -4862,8 +4814,7 @@
     ],
     'NumberOfNodesPerClusterLimitExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'NumberOfNodesPerClusterLimitExceeded',
         'httpStatusCode' => 400,
@@ -4873,8 +4824,7 @@
     ],
     'NumberOfNodesQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'NumberOfNodesQuotaExceeded',
         'httpStatusCode' => 400,
@@ -5075,8 +5025,7 @@
     ],
     'ReservedNodeAlreadyExistsFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ReservedNodeAlreadyExists',
         'httpStatusCode' => 404,
@@ -5093,8 +5042,7 @@
     ],
     'ReservedNodeNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ReservedNodeNotFound',
         'httpStatusCode' => 404,
@@ -5141,8 +5089,7 @@
     ],
     'ReservedNodeOfferingNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ReservedNodeOfferingNotFound',
         'httpStatusCode' => 404,
@@ -5163,8 +5110,7 @@
     ],
     'ReservedNodeQuotaExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ReservedNodeQuotaExceeded',
         'httpStatusCode' => 400,
@@ -5202,8 +5148,7 @@
     ],
     'ResizeNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ResizeNotFound',
         'httpStatusCode' => 404,
@@ -5254,8 +5199,7 @@
     ],
     'ResourceNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'ResourceNotFoundFault',
         'httpStatusCode' => 404,
@@ -5400,8 +5344,7 @@
     ],
     'SNSInvalidTopicFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SNSInvalidTopic',
         'httpStatusCode' => 400,
@@ -5411,8 +5354,7 @@
     ],
     'SNSNoAuthorizationFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SNSNoAuthorization',
         'httpStatusCode' => 400,
@@ -5422,8 +5364,7 @@
     ],
     'SNSTopicArnNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SNSTopicArnNotFound',
         'httpStatusCode' => 404,
@@ -5520,8 +5461,7 @@
     ],
     'SnapshotCopyAlreadyDisabledFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SnapshotCopyAlreadyDisabledFault',
         'httpStatusCode' => 400,
@@ -5531,8 +5471,7 @@
     ],
     'SnapshotCopyAlreadyEnabledFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SnapshotCopyAlreadyEnabledFault',
         'httpStatusCode' => 400,
@@ -5542,8 +5481,7 @@
     ],
     'SnapshotCopyDisabledFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SnapshotCopyDisabledFault',
         'httpStatusCode' => 400,
@@ -5578,8 +5516,7 @@
     ],
     'SourceNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SourceNotFound',
         'httpStatusCode' => 404,
@@ -5615,8 +5552,7 @@
     ],
     'SubnetAlreadyInUse' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SubnetAlreadyInUse',
         'httpStatusCode' => 400,
@@ -5640,8 +5576,7 @@
     ],
     'SubscriptionAlreadyExistFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SubscriptionAlreadyExist',
         'httpStatusCode' => 400,
@@ -5651,8 +5586,7 @@
     ],
     'SubscriptionCategoryNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SubscriptionCategoryNotFound',
         'httpStatusCode' => 404,
@@ -5662,8 +5596,7 @@
     ],
     'SubscriptionEventIdNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SubscriptionEventIdNotFound',
         'httpStatusCode' => 404,
@@ -5673,8 +5606,7 @@
     ],
     'SubscriptionNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SubscriptionNotFound',
         'httpStatusCode' => 404,
@@ -5684,8 +5616,7 @@
     ],
     'SubscriptionSeverityNotFoundFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'SubscriptionSeverityNotFound',
         'httpStatusCode' => 404,
@@ -5716,8 +5647,7 @@
     ],
     'TagLimitExceededFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'TagLimitExceededFault',
         'httpStatusCode' => 400,
@@ -5773,8 +5703,7 @@
     ],
     'UnauthorizedOperation' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'UnauthorizedOperation',
         'httpStatusCode' => 400,
@@ -5784,8 +5713,7 @@
     ],
     'UnknownSnapshotCopyRegionFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'UnknownSnapshotCopyRegionFault',
         'httpStatusCode' => 404,
@@ -5795,8 +5723,7 @@
     ],
     'UnsupportedOptionFault' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'UnsupportedOptionFault',
         'httpStatusCode' => 400,

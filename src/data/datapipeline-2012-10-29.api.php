@@ -513,8 +513,7 @@
     ],
     'ActivatePipelineOutput' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'CreatePipelineInput' => [
       'type' => 'structure',
@@ -1145,8 +1144,7 @@
     ],
     'SetTaskStatusOutput' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'TaskNotFoundException' => [
       'type' => 'structure',

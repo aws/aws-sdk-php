@@ -790,8 +790,7 @@
     ],
     'BucketAlreadyExists' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'BucketCannedACL' => [
@@ -1852,7 +1851,7 @@
       'flattened' => true,
     ],
     'Expiration' => [
-      'type' => 'string',
+      'type' => 'timestamp',
     ],
     'ExpirationStatus' => [
       'type' => 'string',
@@ -2451,6 +2450,8 @@
         ],
         'Type' => [
           'shape' => 'Type',
+          'xmlAttribute' => true,
+          'locationName' => 'xsi:type',
         ],
         'URI' => [
           'shape' => 'URI',
@@ -3201,20 +3202,17 @@
     ],
     'NoSuchBucket' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'NoSuchKey' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'NoSuchUpload' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'NoncurrentVersionExpiration' => [
@@ -3278,8 +3276,7 @@
     ],
     'ObjectAlreadyInActiveTierError' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'ObjectCannedACL' => [
@@ -3326,8 +3323,7 @@
     ],
     'ObjectNotInActiveTierError' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'ObjectStorageClass' => [
@@ -4323,8 +4319,6 @@
         'AmazonCustomerByEmail',
         'Group',
       ],
-      'xmlAttribute' => true,
-      'locationName' => 'xsi:type',
     ],
     'URI' => [
       'type' => 'string',

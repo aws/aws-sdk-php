@@ -875,8 +875,7 @@
     ],
     'DisableDomainAutoRenewResponse' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'DisableDomainTransferLockRequest' => [
       'type' => 'structure',
@@ -1003,8 +1002,7 @@
     ],
     'EnableDomainAutoRenewResponse' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'EnableDomainTransferLockRequest' => [
       'type' => 'structure',

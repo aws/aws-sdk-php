@@ -551,8 +551,7 @@
     ],
     'BatchEntryIdsNotDistinct' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'AWS.SimpleQueueService.BatchEntryIdsNotDistinct',
         'httpStatusCode' => 400,
@@ -562,8 +561,7 @@
     ],
     'BatchRequestTooLong' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'AWS.SimpleQueueService.BatchRequestTooLong',
         'httpStatusCode' => 400,
@@ -831,8 +829,7 @@
     ],
     'EmptyBatchRequest' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'AWS.SimpleQueueService.EmptyBatchRequest',
         'httpStatusCode' => 400,
@@ -890,14 +887,12 @@
     ],
     'InvalidAttributeName' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidBatchEntryId' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'AWS.SimpleQueueService.InvalidBatchEntryId',
         'httpStatusCode' => 400,
@@ -907,14 +902,12 @@
     ],
     'InvalidIdFormat' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'InvalidMessageContents' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'ListDeadLetterSourceQueuesRequest' => [
@@ -1043,8 +1036,7 @@
     ],
     'MessageNotInflight' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'AWS.SimpleQueueService.MessageNotInflight',
         'httpStatusCode' => 400,
@@ -1054,8 +1046,7 @@
     ],
     'OverLimit' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'OverLimit',
         'httpStatusCode' => 403,
@@ -1065,8 +1056,7 @@
     ],
     'PurgeQueueInProgress' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'AWS.SimpleQueueService.PurgeQueueInProgress',
         'httpStatusCode' => 403,
@@ -1105,8 +1095,7 @@
     ],
     'QueueDeletedRecently' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'AWS.SimpleQueueService.QueueDeletedRecently',
         'httpStatusCode' => 400,
@@ -1116,8 +1105,7 @@
     ],
     'QueueDoesNotExist' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'AWS.SimpleQueueService.NonExistentQueue',
         'httpStatusCode' => 400,
@@ -1127,8 +1115,7 @@
     ],
     'QueueNameExists' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'QueueAlreadyExists',
         'httpStatusCode' => 400,
@@ -1146,8 +1133,7 @@
     ],
     'ReceiptHandleIsInvalid' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'exception' => true,
     ],
     'ReceiveMessageRequest' => [
@@ -1353,8 +1339,7 @@
     ],
     'TooManyEntriesInBatchRequest' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'AWS.SimpleQueueService.TooManyEntriesInBatchRequest',
         'httpStatusCode' => 400,
@@ -1364,8 +1349,7 @@
     ],
     'UnsupportedOperation' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
       'error' => [
         'code' => 'AWS.SimpleQueueService.UnsupportedOperation',
         'httpStatusCode' => 400,

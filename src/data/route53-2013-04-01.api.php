@@ -5,7 +5,7 @@
     'globalEndpoint' => 'route53.amazonaws.com',
     'serviceAbbreviation' => 'Route 53',
     'serviceFullName' => 'Amazon Route 53',
-    'signatureVersion' => 'v3https',
+    'signatureVersion' => 'v4',
     'protocol' => 'rest-xml',
   ],
   'operations' => [
@@ -1203,8 +1203,7 @@
     ],
     'ChangeTagsForResourceResponse' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'Changes' => [
       'type' => 'list',
@@ -1440,8 +1439,7 @@
     ],
     'DeleteHealthCheckResponse' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'DeleteHostedZoneRequest' => [
       'type' => 'structure',
@@ -1482,8 +1480,7 @@
     ],
     'DeleteReusableDelegationSetResponse' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'DisassociateVPCComment' => [
       'type' => 'string',
@@ -1638,8 +1635,7 @@
     ],
     'GetCheckerIpRangesRequest' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'GetCheckerIpRangesResponse' => [
       'type' => 'structure',
@@ -1685,8 +1681,7 @@
     ],
     'GetHealthCheckCountRequest' => [
       'type' => 'structure',
-      'members' => [
-      ],
+      'members' => [],
     ],
     'GetHealthCheckCountResponse' => [
       'type' => 'structure',
