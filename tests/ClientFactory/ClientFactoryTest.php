@@ -1,17 +1,17 @@
 <?php
-namespace Aws\Test\Common;
+namespace Aws\Test\ClientFactory;
 
+use Aws\ClientFactory\ClientFactory;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\NullCredentials;
 use Aws\Exception\AwsException;
-use Aws\ClientFactory;
 use Aws\Test\SdkTest;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Client;
 use Aws\Credentials\Provider;
 
 /**
- * @covers Aws\ClientFactory
+ * @covers Aws\ClientFactory\ClientFactory
  */
 class ClientFactoryTest extends \PHPUnit_Framework_TestCase
 {

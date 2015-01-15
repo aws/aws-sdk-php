@@ -1,13 +1,13 @@
 <?php
-namespace Aws\Glacier;
+namespace Aws\ClientFactory;
 
-use Aws\ClientFactory;
 use Aws\Subscriber\SourceFile;
+use Aws\Glacier\ApplyChecksumsSubscriber;
 
 /**
  * @internal
  */
-class GlacierFactory extends ClientFactory
+class Glacier extends ClientFactory
 {
     protected function createClient(array $args)
     {

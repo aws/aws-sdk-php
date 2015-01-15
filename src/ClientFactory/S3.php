@@ -1,13 +1,18 @@
 <?php
-namespace Aws\S3;
+namespace Aws\ClientFactory;
 
-use Aws\ClientFactory;
 use Aws\Retry\S3TimeoutFilter;
 use Aws\Signature\S3Signature;
 use Aws\Signature\S3SignatureV4;
 use Aws\Signature\SignatureV4;
 use Aws\Subscriber\SaveAs;
 use Aws\Subscriber\SourceFile;
+use Aws\S3\ApplyMd5Subscriber;
+use Aws\S3\PutObjectUrlSubscriber;
+use Aws\S3\BucketStyleSubscriber;
+use Aws\S3\SSECSubscriber;
+use Aws\S3\PermanentRedirectSubscriber;
+use Aws\S3\S3UriParser;
 use GuzzleHttp\Message\ResponseInterface;
 use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
 
@@ -21,7 +26,7 @@ use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
  *
  * @internal
  */
-class S3Factory extends ClientFactory
+class S3 extends ClientFactory
 {
     /**
      * {@inheritdoc}

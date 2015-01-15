@@ -1,17 +1,17 @@
 <?php
 namespace Aws\Test\Sqs;
 
-use Aws\Sqs\SqsFactory;
+use Aws\ClientFactory\Sqs;
 use Aws\Test\SdkTest;
 
 /**
- * @covers Aws\Sqs\SqsFactory
+ * @covers Aws\ClientFactory\Sqs
  */
-class SqsFactoryTest extends \PHPUnit_Framework_TestCase
+class SqsTest extends \PHPUnit_Framework_TestCase
 {
     public function testAttachesSubscribers()
     {
-        $f = new SqsFactory();
+        $f = new Sqs();
         $client = $f->create([
             'service' => 'sqs',
             'region'  => 'us-west-2',

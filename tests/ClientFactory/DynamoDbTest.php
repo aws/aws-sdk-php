@@ -1,18 +1,18 @@
 <?php
-namespace Aws\Test\DynamoDb;
+namespace Aws\Test\ClientFactory;
 
-use Aws\DynamoDb\DynamoDbFactory;
+use Aws\ClientFactory\DynamoDb;
 use Aws\Test\SdkTest;
 use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
 
 /**
- * @covers Aws\DynamoDb\DynamoDbFactory
+ * @covers Aws\ClientFactory\DynamoDb
  */
 class DynamoDbFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testDisablesRedirects()
     {
-        $f = new DynamoDbFactory();
+        $f = new DynamoDb();
         $client = $f->create([
             'service' => 'dynamodb',
             'region'  => 'us-west-2',
@@ -23,7 +23,7 @@ class DynamoDbFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testUsesCustomBackoffStrategy()
     {
-        $f = new DynamoDbFactory();
+        $f = new DynamoDb();
         $client = $f->create([
             'service' => 'dynamodb',
             'region'  => 'us-west-2',
@@ -53,7 +53,7 @@ class DynamoDbFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCanDisableRetries()
     {
-        $f = new DynamoDbFactory();
+        $f = new DynamoDb();
         $client = $f->create([
             'service' => 'dynamodb',
             'region'  => 'us-west-2',

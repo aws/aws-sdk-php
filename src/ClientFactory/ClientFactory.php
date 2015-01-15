@@ -1,10 +1,13 @@
 <?php
-namespace Aws;
+namespace Aws\ClientFactory;
 
 use InvalidArgumentException as IAE;
+use Aws\Sdk;
+use Aws\AwsClientInterface;
 use Aws\Api\FilesystemApiProvider;
 use Aws\Api\Service;
 use Aws\Api\Validator;
+use Aws\EndpointProvider;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Credentials\NullCredentials;
@@ -137,7 +140,7 @@ class ClientFactory
         }
 
         if (!isset($args['api_provider'])) {
-            $args['api_provider'] = new FilesystemApiProvider(__DIR__ . '/data');
+            $args['api_provider'] = new FilesystemApiProvider(__DIR__ . '/../data');
         }
 
         if (!isset($args['endpoint_provider'])) {
