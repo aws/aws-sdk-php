@@ -10,9 +10,9 @@ use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Stream\NoSeekStream;
 
 /**
- * @covers Aws\Glacier\ApplyChecksums
+ * @covers Aws\Glacier\ApplyChecksumsSubscriber
  */
-class ApplyChecksumsTest extends \PHPUnit_Framework_TestCase
+class ApplyChecksumsSubscriberTest extends \PHPUnit_Framework_TestCase
 {
     use UsesServiceTrait;
 

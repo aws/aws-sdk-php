@@ -2,6 +2,7 @@
 namespace Aws\S3;
 
 use Aws\ClientFactory;
+use Aws\Retry\S3TimeoutFilter;
 use Aws\Signature\S3Signature;
 use Aws\Signature\S3SignatureV4;
 use Aws\Signature\SignatureV4;

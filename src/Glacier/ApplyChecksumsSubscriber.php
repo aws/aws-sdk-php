@@ -12,7 +12,7 @@ use GuzzleHttp\Subscriber\MessageIntegrity\PhpHash;
  *
  * @internal
  */
-class ApplyChecksums implements SubscriberInterface
+class ApplyChecksumsSubscriber implements SubscriberInterface
 {
     public function getEvents()
     {

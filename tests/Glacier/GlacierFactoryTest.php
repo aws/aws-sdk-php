@@ -48,6 +48,6 @@ class GlacierFactoryTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->assertContains('Aws\Subscriber\SourceFile', $found);
-        $this->assertContains('Aws\Glacier\ApplyChecksums', $found);
+        $this->assertContains('Aws\Glacier\ApplyChecksumsSubscriber', $found);
     }
 }

@@ -31,7 +31,7 @@ class GlacierFactory extends ClientFactory
         $em->attach(new SourceFile($client->getApi(), 'body', 'sourceFile'));
         // Listen for upload operations and make sure the required hash headers
         // are added.
-        $em->attach(new ApplyChecksums);
+        $em->attach(new ApplyChecksumsSubscriber());
 
         return $client;
     }

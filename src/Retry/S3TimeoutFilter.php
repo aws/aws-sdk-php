@@ -1,5 +1,5 @@
 <?php
-namespace Aws\S3;
+namespace Aws\Retry;
 
 use GuzzleHttp\Event\AbstractTransferEvent;
 use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
