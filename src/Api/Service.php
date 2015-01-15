@@ -22,11 +22,11 @@ class Service extends AbstractModel
     /** @var Operation[] */
     private $operations = [];
 
-    /** @var array */
-    private $paginators = [];
+    /** @var array|null */
+    private $paginators = null;
 
-    /** @var array */
-    private $waiters = [];
+    /** @var array|null */
+    private $waiters = null;
 
     /**
      * @param callable $apiProvider
@@ -194,8 +194,7 @@ class Service extends AbstractModel
      */
     public function getProtocol()
     {
-        return $this->getMetadata('protocol')
-            ?: $this->getMetadata('type');
+        return $this->getMetadata('protocol');
     }
 
     /**
@@ -273,7 +272,37 @@ class Service extends AbstractModel
         return null;
     }
 
-    public function getPaginatorConfig($operationName)
+    /**
+     * Determines if the service has a paginator by name.
+     *
+     * @param string $name Name of the paginator.
+     *
+     * @return bool
+     */
+    public function hasPaginator($name)
+    {
+        if (!isset($this->paginators)) {
+            $res = call_user_func(
+                $this->apiProvider,
+                'paginator',
+                $this->serviceName,
+                $this->apiVersion
+            );
+            $this->paginators = isset($res['pagination']) ? $res['pagination'] : [];
+        }
+
+        return isset($this->paginators[$name]);
+    }
+
+    /**
+     * Retrieve a paginator by name.
+     *
+     * @param string $name Paginator to retrieve by name. This argument is
+     *                     typically the operation name.
+     * @return array
+     * @throws \UnexpectedValueException if the paginator does not exist.
+     */
+    public function getPaginatorConfig($name)
     {
         static $defaults = [
             'input_token'  => null,
@@ -283,38 +312,50 @@ class Service extends AbstractModel
             'more_results' => null,
         ];
 
-        if (!$this->paginators) {
-            $this->paginators = call_user_func(
-                $this->apiProvider,
-                'paginator',
-                $this->serviceName,
-                $this->apiVersion
-            )['pagination'];
+        if (!$this->hasPaginator($name)) {
+            throw new \UnexpectedValueException("There is no {$name} "
+                . "paginator defined for the {$this->serviceName} service.");
         }
 
-        $config = $defaults;
-        if (isset($this->paginators[$operationName])) {
-            $config = $this->paginators[$operationName] + $config;
-        }
-
-        return $config;
+        return $this->paginators[$name] + $defaults;
     }
 
-    public function getWaiterConfig($name)
+    /**
+     * Determines if the service has a waiter by name.
+     *
+     * @param string $name Name of the waiter.
+     *
+     * @return bool
+     */
+    public function hasWaiter($name)
     {
-        if (!$this->waiters) {
-            $this->waiters = call_user_func(
+        if (!isset($this->waiters)) {
+            $res = call_user_func(
                 $this->apiProvider,
                 'waiter',
                 $this->serviceName,
                 $this->apiVersion
-            )['waiters'];
+            );
+            $this->waiters = isset($res['waiters']) ? $res['waiters'] : [];
         }
 
+        return isset($this->waiters[$name]);
+    }
+
+    /**
+     * Get a waiter configuration by name.
+     *
+     * @param string $name Name of the waiter by name.
+     *
+     * @return array
+     * @throws \UnexpectedValueException if the waiter does not exist.
+     */
+    public function getWaiterConfig($name)
+    {
         // Error if the waiter is not defined
-        if (!isset($this->waiters[$name])) {
+        if (!$this->hasWaiter($name)) {
             throw new \UnexpectedValueException("There is no {$name} waiter "
-                . " defined for the {$this->serviceName} service.");
+                . "defined for the {$this->serviceName} service.");
         }
 
         // Resolve the configuration for the named waiter

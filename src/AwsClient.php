@@ -212,12 +212,8 @@ class AwsClient extends AbstractClient implements AwsClientInterface
     public function getPaginator($name, array $args = [], array $config = [])
     {
         $config += $this->api->getPaginatorConfig($name);
-        if ($config['output_token'] && $config['input_token']) {
-            return new ResultPaginator($this, $name, $args, $config);
-        }
 
-        throw new \UnexpectedValueException("Results for the {$name} operation "
-            . "of {$this->api['serviceFullName']} cannot be paginated.");
+        return new ResultPaginator($this, $name, $args, $config);
     }
 
     public function getWaiter($name, array $args = [], array $config = [])
