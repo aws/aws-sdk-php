@@ -17,6 +17,7 @@
 namespace Aws\Tests\Common\Signature;
 
 use Aws\Common\Credentials\Credentials;
+use Aws\Common\Credentials\NullCredentials;
 use Aws\Common\Signature\SignatureListener;
 use Guzzle\Common\Collection;
 use Guzzle\Http\Message\Request;
@@ -44,6 +45,26 @@ class SignatureListenerTest extends \Guzzle\Tests\GuzzleTestCase
         // Create a mock event
         $event = new Event(array(
             'request' => $request
+        ));
+
+        $listener->onRequestBeforeSend($event);
+    }
+
+    public function testDoesNotSignNullCredentialRequests() {
+        $request = new Request('GET', 'http://www.example.com');
+        $request->getEventDispatcher();
+        $credentials = new NullCredentials();
+        $signature = $this->getMock('Aws\Common\Signature\SignatureV4');
+
+        // Ensure that signing the request occurred once with the correct args
+        $signature->expects($this->never())
+          ->method('signRequest');
+
+        $listener = new SignatureListener($credentials, $signature);
+
+        // Create a mock event
+        $event = new Event(array(
+          'request' => $request
         ));
 
         $listener->onRequestBeforeSend($event);
