@@ -1,5 +1,12 @@
 <?php
-// Adds autoloading of legacy named AWS classes.
+/*
+ * Adds autoloading of legacy named AWS classes.
+ *
+ * Set $_ENV['AWS_SHOW_LEGACY_WARNINGS'] to true to trigger E_USER_DEPRECATED
+ * warnings. These warnings will show the name of the legacy class being loaded
+ * and the name of the new class name. This is useful for migrating
+ * applications to v3 so that they do not rely on the legacy autoloader.
+ */
 
 $oldToNewMap = [
     'Aws\\AutoScaling\\AutoScalingClient' => 'Aws\\AutoScalingClient',
@@ -105,6 +112,9 @@ $removedClasses = [
 
 spl_autoload_register(function ($class) use ($oldToNewMap, $removedClasses) {
     if (isset($oldToNewMap[$class])) {
+        if (!empty($_ENV['AWS_SHOW_LEGACY_WARNINGS'])) {
+            trigger_error("{$class} is deprecated. Use {$oldToNewMap[$class]}", E_USER_DEPRECATED);
+        }
         class_alias($oldToNewMap[$class], $class);
     } elseif (isset($removedClasses[$class])) {
         throw new \RuntimeException(
