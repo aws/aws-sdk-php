@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Next Release
+
+* Added support for [HLS Content Protection](https://aws.amazon.com/releasenotes/3388917394239147)
+  to the Elastic Transcoder client.
+* Updated client factory logic to add the `SignatureListener`, even when
+  `NullCredentials` have been specified. This way, you can update a client's
+  credentials later if you want to begin signing requests.
+
 ## 2.7.14 - 2015-01-09
 
 * Fixed a regression in the CloudSearch Domain client (#448).

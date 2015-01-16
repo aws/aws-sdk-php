@@ -144,7 +144,6 @@ return array (
                                 ),
                                 'InitializationVector' => array(
                                     'type' => 'string',
-                                    'minLength' => 1,
                                     'maxLength' => 255,
                                 ),
                             ),
@@ -177,7 +176,6 @@ return array (
                                 ),
                                 'InitializationVector' => array(
                                     'type' => 'string',
-                                    'minLength' => 1,
                                     'maxLength' => 255,
                                 ),
                             ),
@@ -221,7 +219,6 @@ return array (
                                             ),
                                             'InitializationVector' => array(
                                                 'type' => 'string',
-                                                'minLength' => 1,
                                                 'maxLength' => 255,
                                             ),
                                         ),
@@ -275,7 +272,6 @@ return array (
                                                     ),
                                                     'InitializationVector' => array(
                                                         'type' => 'string',
-                                                        'minLength' => 1,
                                                         'maxLength' => 255,
                                                     ),
                                                 ),
@@ -350,7 +346,6 @@ return array (
                                                     ),
                                                     'InitializationVector' => array(
                                                         'type' => 'string',
-                                                        'minLength' => 1,
                                                         'maxLength' => 255,
                                                     ),
                                                 ),
@@ -385,7 +380,6 @@ return array (
                                                     ),
                                                     'InitializationVector' => array(
                                                         'type' => 'string',
-                                                        'minLength' => 1,
                                                         'maxLength' => 255,
                                                     ),
                                                 ),
@@ -409,7 +403,6 @@ return array (
                                 ),
                                 'InitializationVector' => array(
                                     'type' => 'string',
-                                    'minLength' => 1,
                                     'maxLength' => 255,
                                 ),
                             ),
@@ -446,7 +439,6 @@ return array (
                                     ),
                                     'InitializationVector' => array(
                                         'type' => 'string',
-                                        'minLength' => 1,
                                         'maxLength' => 255,
                                     ),
                                 ),
@@ -490,7 +482,6 @@ return array (
                                                 ),
                                                 'InitializationVector' => array(
                                                     'type' => 'string',
-                                                    'minLength' => 1,
                                                     'maxLength' => 255,
                                                 ),
                                             ),
@@ -544,7 +535,6 @@ return array (
                                                         ),
                                                         'InitializationVector' => array(
                                                             'type' => 'string',
-                                                            'minLength' => 1,
                                                             'maxLength' => 255,
                                                         ),
                                                     ),
@@ -619,7 +609,6 @@ return array (
                                                         ),
                                                         'InitializationVector' => array(
                                                             'type' => 'string',
-                                                            'minLength' => 1,
                                                             'maxLength' => 255,
                                                         ),
                                                     ),
@@ -654,7 +643,6 @@ return array (
                                                         ),
                                                         'InitializationVector' => array(
                                                             'type' => 'string',
-                                                            'minLength' => 1,
                                                             'maxLength' => 255,
                                                         ),
                                                     ),
@@ -678,7 +666,6 @@ return array (
                                     ),
                                     'InitializationVector' => array(
                                         'type' => 'string',
-                                        'minLength' => 1,
                                         'maxLength' => 255,
                                     ),
                                 ),
@@ -716,6 +703,31 @@ return array (
                                     'type' => 'string',
                                     'minLength' => 1,
                                     'maxLength' => 255,
+                                ),
+                            ),
+                            'HlsContentProtection' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'Method' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Key' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'KeyMd5' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'InitializationVector' => array(
+                                        'type' => 'string',
+                                        'maxLength' => 255,
+                                    ),
+                                    'LicenseAcquisitionUrl' => array(
+                                        'type' => 'string',
+                                        'maxLength' => 512,
+                                    ),
+                                    'KeyStoragePolicy' => array(
+                                        'type' => 'string',
+                                    ),
                                 ),
                             ),
                         ),
@@ -2351,6 +2363,29 @@ return array (
                                             'type' => 'string',
                                         ),
                                     ),
+                                    'HlsContentProtection' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'Method' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Key' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'KeyMd5' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'InitializationVector' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'LicenseAcquisitionUrl' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'KeyStoragePolicy' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
                                     'Status' => array(
                                         'type' => 'string',
                                     ),
@@ -3263,6 +3298,29 @@ return array (
                                                 'type' => 'string',
                                             ),
                                         ),
+                                        'HlsContentProtection' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'Method' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Key' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'KeyMd5' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'InitializationVector' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'LicenseAcquisitionUrl' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'KeyStoragePolicy' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
                                         'Status' => array(
                                             'type' => 'string',
                                         ),
@@ -3882,6 +3940,29 @@ return array (
                                             'items' => array(
                                                 'name' => 'Key',
                                                 'type' => 'string',
+                                            ),
+                                        ),
+                                        'HlsContentProtection' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'Method' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Key' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'KeyMd5' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'InitializationVector' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'LicenseAcquisitionUrl' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'KeyStoragePolicy' => array(
+                                                    'type' => 'string',
+                                                ),
                                             ),
                                         ),
                                         'Status' => array(
@@ -4808,6 +4889,29 @@ return array (
                                         'items' => array(
                                             'name' => 'Key',
                                             'type' => 'string',
+                                        ),
+                                    ),
+                                    'HlsContentProtection' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'Method' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Key' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'KeyMd5' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'InitializationVector' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'LicenseAcquisitionUrl' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'KeyStoragePolicy' => array(
+                                                'type' => 'string',
+                                            ),
                                         ),
                                     ),
                                     'Status' => array(
