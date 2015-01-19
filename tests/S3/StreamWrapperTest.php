@@ -766,4 +766,27 @@ EOT;
         $r = opendir('s3://bucket', $context);
         closedir($r);
     }
+
+    public function testCanClearStatCache()
+    {
+        StreamWrapper::clearCache();
+        $this->assertEmpty($this->readAttribute('Aws\S3\StreamWrapper', 'statCache'));
+        $results = [
+            [
+                'IsTruncated' => false,
+                'Delimiter'   => '/',
+                'Name'        => 'bucket',
+                'Prefix'      => '',
+                'MaxKeys'     => 1000,
+                'Contents'    => [['Key' => 'a'], ['Key' => 'b']],
+            ]
+        ];
+
+        $this->addMockResults($this->client, $results);
+        $dir = 's3://bucket/key/';
+        $r = opendir($dir);
+        while (($file = readdir($r)) !== false);
+        $this->assertNotEmpty($this->readAttribute('Aws\S3\StreamWrapper', 'statCache'));
+        closedir($r);
+    }
 }
