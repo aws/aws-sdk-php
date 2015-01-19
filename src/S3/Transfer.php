@@ -120,18 +120,24 @@ class Transfer
     public static function recursiveDirIterator($path)
     {
         $invalid = ['.' => true, '..' => true];
-        $queue = scandir($path);
         $pathLen = strlen($path) + 1;
+        $queue = new \SplDoublyLinkedList();
+        foreach (scandir($path) as $item) {
+            $queue->push($item);
+        }
 
-        while ($file = array_shift($queue)) {
+        while (!$queue->isEmpty()) {
+            $file = $queue->shift();
             if (isset($invalid[basename($file)])) {
                 continue;
             }
             $fullPath = $path . '/' . $file;
             yield $fullPath;
             if (is_dir($fullPath)) {
-                foreach (scandir($fullPath) as $subFile) {
-                    $queue[] = substr("$fullPath/$subFile", $pathLen);
+                // Push these files to the front of the queue, in order.
+                $push = scandir($fullPath);
+                for ($i = count($push) - 1; $i > -1; $i--) {
+                    $queue->unshift(substr("$fullPath/{$push[$i]}", $pathLen));
                 }
             }
         }
