@@ -6,10 +6,15 @@ use GuzzleHttp\Stream\LimitStream;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Stream\StreamInterface;
 
+/**
+ * Base class for the service-specific UploadBuilders
+ *
+ * @internal
+ */
 abstract class AbstractUploadBuilder
 {
     /** @var array Set of three parameters required to identify an upload. */
-    protected $uploadParams;
+    protected $uploadId = [];
 
     /** @var AwsClientInterface Client used to transfer requests. */
     protected $client;
@@ -21,10 +26,20 @@ abstract class AbstractUploadBuilder
     protected $source;
 
     /** @var int Size, in bytes, of each part. */
-    protected $partSize;
+    protected $specifiedPartSize;
 
-    /** @var array Parameters for executed commands. */
-    protected $params = [];
+    /** @var array Service-specific configuration for uploader. */
+    protected $config = [];
+
+    /**
+     * Sets up an empty upload identity.
+     */
+    public function __construct()
+    {
+        foreach ($this->config['id'] as $param) {
+            $this->uploadId[$param] = null;
+        }
+    }
 
     /**
      * Set the client used to connect to the AWS service.
@@ -79,24 +94,9 @@ abstract class AbstractUploadBuilder
         }
 
         $this->source = Stream::factory($source);
-
         if (!$this->source->isReadable()) {
             throw new \InvalidArgumentException('Source stream must be readable.');
         }
-
-        return $this;
-    }
-
-    /**
-     * Set the upload ID of the upload.
-     *
-     * @param string $uploadId ID of the upload.
-     *
-     * @return self
-     */
-    public function setUploadId($uploadId)
-    {
-        $this->uploadParams[array_keys($this->uploadParams)[2]] = $uploadId;
 
         return $this;
     }
@@ -110,42 +110,25 @@ abstract class AbstractUploadBuilder
      */
     public function setPartSize($partSize)
     {
-        $this->partSize = $partSize;
+        $this->specifiedPartSize = $partSize;
 
         return $this;
     }
 
     /**
-     * Set additional parameters to be used with the specified command.
+     * Set additional parameters to be used with an operation.
      *
-     * @param string $commandName Name of the command to set parameters for.
-     * @param array  $params      Parameters to include for the command.
-     *
-     * @return static
-     */
-    public function setParams($commandName, array $params)
-    {
-        $this->params[$commandName] = $params;
-
-        return $this;
-    }
-
-    /**
-     * Set a single additional parameter to be used with the specified command.
-     *
-     * @param string $commandName Name of the command to set parameters for.
-     * @param string $param       Parameter to include for the command.
-     * @param mixed  $value       Parameter value
+     * @param string $operation Operation type to add parameters to. Should be
+     *                          "initiate", "upload", "complete", or "abort".
+     * @param array $params     Parameters to include for the operation.
      *
      * @return static
      */
-    public function addParam($commandName, $param, $value)
+    public function addParams($operation, array $params)
     {
-        if (!isset($this->params[$commandName])) {
-            $this->params[$commandName] = [];
+        foreach ($params as $key => $value) {
+            $this->config[$operation]['params'][$key] = $value;
         }
-
-        $this->params[$commandName][$param] = $value;
 
         return $this;
     }
@@ -153,18 +136,29 @@ abstract class AbstractUploadBuilder
     /**
      * Build the uploader based on the provided configuration.
      *
-     * @return AbstractUploader
+     * @return Uploader
      */
     public function build()
     {
-        // Determine the state
+        // Determine the state, including the part size.
         $this->determineUploadState();
 
-        // Determine the partSize
-        $this->partSize = $this->state->getPartSize() ?: $this->determinePartSize();
-        $this->state->setPartSize($this->partSize);
+        // Prepare the parameters.
+        $this->prepareParams();
 
-        return $this->createUploader();
+        // Prepare the config.
+        $this->config['fn'] = [
+            'complete' => $this->getCompleteParamsFn(),
+            'result'   => $this->getResultHandlerFn()
+        ];
+
+        // Create an uploader object to encapsulate this upload.
+        return new Uploader(
+            $this->client,
+            $this->state,
+            $this->getPartGenerator($this->getCreatePartFn()),
+            $this->config
+        );
     }
 
     /**
@@ -178,7 +172,11 @@ abstract class AbstractUploadBuilder
     protected function limitPartStream(StreamInterface $stream)
     {
         // Limit what is read from the stream to the part size.
-        return new LimitStream($stream, $this->partSize, $this->source->tell());
+        return new LimitStream(
+            $stream,
+            $this->state->getPartSize(),
+            $this->source->tell()
+        );
     }
 
     /**
@@ -188,12 +186,12 @@ abstract class AbstractUploadBuilder
      *
      * @return UploadState
      */
-    abstract protected function loadStateFromParams(array $params = []);
+    abstract protected function loadStateByUploadId(array $params = []);
 
     /**
-     * Performs service-specific logic to create the uploader.
+     * Performs service-specific logic to prepare parameters.
      */
-    abstract protected function createUploader();
+    abstract protected function prepareParams();
 
     /**
      * Determines the part size to use for upload parts.
@@ -202,6 +200,8 @@ abstract class AbstractUploadBuilder
      * best possible part size.
      *
      * @throws \InvalidArgumentException if the part size is invalid.
+     *
+     * @return int
      */
     abstract protected function determinePartSize();
 
@@ -219,6 +219,23 @@ abstract class AbstractUploadBuilder
     abstract protected function getCreatePartFn();
 
     /**
+     * Creates a service-specific callback function for getting the command
+     * params for completing a multipart upload.
+     *
+     * @return callable
+     */
+    abstract protected function getCompleteParamsFn();
+
+    /**
+     * Creates a service-specific callback function that uses information from
+     * the Command and Result to determine which part was uploaded and mark it
+     * as uploaded in the upload's state.
+     *
+     * @return callable
+     */
+    abstract protected function getResultHandlerFn();
+
+    /**
      * Determines the upload state using the provided upload params.
      *
      * @throws \InvalidArgumentException if required upload params not included.
@@ -227,23 +244,73 @@ abstract class AbstractUploadBuilder
     {
         if (!($this->state instanceof UploadState)) {
             // Get the required and uploadId param names.
-            $requiredParams = array_keys($this->uploadParams);
+            $requiredParams = $this->config['id'];
             $uploadIdParam = array_pop($requiredParams);
 
             // Make sure that essential upload params are set.
             foreach ($requiredParams as $param) {
-                if (!isset($this->uploadParams[$param])) {
+                if (!isset($this->uploadId[$param])) {
                     throw new \InvalidArgumentException('You must provide an '
                         . $param . ' value to the UploadBuilder.');
                 }
             }
 
             // Create a state from the upload params.
-            if (isset($this->uploadParams[$uploadIdParam])) {
-                $this->state = $this->loadStateFromParams($this->uploadParams);
+            if (isset($this->uploadId[$uploadIdParam])) {
+                $this->state = $this->loadStateByUploadId($this->uploadId);
             } else {
-                unset($this->uploadParams[$uploadIdParam]);
-                $this->state = new UploadState($this->uploadParams);
+                $this->state = new UploadState($this->uploadId);
+            }
+        }
+
+        if (!$this->state->getPartSize()) {
+            $this->state->setPartSize($this->determinePartSize());
+        }
+    }
+
+    /**
+     * Creates a generator that yields part data for the provided source.
+     *
+     * Yields associative arrays of parameters that are ultimately merged in
+     * with others to form the complete parameters of an UploadPart (or
+     * UploadMultipartPart for Glacier) command. This includes the Body
+     * parameter, which is a limited stream (i.e., a Stream object, decorated
+     * with a LimitStream).
+     *
+     * @param callable $createPart Service-specific logic for defining a part.
+     *
+     * @return \Generator
+     */
+    private function getPartGenerator(callable $createPart)
+    {
+        // Determine if the source can be seeked.
+        $seekable = $this->source->isSeekable()
+            && $this->source->getMetadata('wrapper_type') === 'plainfile';
+
+        for (
+            $partNumber = 1;
+            $seekable ?
+                $this->source->tell() < $this->source->getSize() :
+                !$this->source->eof();
+            $partNumber++
+        ) {
+            // If we haven't already uploaded this part, yield a new part.
+            if (!$this->state->hasPartBeenUploaded($partNumber)) {
+                $partStartPos = $this->source->tell();
+                yield $partNumber => $createPart($seekable, $partNumber);
+                if ($this->source->tell() > $partStartPos) {
+                    continue;
+                }
+            }
+
+            // Advance the source's offset if not already advanced.
+            if ($seekable) {
+                $this->source->seek(min(
+                    $this->source->tell() + $this->state->getPartSize(),
+                    $this->source->getSize()
+                ));
+            } else {
+                $this->source->read($this->state->getPartSize());
             }
         }
     }

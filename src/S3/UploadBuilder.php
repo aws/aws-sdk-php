@@ -1,10 +1,11 @@
 <?php
 namespace Aws\S3;
 
-use Aws\Multipart\PartGenerator;
 use Aws\Multipart\AbstractUploadBuilder;
 use Aws\Multipart\UploadState;
+use Aws\Result;
 use Aws\Signature\SignatureV4;
+use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Mimetypes;
 use GuzzleHttp\Stream\LazyOpenStream;
 use GuzzleHttp\Stream\Stream;
@@ -18,15 +19,30 @@ use GuzzleHttp\Subscriber\MessageIntegrity\PhpHash;
  */
 class UploadBuilder extends AbstractUploadBuilder
 {
-    // An S3 upload part can be anywhere from 5 MB to 5 GB
-    const MIN_PART_SIZE = 5242880;
-    const MAX_PART_SIZE = 5368709120;
-    const MAX_PARTS = 10000;
-
-    protected $uploadParams = [
-        'Bucket'   => null, // Required to initiate.
-        'Key'      => null, // Required to initiate.
-        'UploadId' => null, // Required to upload.
+    protected $config = [
+        'id' => ['Bucket', 'Key', 'UploadId'],
+        'part'   => [
+            'min_size' => 5242880,
+            'max_size' => 5368709120,
+            'max_num'  => 10000,
+            'param'    => 'PartNumber',
+        ],
+        'initiate' => [
+            'command' => 'CreateMultipartUpload',
+            'params'  => [],
+        ],
+        'upload' => [
+            'command' => 'UploadPart',
+            'params'  => [],
+        ],
+        'complete' => [
+            'command' => 'CompleteMultipartUpload',
+            'params'  => [],
+        ],
+        'abort' => [
+            'command' => 'AbortMultipartUpload',
+            'params'  => [],
+        ],
     ];
 
     /**
@@ -38,7 +54,7 @@ class UploadBuilder extends AbstractUploadBuilder
      */
     public function setBucket($bucket)
     {
-        $this->uploadParams['Bucket'] = $bucket;
+        $this->uploadId['Bucket'] = $bucket;
 
         return $this;
     }
@@ -52,29 +68,38 @@ class UploadBuilder extends AbstractUploadBuilder
      */
     public function setKey($key)
     {
-        $this->uploadParams['Key'] = $key;
+        $this->uploadId['Key'] = $key;
 
         return $this;
     }
 
-    protected function createUploader()
+    /**
+     * Set the upload ID of the upload.
+     *
+     * @param string $uploadId ID of the upload.
+     *
+     * @return self
+     */
+    public function setUploadId($uploadId)
+    {
+        $this->uploadId['UploadId'] = $uploadId;
+
+        return $this;
+    }
+
+    protected function prepareParams()
     {
         // Set the content type, if not specified, and can be detected.
-        if (!isset($this->params[Uploader::INITIATE]['ContentType'])
+        if (!isset($this->config['initiate']['params']['ContentType'])
             && ($uri = $this->source->getMetadata('uri'))
         ) {
             if ($mimeType = Mimetypes::getInstance()->fromFilename($uri)) {
-                $this->addParam(Uploader::INITIATE, 'ContentType', $mimeType);
+                $this->config['initiate']['params']['ContentType'] = $mimeType;
             }
         }
-
-        $createPart = $this->getCreatePartFn();
-        $parts = new PartGenerator($this->source, $this->state, $createPart);
-
-        return new Uploader($this->client, $this->state, $parts, $this->params);
     }
 
-    protected function loadStateFromParams(array $params = [])
+    protected function loadStateByUploadId(array $params = [])
     {
         $state = new UploadState($params);
 
@@ -95,15 +120,20 @@ class UploadBuilder extends AbstractUploadBuilder
     protected function determinePartSize()
     {
         // Make sure the part size is set.
-        $partSize = $this->partSize ?: self::MIN_PART_SIZE;
+        $partSize = $this->specifiedPartSize ?: $this->config['part']['min_size'];
 
         // Adjust the part size to be larger for known, x-large uploads.
         if ($sourceSize = $this->source->getSize()) {
-            $partSize = (int) max($partSize, ceil($sourceSize / self::MAX_PARTS));
+            $partSize = (int) max(
+                $partSize,
+                ceil($sourceSize / $this->config['part']['max_num'])
+            );
         }
 
         // Ensure that the part size follows the rules: 5 MB <= size <= 5 GB
-        if ($partSize < self::MIN_PART_SIZE || $partSize > self::MAX_PART_SIZE) {
+        if ($partSize < $this->config['part']['min_size']
+            || $partSize > $this->config['part']['max_size']
+        ) {
             throw new \InvalidArgumentException('The part size must be no less '
                 . 'than 5 MB and not greater than 5 GB.');
         }
@@ -140,6 +170,27 @@ class UploadBuilder extends AbstractUploadBuilder
             $data['Body'] = $body;
 
             return $data;
+        };
+    }
+
+    protected function getCompleteParamsFn()
+    {
+        return function () {
+            return [
+                'MultipartUpload' => [
+                    'Parts' => $this->state->getUploadedParts()
+                ]
+            ];
+        };
+    }
+
+    protected function getResultHandlerFn()
+    {
+        return function (CommandInterface $command, Result $result) {
+            $this->state->markPartAsUploaded($command['PartNumber'], [
+                'PartNumber' => $command['PartNumber'],
+                'ETag'       => $result['ETag']
+            ]);
         };
     }
 

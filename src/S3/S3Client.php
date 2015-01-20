@@ -239,7 +239,7 @@ class S3Client extends AwsClient
             ->setSource($body)
             ->setBucket($bucket)
             ->setKey($key)
-            ->setParams('CreateMultipartUpload', $params)
+            ->addParams('initiate', $params)
             ->setPartSize($options['part_size'])
             ->build()
             ->upload($options['concurrency'], $options['before_upload']);

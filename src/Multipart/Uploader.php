@@ -5,61 +5,48 @@ use Aws\AwsClientInterface;
 use Aws\Exception\AwsException;
 use Aws\Exception\MultipartUploadException;
 use Aws\Result;
-use GuzzleHttp\Command\CommandInterface;
+use GuzzleHttp\Command\CommandInterface as Command;
 use GuzzleHttp\Command\Event\ProcessEvent;
 use transducers as t;
 
 /**
- * Templates the generic multipart upload logic for S3 and Glacier.
+ * Encapsulates the execution of a multipart upload to S3 or Glacier.
  */
-abstract class AbstractUploader
+class Uploader
 {
-    // Constants for operation names.
-    const INITIATE = 'CreateMultipartUpload';
-    const UPLOAD = 'UploadPart';
-    const COMPLETE = 'CompleteMultipartUpload';
-    const ABORT = 'AbortMultipartUpload';
-
-    /** @var string Parameter that holds the upload ID. */
-    protected static $uploadIdParam = 'UploadId';
-
-    /** @var string Parameter that holds the part number. */
-    protected static $partNumberParam = 'PartNumber';
-
     /** @var AwsClientInterface Client used for the upload. */
-    protected $client;
+    private $client;
 
     /** @var UploadState State used to manage the upload. */
-    protected $state;
+    private $state;
 
-    /** @var PartGenerator Generator that yields upload parts data. */
-    protected $parts;
+    /** @var \Traversable Generator that yields sets of upload part params. */
+    private $parts;
 
-    /** @var array Associative Array of parameters for executed commands. */
-    protected $params;
+    /** @var array Service-specific configuration used to perform the upload. */
+    private $config;
 
     /**
      * Construct a new transfer object
      *
      * @param AwsClientInterface $client Client used for the upload.
      * @param UploadState        $state  State used to manage the upload.
-     * @param \Iterator          $parts Iterator that yields sets of parameters
-     *     for each upload part operation, including the upload body.
-     * @param array              $params Array of parameters where the key
-     *     is the name of an operation, and the value is an array of the
-     *     parameters that should be included when the Uploader executes that
-     *     type of operation.
+     * @param \Traversable       $parts  Generator that yields sets of params
+     *                                   for each upload part operation,
+     *                                   including the upload body.
+     * @param array              $config Service-specific configuration relevant
+     *                                   to performing the upload.
      */
     public function __construct(
         AwsClientInterface $client,
         UploadState $state,
-        \Iterator $parts,
-        array $params = []
+        \Traversable $parts,
+        array $config = []
     ) {
         $this->client = $client;
         $this->state = $state;
         $this->parts = $parts;
-        $this->params = $params;
+        $this->config = $config;
     }
 
     public function __invoke($concurrency = 1, callable $before = null)
@@ -91,7 +78,7 @@ abstract class AbstractUploader
         }
 
         try {
-            $result = $this->client->execute($this->createCommand(static::ABORT));
+            $result = $this->client->execute($this->createCommand('abort'));
             $this->state->setStatus(UploadState::ABORTED);
             return $result;
         } catch (AwsException $e) {
@@ -107,9 +94,9 @@ abstract class AbstractUploader
     private function initiate()
     {
         try {
-            $result = $this->client->execute($this->createCommand(static::INITIATE));
+            $result = $this->client->execute($this->createCommand('initiate'));
             $params = $this->state->getUploadId();
-            $params[static::$uploadIdParam] = $result[static::$uploadIdParam];
+            $params[$this->config['id'][2]] = $result[$this->config['id'][2]];
             $this->state->setStatus(UploadState::INITIATED, $params);
         } catch (AwsException $e) {
             throw new MultipartUploadException($this->state, 'initiating', $e);
@@ -125,7 +112,9 @@ abstract class AbstractUploader
     private function complete()
     {
         try {
-            $result = $this->client->execute($this->getCompleteCommand());
+            $result = $this->client->execute($this->createCommand('complete',
+                $this->config['fn']['complete']()
+            ));
             $this->state->setStatus(UploadState::COMPLETED);
             return $result;
         } catch (AwsException $e) {
@@ -160,7 +149,7 @@ abstract class AbstractUploader
 
         // Create iterator that will yield UploadPart commands for each part.
         $commands = t\to_iter($this->parts, t\map(function (array $partData) {
-            return $this->createCommand(static::UPLOAD, $partData);
+            return $this->createCommand('upload', $partData);
         }));
 
         // Execute the commands in parallel and process results. This collects
@@ -173,12 +162,12 @@ abstract class AbstractUploader
             'process'   => [
                 'fn' => function (ProcessEvent $event) use (&$errors) {
                     $command = $event->getCommand();
+                    $partNumber = $command[$this->config['part']['param']];
                     if ($ex = $event->getException()) {
-                        $key = $command[static::$partNumberParam];
-                        $errors[$key] = $ex->getMessage();
+                        $errors[$partNumber] = $ex->getMessage();
                     } else {
-                        //unset($errors[$command[static::$partNumberParam]]);
-                        $this->handleResult($command, $event->getResult());
+                        unset($errors[$partNumber]);
+                        $this->config['fn']['result']($command, $event->getResult());
                     }
                 },
                 'priority' => 'last'
@@ -196,34 +185,18 @@ abstract class AbstractUploader
      * Creates a command with all of the relevant parameters from the operation
      * name and an array of additional parameters.
      *
-     * @param string $operation        Name of the operation (e.g., UploadPart).
-     * @param array  $additionalParams Extra params not stored in the Uploader.
+     * @param string $operation      Name of the operation (e.g., UploadPart).
+     * @param array  $computedParams Extra params not stored in the Uploader.
      *
-     * @return CommandInterface
+     * @return Command
      */
-    protected function createCommand($operation, array $additionalParams = [])
+    private function createCommand($operation, array $computedParams = [])
     {
-        $params = $additionalParams + $this->state->getUploadId();
-        if (isset($this->params[$operation])) {
-            $params += $this->params[$operation];
-        }
+        $configuredParams = $this->state->getUploadId() + $this->config[$operation]['params'];
 
-        return $this->client->getCommand($operation, $params);
+        return $this->client->getCommand(
+            $this->config[$operation]['command'],
+            $computedParams + $configuredParams
+        );
     }
-
-    /**
-     * Get the command for completing the multipart upload.
-     *
-     * @return CommandInterface
-     */
-    abstract protected function getCompleteCommand();
-
-    /**
-     * Uses information from the Command and Result to determine which part was
-     * uploaded and mark it as such.
-     */
-    abstract protected function handleResult(
-        CommandInterface $command,
-        Result $result
-    );
 }
