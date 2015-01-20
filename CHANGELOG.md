@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next Release
+## 2.7.16 - 2015-01-20
 
 * Added support for custom security groups to the Amazon EMR client.
 * Added support for the latest APIs to the Amazon Cognito Identity client.
