@@ -5,7 +5,6 @@ use Aws\Exception\AwsException;
 use Aws\Api\Service;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Signature\SignatureInterface;
-use Aws\Waiter;
 use GuzzleHttp\Command\AbstractClient;
 use GuzzleHttp\Command\Command;
 use GuzzleHttp\Command\CommandInterface;

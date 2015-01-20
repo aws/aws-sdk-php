@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Sns\MessageValidator;
 
+use Aws\Sns\Exception\MessageValidatorException;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Url;
@@ -40,7 +41,7 @@ class MessageValidator
      *
      * @param Message $message The message to validate
      *
-     * @throws SnsMessageValidatorException If the certificate cannot be
+     * @throws MessageValidatorException If the certificate cannot be
      *     retrieved, if the certificate's source cannot be verified, or if the
      *     message's signature is invalid.
      */
@@ -54,7 +55,7 @@ class MessageValidator
         $certificate = $this->client->get((string) $certUrl)->getBody();
         $key = openssl_get_publickey($certificate);
         if (!$key) {
-            throw new SnsMessageValidatorException('Cannot get the public key '
+            throw new MessageValidatorException('Cannot get the public key '
                 . 'from the certificate.');
         }
 
@@ -63,7 +64,7 @@ class MessageValidator
         $signature = base64_decode($message->get('Signature'));
 
         if (!openssl_verify($content, $signature, $key, OPENSSL_ALGO_SHA1)) {
-            throw new SnsMessageValidatorException('The message signature is '
+            throw new MessageValidatorException('The message signature is '
                 . 'invalid.');
         }
     }
@@ -81,7 +82,7 @@ class MessageValidator
         try {
             $this->validate($message);
             return true;
-        } catch (SnsMessageValidatorException $e) {
+        } catch (MessageValidatorException $e) {
             return false;
         }
     }
@@ -92,7 +93,7 @@ class MessageValidator
      *
      * @param Url $url
      *
-     * @throws SnsMessageValidatorException if the cert url is invalid
+     * @throws MessageValidatorException if the cert url is invalid
      */
     private function validateUrl(Url $url)
     {
@@ -102,7 +103,7 @@ class MessageValidator
             || substr($url, -4) !== '.pem'
             || !preg_match($hostPattern, $url->getHost())
         ) {
-            throw new SnsMessageValidatorException('The certificate is located '
+            throw new MessageValidatorException('The certificate is located '
                 . 'on an invalid domain.');
         }
     }

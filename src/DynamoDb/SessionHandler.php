@@ -1,8 +1,6 @@
 <?php
 namespace Aws\DynamoDb;
 
-use Aws\DynamoDbClient;
-
 /**
  * Provides an interface for using Amazon DynamoDB as a session store by hooking
  * into PHP's session handler hooks. Once registered, You may use the native

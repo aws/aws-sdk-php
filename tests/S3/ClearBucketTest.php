@@ -2,7 +2,7 @@
 namespace Aws\Test\S3;
 
 use Aws\S3\Exception\ClearBucketException;
-use Aws\S3Client;
+use Aws\S3\S3Client;
 use Aws\S3\ClearBucket;
 use Aws\Test\UsesServiceTrait;
 

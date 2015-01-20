@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Test\S3\Subscriber;
 
-use Aws\Exception\S3Exception;
+use Aws\S3\Exception\S3Exception;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Message\Response;

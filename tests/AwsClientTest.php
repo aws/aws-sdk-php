@@ -1,14 +1,13 @@
 <?php
 namespace Aws\Test;
 
-use Aws\Test\UsesServiceTrait;
 use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\Credentials\Credentials;
 use Aws\Exception\AwsException;
 use Aws\Signature\SignatureV4;
-use Aws\SqsClient;
-use Aws\StsClient;
+use Aws\Sqs\SqsClient;
+use Aws\Sts\StsClient;
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Message\Request;
@@ -89,7 +88,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [null, 'Aws\Exception\AwsException'],
-            ['Aws\Exception\Ec2Exception', 'Aws\Exception\Ec2Exception']
+            ['Aws\Ec2\Exception\Ec2Exception', 'Aws\Ec2\Exception\Ec2Exception']
         ];
     }
 
@@ -280,14 +279,14 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'region'  => 'us-west-2',
             'version' => 'latest'
         ]);
-        $this->assertInstanceOf('Aws\SqsClient', $client);
+        $this->assertInstanceOf('Aws\Sqs\SqsClient', $client);
         $this->assertEquals('us-west-2', $client->getRegion());
 
         $client = StsClient::factory([
             'region'  => 'us-west-2',
             'version' => 'latest'
         ]);
-        $this->assertInstanceOf('Aws\StsClient', $client);
+        $this->assertInstanceOf('Aws\Sts\StsClient', $client);
         $this->assertEquals('us-west-2', $client->getRegion());
     }
 

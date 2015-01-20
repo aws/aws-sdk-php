@@ -1,8 +1,7 @@
 <?php
 namespace Aws\DynamoDb;
 
-use Aws\DynamoDbClient;
-use Aws\Exception\DynamoDbException;
+use Aws\DynamoDb\Exception\DynamoDbException;
 
 /**
  * The locking connection adds locking logic to the read operation.

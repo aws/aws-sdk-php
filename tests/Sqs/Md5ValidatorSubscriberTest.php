@@ -3,7 +3,7 @@ namespace Aws\Test\Sqs;
 
 use Aws\Result;
 use Aws\Sqs\Md5ValidatorSubscriber;
-use Aws\SqsClient;
+use Aws\Sqs\SqsClient;
 use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Event\ProcessEvent;
 
@@ -13,7 +13,7 @@ use GuzzleHttp\Command\Event\ProcessEvent;
 class Md5ValidatorSubscriberTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @expectedException \Aws\Exception\SqsException
+     * @expectedException \Aws\Sqs\Exception\SqsException
      */
     public function testValidatesMd5WithException()
     {

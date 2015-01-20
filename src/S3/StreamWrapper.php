@@ -2,8 +2,7 @@
 namespace Aws\S3;
 
 use Aws\Result;
-use Aws\S3Client;
-use Aws\Exception\S3Exception;
+use Aws\S3\Exception\S3Exception;
 use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Stream\StreamInterface;
 use GuzzleHttp\Stream\Stream;
