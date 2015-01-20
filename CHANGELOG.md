@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Next Release
+
+* Added the ability to set a client's API version to "latest" for forwards
+  compatibility with v3.
+
 ## 2.7.15 - 2015-01-15
 
 * Added support for [HLS Content Protection](https://aws.amazon.com/releasenotes/3388917394239147)

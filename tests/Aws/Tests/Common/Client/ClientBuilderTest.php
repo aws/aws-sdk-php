@@ -399,4 +399,17 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         $c = $sdk->get('iam', array('region' => 'cn-north-1'));
         $this->assertEquals('https://iam.cn-north-1.amazonaws.com.cn', $c->getBaseUrl());
     }
+
+    public function testCanUseVersionOfLatestForForwardsCompatibility()
+    {
+        $config = array(
+            'service' => 'dynamodb',
+            'region'  => 'us-east-1',
+            'version' => 'latest',
+            'service.description' => __DIR__ . '/../../../../../src/Aws/DynamoDb/Resources/dynamodb-%s.php'
+        );
+
+        $client = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
+        $this->assertEquals($client->getApiVersion(), DynamoDbClient::LATEST_API_VERSION);
+    }
 }

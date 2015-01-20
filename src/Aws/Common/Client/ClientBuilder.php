@@ -89,6 +89,12 @@ class ClientBuilder
      */
     protected $iteratorsConfig = array();
 
+    /** @var string */
+    private $clientClass;
+
+    /** @var string */
+    private $serviceName;
+
     /**
      * Factory method for creating the client builder
      *
@@ -109,6 +115,14 @@ class ClientBuilder
     public function __construct($namespace = null)
     {
         $this->clientNamespace = $namespace;
+
+        // Determine service and class name
+        $this->clientClass = 'Aws\Common\Client\DefaultClient';
+
+        if ($this->clientNamespace) {
+            $this->serviceName = substr($this->clientNamespace, strrpos($this->clientNamespace, '\\') + 1);
+            $this->clientClass = $this->clientNamespace . '\\' . $this->serviceName . 'Client';
+        }
     }
 
     /**
@@ -199,6 +213,10 @@ class ClientBuilder
             (self::$commonConfigRequirements + $this->configRequirements)
         );
 
+        if ($config[Options::VERSION] === 'latest') {
+            $config[Options::VERSION] = constant("{$this->clientClass}::LATEST_API_VERSION");
+        }
+
         if (!isset($config['endpoint_provider'])) {
             $config['endpoint_provider'] = RulesEndpointProvider::fromDefaults();
         }
@@ -241,15 +259,8 @@ class ClientBuilder
             $this->addBackoffLogger($backoff, $config);
         }
 
-        // Determine service and class name
-        $clientClass = 'Aws\Common\Client\DefaultClient';
-        if ($this->clientNamespace) {
-            $serviceName = substr($this->clientNamespace, strrpos($this->clientNamespace, '\\') + 1);
-            $clientClass = $this->clientNamespace . '\\' . $serviceName . 'Client';
-        }
-
         /** @var $client AwsClientInterface */
-        $client = new $clientClass($credentials, $signature, $config);
+        $client = new $this->clientClass($credentials, $signature, $config);
         $client->setDescription($description);
 
         // Add exception marshaling so that more descriptive exception are thrown
@@ -257,7 +268,7 @@ class ClientBuilder
             $exceptionFactory = new NamespaceExceptionFactory(
                 $this->exceptionParser,
                 "{$this->clientNamespace}\\Exception",
-                "{$this->clientNamespace}\\Exception\\{$serviceName}Exception"
+                "{$this->clientNamespace}\\Exception\\{$this->serviceName}Exception"
             );
             $client->addSubscriber(new ExceptionListener($exceptionFactory));
         }
