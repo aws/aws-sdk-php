@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Test\Integ;
 
-use Aws\Exception\DynamoDbException;
+use Aws\DynamoDb\Exception\DynamoDbException;
 use Aws\DynamoDb\WriteRequestBatch;
 use GuzzleHttp\Command\Event\ProcessEvent;
 

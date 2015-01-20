@@ -1,5 +1,4 @@
 <?php
-
 use Aws\Build\Docs\DocsBuilder;
 
 // Setup autoloading for SDK and build classes.
