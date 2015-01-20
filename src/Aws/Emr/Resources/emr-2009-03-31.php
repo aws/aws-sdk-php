@@ -928,6 +928,30 @@ return array (
                             'type' => 'string',
                             'maxLength' => 256,
                         ),
+                        'EmrManagedMasterSecurityGroup' => array(
+                            'type' => 'string',
+                            'maxLength' => 256,
+                        ),
+                        'EmrManagedSlaveSecurityGroup' => array(
+                            'type' => 'string',
+                            'maxLength' => 256,
+                        ),
+                        'AdditionalMasterSecurityGroups' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'XmlStringMaxLen256',
+                                'type' => 'string',
+                                'maxLength' => 256,
+                            ),
+                        ),
+                        'AdditionalSlaveSecurityGroups' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'XmlStringMaxLen256',
+                                'type' => 'string',
+                                'maxLength' => 256,
+                            ),
+                        ),
                     ),
                 ),
                 'Steps' => array(
@@ -1320,6 +1344,26 @@ return array (
                                 ),
                                 'IamInstanceProfile' => array(
                                     'type' => 'string',
+                                ),
+                                'EmrManagedMasterSecurityGroup' => array(
+                                    'type' => 'string',
+                                ),
+                                'EmrManagedSlaveSecurityGroup' => array(
+                                    'type' => 'string',
+                                ),
+                                'AdditionalMasterSecurityGroups' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'String',
+                                        'type' => 'string',
+                                    ),
+                                ),
+                                'AdditionalSlaveSecurityGroups' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'String',
+                                        'type' => 'string',
+                                    ),
                                 ),
                             ),
                         ),

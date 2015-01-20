@@ -2,6 +2,9 @@
 
 ## Next Release
 
+* Added support for custom security groups to the Amazon EMR client.
+* Added support for the latest APIs to the Amazon Cognito Identity client.
+* Added support for ClassicLink to the Auto Scaling client.
 * Added the ability to set a client's API version to "latest" for forwards
   compatibility with v3.
 
