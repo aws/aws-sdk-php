@@ -8,7 +8,7 @@ $conf = [
 ];
 
 // Normal autoloading of real classes.
-Aws\S3Client::factory($conf);
+Aws\S3\S3Client::factory($conf);
 
 // Autoloading of legacy class names.
 Aws\DynamoDb\DynamoDbClient::factory($conf);

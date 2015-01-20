@@ -82,7 +82,7 @@ More installation instructions can be found in the
    the basic concepts, and there are also specific guides for each of the
    [supported services][docs-services].
 
-## Quick Example
+## Quick Examples
 
 ### Create an Amazon S3 client
 
@@ -91,7 +91,7 @@ More installation instructions can be found in the
 // Require the Composer autoloader.
 require 'vendor/autoload.php';
 
-use Aws\S3Client;
+use Aws\S3\S3Client;
 use Aws\Exception\S3Exception;
 
 // Instantiate an Amazon S3 client.

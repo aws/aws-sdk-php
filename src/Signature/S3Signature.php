@@ -2,7 +2,7 @@
 namespace Aws\Signature;
 
 use Aws\Credentials\CredentialsInterface;
-use Aws\S3Client;
+use Aws\S3\S3Client;
 use Aws\S3\S3UriParser;
 use GuzzleHttp\Message\RequestInterface;
 

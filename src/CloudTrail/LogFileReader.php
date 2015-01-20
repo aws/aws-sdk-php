@@ -1,7 +1,7 @@
 <?php
 namespace Aws\CloudTrail;
 
-use Aws\S3Client;
+use Aws\S3\S3Client;
 use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Event\RequestEvents;
 use GuzzleHttp\Utils;

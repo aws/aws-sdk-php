@@ -1,8 +1,7 @@
 <?php
 namespace Aws\CloudTrail;
 
-use Aws\S3Client;
-use Aws\CloudTrailClient;
+use Aws\S3\S3Client;
 use GuzzleHttp\Collection;
 
 /**

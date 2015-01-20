@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Test\Integ;
 
-use Aws\S3Client;
+use Aws\S3\S3Client;
 use GuzzleHttp\Command\Command;
 use GuzzleHttp\Command\Exception\CommandException;
 

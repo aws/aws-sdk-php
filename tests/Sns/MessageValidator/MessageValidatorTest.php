@@ -32,7 +32,7 @@ class MessageValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Aws\Sns\MessageValidator\SnsMessageValidatorException
+     * @expectedException \Aws\Sns\Exception\MessageValidatorException
      * @expectedExceptionMessage The certificate is located on an invalid domain.
      */
     public function testValidateFailsWhenCertUrlInvalid()
@@ -45,7 +45,7 @@ class MessageValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Aws\Sns\MessageValidator\SnsMessageValidatorException
+     * @expectedException \Aws\Sns\Exception\MessageValidatorException
      * @expectedExceptionMessage Cannot get the public key from the certificate.
      */
     public function testValidateFailsWhenCannotDeterminePublicKey()
@@ -59,7 +59,7 @@ class MessageValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Aws\Sns\MessageValidator\SnsMessageValidatorException
+     * @expectedException \Aws\Sns\Exception\MessageValidatorException
      * @expectedExceptionMessage The message signature is invalid.
      */
     public function testValidateFailsWhenMessageIsInvalid()

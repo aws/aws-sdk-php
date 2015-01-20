@@ -44,7 +44,7 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
     {
         $client = $this->getTestSdk()->getDynamoDb();
         $this->addMockResults($client, [
-            $this->createMockAwsException('ERROR', 'Aws\Exception\DynamoDbException')
+            $this->createMockAwsException('ERROR', 'Aws\DynamoDb\Exception\DynamoDbException')
         ]);
         $connection = new StandardSessionConnection($client);
         $data = $connection->read('session1');
@@ -73,7 +73,7 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
     {
         $client = $this->getTestSdk()->getDynamoDb();
         $this->addMockResults($client, [
-            $this->createMockAwsException('ERROR', 'Aws\Exception\DynamoDbException')
+            $this->createMockAwsException('ERROR', 'Aws\DynamoDb\Exception\DynamoDbException')
         ]);
         $client->getEmitter()->on('prepared', function (PreparedEvent $e) {
             $this->assertEquals(
@@ -93,7 +93,7 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
         $client = $this->getTestSdk()->getDynamoDb();
         $this->addMockResults($client, [
              new Result([]),
-             $this->createMockAwsException('ERROR', 'Aws\Exception\DynamoDbException')
+             $this->createMockAwsException('ERROR', 'Aws\DynamoDb\Exception\DynamoDbException')
         ]);
 
         $connection = new StandardSessionConnection($client);

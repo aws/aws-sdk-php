@@ -3,7 +3,7 @@ namespace Aws\Test\Api\Serializer;
 
 use Aws\Api\Service;
 use Aws\AwsClient;
-use Aws\ClientFactory\ClientFactory;
+use Aws\ClientFactory;
 use Aws\Credentials\NullCredentials;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Client;

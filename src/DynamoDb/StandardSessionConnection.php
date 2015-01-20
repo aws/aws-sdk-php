@@ -1,22 +1,17 @@
 <?php
 namespace Aws\DynamoDb;
 
-use Aws\DynamoDbClient;
-use Aws\Exception\DynamoDbException;
+use Aws\DynamoDb\Exception\DynamoDbException;
 
 /**
  * The standard connection performs the read and write operations to DynamoDB.
  */
 class StandardSessionConnection implements SessionConnectionInterface
 {
-    /**
-     * @var DynamoDbClient The DynamoDB client
-     */
+    /** @var DynamoDbClient The DynamoDB client */
     protected $client;
 
-    /**
-     * @var array The session handler config options
-     */
+    /** @var array The session handler config options */
     protected $config;
 
     /**

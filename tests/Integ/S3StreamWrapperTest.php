@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Test\Integ;
 
-use Aws\S3Client;
+use Aws\S3\S3Client;
 use Aws\S3\ClearBucket;
 
 class S3StreamWrapperTest extends \PHPUnit_Framework_TestCase

@@ -1,7 +1,6 @@
 <?php
 namespace Aws\S3;
 
-use Aws\S3Client;
 use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Event\SubscriberInterface;
 

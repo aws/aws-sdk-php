@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Test\Glacier;
 
-use Aws\Exception\GlacierException;
+use Aws\Glacier\Exception\GlacierException;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Command\Event\PreparedEvent;

@@ -161,7 +161,7 @@ class WriteRequestBatchTest extends \PHPUnit_Framework_TestCase
 
     private function getMockClient()
     {
-        return $this->getMockBuilder('Aws\DynamoDbClient')
+        return $this->getMockBuilder('Aws\DynamoDb\DynamoDbClient')
             ->disableOriginalConstructor()
             ->getMock();
     }

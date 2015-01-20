@@ -18,7 +18,7 @@ class LockingSessionConnectionTest extends \PHPUnit_Framework_TestCase
         $this->addMockResults($client, [
             $this->createMockAwsException(
                 'ConditionalCheckFailedException',
-                'Aws\Exception\DynamoDbException'
+                'Aws\DynamoDb\Exception\DynamoDbException'
             ),
             new Result(['Attributes' => [
                 'sessionid' => ['S' => 'session1'],
