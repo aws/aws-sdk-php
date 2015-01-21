@@ -32,17 +32,9 @@ class ClientFactory
         'key' => ['type' => 'deprecated'],
         'ssl.certificate_authority' => ['type' => 'deprecated'],
         'curl.options' => ['type' => 'deprecated'],
-        'scheme' => [
-            'type'     => 'value',
-            'default'  => 'https',
-            'required' => true
-        ],
-        'region' => [
-            'type'     => 'value',
-            'required' => true,
-            'default'  => true
-        ],
         'service' => ['type' => 'value', 'required' => true],
+        'scheme' => ['type' => 'value', 'default' => 'https', 'required' => true],
+        'region' => ['type' => 'value', 'required' => true],
         'endpoint' => ['type' => 'value'],
         'version' => ['type' => 'value', 'required' => true],
         'defaults' => ['type' => 'value'],
@@ -80,7 +72,11 @@ class ClientFactory
                     // Merge defaults in when not present.
                     $args[$key] = $a['default'];
                 } elseif (!empty($a['required'])) {
-                    throw new IAE("{$key} is a required client setting");
+                    // Allows custom error messages for missing values.
+                    $message = method_exists($this, "missing_{$key}")
+                        ? $this->{"missing_{$key}"}($args)
+                        : "{$key} is a required client setting";
+                    throw new IAE($message);
                 } else {
                     continue;
                 }
@@ -483,5 +479,43 @@ class ClientFactory
             . "(i.e., S3Client::factory(['client_defaults' => ['config' => ['curl' => []]]]). ");
         $args['client_defaults']['config']['curl'] = $value;
         unset($args['curl.options']);
+    }
+
+    private function missing_region(array $args)
+    {
+        return <<<EOT
+A 'region' configuration value is required when connecting to the {$args['service']}
+service (e.g., 'us-west-2'). A list of available public regions and endpoints
+can be found at http://docs.aws.amazon.com/general/latest/gr/rande.html;
+EOT;
+    }
+
+    private function missing_version(array $args)
+    {
+        $dir = __DIR__ . '/data';
+        $provider = new FilesystemApiProvider($dir);
+        $versions = $provider->getServiceVersions($args['service']);
+        $versions = implode("\n", array_map(function ($v) {
+                    return "- $v";
+                }, $versions));
+        return <<<EOT
+A 'version' configuration value is required when creating an API client. For
+example, when using Amazon S3, you can lock your API version to '2006-03-01' to
+ensure that your code will be unaffected by a change in the web service.
+
+Your build of the SDK has the following versions of '{$args['service']}':
+{$versions}
+
+You may provide 'latest' to the 'version' configuration value to utilize the
+most recent available API version that your client's API provider can find
+(the default API provider will scan the {$dir}
+directory for *.api.php and *.api.json files). Using 'latest' in a production
+application is not recommended.
+
+A list of available API versions can be found on each client's API documentation
+page: http://docs.aws.amazon.com/aws-sdk-php/v3/api/index.html. If you are
+unable to load a specific API version, then you may need to update your copy of
+the SDK.
+EOT;
     }
 }
