@@ -134,6 +134,7 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
                 return [
                     'operations' => ['DescribeTable' => ['input' => []]],
                     'metadata' => [
+                        'endpointPrefix' => 'foo',
                         'protocol' => 'json',
                         'signatureVersion' => 'v4'
                     ],

@@ -1,6 +1,7 @@
 <?php
 namespace Aws;
 
+use GuzzleHttp\Ring\Core;
 use InvalidArgumentException as IAE;
 use Aws\Api\FilesystemApiProvider;
 use Aws\Api\Service;
@@ -8,11 +9,10 @@ use Aws\Api\Validator;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Credentials\NullCredentials;
-use Aws\Credentials\Provider;
+use Aws\Credentials\Provider as CredentialProvider;
+use Aws\Signature\Provider as SignatureProvider;
 use Aws\Retry\ThrottlingFilter;
 use Aws\Signature\SignatureInterface;
-use Aws\Signature\SignatureV2;
-use Aws\Signature\SignatureV4;
 use Aws\Subscriber\Signature;
 use Aws\Subscriber\Validation;
 use GuzzleHttp\Client;
@@ -274,7 +274,7 @@ class ClientFactory
 
     private function handle_profile($value, array &$args)
     {
-        $args['credentials'] = Provider::ini($args['profile']);
+        $args['credentials'] = CredentialProvider::ini($args['profile']);
     }
 
     private function handle_credentials($value, array &$args)
@@ -282,9 +282,10 @@ class ClientFactory
         if ($value instanceof CredentialsInterface) {
             return;
         } elseif (is_callable($value)) {
-            $args['credentials'] = Provider::resolve($value);
+            $args['credentials'] = CredentialProvider::resolve($value);
         } elseif ($value === true) {
-            $args['credentials'] = Provider::resolve(Provider::defaultProvider());
+            $default = CredentialProvider::defaultProvider();
+            $args['credentials'] = CredentialProvider::resolve($default);
         } elseif (is_array($value) && isset($value['key']) && isset($value['secret'])) {
             $args['credentials'] = new Credentials(
                 $value['key'],
@@ -366,40 +367,29 @@ class ClientFactory
 
     private function handle_signature($value, array &$args)
     {
-        $region = isset($args['region']) ? $args['region'] : 'us-east-1';
         $version = $value ?: $args['api']->getMetadata('signatureVersion');
 
         if (is_string($version)) {
-            $args['signature'] = $this->createSignature(
-                $version,
-                $args['api']->getSigningName(),
-                $region
-            );
+            $args['signature'] = $this->createSignature($version, $args);
         } elseif (!($version instanceof SignatureInterface)) {
-            throw new IAE('Invalid signature option.');
+            throw new IAE('Invalid signature option: ' . Core::describeType($value));
         }
     }
 
     /**
      * Creates a signature object based on the service description.
      *
-     * @param string $version     Signature version name
-     * @param string $signingName Signing name of the service (for V4)
-     * @param string $region      Region used for the service (for V4)
+     * @param string $version Signature version (e.g., "s3", "v3").
+     * @param array  $args    Client configuration arguments.
      *
      * @return SignatureInterface
-     * @throws \InvalidArgumentException if the signature cannot be created
      */
-    protected function createSignature($version, $signingName, $region)
+    protected function createSignature($version, array $args)
     {
-        switch ($version) {
-            case 'v4':
-                return new SignatureV4($signingName, $region);
-            case 'v2':
-                return new SignatureV2();
-        }
-
-        throw new IAE('Unable to create the signature.');
+        return SignatureProvider::fromVersion($version, [
+            'service' => $args['api']->getSigningName(),
+            'region'  => $args['region']
+        ]);
     }
 
     protected function postCreate(AwsClientInterface $client, array $args)

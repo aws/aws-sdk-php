@@ -3,8 +3,6 @@ namespace Aws\S3;
 
 use Aws\ClientFactory;
 use Aws\Retry\S3TimeoutFilter;
-use Aws\Signature\S3Signature;
-use Aws\Signature\S3SignatureV4;
 use Aws\Signature\SignatureV4;
 use Aws\Subscriber\SaveAs;
 use Aws\Subscriber\SourceFile;
@@ -66,18 +64,6 @@ class S3Factory extends ClientFactory
         $emitter->attach(new SaveAs());
 
         return $client;
-    }
-
-    protected function createSignature($version, $signingName, $region)
-    {
-        if ($version == 's3') {
-            return new S3Signature();
-        } elseif ($version == 'v4') {
-            return new S3SignatureV4($signingName, $region);
-        }
-
-        throw new \InvalidArgumentException('Amazon S3 supports signature '
-            . 'version "s3" or "v4"');
     }
 
     protected function getRetryOptions(array $args)

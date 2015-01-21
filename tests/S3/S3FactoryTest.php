@@ -47,19 +47,6 @@ class S3FactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($command['PathStyle']);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Amazon S3 supports signature version "s3" or "v4"
-     */
-    public function testValidatesSignature()
-    {
-        (new S3Factory())->create([
-            'service'   => 's3',
-            'signature' => 'foo',
-            'version'   => 'latest'
-        ]);
-    }
-
     public function testCreatesClientWithSubscribers()
     {
         $c = (new S3Factory())->create([

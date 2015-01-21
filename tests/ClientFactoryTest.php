@@ -426,35 +426,31 @@ EOT;
         ));
     }
 
-    public function signatureVersionProvider()
-    {
-        return [
-            ['v2', 'Aws\Signature\SignatureV2'],
-            ['v4', 'Aws\Signature\SignatureV4'],
-            ['v1', 'InvalidArgumentException']
-        ];
-    }
-
     /**
-     * @dataProvider signatureVersionProvider
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Invalid signature option: bool(true)
      */
-    public function testCreatesSignatures($version, $class)
+    public function testValidatesSignature()
     {
         $f = new ClientFactory();
+        $f->create([
+            'service'  => 'sqs',
+            'region'   => 'x',
+            'signature' => true,
+            'version'  => 'latest'
+        ]);
+    }
 
-        $m = new \ReflectionMethod($f, 'createSignature');
-        $m->setAccessible(true);
-
-        try {
-            $result = $m->invoke($f, $version, 'foo', 'bar');
-        } catch (\Exception $e) {
-            $result = $e;
-        }
-
-        $this->assertInstanceOf($class, $result);
-        if (method_exists($result, 'getRegion')) {
-            $this->assertEquals('bar', $result->getRegion());
-        }
+    public function testCreatesSignatureFromString()
+    {
+        $f = new ClientFactory();
+        $c = $f->create([
+            'service'   => 'sqs',
+            'region'    => 'x',
+            'signature' => 'v2',
+            'version'   => 'latest'
+        ]);
+        $this->assertInstanceOf('Aws\Signature\SignatureV2', $c->getSignature());
     }
 
     public function testDoesNotMessWithExistingResults()
