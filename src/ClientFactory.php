@@ -12,7 +12,6 @@ use Aws\Credentials\Provider;
 use Aws\Retry\ThrottlingFilter;
 use Aws\Signature\SignatureInterface;
 use Aws\Signature\SignatureV2;
-use Aws\Signature\SignatureV3Https;
 use Aws\Signature\SignatureV4;
 use Aws\Subscriber\Signature;
 use Aws\Subscriber\Validation;
@@ -398,8 +397,6 @@ class ClientFactory
                 return new SignatureV4($signingName, $region);
             case 'v2':
                 return new SignatureV2();
-            case 'v3https':
-                return new SignatureV3Https();
         }
 
         throw new IAE('Unable to create the signature.');

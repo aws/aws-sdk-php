@@ -5,8 +5,6 @@ use Aws\ClientFactory;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\NullCredentials;
 use Aws\Exception\AwsException;
-use Aws\Test\SdkTest;
-use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Client;
 use Aws\Credentials\Provider;
 
@@ -433,7 +431,6 @@ EOT;
         return [
             ['v2', 'Aws\Signature\SignatureV2'],
             ['v4', 'Aws\Signature\SignatureV4'],
-            ['v3https', 'Aws\Signature\SignatureV3Https'],
             ['v1', 'InvalidArgumentException']
         ];
     }
