@@ -26,8 +26,7 @@ $burgomaster->recursiveCopy('vendor/react/promise/src', 'React/Promise');
 
 $burgomaster->createAutoloader([
     'React/Promise/functions.php',
-    'JmesPath/JmesPath.php',
-    'Aws/legacy-bootstrap.php'
+    'JmesPath/JmesPath.php'
 ], $autoloaderFilename);
 
 $burgomaster->createZip(__DIR__ . "/artifacts/aws.zip");
