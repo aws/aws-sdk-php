@@ -13,6 +13,7 @@ foreach ($metaFiles as $file) {
 }
 
 $burgomaster->recursiveCopy('src', 'Aws', ['php', 'json']);
+$burgomaster->recursiveCopy('vendor/mtdowling/transducers/src', 'Transducers');
 $burgomaster->recursiveCopy('vendor/guzzlehttp/guzzle/src', 'GuzzleHttp');
 $burgomaster->recursiveCopy('vendor/guzzlehttp/ringphp/src', 'GuzzleHttp/Ring');
 $burgomaster->recursiveCopy('vendor/guzzlehttp/streams/src', 'GuzzleHttp/Stream');
@@ -26,7 +27,8 @@ $burgomaster->recursiveCopy('vendor/react/promise/src', 'React/Promise');
 
 $burgomaster->createAutoloader([
     'React/Promise/functions.php',
-    'JmesPath/JmesPath.php'
+    'JmesPath/JmesPath.php',
+    'Transducers/transducers.php'
 ], $autoloaderFilename);
 
 $burgomaster->createZip(__DIR__ . "/artifacts/aws.zip");
