@@ -68,14 +68,6 @@ class TransferTest extends \PHPUnit_Framework_TestCase
         (new Transfer($s3, false, 's3://foo/bar'));
     }
 
-    public function testCreatesFileIteratorThatContainsStrings()
-    {
-        $iter = Transfer::recursiveDirIterator(__DIR__);
-        $this->assertInstanceOf('Iterator', $iter);
-        $files = iterator_to_array($iter);
-        $this->assertContains(__FILE__, $files);
-    }
-
     public function testUsesFileIteratorIfStringIsProvided()
     {
         $s3 = $this->getTestClient('s3');
