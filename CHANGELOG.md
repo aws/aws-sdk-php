@@ -2,11 +2,11 @@
 
 ## 3.0.0-beta.1 - 2014-10-14
 
-* New requirements on Guzzle 5 and PHP 5.4.
+* New requirements on Guzzle 5 and PHP 5.5.
 * Event system now uses Guzzle 5 events and no longer utilizes Symfony2.
-* `version` is a required parameter for each client constructor. You can
-  op-into using the latest version of a service by setting `version` to
-  `latest`.
+* `version` and `region` are noww required parameter for each client
+  constructor. You can op-into using the latest version of a service by
+  setting `version` to `latest`.
 * Removed `Aws\S3\ResumableDownload`.
 * More information to follow.
 

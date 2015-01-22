@@ -6,32 +6,20 @@ Upgrade from 2.x to 3.x
 
 Version 3 is a new major version of the SDK that represents a lot of new work
 and refactoring. While the fundamental way the you use the SDK has not changed,
-there are changes in several parts to accomplish our goals of:
-
-- Adding new functionality
-- Improving performance
-- Simplifying interfaces
-- Reducing bloat
-- Protecting against future breaking changes
-
-The following sections describe these changes.
+there are changes in several parts to accomplish our goals, including adding
+new functionality, improving performance, simplifying interfaces, and
+reducing bloat.
 
 ### Dependencies
 
-* **PHP 5.4+** - PHP version 5.4 or higher is now required, because the SDK and
-  its dependencies use various PHP 5.4 features including traits, short array
-  syntax, `callable` typehints, and the auto-binding of `$this` in closures.
+* **PHP 5.5+** - PHP version 5.5 or higher is now required, because the SDK and
+  its dependencies use various PHP 5.4/5.5 features including traits,
+  generators, and `callable` typehints,
 * **[Guzzle 5](http://guzzlephp.org/)** - The underlying HTTP library for the
   SDK. The update from Guzzle 3 to Guzzle 5 provides many of the new features of
   the SDK, including async requests, the new event system, the "debug" client
   option, and more.
-* **[RingPHP](http://ringphp.readthedocs.org)** - The foundation of Guzzle 5.
-  It performs the low-level request handling for Guzzle, and is based on a
-  [similarly named library from Clojure](https://github.com/ring-clojure/ring).
-* **[React/Promise](https://github.com/reactphp/promise)** - A PHP
-  implementation of the [Promises/A+ specification](https://promisesaplus.com/).
-  Used by RingPHP to the promise API for asynchronous requests.
-* **[jmespath.php](https://github.com/mtdowling/jmespath.php)** - Provides the
+* **[jmespath.php](https://github.com/jmespath/jmespath.php)** - Provides the
   ability to query Result data, especially deeply nested results. It implements
   the [JMESPath specification](http://jmespath.org/), which is also supported
   by the [AWS CLI](https://github.com/aws/aws-cli).
@@ -52,7 +40,8 @@ $aws->getClient('s3', [
     'region' => 'us-west-2',
     'version' => 'latest',
 ]);
-// OR... you can use the magic methods.
+
+// OR... you can use the magic methods that have IDE autocompletion.
 $aws->getS3([
     // Provide client options.
     'region' => 'us-west-2',
