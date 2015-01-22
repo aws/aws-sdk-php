@@ -1,6 +1,7 @@
 <?php
 namespace Aws\S3;
 
+use Aws\Utils;
 use GuzzleHttp\Command\Command;
 use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Command\Event\PreparedEvent;
@@ -69,7 +70,7 @@ class Transfer
         $client->registerStreamWrapper();
         if (is_string($source)) {
             $this->base_dir = $source;
-            $source = self::recursiveDirIterator($source, $client);
+            $source = Utils::recursiveDirIterator($source);
         } elseif (!$source instanceof \Iterator) {
             throw new \InvalidArgumentException('source must be the path to a '
                 . 'directory or an iterator that yields file names.');
@@ -105,41 +106,6 @@ class Transfer
         }
 
         $this->source = $this->wrapIterator($source);
-    }
-
-    /**
-     * Returns a recursive directory iterator that yields filenames only and
-     * is not broken like PHP's built-in DirectoryIterator (which will read
-     * the first file from a stream wrapper, then rewind, then read it again).
-     *
-     * @param string $path Path on disk to traverse
-     *
-     * @return \Iterator Returns an iterator that yields absolute filenames.
-     */
-    public static function recursiveDirIterator($path)
-    {
-        $invalid = ['.' => true, '..' => true];
-        $pathLen = strlen($path) + 1;
-        $queue = new \SplDoublyLinkedList();
-        foreach (scandir($path) as $item) {
-            $queue->push($item);
-        }
-
-        while (!$queue->isEmpty()) {
-            $file = $queue->shift();
-            if (isset($invalid[basename($file)])) {
-                continue;
-            }
-            $fullPath = $path . '/' . $file;
-            yield $fullPath;
-            if (is_dir($fullPath)) {
-                // Push these files to the front of the queue, in order.
-                $push = scandir($fullPath);
-                for ($i = count($push) - 1; $i > -1; $i--) {
-                    $queue->unshift(substr("$fullPath/{$push[$i]}", $pathLen));
-                }
-            }
-        }
     }
 
     /**
