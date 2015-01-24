@@ -1,7 +1,6 @@
 <?php
 namespace Aws;
 
-use GuzzleHttp\Ring\Core;
 use InvalidArgumentException as IAE;
 use Aws\Api\FilesystemApiProvider;
 use Aws\Api\Service;
@@ -16,40 +15,143 @@ use Aws\Signature\SignatureInterface;
 use Aws\Subscriber\Signature;
 use Aws\Subscriber\Validation;
 use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Command\Event\ProcessEvent;
 use GuzzleHttp\Subscriber\Log\SimpleLogger;
 use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
 use GuzzleHttp\Command\Subscriber\Debug;
+use GuzzleHttp\Ring\Core;
 
 /**
  * @internal Default factory class used to create clients.
  */
 class ClientFactory
 {
-    private $validArguments = [
-        'key' => ['type' => 'deprecated'],
-        'ssl.certificate_authority' => ['type' => 'deprecated'],
-        'curl.options' => ['type' => 'deprecated'],
-        'service' => ['type' => 'value', 'required' => true],
-        'scheme' => ['type' => 'value', 'default' => 'https', 'required' => true],
-        'region' => ['type' => 'value', 'required' => true],
-        'endpoint' => ['type' => 'value'],
-        'version' => ['type' => 'value', 'required' => true],
-        'defaults' => ['type' => 'value'],
-        'endpoint_provider' => ['type' => 'pre', 'required' => true],
-        'api_provider' => ['type' => 'pre', 'required' => true],
-        'class_name' => ['type' => 'pre', 'default' => true],
-        'profile' => ['type' => 'pre'],
-        'credentials' => ['type' => 'pre', 'default' => true],
-        'signature' => ['type' => 'pre', 'default' => false],
-        'client' => ['type' => 'pre', 'default' => true],
-        'ringphp_handler' => ['type' => 'pre'],
-        'retries' => ['type' => 'post', 'default' => true],
-        'validate' => ['type' => 'post', 'default' => true],
-        'debug' => ['type' => 'post'],
-        'client_defaults' => ['type' => 'post'],
-    ];
+    /**
+     * Gets an array of valid arguments, each argument containing a hash of
+     * the following:
+     *
+     * - type: (string, required) argument type (deprecated, value, pre, post)
+     * - valid: (string, required) "|" separated valid types or class names.
+     * - required: (bool) Whether or not the argument is required.
+     * - default: (mixed) The default value of the argument if not provided.
+     * - doc: (string) The argument documentation string.
+     *
+     * @return array
+     */
+    public static function getValidArguments()
+    {
+        return [
+            'key' => ['type' => 'deprecated'],
+            'ssl.certificate_authority' => ['type' => 'deprecated'],
+            'curl.options' => ['type' => 'deprecated'],
+            'service' => [
+                'type'     => 'value',
+                'valid'    => 'string',
+                'required' => true,
+                'doc'      => 'Name of the service to utilize. This value will be supplied by default.'
+            ],
+            'scheme' => [
+                'type'     => 'value',
+                'valid'    => 'string',
+                'default'  => 'https',
+                'doc'      => 'URI scheme to use to connect. One of http or https.'
+            ],
+            'region' => [
+                'type'     => 'value',
+                'valid'    => 'string',
+                'required' => true,
+                'doc'      => 'Region to connect to. See http://docs.aws.amazon.com/general/latest/gr/rande.html for a list of available regions.'
+            ],
+            'version' => [
+                'type'     => 'value',
+                'valid'    => 'string',
+                'required' => true,
+                'doc'      => 'The version of the webservice to utilize (e.g., 2006-03-01).'
+            ],
+            'endpoint' => [
+                'type'  => 'value',
+                'valid' => 'string',
+                'doc'   => 'The full URI of the webservice. This is only required when connecting to a custom endpoint (e.g., a local version of S3).'
+            ],
+            'defaults' => [
+                'type'  => 'value',
+                'valid' => 'array',
+                'doc'   => 'An associative array of default parameters to pass to each operation created by the client.'
+            ],
+            'endpoint_provider' => [
+                'type'     => 'pre',
+                'valid'    => 'callable',
+                'doc'      => 'An optional PHP callable that accepts a hash of options including a service and region key and returns a hash of endpoint data, of which the endpoint key is required.'
+            ],
+            'api_provider' => [
+                'type'     => 'pre',
+                'valid'    => 'callable',
+                'doc'      => 'An optional PHP callable that accepts a type, service, and version argument, and returns an array of corresponding configuration data. The type value can be one of api, waiter, or paginator.'
+            ],
+            'class_name' => [
+                'type'    => 'value',
+                'valid'   => 'string',
+                'default' => 'Aws\AwsClient',
+                'doc'     => 'Optional class name of the client to create. This value will be supplied by default.'
+            ],
+            'exception_class' => [
+                'type'    => 'value',
+                'valid'   => 'string',
+                'default' => 'Aws\Exception\AwsException',
+                'doc'     => 'Optional exception class name to throw on request errors. This value will be supplied by default.'
+            ],
+            'profile' => [
+                'type'  => 'pre',
+                'valid' => 'string',
+                'doc'   => 'Allows you to specify which profile to use when credentials are created from the AWS credentials file in your home directory. This setting overrides the AWS_PROFILE environment variable. Specifying "profile" will cause the "credentials" key to be ignored.'
+            ],
+            'credentials' => [
+                'type'    => 'pre',
+                'valid'   => 'array|Aws\Credentials\CredentialsInterface|bool|callable',
+                'default' => true,
+                'doc'     => 'An Aws\Credentials\CredentialsInterface object to use with each, an associative array of "key", "secret", and "token" key value pairs, `false` to utilize null credentials, or a callable credentials provider function to create credentials using a function. If no credentials are provided or credentials is set to true, the SDK will attempt to load them from the environment.'
+            ],
+            'signature' => [
+                'type'    => 'pre',
+                'valid'   => 'string|Aws\Signature\SignatureInterface|bool',
+                'default' => false,
+                'doc'     => 'A string representing a custom signature version to use with a service (e.g., v4, s3, v2) or a Aws\Signature\SignatureInterface object. Set to false or do not specify a signature to use the default signature version of the service.'
+            ],
+            'client' => [
+                'type'    => 'pre',
+                'valid'   => 'GuzzleHttp\ClientInterface|bool',
+                'default' => true,
+                'doc'     => 'Optional Guzzle client used to transfer requests over the wire. Set to true or do not specify a client, and the SDK will create a new client that uses a shared Ring HTTP handler with other clients.'
+            ],
+            'ringphp_handler' => [
+                'type'  => 'pre',
+                'valid' => 'callable',
+                'doc'   => 'RingPHP handler used to transfer HTTP requests (see http://ringphp.readthedocs.org/en/latest/).'
+            ],
+            'retries' => [
+                'type'    => 'post',
+                'valid'   => 'bool|int',
+                'default' => true,
+                'doc'     => 'Configures retries for clients. The value can be true (the default setting which enables retry behavior), false to disable retries, or a number representing the maximum number of retries.'
+            ],
+            'validate' => [
+                'type'    => 'post',
+                'valid'   => 'bool',
+                'default' => true,
+                'doc'     => 'Set to false to disable client-side parameter validation.'
+            ],
+            'debug' => [
+                'type'  => 'post',
+                'valid' => 'bool|resource',
+                'doc'   => 'Set to true to display debug information when sending requests. Provide a stream resource to write debug information to a specific resource.'
+            ],
+            'client_defaults' => [
+                'type'  => 'post',
+                'valid' => 'array',
+                'doc'   => 'Set to an array of Guzzle client request options (e.g., proxy, verify, etc.). See http://docs.guzzlephp.org/en/latest/clients.html#request-options for a list of available options.'
+            ],
+        ];
+    }
 
     /**
      * Constructs a new factory object used for building services.
@@ -65,7 +167,7 @@ class ClientFactory
         $post = [];
         $this->addDefaultArgs($args);
 
-        foreach ($this->validArguments as $key => $a) {
+        foreach (static::getValidArguments() as $key => $a) {
             if (!array_key_exists($key, $args)) {
                 if (isset($a['default'])) {
                     // Merge defaults in when not present.
@@ -80,6 +182,7 @@ class ClientFactory
                     continue;
                 }
             }
+            $this->validate($key, $args[$key], $a['valid']);
             if ($a['type'] === 'pre') {
                 $this->{"handle_{$key}"}($args[$key], $args);
             } elseif ($a['type'] === 'post') {
@@ -112,7 +215,7 @@ class ClientFactory
      */
     protected function createClient(array $args)
     {
-        return new $args['client_class']($args);
+        return new $args['class_name']($args);
     }
 
     /**
@@ -164,9 +267,6 @@ class ClientFactory
         if (is_int($value)) {
             // Overwrite the max, if a retry value was provided.
             $conf['max'] = $value;
-        } elseif ($value !== true) {
-            // If retry value was not an int or bool, throw an exception.
-            throw new IAE('retries must be a boolean or an integer');
         }
 
         // Add retry logger
@@ -235,43 +335,6 @@ class ClientFactory
         ));
     }
 
-    /**
-     * Validates the provided "retries" key and returns a number.
-     *
-     * @param mixed $value Value to validate and coerce
-     *
-     * @return bool|int Returns false to disable, or a number of retries.
-     * @throws \InvalidArgumentException if the setting is invalid.
-     */
-    protected function validateRetries($value)
-    {
-        if (!$value) {
-            return false;
-        } elseif (!is_integer($value)) {
-            throw new IAE('retries must be a boolean or an integer');
-        }
-
-        return $value;
-    }
-
-    private function handle_class_name($value, array &$args)
-    {
-        if ($value === true) {
-            $args['client_class'] = 'Aws\AwsClient';
-            $args['exception_class'] = 'Aws\Exception\AwsException';
-        } else {
-            // An explicitly provided class_name must be found.
-            $args['client_class'] = "Aws\\{$value}\\{$value}Client";
-            if (!class_exists($args['client_class'])) {
-                throw new \RuntimeException("Client not found for $value");
-            }
-            $args['exception_class']  = "Aws\\{$args['class_name']}\\Exception\\{$args['class_name']}Exception";
-            if (!class_exists($args['exception_class'] )) {
-                throw new \RuntimeException("Exception class not found $value");
-            }
-        }
-    }
-
     private function handle_profile($value, array &$args)
     {
         $args['credentials'] = CredentialProvider::ini($args['profile']);
@@ -305,10 +368,6 @@ class ClientFactory
 
     private function handle_client($value, array &$args)
     {
-        if (!($value instanceof ClientInterface)) {
-            throw new IAE('client must be an instance of GuzzleHttp\ClientInterface');
-        }
-
         // Make sure the user agent is prefixed by the SDK version
         $args['client']->setDefaultOption(
             'headers/User-Agent',
@@ -318,10 +377,6 @@ class ClientFactory
 
     private function handle_client_defaults($value, array &$args)
     {
-        if (!is_array($value)) {
-            throw new IAE('client_defaults must be an array');
-        }
-
         foreach ($value as $k => $v) {
             $args['client']->setDefaultOption($k, $v);
         }
@@ -334,10 +389,6 @@ class ClientFactory
 
     private function handle_api_provider($value, array &$args)
     {
-        if (!is_callable($value)) {
-            throw new IAE('api_provider must be callable');
-        }
-
         $api = new Service($value, $args['service'], $args['version']);
         $args['api'] = $api;
         $args['error_parser'] = Service::createErrorParser($api->getProtocol());
@@ -346,10 +397,6 @@ class ClientFactory
 
     private function handle_endpoint_provider($value, array &$args)
     {
-        if (!is_callable($value)) {
-            throw new IAE('endpoint_provider must be a callable that returns an endpoint array.');
-        }
-
         if (!isset($args['endpoint'])) {
             $result = call_user_func($value, [
                 'service' => $args['service'],
@@ -368,11 +415,8 @@ class ClientFactory
     private function handle_signature($value, array &$args)
     {
         $version = $value ?: $args['api']->getMetadata('signatureVersion');
-
         if (is_string($version)) {
             $args['signature'] = $this->createSignature($version, $args);
-        } elseif (!($version instanceof SignatureInterface)) {
-            throw new IAE('Invalid signature option: ' . Core::describeType($value));
         }
     }
 
@@ -504,5 +548,31 @@ page: http://docs.aws.amazon.com/aws-sdk-php/v3/api/index.html. If you are
 unable to load a specific API version, then you may need to update your copy of
 the SDK.
 EOT;
+    }
+
+    /**
+     * Validates the user provided argument.
+     *
+     * @param string $name     Name of the value being validated.
+     * @param mixed  $provided The provided value.
+     * @param string $expected "|" separated list of valid types.
+     * @throws \InvalidArgumentException on error.
+     */
+    private function validate($name, $provided, $expected)
+    {
+        static $replace = ['integer' => 'int', 'boolean' => 'bool'];
+        $type = strtr(gettype($provided), $replace);
+        foreach (explode('|', $expected) as $valid) {
+            if ($type === $valid
+                || ($type === 'object' && $provided instanceof $valid)
+                || ($valid === 'callable' && is_callable($provided))
+            ) {
+                return;
+            }
+        }
+
+        throw new \InvalidArgumentException("Invalid configuration value "
+            . "provided for {$name}. Expected {$expected}, but got "
+            . Core::describeType($provided));
     }
 }

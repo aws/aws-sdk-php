@@ -5,6 +5,7 @@ use Aws\ClientFactory;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\NullCredentials;
 use Aws\Exception\AwsException;
+use Aws\Signature\SignatureV2;
 use GuzzleHttp\Client;
 use Aws\Credentials\Provider;
 
@@ -37,28 +38,13 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $f->create([]);
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Client not found for Foo
-     */
-    public function testEnsuresClientClassExists()
-    {
-        $f = new ClientFactory();
-        $f->create([
-            'service'    => 'sqs',
-            'region'     => 'x',
-            'class_name' => 'Foo',
-            'version'    => 'latest'
-        ]);
-    }
-
     public function testCanSpecifyValidClientClass()
     {
         $f = new ClientFactory();
         $this->assertInstanceOf('Aws\Sqs\SqsClient', $f->create([
             'service'    => 'sqs',
             'region'     => 'x',
-            'class_name' => 'Sqs',
+            'class_name' => 'Aws\Sqs\SqsClient',
             'version'    => 'latest'
         ]));
     }
@@ -117,21 +103,6 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         ]);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage retries must be a boolean or an integer
-     */
-    public function testValidatesRetries()
-    {
-        $f = new ClientFactory();
-        $f->create([
-            'service' => 'dynamodb',
-            'region'  => 'x',
-            'retries' => 'a',
-            'version' => 'latest'
-        ]);
-    }
-
     public function testCanSpecifyValidExceptionClass()
     {
         $f = new ClientFactory();
@@ -140,21 +111,6 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
             'region'          => 'x',
             'exception_class' => 'Aws\Exception\AwsException',
             'version' => 'latest'
-        ]);
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Invalid signature option
-     */
-    public function testValidatesSignatureOption()
-    {
-        $f = new ClientFactory();
-        $f->create([
-            'service'   => 'dynamodb',
-            'region'    => 'x',
-            'signature' => [0, 2, 3],
-            'version'   => 'latest'
         ]);
     }
 
@@ -176,54 +132,22 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage client must be an instance of GuzzleHttp\ClientInterface
      */
-    public function testValidatesClient()
+    public function testValidatesObjects()
     {
         $f = new ClientFactory();
         $f->create([
-            'service' => 'dynamodb',
-            'region'  => 'x',
-            'client'  => [0, 1, 2],
-            'version' => 'latest'
+            'service'   => 'dynamodb',
+            'region'    => 'x',
+            'signature' => -1,
+            'version'   => 'latest'
         ]);
     }
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage client_defaults must be an array
      */
-    public function testValidatesClientDefaults()
-    {
-        $f = new ClientFactory();
-        $f->create([
-            'service' => 'dynamodb',
-            'region'  => 'x',
-            'client_defaults'  => 'foo',
-            'version' => 'latest'
-        ]);
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage api_provider must be callable
-     */
-    public function testValidatesApiProvider()
-    {
-        $f = new ClientFactory();
-        $f->create([
-            'service' => 'dynamodb',
-            'region' => 'x',
-            'api_provider' => [0, 1, 2],
-            'version' => 'latest'
-        ]);
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage endpoint_provider must be a callable
-     */
-    public function testValidatesEndpointProvider()
+    public function testValidatesCallables()
     {
         $f = new ClientFactory();
         $f->create([
@@ -242,10 +166,10 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $f = new ClientFactory();
         $f->create([
-            'service' => 'dynamodb',
-            'region' => 'x',
-            'credentials' => new \stdClass(),
-            'version' => 'latest'
+            'service'     => 'dynamodb',
+            'region'      => 'x',
+            'credentials' => [],
+            'version'     => 'latest'
         ]);
     }
 
@@ -424,21 +348,6 @@ EOT;
             'GuzzleHttp\Command\Subscriber\Debug',
             'prepare'
         ));
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Invalid signature option: bool(true)
-     */
-    public function testValidatesSignature()
-    {
-        $f = new ClientFactory();
-        $f->create([
-            'service'  => 'sqs',
-            'region'   => 'x',
-            'signature' => true,
-            'version'  => 'latest'
-        ]);
     }
 
     public function testCreatesSignatureFromString()

@@ -152,44 +152,78 @@ class Sdk
     /**
      * Get a client by name using an array of constructor options.
      *
-     * - region: The region to use of the service.
-     * - version: API version of the service.
-     * - credentials: An {@see Aws\Credentials\CredentialsInterface}
-     *   object to use with each, an associative array of 'key', 'secret', and
-     *   'token' key value pairs, `false` to utilize null credentials, or a
-     *   callable credentials provider function to create credentials using a
-     *   function. If no credentials are provided, the SDK will attempt to load
-     *   them from the environment.
-     * - profile: Allows you to specify which profile to use when credentials
-     *   are created from the AWS credentials file in your home directory. This
-     *   setting overrides the AWS_PROFILE environment variable. Specifying
-     *   "profile" will cause the "credentials" key to be ignored.
-     * - signature: A string representing a custom signature version to use
-     *   with a service or a {@see Aws\Signture\SignatureInterface} object.
-     * - retries: Configures retries for clients. The value can be true (the
-     *   default setting which enables retry behavior), false to disable
-     *   retries, or a number representing the maximum number of retries.
-     * - retry_logger: Set to a PSR-3 Psr\Log\LoggerInterface compatible logger
-     *   to log all retries.
-     * - defaults: Optional associative array of command parameters to pass to
-     *   each command created by the client.
-     * - client: Optional {@see GuzzleHttp\ClientInterface} used to transfer
-     *   requests over the wire. If not specified, the SDK will create a new
-     *   client that uses a shared Ring HTTP handler with other clients.
-     * - client_defaults: Associative array of default Guzzle client options to
-     *   apply to the client after it is constructed. See http://docs.guzzlephp.org/en/latest/clients.html#request-options
-     *   for a list of request options.
-     * - ringphp_handler: callable RingPHP handler used to transfer HTTP
+     * - api_provider: (callable) An optional PHP callable that accepts a
+     *   type, service, and version argument, and returns an
+     *   array of corresponding configuration data. The type
+     *   value can be one of api, waiter, or paginator.
+     * - class_name: (string, default=string(13) "Aws\AwsClient") Optional
+     *   class name of the client to create. This value will be
+     *   supplied by default.
+     * - client: (GuzzleHttp\ClientInterface|bool, default=bool(true))
+     *   Optional Guzzle client used to transfer requests over
+     *   the wire. Set to true or do not specify a client, and
+     *   the SDK will create a new client that uses a shared
+     *   Ring HTTP handler with other clients.
+     * - client_defaults: (array) Set to an array of Guzzle client request
+     *   options (e.g., proxy, verify, etc.). See
+     *   http://docs.guzzlephp.org/en/latest/clients.html#request-options
+     *   for a list of available options.
+     * - credentials: (array|Aws\Credentials\CredentialsInterface|bool|callable, default=bool(true))
+     *   An Aws\Credentials\CredentialsInterface object to use
+     *   with each, an associative array of "key", "secret",
+     *   and "token" key value pairs, `false` to utilize null
+     *   credentials, or a callable credentials provider
+     *   function to create credentials using a function. If no
+     *   credentials are provided or credentials is set to
+     *   true, the SDK will attempt to load them from the
+     *   environment.
+     * - debug: (bool|resource) Set to true to display debug
+     *   information when sending requests. Provide a stream
+     *   resource to write debug information to a specific
+     *   resource.
+     * - defaults: (array) An associative array of default parameters to
+     *   pass to each operation created by the client.
+     * - endpoint: (string) The full URI of the webservice. This is only
+     *   required when connecting to a custom endpoint (e.g., a
+     *   local version of S3).
+     * - endpoint_provider: (callable) An optional PHP callable that accepts a
+     *   hash of options including a service and region key and
+     *   returns a hash of endpoint data, of which the endpoint
+     *   key is required.
+     * - exception_class: (string, default=string(26)
+     *   "Aws\Exception\AwsException") Optional exception class
+     *   name to throw on request errors. This value will be
+     *   supplied by default.
+     * - profile: (string) Allows you to specify which profile to use
+     *   when credentials are created from the AWS credentials
+     *   file in your home directory. This setting overrides
+     *   the AWS_PROFILE environment variable. Specifying
+     *   "profile" will cause the "credentials" key to be
+     *   ignored.
+     * - region: (string, required) Region to connect to. See
+     *   http://docs.aws.amazon.com/general/latest/gr/rande.html
+     *   for a list of available regions.
+     * - retries: (bool|int, default=bool(true)) Configures retries for
+     *   clients. The value can be true (the default setting
+     *   which enables retry behavior), false to disable
+     *   retries, or a number representing the maximum number
+     *   of retries.
+     * - ringphp_handler: (callable) RingPHP handler used to transfer HTTP
      *   requests (see http://ringphp.readthedocs.org/en/latest/).
-     * - api_provider: Optional service description API provider as a callable
-     *   that accepts a type, service name, and version and returns an
-     *   associative array of configuration data.
-     * - endpoint: An optional custom endpoint to use when interacting with a
-     *   service.
-     * - endpoint_provider: Optional endpoint provider used when creating
-     *   service endpoints.
-     * - scheme: The scheme to use when interacting with a service (https or
-     *   http). Defaults to https.
+     * - scheme: (string, default=string(5) "https") URI scheme to use
+     *   to connect. One of http or https.
+     * - service: (string, required) Name of the service to utilize.
+     *   This value will be supplied by default.
+     * - signature: (string|Aws\Signature\SignatureInterface|bool,
+     *   default=bool(false)) A string representing a custom
+     *   signature version to use with a service (e.g., v4, s3,
+     *   v2) or a Aws\Signature\SignatureInterface object. Set
+     *   to false or do not specify a signature to use the
+     *   default signature version of the service.
+     * - validate: (bool, default=bool(true)) Set to false to disable
+     *   client-side parameter validation.
+     * - version: (string, required) The version of the webservice to
+     *   utilize (e.g., 2006-03-01).
      *
      * @param string $name Client name
      * @param array  $args Custom arguments to provide to the client.
@@ -212,16 +246,17 @@ class Sdk
         if (isset($this->args[$name])) {
             $args += $this->args[$name];
         }
-        $args += $this->args;
 
         // Set the service name and determine if it is linked to a known class
+        $args += $this->args;
         $args['service'] = $name;
-        $args['class_name'] = false;
         $factoryName = 'Aws\\ClientFactory';
 
         if (isset(self::$services[$name])) {
-            $args['class_name'] = self::$services[$name];
-            $check = "Aws\\{$args['class_name']}\\{$args['class_name']}Factory";
+            $name = self::$services[$name];
+            $args['class_name'] = "Aws\\{$name}\\{$name}Client";
+            $args['exception_class'] = "Aws\\{$name}\\Exception\\{$name}Exception";
+            $check = "Aws\\{$name}\\{$name}Factory";
             if (class_exists($check)) {
                 $factoryName = $check;
             }
