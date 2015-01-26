@@ -1,6 +1,7 @@
 <?php
 namespace Aws\S3;
 
+use Aws\AwsClientInterface;
 use Aws\ClientFactory;
 use Aws\Retry\S3TimeoutFilter;
 use Aws\Signature\SignatureV4;
@@ -13,14 +14,31 @@ use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
  * In addition to the default client factory configuration options, the Amazon
  * S3 factory supports the following additional key value pairs:
  *
- * - calculate_md5: Set to false to disable optional MD5 calculations.
- * - force_path_style: Set to true to force all Amazon S3 requests to be sent
- *   using path-style addressing rather than bucket style addressing.
+ * - calculate_md5: Set to false to disable calculating an MD5 for all Amazon
+ *   S3 signed uploads.
+ * - force_path_style: Set to false to disable calculating an MD5 for all
+ *   Amazon S3 signed uploads.
  *
  * @internal
  */
 class S3Factory extends ClientFactory
 {
+    public static function getValidArguments()
+    {
+        return parent::getValidArguments() + [
+            'force_path_style' => [
+                'doc'     => 'Set to true to send requests using path style addressing.',
+                'type'    => 'post',
+                'valid'   => 'bool'
+            ],
+            'calculate_md5' => [
+                'doc'     => 'Set to false to disable calculating an MD5 for all Amazon S3 signed uploads.',
+                'type'    => 'value',
+                'valid'   => 'bool'
+            ]
+        ];
+    }
+
     /**
      * {@inheritdoc}
      *
@@ -39,21 +57,6 @@ class S3Factory extends ClientFactory
     {
         $this->enableErrorParserToHandleHeadRequests($args);
         $client = parent::createClient($args);
-
-        // S3Client should calculate MD5 checksums for uploads unless explicitly
-        // disabled or using SignatureV4.
-        $client->setConfig(
-            'calculate_md5',
-            isset($args['calculate_md5'])
-                ? $args['calculate_md5']
-                : (!$client->getSignature() instanceof SignatureV4)
-        );
-
-        // Force path style on all requests.
-        if (!empty($args['force_path_style'])) {
-            $client->setConfig('defaults/PathStyle', true);
-        }
-
         $emitter = $client->getEmitter();
         $emitter->attach(new BucketStyleSubscriber());
         $emitter->attach(new PermanentRedirectSubscriber());
@@ -62,6 +65,13 @@ class S3Factory extends ClientFactory
         $emitter->attach(new SourceFile($client->getApi()));
         $emitter->attach(new ApplyMd5Subscriber());
         $emitter->attach(new SaveAs());
+
+        // S3Client should calculate MD5 checksums for uploads unless explicitly
+        // disabled or using SignatureV4.
+        $value = !isset($args['calculate_md5'])
+            ? !($client->getSignature() instanceof SignatureV4)
+            : $args['calculate_md5'];
+        $client->setConfig('calculate_md5', $value);
 
         return $client;
     }
@@ -100,5 +110,14 @@ class S3Factory extends ClientFactory
 
             return $errorData;
         };
+    }
+
+    protected function handle_force_path_style(
+        $value,
+        array $args,
+        AwsClientInterface $client
+    ) {
+        // Force path style on all requests if instructed.
+        $client->setConfig('defaults/PathStyle', $value === true);
     }
 }
