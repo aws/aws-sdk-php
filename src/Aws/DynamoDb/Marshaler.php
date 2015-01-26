@@ -52,7 +52,7 @@ class Marshaler
      * @return array Formatted like `array(TYPE => VALUE)`.
      * @throws \UnexpectedValueException if the value cannot be marshaled.
      */
-    private function marshalValue($value)
+    protected function marshalValue($value)
     {
         $type = gettype($value);
         if ($type === 'string' && $value !== '') {
