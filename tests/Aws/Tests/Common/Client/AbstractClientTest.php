@@ -213,53 +213,11 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
         $client->getFooIterator(array('baz' => 'bar'));
     }
 
-    /**
-     * @expectedException \Aws\Common\Exception\InvalidArgumentException
-     * @expectedExceptionMessage No regions
-     */
-    public function testEnsuresRegionsAreSetWhenCreatingEndpoints()
-    {
-        AbstractClient::getEndpoint(ServiceDescription::factory(array()), 'foo', 'baz');
-    }
-
-    /**
-     * @expectedException \Aws\Common\Exception\InvalidArgumentException
-     * @expectedExceptionMessage foo is not a valid region
-     */
-    public function testEnsuresRegionIsValidWhenCreatingEndpoints()
-    {
-        AbstractClient::getEndpoint(ServiceDescription::factory(array(
-            'regions' => array(
-                'baz' => array()
-            )
-        )), 'foo', 'baz');
-    }
-
-    /**
-     * @expectedException \Aws\Common\Exception\InvalidArgumentException
-     * @expectedExceptionMessage http is not a valid URI scheme for
-     */
-    public function testEnsuresSchemeIsValidWhenCreatingEndpoints()
-    {
-        AbstractClient::getEndpoint(ServiceDescription::factory(array(
-            'regions' => array(
-                'baz' => array(
-                    'http' => false
-                )
-            )
-        )), 'baz', 'http');
-    }
-
     public function testCreatesEndpoints()
     {
-        $this->assertEquals('http://test.com', AbstractClient::getEndpoint(ServiceDescription::factory(array(
-            'regions' => array(
-                'baz' => array(
-                    'http' => true,
-                    'hostname' => 'test.com'
-                )
-            )
-        )), 'baz', 'http'));
+        $this->assertEquals('http://s3.amazonaws.com', AbstractClient::getEndpoint(ServiceDescription::factory(array(
+            'endpointPrefix' => 's3',
+        )), 'us-east-1', 'http'));
     }
 
     public function testChangeRegionAndCredentialsEvents()
