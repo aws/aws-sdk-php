@@ -16094,6 +16094,9 @@ return array (
             'result_key' => 'InstanceStatuses',
         ),
         'DescribeInstances' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'limit_key' => 'MaxResults',
             'result_key' => 'Reservations',
         ),
         'DescribeInternetGateways' => array(
