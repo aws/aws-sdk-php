@@ -52,7 +52,7 @@ class Marshaler
      * @return array Formatted like `array(TYPE => VALUE)`.
      * @throws \UnexpectedValueException if the value cannot be marshaled.
      */
-    protected function marshalValue($value)
+    public function marshalValue($value)
     {
         $type = gettype($value);
         if ($type === 'string' && $value !== '') {
@@ -132,7 +132,7 @@ class Marshaler
      * @return mixed
      * @throws \UnexpectedValueException
      */
-    private function unmarshalValue(array $value, $mapAsObject = false)
+    public function unmarshalValue(array $value, $mapAsObject = false)
     {
         list($type, $value) = each($value);
         switch ($type) {
