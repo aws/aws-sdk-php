@@ -349,7 +349,7 @@ return array (
                 'MemorySize' => array(
                     'type' => 'numeric',
                     'location' => 'query',
-                    'minimum' => 64,
+                    'minimum' => 128,
                     'maximum' => 1024,
                 ),
             ),
@@ -424,7 +424,7 @@ return array (
                 'MemorySize' => array(
                     'type' => 'numeric',
                     'location' => 'query',
-                    'minimum' => 64,
+                    'minimum' => 128,
                     'maximum' => 1024,
                 ),
             ),

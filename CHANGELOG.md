@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.7.17 - 2015-01-27
+
+* Added support for `getShippingLabel` to the AWS Import/Export client.
+* Updated the AWS Lambda client.
+
 ## 2.7.16 - 2015-01-20
 
 * Added support for custom security groups to the Amazon EMR client.

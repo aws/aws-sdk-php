@@ -28,6 +28,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  *
  * @method Model cancelJob(array $args = array()) {@command ImportExport CancelJob}
  * @method Model createJob(array $args = array()) {@command ImportExport CreateJob}
+ * @method Model getShippingLabel(array $args = array()) {@command ImportExport GetShippingLabel}
  * @method Model getStatus(array $args = array()) {@command ImportExport GetStatus}
  * @method Model listJobs(array $args = array()) {@command ImportExport ListJobs}
  * @method Model updateJob(array $args = array()) {@command ImportExport UpdateJob}
