@@ -1,9 +1,8 @@
 <?php
-namespace Aws\Test\S3\Multipart;
+namespace Aws\Test\S3;
 
 use Aws\Multipart\UploadState;
 use Aws\S3\UploadBuilder;
-use Aws\S3\Uploader;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Stream\Stream;
@@ -19,20 +18,24 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testCanCreateBuilder()
     {
-        $uploader = (new UploadBuilder)
+        $builder = (new UploadBuilder)
             ->setClient($this->getMock('Aws\AwsClientInterface'))
             ->setSource(__FILE__)
             ->setBucket('foo')
-            ->setKey('bar')
-            ->build();
+            ->setKey('bar');
+        $builder2 = clone $builder;
 
-        $params = $this->readAttribute($uploader, 'params');
-        $this->assertArrayHasKey(Uploader::INITIATE, $params);
-        $initParams = $params[Uploader::INITIATE];
-        $this->assertArrayHasKey('ContentType', $initParams);
-        $parts = $this->readAttribute($uploader, 'parts');
-        $this->assertInstanceOf('Aws\Multipart\PartGenerator', $parts);
-        $this->assertInstanceOf('Aws\S3\Uploader', $uploader);
+        $uploader = $builder->build();
+        $config = $this->readAttribute($uploader, 'config');
+        $params = $config['initiate']['params'];
+        $this->assertArrayHasKey('ContentType', $params);
+        $this->assertInstanceOf('Aws\Multipart\Uploader', $uploader);
+
+        $builder2->setUploadId('baz');
+        $this->assertEquals(
+            ['Bucket' => 'foo', 'Key' => 'bar', 'UploadId' => 'baz'],
+            $this->readAttribute($builder2, 'uploadId')
+        );
     }
 
     public function testThrowsExceptionOnBadPartSize()
@@ -63,7 +66,7 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
 
         $builder = (new UploadBuilder)->setClient($client);
         $method = (new \ReflectionObject($builder))
-            ->getMethod('loadStateFromParams');
+            ->getMethod('loadStateByUploadId');
         $method->setAccessible(true);
         /** @var UploadState $state */
         $state = $method->invoke($builder, [
@@ -122,16 +125,18 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
     public function testCanCreatePartGeneratorCallback()
     {
         $source = Stream::factory('foo');
-        $uploader = (new UploadBuilder)
+        $state = new UploadState([]);
+        $state->setPartSize(5);
+        $builder = (new UploadBuilder)
             ->setClient($this->getTestClient('s3'))
-            ->setPartSize(5)
+            ->setState($state)
             ->setSource($source);
 
-        $method = (new \ReflectionClass('Aws\S3\UploadBuilder'))
+        $method = (new \ReflectionObject($builder))
             ->getMethod('getCreatePartFn');
         $method->setAccessible(true);
         /** @var callable $createPart */
-        $createPart = $method->invoke($uploader);
+        $createPart = $method->invoke($builder);
 
         $data = $createPart(true, 2);
         $this->assertEquals(2, $data['PartNumber']);
@@ -143,5 +148,69 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('GuzzleHttp\Stream\Stream', $data['Body']);
         $this->assertArrayHasKey('ContentLength', $data);
         $this->assertArrayHasKey('ContentMD5', $data);
+    }
+
+    public function testCallbackCreatesCorrectCompleteCommandParams()
+    {
+        // Prepare state.
+        $state = new UploadState([]);
+        $parts = [
+            1 => ['ETag' => 'foo'],
+            2 => ['ETag' => 'bar'],
+            3 => ['ETag' => 'baz'],
+        ];
+        foreach ($parts as $number => $data) {
+            $state->markPartAsUploaded($number, $data);
+        }
+
+        // Prepare builder.
+        $builder = (new UploadBuilder)
+            ->setClient($this->getTestClient('s3'))
+            ->setState($state)
+            ->setSource(Stream::factory('foo'));
+
+        // Get function.
+        $method = (new \ReflectionObject($builder))
+            ->getMethod('getCompleteParamsFn');
+        $method->setAccessible(true);
+        /** @var callable $getCommandParams */
+        $getCommandParams = $method->invoke($builder);
+
+        // Validate function results.
+        $params = $getCommandParams();
+        $this->assertTrue(isset($params['MultipartUpload']['Parts']));
+        $this->assertEquals($parts, $params['MultipartUpload']['Parts']);
+    }
+
+    public function testCallbackHandlesResultsOfUploadPart()
+    {
+        $state = new UploadState([]);
+
+        $builder = (new UploadBuilder)
+            ->setClient($this->getTestClient('s3'))
+            ->setState($state)
+            ->setSource(Stream::factory('foo'));
+
+        $method = (new \ReflectionObject($builder))
+            ->getMethod('getResultHandlerFn');
+        $method->setAccessible(true);
+        /** @var callable $handleResult */
+        $handleResult = $method->invoke($builder);
+
+        // Mock arguments.
+        $command = $this->getMockBuilder('GuzzleHttp\Command\Command')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $command->method('offsetGet')->willReturn(2);
+        $result = $this->getMockBuilder('Aws\Result')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $result->method('offsetGet')->willReturn('foo');
+
+        $handleResult($command, $result);
+
+        $uploadedParts = $state->getUploadedParts();
+        $this->assertTrue(isset($uploadedParts[2]['ETag']));
+        $this->assertEquals('foo', $uploadedParts[2]['ETag']);
     }
 }

@@ -47,6 +47,10 @@ class UploadStateTest extends \PHPUnit_Framework_TestCase
         $state->markPartAsUploaded(1, ['foo' => 1]);
         $state->markPartAsUploaded(3, ['foo' => 3]);
         $state->markPartAsUploaded(2, ['foo' => 2]);
+
+        $this->assertTrue($state->hasPartBeenUploaded(2));
+        $this->assertFalse($state->hasPartBeenUploaded(5));
+
         // Note: The parts should come out sorted.
         $this->assertSame([1, 2, 3], array_keys($state->getUploadedParts()));
     }

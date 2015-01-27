@@ -1,10 +1,10 @@
 <?php
 
-namespace Aws\Test\Glacier\Multipart;
+namespace Aws\Test\Glacier;
 
+use Aws\Glacier\TreeHash;
 use Aws\Multipart\UploadState;
 use Aws\Glacier\UploadBuilder;
-use Aws\Glacier\Uploader;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Stream\Stream;
@@ -18,18 +18,26 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testCanCreateBuilder()
     {
-        $uploader = (new UploadBuilder)
+        $builder = (new UploadBuilder)
             ->setClient($this->getMock('Aws\AwsClientInterface'))
             ->setSource(__FILE__)
             ->setAccountId('foo')
             ->setVaultName('bar')
-            ->setArchiveDescription('baz')
-            ->build();
+            ->setArchiveDescription('baz');
+        $builder2 = clone $builder;
 
-        $params = $this->readAttribute($uploader, 'params')[Uploader::INITIATE];
-        $this->assertInstanceOf('Aws\Glacier\Uploader', $uploader);
+        $uploader = $builder->build();
+        $config = $this->readAttribute($uploader, 'config');
+        $params = $config['initiate']['params'];
+        $this->assertInstanceOf('Aws\Multipart\Uploader', $uploader);
         $this->assertArrayHasKey('archiveDescription', $params);
         $this->assertArrayHasKey('partSize', $params);
+
+        $builder2->setUploadId('baz');
+        $this->assertEquals(
+            ['accountId' => 'foo', 'vaultName' => 'bar', 'uploadId' => 'baz'],
+            $this->readAttribute($builder2, 'uploadId')
+        );
     }
 
     public function testThrowsExceptionOnBadPartSize()
@@ -59,7 +67,7 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
 
         $builder = (new UploadBuilder)->setClient($client);
         $method = (new \ReflectionObject($builder))
-            ->getMethod('loadStateFromParams');
+            ->getMethod('loadStateByUploadId');
         $method->setAccessible(true);
         /** @var UploadState $state */
         $state = $method->invoke($builder, [
@@ -73,61 +81,21 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('bar', $part['checksum']);
     }
 
-//    /**
-//     * @dataProvider checksumTestProvider
-//     */
-//    public function testKnowsWhenToCalculateChecksums($client, $expected)
-//    {
-//        $uploader = (new UploadBuilder)->setClient($client);
-//        $stream = Stream::factory('foo');
-//
-//        $method = (new \ReflectionClass('Aws\S3\UploadBuilder'))
-//            ->getMethod('decorateWithHashes');
-//        $method->setAccessible(true);
-//
-//        $actual = null;
-//        $stream = $method->invoke($uploader, $stream, function ($result, $type) use (&$actual) {
-//                $actual = [$type, $result];
-//            });
-//        $stream->getContents();
-//        $this->assertEquals($expected, $actual);
-//    }
-//
-//    public function checksumTestProvider()
-//    {
-//        $hasher = function ($type, $value) {
-//            return base64_encode(hash($type, $value, true));
-//        };
-//
-//        return [
-//            [
-//                $this->getTestClient('s3'),
-//                ['md5', $hasher('md5', 'foo')]
-//            ],
-//            [
-//                $this->getTestClient('s3', ['calculate_md5' => false]),
-//                null
-//            ],
-//            [
-//                $this->getTestClient('s3', ['signature' => 'v4']),
-//                ['sha256', $hasher('sha256', 'foo')]
-//            ]
-//        ];
-//    }
-
     public function testCanCreatePartGeneratorCallback()
     {
         $source = Stream::factory('foo');
-        $uploader = (new UploadBuilder)
+        $state = new UploadState([]);
+        $state->setPartSize(5);
+        $builder = (new UploadBuilder)
             ->setClient($this->getTestClient('glacier'))
-            ->setPartSize(5)
+            ->setState($state)
             ->setSource($source);
 
-        $method = (new \ReflectionClass('Aws\Glacier\UploadBuilder'))
+        $method = (new \ReflectionObject($builder))
             ->getMethod('getCreatePartFn');
         $method->setAccessible(true);
         /** @var callable $createPart */
-        $createPart = $method->invoke($uploader);
+        $createPart = $method->invoke($builder);
 
         $data = $createPart(true);
         // Range is an odd value here, because we are using a non-file stream
@@ -141,52 +109,91 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('checksum', $data);
         $this->assertArrayHasKey('ContentSHA256', $data);
     }
-}
 
-//const MB = 1048576;
-//
-//public function getStreamTestCases()
-//{
-//    return [
-//        [$this->createStream(true), 'GuzzleHttp\Stream\LimitStream'],
-//        [$this->createStream(false), 'GuzzleHttp\Stream\Stream'],
-//    ];
-//}
-//
-///**
-// * @dataProvider getStreamTestCases
-// */
-//public function testCanGeneratePartsForStream($source, $bodyClass)
-//{
-//    $generator = new PartGenerator($source, self::MB);
-//    $parts = iterator_to_array($generator);
-//    $this->assertCount(4, $parts);
-//
-//    $part = reset($parts);
-//    // Has all the part data.
-//    $this->assertEquals(
-//        ['checksum', 'ContentSHA256', 'body', 'range'],
-//        array_keys($part)
-//    );
-//    // For 1 MB parts, the checksums should be the same.
-//    $this->assertEquals($part['checksum'], $part['ContentSHA256']);
-//    // Verify the body is of the expected stream class.
-//    $this->assertInstanceOf($bodyClass, $part['body']);
-//}
-//
-//private function createStream($seekable)
-//{
-//    $stream = Stream::factory(str_repeat('.', 3 * self::MB + 1024));
-//
-//    return FnStream::decorate($stream, [
-//                                         'seek' => function ($pos) use ($seekable, $stream) {
-//                                                 return $seekable ? $stream->seek($pos) : false;
-//                                             },
-//                                         'isSeekable' => function () use ($seekable) {return $seekable;},
-//                                         'getMetadata' => function ($key = null) use ($seekable, $stream) {
-//                                                 return ($seekable && $key === 'wrapper_type')
-//                                                     ? 'plainfile'
-//                                                     : $stream->getMetadata($key);
-//                                             }
-//                                     ]);
-//}
+    public function testCanParseARange()
+    {
+        $builder = new UploadBuilder;
+        $method = (new \ReflectionObject($builder))->getMethod('parseRange');
+        $method->setAccessible(true);
+        $data = $method->invoke($builder, 'bytes 2097152-4194303/*', 2097152);
+        $this->assertEquals(2097152, $data['Size']);
+        $this->assertEquals(2, $data['PartNumber']);
+    }
+
+    public function testCallbackCreatesCorrectCompleteCommandParams()
+    {
+        // Create dummy hashes.
+        $checksums = [
+            hash('sha256', 'a'),
+            hash('sha256', 'b'),
+            hash('sha256', 'c'),
+        ];
+        $treeHash = new TreeHash();
+        foreach ($checksums as $checksum) {
+            $treeHash->addChecksum($checksum);
+        }
+        $expectedChecksum = bin2hex($treeHash->complete());
+
+        // Prepare state.
+        $state = new UploadState([]);
+        $parts = [
+            1 => ['size' => 3, 'checksum' => $checksums[0]],
+            2 => ['size' => 1, 'checksum' => $checksums[1]],
+            3 => ['size' => 5, 'checksum' => $checksums[2]],
+        ];
+        foreach ($parts as $number => $data) {
+            $state->markPartAsUploaded($number, $data);
+        }
+
+        // Prepare builder.
+        $builder = (new UploadBuilder)
+            ->setClient($this->getTestClient('s3'))
+            ->setState($state)
+            ->setSource(Stream::factory('foo'));
+
+        // Get the function.
+        $method = (new \ReflectionObject($builder))
+            ->getMethod('getCompleteParamsFn');
+        $method->setAccessible(true);
+        /** @var callable $getCommandParams */
+        $getCommandParams = $method->invoke($builder);
+        
+        // Validate function results.
+        $params = $getCommandParams();
+        $this->assertEquals(9, $params['archiveSize']);
+        $this->assertEquals($expectedChecksum, $params['checksum']);
+    }
+
+    public function testCallbackHandlesResultsOfUploadPart()
+    {
+        $state = new UploadState([]);
+        $state->setPartSize(2097152);
+
+        $builder = (new UploadBuilder)
+            ->setClient($this->getTestClient('s3'))
+            ->setState($state)
+            ->setSource(Stream::factory('foo'));
+
+        $method = (new \ReflectionObject($builder))
+            ->getMethod('getResultHandlerFn');
+        $method->setAccessible(true);
+        /** @var callable $handleResult */
+        $handleResult = $method->invoke($builder);
+
+        // Mock arguments.
+        $command = $this->getMockBuilder('GuzzleHttp\Command\Command')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $command->method('offsetGet')
+            ->willReturnOnConsecutiveCalls('0-2097151', 'foo');
+        $result = $this->getMockBuilder('Aws\Result')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $handleResult($command, $result);
+
+        $uploadedParts = $state->getUploadedParts();
+        $this->assertTrue(isset($uploadedParts[1]['checksum']));
+        $this->assertEquals('foo', $uploadedParts[1]['checksum']);
+    }
+}

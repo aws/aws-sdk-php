@@ -2,8 +2,9 @@
 namespace Aws\Glacier;
 
 use Aws\Multipart\AbstractUploadBuilder;
-use Aws\Multipart\PartGenerator;
 use Aws\Multipart\UploadState;
+use Aws\Result;
+use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Stream\StreamInterface;
 use GuzzleHttp\Stream\Utils;
@@ -15,21 +16,40 @@ use GuzzleHttp\Subscriber\MessageIntegrity\PhpHash;
  */
 class UploadBuilder extends AbstractUploadBuilder
 {
-    // An Glacier upload part can be anywhere from 1 MB to 4 GB
-    const MIN_PART_SIZE = 1048576;
-    const MAX_PART_SIZE = 4294967296;
-    const MAX_PARTS = 10000;
-
-    protected $uploadParams = [
-        'accountId' => '-',  // Required to initiate.
-        'vaultName' => null, // Required to initiate.
-        'uploadId'  => null, // Required to upload.
+    protected $config = [
+        'id' => ['accountId', 'vaultName', 'uploadId'],
+        'part' => [
+            'min_size' => 1048576,
+            'max_size' => 4294967296,
+            'max_num'  => 10000,
+            'param'    => 'range',
+        ],
+        'initiate' => [
+            'command' => 'InitiateMultipartUpload',
+            'params'  => [],
+        ],
+        'upload' => [
+            'command' => 'UploadMultipartPart',
+            'params'  => [],
+        ],
+        'complete' => [
+            'command' => 'CompleteMultipartUpload',
+            'params'  => [],
+        ],
+        'abort' => [
+            'command' => 'AbortMultipartUpload',
+            'params'  => [],
+        ],
     ];
 
-    /**
-     * @var string Archive description.
-     */
+    /** @var string Archive description. */
     protected $archiveDescription;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->uploadId['accountId'] = '-';
+    }
 
     /**
      * Set the account ID of the the archive.
@@ -40,7 +60,7 @@ class UploadBuilder extends AbstractUploadBuilder
      */
     public function setAccountId($accountId)
     {
-        $this->uploadParams['accountId'] = $accountId;
+        $this->uploadId['accountId'] = $accountId;
 
         return $this;
     }
@@ -54,7 +74,21 @@ class UploadBuilder extends AbstractUploadBuilder
      */
     public function setVaultName($vaultName)
     {
-        $this->uploadParams['vaultName'] = $vaultName;
+        $this->uploadId['vaultName'] = $vaultName;
+
+        return $this;
+    }
+
+    /**
+     * Set the upload ID of the upload.
+     *
+     * @param string $uploadId ID of the upload.
+     *
+     * @return self
+     */
+    public function setUploadId($uploadId)
+    {
+        $this->uploadId['uploadId'] = $uploadId;
 
         return $this;
     }
@@ -68,22 +102,17 @@ class UploadBuilder extends AbstractUploadBuilder
      */
     public function setArchiveDescription($description)
     {
-        $this->addParam(Uploader::INITIATE, 'archiveDescription', $description);
+        $this->config['initiate']['params']['archiveDescription'] = $description;
 
         return $this;
     }
 
-    protected function createUploader()
+    protected function prepareParams()
     {
-        $this->addParam(Uploader::INITIATE, 'partSize', $this->partSize);
-
-        $createPart = $this->getCreatePartFn();
-        $parts = new PartGenerator($this->source, $this->state, $createPart);
-
-        return new Uploader($this->client, $this->state, $parts, $this->params);
+        $this->config['initiate']['params']['partSize'] = $this->state->getPartSize();
     }
 
-    protected function loadStateFromParams(array $params = [])
+    protected function loadStateByUploadId(array $params = [])
     {
         $state = new UploadState($params);
 
@@ -93,7 +122,7 @@ class UploadBuilder extends AbstractUploadBuilder
         foreach ($results as $result) {
             if (!$partSize) $partSize = $result['PartSizeInBytes'];
             foreach ($result['Parts'] as $part) {
-                $rangeData = Uploader::parseRange($part['RangeInBytes'], $partSize);
+                $rangeData = $this->parseRange($part['RangeInBytes'], $partSize);
                 $state->markPartAsUploaded($rangeData['PartNumber'], [
                     'size'     => $rangeData['Size'],
                     'checksum' => $part['SHA256TreeHash'],
@@ -109,13 +138,13 @@ class UploadBuilder extends AbstractUploadBuilder
     protected function determinePartSize()
     {
         // Make sure the part size is set.
-        $partSize = $this->partSize ?: self::MIN_PART_SIZE;
+        $partSize = $this->specifiedPartSize ?: $this->config['part']['min_size'];
 
         // Calculate list of valid part sizes.
         static $validSizes;
         if (!$validSizes) {
             $validSizes = array_map(function ($n) {
-                return pow(2, $n) * self::MIN_PART_SIZE;
+                return pow(2, $n) * $this->config['part']['min_size'];
             }, range(0, 12));
         }
 
@@ -126,6 +155,40 @@ class UploadBuilder extends AbstractUploadBuilder
         }
 
         return $partSize;
+    }
+
+    protected function getCompleteParamsFn()
+    {
+        return function () {
+            $treeHash = new TreeHash();
+            $archiveSize = 0;
+            foreach ($this->state->getUploadedParts() as $part) {
+                $archiveSize += $part['size'];
+                $treeHash->addChecksum($part['checksum']);
+            }
+
+            return [
+                'archiveSize' => $archiveSize,
+                'checksum'    => bin2hex($treeHash->complete()),
+            ];
+        };
+    }
+
+    protected function getResultHandlerFn()
+    {
+        return function (CommandInterface $command, Result $result) {
+            // Get data from the range.
+            $rangeData = $this->parseRange(
+                $command['range'],
+                $this->state->getPartSize()
+            );
+
+            // Store the data we need for later.
+            $this->state->markPartAsUploaded($rangeData['PartNumber'], [
+                'size'     => $rangeData['Size'],
+                'checksum' => $command['checksum']
+            ]);
+        };
     }
 
     protected function getCreatePartFn()
@@ -187,5 +250,30 @@ class UploadBuilder extends AbstractUploadBuilder
         );
 
         return $stream;
+    }
+
+    /**
+     * Parses a Glacier range string into a size and part number.
+     *
+     * @param string $range    Glacier range string (e.g., "bytes 5-5000/*")
+     * @param int    $partSize The part size
+     *
+     * @return array
+     */
+    private function parseRange($range, $partSize)
+    {
+        // Strip away the prefix and suffix.
+        if (strpos($range, 'bytes') !== false) {
+            $range = substr($range, 6, -2);
+        }
+
+        // Split that range into it's parts.
+        list($firstByte, $lastByte) = explode('-', $range);
+
+        // Calculate and return data from the range.
+        return [
+            'Size'       => $lastByte - $firstByte + 1,
+            'PartNumber' => intval($firstByte / $partSize) + 1,
+        ];
     }
 }

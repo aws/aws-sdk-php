@@ -2,15 +2,15 @@
 namespace Aws\Test\Multipart;
 
 use Aws\Exception\MultipartUploadException;
-use Aws\Multipart\AbstractUploader;
+use Aws\Multipart\Uploader;
 use Aws\Multipart\UploadState;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 
 /**
- * @covers Aws\Multipart\AbstractUploader
+ * @covers Aws\Multipart\Uploader
  */
-class AbstractUploaderTest extends \PHPUnit_Framework_TestCase
+class UploaderTest extends \PHPUnit_Framework_TestCase
 {
     use UsesServiceTrait;
 
@@ -137,8 +137,8 @@ class AbstractUploaderTest extends \PHPUnit_Framework_TestCase
     private function getMockUploader(
         array $results = [],
         $status = null,
-        array $parts = [])
-    {
+        array $parts = []
+    ) {
         $client = $this->getTestClient('s3', [
             'retries'  => false,
             'validate' => false,
@@ -149,20 +149,46 @@ class AbstractUploaderTest extends \PHPUnit_Framework_TestCase
         $parts = new \ArrayIterator($parts);
 
         // Create the mock uploader
-        $uploader = $this->getMockBuilder('Aws\Multipart\AbstractUploader')
+        $uploader = $this->getMockBuilder('Aws\Multipart\Uploader')
             ->setConstructorArgs([$client, $state, $parts, [
-                AbstractUploader::INITIATE => ['fizz' => 'buzz']
+                'id' => ['Bucket', 'Key', 'UploadId'],
+                'part'   => [
+                    'min_size' => 5242880,
+                    'max_size' => 5368709120,
+                    'max_num'  => 10000,
+                    'param'    => 'PartNumber',
+                ],
+                'initiate' => [
+                    'command' => 'CreateMultipartUpload',
+                    'params'  => ['fizz' => 'buzz'],
+                ],
+                'upload' => [
+                    'command' => 'UploadPart',
+                    'params'  => [],
+                ],
+                'complete' => [
+                    'command' => 'CompleteMultipartUpload',
+                    'params'  => [],
+                ],
+                'abort' => [
+                    'command' => 'AbortMultipartUpload',
+                    'params'  => [],
+                ],
+                'fn' => [
+                    'complete' => function () {return [];},
+                    'result'   => function () {},
+                ]
             ]])
             ->setMethods(['getCompleteCommand'])
             ->getMockForAbstractClass();
         $uploader->expects($this->any())
             ->method('getCompleteCommand')
-            ->willReturn($client->getCommand(AbstractUploader::COMPLETE, [
+            ->willReturn($client->getCommand('CompleteMultipartUpload', [
                 'Bucket' => 'foo',
                 'Key'    => 'bar'
             ]));
 
-        /** @var AbstractUploader $uploader */
+        /** @var Uploader $uploader */
         return $uploader;
     }
 }
