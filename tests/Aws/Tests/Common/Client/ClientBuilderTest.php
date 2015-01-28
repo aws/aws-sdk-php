@@ -282,6 +282,28 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         putenv(Credentials::ENV_KEY); putenv(Credentials::ENV_SECRET);
     }
 
+    public function testAddsCredentialsFromArray()
+    {
+        $config = array(
+            'service' => 'dynamodb',
+            'region'  => 'us-east-1',
+            'credentials' => array(
+                'key'    => 'foo',
+                'secret' => 'bar'
+            ),
+            'service.description' => array(
+                'signatureVersion' => 'v2',
+                'regions' => array('us-east-1' => array('https' => true, 'hostname' => 'foo.com'))
+            )
+        );
+        $client = ClientBuilder::factory('Aws\\DynamoDb')
+            ->setConfig($config)
+            ->build();
+        $creds = $client->getCredentials();
+        $this->assertEquals('foo', $creds->getAccessKeyId());
+        $this->assertEquals('bar', $creds->getSecretKey());
+    }
+
     public function testAddsDefaultBackoffPluginIfNeeded()
     {
         $config = array(

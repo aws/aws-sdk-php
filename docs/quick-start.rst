@@ -130,9 +130,7 @@ A simple configuration file should look something like this:
         'services' => array(
             'default_settings' => array(
                 'params' => array(
-                    'key'    => 'YOUR_AWS_ACCESS_KEY_ID',
-                    'secret' => 'YOUR_AWS_SECRET_ACCESS_KEY',
-                    // OR: 'profile' => 'my_profile',
+                    'profile' => 'my_profile',
                     'region' => 'us-west-2'
                 )
             )

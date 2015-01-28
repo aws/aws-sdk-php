@@ -48,9 +48,11 @@ from AWS STS directly.
     $result = $client->getSessionToken();
 
     $s3 = S3Client::factory(array(
-        'key'    => $result['Credentials']['AccessKeyId'],
-        'secret' => $result['Credentials']['SecretAccessKey'],
-        'token'  => $result['Credentials']['SessionToken'],
+        'credentials' => array(
+            'key'    => $result['Credentials']['AccessKeyId'],
+            'secret' => $result['Credentials']['SecretAccessKey'],
+            'token'  => $result['Credentials']['SessionToken'],
+        )
     ));
 
 You can also construct a ``Credentials`` object and use that when instantiating the client.

@@ -36,8 +36,6 @@ instantiate the CloudFront client. The following is an example config file that 
         'services' => array(
             'default_settings' => array(
                 'params' => array(
-                    'key'    => '<aws access key>',
-                    'secret' => '<aws secret key>',
                     'region' => 'us-west-2'
                 )
             ),

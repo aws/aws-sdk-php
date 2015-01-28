@@ -467,7 +467,10 @@ class ClientBuilder
     protected function getCredentials(Collection $config)
     {
         $credentials = $config->get(Options::CREDENTIALS);
-        if ($credentials === false) {
+
+        if (is_array($credentials)) {
+            $credentials = Credentials::factory($credentials);
+        } elseif ($credentials === false) {
             $credentials = new NullCredentials();
         } elseif (!$credentials instanceof CredentialsInterface) {
             $credentials = Credentials::factory($config);
