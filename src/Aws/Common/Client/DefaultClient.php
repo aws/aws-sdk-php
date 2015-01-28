@@ -42,8 +42,8 @@ class DefaultClient extends AbstractClient
      * Region and endpoint options (Some services do not require a region while others do. Check the service specific user guide documentation for details):
      *
      * - region: Region name (e.g. 'us-east-1', 'us-west-1', 'us-west-2', 'eu-west-1', etc...)
-     * - scheme: URI Scheme of the base URL (e.g. 'https', 'http') used when base_url is not supplied
-     * - base_url: Allows you to specify a custom endpoint instead of building one from the region and scheme
+     * - scheme: URI Scheme of the base URL (e.g. 'https', 'http') used when endpoint is not supplied
+     * - endpoint: Allows you to specify a custom endpoint instead of building one from the region and scheme
      *
      * Generic client options:
      *

@@ -188,9 +188,9 @@ Options                   Description
 ``region``                Region name (e.g., 'us-east-1', 'us-west-1', 'us-west-2', 'eu-west-1', etc.).
                           See :ref:`specify_region`.
 
-``scheme``                URI Scheme of the base URL (e.g.. 'https', 'http') used when base_url is not supplied.
+``scheme``                URI Scheme of the base URL (e.g.. 'https', 'http') used when endpoint is not supplied.
 
-``base_url``              Allows you to specify a custom endpoint instead of have the SDK build one automatically from
+``endpoint``              Allows you to specify a custom endpoint instead of have the SDK build one automatically from
                           the region and scheme.
 
 ``signature``             Overrides the signature used by the client. Clients will always choose an appropriate default
@@ -263,7 +263,7 @@ Here's an example of creating an Amazon DynamoDB client that uses the ``us-west-
 Setting a custom endpoint
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can specify a completely customized endpoint for a client using the client's ``base_url`` option. If the client you
+You can specify a completely customized endpoint for a client using the client's ``endpoint`` option. If the client you
 are using requires a region, then must still specify the name of the region using the ``region`` option. Setting a
 custom endpoint can be useful if you're using a mock web server that emulates a web service, you're testing against a
 private beta endpoint, or you are trying to a use a new region not yet supported by the SDK.
@@ -278,7 +278,7 @@ Here's an example of creating an Amazon DynamoDB client that uses a completely c
 
     // Create a client that that contacts a completely customized base URL
     $client = DynamoDbClient::factory(array(
-        'base_url' => 'http://my-custom-url',
+        'endpoint' => 'http://my-custom-url',
         'region'   => 'my-region-1',
         'key'      => 'abc',
         'secret'   => '123'

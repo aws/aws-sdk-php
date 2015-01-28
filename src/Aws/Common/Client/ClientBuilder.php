@@ -380,37 +380,8 @@ class ClientBuilder
             $this->setIteratorsConfig($iterators);
         }
 
-        // Make sure a valid region is set
-        $region = $config->get(Options::REGION);
-        $global = $description->getData('globalEndpoint');
-
-        if (!$global && !$region) {
-            throw new InvalidArgumentException(
-                'A region is required when using ' . $description->getData('serviceFullName')
-            );
-        } elseif ($global && !$region) {
-            $region = 'us-east-1';
-            $config->set(Options::REGION, 'us-east-1');
-        }
-
-        if (!$config->get(Options::BASE_URL)) {
-            $endpoint = call_user_func(
-                $config->get('endpoint_provider'),
-                array(
-                    'scheme'  => $config->get(Options::SCHEME),
-                    'region'  => $region,
-                    'service' => $config->get(Options::SERVICE)
-                )
-            );
-            $config->set(Options::BASE_URL, $endpoint['endpoint']);
-
-            // Set a signature if one was not explicitly provided.
-            if (!$config->hasKey(Options::SIGNATURE)
-                && isset($endpoint['signatureVersion'])
-            ) {
-                $config->set(Options::SIGNATURE, $endpoint['signatureVersion']);
-            }
-        }
+        $this->handleRegion($config);
+        $this->handleEndpoint($config);
 
         return $description;
     }
@@ -474,5 +445,52 @@ class ClientBuilder
         }
 
         return $credentials;
+    }
+
+    private function handleRegion(Collection $config)
+    {
+        // Make sure a valid region is set
+        $region = $config[Options::REGION];
+        $description = $config[Options::SERVICE_DESCRIPTION];
+        $global = $description->getData('globalEndpoint');
+
+        if (!$global && !$region) {
+            throw new InvalidArgumentException(
+                'A region is required when using ' . $description->getData('serviceFullName')
+            );
+        } elseif ($global && !$region) {
+            $config[Options::REGION] = 'us-east-1';
+        }
+    }
+
+    private function handleEndpoint(Collection $config)
+    {
+        // Alias "endpoint" with "base_url" for forwards compatibility.
+        if ($config['endpoint']) {
+            $config[Options::BASE_URL] = $config['endpoint'];
+            return;
+        }
+
+        if ($config[Options::BASE_URL]) {
+            return;
+        }
+
+        $endpoint = call_user_func(
+            $config['endpoint_provider'],
+            array(
+                'scheme'  => $config[Options::SCHEME],
+                'region'  => $config[Options::REGION],
+                'service' => $config[Options::SERVICE]
+            )
+        );
+
+        $config[Options::BASE_URL] = $endpoint['endpoint'];
+
+        // Set a signature if one was not explicitly provided.
+        if (!$config->hasKey(Options::SIGNATURE)
+            && isset($endpoint['signatureVersion'])
+        ) {
+            $config->set(Options::SIGNATURE, $endpoint['signatureVersion']);
+        }
     }
 }

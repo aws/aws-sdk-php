@@ -23,11 +23,11 @@ Similar to the way other service clients are used, you can instantiate the ``Clo
 
     $client = CloudSearchDomainClient::factory(array(
         'profile'  => '<profile in your aws credentials file>',
-        'base_url' => '<your cloudsearch domain endpoint>'
+        'endpoint' => '<your cloudsearch domain endpoint>'
     ));
 
 The ``CloudSearchDomainClient`` is unlike other clients, because it does not require you to provide a region. Instead,
-you must provide the ``base_url`` option, which represents the domain's endpoint. Domain endpoints are unique to each
+you must provide the ``endpoint`` option, which represents the domain's endpoint. Domain endpoints are unique to each
 domain, and you can get it using the `DescribeDomains operation
 <http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.CloudSearch.CloudSearchClient.html#_describeDomains>`_ of the
 :doc:`Amazon CloudSearch configuration client<service-cloudsearch>`.
@@ -49,13 +49,13 @@ all clients so that you only have to specify your settings once.
     // Get the client from the builder
     $client = $aws->get('CloudSearchDomain');
 
-**Note:** This assumes that your configuration file has been setup to include the ``base_url`` option for the
+**Note:** This assumes that your configuration file has been setup to include the ``endpoint`` option for the
 CloudSearch Domain service. If it is not, you can provide it manually when calling ``get()``.
 
 .. code-block:: php
 
     $client = $aws->get('cloudsearchdomain', array(
-        'base_url' => '<your cloudsearch domain endpoint>'
+        'endpoint' => '<your cloudsearch domain endpoint>'
     ));
 
 For more information about configuration files, see :doc:`configuration`.
