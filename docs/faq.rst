@@ -33,8 +33,6 @@ in a client's factory method or the configuration settings used with
 
     $aws = Aws\Common\Aws::factory(array(
         'region' => 'us-west-2',
-        'key'    => '****',
-        'secret' => '****',
         'ssl.certificate_authority' => '/path/to/updated/cacert.pem'
     ));
 

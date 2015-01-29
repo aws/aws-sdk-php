@@ -157,27 +157,39 @@ Options                   Description
                           used to look up your credentials in your credentials file (``~/.aws/credentials``). See
                           :ref:`credential_profiles` for more information.
 
+``token.ttd``             The UNIX timestamp for when the provided credentials expire.
+
+``credentials``           An associative array containing the "key", "secret", and optional "token" key value pairs,
+                          or a credentials object (``Aws\Common\Credentials\CredentialsInterface``) can be provided
+                          instead explicit access keys and tokens.
+
 ``key``                   An AWS access key ID. Unless you are setting temporary credentials provided by AWS STS, it is
                           recommended that you avoid hard-coding credentials with this parameter. Please see
                           :doc:`credentials` for my information about credentials.
+
+                          .. note::
+
+                              ``key`` is deprecated in v3 of the AWS SDK for PHP in favor of using the ``credentials``
+                               option.
 
 ``secret``                An AWS secret access key. Unless you are setting temporary credentials provided by AWS STS, it
                           is recommended that you avoid hard-coding credentials with this parameter. Please see
                           :doc:`credentials` for my information about credentials.
 
+                          .. note::
+
+                              ``secret`` is deprecated in v3 of the AWS SDK for PHP in favor of using the
+                              ``credentials`` option.
+
 ``token``                 An AWS security token to use with request authentication. These are typically provided by the
                           AWS STS service. Please note that not all services accept temporary credentials.
                           See http://docs.aws.amazon.com/STS/latest/UsingSTS/UsingTokens.html.
 
-``token.ttd``             The UNIX timestamp for when the provided credentials expire.
+                          .. note::
 
-``credentials``           A credentials object (``Aws\Common\Credentials\CredentialsInterface``) can be provided instead
-                          explicit access keys and tokens.
+                              ``token`` is deprecated in v3 of the AWS SDK for PHP in favor of using the
+                              ``credentials`` option.
 
-``credentials.cache.key`` Optional custom cache key to use with the credentials.
-
-``credentials.client``    Pass this option to specify a custom ``Guzzle\Http\ClientInterface`` to use if your
-                          credentials require a HTTP request (e.g. ``RefreshableInstanceProfileCredentials``).
 ========================= ==============================================================================================
 
 ========================= ==============================================================================================
@@ -253,8 +265,10 @@ Here's an example of creating an Amazon DynamoDB client that uses the ``us-west-
 
     // Create a client that uses the us-west-1 region
     $client = DynamoDbClient::factory(array(
-        'key'    => 'YOUR_AWS_ACCESS_KEY_ID',
-        'secret' => 'YOUR_AWS_SECRET_ACCESS_KEY',
+        'credentials' => array(
+            'key'    => 'YOUR_AWS_ACCESS_KEY_ID',
+            'secret' => 'YOUR_AWS_SECRET_ACCESS_KEY',
+        ),
         'region' => 'us-west-1'
     ));
 
@@ -280,8 +294,10 @@ Here's an example of creating an Amazon DynamoDB client that uses a completely c
     $client = DynamoDbClient::factory(array(
         'endpoint' => 'http://my-custom-url',
         'region'   => 'my-region-1',
-        'key'      => 'abc',
-        'secret'   => '123'
+        'credentials' => array(
+            'key'      => 'abc',
+            'secret'   => '123'
+        )
     ));
 
 If your custom endpoint uses signature version 4 and must be signed with custom signature scoping values, then you can

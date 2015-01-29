@@ -16,7 +16,6 @@ There are many ways to provide credentials:
 #. :ref:`credential_profiles`
 #. :ref:`configuration_credentials`
 #. :ref:`factory_credentials`
-#. :ref:`set_credentials`
 #. :ref:`temporary_credentials`
 
 Which technique should you choose?
@@ -235,8 +234,12 @@ the service builder:
             // providing a default region setting.
             'default_settings' => array(
                 'params' => array(
-                    'key'    => 'YOUR_AWS_ACCESS_KEY_ID',
-                    'secret' => 'YOUR_AWS_SECRET_ACCESS_KEY',
+                    array(
+                        'credentials' => array(
+                            'key'    => 'YOUR_AWS_ACCESS_KEY_ID',
+                            'secret' => 'YOUR_AWS_SECRET_ACCESS_KEY',
+                        )
+                    ),
                     'region' => 'us-west-1'
                 )
             )
@@ -276,8 +279,10 @@ client object.
 
     // Instantiate the S3 client with your AWS credentials
     $s3Client = S3Client::factory(array(
-        'key'    => 'YOUR_AWS_ACCESS_KEY_ID',
-        'secret' => 'YOUR_AWS_SECRET_ACCESS_KEY',
+        'credentials' => array(
+            'key'    => 'YOUR_AWS_ACCESS_KEY_ID',
+            'secret' => 'YOUR_AWS_SECRET_ACCESS_KEY',
+        )
     ));
 
 In some cases, you may already have an instance of a ``Credentials`` object. You can use this instead of specifying your
@@ -299,55 +304,6 @@ access keys separately.
 
 You may also want to read the section in the Getting Started Guide about
 :ref:`using a client's factory method <client_factory_method>` for more details.
-
-.. _set_credentials:
-
-Setting credentials after instantiation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-At any time after instantiating the client, you can set the credentials the client should use with the
-``setCredentials()`` method.
-
-.. code-block:: php
-
-    <?php
-
-    use Aws\S3\S3Client;
-    use Aws\Common\Credentials\Credentials
-
-    $s3Client = S3Client::factory();
-
-    $credentials = new Credentials('YOUR_ACCESS_KEY', 'YOUR_SECRET_KEY');
-    $s3Client->setCredentials($credentials);
-
-This can be used to change the credentials, set temporary credentials, refresh expired credentials, etc.
-
-Using the ``setCredentials()`` method will also trigger a ``client.credentials_changed`` event, so you can program other
-parts of your application to react to the change. To do this, you just need to add a listener to the client object.
-
-.. code-block:: php
-
-    use Aws\S3\S3Client;
-    use Aws\Common\Credentials\Credentials
-
-    // Create 2 sets of credentials
-    $credentials1 = new Credentials('ACCESS_KEY_1', 'SECRET_KEY_1');
-    $credentials2 = new Credentials('ACCESS_KEY_2', 'SECRET_KEY_2');
-
-    // Instantiate the client with the first credential set
-    $s3Client = S3Client::factory(array('credentials' => $credentials1));
-
-    // Get the event dispatcher and register a listener for the credential change
-    $dispatcher = $s3Client->getEventDispatcher();
-    $dispatcher->addListener('client.credentials_changed', function ($event) {
-        $formerAccessKey = $event['former_credentials']->getAccessKey();
-        $currentAccessKey = $event['credentials']->getAccessKey();
-        echo "Access key has changed from {$formerAccessKey} to {$currentAccessKey}.\n";
-    });
-
-    // Change the credentials to the second set to trigger the event
-    $s3Client->setCredentials($credentials2);
-    //> Access key has changed from ACCESS_KEY_1 to ACCESS_KEY_2.
 
 .. _temporary_credentials:
 
@@ -408,9 +364,11 @@ from AWS STS directly.
     $result = $stsClient->getSessionToken();
 
     $s3Client = S3Client::factory(array(
-        'key'    => $result['Credentials']['AccessKeyId'],
-        'secret' => $result['Credentials']['SecretAccessKey'],
-        'token'  => $result['Credentials']['SessionToken'],
+        'credentials' => array(
+            'key'    => $result['Credentials']['AccessKeyId'],
+            'secret' => $result['Credentials']['SecretAccessKey'],
+            'token'  => $result['Credentials']['SessionToken']
+        )
     ));
 
 You can also construct a ``Credentials`` object and use that when instantiating the client.

@@ -111,8 +111,6 @@ referencing the Version 1 of the SDK:
         'services' => array(
             'default_settings' => array(
                 'params' => array(
-                    'key'    => 'your-aws-access-key-id',
-                    'secret' => 'your-aws-secret-access-key',
                     'region' => 'us-west-2'
                 )
             )
@@ -145,8 +143,7 @@ configuration data, including your credentials. The ``factory()`` will work for 
 
     // Create an array of configuration options
     $config = array(
-        'key'    => 'your-aws-access-key-id',
-        'secret' => 'your-aws-secret-access-key',
+        'region' => 'us-west-2'
     );
 
     // Instantiate Amazon S3 clients from both SDKs via their factory methods

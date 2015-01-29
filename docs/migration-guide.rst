@@ -106,8 +106,10 @@ behavior.
 .. code-block:: php
 
     $dynamodb = Aws\DynamoDb\DynamoDbClient::factory(array(
-        'key'    => 'your-aws-access-key-id',
-        'secret' => 'your-aws-secret-access-key',
+        'credentials' => array(
+            'key'    => 'your-aws-access-key-id',
+            'secret' => 'your-aws-secret-access-key',
+        ),
         'region' => 'us-west-2',
     ));
 

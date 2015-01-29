@@ -32,11 +32,7 @@ The first step is to instantiate the Amazon DynamoDB client and register the ses
 
     use Aws\DynamoDb\DynamoDbClient;
 
-    $dynamoDb = DynamoDbClient::factory(array(
-        'key'    => '<aws access key>',
-        'secret' => '<aws secret key>',
-        'region' => '<region name>'
-    ));
+    $dynamoDb = DynamoDbClient::factory(array('region' => '<region name>'));
 
     $sessionHandler = $dynamoDb->registerSessionHandler(array(
         'table_name' => 'sessions'
@@ -52,8 +48,6 @@ You can also instantiate the ``SessionHandler`` object directly using it's ``fac
     use Aws\DynamoDb\Session\SessionHandler;
 
     $dynamoDb = DynamoDbClient::factory(array(
-        'key'    => '<aws access key>',
-        'secret' => '<aws secret key>',
         'region' => '<region name>',
     ));
 
@@ -256,8 +250,6 @@ something like the following:
     use Aws\DynamoDb\Session\SessionHandler;
 
     $dynamoDb = DynamoDbClient::factory(array(
-        'key'    => '<aws access key>',
-        'secret' => '<aws secret key>',
         'region' => '<region name>',
     ));
 
