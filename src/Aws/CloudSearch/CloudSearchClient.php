@@ -95,8 +95,8 @@ class CloudSearchClient extends AbstractClient
      */
     public function getDomainClient($domainName, array $config = array())
     {
-        // Determine the Domain client's base_url
-        $config['base_url'] = $this->describeDomains(array(
+        // Determine the Domain client's endpoint
+        $config['endpoint'] = $this->describeDomains(array(
             'DomainNames' => array($domainName)
         ))->getPath('DomainStatusList/0/SearchService/Endpoint');
 

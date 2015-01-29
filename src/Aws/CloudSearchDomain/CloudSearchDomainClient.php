@@ -3,7 +3,6 @@
 namespace Aws\CloudSearchDomain;
 
 use Aws\Common\Client\AbstractClient;
-use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\BadMethodCallException;
 use Guzzle\Common\Collection;
@@ -26,7 +25,7 @@ class CloudSearchDomainClient extends AbstractClient
     /**
      * Factory method to create a new Amazon CloudSearch Domain client using an array of configuration options.
      *
-     * You must provide the `base_url` option for this client, but credentials and `region` are not needed.
+     * You must provide the `endpoint` option for this client, but credentials and `region` are not needed.
      *
      * @param array|Collection $config Client configuration data
      *

@@ -5,13 +5,11 @@ namespace Aws\CloudSearchDomain;
 use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Client\ThrottlingErrorChecker;
 use Aws\Common\Client\UserAgentListener;
-use Aws\Common\Credentials\Credentials;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\ExceptionListener;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Exception\NamespaceExceptionFactory;
 use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
-use Aws\Common\Signature\SignatureV4;
 use Guzzle\Common\Collection;
 use Guzzle\Http\Url;
 use Guzzle\Plugin\Backoff\BackoffPlugin;
@@ -41,18 +39,21 @@ class CloudSearchDomainClientBuilder extends ClientBuilder
             $this->configRequirements
         );
 
-        // Make sure base_url is correctly set
-        if (!($baseUrl = $config->get(Options::BASE_URL))) {
+        $endpoint = $config['endpoint'] ?: $config[Options::BASE_URL];
+
+        // Make sure endpoint is correctly set
+        if (!$endpoint) {
             throw new InvalidArgumentException('You must provide the endpoint for the CloudSearch domain.');
-        } elseif (strpos($baseUrl, 'http') !== 0) {
-            $config->set(Options::BASE_URL, Url::buildUrl(array(
-                'scheme' => $config->get(Options::SCHEME),
-                'host'   => $baseUrl,
-            )));
+        }
+
+        if (strpos($endpoint, 'http') !== 0) {
+            $endpoint = $config[Options::SCHEME] . '://' . $endpoint;
+            $config['endpoint'] = $endpoint;
+            $config[Options::BASE_URL] = $endpoint;
         }
 
         // Determine the region from the endpoint
-        $endpoint = Url::factory($config->get(Options::BASE_URL));
+        $endpoint = Url::factory($endpoint);
         list(,$region) = explode('.', $endpoint->getHost());
         $config[Options::REGION] = $config[Options::SIGNATURE_REGION] = $region;
 
