@@ -59,6 +59,7 @@ class ChangedFilesIterator extends \FilterIterator
     {
         $current = $this->current();
         $key = $this->sourceConverter->convert($this->normalize($current));
+
         if (!($data = $this->getTargetData($key))) {
             return true;
         }
@@ -115,7 +116,11 @@ class ChangedFilesIterator extends \FilterIterator
 
     private function normalize($current)
     {
-        return $current->getRealPath() ?: (string) $current;
+        $asString = (string) $current;
+
+        return strpos($asString, 's3://') === 0
+            ? $asString
+            : $current->getRealPath();
     }
 
     private function cleanKey($key)
