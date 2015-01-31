@@ -14,10 +14,17 @@ use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
  * In addition to the default client factory configuration options, the Amazon
  * S3 factory supports the following additional key value pairs:
  *
- * - calculate_md5: Set to false to disable calculating an MD5 for all Amazon
- *   S3 signed uploads.
- * - force_path_style: Set to false to disable calculating an MD5 for all
- *   Amazon S3 signed uploads.
+ * - bucket_endpoint: (bool) Set to true to send requests to a hardcoded
+ *   bucket endpoint rather than create an endpoint as a
+ *   result of injecting the bucket into the URL. This
+ *   option is useful for interacting with CNAME endpoints.
+ * - calculate_md5: (bool) Set to false to disable calculating an MD5 for
+ *   all Amazon S3 signed uploads.
+ * - class_name: (string, default=string(13) "Aws\AwsClient") Optional
+ *   class name of the client to create. This value will be
+ *   supplied by default.
+ * - force_path_style: (bool) Set to true to send requests using path style
+ *   addressing.
  *
  * @internal
  */
@@ -35,6 +42,11 @@ class S3Factory extends ClientFactory
                 'doc'     => 'Set to false to disable calculating an MD5 for all Amazon S3 signed uploads.',
                 'type'    => 'value',
                 'valid'   => 'bool'
+            ],
+            'bucket_endpoint' => [
+                'doc'   => 'Set to true to send requests to a hardcoded bucket endpoint rather than create an endpoint as a result of injecting the bucket into the URL. This option is useful for interacting with CNAME endpoints.',
+                'type'  => 'value',
+                'valid' => 'bool'
             ]
         ];
     }
@@ -58,7 +70,7 @@ class S3Factory extends ClientFactory
         $this->enableErrorParserToHandleHeadRequests($args);
         $client = parent::createClient($args);
         $emitter = $client->getEmitter();
-        $emitter->attach(new BucketStyleSubscriber());
+        $emitter->attach(new BucketStyleSubscriber(!empty($args['bucket_endpoint'])));
         $emitter->attach(new PermanentRedirectSubscriber());
         $emitter->attach(new SSECSubscriber());
         $emitter->attach(new PutObjectUrlSubscriber());

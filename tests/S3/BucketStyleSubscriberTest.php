@@ -3,7 +3,10 @@ namespace Aws\Test\S3;
 
 use Aws\S3\BucketStyleSubscriber;
 use Aws\Test\UsesServiceTrait;
+use GuzzleHttp\Command\CommandTransaction;
+use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Command\Event\ProcessEvent;
+use GuzzleHttp\Message\Request;
 use GuzzleHttp\Message\Response;
 
 /**
@@ -58,9 +61,9 @@ class BucketStyleTest extends \PHPUnit_Framework_TestCase
             'PathStyle' => true
         ));
         $command->getEmitter()->on('process', function (ProcessEvent $e) {
-                $this->assertEquals('s3.amazonaws.com', $e->getRequest()->getHost());
-                $this->assertEquals('/foo/Bar', $e->getRequest()->getResource());
-            });
+            $this->assertEquals('s3.amazonaws.com', $e->getRequest()->getHost());
+            $this->assertEquals('/foo/Bar', $e->getRequest()->getResource());
+        });
         $s3->execute($command);
     }
 
@@ -86,5 +89,24 @@ class BucketStyleTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals('/foo?location', $e->getRequest()->getResource());
         });
         $s3->execute($command);
+    }
+
+    public function testRemovesBucketWhenBucketEndpoint()
+    {
+        $s3 = $this->getTestClient('s3', [
+            'endpoint'        => 'http://test.domain.com',
+            'bucket_endpoint' => true
+        ]);
+        $command = $s3->getCommand('GetObject', array(
+            'Bucket' => 'test',
+            'Key'    => 'key'
+        ));
+        $ct = new CommandTransaction($s3, $command);
+        $ct->request = new Request('GET', 'http://test.domain.com/test/key');
+        $event = new PreparedEvent($ct);
+        $bs = new BucketStyleSubscriber(true);
+        $bs->setBucketStyle($event);
+        $this->assertEquals('/key', $ct->request->getResource());
+        $this->assertEquals('test.domain.com', $ct->request->getHost());
     }
 }
