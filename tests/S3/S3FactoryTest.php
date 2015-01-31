@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\ClientFactory;
 
+use Aws\S3\S3Client;
 use Aws\S3\S3Factory;
 
 /**
@@ -69,5 +70,19 @@ class S3FactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('Aws\S3\ApplyMd5Subscriber', $found);
         $this->assertContains('Aws\S3\PermanentRedirectSubscriber', $found);
         $this->assertContains('Aws\S3\PutObjectUrlSubscriber', $found);
+    }
+
+    public function testCanUseBucketEndpoint()
+    {
+        $c = S3Client::factory([
+            'service'         => 's3',
+            'version'         => 'latest',
+            'endpoint'        => 'http://test.domain.com',
+            'bucket_endpoint' => true
+        ]);
+        $this->assertEquals(
+            'http://test.domain.com/key',
+            $c->getObjectUrl('test', 'key')
+        );
     }
 }

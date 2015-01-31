@@ -13,6 +13,17 @@ use GuzzleHttp\Event\SubscriberInterface;
 class BucketStyleSubscriber implements SubscriberInterface
 {
     private static $exclusions = ['GetBucketLocation' => true];
+    private $bucketEndpoint;
+
+    /**
+     * @param bool $bucketEndpoint Set to true to send requests to a bucket
+     *                             specific endpoint and not inject a bucket
+     *                             in the request host or path.
+     */
+    public function __construct($bucketEndpoint = false)
+    {
+        $this->bucketEndpoint = $bucketEndpoint;
+    }
 
     public function getEvents()
     {
@@ -31,18 +42,21 @@ class BucketStyleSubscriber implements SubscriberInterface
         $bucket = $command['Bucket'];
         $path = $request->getPath();
 
-        if (isset(self::$exclusions[$command->getName()])) {
+        if (!$bucket || isset(self::$exclusions[$command->getName()])) {
             return;
         }
 
-        // Switch to virtual if PathStyle is disabled, or not a DNS compatible
-        // bucket name, or the scheme is https and there are no dots in the host
-        // header (avoids SSL issues).
-        if (!$command['PathStyle'] && S3Client::isBucketDnsCompatible($bucket)
+        if ($this->bucketEndpoint) {
+            $path = $this->removeBucketFromPath($path, $bucket);
+        } elseif (!$command['PathStyle']
+            && S3Client::isBucketDnsCompatible($bucket)
             && !($request->getScheme() == 'https' && strpos($bucket, '.'))
         ) {
+            // Switch to virtual if PathStyle is disabled, or not a DNS
+            // compatible bucket name, or the scheme is https and there are no
+            // dots in the hostheader (avoids SSL issues).
             $request->setHost($bucket . '.' . $request->getHost());
-            $path = substr($path, strlen($bucket) + 2);
+            $path = $this->removeBucketFromPath($path, $bucket);
         }
 
         // Modify the Key to make sure the key is encoded, but slashes are not.
@@ -51,5 +65,10 @@ class BucketStyleSubscriber implements SubscriberInterface
         }
 
         $request->setPath($path);
+    }
+
+    private function removeBucketFromPath($path, $bucket)
+    {
+        return substr($path, strlen($bucket) + 2);
     }
 }
