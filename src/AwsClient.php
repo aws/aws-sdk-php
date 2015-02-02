@@ -4,12 +4,14 @@ namespace Aws;
 use Aws\Exception\AwsException;
 use Aws\Api\Service;
 use Aws\Credentials\CredentialsInterface;
-use Aws\Signature\SignatureInterface;
 use GuzzleHttp\Command\AbstractClient;
 use GuzzleHttp\Command\Command;
 use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Command\CommandTransaction;
+use GuzzleHttp\Event\BeforeEvent;
+use GuzzleHttp\Event\RequestEvents;
 use GuzzleHttp\Exception\RequestException;
+use Aws\Signature\Provider as SignatureProvider;
 
 /**
  * Default AWS client implementation
@@ -18,9 +20,6 @@ class AwsClient extends AbstractClient implements AwsClientInterface
 {
     /** @var CredentialsInterface AWS credentials */
     private $credentials;
-
-    /** @var SignatureInterface Signature implementation of the service */
-    private $signature;
 
     /** @var array Default command options */
     private $defaults;
@@ -43,20 +42,34 @@ class AwsClient extends AbstractClient implements AwsClientInterface
     /** @var callable */
     private $serializer;
 
+    /** @var callable */
+    private $signatureProvider;
+
+    /** @var callable */
+    private $defaultSignatureListener;
+
     /**
      * The AwsClient constructor requires the following constructor options:
      *
-     * - api: The Api object used to interact with a web service
-     * - credentials: CredentialsInterface object used when signing.
-     * - client: {@see GuzzleHttp\Client} used to send requests.
-     * - signature: string representing the signature version to use (e.g., v4)
-     * - region: (optional) Region used to interact with the service
-     * - error_parser: A callable that parses response exceptions
+     * - api: (required, Service) Object used to describe a web service.
+     * - credentials: (required, CredentialsInterface) Used when signing.
+     * - client: ({@see GuzzleHttp\Client}, required) Sends HTTP requests.
+     * - endpoint: (required, string) Endpoint for HTTP requests.
+     * - error_parser: (required, callable) Fn that parses response exceptions
+     * - serializer: (required, callable) Serializes a request for a provided
+     *   CommandTransaction argument. The fn must return a RequestInterface.
+     * - region: (string) Region used to interact with the service
      * - exception_class: (optional) A specific exception class to throw that
      *   extends from {@see Aws\Exception\AwsException}.
-     * - serializer: callable used to serialize a request for a provided
-     *   CommandTransaction argument. The callable must return a
-     *   RequestInterface object.
+     * - signature_provider: (callable) Function that accepts a signature name,
+     *   service name, and region name and returns a SignatureInterface object.
+     * - config: (array) Configuration array of the client, accessible via the
+     *   getConfig() method of the client.
+     *
+     *   - signature_version: (string) The default signature version to use
+     *     (e.g., v4) if you wish to use a version different than the service
+     *     default (note that per/operation overrides take precedent).
+     *
      *
      * @param array $config Configuration options
      *
@@ -64,8 +77,8 @@ class AwsClient extends AbstractClient implements AwsClientInterface
      */
     public function __construct(array $config)
     {
-        static $required = ['api', 'credentials', 'client', 'signature',
-                            'error_parser', 'endpoint', 'serializer'];
+        static $required = ['api', 'credentials', 'client', 'error_parser',
+                            'endpoint', 'serializer'];
 
         foreach ($required as $r) {
             if (!isset($config[$r])) {
@@ -77,15 +90,17 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         $this->api = $config['api'];
         $this->endpoint = $config['endpoint'];
         $this->credentials = $config['credentials'];
-        $this->signature = $config['signature'];
         $this->errorParser = $config['error_parser'];
         $this->region = isset($config['region']) ? $config['region'] : null;
         $this->defaults = isset($config['defaults']) ? $config['defaults'] : [];
         $this->commandException = isset($config['exception_class'])
             ? $config['exception_class']
             : 'Aws\Exception\AwsException';
+        $this->signatureProvider = isset($config['signature_provider'])
+            ? $config['signature_provider']
+            : SignatureProvider::memoize(SignatureProvider::version());
 
-        parent::__construct($config['client']);
+        parent::__construct($config['client'], $this->initConfig($config));
     }
 
     /**
@@ -108,11 +123,6 @@ class AwsClient extends AbstractClient implements AwsClientInterface
     public function getCredentials()
     {
         return $this->credentials;
-    }
-
-    public function getSignature()
-    {
-        return $this->signature;
     }
 
     public function getEndpoint()
@@ -278,7 +288,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         );
     }
 
-    protected function createFutureResult(CommandTransaction $transaction)
+    final protected function createFutureResult(CommandTransaction $transaction)
     {
         return new FutureResult(
             $transaction->response->then(function () use ($transaction) {
@@ -289,9 +299,55 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         );
     }
 
-    protected function serializeRequest(CommandTransaction $trans)
+    final protected function serializeRequest(CommandTransaction $trans)
     {
         $fn = $this->serializer;
-        return $fn($trans);
+        $request = $fn($trans);
+
+        // Note: We can later update this to allow custom per/operation
+        // signers, by checking the corresponding operation for a
+        // signatureVersion override and attaching a different listener.
+        $request->getEmitter()->on(
+            'before',
+            $this->defaultSignatureListener,
+            RequestEvents::SIGN_REQUEST
+        );
+
+        return $request;
+    }
+
+    /**
+     * Get the signature_provider function of the client.
+     *
+     * @return callable
+     */
+    final protected function getSignatureProvider()
+    {
+        return $this->signatureProvider;
+    }
+
+    private function initConfig(array $config)
+    {
+        $conf = isset($config['config']) ? $config['config'] : [];
+
+        if (!isset($conf['signature_version'])) {
+            $conf['signature_version'] = $this->api->getSignatureVersion();
+        }
+
+        $fn = $this->signatureProvider;
+        $defaultSigner = $fn(
+            $conf['signature_version'],
+            $this->api->getSigningName(),
+            $this->region
+        );
+
+        $this->defaultSignatureListener = function (BeforeEvent $e) use ($defaultSigner) {
+            $defaultSigner->signRequest(
+                $e->getRequest(),
+                $this->credentials
+            );
+        };
+
+        return $conf;
     }
 }

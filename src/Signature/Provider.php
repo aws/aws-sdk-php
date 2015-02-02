@@ -7,46 +7,54 @@ namespace Aws\Signature;
 class Provider
 {
     /**
-     * Creates a Signature object from a signature version name.
+     * Creates a signature provider that caches previously created signature
+     * objects.
      *
-     * This provider currently supports: v2, v4, and s3 signature versions. The
-     * $config array supports the following values:
+     * @param callable $provider Signature provider to wrap.
      *
-     * - service: The service name that the signer is signing for.
-     * - region: The region name that the signer is signing for.
-     *
-     * @param string $signatureVersion Signature version to create.
-     * @param array  $config           Associative array of signature options.
-     *
-     * @return SignatureInterface
+     * @return callable
      */
-    public static function fromVersion($signatureVersion, array $config = [])
+    public static function memoize(callable $provider)
     {
-        switch ($signatureVersion) {
-            case 'v4':
-                return self::createV4($config);
-            case 's3':
-                return new S3Signature();
-            case 'v2':
-                return new SignatureV2();
-        }
-
-        throw new \InvalidArgumentException("Unknown signature version: $signatureVersion");
+        $cache = [];
+        return function ($version, $service, $region) use (&$cache, $provider) {
+            $key = "($version)($service)($region)";
+            if (!isset($cache[$key])) {
+                $cache[$key] = $provider($version, $service, $region);
+            }
+            return $cache[$key];
+        };
     }
 
-    private static function createV4(array $config)
+    /**
+     * Signature provider that creates signature objects from a version string.
+     *
+     * This provider currently recognizes the following signature versions:
+     *
+     * - v4: Signature version 4.
+     * - v2: Signature version 2.
+     * - s3: Amazon S3 specific signature.
+     * - anonymous: Does not sign requests.
+     *
+     * @return callable
+     */
+    public static function version()
     {
-        foreach (['service', 'region'] as $key) {
-            if (!isset($config[$key])) {
-                throw new \InvalidArgumentException("{$key} is required");
+        return function ($version, $service, $region) {
+            switch ($version) {
+                case 'v4':
+                    return $service === 's3'
+                        ? new S3SignatureV4($service, $region)
+                        : new SignatureV4($service, $region);
+                case 's3':
+                    return new S3Signature();
+                case 'v2':
+                    return new SignatureV2();
+                case 'anonymous':
+                    return new AnonymousSignature();
             }
-        }
 
-        switch ($config['service']) {
-            case 's3':
-                return new S3SignatureV4($config['service'], $config['region']);
-            default:
-                return new SignatureV4($config['service'], $config['region']);
-        }
+            throw new \InvalidArgumentException("Unknown signature version: $version");
+        };
     }
 }

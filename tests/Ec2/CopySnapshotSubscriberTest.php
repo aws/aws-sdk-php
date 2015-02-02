@@ -29,7 +29,7 @@ class CopySnapshotSubscriberTest extends \PHPUnit_Framework_TestCase
             'region'  => 'us-east-2',
             'version' => 'latest'
         ]);
-        $this->addMockResults($ec2, [[]]);
+        $this->addMockResults($ec2, [[], []]);
         $cmd = $ec2->getCommand('CopySnapshot', [
             'SourceRegion'     => 'eu-west-1',
             'SourceSnapshotId' => 'foo'

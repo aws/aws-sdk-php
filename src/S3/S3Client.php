@@ -3,6 +3,7 @@ namespace Aws\S3;
 
 use Aws\AwsClient;
 use Aws\S3\Exception\S3Exception;
+use Aws\Result;
 use GuzzleHttp\Stream\AppendStream;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Command\CommandInterface;
@@ -49,7 +50,14 @@ class S3Client extends AwsClient
      */
     public function createPresignedUrl(CommandInterface $command, $expires)
     {
-        return $this->getSignature()->createPresignedUrl(
+        $signer = call_user_func(
+            $this->getSignatureProvider(),
+            $this->getConfig('signature_version'),
+            $this->getApi()->getSigningName(),
+            $this->getRegion()
+        );
+
+        return $signer->createPresignedUrl(
             $this->initTransaction($command)->request,
             $this->getCredentials(),
             $expires

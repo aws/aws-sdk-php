@@ -4,12 +4,15 @@ namespace Aws\Test;
 use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\Credentials\Credentials;
+use Aws\Ec2\Ec2Client;
 use Aws\Exception\AwsException;
 use Aws\Signature\SignatureV4;
 use Aws\Sqs\SqsClient;
 use Aws\Sts\StsClient;
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\Event\PreparedEvent;
+use GuzzleHttp\Event\BeforeEvent;
+use GuzzleHttp\Event\RequestEvents;
 use GuzzleHttp\Message\Request;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Subscriber\Mock;
@@ -26,7 +29,6 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         $config = [
             'client'       => new Client(),
             'credentials'  => new Credentials('foo', 'bar'),
-            'signature'    => new SignatureV4('foo', 'bar'),
             'region'       => 'foo',
             'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
             'serializer'   => function () {},
@@ -38,7 +40,6 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         $client = new AwsClient($config);
         $this->assertSame($config['client'], $client->getHttpClient());
         $this->assertSame($config['credentials'], $client->getCredentials());
-        $this->assertSame($config['signature'], $client->getSignature());
         $this->assertSame($config['region'], $client->getRegion());
         $this->assertSame($config['api'], $client->getApi());
     }
@@ -328,5 +329,44 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'error_parser' => function () {},
             'version'      => 'latest'
         ]);
+    }
+
+    public function signerProvider()
+    {
+        return [
+            [null, 'AWS4-HMAC-SHA256'],
+            ['v2', 'SignatureVersion']
+        ];
+    }
+
+    /**
+     * @dataProvider signerProvider
+     */
+    public function testSignsRequestsUsingSigner($version, $search)
+    {
+        $conf = [
+            'region'  => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => [
+                'key'    => 'foo',
+                'secret' => 'bar'
+            ]
+        ];
+
+        if ($version) {
+            $conf['signature_version'] = $version;
+        }
+
+        $client = Ec2Client::factory($conf);
+        $client->getHttpClient()->getEmitter()->on(
+            'before',
+            function (BeforeEvent $e) use ($search) {
+                $str = (string) $e->getRequest();
+                $this->assertContains($search, $str);
+                $e->intercept(new Response(200));
+            },
+            RequestEvents::SIGN_REQUEST - 1
+        );
+        $client->describeInstances();
     }
 }

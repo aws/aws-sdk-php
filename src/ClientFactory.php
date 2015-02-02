@@ -9,10 +9,7 @@ use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Credentials\NullCredentials;
 use Aws\Credentials\Provider as CredentialProvider;
-use Aws\Signature\Provider as SignatureProvider;
 use Aws\Retry\ThrottlingFilter;
-use Aws\Signature\SignatureInterface;
-use Aws\Subscriber\Signature;
 use Aws\Subscriber\Validation;
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\Event\ProcessEvent;
@@ -30,11 +27,20 @@ class ClientFactory
      * Gets an array of valid arguments, each argument containing a hash of
      * the following:
      *
-     * - type: (string, required) argument type (deprecated, value, pre, post)
+     * - type: (string, required) argument type (deprecated, value, pre, post,
+     *   config). A type of "value" will simply make the value available during
+     *   the client creation process. A type of "config" will ensure the
+     *   provided value is made available in the client's getConfig() method.
+     *   A value of "pre" will use a double-dispatch application method before
+     *   the client is created. A value of "post" will use a double-dispatch
+     *   application method after the client is created, allowing you to modify
+     *   the created client.
      * - valid: (string, required) "|" separated valid types or class names.
      * - required: (bool) Whether or not the argument is required.
      * - default: (mixed) The default value of the argument if not provided.
      * - doc: (string) The argument documentation string.
+     *
+     * Note: Order is honored and important when applying arguments.
      *
      * @return array
      */
@@ -78,6 +84,16 @@ class ClientFactory
                 'valid' => 'array',
                 'doc'   => 'An associative array of default parameters to pass to each operation created by the client.'
             ],
+            'signature_version' => [
+                'type'    => 'config',
+                'valid'   => 'string',
+                'doc'     => 'A string representing a custom signature version to use with a service (e.g., v4, s3, v2). Note that per/operation signature version MAY override this requested signature version.'
+            ],
+            'signature_provider' => [
+                'type'    => 'value',
+                'valid'   => 'callable',
+                'doc'     => 'A callable that accepts a signature version name (e.g., v4, s3), a service name, and region, and returns a SignatureInterface object. This provider is used to create signers utilized by the client.'
+            ],
             'endpoint_provider' => [
                 'type'     => 'pre',
                 'valid'    => 'callable',
@@ -110,12 +126,6 @@ class ClientFactory
                 'valid'   => 'array|Aws\Credentials\CredentialsInterface|bool|callable',
                 'default' => true,
                 'doc'     => 'An Aws\Credentials\CredentialsInterface object to use with each, an associative array of "key", "secret", and "token" key value pairs, `false` to utilize null credentials, or a callable credentials provider function to create credentials using a function. If no credentials are provided or credentials is set to true, the SDK will attempt to load them from the environment.'
-            ],
-            'signature' => [
-                'type'    => 'pre',
-                'valid'   => 'string|Aws\Signature\SignatureInterface|bool',
-                'default' => false,
-                'doc'     => 'A string representing a custom signature version to use with a service (e.g., v4, s3, v2) or a Aws\Signature\SignatureInterface object. Set to false or do not specify a signature to use the default signature version of the service.'
             ],
             'client' => [
                 'type'    => 'pre',
@@ -190,6 +200,8 @@ class ClientFactory
             } elseif ($a['type'] === 'deprecated') {
                 $meth = 'deprecated_' . str_replace('.', '_', $key);
                 $this->{$meth}($args[$key], $args);
+            } elseif ($a['type'] === 'config') {
+                $args['config'][$key] = $args[$key];
             }
         }
 
@@ -199,7 +211,8 @@ class ClientFactory
             $this->{"handle_{$key}"}($value, $args, $client);
         }
 
-        $this->postCreate($client, $args);
+        // Apply the protocol of the service description to the client.
+        $this->applyParser($client);
 
         return $client;
     }
@@ -321,6 +334,26 @@ class ClientFactory
         $client->getEmitter()->attach(new Validation($args['api'], new Validator()));
     }
 
+    /**
+     * Gets the signature version of the client, in order of precedence.
+     *
+     * @param array $args Client configuration array.
+     *
+     * @return string|null
+     */
+    final protected function getSignatureVersion(array $args)
+    {
+        if (isset($args['config']['signature_version'])) {
+            return $args['config']['signature_version'];
+        } elseif (isset($args['signature_version'])) {
+            return $args['signature_version'];
+        } elseif (isset($args['api'])) {
+            return $args['api']->getSignatureVersion();
+        } else {
+            return null;
+        }
+    }
+
     private function handle_debug(
         $value,
         array &$args,
@@ -407,47 +440,8 @@ class ClientFactory
             $args['endpoint'] = $result['endpoint'];
 
             if (isset($result['signatureVersion'])) {
-                $args['signature'] = $result['signatureVersion'];
+                $args['config']['signature_version'] = $result['signatureVersion'];
             }
-        }
-    }
-
-    private function handle_signature($value, array &$args)
-    {
-        $version = $value ?: $args['api']->getMetadata('signatureVersion');
-        if (is_string($version)) {
-            $args['signature'] = $this->createSignature($version, $args);
-        }
-    }
-
-    /**
-     * Creates a signature object based on the service description.
-     *
-     * @param string $version Signature version (e.g., "s3", "v3").
-     * @param array  $args    Client configuration arguments.
-     *
-     * @return SignatureInterface
-     */
-    protected function createSignature($version, array $args)
-    {
-        return SignatureProvider::fromVersion($version, [
-            'service' => $args['api']->getSigningName(),
-            'region'  => $args['region']
-        ]);
-    }
-
-    protected function postCreate(AwsClientInterface $client, array $args)
-    {
-        // Apply the protocol of the service description to the client.
-        $this->applyParser($client);
-        // Attach a signer to the client.
-        $credentials = $client->getCredentials();
-
-        // Null credentials don't sign requests.
-        if (!($credentials instanceof NullCredentials)) {
-            $client->getHttpClient()->getEmitter()->attach(
-                new Signature($credentials, $client->getSignature())
-            );
         }
     }
 

@@ -116,7 +116,7 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
                 null
             ],
             [
-                $this->getTestClient('s3', ['signature' => 'v4']),
+                $this->getTestClient('s3', ['signature_version' => 'v4']),
                 ['sha256', $hasher('sha256', 'foo')]
             ]
         ];

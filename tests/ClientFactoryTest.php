@@ -1,11 +1,12 @@
 <?php
 namespace Aws\Test;
 
+use Aws\Api\Service;
 use Aws\ClientFactory;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\NullCredentials;
 use Aws\Exception\AwsException;
-use Aws\Signature\SignatureV2;
+use Aws\S3\S3Client;
 use GuzzleHttp\Client;
 use Aws\Credentials\Provider;
 
@@ -114,22 +115,6 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         ]);
     }
 
-    public function testCanSetSignatureVersionString()
-    {
-        $f = new ClientFactory();
-        $args = [
-            'service'   => 'sqs',
-            'region'    => 'foo',
-            'signature' => 'v2',
-            'version'   => 'latest'
-        ];
-        $c = $f->create($args);
-        $this->assertInstanceOf(
-            'Aws\Signature\SignatureV2',
-            $c->getSignature()
-        );
-    }
-
     /**
      * @expectedException \InvalidArgumentException
      */
@@ -139,7 +124,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $f->create([
             'service'   => 'dynamodb',
             'region'    => 'x',
-            'signature' => -1,
+            'signature_version' => -1,
             'version'   => 'latest'
         ]);
     }
@@ -277,10 +262,7 @@ EOT;
             'endpoint_provider' => $p,
             'version' => 'latest'
         ]);
-        $this->assertInstanceOf(
-            'Aws\Signature\SignatureV2',
-            $c->getSignature()
-        );
+        $this->assertEquals('v2', $c->getConfig('signature_version'));
     }
 
     public function testAddsLogger()
@@ -348,18 +330,6 @@ EOT;
             'GuzzleHttp\Command\Subscriber\Debug',
             'prepare'
         ));
-    }
-
-    public function testCreatesSignatureFromString()
-    {
-        $f = new ClientFactory();
-        $c = $f->create([
-            'service'   => 'sqs',
-            'region'    => 'x',
-            'signature' => 'v2',
-            'version'   => 'latest'
-        ]);
-        $this->assertInstanceOf('Aws\Signature\SignatureV2', $c->getSignature());
     }
 
     public function testDoesNotMessWithExistingResults()
@@ -483,5 +453,66 @@ EOT;
             'client_defaults' => ['foo' => 'bar']
         ]);
         $this->assertEquals('bar', $client->getHttpClient()->getDefaultOption('foo'));
+    }
+
+    public function testCanAddConfigOptions()
+    {
+        $c = S3Client::factory([
+            'version' => 'latest',
+            'region'  => 'us-west-2',
+            'calculate_md5' => true
+        ]);
+        $this->assertTrue($c->getConfig('calculate_md5'));
+    }
+
+    private function getCallableSignatureVersion()
+    {
+        $f = new ClientFactory();
+        $r = new \ReflectionMethod($f, 'getSignatureVersion');
+        $r->setAccessible(true);
+
+        return function (array $args) use ($r, $f) {
+            return $r->invoke($f, $args);
+        };
+    }
+
+    public function testCanGetSignatureVersionFromOuterArray()
+    {
+        $fn = $this->getCallableSignatureVersion();
+        $this->assertEquals(
+            'v2',
+            $fn(['signature_version' => 'v2'])
+        );
+    }
+
+    public function testCanGetSignatureVersionFromConfig()
+    {
+        $fn = $this->getCallableSignatureVersion();
+        $this->assertEquals(
+            'v4',
+            $fn([
+                'signature_version' => 'v2',
+                'config'            => ['signature_version' => 'v4']
+            ])
+        );
+    }
+
+    public function testCanGetSignatureApiModel()
+    {
+        $fn = $this->getCallableSignatureVersion();
+        $api = $this->getMockBuilder('Aws\Api\Service')
+            ->setMethods(['getSignatureVersion'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $api->expects($this->once())
+            ->method('getSignatureVersion')
+            ->will($this->returnValue('s3'));
+        $this->assertEquals('s3', $fn(['api' => $api]));
+    }
+
+    public function testReturnsNullSignatureVersion()
+    {
+        $fn = $this->getCallableSignatureVersion();
+        $this->assertNull($fn([]));
     }
 }

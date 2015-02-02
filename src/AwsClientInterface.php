@@ -17,13 +17,6 @@ interface AwsClientInterface extends ServiceClientInterface
     public function getCredentials();
 
     /**
-     * Returns the signature implementation used with the client.
-     *
-     * @return \Aws\Signature\SignatureInterface
-     */
-    public function getSignature();
-
-    /**
      * Get the region to which the client is configured to send requests.
      *
      * @return string

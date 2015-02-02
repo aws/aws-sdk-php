@@ -9,34 +9,6 @@ use Aws\S3\S3Factory;
  */
 class S3FactoryTest extends \PHPUnit_Framework_TestCase
 {
-    public function testCreatesS3Signature()
-    {
-        $c = (new S3Factory())->create([
-            'service'   => 's3',
-            'signature' => 's3',
-            'version'   => 'latest'
-        ]);
-
-        $this->assertInstanceOf(
-            'Aws\Signature\S3Signature',
-            $c->getSignature()
-        );
-    }
-
-    public function testCreatesRegularSignature()
-    {
-        $c = (new S3Factory())->create([
-            'service'   => 's3',
-            'signature' => 'v4',
-            'version'   => 'latest'
-        ]);
-
-        $this->assertInstanceOf(
-            'Aws\Signature\SignatureV4',
-            $c->getSignature()
-        );
-    }
-
     public function testCanForcePathStyleOnAllOperations()
     {
         $c = (new S3Factory())->create([
@@ -84,5 +56,15 @@ class S3FactoryTest extends \PHPUnit_Framework_TestCase
             'http://test.domain.com/key',
             $c->getObjectUrl('test', 'key')
         );
+    }
+
+    public function testAddsMd5ToConfig()
+    {
+        $c = S3Client::factory([
+            'service'         => 's3',
+            'version'         => 'latest',
+            'calculate_md5'   => true
+        ]);
+        $this->assertTrue($c->getConfig('calculate_md5'));
     }
 }
