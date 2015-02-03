@@ -31,17 +31,17 @@ class S3Factory extends ClientFactory
             'force_path_style' => [
                 'doc'     => 'Set to true to send requests using path style addressing.',
                 'type'    => 'value',
-                'valid'   => 'bool'
+                'valid'   => ['bool']
             ],
             'calculate_md5' => [
                 'doc'     => 'Set to false to disable calculating an MD5 for all Amazon S3 signed uploads.',
                 'type'    => 'config',
-                'valid'   => 'bool'
+                'valid'   => ['bool']
             ],
             'bucket_endpoint' => [
                 'doc'   => 'Set to true to send requests to a hardcoded bucket endpoint rather than create an endpoint as a result of injecting the bucket into the URL. This option is useful for interacting with CNAME endpoints.',
                 'type'  => 'value',
-                'valid' => 'bool'
+                'valid' => ['bool']
             ]
         ];
     }

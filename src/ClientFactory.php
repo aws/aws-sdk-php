@@ -52,112 +52,112 @@ class ClientFactory
             'curl.options' => ['type' => 'deprecated'],
             'service' => [
                 'type'     => 'value',
-                'valid'    => 'string',
+                'valid'    => ['string'],
                 'required' => true,
                 'doc'      => 'Name of the service to utilize. This value will be supplied by default.'
             ],
             'scheme' => [
                 'type'     => 'value',
-                'valid'    => 'string',
+                'valid'    => ['string'],
                 'default'  => 'https',
                 'doc'      => 'URI scheme to use to connect. One of http or https.'
             ],
             'region' => [
                 'type'     => 'value',
-                'valid'    => 'string',
+                'valid'    => ['string'],
                 'required' => true,
                 'doc'      => 'Region to connect to. See http://docs.aws.amazon.com/general/latest/gr/rande.html for a list of available regions.'
             ],
             'version' => [
                 'type'     => 'value',
-                'valid'    => 'string',
+                'valid'    => ['string'],
                 'required' => true,
                 'doc'      => 'The version of the webservice to utilize (e.g., 2006-03-01).'
             ],
             'endpoint' => [
                 'type'  => 'value',
-                'valid' => 'string',
+                'valid' => ['string'],
                 'doc'   => 'The full URI of the webservice. This is only required when connecting to a custom endpoint (e.g., a local version of S3).'
             ],
             'defaults' => [
                 'type'  => 'value',
-                'valid' => 'array',
+                'valid' => ['array'],
                 'doc'   => 'An associative array of default parameters to pass to each operation created by the client.'
             ],
             'signature_version' => [
                 'type'    => 'config',
-                'valid'   => 'string',
+                'valid'   => ['string'],
                 'doc'     => 'A string representing a custom signature version to use with a service (e.g., v4, s3, v2). Note that per/operation signature version MAY override this requested signature version.'
             ],
             'signature_provider' => [
                 'type'    => 'value',
-                'valid'   => 'callable',
+                'valid'   => ['callable'],
                 'doc'     => 'A callable that accepts a signature version name (e.g., v4, s3), a service name, and region, and returns a SignatureInterface object. This provider is used to create signers utilized by the client.'
             ],
             'endpoint_provider' => [
                 'type'     => 'pre',
-                'valid'    => 'callable',
+                'valid'    => ['callable'],
                 'doc'      => 'An optional PHP callable that accepts a hash of options including a service and region key and returns a hash of endpoint data, of which the endpoint key is required.'
             ],
             'api_provider' => [
                 'type'     => 'pre',
-                'valid'    => 'callable',
+                'valid'    => ['callable'],
                 'doc'      => 'An optional PHP callable that accepts a type, service, and version argument, and returns an array of corresponding configuration data. The type value can be one of api, waiter, or paginator.'
             ],
             'class_name' => [
                 'type'    => 'value',
-                'valid'   => 'string',
+                'valid'   => ['string'],
                 'default' => 'Aws\AwsClient',
                 'doc'     => 'Optional class name of the client to create. This value will be supplied by default.'
             ],
             'exception_class' => [
                 'type'    => 'value',
-                'valid'   => 'string',
+                'valid'   => ['string'],
                 'default' => 'Aws\Exception\AwsException',
                 'doc'     => 'Optional exception class name to throw on request errors. This value will be supplied by default.'
             ],
             'profile' => [
                 'type'  => 'pre',
-                'valid' => 'string',
+                'valid' => ['string'],
                 'doc'   => 'Allows you to specify which profile to use when credentials are created from the AWS credentials file in your home directory. This setting overrides the AWS_PROFILE environment variable. Specifying "profile" will cause the "credentials" key to be ignored.'
             ],
             'credentials' => [
                 'type'    => 'pre',
-                'valid'   => 'array|Aws\Credentials\CredentialsInterface|bool|callable',
+                'valid'   => ['array', 'Aws\Credentials\CredentialsInterface', 'bool', 'callable'],
                 'default' => true,
                 'doc'     => 'An Aws\Credentials\CredentialsInterface object to use with each, an associative array of "key", "secret", and "token" key value pairs, `false` to utilize null credentials, or a callable credentials provider function to create credentials using a function. If no credentials are provided or credentials is set to true, the SDK will attempt to load them from the environment.'
             ],
             'client' => [
                 'type'    => 'pre',
-                'valid'   => 'GuzzleHttp\ClientInterface|bool',
+                'valid'   => ['GuzzleHttp\ClientInterface', 'bool'],
                 'default' => true,
                 'doc'     => 'Optional Guzzle client used to transfer requests over the wire. Set to true or do not specify a client, and the SDK will create a new client that uses a shared Ring HTTP handler with other clients.'
             ],
             'ringphp_handler' => [
                 'type'  => 'pre',
-                'valid' => 'callable',
+                'valid' => ['callable'],
                 'doc'   => 'RingPHP handler used to transfer HTTP requests (see http://ringphp.readthedocs.org/en/latest/).'
             ],
             'retries' => [
                 'type'    => 'post',
-                'valid'   => 'bool|int',
+                'valid'   => ['bool', 'int'],
                 'default' => true,
                 'doc'     => 'Configures retries for clients. The value can be true (the default setting which enables retry behavior), false to disable retries, or a number representing the maximum number of retries.'
             ],
             'validate' => [
                 'type'    => 'post',
-                'valid'   => 'bool',
+                'valid'   => ['bool'],
                 'default' => true,
                 'doc'     => 'Set to false to disable client-side parameter validation.'
             ],
             'debug' => [
                 'type'  => 'post',
-                'valid' => 'bool|resource',
+                'valid' => ['bool', 'resource'],
                 'doc'   => 'Set to true to display debug information when sending requests. Provide a stream resource to write debug information to a specific resource.'
             ],
             'client_defaults' => [
                 'type'  => 'post',
-                'valid' => 'array',
+                'valid' => ['array'],
                 'doc'   => 'Set to an array of Guzzle client request options (e.g., proxy, verify, etc.). See http://docs.guzzlephp.org/en/latest/clients.html#request-options for a list of available options.'
             ],
         ];
@@ -550,22 +550,34 @@ EOT;
      *
      * @param string $name     Name of the value being validated.
      * @param mixed  $provided The provided value.
-     * @param string $expected "|" separated list of valid types.
+     * @param array  $expected  Array of possible types.
      * @throws \InvalidArgumentException on error.
      */
-    private function validate($name, $provided, $expected)
+    private function validate($name, $provided, array $expected)
     {
-        static $replace = ['integer' => 'int', 'boolean' => 'bool'];
-        $type = strtr(gettype($provided), $replace);
-        foreach (explode('|', $expected) as $valid) {
-            if ($type === $valid
-                || ($type === 'object' && $provided instanceof $valid)
-                || ($valid === 'callable' && is_callable($provided))
-            ) {
+        static $typeMap = [
+            'resource' => 'is_resource',
+            'callable' => 'is_callable',
+            'int'      => 'is_int',
+            'bool'     => 'is_bool',
+            'string'   => 'is_string',
+            'object'   => 'is_object',
+            'array'    => 'is_array',
+            'null'     => 'is_null'
+        ];
+
+        foreach ($expected as $check) {
+            if (isset($typeMap[$check])) {
+                $fn = $typeMap[$check];
+                if ($fn($provided)) {
+                    return;
+                }
+            } elseif ($provided instanceof $check) {
                 return;
             }
         }
 
+        $expected = implode('|', $expected);
         throw new \InvalidArgumentException("Invalid configuration value "
             . "provided for {$name}. Expected {$expected}, but got "
             . Core::describeType($provided));

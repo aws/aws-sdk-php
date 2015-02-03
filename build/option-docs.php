@@ -14,7 +14,7 @@ function generateDocblock(array $args)
         $modifiers = [];
 
         if (isset($value['valid'])) {
-            $modifiers[] = $value['valid'];
+            $modifiers[] = implode('|', $value['valid']);
         }
 
         if (isset($value['required'])) {
