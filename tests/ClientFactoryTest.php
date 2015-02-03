@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Test;
 
-use Aws\Api\Service;
 use Aws\ClientFactory;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\NullCredentials;
@@ -189,6 +188,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
             'Aws\Credentials\NullCredentials',
             $c->getCredentials()
         );
+        $this->assertEquals('anonymous', $c->getConfig('signature_version'));
     }
 
     public function testCanCreateCredentialsFromProvider()

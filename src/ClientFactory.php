@@ -391,6 +391,7 @@ class ClientFactory
             );
         } elseif ($value === false) {
             $args['credentials'] = new NullCredentials();
+            $args['config']['signature_version'] = 'anonymous';
         } else {
             throw new IAE('Credentials must be an instance of '
                 . 'Aws\Credentials\CredentialsInterface, an associative '
