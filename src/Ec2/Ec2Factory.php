@@ -12,8 +12,7 @@ class Ec2Factory extends ClientFactory
     {
         $client = parent::createClient($args);
         $client->getEmitter()->attach(new CopySnapshotSubscriber(
-            $args['endpoint_provider'],
-            $args['serializer']
+            $args['endpoint_provider']
         ));
 
         return $client;

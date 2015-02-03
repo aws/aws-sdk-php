@@ -4,7 +4,6 @@ namespace Aws\Ec2;
 use Aws\AwsClientInterface;
 use Aws\Signature\SignatureV4;
 use GuzzleHttp\Command\CommandInterface;
-use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Event\InitEvent;
 use GuzzleHttp\Event\RequestEvents;
 use GuzzleHttp\Event\SubscriberInterface;
@@ -16,14 +15,10 @@ use GuzzleHttp\Url;
 class CopySnapshotSubscriber implements SubscriberInterface
 {
     private $endpointProvider;
-    private $requestSerializer;
 
-    public function __construct(
-        callable $endpointProvider,
-        callable $requestSerializer
-    ) {
+    public function __construct(callable $endpointProvider)
+    {
         $this->endpointProvider = $endpointProvider;
-        $this->requestSerializer = $requestSerializer;
     }
 
     public function getEvents()
@@ -47,9 +42,9 @@ class CopySnapshotSubscriber implements SubscriberInterface
         CommandInterface $cmd
     ) {
         $newCmd = $client->getCommand('CopySnapshot', $cmd->toArray());
+        $newCmd->getEmitter()->detach($this);
         // Serialize a request for the CopySnapshot operation.
-        $trans = new CommandTransaction($client, $newCmd);
-        $request = call_user_func($this->requestSerializer, $trans);
+        $request = $client->initTransaction($newCmd)->request;
         // Create the new endpoint for the target endpoint.
         $endpoint = call_user_func($this->endpointProvider, [
             'region'  => $cmd['SourceRegion'],

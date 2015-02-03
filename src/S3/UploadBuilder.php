@@ -4,7 +4,6 @@ namespace Aws\S3;
 use Aws\Multipart\AbstractUploadBuilder;
 use Aws\Multipart\UploadState;
 use Aws\Result;
-use Aws\Signature\SignatureV4;
 use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Mimetypes;
 use GuzzleHttp\Stream\LazyOpenStream;
@@ -213,7 +212,7 @@ class UploadBuilder extends AbstractUploadBuilder
     private function decorateWithHashes(StreamInterface $stream, callable $complete)
     {
         // Determine if the checksum needs to be calculated.
-        if ($this->client->getSignature() instanceof SignatureV4) {
+        if ($this->client->getConfig('signature_version') == 'v4') {
             $type = 'sha256';
         } elseif ($this->client->getConfig('calculate_md5')) {
             $type = 'md5';

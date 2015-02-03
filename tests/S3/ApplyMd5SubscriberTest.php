@@ -11,7 +11,7 @@ use GuzzleHttp\Stream\NoSeekStream;
 /**
  * @covers Aws\S3\ApplyMd5Subscriber
  */
-class ApplyMd5Test extends \PHPUnit_Framework_TestCase
+class ApplyMd5SubscriberTest extends \PHPUnit_Framework_TestCase
 {
     use UsesServiceTrait;
 
@@ -100,7 +100,7 @@ class ApplyMd5Test extends \PHPUnit_Framework_TestCase
             ],
             // Not added to upload operations when using SigV4
             [
-                ['signature' => 'v4'],
+                ['signature_version' => 'v4'],
                 'PutObject',
                 $args + ['Body' => 'baz'],
                 false,

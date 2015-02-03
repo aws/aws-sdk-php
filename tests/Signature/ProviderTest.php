@@ -1,5 +1,6 @@
 <?php
 namespace Aws\Test\Signature;
+
 use Aws\Signature\Provider;
 
 /**
@@ -22,29 +23,17 @@ class ProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreatesSignatureFromVersionString($v, $type, $service)
     {
-        $result = Provider::fromVersion($v, [
-            'service' => $service,
-            'region'  => 'baz'
-        ]);
-
+        $fn = Provider::version();
+        $result = $fn($v, $service, 'baz');
         $this->assertInstanceOf($type, $result);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage service is required
-     */
-    public function testEnsuresServiceIsProvidedForV4()
+    public function testCanMemoizeSignatures()
     {
-        Provider::fromVersion('v4', ['region' => 'foo']);
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage region is required
-     */
-    public function testEnsuresRegionIsProvidedForV4()
-    {
-        Provider::fromVersion('v4', ['service' => 'foo']);
+        $fn = Provider::version();
+        $fn = Provider::memoize($fn);
+        $a = $fn('v4', 'ec2', 'us-west-2');
+        $this->assertSame($a, $fn('v4', 'ec2', 'us-west-2'));
+        $this->assertNotSame($a, $fn('v4', 'ec2', 'us-east-1'));
     }
 }

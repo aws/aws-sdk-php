@@ -1,10 +1,8 @@
 <?php
 namespace Aws\S3;
 
-use Aws\AwsClientInterface;
 use Aws\ClientFactory;
 use Aws\Retry\S3TimeoutFilter;
-use Aws\Signature\SignatureV4;
 use Aws\Subscriber\SaveAs;
 use Aws\Subscriber\SourceFile;
 use GuzzleHttp\Message\ResponseInterface;
@@ -20,9 +18,6 @@ use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
  *   option is useful for interacting with CNAME endpoints.
  * - calculate_md5: (bool) Set to false to disable calculating an MD5 for
  *   all Amazon S3 signed uploads.
- * - class_name: (string, default=string(13) "Aws\AwsClient") Optional
- *   class name of the client to create. This value will be
- *   supplied by default.
  * - force_path_style: (bool) Set to true to send requests using path style
  *   addressing.
  *
@@ -35,12 +30,12 @@ class S3Factory extends ClientFactory
         return parent::getValidArguments() + [
             'force_path_style' => [
                 'doc'     => 'Set to true to send requests using path style addressing.',
-                'type'    => 'post',
+                'type'    => 'value',
                 'valid'   => 'bool'
             ],
             'calculate_md5' => [
                 'doc'     => 'Set to false to disable calculating an MD5 for all Amazon S3 signed uploads.',
-                'type'    => 'value',
+                'type'    => 'config',
                 'valid'   => 'bool'
             ],
             'bucket_endpoint' => [
@@ -67,6 +62,17 @@ class S3Factory extends ClientFactory
 
     protected function createClient(array $args)
     {
+        if (!empty($args['force_path_style'])) {
+            $args['defaults']['PathStyle'] = true;
+        }
+
+        // S3Client should calculate MD5 checksums for uploads unless
+        // explicitly disabled or using a v4 signer.
+        if (!isset($args['config']['calculate_md5'])) {
+            $version = $this->getSignatureVersion($args);
+            $args['config']['calculate_md5'] = $version != 'v4';
+        }
+
         $this->enableErrorParserToHandleHeadRequests($args);
         $client = parent::createClient($args);
         $emitter = $client->getEmitter();
@@ -77,13 +83,6 @@ class S3Factory extends ClientFactory
         $emitter->attach(new SourceFile($client->getApi()));
         $emitter->attach(new ApplyMd5Subscriber());
         $emitter->attach(new SaveAs());
-
-        // S3Client should calculate MD5 checksums for uploads unless explicitly
-        // disabled or using SignatureV4.
-        $value = !isset($args['calculate_md5'])
-            ? !($client->getSignature() instanceof SignatureV4)
-            : $args['calculate_md5'];
-        $client->setConfig('calculate_md5', $value);
 
         return $client;
     }
@@ -122,14 +121,5 @@ class S3Factory extends ClientFactory
 
             return $errorData;
         };
-    }
-
-    protected function handle_force_path_style(
-        $value,
-        array $args,
-        AwsClientInterface $client
-    ) {
-        // Force path style on all requests if instructed.
-        $client->setConfig('defaults/PathStyle', $value === true);
     }
 }

@@ -188,6 +188,18 @@ class Service extends AbstractModel
     }
 
     /**
+     * Get the default signature version of the service.
+     *
+     * Note: this method assumes "v4" when not specified in the model.
+     *
+     * @return string
+     */
+    public function getSignatureVersion()
+    {
+        return $this->getMetadata('signatureVersion') ?: 'v4';
+    }
+
+    /**
      * Get the protocol used by the service.
      *
      * @return string
