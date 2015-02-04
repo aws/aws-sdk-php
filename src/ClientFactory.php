@@ -194,7 +194,7 @@ class ClientFactory
             }
             $this->validate($key, $args[$key], $a['valid']);
             if ($a['type'] === 'pre') {
-                $this->{"handle_{$key}"}($args[$key], $args);
+                $this->{"pre_{$key}"}($args[$key], $args);
             } elseif ($a['type'] === 'post') {
                 $post[$key] = $args[$key];
             } elseif ($a['type'] === 'deprecated') {
@@ -208,7 +208,7 @@ class ClientFactory
         // Create the client and then handle deferred and post-create logic
         $client = $this->createClient($args);
         foreach ($post as $key => $value) {
-            $this->{"handle_{$key}"}($value, $args, $client);
+            $this->{"post_{$key}"}($value, $args, $client);
         }
 
         // Apply the protocol of the service description to the client.
@@ -266,7 +266,7 @@ class ClientFactory
      * @param AwsClientInterface $client Client to modify
      * @throws \InvalidArgumentException if the value provided is invalid.
      */
-    private function handle_retries(
+    private function post_retries(
         $value,
         array &$args,
         AwsClientInterface $client
@@ -322,7 +322,7 @@ class ClientFactory
     /**
      * Applies validation to a client
      */
-    protected function handle_validate(
+    protected function post_validate(
         $value,
         array &$args,
         AwsClientInterface $client
@@ -354,7 +354,7 @@ class ClientFactory
         }
     }
 
-    private function handle_debug(
+    private function post_debug(
         $value,
         array &$args,
         AwsClientInterface $client
@@ -368,12 +368,12 @@ class ClientFactory
         ));
     }
 
-    private function handle_profile($value, array &$args)
+    private function pre_profile($value, array &$args)
     {
         $args['credentials'] = CredentialProvider::ini($args['profile']);
     }
 
-    private function handle_credentials($value, array &$args)
+    private function pre_credentials($value, array &$args)
     {
         if ($value instanceof CredentialsInterface) {
             return;
@@ -400,7 +400,7 @@ class ClientFactory
         }
     }
 
-    private function handle_client($value, array &$args)
+    private function pre_client($value, array &$args)
     {
         // Make sure the user agent is prefixed by the SDK version
         $args['client']->setDefaultOption(
@@ -409,19 +409,19 @@ class ClientFactory
         );
     }
 
-    private function handle_client_defaults($value, array &$args)
+    private function post_client_defaults($value, array &$args)
     {
         foreach ($value as $k => $v) {
             $args['client']->setDefaultOption($k, $v);
         }
     }
 
-    private function handle_ringphp_handler($value, array &$args)
+    private function pre_ringphp_handler($value, array &$args)
     {
         throw new IAE('You cannot provide both a client option and a ringphp_handler option.');
     }
 
-    private function handle_api_provider($value, array &$args)
+    private function pre_api_provider($value, array &$args)
     {
         $api = new Service($value, $args['service'], $args['version']);
         $args['api'] = $api;
@@ -429,7 +429,7 @@ class ClientFactory
         $args['serializer'] = Service::createSerializer($api, $args['endpoint']);
     }
 
-    private function handle_endpoint_provider($value, array &$args)
+    private function pre_endpoint_provider($value, array &$args)
     {
         if (!isset($args['endpoint'])) {
             $result = call_user_func($value, [
