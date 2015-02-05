@@ -1,10 +1,10 @@
 <?php
 namespace Aws\Test\CloudSearchDomain;
 
-use Aws\CloudSearchDomain\CloudSearchDomainFactory;
+use Aws\CloudSearchDomain\CloudSearchDomainClient;
 
 /**
- * @covers Aws\CloudSearchDomain\CloudSearchDomainFactory
+ * @covers Aws\CloudSearchDomain\CloudSearchDomainClient
  */
 class CloudSearchDomainTest extends \PHPUnit_Framework_TestCase
 {
@@ -13,12 +13,15 @@ class CloudSearchDomainTest extends \PHPUnit_Framework_TestCase
      */
     public function testRequiresEndpoint()
     {
-        (new CloudSearchDomainFactory)->create();
+        new CloudSearchDomainClient([
+            'service'   => 'cloudsearchdomain',
+            'version'   => 'latest'
+        ]);
     }
 
     public function testGetsRegionFromEndpoint()
     {
-        $client = (new CloudSearchDomainFactory)->create([
+        $client = new CloudSearchDomainClient([
             'service'   => 'cloudsearchdomain',
             'endpoint'  => 'search-foo.us-west-2.cloudsearch.amazon.com',
             'signature' => 'v4',

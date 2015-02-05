@@ -1,11 +1,9 @@
 <?php
 namespace Aws\Test;
 
-use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\Credentials\Credentials;
 use Aws\Ec2\Ec2Client;
-use Aws\Exception\AwsException;
 use Aws\Signature\SignatureV4;
 use Aws\Sqs\SqsClient;
 use Aws\Sts\StsClient;
@@ -15,7 +13,6 @@ use GuzzleHttp\Event\BeforeEvent;
 use GuzzleHttp\Event\RequestEvents;
 use GuzzleHttp\Message\Request;
 use GuzzleHttp\Message\Response;
-use GuzzleHttp\Subscriber\Mock;
 
 /**
  * @covers Aws\AwsClient
@@ -23,6 +20,18 @@ use GuzzleHttp\Subscriber\Mock;
 class AwsClientTest extends \PHPUnit_Framework_TestCase
 {
     use UsesServiceTrait;
+
+    private function getApiProvider()
+    {
+        return function () {
+            return [
+                'metadata' => [
+                    'protocol'       => 'query',
+                    'endpointPrefix' => 'foo'
+                ]
+            ];
+        };
+    }
 
     public function testHasGetters()
     {
@@ -32,7 +41,8 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'region'       => 'foo',
             'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
             'serializer'   => function () {},
-            'api'          => new Service(function () {}, 'foo', 'bar'),
+            'api_provider' => $this->getApiProvider(),
+            'service'      => 'foo',
             'error_parser' => function () {},
             'version'      => 'latest'
         ];
@@ -41,16 +51,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($config['client'], $client->getHttpClient());
         $this->assertSame($config['credentials'], $client->getCredentials());
         $this->assertSame($config['region'], $client->getRegion());
-        $this->assertSame($config['api'], $client->getApi());
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage is a required option
-     */
-    public function testEnsuresRequiredArgumentsArePresent()
-    {
-        new AwsClient([]);
+        $this->assertEquals('foo', $client->getApi()->getEndpointPrefix());
     }
 
     /**
@@ -64,9 +65,13 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
 
     public function testReturnsCommandForOperation()
     {
-        $client = $this->createClient(['operations' => ['foo' => [
-            'http' => ['method' => 'POST']
-        ]]]);
+        $client = $this->createClient([
+            'operations' => [
+                'foo' => [
+                    'http' => ['method' => 'POST']
+                ]
+            ]
+        ]);
 
         $this->assertInstanceOf(
             'GuzzleHttp\Command\CommandInterface',
@@ -83,70 +88,6 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         $command = $client->getCommand('foo', ['bam' => 'boozled']);
         $this->assertEquals('123', $command['test']);
         $this->assertEquals('boozled', $command['bam']);
-    }
-
-    public function errorProvider()
-    {
-        return [
-            [null, 'Aws\Exception\AwsException'],
-            ['Aws\Ec2\Exception\Ec2Exception', 'Aws\Ec2\Exception\Ec2Exception']
-        ];
-    }
-
-    /**
-     * @dataProvider errorProvider
-     */
-    public function testThrowsSpecificErrors($value, $type)
-    {
-        $apiProvider = function () {
-            return ['operations' => ['foo' => [
-                'http' => ['method' => 'POST']
-            ]]];
-        };
-        $service = new Service($apiProvider, 'foo', 'bar');
-
-        $c = new Client();
-        $client = new AwsClient([
-            'client'          => $c,
-            'credentials'     => new Credentials('foo', 'bar'),
-            'signature'       => new SignatureV4('foo', 'bar'),
-            'endpoint'        => 'http://us-east-1.foo.amazonaws.com',
-            'region'          => 'foo',
-            'exception_class' => $value,
-            'api'             => $service,
-            'version'         => 'latest',
-            'serializer'   => function () use ($c) {
-                return $c->createRequest('GET', 'http://httpbin.org');
-            },
-            'error_parser'    => function () {
-                return [
-                    'code' => 'foo',
-                    'type' => 'bar',
-                    'request_id' => '123'
-                ];
-            }
-        ]);
-
-        $client->getHttpClient()->getEmitter()->attach(new Mock([
-            new Response(404)
-        ]));
-
-        try {
-            $client->foo();
-            $this->fail('Did not throw an exception');
-        } catch (AwsException $e) {
-            $this->assertInstanceOf($type, $e);
-            $this->assertEquals([
-                'aws_error' => [
-                    'code' => 'foo',
-                    'type' => 'bar',
-                    'request_id' => '123'
-                ]
-            ], $e->getTransaction()->context->toArray());
-            $this->assertEquals('foo', $e->getAwsErrorCode());
-            $this->assertEquals('bar', $e->getAwsErrorType());
-            $this->assertEquals('123', $e->getAwsRequestId());
-        }
     }
 
     /**
@@ -174,7 +115,10 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         $r = new Request('GET', 'http://foo.com');
         $client = $this->createClient(
             ['operations' => ['foo' => ['http' => ['method' => 'POST']]]],
-            ['serializer' => function () use ($r) { return $r; }]
+            [
+                'serializer' => function () use ($r) { return $r; },
+                'endpoint'   => 'http://foo.com'
+            ]
         );
         $command = $client->getCommand('foo');
         $command->getEmitter()->on('prepared', function (PreparedEvent $e) {
@@ -276,14 +220,14 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatesClientsFromFactoryMethod()
     {
-        $client = SqsClient::factory([
+        $client = new SqsClient([
             'region'  => 'us-west-2',
             'version' => 'latest'
         ]);
         $this->assertInstanceOf('Aws\Sqs\SqsClient', $client);
         $this->assertEquals('us-west-2', $client->getRegion());
 
-        $client = StsClient::factory([
+        $client = new StsClient([
             'region'  => 'us-west-2',
             'version' => 'latest'
         ]);
@@ -312,11 +256,13 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
                     ? ['waiters' => $service['waiters']]
                     : ['waiters' => []];
             } else {
+                if (!isset($service['metadata'])) {
+                    $service['metadata'] = [];
+                }
+                $service['metadata']['protocol'] = 'query';
                 return $service;
             }
         };
-
-        $api = new Service($apiProvider, 'service', 'region');
 
         return new AwsClient($config + [
             'client'       => new Client(),
@@ -324,7 +270,8 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'signature'    => new SignatureV4('foo', 'bar'),
             'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
             'region'       => 'foo',
-            'api'          => $api,
+            'service'      => 'foo',
+            'api_provider' => $apiProvider,
             'serializer'   => function () {},
             'error_parser' => function () {},
             'version'      => 'latest'
@@ -357,7 +304,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             $conf['signature_version'] = $version;
         }
 
-        $client = Ec2Client::factory($conf);
+        $client = new Ec2Client($conf);
         $client->getHttpClient()->getEmitter()->on(
             'before',
             function (BeforeEvent $e) use ($search) {
@@ -368,5 +315,13 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             RequestEvents::SIGN_REQUEST - 1
         );
         $client->describeInstances();
+    }
+
+    public function testAllowsFactoryMethodForBc()
+    {
+        Ec2Client::factory([
+            'region'  => 'us-west-2',
+            'version' => 'latest'
+        ]);
     }
 }

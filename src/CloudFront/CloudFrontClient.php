@@ -2,8 +2,6 @@
 namespace Aws\CloudFront;
 
 use Aws\AwsClient;
-
-use Aws\CloudFront\UrlSigner;
 use GuzzleHttp\Collection;
 
 /**

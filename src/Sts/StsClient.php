@@ -10,6 +10,15 @@ use Aws\Credentials\Credentials;
  */
 class StsClient extends AwsClient
 {
+    public static function getArguments()
+    {
+        $args = parent::getArguments();
+        // STS does not require a region.
+        $args['region']['default'] = 'us-east-1';
+
+        return $args;
+    }
+
     /**
      * Creates credentials from the result of an STS operations
      *

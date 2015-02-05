@@ -2,7 +2,6 @@
 namespace Aws\CloudSearch;
 
 use Aws\AwsClient;
-
 use Aws\CloudSearchDomain\CloudSearchDomainClient;
 
 /**

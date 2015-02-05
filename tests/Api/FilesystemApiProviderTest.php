@@ -55,7 +55,7 @@ class FilesystemApiProviderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \RuntimeException
-     * @expectedExceptionMessage There are no versions of the dodo service available
+     * @expectedExceptionMessage There are no versions of the "dodo" service available
      */
     public function testThrowsWhenNoLatestVersionIsAvailable()
     {

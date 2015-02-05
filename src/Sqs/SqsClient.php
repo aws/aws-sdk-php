@@ -8,6 +8,14 @@ use Aws\AwsClient;
  */
 class SqsClient extends AwsClient
 {
+    public function __construct(array $config)
+    {
+        parent::__construct($config);
+        $emitter = $this->getEmitter();
+        $emitter->attach(new QueueUrlSubscriber());
+        $emitter->attach(new Md5ValidatorSubscriber());
+    }
+
     /**
      * Converts a queue URL into a queue ARN.
      *

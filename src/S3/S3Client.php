@@ -4,6 +4,13 @@ namespace Aws\S3;
 use Aws\AwsClient;
 use Aws\S3\Exception\S3Exception;
 use Aws\Result;
+use Aws\Retry\ThrottlingFilter;
+use Aws\ClientResolver;
+use Aws\Retry\S3TimeoutFilter;
+use Aws\Subscriber\SaveAs;
+use Aws\Subscriber\SourceFile;
+use GuzzleHttp\Message\ResponseInterface;
+use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
 use GuzzleHttp\Stream\AppendStream;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Command\CommandInterface;
@@ -11,10 +18,87 @@ use GuzzleHttp\Stream\StreamInterface;
 use GuzzleHttp\Stream\Utils;
 
 /**
- * This client is used to interact with the **Amazon Simple Storage Service (Amazon S3)**.
+ * Client used to interact with **Amazon Simple Storage Service (Amazon S3)**.
  */
 class S3Client extends AwsClient
 {
+    public static function getArguments()
+    {
+        $args = parent::getArguments();
+        // S3 does not require a region for the "classic" endpoint.
+        $args['region']['default'] = 'us-east-1';
+        // Apply custom retry strategy.
+        $args['retries']['fn'] = self::createRetry();
+        // Handle HEAD request error parsing.
+        $args['api_provider']['fn'] = self::applyApiProvider();
+
+        return $args + [
+            'force_path_style' => [
+                'type'    => 'config',
+                'valid'   => ['bool'],
+                'doc'     => 'Set to true to send requests using path style '
+                           . 'bucket addressing (e.g., '
+                           . 'https://s3.amazonaws.com/bucket/key).',
+                'fn'      => function ($value, array &$args) {
+                    if ($value) {
+                        $args['defaults']['PathStyle'] = true;
+                    }
+                },
+            ],
+            'calculate_md5' => [
+                'type'    => 'config',
+                'valid'   => ['bool'],
+                'doc'     => 'Set to false to disable calculating an MD5 for '
+                           . 'all Amazon S3 signed uploads.',
+                'default' => function (array &$args) {
+                    // S3Client should calculate MD5 checksums for uploads
+                    // unless explicitly disabled or using a v4 signer.
+                    return $args['config']['signature_version'] != 'v4';
+                },
+            ],
+            'bucket_endpoint' => [
+                'type'  => 'config',
+                'valid' => ['bool'],
+                'doc'   => 'Set to true to send requests to a hardcoded bucket '
+                         . 'endpoint rather than create an endpoint as a '
+                         . 'result of injecting the bucket into the URL. This '
+                         . 'option is useful for interacting with CNAME '
+                         . 'endpoints.',
+            ]
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * In addition to the options available to
+     * {@see Aws\AwsClient::__construct}, S3Client accepts the following
+     * options:
+     *
+     * - bucket_endpoint: (bool) Set to true to send requests to a
+     *   hardcoded bucket endpoint rather than create an endpoint as a result
+     *   of injecting the bucket into the URL. This option is useful for
+     *   interacting with CNAME endpoints.
+     * - calculate_md5: (bool) Set to false to disable calculating an MD5
+     *   for all Amazon S3 signed uploads.
+     * - force_path_style: (bool) Set to true to send requests using path
+     *   style bucket addressing (e.g., https://s3.amazonaws.com/bucket/key).
+     *
+     * @param array $args
+     */
+    public function __construct(array $args)
+    {
+        parent::__construct($args);
+        $emitter = $this->getEmitter();
+        $emitter->attach(new BucketStyleSubscriber($this->getConfig('bucket_endpoint')));
+        $emitter->attach(new PermanentRedirectSubscriber());
+        $emitter->attach(new SSECSubscriber());
+        $emitter->attach(new PutObjectUrlSubscriber());
+        $emitter->attach(new SourceFile($this->getApi()));
+        $emitter->attach(new ApplyMd5Subscriber());
+        $emitter->attach(new SaveAs());
+    }
+
     /**
      * Determine if a string is a valid name for a DNS compatible Amazon S3
      * bucket.
@@ -374,5 +458,49 @@ class S3Client extends AwsClient
     public static function isValidBucketName($bucket)
     {
         return self::isBucketDnsCompatible($bucket);
+    }
+
+    private static function createRetry()
+    {
+        return function ($value, array &$args) {
+            if ($value) {
+                $args['client']->getEmitter()->attach(new RetrySubscriber(
+                    ClientResolver::_wrapDebugLogger($args, [
+                        'max'    => $value,
+                        'delay'  => 'GuzzleHttp\Subscriber\Retry\RetrySubscriber::exponentialDelay',
+                        'filter' => RetrySubscriber::createChainFilter([
+                            new S3TimeoutFilter(),
+                            new ThrottlingFilter($args['error_parser']),
+                            RetrySubscriber::createStatusFilter(),
+                            RetrySubscriber::createConnectFilter()
+                        ])
+                    ])
+                ));
+            }
+        };
+    }
+
+    private static function applyApiProvider()
+    {
+        return function ($value, &$args) {
+            ClientResolver::_apply_api_provider($value, $args);
+            $parser = function (ResponseInterface $response) use ($args) {
+                // Call the original parser.
+                $errorData = $args['error_parser']($response);
+                // Handle 404 responses where the code was not parsed.
+                if (!isset($errorData['code'])
+                    && $response->getStatusCode() == 404
+                ) {
+                    $url = (new S3UriParser)->parse($response->getEffectiveUrl());
+                    if (isset($url['key'])) {
+                        $errorData['code'] = 'NoSuchKey';
+                    } elseif ($url['bucket']) {
+                        $errorData['code'] = 'NoSuchBucket';
+                    }
+                }
+                return $errorData;
+            };
+            $args['error_parser'] = $parser;
+        };
     }
 }

@@ -1,18 +1,17 @@
 <?php
 namespace Aws\Test\Route53;
 
-use Aws\Route53\Route53Factory;
+use Aws\Route53\Route53Client;
 use Aws\Test\SdkTest;
 
 /**
- * @covers Aws\Route53\Route53Factory
+ * @covers Aws\Route53\Route53Client
  */
-class Route53FactoryTest extends \PHPUnit_Framework_TestCase
+class Route53ClientTest extends \PHPUnit_Framework_TestCase
 {
     public function testAttachesSubscribers()
     {
-        $f = new Route53Factory();
-        $client = $f->create([
+        $client = new Route53Client([
             'service' => 'route53',
             'region'  => 'us-west-2',
             'version' => 'latest'
