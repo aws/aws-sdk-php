@@ -342,6 +342,41 @@ class ClientResolver
     }
 
     /**
+     * Creates a verbose error message for an invalid argument.
+     *
+     * @param string $name        Name of the argument that is missing.
+     * @param array  $args        Provided arguments
+     * @param bool   $useRequired Set to true to show the required fn text if
+     *                            available instead of the documentation.
+     * @return string
+     */
+    private function getArgMessage($name, $args = [], $useRequired = false)
+    {
+        $arg = $this->argDefinitions[$name];
+        $msg = '';
+        $modifiers = [];
+        if (isset($arg['valid'])) {
+            $modifiers[] = implode('|', $arg['valid']);
+        }
+        if (isset($arg['choice'])) {
+            $modifiers[] = 'One of ' . implode(', ', $arg['choice']);
+        }
+        if ($modifiers) {
+            $msg .= '(' . implode('; ', $modifiers) . ')';
+        }
+        $msg = wordwrap("{$name}: {$msg}", 75, "\n  ");
+
+        if ($useRequired && is_callable($arg['required'])) {
+            $msg .= "\n\n  ";
+            $msg .= str_replace("\n", "\n  ", call_user_func($arg['required'], $args));
+        } elseif (isset($arg['doc'])) {
+            $msg .= wordwrap("\n\n  {$arg['doc']}", 75, "\n  ");
+        }
+
+        return $msg;
+    }
+
+    /**
      * Validates the user provided argument.
      *
      * @param string $name     Name of the value being validated.
@@ -374,9 +409,11 @@ class ClientResolver
         }
 
         $expected = implode('|', $expected);
-        throw new \InvalidArgumentException("Invalid configuration value "
+        $msg = "Invalid configuration value "
             . "provided for \"{$name}\". Expected {$expected}, but got "
-            . Core::describeType($provided));
+            . Core::describeType($provided) . "\n\n"
+            . $this->getArgMessage($name);
+        throw new \InvalidArgumentException($msg);
     }
 
     private function validateChoice($name, $provided, array $expected)
@@ -384,46 +421,14 @@ class ClientResolver
         if (in_array($provided, $expected)) {
             return;
         }
-        throw new \InvalidArgumentException("The value provided for the "
+        $msg = "The value provided for the "
             . "\"{$name}\" option has the value of " . Core::describeType($provided)
-            . ", but is expected to be one of " . implode(
-                ", ",
-                array_map(function ($s) { return '"' . $s . '"'; }, $expected)
-            ));
-    }
-
-    /**
-     * Creates a verbose error message for a missing required option.
-     *
-     * @param string $name Name of the argument that is missing.
-     * @param array  $args Provided arguments
-     *
-     * @return string
-     */
-    private function getMissingMessage($name, $args)
-    {
-        $arg = $this->argDefinitions[$name];
-        $msg = '';
-        $modifiers = [];
-        if (isset($arg['valid'])) {
-            $modifiers[] = implode('|', $arg['valid']);
-        }
-        if (isset($arg['choice'])) {
-            $modifiers[] = 'One of ' . implode(', ', $arg['choice']);
-        }
-        if ($modifiers) {
-            $msg .= '(' . implode('; ', $modifiers) . ')';
-        }
-        $msg = wordwrap("{$name}: {$msg}", 75, "\n  ");
-
-        if (is_callable($arg['required'])) {
-            $msg .= "\n\n  ";
-            $msg .= str_replace("\n", "\n  ", call_user_func($arg['required'], $args));
-        } elseif (isset($arg['doc'])) {
-            $msg .= wordwrap("\n\n  {$arg['doc']}", 75, "\n  ");
-        }
-
-        return $msg;
+            . ", but is expected to be one of ";
+        $msg .= implode(", ", array_map(function ($s) {
+                return '"' . $s . '"';
+            }, $expected));
+        $msg .= $this->getArgMessage($name);
+        throw new \InvalidArgumentException($msg);
     }
 
     /**
@@ -442,7 +447,7 @@ class ClientResolver
             ) {
                 continue;
             }
-            $missing[] = $this->getMissingMessage($k, $args);
+            $missing[] = $this->getArgMessage($k, $args, true);
         }
         $msg = "Missing required client configuration options: \n\n";
         $msg .= implode("\n\n", $missing);
