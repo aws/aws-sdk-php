@@ -17,16 +17,9 @@ class DynamoDbClient extends AwsClient
         $args = parent::getArguments();
         // Apply custom retry strategy for DynamoDB.
         $args['retries']['default'] = 11;
-        $args['retries']['fn'] = self::applyRetryConfig();
+        $args['retries']['fn'] = [__CLASS__, '_applyRetryConfig'];
 
         return $args;
-    }
-
-    public function __construct(array $args)
-    {
-        parent::__construct($args);
-        // DynamoDB does not redirect, so there's no need to add the subscriber.
-        $this->getHttpClient()->setDefaultOption('allow_redirects', false);
     }
 
     /**
@@ -45,27 +38,28 @@ class DynamoDbClient extends AwsClient
         return $handler;
     }
 
-    private static function applyRetryConfig()
+    /** @internal */
+    public static function _applyRetryConfig($value, array &$args)
     {
-        return function ($value, array &$args) {
-            if ($value) {
-                $args['client']->getEmitter()->attach(new RetrySubscriber(
-                    ClientResolver::_wrapDebugLogger($args, [
-                        'max'    => $value,
-                        'delay'  => function ($retries) {
-                            return $retries
-                                ? (50 * (int)pow(2, $retries - 1)) / 1000
-                                : 0;
-                        },
-                        'filter' => RetrySubscriber::createChainFilter([
-                            new ThrottlingFilter($args['error_parser']),
-                            new Crc32Filter($args['error_parser']),
-                            RetrySubscriber::createStatusFilter(),
-                            RetrySubscriber::createConnectFilter()
-                        ])
-                    ])
-                ));
-            }
-        };
+        if (!$value) {
+            return;
+        }
+
+        $args['client']->getEmitter()->attach(new RetrySubscriber(
+            ClientResolver::_wrapDebugLogger($args, [
+                'max'    => $value,
+                'delay'  => function ($retries) {
+                    return $retries
+                        ? (50 * (int)pow(2, $retries - 1)) / 1000
+                        : 0;
+                },
+                'filter' => RetrySubscriber::createChainFilter([
+                    new ThrottlingFilter($args['error_parser']),
+                    new Crc32Filter($args['error_parser']),
+                    RetrySubscriber::createStatusFilter(),
+                    RetrySubscriber::createConnectFilter()
+                ])
+            ])
+        ));
     }
 }

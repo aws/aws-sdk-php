@@ -17,13 +17,6 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
 {
     use UsesServiceTrait;
 
-    public static function setupBeforeClass()
-    {
-        $rp = new \ReflectionProperty('Aws\ClientResolver', 'argCache');
-        $rp->setAccessible(true);
-        $rp->setValue(null);
-    }
-
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Missing required client configuration options
@@ -96,22 +89,6 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
             ]
         ]);
         $r->resolve(['foo' => -1], new Emitter());
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The value provided for the "foo" option has the value of string(1) "c", but is expected to be one of "a", "b"
-     */
-    public function testValidatesChoice()
-    {
-        $r = new ClientResolver([
-            'foo' => [
-                'type'   => 'value',
-                'valid'  => ['string'],
-                'choice' => ['a', 'b']
-            ]
-        ]);
-        $r->resolve(['foo' => 'c'], new Emitter());
     }
 
     /**

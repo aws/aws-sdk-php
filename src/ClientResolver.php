@@ -1,7 +1,6 @@
 <?php
 namespace Aws;
 
-use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Event\EmitterInterface;
 use InvalidArgumentException as IAE;
 use Aws\Api\Service;
@@ -29,8 +28,16 @@ class ClientResolver
     /** @var array */
     private $argDefinitions;
 
-    /** @var array */
-    private static $argCache;
+    /** @var array Map of types to a corresponding function */
+    private static $typeMap = [
+        'resource' => 'is_resource',
+        'callable' => 'is_callable',
+        'int'      => 'is_int',
+        'bool'     => 'is_bool',
+        'string'   => 'is_string',
+        'object'   => 'is_object',
+        'array'    => 'is_array',
+    ];
 
     /**
      * Gets an array of default client arguments, each argument containing a
@@ -40,10 +47,8 @@ class ClientResolver
      *   - value: The default option type.
      *   - config: The provided value is made available in the client's
      *     getConfig() method.
-     *   - deprecated: Used to apply a deprecated option to a client.
-     *     Deprecated options are applied using the "fn" key of the option. The
-     *     provided "fn" is expected to trigger a PHP warning.
-     * - valid: (array, required) Valid PHP types or class names.
+     * - valid: (array, required) Valid PHP types or class names. Note: null
+     *   is not an allowed type.
      * - required: (bool, callable) Whether or not the argument is required.
      *   Provide a function that accepts an array of arguments and returns a
      *   string to provide a custom error message.
@@ -55,8 +60,6 @@ class ClientResolver
      * - fn: (callable) Function used to apply the argument. The function
      *   accepts the provided value, array of arguments by reference, and an
      *   event emitter.
-     * - choice: (array) If provided, the passed in value MUST match one of the
-     *   values in the choice array.
      *
      * Note: Order is honored and important when applying arguments.
      *
@@ -64,26 +67,7 @@ class ClientResolver
      */
     public static function getDefaultArguments()
     {
-        if (self::$argCache) {
-            return self::$argCache;
-        }
-
-        return self::$argCache = [
-            'key' => [
-                'type'  => 'deprecated',
-                'valid' => ['string'],
-                'fn'    => [__CLASS__, '_deprecated_key'],
-            ],
-            'ssl.certificate_authority' => [
-                'type'  => 'deprecated',
-                'valid' => ['bool', 'string'],
-                'fn'    => [__CLASS__, '_deprecated_ssl_certificate_authority'],
-            ],
-            'curl.options' => [
-                'type'  => 'deprecated',
-                'valid' => ['array'],
-                'fn'    => [__CLASS__, '_deprecated_curl_options'],
-            ],
+        return [
             'service' => [
                 'type'     => 'value',
                 'valid'    => ['string'],
@@ -96,15 +80,15 @@ class ClientResolver
                 'type'     => 'value',
                 'valid'    => ['string'],
                 'default'  => 'https',
-                'choice'   => ['http', 'https'],
-                'doc'      => 'URI scheme to use when connecting connect.',
+                'doc'      => 'URI scheme to use when connecting connect '
+                            . '(e.g., "http" or "https").',
             ],
             'endpoint' => [
                 'type'  => 'value',
                 'valid' => ['string'],
                 'doc'   => 'The full URI of the webservice. This is only '
-                    . 'required when connecting to a custom endpoint '
-                    . '(e.g., a local version of S3).',
+                         . 'required when connecting to a custom endpoint '
+                         . '(e.g., a local version of S3).',
             ],
             'region' => [
                 'type'     => 'value',
@@ -136,11 +120,7 @@ class ClientResolver
                            . 'This provider is used to create signers utilized '
                            . 'by the client. See Aws\\Signature\\SignatureProvider '
                            . 'for a list of built-in providers',
-                'default' => function () {
-                    return SignatureProvider::memoize(
-                        SignatureProvider::defaultProvider()
-                    );
-                },
+                'default' => [__CLASS__, '_default_signature_provider'],
             ],
             'endpoint_provider' => [
                 'type'     => 'value',
@@ -151,9 +131,7 @@ class ClientResolver
                             . 'and returns a hash of endpoint data, of which '
                             . 'the "endpoint" key is required. See Aws\\Endpoint\\EndpointProvider '
                             . 'for a list of built-in providers.',
-                'default' => function () {
-                    return EndpointProvider::defaultProvider();
-                },
+                'default' => [__CLASS__, '_default_endpoint_provider'],
             ],
             'api_provider' => [
                 'type'     => 'value',
@@ -163,9 +141,7 @@ class ClientResolver
                             . 'array of corresponding configuration data. The '
                             . 'type value can be one of api, waiter, or paginator.',
                 'fn'       => [__CLASS__, '_apply_api_provider'],
-                'default'  => function () {
-                    return new FilesystemApiProvider(__DIR__ . '/data');
-                },
+                'default'  => [__CLASS__, '_default_api_provider'],
             ],
             'signature_version' => [
                 'type'    => 'config',
@@ -174,11 +150,7 @@ class ClientResolver
                            . 'to use with a service (e.g., v4, s3, v2). Note '
                            . 'that per/operation signature version MAY '
                            . 'override this requested signature version.',
-                'default' => function (array &$args) {
-                    return isset($args['config']['signature_version'])
-                        ? $args['config']['signature_version']
-                        : $args['api']->getSignatureVersion();
-                },
+                'default' => [__CLASS__, '_default_signature_version'],
             ],
             'profile' => [
                 'type'  => 'config',
@@ -189,13 +161,11 @@ class ClientResolver
                          . 'the AWS_PROFILE environment variable. Note: '
                          . 'Specifying "profile" will cause the "credentials" '
                          . 'key to be ignored.',
-                'fn'    => function ($_, array &$args) {
-                    $args['credentials'] = CredentialsProvider::ini($args['profile']);
-                },
+                'fn'    => [__CLASS__, '_apply_profile'],
             ],
             'credentials' => [
                 'type'    => 'value',
-                'valid'   => ['array', 'Aws\Credentials\CredentialsInterface', 'bool', 'callable'],
+                'valid'   => ['Aws\Credentials\CredentialsInterface', 'array', 'bool', 'callable'],
                 'doc'     => 'Specifies the credentials used to sign requests. '
                            . 'Provide an Aws\Credentials\CredentialsInterface '
                            . 'object, an associative array of "key", "secret", '
@@ -207,11 +177,7 @@ class ClientResolver
                            . 'credentials are provided, the SDK will attempt '
                            . 'to load them from the environment.',
                 'fn'      => [__CLASS__, '_apply_credentials'],
-                'default' => function () {
-                    return CredentialsProvider::resolve(
-                        CredentialsProvider::defaultProvider()
-                    );
-                },
+                'default' => [__CLASS__, '_default_credentials'],
             ],
             'client' => [
                 'type'    => 'value',
@@ -221,23 +187,14 @@ class ClientResolver
                            . 'over the wire. Set to true or do not specify a '
                            . 'client, and the SDK will create a new client '
                            . 'that uses a shared Ring HTTP handler with other '
-                           . 'clients.',
-                'fn'      => function (ClientInterface $value) {
-                    // Make sure the user agent is prefixed by the SDK version.
-                    $value->setDefaultOption(
-                        'headers/User-Agent',
-                        'aws-sdk-php/' . Sdk::VERSION . ' ' . Client::getDefaultUserAgent()
-                    );
-                }
+                           . 'clients.'
             ],
             'ringphp_handler' => [
                 'type'  => 'value',
                 'valid' => ['callable'],
                 'doc'   => 'RingPHP handler used to transfer HTTP requests '
                          . '(see http://ringphp.readthedocs.org/en/latest/).',
-                'fn'    => function () {
-                    throw new IAE('You cannot provide both a client option and a ringphp_handler option.');
-                },
+                'fn'    => [__CLASS__, '_apply_ringphp_handler'],
             ],
             'retry_logger' => [
                 'type'  => 'value',
@@ -259,11 +216,7 @@ class ClientResolver
                 'valid'   => ['bool'],
                 'default' => true,
                 'doc'     => 'Set to false to disable client-side parameter validation.',
-                'fn'      => function ($value, array &$args, EmitterInterface $em) {
-                    if ($value === true) {
-                        $em->attach(new Validation($args['api'], new Validator()));
-                    }
-                },
+                'fn'      => [__CLASS__, '_apply_validate'],
             ],
             'debug' => [
                 'type'  => 'value',
@@ -271,13 +224,7 @@ class ClientResolver
                 'doc'   => 'Set to true to display debug information when '
                          . 'sending requests. Provide a stream resource to '
                          . 'write debug information to a specific resource.',
-                'fn'    => function ($value, $_, EmitterInterface $em) {
-                    if ($value !== false) {
-                        $em->attach(new Debug(
-                            $value === true ? [] : $value
-                        ));
-                    }
-                },
+                'fn'    => [__CLASS__, '_apply_debug'],
             ],
             'http' => [
                 'type'  => 'value',
@@ -285,11 +232,7 @@ class ClientResolver
                 'doc'   => 'Set to an array of Guzzle client request options '
                          . '(e.g., proxy, verify, etc.). See http://docs.guzzlephp.org/en/latest/clients.html#request-options '
                          . 'for a list of available options.',
-                'fn'    => function (array $values, array &$args) {
-                    foreach ($values as $k => $v) {
-                        $args['client']->setDefaultOption($k, $v);
-                    }
-                },
+                'fn'    => [__CLASS__, '_apply_http'],
             ],
         ];
     }
@@ -316,28 +259,35 @@ class ClientResolver
     {
         $args['config'] = [];
         foreach ($this->argDefinitions as $key => $a) {
-            if (!array_key_exists($key, $args)) {
+            // Add defaults, validate required values, and skip if not set.
+            if (!isset($args[$key])) {
                 if (isset($a['default'])) {
                     // Merge defaults in when not present.
-                    if (!is_callable($a['default'])) {
-                        $args[$key] = $a['default'];
-                    } else {
-                        $fn = $a['default'];
-                        $args[$key] = $fn($args);
-                    }
-                } elseif (!empty($a['required'])) {
-                    $this->throwRequired($args);
-                } else {
+                    $args[$key] = is_callable($a['default'])
+                        ? $a['default']($args)
+                        : $a['default'];
+                } elseif (empty($a['required'])) {
                     continue;
+                } else {
+                    $this->throwRequired($args);
                 }
             }
-            $this->validate($key, $args[$key], $a['valid']);
-            if (isset($a['choice'])) {
-                $this->validateChoice($key, $args[$key], $a['choice']);
+            // Validate the types against the provided value.
+            foreach ($a['valid'] as $check) {
+                if (isset(self::$typeMap[$check])) {
+                    $fn = self::$typeMap[$check];
+                    if ($fn($args[$key])) {
+                        goto is_valid;
+                    }
+                } elseif ($args[$key] instanceof $check) {
+                    goto is_valid;
+                }
             }
+            $this->invalidType($key, $args[$key]);
+            // Apply the value;
+            is_valid:
             if (isset($a['fn'])) {
-                $fn = $a['fn'];
-                $fn($args[$key], $args, $emitter);
+                $a['fn']($args[$key], $args, $emitter);
             }
             if ($a['type'] === 'config') {
                 $args['config'][$key] = $args[$key];
@@ -383,57 +333,19 @@ class ClientResolver
     }
 
     /**
-     * Validates the user provided argument.
+     * Throw when an invalid type is encountered.
      *
      * @param string $name     Name of the value being validated.
      * @param mixed  $provided The provided value.
-     * @param array  $expected  Array of possible types.
-     * @throws \InvalidArgumentException on error.
+     * @throws \InvalidArgumentException
      */
-    private function validate($name, $provided, array $expected)
+    private function invalidType($name, $provided)
     {
-        static $typeMap = [
-            'resource' => 'is_resource',
-            'callable' => 'is_callable',
-            'int'      => 'is_int',
-            'bool'     => 'is_bool',
-            'string'   => 'is_string',
-            'object'   => 'is_object',
-            'array'    => 'is_array',
-            'null'     => 'is_null'
-        ];
-
-        foreach ($expected as $check) {
-            if (isset($typeMap[$check])) {
-                $fn = $typeMap[$check];
-                if ($fn($provided)) {
-                    return;
-                }
-            } elseif ($provided instanceof $check) {
-                return;
-            }
-        }
-
-        $expected = implode('|', $expected);
+        $expected = implode('|', $this->argDefinitions[$name]['valid']);
         $msg = "Invalid configuration value "
             . "provided for \"{$name}\". Expected {$expected}, but got "
             . Core::describeType($provided) . "\n\n"
             . $this->getArgMessage($name);
-        throw new \InvalidArgumentException($msg);
-    }
-
-    private function validateChoice($name, $provided, array $expected)
-    {
-        if (in_array($provided, $expected)) {
-            return;
-        }
-        $msg = "The value provided for the "
-            . "\"{$name}\" option has the value of " . Core::describeType($provided)
-            . ", but is expected to be one of ";
-        $msg .= implode(", ", array_map(function ($s) {
-                return '"' . $s . '"';
-            }, $expected));
-        $msg .= $this->getArgMessage($name);
         throw new \InvalidArgumentException($msg);
     }
 
@@ -527,34 +439,78 @@ class ClientResolver
         }
     }
 
-    public static function _deprecated_key($_, array &$args)
+    public static function _apply_debug($value, $_, EmitterInterface $em)
     {
-        trigger_error('You provided key, secret, or token in a top-level '
-            . 'configuration value. In v3, credentials should be provided '
-            . 'in an associative array under the "credentials" key (i.e., '
-            . "['credentials' => ['key' => 'abc', 'secret' => '123']]).");
-        $args['credentials'] = [
-            'key'    => $args['key'],
-            'secret' => $args['secret'],
-            'token'  => isset($args['token']) ? $args['token'] : null
-        ];
-        unset($args['key'], $args['secret'], $args['token']);
+        if ($value !== false) {
+            $em->attach(new Debug(
+                $value === true ? [] : $value
+            ));
+        }
     }
 
-    public static function _deprecated_curl_options($value, array &$args)
+    public static function _apply_http(array $values, array &$args)
     {
-        trigger_error("curl.options should be provided using \$config['http']['config']['curl']' "
-            . "(i.e., new S3Client(['http' => ['config' => ['curl' => []]]]). ");
-        $args['http']['config']['curl'] = $value;
-        unset($args['curl.options']);
+        foreach ($values as $k => $v) {
+            $args['client']->setDefaultOption($k, $v);
+        }
     }
 
-    public static function _deprecated_ssl_certificate_authority($value, array &$args)
+    public static function _apply_profile($_, array &$args)
     {
-        trigger_error('ssl.certificate_authority should be provided using '
-            . "\$config['http']['verify']' (i.e., new S3Client(['http' => ['verify' => true]]). ");
-        $args['http']['verify'] = $value;
-        unset($args['ssl.certificate_authority']);
+        $args['credentials'] = CredentialsProvider::ini($args['profile']);
+    }
+
+    public static function _apply_ringphp_handler()
+    {
+        throw new IAE('You cannot provide both a client option and a ringphp_handler option.');
+    }
+
+    public static function _apply_validate($value, array &$args, EmitterInterface $em)
+    {
+        if ($value === true) {
+            $em->attach(new Validation($args['api'], new Validator()));
+        }
+    }
+
+    public static function _default_api_provider()
+    {
+        return new FilesystemApiProvider(__DIR__ . '/data');
+    }
+
+    public static function _default_client (array &$args)
+    {
+        $clientArgs = [];
+        if (isset($args['ringphp_handler'])) {
+            $clientArgs['handler'] = $args['ringphp_handler'];
+            unset($args['ringphp_handler']);
+        }
+        return new Client($clientArgs);
+    }
+
+    public static function _default_credentials()
+    {
+        return CredentialsProvider::resolve(
+            CredentialsProvider::defaultProvider()
+        );
+    }
+
+    public static function _default_endpoint_provider()
+    {
+        return EndpointProvider::defaultProvider();
+    }
+
+    public static function _default_signature_provider()
+    {
+        return SignatureProvider::memoize(
+            SignatureProvider::defaultProvider()
+        );
+    }
+
+    public static function _default_signature_version(array &$args)
+    {
+        return isset($args['config']['signature_version'])
+            ? $args['config']['signature_version']
+            : $args['api']->getSignatureVersion();
     }
 
     public static function _missing_version(array $args)
@@ -598,16 +554,6 @@ A "region" configuration value is required for the "{$service}" service
 (e.g., "us-west-2"). A list of available public regions and endpoints can be
 found at http://docs.aws.amazon.com/general/latest/gr/rande.html.
 EOT;
-    }
-
-    public static function _default_client (array &$args)
-    {
-        $clientArgs = [];
-        if (isset($args['ringphp_handler'])) {
-            $clientArgs['handler'] = $args['ringphp_handler'];
-            unset($args['ringphp_handler']);
-        }
-        return new Client($clientArgs);
     }
 
     public static function _wrapDebugLogger(array $clientArgs, array $conf)

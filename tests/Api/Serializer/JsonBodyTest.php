@@ -16,7 +16,9 @@ class JsonBodyTest extends \PHPUnit_Framework_TestCase
 
     public function testUsesEmptyHashByDefault()
     {
-        $j = new JsonBody(new Service(function() {}, 'service', 'region'));
+        $j = new JsonBody(new Service(function() {
+            return [];
+        }, 'service', 'region'));
         $this->assertEquals(
             '{}',
             $j->build(new Shape([], new ShapeMap([])), [])
@@ -124,7 +126,9 @@ class JsonBodyTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormatsJson($def, $args, $result)
     {
-        $j = new JsonBody(new Service(function () {}, 'service', 'region'));
+        $j = new JsonBody(new Service(function() {
+            return [];
+        }, 'service', 'region'));
         $shape = Shape::create($def, new ShapeMap([]));
         $this->assertEquals($result, $j->build($shape, $args));
     }

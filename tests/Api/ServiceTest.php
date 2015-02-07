@@ -13,7 +13,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testSetsDefaultValues()
     {
-        $s = new Service(function () {}, '', '');
+        $s = new Service(function () { return []; }, '', '');
         $this->assertSame([], $s['operations']);
         $this->assertSame([], $s['shapes']);
     }
@@ -23,7 +23,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $s = new Service(function () {
             return ['metadata' => ['foo' => 'bar']];
         }, '', '');
-        $this->assertSame(['foo' => 'bar'], $s['metadata']);
+        $this->assertEquals('bar', $s['metadata']['foo']);
         $this->assertNull($s['missing']);
         $s['abc'] = '123';
         $this->assertEquals('123', $s['abc']);
@@ -33,13 +33,15 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
     public function testReturnsApiData()
     {
         $s = new Service(function () {
-            return ['metadata' => [
-                'serviceFullName' => 'foo',
-                'endpointPrefix' => 'bar',
-                'apiVersion' => 'baz',
-                'signingName' => 'qux',
-                'protocol' => 'yak',
-            ]];
+            return [
+                'metadata' => [
+                    'serviceFullName' => 'foo',
+                    'endpointPrefix'  => 'bar',
+                    'apiVersion'      => 'baz',
+                    'signingName'     => 'qux',
+                    'protocol'        => 'yak',
+                ]
+            ];
         }, '', '');
         $this->assertEquals('foo', $s->getServiceFullName());
         $this->assertEquals('bar', $s->getEndpointPrefix());
@@ -50,12 +52,12 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testReturnsMetadata()
     {
-        $s = new Service(function () {}, '', '');
-        $this->assertSame([], $s->getMetadata());
+        $s = new Service(function () { return []; }, '', '');
+        $this->assertInternalType('array', $s->getMetadata());
         $s['metadata'] = [
             'serviceFullName' => 'foo',
-            'endpointPrefix' => 'bar',
-            'apiVersion' => 'baz'
+            'endpointPrefix'  => 'bar',
+            'apiVersion'      => 'baz'
         ];
         $this->assertEquals('foo', $s->getMetadata('serviceFullName'));
         $this->assertNull($s->getMetadata('baz'));
@@ -76,7 +78,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testEnsuresOperationExists()
     {
-        $s = new Service(function () {}, '', '');
+        $s = new Service(function () { return []; }, '', '');
         $s->getOperation('foo');
     }
 
@@ -115,7 +117,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($api->hasWaiter('Fizz'));
         $this->setExpectedException('UnexpectedValueException');
-        $config = $api->getWaiterConfig('Fizz');
+        $api->getWaiterConfig('Fizz');
     }
 
     public function errorParserProvider()

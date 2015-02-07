@@ -29,37 +29,33 @@ class Service extends AbstractModel
     private $waiters = null;
 
     /**
-     * @param callable $apiProvider
+     * @param callable $provider
      * @param string   $serviceName
      * @param string   $apiVersion
-     * @param array    $options     Hash of options
      *
      * @internal param array $definition Service description
      */
-    public function __construct(
-        callable $apiProvider,
-        $serviceName,
-        $apiVersion,
-        array $options = []
-    ) {
-        $definition = $apiProvider('api', $serviceName, $apiVersion);
-        $this->apiProvider = $apiProvider;
+    public function __construct(callable $provider, $serviceName, $apiVersion)
+    {
+        static $defaults = [
+            'operations' => [],
+            'shapes'     => [],
+            'metadata'   => []
+        ], $defaultMeta = [
+            'serviceFullName'  => null,
+            'apiVersion'       => null,
+            'endpointPrefix'   => null,
+            'signingName'      => null,
+            'signatureVersion' => null,
+            'protocol'         => null
+        ];
+
+        $this->apiProvider = $provider;
         $this->serviceName = $serviceName;
         $this->apiVersion = $apiVersion;
-
-        if (!isset($definition['operations'])) {
-            $definition['operations'] = [];
-        }
-
-        if (!isset($definition['shapes'])) {
-            $definition['shapes'] = [];
-        }
-
-        if (!isset($options['shape_map'])) {
-            $options['shape_map'] = new ShapeMap($definition['shapes']);
-        }
-
-        parent::__construct($definition, $options['shape_map']);
+        $definition = $provider('api', $serviceName, $apiVersion) + $defaults;
+        $definition['metadata'] += $defaultMeta;
+        parent::__construct($definition, new ShapeMap($definition['shapes']));
     }
 
     /**
@@ -86,11 +82,11 @@ class Service extends AbstractModel
             return new $mapping[$proto]($api, $endpoint);
         } elseif ($proto == 'ec2') {
             return new QuerySerializer($api, $endpoint, new Ec2ParamBuilder());
-        } else {
-            throw new \UnexpectedValueException(
-                'Unknown protocol: ' . $api->getProtocol()
-            );
         }
+
+        throw new \UnexpectedValueException(
+            'Unknown protocol: ' . $api->getProtocol()
+        );
     }
 
     /**
@@ -111,11 +107,11 @@ class Service extends AbstractModel
             'ec2'       => 'Aws\Api\ErrorParser\XmlErrorParser'
         ];
 
-        if (!isset($mapping[$protocol])) {
-            throw new \UnexpectedValueException("Unknown protocol: $protocol");
+        if (isset($mapping[$protocol])) {
+            return new $mapping[$protocol]();
         }
 
-        return new $mapping[$protocol]();
+        throw new \UnexpectedValueException("Unknown protocol: $protocol");
     }
 
     /**
@@ -139,11 +135,11 @@ class Service extends AbstractModel
             return new $mapping[$proto]($api);
         } elseif ($proto == 'ec2') {
             return new QueryParser($api, null, false);
-        } else {
-            throw new \UnexpectedValueException(
-                'Unknown protocol: ' . $api->getProtocol()
-            );
         }
+
+        throw new \UnexpectedValueException(
+            'Unknown protocol: ' . $api->getProtocol()
+        );
     }
 
     /**
@@ -153,7 +149,7 @@ class Service extends AbstractModel
      */
     public function getServiceFullName()
     {
-        return $this->getMetadata('serviceFullName');
+        return $this->definition['metadata']['serviceFullName'];
     }
 
     /**
@@ -163,7 +159,7 @@ class Service extends AbstractModel
      */
     public function getApiVersion()
     {
-        return $this->getMetadata('apiVersion');
+        return $this->definition['metadata']['apiVersion'];
     }
 
     /**
@@ -173,7 +169,7 @@ class Service extends AbstractModel
      */
     public function getEndpointPrefix()
     {
-        return $this->getMetadata('endpointPrefix');
+        return $this->definition['metadata']['endpointPrefix'];
     }
 
     /**
@@ -183,8 +179,8 @@ class Service extends AbstractModel
      */
     public function getSigningName()
     {
-        return $this->getMetadata('signingName')
-            ?: $this->getMetadata('endpointPrefix');
+        return $this->definition['metadata']['signingName']
+            ?: $this->definition['metadata']['endpointPrefix'];
     }
 
     /**
@@ -196,7 +192,7 @@ class Service extends AbstractModel
      */
     public function getSignatureVersion()
     {
-        return $this->getMetadata('signatureVersion') ?: 'v4';
+        return $this->definition['metadata']['signatureVersion'] ?: 'v4';
     }
 
     /**
@@ -206,7 +202,7 @@ class Service extends AbstractModel
      */
     public function getProtocol()
     {
-        return $this->getMetadata('protocol');
+        return $this->definition['metadata']['protocol'];
     }
 
     /**
@@ -233,10 +229,8 @@ class Service extends AbstractModel
     {
         if (!isset($this->operations[$name])) {
             if (!isset($this->definition['operations'][$name])) {
-                throw new \InvalidArgumentException('Unknown operation: '
-                    . $name);
+                throw new \InvalidArgumentException("Unknown operation: $name");
             }
-
             $this->operations[$name] = new Operation(
                 $this->definition['operations'][$name],
                 $this->shapeMap
@@ -271,13 +265,8 @@ class Service extends AbstractModel
     public function getMetadata($key = null)
     {
         if (!$key) {
-            if (!isset($this->definition['metadata'])) {
-                $this->definition['metadata'] = [];
-            }
             return $this['metadata'];
-        }
-
-        if (isset($this->definition['metadata'][$key])) {
+        } elseif (isset($this->definition['metadata'][$key])) {
             return $this->definition['metadata'][$key];
         }
 
@@ -324,12 +313,12 @@ class Service extends AbstractModel
             'more_results' => null,
         ];
 
-        if (!$this->hasPaginator($name)) {
-            throw new \UnexpectedValueException("There is no {$name} "
-                . "paginator defined for the {$this->serviceName} service.");
+        if ($this->hasPaginator($name)) {
+            return $this->paginators[$name] + $defaults;
         }
 
-        return $this->paginators[$name] + $defaults;
+        throw new \UnexpectedValueException("There is no {$name} "
+            . "paginator defined for the {$this->serviceName} service.");
     }
 
     /**
@@ -365,11 +354,11 @@ class Service extends AbstractModel
     public function getWaiterConfig($name)
     {
         // Error if the waiter is not defined
-        if (!$this->hasWaiter($name)) {
-            throw new \UnexpectedValueException("There is no {$name} waiter "
-                . "defined for the {$this->serviceName} service.");
+        if ($this->hasWaiter($name)) {
+            return $this->waiters[$name];
         }
 
-        return $this->waiters[$name];
+        throw new \UnexpectedValueException("There is no {$name} waiter "
+            . "defined for the {$this->serviceName} service.");
     }
 }

@@ -48,7 +48,7 @@ class SignatureProvider
      * @param string   $service  Service name.
      * @param string   $region   Region name.
      *
-     * @return array
+     * @return SignatureInterface
      * @throws UnresolvedSignatureException
      */
     public static function resolve(callable $provider, $version, $service, $region)

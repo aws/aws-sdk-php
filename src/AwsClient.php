@@ -5,6 +5,7 @@ use Aws\Exception\AwsException;
 use Aws\Api\Service;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Signature\SignatureProvider;
+use GuzzleHttp\Client;
 use GuzzleHttp\Command\AbstractClient;
 use GuzzleHttp\Command\Command;
 use GuzzleHttp\Command\CommandInterface;
@@ -35,7 +36,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
     private $api;
 
     /** @var string */
-    private $commandException;
+    private $commandException = 'Aws\Exception\AwsException';
 
     /** @var callable */
     private $errorParser;
@@ -133,7 +134,6 @@ class AwsClient extends AbstractClient implements AwsClientInterface
     public function __construct(array $args)
     {
         $service = $this->parseClass();
-        $resolver = new ClientResolver(static::getArguments());
         $withResolved = null;
 
         if (isset($args['with_resolved'])) {
@@ -145,6 +145,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
             $args['service'] = $service;
         }
 
+        $resolver = new ClientResolver(static::getArguments());
         $config = $resolver->resolve($args, $this->getEmitter());
         $this->api = $config['api'];
         $this->serializer = $config['serializer'];
@@ -157,6 +158,14 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         $this->applyParser();
         $this->initSigners($config['config']['signature_version']);
         parent::__construct($config['client'], $config['config']);
+
+        // Make sure the user agent is prefixed by the SDK version.
+        $client = $this->getHttpClient();
+        $client->setDefaultOption('allow_redirects', false);
+        $client->setDefaultOption(
+            'headers/User-Agent',
+            'aws-sdk-php/' . Sdk::VERSION . ' ' . Client::getDefaultUserAgent()
+        );
 
         if ($withResolved) {
             /** @var callable $withResolved */
@@ -400,7 +409,6 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         $klass = get_class($this);
 
         if ($klass == __CLASS__) {
-            $this->commandException = 'Aws\Exception\AwsException';
             return '';
         }
 

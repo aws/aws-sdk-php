@@ -1,8 +1,6 @@
 <?php
 namespace Aws\Endpoint;
 
-use GuzzleHttp\Utils;
-
 /**
  * Provides endpoints based on an endpoint pattern configuration array.
  */
@@ -28,18 +26,25 @@ class PatternEndpointProvider
 
         foreach ($keys as $key) {
             if (isset($this->patterns[$key])) {
-                return $this->expand($this->patterns[$key], $args);
+                return $this->expand(
+                    $this->patterns[$key],
+                    isset($args['scheme']) ? $args['scheme'] : 'https',
+                    $service,
+                    $region
+                );
             }
         }
 
         return null;
     }
 
-    private function expand(array $config, array $args)
+    private function expand(array $config, $scheme, $service, $region)
     {
-        $scheme = isset($args['scheme']) ? $args['scheme'] : 'https';
         $config['endpoint'] = $scheme . '://'
-            . Utils::uriTemplate($config['endpoint'], $args);
+            . strtr($config['endpoint'], [
+                '{service}' => $service,
+                '{region}'  => $region
+            ]);
 
         return $config;
     }
