@@ -4,6 +4,7 @@ namespace Aws;
 use Aws\Exception\AwsException;
 use Aws\Api\Service;
 use Aws\Credentials\CredentialsInterface;
+use Aws\Signature\SignatureProvider;
 use GuzzleHttp\Command\AbstractClient;
 use GuzzleHttp\Command\Command;
 use GuzzleHttp\Command\CommandInterface;
@@ -380,8 +381,8 @@ class AwsClient extends AbstractClient implements AwsClientInterface
 
     private function initSigners($defaultVersion)
     {
-        $fn = $this->signatureProvider;
-        $defaultSigner = $fn(
+        $defaultSigner = SignatureProvider::resolve(
+            $this->signatureProvider,
             $defaultVersion,
             $this->api->getSigningName(),
             $this->region

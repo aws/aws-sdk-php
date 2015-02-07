@@ -3,6 +3,7 @@ namespace Aws\Ec2;
 
 use Aws\AwsClientInterface;
 use Aws\Signature\SignatureV4;
+use Aws\Endpoint\EndpointProvider;
 use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Command\Event\InitEvent;
 use GuzzleHttp\Event\RequestEvents;
@@ -46,7 +47,7 @@ class CopySnapshotSubscriber implements SubscriberInterface
         // Serialize a request for the CopySnapshot operation.
         $request = $client->initTransaction($newCmd)->request;
         // Create the new endpoint for the target endpoint.
-        $endpoint = call_user_func($this->endpointProvider, [
+        $endpoint = EndpointProvider::resolve($this->endpointProvider, [
             'region'  => $cmd['SourceRegion'],
             'service' => 'ec2'
         ])['endpoint'];

@@ -1,19 +1,20 @@
 <?php
 namespace Aws;
 
-use Aws\Signature\Provider;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Event\EmitterInterface;
 use InvalidArgumentException as IAE;
-use Aws\Api\FilesystemApiProvider;
 use Aws\Api\Service;
 use Aws\Api\Validator;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Credentials\NullCredentials;
-use Aws\Credentials\Provider as CredentialProvider;
 use Aws\Retry\ThrottlingFilter;
 use Aws\Subscriber\Validation;
+use Aws\Api\FilesystemApiProvider;
+use Aws\Signature\SignatureProvider;
+use Aws\Endpoint\EndpointProvider;
+use Aws\Credentials\CredentialsProvider;
 use GuzzleHttp\Client;
 use GuzzleHttp\Subscriber\Log\SimpleLogger;
 use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
@@ -36,7 +37,6 @@ class ClientResolver
      * hash of the following:
      *
      * - type: (string, required) option type described as follows:
-     *
      *   - value: The default option type.
      *   - config: The provided value is made available in the client's
      *     getConfig() method.
@@ -131,12 +131,15 @@ class ClientResolver
                 'type'    => 'value',
                 'valid'   => ['callable'],
                 'doc'     => 'A callable that accepts a signature version name '
-                           . '(e.g., v4, s3), a service name, and region, and '
-                           . 'returns a SignatureInterface object. This '
-                           . 'provider is used to create signers utilized by '
-                           . 'the client.',
-                'default' => function (array &$args) {
-                    return Provider::memoize(Provider::version());
+                           . '(e.g., "v4", "s3"), a service name, and region, '
+                           . 'and  returns a SignatureInterface object or null. '
+                           . 'This provider is used to create signers utilized '
+                           . 'by the client. See Aws\\Signature\\SignatureProvider '
+                           . 'for a list of built-in providers',
+                'default' => function () {
+                    return SignatureProvider::memoize(
+                        SignatureProvider::defaultProvider()
+                    );
                 },
             ],
             'endpoint_provider' => [
@@ -144,11 +147,12 @@ class ClientResolver
                 'valid'    => ['callable'],
                 'fn'       => [__CLASS__, '_apply_endpoint_provider'],
                 'doc'      => 'An optional PHP callable that accepts a hash of '
-                            . 'options including a service and region key and '
-                            . 'returns a hash of endpoint data, of which the '
-                            . 'endpoint key is required.',
+                            . 'options including a "service" and "region" key '
+                            . 'and returns a hash of endpoint data, of which '
+                            . 'the "endpoint" key is required. See Aws\\Endpoint\\EndpointProvider '
+                            . 'for a list of built-in providers.',
                 'default' => function () {
-                    return EndpointProvider::fromDefaults();
+                    return EndpointProvider::defaultProvider();
                 },
             ],
             'api_provider' => [
@@ -186,24 +190,26 @@ class ClientResolver
                          . 'Specifying "profile" will cause the "credentials" '
                          . 'key to be ignored.',
                 'fn'    => function ($_, array &$args) {
-                    $args['credentials'] = CredentialProvider::ini($args['profile']);
+                    $args['credentials'] = CredentialsProvider::ini($args['profile']);
                 },
             ],
             'credentials' => [
                 'type'    => 'value',
                 'valid'   => ['array', 'Aws\Credentials\CredentialsInterface', 'bool', 'callable'],
-                'doc'     => 'An Aws\Credentials\CredentialsInterface object '
-                           . 'to use with each, an associative array of "key", '
-                           . '"secret", and "token" key value pairs, `false` '
-                           . 'to utilize null credentials, or a callable '
-                           . 'credentials provider function to create '
-                           . 'credentials using a function. If no credentials '
-                           . 'are provided, the SDK will attempt to load them '
-                           . 'from the environment.',
+                'doc'     => 'Specifies the credentials used to sign requests. '
+                           . 'Provide an Aws\Credentials\CredentialsInterface '
+                           . 'object, an associative array of "key", "secret", '
+                           . 'and an optional "token" key, `false` to use null '
+                           . 'credentials, or a callable credentials provider '
+                           . 'used to create credentials or return null. See '
+                           . 'Aws\\Credentials\\CredentialsProvider for a list '
+                           . 'of built-in credentials providers. If no '
+                           . 'credentials are provided, the SDK will attempt '
+                           . 'to load them from the environment.',
                 'fn'      => [__CLASS__, '_apply_credentials'],
                 'default' => function () {
-                    return CredentialProvider::resolve(
-                        CredentialProvider::defaultProvider()
+                    return CredentialsProvider::resolve(
+                        CredentialsProvider::defaultProvider()
                     );
                 },
             ],
@@ -454,7 +460,6 @@ class ClientResolver
         throw new IAE($msg);
     }
 
-    /** @internal */
     public static function _apply_retries($value, array &$args)
     {
         if ($value) {
@@ -471,13 +476,13 @@ class ClientResolver
         }
     }
 
-    /** @internal */
     public static function _apply_credentials($value, array &$args)
     {
         if ($value instanceof CredentialsInterface) {
             return;
         } elseif (is_callable($value)) {
-            $args['credentials'] = CredentialProvider::resolve($value);
+            // Invoke the credentials provider and throw if it does not resolve.
+            $args['credentials'] = CredentialsProvider::resolve($value);
         } elseif (is_array($value) && isset($value['key']) && isset($value['secret'])) {
             $args['credentials'] = new Credentials(
                 $value['key'],
@@ -496,7 +501,6 @@ class ClientResolver
         }
     }
 
-    /** @internal */
     public static function _apply_api_provider($value, array &$args)
     {
         $api = new Service($value, $args['service'], $args['version']);
@@ -505,11 +509,11 @@ class ClientResolver
         $args['serializer'] = Service::createSerializer($api, $args['endpoint']);
     }
 
-    /** @internal */
-    public static function _apply_endpoint_provider($value, array &$args)
+    public static function _apply_endpoint_provider(callable $value, array &$args)
     {
         if (!isset($args['endpoint'])) {
-            $result = call_user_func($value, [
+            // Invoke the endpoint provider and throw if it does not resolve.
+            $result = EndpointProvider::resolve($value, [
                 'service' => $args['service'],
                 'region'  => $args['region'],
                 'scheme'  => $args['scheme']
@@ -523,7 +527,6 @@ class ClientResolver
         }
     }
 
-    /** @internal */
     public static function _deprecated_key($_, array &$args)
     {
         trigger_error('You provided key, secret, or token in a top-level '
@@ -538,7 +541,6 @@ class ClientResolver
         unset($args['key'], $args['secret'], $args['token']);
     }
 
-    /** @internal */
     public static function _deprecated_curl_options($value, array &$args)
     {
         trigger_error("curl.options should be provided using \$config['http']['config']['curl']' "
@@ -547,7 +549,6 @@ class ClientResolver
         unset($args['curl.options']);
     }
 
-    /** @internal */
     public static function _deprecated_ssl_certificate_authority($value, array &$args)
     {
         trigger_error('ssl.certificate_authority should be provided using '
@@ -556,7 +557,6 @@ class ClientResolver
         unset($args['ssl.certificate_authority']);
     }
 
-    /** @internal */
     public static function _missing_version(array $args)
     {
         $dir = __DIR__ . '/data';
@@ -589,7 +589,6 @@ the SDK.
 EOT;
     }
 
-    /** @internal */
     public static function _missing_region(array $args)
     {
         $service = isset($args['service']) ? $args['service'] : '';
@@ -601,7 +600,6 @@ found at http://docs.aws.amazon.com/general/latest/gr/rande.html.
 EOT;
     }
 
-    /** @internal */
     public static function _default_client (array &$args)
     {
         $clientArgs = [];
@@ -612,7 +610,6 @@ EOT;
         return new Client($clientArgs);
     }
 
-    /** @internal */
     public static function _wrapDebugLogger(array $clientArgs, array $conf)
     {
         // Add retry logger

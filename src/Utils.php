@@ -66,4 +66,32 @@ final class Utils
             $iterator = array_pop($queue);
         } while ($iterator);
     }
+
+    /**
+     * Returns a function that invokes the provided variadic functions one
+     * after the other until one of the functions returns a non-null value.
+     * The return function will call each passed function with any arguments it
+     * is provided.
+     *
+     *     $a = function ($x, $y) { return null; };
+     *     $b = function ($x, $y) { return $x + $y; };
+     *     $fn = Utils::orFn($a, $b);
+     *     echo $fn(1, 2); // 3
+     *
+     * @return callable
+     */
+    public static function orFn()
+    {
+        $fns = func_get_args();
+        return function () use ($fns) {
+            $args = func_get_args();
+            foreach ($fns as $fn) {
+                $result = $args ? call_user_func_array($fn, $args) : $fn();
+                if ($result) {
+                    return $result;
+                }
+            }
+            return null;
+        };
+    }
 }

@@ -15,12 +15,11 @@ class RefreshableCredentials implements CredentialsInterface
     private $provider;
 
     /**
-     * @param callable $callback A function that accepts no arguments and
-     *                           returns a CredentialsInterface object.
+     * @param callable $provider A credentials provider function.
      */
-    public function __construct(callable $callback)
+    public function __construct(callable $provider)
     {
-        $this->provider = $callback;
+        $this->provider = $provider;
         $this->refresh();
     }
 
@@ -67,10 +66,7 @@ class RefreshableCredentials implements CredentialsInterface
     {
         $this->credentials = null;
         $fn = $this->provider;
-        $creds = $fn();
-        if (!$creds instanceof CredentialsInterface) {
-            throw new CredentialsException('Expected an instance of CredentialsInterface');
-        }
+        $creds = CredentialsProvider::resolve($fn);
         if ($creds->isExpired()) {
             throw new CredentialsException('Could not refresh credentials');
         }

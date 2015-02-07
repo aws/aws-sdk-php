@@ -1,20 +1,18 @@
 <?php
 namespace Aws\Test;
 
-use Aws\EndpointProvider;
+use Aws\Endpoint\EndpointProvider;
+use Aws\Endpoint\PatternEndpointProvider;
 
 /**
- * @covers Aws\EndpointProvider
+ * @covers Aws\Endpoint\PatternEndpointProvider
  */
-class EndpointProviderTest extends \PHPUnit_Framework_TestCase
+class PatternEndpointProviderTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @expectedException \Aws\Exception\UnresolvedEndpointException
-     */
-    public function testThrowsWhenEndpointIsNotResolved()
+    public function testReturnsNullWhenUnresolved()
     {
-        $e = new EndpointProvider(['foo' => ['rules' => []]]);
-        call_user_func($e, ['service' => 'foo', 'region' => 'bar']);
+        $e = new PatternEndpointProvider(['foo' => ['rules' => []]]);
+        $this->assertNull($e(['service' => 'foo', 'region' => 'bar']));
     }
 
     public function endpointProvider()
@@ -79,27 +77,7 @@ class EndpointProviderTest extends \PHPUnit_Framework_TestCase
     public function testResolvesEndpoints($input, $output)
     {
         // Use the default endpoints file
-        $p = EndpointProvider::fromDefaults();
+        $p = EndpointProvider::defaultProvider();
         $this->assertEquals($output, call_user_func($p, $input));
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Requires a "service" value
-     */
-    public function testEnsuresService()
-    {
-        $p = EndpointProvider::fromDefaults();
-        call_user_func($p, ['region' => 'foo']);
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Requires a "region" value
-     */
-    public function testEnsuresVersion()
-    {
-        $p = EndpointProvider::fromDefaults();
-        call_user_func($p, ['service' => 'foo']);
     }
 }
