@@ -37,14 +37,14 @@ $aws = new \Aws\Sdk();
 // Use the getClient method to instantiate a client.
 $aws->getClient('s3', [
     // Provide client options.
-    'region' => 'us-west-2',
-    'version' => 'latest',
+    'region'  => 'us-west-2',
+    'version' => '2006-03-01',
 ]);
 
 // OR... you can use the magic methods that have IDE autocompletion.
 $aws->getS3([
     // Provide client options.
-    'region' => 'us-west-2',
+    'region'  => 'us-west-2',
     'version' => 'latest',
 ]);
 ```
@@ -59,7 +59,7 @@ object. They can be overwritten when calling the `getClient()` method as above.
 
 ```php
 $aws = new \Aws\Sdk([
-    'region' => 'us-west-2',
+    'region'  => 'us-west-2',
     'version' => 'latest',
 ]);
 
@@ -77,11 +77,23 @@ in the options.
 
 ```php
 $aws = new \Aws\Sdk([
-    'region' => 'us-west-2',
-    'version' => 'latest',
+    'region'   => 'us-west-2',
+    'version'  => 'latest',
     'dynamodb' => [
         'region' => 'ap-northeast-1',
     ]
+]);
+```
+
+#### Creating clients
+
+Using the `factory()` method of a client is now deprecated. v3 of the SDK now
+allows you to create clients using the `new` operator:
+
+```php
+$client = new \Aws\S3\S3Client([
+    'region'  => 'us-west-2',
+    'version' => '2006-03-01'
 ]);
 ```
 
@@ -177,7 +189,7 @@ result in v3 now includes a wrapping "EngineDefaults" element whereas in v2
 this element was not present.
 
 ```php
-$client = Aws\Rds\RdsClient::factory([
+$client = new Aws\Rds\RdsClient([
     'region'  => 'us-west-1',
     'version' => '2014-09-01'
 ]);

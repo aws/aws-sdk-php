@@ -23,4 +23,24 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
         $files = iterator_to_array($iter);
         $this->assertContains('UtilsTest.php', $files);
     }
+
+    public function testComposesOrFunctions()
+    {
+        $a = function ($a, $b) { return null; };
+        $b = function ($a, $b) { return $a . $b; };
+        $c = function ($a, $b) { return 'C'; };
+        $comp = Utils::orFn($a, $b, $c);
+        $this->assertEquals('+-', $comp('+', '-'));
+    }
+
+    public function testReturnsNullWhenNonResolve()
+    {
+        $called = [];
+        $a = function () use (&$called) { $called[] = 'a'; };
+        $b = function () use (&$called) { $called[] = 'b'; };
+        $c = function () use (&$called) { $called[] = 'c'; };
+        $comp = Utils::orFn($a, $b, $c);
+        $this->assertNull($comp());
+        $this->assertEquals(['a', 'b', 'c'], $called);
+    }
 }

@@ -250,19 +250,14 @@ class Sdk
         // Set the service name and determine if it is linked to a known class
         $args += $this->args;
         $args['service'] = $name;
-        $factoryName = 'Aws\\ClientFactory';
+        $client = 'Aws\\AwsClient';
 
         if (isset(self::$services[$name])) {
             $name = self::$services[$name];
-            $args['class_name'] = "Aws\\{$name}\\{$name}Client";
-            $args['exception_class'] = "Aws\\{$name}\\Exception\\{$name}Exception";
-            $check = "Aws\\{$name}\\{$name}Factory";
-            if (class_exists($check)) {
-                $factoryName = $check;
-            }
+            $client = "Aws\\{$name}\\{$name}Client";
         }
 
-        return (new $factoryName)->create($args);
+        return new $client($args);
     }
 
     private function createSharedHandlerIfNeeded(array $args)

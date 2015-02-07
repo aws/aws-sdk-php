@@ -96,18 +96,13 @@ class InstanceProfileProvider
                 $message = $this->createErrorMessage($e->getMessage());
                 throw new CredentialsException($message, $e->getCode());
             }
+            goto start_over;
         }
-        goto start_over;
     }
 
     private function createErrorMessage($previous)
     {
-        return <<<EOT
-Error retrieving credentials from the instance profile metadata server. When
-you are not running inside of Amazon EC2, you must provide your AWS Access Key
-ID and Secret Access Key in the "key" and "secret" options when creating a
-client or provide an instantiated Aws\\Credentials\\CredentialsInterface
-object. ({$previous})
-EOT;
+        return "Error retrieving credentials from the instance profile "
+            . "metadata server. ({$previous})";
     }
 }

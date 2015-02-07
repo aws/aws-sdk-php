@@ -17,11 +17,11 @@ function generateDocblock(array $args)
             $modifiers[] = implode('|', $value['valid']);
         }
 
-        if (isset($value['required'])) {
+        if (!empty($value['required'])) {
             $modifiers[] = 'required';
         }
 
-        if (isset($value['default'])) {
+        if (isset($value['default']) && !is_callable($value['default'])) {
             $modifiers[] = 'default=' . Core::describeType($value['default']);
         }
 
@@ -29,13 +29,13 @@ function generateDocblock(array $args)
             $docs = '(' . implode(', ', $modifiers) . ') ' . $docs;
         }
 
-        $value = wordwrap($docs, 54, "\n*   ", true);
-        echo '* - ' . $name . ': ' . $value . "\n";
+        $docs = '* - ' . $name . ': ' . $docs;
+        echo wordwrap($docs, 70, "\n*   ") . "\n";
     }
 }
 
-$clientName = isset($argv[1]) ? $argv[1] : 'Aws\ClientFactory';
-$args = call_user_func([$clientName, 'getValidArguments']);
+$clientName = isset($argv[1]) ? $argv[1] : 'Aws\AwsClient';
+$args = call_user_func([$clientName, 'getArguments']);
 ksort($args);
 
 $type = isset($argv[2]) ? $argv[2] : 'docblock';

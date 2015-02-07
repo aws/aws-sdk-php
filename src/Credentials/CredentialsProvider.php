@@ -2,14 +2,51 @@
 namespace Aws\Credentials;
 
 use Aws\Exception\CredentialsException;
+use Aws\Exception\UnresolvedCredentialsException;
+use Aws\Utils;
 
 /**
- * Credential provider functions provide credentials or null when invoked.
+ * Credentials providers are functions that create credentials and can be
+ * composed to create credentials using conditional logic that can create
+ * different credentials in different environments.
  *
- * This allows you compose credential provider functions to create shareable
- * conditional logic used to load credentials in different environments.
+ * A credentials provider is a function that accepts no arguments and returns
+ * {@see CredentialsInterface} object on success or NULL if no credentials can
+ * be created. Note: exceptions MAY be thrown in credentials providers if
+ * necessary though this should only be the result of an error (e.g., malformed
+ * file, bad permissions, etc.) and not the result of missing credentials.
+ *
+ * You can wrap your calls to a credentials provider with the
+ * {@see CredentialsProvider::resolve} function to ensure that a credentials
+ * object is created. If a credentials object is not created, then the
+ * resolve() function will throw a {@see Aws\Exception\UnresolvedCredentialsException}.
+ *
+ *     use Aws\Credentials\CredentialsProvider;
+ *     $provider = CredentialsProvider::defaultProvider();
+ *     // Returns a CredentialsInterface or NULL.
+ *     $creds = $provider();
+ *     // Returns a CredentialsInterface or throws.
+ *     $creds = CredentialsProvider::resolve($provider);
+ *
+ * You can compose multiple providers into a single provider using
+ * {@see Aws\Utils::orFn}. This function accepts providers as arguments and
+ * returns a new function that will invoke each provider until a non-null value
+ * is returned.
+ *
+ *     // First try an INI file at this location.
+ *     $a = CredentialsProvider::ini(null, '/path/to/file.ini');
+ *     // Then try an INI file at this location.
+ *     $b = CredentialsProvider::ini(null, '/path/to/other-file.ini');
+ *     // Then try loading from envrionment variables.
+ *     $c = CredentialsProvider::env();
+ *     // Combine the three providers together.
+ *     $composed = Aws\Utils::orFn($a, $b, $c);
+ *     // Returns creds or NULL
+ *     $creds = $composed();
+ *     // Returns creds or throws.
+ *     $creds = CredentialsProvider::resolve($composed);
  */
-class Provider
+class CredentialsProvider
 {
     const ENV_KEY = 'AWS_ACCESS_KEY_ID';
     const ENV_SECRET = 'AWS_SECRET_ACCESS_KEY';
@@ -27,40 +64,12 @@ class Provider
      */
     public static function resolve(callable $provider)
     {
-        if (!$result = $provider()) {
-            throw new CredentialsException('Could not load credentials.');
+        $result = $provider();
+        if ($result instanceof CredentialsInterface) {
+            return $result;
         }
 
-        return $result;
-    }
-
-    /**
-     * Credential provider that attempts to load credentials from multiple
-     * credential providers.
-     *
-     *     // Providers are supplied using variadic arguments.
-     *     $provider = Provider::chain(
-     *         Provider::ini(),
-     *         Provider::env()
-     *     );
-     *     $credsOrNull = $provider();
-     *
-     * @param callable ... Credential providers pass as variadic arguments.
-     *
-     * @return callable
-     */
-    public static function chain()
-    {
-        $providers = func_get_args();
-        return function () use ($providers) {
-            foreach ($providers as $provider) {
-                $result = $provider();
-                if ($result instanceof CredentialsInterface) {
-                    return $result;
-                }
-            }
-            return null;
-        };
+        throw new UnresolvedCredentialsException('Could not load credentials');
     }
 
     /**
@@ -149,7 +158,7 @@ class Provider
     {
         $result = null;
         return function () use (&$result, $provider) {
-            if (!$result || ($result && $result->isExpired())) {
+            if (!$result || $result->isExpired()) {
                 $result = $provider();
             }
             return $result;
@@ -168,7 +177,7 @@ class Provider
      */
     public static function defaultProvider(array $config = [])
     {
-        return self::chain(
+        return Utils::orFn(
             self::env(),
             self::ini(),
             self::instanceProfile($config)

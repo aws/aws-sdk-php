@@ -49,7 +49,7 @@ class FilesystemApiProvider
             case 'waiter':
                 return $this->getServiceWaiterConfig($service, $version);
             default:
-                throw new \InvalidArgumentException('Unknown type: ' . $type);
+                throw new \InvalidArgumentException("Unknown type: $type");
         }
     }
 
@@ -82,16 +82,10 @@ class FilesystemApiProvider
 
     public function getServiceVersions($service)
     {
-        $files = $this->getServiceFiles('.api.');
-        $search = [$this->path, '.api.php', '.api.json'];
         $results = [];
-        $needle = $service . '-';
-        $len = strlen($needle);
-
-        foreach ($files as $f) {
-            if (strpos($f, $needle) === 0) {
-                $results[] = substr(str_replace($search, '', $f), $len);
-            }
+        $len = strlen($service) + 1;
+        foreach (glob("{$this->path}/{$service}-*.api.*") as $f) {
+            $results[] = substr(basename($f), $len, 10);
         }
 
         return $results;
@@ -114,20 +108,7 @@ class FilesystemApiProvider
             return Utils::jsonDecode(file_get_contents($path), true);
         }
 
-        throw new \RuntimeException('Cannot load file: ' . $path);
-    }
-
-    private function getServiceFiles($substr)
-    {
-        $services = [];
-
-        foreach (scandir($this->path) as $file) {
-            if (strpos($file, $substr)) {
-                $services[] = $file;
-            }
-        }
-
-        return $services;
+        throw new \RuntimeException("Cannot load file: $path");
     }
 
     private function determineLatestVersion($service)
@@ -137,8 +118,8 @@ class FilesystemApiProvider
                 rsort($versions);
                 $this->latestVersions[$service] = $versions[0];
             } else {
-                throw new \RuntimeException('There are no versions of the '
-                    . $service . ' service available.');
+                throw new \RuntimeException("There are no versions of the "
+                    . "\"$service\" service available.");
             }
         }
 

@@ -13,7 +13,7 @@ class CopySnapshotSubscriberTest extends \PHPUnit_Framework_TestCase
 
     public function testDoesNotAddPresignedUrlForNonCopySnapshot()
     {
-        $ec2 = Ec2Client::factory([
+        $ec2 = new Ec2Client([
             'region'  => 'us-east-1',
             'version' => 'latest'
         ]);
@@ -25,7 +25,7 @@ class CopySnapshotSubscriberTest extends \PHPUnit_Framework_TestCase
 
     public function testAddsPresignedUrlForCopySnapshot()
     {
-        $ec2 = Ec2Client::factory([
+        $ec2 = new Ec2Client([
             'region'  => 'us-east-2',
             'version' => 'latest'
         ]);

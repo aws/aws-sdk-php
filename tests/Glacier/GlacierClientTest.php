@@ -1,18 +1,18 @@
 <?php
-namespace Aws\Test\ClientFactory;
+namespace Aws\Test\Glacier;
 
-use Aws\Glacier\GlacierFactory;
+use Aws\Glacier\GlacierClient;
 use Aws\Result;
 use GuzzleHttp\Command\Event\PreparedEvent;
 
 /**
- * @covers Aws\Glacier\GlacierFactory
+ * @covers Aws\Glacier\GlacierClient
  */
-class GlacierTest extends \PHPUnit_Framework_TestCase
+class GlacierClientTest extends \PHPUnit_Framework_TestCase
 {
     public function testHasNecessaryDefaults()
     {
-        $client = (new GlacierFactory)->create([
+        $client = new GlacierClient([
             'service' => 'glacier',
             'region'  => 'us-west-2',
             'version' => 'latest'
@@ -32,7 +32,7 @@ class GlacierTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatesClientWithSubscribers()
     {
-        $client = (new GlacierFactory)->create([
+        $client = new GlacierClient([
             'service' => 'glacier',
             'region'  => 'us-west-2',
             'version' => 'latest'

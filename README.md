@@ -95,7 +95,7 @@ use Aws\S3\S3Client;
 use Aws\Exception\S3Exception;
 
 // Instantiate an Amazon S3 client.
-$s3 = S3Client::factory([
+$s3 = new S3Client([
     'version' => 'latest',
     'region'  => 'us-west-2'
 ]);

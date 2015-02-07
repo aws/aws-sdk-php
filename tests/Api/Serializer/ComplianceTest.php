@@ -3,7 +3,6 @@ namespace Aws\Test\Api\Serializer;
 
 use Aws\Api\Service;
 use Aws\AwsClient;
-use Aws\ClientFactory;
 use Aws\Credentials\NullCredentials;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Client;
@@ -69,23 +68,20 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
     ) {
         $ep = 'http://us-east-1.foo.amazonaws.com';
         $client = new AwsClient([
-            'api' => $service,
-            'credentials' => new NullCredentials(),
-            'client' => new Client(),
-            'signature' => $this->getMock('Aws\Signature\SignatureInterface'),
-            'region' => 'us-west-2',
-            'endpoint' => $ep,
+            'service'      => 'foo',
+            'api_provider' => function () use ($service) {
+                return $service->toArray();
+            },
+            'credentials'  => new NullCredentials(),
+            'client'       => new Client(),
+            'signature'    => $this->getMock('Aws\Signature\SignatureInterface'),
+            'region'       => 'us-west-2',
+            'endpoint'     => $ep,
             'error_parser' => Service::createErrorParser($service->getProtocol()),
             'serializer'   => Service::createSerializer($service, $ep),
             'version'      => 'latest'
         ]);
 
-        $cf = new ClientFactory();
-        $rc = new \ReflectionClass($cf);
-        $rm = $rc->getMethod('applyParser');
-        $rm->setAccessible(true);
-
-        $rm->invoke($cf, $client, 'http://foo.com');
         $command = $client->getCommand($name, $args);
         $trans = new CommandTransaction($client, $command);
         /** @var callable $serializer */

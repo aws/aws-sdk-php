@@ -140,7 +140,7 @@ class UploaderTest extends \PHPUnit_Framework_TestCase
         array $parts = []
     ) {
         $client = $this->getTestClient('s3', [
-            'retries'  => false,
+            'retries'  => 0,
             'validate' => false,
         ]);
         $this->addMockResults($client, $results);
