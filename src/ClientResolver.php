@@ -39,6 +39,126 @@ class ClientResolver
         'array'    => 'is_array',
     ];
 
+    private static $defaultArgs = [
+        'service' => [
+            'type'     => 'value',
+            'valid'    => ['string'],
+            'doc'      => 'Name of the service to utilize. This value will be supplied by default when using one of the SDK clients (e.g., Aws\\S3\\S3Client).',
+            'required' => true,
+        ],
+        'scheme' => [
+            'type'     => 'value',
+            'valid'    => ['string'],
+            'default'  => 'https',
+            'doc'      => 'URI scheme to use when connecting connect (e.g., "http" or "https").',
+        ],
+        'endpoint' => [
+            'type'  => 'value',
+            'valid' => ['string'],
+            'doc'   => 'The full URI of the webservice. This is only required when connecting to a custom endpoint (e.g., a local version of S3).',
+        ],
+        'region' => [
+            'type'     => 'value',
+            'valid'    => ['string'],
+            'required' => [__CLASS__, '_missing_region'],
+            'doc'      => 'Region to connect to. See http://docs.aws.amazon.com/general/latest/gr/rande.html for a list of available regions.',
+        ],
+        'version' => [
+            'type'     => 'value',
+            'valid'    => ['string'],
+            'required' => [__CLASS__, '_missing_version'],
+            'doc'      => 'The version of the webservice to utilize (e.g., 2006-03-01).',
+        ],
+        'defaults' => [
+            'type'    => 'config',
+            'valid'   => ['array'],
+            'default' => [],
+            'doc'     => 'An associative array of default parameters to pass to each operation created by the client.',
+        ],
+        'signature_provider' => [
+            'type'    => 'value',
+            'valid'   => ['callable'],
+            'doc'     => 'A callable that accepts a signature version name (e.g., "v4", "s3"), a service name, and region, and  returns a SignatureInterface object or null. This provider is used to create signers utilized by the client. See Aws\\Signature\\SignatureProvider for a list of built-in providers',
+            'default' => [__CLASS__, '_default_signature_provider'],
+        ],
+        'endpoint_provider' => [
+            'type'     => 'value',
+            'valid'    => ['callable'],
+            'fn'       => [__CLASS__, '_apply_endpoint_provider'],
+            'doc'      => 'An optional PHP callable that accepts a hash of options including a "service" and "region" key and returns a hash of endpoint data, of which the "endpoint" key is required. See Aws\\Endpoint\\EndpointProvider for a list of built-in providers.',
+            'default' => [__CLASS__, '_default_endpoint_provider'],
+        ],
+        'api_provider' => [
+            'type'     => 'value',
+            'valid'    => ['callable'],
+            'doc'      => 'An optional PHP callable that accepts a type, service, and version argument, and returns an array of corresponding configuration data. The type value can be one of api, waiter, or paginator.',
+            'fn'       => [__CLASS__, '_apply_api_provider'],
+            'default'  => [__CLASS__, '_default_api_provider'],
+        ],
+        'signature_version' => [
+            'type'    => 'config',
+            'valid'   => ['string'],
+            'doc'     => 'A string representing a custom signature version to use with a service (e.g., v4, s3, v2). Note that per/operation signature version MAY override this requested signature version.',
+            'default' => [__CLASS__, '_default_signature_version'],
+        ],
+        'profile' => [
+            'type'  => 'config',
+            'valid' => ['string'],
+            'doc'   => 'Allows you to specify which profile to use when credentials are created from the AWS credentials file in your HOME directory. This setting overrides the AWS_PROFILE environment variable. Note: Specifying "profile" will cause the "credentials" key to be ignored.',
+            'fn'    => [__CLASS__, '_apply_profile'],
+        ],
+        'credentials' => [
+            'type'    => 'value',
+            'valid'   => ['Aws\Credentials\CredentialsInterface', 'array', 'bool', 'callable'],
+            'doc'     => 'Specifies the credentials used to sign requests. Provide an Aws\Credentials\CredentialsInterface object, an associative array of "key", "secret", and an optional "token" key, `false` to use null credentials, or a callable credentials provider used to create credentials or return null. See Aws\\Credentials\\CredentialsProvider for a list of built-in credentials providers. If no credentials are provided, the SDK will attempt to load them from the environment.',
+            'fn'      => [__CLASS__, '_apply_credentials'],
+            'default' => [__CLASS__, '_default_credentials'],
+        ],
+        'client' => [
+            'type'    => 'value',
+            'valid'   => ['GuzzleHttp\ClientInterface', 'bool'],
+            'default' => [__CLASS__, '_default_client'],
+            'doc'     => 'Optional Guzzle client used to transfer requests over the wire. Set to true or do not specify a client, and the SDK will create a new client that uses a shared Ring HTTP handler with other clients.'
+        ],
+        'ringphp_handler' => [
+            'type'  => 'value',
+            'valid' => ['callable'],
+            'doc'   => 'RingPHP handler used to transfer HTTP requests (see http://ringphp.readthedocs.org/en/latest/).',
+            'fn'    => [__CLASS__, '_apply_ringphp_handler'],
+        ],
+        'retry_logger' => [
+            'type'  => 'value',
+            'valid' => ['string', 'Psr\Log\LoggerInterface'],
+            'doc'   => 'When the string "debug" is provided, all retries will be logged to STDOUT. Provide a PSR-3 logger to log retries to a specific logger instance.'
+        ],
+        'retries' => [
+            'type'    => 'value',
+            'valid'   => ['int'],
+            'doc'     => 'Configures the maximum number of allowed retries for a client (pass 0 to disable retries). ',
+            'fn'      => [__CLASS__, '_apply_retries'],
+            'default' => 3,
+        ],
+        'validate' => [
+            'type'    => 'value',
+            'valid'   => ['bool'],
+            'default' => true,
+            'doc'     => 'Set to false to disable client-side parameter validation.',
+            'fn'      => [__CLASS__, '_apply_validate'],
+        ],
+        'debug' => [
+            'type'  => 'value',
+            'valid' => ['bool', 'resource'],
+            'doc'   => 'Set to true to display debug information when sending requests. Provide a stream resource to write debug information to a specific resource.',
+            'fn'    => [__CLASS__, '_apply_debug'],
+        ],
+        'http' => [
+            'type'  => 'value',
+            'valid' => ['array'],
+            'doc'   => 'Set to an array of Guzzle client request options (e.g., proxy, verify, etc.). See http://docs.guzzlephp.org/en/latest/clients.html#request-options for a list of available options.',
+            'fn'    => [__CLASS__, '_apply_http'],
+        ],
+    ];
+
     /**
      * Gets an array of default client arguments, each argument containing a
      * hash of the following:
@@ -67,174 +187,7 @@ class ClientResolver
      */
     public static function getDefaultArguments()
     {
-        return [
-            'service' => [
-                'type'     => 'value',
-                'valid'    => ['string'],
-                'doc'      => 'Name of the service to utilize. This value will '
-                            . 'be supplied by default when using one of the '
-                            . 'SDK clients (e.g., Aws\\S3\\S3Client).',
-                'required' => true,
-            ],
-            'scheme' => [
-                'type'     => 'value',
-                'valid'    => ['string'],
-                'default'  => 'https',
-                'doc'      => 'URI scheme to use when connecting connect '
-                            . '(e.g., "http" or "https").',
-            ],
-            'endpoint' => [
-                'type'  => 'value',
-                'valid' => ['string'],
-                'doc'   => 'The full URI of the webservice. This is only '
-                         . 'required when connecting to a custom endpoint '
-                         . '(e.g., a local version of S3).',
-            ],
-            'region' => [
-                'type'     => 'value',
-                'valid'    => ['string'],
-                'required' => [__CLASS__, '_missing_region'],
-                'doc'      => 'Region to connect to. See http://docs.aws.amazon.com/general/latest/gr/rande.html '
-                            . 'for a list of available regions.',
-            ],
-            'version' => [
-                'type'     => 'value',
-                'valid'    => ['string'],
-                'required' => [__CLASS__, '_missing_version'],
-                'doc'      => 'The version of the webservice to utilize '
-                            . '(e.g., 2006-03-01).',
-            ],
-            'defaults' => [
-                'type'    => 'config',
-                'valid'   => ['array'],
-                'default' => [],
-                'doc'     => 'An associative array of default parameters to '
-                           . 'pass to each operation created by the client.',
-            ],
-            'signature_provider' => [
-                'type'    => 'value',
-                'valid'   => ['callable'],
-                'doc'     => 'A callable that accepts a signature version name '
-                           . '(e.g., "v4", "s3"), a service name, and region, '
-                           . 'and  returns a SignatureInterface object or null. '
-                           . 'This provider is used to create signers utilized '
-                           . 'by the client. See Aws\\Signature\\SignatureProvider '
-                           . 'for a list of built-in providers',
-                'default' => [__CLASS__, '_default_signature_provider'],
-            ],
-            'endpoint_provider' => [
-                'type'     => 'value',
-                'valid'    => ['callable'],
-                'fn'       => [__CLASS__, '_apply_endpoint_provider'],
-                'doc'      => 'An optional PHP callable that accepts a hash of '
-                            . 'options including a "service" and "region" key '
-                            . 'and returns a hash of endpoint data, of which '
-                            . 'the "endpoint" key is required. See Aws\\Endpoint\\EndpointProvider '
-                            . 'for a list of built-in providers.',
-                'default' => [__CLASS__, '_default_endpoint_provider'],
-            ],
-            'api_provider' => [
-                'type'     => 'value',
-                'valid'    => ['callable'],
-                'doc'      => 'An optional PHP callable that accepts a type, '
-                            . 'service, and version argument, and returns an '
-                            . 'array of corresponding configuration data. The '
-                            . 'type value can be one of api, waiter, or paginator.',
-                'fn'       => [__CLASS__, '_apply_api_provider'],
-                'default'  => [__CLASS__, '_default_api_provider'],
-            ],
-            'signature_version' => [
-                'type'    => 'config',
-                'valid'   => ['string'],
-                'doc'     => 'A string representing a custom signature version '
-                           . 'to use with a service (e.g., v4, s3, v2). Note '
-                           . 'that per/operation signature version MAY '
-                           . 'override this requested signature version.',
-                'default' => [__CLASS__, '_default_signature_version'],
-            ],
-            'profile' => [
-                'type'  => 'config',
-                'valid' => ['string'],
-                'doc'   => 'Allows you to specify which profile to use when '
-                         . 'credentials are created from the AWS credentials '
-                         . 'file in your HOME directory. This setting overrides '
-                         . 'the AWS_PROFILE environment variable. Note: '
-                         . 'Specifying "profile" will cause the "credentials" '
-                         . 'key to be ignored.',
-                'fn'    => [__CLASS__, '_apply_profile'],
-            ],
-            'credentials' => [
-                'type'    => 'value',
-                'valid'   => ['Aws\Credentials\CredentialsInterface', 'array', 'bool', 'callable'],
-                'doc'     => 'Specifies the credentials used to sign requests. '
-                           . 'Provide an Aws\Credentials\CredentialsInterface '
-                           . 'object, an associative array of "key", "secret", '
-                           . 'and an optional "token" key, `false` to use null '
-                           . 'credentials, or a callable credentials provider '
-                           . 'used to create credentials or return null. See '
-                           . 'Aws\\Credentials\\CredentialsProvider for a list '
-                           . 'of built-in credentials providers. If no '
-                           . 'credentials are provided, the SDK will attempt '
-                           . 'to load them from the environment.',
-                'fn'      => [__CLASS__, '_apply_credentials'],
-                'default' => [__CLASS__, '_default_credentials'],
-            ],
-            'client' => [
-                'type'    => 'value',
-                'valid'   => ['GuzzleHttp\ClientInterface', 'bool'],
-                'default' => [__CLASS__, '_default_client'],
-                'doc'     => 'Optional Guzzle client used to transfer requests '
-                           . 'over the wire. Set to true or do not specify a '
-                           . 'client, and the SDK will create a new client '
-                           . 'that uses a shared Ring HTTP handler with other '
-                           . 'clients.'
-            ],
-            'ringphp_handler' => [
-                'type'  => 'value',
-                'valid' => ['callable'],
-                'doc'   => 'RingPHP handler used to transfer HTTP requests '
-                         . '(see http://ringphp.readthedocs.org/en/latest/).',
-                'fn'    => [__CLASS__, '_apply_ringphp_handler'],
-            ],
-            'retry_logger' => [
-                'type'  => 'value',
-                'valid' => ['string', 'Psr\Log\LoggerInterface'],
-                'doc'   => 'When the string "debug" is provided, all retries '
-                         . 'will be logged to STDOUT. Provide a PSR-3 logger '
-                         . 'to log retries to a specific logger instance.'
-            ],
-            'retries' => [
-                'type'    => 'value',
-                'valid'   => ['int'],
-                'doc'     => 'Configures the maximum number of allowed retries '
-                           . 'for a client (pass 0 to disable retries). ',
-                'fn'      => [__CLASS__, '_apply_retries'],
-                'default' => 3,
-            ],
-            'validate' => [
-                'type'    => 'value',
-                'valid'   => ['bool'],
-                'default' => true,
-                'doc'     => 'Set to false to disable client-side parameter validation.',
-                'fn'      => [__CLASS__, '_apply_validate'],
-            ],
-            'debug' => [
-                'type'  => 'value',
-                'valid' => ['bool', 'resource'],
-                'doc'   => 'Set to true to display debug information when '
-                         . 'sending requests. Provide a stream resource to '
-                         . 'write debug information to a specific resource.',
-                'fn'    => [__CLASS__, '_apply_debug'],
-            ],
-            'http' => [
-                'type'  => 'value',
-                'valid' => ['array'],
-                'doc'   => 'Set to an array of Guzzle client request options '
-                         . '(e.g., proxy, verify, etc.). See http://docs.guzzlephp.org/en/latest/clients.html#request-options '
-                         . 'for a list of available options.',
-                'fn'    => [__CLASS__, '_apply_http'],
-            ],
-        ];
+        return self::$defaultArgs;
     }
 
     /**
