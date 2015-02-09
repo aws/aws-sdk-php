@@ -136,11 +136,6 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         $service = $this->parseClass();
         $withResolved = null;
 
-        if (isset($args['with_resolved'])) {
-            $withResolved = $args['with_resolved'];
-            unset($args['with_resolved']);
-        }
-
         if (!isset($args['service'])) {
             $args['service'] = $service;
         }
@@ -167,9 +162,9 @@ class AwsClient extends AbstractClient implements AwsClientInterface
             'aws-sdk-php/' . Sdk::VERSION . ' ' . Client::getDefaultUserAgent()
         );
 
-        if ($withResolved) {
+        if (isset($args['with_resolved'])) {
             /** @var callable $withResolved */
-            $withResolved($config);
+            $args['with_resolved']($config);
         }
     }
 
@@ -397,10 +392,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
             $this->region
         );
         $this->defaultSignatureListener = function (BeforeEvent $e) use ($defaultSigner) {
-            $defaultSigner->signRequest(
-                $e->getRequest(),
-                $this->credentials
-            );
+            $defaultSigner->signRequest($e->getRequest(), $this->credentials);
         };
     }
 
@@ -408,14 +400,12 @@ class AwsClient extends AbstractClient implements AwsClientInterface
     {
         $klass = get_class($this);
 
-        if ($klass == __CLASS__) {
+        if ($klass === __CLASS__) {
             return '';
         }
 
-        $parts = explode('\\', $klass);
-        $service = substr(array_pop($parts), 0, -6);
-        $this->commandException = implode('\\', $parts)
-            . "\\Exception\\{$service}Exception";
+        $service = substr($klass, strrpos($klass, '\\') + 1, -6);
+        $this->commandException = "Aws\\{$service}\\Exception\\{$service}Exception";
 
         return strtolower($service);
     }
