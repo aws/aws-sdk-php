@@ -385,14 +385,18 @@ class AwsClient extends AbstractClient implements AwsClientInterface
 
     private function initSigners($defaultVersion)
     {
+        $credentials = $this->credentials;
         $defaultSigner = SignatureProvider::resolve(
             $this->signatureProvider,
             $defaultVersion,
             $this->api->getSigningName(),
             $this->region
         );
-        $this->defaultSignatureListener = function (BeforeEvent $e) use ($defaultSigner) {
-            $defaultSigner->signRequest($e->getRequest(), $this->credentials);
+        $this->defaultSignatureListener = static function (BeforeEvent $e) use (
+            $credentials,
+            $defaultSigner
+        ) {
+            $defaultSigner->signRequest($e->getRequest(), $credentials);
         };
     }
 
@@ -415,7 +419,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         $parser = Service::createParser($this->api);
         $this->getEmitter()->on(
             'process',
-            function (ProcessEvent $e) use ($parser) {
+            static function (ProcessEvent $e) use ($parser) {
                 // Guard against exceptions and injected results.
                 if ($e->getException() || $e->getResult()) {
                     return;
