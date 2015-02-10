@@ -39,6 +39,11 @@ class ClientOptions extends Enum
     const CREDENTIALS = 'credentials';
 
     /**
+     * @var string The path of a credential file to read from
+     */
+    const CREDENTIALS = 'credentials.file';
+
+    /**
      * @var string Name of a credential profile to read from your ~/.aws/credentials file
      */
     const PROFILE = 'profile';

@@ -275,6 +275,8 @@ class Credentials implements CredentialsInterface, FromConfigInterface
         $home = self::getHomeDir();
         if ($home && file_exists("{$home}/.aws/credentials")) {
             return self::fromIni($config[Options::PROFILE], "{$home}/.aws/credentials");
+        } elseif (file_exists($config[Options::CREDENTIALS_FILE])) {
+            return self::fromIni($config[Options::PROFILE], $config[Options::CREDENTIALS_FILE]);
         }
 
         // Use instance profile credentials (available on EC2 instances)
