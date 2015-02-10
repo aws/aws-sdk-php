@@ -1,8 +1,17 @@
 # CHANGELOG
 
+## Next Release
+
+* Added support for the Scan API for secondary indexes to the DynamoDB client.
+* Added forward compatibility for the `'credentials'`, `'endpoint'`, and
+  `'http'` configuration options.
+* Made the `marshalValue()` and `unmarshalValue()` methods public in the
+  DynamoDB Marshaler.
+
 ## 2.7.17 - 2015-01-27
 
 * Added support for `getShippingLabel` to the AWS Import/Export client.
+* Added support for online indexing to the DynamoDB client.
 * Updated the AWS Lambda client.
 
 ## 2.7.16 - 2015-01-20
