@@ -19,62 +19,10 @@ def setup(app):
     from sphinx.application import Sphinx
     if not isinstance(app, Sphinx): return
 
-    app.add_role('regions', regions_role)
     app.add_directive('service', ServiceIntro)
     app.add_directive('apiref', ServiceApiRef)
     app.add_directive('indexlinks', ServiceIndexLinks)
     app.add_directive('example', ExampleDirective)
-
-
-def regions_role(name, rawtext, text, lineno, inliner, options={}, content={}):
-    """Inserts a list of regions available to a service name
-
-    Returns 2 part tuple containing list of nodes to insert into the
-    document and a list of system messages.  Both are allowed to be
-    empty.
-
-    :param name: The role name used in the document.
-    :param rawtext: The entire markup snippet, with role.
-    :param text: The text marked with the role.
-    :param lineno: The line number where rawtext appears in the input.
-    :param inliner: The inliner instance that called us.
-    :param options: Directive options for customization.
-    :param content: The directive content for customization.
-    """
-    try:
-        service_name = str(text)
-        if not service_name:
-            raise ValueError
-        app = inliner.document.settings.env.app
-        node = make_regions_node(rawtext, app, str(service_name), options)
-        return [node], []
-    except ValueError:
-        msg = inliner.reporter.error(
-            'The service name "%s" is invalid; ' % text, line=lineno)
-        prb = inliner.problematic(rawtext, rawtext, msg)
-        return [prb], [msg]
-
-
-def get_regions(service_name):
-    """Get the regions for a service by name
-
-    Returns a list of regions
-
-    :param service_name: Retrieve regions for this service by name
-    """
-    return load_service_description(service_name)['regions'].keys()
-
-
-def make_regions_node(rawtext, app, service_name, options):
-    """Create a list of regions for a service name
-
-    :param rawtext:      Text being replaced with the list node.
-    :param app:          Sphinx application context
-    :param service_name: Service name
-    :param options:      Options dictionary passed to role func.
-    """
-    regions = get_regions(service_name)
-    return nodes.Text(", ".join(regions))
 
 
 class ServiceDescription():
@@ -223,7 +171,6 @@ class ServiceIntro(ServiceDescriptionDirective):
         template = env.get_template("client_intro")
         rawtext += template.render(
             scalar,
-            regions=get_regions(d["namespace"]),
             doc_url=docs,
             specifiedApiVersion=api_version,
             apiVersionSuffix=apiVersionSuffix)
@@ -267,7 +214,6 @@ class ServiceApiRef(ServiceDescriptionDirective):
         rawtext += template.render(
             scalar,
             description=d.description,
-            regions=get_regions(d["namespace"]),
             apiVersionSuffix=apiVersionSuffix)
 
         return rawtext

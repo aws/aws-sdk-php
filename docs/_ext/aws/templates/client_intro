@@ -2,61 +2,34 @@
 {{serviceFullName}}{% if specifiedApiVersion %} ({{specifiedApiVersion}}){% endif %}
 ====================================================================================
 
-This guide focuses on the AWS SDK for PHP client for `{{ serviceFullName }} <{{ doc_url }}>`_. This guide assumes that
-you have already downloaded and installed the AWS SDK for PHP. See :doc:`installation` for more information on
-getting started.
+This guide focuses on the AWS SDK for PHP client for
+`{{ serviceFullName }} <{{ doc_url }}>`_. This guide assumes that you have
+already downloaded and installed the AWS SDK for PHP. See :doc:`installation`
+for more information on getting started.
 
 {% if specifiedApiVersion %}
-**Note:** This guide is for the **{{ specifiedApiVersion }}** API version of {{ serviceFullName }}. You may also be
-interested in the :doc:`guide for the latest API version of {{ serviceFullName }} <service-{{ namespace|lower }}>`.
+**Note:** This guide is for the **{{ specifiedApiVersion }}** API version of
+{{ serviceFullName }}. You may also be interested in the
+:doc:`guide for the latest API version of {{ serviceFullName }} <service-{{ namespace|lower }}>`.
 {% endif %}
 
 Creating a client
 -----------------
 
-First you need to create a client object using one of the following techniques.
-
-Factory method
-~~~~~~~~~~~~~~
-
-The easiest way to get up and running quickly is to use the ``Aws\{{namespace}}\{{namespace}}Client::factory()`` method
-and provide your credentials (``key`` and ``secret``).
-
-{% if not globalEndpoint -%}
-A ``region`` parameter is also required and must be set to one of the following values: ``{{ regions|join("``, ``") }}``
-{% endif %}
+Clients are created by passing an associative array of options to a client's
+constructor.
 
 .. code-block:: php
 
     use Aws\{{namespace}}\{{namespace}}Client;
 
-    $client = {{namespace}}Client::factory(array(
-        'key'    {% if specifiedApiVersion %} {% endif %}=> '<aws access key>',
-        'secret' {% if specifiedApiVersion %} {% endif %}=> '<aws secret key>'{% if not globalEndpoint -%},
-        'region' {% if specifiedApiVersion %} {% endif %}=> '<region name>'{% endif %}{% if specifiedApiVersion -%},
-        'version' => '{{specifiedApiVersion}}'{% endif %}
-    ));
+    $client = new {{namespace}}Client([
+        'region'  => '<region name>',
+        'version' => '{{specifiedApiVersion}}',
+    ]);
 
-You can provide your access keys like in the preceding example, or you can choose to omit them if you are using `AWS
-Identity and Access Management (IAM) roles for EC2 instances
-<http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances>`_ or credentials
-sourced from the ``AWS_ACCESS_KEY_ID`` and ``AWS_SECRET_ACCESS_KEY`` environment variables.
-
-Service builder
-~~~~~~~~~~~~~~~
-
-A more robust way to connect to {{ serviceFullName }} is through the service builder. This allows you to specify
-credentials and other configuration settings in a configuration file. These settings can then be shared across all
-clients so that you only have to specify your settings once.
-
-.. code-block:: php
-
-    use Aws\Common\Aws;
-
-    // Create a service builder using a configuration file
-    $aws = Aws::factory('/path/to/my_config.json');
-
-    // Get the client from the builder by namespace
-    $client = $aws->get('{{ namespace }}');
-
-.. _{{ namespace }}{{ apiVersionSuffix }}_operations:
+You can provide your access keys like in the preceding example, or you can
+choose to omit them if you are using `AWS Identity and Access Management (IAM)
+roles for EC2 instances <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances>`_
+or credentials sourced from the ``AWS_ACCESS_KEY_ID`` and
+``AWS_SECRET_ACCESS_KEY`` environment variables.

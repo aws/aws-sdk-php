@@ -61,7 +61,8 @@ copyright = u'2013, Amazon Web Services'
 # built documents.
 #
 # The short X.Y version.
-version = subprocess.check_output('git describe --abbrev=0 --tags', shell=True).strip()
+git_verson = subprocess.check_output('git describe --abbrev=0 --tags', shell=True)
+version = os.getenv('VERSION', git_verson.strip())
 # The full version, including alpha/beta/rc tags.
 release = version
 
@@ -254,7 +255,6 @@ texinfo_documents = [
 # -- HTML theme settings ------------------------------------------------
 import guzzle_sphinx_theme
 extensions.append("guzzle_sphinx_theme")
-pygments_style = 'guzzle_sphinx_theme.GuzzleStyle'
 html_translator_class = 'guzzle_sphinx_theme.HTMLTranslator'
 html_theme_path = guzzle_sphinx_theme.html_theme_path()
 html_theme = 'guzzle_sphinx_theme'

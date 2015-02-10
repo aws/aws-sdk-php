@@ -2,6 +2,9 @@
 Installation
 ============
 
+This guide assumes that your system meets the minimum system requirements
+outlined in the :doc:`installing guide <installation>`.
+
 Installing via Composer
 -----------------------
 
@@ -32,7 +35,7 @@ following:
 
    .. code-block:: sh
 
-       php composer.phar install
+       php composer.phar install -o
 
 #. Require Composer's autoloader.
 
@@ -42,7 +45,7 @@ following:
 
    .. code-block:: php
 
-       require '/path/to/sdk/vendor/autoload.php';
+       require __DIR__ . '/vendor/autoload.php';
 
 You can find out more on how to install Composer, configure autoloading, and
 other best-practices for defining dependencies at
@@ -77,8 +80,10 @@ following required and suggested libraries:
 
 -  `Guzzle <https://github.com/guzzle/guzzle>`_ for HTTP requests
 -  `RingPHP <https://github.com/guzzle/guzzle>`_ for HTTP handlers
--  `jmespath.php <https://github.com/mtdowling/jmespath.php>`_ for JMESPath
+-  `jmespath.php <https://github.com/jmespath/jmespath.php>`_ for JMESPath
     support.
+-  `transducers.php <https://github.com/mtdowling/transducers.php>`_ use
+   internally by the SDK.
 -  `React/Promise <https://github.com/reactphp/promise>`_ for promise support
 
 You can `download the packaged Phar <https://github.com/aws/aws-sdk-php/releases>`_
@@ -104,20 +109,8 @@ containing all of the classes and dependencies you need to run the SDK.
 Additionally, the zip file includes a class autoloader for the AWS SDK for PHP
 and all of its dependencies.
 
-Using the zip file is great if you:
-
-1. Prefer not to or cannot use package managers like Composer and PEAR.
-2. Cannot use phar files due to environment limitations.
-3. Want to use only specific files from the SDK.
-
 To get started, you must `download the zip file <https://github.com/aws/aws-sdk-php/releases>`_,
 unzip it into your project to a location of your choosing, and include the
 autoloader::
 
     require '/path/to/aws-autoloader.php';
-
-Alternatively, you can write your own autoloader or use an existing one from
-your project.
-
-If you have `phing <http://www.phing.info/>`_ installed, you can clone the SDK
-and build a zip file yourself using the *"zip"* task.

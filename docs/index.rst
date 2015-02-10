@@ -10,7 +10,6 @@ AWS SDK for PHP
     installation
     quick-start
     migration-guide
-    side-by-side
 
     credentials
     configuration
@@ -18,21 +17,17 @@ AWS SDK for PHP
     feature-waiters
     feature-iterators
     feature-models
-    feature-facades
-    performance
     faq
 
     service-autoscaling
     service-cloudformation
     service-cloudfront
-    service-cloudfront-20120505
     service-cloudsearch
     service-cloudtrail
     service-cloudwatch
     service-datapipeline
     service-directconnect
     service-dynamodb
-    service-dynamodb-20111205
     service-ec2
     service-elasticache
     service-elasticbeanstalk
@@ -59,11 +54,14 @@ AWS SDK for PHP
     feature-dynamodb-session-handler
     feature-s3-stream-wrapper
 
-The **AWS SDK for PHP** enables PHP developers to use `Amazon Web Services <http://aws.amazon.com/>`_ from their PHP
-code, and build robust applications and software using services like Amazon S3, Amazon DynamoDB, Amazon Glacier, etc.
-You can get started in minutes by installing the SDK through Composer — by requiring the ``aws/aws-sdk-php`` package —
-or by downloading the standalone `aws.zip <http://pear.amazonwebservices.com/get/aws.zip>`_ or
-`aws.phar <http://pear.amazonwebservices.com/get/aws.phar>`_ files.
+The **AWS SDK for PHP** enables PHP developers to use
+`Amazon Web Services <http://aws.amazon.com/>`_ from their PHP code, and build
+robust applications and software using services like Amazon S3, Amazon
+DynamoDB, Amazon Glacier, etc. You can get started in minutes by installing the
+SDK through Composer — by requiring the ``aws/aws-sdk-php`` package — or by
+downloading the standalone `aws.zip <http://pear.amazonwebservices.com/get/aws.zip>`_
+or `aws.phar <http://pear.amazonwebservices.com/get/aws.phar>`_ files.
+
 
 Getting Started
 ---------------
@@ -79,10 +77,6 @@ Getting Started
   * :doc:`quick-start` – Everything you need to know to use the AWS SDK for PHP
   * `Sample Project <http://aws.amazon.com/developers/getting-started/php/>`_
 
-* Migrating from Version 1 of the SDK?
-
-  * :doc:`migration-guide` – Migrating from Version 1 of the SDK to Version 2
-  * :doc:`side-by-side` – Using Version 1 and Version 2 of the SDK side-by-side in the same project
 
 In-Depth Guides
 ---------------
@@ -99,12 +93,11 @@ In-Depth Guides
   * :doc:`feature-facades`
 
 * :doc:`faq`
-* :doc:`performance`
 * `Contributing to the SDK <https://github.com/aws/aws-sdk-php/blob/master/CONTRIBUTING.md>`_
 * `Guzzle Documentation <http://docs.guzzlephp.org/en/latest/docs.html>`_
 
-.. _supported-services:
 
+.. _supported-services:
 Service-Specific Guides
 -----------------------
 
