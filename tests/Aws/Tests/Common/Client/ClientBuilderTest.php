@@ -434,4 +434,21 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         $client = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
         $this->assertEquals($client->getApiVersion(), DynamoDbClient::LATEST_API_VERSION);
     }
+
+    /**
+     * @expectedException \Guzzle\Common\Exception\RuntimeException
+     * @expectedExceptionMessage Invalid option passed to ssl.certificate_authority
+     */
+    public function testHandlesHttpSslOption()
+    {
+        ClientBuilder::factory()
+            ->setConfig(array(
+                'service' => 'foo',
+                'region' => 'us-east-1',
+                'credentials' => false,
+                'service.description' => array('signatureVersion' => 'v4'),
+                'http' => array('verify' => '/does/not/exist/here')
+            ))
+            ->build();
+    }
 }

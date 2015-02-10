@@ -225,6 +225,7 @@ class ClientBuilder
         $description = $this->updateConfigFromDescription($config);
         $signature = $this->getSignature($description, $config);
         $credentials = $this->getCredentials($config);
+        $this->extractHttpConfig($config);
 
         // Resolve exception parser
         if (!$this->exceptionParser) {
@@ -234,24 +235,7 @@ class ClientBuilder
         // Resolve backoff strategy
         $backoff = $config->get(Options::BACKOFF);
         if ($backoff === null) {
-            $backoff = new BackoffPlugin(
-                // Retry failed requests up to 3 times if it is determined that the request can be retried
-                new TruncatedBackoffStrategy(3,
-                    // Retry failed requests with 400-level responses due to throttling
-                    new ThrottlingErrorChecker($this->exceptionParser,
-                        // Retry failed requests due to transient network or cURL problems
-                        new CurlBackoffStrategy(null,
-                            // Retry failed requests with 500-level responses
-                            new HttpBackoffStrategy(array(500, 503, 509),
-                                // Retry requests that failed due to expired credentials
-                                new ExpiredCredentialsChecker($this->exceptionParser,
-                                    new ExponentialBackoffStrategy()
-                                )
-                            )
-                        )
-                    )
-                )
-            );
+            $backoff = $this->createDefaultBackoff();
             $config->set(Options::BACKOFF, $backoff);
         }
 
@@ -494,6 +478,41 @@ class ClientBuilder
             && isset($endpoint['signatureVersion'])
         ) {
             $config->set(Options::SIGNATURE, $endpoint['signatureVersion']);
+        }
+    }
+
+    private function createDefaultBackoff()
+    {
+        return new BackoffPlugin(
+            // Retry failed requests up to 3 times if it is determined that the request can be retried
+            new TruncatedBackoffStrategy(3,
+                // Retry failed requests with 400-level responses due to throttling
+                new ThrottlingErrorChecker($this->exceptionParser,
+                    // Retry failed requests due to transient network or cURL problems
+                    new CurlBackoffStrategy(null,
+                        // Retry failed requests with 500-level responses
+                        new HttpBackoffStrategy(array(500, 503, 509),
+                            // Retry requests that failed due to expired credentials
+                            new ExpiredCredentialsChecker($this->exceptionParser,
+                                new ExponentialBackoffStrategy()
+                            )
+                        )
+                    )
+                )
+            )
+        );
+    }
+
+    private function extractHttpConfig(Collection $config)
+    {
+        $http = $config['http'];
+
+        if (!is_array($http)) {
+            return;
+        }
+
+        if (isset($http['verify'])) {
+            $config[Options::SSL_CERT] = $http['verify'];
         }
     }
 }

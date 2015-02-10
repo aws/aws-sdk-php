@@ -228,6 +228,9 @@ Options                            Description
                                    system's temp folder, and each time a client is created an MD5 check will be
                                    performed to ensure the integrity of the certificate.
 
+                                   This parameter can also be passed in using an SDK v3 forwards compatible way using
+                                   the ``['http']['verify']`` key (e.g., ``$config['http']['verify'] = true``).
+
 ``curl.options``                   Associative array of cURL options to apply to every request created by the client.
                                    If either the key or value of an entry in the array is a string, Guzzle will attempt
                                    to find a matching defined cURL constant automatically (e.g. ``"CURLOPT_PROXY"`` will
