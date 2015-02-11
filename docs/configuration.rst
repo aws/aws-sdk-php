@@ -72,15 +72,6 @@ Set to true to display debug information when sending requests. Provide a
 stream resource to write debug information to a specific resource.
 
 
-defaults
-~~~~~~~~
-
-:Type: ``array``
-
-An associative array of default parameters to pass to each operation created
-by the client.
-
-
 endpoint
 ~~~~~~~~
 
@@ -89,6 +80,16 @@ endpoint
 The full URI of the webservice. This is only required when connecting to a
 custom endpoint (e.g., a local version of Amazon S3 or Amazon DynamoDB
 local).
+
+Here's an example of connecting to `Amazon DynamoDB Local <http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tools.DynamoDBLocal.html>`_:
+
+.. code-block:: php
+
+    $client = new Aws\DynamoDb\DynamoDbClient([
+        'version'  => '2012-08-10',
+        'region'   => 'us-east-1'
+        'endpoint' => 'http://localhost:8000'
+    ]);
 
 
 endpoint_provider
