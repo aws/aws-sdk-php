@@ -2,6 +2,7 @@
 Frequently Asked Questions (FAQ)
 ================================
 
+
 What methods are available on a client?
 ---------------------------------------
 
@@ -10,6 +11,7 @@ The AWS SDK for PHP utilizes service descriptions and dynamic
 operations. You can find a full list of methods available for a web service
 client in the `API documentation <http://docs.aws.amazon.com/aws-sdk-php/v3/api/index.html>`_
 of the client.
+
 
 What do I do about a cURL SSL certificate error?
 ------------------------------------------------
@@ -24,6 +26,7 @@ compiled. You can change the default CA bundle used by PHP by modifying the
 ``openssl.cafile`` PHP ini configuration setting to be set to the path a CA
 file on disk. You can find out more about how cURL bundles the CA bundle here:
 http://curl.haxx.se/docs/caextract.html
+
 
 How do I disable SSL?
 ---------------------
@@ -47,6 +50,7 @@ method to 'http'.
         'scheme' => 'http'
     ));
 
+
 Why can't I upload or download files greater than 2GB?
 ------------------------------------------------------
 
@@ -62,6 +66,7 @@ such as the 64-bit Amazon Linux AMI with the latest version of PHP installed.
 
 For more information, please see: `PHP filesize :Return values <http://docs.php.net/manual/en/function.filesize.php#refsect1-function.filesize-returnvalues>`_.
 
+
 How can I see what data is sent over the wire?
 ----------------------------------------------
 
@@ -74,6 +79,7 @@ This includes the data that is sent and received over the wire.
 .. code-block:: php
 
     $s3Client = S3Client::factory(['debug' => true]);
+
 
 How can I set arbitrary headers on a request?
 ---------------------------------------------
@@ -99,6 +105,7 @@ Amazon S3 PutObject operation.
     });
 
 
+
 Why am I seeing a "Cannot redeclare class" error?
 -------------------------------------------------
 
@@ -115,6 +122,7 @@ makes the most sense for your environment and application.
    include ``"^phar://"``.
 4. **Don't use the phar** - When all else fails, you should install the SDK
    through Composer (recommended) or by using the zip file.
+
 
 What is an InstanceProfileCredentialsException?
 -----------------------------------------------

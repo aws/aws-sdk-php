@@ -1,311 +1,220 @@
-Configuring the SDK
-===================
+=============
+Configuration
+=============
 
-The AWS SDK for PHP can be configured in many ways to suit your needs. This guide highlights the use of configuration
-files with the service builder as well as individual client configuration options.
+The AWS SDK for PHP can be configured in many ways to suit your needs. This
+guide describes each client constructor setting.
 
-Configuration files
--------------------
 
-How configuration files work
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Creating a Client
+-----------------
 
-When passing an array of parameters to the first argument of ``Aws\Common\Aws::factory()``, the service builder loads
-the default ``aws-config.php`` file and merges the array of shared parameters into the default configuration.
-
-Excerpt from ``src/Aws/Common/Resources/aws-config.php``:
+You can create a client by passing an associative array of options to a
+client's constructor.
 
 .. code-block:: php
 
-    <?php return array(
-        'class' => 'Aws\Common\Aws',
-        'services' => array(
-            'default_settings' => array(
-                'params' => array()
-            ),
-            'autoscaling' => array(
-                'alias'   => 'AutoScaling',
-                'extends' => 'default_settings',
-                'class'   => 'Aws\AutoScaling\AutoScalingClient'
-            ),
-            'cloudformation' => array(
-                'alias'   => 'CloudFormation',
-                'extends' => 'default_settings',
-                'class'   => 'Aws\CloudFormation\CloudFormationClient'
-            ),
-        // ...
-    );
-
-The ``aws-config.php`` file provides default configuration settings for associating client classes with service names.
-This file tells the ``Aws\Common\Aws`` service builder which class to instantiate when you reference a client by name.
-
-You can supply your credentials and other configuration settings to the service builder so that each client is
-instantiated with those settings. To do this, pass an array of settings (including your ``key`` and ``secret``) into the
-first argument of ``Aws\Common\Aws::factory()``.
-
-.. code-block:: php
-
-    <?php
-
-    require 'vendor/autoload.php';
-
-    use Aws\Common\Aws;
-
-    $aws = Aws::factory(array(
-        'key'    => 'YOUR_AWS_ACCESS_KEY_ID',
-        'secret' => 'YOUR_AWS_SECRET_ACCESS_KEY',
-        'region' => 'us-east-1',
-    ));
-
-Using a custom configuration file
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You can use a custom configuration file that allows you to create custom named clients with pre-configured settings.
-
-Let's say you want to use the default ``aws-config.php`` settings, but you want to supply your keys using a
-configuration file. Each service defined in the default configuration file extends from ``default_settings`` service.
-You can create a custom configuration file that extends the default configuration file and add credentials to the
-``default_settings`` service:
-
-.. code-block:: php
-
-    <?php return array(
-        'includes' => array('_aws'),
-        'services' => array(
-            'default_settings' => array(
-                'params' => array(
-                    'key'    => 'YOUR_AWS_ACCESS_KEY_ID',
-                    'secret' => 'YOUR_AWS_SECRET_ACCESS_KEY',
-                    'region' => 'us-west-2'
-                )
-            )
-        )
-    );
-
-Make sure to include the ``'includes' => array('_aws'),`` line in your configuration file, because this extends the
-default configuration that makes all of the service clients available to the service builder. If this is missing, then
-you will get an exception when trying to retrieve a service client.
-
-You can use your custom configuration file with the ``Aws\Common\Aws`` class by passing the full path to the
-configuration file in the first argument of the ``factory()`` method:
-
-.. code-block:: php
-
-    <?php
-
-    require 'vendor/autoload.php';
-
-    use Aws\Common\Aws;
-
-    $aws = Aws::factory('/path/to/custom/config.php');
-
-You can create custom named services if you need to use multiple accounts with the same service:
-
-.. code-block:: php
-
-    <?php return array(
-        'includes' => array('_aws'),
-        'services' => array(
-            'foo.dynamodb' => array(
-                'extends' => 'dynamodb',
-                'params'  => array(
-                    'key'    => 'your-aws-access-key-id-for-foo',
-                    'secret' => 'your-aws-secret-access-key-for-foo',
-                    'region' => 'us-west-2'
-                )
-            ),
-            'bar.dynamodb' => array(
-                'extends' => 'dynamodb',
-                'params'  => array(
-                    'key'    => 'your-aws-access-key-id-for-bar',
-                    'secret' => 'your-aws-secret-access-key-for-bar',
-                    'region' => 'us-west-2'
-                )
-            )
-        )
-    );
-
-If you prefer JSON syntax, you can define your configuration in JSON format instead of PHP.
-
-.. code-block:: js
-
-    {
-        "includes": ["_aws"],
-        "services": {
-            "default_settings": {
-                "params": {
-                    "key": "your-aws-access-key-id",
-                    "secret": "your-aws-secret-access-key",
-                    "region": "us-west-2"
-                }
-            }
-        }
-    }
+    $s3 = new Aws\S3\S3Client([
+        'version' => 'latest',
+        'region'  => 'us-west-2'
+    ]);
 
-For more information about writing custom configuration files, please see `Using the Service Builder
-<http://docs.guzzlephp.org/en/latest/webservice-client/using-the-service-builder.html>`_ in the Guzzle documentation.
+All of the general client configuration options are described in detail below.
+The array of options provided to a client may vary based on which client you
+are creating. These custom client configuration options are described in the
+`API documentation <http://docs.aws.amazon.com/aws-sdk-php/latest/>`_ of each
+client.
 
-Client configuration options
------------------------------
 
-Basic client configuration options include your ``key`` and ``secret`` credentials (see :doc:`credentials`) and a
-``region`` (see :ref:`specify_region`). For typical use cases, you will not need to provide more than these 3 options.
-The following represents all of the possible client configuration options for service clients in the SDK.
+Configuration Options
+---------------------
 
-========================= ==============================================================================================
-Credentials Options
-------------------------------------------------------------------------------------------------------------------------
-Options                   Description
-========================= ==============================================================================================
-``key``                   Your AWS access key ID. See `AWS access keys <http://aws.amazon.com/developers/access-keys/>`_.
 
-``secret``                Your AWS secret access key. See `AWS access keys <http://aws.amazon.com/developers/access-keys/>`_.
+api_provider
+~~~~~~~~~~~~
 
-``token``                 An AWS security token to use with request authentication. Please note that not all services
-                          accept temporary credentials. See http://docs.aws.amazon.com/STS/latest/UsingSTS/UsingTokens.html.
+:Type: ``callable``
 
-``token.ttd``             The UNIX timestamp for when the provided credentials expire.
+An optional PHP callable that accepts a type, service, and version argument,
+and returns an array of corresponding configuration data. The type value can
+be one of api, waiter, or paginator.
 
-``credentials``           A credentials object (``Aws\Common\Credentials\CredentialsInterface``) can be provided instead
-                          explicit access keys and tokens.
 
-``credentials.cache.key`` Optional custom cache key to use with the credentials.
+client
+~~~~~~
 
-``credentials.client``    Pass this option to specify a custom ``Guzzle\Http\ClientInterface`` to use if your
-                          credentials require a HTTP request (e.g. ``RefreshableInstanceProfileCredentials``).
-========================= ==============================================================================================
+:Type: ``GuzzleHttp\ClientInterface|bool``
 
-========================= ==============================================================================================
-Endpoint and Signature Options
-------------------------------------------------------------------------------------------------------------------------
-Options                   Description
-========================= ==============================================================================================
-``region``                Region name (e.g., 'us-east-1', 'us-west-1', 'us-west-2', 'eu-west-1', etc.).
-                          See :ref:`specify_region`.
+Optional Guzzle client used to transfer requests over the wire. Set to true
+or do not specify a client, and the SDK will create a new client that uses a
+shared Ring HTTP handler with other clients.
 
-``scheme``                URI Scheme of the base URL (e.g.. 'https', 'http') used when base_url is not supplied.
 
-``base_url``              Allows you to specify a custom endpoint instead of have the SDK build one automatically from
-                          the region and scheme.
+credentials
+~~~~~~~~~~~
 
-``signature``             Overrides the signature used by the client. Clients will always choose an appropriate default
-                          signature. However, it can be useful to override this with a custom setting. This can be set
-                          to "v4", "v3https", "v2" or an instance of ``Aws\Common\Signature\SignatureInterface``.
+:Type: ``array|Aws\Credentials\CredentialsInterface|bool|callable``
 
-``signature.service``     The signature service scope for Signature V4. See :ref:`custom_endpoint`.
+An ``Aws\Credentials\CredentialsInterface`` object to use with each, an
+associative array of "key", "secret", and "token" key value pairs,
+`false` to utilize null credentials, or a callable credentials
+provider function to create credentials using a function. If no
+credentials are provided, the SDK will attempt to load them from the
+environment.
 
-``signature.region``      The signature region scope for Signature V4. See :ref:`custom_endpoint`.
-========================= ==============================================================================================
 
-================================== =====================================================================================
-Generic Client Options
-------------------------------------------------------------------------------------------------------------------------
-Options                            Description
-================================== =====================================================================================
-``ssl.certificate_authority``      Set to true to use the SDK bundled SSL certificate bundle (this is used by default),
-                                   ``'system'`` to use the bundle on your system, a string pointing to a file to use a
-                                   specific certificate file, a string pointing to a directory to use multiple
-                                   certificates, or false to disable SSL validation (not recommended).
+debug
+~~~~~
 
-                                   When using the ``aws.phar``, the bundled SSL certificate will be extracted to your
-                                   system's temp folder, and each time a client is created an MD5 check will be
-                                   performed to ensure the integrity of the certificate.
+:Type: ``bool|resource``
 
-``curl.options``                   Associative array of cURL options to apply to every request created by the client.
-                                   If either the key or value of an entry in the array is a string, Guzzle will attempt
-                                   to find a matching defined cURL constant automatically (e.g. ``"CURLOPT_PROXY"`` will
-                                   be converted to the constant ``CURLOPT_PROXY``).
+Set to true to display debug information when sending requests. Provide a
+stream resource to write debug information to a specific resource.
 
-``request.options``                Associative array of `Guzzle request options
-                                   <http://docs.guzzlephp.org/en/latest/http-client/client.html#request-options>`_ to
-                                   apply to every request created by the client.
 
-``command.params``                 An associative array of default options to set on each command created by the client.
+defaults
+~~~~~~~~
 
-``client.backoff.logger``          A ``Guzzle\Log\LogAdapterInterface`` object used to log backoff retries. Use
-                                   ``'debug'`` to emit PHP warnings when a retry is issued.
+:Type: ``array``
 
-``client.backoff.logger.template`` Optional template to use for exponential backoff log messages. See the
-                                   ``Guzzle\Plugin\Backoff\BackoffLogger`` class for formatting information.
-================================== =====================================================================================
+An associative array of default parameters to pass to each operation created
+by the client.
 
-.. _specify_region:
 
-Specifying a region
-~~~~~~~~~~~~~~~~~~~
+endpoint
+~~~~~~~~
 
-Some clients require a ``region`` configuration setting. You can find out if the client you are using requires a region
-and the regions available to a client by consulting the documentation for that particular client
-(see :ref:`supported-services`).
+:Type: ``string``
 
-Here's an example of creating an Amazon DynamoDB client that uses the ``us-west-1`` region:
+The full URI of the webservice. This is only required when connecting to a
+custom endpoint (e.g., a local version of Amazon S3 or Amazon DynamoDB
+local).
 
-.. code-block:: php
 
-    require 'vendor/autoload.php';
+endpoint_provider
+~~~~~~~~~~~~~~~~~
 
-    use Aws\DynamoDb\DynamoDbClient;
+:Type: ``callable``
 
-    // Create a client that uses the us-west-1 region
-    $client = DynamoDbClient::factory(array(
-        'key'    => 'YOUR_AWS_ACCESS_KEY_ID',
-        'secret' => 'YOUR_AWS_SECRET_ACCESS_KEY',
-        'region' => 'us-west-1'
-    ));
+An optional PHP callable that accepts a hash of options including a service
+and region key and returns a hash of endpoint data, of which the endpoint key
+is required.
 
-.. _custom_endpoint:
 
-Setting a custom endpoint
-~~~~~~~~~~~~~~~~~~~~~~~~~
+http
+~~~~
 
-You can specify a completely customized endpoint for a client using the client's ``base_url`` option. If the client you
-are using requires a region, then must still specify the name of the region using the ``region`` option. Setting a
-custom endpoint can be useful if you're using a mock web server that emulates a web service, you're testing against a
-private beta endpoint, or you are trying to a use a new region not yet supported by the SDK.
+:Type: ``array``
 
-Here's an example of creating an Amazon DynamoDB client that uses a completely customized endpoint:
+Set to an array of Guzzle client request options (e.g., proxy, verify, etc.).
+See http://docs.guzzlephp.org/en/latest/clients.html#request-options for a
+list of available options.
 
-.. code-block:: php
 
-    require 'vendor/autoload.php';
+profile
+~~~~~~~
 
-    use Aws\DynamoDb\DynamoDbClient;
+:Type: ``string``
 
-    // Create a client that that contacts a completely customized base URL
-    $client = DynamoDbClient::factory(array(
-        'base_url' => 'http://my-custom-url',
-        'region'   => 'my-region-1',
-        'key'      => 'abc',
-        'secret'   => '123'
-    ));
+Allows you to specify which profile to use when credentials are created from
+the AWS credentials file in your HOME directory. This setting overrides the
+AWS_PROFILE environment variable. Note: Specifying "profile" will cause the
+"credentials" key to be ignored.
 
-If your custom endpoint uses signature version 4 and must be signed with custom signature scoping values, then you can
-specify the signature scoping values using ``signature.service`` (the scoped name of the service) and
-``signature.region`` (the region that you are contacting). These values are typically not required.
 
-.. _using_proxy:
+region
+~~~~~~
 
-Using a proxy
-~~~~~~~~~~~~~
+:Type: ``string``
+:Required: true
 
-You can send requests with the AWS SDK for PHP through a proxy using the "request options" of a client. These
-"request options" are applied to each HTTP request sent from the client. One of the option settings that can be
-specified is the `proxy` option.
+Region to connect to. See http://docs.aws.amazon.com/general/latest/gr/rande.html
+for a list of available regions.
 
-Request options are passed to a client through the client's factory method:
 
-.. code-block:: php
+retries
+~~~~~~~
 
-    use Aws\S3\S3Client;
+:Type: ``int``
+:Default: ``int(3)``
 
-    $s3 = S3Client::factory(array(
-        'request.options' => array(
-            'proxy' => '127.0.0.1:123'
-        )
-    ));
+Configures the maximum number of allowed retries for a client. Pass ``0`` to
+disable retries.
 
-The above example tells the client that all requests should be proxied through an HTTP proxy located at the
-`127.0.0.1` IP address using port `123`.
 
-You can supply a username and password when specifying your proxy setting if needed, using the format of
-``username:password@host:port``.
+retry_logger
+~~~~~~~~~~~~
+
+:Type: ``string|resource``
+
+When the string "debug" is provided, all retries will be logged to STDOUT.
+Provide a `PSR-3 logger <http://www.php-fig.org/psr/psr-3/>`_ to log
+retries to a specific logger instance.
+
+
+ringphp_handler
+~~~~~~~~~~~~~~~
+
+:Type: ``callable``
+
+`RingPHP <http://ringphp.readthedocs.org/en/latest/>`_ handler used to
+transfer HTTP requests.
+
+
+scheme
+~~~~~~
+
+:Type: ``string``
+:Default: ``string(5) "https"``
+
+URI scheme to use when connecting connect.
+
+
+service
+~~~~~~~
+
+:Type: ``string``
+:Required: true
+
+Name of the service to utilize. This value will be supplied by default when
+using a client provided by the SDK (i.e., ``Aws\S3\S3Client``). This option
+is useful when testing a service that has not yet been published in the SDK
+but you have available on disk.
+
+
+signature_provider
+~~~~~~~~~~~~~~~~~~
+
+:Type: ``callable``
+
+A callable that accepts a signature version name (e.g., v4, s3), a service
+name, and region, and returns a ``Aws\Signature\SignatureInterface`` object.
+This provider is used to create signers utilized by the client.
+
+
+signature_version
+~~~~~~~~~~~~~~~~~
+
+:Type: ``string``
+
+A string representing a custom signature version to use with a service
+(e.g., v4, s3, v2). Note that per/operation signature version MAY override
+this requested signature version.
+
+
+validate
+~~~~~~~~
+
+:Type: ``bool``
+:Default: ``bool(true)``
+
+Set to false to disable client-side parameter validation.
+
+
+version
+~~~~~~~
+
+:Type: ``string``
+:Required: true
+
+The version of the webservice to utilize (e.g., ``2006-03-01``).

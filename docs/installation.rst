@@ -2,6 +2,9 @@
 Installation
 ============
 
+There are several supported methods of installing the AWS SDK for PHP. The
+recommended way to install the SDK is through `Composer <http://getcomposer.org>`_.
+
 Installing via Composer
 -----------------------
 
@@ -58,7 +61,7 @@ and all of its dependencies when included. Bundled with the phar file are the
 following required and suggested libraries:
 
 -  `Guzzle <https://github.com/guzzle/guzzle>`_
--  `RingPHP <https://github.com/guzzle/guzzle>`_
+-  `RingPHP <https://github.com/guzzle/RingPHP>`_
 -  `jmespath.php <https://github.com/jmespath/jmespath.php>`_
 -  `transducers.php <https://github.com/mtdowling/transducers.php>`_
 -  `React/Promise <https://github.com/reactphp/promise>`_

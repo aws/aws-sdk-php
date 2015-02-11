@@ -1,5 +1,7 @@
-Providing Credentials to the SDK
-================================
+===========
+Credentials
+===========
+
 
 Introduction
 ------------
@@ -17,6 +19,7 @@ There are many ways to provide credentials:
 #. :ref:`instance_profile_credentials`
 #. :ref:`factory_credentials`
 #. :ref:`temporary_credentials`
+
 
 Which technique should you choose?
 ----------------------------------
@@ -45,6 +48,7 @@ specific to those projects.
 *In general, it is recommended that you use IAM roles when running your
 application on Amazon EC2 and use environment variables elsewhere.*
 
+
 .. _environment_credentials:
 
 Using credentials from environment variables
@@ -63,6 +67,7 @@ If you are hosting your application on `AWS Elastic Beanstalk
 you can set the ``AWS_ACCESS_KEY_ID`` and ``AWS_SECRET_KEY`` environment
 variables on the AWS Elastic Beanstalk console so that the SDK can use those
 credentials automatically.
+
 
 .. _instance_profile_credentials:
 
@@ -99,6 +104,7 @@ been configured with an IAM role.
 
 For more information, see `IAM Roles for Amazon EC2 <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html>`_.
 
+
 .. _hardcoded_credentials:
 
 Setting credentials explicitly in your code
@@ -113,6 +119,7 @@ Hard-coding your credentials can be dangerous, because it is easy to
 accidentally commit your credentials into an SCM repository, potentially
 exposing your credentials to more people than intended. It can also make it
 difficult to rotate credentials in the future.
+
 
 .. _factory_credentials:
 
@@ -154,6 +161,7 @@ You can use this instead of specifying your access keys separately.
 You may also want to read the section in the Getting Started Guide about
 :ref:`using a client's factory method <client_factory_method>` for more details.
 
+
 .. _temporary_credentials:
 
 Using temporary credentials from AWS STS
@@ -173,6 +181,7 @@ through third-party identity providers (read more about `Web Identity Federation
     service. Please check if the service you are using supports temporary
     credentials by reading `AWS Services that Support AWS STS
     <http://docs.aws.amazon.com/STS/latest/UsingSTS/UsingTokens.html>`_.
+
 
 Getting temporary credentials
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -204,6 +213,7 @@ contains a ``'Credentials'`` value. If you print the result (e.g.,
         )
         ...
     )
+
 
 Providing temporary credentials to the SDK
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
