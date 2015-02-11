@@ -8,10 +8,9 @@ AWS SDK for PHP
     requirements
     installation
     quick-start
-    migration-guide
 
-    credentials
     configuration
+    credentials
     feature-commands
     feature-waiters
     feature-iterators
@@ -20,12 +19,14 @@ AWS SDK for PHP
 
     service-cloudfront
     service-dynamodb
+    feature-dynamodb-session-handler
     service-redshift
     service-s3
+    feature-s3-stream-wrapper
     service-sqs
     service-sts
-    feature-dynamodb-session-handler
-    feature-s3-stream-wrapper
+
+    migration-guide
 
 The **AWS SDK for PHP** enables PHP developers to use
 `Amazon Web Services <http://aws.amazon.com/>`_ from their PHP code, and build
