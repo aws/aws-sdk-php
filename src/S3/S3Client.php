@@ -9,6 +9,8 @@ use Aws\ClientResolver;
 use Aws\Retry\S3TimeoutFilter;
 use Aws\Subscriber\SaveAs;
 use Aws\Subscriber\SourceFile;
+use GuzzleHttp\Command\Event\InitEvent;
+use GuzzleHttp\Event\EmitterInterface;
 use GuzzleHttp\Message\ResponseInterface;
 use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
 use GuzzleHttp\Stream\AppendStream;
@@ -39,9 +41,11 @@ class S3Client extends AwsClient
                 'doc'     => 'Set to true to send requests using path style '
                            . 'bucket addressing (e.g., '
                            . 'https://s3.amazonaws.com/bucket/key).',
-                'fn'      => function ($value, array &$args) {
-                    if ($value) {
-                        $args['defaults']['PathStyle'] = true;
+                'fn'      => function ($value, $_, EmitterInterface $em) {
+                    if ($value === true) {
+                        $em->on('init', function (InitEvent $e) {
+                            $e->getCommand()['PathStyle'] = true;
+                        });
                     }
                 },
             ],
@@ -89,14 +93,14 @@ class S3Client extends AwsClient
     public function __construct(array $args)
     {
         parent::__construct($args);
-        $emitter = $this->getEmitter();
-        $emitter->attach(new BucketStyleSubscriber($this->getConfig('bucket_endpoint')));
-        $emitter->attach(new PermanentRedirectSubscriber());
-        $emitter->attach(new SSECSubscriber());
-        $emitter->attach(new PutObjectUrlSubscriber());
-        $emitter->attach(new SourceFile($this->getApi()));
-        $emitter->attach(new ApplyMd5Subscriber());
-        $emitter->attach(new SaveAs());
+        $em = $this->getEmitter();
+        $em->attach(new BucketStyleSubscriber($this->getConfig('bucket_endpoint')));
+        $em->attach(new PermanentRedirectSubscriber());
+        $em->attach(new SSECSubscriber());
+        $em->attach(new PutObjectUrlSubscriber());
+        $em->attach(new SourceFile($this->getApi()));
+        $em->attach(new ApplyMd5Subscriber());
+        $em->attach(new SaveAs());
     }
 
     /**

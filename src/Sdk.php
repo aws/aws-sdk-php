@@ -203,8 +203,6 @@ class Sdk
      *   information when sending requests. Provide a stream
      *   resource to write debug information to a specific
      *   resource.
-     * - defaults: (array) An associative array of default parameters to
-     *   pass to each operation created by the client.
      * - endpoint: (string) The full URI of the webservice. This is only
      *   required when connecting to a custom endpoint (e.g., a
      *   local version of S3).

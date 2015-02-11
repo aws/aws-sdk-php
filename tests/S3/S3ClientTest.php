@@ -24,7 +24,13 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
             'version'          => 'latest',
             'force_path_style' => true
         ]);
-        $command = $c->getCommand('GetObject');
+
+        $this->addMockResults($c, [[]]);
+        $command = $c->getCommand('GetObject', [
+            'Bucket' => 'foo',
+            'Key'    => 'baz'
+        ]);
+        $c->execute($command);
         $this->assertTrue($command['PathStyle']);
     }
 

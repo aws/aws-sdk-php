@@ -79,17 +79,6 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testMergesDefaultCommandParameters()
-    {
-        $client = $this->createClient(
-            ['operations' => ['foo' => ['http' => ['method' => 'POST']]]],
-            ['defaults' => ['test' => '123']]
-        );
-        $command = $client->getCommand('foo', ['bam' => 'boozled']);
-        $this->assertEquals('123', $command['test']);
-        $this->assertEquals('boozled', $command['bam']);
-    }
-
     /**
      * @expectedException \Aws\Exception\AwsException
      * @expectedExceptionMessage Uncaught exception while executing Aws\AwsClient::foo - Baz Bar!
@@ -139,16 +128,6 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'GuzzleHttp\Command\CommandInterface',
             $client->getCommand('foo')
         );
-    }
-
-    public function testCanSpecifyDefaultCommandOptions()
-    {
-        $client = $this->createClient(['operations' => ['foo' => [
-            'http' => ['method' => 'POST']
-        ]]], ['defaults' => ['baz' => 'bam']]);
-
-        $c = $client->getCommand('foo');
-        $this->assertEquals('bam', $c['baz']);
     }
 
     public function testCanGetIterator()

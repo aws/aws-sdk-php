@@ -23,9 +23,6 @@ class AwsClient extends AbstractClient implements AwsClientInterface
     /** @var CredentialsInterface AWS credentials */
     private $credentials;
 
-    /** @var array Default command options */
-    private $defaults;
-
     /** @var string */
     private $region;
 
@@ -82,8 +79,6 @@ class AwsClient extends AbstractClient implements AwsClientInterface
      * - debug: (bool|resource) Set to true to display debug information
      *   when sending requests. Provide a stream resource to write debug
      *   information to a specific resource.
-     * - defaults: (array, default=array(0)) An associative array of
-     *   default parameters to pass to each operation created by the client.
      * - endpoint: (string) The full URI of the webservice. This is only
      *   required when connecting to a custom endpoint (e.g., a local version
      *   of S3).
@@ -148,7 +143,6 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         $this->signatureProvider = $config['signature_provider'];
         $this->endpoint = $config['endpoint'];
         $this->credentials = $config['credentials'];
-        $this->defaults = $config['defaults'];
         $this->region = isset($config['region']) ? $config['region'] : null;
         $this->applyParser();
         $this->initSigners($config['config']['signature_version']);
@@ -235,9 +229,6 @@ class AwsClient extends AbstractClient implements AwsClientInterface
             }
         }
 
-        // Merge in default configuration options.
-        $args += $this->getConfig('defaults');
-
         if (isset($args['@future'])) {
             $future = $args['@future'];
             unset($args['@future']);
@@ -245,7 +236,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
             $future = false;
         }
 
-        return new Command($name, $args + $this->defaults, [
+        return new Command($name, $args, [
             'emitter' => clone $this->getEmitter(),
             'future' => $future
         ]);

@@ -69,12 +69,6 @@ class ClientResolver
             'required' => [__CLASS__, '_missing_version'],
             'doc'      => 'The version of the webservice to utilize (e.g., 2006-03-01).',
         ],
-        'defaults' => [
-            'type'    => 'config',
-            'valid'   => ['array'],
-            'default' => [],
-            'doc'     => 'An associative array of default parameters to pass to each operation created by the client.',
-        ],
         'signature_provider' => [
             'type'    => 'value',
             'valid'   => ['callable'],
@@ -225,6 +219,7 @@ class ClientResolver
                     $this->throwRequired($args);
                 }
             }
+
             // Validate the types against the provided value.
             foreach ($a['valid'] as $check) {
                 if (isset(self::$typeMap[$check])) {
@@ -236,12 +231,15 @@ class ClientResolver
                     goto is_valid;
                 }
             }
+
             $this->invalidType($key, $args[$key]);
-            // Apply the value;
+
+            // Apply the value
             is_valid:
             if (isset($a['fn'])) {
                 $a['fn']($args[$key], $args, $emitter);
             }
+
             if ($a['type'] === 'config') {
                 $args['config'][$key] = $args[$key];
             }

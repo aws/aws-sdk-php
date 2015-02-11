@@ -11,8 +11,6 @@ class GlacierClient extends AwsClient
 {
     public function __construct(array $args)
     {
-        // Set the default accountId to "-" for all operations.
-        $args['defaults']['accountId'] = '-';
         parent::__construct($args);
         $api = $this->getApi();
         // Add the Glacier version header required for all operations.
@@ -26,5 +24,15 @@ class GlacierClient extends AwsClient
         // Listen for upload operations and make sure the required hash headers
         // are added.
         $em->attach(new ApplyChecksumsSubscriber());
+    }
+
+    public function getCommand($name, array $args = [])
+    {
+        // Set the default accountId to "-" for all operations.
+        if (!isset($args['accountId'])) {
+            $args['accountId'] = '-';
+        }
+
+        return parent::getCommand($name, $args);
     }
 }
