@@ -2,65 +2,36 @@
 Installation
 ============
 
-This guide assumes that your system meets the minimum system requirements
-outlined in the :doc:`installing guide <installation>`.
-
 Installing via Composer
 -----------------------
 
 Using `Composer <http://getcomposer.org>`_ is the recommended way to install
 the AWS SDK for PHP. Composer is a dependency management tool for PHP that
 allows you to declare the dependencies your project needs and installs them
-into your project. In order to use the SDK with Composer, you must do the
-following:
+into your project.
 
-#. Add ``"aws/aws-sdk-php"`` as a dependency in your project's
-``composer.json`` file.
+1. Install Composer
 
-   .. code-block:: js
-
-       {
-           "require": {
-               "aws/aws-sdk-php": "~3.0"
-           }
-       }
-
-#. Download and install Composer.
-
-   .. code-block:: sh
+   ::
 
        curl -sS https://getcomposer.org/installer | php
 
-#. Install your dependencies.
+2. Run the Composer command to install the latest stable version of the SDK:
 
-   .. code-block:: sh
+   ::
 
-       php composer.phar install -o
+       composer require guzzlehttp/guzzle
 
-#. Require Composer's autoloader.
-
-   Composer prepares an autoload file that's capable of autoloading all of the
-   classes in any of the libraries that it downloads. To use it, just add the
-   following line to your code's bootstrap process.
+3. Require Composer's autoloader:
 
    .. code-block:: php
 
-       require __DIR__ . '/vendor/autoload.php';
+       <?php
+       require 'vendor/autoload.php';
 
 You can find out more on how to install Composer, configure autoloading, and
 other best-practices for defining dependencies at
 `getcomposer.org <http://getcomposer.org>`_.
-
-During your development, you can keep up with the latest changes on the master
-branch by setting the version requirement for the SDK to ``dev-master``.
-
-.. code-block:: js
-
-   {
-      "require": {
-         "aws/aws-sdk-php": "dev-master"
-      }
-   }
 
 If you are deploying your application to `AWS Elastic Beanstalk
 <http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_PHP_eb.html>`_,
@@ -71,6 +42,14 @@ your application.
 Installing via Phar
 -------------------
 
+You can `download the packaged Phar <https://github.com/aws/aws-sdk-php/releases>`_
+and simply include it in your scripts to get started:
+
+.. code-block:: php
+
+    <?php
+    require '/path/to/aws.phar';
+
 Each release of the AWS SDK for PHP ships with a pre-packaged
 `phar <http://php.net/manual/en/book.phar.php>`_ (PHP archive) file containing
 all of the classes and dependencies you need to run the SDK. Additionally, the
@@ -78,18 +57,11 @@ phar file automatically registers a class autoloader for the AWS SDK for PHP
 and all of its dependencies when included. Bundled with the phar file are the
 following required and suggested libraries:
 
--  `Guzzle <https://github.com/guzzle/guzzle>`_ for HTTP requests
--  `RingPHP <https://github.com/guzzle/guzzle>`_ for HTTP handlers
--  `jmespath.php <https://github.com/jmespath/jmespath.php>`_ for JMESPath
-    support.
--  `transducers.php <https://github.com/mtdowling/transducers.php>`_ use
-   internally by the SDK.
--  `React/Promise <https://github.com/reactphp/promise>`_ for promise support
-
-You can `download the packaged Phar <https://github.com/aws/aws-sdk-php/releases>`_
-and simply include it in your scripts to get started::
-
-    require '/path/to/aws.phar';
+-  `Guzzle <https://github.com/guzzle/guzzle>`_
+-  `RingPHP <https://github.com/guzzle/guzzle>`_
+-  `jmespath.php <https://github.com/jmespath/jmespath.php>`_
+-  `transducers.php <https://github.com/mtdowling/transducers.php>`_
+-  `React/Promise <https://github.com/reactphp/promise>`_
 
 .. note::
 

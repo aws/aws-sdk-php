@@ -26,7 +26,7 @@ EOT
 # Get the current script directory.
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-tojson() {
+to_php() {
   f=${1:?"a filename is required"}
   [ "$f" == "." ] && return
   topath="$DIR/../src/data/`basename $f .json`.php"
@@ -37,7 +37,7 @@ max_jobs=25
 counter=0
 
 for f in "$@"; do
-  tojson $f &
+  to_php $f &
   ((counter++))
   [ $counter -eq "$max_jobs" ] && wait
 done

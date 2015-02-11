@@ -1,4 +1,6 @@
-.. service:: CloudFront
+=======================
+Amazon CloudFront Guide
+=======================
 
 Signing CloudFront URLs for Private Distributions
 -------------------------------------------------
@@ -128,7 +130,3 @@ The following is an example of how you could use the signed URL to construct a w
         </script>
     </body>
     </html>
-
-.. include:: _snippets/incomplete.txt
-
-.. apiref:: CloudFront

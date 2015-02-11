@@ -150,6 +150,28 @@ class Sdk
     }
 
     /**
+     * Get the class name of a client.
+     *
+     * @param string $name Client name (e.g., "s3", "dynamodb").
+     *
+     * @return string
+     */
+    public static function getClientClass($name)
+    {
+        $name = strtolower($name);
+
+        if (isset(self::$aliases[$name])) {
+            $name = self::$aliases[$name];
+        }
+
+        return isset(self::$services[$name])
+            ? "Aws\\" . self::$services[$name] . "\\"
+                . self::$services[$name]
+                . "Client"
+            : 'Aws\AwsClient';
+    }
+
+    /**
      * Get a client by name using an array of constructor options.
      *
      * - api_provider: (callable) An optional PHP callable that accepts a
@@ -233,9 +255,8 @@ class Sdk
      */
     public function getClient($name, array $args = [])
     {
-        // Normalize service name to lower case
-        $name = strtolower($name);
         $this->createSharedHandlerIfNeeded($args);
+        $name = strtolower($name);
 
         // Resolve service aliases
         if (isset(self::$aliases[$name])) {

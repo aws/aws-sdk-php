@@ -23,6 +23,7 @@ Optional requirements
 
 
 .. _optimal-settings:
+
 Optimal settings
 ----------------
 
