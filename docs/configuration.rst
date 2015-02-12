@@ -491,8 +491,12 @@ signature_provider
 :Type: ``callable``
 
 A callable that accepts a signature version name (e.g., v4, s3), a service
-name, and region, and returns a ``Aws\Signature\SignatureInterface`` object.
-This provider is used to create signers utilized by the client.
+name, and region, and returns a ``Aws\Signature\SignatureInterface`` object or
+``NULL``. This provider is used to create signers utilized by the client.
+
+There are various functions provided by the SDK in the
+``Aws\Signature\SignatureProvider`` class that can be used to create customized
+signature providers.
 
 
 signature_version
