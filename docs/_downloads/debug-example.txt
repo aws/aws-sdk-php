@@ -1,0 +1,103 @@
+2015-02-11T14:36:11-08:00: Starting the command:init event for Aws\S3\S3Client::ListBuckets (0000000055c772dd000000014970a96f): State was changed to Array
+(
+    [time] => 1423694171.8275
+    [command] => Array
+        (
+            [id] => 0000000055c772d9000000014970a96f
+            [class] => GuzzleHttp\Command\Command
+            [keys] => Array
+                (
+                )
+
+            [name] => ListBuckets
+        )
+
+    [request] =>
+    [response] =>
+    [result] =>
+    [error] =>
+)
+
+2015-02-11T14:36:11-08:00: Done with the command:init event for Aws\S3\S3Client::ListBuckets (0000000055c772dd000000014970a96f) (took 0.000792 seconds): No change
+2015-02-11T14:36:11-08:00: Starting the command:prepared event for Aws\S3\S3Client::ListBuckets (0000000055c772a5000000014970a96f): Array
+(
+    [request was changed] => Array
+        (
+            [start-line] => GET / HTTP/1.1
+            [headers] =>
+Host: s3-us-west-2.amazonaws.com
+User-Agent: aws-sdk-php/3.0.0-beta.1 Guzzle/5.2.0 curl/7.38.0 PHP/5.5.19
+            [body] =>
+        )
+
+)
+
+2015-02-11T14:36:11-08:00: Done with the command:prepared event for Aws\S3\S3Client::ListBuckets (0000000055c772a5000000014970a96f) (took 0.000315 seconds): No change
+2015-02-11T14:36:11-08:00: Starting the request:before event for Aws\S3\S3Client::ListBuckets (0000000055c772a8000000014970a96f): No change
+2015-02-11T14:36:11-08:00: Done with the request:before event for Aws\S3\S3Client::ListBuckets (0000000055c772a8000000014970a96f) (took 0.000817 seconds): Array
+(
+    [request has a change] => Array
+        (
+            [headers was changed] =>
+Host: s3-us-west-2.amazonaws.com
+User-Agent: aws-sdk-php/3.0.0-beta.1 Guzzle/5.2.0 curl/7.38.0 PHP/5.5.19
+Date: Wed, 11 Feb 2015 22:36:11 +0000
+Authorization: AWS KEY:SIGNATURE
+        )
+
+)
+
+* Hostname was NOT found in DNS cache
+*   Trying 10.12.10.0...
+* Connected to s3-us-west-2.amazonaws.com (10.12.10.0) port 443 (#0)
+* TLS 1.2 connection using TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+* Server certificate: *.s3-us-west-2.amazonaws.com
+* Server certificate: VeriSign Class 3 Secure Server CA - G3
+* Server certificate: VeriSign Class 3 Public Primary Certification Authority - G5
+* Server certificate: Class 3 Public Primary Certification Authority
+> GET / HTTP/1.1
+Host: s3-us-west-2.amazonaws.com
+User-Agent: aws-sdk-php/3.0.0-beta.1 Guzzle/5.2.0 curl/7.38.0 PHP/5.5.19
+Date: Wed, 11 Feb 2015 22:36:11 +0000
+Authorization: AWS KEY:SIGNATURE
+
+< HTTP/1.1 200 OK
+< x-amz-id-2: 71pfjS/d/JwATKdF2II0JVW0RPlSYx7nuhXP0cfhBLETS+/V8/SBMC2lciuy7xPX
+< x-amz-request-id: 567E2EC793B5EEDD
+< Date: Wed, 11 Feb 2015 22:36:13 GMT
+< Content-Type: application/xml
+< Transfer-Encoding: chunked
+* Server AmazonS3 is not blacklisted
+< Server: AmazonS3
+<
+* Connection #0 to host s3-us-west-2.amazonaws.com left intact
+2015-02-11T14:36:13-08:00: Starting the request:complete event for Aws\S3\S3Client::ListBuckets (0000000055c772ae000000014970a96f): Array
+(
+    [response was changed] => Array
+        (
+            [start-line] => HTTP/1.1 200 OK
+            [headers] =>
+x-amz-id-2: 71pfjS/d/JwATKdF2II0JVW0RPlSYx7nuhXP0cfhBLETS+/V8/SBMC2lciuy7xPX
+x-amz-request-id: 567E2EC793B5EEDD
+Date: Wed, 11 Feb 2015 22:36:13 GMT
+Content-Type: application/xml
+Transfer-Encoding: chunked
+Server: AmazonS3
+            [body] => Array
+                (
+                    [class] => GuzzleHttp\Stream\Stream
+                    [size] => 6203
+                    [tell] => 0
+                    [contents] => <?xml version="1.0" encoding="UTF-8"?>
+<ListAllMyBucketsResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"><Owner><ID>ownerid</ID><DisplayName>michael_aws</DisplayName></Owner><Buckets><Bucket><Name>foo</Name><CreationDate>2014-07-10T18:25:10.000Z</CreationDate></Bucket></Buckets></ListAllMyBucketsResult>
+                )
+
+        )
+
+)
+
+2015-02-11T14:36:13-08:00: Done with the request:complete event for Aws\S3\S3Client::ListBuckets (0000000055c772ae000000014970a96f) (took 0.000795 seconds): No change
+2015-02-11T14:36:13-08:00: Starting the request:end event for Aws\S3\S3Client::ListBuckets (0000000055c772ae000000014970a96f): No change
+2015-02-11T14:36:13-08:00: Done with the request:end event for Aws\S3\S3Client::ListBuckets (0000000055c772ae000000014970a96f) (took 0.000514 seconds): No change
+2015-02-11T14:36:13-08:00: Starting the command:process event for Aws\S3\S3Client::ListBuckets (0000000055c772b1000000014970a96f): No change
+2015-02-11T14:36:13-08:00: Done with the command:process event for Aws\S3\S3Client::ListBuckets (0000000055c772b1000000014970a96f) (took 0.000499 seconds): No change

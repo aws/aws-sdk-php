@@ -50,7 +50,7 @@ class ClientResolver
             'type'     => 'value',
             'valid'    => ['string'],
             'default'  => 'https',
-            'doc'      => 'URI scheme to use when connecting connect (e.g., "http" or "https").',
+            'doc'      => 'URI scheme to use when connecting connect. The SDK will utilize "https" endpoints (i.e., utilize SSL/TLS connections) by default. You can attempt to connect to a service over an unencrypted "http" endpoint by setting ``scheme`` to "http".',
         ],
         'endpoint' => [
             'type'  => 'value',
@@ -110,9 +110,9 @@ class ClientResolver
         ],
         'client' => [
             'type'    => 'value',
-            'valid'   => ['GuzzleHttp\ClientInterface', 'bool'],
+            'valid'   => ['GuzzleHttp\ClientInterface'],
             'default' => [__CLASS__, '_default_client'],
-            'doc'     => 'Optional Guzzle client used to transfer requests over the wire. Set to true or do not specify a client, and the SDK will create a new client that uses a shared Ring HTTP handler with other clients.'
+            'doc'     => 'Optional Guzzle client used to transfer requests over the wire. If you do not specify a client, the SDK will create a new client that uses a shared Ring HTTP handler with other clients.'
         ],
         'ringphp_handler' => [
             'type'  => 'value',

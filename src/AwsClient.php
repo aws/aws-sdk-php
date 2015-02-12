@@ -64,10 +64,10 @@ class AwsClient extends AbstractClient implements AwsClientInterface
      *   type, service, and version argument, and returns an array of
      *   corresponding configuration data. The type value can be one of api,
      *   waiter, or paginator.
-     * - client: (GuzzleHttp\ClientInterface|bool) Optional Guzzle client
-     *   used to transfer requests over the wire. Set to true or do not specify
-     *   a client, and the SDK will create a new client that uses a shared Ring
-     *   HTTP handler with other clients.
+     * - client: (GuzzleHttp\ClientInterface) Optional Guzzle client used to
+     *   transfer requests over the wire. If you do not specify a client, the
+     *   SDK will create a new client that uses a shared Ring HTTP handler
+     *   with other clients.
      * - credentials:
      *   (array|Aws\Credentials\CredentialsInterface|bool|callable) An
      *   Aws\Credentials\CredentialsInterface object to use with each, an
@@ -100,9 +100,9 @@ class AwsClient extends AbstractClient implements AwsClientInterface
      *   available regions.
      * - retries: (int, default=int(3)) Configures the maximum number of
      *   allowed retries for a client (pass 0 to disable retries).
-     * - retry_logger: When the string "debug" is provided, all retries
-     *   will be logged to STDOUT. Provide a PSR-3 logger to log retries to a
-     *   specific logger instance.
+     * - retry_logger: (string|Psr\Log\LoggerInterface) When the string "debug"
+     *   is provided, all retries will be logged to STDOUT. Provide a PSR-3
+     *   logger to log retries to a specific logger instance.
      * - ringphp_handler: (callable) RingPHP handler used to transfer HTTP
      *   requests (see http://ringphp.readthedocs.org/en/latest/).
      * - scheme: (string, default=string(5) "https") URI scheme to use when
