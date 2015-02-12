@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Api;
 
+use Aws\Exception\UnresolvedApiException;
 use GuzzleHttp\Utils;
 
 /**
@@ -41,43 +42,20 @@ class FilesystemApiProvider
      */
     public function __invoke($type, $service, $version)
     {
+        if ($version == 'latest') {
+            $version = $this->determineLatestVersion($service);
+        }
+
         switch ($type) {
             case 'api':
-                return $this->getService($service, $version);
+                return $this->load($service, $version, 'api');
             case 'paginator':
-                return $this->getServicePaginatorConfig($service, $version);
+                return $this->load($service, $version, 'paginators');
             case 'waiter':
-                return $this->getServiceWaiterConfig($service, $version);
+                return $this->load($service, $version, 'waiters2');
             default:
                 throw new \InvalidArgumentException("Unknown type: $type");
         }
-    }
-
-    private function getService($service, $version)
-    {
-        if ($version == 'latest') {
-            $version = $this->determineLatestVersion($service);
-        }
-
-        return $this->load($service, $version, 'api');
-    }
-
-    private function getServicePaginatorConfig($service, $version)
-    {
-        if ($version == 'latest') {
-            $version = $this->determineLatestVersion($service);
-        }
-
-        return $this->load($service, $version, 'paginators');
-    }
-
-    private function getServiceWaiterConfig($service, $version)
-    {
-        if ($version == 'latest') {
-            $version = $this->determineLatestVersion($service);
-        }
-
-        return $this->load($service, $version, 'waiters2');
     }
 
     public function getServiceVersions($service)
@@ -108,7 +86,7 @@ class FilesystemApiProvider
             return Utils::jsonDecode(file_get_contents($path), true);
         }
 
-        throw new \RuntimeException("Cannot load file: $path");
+        throw new UnresolvedApiException("Cannot find file: $path");
     }
 
     private function determineLatestVersion($service)
@@ -118,7 +96,7 @@ class FilesystemApiProvider
                 rsort($versions);
                 $this->latestVersions[$service] = $versions[0];
             } else {
-                throw new \RuntimeException("There are no versions of the "
+                throw new UnresolvedApiException("There are no versions of the "
                     . "\"$service\" service available.");
             }
         }

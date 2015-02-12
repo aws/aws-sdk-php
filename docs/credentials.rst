@@ -13,18 +13,14 @@ AWS SDK for SDK using one of the following methods:
 #. :ref:`instance_profile_credentials`
 #. :ref:`credential_profiles`
 #. :ref:`hardcoded_credentials`
-#. :ref:`temporary_credentials`
 #. :ref:`credential_provider`
+#. :ref:`temporary_credentials`
 
-*In general, it is recommended that you use IAM roles when running your
+In general, it is recommended that you use IAM roles when running your
 application on Amazon EC2 and use credential profiles or environment variables
-elsewhere.*
-
-.. important::
-
-    Regardless of how you supply credentials to the SDK, it is encouraged that
-    you follow the `IAM Best Practices <http://docs.aws.amazon.com/IAM/latest/UserGuide/IAMBestPractices.html>`_
-    when managing your credentials.
+elsewhere. Regardless of how you supply credentials to the SDK, it is encouraged that
+you follow the `IAM Best Practices <http://docs.aws.amazon.com/IAM/latest/UserGuide/IAMBestPractices.html>`_
+when managing your credentials.
 
 
 .. _environment_credentials:
@@ -161,6 +157,230 @@ a client constructor.
     accidentally commit your credentials into an SCM repository, potentially
     exposing your credentials to more people than intended. It can also make it
     difficult to rotate credentials in the future.
+
+
+.. _credential_provider:
+
+Using a credential provider
+---------------------------
+
+A credential provider is a function that returns ``NULL`` or an
+``Aws\Credentials\CredentialsInterface`` object. You can use credential
+providers to implement your own custom logic for creating credentials.
+
+Credential providers are passed into the ``credentials`` client constructor
+option:
+
+.. code-block:: php
+
+    use Aws\Credentials\CredentialProvider;
+    use Aws\S3\S3Client;
+
+    // Only allow environment variable credentials.
+    $provider = CredentialProvider::env();
+
+    // Pass the provider to the client.
+    $client = new S3Client([
+        'region'      => 'us-west-2',
+        'version'     => '2006-03-01',
+        'credentials' => $provider
+    ]);
+
+Passing in a credential provider function to an SDK client constructor will
+invoke the provider and ensure that it returns an instance of
+``Aws\Credentials\CredentialsInterface``. If the provider does not return a
+credential object, an ``Aws\Exception\UnresolvedCredentialsException`` is
+thrown.
+
+The SDK ships with several built-in providers that can be combined together
+along with any custom providers.
+
+
+env provider
+~~~~~~~~~~~~
+
+``Aws\Credentials\CredentialProvider::env`` attempts to load credentials from
+environment variables.
+
+.. code-block:: php
+
+    use Aws\Credentials\CredentialProvider;
+    use Aws\S3\S3Client;
+
+    $client = new S3Client([
+        'region'      => 'us-west-2',
+        'version'     => '2006-03-01',
+        'credentials' => CredentialProvider::env()
+    ]);
+
+
+ini provider
+~~~~~~~~~~~~
+
+``Aws\Credentials\CredentialProvider::ini`` attempts to load credentials from
+an :ref:`ini credential file <credential_profiles>`. The SDK will by default
+attempt to load the "default" profile from a file located at
+``~/.aws/credentials``.
+
+.. code-block:: php
+
+    use Aws\Credentials\CredentialProvider;
+    use Aws\S3\S3Client;
+
+    $client = new S3Client([
+        'region'      => 'us-west-2',
+        'version'     => '2006-03-01',
+        'credentials' => CredentialProvider::ini()
+    ]);
+
+You can use a custom profile or ini file location by providing arguments to
+the function that creates the provider.
+
+.. code-block:: php
+
+    $profile = 'production';
+    $path = '/full/path/to/credentials.ini';
+
+    $client = new S3Client([
+        'region'      => 'us-west-2',
+        'version'     => '2006-03-01',
+        'credentials' => CredentialProvider::ini($profile, $path)
+    ]);
+
+
+instanceProfile provider
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+``Aws\Credentials\CredentialProvider::instanceProfile`` attempts to load
+credentials from Amazon EC2 instance profiles.
+
+.. code-block:: php
+
+    use Aws\Credentials\CredentialProvider;
+    use Aws\S3\S3Client;
+
+    $client = new S3Client([
+        'region'      => 'us-west-2',
+        'version'     => '2006-03-01',
+        'credentials' => CredentialProvider::instanceProfile()
+    ]);
+
+
+defaultProvider provider
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+``Aws\Credentials\CredentialProvider::defaultProvider`` is the default
+credential provider. This provider is used if you omit a ``credentials`` option
+when creating a client. It first attempts to load credentials from environment
+variables, then from an ini file, then from an instance profile.
+
+
+Creating a custom provider
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Credential providers are simply functions that when invoked return either
+``NULL`` or an ``Aws\Credentials\CredentialsInterface`` object. A credential
+provider should have the following logic:
+
+1. Return ``NULL`` if the provider is not capable of providing credentials
+   given the arguments in which it was created.
+2. Throw an ``Aws\Exception\CredentialsException`` if the provider encounters
+   an exceptional situation (e.g., a corrupted file, an invalid format, etc.).
+3. Return an instance of ``Aws\Credentials\CredentialsInterface`` if the
+   provider is able to provide credentials.
+
+A best practice for creating providers is to create a function that is invoked
+to create a credential provider. As an example, here's the source of the
+``env`` provider:
+
+.. code-block:: php
+
+    // This function CREATES a credential provider.
+    public static function env()
+    {
+        // This function IS the credential provider.
+        return function () {
+            // Use credentials from environment variables, if available
+            $key = getenv(self::ENV_KEY);
+            $secret = getenv(self::ENV_SECRET);
+            return $key && $secret
+                ? new Credentials($key, $secret, getenv(self::ENV_SESSION))
+                : null;
+        };
+    }
+
+
+Chaining providers
+~~~~~~~~~~~~~~~~~~
+
+Credential providers can be chained using the ``Aws\Utils::orFn()`` function.
+This function accepts a variadic number of arguments, each of which are
+credential provider functions. This function then returns a new function that
+is the composition of the provided functions such that they are invoked one
+after the other until a function returns a non-null value.
+
+The ``defaultProvider`` uses this composition in order to check multiple
+providers before returning ``NULL``. The source of the ``defaultProvider``
+demonstrates the use of the ``orFn``.
+
+.. code-block:: php
+
+    // This function returns a provider.
+    public static function defaultProvider(array $config = [])
+    {
+        // This function is the provider, which is actually the composition
+        // of multiple providers.
+        return Utils::orFn(
+            self::env(),
+            self::ini(),
+            self::instanceProfile($config)
+        );
+    }
+
+
+Refreshable Credentials
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Some credentials are only temporary and must be periodically refreshed. In
+fact, the instance profile credentials provided by the ``instanceProfile``
+provider will create credentials that automatically refresh when they expire.
+Use the ``Aws\Credentials\RefreshableCredentials`` class if you need to create
+a custom credential provider that returns temporary credentials that are
+automatically refreshed.
+
+The ``RefreshableCredentials`` class accepts a single argument in the
+constructor: a credential provider. When instantiated, the
+``RefreshableCredentials`` class immediately invokes the provider and uses the
+provided credentials. When the decorated credentials expire, the class will
+automatically invoke the credential provider to retrieve new credentials.
+
+
+Memoizing Credentials
+~~~~~~~~~~~~~~~~~~~~~
+
+It is sometimes necessary to create a credential provider that remembers the
+previous return value. This can be useful when using the ``Aws\Sdk`` class to
+share a credential provider across multiple clients. You can add memoization to
+a credential provider by wrapping the credential provider function in a
+memoization  function:
+
+.. code-block:: php
+
+    use Aws\Credentials\CredentialProvider;
+
+    $provider = CredentialProvider::instanceProfile();
+    $provider = CredentialProvider::memoize($provider);
+
+    // Pass the provider into the Sdk class and share the provider
+    // across multiple clients. Each time a new client is constructed,
+    // it will use the previously returned credentials as long as
+    // they have not yet expired.
+    $sdk = new Aws\Sdk(['credentials' => $provider]);
+
+    $s3 = $sdk->getS3(['region' => 'us-west-2', 'version' => 'latest']);
+    $ec2 = $sdk->getEc2(['region' => 'us-west-2', 'version' => 'latest']);
+
+    assert($s3->getCredentials() === $ec2->getCredentials());
 
 
 .. _temporary_credentials:
@@ -308,107 +528,3 @@ To create an anonymous client, you can set the ``'credentials'`` option to
         'Bucket' => 'my-bucket',
         'Key'    => 'my-key',
     ]);
-
-
-.. _credential_provider:
-
-Using a credential provider
----------------------------
-
-A credential provider is a function that returns ``NULL`` or an
-``Aws\Credentials\CredentialsInterface`` object. You can use credential
-providers to implement your own custom logic for creating credentials.
-
-Credential providers can be chained together to implement environment specific
-logic to attain credentials. For example, if no credentials are provided in the
-``credentials`` key value pair, the SDK will use the default credential
-provider to check for credentials in various places before failing. The default
-provider first attempts to load credentials from environment variables, then
-from an ini file, then from an instance profile. Here's an example of using
-this same credential provider but manually passing it into the ``credentials``
-option:
-
-.. code-block:: php
-
-    use Aws\Credentials\CredentialProvider;
-    use Aws\S3\S3Client;
-
-    // Create a default credential provider.
-    $provider = CredentialProvider::defaultProvider();
-
-    // Pass the provider into a client.
-    $client = new S3Client([
-        'region'      => 'us-west-2',
-        'version'     => '2006-03-01',
-        'credentials' => $provider
-    ]);
-
-Passing in a credential provider function to the SDK will invoke the provider
-and ensure that it returns an instance of
-``Aws\Credentials\CredentialsInterface``. If the provider does not return a
-credential object, an ``Aws\Exception\UnresolvedCredentialsException`` is
-thrown.
-
-The SDK ships with the following providers:
-
-- ``Aws\Credentials\CredentialProvider::env``: Attempts to load credentials
-  from environment variables.
-
-  .. code-block:: php
-
-      use Aws\Credentials\CredentialProvider;
-      use Aws\S3\S3Client;
-
-      $client = new S3Client([
-          'region'      => 'us-west-2',
-          'version'     => '2006-03-01',
-          'credentials' => CredentialProvider::env()
-      ]);
-
-- ``Aws\Credentials\CredentialProvider::ini``: Attempts to load credentials
-  from an :ref:`ini credential file <credential_profiles>`. The SDK will by
-  default attempt to load the "default" profile from a file located at
-  ``~/.aws/credentials``.
-
-  .. code-block:: php
-
-      use Aws\Credentials\CredentialProvider;
-      use Aws\S3\S3Client;
-
-      $client = new S3Client([
-          'region'      => 'us-west-2',
-          'version'     => '2006-03-01',
-          'credentials' => CredentialProvider::ini()
-      ]);
-
-  You can use a custom profile or ini file location by providing arguments to
-  the function that creates the provider.
-
-  .. code-block:: php
-
-      $profile = 'production';
-      $path = '/full/path/to/credentials.ini';
-
-      $client = new S3Client([
-          'region'      => 'us-west-2',
-          'version'     => '2006-03-01',
-          'credentials' => CredentialProvider::ini($profile, $path)
-      ]);
-
-- ``Aws\Credentials\CredentialProvider::instanceProfile``: Attempts to load
-  credentials from Amazon EC2 instance profiles.
-
-  .. code-block:: php
-
-      use Aws\Credentials\CredentialProvider;
-      use Aws\S3\S3Client;
-
-      $client = new S3Client([
-          'region'      => 'us-west-2',
-          'version'     => '2006-03-01',
-          'credentials' => CredentialProvider::instanceProfile()
-      ]);
-
-- ``Aws\Credentials\CredentialProvider::defaultProvider``: Attempts to load
-  credentials from environment variables, then from an ini file, and finally
-  from IAM instance profile credentials.

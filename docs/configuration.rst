@@ -35,9 +35,12 @@ api_provider
 
 :Type: ``callable``
 
-An optional PHP callable that accepts a type, service, and version argument,
-and returns an array of corresponding configuration data. The type value can
-be one of api, waiter, or paginator.
+A PHP callable that accepts a type, service, and version argument, and returns
+an array of corresponding configuration data. The type value can be one of
+``api``, ``waiter``, or ``paginator``.
+
+By default, the SDK will use an instance of ``Aws\Api\FileSystemApiProvider``
+that loads credentials from the ``src/data`` folder of the SDK.
 
 
 client
@@ -70,12 +73,67 @@ credentials
 
 :Type: ``array|Aws\Credentials\CredentialsInterface|bool|callable``
 
-An ``Aws\Credentials\CredentialsInterface`` object to use with each, an
-associative array of "key", "secret", and "token" key value pairs,
-`false` to utilize null credentials, or a callable credentials
-provider function to create credentials using a function. If no
-credentials are provided, the SDK will attempt to load them from the
-environment.
+If you do not provide a ``credentials`` option, the SDK will attempt to load
+credentials from your environment in the following order:
+
+1. Load credentials from :ref:`environment variables <environment_credentials>`
+2. Load credentials from a :ref:`credentials ini file <credential_profiles>`
+3. Load credentials from an :ref:`IAM instance profile <instance_profile_credentials>`.
+
+You can provide an associative array of "key", "secret", and "token" key value
+pairs to use :ref:`hardcoded credentials <hardcoded_credentials>`.
+
+.. code-block:: php
+
+    // Hardcoded credentials.
+    $s3 = new Aws\S3\S3Client([
+        'version'     => 'latest',
+        'region'      => 'us-west-2',
+        'credentials' => [
+            'key'    => 'abc',
+            'secret' => '123'
+        ]
+    ]);
+
+Pass an ``Aws\Credentials\CredentialsInterface`` object to use a specific
+credentials instance.
+
+.. code-block:: php
+
+    $credentials = new Aws\Credentials\Credentials('key', 'secret');
+
+    $s3 = new Aws\S3\S3Client([
+        'version'     => 'latest',
+        'region'      => 'us-west-2',
+        'credentials' => $credentials
+    ]);
+
+Pass `false` to utilize null credentials and not sign requests.
+
+.. code-block:: php
+
+    $s3 = new Aws\S3\S3Client([
+        'version'     => 'latest',
+        'region'      => 'us-west-2',
+        'credentials' => false
+    ]);
+
+Pass a callable :ref:`credential provider <credential_provider>` function to
+create credentials using a function.
+
+.. code-block:: php
+
+    use Aws\Credentials\CredentialProvider;
+
+    $provider = CredentialProvider::env();
+    $s3 = new Aws\S3\S3Client([
+        'version'     => 'latest',
+        'region'      => 'us-west-2',
+        'credentials' => $provider
+    ]);
+
+You can find more information about providing credentials to a client in the
+:doc:`credentials` guide.
 
 
 debug
