@@ -15,7 +15,7 @@
  */
 
 return array (
-    'apiVersion' => '2014-09-30',
+    'apiVersion' => '2015-02-02',
     'endpointPrefix' => 'elasticache',
     'serviceFullName' => 'Amazon ElastiCache',
     'serviceType' => 'query',
@@ -70,6 +70,66 @@ return array (
         ),
     ),
     'operations' => array(
+        'AddTagsToResource' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'TagListMessage',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'AddTagsToResource',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2015-02-02',
+                ),
+                'ResourceName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Tags' => array(
+                    'required' => true,
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The requested cache cluster ID does not refer to an existing cache cluster.',
+                    'class' => 'CacheClusterNotFoundException',
+                ),
+                array(
+                    'reason' => 'The requested snapshot name does not refer to an existing snapshot.',
+                    'class' => 'SnapshotNotFoundException',
+                ),
+                array(
+                    'reason' => 'The request cannot be processed because it would cause the resource to have more than the allowed number of tags. The maximum number of tags permitted on a resource is 10.',
+                    'class' => 'TagQuotaPerResourceExceededException',
+                ),
+                array(
+                    'reason' => 'The requested Amazon Resource Name (ARN) does not refer to an existing resource.',
+                    'class' => 'InvalidARNException',
+                ),
+            ),
+        ),
         'AuthorizeCacheSecurityGroupIngress' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -85,7 +145,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'CacheSecurityGroupName' => array(
                     'required' => true,
@@ -141,7 +201,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'SourceSnapshotName' => array(
                     'required' => true,
@@ -196,7 +256,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'CacheClusterId' => array(
                     'required' => true,
@@ -264,6 +324,23 @@ return array (
                     'items' => array(
                         'name' => 'SecurityGroupId',
                         'type' => 'string',
+                    ),
+                ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
                     ),
                 ),
                 'SnapshotArns' => array(
@@ -351,6 +428,10 @@ return array (
                     'class' => 'InvalidVPCNetworkStateException',
                 ),
                 array(
+                    'reason' => 'The request cannot be processed because it would cause the resource to have more than the allowed number of tags. The maximum number of tags permitted on a resource is 10.',
+                    'class' => 'TagQuotaPerResourceExceededException',
+                ),
+                array(
                     'reason' => 'The value for a parameter is invalid.',
                     'class' => 'InvalidParameterValueException',
                 ),
@@ -375,7 +456,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'CacheParameterGroupName' => array(
                     'required' => true,
@@ -431,7 +512,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'CacheSecurityGroupName' => array(
                     'required' => true,
@@ -478,7 +559,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'CacheSubnetGroupName' => array(
                     'required' => true,
@@ -535,7 +616,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'ReplicationGroupId' => array(
                     'required' => true,
@@ -605,6 +686,23 @@ return array (
                     'items' => array(
                         'name' => 'SecurityGroupId',
                         'type' => 'string',
+                    ),
+                ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
                     ),
                 ),
                 'SnapshotArns' => array(
@@ -692,6 +790,10 @@ return array (
                     'class' => 'InvalidVPCNetworkStateException',
                 ),
                 array(
+                    'reason' => 'The request cannot be processed because it would cause the resource to have more than the allowed number of tags. The maximum number of tags permitted on a resource is 10.',
+                    'class' => 'TagQuotaPerResourceExceededException',
+                ),
+                array(
                     'reason' => 'The value for a parameter is invalid.',
                     'class' => 'InvalidParameterValueException',
                 ),
@@ -716,7 +818,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'CacheClusterId' => array(
                     'required' => true,
@@ -775,7 +877,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'CacheClusterId' => array(
                     'required' => true,
@@ -833,7 +935,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'CacheParameterGroupName' => array(
                     'required' => true,
@@ -875,7 +977,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'CacheSecurityGroupName' => array(
                     'required' => true,
@@ -917,7 +1019,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'CacheSubnetGroupName' => array(
                     'required' => true,
@@ -951,7 +1053,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'ReplicationGroupId' => array(
                     'required' => true,
@@ -1014,7 +1116,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'SnapshotName' => array(
                     'required' => true,
@@ -1056,7 +1158,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'CacheClusterId' => array(
                     'type' => 'string',
@@ -1106,7 +1208,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'Engine' => array(
                     'type' => 'string',
@@ -1150,7 +1252,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'CacheParameterGroupName' => array(
                     'type' => 'string',
@@ -1195,7 +1297,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'CacheParameterGroupName' => array(
                     'required' => true,
@@ -1245,7 +1347,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'CacheSecurityGroupName' => array(
                     'type' => 'string',
@@ -1290,7 +1392,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'CacheSubnetGroupName' => array(
                     'type' => 'string',
@@ -1327,7 +1429,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'CacheParameterGroupFamily' => array(
                     'required' => true,
@@ -1369,7 +1471,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'SourceIdentifier' => array(
                     'type' => 'string',
@@ -1436,7 +1538,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'ReplicationGroupId' => array(
                     'type' => 'string',
@@ -1481,7 +1583,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'ReservedCacheNodeId' => array(
                     'type' => 'string',
@@ -1546,7 +1648,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'ReservedCacheNodesOfferingId' => array(
                     'type' => 'string',
@@ -1607,7 +1709,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'CacheClusterId' => array(
                     'type' => 'string',
@@ -1649,6 +1751,44 @@ return array (
                 ),
             ),
         ),
+        'ListTagsForResource' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'TagListMessage',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'ListTagsForResource',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2015-02-02',
+                ),
+                'ResourceName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The requested cache cluster ID does not refer to an existing cache cluster.',
+                    'class' => 'CacheClusterNotFoundException',
+                ),
+                array(
+                    'reason' => 'The requested snapshot name does not refer to an existing snapshot.',
+                    'class' => 'SnapshotNotFoundException',
+                ),
+                array(
+                    'reason' => 'The requested Amazon Resource Name (ARN) does not refer to an existing resource.',
+                    'class' => 'InvalidARNException',
+                ),
+            ),
+        ),
         'ModifyCacheCluster' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -1664,7 +1804,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'CacheClusterId' => array(
                     'required' => true,
@@ -1816,7 +1956,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'CacheParameterGroupName' => array(
                     'required' => true,
@@ -1876,7 +2016,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'CacheSubnetGroupName' => array(
                     'required' => true,
@@ -1931,7 +2071,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'ReplicationGroupId' => array(
                     'required' => true,
@@ -2082,7 +2222,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'ReservedCacheNodesOfferingId' => array(
                     'required' => true,
@@ -2136,7 +2276,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'CacheClusterId' => array(
                     'required' => true,
@@ -2165,6 +2305,58 @@ return array (
                 ),
             ),
         ),
+        'RemoveTagsFromResource' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'TagListMessage',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'RemoveTagsFromResource',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2015-02-02',
+                ),
+                'ResourceName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'TagKeys' => array(
+                    'required' => true,
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'TagKeys.member',
+                    'items' => array(
+                        'name' => 'String',
+                        'type' => 'string',
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The requested cache cluster ID does not refer to an existing cache cluster.',
+                    'class' => 'CacheClusterNotFoundException',
+                ),
+                array(
+                    'reason' => 'The requested snapshot name does not refer to an existing snapshot.',
+                    'class' => 'SnapshotNotFoundException',
+                ),
+                array(
+                    'reason' => 'The requested Amazon Resource Name (ARN) does not refer to an existing resource.',
+                    'class' => 'InvalidARNException',
+                ),
+                array(
+                    'reason' => 'The requested tag was not found on this resource.',
+                    'class' => 'TagNotFoundException',
+                ),
+            ),
+        ),
         'ResetCacheParameterGroup' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -2180,7 +2372,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'CacheParameterGroupName' => array(
                     'required' => true,
@@ -2245,7 +2437,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2014-09-30',
+                    'default' => '2015-02-02',
                 ),
                 'CacheSecurityGroupName' => array(
                     'required' => true,
@@ -2288,6 +2480,29 @@ return array (
         ),
     ),
     'models' => array(
+        'TagListMessage' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'TagList' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'sentAs' => 'Tag',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
         'CacheSecurityGroupWrapper' => array(
             'type' => 'object',
             'additionalProperties' => true,
