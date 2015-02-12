@@ -1,21 +1,21 @@
 <?php
 namespace Aws\Test\Credentials;
 
-use Aws\Credentials\CredentialsProvider;
+use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 
 /**
- * @covers \Aws\Credentials\CredentialsProvider
+ * @covers \Aws\Credentials\CredentialProvider
  */
-class CredentialsProviderTest extends \PHPUnit_Framework_TestCase
+class CredentialProviderTest extends \PHPUnit_Framework_TestCase
 {
     private $home, $homedrive, $homepath, $key, $secret, $profile;
 
     private function clearEnv()
     {
-        putenv(CredentialsProvider::ENV_KEY . '=');
-        putenv(CredentialsProvider::ENV_SECRET . '=');
-        putenv(CredentialsProvider::ENV_PROFILE . '=');
+        putenv(CredentialProvider::ENV_KEY . '=');
+        putenv(CredentialProvider::ENV_SECRET . '=');
+        putenv(CredentialProvider::ENV_PROFILE . '=');
     }
 
     public function setUp()
@@ -23,9 +23,9 @@ class CredentialsProviderTest extends \PHPUnit_Framework_TestCase
         $this->home = getenv('HOME');
         $this->homedrive = getenv('HOMEDRIVE');
         $this->homepath = getenv('HOMEPATH');
-        $this->key = getenv(CredentialsProvider::ENV_KEY);
-        $this->secret = getenv(CredentialsProvider::ENV_SECRET);
-        $this->profile = getenv(CredentialsProvider::ENV_PROFILE);
+        $this->key = getenv(CredentialProvider::ENV_KEY);
+        $this->secret = getenv(CredentialProvider::ENV_SECRET);
+        $this->profile = getenv(CredentialProvider::ENV_PROFILE);
     }
 
     public function tearDown()
@@ -33,9 +33,9 @@ class CredentialsProviderTest extends \PHPUnit_Framework_TestCase
         putenv('HOME=' . $this->home);
         putenv('HOMEDRIVE=' . $this->homedrive);
         putenv('HOMEPATH=' . $this->homepath);
-        putenv(CredentialsProvider::ENV_KEY . '=' . $this->key);
-        putenv(CredentialsProvider::ENV_SECRET . '=' . $this->secret);
-        putenv(CredentialsProvider::ENV_PROFILE . '=' . $this->profile);
+        putenv(CredentialProvider::ENV_KEY . '=' . $this->key);
+        putenv(CredentialProvider::ENV_SECRET . '=' . $this->secret);
+        putenv(CredentialProvider::ENV_PROFILE . '=' . $this->profile);
     }
 
     /**
@@ -43,15 +43,15 @@ class CredentialsProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testEnsuresCredentialsAreFound()
     {
-        CredentialsProvider::resolve(function () {});
+        CredentialProvider::resolve(function () {});
     }
 
     public function testCreatesFromEnvironmentVariables()
     {
         $this->clearEnv();
-        putenv(CredentialsProvider::ENV_KEY . '=abc');
-        putenv(CredentialsProvider::ENV_SECRET . '=123');
-        $creds = CredentialsProvider::resolve(CredentialsProvider::env());
+        putenv(CredentialProvider::ENV_KEY . '=abc');
+        putenv(CredentialProvider::ENV_SECRET . '=123');
+        $creds = CredentialProvider::resolve(CredentialProvider::env());
         $this->assertEquals('abc', $creds->getAccessKeyId());
         $this->assertEquals('abc', $creds->getAccessKeyId());
     }
@@ -72,7 +72,7 @@ aws_security_token = tok
 EOT;
         file_put_contents($dir . '/credentials', $ini);
         putenv('HOME=' . dirname($dir));
-        $creds = CredentialsProvider::resolve(CredentialsProvider::ini());
+        $creds = CredentialProvider::resolve(CredentialProvider::ini());
         $this->assertEquals('foo', $creds->getAccessKeyId());
         $this->assertEquals('baz', $creds->getSecretKey());
         $this->assertEquals('tok', $creds->getSecurityToken());
@@ -96,7 +96,7 @@ EOT;
         putenv('HOME=' . dirname($dir));
 
         try {
-            @CredentialsProvider::resolve(CredentialsProvider::ini());
+            @CredentialProvider::resolve(CredentialProvider::ini());
         } catch (\Exception $e) {
             unlink($dir . '/credentials');
             throw $e;
@@ -110,7 +110,7 @@ EOT;
     {
         $this->clearEnv();
         putenv('HOME=/does/not/exist');
-        CredentialsProvider::resolve(CredentialsProvider::ini());
+        CredentialProvider::resolve(CredentialProvider::ini());
     }
 
     /**
@@ -129,7 +129,7 @@ EOT;
         putenv('HOME=' . dirname($dir));
 
         try {
-            CredentialsProvider::resolve(CredentialsProvider::ini('foo'));
+            CredentialProvider::resolve(CredentialProvider::ini('foo'));
         } catch (\Exception $e) {
             unlink($dir . '/credentials');
             throw $e;
@@ -138,7 +138,7 @@ EOT;
 
     public function testCreatesFromInstanceProfileProvider()
     {
-        $p = CredentialsProvider::instanceProfile();
+        $p = CredentialProvider::instanceProfile();
         $this->assertInstanceOf('Aws\Credentials\InstanceProfileProvider', $p);
     }
 
@@ -147,7 +147,7 @@ EOT;
         putenv('HOME=');
         putenv('HOMEDRIVE=C:');
         putenv('HOMEPATH=\\Michael\\Home');
-        $ref = new \ReflectionClass('Aws\Credentials\CredentialsProvider');
+        $ref = new \ReflectionClass('Aws\Credentials\CredentialProvider');
         $meth = $ref->getMethod('getHomeDir');
         $meth->setAccessible(true);
         $this->assertEquals('C:\\Michael\\Home', $meth->invoke(null));
@@ -161,7 +161,7 @@ EOT;
             $called++;
             return $creds;
         };
-        $p = CredentialsProvider::memoize($f);
+        $p = CredentialProvider::memoize($f);
         $this->assertSame($creds, $p());
         $this->assertEquals(1, $called);
         $this->assertSame($creds, $p());
@@ -170,14 +170,14 @@ EOT;
 
     public function testCallsDefaultsCreds()
     {
-        $k = getenv(CredentialsProvider::ENV_KEY);
-        $s = getenv(CredentialsProvider::ENV_SECRET);
-        putenv(CredentialsProvider::ENV_KEY . '=abc');
-        putenv(CredentialsProvider::ENV_SECRET . '=123');
-        $provider = CredentialsProvider::defaultProvider();
+        $k = getenv(CredentialProvider::ENV_KEY);
+        $s = getenv(CredentialProvider::ENV_SECRET);
+        putenv(CredentialProvider::ENV_KEY . '=abc');
+        putenv(CredentialProvider::ENV_SECRET . '=123');
+        $provider = CredentialProvider::defaultProvider();
         $creds = $provider();
-        putenv(CredentialsProvider::ENV_KEY . "={$k}");
-        putenv(CredentialsProvider::ENV_SECRET . "={$s}");
+        putenv(CredentialProvider::ENV_KEY . "={$k}");
+        putenv(CredentialProvider::ENV_SECRET . "={$s}");
         $this->assertEquals('abc', $creds->getAccessKeyId());
         $this->assertEquals('123', $creds->getSecretKey());
     }

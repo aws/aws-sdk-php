@@ -2,62 +2,67 @@
 Getting Started Guide
 =====================
 
-This "Getting Started Guide" focuses on basic usage of the **AWS SDK for PHP**. After reading through this material, you
-should be familiar with the SDK and be able to start using the SDK in your application. This guide assumes that you have
-already :doc:`downloaded and installed the SDK <installation>` and retrieved your `AWS access keys
-<http://aws.amazon.com/developers/access-keys/>`_.
+This "Getting Started Guide" focuses on basic usage of the **AWS SDK for PHP**.
+After reading through this material, you should be familiar with the SDK and be
+able to start using the SDK in your application. This guide assumes that you
+have already :doc:`downloaded and installed the SDK <installation>` and
+retrieved your `AWS access keys <http://aws.amazon.com/developers/access-keys/>`_.
+
 
 Including the SDK
 -----------------
 
-No matter which technique you have used to to install the SDK, the SDK can be included into your project or script with
-just a single include (or require) statement. Please refer to the following table for the PHP code that best fits your
-installation technique. Please replace any instances of ``/path/to/`` with the actual path on your system.
+No matter which technique you have used to to install the SDK, the SDK can be
+included into your project or script with just a single include
+(or ``require``) statement. Please refer to the following table for the PHP
+code that best fits your installation technique. Please replace any instances
+of ``/path/to/`` with the actual path on your system.
 
-========================== =============================================================================================
+========================== ===================================================
 Installation Technique     Include Statement
-========================== =============================================================================================
+========================== ===================================================
 Using Composer             ``require '/path/to/vendor/autoload.php';``
--------------------------- ---------------------------------------------------------------------------------------------
+-------------------------- ---------------------------------------------------
 Using the Phar             ``require '/path/to/aws.phar';``
--------------------------- ---------------------------------------------------------------------------------------------
+-------------------------- ---------------------------------------------------
 Using the Zip              ``require '/path/to/aws-autoloader.php';``
--------------------------- ---------------------------------------------------------------------------------------------
-Using PEAR                 ``require 'AWSSDKforPHP/aws.phar';``
-========================== =============================================================================================
+========================== ===================================================
 
-For the remainder of this guide, we will show examples that use the Composer installation method. If you are using a
-different installation method, then you can refer to this section and substitute in the proper code.
+For the remainder of this guide, we will show examples that use the Composer
+installation method. If you are using a different installation method, then you
+can refer to this section and substitute in the proper code.
+
 
 Creating a client object
 ------------------------
 
-To use the SDK, you first you need to instantiate a **client** object for the service you are using. We'll use the
-Amazon Simple Storage Service (Amazon S3) client as an example. You can instantiate a client using two different
-techniques.
+To use the SDK, you first you need to instantiate a **client** object for the
+service you are using. We'll use the Amazon Simple Storage Service (Amazon S3)
+client as an example.
 
-.. _client_factory_method:
-
-Factory method
-~~~~~~~~~~~~~~
-
-The easiest way to get up and running quickly is to use the web service client's ``factory()`` method and provide your
-AWS **credentials** (e.g., ``key`` and ``secret``).
+To create a client, pass an array of configuration settings to the client's
+constructor.
 
 .. code-block:: php
 
     <?php
-
     // Include the SDK using the Composer autoloader
     require 'vendor/autoload.php';
 
     use Aws\S3\S3Client;
 
-    // Instantiate the S3 client with your AWS credentials
-    $s3Client = S3Client::factory(array(
-        'key'    => 'YOUR_AWS_ACCESS_KEY_ID',
-        'secret' => 'YOUR_AWS_SECRET_ACCESS_KEY',
-    ));
+    $s3Client = new S3Client([
+        'region' =>  'us-west-2',
+        'version' => '2006-03-01'
+    ]);
+
+Notice that we did not provide credentials to the client. That's because the
+credentials used by the SDK should come from either environment variables, an
+AWS credentials ini file in your HOME directory, or AWS Identity and Access
+Management `instance profile credentials <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances>`_.
+As a last resort, you can hardcode your credentials by passing the ``key`` and
+``secret`` key value pairs in the ``credentials`` client configuration setting
+array.
 
 You can provide your credentials explicitly like in the preceding example, or you can choose to omit them if you are
 relying on **instance profile credentials** provided via `AWS Identity and Access Management (AWS IAM) roles for EC2
@@ -88,62 +93,6 @@ credentials in the array argument that you provide.
 To know if the service client you are using requires a region and to find out which regions are supported by the client,
 please see the appropriate :ref:`service-specific guide <supported-services>`.
 
-Service builder
-~~~~~~~~~~~~~~~
-
-Another way to instantiate a service client is using the ``Aws\Common\Aws`` object (a.k.a the **service builder**).
-The ``Aws`` object is essentially a `service locator <http://en.wikipedia.org/wiki/Service_locator_pattern>`_, and
-allows you to specify credentials and configuration settings such that they can be shared across all client instances.
-Also, every time you fetch a client object from the ``Aws`` object, it will be exactly the same instance.
-
-.. code-block:: php
-
-    use Aws\Common\Aws;
-
-    // Create a service locator using a configuration file
-    $aws = Aws::factory(array(
-        'key'    => 'YOUR_AWS_ACCESS_KEY_ID',
-        'secret' => 'YOUR_AWS_SECRET_ACCESS_KEY',
-        'region' => 'us-east-1',
-    ));
-
-    // Get client instances from the service locator by name
-    $s3Client = $aws->get('s3');
-    $ec2Client = $aws->get('ec2');
-
-    // The service locator always returns the same instance
-    $anotherS3Client = $aws->get('s3');
-    assert('$s3Client === $anotherS3Client');
-
-You can also declare your credentials and settings in a **configuration file**, and provide the path to that file (in
-either php or json format) when you instantiate the ``Aws`` object.
-
-.. code-block:: php
-
-    // Create a `Aws` object using a configuration file
-    $aws = Aws::factory('/path/to/config.php');
-
-    // Get the client from the service locator by namespace
-    $s3Client = $aws->get('s3');
-
-A simple configuration file should look something like this:
-
-.. code-block:: php
-
-    <?php return array(
-        'includes' => array('_aws'),
-        'services' => array(
-            'default_settings' => array(
-                'params' => array(
-                    'key'    => 'YOUR_AWS_ACCESS_KEY_ID',
-                    'secret' => 'YOUR_AWS_SECRET_ACCESS_KEY',
-                    'region' => 'us-west-2'
-                )
-            )
-        )
-    );
-
-For more information about configuration files, please see :doc:`configuration`.
 
 Performing service operations
 -----------------------------
@@ -152,12 +101,14 @@ Performing service operations
 
 To learn about performing operations in more detail, including using command objects, see :doc:`feature-commands`.
 
+
 Working with modeled responses
 ------------------------------
 
 .. include:: _snippets/models-intro.txt
 
 To learn more about how to work with modeled responses, read the detailed guide to :doc:`feature-models`.
+
 
 Detecting and handling errors
 -----------------------------
@@ -184,12 +135,14 @@ Exceptions thrown by the SDK like this all extend the ``ServiceResponseException
 <http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Common.Exception.ServiceResponseException.html>`_), which has
 some custom methods that might help you discover what went wrong.
 
+
 Waiters
 -------
 
 .. include:: _snippets/waiters-intro.txt
 
 To learn more about how to use and configure waiters, please read the detailed guide to :doc:`feature-waiters`.
+
 
 Iterators
 ---------

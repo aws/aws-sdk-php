@@ -2,51 +2,29 @@
 Credentials
 ===========
 
-
-Introduction
-------------
-
 In order to authenticate requests, AWS services require you to provide your
 `AWS access keys <http://aws.amazon.com/developers/access-keys/>`_, also known
 as your AWS **access key ID** and **secret access key**. In the AWS SDK for
 PHP, these access keys are often referred to collectively as your
-**credentials**. This guide demonstrates how to provide your credentials to
-the AWS SDK for SDK.
-
-There are many ways to provide credentials:
+**credentials**. This guide demonstrates how to provide your credentials to the
+AWS SDK for SDK using one of the following methods:
 
 #. :ref:`environment_credentials`
 #. :ref:`instance_profile_credentials`
-#. :ref:`factory_credentials`
+#. :ref:`credential_profiles`
+#. :ref:`hardcoded_credentials`
 #. :ref:`temporary_credentials`
-
-
-Which technique should you choose?
-----------------------------------
-
-The technique that you use to provide credentials to the SDK for your
-application is entirely up to you. Please read each section on this page to
-determine what is the best fit for you. What you choose will depend on many
-different factors, including:
-
-* The environment you are operating in (e.g., development, testing, production)
-* The host of your application (e.g., localhost, Amazon EC2, third-party server)
-* How many sets of credentials you are using
-* The type of project you are developing (e.g., application, CLI, library)
-* How often you rotate your credentials
-* If you rely on temporary or federated credentials
-* Your deployment process
-* Your application framework
-
-Regardless of the technique used, it is encouraged that you follow the
-`IAM Best Practices <http://docs.aws.amazon.com/IAM/latest/UserGuide/IAMBestPractices.html>`_
-when managing your credentials, including the recommendation to not use your
-AWS account's root credentials. Instead, create separate IAM users with their
-own access keys for each project, and tailor the permissions of the users
-specific to those projects.
+#. :ref:`credential_provider`
 
 *In general, it is recommended that you use IAM roles when running your
-application on Amazon EC2 and use environment variables elsewhere.*
+application on Amazon EC2 and use credential profiles or environment variables
+elsewhere.*
+
+.. important::
+
+    Regardless of how you supply credentials to the SDK, it is encouraged that
+    you follow the `IAM Best Practices <http://docs.aws.amazon.com/IAM/latest/UserGuide/IAMBestPractices.html>`_
+    when managing your credentials.
 
 
 .. _environment_credentials:
@@ -55,18 +33,12 @@ Using credentials from environment variables
 --------------------------------------------
 
 If you do not provide credentials to a client object at the time of its
-instantiation (e.g., via the client's factory method or via a service builder
-configuration), the SDK will attempt to find credentials in your environment
-when you call your first operation. The SDK will use PHP's ``getenv()`` function
-to retrieve environment variables, looking for the ``AWS_ACCESS_KEY_ID`` and
-``AWS_SECRET_KEY`` environment variables. These credentials are often called
+instantiation, the SDK will attempt to find credentials in your environment.
+The first place the SDK will check for credentials is in your environment
+variables. The SDK will use the ``getenv()`` function function to look for the
+``AWS_ACCESS_KEY_ID``, ``AWS_SECRET_ACCESS_KEY``, and ``AWS_SESSION_TOKEN``
+environment variables. These credentials are referred to as
 **environment credentials**.
-
-If you are hosting your application on `AWS Elastic Beanstalk
-<http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_PHP_eb.html>`_,
-you can set the ``AWS_ACCESS_KEY_ID`` and ``AWS_SECRET_KEY`` environment
-variables on the AWS Elastic Beanstalk console so that the SDK can use those
-credentials automatically.
 
 
 .. _instance_profile_credentials:
@@ -78,9 +50,9 @@ Using IAM roles for Amazon EC2 instances
 applications running on Amazon EC2.* IAM roles remove the need to worry about
 credential management from your application. They allow an instance to "assume"
 a role by retrieving temporary credentials from the EC2 instance's metadata
-server. These temporary credentials, often referred to as **instance profile
-credentials**, allow access to the actions and resources that the role's policy
-allows.
+server. These temporary credentials, often referred to as
+**instance profile credentials**, allow access to the actions and resources
+that the role's policy allows.
 
 When launching an EC2 instance, you can choose to associate it with an IAM
 role. Any application running on that EC2 instance is then allowed to assume
@@ -105,61 +77,90 @@ been configured with an IAM role.
 For more information, see `IAM Roles for Amazon EC2 <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html>`_.
 
 
+.. _credential_profiles:
+
+Using the AWS credentials file and credential profiles
+------------------------------------------------------
+
+Starting with the AWS SDK for PHP version 2.6.2, you can use an AWS credentials
+file to specify your credentials. This is a special, INI-formatted file stored
+under your HOME directory, and is a good way to manage credentials for your
+development environment. The file should be placed at ``~/.aws/credentials``,
+where ``~`` represents your HOME directory.
+
+Using an AWS credentials file offers a few benefits:
+
+1. Your projects' credentials are stored outside of your projects, so there is
+   no chance of accidentally committing them into version control.
+2. You can define and name multiple sets of credentials in one place.
+3. You can easily reuse the same credentials between projects.
+4. Other AWS SDKs and tools support, or will soon support, this same
+   credentials file. This allows you to reuse your credentials with other
+   tools.
+
+The format of the AWS credentials file should look something like the
+following:
+
+.. code-block:: ini
+
+    [default]
+    aws_access_key_id = YOUR_AWS_ACCESS_KEY_ID
+    aws_secret_access_key = YOUR_AWS_SECRET_ACCESS_KEY
+
+    [project1]
+    aws_access_key_id = ANOTHER_AWS_ACCESS_KEY_ID
+    aws_secret_access_key = ANOTHER_AWS_SECRET_ACCESS_KEY
+
+Each section (e.g., ``[default]``, ``[project1]``), represents a separate
+credential **profile**. Profiles can be referenced from an SDK configuration
+file, or when you are instantiating a client, using the ``profile`` option:
+
+.. code-block:: php
+
+    <?php
+
+    use Aws\DynamoDb\DynamoDbClient;
+
+    // Instantiate a client with the credentials from the project1 profile
+    $client = new DynamoDbClient([
+        'profile' => 'project1',
+        'region'  => 'us-west-2',
+        'version' => 'latest'
+    ]);
+
+If no credentials or profiles were explicitly provided to the SDK and no
+credentials were defined in environment variables, but a credentials file is
+defined, the SDK will use the "default" profile. You can change the default
+profile by specifying an alternate profile name in the ``AWS_PROFILE``
+environment variable.
+
+
 .. _hardcoded_credentials:
 
-Setting credentials explicitly in your code
--------------------------------------------
+Using hard-coded credentials
+----------------------------
 
-The SDK allows you to explicitly set your credentials in your project in a few
-different ways. These techniques are useful for rapid development, integrating
-with existing configurations systems (e.g., your PHP framework of choice), and
-handling :ref:`temporary credentials <temporary_credentials>`. However,
-**be careful to not hard-code your credentials** inside of your applications.
-Hard-coding your credentials can be dangerous, because it is easy to
-accidentally commit your credentials into an SCM repository, potentially
-exposing your credentials to more people than intended. It can also make it
-difficult to rotate credentials in the future.
-
-
-.. _factory_credentials:
-
-Passing credentials into a client factory method
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-A simple way to specify your credentials is by injecting them directly into
-the factory method when instantiating the client object.
+You can provide hard-coded credentials to an SDK client by providing the "key",
+"secret", and optional "token" key value pairs to the "credentials" option of
+a client constructor.
 
 .. code-block:: php
 
-    <?php
-
-    use Aws\S3\S3Client;
-
-    // Instantiate the S3 client with your AWS credentials
-    $s3Client = S3Client::factory([
-        'key'    => 'YOUR_AWS_ACCESS_KEY_ID',
-        'secret' => 'YOUR_AWS_SECRET_ACCESS_KEY',
+    $s3Client = new S3Client([
+        'version'     => 'latest',
+        'region'      => 'us-west-2',
+        'credentials' => [
+            'key'    => 'my-access-key-id',
+            'secret' => 'my-secret-access-key',
+        ],
     ]);
 
-In some cases, you may already have an instance of a ``Credentials`` object.
-You can use this instead of specifying your access keys separately.
+.. warning::
 
-.. code-block:: php
-
-    <?php
-
-    use Aws\S3\S3Client;
-    use Aws\Common\Credentials\Credentials;
-
-    $credentials = new Credentials('YOUR_ACCESS_KEY', 'YOUR_SECRET_KEY');
-
-    // Instantiate the S3 client with your AWS credentials
-    $s3Client = S3Client::factory([
-        'credentials' => $credentials
-    ]);
-
-You may also want to read the section in the Getting Started Guide about
-:ref:`using a client's factory method <client_factory_method>` for more details.
+    Hard-coding your credentials can be dangerous, because it is easy to
+    accidentally commit your credentials into an SCM repository, potentially
+    exposing your credentials to more people than intended. It can also make it
+    difficult to rotate credentials in the future.
 
 
 .. _temporary_credentials:
@@ -179,8 +180,7 @@ through third-party identity providers (read more about `Web Identity Federation
 
     Temporary credentials generated by AWS STS are not supported by every
     service. Please check if the service you are using supports temporary
-    credentials by reading `AWS Services that Support AWS STS
-    <http://docs.aws.amazon.com/STS/latest/UsingSTS/UsingTokens.html>`_.
+    credentials by reading `AWS Services that Support AWS STS <http://docs.aws.amazon.com/STS/latest/UsingSTS/UsingTokens.html>`_.
 
 
 Getting temporary credentials
@@ -196,8 +196,8 @@ Assuming you have an instance of ``Aws\Sts\StsClient`` stored in the
     $result = $stsClient->getSessionToken();
 
 The result for ``GetSessionToken`` and the other AWS STS operations always
-contains a ``'Credentials'`` value. If you print the result (e.g.,
-``print_r($result)``), it looks like the following:
+contains a ``'Credentials'`` value. If you print the result
+(e.g., ``print_r($result)``), it looks like the following:
 
 ::
 
@@ -218,8 +218,8 @@ contains a ``'Credentials'`` value. If you print the result (e.g.,
 Providing temporary credentials to the SDK
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can use temporary credentials with another AWS client by instantiating the
-client and passing in the values received from AWS STS directly.
+You can use temporary credentials with another AWS client by instantiating
+the client and passing in the values received from AWS STS directly.
 
 .. code-block:: php
 
@@ -227,18 +227,22 @@ client and passing in the values received from AWS STS directly.
 
     $result = $stsClient->getSessionToken();
 
-    $s3Client = S3Client::factory([
-        'key'    => $result['Credentials']['AccessKeyId'],
-        'secret' => $result['Credentials']['SecretAccessKey'],
-        'token'  => $result['Credentials']['SessionToken'],
+    $s3Client = new S3Client([
+        'version'     => '2006-03-01',
+        'region'      => 'us-west-2',
+        'credentials' => [
+            'key'    => $result['Credentials']['AccessKeyId'],
+            'secret' => $result['Credentials']['SecretAccessKey'],
+            'token'  => $result['Credentials']['SessionToken']
+        ]
     ]);
 
-You can also construct a ``Credentials`` object and use that when instantiating
-the client.
+You can also construct a ``Aws\Credentials\Credentials`` object and use that
+when instantiating the client.
 
 .. code-block:: php
 
-    use Aws\Common\Credentials\Credentials;
+    use Aws\Credentials\Credentials;
     use Aws\S3\S3Client;
 
     $result = $stsClient->getSessionToken();
@@ -249,7 +253,11 @@ the client.
         $result['Credentials']['SessionToken']
     );
 
-    $s3Client = S3Client::factory(['credentials' => $credentials]);
+    $s3Client = new S3Client([
+        'version'     => '2006-03-01',
+        'region'      => 'us-west-2',
+        'credentials' => $credentials
+    ]);
 
 However, the *best* way to provide temporary credentials is to use the
 ``createCredentials()`` helper method included with the ``StsClient``. This
@@ -261,9 +269,146 @@ object for you.
     $result = $stsClient->getSessionToken();
     $credentials = $stsClient->createCredentials($result);
 
-    $s3Client = S3Client::factory(['credentials' => $credentials]);
+    $s3Client = new S3Client([
+        'version'     => '2006-03-01',
+        'region'      => 'us-west-2',
+        'credentials' => $credentials
+    ]);
 
 For more information about why you might need to use temporary credentials in
-your application or project, see
-`Scenarios for Granting Temporary Access <http://docs.aws.amazon.com/STS/latest/UsingSTS/STSUseCases.html>`_
-in the AWS STS documentation.
+your application or project, see `Scenarios for Granting Temporary Access
+<http://docs.aws.amazon.com/STS/latest/UsingSTS/STSUseCases.html>`_ in the AWS
+STS documentation.
+
+
+.. _anonymous_access:
+
+Creating Anonymous Clients
+--------------------------
+
+In some cases, you may want to create a client that is not associated with any
+credentials. This allows you to make anonymous requests to a service. For
+example, both S3 Objects and CloudSearch Domains can be configured to allow
+anonymous access.
+
+To create an anonymous client, you can set the ``'credentials'`` option to
+``false``.
+
+.. code-block:: php
+
+    $s3Client = new S3Client([
+        'version'     => 'latest',
+        'region'      => 'us-west-2',
+        'credentials' => false
+    ]);
+
+    // Makes an anonymous request. The Object would need to be publicly
+    // readable for this to succeed.
+    $result = $s3Client->getObject([
+        'Bucket' => 'my-bucket',
+        'Key'    => 'my-key',
+    ]);
+
+
+.. _credential_provider:
+
+Using a credential provider
+---------------------------
+
+A credential provider is a function that returns ``NULL`` or an
+``Aws\Credentials\CredentialsInterface`` object. You can use credential
+providers to implement your own custom logic for creating credentials.
+
+Credential providers can be chained together to implement environment specific
+logic to attain credentials. For example, if no credentials are provided in the
+``credentials`` key value pair, the SDK will use the default credential
+provider to check for credentials in various places before failing. The default
+provider first attempts to load credentials from environment variables, then
+from an ini file, then from an instance profile. Here's an example of using
+this same credential provider but manually passing it into the ``credentials``
+option:
+
+.. code-block:: php
+
+    use Aws\Credentials\CredentialProvider;
+    use Aws\S3\S3Client;
+
+    // Create a default credential provider.
+    $provider = CredentialProvider::defaultProvider();
+
+    // Pass the provider into a client.
+    $client = new S3Client([
+        'region'      => 'us-west-2',
+        'version'     => '2006-03-01',
+        'credentials' => $provider
+    ]);
+
+Passing in a credential provider function to the SDK will invoke the provider
+and ensure that it returns an instance of
+``Aws\Credentials\CredentialsInterface``. If the provider does not return a
+credential object, an ``Aws\Exception\UnresolvedCredentialsException`` is
+thrown.
+
+The SDK ships with the following providers:
+
+- ``Aws\Credentials\CredentialProvider::env``: Attempts to load credentials
+  from environment variables.
+
+  .. code-block:: php
+
+      use Aws\Credentials\CredentialProvider;
+      use Aws\S3\S3Client;
+
+      $client = new S3Client([
+          'region'      => 'us-west-2',
+          'version'     => '2006-03-01',
+          'credentials' => CredentialProvider::env()
+      ]);
+
+- ``Aws\Credentials\CredentialProvider::ini``: Attempts to load credentials
+  from an :ref:`ini credential file <credential_profiles>`. The SDK will by
+  default attempt to load the "default" profile from a file located at
+  ``~/.aws/credentials``.
+
+  .. code-block:: php
+
+      use Aws\Credentials\CredentialProvider;
+      use Aws\S3\S3Client;
+
+      $client = new S3Client([
+          'region'      => 'us-west-2',
+          'version'     => '2006-03-01',
+          'credentials' => CredentialProvider::ini()
+      ]);
+
+  You can use a custom profile or ini file location by providing arguments to
+  the function that creates the provider.
+
+  .. code-block:: php
+
+      $profile = 'production';
+      $path = '/full/path/to/credentials.ini';
+
+      $client = new S3Client([
+          'region'      => 'us-west-2',
+          'version'     => '2006-03-01',
+          'credentials' => CredentialProvider::ini($profile, $path)
+      ]);
+
+- ``Aws\Credentials\CredentialProvider::instanceProfile``: Attempts to load
+  credentials from Amazon EC2 instance profiles.
+
+  .. code-block:: php
+
+      use Aws\Credentials\CredentialProvider;
+      use Aws\S3\S3Client;
+
+      $client = new S3Client([
+          'region'      => 'us-west-2',
+          'version'     => '2006-03-01',
+          'credentials' => CredentialProvider::instanceProfile()
+      ]);
+
+- ``Aws\Credentials\CredentialProvider::defaultProvider``: Attempts to load
+  credentials from environment variables, then from an ini file, and finally
+  from IAM instance profile credentials.

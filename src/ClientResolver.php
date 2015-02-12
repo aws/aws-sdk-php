@@ -13,7 +13,7 @@ use Aws\Subscriber\Validation;
 use Aws\Api\FilesystemApiProvider;
 use Aws\Signature\SignatureProvider;
 use Aws\Endpoint\EndpointProvider;
-use Aws\Credentials\CredentialsProvider;
+use Aws\Credentials\CredentialProvider;
 use GuzzleHttp\Client;
 use GuzzleHttp\Subscriber\Log\SimpleLogger;
 use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
@@ -104,7 +104,7 @@ class ClientResolver
         'credentials' => [
             'type'    => 'value',
             'valid'   => ['Aws\Credentials\CredentialsInterface', 'array', 'bool', 'callable'],
-            'doc'     => 'Specifies the credentials used to sign requests. Provide an Aws\Credentials\CredentialsInterface object, an associative array of "key", "secret", and an optional "token" key, `false` to use null credentials, or a callable credentials provider used to create credentials or return null. See Aws\\Credentials\\CredentialsProvider for a list of built-in credentials providers. If no credentials are provided, the SDK will attempt to load them from the environment.',
+            'doc'     => 'Specifies the credentials used to sign requests. Provide an Aws\Credentials\CredentialsInterface object, an associative array of "key", "secret", and an optional "token" key, `false` to use null credentials, or a callable credentials provider used to create credentials or return null. See Aws\\Credentials\\CredentialProvider for a list of built-in credentials providers. If no credentials are provided, the SDK will attempt to load them from the environment.',
             'fn'      => [__CLASS__, '_apply_credentials'],
             'default' => [__CLASS__, '_default_credentials'],
         ],
@@ -345,7 +345,7 @@ class ClientResolver
             return;
         } elseif (is_callable($value)) {
             // Invoke the credentials provider and throw if it does not resolve.
-            $args['credentials'] = CredentialsProvider::resolve($value);
+            $args['credentials'] = CredentialProvider::resolve($value);
         } elseif (is_array($value) && isset($value['key']) && isset($value['secret'])) {
             $args['credentials'] = new Credentials(
                 $value['key'],
@@ -408,7 +408,7 @@ class ClientResolver
 
     public static function _apply_profile($_, array &$args)
     {
-        $args['credentials'] = CredentialsProvider::ini($args['profile']);
+        $args['credentials'] = CredentialProvider::ini($args['profile']);
     }
 
     public static function _apply_ringphp_handler()
@@ -440,8 +440,8 @@ class ClientResolver
 
     public static function _default_credentials()
     {
-        return CredentialsProvider::resolve(
-            CredentialsProvider::defaultProvider()
+        return CredentialProvider::resolve(
+            CredentialProvider::defaultProvider()
         );
     }
 

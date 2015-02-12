@@ -6,27 +6,27 @@ use Aws\Exception\UnresolvedCredentialsException;
 use Aws\Utils;
 
 /**
- * Credentials providers are functions that create credentials and can be
+ * Credential providers are functions that create credentials and can be
  * composed to create credentials using conditional logic that can create
  * different credentials in different environments.
  *
- * A credentials provider is a function that accepts no arguments and returns
+ * A credential provider is a function that accepts no arguments and returns
  * {@see CredentialsInterface} object on success or NULL if no credentials can
- * be created. Note: exceptions MAY be thrown in credentials providers if
+ * be created. Note: exceptions MAY be thrown in credential providers if
  * necessary though this should only be the result of an error (e.g., malformed
  * file, bad permissions, etc.) and not the result of missing credentials.
  *
- * You can wrap your calls to a credentials provider with the
- * {@see CredentialsProvider::resolve} function to ensure that a credentials
+ * You can wrap your calls to a credential provider with the
+ * {@see CredentialProvider::resolve} function to ensure that a credentials
  * object is created. If a credentials object is not created, then the
  * resolve() function will throw a {@see Aws\Exception\UnresolvedCredentialsException}.
  *
- *     use Aws\Credentials\CredentialsProvider;
- *     $provider = CredentialsProvider::defaultProvider();
+ *     use Aws\Credentials\CredentialProvider;
+ *     $provider = CredentialProvider::defaultProvider();
  *     // Returns a CredentialsInterface or NULL.
  *     $creds = $provider();
  *     // Returns a CredentialsInterface or throws.
- *     $creds = CredentialsProvider::resolve($provider);
+ *     $creds = CredentialProvider::resolve($provider);
  *
  * You can compose multiple providers into a single provider using
  * {@see Aws\Utils::orFn}. This function accepts providers as arguments and
@@ -34,19 +34,19 @@ use Aws\Utils;
  * is returned.
  *
  *     // First try an INI file at this location.
- *     $a = CredentialsProvider::ini(null, '/path/to/file.ini');
+ *     $a = CredentialProvider::ini(null, '/path/to/file.ini');
  *     // Then try an INI file at this location.
- *     $b = CredentialsProvider::ini(null, '/path/to/other-file.ini');
+ *     $b = CredentialProvider::ini(null, '/path/to/other-file.ini');
  *     // Then try loading from envrionment variables.
- *     $c = CredentialsProvider::env();
+ *     $c = CredentialProvider::env();
  *     // Combine the three providers together.
  *     $composed = Aws\Utils::orFn($a, $b, $c);
  *     // Returns creds or NULL
  *     $creds = $composed();
  *     // Returns creds or throws.
- *     $creds = CredentialsProvider::resolve($composed);
+ *     $creds = CredentialProvider::resolve($composed);
  */
-class CredentialsProvider
+class CredentialProvider
 {
     const ENV_KEY = 'AWS_ACCESS_KEY_ID';
     const ENV_SECRET = 'AWS_SECRET_ACCESS_KEY';
@@ -146,7 +146,7 @@ class CredentialsProvider
     }
 
     /**
-     * Wraps a credentials provider and caches previously provided credentials.
+     * Wraps a credential provider and caches previously provided credentials.
      *
      * Ensures that cached credentials are refreshed when they expire.
      *
@@ -166,7 +166,7 @@ class CredentialsProvider
     }
 
     /**
-     * Create a default credentials provider that first checks for environment
+     * Create a default credential provider that first checks for environment
      * variables, then checks for the "default" profile in ~/.aws/credentials,
      * and finally checks for credentials using EC2 instance profile
      * credentials.

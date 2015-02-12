@@ -7,7 +7,7 @@ use Aws\DynamoDb\DynamoDbClient;
 use Aws\Exception\AwsException;
 use Aws\S3\S3Client;
 use GuzzleHttp\Client;
-use Aws\Credentials\CredentialsProvider;
+use Aws\Credentials\CredentialProvider;
 use GuzzleHttp\Event\Emitter;
 
 /**
@@ -121,10 +121,10 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadsFromDefaultChainIfNeeded()
     {
-        $key = getenv(CredentialsProvider::ENV_KEY);
-        $secret = getenv(CredentialsProvider::ENV_SECRET);
-        putenv(CredentialsProvider::ENV_KEY . '=foo');
-        putenv(CredentialsProvider::ENV_SECRET . '=bar');
+        $key = getenv(CredentialProvider::ENV_KEY);
+        $secret = getenv(CredentialProvider::ENV_SECRET);
+        putenv(CredentialProvider::ENV_KEY . '=foo');
+        putenv(CredentialProvider::ENV_SECRET . '=bar');
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $r->resolve([
             'service' => 'sqs',
@@ -135,8 +135,8 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Aws\Credentials\CredentialsInterface', $c);
         $this->assertEquals('foo', $c->getAccessKeyId());
         $this->assertEquals('bar', $c->getSecretKey());
-        putenv(CredentialsProvider::ENV_KEY . "=$key");
-        putenv(CredentialsProvider::ENV_SECRET . "=$secret");
+        putenv(CredentialProvider::ENV_KEY . "=$key");
+        putenv(CredentialProvider::ENV_SECRET . "=$secret");
     }
 
     public function testCreatesFromArray()
