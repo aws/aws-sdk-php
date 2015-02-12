@@ -510,6 +510,9 @@
         ],
       ],
     ],
+    'Backfilling' => [
+      'type' => 'boolean',
+    ],
     'BatchGetItemInput' => [
       'type' => 'structure',
       'required' => [
@@ -706,6 +709,29 @@
     'ConsumedCapacityUnits' => [
       'type' => 'double',
     ],
+    'CreateGlobalSecondaryIndexAction' => [
+      'type' => 'structure',
+      'required' => [
+        'IndexName',
+        'KeySchema',
+        'Projection',
+        'ProvisionedThroughput',
+      ],
+      'members' => [
+        'IndexName' => [
+          'shape' => 'IndexName',
+        ],
+        'KeySchema' => [
+          'shape' => 'KeySchema',
+        ],
+        'Projection' => [
+          'shape' => 'Projection',
+        ],
+        'ProvisionedThroughput' => [
+          'shape' => 'ProvisionedThroughput',
+        ],
+      ],
+    ],
     'CreateTableInput' => [
       'type' => 'structure',
       'required' => [
@@ -745,6 +771,17 @@
     ],
     'Date' => [
       'type' => 'timestamp',
+    ],
+    'DeleteGlobalSecondaryIndexAction' => [
+      'type' => 'structure',
+      'required' => [
+        'IndexName',
+      ],
+      'members' => [
+        'IndexName' => [
+          'shape' => 'IndexName',
+        ],
+      ],
     ],
     'DeleteItemInput' => [
       'type' => 'structure',
@@ -989,6 +1026,9 @@
         'IndexStatus' => [
           'shape' => 'IndexStatus',
         ],
+        'Backfilling' => [
+          'shape' => 'Backfilling',
+        ],
         'ProvisionedThroughput' => [
           'shape' => 'ProvisionedThroughputDescription',
         ],
@@ -1017,6 +1057,12 @@
       'members' => [
         'Update' => [
           'shape' => 'UpdateGlobalSecondaryIndexAction',
+        ],
+        'Create' => [
+          'shape' => 'CreateGlobalSecondaryIndexAction',
+        ],
+        'Delete' => [
+          'shape' => 'DeleteGlobalSecondaryIndexAction',
         ],
       ],
     ],
@@ -1611,6 +1657,9 @@
         'TableName' => [
           'shape' => 'TableName',
         ],
+        'IndexName' => [
+          'shape' => 'IndexName',
+        ],
         'AttributesToGet' => [
           'shape' => 'AttributeNameList',
         ],
@@ -1848,6 +1897,9 @@
         'TableName',
       ],
       'members' => [
+        'AttributeDefinitions' => [
+          'shape' => 'AttributeDefinitions',
+        ],
         'TableName' => [
           'shape' => 'TableName',
         ],

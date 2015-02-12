@@ -114,6 +114,8 @@
       'refs' => [
         'Encryption$Key' => '<p>The data encryption key that you want Elastic Transcoder to use to encrypt your output file, or that was used to encrypt your input file. The key must be base64-encoded and it must be one of the following bit lengths before being base64-encoded:</p> <p><code>128</code>, <code>192</code>, or <code>256</code>. </p> <p>The key must also be encrypted by using the Amazon Key Management Service.</p>',
         'Encryption$KeyMd5' => '<p>The MD5 digest of the key that you used to encrypt your input file, or that you want Elastic Transcoder to use to encrypt your output file. Elastic Transcoder uses the key digest as a checksum to make sure your key was not corrupted in transit. The key MD5 must be base64-encoded, and it must be exactly 16 bytes long before being base64-encoded.</p>',
+        'HlsContentProtection$Key' => '<p>If you want Elastic Transcoder to generate a key for you, leave this field blank.</p> <p>If you choose to supply your own key, you must encrypt the key by using AWS KMS. The key must be base64-encoded, and it must be one of the following bit lengths before being base64-encoded:</p> <p><code>128</code>, <code>192</code>, or <code>256</code>. </p>',
+        'HlsContentProtection$KeyMd5' => '<p>If Elastic Transcoder is generating your key for you, you must leave this field blank.</p> <p>The MD5 digest of the key that you want Elastic Transcoder to use to encrypt your output file, and that you want Elastic Transcoder to use as a checksum to make sure your key was not corrupted in transit. The key MD5 must be base64-encoded, and it must be exactly 16 bytes before being base64- encoded.</p>',
       ],
     ],
     'BucketName' => [
@@ -368,6 +370,19 @@
         'Permission$GranteeType' => '<p>The type of value that appears in the Grantee object: <ul> <li> <code>Canonical</code>: Either the canonical user ID for an AWS account or an origin access identity for an Amazon CloudFront distribution. <important>A canonical user ID is not the same as an AWS account number.</important> </li> <li> <code>Email</code>: The registered email address of an AWS account.</li> <li> <code>Group</code>: One of the following predefined Amazon S3 groups: <code>AllUsers</code>, <code>AuthenticatedUsers</code>, or <code>LogDelivery</code>.</li> </ul> </p>',
       ],
     ],
+    'HlsContentProtection' => [
+      'base' => '<p>The HLS content protection settings, if any, that you want Elastic Transcoder to apply to your output files.</p>',
+      'refs' => [
+        'CreateJobPlaylist$HlsContentProtection' => '<p>The HLS content protection settings, if any, that you want Elastic Transcoder to apply to the output files associated with this playlist.</p>',
+        'Playlist$HlsContentProtection' => '<p>The HLS content protection settings, if any, that you want Elastic Transcoder to apply to the output files associated with this playlist.</p>',
+      ],
+    ],
+    'HlsContentProtectionMethod' => [
+      'base' => NULL,
+      'refs' => [
+        'HlsContentProtection$Method' => '<p>The content protection method for your output. The only valid value is: <code>aes-128</code>.</p> <p>This value will be written into the method attribute of the <code>EXT-X-KEY</code> metadata tag in the output playlist.</p>',
+      ],
+    ],
     'HorizontalAlign' => [
       'base' => NULL,
       'refs' => [
@@ -502,7 +517,6 @@
         'CaptionSource$Language' => '<p>A string that specifies the language of the caption. Specify this as one of:</p> <ul> <li><p>2-character ISO 639-1 code</p></li> <li><p>3-character ISO 639-2 code</p></li> </ul> <p>For more information on ISO language codes and language names, see the List of ISO 639-1 codes.</p>',
         'CreateJobOutput$Key' => '<p> The name to assign to the transcoded file. Elastic Transcoder saves the file in the Amazon S3 bucket specified by the <code>OutputBucket</code> object in the pipeline that is specified by the pipeline ID. If a file with the specified name already exists in the output bucket, the job fails. </p>',
         'CreateJobRequest$OutputKeyPrefix' => '<p>The value, if any, that you want Elastic Transcoder to prepend to the names of all files that this job creates, including output files, thumbnails, and playlists.</p>',
-        'Encryption$InitializationVector' => '<p>The series of random bits created by a random bit generator, unique for every encryption operation, that you used to encrypt your input files or that you want Elastic Transcoder to use to encrypt your output files. The initialization vector must be base64-encoded, and it must be exactly 16 bytes long before being base64-encoded.</p>',
         'Job$OutputKeyPrefix' => '<p>The value, if any, that you want Elastic Transcoder to prepend to the names of all files that this job creates, including output files, thumbnails, and playlists. We recommend that you add a / or some other delimiter to the end of the <code>OutputKeyPrefix</code>.</p>',
         'JobInput$Key' => '<p> The name of the file to transcode. Elsewhere in the body of the JSON block is the the ID of the pipeline to use for processing the job. The <code>InputBucket</code> object in that pipeline tells Elastic Transcoder which Amazon S3 bucket to get the file from. </p> <p>If the file name includes a prefix, such as <code>cooking/lasagna.mpg</code>, include the prefix in the key. If the file isn\'t in the specified bucket, Elastic Transcoder returns an error.</p>',
         'JobOutput$Key' => '<p> The name to assign to the transcoded file. Elastic Transcoder saves the file in the Amazon S3 bucket specified by the <code>OutputBucket</code> object in the pipeline that is specified by the pipeline ID.</p>',
@@ -515,6 +529,12 @@
         'CreatePipelineRequest$AwsKmsKeyArn' => '<p>The AWS Key Management Service (AWS KMS] key that you want to use with this pipeline.</p> <p>If you use either <code>S3</code> or <code>S3-AWS-KMS</code> as your <code>Encryption:Mode</code>, you don\'t need to provide a key with your job because a default key, known as an AWS-KMS key, is created for you automatically. You need to provide an AWS-KMS key only if you want to use a non-default AWS-KMS key, or if you are using an <code>Encryption:Mode</code> of <code>AES-PKCS7</code>, <code>AES-CTR</code>, or <code>AES-GCM</code>.</p>',
         'Pipeline$AwsKmsKeyArn' => '<p>The AWS Key Management Service (AWS KMS] key that you want to use with this pipeline.</p> <p>If you use either <code>S3</code> or <code>S3-AWS-KMS</code> as your <code>Encryption:Mode</code>, you don\'t need to provide a key with your job because a default key, known as an AWS-KMS key, is created for you automatically. You need to provide an AWS-KMS key only if you want to use a non-default AWS-KMS key, or if you are using an <code>Encryption:Mode</code> of <code>AES-PKCS7</code>, <code>AES-CTR</code>, or <code>AES-GCM</code>.</p>',
         'UpdatePipelineRequest$AwsKmsKeyArn' => '<p>The AWS Key Management Service (AWS KMS] key that you want to use with this pipeline.</p> <p>If you use either <code>S3</code> or <code>S3-AWS-KMS</code> as your <code>Encryption:Mode</code>, you don\'t need to provide a key with your job because a default key, known as an AWS-KMS key, is created for you automatically. You need to provide an AWS-KMS key only if you want to use a non-default AWS-KMS key, or if you are using an <code>Encryption:Mode</code> of <code>AES-PKCS7</code>, <code>AES-CTR</code>, or <code>AES-GCM</code>.</p>',
+      ],
+    ],
+    'KeyStoragePolicy' => [
+      'base' => NULL,
+      'refs' => [
+        'HlsContentProtection$KeyStoragePolicy' => '<p>Specify whether you want Elastic Transcoder to write your HLS license key to an Amazon S3 bucket. If you choose <code>WithVariantPlaylists</code>, <code>LicenseAcquisitionUrl</code> must be left blank and Elastic Transcoder writes your data key into the same bucket as the associated playlist.</p>',
       ],
     ],
     'KeyframesMaxDist' => [
@@ -974,6 +994,19 @@
       'base' => NULL,
       'refs' => [
         'PresetWatermark$SizingPolicy' => '<p>A value that controls scaling of the watermark: <ul> <li> <b>Fit</b>: Elastic Transcoder scales the watermark so it matches the value that you specified in either <code>MaxWidth</code> or <code>MaxHeight</code> without exceeding the other value.</li> <li> <b>Stretch</b>: Elastic Transcoder stretches the watermark to match the values that you specified for <code>MaxWidth</code> and <code>MaxHeight</code>. If the relative proportions of the watermark and the values of <code>MaxWidth</code> and <code>MaxHeight</code> are different, the watermark will be distorted.</li> <li> <b>ShrinkToFit</b>: Elastic Transcoder scales the watermark down so that its dimensions match the values that you specified for at least one of <code>MaxWidth</code> and <code>MaxHeight</code> without exceeding either value. If you specify this option, Elastic Transcoder does not scale the watermark up.</li> </ul> </p>',
+      ],
+    ],
+    'ZeroTo255String' => [
+      'base' => NULL,
+      'refs' => [
+        'Encryption$InitializationVector' => '<p>The series of random bits created by a random bit generator, unique for every encryption operation, that you used to encrypt your input files or that you want Elastic Transcoder to use to encrypt your output files. The initialization vector must be base64-encoded, and it must be exactly 16 bytes long before being base64-encoded.</p>',
+        'HlsContentProtection$InitializationVector' => '<p>If Elastic Transcoder is generating your key for you, you must leave this field blank.</p> <p>The series of random bits created by a random bit generator, unique for every encryption operation, that you want Elastic Transcoder to use to encrypt your output files. The initialization vector must be base64-encoded, and it must be exactly 16 bytes before being base64-encoded.</p>',
+      ],
+    ],
+    'ZeroTo512String' => [
+      'base' => NULL,
+      'refs' => [
+        'HlsContentProtection$LicenseAcquisitionUrl' => '<p>The location of the license key required to decrypt your HLS playlist. The URL must be an absolute path, and is referenced in the URI attribute of the EXT-X-KEY metadata tag in the playlist file.</p>',
       ],
     ],
   ],

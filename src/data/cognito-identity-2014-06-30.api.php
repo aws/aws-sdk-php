@@ -109,6 +109,54 @@
         ],
       ],
     ],
+    'DescribeIdentity' => [
+      'name' => 'DescribeIdentity',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'DescribeIdentityInput',
+      ],
+      'output' => [
+        'shape' => 'IdentityDescription',
+      ],
+      'errors' => [
+        [
+          'shape' => 'InvalidParameterException',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceNotFoundException',
+          'error' => [
+            'httpStatusCode' => 404,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'NotAuthorizedException',
+          'error' => [
+            'httpStatusCode' => 403,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'TooManyRequestsException',
+          'error' => [
+            'httpStatusCode' => 429,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InternalErrorException',
+          'exception' => true,
+          'fault' => true,
+        ],
+      ],
+    ],
     'DescribeIdentityPool' => [
       'name' => 'DescribeIdentityPool',
       'http' => [
@@ -147,6 +195,68 @@
           'shape' => 'TooManyRequestsException',
           'error' => [
             'httpStatusCode' => 429,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InternalErrorException',
+          'exception' => true,
+          'fault' => true,
+        ],
+      ],
+    ],
+    'GetCredentialsForIdentity' => [
+      'name' => 'GetCredentialsForIdentity',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'GetCredentialsForIdentityInput',
+      ],
+      'output' => [
+        'shape' => 'GetCredentialsForIdentityResponse',
+      ],
+      'errors' => [
+        [
+          'shape' => 'InvalidParameterException',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceNotFoundException',
+          'error' => [
+            'httpStatusCode' => 404,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'NotAuthorizedException',
+          'error' => [
+            'httpStatusCode' => 403,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceConflictException',
+          'error' => [
+            'httpStatusCode' => 409,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'TooManyRequestsException',
+          'error' => [
+            'httpStatusCode' => 429,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidIdentityPoolConfigurationException',
+          'error' => [
+            'httpStatusCode' => 400,
           ],
           'exception' => true,
         ],
@@ -216,6 +326,61 @@
             'httpStatusCode' => 400,
           ],
           'exception' => true,
+        ],
+      ],
+    ],
+    'GetIdentityPoolRoles' => [
+      'name' => 'GetIdentityPoolRoles',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'GetIdentityPoolRolesInput',
+      ],
+      'output' => [
+        'shape' => 'GetIdentityPoolRolesResponse',
+      ],
+      'errors' => [
+        [
+          'shape' => 'InvalidParameterException',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceNotFoundException',
+          'error' => [
+            'httpStatusCode' => 404,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'NotAuthorizedException',
+          'error' => [
+            'httpStatusCode' => 403,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceConflictException',
+          'error' => [
+            'httpStatusCode' => 409,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'TooManyRequestsException',
+          'error' => [
+            'httpStatusCode' => 429,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InternalErrorException',
+          'exception' => true,
+          'fault' => true,
         ],
       ],
     ],
@@ -535,6 +700,58 @@
         ],
       ],
     ],
+    'SetIdentityPoolRoles' => [
+      'name' => 'SetIdentityPoolRoles',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/',
+      ],
+      'input' => [
+        'shape' => 'SetIdentityPoolRolesInput',
+      ],
+      'errors' => [
+        [
+          'shape' => 'InvalidParameterException',
+          'error' => [
+            'httpStatusCode' => 400,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceNotFoundException',
+          'error' => [
+            'httpStatusCode' => 404,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'NotAuthorizedException',
+          'error' => [
+            'httpStatusCode' => 403,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ResourceConflictException',
+          'error' => [
+            'httpStatusCode' => 409,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'TooManyRequestsException',
+          'error' => [
+            'httpStatusCode' => 429,
+          ],
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InternalErrorException',
+          'exception' => true,
+          'fault' => true,
+        ],
+      ],
+    ],
     'UnlinkDeveloperIdentity' => [
       'name' => 'UnlinkDeveloperIdentity',
       'http' => [
@@ -696,6 +913,14 @@
     ],
   ],
   'shapes' => [
+    'ARNString' => [
+      'type' => 'string',
+      'min' => 20,
+      'max' => 2048,
+    ],
+    'AccessKeyString' => [
+      'type' => 'string',
+    ],
     'AccountId' => [
       'type' => 'string',
       'min' => 1,
@@ -726,6 +951,26 @@
         ],
       ],
     ],
+    'Credentials' => [
+      'type' => 'structure',
+      'members' => [
+        'AccessKeyId' => [
+          'shape' => 'AccessKeyString',
+        ],
+        'SecretKey' => [
+          'shape' => 'SecretKeyString',
+        ],
+        'SessionToken' => [
+          'shape' => 'SessionTokenString',
+        ],
+        'Expiration' => [
+          'shape' => 'DateType',
+        ],
+      ],
+    ],
+    'DateType' => [
+      'type' => 'timestamp',
+    ],
     'DeleteIdentityPoolInput' => [
       'type' => 'structure',
       'required' => [
@@ -734,6 +979,17 @@
       'members' => [
         'IdentityPoolId' => [
           'shape' => 'IdentityPoolId',
+        ],
+      ],
+    ],
+    'DescribeIdentityInput' => [
+      'type' => 'structure',
+      'required' => [
+        'IdentityId',
+      ],
+      'members' => [
+        'IdentityId' => [
+          'shape' => 'IdentityId',
         ],
       ],
     ],
@@ -768,6 +1024,9 @@
     ],
     'DeveloperUserIdentifier' => [
       'type' => 'string',
+      'min' => 1,
+      'max' => 1024,
+      'pattern' => '[\\w.@_-]+',
     ],
     'DeveloperUserIdentifierList' => [
       'type' => 'list',
@@ -775,10 +1034,34 @@
         'shape' => 'DeveloperUserIdentifier',
       ],
     ],
+    'GetCredentialsForIdentityInput' => [
+      'type' => 'structure',
+      'required' => [
+        'IdentityId',
+      ],
+      'members' => [
+        'IdentityId' => [
+          'shape' => 'IdentityId',
+        ],
+        'Logins' => [
+          'shape' => 'LoginsMap',
+        ],
+      ],
+    ],
+    'GetCredentialsForIdentityResponse' => [
+      'type' => 'structure',
+      'members' => [
+        'IdentityId' => [
+          'shape' => 'IdentityId',
+        ],
+        'Credentials' => [
+          'shape' => 'Credentials',
+        ],
+      ],
+    ],
     'GetIdInput' => [
       'type' => 'structure',
       'required' => [
-        'AccountId',
         'IdentityPoolId',
       ],
       'members' => [
@@ -798,6 +1081,25 @@
       'members' => [
         'IdentityId' => [
           'shape' => 'IdentityId',
+        ],
+      ],
+    ],
+    'GetIdentityPoolRolesInput' => [
+      'type' => 'structure',
+      'members' => [
+        'IdentityPoolId' => [
+          'shape' => 'IdentityPoolId',
+        ],
+      ],
+    ],
+    'GetIdentityPoolRolesResponse' => [
+      'type' => 'structure',
+      'members' => [
+        'IdentityPoolId' => [
+          'shape' => 'IdentityPoolId',
+        ],
+        'Roles' => [
+          'shape' => 'RolesMap',
         ],
       ],
     ],
@@ -872,6 +1174,12 @@
         ],
         'Logins' => [
           'shape' => 'LoginsList',
+        ],
+        'CreationDate' => [
+          'shape' => 'DateType',
+        ],
+        'LastModifiedDate' => [
+          'shape' => 'DateType',
         ],
       ],
     ],
@@ -978,6 +1286,18 @@
       ],
       'exception' => true,
       'fault' => true,
+    ],
+    'InvalidIdentityPoolConfigurationException' => [
+      'type' => 'structure',
+      'members' => [
+        'message' => [
+          'shape' => 'String',
+        ],
+      ],
+      'error' => [
+        'httpStatusCode' => 400,
+      ],
+      'exception' => true,
     ],
     'InvalidParameterException' => [
       'type' => 'structure',
@@ -1156,15 +1476,10 @@
       ],
       'exception' => true,
     ],
-    'OIDCProviderARN' => [
-      'type' => 'string',
-      'min' => 20,
-      'max' => 2048,
-    ],
     'OIDCProviderList' => [
       'type' => 'list',
       'member' => [
-        'shape' => 'OIDCProviderARN',
+        'shape' => 'ARNString',
       ],
     ],
     'OIDCToken' => [
@@ -1203,6 +1518,41 @@
         'httpStatusCode' => 404,
       ],
       'exception' => true,
+    ],
+    'RoleType' => [
+      'type' => 'string',
+      'pattern' => '(un]?authenticated',
+    ],
+    'RolesMap' => [
+      'type' => 'map',
+      'key' => [
+        'shape' => 'RoleType',
+      ],
+      'value' => [
+        'shape' => 'ARNString',
+      ],
+      'max' => 2,
+    ],
+    'SecretKeyString' => [
+      'type' => 'string',
+    ],
+    'SessionTokenString' => [
+      'type' => 'string',
+    ],
+    'SetIdentityPoolRolesInput' => [
+      'type' => 'structure',
+      'required' => [
+        'IdentityPoolId',
+        'Roles',
+      ],
+      'members' => [
+        'IdentityPoolId' => [
+          'shape' => 'IdentityPoolId',
+        ],
+        'Roles' => [
+          'shape' => 'RolesMap',
+        ],
+      ],
     ],
     'String' => [
       'type' => 'string',

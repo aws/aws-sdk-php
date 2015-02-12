@@ -2,12 +2,12 @@
   'metadata' => [
     'apiVersion' => '2014-05-30',
     'endpointPrefix' => 'cloudhsm',
+    'jsonVersion' => '1.1',
     'serviceAbbreviation' => 'CloudHSM',
     'serviceFullName' => 'Amazon CloudHSM',
     'signatureVersion' => 'v4',
-    'targetPrefix' => 'CloudHsmFrontendService',
+    'targetPrefix' => 'cloudhsm',
     'protocol' => 'json',
-    'jsonVersion' => '1.1',
   ],
   'operations' => [
     'CreateHapg' => [

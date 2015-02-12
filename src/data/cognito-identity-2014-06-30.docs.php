@@ -2,20 +2,37 @@
   'operations' => [
     'CreateIdentityPool' => '<p>Creates a new identity pool. The identity pool is a store of user identity information that is specific to your AWS account. The limit on identity pools is 60 per account.</p>',
     'DeleteIdentityPool' => '<p>Deletes a user pool. Once a pool is deleted, users will not be able to authenticate with the pool.</p>',
+    'DescribeIdentity' => '<p>Returns metadata related to the given identity, including when the identity was created and any associated linked logins.</p>',
     'DescribeIdentityPool' => '<p>Gets details about a particular identity pool, including the pool name, ID description, creation date, and current number of users.</p>',
+    'GetCredentialsForIdentity' => '<p>Returns credentials for the the provided identity ID. Any provided logins will be validated against supported login providers. If the token is for cognito-identity.amazonaws.com, it will be passed through to AWS Security Token Service with the appropriate role for the token.</p>',
     'GetId' => '<p>Generates (or retrieves] a Cognito ID. Supplying multiple logins will create an implicit linked account.</p>',
+    'GetIdentityPoolRoles' => '<p>Gets the roles for an identity pool.</p>',
     'GetOpenIdToken' => '<p>Gets an OpenID token, using a known Cognito ID. This known Cognito ID is returned by <a>GetId</a>. You can optionally add additional logins for the identity. Supplying multiple logins creates an implicit link.</p> <p>The OpenId token is valid for 15 minutes.</p>',
     'GetOpenIdTokenForDeveloperIdentity' => '<p>Registers (or retrieves] a Cognito <code>IdentityId</code> and an OpenID Connect token for a user authenticated by your backend authentication process. Supplying multiple logins will create an implicit linked account. You can only specify one developer provider as part of the <code>Logins</code> map, which is linked to the identity pool. The developer provider is the "domain" by which Cognito will refer to your users.</p> <p>You can use <code>GetOpenIdTokenForDeveloperIdentity</code> to create a new identity and to link new logins (that is, user credentials issued by a public provider or developer provider] to an existing identity. When you want to create a new identity, the <code>IdentityId</code> should be null. When you want to associate a new login with an existing authenticated/unauthenticated identity, you can do so by providing the existing <code>IdentityId</code>. This API will create the identity in the specified <code>IdentityPoolId</code>.</p>',
     'ListIdentities' => '<p>Lists the identities in a pool.</p>',
     'ListIdentityPools' => '<p>Lists all of the Cognito identity pools registered for your account.</p>',
     'LookupDeveloperIdentity' => '<p>Retrieves the <code>IdentityID</code> associated with a <code>DeveloperUserIdentifier</code> or the list of <code>DeveloperUserIdentifier</code>s associated with an <code>IdentityId</code> for an existing identity. Either <code>IdentityID</code> or <code>DeveloperUserIdentifier</code> must not be null. If you supply only one of these values, the other value will be searched in the database and returned as a part of the response. If you supply both, <code>DeveloperUserIdentifier</code> will be matched against <code>IdentityID</code>. If the values are verified against the database, the response returns both values and is the same as the request. Otherwise a <code>ResourceConflictException</code> is thrown.</p>',
     'MergeDeveloperIdentities' => '<p>Merges two users having different <code>IdentityId</code>s, existing in the same identity pool, and identified by the same developer provider. You can use this action to request that discrete users be merged and identified as a single user in the Cognito environment. Cognito associates the given source user (<code>SourceUserIdentifier</code>] with the <code>IdentityId</code> of the <code>DestinationUserIdentifier</code>. Only developer-authenticated users can be merged. If the users to be merged are associated with the same public provider, but as two different users, an exception will be thrown.</p>',
+    'SetIdentityPoolRoles' => '<p>Sets the roles for an identity pool. These roles are used when making calls to <code>GetCredentialsForIdentity</code> action.</p>',
     'UnlinkDeveloperIdentity' => '<p>Unlinks a <code>DeveloperUserIdentifier</code> from an existing identity. Unlinked developer users will be considered new identities next time they are seen. If, for a given Cognito identity, you remove all federated identities as well as the developer user identifier, the Cognito identity becomes inaccessible.</p>',
     'UnlinkIdentity' => '<p>Unlinks a federated identity from an existing account. Unlinked logins will be considered new identities next time they are seen. Removing the last linked login will make this identity inaccessible.</p>',
     'UpdateIdentityPool' => '<p>Updates a user pool.</p>',
   ],
-  'service' => '<fullname>Amazon Cognito</fullname> <p>Amazon Cognito is a web service that delivers scoped temporary credentials to mobile devices and other untrusted environments. Amazon Cognito uniquely identifies a device and supplies the user with a consistent identity over the lifetime of an application.</p> <p>Using Amazon Cognito, you can enable authentication with one or more third-party identity providers (Facebook, Google, or Login with Amazon], and you can also choose to support unauthenticated access from your app. Cognito delivers a unique identifier for each user and acts as an OpenID token provider trusted by AWS Security Token Service (STS] to access temporary, limited-privilege AWS credentials.</p> <p>To provide end-user credentials, first make an unsigned call to <a>GetId</a>. If the end user is authenticated with one of the supported identity providers, set the <code>Logins</code> map with the identity provider token. <code>GetId</code> returns a unique identifier for the user.</p> <p>Next, make an unsigned call to <a>GetOpenIdToken</a>, which returns the OpenID token necessary to call STS and retrieve AWS credentials. This call expects the same <code>Logins</code> map as the <code>GetId</code> call, as well as the <code>IdentityID</code> originally returned by <code>GetId</code>. The token returned by <code>GetOpenIdToken</code> can be passed to the STS operation <a href="http://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRoleWithWebIdentity.html">AssumeRoleWithWebIdentity</a> to retrieve AWS credentials.</p>',
+  'service' => '<fullname>Amazon Cognito</fullname> <p>Amazon Cognito is a web service that delivers scoped temporary credentials to mobile devices and other untrusted environments. Amazon Cognito uniquely identifies a device and supplies the user with a consistent identity over the lifetime of an application.</p> <p>Using Amazon Cognito, you can enable authentication with one or more third-party identity providers (Facebook, Google, or Login with Amazon], and you can also choose to support unauthenticated access from your app. Cognito delivers a unique identifier for each user and acts as an OpenID token provider trusted by AWS Security Token Service (STS] to access temporary, limited-privilege AWS credentials.</p> <p>To provide end-user credentials, first make an unsigned call to <a>GetId</a>. If the end user is authenticated with one of the supported identity providers, set the <code>Logins</code> map with the identity provider token. <code>GetId</code> returns a unique identifier for the user.</p> <p>Next, make an unsigned call to <a>GetCredentialsForIdentity</a>. This call expects the same <code>Logins</code> map as the <code>GetId</code> call, as well as the <code>IdentityID</code> originally returned by <code>GetId</code>. Assuming your identity pool has been configured via the <a>SetIdentityPoolRoles</a> operation, <code>GetCredentialsForIdentity</code> will return AWS credentials for your use. If your pool has not been configured with <code>SetIdentityPoolRoles</code>, or if you want to follow legacy flow, make an unsigned call to <a>GetOpenIdToken</a>, which returns the OpenID token necessary to call STS and retrieve AWS credentials. This call expects the same <code>Logins</code> map as the <code>GetId</code> call, as well as the <code>IdentityID</code> originally returned by <code>GetId</code>. The token returned by <code>GetOpenIdToken</code> can be passed to the STS operation <a href="http://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRoleWithWebIdentity.html">AssumeRoleWithWebIdentity</a> to retrieve AWS credentials.</p> <p>If you want to use Amazon Cognito in an Android, iOS, or Unity application, you will probably want to make API calls via the AWS Mobile SDK. To learn more, see the <a href="http://docs.aws.amazon.com/mobile/index.html">AWS Mobile SDK Developer Guide</a>.</p>',
   'shapes' => [
+    'ARNString' => [
+      'base' => NULL,
+      'refs' => [
+        'OIDCProviderList$member' => NULL,
+        'RolesMap$value' => NULL,
+      ],
+    ],
+    'AccessKeyString' => [
+      'base' => NULL,
+      'refs' => [
+        'Credentials$AccessKeyId' => '<p>The Access Key portion of the credentials.</p>',
+      ],
+    ],
     'AccountId' => [
       'base' => NULL,
       'refs' => [
@@ -26,8 +43,26 @@
       'base' => '<p>Input to the CreateIdentityPool action.</p>',
       'refs' => [],
     ],
+    'Credentials' => [
+      'base' => '<p>Credentials for the the provided identity ID.</p>',
+      'refs' => [
+        'GetCredentialsForIdentityResponse$Credentials' => '<p>Credentials for the the provided identity ID.</p>',
+      ],
+    ],
+    'DateType' => [
+      'base' => NULL,
+      'refs' => [
+        'Credentials$Expiration' => '<p>The date at which these credentials will expire.</p>',
+        'IdentityDescription$CreationDate' => '<p>Date on which the identity was created.</p>',
+        'IdentityDescription$LastModifiedDate' => '<p>Date on which the identity was last modified.</p>',
+      ],
+    ],
     'DeleteIdentityPoolInput' => [
       'base' => '<p>Input to the DeleteIdentityPool action.</p>',
+      'refs' => [],
+    ],
+    'DescribeIdentityInput' => [
+      'base' => '<p>Input to the <code>DescribeIdentity</code> action.</p>',
       'refs' => [],
     ],
     'DescribeIdentityPoolInput' => [
@@ -63,12 +98,28 @@
         'LookupDeveloperIdentityResponse$DeveloperUserIdentifierList' => '<p>This is the list of developer user identifiers associated with an identity ID. Cognito supports the association of multiple developer user identifiers with an identity ID.</p>',
       ],
     ],
+    'GetCredentialsForIdentityInput' => [
+      'base' => '<p>Input to the <code>GetCredentialsForIdentity</code> action.</p>',
+      'refs' => [],
+    ],
+    'GetCredentialsForIdentityResponse' => [
+      'base' => '<p>Returned in response to a successful <code>GetCredentialsForIdentity</code> operation.</p>',
+      'refs' => [],
+    ],
     'GetIdInput' => [
       'base' => 'Input to the GetId action.',
       'refs' => [],
     ],
     'GetIdResponse' => [
       'base' => 'Returned in response to a GetId request.',
+      'refs' => [],
+    ],
+    'GetIdentityPoolRolesInput' => [
+      'base' => '<p>Input to the <code>GetIdentityPoolRoles</code> action.</p>',
+      'refs' => [],
+    ],
+    'GetIdentityPoolRolesResponse' => [
+      'base' => '<p>Returned in response to a successful <code>GetIdentityPoolRoles</code> operation.</p>',
       'refs' => [],
     ],
     'GetOpenIdTokenForDeveloperIdentityInput' => [
@@ -102,6 +153,9 @@
     'IdentityId' => [
       'base' => NULL,
       'refs' => [
+        'DescribeIdentityInput$IdentityId' => '<p>A unique identifier in the format REGION:GUID.</p>',
+        'GetCredentialsForIdentityInput$IdentityId' => '<p>A unique identifier in the format REGION:GUID.</p>',
+        'GetCredentialsForIdentityResponse$IdentityId' => '<p>A unique identifier in the format REGION:GUID.</p>',
         'GetIdResponse$IdentityId' => 'A unique identifier in the format REGION:GUID.',
         'GetOpenIdTokenForDeveloperIdentityInput$IdentityId' => '<p>A unique identifier in the format REGION:GUID.</p>',
         'GetOpenIdTokenForDeveloperIdentityResponse$IdentityId' => '<p>A unique identifier in the format REGION:GUID.</p>',
@@ -125,6 +179,8 @@
         'DeleteIdentityPoolInput$IdentityPoolId' => 'An identity pool ID in the format REGION:GUID.',
         'DescribeIdentityPoolInput$IdentityPoolId' => 'An identity pool ID in the format REGION:GUID.',
         'GetIdInput$IdentityPoolId' => 'An identity pool ID in the format REGION:GUID.',
+        'GetIdentityPoolRolesInput$IdentityPoolId' => '<p>An identity pool ID in the format REGION:GUID.</p>',
+        'GetIdentityPoolRolesResponse$IdentityPoolId' => '<p>An identity pool ID in the format REGION:GUID.</p>',
         'GetOpenIdTokenForDeveloperIdentityInput$IdentityPoolId' => '<p>An identity pool ID in the format REGION:GUID.</p>',
         'IdentityPool$IdentityPoolId' => 'An identity pool ID in the format REGION:GUID.',
         'IdentityPoolShortDescription$IdentityPoolId' => 'An identity pool ID in the format REGION:GUID.',
@@ -132,6 +188,7 @@
         'ListIdentitiesResponse$IdentityPoolId' => 'An identity pool ID in the format REGION:GUID.',
         'LookupDeveloperIdentityInput$IdentityPoolId' => '<p>An identity pool ID in the format REGION:GUID.</p>',
         'MergeDeveloperIdentitiesInput$IdentityPoolId' => '<p>An identity pool ID in the format REGION:GUID.</p>',
+        'SetIdentityPoolRolesInput$IdentityPoolId' => '<p>An identity pool ID in the format REGION:GUID.</p>',
         'UnlinkDeveloperIdentityInput$IdentityPoolId' => '<p>An identity pool ID in the format REGION:GUID.</p>',
       ],
     ],
@@ -193,6 +250,10 @@
       'base' => 'Thrown when the service encounters an error during processing the request.',
       'refs' => [],
     ],
+    'InvalidIdentityPoolConfigurationException' => [
+      'base' => '<p>Thrown if the identity pool has no role associated for the given auth type (auth/unauth] or if the AssumeRole fails.</p>',
+      'refs' => [],
+    ],
     'InvalidParameterException' => [
       'base' => 'Thrown for missing or bad input parameter(s].',
       'refs' => [],
@@ -227,6 +288,7 @@
     'LoginsMap' => [
       'base' => NULL,
       'refs' => [
+        'GetCredentialsForIdentityInput$Logins' => '<p>A set of optional name-value pairs that map provider names to provider tokens.</p>',
         'GetIdInput$Logins' => '<p>A set of optional name-value pairs that map provider names to provider tokens.</p> <p>The available provider names for <code>Logins</code> are as follows: <ul> <li>Facebook: <code>graph.facebook.com</code> </li> <li>Google: <code>accounts.google.com</code> </li> <li>Amazon: <code>www.amazon.com</code> </li> </ul> </p>',
         'GetOpenIdTokenForDeveloperIdentityInput$Logins' => '<p>A set of optional name-value pairs that map provider names to provider tokens. Each name-value pair represents a user from a public provider or developer provider. If the user is from a developer provider, the name-value pair will follow the syntax <code>"developer_provider_name": "developer_user_identifier"</code>. The developer provider is the "domain" by which Cognito will refer to your users; you provided this domain while creating/updating the identity pool. The developer user identifier is an identifier from your backend that uniquely identifies a user. When you create an identity pool, you can specify the supported logins.</p>',
         'GetOpenIdTokenInput$Logins' => 'A set of optional name-value pairs that map provider names to provider tokens.',
@@ -253,17 +315,11 @@
       'base' => 'Thrown when a user is not authorized to access the requested resource.',
       'refs' => [],
     ],
-    'OIDCProviderARN' => [
-      'base' => NULL,
-      'refs' => [
-        'OIDCProviderList$member' => NULL,
-      ],
-    ],
     'OIDCProviderList' => [
       'base' => NULL,
       'refs' => [
-        'CreateIdentityPoolInput$OpenIdConnectProviderARNs' => NULL,
-        'IdentityPool$OpenIdConnectProviderARNs' => NULL,
+        'CreateIdentityPoolInput$OpenIdConnectProviderARNs' => '<p>A list of OpendID Connect provider ARNs.</p>',
+        'IdentityPool$OpenIdConnectProviderARNs' => '<p>A list of OpendID Connect provider ARNs.</p>',
       ],
     ],
     'OIDCToken' => [
@@ -300,11 +356,41 @@
       'base' => 'Thrown when the requested resource (for example, a dataset or record] does not exist.',
       'refs' => [],
     ],
+    'RoleType' => [
+      'base' => NULL,
+      'refs' => [
+        'RolesMap$key' => NULL,
+      ],
+    ],
+    'RolesMap' => [
+      'base' => NULL,
+      'refs' => [
+        'GetIdentityPoolRolesResponse$Roles' => '<p>The map of roles associated with this pool. Currently only authenticated and unauthenticated roles are supported.</p>',
+        'SetIdentityPoolRolesInput$Roles' => '<p>The map of roles associated with this pool. Currently only authenticated and unauthenticated roles are supported.</p>',
+      ],
+    ],
+    'SecretKeyString' => [
+      'base' => NULL,
+      'refs' => [
+        'Credentials$SecretKey' => '<p>The Secret Access Key portion of the credentials</p>',
+      ],
+    ],
+    'SessionTokenString' => [
+      'base' => NULL,
+      'refs' => [
+        'Credentials$SessionToken' => '<p>The Session Token portion of the credentials</p>',
+      ],
+    ],
+    'SetIdentityPoolRolesInput' => [
+      'base' => '<p>Input to the <code>SetIdentityPoolRoles</code> action.</p>',
+      'refs' => [],
+    ],
     'String' => [
       'base' => NULL,
       'refs' => [
         'DeveloperUserAlreadyRegisteredException$message' => '<p>This developer user identifier is already registered with Cognito.</p>',
         'InternalErrorException$message' => 'The message returned by an InternalErrorException.',
+        'InvalidIdentityPoolConfigurationException$message' => '<p>The message returned for an <code>InvalidIdentityPoolConfigurationException</code></p>',
         'InvalidParameterException$message' => 'The message returned by an InvalidParameterException.',
         'LimitExceededException$message' => 'The message returned by a LimitExceededException.',
         'NotAuthorizedException$message' => 'The message returned by a NotAuthorizedException',

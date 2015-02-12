@@ -43,6 +43,10 @@
           'shape' => 'InvalidAccessKeyIdException',
           'exception' => true,
         ],
+        [
+          'shape' => 'InvalidVersionException',
+          'exception' => true,
+        ],
       ],
     ],
     'CreateJob' => [
@@ -61,10 +65,6 @@
       'errors' => [
         [
           'shape' => 'MissingParameterException',
-          'exception' => true,
-        ],
-        [
-          'shape' => 'InvalidParameterException',
           'exception' => true,
         ],
         [
@@ -115,6 +115,62 @@
           'shape' => 'MalformedManifestException',
           'exception' => true,
         ],
+        [
+          'shape' => 'CreateJobQuotaExceededException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidJobIdException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidVersionException',
+          'exception' => true,
+        ],
+      ],
+    ],
+    'GetShippingLabel' => [
+      'name' => 'GetShippingLabel',
+      'http' => [
+        'method' => 'POST',
+        'requestUri' => '/?Operation=GetShippingLabel',
+      ],
+      'input' => [
+        'shape' => 'GetShippingLabelInput',
+      ],
+      'output' => [
+        'shape' => 'GetShippingLabelOutput',
+        'resultWrapper' => 'GetShippingLabelResult',
+      ],
+      'errors' => [
+        [
+          'shape' => 'InvalidJobIdException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'ExpiredJobIdException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'CanceledJobIdException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidAccessKeyIdException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidAddressException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidVersionException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidParameterException',
+          'exception' => true,
+        ],
       ],
     ],
     'GetStatus' => [
@@ -147,6 +203,10 @@
           'shape' => 'InvalidAccessKeyIdException',
           'exception' => true,
         ],
+        [
+          'shape' => 'InvalidVersionException',
+          'exception' => true,
+        ],
       ],
     ],
     'ListJobs' => [
@@ -169,6 +229,10 @@
         ],
         [
           'shape' => 'InvalidAccessKeyIdException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidVersionException',
           'exception' => true,
         ],
       ],
@@ -251,12 +315,37 @@
           'shape' => 'MalformedManifestException',
           'exception' => true,
         ],
+        [
+          'shape' => 'UnableToUpdateJobIdException',
+          'exception' => true,
+        ],
+        [
+          'shape' => 'InvalidVersionException',
+          'exception' => true,
+        ],
       ],
     ],
   ],
   'shapes' => [
-    'AwsShippingAddress' => [
+    'APIVersion' => [
       'type' => 'string',
+    ],
+    'Artifact' => [
+      'type' => 'structure',
+      'members' => [
+        'Description' => [
+          'shape' => 'Description',
+        ],
+        'URL' => [
+          'shape' => 'URL',
+        ],
+      ],
+    ],
+    'ArtifactList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'Artifact',
+      ],
     ],
     'BucketPermissionException' => [
       'type' => 'structure',
@@ -275,6 +364,9 @@
       'members' => [
         'JobId' => [
           'shape' => 'JobId',
+        ],
+        'APIVersion' => [
+          'shape' => 'APIVersion',
         ],
       ],
     ],
@@ -318,6 +410,9 @@
         'ValidateOnly' => [
           'shape' => 'ValidateOnly',
         ],
+        'APIVersion' => [
+          'shape' => 'APIVersion',
+        ],
       ],
     ],
     'CreateJobOutput' => [
@@ -329,9 +424,6 @@
         'JobType' => [
           'shape' => 'JobType',
         ],
-        'AwsShippingAddress' => [
-          'shape' => 'AwsShippingAddress',
-        ],
         'Signature' => [
           'shape' => 'Signature',
         ],
@@ -341,12 +433,27 @@
         'WarningMessage' => [
           'shape' => 'WarningMessage',
         ],
+        'ArtifactList' => [
+          'shape' => 'ArtifactList',
+        ],
       ],
+    ],
+    'CreateJobQuotaExceededException' => [
+      'type' => 'structure',
+      'members' => [
+        'message' => [
+          'shape' => 'ErrorMessage',
+        ],
+      ],
+      'exception' => true,
     ],
     'CreationDate' => [
       'type' => 'timestamp',
     ],
     'CurrentManifest' => [
+      'type' => 'string',
+    ],
+    'Description' => [
       'type' => 'string',
     ],
     'ErrorCount' => [
@@ -364,6 +471,64 @@
       ],
       'exception' => true,
     ],
+    'GenericString' => [
+      'type' => 'string',
+    ],
+    'GetShippingLabelInput' => [
+      'type' => 'structure',
+      'required' => [
+        'jobIds',
+      ],
+      'members' => [
+        'jobIds' => [
+          'shape' => 'JobIdList',
+        ],
+        'name' => [
+          'shape' => 'GenericString',
+        ],
+        'company' => [
+          'shape' => 'GenericString',
+        ],
+        'phoneNumber' => [
+          'shape' => 'GenericString',
+        ],
+        'country' => [
+          'shape' => 'GenericString',
+        ],
+        'stateOrProvince' => [
+          'shape' => 'GenericString',
+        ],
+        'city' => [
+          'shape' => 'GenericString',
+        ],
+        'postalCode' => [
+          'shape' => 'GenericString',
+        ],
+        'street1' => [
+          'shape' => 'GenericString',
+        ],
+        'street2' => [
+          'shape' => 'GenericString',
+        ],
+        'street3' => [
+          'shape' => 'GenericString',
+        ],
+        'APIVersion' => [
+          'shape' => 'GenericString',
+        ],
+      ],
+    ],
+    'GetShippingLabelOutput' => [
+      'type' => 'structure',
+      'members' => [
+        'ShippingLabelURL' => [
+          'shape' => 'GenericString',
+        ],
+        'Warning' => [
+          'shape' => 'GenericString',
+        ],
+      ],
+    ],
     'GetStatusInput' => [
       'type' => 'structure',
       'required' => [
@@ -372,6 +537,9 @@
       'members' => [
         'JobId' => [
           'shape' => 'JobId',
+        ],
+        'APIVersion' => [
+          'shape' => 'APIVersion',
         ],
       ],
     ],
@@ -383,9 +551,6 @@
         ],
         'JobType' => [
           'shape' => 'JobType',
-        ],
-        'AwsShippingAddress' => [
-          'shape' => 'AwsShippingAddress',
         ],
         'LocationCode' => [
           'shape' => 'LocationCode',
@@ -425,6 +590,9 @@
         ],
         'CreationDate' => [
           'shape' => 'CreationDate',
+        ],
+        'ArtifactList' => [
+          'shape' => 'ArtifactList',
         ],
       ],
     ],
@@ -491,6 +659,15 @@
       ],
       'exception' => true,
     ],
+    'InvalidVersionException' => [
+      'type' => 'structure',
+      'members' => [
+        'message' => [
+          'shape' => 'ErrorMessage',
+        ],
+      ],
+      'exception' => true,
+    ],
     'IsCanceled' => [
       'type' => 'boolean',
     ],
@@ -517,6 +694,12 @@
     'JobId' => [
       'type' => 'string',
     ],
+    'JobIdList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'GenericString',
+      ],
+    ],
     'JobType' => [
       'type' => 'string',
       'enum' => [
@@ -538,6 +721,9 @@
         ],
         'Marker' => [
           'shape' => 'Marker',
+        ],
+        'APIVersion' => [
+          'shape' => 'APIVersion',
         ],
       ],
     ],
@@ -648,7 +834,19 @@
     'TrackingNumber' => [
       'type' => 'string',
     ],
+    'URL' => [
+      'type' => 'string',
+    ],
     'UnableToCancelJobIdException' => [
+      'type' => 'structure',
+      'members' => [
+        'message' => [
+          'shape' => 'ErrorMessage',
+        ],
+      ],
+      'exception' => true,
+    ],
+    'UnableToUpdateJobIdException' => [
       'type' => 'structure',
       'members' => [
         'message' => [
@@ -678,6 +876,9 @@
         'ValidateOnly' => [
           'shape' => 'ValidateOnly',
         ],
+        'APIVersion' => [
+          'shape' => 'APIVersion',
+        ],
       ],
     ],
     'UpdateJobOutput' => [
@@ -688,6 +889,9 @@
         ],
         'WarningMessage' => [
           'shape' => 'WarningMessage',
+        ],
+        'ArtifactList' => [
+          'shape' => 'ArtifactList',
         ],
       ],
     ],

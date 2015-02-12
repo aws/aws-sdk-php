@@ -454,7 +454,7 @@
     ],
     'FunctionArn' => [
       'type' => 'string',
-      'pattern' => 'arn:aws:lambda:[a-z]{2}-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-]+(\\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}]?',
+      'pattern' => 'arn:aws:lambda:[a-z]{2}-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_]+(\\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}]?',
     ],
     'FunctionCodeLocation' => [
       'type' => 'structure',
@@ -518,7 +518,7 @@
       'type' => 'string',
       'min' => 1,
       'max' => 64,
-      'pattern' => '[a-zA-Z0-9-]+',
+      'pattern' => '[a-zA-Z0-9-_]+',
     ],
     'GetEventSourceRequest' => [
       'type' => 'structure',
@@ -718,7 +718,7 @@
     ],
     'MemorySize' => [
       'type' => 'integer',
-      'min' => 64,
+      'min' => 128,
       'max' => 1024,
     ],
     'Mode' => [
@@ -757,7 +757,7 @@
     ],
     'RoleArn' => [
       'type' => 'string',
-      'pattern' => 'arn:aws:iam::\\d{12}:role/?[a-zA-Z_0-9+=,.@\\-_]+',
+      'pattern' => 'arn:aws:iam::\\d{12}:role/?[a-zA-Z_0-9+=,.@\\-_/]+',
     ],
     'Runtime' => [
       'type' => 'string',
@@ -789,7 +789,7 @@
       'max' => 60,
     ],
     'Timestamp' => [
-      'type' => 'timestamp',
+      'type' => 'string',
     ],
     'UpdateFunctionConfigurationRequest' => [
       'type' => 'structure',

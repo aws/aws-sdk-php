@@ -2,17 +2,35 @@
   'operations' => [
     'CancelJob' => 'This operation cancels a specified job. Only the job owner can cancel it. The operation fails if the job has already started or is complete.',
     'CreateJob' => 'This operation initiates the process of scheduling an upload or download of your data. You include in the request a manifest that describes the data transfer specifics. The response to the request includes a job ID, which you can use in other operations, a signature that you use to identify your storage device, and the address where you should ship your storage device.',
+    'GetShippingLabel' => 'This operation returns information about a job, including where the job is in the processing pipeline, the status of the results, and the signature value associated with the job. You can only return information about jobs you own.',
     'GetStatus' => 'This operation returns information about a job, including where the job is in the processing pipeline, the status of the results, and the signature value associated with the job. You can only return information about jobs you own.',
     'ListJobs' => 'This operation returns the jobs associated with the requester. AWS Import/Export lists the jobs in reverse chronological order based on the date of creation. For example if Job Test1 was created 2009Dec30 and Test2 was created 2010Feb05, the ListJobs operation would return Test2 followed by Test1.',
     'UpdateJob' => 'You use this operation to change the parameters specified in the original manifest file by supplying a new manifest file. The manifest file attached to this request replaces the original manifest file. You can only use the operation after a CreateJob request but before the data transfer starts and you can only use it on jobs you own.',
   ],
   'service' => '<fullname>AWS Import/Export Service</fullname> AWS Import/Export accelerates transferring large amounts of data between the AWS cloud and portable storage devices that you mail to us. AWS Import/Export transfers data directly onto and off of your storage devices using Amazon\'s high-speed internal network and bypassing the Internet. For large data sets, AWS Import/Export is often faster than Internet transfer and more cost effective than upgrading your connectivity.',
   'shapes' => [
-    'AwsShippingAddress' => [
-      'base' => 'Address you ship your storage device to.',
+    'APIVersion' => [
+      'base' => 'Specifies the version of the client tool.',
       'refs' => [
-        'CreateJobOutput$AwsShippingAddress' => NULL,
-        'GetStatusOutput$AwsShippingAddress' => NULL,
+        'CancelJobInput$APIVersion' => NULL,
+        'CreateJobInput$APIVersion' => NULL,
+        'GetStatusInput$APIVersion' => NULL,
+        'ListJobsInput$APIVersion' => NULL,
+        'UpdateJobInput$APIVersion' => NULL,
+      ],
+    ],
+    'Artifact' => [
+      'base' => 'A discrete item that contains the description and URL of an artifact (such as a PDF].',
+      'refs' => [
+        'ArtifactList$member' => NULL,
+      ],
+    ],
+    'ArtifactList' => [
+      'base' => 'A collection of artifacts.',
+      'refs' => [
+        'CreateJobOutput$ArtifactList' => NULL,
+        'GetStatusOutput$ArtifactList' => NULL,
+        'UpdateJobOutput$ArtifactList' => NULL,
       ],
     ],
     'BucketPermissionException' => [
@@ -45,6 +63,10 @@
       'base' => 'Output structure for the CreateJob operation.',
       'refs' => [],
     ],
+    'CreateJobQuotaExceededException' => [
+      'base' => 'Each account can create only a certain number of jobs per day. If you need to create more than this, please contact awsimportexport@amazon.com to explain your particular use case.',
+      'refs' => [],
+    ],
     'CreationDate' => [
       'base' => 'Timestamp of the CreateJob request in ISO8601 date format. For example "2010-03-28T20:27:35Z".',
       'refs' => [
@@ -58,6 +80,12 @@
         'GetStatusOutput$CurrentManifest' => NULL,
       ],
     ],
+    'Description' => [
+      'base' => 'The associated description for this object.',
+      'refs' => [
+        'Artifact$Description' => NULL,
+      ],
+    ],
     'ErrorCount' => [
       'base' => 'Number of errors. We return this value when the ProgressCode is Success or SuccessWithErrors.',
       'refs' => [
@@ -69,6 +97,7 @@
       'refs' => [
         'BucketPermissionException$message' => NULL,
         'CanceledJobIdException$message' => NULL,
+        'CreateJobQuotaExceededException$message' => NULL,
         'ExpiredJobIdException$message' => NULL,
         'InvalidAccessKeyIdException$message' => NULL,
         'InvalidAddressException$message' => NULL,
@@ -77,6 +106,7 @@
         'InvalidJobIdException$message' => NULL,
         'InvalidManifestFieldException$message' => NULL,
         'InvalidParameterException$message' => NULL,
+        'InvalidVersionException$message' => NULL,
         'MalformedManifestException$message' => NULL,
         'MissingCustomsException$message' => NULL,
         'MissingManifestFieldException$message' => NULL,
@@ -84,10 +114,38 @@
         'MultipleRegionsException$message' => NULL,
         'NoSuchBucketException$message' => NULL,
         'UnableToCancelJobIdException$message' => NULL,
+        'UnableToUpdateJobIdException$message' => NULL,
       ],
     ],
     'ExpiredJobIdException' => [
       'base' => 'Indicates that the specified job has expired out of the system.',
+      'refs' => [],
+    ],
+    'GenericString' => [
+      'base' => NULL,
+      'refs' => [
+        'GetShippingLabelInput$name' => NULL,
+        'GetShippingLabelInput$company' => NULL,
+        'GetShippingLabelInput$phoneNumber' => NULL,
+        'GetShippingLabelInput$country' => NULL,
+        'GetShippingLabelInput$stateOrProvince' => NULL,
+        'GetShippingLabelInput$city' => NULL,
+        'GetShippingLabelInput$postalCode' => NULL,
+        'GetShippingLabelInput$street1' => NULL,
+        'GetShippingLabelInput$street2' => NULL,
+        'GetShippingLabelInput$street3' => NULL,
+        'GetShippingLabelInput$APIVersion' => NULL,
+        'GetShippingLabelOutput$ShippingLabelURL' => NULL,
+        'GetShippingLabelOutput$Warning' => NULL,
+        'JobIdList$member' => NULL,
+      ],
+    ],
+    'GetShippingLabelInput' => [
+      'base' => NULL,
+      'refs' => [],
+    ],
+    'GetShippingLabelOutput' => [
+      'base' => NULL,
       'refs' => [],
     ],
     'GetStatusInput' => [
@@ -126,6 +184,10 @@
       'base' => 'One or more parameters had an invalid value.',
       'refs' => [],
     ],
+    'InvalidVersionException' => [
+      'base' => 'The client tool version is invalid.',
+      'refs' => [],
+    ],
     'IsCanceled' => [
       'base' => 'Indicates whether the job was canceled.',
       'refs' => [
@@ -153,6 +215,12 @@
         'GetStatusOutput$JobId' => NULL,
         'Job$JobId' => NULL,
         'UpdateJobInput$JobId' => NULL,
+      ],
+    ],
+    'JobIdList' => [
+      'base' => NULL,
+      'refs' => [
+        'GetShippingLabelInput$jobIds' => NULL,
       ],
     ],
     'JobType' => [
@@ -291,8 +359,18 @@
         'GetStatusOutput$TrackingNumber' => NULL,
       ],
     ],
+    'URL' => [
+      'base' => 'The URL for a given Artifact.',
+      'refs' => [
+        'Artifact$URL' => NULL,
+      ],
+    ],
     'UnableToCancelJobIdException' => [
       'base' => 'AWS Import/Export cannot cancel the job',
+      'refs' => [],
+    ],
+    'UnableToUpdateJobIdException' => [
+      'base' => 'AWS Import/Export cannot update the job',
       'refs' => [],
     ],
     'UpdateJobInput' => [

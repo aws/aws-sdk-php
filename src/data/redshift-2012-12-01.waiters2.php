@@ -1,65 +1,95 @@
 <?php return [
   'version' => 2,
   'waiters' => [
-    'ClusterAvailable' => [
-      'operation' => 'DescribeClusters',
-      'maxAttempts' => 30,
-      'delay' => 60,
+    'DBInstanceAvailable' => [
+      'delay' => 30,
+      'operation' => 'DescribeDBInstances',
+      'maxAttempts' => 60,
       'acceptors' => [
         [
-          'state' => 'success',
-          'matcher' => 'pathAll',
-          'argument' => 'Clusters[].ClusterStatus',
           'expected' => 'available',
-        ],
-        [
-          'state' => 'failure',
-          'matcher' => 'pathAny',
-          'argument' => 'Clusters[].ClusterStatus',
-          'expected' => 'deleting',
-        ],
-      ],
-    ],
-    'ClusterDeleted' => [
-      'operation' => 'DescribeClusters',
-      'maxAttempts' => 30,
-      'delay' => 60,
-      'acceptors' => [
-        [
-          'state' => 'success',
-          'matcher' => 'error',
-          'expected' => 'ClusterNotFound',
-        ],
-        [
-          'state' => 'failure',
-          'matcher' => 'pathAny',
-          'argument' => 'Clusters[].ClusterStatus',
-          'expected' => 'creating',
-        ],
-        [
-          'state' => 'failure',
-          'matcher' => 'pathAny',
-          'argument' => 'Clusters[].ClusterStatus',
-          'expected' => 'rebooting',
-        ],
-      ],
-    ],
-    'SnapshotAvailable' => [
-      'operation' => 'DescribeClusterSnapshots',
-      'maxAttempts' => 20,
-      'delay' => 15,
-      'acceptors' => [
-        [
-          'state' => 'success',
           'matcher' => 'pathAll',
-          'argument' => 'Snapshots[].Status',
-          'expected' => 'available',
+          'state' => 'success',
+          'argument' => 'DBInstances[].DBInstanceStatus',
         ],
         [
-          'state' => 'failure',
-          'matcher' => 'pathAny',
-          'argument' => 'Snapshots[].Status',
           'expected' => 'deleted',
+          'matcher' => 'pathAny',
+          'state' => 'failure',
+          'argument' => 'DBInstances[].DBInstanceStatus',
+        ],
+        [
+          'expected' => 'deleting',
+          'matcher' => 'pathAny',
+          'state' => 'failure',
+          'argument' => 'DBInstances[].DBInstanceStatus',
+        ],
+        [
+          'expected' => 'failed',
+          'matcher' => 'pathAny',
+          'state' => 'failure',
+          'argument' => 'DBInstances[].DBInstanceStatus',
+        ],
+        [
+          'expected' => 'incompatible-restore',
+          'matcher' => 'pathAny',
+          'state' => 'failure',
+          'argument' => 'DBInstances[].DBInstanceStatus',
+        ],
+        [
+          'expected' => 'incompatible-parameters',
+          'matcher' => 'pathAny',
+          'state' => 'failure',
+          'argument' => 'DBInstances[].DBInstanceStatus',
+        ],
+        [
+          'expected' => 'incompatible-parameters',
+          'matcher' => 'pathAny',
+          'state' => 'failure',
+          'argument' => 'DBInstances[].DBInstanceStatus',
+        ],
+        [
+          'expected' => 'incompatible-restore',
+          'matcher' => 'pathAny',
+          'state' => 'failure',
+          'argument' => 'DBInstances[].DBInstanceStatus',
+        ],
+      ],
+    ],
+    'DBInstanceDeleted' => [
+      'delay' => 30,
+      'operation' => 'DescribeDBInstances',
+      'maxAttempts' => 60,
+      'acceptors' => [
+        [
+          'expected' => 'deleted',
+          'matcher' => 'pathAll',
+          'state' => 'success',
+          'argument' => 'DBInstances[].DBInstanceStatus',
+        ],
+        [
+          'expected' => 'creating',
+          'matcher' => 'pathAny',
+          'state' => 'failure',
+          'argument' => 'DBInstances[].DBInstanceStatus',
+        ],
+        [
+          'expected' => 'modifying',
+          'matcher' => 'pathAny',
+          'state' => 'failure',
+          'argument' => 'DBInstances[].DBInstanceStatus',
+        ],
+        [
+          'expected' => 'rebooting',
+          'matcher' => 'pathAny',
+          'state' => 'failure',
+          'argument' => 'DBInstances[].DBInstanceStatus',
+        ],
+        [
+          'expected' => 'resetting-master-credentials',
+          'matcher' => 'pathAny',
+          'state' => 'failure',
+          'argument' => 'DBInstances[].DBInstanceStatus',
         ],
       ],
     ],

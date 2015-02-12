@@ -5,7 +5,7 @@
     'globalEndpoint' => 'route53.amazonaws.com',
     'serviceAbbreviation' => 'Route 53',
     'serviceFullName' => 'Amazon Route 53',
-    'signatureVersion' => 'v4',
+    'signatureVersion' => 'v3https',
     'protocol' => 'rest-xml',
   ],
   'operations' => [

@@ -338,7 +338,7 @@
       'refs' => [],
     ],
     'ServerException' => [
-      'base' => '<p>These errors are usually caused by a server-side issue.</p>',
+      'base' => NULL,
       'refs' => [],
     ],
     'StartTaskRequest' => [
@@ -360,7 +360,7 @@
     'String' => [
       'base' => NULL,
       'refs' => [
-        'ClientException$message' => NULL,
+        'ClientException$message' => '<p>These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.</p>',
         'Cluster$clusterArn' => '<p>The Amazon Resource Name (ARN] that identifies the cluster. The ARN contains the <code>arn:aws:ecs</code> namespace, followed by the region of the cluster, the AWS account ID of the cluster owner, the <code>cluster</code> namespace, and then the cluster name. For example, arn:aws:ecs:<i>region</i>:<i>012345678910</i>:cluster/<i>test</i>.</p>',
         'Cluster$clusterName' => '<p>A user-generated string that you can use to identify your cluster.</p>',
         'Cluster$status' => '<p>The status of the cluster. The valid values are <code>ACTIVE</code> or <code>INACTIVE</code>. <code>ACTIVE</code> indicates that you can register container instances with the cluster and the associated instances can accept tasks.</p>',
@@ -411,7 +411,7 @@
         'Resource$type' => '<p>The type of the resource, such as <code>INTEGER</code>, <code>DOUBLE</code>, <code>LONG</code>, or <code>STRINGSET</code>.</p>',
         'RunTaskRequest$cluster' => '<p>The short name or full Amazon Resource Name (ARN] of the cluster that you want to run your task on. If you do not specify a cluster, the default cluster is assumed..</p>',
         'RunTaskRequest$taskDefinition' => '<p>The <code>family</code> and <code>revision</code> (<code>family:revision</code>] or full Amazon Resource Name (ARN] of the task definition that you want to run.</p>',
-        'ServerException$message' => NULL,
+        'ServerException$message' => '<p>These errors are usually caused by a server-side issue.</p>',
         'StartTaskRequest$cluster' => '<p>The short name or full Amazon Resource Name (ARN] of the cluster that you want to start your task on. If you do not specify a cluster, the default cluster is assumed..</p>',
         'StartTaskRequest$taskDefinition' => '<p>The <code>family</code> and <code>revision</code> (<code>family:revision</code>] or full Amazon Resource Name (ARN] of the task definition that you want to start.</p>',
         'StopTaskRequest$cluster' => '<p>The short name or full Amazon Resource Name (ARN] of the cluster that hosts the task you want to stop. If you do not specify a cluster, the default cluster is assumed..</p>',

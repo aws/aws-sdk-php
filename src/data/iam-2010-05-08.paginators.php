@@ -1,5 +1,12 @@
 <?php return [
   'pagination' => [
+    'GetAccountAuthorizationDetails' => [
+      'input_token' => 'Marker',
+      'output_token' => 'Marker',
+      'more_results' => 'IsTruncated',
+      'limit_key' => 'MaxItems',
+      'result_key' => 'UserDetailList || GroupDetailList || RoleDetailList',
+    ],
     'GetGroup' => [
       'input_token' => 'Marker',
       'output_token' => 'Marker',

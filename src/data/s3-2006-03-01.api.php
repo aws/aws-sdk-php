@@ -1851,7 +1851,7 @@
       'flattened' => true,
     ],
     'Expiration' => [
-      'type' => 'timestamp',
+      'type' => 'string',
     ],
     'ExpirationStatus' => [
       'type' => 'string',
@@ -2450,8 +2450,6 @@
         ],
         'Type' => [
           'shape' => 'Type',
-          'xmlAttribute' => true,
-          'locationName' => 'xsi:type',
         ],
         'URI' => [
           'shape' => 'URI',
@@ -4319,6 +4317,8 @@
         'AmazonCustomerByEmail',
         'Group',
       ],
+      'xmlAttribute' => true,
+      'locationName' => 'xsi:type',
     ],
     'URI' => [
       'type' => 'string',

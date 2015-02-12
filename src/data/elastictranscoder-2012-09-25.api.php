@@ -977,7 +977,7 @@
     ],
     'Base64EncodedString' => [
       'type' => 'string',
-      'pattern' => '^(?:[A-Za-z0-9\\+/]{4}]*(?:[A-Za-z0-9\\+/]{2}==|[A-Za-z0-9\\+/]{3}=]?$',
+      'pattern' => '^$|(^(?:[A-Za-z0-9\\+/]{4}]*(?:[A-Za-z0-9\\+/]{2}==|[A-Za-z0-9\\+/]{3}=]?$]',
     ],
     'BucketName' => [
       'type' => 'string',
@@ -1159,6 +1159,9 @@
         ],
         'OutputKeys' => [
           'shape' => 'OutputKeys',
+        ],
+        'HlsContentProtection' => [
+          'shape' => 'HlsContentProtection',
         ],
       ],
     ],
@@ -1347,7 +1350,7 @@
           'shape' => 'Base64EncodedString',
         ],
         'InitializationVector' => [
-          'shape' => 'Key',
+          'shape' => 'ZeroTo255String',
         ],
       ],
     ],
@@ -1386,6 +1389,33 @@
     'GranteeType' => [
       'type' => 'string',
       'pattern' => '(^Canonical$]|(^Email$]|(^Group$]',
+    ],
+    'HlsContentProtection' => [
+      'type' => 'structure',
+      'members' => [
+        'Method' => [
+          'shape' => 'HlsContentProtectionMethod',
+        ],
+        'Key' => [
+          'shape' => 'Base64EncodedString',
+        ],
+        'KeyMd5' => [
+          'shape' => 'Base64EncodedString',
+        ],
+        'InitializationVector' => [
+          'shape' => 'ZeroTo255String',
+        ],
+        'LicenseAcquisitionUrl' => [
+          'shape' => 'ZeroTo512String',
+        ],
+        'KeyStoragePolicy' => [
+          'shape' => 'KeyStoragePolicy',
+        ],
+      ],
+    ],
+    'HlsContentProtectionMethod' => [
+      'type' => 'string',
+      'pattern' => '(^aes-128$]',
     ],
     'HorizontalAlign' => [
       'type' => 'string',
@@ -1594,6 +1624,10 @@
       'type' => 'string',
       'min' => 0,
       'max' => 255,
+    ],
+    'KeyStoragePolicy' => [
+      'type' => 'string',
+      'pattern' => '(^NoStore$]|(^WithVariantPlaylists$]',
     ],
     'KeyframesMaxDist' => [
       'type' => 'string',
@@ -1876,6 +1910,9 @@
         ],
         'OutputKeys' => [
           'shape' => 'OutputKeys',
+        ],
+        'HlsContentProtection' => [
+          'shape' => 'HlsContentProtection',
         ],
         'Status' => [
           'shape' => 'JobStatus',
@@ -2378,6 +2415,16 @@
     'WatermarkSizingPolicy' => [
       'type' => 'string',
       'pattern' => '(^Fit$]|(^Stretch$]|(^ShrinkToFit$]',
+    ],
+    'ZeroTo255String' => [
+      'type' => 'string',
+      'min' => 0,
+      'max' => 255,
+    ],
+    'ZeroTo512String' => [
+      'type' => 'string',
+      'min' => 0,
+      'max' => 512,
     ],
   ],
 ];

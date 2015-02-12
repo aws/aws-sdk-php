@@ -1151,12 +1151,12 @@
     'BlockDeviceEbsIops' => [
       'type' => 'integer',
       'min' => 100,
-      'max' => 4000,
+      'max' => 30000,
     ],
     'BlockDeviceEbsVolumeSize' => [
       'type' => 'integer',
       'min' => 1,
-      'max' => 1024,
+      'max' => 16384,
     ],
     'BlockDeviceEbsVolumeType' => [
       'type' => 'string',
@@ -1187,6 +1187,12 @@
       'type' => 'list',
       'member' => [
         'shape' => 'BlockDeviceMapping',
+      ],
+    ],
+    'ClassicLinkVPCSecurityGroups' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'XmlStringMaxLen255',
       ],
     ],
     'CompleteLifecycleActionAnswer' => [
@@ -1291,6 +1297,12 @@
         ],
         'SecurityGroups' => [
           'shape' => 'SecurityGroups',
+        ],
+        'ClassicLinkVPCId' => [
+          'shape' => 'XmlStringMaxLen255',
+        ],
+        'ClassicLinkVPCSecurityGroups' => [
+          'shape' => 'ClassicLinkVPCSecurityGroups',
         ],
         'UserData' => [
           'shape' => 'XmlStringUserData',
@@ -1896,6 +1908,12 @@
         ],
         'SecurityGroups' => [
           'shape' => 'SecurityGroups',
+        ],
+        'ClassicLinkVPCId' => [
+          'shape' => 'XmlStringMaxLen255',
+        ],
+        'ClassicLinkVPCSecurityGroups' => [
+          'shape' => 'ClassicLinkVPCSecurityGroups',
         ],
         'UserData' => [
           'shape' => 'XmlStringUserData',

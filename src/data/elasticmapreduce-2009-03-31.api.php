@@ -796,6 +796,18 @@
         'IamInstanceProfile' => [
           'shape' => 'String',
         ],
+        'EmrManagedMasterSecurityGroup' => [
+          'shape' => 'String',
+        ],
+        'EmrManagedSlaveSecurityGroup' => [
+          'shape' => 'String',
+        ],
+        'AdditionalMasterSecurityGroups' => [
+          'shape' => 'StringList',
+        ],
+        'AdditionalSlaveSecurityGroups' => [
+          'shape' => 'StringList',
+        ],
       ],
     ],
     'ErrorCode' => [
@@ -1360,6 +1372,18 @@
         'Ec2SubnetId' => [
           'shape' => 'XmlStringMaxLen256',
         ],
+        'EmrManagedMasterSecurityGroup' => [
+          'shape' => 'XmlStringMaxLen256',
+        ],
+        'EmrManagedSlaveSecurityGroup' => [
+          'shape' => 'XmlStringMaxLen256',
+        ],
+        'AdditionalMasterSecurityGroups' => [
+          'shape' => 'SecurityGroupsList',
+        ],
+        'AdditionalSlaveSecurityGroups' => [
+          'shape' => 'SecurityGroupsList',
+        ],
       ],
     ],
     'JobFlowInstancesDetail' => [
@@ -1693,6 +1717,12 @@
         'Args' => [
           'shape' => 'XmlStringList',
         ],
+      ],
+    ],
+    'SecurityGroupsList' => [
+      'type' => 'list',
+      'member' => [
+        'shape' => 'XmlStringMaxLen256',
       ],
     ],
     'SetTerminationProtectionInput' => [
