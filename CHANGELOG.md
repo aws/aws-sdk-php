@@ -2,9 +2,9 @@
 
 ## 2.7.18 - 2015-02-12
 
-* ``Aws\Iam`` - Added support for named and managed policies.
-* ``Aws\Route53Domains`` - Added support for tagging operations.
-* ``Aws\ElastiCache`` - Added support for tagging operations.
+* `Aws\Iam` - Added support for named and managed policies.
+* `Aws\Route53Domains` - Added support for tagging operations.
+* `Aws\ElastiCache` - Added support for tagging operations.
 * Added support for the Scan API for secondary indexes to the DynamoDB client.
 * Added forward compatibility for the `'credentials'`, `'endpoint'`, and
   `'http'` configuration options.
