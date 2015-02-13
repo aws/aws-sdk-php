@@ -14,7 +14,7 @@ class LockingSessionConnectionTest extends \PHPUnit_Framework_TestCase
 
     public function testReadRetrievesItemData()
     {
-        $client = $this->getTestSdk()->getDynamoDb();
+        $client = $this->getTestSdk()->createDynamoDb();
         $this->addMockResults($client, [
             $this->createMockAwsException(
                 'ConditionalCheckFailedException',

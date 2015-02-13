@@ -19,7 +19,7 @@ class UseStreamTest extends \PHPUnit_Framework_TestCase
     public function testCanUseStreamForPut()
     {
         $client = new Client(['adapter' => new StreamHandler()]);
-        $ddb = $this->getSdk()->getDynamoDb(['client' => $client]);
+        $ddb = $this->getSdk()->createDynamoDb(['client' => $client]);
         $result = $ddb->listTables();
         $this->assertArrayHasKey('TableNames', $result);
     }

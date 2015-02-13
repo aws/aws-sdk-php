@@ -13,7 +13,7 @@ class SessionHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testCanCreateSessionHandler()
     {
-        $client = $this->getTestSdk()->getDynamoDb();
+        $client = $this->getTestSdk()->createDynamoDb();
         $sh1 = SessionHandler::fromClient($client);
         $sh2 = SessionHandler::fromClient($client, ['locking' => true]);
 

@@ -18,7 +18,7 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
      */
     public function testErrorOnBadConfig()
     {
-        $client = $this->getTestClient('dynamodb');
+        $client = $this->getTestClient('DynamoDb');
         $client->waitUntil(
             'TableExists',
             ['TableName' => 'Meh'],
@@ -28,7 +28,7 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
 
     public function testCanCancel()
     {
-        $client = $this->getTestClient('dynamodb');
+        $client = $this->getTestClient('DynamoDb');
         $client->waitUntil('TableExists', [
             'TableName' => 'Meh',
             '@future'   => true,
@@ -38,7 +38,7 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
     public function testCanWait()
     {
         $i = 0;
-        $client = $this->getTestClient('dynamodb', [
+        $client = $this->getTestClient('DynamoDb', [
             'ringphp_handler' => new MockHandler(function () use (&$i) {
                 if ($i++) {
                     return [
@@ -67,7 +67,7 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
     public function testWaiterWorkflow($results, $expectedException)
     {
         // Prepare a client
-        $client = $this->getTestClient('dynamodb', [
+        $client = $this->getTestClient('DynamoDb', [
             'api_provider' => $this->getApiProvider()
         ]);
         $this->addMockResults($client, $results);

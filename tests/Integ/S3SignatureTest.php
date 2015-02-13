@@ -26,7 +26,7 @@ class S3SignatureTest extends \PHPUnit_Framework_TestCase
      */
     public function testSignsS3Requests($args)
     {
-        $s3 = $this->getSdk()->getClient('s3', ['region' => 'us-east-1']);
+        $s3 = $this->getSdk()->createClient('s3', ['region' => 'us-east-1']);
         $command = $s3->getCommand('HeadBucket', $args);
         $this->ensureNot403($command, $s3);
     }

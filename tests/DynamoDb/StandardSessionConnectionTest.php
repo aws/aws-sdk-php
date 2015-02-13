@@ -15,7 +15,7 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
 
     public function testReadRetrievesItemData()
     {
-        $client = $this->getTestSdk()->getDynamoDb();
+        $client = $this->getTestSdk()->createDynamoDb();
         $this->addMockResults($client, [
             new Result(['Item' => [
                 'sessionid' => ['S' => 'session1'],
@@ -42,7 +42,7 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
 
     public function testReadReturnsEmptyArrayIfNoItem()
     {
-        $client = $this->getTestSdk()->getDynamoDb();
+        $client = $this->getTestSdk()->createDynamoDb();
         $this->addMockResults($client, [
             $this->createMockAwsException('ERROR', 'Aws\DynamoDb\Exception\DynamoDbException')
         ]);
@@ -54,7 +54,7 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
 
     public function testWriteUpdatesItemData()
     {
-        $client = $this->getTestSdk()->getDynamoDb();
+        $client = $this->getTestSdk()->createDynamoDb();
         $this->addMockResults($client, [new Result([])]);
         $client->getEmitter()->on('prepared', function (PreparedEvent $e) {
             $updates = $e->getCommand()['AttributeUpdates'];
@@ -71,7 +71,7 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
 
     public function testWriteReturnsFalseOnFailure()
     {
-        $client = $this->getTestSdk()->getDynamoDb();
+        $client = $this->getTestSdk()->createDynamoDb();
         $this->addMockResults($client, [
             $this->createMockAwsException('ERROR', 'Aws\DynamoDb\Exception\DynamoDbException')
         ]);
@@ -90,7 +90,7 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
 
     public function testDeleteReturnsBoolBasedOnRSuccess()
     {
-        $client = $this->getTestSdk()->getDynamoDb();
+        $client = $this->getTestSdk()->createDynamoDb();
         $this->addMockResults($client, [
              new Result([]),
              $this->createMockAwsException('ERROR', 'Aws\DynamoDb\Exception\DynamoDbException')
@@ -107,7 +107,7 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
 
     public function testDeleteReturnsBoolBasedOnSuccess()
     {
-        $client = $this->getTestSdk()->getDynamoDb();
+        $client = $this->getTestSdk()->createDynamoDb();
         $this->addMockResults($client, [
             new Result(['Items' => [
                 ['id' => ['S' => 'foo']],

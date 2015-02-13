@@ -11,7 +11,7 @@ class WaitersTest extends \PHPUnit_Framework_TestCase
 
     public function testNormalWaiters()
     {
-        $client = self::getSdk()->getDynamoDb();
+        $client = self::getSdk()->createDynamoDb();
         $table = self::getResourcePrefix() . '-test-table';
 
         self::log('Testing synchronous waiters.');
@@ -67,7 +67,7 @@ class WaitersTest extends \PHPUnit_Framework_TestCase
     {
         $sdk = self::getSdk();
 
-        $client = $sdk->getDynamoDb();
+        $client = $sdk->createDynamoDb();
         $table = self::getResourcePrefix() . '-test-table';
 
         self::log('Testing asynchronous waiters.');

@@ -7,7 +7,7 @@ class PromisesTest extends \PHPUnit_Framework_TestCase
 
     public function testSendsSynchronously()
     {
-        $client = $this->getSdk()->getClient('s3');
+        $client = $this->getSdk()->createClient('s3');
         $result = $client->listBuckets();
         $this->assertInstanceOf('Aws\Result', $result);
         $this->assertInternalType('string', $result['Owner']['ID']);
@@ -15,7 +15,7 @@ class PromisesTest extends \PHPUnit_Framework_TestCase
 
     public function testProvidesFutures()
     {
-        $client = $this->getSdk()->getClient('s3');
+        $client = $this->getSdk()->createClient('s3');
         $result = $client->listBuckets(['@future' => true]);
         $this->assertInstanceOf('Aws\FutureResult', $result);
         // Block until it's ready
@@ -24,7 +24,7 @@ class PromisesTest extends \PHPUnit_Framework_TestCase
 
     public function testFuturesProvidePromises()
     {
-        $client = $this->getSdk()->getClient('s3');
+        $client = $this->getSdk()->createClient('s3');
         $resolved = null;
         $result = $client->listBuckets(['@future' => true]);
         $result

@@ -54,7 +54,7 @@ trait UsesServiceTrait
             });
         }
 
-        return $this->getTestSdk()->getClient($service, $args);
+        return $this->getTestSdk()->createClient($service, $args);
     }
 
     /**

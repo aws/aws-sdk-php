@@ -54,19 +54,19 @@ class SdkTest extends \PHPUnit_Framework_TestCase
     public function testHasMagicMethods()
     {
         $sdk = $this->getMockBuilder('Aws\Sdk')
-            ->setMethods(['getClient'])
+            ->setMethods(['createClient'])
             ->getMock();
         $sdk->expects($this->once())
-            ->method('getClient')
+            ->method('createClient')
             ->with('Foo', ['bar' => 'baz']);
-        $sdk->getFoo(['bar' => 'baz']);
+        $sdk->createFoo(['bar' => 'baz']);
     }
 
     public function testCreatesClients()
     {
         $this->assertInstanceOf(
             'Aws\AwsClientInterface',
-            (new Sdk())->getDynamoDb([
+            (new Sdk())->createDynamoDb([
                 'region'  => 'us-east-1',
                 'version' => 'latest'
             ])
@@ -77,7 +77,7 @@ class SdkTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(
             'Aws\AwsClientInterface',
-            (new Sdk())->getCloudWatch([
+            (new Sdk())->createCloudWatch([
                 'region'  => 'us-east-1',
                 'version' => 'latest'
             ])
@@ -87,11 +87,11 @@ class SdkTest extends \PHPUnit_Framework_TestCase
     public function testUsesSharedHandler()
     {
         $sdk = new Sdk();
-        $c1 = $sdk->getClient('s3', [
+        $c1 = $sdk->createClient('s3', [
             'version'     => 'latest',
             'credentials' => ['key' => 'a', 'secret' => 'b']
         ]);
-        $c2 = $sdk->getClient('s3', [
+        $c2 = $sdk->createClient('s3', [
             'version'     => 'latest',
             'credentials' => ['key' => 'a', 'secret' => 'b']
         ]);

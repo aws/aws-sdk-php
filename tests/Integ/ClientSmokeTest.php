@@ -15,7 +15,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
         $endpoint, $operation, $params, $succeed, $value
     ) {
         // Create the client and make sure it is the right class.
-        $client = $this->getSdk()->getClient($service, $options);
+        $client = $this->getSdk()->createClient($service, $options);
         $this->assertInstanceOf($class, $client);
 
         // Setup event to get the request's host value.
@@ -78,7 +78,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
     {
         return [
             /*[
-                service (client to create `Sdk::getClient()`)
+                service (client to create `Sdk::createClient()`)
                 class (expected class name of instantiated client)
                 options (client options; besides region, version, & credentials)
                 endpoint (expected host of the request)

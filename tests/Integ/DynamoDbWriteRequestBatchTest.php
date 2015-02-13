@@ -46,7 +46,7 @@ class DynamoDbWriteRequestBatchTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->client = self::getSdk()->getDynamoDb();
+        $this->client = self::getSdk()->createDynamoDb();
         $this->table = self::getResourcePrefix() . '-wrb-test';
 
         $this->cleanUpTable();

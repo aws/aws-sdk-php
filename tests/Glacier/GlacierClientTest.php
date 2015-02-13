@@ -24,7 +24,7 @@ class GlacierClientTest extends \PHPUnit_Framework_TestCase
         $command->getEmitter()->on('prepared', function (PreparedEvent $event) {
             $event->setResult(new Result([]));
             $this->assertEquals(
-                $event->getClient()->getApi()->getMetadata('apiVersion'),
+                $event->createClient()->getApi()->getMetadata('apiVersion'),
                 $event->getRequest()->getHeader('x-amz-glacier-version')
             );
         });

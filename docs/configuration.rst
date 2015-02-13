@@ -2,15 +2,15 @@
 Configuration
 =============
 
-The AWS SDK for PHP can be configured in many ways to suit your needs. This
-guide describes each client constructor setting.
+This guide describes client constructor options. These options can be provided
+in a client constructor or to the ``Aws\Sdk`` class.
 
 
-Creating a Client
+Creating a client
 -----------------
 
 You can create a client by passing an associative array of options to a
-client's constructor.
+client constructor.
 
 .. code-block:: php
 
@@ -26,7 +26,55 @@ are creating. These custom client configuration options are described in the
 client.
 
 
-Configuration Options
+Using the Sdk class
+-------------------
+
+The ``Aws\Sdk`` class is used to manage shared configuration options across
+multiple clients. For example, the ``Aws\Sdk`` class will automatically ensure
+that each client it creates shares the same RingPHP adapter, allowing the
+clients to send future requests concurrently.
+
+The same options that can be provided to a specific client constructor can also
+be supplied to the ``Aws\Sdk`` class. These options are then applied to each
+client constructor.
+
+.. code-block:: php
+
+    // Use the us-west-2 region and latest version of each client.
+    $sharedConfig = [
+        'region'  => 'us-west-2',
+        'version' => 'latest'
+    ];
+
+    // Create an SDK class used to share configuration across clients.
+    $sdk = new Aws\Sdk($sharedConfig);
+
+    // Create an Amazon SQS client using the shared configuration data.
+    $client = $sdk->createSqs();
+
+Options that are shared across all clients are placed in root-level key value
+pairs. Service specific configuration data can be provided in a key that is the
+namespace of a service (e.g., "S3", "DynamoDb", etc.).
+
+.. code-block:: php
+
+    $sdk = new Aws\Sdk([
+        'region'   => 'us-west-2',
+        'version'  => 'latest',
+        'DynamoDb' => [
+            'region' => 'eu-central-1'
+        ]
+    ]);
+
+    // Creating a DynamoDb client will use the "eu-central-1" region.
+    $client = $sdk->createDynamoDb();
+
+Service specific configuration values are a union of the service specific
+values and the root-level values (i.e., service specific values are shallow
+merged onto root level values).
+
+
+Configuration options
 ---------------------
 
 

@@ -71,7 +71,7 @@ class DynamoDbClientTest extends \PHPUnit_Framework_TestCase
 
     public function testRegisterSessionHandlerReturnsHandler()
     {
-        $client = $this->getTestSdk()->getDynamoDb();
+        $client = $this->getTestSdk()->createDynamoDb();
         $sh = $client->registerSessionHandler(['locking' => true]);
         $this->assertInstanceOf(
             'Aws\DynamoDb\LockingSessionConnection',

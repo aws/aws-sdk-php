@@ -20,7 +20,6 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
     public function testCanForcePathStyleOnAllOperations()
     {
         $c = new S3Client([
-            'service'          => 's3',
             'version'          => 'latest',
             'force_path_style' => true
         ]);
@@ -36,10 +35,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatesClientWithSubscribers()
     {
-        $c = new S3Client([
-            'service' => 's3',
-            'version' => 'latest'
-        ]);
+        $c = new S3Client(['version' => 'latest']);
         $l = $c->getEmitter()->listeners();
 
         $found = [];
@@ -61,7 +57,6 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
     public function testCanUseBucketEndpoint()
     {
         $c = new S3Client([
-            'service'         => 's3',
             'version'         => 'latest',
             'endpoint'        => 'http://test.domain.com',
             'bucket_endpoint' => true
@@ -75,7 +70,6 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
     public function testAddsMd5ToConfig()
     {
         $c = new S3Client([
-            'service'         => 's3',
             'version'         => 'latest',
             'calculate_md5'   => true
         ]);
@@ -116,7 +110,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreatesPresignedUrls()
     {
-        $client = $this->getTestClient('s3', [
+        $client = $this->getTestClient('S3', [
             'region'      => 'us-east-1',
             'credentials' => ['key' => 'foo', 'secret' => 'bar']
         ]);
@@ -153,14 +147,14 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testClearsBucket()
     {
-        $s3 = $this->getTestClient('s3', ['region' => 'us-east-1']);
+        $s3 = $this->getTestClient('S3', ['region' => 'us-east-1']);
         $this->addMockResults($s3, [[]]);
         $s3->clearBucket('foo');
     }
 
     public function testRegistersStreamWrapper()
     {
-        $s3 = $this->getTestClient('s3', ['region' => 'us-east-1']);
+        $s3 = $this->getTestClient('S3', ['region' => 'us-east-1']);
         $s3->registerStreamWrapper();
         $this->assertContains('s3', stream_get_wrappers());
         stream_wrapper_unregister('s3');
@@ -201,7 +195,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testsIfExists($bucket, $key, $exists, $result)
     {
-        $s3 = $this->getTestClient('s3', ['region' => 'us-east-1']);
+        $s3 = $this->getTestClient('S3', ['region' => 'us-east-1']);
         $this->addMockResults($s3, [$result]);
         try {
             if ($key) {
@@ -216,7 +210,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testReturnsObjectUrl()
     {
-        $s3 = $this->getTestClient('s3', [
+        $s3 = $this->getTestClient('S3', [
             'region'      => 'us-east-1',
             'credentials' => new NullCredentials()
         ]);
@@ -225,7 +219,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testReturnsObjectUrlViaPath()
     {
-        $s3 = $this->getTestClient('s3', [
+        $s3 = $this->getTestClient('S3', [
             'region'      => 'us-east-1',
             'credentials' => new NullCredentials()
         ]);
@@ -244,7 +238,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
         array $options
     ) {
         /** @var \Aws\S3\S3Client $client */
-        $client = $this->getTestClient('s3');
+        $client = $this->getTestClient('S3');
         $this->addMockResults($client, $mockedResults);
         $result = $client->upload('bucket', 'key', $body, 'private', $options);
         $this->assertEquals('https://bucket.s3.amazonaws.com/key', $result['ObjectURL']);
@@ -255,13 +249,13 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testEnsuresPrefixOrRegexSuppliedForDeleteMatchingObjects()
     {
-        $client = $this->getTestClient('s3');
+        $client = $this->getTestClient('S3');
         $client->deleteMatchingObjects('foo');
     }
 
     public function testDeletesMatchingObjectsByPrefixAndRegex()
     {
-        $client = $this->getTestClient('s3');
+        $client = $this->getTestClient('S3');
 
         $client->getEmitter()->on('prepared', function (PreparedEvent $e) {
             $this->assertEquals('bucket', $e->getCommand()['Bucket']);
@@ -352,7 +346,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testProxiesToTransferObjectPut()
     {
-        $client = $this->getTestClient('s3');
+        $client = $this->getTestClient('S3');
         $c = null;
         $client->getEmitter()->on('prepared', function (PreparedEvent $e) use (&$c) {
             $this->assertEquals('PutObject', $e->getCommand()->getName());
@@ -366,7 +360,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testProxiesToTransferObjectGet()
     {
-        $client = $this->getTestClient('s3');
+        $client = $this->getTestClient('S3');
         $c = null;
         $client->getEmitter()->on('prepared', function (PreparedEvent $e) use (&$c) {
             $n = $e->getCommand()->getName();

@@ -22,7 +22,7 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->client = $this->getTestClient('s3', ['region' => 'us-east-1']);
+        $this->client = $this->getTestClient('S3', ['region' => 'us-east-1']);
         $this->client->registerStreamWrapper();
     }
 
