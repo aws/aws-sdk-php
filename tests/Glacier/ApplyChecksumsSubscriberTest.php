@@ -18,7 +18,7 @@ class ApplyChecksumsSubscriberTest extends \PHPUnit_Framework_TestCase
 
     public function testThrowsExceptionIfBodyIsNotSeekable()
     {
-        $glacier = $this->getTestClient('glacier');
+        $glacier = $this->getTestClient('Glacier');
         $command = $glacier->getCommand('UploadArchive', [
             'vaultName' => 'foo',
             'body'      => new NoSeekStream(Stream::factory('foo')),
@@ -36,7 +36,7 @@ class ApplyChecksumsSubscriberTest extends \PHPUnit_Framework_TestCase
 
     public function testAddsChecksumsIfNeeded()
     {
-        $glacier = $this->getTestClient('glacier');
+        $glacier = $this->getTestClient('Glacier');
         $this->addMockResponses($glacier, [new Response(200)]);
 
         $command = $glacier->getCommand('UploadArchive', [

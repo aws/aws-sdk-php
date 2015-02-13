@@ -53,7 +53,7 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testCanLoadStateFromUploadId()
     {
-        $client = $this->getTestClient('s3');
+        $client = $this->getTestClient('S3');
         $this->addMockResults($client, [
             new Result([
                 'Parts' => [
@@ -108,15 +108,15 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
 
         return [
             [
-                $this->getTestClient('s3'),
+                $this->getTestClient('S3'),
                 ['md5', $hasher('md5', 'foo')]
             ],
             [
-                $this->getTestClient('s3', ['calculate_md5' => false]),
+                $this->getTestClient('S3', ['calculate_md5' => false]),
                 null
             ],
             [
-                $this->getTestClient('s3', ['signature_version' => 'v4']),
+                $this->getTestClient('S3', ['signature_version' => 'v4']),
                 ['sha256', $hasher('sha256', 'foo')]
             ]
         ];
@@ -128,7 +128,7 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
         $state = new UploadState([]);
         $state->setPartSize(5);
         $builder = (new UploadBuilder)
-            ->setClient($this->getTestClient('s3'))
+            ->setClient($this->getTestClient('S3'))
             ->setState($state)
             ->setSource($source);
 
@@ -165,7 +165,7 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
 
         // Prepare builder.
         $builder = (new UploadBuilder)
-            ->setClient($this->getTestClient('s3'))
+            ->setClient($this->getTestClient('S3'))
             ->setState($state)
             ->setSource(Stream::factory('foo'));
 
@@ -187,7 +187,7 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
         $state = new UploadState([]);
 
         $builder = (new UploadBuilder)
-            ->setClient($this->getTestClient('s3'))
+            ->setClient($this->getTestClient('S3'))
             ->setState($state)
             ->setSource(Stream::factory('foo'));
 
