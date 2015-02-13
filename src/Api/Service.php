@@ -53,7 +53,7 @@ class Service extends AbstractModel
         $this->apiProvider = $provider;
         $this->serviceName = $serviceName;
         $this->apiVersion = $apiVersion;
-        $definition = $provider('api', $serviceName, $apiVersion) + $defaults;
+        $definition = ApiProvider::resolve($provider, 'api', $serviceName, $apiVersion) + $defaults;
         $definition['metadata'] += $defaultMeta;
         parent::__construct($definition, new ShapeMap($definition['shapes']));
     }

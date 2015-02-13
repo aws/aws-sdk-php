@@ -7,6 +7,18 @@
     'signatureVersion' => 'v4',
     'xmlNamespace' => 'http://ec2.amazonaws.com/doc/2014-10-01',
     'protocol' => 'ec2',
+    'compatibleApiVersions' => [
+      '2014-09-01',
+      '2014-06-15',
+      '2014-05-01',
+      '2014-02-01',
+      '2013-10-15',
+      '2013-10-01',
+      '2013-08-15',
+      '2013-07-15',
+      '2013-06-15',
+      '2013-02-01'
+    ],
   ],
   'operations' => [
     'AcceptVpcPeeringConnection' => [
