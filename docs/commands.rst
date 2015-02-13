@@ -37,8 +37,7 @@ A **Command** is an object that represents the execution of a service
 operation. Command objects are an abstraction of the process of formatting a
 request to a service, executing the request, receiving the response, and
 formatting the results. Commands are created and executed by the client and
-contain references to **Request** and **Response** objects. The **Result**
-object is a what we refer to as a :doc:`"result model" <feature-models>`.
+contain references to **Request** and **Response** objects.
 
 Using command objects
 ---------------------

@@ -1,6 +1,6 @@
-=================
-Modeled Responses
-=================
+================
+Response Objects
+================
 
 Introduction
 ------------
@@ -146,7 +146,7 @@ Getting Response Headers
 
 The ``Response`` object is not directly accessible from the ``Model`` object. If you are interested in getting header
 values, the status code, or other data from the response you will need to get the ``Response`` object from the
-``Command`` object (see :doc:`feature-commands`). You may need to switch from using the shorthand command syntax to the
+``Command`` object (see :doc:`commands`). You may need to switch from using the shorthand command syntax to the
 expanded syntax so that the command object can be accessed directly.
 
 .. code-block:: php

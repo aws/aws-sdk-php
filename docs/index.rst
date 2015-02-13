@@ -11,10 +11,10 @@ AWS SDK for PHP
 
     configuration
     credentials
-    feature-commands
-    feature-waiters
-    feature-iterators
-    feature-models
+    commands
+    waiters
+    iterators
+    response-objects
     faq
 
     service-cloudfront
@@ -59,10 +59,10 @@ Using the SDK
 
 * :doc:`configuration`
 * :doc:`credentials`
-* :doc:`feature-iterators`
-* :doc:`feature-waiters`
-* :doc:`feature-commands`
-* :doc:`feature-models`
+* :doc:`iterators`
+* :doc:`waiters`
+* :doc:`commands`
+* :doc:`response-objects`
 * :doc:`faq`
 * `Contributing to the SDK <https://github.com/aws/aws-sdk-php/blob/master/CONTRIBUTING.md>`_
 * `Guzzle Documentation <http://guzzlephp.org>`_
