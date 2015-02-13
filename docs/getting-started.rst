@@ -99,7 +99,7 @@ Performing service operations
 
 .. include:: _snippets/performing-operations.txt
 
-To learn about performing operations in more detail, including using command objects, see :doc:`feature-commands`.
+To learn about performing operations in more detail, including using command objects, see :doc:`commands`.
 
 
 Working with modeled responses
@@ -107,7 +107,7 @@ Working with modeled responses
 
 .. include:: _snippets/models-intro.txt
 
-To learn more about how to work with modeled responses, read the detailed guide to :doc:`feature-models`.
+To learn more about how to work with modeled responses, read the detailed guide to :doc:`response-objects`.
 
 
 Detecting and handling errors
@@ -141,7 +141,7 @@ Waiters
 
 .. include:: _snippets/waiters-intro.txt
 
-To learn more about how to use and configure waiters, please read the detailed guide to :doc:`feature-waiters`.
+To learn more about how to use and configure waiters, please read the detailed guide to :doc:`waiters`.
 
 
 Iterators
@@ -149,4 +149,4 @@ Iterators
 
 .. include:: _snippets/iterators-intro.txt
 
-To learn more about how to use and configure iterators, please read the detailed guide to :doc:`feature-iterators`.
+To learn more about how to use and configure iterators, please read the detailed guide to :doc:`iterators`.
