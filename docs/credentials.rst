@@ -108,7 +108,7 @@ following:
     aws_secret_access_key = ANOTHER_AWS_SECRET_ACCESS_KEY
 
 Each section (e.g., ``[default]``, ``[project1]``), represents a separate
-credential **profile**. Profiles can be referenced from an SDK configuration
+credential **profile**. Profiles can be referenced from a SDK configuration
 file, or when you are instantiating a client, using the ``profile`` option:
 
 .. code-block:: php
@@ -136,7 +136,7 @@ environment variable.
 Using hard-coded credentials
 ----------------------------
 
-You can provide hard-coded credentials to an SDK client by providing the "key",
+You can provide hard-coded credentials to a SDK client by providing the "key",
 "secret", and optional "token" key value pairs to the "credentials" option of
 a client constructor.
 
@@ -186,7 +186,7 @@ option:
         'credentials' => $provider
     ]);
 
-Passing in a credential provider function to an SDK client constructor will
+Passing in a credential provider function to a SDK client constructor will
 invoke the provider and ensure that it returns an instance of
 ``Aws\Credentials\CredentialsInterface``. If the provider does not return a
 credential object, an ``Aws\Exception\UnresolvedCredentialsException`` is

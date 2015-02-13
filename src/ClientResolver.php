@@ -79,7 +79,7 @@ class ClientResolver
             'type'     => 'value',
             'valid'    => ['callable'],
             'fn'       => [__CLASS__, '_apply_endpoint_provider'],
-            'doc'      => 'An optional PHP callable that accepts a hash of options including a "service" and "region" key and returns a hash of endpoint data, of which the "endpoint" key is required. See Aws\\Endpoint\\EndpointProvider for a list of built-in providers.',
+            'doc'      => 'An optional PHP callable that accepts a hash of options including a "service" and "region" key and returns NULL or a hash of endpoint data, of which the "endpoint" key is required. See Aws\\Endpoint\\EndpointProvider for a list of built-in providers.',
             'default' => [__CLASS__, '_default_endpoint_provider'],
         ],
         'api_provider' => [

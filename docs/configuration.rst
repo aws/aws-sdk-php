@@ -192,9 +192,9 @@ endpoint_provider
 
 :Type: ``callable``
 
-An optional PHP callable that accepts a hash of options including a service
-and region key and returns a hash of endpoint data, of which the endpoint key
-is required.
+An optional PHP callable that accepts a hash of options including a "service"
+and "region" key and returns ``NULL`` or a hash of endpoint data, of which the
+"endpoint" key is required.
 
 
 http
