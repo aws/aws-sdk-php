@@ -79,7 +79,7 @@ respectively.
 
 .. note::
 
-    The ``createSessionsTable`` function uses the ``TableExists`` :doc:`waiter <feature-waiters>` internally, so this
+    The ``createSessionsTable`` function uses the ``TableExists`` :doc:`waiter <waiters>` internally, so this
     function call will block until the table exists and is ready to be used.
 
 3. Use PHP sessions like normal

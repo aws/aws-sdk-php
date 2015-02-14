@@ -2,16 +2,16 @@
 Command Objects
 ===============
 
-Command objects are fundamental to how the SDK works. In normal usage of the
-SDK, you may never interact with command objects. However, if you are
-:ref:`performing operations concurrently <concurrent_commands>`,
-:ref:`inspecting data from the request or response <requests_and_responses>`,
-or writing custom plugins, you will need to understand how they work.
+Command objects are useful for performing :ref:`performing operations
+concurrently <concurrent_commands>`, using the command event system, and
+sending asynchronous requests.
+
 
 Typical SDK usage
 -----------------
 
 .. include:: _snippets/performing-operations.txt
+
 
 A peek under the hood
 ---------------------
@@ -39,12 +39,14 @@ request to a service, executing the request, receiving the response, and
 formatting the results. Commands are created and executed by the client and
 contain references to **Request** and **Response** objects.
 
+
 Using command objects
 ---------------------
 
 Using the magic-methods for performing operations is preferred for typical use
 cases, but command objects provide greater flexibility and access to additional
 data.
+
 
 Manipulating command objects before execution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -74,63 +76,6 @@ Take a look at the `API docs for commands
 <http://docs.aws.amazon.com/aws-sdk-php/v3/api/GuzzleHttp/Command/Command.html>`_.
 for more information on the PHP API.
 
-.. _requests_and_responses:
-
-Request and response objects
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-From the command object, you can access the request, response, and result
-objects. The availability of these objects depend on the state of the command
-object.
-
-Using requests and responses
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Request and response objects contain data about the actual requests and
-responses to the service. You can get access to the request a command will send
-and the response received while sending a request using the event system.
-
-.. code-block:: php
-
-    use GuzzleHttp\Command\Event\PreparedEvent;
-    use GuzzleHttp\Command\Event\ProcessEvent;
-
-    $command = $client->getCommand('OperationName');
-
-    $request = null;
-    $response = null;
-
-    $emitter = $command->getEmitter();
-
-    // Get the request when it is prepared.
-    $emitter->on('prepared', function (PreparedEvent $e) use (&$request) {
-        $request = $e->getRequest();
-    });
-
-    // Get the response when it has been received.
-    $emitter->on('process', function (ProcessEvent $e) use (&$response) {
-        $response = $e->getResponse();
-    });
-
-    // Get the result object, a parsed representation of the response.
-    $result = $client->execute($command);
-
-    $command->execute();
-
-    // Inspect the request object.
-    $contentLength = $request->getHeader('Content-Length');
-    $url = $request->getUrl();
-
-    // Inspect the response object.
-    $success = $response->isSuccessful();
-    $status = $response->getStatusCode();
-
-.. important::
-
-    The HTTP request and response message that is sent over the wire should be
-    considered an implementation detail of the SDK and the web service you are
-    using. Inspecting the request and response should usually only be employed
-    when troubleshooting.
 
 .. _concurrent_commands:
 

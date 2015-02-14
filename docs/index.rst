@@ -14,7 +14,6 @@ AWS SDK for PHP
     commands
     waiters
     iterators
-    response-objects
     faq
 
     service-cloudfront
@@ -62,7 +61,6 @@ Using the SDK
 * :doc:`iterators`
 * :doc:`waiters`
 * :doc:`commands`
-* :doc:`response-objects`
 * :doc:`faq`
 * `Contributing to the SDK <https://github.com/aws/aws-sdk-php/blob/master/CONTRIBUTING.md>`_
 * `Guzzle Documentation <http://guzzlephp.org>`_

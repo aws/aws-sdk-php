@@ -64,9 +64,6 @@ class Sdk
     /** @var array Arguments for creating clients */
     private $args;
 
-    /** @var callable|null Shared RingPHP handler */
-    private $handler;
-
     /**
      * Constructs a new SDK object with an associative array of default
      * client settings.

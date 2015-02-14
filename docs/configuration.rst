@@ -3,7 +3,23 @@ Configuration
 =============
 
 This guide describes client constructor options. These options can be provided
-in a client constructor or to the ``Aws\Sdk`` class.
+in a client constructor or to the ``Aws\Sdk`` class. The following example
+shows how to pass options into an Amazon S3 client constructor.
+
+.. code-block:: php
+
+    use Aws\S3\S3Client;
+
+    $options = [
+        'region'            => 'us-west-2',
+        'version'           => '2006-03-01',
+        'signature_version' => 'v4'
+    ];
+
+    $s3Client = new S3Client($options);
+
+Refer to the :doc:`getting started guide <getting-started>` for more
+information on constructing clients.
 
 
 api_provider
