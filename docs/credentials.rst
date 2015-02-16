@@ -279,11 +279,10 @@ client object.
 
     // Instantiate the S3 client with your AWS credentials
     $s3Client = S3Client::factory(array(
-        'credentials' => array(
             'key'    => 'YOUR_AWS_ACCESS_KEY_ID',
             'secret' => 'YOUR_AWS_SECRET_ACCESS_KEY',
         )
-    ));
+    );
 
 In some cases, you may already have an instance of a ``Credentials`` object. You can use this instead of specifying your
 access keys separately.
