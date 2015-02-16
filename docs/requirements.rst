@@ -37,7 +37,8 @@ Optimal settings
   system called `RingPHP <http://ringphp.readthedocs.org/en/latest/>`_ to allow
   Guzzle to utilize any sort of underlying transport (whether it's cURL, PHP
   sockets, PHP stream wrappers, etc.). You can configure which handler is used
-  by the SDK using the ``ringphp_handler`` client constructor option.
+  by the SDK using the ``client`` client constructor option and supplying a
+  custom "handler" option to the created client.
 
 `OPCache <http://php.net/manual/en/book.opcache.php>`_
   Using the OPcache extension improves PHP performance by storing precompiled

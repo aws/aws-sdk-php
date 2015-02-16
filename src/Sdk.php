@@ -76,6 +76,16 @@ class Sdk
     public function __construct(array $args = [])
     {
         $this->args = $args;
+
+        if (!isset($args['client'])) {
+            $this->args['client'] = static function () {
+                static $handler;
+                if (!$handler) {
+                    $handler = Client::getDefaultHandler();
+                }
+                return new Client(['handler' => $handler]);
+            };
+        }
     }
 
     public function __call($name, array $args = [])
@@ -116,8 +126,6 @@ class Sdk
      */
     public function createClient($name, array $args = [])
     {
-        $this->createSharedHandlerIfNeeded($args);
-
         // Merge provided args with stored args
         if (isset($this->args[$name])) {
             $args += $this->args[$name];
@@ -136,15 +144,5 @@ class Sdk
         }
 
         return new $client($args);
-    }
-
-    private function createSharedHandlerIfNeeded(array $args)
-    {
-        if (!isset($this->args['ringphp_handler'])
-            && !isset($args['client'])
-            && !isset($args['ringphp_handler'])
-        ) {
-            $this->args['ringphp_handler'] = Client::getDefaultHandler();
-        }
     }
 }

@@ -3,6 +3,7 @@ namespace Aws\Test;
 
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
+use GuzzleHttp\Client;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Ring\Client\MockHandler;
 
@@ -39,19 +40,23 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
     {
         $i = 0;
         $client = $this->getTestClient('DynamoDb', [
-            'ringphp_handler' => new MockHandler(function () use (&$i) {
-                if ($i++) {
-                    return [
-                        'status' => 200,
-                        'body' => '{"Table":{"TableStatus":"ACTIVE"}}'
-                    ];
-                } else {
-                    return [
-                        'status' => 200,
-                        'body' => '{"Table":{"TableStatus":"CREATING"}}'
-                    ];
-                }
-            })
+            'client' => function () {
+                return new Client([
+                    'handler' => new MockHandler(function () use (&$i) {
+                        if ($i++) {
+                            return [
+                                'status' => 200,
+                                'body' => '{"Table":{"TableStatus":"ACTIVE"}}'
+                            ];
+                        } else {
+                            return [
+                                'status' => 200,
+                                'body' => '{"Table":{"TableStatus":"CREATING"}}'
+                            ];
+                        }
+                    })
+                ]);
+            }
         ]);
 
         $client->waitUntil(

@@ -353,34 +353,22 @@ EOT;
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage You cannot provide both a client option and a ringphp_handler option.
-     */
-    public function testCannotProvideClientAndHandler()
-    {
-        $r = new ClientResolver(ClientResolver::getDefaultArguments());
-        $r->resolve([
-            'service' => 'dynamodb',
-            'region'  => 'x',
-            'version' => 'latest',
-            'client'  => new Client(),
-            'ringphp_handler' => function () {}
-        ], new Emitter());
-    }
-
-    /**
      * @expectedException \GuzzleHttp\Exception\RequestException
      * @expectedExceptionMessage foo
      */
-    public function testCanProvideRingPHPHandler()
+    public function testCanProvideCallableClient()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $r->resolve([
             'service' => 'dynamodb',
             'region'  => 'x',
             'version' => 'latest',
-            'ringphp_handler' => function () {
-                throw new \UnexpectedValueException('foo');
+            'client' => function (array $args) {
+                return new Client([
+                    'handler' => function () {
+                        throw new \UnexpectedValueException('foo');
+                    }
+                ]);
             }
         ], new Emitter());
 
