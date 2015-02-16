@@ -110,15 +110,10 @@ class ClientResolver
         ],
         'client' => [
             'type'    => 'value',
-            'valid'   => ['GuzzleHttp\ClientInterface'],
+            'valid'   => ['callable', 'GuzzleHttp\ClientInterface'],
             'default' => [__CLASS__, '_default_client'],
-            'doc'     => 'Optional Guzzle client used to transfer requests over the wire. If you do not specify a client, the SDK will create a new client that uses a shared Ring HTTP handler with other clients.'
-        ],
-        'ringphp_handler' => [
-            'type'  => 'value',
-            'valid' => ['callable'],
-            'doc'   => 'RingPHP handler used to transfer HTTP requests (see http://ringphp.readthedocs.org/en/latest/).',
-            'fn'    => [__CLASS__, '_apply_ringphp_handler'],
+            'fn'      => [__CLASS__, '_apply_client'],
+            'doc'     => 'A function that accepts an array of options and returns a GuzzleHttp\ClientInterface, or a Guzzle client used to transfer requests over the wire.'
         ],
         'retry_logger' => [
             'type'  => 'value',
@@ -399,6 +394,13 @@ class ClientResolver
         }
     }
 
+    public static function _apply_client($value, array &$args)
+    {
+        if (is_callable($value)) {
+            $args['client'] = $value($args);
+        }
+    }
+
     public static function _apply_http(array $values, array &$args)
     {
         foreach ($values as $k => $v) {
@@ -428,14 +430,9 @@ class ClientResolver
         return new FilesystemApiProvider(__DIR__ . '/data');
     }
 
-    public static function _default_client (array &$args)
+    public static function _default_client ()
     {
-        $clientArgs = [];
-        if (isset($args['ringphp_handler'])) {
-            $clientArgs['handler'] = $args['ringphp_handler'];
-            unset($args['ringphp_handler']);
-        }
-        return new Client($clientArgs);
+        return new Client();
     }
 
     public static function _default_credentials()

@@ -38,11 +38,17 @@ that loads credentials from the ``src/data`` folder of the SDK.
 client
 ~~~~~~
 
-:Type: ``GuzzleHttp\ClientInterface``
+:Type: ``callable|GuzzleHttp\ClientInterface``
 
-Optional Guzzle client used to transfer requests over the wire. If you do not
-specify a client, the SDK will create a new client that uses a shared Ring HTTP
-handler with other clients.
+A function that accepts an array of options and returns a
+``GuzzleHttp\ClientInterface``, or a ``GuzzleHttp\ClientInterface`` client used
+to transfer requests over the wire.
+
+.. note::
+
+    If you do not specify a client and use the ``Aws\Sdk`` class to create
+    clients, then the SDK will create a new client that uses a shared Ring
+    HTTP handler.
 
 .. code-block:: php
 
@@ -57,6 +63,18 @@ handler with other clients.
         'version' => 'latest',
         'region'  => 'us-west-2',
         'client'  => $myClient
+    ]);
+
+    $clientFactory = function (array $options) {
+        return new Client([
+            // 'handler' => $myCustomHandler
+        ]);
+    };
+
+    $s3 = new S3Client([
+        'version' => 'latest',
+        'region'  => 'us-west-2',
+        'client'  => $clientFactory
     ]);
 
 
@@ -405,40 +423,6 @@ phrase, number of retries, connection time, total time, and error message.
         'version'      => '2012-08-10',
         'region'       => 'us-west-2',
         'retry_logger' => $logger
-    ]);
-
-
-ringphp_handler
-~~~~~~~~~~~~~~~
-
-:Type: ``callable``
-
-`RingPHP <http://ringphp.readthedocs.org/en/latest/>`_ handler used to
-transfer HTTP requests. Setting a custom RingPHP handler can be useful if you
-would like to mock HTTP responses or if you are using a third-party handler
-like the `React PHP handler <https://github.com/WyriHaximus/ReactGuzzleRing>`_
-for async support.
-
-.. code-block:: php
-
-    use GuzzleHttp\Ring\Client\MockHandler;
-    use Aws\S3\S3Client;
-
-    // Create a RingPHP handlers that always returns the same response.
-    // RingPHP response arrays are documented at
-    // http://ringphp.readthedocs.org/en/latest/spec.html#responses
-    $handler = new MockHandler([
-        'status'  => '200',
-        'body'    => '',
-        'headers' => [
-            'Content-Length' => ['0']
-        ]
-    ]);
-
-    $s3 = new Aws\S3\S3Client([
-        'region'          => 'us-west-2',
-        'version'         => '2006-03-01',
-        'ringphp_handler' => $handler
     ]);
 
 
