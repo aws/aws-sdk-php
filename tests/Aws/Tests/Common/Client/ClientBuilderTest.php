@@ -44,16 +44,16 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
     public function testBuild()
     {
         $client = ClientBuilder::factory('Aws\\DynamoDb')
-            ->setConfig([])
-            ->setConfigDefaults([
+            ->setConfig(array())
+            ->setConfigDefaults(array(
                 'scheme'   => 'https',
                 'region'   => 'us-east-1',
                 'service'  => 'dynamodb',
                 'service.description' => $this->dynamoDbDescription
-            ])
-            ->setConfigRequirements(['scheme'])
+            ))
+            ->setConfigRequirements(array('scheme'))
             ->setExceptionParser(new JsonQueryExceptionParser())
-            ->setIteratorsConfig(['input_token' => 'foo'])
+            ->setIteratorsConfig(array('input_token' => 'foo'))
             ->build();
 
         $this->assertInstanceOf('Aws\DynamoDb\DynamoDbClient', $client);
@@ -62,21 +62,21 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
     public function testUsesGlobalEndpoint()
     {
         $client = ClientBuilder::factory('Aws\\Iam')
-            ->setConfig([])
-            ->setConfigDefaults([
+            ->setConfig(array())
+            ->setConfigDefaults(array(
                 'service' => 'iam',
                 'service.description' => $this->iamDescription
-            ])
+            ))
             ->build();
         $this->assertInstanceOf('Aws\Iam\IamClient', $client);
         $this->assertEquals('https://iam.amazonaws.com', $client->getBaseUrl());
 
         $client = ClientBuilder::factory('Aws\\Iam')
-            ->setConfig(['region' => 'cn-north-1'])
-            ->setConfigDefaults([
+            ->setConfig(array('region' => 'cn-north-1'))
+            ->setConfigDefaults(array(
                 'service' => 'iam',
                 'service.description' => $this->iamDescription
-            ])
+            ))
             ->build();
         $this->assertInstanceOf('Aws\Iam\IamClient', $client);
         $this->assertEquals('https://iam.cn-north-1.amazonaws.com.cn', $client->getBaseUrl());
@@ -85,14 +85,14 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
     public function testBuildAlternate()
     {
         $client = ClientBuilder::factory('Aws\\DynamoDb')
-            ->setConfigDefaults([
+            ->setConfigDefaults(array(
                 'scheme'  => 'https',
                 'region'  => 'us-west-1',
                 'service' => 'dynamodb',
                 'service.description' => $this->dynamoDbDescription,
-                'credentials' => Credentials::factory(['key' => 'foo', 'secret' => 'bar']),
+                'credentials' => Credentials::factory(array('key' => 'foo', 'secret' => 'bar')),
                 'client.backoff' => BackoffPLugin::getExponentialBackoff()
-            ])
+            ))
             ->build();
 
         $this->assertInstanceOf('Aws\DynamoDb\DynamoDbClient', $client);
@@ -100,20 +100,20 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function getDataForProcessArrayTest()
     {
-        return [
-            [
-                ['foo' => 'bar', 'bar' => 'baz'],
-                ['foo' => 'bar', 'bar' => 'baz'],
-            ],
-            [
-                new Collection(['foo' => 'bar', 'bar' => 'baz']),
-                ['foo' => 'bar', 'bar' => 'baz'],
-            ],
-            [
+        return array(
+            array(
+                array('foo' => 'bar', 'bar' => 'baz'),
+                array('foo' => 'bar', 'bar' => 'baz'),
+            ),
+            array(
+                new Collection(array('foo' => 'bar', 'bar' => 'baz')),
+                array('foo' => 'bar', 'bar' => 'baz'),
+            ),
+            array(
                 'foo',
                 null
-            ]
-        ];
+            )
+        );
     }
 
     /**
@@ -140,7 +140,7 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
     public function testEnsuresDescriptionsContainRegions()
     {
         ClientBuilder::factory('Aws\\DynamoDb')
-            ->setConfig(['service.description' => ['signatureVersion' => 'v2']])
+            ->setConfig(array('service.description' => array('signatureVersion' => 'v2')))
             ->build();
     }
 
@@ -151,25 +151,25 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
     public function testEnsuresSignatureIsProvided()
     {
         ClientBuilder::factory('Aws\\DynamoDb')
-            ->setConfig([
+            ->setConfig(array(
                 'region'  => 'us-west-1',
                 'service' => 'dynamodb',
                 'scheme'  => 'http',
-                'service.description' => [
-                    'regions' => ['us-west-1' => ['hostname' => 'foo', 'http' => true]]
-                ]
-            ])
+                'service.description' => array(
+                    'regions' => array('us-west-1' => array('hostname' => 'foo', 'http' => true))
+                )
+            ))
             ->build();
     }
 
     public function signatureVersionProvider()
     {
-        return [
-            ['v4', 'Aws\\Common\\Signature\\SignatureV4'],
-            ['v2', 'Aws\\Common\\Signature\\SignatureV2'],
-            ['v3https', 'Aws\\Common\\Signature\\SignatureV3Https'],
-            ['foo', false]
-        ];
+        return array(
+            array('v4', 'Aws\\Common\\Signature\\SignatureV4'),
+            array('v2', 'Aws\\Common\\Signature\\SignatureV2'),
+            array('v3https', 'Aws\\Common\\Signature\\SignatureV3Https'),
+            array('foo', false)
+        );
     }
 
     /**
@@ -179,15 +179,15 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
     {
         try {
             $client = ClientBuilder::factory()
-                ->setConfig([
+                ->setConfig(array(
                     'service' => 'foo',
                     'region' => 'us-east-1',
                     'signature' => $str,
-                    'service.description' => [
+                    'service.description' => array(
                         'signatureVersion' => 'v2',
-                        'regions' => ['us-east-1' => ['https' => true, 'hostname' => 'baz']]
-                    ]
-                ])
+                        'regions' => array('us-east-1' => array('https' => true, 'hostname' => 'baz'))
+                    )
+                ))
                 ->build();
             $this->assertInstanceOf($type, $client->getSignature());
         } catch (\InvalidArgumentException $e) {
@@ -204,13 +204,13 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
     public function testEnsuresExceptionIsThrownWhenMissingRequiredRegion()
     {
         ClientBuilder::factory('Aws\\DynamoDb')
-            ->setConfig([
+            ->setConfig(array(
                 'service' => 'dynamodb',
-                'service.description' => [
+                'service.description' => array(
                     'signatureVersion' => 'v2',
-                    'regions' => ['us-east-1' => []]
-                ]
-            ])
+                    'regions' => array('us-east-1' => array())
+                )
+            ))
             ->build();
     }
 
@@ -221,16 +221,16 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         putenv('AWS_ACCESS_KEY_ID=');
         putenv('AWS_SECRET_KEY=');
 
-        $creds = Credentials::factory(['key' => 'foo', 'secret' => 'bar']);
-        $config = [
+        $creds = Credentials::factory(array('key' => 'foo', 'secret' => 'bar'));
+        $config = array(
             'service' => 'dynamodb',
             'region'  => 'us-east-1',
             'credentials' => $creds,
-            'service.description' => [
+            'service.description' => array(
                 'signatureVersion' => 'v2',
-                'regions' => ['us-east-1' => ['https' => true, 'hostname' => 'foo.com']]
-            ]
-        ];
+                'regions' => array('us-east-1' => array('https' => true, 'hostname' => 'foo.com'))
+            )
+        );
 
         // Ensure that specific credentials can be used
         $client1 = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
@@ -239,8 +239,8 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         // Ensure that the instance metadata service is called when no credentials are supplied
         $imc = $this->getMock(
             'Aws\Common\InstanceMetadata\InstanceMetadataClient',
-            ['getInstanceProfileCredentials'],
-            [$this->getMock('Guzzle\Common\Collection')]
+            array('getInstanceProfileCredentials'),
+            array($this->getMock('Guzzle\Common\Collection'))
         );
         $imc->expects($this->any())->method('getInstanceProfileCredentials')
             ->willThrowException(new \Aws\Common\Exception\InstanceProfileCredentialsException);
@@ -284,18 +284,18 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testAddsCredentialsFromArray()
     {
-        $config = [
+        $config = array(
             'service' => 'dynamodb',
             'region'  => 'us-east-1',
-            'credentials' => [
+            'credentials' => array(
                 'key'    => 'foo',
                 'secret' => 'bar'
-            ],
-            'service.description' => [
+            ),
+            'service.description' => array(
                 'signatureVersion' => 'v2',
-                'regions' => ['us-east-1' => ['https' => true, 'hostname' => 'foo.com']]
-            ]
-        ];
+                'regions' => array('us-east-1' => array('https' => true, 'hostname' => 'foo.com'))
+            )
+        );
         $client = ClientBuilder::factory('Aws\\DynamoDb')
             ->setConfig($config)
             ->build();
@@ -306,14 +306,14 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testAddsDefaultBackoffPluginIfNeeded()
     {
-        $config = [
+        $config = array(
             'service' => 'dynamodb',
             'region'  => 'us-east-1',
-            'service.description' => [
+            'service.description' => array(
                 'signatureVersion' => 'v2',
-                'regions' => ['us-east-1' => ['https' => true, 'hostname' => 'foo.com']]
-            ]
-        ];
+                'regions' => array('us-east-1' => array('https' => true, 'hostname' => 'foo.com'))
+            )
+        );
 
         // Ensure that a default plugin is set
         $client = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
@@ -332,16 +332,16 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testUsesBackoffLoggerWithDebug()
     {
-        $config = [
+        $config = array(
             'service' => 'dynamodb',
             'region'  => 'us-east-1',
-            'service.description' => [
+            'service.description' => array(
                 'signatureVersion' => 'v2',
-                'regions' => ['us-east-1' => ['https' => true, 'hostname' => 'foo.com']]
-            ],
+                'regions' => array('us-east-1' => array('https' => true, 'hostname' => 'foo.com'))
+            ),
             Options::BACKOFF_LOGGER => 'debug',
             Options::BACKOFF_LOGGER_TEMPLATE => '[{ts}] {url}'
-        ];
+        );
         $client = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
         $plugin = $client->getConfig(Options::BACKOFF);
         $this->assertInstanceOf('Guzzle\Plugin\Backoff\BackoffPlugin', $plugin);
@@ -354,15 +354,15 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testAllowsValidationToBeDisabled()
     {
-        $config = [
+        $config = array(
             'service' => 'dynamodb',
             'region'  => 'us-east-1',
-            'service.description' => [
+            'service.description' => array(
                 'signatureVersion' => 'v2',
-                'regions' => ['us-east-1' => ['https' => true, 'hostname' => 'foo.com']]
-            ],
+                'regions' => array('us-east-1' => array('https' => true, 'hostname' => 'foo.com'))
+            ),
             'validation' => false
-        ];
+        );
 
         $client = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
         $params = $client->getConfig('command.params');
@@ -371,15 +371,15 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testAllowsBackoffDisabling()
     {
-        $config = [
+        $config = array(
             'service' => 'dynamodb',
             'region'  => 'us-east-1',
-            'service.description' => [
+            'service.description' => array(
                 'signatureVersion' => 'v2',
-                'regions' => ['us-east-1' => ['https' => true, 'hostname' => 'foo.com']]
-            ],
+                'regions' => array('us-east-1' => array('https' => true, 'hostname' => 'foo.com'))
+            ),
             'client.backoff' => false
-        ];
+        );
 
         $client = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
         $this->assertFalse($client->getConfig('client.backoff'));
@@ -387,12 +387,12 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testInjectsVersionIntoServiceDescriptionFileName()
     {
-        $config = [
+        $config = array(
             'service' => 'dynamodb',
             'region'  => 'us-east-1',
             'version' => DynamoDbClient::LATEST_API_VERSION,
             'service.description' => __DIR__ . '/../../../../../src/Aws/DynamoDb/Resources/dynamodb-%s.php'
-        ];
+        );
 
         $client = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
         $this->assertNotNull($client->getDescription());
@@ -401,15 +401,15 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
     public function testCanCreateNullCredentials()
     {
         $client = ClientBuilder::factory()
-            ->setConfig([
+            ->setConfig(array(
                 'service' => 'foo',
                 'region' => 'us-east-1',
                 'credentials' => false,
-                'service.description' => [
+                'service.description' => array(
                     'signatureVersion' => 'v4',
-                    'regions' => ['us-east-1' => ['https' => true, 'hostname' => 'foo.com']]
-                ]
-            ])
+                    'regions' => array('us-east-1' => array('https' => true, 'hostname' => 'foo.com'))
+                )
+            ))
             ->build();
         $this->assertInstanceOf('Aws\\Common\\Signature\\SignatureV4', $client->getSignature());
         $this->assertInstanceOf('Aws\\Common\\Credentials\\NullCredentials', $client->getCredentials());
@@ -418,18 +418,18 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
     public function testCanUseCnNorth1AndIam()
     {
         $sdk = Aws::factory();
-        $c = $sdk->get('iam', ['region' => 'cn-north-1']);
+        $c = $sdk->get('iam', array('region' => 'cn-north-1'));
         $this->assertEquals('https://iam.cn-north-1.amazonaws.com.cn', $c->getBaseUrl());
     }
 
     public function testCanUseVersionOfLatestForForwardsCompatibility()
     {
-        $config = [
+        $config = array(
             'service' => 'dynamodb',
             'region'  => 'us-east-1',
             'version' => 'latest',
             'service.description' => __DIR__ . '/../../../../../src/Aws/DynamoDb/Resources/dynamodb-%s.php'
-        ];
+        );
 
         $client = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
         $this->assertEquals($client->getApiVersion(), DynamoDbClient::LATEST_API_VERSION);
@@ -442,13 +442,13 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
     public function testHandlesHttpSslOption()
     {
         ClientBuilder::factory()
-            ->setConfig([
+            ->setConfig(array(
                 'service' => 'foo',
                 'region' => 'us-east-1',
                 'credentials' => false,
-                'service.description' => ['signatureVersion' => 'v4'],
-                'http' => ['verify' => '/does/not/exist/here']
-            ])
+                'service.description' => array('signatureVersion' => 'v4'),
+                'http' => array('verify' => '/does/not/exist/here')
+            ))
             ->build();
     }
 }
