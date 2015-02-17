@@ -15,7 +15,7 @@
  */
 
 return array (
-    'apiVersion' => '2014-10-21',
+    'apiVersion' => '2014-11-06',
     'endpointPrefix' => 'cloudfront',
     'serviceFullName' => 'Amazon CloudFront',
     'serviceAbbreviation' => 'CloudFront',
@@ -68,7 +68,7 @@ return array (
     'operations' => array(
         'CreateCloudFrontOriginAccessIdentity' => array(
             'httpMethod' => 'POST',
-            'uri' => '/2014-10-21/origin-access-identity/cloudfront',
+            'uri' => '/2014-11-06/origin-access-identity/cloudfront',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'CreateCloudFrontOriginAccessIdentityResult',
             'responseType' => 'model',
@@ -76,7 +76,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'CloudFrontOriginAccessIdentityConfig',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2014-10-21/',
+                        'http://cloudfront.amazonaws.com/doc/2014-11-06/',
                     ),
                 ),
             ),
@@ -121,7 +121,7 @@ return array (
         ),
         'CreateDistribution' => array(
             'httpMethod' => 'POST',
-            'uri' => '/2014-10-21/distribution',
+            'uri' => '/2014-11-06/distribution',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'CreateDistributionResult',
             'responseType' => 'model',
@@ -129,7 +129,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'DistributionConfig',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2014-10-21/',
+                        'http://cloudfront.amazonaws.com/doc/2014-11-06/',
                     ),
                 ),
             ),
@@ -140,7 +140,6 @@ return array (
                     'location' => 'xml',
                 ),
                 'Aliases' => array(
-                    'required' => true,
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
@@ -158,7 +157,6 @@ return array (
                     ),
                 ),
                 'DefaultRootObject' => array(
-                    'required' => true,
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -184,6 +182,9 @@ return array (
                                     ),
                                     'DomainName' => array(
                                         'required' => true,
+                                        'type' => 'string',
+                                    ),
+                                    'OriginPath' => array(
                                         'type' => 'string',
                                     ),
                                     'S3OriginConfig' => array(
@@ -350,7 +351,6 @@ return array (
                     ),
                 ),
                 'CacheBehaviors' => array(
-                    'required' => true,
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
@@ -536,7 +536,6 @@ return array (
                     'location' => 'xml',
                 ),
                 'Logging' => array(
-                    'required' => true,
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
@@ -561,7 +560,6 @@ return array (
                     ),
                 ),
                 'PriceClass' => array(
-                    'required' => true,
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -735,7 +733,7 @@ return array (
         ),
         'CreateInvalidation' => array(
             'httpMethod' => 'POST',
-            'uri' => '/2014-10-21/distribution/{DistributionId}/invalidation',
+            'uri' => '/2014-11-06/distribution/{DistributionId}/invalidation',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'CreateInvalidationResult',
             'responseType' => 'model',
@@ -743,7 +741,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'InvalidationBatch',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2014-10-21/',
+                        'http://cloudfront.amazonaws.com/doc/2014-11-06/',
                     ),
                 ),
             ),
@@ -813,7 +811,7 @@ return array (
         ),
         'CreateStreamingDistribution' => array(
             'httpMethod' => 'POST',
-            'uri' => '/2014-10-21/streaming-distribution',
+            'uri' => '/2014-11-06/streaming-distribution',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'CreateStreamingDistributionResult',
             'responseType' => 'model',
@@ -821,7 +819,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'StreamingDistributionConfig',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2014-10-21/',
+                        'http://cloudfront.amazonaws.com/doc/2014-11-06/',
                     ),
                 ),
             ),
@@ -847,7 +845,6 @@ return array (
                     ),
                 ),
                 'Aliases' => array(
-                    'required' => true,
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
@@ -870,7 +867,6 @@ return array (
                     'location' => 'xml',
                 ),
                 'Logging' => array(
-                    'required' => true,
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
@@ -913,7 +909,6 @@ return array (
                     ),
                 ),
                 'PriceClass' => array(
-                    'required' => true,
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -978,9 +973,9 @@ return array (
         ),
         'DeleteCloudFrontOriginAccessIdentity' => array(
             'httpMethod' => 'DELETE',
-            'uri' => '/2014-10-21/origin-access-identity/cloudfront/{Id}',
+            'uri' => '/2014-11-06/origin-access-identity/cloudfront/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'DeleteCloudFrontOriginAccessIdentity2014_10_21Output',
+            'responseClass' => 'DeleteCloudFrontOriginAccessIdentity2014_11_06Output',
             'responseType' => 'model',
             'parameters' => array(
                 'Id' => array(
@@ -1018,9 +1013,9 @@ return array (
         ),
         'DeleteDistribution' => array(
             'httpMethod' => 'DELETE',
-            'uri' => '/2014-10-21/distribution/{Id}',
+            'uri' => '/2014-11-06/distribution/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'DeleteDistribution2014_10_21Output',
+            'responseClass' => 'DeleteDistribution2014_11_06Output',
             'responseType' => 'model',
             'parameters' => array(
                 'Id' => array(
@@ -1058,9 +1053,9 @@ return array (
         ),
         'DeleteStreamingDistribution' => array(
             'httpMethod' => 'DELETE',
-            'uri' => '/2014-10-21/streaming-distribution/{Id}',
+            'uri' => '/2014-11-06/streaming-distribution/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'DeleteStreamingDistribution2014_10_21Output',
+            'responseClass' => 'DeleteStreamingDistribution2014_11_06Output',
             'responseType' => 'model',
             'parameters' => array(
                 'Id' => array(
@@ -1098,7 +1093,7 @@ return array (
         ),
         'GetCloudFrontOriginAccessIdentity' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2014-10-21/origin-access-identity/cloudfront/{Id}',
+            'uri' => '/2014-11-06/origin-access-identity/cloudfront/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetCloudFrontOriginAccessIdentityResult',
             'responseType' => 'model',
@@ -1126,7 +1121,7 @@ return array (
         ),
         'GetCloudFrontOriginAccessIdentityConfig' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2014-10-21/origin-access-identity/cloudfront/{Id}/config',
+            'uri' => '/2014-11-06/origin-access-identity/cloudfront/{Id}/config',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetCloudFrontOriginAccessIdentityConfigResult',
             'responseType' => 'model',
@@ -1154,7 +1149,7 @@ return array (
         ),
         'GetDistribution' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2014-10-21/distribution/{Id}',
+            'uri' => '/2014-11-06/distribution/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetDistributionResult',
             'responseType' => 'model',
@@ -1182,7 +1177,7 @@ return array (
         ),
         'GetDistributionConfig' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2014-10-21/distribution/{Id}/config',
+            'uri' => '/2014-11-06/distribution/{Id}/config',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetDistributionConfigResult',
             'responseType' => 'model',
@@ -1210,7 +1205,7 @@ return array (
         ),
         'GetInvalidation' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2014-10-21/distribution/{DistributionId}/invalidation/{Id}',
+            'uri' => '/2014-11-06/distribution/{DistributionId}/invalidation/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetInvalidationResult',
             'responseType' => 'model',
@@ -1247,7 +1242,7 @@ return array (
         ),
         'GetStreamingDistribution' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2014-10-21/streaming-distribution/{Id}',
+            'uri' => '/2014-11-06/streaming-distribution/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetStreamingDistributionResult',
             'responseType' => 'model',
@@ -1275,7 +1270,7 @@ return array (
         ),
         'GetStreamingDistributionConfig' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2014-10-21/streaming-distribution/{Id}/config',
+            'uri' => '/2014-11-06/streaming-distribution/{Id}/config',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetStreamingDistributionConfigResult',
             'responseType' => 'model',
@@ -1303,7 +1298,7 @@ return array (
         ),
         'ListCloudFrontOriginAccessIdentities' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2014-10-21/origin-access-identity/cloudfront',
+            'uri' => '/2014-11-06/origin-access-identity/cloudfront',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ListCloudFrontOriginAccessIdentitiesResult',
             'responseType' => 'model',
@@ -1330,7 +1325,7 @@ return array (
         ),
         'ListDistributions' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2014-10-21/distribution',
+            'uri' => '/2014-11-06/distribution',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ListDistributionsResult',
             'responseType' => 'model',
@@ -1357,7 +1352,7 @@ return array (
         ),
         'ListInvalidations' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2014-10-21/distribution/{DistributionId}/invalidation',
+            'uri' => '/2014-11-06/distribution/{DistributionId}/invalidation',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ListInvalidationsResult',
             'responseType' => 'model',
@@ -1397,7 +1392,7 @@ return array (
         ),
         'ListStreamingDistributions' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2014-10-21/streaming-distribution',
+            'uri' => '/2014-11-06/streaming-distribution',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ListStreamingDistributionsResult',
             'responseType' => 'model',
@@ -1424,7 +1419,7 @@ return array (
         ),
         'UpdateCloudFrontOriginAccessIdentity' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/2014-10-21/origin-access-identity/cloudfront/{Id}/config',
+            'uri' => '/2014-11-06/origin-access-identity/cloudfront/{Id}/config',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'UpdateCloudFrontOriginAccessIdentityResult',
             'responseType' => 'model',
@@ -1432,7 +1427,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'CloudFrontOriginAccessIdentityConfig',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2014-10-21/',
+                        'http://cloudfront.amazonaws.com/doc/2014-11-06/',
                     ),
                 ),
             ),
@@ -1499,7 +1494,7 @@ return array (
         ),
         'UpdateDistribution' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/2014-10-21/distribution/{Id}/config',
+            'uri' => '/2014-11-06/distribution/{Id}/config',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'UpdateDistributionResult',
             'responseType' => 'model',
@@ -1507,7 +1502,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'DistributionConfig',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2014-10-21/',
+                        'http://cloudfront.amazonaws.com/doc/2014-11-06/',
                     ),
                 ),
             ),
@@ -1518,7 +1513,6 @@ return array (
                     'location' => 'xml',
                 ),
                 'Aliases' => array(
-                    'required' => true,
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
@@ -1536,7 +1530,6 @@ return array (
                     ),
                 ),
                 'DefaultRootObject' => array(
-                    'required' => true,
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -1562,6 +1555,9 @@ return array (
                                     ),
                                     'DomainName' => array(
                                         'required' => true,
+                                        'type' => 'string',
+                                    ),
+                                    'OriginPath' => array(
                                         'type' => 'string',
                                     ),
                                     'S3OriginConfig' => array(
@@ -1728,7 +1724,6 @@ return array (
                     ),
                 ),
                 'CacheBehaviors' => array(
-                    'required' => true,
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
@@ -1914,7 +1909,6 @@ return array (
                     'location' => 'xml',
                 ),
                 'Logging' => array(
-                    'required' => true,
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
@@ -1939,7 +1933,6 @@ return array (
                     ),
                 ),
                 'PriceClass' => array(
-                    'required' => true,
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -2123,7 +2116,7 @@ return array (
         ),
         'UpdateStreamingDistribution' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/2014-10-21/streaming-distribution/{Id}/config',
+            'uri' => '/2014-11-06/streaming-distribution/{Id}/config',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'UpdateStreamingDistributionResult',
             'responseType' => 'model',
@@ -2131,7 +2124,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'StreamingDistributionConfig',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2014-10-21/',
+                        'http://cloudfront.amazonaws.com/doc/2014-11-06/',
                     ),
                 ),
             ),
@@ -2157,7 +2150,6 @@ return array (
                     ),
                 ),
                 'Aliases' => array(
-                    'required' => true,
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
@@ -2180,7 +2172,6 @@ return array (
                     'location' => 'xml',
                 ),
                 'Logging' => array(
-                    'required' => true,
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
@@ -2223,7 +2214,6 @@ return array (
                     ),
                 ),
                 'PriceClass' => array(
-                    'required' => true,
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -2449,6 +2439,9 @@ return array (
                                                 'type' => 'string',
                                             ),
                                             'DomainName' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'OriginPath' => array(
                                                 'type' => 'string',
                                             ),
                                             'S3OriginConfig' => array(
@@ -3043,7 +3036,7 @@ return array (
                 ),
             ),
         ),
-        'DeleteCloudFrontOriginAccessIdentity2014_10_21Output' => array(
+        'DeleteCloudFrontOriginAccessIdentity2014_11_06Output' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
@@ -3053,7 +3046,7 @@ return array (
                 ),
             ),
         ),
-        'DeleteDistribution2014_10_21Output' => array(
+        'DeleteDistribution2014_11_06Output' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
@@ -3063,7 +3056,7 @@ return array (
                 ),
             ),
         ),
-        'DeleteStreamingDistribution2014_10_21Output' => array(
+        'DeleteStreamingDistribution2014_11_06Output' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
@@ -3237,6 +3230,9 @@ return array (
                                                 'type' => 'string',
                                             ),
                                             'DomainName' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'OriginPath' => array(
                                                 'type' => 'string',
                                             ),
                                             'S3OriginConfig' => array(
@@ -3670,6 +3666,9 @@ return array (
                                         'type' => 'string',
                                     ),
                                     'DomainName' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'OriginPath' => array(
                                         'type' => 'string',
                                     ),
                                     'S3OriginConfig' => array(
@@ -4482,6 +4481,9 @@ return array (
                                                 'DomainName' => array(
                                                     'type' => 'string',
                                                 ),
+                                                'OriginPath' => array(
+                                                    'type' => 'string',
+                                                ),
                                                 'S3OriginConfig' => array(
                                                     'type' => 'object',
                                                     'properties' => array(
@@ -5148,6 +5150,9 @@ return array (
                                             'DomainName' => array(
                                                 'type' => 'string',
                                             ),
+                                            'OriginPath' => array(
+                                                'type' => 'string',
+                                            ),
                                             'S3OriginConfig' => array(
                                                 'type' => 'object',
                                                 'properties' => array(
@@ -5685,31 +5690,31 @@ return array (
     'iterators' => array(
         'ListCloudFrontOriginAccessIdentities' => array(
             'input_token' => 'Marker',
-            'output_token' => 'NextMarker',
+            'output_token' => 'CloudFrontOriginAccessIdentityList/NextMarker',
             'limit_key' => 'MaxItems',
-            'more_results' => 'IsTruncated',
-            'result_key' => 'Items',
+            'more_results' => 'CloudFrontOriginAccessIdentityList/IsTruncated',
+            'result_key' => 'CloudFrontOriginAccessIdentityList/Items',
         ),
         'ListDistributions' => array(
             'input_token' => 'Marker',
-            'output_token' => 'NextMarker',
+            'output_token' => 'DistributionList/NextMarker',
             'limit_key' => 'MaxItems',
-            'more_results' => 'IsTruncated',
-            'result_key' => 'Items',
+            'more_results' => 'DistributionList/IsTruncated',
+            'result_key' => 'DistributionList/Items',
         ),
         'ListInvalidations' => array(
             'input_token' => 'Marker',
-            'output_token' => 'NextMarker',
+            'output_token' => 'InvalidationList/NextMarker',
             'limit_key' => 'MaxItems',
-            'more_results' => 'IsTruncated',
-            'result_key' => 'Items',
+            'more_results' => 'InvalidationList/IsTruncated',
+            'result_key' => 'InvalidationList/Items',
         ),
         'ListStreamingDistributions' => array(
             'input_token' => 'Marker',
-            'output_token' => 'NextMarker',
+            'output_token' => 'StreamingDistributionList/NextMarker',
             'limit_key' => 'MaxItems',
-            'more_results' => 'IsTruncated',
-            'result_key' => 'Items',
+            'more_results' => 'StreamingDistributionList/IsTruncated',
+            'result_key' => 'StreamingDistributionList/Items',
         ),
     ),
     'waiters' => array(

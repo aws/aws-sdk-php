@@ -3,6 +3,7 @@
 ## Next Release
 
 * `Aws\Sts` - Added support for regional endpoints.
+* `Aws\CloudFront` - Added support for origin paths in web distributions.
 
 ## 2.7.18 - 2015-02-12
 
