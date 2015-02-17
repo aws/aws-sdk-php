@@ -31,7 +31,7 @@ class RulesEndpointProviderTest extends \PHPUnit_Framework_TestCase
             array('sa-east-1', 's3', 'http', 'http://s3-sa-east-1.amazonaws.com'),
             array('sa-east-1', 's3', 'https', 'https://s3-sa-east-1.amazonaws.com'),
             array('us-east-1', 's3', 'http', 'http://s3.amazonaws.com'),
-            array('foo', 'sts', 'https', 'https://sts.amazonaws.com'),
+            array('foo', 'iam', 'https', 'https://iam.amazonaws.com'),
             array('us-gov-west-1', 's3', 'https', 'https://s3-us-gov-west-1.amazonaws.com'),
             array('us-gov-west-1', 'iam', 'https', 'https://iam.us-gov.amazonaws.com'),
             array('cn-north-1', 's3', 'https', 'https://s3.cn-north-1.amazonaws.com.cn')

@@ -35,7 +35,7 @@ class StsClientTest extends \Guzzle\Tests\GuzzleTestCase
         ));
 
         $this->assertInstanceOf('Aws\Common\Credentials\Credentials', $client->getCredentials());
-        $this->assertEquals('https://sts.amazonaws.com', $client->getBaseUrl());
+        $this->assertEquals('https://sts.us-west-1.amazonaws.com', $client->getBaseUrl());
         $this->assertInstanceOf('Aws\Common\Signature\SignatureV4', $client->getSignature());
         $this->assertTrue($client->getDescription()->hasOperation('GetSessionToken'));
     }

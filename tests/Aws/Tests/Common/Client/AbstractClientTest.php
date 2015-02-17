@@ -168,12 +168,12 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
         }
 
         /** @var $client AwsClientInterface */
-        $client = $this->getServiceBuilder()->get('sts', true);
+        $client = $this->getServiceBuilder()->get('iam', true);
         $client->getConfig()->set('scheme', 'https');
         foreach (array_keys($client->getRegions()) as $region) {
             $client->setRegion($region);
-            $this->assertEquals("https://sts.amazonaws.com", (string) $client->getBaseUrl());
-            $this->assertEquals("https://sts.amazonaws.com", $client->getConfig('base_url'));
+            $this->assertEquals("https://iam.amazonaws.com", (string) $client->getBaseUrl());
+            $this->assertEquals("https://iam.amazonaws.com", $client->getConfig('base_url'));
             $this->assertEquals(Region::US_EAST_1, $client->getRegion());
             $this->assertEquals(Region::US_EAST_1, $this->readAttribute($client->getSignature(), 'regionName'));
         }

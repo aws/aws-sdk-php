@@ -29,11 +29,11 @@ class DefaultClientTest extends \Guzzle\Tests\GuzzleTestCase
         $credentials = $this->getMock('Aws\Common\Credentials\CredentialsInterface');
         $client = DefaultClient::factory(array(
             Options::CREDENTIALS => $credentials,
-            Options::SERVICE_DESCRIPTION => __DIR__ . '/../../../../../src/Aws/Sts/Resources/sts-2011-06-15.php'
+            Options::SERVICE_DESCRIPTION => __DIR__ . '/../../../../../src/Aws/Iam/Resources/iam-2010-05-08.php'
         ));
         $this->assertInstanceOf('Aws\Common\Signature\SignatureInterface', $client->getSignature());
         $this->assertInstanceOf('Aws\Common\Credentials\CredentialsInterface', $client->getCredentials());
         $this->assertSame($credentials, $client->getCredentials());
-        $this->assertEquals('https://sts.amazonaws.com', $client->getBaseUrl());
+        $this->assertEquals('https://iam.amazonaws.com', $client->getBaseUrl());
     }
 }

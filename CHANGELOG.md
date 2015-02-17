@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Next Release
+
+* `Aws\Sts` - Added support for regional endpoints.
+
 ## 2.7.18 - 2015-02-12
 
 * `Aws\Iam` - Added support for named and managed policies.

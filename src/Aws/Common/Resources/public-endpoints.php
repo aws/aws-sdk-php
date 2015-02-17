@@ -12,9 +12,6 @@ return array(
         'us-gov-west-1/iam' => array(
             'endpoint' => 'iam.us-gov.amazonaws.com'
         ),
-        'us-gov-west-1/sts' => array(
-            'endpoint' => 'sts.us-gov-west-1.amazonaws.com'
-        ),
         'us-gov-west-1/s3' => array(
             'endpoint' => 's3-{region}.amazonaws.com'
         ),
@@ -29,9 +26,6 @@ return array(
         ),
         '*/route53' => array(
             'endpoint' => 'route53.amazonaws.com'
-        ),
-        '*/sts' => array(
-            'endpoint' => 'sts.amazonaws.com'
         ),
         'us-east-1/sdb' => array(
             'endpoint' => 'sdb.amazonaws.com'
