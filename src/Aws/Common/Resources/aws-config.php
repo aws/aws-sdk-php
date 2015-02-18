@@ -281,6 +281,12 @@ return array(
             'class'   => 'Aws\Sqs\SqsClient'
         ),
 
+        'ssm' => array(
+            'alias'   => 'Ssm',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\Ssm\SsmClient'
+        ),
+
         'storagegateway' => array(
             'alias'   => 'StorageGateway',
             'extends' => 'default_settings',

@@ -2,6 +2,8 @@
 
 ## Next Release
 
+* `Aws\Ssm` - Added support for the **Amazon Simple Systems Management Service
+  (SSM)**. 
 * `Aws\Sts` - Added support for regional endpoints.
 * `Aws\CloudFront` - Added support for origin paths in web distributions.
 
