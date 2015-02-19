@@ -479,6 +479,14 @@ class ClientBuilder
         ) {
             $config->set(Options::SIGNATURE, $endpoint['signatureVersion']);
         }
+
+        // The the signing region if endpoint rule specifies one.
+        if (isset($endpoint['credentialScope'])) {
+            $scope = $endpoint['credentialScope'];
+            if (isset($scope['region'])) {
+                $config->set(Options::SIGNATURE_REGION, $scope['region']);
+            }
+        }
     }
 
     private function createDefaultBackoff()

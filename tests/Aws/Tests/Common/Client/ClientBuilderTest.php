@@ -72,6 +72,17 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals('https://iam.amazonaws.com', $client->getBaseUrl());
 
         $client = ClientBuilder::factory('Aws\\Iam')
+            ->setConfig(array('region' => 'us-west-2'))
+            ->setConfigDefaults(array(
+                'service' => 'iam',
+                'service.description' => $this->iamDescription
+            ))
+            ->build();
+        $this->assertInstanceOf('Aws\Iam\IamClient', $client);
+        $this->assertEquals('https://iam.amazonaws.com', $client->getBaseUrl());
+        $this->assertEquals('us-east-1', $client->getConfig(Options::SIGNATURE_REGION));
+
+        $client = ClientBuilder::factory('Aws\\Iam')
             ->setConfig(array('region' => 'cn-north-1'))
             ->setConfigDefaults(array(
                 'service' => 'iam',

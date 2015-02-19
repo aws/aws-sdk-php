@@ -74,7 +74,9 @@ class StsClient extends AbstractClient
         $client->getEventDispatcher()->addListener('command.before_send', function(Event $event) {
             /** @var AbstractCommand $command */
             $command = $event['command'];
-            if ($command->getName() === 'AssumeRoleWithWebIdentity') {
+            if ($command->getName() === 'AssumeRoleWithWebIdentity'
+                || $command->getName() === 'AssumeRoleWithSAML'
+            ) {
                 /** @var EventDispatcher $dispatcher */
                 $dispatcher = $command->getRequest()->getEventDispatcher();
                 foreach ($dispatcher->getListeners('request.before_send') as $listener) {
