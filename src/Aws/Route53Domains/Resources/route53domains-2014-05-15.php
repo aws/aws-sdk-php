@@ -2113,4 +2113,18 @@ return array (
             ),
         ),
     ),
+    'iterators' => array(
+        'ListDomains' => array(
+            'limit_key' => 'MaxItems',
+            'input_token' => 'Marker',
+            'output_token' => 'NextPageMarker',
+            'result_key' => 'Domains',
+        ),
+        'ListOperations' => array(
+            'limit_key' => 'MaxItems',
+            'input_token' => 'Marker',
+            'output_token' => 'NextPageMarker',
+            'result_key' => 'Operations',
+        ),
+    ),
 );

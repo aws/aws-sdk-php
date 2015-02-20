@@ -8,6 +8,7 @@
 * `Aws\CloudFront` - Added support for origin paths in web distributions.
 * `Aws\Ecs` - Added support for specifying volumes and mount points. Also
   switched the client to use a JSON protocol.
+* `Aws\Route53Domains` - Add iterators for `ListDomains` and `ListOperations`.
 
 ## 2.7.18 - 2015-02-12
 
