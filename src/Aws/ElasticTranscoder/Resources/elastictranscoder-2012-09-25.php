@@ -2525,6 +2525,22 @@ return array (
                         ),
                     ),
                 ),
+                'Warnings' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'Warning',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Code' => array(
+                                'type' => 'string',
+                            ),
+                            'Message' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
             ),
         ),
         'CreatePresetResponse' => array(
@@ -5053,6 +5069,22 @@ return array (
                         ),
                     ),
                 ),
+                'Warnings' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'Warning',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Code' => array(
+                                'type' => 'string',
+                            ),
+                            'Message' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
             ),
         ),
         'ReadPresetResponse' => array(
@@ -5359,6 +5391,22 @@ return array (
                                         ),
                                     ),
                                 ),
+                            ),
+                        ),
+                    ),
+                ),
+                'Warnings' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'Warning',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Code' => array(
+                                'type' => 'string',
+                            ),
+                            'Message' => array(
+                                'type' => 'string',
                             ),
                         ),
                     ),
