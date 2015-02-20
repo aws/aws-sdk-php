@@ -92,8 +92,8 @@ You can also use the same technique when setting credentials on an existing clie
 Using Regional Endpoints
 ------------------------
 
-Starting in version 2.7.19 of the SDK you can use [regional STS endpoints](http://docs.aws.amazon.com/general/latest/gr/rande.html#sts_region)
-that you must first [enable in the AWS Management Console](http://blogs.aws.amazon.com/security/post/Tx3CYWU11LY2GLB/AWS-Security-Token-Service-Is-Now-Available-in-Every-AWS-Region).
+Starting in version 2.7.19 of the SDK you can use `regional STS endpoints <http://docs.aws.amazon.com/general/latest/gr/rande.html#sts_region>`_
+that you must first `enable in the AWS Management Console <http://blogs.aws.amazon.com/security/post/Tx3CYWU11LY2GLB/AWS-Security-Token-Service-Is-Now-Available-in-Every-AWS-Region>`_.
 To use a regional endpoint for STS, you must set both the region and endpoint
 when you instantiate the client.
 
