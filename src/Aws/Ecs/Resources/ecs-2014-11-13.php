@@ -19,38 +19,83 @@ return array (
     'endpointPrefix' => 'ecs',
     'serviceFullName' => 'Amazon EC2 Container Service',
     'serviceAbbreviation' => 'Amazon ECS',
-    'serviceType' => 'query',
-    'resultWrapped' => true,
+    'serviceType' => 'json',
+    'jsonVersion' => '1.1',
+    'targetPrefix' => 'AmazonEC2ContainerServiceV20141113.',
     'signatureVersion' => 'v4',
     'namespace' => 'Ecs',
     'operations' => array(
         'CreateCluster' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'CreateClusterResponse',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'CreateCluster',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2014-11-13',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.CreateCluster',
                 ),
                 'clusterName' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
                     'class' => 'ServerException',
                 ),
                 array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'class' => 'ClientException',
+                ),
+            ),
+        ),
+        'DeleteCluster' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'DeleteClusterResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.DeleteCluster',
+                ),
+                'cluster' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'class' => 'ServerException',
+                ),
+                array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
             ),
@@ -58,40 +103,46 @@ return array (
         'DeregisterContainerInstance' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'DeregisterContainerInstanceResponse',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'DeregisterContainerInstance',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2014-11-13',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.DeregisterContainerInstance',
                 ),
                 'cluster' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'containerInstance' => array(
                     'required' => true,
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'force' => array(
                     'type' => 'boolean',
                     'format' => 'boolean-string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
                     'class' => 'ServerException',
                 ),
                 array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
             ),
@@ -99,31 +150,37 @@ return array (
         'DeregisterTaskDefinition' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'DeregisterTaskDefinitionResponse',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'DeregisterTaskDefinition',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2014-11-13',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.DeregisterTaskDefinition',
                 ),
                 'taskDefinition' => array(
                     'required' => true,
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
                     'class' => 'ServerException',
                 ),
                 array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
             ),
@@ -131,24 +188,27 @@ return array (
         'DescribeClusters' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'DescribeClustersResponse',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'DescribeClusters',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2014-11-13',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.DescribeClusters',
                 ),
                 'clusters' => array(
                     'type' => 'array',
-                    'location' => 'aws.query',
-                    'sentAs' => 'clusters.member',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'String',
                         'type' => 'string',
@@ -157,9 +217,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
                     'class' => 'ServerException',
                 ),
                 array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
             ),
@@ -167,29 +229,32 @@ return array (
         'DescribeContainerInstances' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'DescribeContainerInstancesResponse',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'DescribeContainerInstances',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2014-11-13',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.DescribeContainerInstances',
                 ),
                 'cluster' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'containerInstances' => array(
                     'required' => true,
                     'type' => 'array',
-                    'location' => 'aws.query',
-                    'sentAs' => 'containerInstances.member',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'String',
                         'type' => 'string',
@@ -198,9 +263,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
                     'class' => 'ServerException',
                 ),
                 array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
             ),
@@ -208,31 +275,37 @@ return array (
         'DescribeTaskDefinition' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'DescribeTaskDefinitionResponse',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'DescribeTaskDefinition',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2014-11-13',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.DescribeTaskDefinition',
                 ),
                 'taskDefinition' => array(
                     'required' => true,
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
                     'class' => 'ServerException',
                 ),
                 array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
             ),
@@ -240,29 +313,32 @@ return array (
         'DescribeTasks' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'DescribeTasksResponse',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'DescribeTasks',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2014-11-13',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.DescribeTasks',
                 ),
                 'cluster' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'tasks' => array(
                     'required' => true,
                     'type' => 'array',
-                    'location' => 'aws.query',
-                    'sentAs' => 'tasks.member',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'String',
                         'type' => 'string',
@@ -271,9 +347,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
                     'class' => 'ServerException',
                 ),
                 array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
             ),
@@ -281,30 +359,40 @@ return array (
         'DiscoverPollEndpoint' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'DiscoverPollEndpointResponse',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'DiscoverPollEndpoint',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2014-11-13',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.DiscoverPollEndpoint',
                 ),
                 'containerInstance' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
+                ),
+                'cluster' => array(
+                    'type' => 'string',
+                    'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
                     'class' => 'ServerException',
                 ),
                 array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
             ),
@@ -312,34 +400,40 @@ return array (
         'ListClusters' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'ListClustersResponse',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'ListClusters',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2014-11-13',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.ListClusters',
                 ),
                 'nextToken' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'maxResults' => array(
                     'type' => 'numeric',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
                     'class' => 'ServerException',
                 ),
                 array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
             ),
@@ -347,38 +441,89 @@ return array (
         'ListContainerInstances' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'ListContainerInstancesResponse',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'ListContainerInstances',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2014-11-13',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.ListContainerInstances',
                 ),
                 'cluster' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'nextToken' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'maxResults' => array(
                     'type' => 'numeric',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
                     'class' => 'ServerException',
                 ),
                 array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'class' => 'ClientException',
+                ),
+            ),
+        ),
+        'ListTaskDefinitionFamilies' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'ListTaskDefinitionFamiliesResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.ListTaskDefinitionFamilies',
+                ),
+                'familyPrefix' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'nextToken' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'maxResults' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'class' => 'ServerException',
+                ),
+                array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
             ),
@@ -386,38 +531,44 @@ return array (
         'ListTaskDefinitions' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'ListTaskDefinitionsResponse',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'ListTaskDefinitions',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2014-11-13',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.ListTaskDefinitions',
                 ),
                 'familyPrefix' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'nextToken' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'maxResults' => array(
                     'type' => 'numeric',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
                     'class' => 'ServerException',
                 ),
                 array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
             ),
@@ -425,46 +576,52 @@ return array (
         'ListTasks' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'ListTasksResponse',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'ListTasks',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2014-11-13',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.ListTasks',
                 ),
                 'cluster' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'containerInstance' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'family' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'nextToken' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'maxResults' => array(
                     'type' => 'numeric',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
                     'class' => 'ServerException',
                 ),
                 array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
             ),
@@ -472,36 +629,39 @@ return array (
         'RegisterContainerInstance' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'RegisterContainerInstanceResponse',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'RegisterContainerInstance',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2014-11-13',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.RegisterContainerInstance',
                 ),
                 'cluster' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'instanceIdentityDocument' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'instanceIdentityDocumentSignature' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'totalResources' => array(
                     'type' => 'array',
-                    'location' => 'aws.query',
-                    'sentAs' => 'totalResources.member',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'Resource',
                         'type' => 'object',
@@ -514,9 +674,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
                     'class' => 'ServerException',
                 ),
                 array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
             ),
@@ -524,30 +686,33 @@ return array (
         'RegisterTaskDefinition' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'RegisterTaskDefinitionResponse',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'RegisterTaskDefinition',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2014-11-13',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.RegisterTaskDefinition',
                 ),
                 'family' => array(
                     'required' => true,
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'containerDefinitions' => array(
                     'required' => true,
                     'type' => 'array',
-                    'location' => 'aws.query',
-                    'sentAs' => 'containerDefinitions.member',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'ContainerDefinition',
                         'type' => 'object',
@@ -566,7 +731,6 @@ return array (
                             ),
                             'links' => array(
                                 'type' => 'array',
-                                'sentAs' => 'links.member',
                                 'items' => array(
                                     'name' => 'String',
                                     'type' => 'string',
@@ -574,7 +738,6 @@ return array (
                             ),
                             'portMappings' => array(
                                 'type' => 'array',
-                                'sentAs' => 'portMappings.member',
                                 'items' => array(
                                     'name' => 'PortMapping',
                                     'type' => 'object',
@@ -594,7 +757,6 @@ return array (
                             ),
                             'entryPoint' => array(
                                 'type' => 'array',
-                                'sentAs' => 'entryPoint.member',
                                 'items' => array(
                                     'name' => 'String',
                                     'type' => 'string',
@@ -602,7 +764,6 @@ return array (
                             ),
                             'command' => array(
                                 'type' => 'array',
-                                'sentAs' => 'command.member',
                                 'items' => array(
                                     'name' => 'String',
                                     'type' => 'string',
@@ -610,7 +771,6 @@ return array (
                             ),
                             'environment' => array(
                                 'type' => 'array',
-                                'sentAs' => 'environment.member',
                                 'items' => array(
                                     'name' => 'KeyValuePair',
                                     'type' => 'object',
@@ -624,15 +784,73 @@ return array (
                                     ),
                                 ),
                             ),
+                            'mountPoints' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'MountPoint',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'sourceVolume' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'containerPath' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'readOnly' => array(
+                                            'type' => 'boolean',
+                                            'format' => 'boolean-string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'volumesFrom' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'VolumeFrom',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'sourceContainer' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'readOnly' => array(
+                                            'type' => 'boolean',
+                                            'format' => 'boolean-string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'volumes' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'Volume',
+                        'type' => 'object',
+                        'properties' => array(
+                            'name' => array(
+                                'type' => 'string',
+                            ),
+                            'host' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'sourcePath' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
                     'class' => 'ServerException',
                 ),
                 array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
             ),
@@ -640,36 +858,39 @@ return array (
         'RunTask' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'RunTaskResponse',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'RunTask',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2014-11-13',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.RunTask',
                 ),
                 'cluster' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'taskDefinition' => array(
                     'required' => true,
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'overrides' => array(
                     'type' => 'object',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                     'properties' => array(
                         'containerOverrides' => array(
                             'type' => 'array',
-                            'sentAs' => 'containerOverrides.member',
                             'items' => array(
                                 'name' => 'ContainerOverride',
                                 'type' => 'object',
@@ -679,7 +900,6 @@ return array (
                                     ),
                                     'command' => array(
                                         'type' => 'array',
-                                        'sentAs' => 'command.member',
                                         'items' => array(
                                             'name' => 'String',
                                             'type' => 'string',
@@ -692,14 +912,16 @@ return array (
                 ),
                 'count' => array(
                     'type' => 'numeric',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
                     'class' => 'ServerException',
                 ),
                 array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
             ),
@@ -707,36 +929,39 @@ return array (
         'StartTask' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'StartTaskResponse',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'StartTask',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2014-11-13',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.StartTask',
                 ),
                 'cluster' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'taskDefinition' => array(
                     'required' => true,
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'overrides' => array(
                     'type' => 'object',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                     'properties' => array(
                         'containerOverrides' => array(
                             'type' => 'array',
-                            'sentAs' => 'containerOverrides.member',
                             'items' => array(
                                 'name' => 'ContainerOverride',
                                 'type' => 'object',
@@ -746,7 +971,6 @@ return array (
                                     ),
                                     'command' => array(
                                         'type' => 'array',
-                                        'sentAs' => 'command.member',
                                         'items' => array(
                                             'name' => 'String',
                                             'type' => 'string',
@@ -760,8 +984,7 @@ return array (
                 'containerInstances' => array(
                     'required' => true,
                     'type' => 'array',
-                    'location' => 'aws.query',
-                    'sentAs' => 'containerInstances.member',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'String',
                         'type' => 'string',
@@ -770,9 +993,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
                     'class' => 'ServerException',
                 ),
                 array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
             ),
@@ -780,35 +1005,41 @@ return array (
         'StopTask' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'StopTaskResponse',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'StopTask',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2014-11-13',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.StopTask',
                 ),
                 'cluster' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'task' => array(
                     'required' => true,
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
                     'class' => 'ServerException',
                 ),
                 array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
             ),
@@ -816,48 +1047,51 @@ return array (
         'SubmitContainerStateChange' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'SubmitContainerStateChangeResponse',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'SubmitContainerStateChange',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2014-11-13',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.SubmitContainerStateChange',
                 ),
                 'cluster' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'task' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'containerName' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'status' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'exitCode' => array(
                     'type' => 'numeric',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'reason' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'networkBindings' => array(
                     'type' => 'array',
-                    'location' => 'aws.query',
-                    'sentAs' => 'networkBindings.member',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'NetworkBinding',
                         'type' => 'object',
@@ -877,9 +1111,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
                     'class' => 'ServerException',
                 ),
                 array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
             ),
@@ -887,42 +1123,48 @@ return array (
         'SubmitTaskStateChange' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'SubmitTaskStateChangeResponse',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'SubmitTaskStateChange',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2014-11-13',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.SubmitTaskStateChange',
                 ),
                 'cluster' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'task' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'status' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'reason' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
                     'class' => 'ServerException',
                 ),
                 array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
             ),
@@ -935,7 +1177,28 @@ return array (
             'properties' => array(
                 'cluster' => array(
                     'type' => 'object',
-                    'location' => 'xml',
+                    'location' => 'json',
+                    'properties' => array(
+                        'clusterArn' => array(
+                            'type' => 'string',
+                        ),
+                        'clusterName' => array(
+                            'type' => 'string',
+                        ),
+                        'status' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'DeleteClusterResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'cluster' => array(
+                    'type' => 'object',
+                    'location' => 'json',
                     'properties' => array(
                         'clusterArn' => array(
                             'type' => 'string',
@@ -956,7 +1219,7 @@ return array (
             'properties' => array(
                 'containerInstance' => array(
                     'type' => 'object',
-                    'location' => 'xml',
+                    'location' => 'json',
                     'properties' => array(
                         'containerInstanceArn' => array(
                             'type' => 'string',
@@ -969,7 +1232,6 @@ return array (
                             'items' => array(
                                 'name' => 'Resource',
                                 'type' => 'object',
-                                'sentAs' => 'member',
                                 'properties' => array(
                                     '' => array(
                                     ),
@@ -981,7 +1243,6 @@ return array (
                             'items' => array(
                                 'name' => 'Resource',
                                 'type' => 'object',
-                                'sentAs' => 'member',
                                 'properties' => array(
                                     '' => array(
                                     ),
@@ -1004,7 +1265,7 @@ return array (
             'properties' => array(
                 'taskDefinition' => array(
                     'type' => 'object',
-                    'location' => 'xml',
+                    'location' => 'json',
                     'properties' => array(
                         'taskDefinitionArn' => array(
                             'type' => 'string',
@@ -1014,7 +1275,6 @@ return array (
                             'items' => array(
                                 'name' => 'ContainerDefinition',
                                 'type' => 'object',
-                                'sentAs' => 'member',
                                 'properties' => array(
                                     'name' => array(
                                         'type' => 'string',
@@ -1033,7 +1293,6 @@ return array (
                                         'items' => array(
                                             'name' => 'String',
                                             'type' => 'string',
-                                            'sentAs' => 'member',
                                         ),
                                     ),
                                     'portMappings' => array(
@@ -1041,7 +1300,6 @@ return array (
                                         'items' => array(
                                             'name' => 'PortMapping',
                                             'type' => 'object',
-                                            'sentAs' => 'member',
                                             'properties' => array(
                                                 'containerPort' => array(
                                                     'type' => 'numeric',
@@ -1060,7 +1318,6 @@ return array (
                                         'items' => array(
                                             'name' => 'String',
                                             'type' => 'string',
-                                            'sentAs' => 'member',
                                         ),
                                     ),
                                     'command' => array(
@@ -1068,7 +1325,6 @@ return array (
                                         'items' => array(
                                             'name' => 'String',
                                             'type' => 'string',
-                                            'sentAs' => 'member',
                                         ),
                                     ),
                                     'environment' => array(
@@ -1076,13 +1332,45 @@ return array (
                                         'items' => array(
                                             'name' => 'KeyValuePair',
                                             'type' => 'object',
-                                            'sentAs' => 'member',
                                             'properties' => array(
                                                 'name' => array(
                                                     'type' => 'string',
                                                 ),
                                                 'value' => array(
                                                     'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'mountPoints' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'MountPoint',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'sourceVolume' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'containerPath' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'readOnly' => array(
+                                                    'type' => 'boolean',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'volumesFrom' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'VolumeFrom',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'sourceContainer' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'readOnly' => array(
+                                                    'type' => 'boolean',
                                                 ),
                                             ),
                                         ),
@@ -1096,6 +1384,26 @@ return array (
                         'revision' => array(
                             'type' => 'numeric',
                         ),
+                        'volumes' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Volume',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'name' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'host' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'sourcePath' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -1106,11 +1414,10 @@ return array (
             'properties' => array(
                 'clusters' => array(
                     'type' => 'array',
-                    'location' => 'xml',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'Cluster',
                         'type' => 'object',
-                        'sentAs' => 'member',
                         'properties' => array(
                             'clusterArn' => array(
                                 'type' => 'string',
@@ -1126,11 +1433,10 @@ return array (
                 ),
                 'failures' => array(
                     'type' => 'array',
-                    'location' => 'xml',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'Failure',
                         'type' => 'object',
-                        'sentAs' => 'member',
                         'properties' => array(
                             'arn' => array(
                                 'type' => 'string',
@@ -1149,11 +1455,10 @@ return array (
             'properties' => array(
                 'containerInstances' => array(
                     'type' => 'array',
-                    'location' => 'xml',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'ContainerInstance',
                         'type' => 'object',
-                        'sentAs' => 'member',
                         'properties' => array(
                             'containerInstanceArn' => array(
                                 'type' => 'string',
@@ -1166,7 +1471,6 @@ return array (
                                 'items' => array(
                                     'name' => 'Resource',
                                     'type' => 'object',
-                                    'sentAs' => 'member',
                                     'properties' => array(
                                         '' => array(
                                         ),
@@ -1178,7 +1482,6 @@ return array (
                                 'items' => array(
                                     'name' => 'Resource',
                                     'type' => 'object',
-                                    'sentAs' => 'member',
                                     'properties' => array(
                                         '' => array(
                                         ),
@@ -1196,11 +1499,10 @@ return array (
                 ),
                 'failures' => array(
                     'type' => 'array',
-                    'location' => 'xml',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'Failure',
                         'type' => 'object',
-                        'sentAs' => 'member',
                         'properties' => array(
                             'arn' => array(
                                 'type' => 'string',
@@ -1219,7 +1521,7 @@ return array (
             'properties' => array(
                 'taskDefinition' => array(
                     'type' => 'object',
-                    'location' => 'xml',
+                    'location' => 'json',
                     'properties' => array(
                         'taskDefinitionArn' => array(
                             'type' => 'string',
@@ -1229,7 +1531,6 @@ return array (
                             'items' => array(
                                 'name' => 'ContainerDefinition',
                                 'type' => 'object',
-                                'sentAs' => 'member',
                                 'properties' => array(
                                     'name' => array(
                                         'type' => 'string',
@@ -1248,7 +1549,6 @@ return array (
                                         'items' => array(
                                             'name' => 'String',
                                             'type' => 'string',
-                                            'sentAs' => 'member',
                                         ),
                                     ),
                                     'portMappings' => array(
@@ -1256,7 +1556,6 @@ return array (
                                         'items' => array(
                                             'name' => 'PortMapping',
                                             'type' => 'object',
-                                            'sentAs' => 'member',
                                             'properties' => array(
                                                 'containerPort' => array(
                                                     'type' => 'numeric',
@@ -1275,7 +1574,6 @@ return array (
                                         'items' => array(
                                             'name' => 'String',
                                             'type' => 'string',
-                                            'sentAs' => 'member',
                                         ),
                                     ),
                                     'command' => array(
@@ -1283,7 +1581,6 @@ return array (
                                         'items' => array(
                                             'name' => 'String',
                                             'type' => 'string',
-                                            'sentAs' => 'member',
                                         ),
                                     ),
                                     'environment' => array(
@@ -1291,13 +1588,45 @@ return array (
                                         'items' => array(
                                             'name' => 'KeyValuePair',
                                             'type' => 'object',
-                                            'sentAs' => 'member',
                                             'properties' => array(
                                                 'name' => array(
                                                     'type' => 'string',
                                                 ),
                                                 'value' => array(
                                                     'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'mountPoints' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'MountPoint',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'sourceVolume' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'containerPath' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'readOnly' => array(
+                                                    'type' => 'boolean',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'volumesFrom' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'VolumeFrom',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'sourceContainer' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'readOnly' => array(
+                                                    'type' => 'boolean',
                                                 ),
                                             ),
                                         ),
@@ -1311,6 +1640,26 @@ return array (
                         'revision' => array(
                             'type' => 'numeric',
                         ),
+                        'volumes' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Volume',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'name' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'host' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'sourcePath' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -1321,11 +1670,10 @@ return array (
             'properties' => array(
                 'tasks' => array(
                     'type' => 'array',
-                    'location' => 'xml',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'Task',
                         'type' => 'object',
-                        'sentAs' => 'member',
                         'properties' => array(
                             'taskArn' => array(
                                 'type' => 'string',
@@ -1347,7 +1695,6 @@ return array (
                                         'items' => array(
                                             'name' => 'ContainerOverride',
                                             'type' => 'object',
-                                            'sentAs' => 'member',
                                             'properties' => array(
                                                 'name' => array(
                                                     'type' => 'string',
@@ -1357,7 +1704,6 @@ return array (
                                                     'items' => array(
                                                         'name' => 'String',
                                                         'type' => 'string',
-                                                        'sentAs' => 'member',
                                                     ),
                                                 ),
                                             ),
@@ -1376,7 +1722,6 @@ return array (
                                 'items' => array(
                                     'name' => 'Container',
                                     'type' => 'object',
-                                    'sentAs' => 'member',
                                     'properties' => array(
                                         'containerArn' => array(
                                             'type' => 'string',
@@ -1401,7 +1746,6 @@ return array (
                                             'items' => array(
                                                 'name' => 'NetworkBinding',
                                                 'type' => 'object',
-                                                'sentAs' => 'member',
                                                 'properties' => array(
                                                     'bindIP' => array(
                                                         'type' => 'string',
@@ -1423,11 +1767,10 @@ return array (
                 ),
                 'failures' => array(
                     'type' => 'array',
-                    'location' => 'xml',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'Failure',
                         'type' => 'object',
-                        'sentAs' => 'member',
                         'properties' => array(
                             'arn' => array(
                                 'type' => 'string',
@@ -1446,7 +1789,7 @@ return array (
             'properties' => array(
                 'endpoint' => array(
                     'type' => 'string',
-                    'location' => 'xml',
+                    'location' => 'json',
                 ),
             ),
         ),
@@ -1456,16 +1799,15 @@ return array (
             'properties' => array(
                 'clusterArns' => array(
                     'type' => 'array',
-                    'location' => 'xml',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'String',
                         'type' => 'string',
-                        'sentAs' => 'member',
                     ),
                 ),
                 'nextToken' => array(
                     'type' => 'string',
-                    'location' => 'xml',
+                    'location' => 'json',
                 ),
             ),
         ),
@@ -1475,16 +1817,33 @@ return array (
             'properties' => array(
                 'containerInstanceArns' => array(
                     'type' => 'array',
-                    'location' => 'xml',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'String',
                         'type' => 'string',
-                        'sentAs' => 'member',
                     ),
                 ),
                 'nextToken' => array(
                     'type' => 'string',
-                    'location' => 'xml',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'ListTaskDefinitionFamiliesResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'families' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'String',
+                        'type' => 'string',
+                    ),
+                ),
+                'nextToken' => array(
+                    'type' => 'string',
+                    'location' => 'json',
                 ),
             ),
         ),
@@ -1494,16 +1853,15 @@ return array (
             'properties' => array(
                 'taskDefinitionArns' => array(
                     'type' => 'array',
-                    'location' => 'xml',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'String',
                         'type' => 'string',
-                        'sentAs' => 'member',
                     ),
                 ),
                 'nextToken' => array(
                     'type' => 'string',
-                    'location' => 'xml',
+                    'location' => 'json',
                 ),
             ),
         ),
@@ -1513,16 +1871,15 @@ return array (
             'properties' => array(
                 'taskArns' => array(
                     'type' => 'array',
-                    'location' => 'xml',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'String',
                         'type' => 'string',
-                        'sentAs' => 'member',
                     ),
                 ),
                 'nextToken' => array(
                     'type' => 'string',
-                    'location' => 'xml',
+                    'location' => 'json',
                 ),
             ),
         ),
@@ -1532,7 +1889,7 @@ return array (
             'properties' => array(
                 'containerInstance' => array(
                     'type' => 'object',
-                    'location' => 'xml',
+                    'location' => 'json',
                     'properties' => array(
                         'containerInstanceArn' => array(
                             'type' => 'string',
@@ -1545,7 +1902,6 @@ return array (
                             'items' => array(
                                 'name' => 'Resource',
                                 'type' => 'object',
-                                'sentAs' => 'member',
                                 'properties' => array(
                                     '' => array(
                                     ),
@@ -1557,7 +1913,6 @@ return array (
                             'items' => array(
                                 'name' => 'Resource',
                                 'type' => 'object',
-                                'sentAs' => 'member',
                                 'properties' => array(
                                     '' => array(
                                     ),
@@ -1580,7 +1935,7 @@ return array (
             'properties' => array(
                 'taskDefinition' => array(
                     'type' => 'object',
-                    'location' => 'xml',
+                    'location' => 'json',
                     'properties' => array(
                         'taskDefinitionArn' => array(
                             'type' => 'string',
@@ -1590,7 +1945,6 @@ return array (
                             'items' => array(
                                 'name' => 'ContainerDefinition',
                                 'type' => 'object',
-                                'sentAs' => 'member',
                                 'properties' => array(
                                     'name' => array(
                                         'type' => 'string',
@@ -1609,7 +1963,6 @@ return array (
                                         'items' => array(
                                             'name' => 'String',
                                             'type' => 'string',
-                                            'sentAs' => 'member',
                                         ),
                                     ),
                                     'portMappings' => array(
@@ -1617,7 +1970,6 @@ return array (
                                         'items' => array(
                                             'name' => 'PortMapping',
                                             'type' => 'object',
-                                            'sentAs' => 'member',
                                             'properties' => array(
                                                 'containerPort' => array(
                                                     'type' => 'numeric',
@@ -1636,7 +1988,6 @@ return array (
                                         'items' => array(
                                             'name' => 'String',
                                             'type' => 'string',
-                                            'sentAs' => 'member',
                                         ),
                                     ),
                                     'command' => array(
@@ -1644,7 +1995,6 @@ return array (
                                         'items' => array(
                                             'name' => 'String',
                                             'type' => 'string',
-                                            'sentAs' => 'member',
                                         ),
                                     ),
                                     'environment' => array(
@@ -1652,13 +2002,45 @@ return array (
                                         'items' => array(
                                             'name' => 'KeyValuePair',
                                             'type' => 'object',
-                                            'sentAs' => 'member',
                                             'properties' => array(
                                                 'name' => array(
                                                     'type' => 'string',
                                                 ),
                                                 'value' => array(
                                                     'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'mountPoints' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'MountPoint',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'sourceVolume' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'containerPath' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'readOnly' => array(
+                                                    'type' => 'boolean',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'volumesFrom' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'VolumeFrom',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'sourceContainer' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'readOnly' => array(
+                                                    'type' => 'boolean',
                                                 ),
                                             ),
                                         ),
@@ -1672,108 +2054,20 @@ return array (
                         'revision' => array(
                             'type' => 'numeric',
                         ),
-                    ),
-                ),
-            ),
-        ),
-        'RunTaskResponse' => array(
-            'type' => 'object',
-            'additionalProperties' => true,
-            'properties' => array(
-                'tasks' => array(
-                    'type' => 'array',
-                    'location' => 'xml',
-                    'items' => array(
-                        'name' => 'Task',
-                        'type' => 'object',
-                        'sentAs' => 'member',
-                        'properties' => array(
-                            'taskArn' => array(
-                                'type' => 'string',
-                            ),
-                            'clusterArn' => array(
-                                'type' => 'string',
-                            ),
-                            'taskDefinitionArn' => array(
-                                'type' => 'string',
-                            ),
-                            'containerInstanceArn' => array(
-                                'type' => 'string',
-                            ),
-                            'overrides' => array(
+                        'volumes' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Volume',
                                 'type' => 'object',
                                 'properties' => array(
-                                    'containerOverrides' => array(
-                                        'type' => 'array',
-                                        'items' => array(
-                                            'name' => 'ContainerOverride',
-                                            'type' => 'object',
-                                            'sentAs' => 'member',
-                                            'properties' => array(
-                                                'name' => array(
-                                                    'type' => 'string',
-                                                ),
-                                                'command' => array(
-                                                    'type' => 'array',
-                                                    'items' => array(
-                                                        'name' => 'String',
-                                                        'type' => 'string',
-                                                        'sentAs' => 'member',
-                                                    ),
-                                                ),
-                                            ),
-                                        ),
+                                    'name' => array(
+                                        'type' => 'string',
                                     ),
-                                ),
-                            ),
-                            'lastStatus' => array(
-                                'type' => 'string',
-                            ),
-                            'desiredStatus' => array(
-                                'type' => 'string',
-                            ),
-                            'containers' => array(
-                                'type' => 'array',
-                                'items' => array(
-                                    'name' => 'Container',
-                                    'type' => 'object',
-                                    'sentAs' => 'member',
-                                    'properties' => array(
-                                        'containerArn' => array(
-                                            'type' => 'string',
-                                        ),
-                                        'taskArn' => array(
-                                            'type' => 'string',
-                                        ),
-                                        'name' => array(
-                                            'type' => 'string',
-                                        ),
-                                        'lastStatus' => array(
-                                            'type' => 'string',
-                                        ),
-                                        'exitCode' => array(
-                                            'type' => 'numeric',
-                                        ),
-                                        'reason' => array(
-                                            'type' => 'string',
-                                        ),
-                                        'networkBindings' => array(
-                                            'type' => 'array',
-                                            'items' => array(
-                                                'name' => 'NetworkBinding',
-                                                'type' => 'object',
-                                                'sentAs' => 'member',
-                                                'properties' => array(
-                                                    'bindIP' => array(
-                                                        'type' => 'string',
-                                                    ),
-                                                    'containerPort' => array(
-                                                        'type' => 'numeric',
-                                                    ),
-                                                    'hostPort' => array(
-                                                        'type' => 'numeric',
-                                                    ),
-                                                ),
+                                    'host' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'sourcePath' => array(
+                                                'type' => 'string',
                                             ),
                                         ),
                                     ),
@@ -1784,17 +2078,16 @@ return array (
                 ),
             ),
         ),
-        'StartTaskResponse' => array(
+        'RunTaskResponse' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
                 'tasks' => array(
                     'type' => 'array',
-                    'location' => 'xml',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'Task',
                         'type' => 'object',
-                        'sentAs' => 'member',
                         'properties' => array(
                             'taskArn' => array(
                                 'type' => 'string',
@@ -1816,7 +2109,6 @@ return array (
                                         'items' => array(
                                             'name' => 'ContainerOverride',
                                             'type' => 'object',
-                                            'sentAs' => 'member',
                                             'properties' => array(
                                                 'name' => array(
                                                     'type' => 'string',
@@ -1826,7 +2118,6 @@ return array (
                                                     'items' => array(
                                                         'name' => 'String',
                                                         'type' => 'string',
-                                                        'sentAs' => 'member',
                                                     ),
                                                 ),
                                             ),
@@ -1845,7 +2136,6 @@ return array (
                                 'items' => array(
                                     'name' => 'Container',
                                     'type' => 'object',
-                                    'sentAs' => 'member',
                                     'properties' => array(
                                         'containerArn' => array(
                                             'type' => 'string',
@@ -1870,7 +2160,6 @@ return array (
                                             'items' => array(
                                                 'name' => 'NetworkBinding',
                                                 'type' => 'object',
-                                                'sentAs' => 'member',
                                                 'properties' => array(
                                                     'bindIP' => array(
                                                         'type' => 'string',
@@ -1892,11 +2181,129 @@ return array (
                 ),
                 'failures' => array(
                     'type' => 'array',
-                    'location' => 'xml',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'Failure',
                         'type' => 'object',
-                        'sentAs' => 'member',
+                        'properties' => array(
+                            'arn' => array(
+                                'type' => 'string',
+                            ),
+                            'reason' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'StartTaskResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'tasks' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'Task',
+                        'type' => 'object',
+                        'properties' => array(
+                            'taskArn' => array(
+                                'type' => 'string',
+                            ),
+                            'clusterArn' => array(
+                                'type' => 'string',
+                            ),
+                            'taskDefinitionArn' => array(
+                                'type' => 'string',
+                            ),
+                            'containerInstanceArn' => array(
+                                'type' => 'string',
+                            ),
+                            'overrides' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'containerOverrides' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'ContainerOverride',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'name' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'command' => array(
+                                                    'type' => 'array',
+                                                    'items' => array(
+                                                        'name' => 'String',
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'lastStatus' => array(
+                                'type' => 'string',
+                            ),
+                            'desiredStatus' => array(
+                                'type' => 'string',
+                            ),
+                            'containers' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'Container',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'containerArn' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'taskArn' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'name' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'lastStatus' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'exitCode' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                        'reason' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'networkBindings' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'NetworkBinding',
+                                                'type' => 'object',
+                                                'properties' => array(
+                                                    'bindIP' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'containerPort' => array(
+                                                        'type' => 'numeric',
+                                                    ),
+                                                    'hostPort' => array(
+                                                        'type' => 'numeric',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'failures' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'Failure',
+                        'type' => 'object',
                         'properties' => array(
                             'arn' => array(
                                 'type' => 'string',
@@ -1915,7 +2322,7 @@ return array (
             'properties' => array(
                 'task' => array(
                     'type' => 'object',
-                    'location' => 'xml',
+                    'location' => 'json',
                     'properties' => array(
                         'taskArn' => array(
                             'type' => 'string',
@@ -1937,7 +2344,6 @@ return array (
                                     'items' => array(
                                         'name' => 'ContainerOverride',
                                         'type' => 'object',
-                                        'sentAs' => 'member',
                                         'properties' => array(
                                             'name' => array(
                                                 'type' => 'string',
@@ -1947,7 +2353,6 @@ return array (
                                                 'items' => array(
                                                     'name' => 'String',
                                                     'type' => 'string',
-                                                    'sentAs' => 'member',
                                                 ),
                                             ),
                                         ),
@@ -1966,7 +2371,6 @@ return array (
                             'items' => array(
                                 'name' => 'Container',
                                 'type' => 'object',
-                                'sentAs' => 'member',
                                 'properties' => array(
                                     'containerArn' => array(
                                         'type' => 'string',
@@ -1991,7 +2395,6 @@ return array (
                                         'items' => array(
                                             'name' => 'NetworkBinding',
                                             'type' => 'object',
-                                            'sentAs' => 'member',
                                             'properties' => array(
                                                 'bindIP' => array(
                                                     'type' => 'string',
@@ -2018,7 +2421,7 @@ return array (
             'properties' => array(
                 'acknowledgment' => array(
                     'type' => 'string',
-                    'location' => 'xml',
+                    'location' => 'json',
                 ),
             ),
         ),
@@ -2028,7 +2431,7 @@ return array (
             'properties' => array(
                 'acknowledgment' => array(
                     'type' => 'string',
-                    'location' => 'xml',
+                    'location' => 'json',
                 ),
             ),
         ),

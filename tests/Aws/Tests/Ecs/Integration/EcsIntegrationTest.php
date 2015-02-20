@@ -18,6 +18,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
     /**
      * @expectedException \Aws\Ecs\Exception\EcsException
+     * @expectedExceptionMessage Cluster not found
      */
     public function testParsesErrors()
     {

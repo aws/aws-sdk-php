@@ -19,6 +19,7 @@ namespace Aws\Ecs;
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
+use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
 
@@ -26,6 +27,7 @@ use Guzzle\Service\Resource\Model;
  * Client to interact with Amazon EC2 Container Service
  *
  * @method Model createCluster(array $args = array()) {@command Ecs CreateCluster}
+ * @method Model deleteCluster(array $args = array()) {@command Ecs DeleteCluster}
  * @method Model deregisterContainerInstance(array $args = array()) {@command Ecs DeregisterContainerInstance}
  * @method Model deregisterTaskDefinition(array $args = array()) {@command Ecs DeregisterTaskDefinition}
  * @method Model describeClusters(array $args = array()) {@command Ecs DescribeClusters}
@@ -35,6 +37,7 @@ use Guzzle\Service\Resource\Model;
  * @method Model discoverPollEndpoint(array $args = array()) {@command Ecs DiscoverPollEndpoint}
  * @method Model listClusters(array $args = array()) {@command Ecs ListClusters}
  * @method Model listContainerInstances(array $args = array()) {@command Ecs ListContainerInstances}
+ * @method Model listTaskDefinitionFamilies(array $args = array()) {@command Ecs ListTaskDefinitionFamilies}
  * @method Model listTaskDefinitions(array $args = array()) {@command Ecs ListTaskDefinitions}
  * @method Model listTasks(array $args = array()) {@command Ecs ListTasks}
  * @method Model registerContainerInstance(array $args = array()) {@command Ecs RegisterContainerInstance}
@@ -70,6 +73,7 @@ class EcsClient extends AbstractClient
                 Options::VERSION             => self::LATEST_API_VERSION,
                 Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/ecs-%s.php'
             ))
+            ->setExceptionParser(new JsonQueryExceptionParser())
             ->build();
     }
 }
