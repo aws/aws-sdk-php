@@ -5,20 +5,15 @@ use Aws\Exception\AwsException;
 use Aws\Api\Service;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Signature\SignatureProvider;
-use GuzzleHttp\Client;
-use GuzzleHttp\Command\AbstractClient;
-use GuzzleHttp\Command\Command;
-use GuzzleHttp\Command\CommandInterface;
-use GuzzleHttp\Command\CommandTransaction;
-use GuzzleHttp\Event\BeforeEvent;
-use GuzzleHttp\Event\RequestEvents;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Command\Event\ProcessEvent;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\Message\Response;
+use GuzzleHttp\Uri;
+use GuzzleHttp\HandlerStack;
 
 /**
  * Default AWS client implementation
  */
-class AwsClient extends AbstractClient implements AwsClientInterface
+class AwsClient implements AwsClientInterface
 {
     /** @var CredentialsInterface AWS credentials */
     private $credentials;
@@ -36,16 +31,13 @@ class AwsClient extends AbstractClient implements AwsClientInterface
     private $commandException = 'Aws\Exception\AwsException';
 
     /** @var callable */
-    private $errorParser;
-
-    /** @var callable */
-    private $serializer;
-
-    /** @var callable */
     private $signatureProvider;
 
-    /** @var callable */
-    private $defaultSignatureListener;
+    /** @var HandlerStack */
+    private $handlerStack;
+
+    /** @var array*/
+    private $defaultRequestOptions;
 
     /**
      * Get an array of client constructor arguments used by the client.
@@ -135,26 +127,26 @@ class AwsClient extends AbstractClient implements AwsClientInterface
             $args['service'] = $service;
         }
 
+        $this->handlerStack = new HandlerStack();
         $resolver = new ClientResolver(static::getArguments());
-        $config = $resolver->resolve($args, $this->getEmitter());
+        $config = $resolver->resolve($args, $this->handlerStack);
         $this->api = $config['api'];
-        $this->serializer = $config['serializer'];
-        $this->errorParser = $config['error_parser'];
         $this->signatureProvider = $config['signature_provider'];
-        $this->endpoint = $config['endpoint'];
+        $this->endpoint = new Uri($config['endpoint']);
         $this->credentials = $config['credentials'];
         $this->region = isset($config['region']) ? $config['region'] : null;
-        $this->applyParser();
-        $this->initSigners($config['config']['signature_version']);
-        parent::__construct($config['client'], $config['config']);
+        $this->httpClient = $config['client'];
+        $this->config = $config['config'];
+        $this->defaultRequestOptions = $config['http'];
 
         // Make sure the user agent is prefixed by the SDK version.
-        $client = $this->getHttpClient();
-        $client->setDefaultOption('allow_redirects', false);
-        $client->setDefaultOption(
+        $this->httpClient->setDefaultOption('allow_redirects', false);
+        $this->httpClient->setDefaultOption(
             'headers/User-Agent',
-            'aws-sdk-php/' . Sdk::VERSION . ' ' . Client::getDefaultUserAgent()
+            'aws-sdk-php/' . Sdk::VERSION . ' ' . \GuzzleHttp\default_user_agent()
         );
+
+        $this->addSignatureMiddleware();
 
         if (isset($args['with_resolved'])) {
             /** @var callable $withResolved */
@@ -162,13 +154,27 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         }
     }
 
-    /**
-     * @deprecated
-     * @return static
-     */
-    public static function factory(array $config = [])
+    public function getHandlerStack()
     {
-        return new static($config);
+        return $this->handlerStack;
+    }
+
+    public function __call($name, array $args)
+    {
+        $cmd = $this->getCommand($name, isset($args[0]) ? $args[0] : []);
+        return $this->execute($cmd);
+    }
+
+    public function getConfig($keyOrPath = null)
+    {
+        return $keyOrPath === null
+            ? $this->config
+            : \GuzzleHttp\get_path($this->config, $keyOrPath);
+    }
+
+    public function executeAll($commands, array $options = [])
+    {
+
     }
 
     public function getCredentials()
@@ -196,27 +202,15 @@ class AwsClient extends AbstractClient implements AwsClientInterface
      *
      * @param CommandInterface $command Command to execute
      *
-     * @return mixed Returns the result of the command
+     * @return ResultInterface
      * @throws AwsException when an error occurs during transfer
      */
     public function execute(CommandInterface $command)
     {
-        try {
-            return parent::execute($command);
-        } catch (AwsException $e) {
-            throw $e;
-        } catch (\Exception $e) {
-            // Wrap other uncaught exceptions for consistency
-            $exceptionClass = $this->commandException;
-            throw new $exceptionClass(
-                sprintf('Uncaught exception while executing %s::%s - %s',
-                    get_class($this),
-                    $command->getName(),
-                    $e->getMessage()),
-                new CommandTransaction($this, $command),
-                $e
-            );
-        }
+        $handler = $command->getHandlerStack()->resolve();
+        $promise = $handler($command);
+
+        return empty($command['@future']) ? $promise->wait() : $promise;
     }
 
     public function getCommand($name, array $args = [])
@@ -229,17 +223,14 @@ class AwsClient extends AbstractClient implements AwsClientInterface
             }
         }
 
-        if (isset($args['@future'])) {
-            $future = $args['@future'];
-            unset($args['@future']);
+        if (!isset($args['@http'])) {
+            $http = $this->defaultRequestOptions;
         } else {
-            $future = false;
+            $http = $args['@http'] + $this->defaultRequestOptions;
+            unset($args['@http']);
         }
 
-        return new Command($name, $args, [
-            'emitter' => clone $this->getEmitter(),
-            'future' => $future
-        ]);
+        return new Command($name, $args, $http, clone $this->getHandlerStack());
     }
 
     public function getIterator($name, array $args = [])
@@ -272,96 +263,47 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         return new ResultPaginator($this, $name, $args, $config);
     }
 
-    public function waitUntil($name, array $args = [], array $config = [])
+    public function getWaiter($name, array $args = [], array $config = [])
     {
         // Create the waiter. If async, then waiting begins immediately.
         $config += $this->api->getWaiterConfig($name);
-        $waiter = new Waiter($this, $name, $args, $config);
+        return new Waiter($this, $name, $args, $config);
+    }
 
-        // If async, return the future, for access to then()/wait()/cancel().
-        if (!empty($args['@future'])) {
-            return $waiter;
-        }
+    public function waitUntil($name, array $args = [], array $config = [])
+    {
+        $this->getWaiter($name, $args, $config)->wait();
+    }
 
-        // For synchronous waiting, call wait() and don't return anything.
-        $waiter->wait();
+    public function serialize(CommandInterface $command)
+    {
+        $request = null;
+        // Return a mock response.
+        $command->setRequestOption(
+            'handler',
+            new MockHandler(function ($req) use (&$request) {
+                $request = $req;
+                return new Response();
+            })
+        );
+        $command['@future'] = true;
+        $this->execute($command)->wait();
+
+        return $request;
     }
 
     /**
-     * Creates AWS specific exceptions.
-     *
-     * {@inheritdoc}
+     * Wraps an exception in an AWS specific exception.
      *
      * @return AwsException
      */
-    public function createCommandException(CommandTransaction $transaction)
+    protected function createException(\Exception $e)
     {
-        // Throw AWS exceptions as-is
-        if ($transaction->exception instanceof AwsException) {
-            return $transaction->exception;
+        if ($e instanceof AwsException) {
+            return $e;
         }
 
-        // Set default values (e.g., for non-RequestException)
-        $url = null;
-        $transaction->context['aws_error'] = [];
-        $serviceError = $transaction->exception->getMessage();
-
-        if ($transaction->exception instanceof RequestException) {
-            $url = $transaction->exception->getRequest()->getUrl();
-            if ($response = $transaction->exception->getResponse()) {
-                $parser = $this->errorParser;
-                // Add the parsed response error to the exception.
-                $transaction->context['aws_error'] = $parser($response);
-                // Only use the AWS error code if the parser could parse response.
-                if (!$transaction->context->getPath('aws_error/type')) {
-                    $serviceError = $transaction->exception->getMessage();
-                } else {
-                    // Create an easy to read error message.
-                    $serviceError = trim($transaction->context->getPath('aws_error/code')
-                        . ' (' . $transaction->context->getPath('aws_error/type')
-                        . ' error): ' . $transaction->context->getPath('aws_error/message'));
-                }
-            }
-        }
-
-        $exceptionClass = $this->commandException;
-        return new $exceptionClass(
-            sprintf('Error executing %s::%s() on "%s"; %s',
-                get_class($this),
-                lcfirst($transaction->command->getName()),
-                $url,
-                $serviceError),
-            $transaction,
-            $transaction->exception
-        );
-    }
-
-    final protected function createFutureResult(CommandTransaction $transaction)
-    {
-        return new FutureResult(
-            $transaction->response->then(function () use ($transaction) {
-                return $transaction->result;
-            }),
-            [$transaction->response, 'wait'],
-            [$transaction->response, 'cancel']
-        );
-    }
-
-    final protected function serializeRequest(CommandTransaction $trans)
-    {
-        $fn = $this->serializer;
-        $request = $fn($trans);
-
-        // Note: We can later update this to allow custom per/operation
-        // signers, by checking the corresponding operation for a
-        // signatureVersion override and attaching a different listener.
-        $request->getEmitter()->on(
-            'before',
-            $this->defaultSignatureListener,
-            RequestEvents::SIGN_REQUEST
-        );
-
-        return $request;
+        die("not implemented");
     }
 
     /**
@@ -374,23 +316,12 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         return $this->signatureProvider;
     }
 
-    private function initSigners($defaultVersion)
-    {
-        $credentials = $this->credentials;
-        $defaultSigner = SignatureProvider::resolve(
-            $this->signatureProvider,
-            $defaultVersion,
-            $this->api->getSigningName(),
-            $this->region
-        );
-        $this->defaultSignatureListener = static function (BeforeEvent $e) use (
-            $credentials,
-            $defaultSigner
-        ) {
-            $defaultSigner->signRequest($e->getRequest(), $credentials);
-        };
-    }
-
+    /**
+     * Parse the class name and setup the custom exception class of the client
+     * and return the "service" name of the client.
+     *
+     * @return string
+     */
     private function parseClass()
     {
         $klass = get_class($this);
@@ -405,25 +336,29 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         return strtolower($service);
     }
 
-    private function applyParser()
+    private function addSignatureMiddleware()
     {
-        $parser = Service::createParser($this->api);
-        $this->getEmitter()->on(
-            'process',
-            static function (ProcessEvent $e) use ($parser) {
-                // Guard against exceptions and injected results.
-                if ($e->getException() || $e->getResult()) {
-                    return;
-                }
-
-                // Ensure a response exists in order to parse.
-                $response = $e->getResponse();
-                if (!$response) {
-                    throw new \RuntimeException('No response was received.');
-                }
-
-                $e->setResult($parser($e->getCommand(), $response));
-            }
+        // Sign requests. This may need to be modified later to support
+        // variable signatures per/operation.
+        $this->handlerStack->push(
+            Middleware::signer(
+                $this->credentials,
+                Utils::constantly(SignatureProvider::resolve(
+                    $this->signatureProvider,
+                    $this->config['signature_version'],
+                    $this->api->getSigningName(),
+                    $this->region
+                ))
+            )
         );
+    }
+
+    /**
+     * @deprecated
+     * @return static
+     */
+    public static function factory(array $config = [])
+    {
+        return new static($config);
     }
 }

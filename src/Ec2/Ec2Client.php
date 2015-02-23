@@ -11,8 +11,12 @@ class Ec2Client extends AwsClient
     public function __construct(array $args)
     {
         $args['with_resolved'] = function (array $args) {
-            $copySnap = new CopySnapshotSubscriber($args['endpoint_provider']);
-            $this->getEmitter()->attach($copySnap);
+            $this->getHandlerStack()->push(
+                CopySnapshotMiddleware::create(
+                    $this,
+                    $args['endpoint_provider']
+                )
+            );
         };
         parent::__construct($args);
     }

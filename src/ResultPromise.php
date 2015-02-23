@@ -1,29 +1,20 @@
 <?php
 namespace Aws;
 
-use GuzzleHttp\Ring\Core;
-use GuzzleHttp\Ring\Future\FutureInterface;
-use GuzzleHttp\Ring\Future\MagicFutureTrait;
+use GuzzleHttp\Promise\Promise;
 
 /**
- * Future result that may not have finished.
+ * Result promise that may not have finished.
  */
-class FutureResult implements ResultInterface, FutureInterface
+class ResultPromise extends Promise implements ResultPromiseInterface
 {
-    use MagicFutureTrait {
-        MagicFutureTrait::wait as parentWait;
-    }
-
-    public function wait()
+    public function __get($name)
     {
-        $result = $this->parentWait();
-
-        if (!$result instanceof ResultInterface) {
-            throw new \RuntimeException('Expected a ResultInterface. Found '
-                . Core::describeType($result));
+        if ($name === '_value') {
+            return $this->_value = $this->wait();
         }
 
-        return $result;
+        throw new \BadMethodCallException('Unknown value: ' . $name);
     }
 
     public function hasKey($name)

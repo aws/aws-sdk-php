@@ -4,7 +4,7 @@ namespace Aws\Signature;
 use Aws\Credentials\CredentialsInterface;
 use Aws\S3\S3Client;
 use Aws\S3\S3UriParser;
-use GuzzleHttp\Message\RequestInterface;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * Default Amazon S3 signature implementation

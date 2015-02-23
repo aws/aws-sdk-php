@@ -1,30 +1,43 @@
 <?php
 namespace Aws\S3;
 
-use Aws\AwsClientInterface;
-use GuzzleHttp\Command\Event\InitEvent;
-use GuzzleHttp\Event\SubscriberInterface;
-use GuzzleHttp\Command\CommandInterface;
+use Aws\CommandInterface;
 
 /**
- * This listener simplifies the SSE-C process by encoding and hashing the key.
+ * Simplifies the SSE-C process by encoding and hashing the key.
  */
-class SSECSubscriber implements SubscriberInterface
+class SSECMiddleware
 {
-    public function getEvents()
+    private $endpointScheme;
+    private $nextHandler;
+
+    /**
+     * Provide the URI scheme of the client sending requests.
+     *
+     * @param string $endpointScheme URI scheme (http/https).
+     *
+     * @return callable
+     */
+    public static function create($endpointScheme)
     {
-        return ['init' => ['onInit']];
+        return function (callable $handler) use ($endpointScheme) {
+            $f = new self();
+            $f->nextHandler = $handler;
+            $f->endpointScheme = $endpointScheme;
+            return $f;
+        };
     }
 
-    public function onInit(InitEvent $e)
+    public function __invoke(CommandInterface $command)
     {
-        $command = $e->getCommand();
-
         // Allows only HTTPS connections when using SSE-C
         if ($command['SSECustomerKey'] ||
             $command['CopySourceSSECustomerKey']
         ) {
-            $this->validateScheme($e->getClient());
+            if ($this->endpointScheme !== 'https') {
+                throw new \RuntimeException('You must configure your S3 client to '
+                    . 'use HTTPS in order to use the SSE-C features.');
+            }
         }
 
         // Prepare the normal SSE-CPK headers
@@ -36,14 +49,9 @@ class SSECSubscriber implements SubscriberInterface
         if ($command['CopySourceSSECustomerKey']) {
             $this->prepareSseParams($command, true);
         }
-    }
 
-    private function validateScheme(AwsClientInterface $client)
-    {
-        if (strpos($client->getEndpoint(), 'https') !== 0) {
-            throw new \RuntimeException('You must configure your S3 client to '
-                . 'use HTTPS in order to use the SSE-C features.');
-        }
+        $f = $this->nextHandler;
+        return $f($command);
     }
 
     private function prepareSseParams(

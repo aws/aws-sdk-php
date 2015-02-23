@@ -2,22 +2,19 @@
 namespace Aws\S3;
 
 use Aws\AwsClient;
+use Aws\HandlerStack;
+use Aws\Middleware;
 use Aws\S3\Exception\S3Exception;
 use Aws\Result;
 use Aws\Retry\ThrottlingFilter;
 use Aws\ClientResolver;
 use Aws\Retry\S3TimeoutFilter;
-use Aws\Subscriber\SaveAs;
-use Aws\Subscriber\SourceFile;
-use GuzzleHttp\Command\Event\InitEvent;
-use GuzzleHttp\Event\EmitterInterface;
-use GuzzleHttp\Message\ResponseInterface;
-use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
-use GuzzleHttp\Stream\AppendStream;
+use Aws\CommandInterface;
 use GuzzleHttp\Stream\Stream;
-use GuzzleHttp\Command\CommandInterface;
-use GuzzleHttp\Stream\StreamInterface;
 use GuzzleHttp\Stream\Utils;
+use GuzzleHttp\Stream\AppendStream;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamableInterface;
 
 /**
  * Client used to interact with **Amazon Simple Storage Service (Amazon S3)**.
@@ -29,8 +26,10 @@ class S3Client extends AwsClient
         $args = parent::getArguments();
         // S3 does not require a region for the "classic" endpoint.
         $args['region']['default'] = 'us-east-1';
+
         // Apply custom retry strategy.
-        $args['retries']['fn'] = self::createRetry();
+        //$args['retries']['fn'] = self::createRetry();
+
         // Handle HEAD request error parsing.
         $args['api_provider']['fn'] = self::applyApiProvider();
 
@@ -41,10 +40,13 @@ class S3Client extends AwsClient
                 'doc'     => 'Set to true to send requests using path style '
                            . 'bucket addressing (e.g., '
                            . 'https://s3.amazonaws.com/bucket/key).',
-                'fn'      => function ($value, $_, EmitterInterface $em) {
+                'fn'      => function ($value, $_, HandlerStack $stack) {
                     if ($value === true) {
-                        $em->on('init', function (InitEvent $e) {
-                            $e->getCommand()['PathStyle'] = true;
+                        $stack->push(function (callable $handler) {
+                            return function (CommandInterface $command) use ($handler) {
+                                $command['PathStyle'] = true;
+                                return $handler($command);
+                            };
                         });
                     }
                 },
@@ -93,14 +95,13 @@ class S3Client extends AwsClient
     public function __construct(array $args)
     {
         parent::__construct($args);
-        $em = $this->getEmitter();
-        $em->attach(new BucketStyleSubscriber($this->getConfig('bucket_endpoint')));
-        $em->attach(new PermanentRedirectSubscriber());
-        $em->attach(new SSECSubscriber());
-        $em->attach(new PutObjectUrlSubscriber());
-        $em->attach(new SourceFile($this->getApi()));
-        $em->attach(new ApplyMd5Subscriber());
-        $em->attach(new SaveAs());
+        $stack = $this->getHandlerStack();
+        $stack->push(SSECMiddleware::create($this->getEndpoint()->getScheme()));
+        $stack->push(BucketStyleMiddleware::create($this->getConfig('bucket_endpoint')));
+        $stack->push(ApplyMd5Middleware::create($this->getConfig('calculate_md5')));
+        $stack->push(PutObjectUrlMiddleware::create());
+        $stack->push(PermanentRedirectMiddleware::create());
+        $stack->push(Middleware::sourceFile($this->getApi()));
     }
 
     /**
@@ -284,7 +285,7 @@ class S3Client extends AwsClient
      * @param string $bucket  Bucket to upload the object
      * @param string $key     Key of the object
      * @param mixed  $body    Object data to upload. Can be a
-     *                        GuzzleHttp\Stream\StreamInterface, PHP stream
+     *                        StreamableInterface, PHP stream
      *                        resource, or a string of data to upload.
      * @param string $acl     ACL to apply to the object
      * @param array  $options Custom options used when executing commands:
@@ -384,12 +385,12 @@ class S3Client extends AwsClient
      * Multipart Upload System. It also modifies the passed-in $body as needed
      * to support the upload.
      *
-     * @param StreamInterface $body      Stream representing the body.
-     * @param integer         $threshold Minimum bytes before using Multipart.
+     * @param StreamableInterface $body      Stream representing the body.
+     * @param integer             $threshold Minimum bytes before using Multipart.
      *
      * @return bool
      */
-    private function requiresMultipart(StreamInterface &$body, $threshold)
+    private function requiresMultipart(StreamableInterface &$body, $threshold)
     {
         // If body size known, compare to threshold to determine if Multipart.
         if ($body->getSize() !== null) {

@@ -1,7 +1,8 @@
 <?php
 namespace Aws\S3;
 
-use GuzzleHttp\Url;
+use GuzzleHttp\Uri;
+use Psr\Http\Message\UriInterface;
 
 /**
  * Extracts a region, bucket, key, and and if a URI is in path-style
@@ -32,7 +33,7 @@ class S3UriParser
      */
     public function parse($uri)
     {
-        $url = Url::fromString($uri);
+        $url = new Uri($uri);
         if (!$url->getHost()) {
             throw new \InvalidArgumentException('No hostname found in URI: '
                 . $uri);
@@ -53,7 +54,7 @@ class S3UriParser
         return $result;
     }
 
-    private function parseCustomEndpoint(Url $url)
+    private function parseCustomEndpoint(UriInterface $url)
     {
         $result = $result = self::$defaultResult;
         $path = ltrim($url->getPath(), '/ ');
@@ -69,7 +70,7 @@ class S3UriParser
         return $result;
     }
 
-    private function parsePathStyle(Url $url)
+    private function parsePathStyle(UriInterface $url)
     {
         $result = self::$defaultResult;
 
@@ -94,7 +95,7 @@ class S3UriParser
         return $result;
     }
 
-    private function parseVirtualHosted(Url $url, array $matches)
+    private function parseVirtualHosted(UriInterface $url, array $matches)
     {
         $result = self::$defaultResult;
         $result['path_style'] = false;

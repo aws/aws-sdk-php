@@ -1,12 +1,10 @@
 <?php
 namespace Aws\DynamoDb;
 
-use GuzzleHttp\ToArrayInterface;
-
 /**
  * Special object to represent a DynamoDB set (SS/NS/BS) value.
  */
-class SetValue implements \JsonSerializable, \Countable, \IteratorAggregate, ToArrayInterface
+class SetValue implements \JsonSerializable, \Countable, \IteratorAggregate
 {
     /** @var array Values in the set as provided. */
     private $values;

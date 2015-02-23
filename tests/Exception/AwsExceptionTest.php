@@ -13,14 +13,6 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
 {
     use UsesServiceTrait;
 
-    public function testReturnsClient()
-    {
-        $client = $this->getTestClient('s3');
-        $trans = new CommandTransaction($client, new Command('foo'));
-        $e = new AwsException('Foo', $trans);
-        $this->assertSame($client, $e->getClient());
-    }
-
     public function testProvidesContextShortcuts()
     {
         $coll = [
@@ -42,14 +34,6 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('mycode', $e->getAwsErrorCode());
         $this->assertEquals('mycode', $e->getExceptionCode());
-    }
-
-    public function testReturnsServiceName()
-    {
-        $client = $this->getTestClient('s3');
-        $trans = new CommandTransaction($client, new Command('foo'));
-        $e = new AwsException('Foo', $trans);
-        $this->assertSame('s3', $e->getServiceName());
     }
 
     public function testReturnsStatusCode()

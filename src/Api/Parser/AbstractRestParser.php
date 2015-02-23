@@ -4,8 +4,8 @@ namespace Aws\Api\Parser;
 use Aws\Api\Shape;
 use Aws\Api\StructureShape;
 use Aws\Result;
-use GuzzleHttp\Command\CommandInterface;
-use GuzzleHttp\Message\ResponseInterface;
+use Aws\CommandInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @internal

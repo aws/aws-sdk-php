@@ -3,8 +3,8 @@ namespace Aws\Api\Parser;
 
 use Aws\Api\Service;
 use Aws\Result;
-use GuzzleHttp\Command\CommandInterface;
-use GuzzleHttp\Message\ResponseInterface;
+use Aws\CommandInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @internal Implements JSON-RPC parsing (e.g., DynamoDB)
@@ -31,7 +31,7 @@ class JsonRpcParser extends AbstractParser
 
         return new Result($this->parser->parse(
             $operation->getOutput(),
-            $response->json()
+            \GuzzleHttp\json_decode($response->getBody(), true)
         ));
     }
 }

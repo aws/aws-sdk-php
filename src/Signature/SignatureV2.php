@@ -2,8 +2,7 @@
 namespace Aws\Signature;
 
 use Aws\Credentials\CredentialsInterface;
-use GuzzleHttp\Message\RequestInterface;
-use GuzzleHttp\Post\PostBodyInterface;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * Implementation of Signature Version 2

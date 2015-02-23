@@ -5,7 +5,6 @@ use Aws\AwsClient;
 use Aws\ClientResolver;
 use Aws\Retry\ThrottlingFilter;
 use Aws\Retry\Crc32Filter;
-use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
 
 /**
  * This client is used to interact with the **Amazon DynamoDB** service.
@@ -16,8 +15,8 @@ class DynamoDbClient extends AwsClient
     {
         $args = parent::getArguments();
         // Apply custom retry strategy for DynamoDB.
-        $args['retries']['default'] = 11;
-        $args['retries']['fn'] = [__CLASS__, '_applyRetryConfig'];
+        //$args['retries']['default'] = 11;
+        //$args['retries']['fn'] = [__CLASS__, '_applyRetryConfig'];
 
         return $args;
     }

@@ -4,7 +4,6 @@ namespace Aws\S3;
 use Aws\AwsClientInterface;
 use Aws\Result;
 use Aws\S3\Exception\DeleteMultipleObjectsException;
-use GuzzleHttp\Command\Event\PreparedEvent;
 
 /**
  * Implements a queue for deleting objects from an Amazon S3 bucket.

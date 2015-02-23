@@ -2,13 +2,13 @@
 namespace Aws\Test;
 
 use Aws\AwsClientInterface;
+use Aws\Exception\AwsException;
 use Aws\Result;
 use Aws\Sdk;
 use Aws\Api\Service;
 use GuzzleHttp\Ring\Client\MockHandler;
 use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Event\PreparedEvent;
-use GuzzleHttp\Command\Exception\CommandException;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Subscriber\Mock;
 
@@ -76,7 +76,7 @@ trait UsesServiceTrait
                 } elseif ($result instanceof Result) {
                     $event->intercept($result);
                     $event->getTransaction()->response = new Response(200);
-                } elseif ($result instanceof CommandException) {
+                } elseif ($result instanceof AwsException) {
                     throw $result;
                 } else {
                     throw new \Exception('There are no more mock results left. '
@@ -117,7 +117,7 @@ trait UsesServiceTrait
      * @param string $type
      * @param string|null $message
      *
-     * @return CommandException
+     * @return AwsException
      */
     private function createMockAwsException(
         $code = null,
@@ -144,15 +144,16 @@ trait UsesServiceTrait
 
         $trans = new CommandTransaction(
             $client,
-            $this->getMock('GuzzleHttp\Command\CommandInterface'),
-            [
-                'aws_error' => [
-                    'message' => $message ?: 'Test error',
-                    'code'    => $code
-                ]
-            ]
+            $this->getMock('GuzzleHttp\Command\CommandInterface')
         );
 
-        return new $type($message ?: 'Test error', $trans);
+        return new $type(
+            $message ?: 'Test error',
+            $trans,
+            [
+                'message' => $message ?: 'Test error',
+                'code'    => $code
+            ]
+        );
     }
 }

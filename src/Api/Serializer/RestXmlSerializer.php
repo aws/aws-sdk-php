@@ -3,8 +3,6 @@ namespace Aws\Api\Serializer;
 
 use Aws\Api\StructureShape;
 use Aws\Api\Service;
-use GuzzleHttp\Message\RequestInterface;
-use GuzzleHttp\Stream\Stream;
 
 /**
  * @internal
@@ -28,14 +26,9 @@ class RestXmlSerializer extends RestSerializer
         $this->xmlBody = $xmlBody ?: new XmlBody($api);
     }
 
-    protected function payload(
-        RequestInterface $request,
-        StructureShape $member,
-        array $value
-    ) {
-        $request->setHeader('Content-Type', 'application/xml');
-        $request->setBody(Stream::factory(
-            $this->xmlBody->build($member, $value)
-        ));
+    protected function payload(StructureShape $member, array $value, array &$opts)
+    {
+        $opts['headers']['Content-Type'] = 'application/xml';
+        $opts['body'] = (string) $this->xmlBody->build($member, $value);
     }
 }

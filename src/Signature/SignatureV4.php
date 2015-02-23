@@ -3,9 +3,9 @@ namespace Aws\Signature;
 
 use Aws\Credentials\CredentialsInterface;
 use Aws\Exception\CouldNotCreateChecksumException;
-use GuzzleHttp\Message\RequestInterface;
-use GuzzleHttp\Post\PostBodyInterface;
-use GuzzleHttp\Stream\Utils;
+use Psr\Http\Message\RequestInterface;
+use GuzzleHttp\Psr7\Utils;
+use GuzzleHttp\Psr7\QueryParser;
 
 /**
  * Signature Version 4
@@ -28,6 +28,9 @@ class SignatureV4 extends AbstractSignature
     /** @var int Size of the hash cache */
     private $cacheSize = 0;
 
+    /** @var QueryParser */
+    private $queryParser;
+
     /**
      * @param string $service Service name to use when signing
      * @param string $region  Region name to use when signing
@@ -36,6 +39,7 @@ class SignatureV4 extends AbstractSignature
     {
         $this->service = $service;
         $this->region = $region;
+        $this->queryParser = new QueryParser();
     }
 
     public function signRequest(
@@ -44,13 +48,18 @@ class SignatureV4 extends AbstractSignature
     ) {
         $ldt = gmdate(self::ISO8601_BASIC);
         $sdt = substr($ldt, 0, 8);
-        $request->removeHeader('Authorization');
-        $request->removeHeader('x-amz-date');
-        $request->setHeader('Date', $ldt);
+
+        // Build up a hash of changes to apply.
+        $modify = [
+            'remove_headers' => ['Authorization', 'x-amz-date'],
+            'set_headers'    => ['Date' => $ldt]
+        ];
 
         if ($token = $credentials->getSecurityToken()) {
-            $request->setHeader('x-amz-security-token', $token);
+            $modify['set_headers']['x-amz-security-token'] = $token;
         }
+
+        $request = Utils::modifyRequest($request, $modify);
 
         $cs = $this->createScope($sdt, $this->region, $this->service);
         $payload = $this->getPayload($request);
@@ -62,12 +71,11 @@ class SignatureV4 extends AbstractSignature
             $this->service,
             $credentials->getSecretKey()
         );
-
         $signature = hash_hmac('sha256', $context['string_to_sign'], $signingKey);
-        $request->setHeader('Authorization', "AWS4-HMAC-SHA256 "
+
+        return $request->withHeader('Authorization', "AWS4-HMAC-SHA256 "
             . "Credential={$credentials->getAccessKeyId()}/{$cs}, "
             . "SignedHeaders={$context['headers']}, Signature={$signature}");
-        $request->getConfig()['aws.signature'] = $context;
     }
 
     public function createPresignedUrl(
@@ -113,15 +121,14 @@ class SignatureV4 extends AbstractSignature
                 . 'received a ' . $request->getMethod() . ' request.');
         }
 
-        $sr = clone $request;
-        $sr->setMethod('GET');
-        $sr->setBody(null);
+        $sr = $request->withMethod('GET')
+            ->withBody('')
+            ->withoutHeader('Content-Type')
+            ->withoutHeader('Content-Length');
 
         // Move POST fields to the query if they are present
-        if ($request->getBody() instanceof PostBodyInterface) {
-            foreach ($request->getBody()->getFields() as $name => $value) {
-                $sr->getQuery()->set($name, $value);
-            }
+        if ($request->getHeader('Content-Type') === 'application/x-www-form-urlencoded') {
+            // @TODO
         }
 
         return $sr;
@@ -187,9 +194,9 @@ class SignatureV4 extends AbstractSignature
             'content-md5' => true
         ];
 
-        // Normalize the path as required by SigV4 and ensure it's absolute
+        // Normalize the path as required by SigV4
         $canon = $request->getMethod() . "\n"
-            . '/' . ltrim($request->getPath(), '/') . "\n"
+            . $request->getUri()->getPath() . "\n"
             . $this->getCanonicalizedQuery($request) . "\n";
 
         $canonHeaders = [];
@@ -238,16 +245,16 @@ class SignatureV4 extends AbstractSignature
 
     private function getCanonicalizedQuery(RequestInterface $request)
     {
-        $queryParams = $request->getQuery()->toArray();
-        unset($queryParams['X-Amz-Signature']);
+        $query = $this->queryParser->parse($request->getUri()->getQuery());
+        unset($query['X-Amz-Signature']);
 
-        if (!$queryParams) {
+        if (!$query) {
             return '';
         }
 
         $qs = '';
-        ksort($queryParams);
-        foreach ($queryParams as $k => $v) {
+        ksort($query);
+        foreach ($query as $k => $v) {
             if (!is_array($v)) {
                 $qs .= rawurlencode($k) . '=' . rawurlencode($v) . '&';
             } else {

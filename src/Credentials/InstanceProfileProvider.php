@@ -3,7 +3,6 @@ namespace Aws\Credentials;
 
 use Aws\Exception\CredentialsException;
 use GuzzleHttp\Client;
-use GuzzleHttp\Utils;
 
 /**
  * Loads credentials from the EC2 metadata server. If the profile cannot bef
@@ -40,7 +39,7 @@ class InstanceProfileProvider
             $this->client = $config['client'];
         } else {
             $this->client = $this->client = new Client([
-                'base_url' => 'http://169.254.169.254/latest/',
+                'base_uri' => 'http://169.254.169.254/latest/',
                 'defaults' => ['connect_timeout' => 1]
             ]);
         }
@@ -65,7 +64,7 @@ class InstanceProfileProvider
 
         return new RefreshableCredentials(function () {
             $response = $this->request("meta-data/iam/security-credentials/$this->profile");
-            $result = Utils::jsonDecode($response, true);
+            $result = \GuzzleHttp\json_decode($response, true);
             if ($result['Code'] !== 'Success') {
                 throw new CredentialsException('Unexpected instance profile response'
                     . " code: {$result['Code']}");

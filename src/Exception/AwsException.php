@@ -1,31 +1,46 @@
 <?php
 namespace Aws\Exception;
 
-use GuzzleHttp\Command\Exception\CommandException;
+use Aws\ResultInterface;
+use Psr\Http\Message\ResponseInterface;
+use Aws\CommandInterface;
 
 /**
  * Represents an AWS exception that is thrown when a command fails.
  */
-class AwsException extends CommandException
+class AwsException extends \RuntimeException
 {
-    /**
-     * Gets the client that executed the command.
-     *
-     * @return \Aws\AwsClientInterface
-     */
-    public function getClient()
-    {
-        return $this->getTransaction()->serviceClient;
-    }
+    private $response;
+    private $command;
+    private $requestId;
+    private $errorType;
+    private $errorCode;
 
     /**
-     * Get the name of the web service that encountered the error.
-     *
-     * @return string
+     * @param string            $message   Exception message
+     * @param CommandInterface  $command   Command that was sent
+     * @param ResultInterface   $result    Result that was parsed.
+     * @param ResponseInterface $response  Response received (if any)
+     * @param array             $context   Exception context.
+     * @param \Exception        $previous  Previous exception (if any)
      */
-    public function getServiceName()
-    {
-        return $this->getClient()->getApi()->getMetadata('endpointPrefix');
+    public function __construct(
+        $message,
+        CommandInterface $command,
+        ResultInterface $result = null,
+        ResponseInterface $response = null,
+        array $context = [],
+        \Exception $previous = null
+    ) {
+        $this->command = $command;
+        $this->response = $response;
+        $this->result = $result;
+        $this->requestId = isset($context['request_id'])
+            ? $context['request_id']
+            : null;
+        $this->errorType = isset($context['type']) ? $context['type'] : null;
+        $this->errorCode = isset($context['code']) ? $context['code'] : null;
+        parent::__construct($message, 0, $previous);
     }
 
     /**
@@ -35,9 +50,7 @@ class AwsException extends CommandException
      */
     public function getStatusCode()
     {
-        return $this->getTransaction()->response
-            ? $this->getTransaction()->response->getStatusCode()
-            : null;
+        return $this->response ? $this->response->getStatusCode() : null;
     }
 
     /**
@@ -49,7 +62,7 @@ class AwsException extends CommandException
      */
     public function getAwsRequestId()
     {
-        return $this->getTransaction()->context->getPath('aws_error/request_id');
+        return $this->requestId;
     }
 
     /**
@@ -59,7 +72,7 @@ class AwsException extends CommandException
      */
     public function getAwsErrorType()
     {
-        return $this->getTransaction()->context->getPath('aws_error/type');
+        return $this->errorType;
     }
 
     /**
@@ -69,30 +82,6 @@ class AwsException extends CommandException
      */
     public function getAwsErrorCode()
     {
-        return $this->getTransaction()->context->getPath('aws_error/code');
-    }
-
-    /**
-     * @deprecated Use getAwsRequestId() instead
-     */
-    public function getRequestId()
-    {
-        return $this->getAwsRequestId();
-    }
-
-    /**
-     * @deprecated Use getAwsErrorCode() instead
-     */
-    public function getExceptionCode()
-    {
-        return $this->getAwsErrorCode();
-    }
-
-    /**
-     * @deprecated Use getAwsErrorType() instead
-     */
-    public function getExceptionType()
-    {
-        return $this->getAwsErrorType();
+        return $this->errorCode;
     }
 }

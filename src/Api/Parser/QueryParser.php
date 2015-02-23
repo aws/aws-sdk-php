@@ -3,8 +3,8 @@ namespace Aws\Api\Parser;
 
 use Aws\Api\Service;
 use Aws\Result;
-use GuzzleHttp\Command\CommandInterface;
-use GuzzleHttp\Message\ResponseInterface;
+use Aws\CommandInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @internal Parses query (XML) responses (e.g., EC2, SQS, and many others)
@@ -39,7 +39,7 @@ class QueryParser extends AbstractParser
         ResponseInterface $response
     ) {
         $output = $this->api->getOperation($command->getName())->getOutput();
-        $xml = $response->xml();
+        $xml = new \SimpleXMLElement($response->getBody());
 
         if ($this->honorResultWrapper && $output['resultWrapper']) {
             $xml = $xml->{$output['resultWrapper']};

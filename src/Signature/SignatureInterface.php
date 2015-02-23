@@ -2,7 +2,7 @@
 namespace Aws\Signature;
 
 use Aws\Credentials\CredentialsInterface;
-use GuzzleHttp\Message\RequestInterface;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * Interface used to provide interchangeable strategies for signing requests
@@ -17,6 +17,8 @@ interface SignatureInterface
      *
      * @param RequestInterface     $request     Request to sign
      * @param CredentialsInterface $credentials Signing credentials
+     *
+     * @return RequestInterface Returns the modified request.
      */
     public function signRequest(
         RequestInterface $request,

@@ -1,12 +1,10 @@
 <?php
 namespace Aws\Api;
 
-use GuzzleHttp\ToArrayInterface;
-
 /**
  * Base class that is used by most API shapes
  */
-abstract class AbstractModel implements ToArrayInterface, \ArrayAccess
+abstract class AbstractModel implements \ArrayAccess
 {
     /** @var array */
     protected $definition;

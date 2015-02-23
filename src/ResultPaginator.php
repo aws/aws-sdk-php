@@ -1,7 +1,6 @@
 <?php
 namespace Aws;
 
-use GuzzleHttp\Event\ListenerAttacherTrait;
 use transducers as t;
 
 /**
@@ -9,8 +8,6 @@ use transducers as t;
  */
 class ResultPaginator implements \Iterator
 {
-    use ListenerAttacherTrait;
-
     /** @var AwsClientInterface Client performing operations. */
     private $client;
 
@@ -51,10 +48,6 @@ class ResultPaginator implements \Iterator
         $this->operation = $operation;
         $this->args = $args;
         $this->config = $config;
-        $this->listeners = $this->prepareListeners(
-            $config,
-            ['prepared', 'process', 'error']
-        );
     }
 
     /**
@@ -121,7 +114,6 @@ class ResultPaginator implements \Iterator
         // Create the command
         $args = $this->args;
         $command = $this->client->getCommand($this->operation, $args);
-        $this->attachListeners($command, $this->listeners);
 
         // Set the next token
         if ($this->nextToken) {

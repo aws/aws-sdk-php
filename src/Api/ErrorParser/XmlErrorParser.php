@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Api\ErrorParser;
 
-use GuzzleHttp\Message\ResponseInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Parses XML errors.

@@ -2,7 +2,7 @@
 namespace Aws\Signature;
 
 use Aws\Credentials\CredentialsInterface;
-use GuzzleHttp\Message\RequestInterface;
+use Psr\Http\Message\RequestInterface;
 
 abstract class AbstractSignature implements SignatureInterface
 {

@@ -2,7 +2,9 @@
 namespace Aws\Api\Serializer;
 
 use Aws\Api\Service;
-use GuzzleHttp\Command\CommandTransaction;
+use Aws\CommandInterface;
+use GuzzleHttp\Psr7\Request;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * Serializes a query protocol request.
@@ -24,9 +26,16 @@ class QuerySerializer
         $this->paramBuilder = $paramBuilder ?: new QueryParamBuilder();
     }
 
-    public function __invoke(CommandTransaction $trans)
+    /**
+     * When invoked with an AWS command, returns a serialization array
+     * containing "method", "uri", "headers", and "body" key value pairs.
+     *
+     * @param CommandInterface $command
+     *
+     * @return RequestInterface
+     */
+    public function __invoke(CommandInterface $command)
     {
-        $command =  $trans->command;
         $operation = $this->api->getOperation($command->getName());
 
         $body = [
@@ -35,6 +44,7 @@ class QuerySerializer
         ];
 
         $params = $command->toArray();
+
         // Only build up the parameters when there are parameters to build
         if ($params) {
             $body += call_user_func(
@@ -44,10 +54,16 @@ class QuerySerializer
             );
         }
 
-        return $trans->client->createRequest(
+        $body = http_build_query($body, null, '&', PHP_QUERY_RFC3986);
+
+        return new Request(
             'POST',
             $this->endpoint,
-            ['body' => $body, 'config' => ['command' => $command]]
+            [
+                'Content-Length' => strlen($body),
+                'Content-Type'   => 'application/x-www-form-urlencoded'
+            ],
+            $body
         );
     }
 }

@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Api\ErrorParser;
 
-use GuzzleHttp\Message\ResponseInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Provides basic JSON error parsing functionality.
@@ -17,7 +17,7 @@ trait JsonParserTrait
             'code'        => null,
             'message'     => null,
             'type'        => $code[0] == '4' ? 'client' : 'server',
-            'parsed'      => $response->json()
+            'parsed'      => json_decode($response->getBody(), true)
         ];
     }
 }

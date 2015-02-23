@@ -1,11 +1,9 @@
 <?php
 namespace Aws;
 
-use GuzzleHttp\Command\Event\PreparedEvent;
-use GuzzleHttp\Command\Event\ProcessEvent;
-use GuzzleHttp\Ring\Future\BaseFutureTrait;
-use GuzzleHttp\Ring\Future\FutureInterface;
-use React\Promise\Deferred;
+use Aws\Exception\AwsException;
+use GuzzleHttp\Promise\Promise;
+use GuzzleHttp\Promise\PromiseInterface;
 
 /**
  * A "waiter" associated with an AWS resource (e.g., EC2 instance) that polls
@@ -16,12 +14,8 @@ use React\Promise\Deferred;
  * non-blocking manner and implement the same future/promise characteristics
  * that normal operations do.
  */
-class Waiter implements FutureInterface
+class Waiter extends Promise
 {
-    use BaseFutureTrait {
-        BaseFutureTrait::wait as parentWait;
-    }
-
     /** @var AwsClientInterface Client used to execute each attempt. */
     private $client;
 
@@ -37,20 +31,14 @@ class Waiter implements FutureInterface
     /** @var int The number of the current attempt to poll the resource. */
     private $attempt;
 
-    /** @var Deferred Represents the async state of the waiter. */
-    private $deferred;
-
     /** @var callable Callback executed when attempt response is processed. */
     private $processfn;
 
-    /** @var FutureResult Future of the most recent attempt. */
+    /** @var PromiseInterface Promise of the most recent attempt. */
     private $currentFuture;
 
     /** @var array Default configuration options. */
-    private static $defaults = [
-        'initDelay' => 0,
-        'retry'     => null,
-    ];
+    private static $defaults = ['initDelay' => 0, 'retry' => null];
 
     /** @var array Required configuration options. */
     private static $required = [
@@ -63,7 +51,7 @@ class Waiter implements FutureInterface
     /**
      * @param AwsClientInterface $client Client used to execute commands.
      * @param string             $name   Waiter name.
-     * @param array              $args   Arguments for command.
+     * @param array              $args   Command arguments.
      * @param array              $config Waiter config that overrides defaults.
      *
      * @throws \InvalidArgumentException if the configuration is incomplete.
@@ -78,53 +66,25 @@ class Waiter implements FutureInterface
         $this->client = $client;
         $this->name = $name;
         $this->args = $args;
+        $this->args['@future'] = true; // Ensure all are asynchronous
         $this->config = $config + self::$defaults;
-        foreach (self::$required as $key) {
-            if (!isset($this->config[$key])) {
-                throw new \InvalidArgumentException(
-                    'The provided waiter configuration was incomplete.'
-                );
-            }
-        }
-        if (isset($this->config['retry']) && !is_callable($this->config['retry'])) {
-            throw new \InvalidArgumentException(
-                'The provided "retry" callback is not callable.'
-            );
-        }
-
-        // Configure the asynchronous behavior.
-        $this->deferred = new Deferred();
-        $this->wrappedPromise = $this->deferred->promise();
-
-        // Setup callbacks.
+        $this->validate();
         $this->processfn = $this->getProcessFn();
-        $this->waitfn = function () {
-            // If doing a blocking wait, just do attempts in a loop.
-            while (!$this->isRealized
-                && $this->attempt < $this->config['maxAttempts']
-            ) {
-                $this->pollResource();
-            }
-        };
+
         $this->cancelfn = function () {
-            if ($this->currentFuture instanceof FutureInterface) {
+            if ($this->currentFuture) {
                 $this->currentFuture->cancel();
             }
         };
 
-        // If async, begin waiting.
-        if (!empty($this->args['@future'])) {
-            $this->pollResource();
-        }
-    }
+        // Give the wait function to the parent class.
+        parent::__construct(function () {
+            if ($this->currentFuture) {
+                $this->currentFuture->wait();
+            }
+        });
 
-    public function wait()
-    {
-        $this->args['@future'] = false;
-        if ($this->currentFuture instanceof FutureInterface) {
-            $this->currentFuture->wait();
-        }
-        return $this->parentWait();
+        $this->pollResource();
     }
 
     /**
@@ -135,26 +95,24 @@ class Waiter implements FutureInterface
      */
     private function getProcessFn()
     {
-        return function (ProcessEvent $event) {
-            $state = $this->determineState($event);
+        return function ($result) {
+            // $state = $this->determineState($result);
+            static $tries = 0;
+            $state = ++$tries < 5 ? 'retry' : 'success';
+            echo 'Try: ' . $tries . "\n" . xdebug_get_stack_depth() . "\n";
+            sleep(1);
+
             if ($state === 'success') {
-                $this->deferred->resolve($event->getResult());
+                $this->resolve($result);
             } elseif ($state === 'failed') {
-                $this->deferred->reject(new \RuntimeException(
-                    "The {$this->name} waiter entered a failure state.", 0,
-                    $event->getException()
-                ));
-                $event->setResult(true);
+                $this->reject("The {$this->name} waiter entered a failure state.", 0, $result);
             } elseif ($this->attempt < $this->config['maxAttempts']) {
                 if ($this->config['retry']) {
                     $this->config['retry']($this->attempt);
                 }
-                if ($this->args['@future'] === true) {
-                    $this->deferred->progress($this->attempt);
-                    $this->pollResource();
-                }
+                $this->pollResource();
             } else {
-                $this->deferred->reject(new \RuntimeException(
+                $this->reject(new \RuntimeException(
                     "Waiter failed after the attempt #{$this->attempt}."
                 ));
             }
@@ -168,7 +126,7 @@ class Waiter implements FutureInterface
     private function pollResource()
     {
         // If the waiter's future is realized, do not make any more attempts.
-        if ($this->isRealized) {
+        if ($this->getState() !== 'pending') {
             return;
         }
 
@@ -180,42 +138,26 @@ class Waiter implements FutureInterface
             $this->args
         );
 
-        // Add listeners to set delay for and process results of the attempt.
-        $emitter = $command->getEmitter();
-        $emitter->on('process', $this->processfn, 'last');
-        if ($delayFn = $this->getDelayFn()) {
-            $emitter->on('prepared', $delayFn);
-        }
-
-        $this->currentFuture = $this->client->execute($command);
-    }
-
-    /**
-     * Returns a callback function that will set the delay of a request when
-     * attached to a "prepared" event.
-     *
-     * @return callable|null
-     */
-    private function getDelayFn()
-    {
         // Get the configured delay for this attempt.
         $delay = ($this->attempt === 1)
             ? $this->config['initDelay']
             : $this->config['delay'];
+
         if (is_callable($delay)) {
             $delay = $delay($this->attempt);
         }
 
-        // Set the delay as a request config option so it is managed at the
-        // HTTP adapter layer in a potentially concurrent way.
         if ($delay) {
-            return function (PreparedEvent $event) use ($delay) {
-                $delay *= 1000; // RingPHP expects delay in milliseconds.
-                $event->getRequest()->getConfig()->set('delay', $delay);
-            };
+            // $command->setRequestOption('delay', $delay * 1000);
         }
 
-        return null;
+        $this->currentFuture = $this->client->execute($command);
+
+        // Add listeners to set delay for and process results of the attempt.
+        $this->currentFuture->then(
+            $this->processfn,
+            $this->processfn
+        );
     }
 
     /**
@@ -223,52 +165,48 @@ class Waiter implements FutureInterface
      * polling the resource. A waiter can have the state of "success", "failed",
      * or "retry".
      *
-     * @param ProcessEvent $event
+     * @param mixed $result
      *
      * @return string Will be "success", "failed", or "retry"
      */
-    private function determineState(ProcessEvent $event)
+    private function determineState($result)
     {
         foreach ($this->config['acceptors'] as $acceptor) {
             $matcher = 'matches' . ucfirst($acceptor['matcher']);
-            if ($this->{$matcher}($event, $acceptor)) {
+            if ($this->{$matcher}($result, $acceptor)) {
                 return $acceptor['state'];
             }
         }
 
-        return $event->getException() ? 'failed' : 'retry';
+        return $result instanceof \Exception ? 'failed' : 'retry';
     }
 
     /**
-     * @param ProcessEvent $event    Process event of the attempt.
-     * @param array        $acceptor Acceptor configuration being checked.
+     * @param result $result   Result or exception.
+     * @param array  $acceptor Acceptor configuration being checked.
      *
      * @return bool
      */
-    private function matchesPath(ProcessEvent $event, array $acceptor)
+    private function matchesPath($result, array $acceptor)
     {
-        if (!$event->getResult()) {
-            return false;
-        }
-
-        $actual = $event->getResult()->search($acceptor['argument']);
-
-        return $acceptor['expected'] == $actual;
+        return !($result instanceof ResultInterface)
+            ? false
+            : $acceptor['expected'] == $result->search($acceptor['argument']);
     }
 
     /**
-     * @param ProcessEvent $event    Process event of the attempt.
-     * @param array        $acceptor Acceptor configuration being checked.
+     * @param result $result   Result or exception.
+     * @param array  $acceptor Acceptor configuration being checked.
      *
      * @return bool
      */
-    private function matchesPathAll(ProcessEvent $event, array $acceptor)
+    private function matchesPathAll($result, array $acceptor)
     {
-        if (!$event->getResult()) {
+        if (!($result instanceof ResultInterface)) {
             return false;
         }
 
-        $actuals = $event->getResult()->search($acceptor['argument']) ?: [];
+        $actuals = $result->search($acceptor['argument']) ?: [];
         foreach ($actuals as $actual) {
             if ($actual != $acceptor['expected']) {
                 return false;
@@ -279,18 +217,18 @@ class Waiter implements FutureInterface
     }
 
     /**
-     * @param ProcessEvent $event    Process event of the attempt.
-     * @param array        $acceptor Acceptor configuration being checked.
+     * @param result $result   Result or exception.
+     * @param array  $acceptor Acceptor configuration being checked.
      *
      * @return bool
      */
-    private function matchesPathAny(ProcessEvent $event, array $acceptor)
+    private function matchesPathAny($result, array $acceptor)
     {
-        if (!$event->getResult()) {
+        if (!($result instanceof ResultInterface)) {
             return false;
         }
 
-        $actuals = $event->getResult()->search($acceptor['argument']) ?: [];
+        $actuals = $result->search($acceptor['argument']) ?: [];
         foreach ($actuals as $actual) {
             if ($actual == $acceptor['expected']) {
                 return true;
@@ -301,40 +239,45 @@ class Waiter implements FutureInterface
     }
 
     /**
-     * @param ProcessEvent $event    Process event of the attempt.
-     * @param array        $acceptor Acceptor configuration being checked.
+     * @param result $result   Result or exception.
+     * @param array  $acceptor Acceptor configuration being checked.
      *
      * @return bool
      */
-    private function matchesStatus(ProcessEvent $event, array $acceptor)
+    private function matchesStatus($result, array $acceptor)
     {
-        if (!$event->getResponse()) {
-            return false;
-        }
-
-        return $acceptor['expected'] == $event->getResponse()->getStatusCode();
+        return !($result instanceof ResultInterface)
+            ? false
+            : $acceptor['expected'] == $result['@status'];
     }
 
     /**
-     * @param ProcessEvent $event    Process event of the attempt.
-     * @param array        $acceptor Acceptor configuration being checked.
+     * @param result $result   Result or exception.
+     * @param array  $acceptor Acceptor configuration being checked.
      *
      * @return bool
      */
-    private function matchesError(ProcessEvent $event, array $acceptor)
+    private function matchesError($result, array $acceptor)
     {
-        /** @var \Aws\Exception\AwsException $exception */
-        $exception = $event->getException();
-        if (!$exception) {
-            return false;
+        return !($result instanceof AwsException)
+            ? false
+            : $result->getAwsErrorCode() == $acceptor['expected'];
+    }
+
+    private function validate()
+    {
+        foreach (self::$required as $key) {
+            if (!isset($this->config[$key])) {
+                throw new \InvalidArgumentException(
+                    'The provided waiter configuration was incomplete.'
+                );
+            }
         }
 
-        $actual = $exception->getAwsErrorCode();
-        if ($actual == $acceptor['expected']) {
-            $event->setResult(true); // a.k.a do not throw the exception.
-            return true;
+        if (isset($this->config['retry']) && !is_callable($this->config['retry'])) {
+            throw new \InvalidArgumentException(
+                'The provided "retry" callback is not callable.'
+            );
         }
-
-        return false;
     }
 }

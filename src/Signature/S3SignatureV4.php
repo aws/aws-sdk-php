@@ -2,7 +2,7 @@
 namespace Aws\Signature;
 
 use Aws\Credentials\CredentialsInterface;
-use GuzzleHttp\Message\RequestInterface;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * Amazon S3 signature version 4 support.
@@ -15,13 +15,13 @@ class S3SignatureV4 extends SignatureV4
     public function signRequest(RequestInterface $request, CredentialsInterface $credentials)
     {
         if (!$request->hasHeader('x-amz-content-sha256')) {
-            $request->setHeader(
+            $request = $request->withHeader(
                 'X-Amz-Content-Sha256',
                 $this->getPayload($request)
             );
         }
 
-        parent::signRequest($request, $credentials);
+        return parent::signRequest($request, $credentials);
     }
 
     /**

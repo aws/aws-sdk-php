@@ -3,7 +3,7 @@ namespace Aws\Api\Parser;
 
 use Aws\Api\StructureShape;
 use Aws\Api\Service;
-use GuzzleHttp\Message\ResponseInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @internal Implements REST-XML parsing (e.g., S3, CloudFront, etc...)
@@ -28,6 +28,7 @@ class RestXmlParser extends AbstractRestParser
         StructureShape $member,
         array &$result
     ) {
-        $result += $this->parser->parse($member, $response->xml());
+        $xml = new \SimpleXMLElement($response->getBody());
+        $result += $this->parser->parse($member, $xml);
     }
 }

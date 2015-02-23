@@ -1,7 +1,6 @@
 <?php
 namespace Aws;
 
-use GuzzleHttp\HasDataTrait;
 use JmesPath\Env as JmesPath;
 
 /**
@@ -11,9 +10,13 @@ class Result implements ResultInterface
 {
     use HasDataTrait;
 
-    public function __construct(array $data)
+    /** @var string|null */
+    private $uri;
+
+    public function __construct(array $data, $uri = null)
     {
         $this->data = $data;
+        $this->uri = $uri;
     }
 
     public function hasKey($name)

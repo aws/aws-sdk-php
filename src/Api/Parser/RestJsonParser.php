@@ -3,7 +3,7 @@ namespace Aws\Api\Parser;
 
 use Aws\Api\Service;
 use Aws\Api\StructureShape;
-use GuzzleHttp\Message\ResponseInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @internal Implements REST-JSON parsing (e.g., Glacier, Elastic Transcoder)
@@ -28,7 +28,9 @@ class RestJsonParser extends AbstractRestParser
         StructureShape $member,
         array &$result
     ) {
-        if ($jsonBody = $response->json()) {
+        $jsonBody = json_decode($response->getBody(), true);
+
+        if ($jsonBody) {
             $result += $this->parser->parse($member, $jsonBody);
         }
     }

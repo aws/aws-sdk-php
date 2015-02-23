@@ -2,7 +2,6 @@
 namespace Aws\CloudFront;
 
 use Aws\AwsClient;
-use GuzzleHttp\Collection;
 
 /**
  * This client is used to interact with the **Amazon CloudFront** service.
@@ -35,11 +34,11 @@ class CloudFrontClient extends AwsClient
      */
     public function getSignedUrl(array $options)
     {
-        $options = Collection::fromConfig(
-            $options,
-            [],
-            ['url', 'key_pair_id', 'private_key']
-        );
+        foreach (['url', 'key_pair_id', 'private_key'] as $required) {
+            if (!isset($options[$required])) {
+                throw new \InvalidArgumentException("$required is required");
+            }
+        }
 
         $UrlSigner = new UrlSigner(
             $options['key_pair_id'],

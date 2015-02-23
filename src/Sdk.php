@@ -1,8 +1,6 @@
 <?php
 namespace Aws;
 
-use GuzzleHttp\Client;
-
 /**
  * Builds AWS clients based on configuration settings.
  *
@@ -81,7 +79,7 @@ class Sdk
             $this->args['client'] = static function () {
                 static $handler;
                 if (!$handler) {
-                    $handler = Client::getDefaultHandler();
+                    $handler = \GuzzleHttp\default_handler();
                 }
                 return new Client(['handler' => $handler]);
             };

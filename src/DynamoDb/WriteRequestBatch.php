@@ -1,9 +1,6 @@
 <?php
 namespace Aws\DynamoDb;
 
-use GuzzleHttp\Command\CommandInterface;
-use GuzzleHttp\Command\Event\ProcessEvent;
-
 /**
  * The WriteRequestBatch is an object that is capable of efficiently sending
  * DynamoDB BatchWriteItem requests from queued up put and delete item requests.
@@ -153,8 +150,8 @@ class WriteRequestBatch
             $this->client->executeAll($commands, [
                 'pool_size' => $this->config['pool_size'],
                 'process' => function (ProcessEvent $e) {
-                    if ($e->getException()) {
-                        $code = $e->getContext()->getPath('aws_error/code');
+                    if ($ex = $e->getException()) {
+                        $code = $ex->getAwsErrorCode();
                         if ($code === 'ProvisionedThroughputExceededException') {
                             $this->retryUnprocessed($e->getCommand()['RequestItems']);
                         } elseif (is_callable($this->config['error'])) {

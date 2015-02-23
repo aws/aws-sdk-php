@@ -6,11 +6,11 @@ use Aws\Api\Operation;
 use Aws\Api\Shape;
 use Aws\Api\StructureShape;
 use Aws\Api\TimestampShape;
-use GuzzleHttp\Command\CommandTransaction;
-use GuzzleHttp\Message\RequestInterface;
-use GuzzleHttp\Query;
-use GuzzleHttp\Url;
-use GuzzleHttp\Stream\Stream;
+use Aws\CommandInterface;
+use GuzzleHttp\Psr7\Stream;
+use GuzzleHttp\Psr7\Uri;
+use Psr\Http\Message\RequestInterface;
+use GuzzleHttp\Psr7\Request;
 
 /**
  * Serializes HTTP locations like header, uri, payload, etc...
@@ -21,11 +21,8 @@ abstract class RestSerializer
     /** @var Service */
     private $api;
 
-    /** @var Url */
+    /** @var Uri */
     private $endpoint;
-
-    /** @var callable */
-    private $aggregator;
 
     /**
      * @param Service $api      Service API description
@@ -34,8 +31,7 @@ abstract class RestSerializer
     public function __construct(Service $api, $endpoint)
     {
         $this->api = $api;
-        $this->endpoint = Url::fromString($endpoint);
-        $this->aggregator = Query::duplicateAggregator();
+        $this->endpoint = new Uri($endpoint);
     }
 
     public function getEvents()
@@ -43,49 +39,46 @@ abstract class RestSerializer
         return ['prepared' => ['onPrepare']];
     }
 
-    public function __invoke(CommandTransaction $trans)
+    /**
+     * @param CommandInterface $command Command to serialized
+     *
+     * @return RequestInterface
+     */
+    public function __invoke(CommandInterface $command)
     {
-        $command = $trans->command;
         $operation = $this->api->getOperation($command->getName());
         $args = $command->toArray();
+        $opts = $this->serialize($operation, $args);
 
-        $request = $trans->client->createRequest(
+        return new Request(
             $operation['http']['method'],
             $this->buildEndpoint($operation, $args),
-            ['config' => ['command' => $command]]
+            isset($opts['headers']) ? $opts['headers'] : [],
+            isset($opts['body']) ? $opts['body'] : null
         );
-
-        // Ensure that query string lists are serialized as duplicates.
-        $request->getQuery()->setAggregator($this->aggregator);
-
-        return $this->serialize($request, $operation, $args);
     }
 
     /**
-     * Applies a payload body to a request.
+     * Modifies a hash of request options for a payload body.
      *
-     * @param RequestInterface $request Request to apply.
      * @param StructureShape   $member  Member to serialize
      * @param array            $value   Value to serialize
-     *
-     * @return \GuzzleHttp\Stream\StreamInterface
+     * @param array            $opts    Request options to modify.
      */
     abstract protected function payload(
-        RequestInterface $request,
         StructureShape $member,
-        array $value
+        array $value,
+        array &$opts
     );
 
-    private function serialize(
-        RequestInterface $request,
-        Operation $operation,
-        array $args
-    ) {
+    private function serialize(Operation $operation, array $args)
+    {
+        $opts = [];
         $input = $operation->getInput();
 
         // Apply the payload trait if present
         if ($payload = $input['payload']) {
-            $this->applyPayload($request, $input, $payload, $args);
+            $this->applyPayload($input, $payload, $args, $opts);
         }
 
         foreach ($args as $name => $value) {
@@ -95,28 +88,24 @@ abstract class RestSerializer
                 if (!$payload && !$location) {
                     $bodyMembers[$name] = $value;
                 } elseif ($location == 'header') {
-                    $this->applyHeader($request, $name, $member, $value);
+                    $this->applyHeader($name, $member, $value, $opts);
                 } elseif ($location == 'querystring') {
-                    $this->applyQuery($request, $name, $member, $value);
+                    $this->applyQuery($name, $member, $value, $opts);
                 } elseif ($location == 'headers') {
-                    $this->applyHeaderMap($request, $name, $member, $value);
+                    $this->applyHeaderMap($name, $member, $value, $opts);
                 }
             }
         }
 
         if (isset($bodyMembers)) {
-            $this->payload($request, $operation->getInput(), $bodyMembers);
+            $this->payload($operation->getInput(), $bodyMembers, $opts);
         }
 
-        return $request;
+        return $opts;
     }
 
-    private function applyPayload(
-        RequestInterface $request,
-        StructureShape $input,
-        $name,
-        array $args
-    ) {
+    private function applyPayload(StructureShape $input, $name, array $args, array &$opts)
+    {
         if (!isset($args[$name])) {
             return;
         }
@@ -128,48 +117,37 @@ abstract class RestSerializer
         ) {
             // Streaming bodies or payloads that are strings are
             // always just a stream of data.
-            $request->setBody(Stream::factory($args[$name]));
-        } else {
-            $this->payload($request, $m, $args[$name]);
+            $opts['body'] = Stream::factory($args[$name]);
+            return;
         }
+
+        $this->payload($m, $args[$name], $opts);
     }
 
-    private function applyHeader(
-        RequestInterface $request,
-        $name,
-        Shape $member,
-        $value
-    ) {
+    private function applyHeader($name, Shape $member, $value, array &$opts)
+    {
         if ($member->getType() == 'timestamp') {
             $value = TimestampShape::format($value, 'rfc822');
         }
 
-        $request->setHeader($member['locationName'] ?: $name, $value);
+        $opts['headers'][$member['locationName'] ?: $name] = $value;
     }
 
     /**
      * Note: This is currently only present in the Amazon S3 model.
      */
-    private function applyHeaderMap(
-        RequestInterface $request,
-        $name,
-        Shape $member,
-        array $value
-    ) {
+    private function applyHeaderMap($name, Shape $member, array $value, array &$opts)
+    {
         $prefix = $member['locationName'];
         foreach ($value as $k => $v) {
-            $request->setHeader($prefix . $k, $v);
+            $opts['headers'][$prefix . $k] = $v;
         }
     }
 
-    private function applyQuery(
-        RequestInterface $request,
-        $name,
-        Shape $member,
-        $value
-    ) {
+    private function applyQuery($name, Shape $member, $value, array &$opts)
+    {
         if ($value !== null) {
-            $request->getQuery()->set($member['locationName'] ?: $name, $value);
+            $opts['query'][$member['locationName'] ?: $name] = $value;
         }
     }
 
@@ -189,13 +167,15 @@ abstract class RestSerializer
         foreach ($operation->getInput()->getMembers() as $name => $member) {
             if ($member['location'] == 'uri') {
                 $varspecs[$member['locationName'] ?: $name] =
-                    isset($args[$name]) ? $args[$name] : null;
+                    isset($args[$name])
+                        ? $args[$name]
+                        : null;
             }
         }
 
         // Expand path place holders using Amazon's slightly different URI
         // template syntax.
-        return $this->endpoint->combine(preg_replace_callback(
+        return Uri::resolve($this->endpoint, preg_replace_callback(
             '/\{([^\}]+)\}/',
             function (array $matches) use ($varspecs) {
                 $isGreedy = substr($matches[1], -1, 1) == '+';

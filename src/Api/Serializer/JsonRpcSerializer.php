@@ -2,7 +2,9 @@
 namespace Aws\Api\Serializer;
 
 use Aws\Api\Service;
-use GuzzleHttp\Command\CommandTransaction;
+use Aws\CommandInterface;
+use GuzzleHttp\Psr7\Request;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * Prepares a JSON-RPC request for transfer.
@@ -38,28 +40,30 @@ class JsonRpcSerializer
         $this->contentType = JsonBody::getContentType($api);
     }
 
-    public function __invoke(CommandTransaction $trans)
+    /**
+     * When invoked with an AWS command, returns a serialization array
+     * containing "method", "uri", "headers", and "body" key value pairs.
+     *
+     * @param CommandInterface $command
+     *
+     * @return RequestInterface
+     */
+    public function __invoke(CommandInterface $command)
     {
-        $command = $trans->command;
         $name = $command->getName();
         $operation = $this->api->getOperation($name);
 
-        return $trans->client->createRequest(
+        return new Request(
             $operation['http']['method'],
             $this->endpoint,
             [
-                'headers' => [
-                    'X-Amz-Target' => $this->api->getMetadata('targetPrefix') . '.' . $name,
-                    'Content-Type' => $this->contentType
-                ],
-                'body' => $this->jsonFormatter->build(
-                    $operation->getInput(),
-                    $command->toArray()
-                ),
-                'config' => [
-                    'command' => $command
-                ]
-            ]
+                'X-Amz-Target' => $this->api->getMetadata('targetPrefix') . '.' . $name,
+                'Content-Type' => $this->contentType
+            ],
+            $this->jsonFormatter->build(
+                $operation->getInput(),
+                $command->toArray()
+            )
         );
     }
 }
