@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Next Release
+
+* `Aws\Route53` - Added support for the `GetHostedZoneCount` and
+  `ListHostedZonesByName` operations.
+
 ## 2.7.19 - 2015-02-20
 
 * `Aws\Ssm` - Added support for the **Amazon Simple Systems Management Service

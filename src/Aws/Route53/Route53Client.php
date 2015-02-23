@@ -46,10 +46,12 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model getHealthCheckLastFailureReason(array $args = array()) {@command Route53 GetHealthCheckLastFailureReason}
  * @method Model getHealthCheckStatus(array $args = array()) {@command Route53 GetHealthCheckStatus}
  * @method Model getHostedZone(array $args = array()) {@command Route53 GetHostedZone}
+ * @method Model getHostedZoneCount(array $args = array()) {@command Route53 GetHostedZoneCount}
  * @method Model getReusableDelegationSet(array $args = array()) {@command Route53 GetReusableDelegationSet}
  * @method Model listGeoLocations(array $args = array()) {@command Route53 ListGeoLocations}
  * @method Model listHealthChecks(array $args = array()) {@command Route53 ListHealthChecks}
  * @method Model listHostedZones(array $args = array()) {@command Route53 ListHostedZones}
+ * @method Model listHostedZonesByName(array $args = array()) {@command Route53 ListHostedZonesByName}
  * @method Model listResourceRecordSets(array $args = array()) {@command Route53 ListResourceRecordSets}
  * @method Model listReusableDelegationSets(array $args = array()) {@command Route53 ListReusableDelegationSets}
  * @method Model listTagsForResource(array $args = array()) {@command Route53 ListTagsForResource}
