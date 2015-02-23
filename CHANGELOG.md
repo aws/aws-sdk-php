@@ -2,13 +2,15 @@
 
 ## Next Release
 
+* `Aws\DataPipeline` - Added support for pipeline tagging via the `AddTags` and
+  `RemoveTags` operations.
 * `Aws\Route53` - Added support for the `GetHostedZoneCount` and
   `ListHostedZonesByName` operations.
 
 ## 2.7.19 - 2015-02-20
 
 * `Aws\Ssm` - Added support for the **Amazon Simple Systems Management Service
-  (SSM)**. 
+  (SSM)**.
 * `Aws\Sts` - Added support for regional endpoints.
 * `Aws\CloudFront` - Added support for origin paths in web distributions.
 * `Aws\Ecs` - Added support for specifying volumes and mount points. Also

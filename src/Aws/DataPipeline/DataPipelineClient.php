@@ -28,6 +28,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * Client to interact with AWS Data Pipeline
  *
  * @method Model activatePipeline(array $args = array()) {@command DataPipeline ActivatePipeline}
+ * @method Model addTags(array $args = array()) {@command DataPipeline AddTags}
  * @method Model createPipeline(array $args = array()) {@command DataPipeline CreatePipeline}
  * @method Model deletePipeline(array $args = array()) {@command DataPipeline DeletePipeline}
  * @method Model describeObjects(array $args = array()) {@command DataPipeline DescribeObjects}
@@ -38,6 +39,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model pollForTask(array $args = array()) {@command DataPipeline PollForTask}
  * @method Model putPipelineDefinition(array $args = array()) {@command DataPipeline PutPipelineDefinition}
  * @method Model queryObjects(array $args = array()) {@command DataPipeline QueryObjects}
+ * @method Model removeTags(array $args = array()) {@command DataPipeline RemoveTags}
  * @method Model reportTaskProgress(array $args = array()) {@command DataPipeline ReportTaskProgress}
  * @method Model reportTaskRunnerHeartbeat(array $args = array()) {@command DataPipeline ReportTaskRunnerHeartbeat}
  * @method Model setStatus(array $args = array()) {@command DataPipeline SetStatus}
