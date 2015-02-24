@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next Release
+## 2.7.20 - 2015-02-23
 
 * `Aws\DataPipeline` - Added support for pipeline tagging via the `AddTags` and
   `RemoveTags` operations.
