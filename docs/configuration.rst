@@ -18,7 +18,7 @@ shows how to pass options into an Amazon S3 client constructor.
 
     $s3Client = new S3Client($options);
 
-Refer to the :doc:`getting started guide <getting-started>` for more
+Refer to the :doc:`basic usage guide <basic-usage>` for more
 information on constructing clients.
 
 

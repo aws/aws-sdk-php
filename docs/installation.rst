@@ -2,7 +2,7 @@
 Installation
 ============
 
-There are several supported methods of installing the AWS SDK for PHP. The
+There are 3 supported methods of installing the AWS SDK for PHP. The
 recommended way to install the SDK is through `Composer <http://getcomposer.org>`_.
 
 Installing via Composer
@@ -23,7 +23,7 @@ into your project.
 
    ::
 
-       composer require guzzlehttp/guzzle
+       composer require aws/aws-sdk-php
 
 3. Require Composer's autoloader:
 
@@ -39,7 +39,7 @@ other best-practices for defining dependencies at
 If you are deploying your application to `AWS Elastic Beanstalk
 <http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_PHP_eb.html>`_,
 and you have a ``composer.json`` file in the root of your package, then Elastic
-Beanstalk will automatically perform a Composer ``install`` when you deploy
+Beanstalk will automatically perform a ``composer install`` when you deploy
 your application.
 
 Installing via Phar
@@ -68,9 +68,9 @@ following required and suggested libraries:
 
 .. note::
 
-    If you are using PHP with the Suhosin patch (especially common on Ubuntu
-    and Debian distributions), you may need to enable the use of phars in the
-    ``suhosin.ini``. Without this, including a phar file in your code will
+    If you are using PHP with the Suhosin patch (not recommended, but common on
+    Ubuntu and Debian distributions), you may need to enable the use of phars in
+    the ``suhosin.ini``. Without this, including a phar file in your code will
     cause it to silently fail. You should modify the ``suhosin.ini`` file by
     adding the line:
 
@@ -79,10 +79,9 @@ following required and suggested libraries:
 Installing via Zip
 ------------------
 
-Each release of the AWS SDK for PHP (since 2.3.2) ships with a zip file
-containing all of the classes and dependencies you need to run the SDK.
-Additionally, the zip file includes a class autoloader for the AWS SDK for PHP
-and all of its dependencies.
+Each release of the AWS SDK for PHP ships with a zip file containing all of the
+classes and dependencies you need to run the SDK. Additionally, the zip file
+includes a class autoloader for the AWS SDK for PHP and all of its dependencies.
 
 To get started, you must `download the zip file <https://github.com/aws/aws-sdk-php/releases>`_,
 unzip it into your project to a location of your choosing, and include the

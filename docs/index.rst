@@ -7,7 +7,7 @@ AWS SDK for PHP
 
     requirements
     installation
-    getting-started
+    basic-usage
 
     configuration
     credentials
@@ -49,7 +49,7 @@ Getting Started
 
 1. :doc:`requirements`
 2. :doc:`installation`
-3. :doc:`getting-started`
+3. :doc:`basic-usage`
 4. `Sample Project <http://aws.amazon.com/developers/getting-started/php/>`_
 
 

@@ -1,43 +1,51 @@
-=====================
-Getting Started Guide
-=====================
+===============
+Basic SDK Usage
+===============
 
-This "Getting Started Guide" focuses on basic usage of the **AWS SDK for PHP**.
-After reading through this material, you should be familiar with the SDK and be
-able to start using the SDK in your application. This guide assumes that you
-have already :doc:`downloaded and installed the SDK <installation>` and
-retrieved your `AWS access keys <http://aws.amazon.com/developers/access-keys/>`_.
+This guide focuses on basic usage patterns of the **AWS SDK for PHP**. This
+guide assumes that you have already :doc:`downloaded and installed the SDK
+<installation>` and retrieved your `AWS access keys
+<http://aws.amazon.com/developers/access-keys/>`_.
 
 
 Including the SDK
 -----------------
 
-No matter which technique you have used to to install the SDK, the SDK can be
-included into your project or script with just a single ``require`` statement.
-Please refer to the following table for the PHP code that best fits your
-installation technique. Please replace any instances of ``/path/to/`` with the
-actual path on your system.
+No matter which technique you have used to to install the SDK, you can include
+the SDK into your code with just a single ``require`` statement. Please refer to
+the following table for the PHP code that best fits your installation technique.
+Please replace any instances of ``/path/to/`` with the actual path on your system.
 
-========================== ===================================================
-Installation Technique     Include Statement
-========================== ===================================================
+========================== =====================================================
+Installation Technique     Require Statement
+========================== =====================================================
 Using Composer             ``require '/path/to/vendor/autoload.php';``
--------------------------- ---------------------------------------------------
+-------------------------- -----------------------------------------------------
 Using the Phar             ``require '/path/to/aws.phar';``
--------------------------- ---------------------------------------------------
+-------------------------- -----------------------------------------------------
 Using the Zip              ``require '/path/to/aws-autoloader.php';``
-========================== ===================================================
+========================== =====================================================
 
-For the remainder of this guide, we will show examples that use the Composer
+For the remainder of this guide, we will show examples that assume the Composer
 installation method. If you are using a different installation method, then you
-can refer to this section and substitute in the proper code.
+can refer back to this section to substitute in the proper ``require`` code.
+
+
+Usage Summary
+-------------
+
+The basic usage pattern of the SDK is that you instantiate a **Client** object
+for the AWS service you want to interact with. Client objects have methods that
+correspond one-to-one with operations in the service's API. To execute a
+particular operation, you call its corresponding method, which either returns an
+array-like **Result** object on success, or throws an **Exception** on failure.
 
 
 Creating a client
 -----------------
 
 You can create a client by passing an associative array of options to a
-client constructor.
+client's constructor.
 
 .. code-block:: php
 
@@ -50,16 +58,18 @@ client constructor.
         'region'  => 'us-west-2'
     ]);
 
-Notice that we did **not** provide credentials to the client. That's because
-the credentials should come from either
+Notice that we did **not** explicitly provide credentials to the client. That's
+because the credentials should be detected by the SDK from either
 :ref:`environment variables <environment_credentials>` (via
 ``AWS_ACCESS_KEY_ID`` and ``AWS_SECRET_ACCESS_KEY``), an
-:ref:`AWS credentials ini file <credential_profiles>` in your HOME
-directory, AWS Identity and Access Management
+:ref:`AWS credentials INI file <credential_profiles>` in your HOME
+directory, AWS Identity and Access Management (IAM)
 :ref:`instance profile credentials <instance_profile_credentials>`, or
-:ref:`credential providers <credential_provider>`. As a last resort, you can
-hardcode your credentials by passing the ``key``, ``secret``, and ``token``
-key value pairs in the ``credentials`` client configuration setting array.
+:ref:`credential providers <credential_provider>`. If needed, you can also
+explicitly set your credentials by passing the ``key`` and ``secret`` (and
+``token``, if using temporary credentials) key-value pairs in the
+``credentials`` client configuration setting array. We recommend against
+hardcoding credentials into your application code for your own security.
 
 All of the general client configuration options are described in detail in
 the :doc:`configuration guide <configuration>`. The array of options provided
@@ -75,7 +85,7 @@ Using the Sdk class
 The ``Aws\Sdk`` class is used to manage shared configuration options across
 multiple clients. For example, the ``Aws\Sdk`` class will automatically ensure
 that each client it creates shares the same RingPHP adapter, allowing the
-clients to send future requests concurrently.
+clients to send asynchronous requests concurrently, even to different services.
 
 The same options that can be provided to a specific client constructor can also
 be supplied to the ``Aws\Sdk`` class. These options are then applied to each
@@ -95,8 +105,8 @@ client constructor.
     // Create an Amazon S3 client using the shared configuration data.
     $client = $sdk->createS3();
 
-Options that are shared across all clients are placed in root-level key value
-pairs. Service specific configuration data can be provided in a key that is the
+Options that are shared across all clients are placed in root-level key-value
+pairs. Service-specific configuration data can be provided in a key that is the
 namespace of a service (e.g., "S3", "DynamoDb", etc.).
 
 .. code-block:: php
@@ -112,15 +122,15 @@ namespace of a service (e.g., "S3", "DynamoDb", etc.).
     // Creating a DynamoDb client will use the "eu-central-1" region.
     $client = $sdk->createDynamoDb();
 
-Service specific configuration values are a union of the service specific
-values and the root-level values (i.e., service specific values are shallow
+Service-specific configuration values are a union of the service-specific
+values and the root-level values (i.e., service-specific values are shallow
 merged onto root level values).
 
 
-Performing service operations
------------------------------
+Executing service operations
+----------------------------
 
-You can perform a service operation by calling the method of the same name on
+You can execute a service operation by calling the method of the same name on
 a client object. For example, to perform the Amazon S3 `PutObject operation
 <http://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectPUT.html>`_, you must
 call the ``Aws\S3\S3Client::putObject()`` method.
@@ -161,13 +171,14 @@ using a command object. Please refer to the :doc:`command object guide
 <commands>` for more information.
 
 
-Result objects
---------------
+Working with Result objects
+---------------------------
 
-Performing an operation will return an ``Aws\Result`` object. Instead of
-returning the raw XML or JSON data of a service, the SDK will coerce the data
-into an associative array and normalize some aspects of the data based on its
-knowledge of the specific service and the underlying response structure.
+Executing an successful operation return an ``Aws\Result`` object. Instead of
+returning the raw XML or JSON data of a service, the SDK coerces the response
+data into an associative array structure and normalizes some aspects of the data
+based on its knowledge of the specific service and the underlying response
+structure.
 
 You can access data from the result object like an associative PHP array.
 
@@ -175,7 +186,7 @@ You can access data from the result object like an associative PHP array.
 
     // Use an Aws\Sdk class to create the S3Client object.
     $s3 = $sdk->createS3();
-    $result = $s3Client->listBuckets();
+    $result = $s3->listBuckets();
 
     foreach ($result['Buckets'] as $bucket) {
         echo $bucket['Name'] . "\n";
@@ -189,9 +200,11 @@ and the version of a service. The result structure of each API operation is
 documented in the API docs for each operation (e.g., see the *Results* section
 in the API docs for each operation.
 
-The SDK is integrated with `JMESPath <http://jmespath.org/>`_, a SDL use to
-search and manipulate JSON data. The result object contains a ``search()``
-method that allows you to more declaratively extract data from the result.
+The SDK is integrated with `JMESPath <http://jmespath.org/>`_, a `DSL
+<http://en.wikipedia.org/wiki/Domain-specific_language>`_ use to search and
+manipulate JSON data, or PHP arrays, in our case. The result object contains a
+``search()`` method that allows you to more declaratively extract data from the
+result.
 
 .. code-block:: php
 
@@ -201,8 +214,8 @@ method that allows you to more declaratively extract data from the result.
     $results = $result->search('Buckets[*].Name');
 
 
-Error handling
---------------
+Handling errors
+---------------
 
 The return value of performing an operation is an ``Aws\Result`` object. If an
 error occurs while performing an operation, then an exception is thrown. For
@@ -233,17 +246,3 @@ about the failure, including the request-id, error code, and error type.
         echo $e->getAwsErrorType() . "\n";
         echo $e->getAwsErrorCode() . "\n"
     }
-
-
-Paginators
-----------
-
-To learn more about how to use and configure iterators, please read the
-detailed guide to :doc:`iterators`.
-
-
-Waiters
--------
-
-To learn more about how to use and configure waiters, please read the detailed
-guide to :doc:`waiters`.
