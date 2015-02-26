@@ -1,2 +1,1 @@
-<?php
-return [];
+<?php return ['foo' => 'bar'];
