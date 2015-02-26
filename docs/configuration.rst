@@ -355,6 +355,8 @@ See :doc:`credentials` for more information on configuring credentials and the
 INI file format.
 
 
+.. _cfg_region:
+
 region
 ~~~~~~
 
@@ -524,13 +526,15 @@ difference is negligible.
     ]);
 
 
+.. _cfg_version:
+
 version
 ~~~~~~~
 
 :Type: ``string``
 :Required: true
 
-The version of the webservice to utilize (e.g., ``2006-03-01``).
+The version of the web service to utilize (e.g., ``2006-03-01``).
 
 A "version" configuration value is required. Specifying a version constraint
 ensures that your code will not be affected by a breaking change made to the

@@ -1,6 +1,6 @@
-=========
-Iterators
-=========
+==========
+Paginators
+==========
 
 Introduction
 ------------

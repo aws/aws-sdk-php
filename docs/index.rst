@@ -9,11 +9,12 @@ AWS SDK for PHP
     installation
     basic-usage
 
+    concepts
     configuration
     credentials
     commands
     waiters
-    iterators
+    paginators
     faq
 
     service-cloudfront
@@ -50,15 +51,17 @@ Getting Started
 1. :doc:`requirements`
 2. :doc:`installation`
 3. :doc:`basic-usage`
-4. `Sample Project <http://aws.amazon.com/developers/getting-started/php/>`_
+
+.. 4. `Sample Project <http://aws.amazon.com/developers/getting-started/php/>`_
 
 
-Using the SDK
--------------
+SDK Details
+-----------
 
+* :doc:`concepts`
 * :doc:`configuration`
 * :doc:`credentials`
-* :doc:`iterators`
+* :doc:`paginators`
 * :doc:`waiters`
 * :doc:`commands`
 * :doc:`faq`
