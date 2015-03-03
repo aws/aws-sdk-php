@@ -61,28 +61,26 @@ class ResultPaginator implements \Iterator
      * Returns an iterator that iterates over the values of applying a JMESPath
      * search to each result yielded by the iterator as a flat sequence.
      *
-     * @param string $expression JMESPath expression to apply to each result.
+     * @param string   $expression JMESPath expression to apply to each result.
+     * @param int|null $limit      Total number of items that should be returned
+     *                             or null for no limit.
      *
      * @return \Iterator
      */
-    public function search($expression)
+    public function search($expression, $limit = null)
     {
-        return t\to_iter(
-            $this,
-            t\mapcat(function (Result $result) use ($expression) {
-                return (array)$result->search($expression);
-            })
-        );
-    }
+        // Apply JMESPath expression on each result, but as a flat sequence.
+        $xf = t\mapcat(function (Result $result) use ($expression) {
+            return (array) $result->search($expression);
+        });
 
-    /**
-     * Returns the next token that will be used for pagination.
-     *
-     * @return array|string
-     */
-    public function getNextToken()
-    {
-        return $this->nextToken;
+        // Apply a limit to the total items returned.
+        if ($limit) {
+            $xf = t\comp($xf, t\take($limit));
+        }
+
+        // Return items as an iterator.
+        return t\to_iter($this, $xf);
     }
 
     /**

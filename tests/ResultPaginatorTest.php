@@ -44,7 +44,7 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedTableNames, $tableNames);
     }
 
-    public function testNonIteratorMethods()
+    public function testNonIterator()
     {
         // Get test data
         $config = $this->getPaginatorIterationData()[0][0];
@@ -56,13 +56,13 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
         $paginator = $client->getPaginator('ListTables', [], $config);
         $paginator->next();
         $this->assertEquals(['test1', 'test2'], $paginator->current()['TableNames']);
-        $this->assertEquals('test2', $paginator->getNextToken());
+        $this->assertEquals('test2', $this->readAttribute($paginator, 'nextToken'));
         $paginator->next();
         $this->assertEquals([], $paginator->current()['TableNames']);
-        $this->assertEquals('test2', $paginator->getNextToken());
+        $this->assertEquals('test2', $this->readAttribute($paginator, 'nextToken'));
         $paginator->next();
         $this->assertEquals(['test3'], $paginator->current()['TableNames']);
-        $this->assertNull($paginator->getNextToken());
+        $this->assertNull($this->readAttribute($paginator, 'nextToken'));
     }
 
     /**
@@ -111,6 +111,7 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
             new Result(['LastToken' => 'b2', 'TableNames' => ['a1', 'b2']]),
             new Result(['LastToken' => 'b2', 'TableNames' => []]),
             new Result(['TableNames' => ['c3']]),
+            new Result(['TableNames' => ['d4']]),
         ]);
 
         $paginator = $client->getPaginator('ListTables', [], [
@@ -122,7 +123,7 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $tableNames = [];
-        foreach ($paginator->search('TableNames[][::-1]') as $table) {
+        foreach ($paginator->search('TableNames[][::-1]', 3) as $table) {
             $tableNames[] = $table;
         }
 

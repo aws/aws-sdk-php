@@ -3,9 +3,8 @@ Requirements
 ============
 
 Aside from a baseline understanding of object-oriented programming in PHP
-(including PHP namespaces), there are a few minimum system requirements to
-start using the AWS SDK for PHP. The extensions listed are common and are
-installed with PHP 5.5 by default in most environments.
+(including PHP namespaces and autoloading), there are a few minimum system
+requirements to start using the AWS SDK for PHP.
 
 
 Minimum requirements
