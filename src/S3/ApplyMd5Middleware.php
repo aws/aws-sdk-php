@@ -3,8 +3,8 @@ namespace Aws\S3;
 
 use Aws\CommandInterface;
 use Aws\Exception\CouldNotCreateChecksumException;
+use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\RequestInterface;
-use GuzzleHttp\Stream\Utils;
 
 /**
  * Apply required or optional MD5s to requests before sending.

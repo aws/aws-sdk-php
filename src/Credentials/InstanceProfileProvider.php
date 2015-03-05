@@ -64,7 +64,7 @@ class InstanceProfileProvider
 
         return new RefreshableCredentials(function () {
             $response = $this->request("meta-data/iam/security-credentials/$this->profile");
-            $result = \GuzzleHttp\json_decode($response, true);
+            $result = json_decode($response, true);
             if ($result['Code'] !== 'Success') {
                 throw new CredentialsException('Unexpected instance profile response'
                     . " code: {$result['Code']}");

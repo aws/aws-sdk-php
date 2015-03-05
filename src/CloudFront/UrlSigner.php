@@ -1,8 +1,8 @@
 <?php
 namespace Aws\CloudFront;
 
-use GuzzleHttp\Query;
-use GuzzleHttp\Url;
+use GuzzleHttp\Psr7\Uri;
+use Psr\Http\Message\UriInterface;
 
 /**
  * Creates signed URLs for Amazon CloudFront resources.
@@ -78,15 +78,17 @@ class UrlSigner
         }
 
         $policy = str_replace(' ', '', $policy);
-        $url = Url::fromString($scheme . '://' . $urlSections[1]);
-        $this->prepareQuery($isCustom, $policy, $url->getQuery(), $expires);
+        $uri = new Uri($scheme . '://' . $urlSections[1]);
+        parse_str($uri->getQuery(), $query);
+        $this->prepareQuery($isCustom, $policy, $query, $expires);
+        $uri = $uri->withQuery(http_build_query($query, null, '&', PHP_QUERY_RFC3986));
 
         return $scheme === 'rtmp'
-            ? $this->createRtmpUrl($url)
-            : (string) $url;
+            ? $this->createRtmpUrl($uri)
+            : (string) $uri;
     }
 
-    private function prepareQuery($isCustom, $policy, Query $query, $expires)
+    private function prepareQuery($isCustom, $policy, array $query, $expires)
     {
         if ($isCustom) {
             // Custom policies require the encoded policy be specified in query
@@ -133,6 +135,12 @@ class UrlSigner
         return $signedPolicy;
     }
 
+    /**
+     * @param $scheme
+     * @param $url
+     *
+     * @return string
+     */
     private function createResource($scheme, $url)
     {
         switch ($scheme) {
@@ -159,13 +167,15 @@ class UrlSigner
             . "Scheme must be one of: http, https, or rtmp");
     }
 
-    private function createRtmpUrl(Url $url)
+    private function createRtmpUrl(UriInterface $uri)
     {
         // Use a relative URL when creating Flash player URLs
-        $url->getQuery()->setEncodingType(false);
-        $url->setScheme(null);
-        $url->setHost(null);
+        $result = $uri->getPath();
 
-        return substr($url, 1);
+        if ($query = $uri->getQuery()) {
+            $result .= $query;
+        }
+
+        return $result;
     }
 }

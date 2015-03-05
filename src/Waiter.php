@@ -99,8 +99,6 @@ class Waiter extends Promise
             // $state = $this->determineState($result);
             static $tries = 0;
             $state = ++$tries < 5 ? 'retry' : 'success';
-            echo 'Try: ' . $tries . "\n" . xdebug_get_stack_depth() . "\n";
-            sleep(1);
 
             if ($state === 'success') {
                 $this->resolve($result);

@@ -34,11 +34,6 @@ abstract class RestSerializer
         $this->endpoint = new Uri($endpoint);
     }
 
-    public function getEvents()
-    {
-        return ['prepared' => ['onPrepare']];
-    }
-
     /**
      * @param CommandInterface $command Command to serialized
      *

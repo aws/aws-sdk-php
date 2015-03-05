@@ -2,7 +2,6 @@
 namespace Aws\CloudTrail;
 
 use Aws\S3\S3Client;
-use GuzzleHttp\Collection;
 
 /**
  * The `Aws\CloudTrail\LogRecordIterator` provides an easy way to iterate over
@@ -107,22 +106,13 @@ class LogRecordIterator implements \OuterIterator
     }
 
     /**
-     * Returns the current log record as a Guzzle Collection object.
+     * Returns the current log record as an array.
      *
-     * This object behaves like an associative array except that it returns
-     * `null` on non-existent keys instead of causing an error. See the linked
-     * resources for the schema of the log record data and how to work with
-     * Guzzle Collections.
-     *
-     * @return Collection
-     * @link http://docs.aws.amazon.com/awscloudtrail/latest/userguide/eventreference.html
-     * @link http://api.guzzlephp.org/class-Guzzle.Common.Collection.html
+     * @return array|false
      */
     public function current()
     {
-        return $this->valid()
-            ? new Collection($this->records[$this->recordIndex])
-            : false;
+        return $this->valid() ? $this->records[$this->recordIndex] : false;
     }
 
     public function next()

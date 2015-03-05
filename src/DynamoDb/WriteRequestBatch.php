@@ -1,6 +1,8 @@
 <?php
 namespace Aws\DynamoDb;
 
+use Aws\CommandInterface;
+
 /**
  * The WriteRequestBatch is an object that is capable of efficiently sending
  * DynamoDB BatchWriteItem requests from queued up put and delete item requests.

@@ -10,13 +10,9 @@ class Result implements ResultInterface
 {
     use HasDataTrait;
 
-    /** @var string|null */
-    private $uri;
-
-    public function __construct(array $data, $uri = null)
+    public function __construct(array $data)
     {
         $this->data = $data;
-        $this->uri = $uri;
     }
 
     public function hasKey($name)

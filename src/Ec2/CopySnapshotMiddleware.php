@@ -5,7 +5,7 @@ use Aws\AwsClientInterface;
 use Aws\Signature\SignatureV4;
 use Aws\Endpoint\EndpointProvider;
 use Aws\CommandInterface;
-use GuzzleHttp\Uri;
+use GuzzleHttp\Psr7\Uri;
 
 /**
  * @internal Adds computed values to the CopySnapshot operation.
@@ -43,7 +43,7 @@ class CopySnapshotMiddleware
         CommandInterface $cmd
     ) {
         $newCmd = $client->getCommand('CopySnapshot', $cmd->toArray());
-        $newCmd->getHandlerStack()->remove($this);
+        $newCmd->getHandlerList()->remove($this);
         // Serialize a request for the CopySnapshot operation.
         $request = $client->serialize($newCmd);
 

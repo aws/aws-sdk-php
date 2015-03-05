@@ -2,9 +2,9 @@
 namespace Aws\Multipart;
 
 use Aws\AwsClientInterface;
-use GuzzleHttp\Stream\LimitStream;
-use GuzzleHttp\Stream\Stream;
-use GuzzleHttp\Stream\StreamInterface;
+use GuzzleHttp\Psr7\LimitStream;
+use GuzzleHttp\Psr7\Stream;
+use Psr\Http\Message\StreamableInterface;
 
 /**
  * Base class for the service-specific UploadBuilders
@@ -22,7 +22,7 @@ abstract class AbstractUploadBuilder
     /** @var UploadState State of the transfer. */
     protected $state;
 
-    /** @var StreamInterface Source of the data. */
+    /** @var StreamableInterface Source of the data. */
     protected $source;
 
     /** @var int Size, in bytes, of each part. */
@@ -74,9 +74,9 @@ abstract class AbstractUploadBuilder
     /**
      * Set the data source of the transfer.
      *
-     * @param resource|string|StreamInterface $source Source of the upload.
+     * @param resource|string|StreamableInterface $source Source of the upload.
      *     Pass a string to transfer from a file on disk. You can also stream
-     *     from a resource returned from fopen or a Guzzle StreamInterface.
+     *     from a resource returned from fopen or a Guzzle StreamableInterface.
      *
      * @return static
      * @throws \InvalidArgumentException when the source cannot be opened/read.
@@ -165,11 +165,11 @@ abstract class AbstractUploadBuilder
      * Create a stream for a part that starts at the current position and
      * has a length of the upload part size (or less with the final part).
      *
-     * @param StreamInterface $stream
+     * @param StreamableInterface $stream
      *
      * @return LimitStream
      */
-    protected function limitPartStream(StreamInterface $stream)
+    protected function limitPartStream(StreamableInterface $stream)
     {
         // Limit what is read from the stream to the part size.
         return new LimitStream(

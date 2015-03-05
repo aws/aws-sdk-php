@@ -5,10 +5,9 @@ use Aws\Exception\AwsException;
 use Aws\Api\Service;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Signature\SignatureProvider;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\Message\Response;
-use GuzzleHttp\Uri;
-use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Message\RequestInterface;
+use GuzzleHttp\Promise\FulfilledPromise;
+use GuzzleHttp\Psr7\Uri;
 
 /**
  * Default AWS client implementation
@@ -27,14 +26,11 @@ class AwsClient implements AwsClientInterface
     /** @var Service */
     private $api;
 
-    /** @var string */
-    private $commandException = 'Aws\Exception\AwsException';
-
     /** @var callable */
     private $signatureProvider;
 
-    /** @var HandlerStack */
-    private $handlerStack;
+    /** @var HandlerList */
+    private $handlerList;
 
     /** @var array*/
     private $defaultRequestOptions;
@@ -56,18 +52,15 @@ class AwsClient implements AwsClientInterface
      *   type, service, and version argument, and returns an array of
      *   corresponding configuration data. The type value can be one of api,
      *   waiter, or paginator.
-     * - client: (GuzzleHttp\ClientInterface) Optional Guzzle client used to
-     *   transfer requests over the wire. If you do not specify a client, the
-     *   SDK will create a new client that uses a shared Ring HTTP handler
-     *   with other clients.
      * - credentials:
-     *   (array|Aws\Credentials\CredentialsInterface|bool|callable) An
-     *   Aws\Credentials\CredentialsInterface object to use with each, an
-     *   associative array of "key", "secret", and "token" key value pairs,
-     *   `false` to utilize null credentials, or a callable credentials
-     *   provider function to create credentials using a function. If no
-     *   credentials are provided, the SDK will attempt to load them from the
-     *   environment.
+     *   (Aws\Credentials\CredentialsInterface|array|bool|callable) Specifies
+     *   the credentials used to sign requests. Provide an
+     *   Aws\Credentials\CredentialsInterface object, an associative array of
+     *   "key", "secret", and an optional "token" key, `false` to use null
+     *   credentials, or a callable credentials provider used to create
+     *   credentials or return null. See Aws\Credentials\CredentialProvider for
+     *   a list of built-in credentials providers. If no credentials are
+     *   provided, the SDK will attempt to load them from the environment.
      * - debug: (bool|resource) Set to true to display debug information
      *   when sending requests. Provide a stream resource to write debug
      *   information to a specific resource.
@@ -75,13 +68,20 @@ class AwsClient implements AwsClientInterface
      *   required when connecting to a custom endpoint (e.g., a local version
      *   of S3).
      * - endpoint_provider: (callable) An optional PHP callable that
-     *   accepts a hash of options including a service and region key and
-     *   returns a hash of endpoint data, of which the endpoint key is
-     *   required.
-     * - http: (array) Set to an array of Guzzle client request options
-     *   (e.g., proxy, verify, etc.). See
-     *   http://docs.guzzlephp.org/en/latest/clients.html#request-options for a
-     *   list of available options.
+     *   accepts a hash of options including a "service" and "region" key and
+     *   returns NULL or a hash of endpoint data, of which the "endpoint" key
+     *   is required. See Aws\Endpoint\EndpointProvider for a list of built-in
+     *   providers.
+     * - handler: (callable) A handler that accepts a command object,
+     *   request object and returns a promise that is fulfilled with a result
+     *   object or an AWS exception. A handler does not accept a next handler
+     *   as it is terminal and expected to fulfill a request.
+     * - http: (array, default=array(0)) Set to an array of SDK request
+     *   options to apply to each request (e.g., proxy, verify, etc.).
+     * - http_handler: (callable) An HTTP handler that accepts a request
+     *   object and returns a promise that is fulfilled with a response object
+     *   or array of exception data. This option supersedes any provided
+     *   "handler" option.
      * - profile: (string) Allows you to specify which profile to use when
      *   credentials are created from the AWS credentials file in your HOME
      *   directory. This setting overrides the AWS_PROFILE environment
@@ -92,19 +92,19 @@ class AwsClient implements AwsClientInterface
      *   available regions.
      * - retries: (int, default=int(3)) Configures the maximum number of
      *   allowed retries for a client (pass 0 to disable retries).
-     * - retry_logger: (string|Psr\Log\LoggerInterface) When the string "debug"
-     *   is provided, all retries will be logged to STDOUT. Provide a PSR-3
-     *   logger to log retries to a specific logger instance.
-     * - ringphp_handler: (callable) RingPHP handler used to transfer HTTP
-     *   requests (see http://ringphp.readthedocs.org/en/latest/).
+     * - retry_logger: (string|Psr\Log\LoggerInterface) When the string
+     *   "debug" is provided, all retries will be logged to STDOUT. Provide a
+     *   PSR-3 logger to log retries to a specific logger instance.
      * - scheme: (string, default=string(5) "https") URI scheme to use when
-     *   connecting connect.
-     * - service: (string, required) Name of the service to utilize. This
-     *   value will be supplied by default.
+     *   connecting connect. The SDK will utilize "https" endpoints (i.e.,
+     *   utilize SSL/TLS connections) by default. You can attempt to connect to
+     *   a service over an unencrypted "http" endpoint by setting ``scheme`` to
+     *   "http".
      * - signature_provider: (callable) A callable that accepts a signature
-     *   version name (e.g., v4, s3), a service name, and region, and returns a
-     *   SignatureInterface object. This provider is used to create signers
-     *   utilized by the client.
+     *   version name (e.g., "v4", "s3"), a service name, and region, and
+     *   returns a SignatureInterface object or null. This provider is used to
+     *   create signers utilized by the client. See
+     *   Aws\Signature\SignatureProvider for a list of built-in providers
      * - signature_version: (string) A string representing a custom
      *   signature version to use with a service (e.g., v4, s3, v2). Note that
      *   per/operation signature version MAY override this requested signature
@@ -120,32 +120,28 @@ class AwsClient implements AwsClientInterface
      */
     public function __construct(array $args)
     {
-        $service = $this->parseClass();
+        list($service, $exceptionClass) = $this->parseClass();
         $withResolved = null;
 
         if (!isset($args['service'])) {
             $args['service'] = $service;
         }
 
-        $this->handlerStack = new HandlerStack();
+        if (!isset($args['exception_class'])) {
+            $args['exception_class'] = $exceptionClass;
+        }
+
+        $this->handlerList = new HandlerList();
         $resolver = new ClientResolver(static::getArguments());
-        $config = $resolver->resolve($args, $this->handlerStack);
+        $config = $resolver->resolve($args, $this->handlerList);
         $this->api = $config['api'];
         $this->signatureProvider = $config['signature_provider'];
         $this->endpoint = new Uri($config['endpoint']);
         $this->credentials = $config['credentials'];
         $this->region = isset($config['region']) ? $config['region'] : null;
-        $this->httpClient = $config['client'];
         $this->config = $config['config'];
         $this->defaultRequestOptions = $config['http'];
-
-        // Make sure the user agent is prefixed by the SDK version.
-        $this->httpClient->setDefaultOption('allow_redirects', false);
-        $this->httpClient->setDefaultOption(
-            'headers/User-Agent',
-            'aws-sdk-php/' . Sdk::VERSION . ' ' . \GuzzleHttp\default_user_agent()
-        );
-
+        $this->defaultRequestOptions['headers']['User-Agent'] = 'aws-sdk-php/' . Sdk::VERSION;
         $this->addSignatureMiddleware();
 
         if (isset($args['with_resolved'])) {
@@ -154,9 +150,9 @@ class AwsClient implements AwsClientInterface
         }
     }
 
-    public function getHandlerStack()
+    public function getHandlerList()
     {
-        return $this->handlerStack;
+        return $this->handlerList;
     }
 
     public function __call($name, array $args)
@@ -169,7 +165,7 @@ class AwsClient implements AwsClientInterface
     {
         return $keyOrPath === null
             ? $this->config
-            : \GuzzleHttp\get_path($this->config, $keyOrPath);
+            : \GuzzleHttp\Utils::getPath($this->config, $keyOrPath);
     }
 
     public function executeAll($commands, array $options = [])
@@ -207,7 +203,7 @@ class AwsClient implements AwsClientInterface
      */
     public function execute(CommandInterface $command)
     {
-        $handler = $command->getHandlerStack()->resolve();
+        $handler = $command->getHandlerList()->resolve();
         $promise = $handler($command);
 
         return empty($command['@future']) ? $promise->wait() : $promise;
@@ -224,13 +220,12 @@ class AwsClient implements AwsClientInterface
         }
 
         if (!isset($args['@http'])) {
-            $http = $this->defaultRequestOptions;
+            $args['@http'] = $this->defaultRequestOptions;
         } else {
-            $http = $args['@http'] + $this->defaultRequestOptions;
-            unset($args['@http']);
+            $args['@http'] += $this->defaultRequestOptions;
         }
 
-        return new Command($name, $args, $http, clone $this->getHandlerStack());
+        return new Command($name, $args, clone $this->getHandlerList());
     }
 
     public function getIterator($name, array $args = [])
@@ -278,32 +273,17 @@ class AwsClient implements AwsClientInterface
     public function serialize(CommandInterface $command)
     {
         $request = null;
-        // Return a mock response.
-        $command->setRequestOption(
-            'handler',
-            new MockHandler(function ($req) use (&$request) {
-                $request = $req;
-                return new Response();
-            })
-        );
         $command['@future'] = true;
+        // Return a mock response.
+        $command->getHandlerList()->setHandler(
+            function (CommandInterface $cmd, RequestInterface $req) use (&$request) {
+                $request = $req;
+                return new FulfilledPromise(new Result([]));
+            }
+        );
         $this->execute($command)->wait();
 
         return $request;
-    }
-
-    /**
-     * Wraps an exception in an AWS specific exception.
-     *
-     * @return AwsException
-     */
-    protected function createException(\Exception $e)
-    {
-        if ($e instanceof AwsException) {
-            return $e;
-        }
-
-        die("not implemented");
     }
 
     /**
@@ -318,9 +298,9 @@ class AwsClient implements AwsClientInterface
 
     /**
      * Parse the class name and setup the custom exception class of the client
-     * and return the "service" name of the client.
+     * and return the "service" name of the client and "exception_class".
      *
-     * @return string
+     * @return array
      */
     private function parseClass()
     {
@@ -331,16 +311,18 @@ class AwsClient implements AwsClientInterface
         }
 
         $service = substr($klass, strrpos($klass, '\\') + 1, -6);
-        $this->commandException = "Aws\\{$service}\\Exception\\{$service}Exception";
 
-        return strtolower($service);
+        return [
+            strtolower($service),
+            "Aws\\{$service}\\Exception\\{$service}Exception"
+        ];
     }
 
     private function addSignatureMiddleware()
     {
         // Sign requests. This may need to be modified later to support
         // variable signatures per/operation.
-        $this->handlerStack->push(
+        $this->handlerList->append(
             Middleware::signer(
                 $this->credentials,
                 Utils::constantly(SignatureProvider::resolve(
@@ -349,7 +331,8 @@ class AwsClient implements AwsClientInterface
                     $this->api->getSigningName(),
                     $this->region
                 ))
-            )
+            ),
+            ['step' => 'sign']
         );
     }
 

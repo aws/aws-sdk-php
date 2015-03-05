@@ -2,7 +2,7 @@
 namespace Aws\CloudSearchDomain;
 
 use Aws\AwsClient;
-use GuzzleHttp\Url;
+use GuzzleHttp\Psr7\Uri;
 
 /**
  * This client is used to search and upload documents to an **Amazon CloudSearch** Domain.
@@ -16,7 +16,7 @@ class CloudSearchDomainClient extends AwsClient
         $args['region']['default'] = function (array $args) {
             // Determine the region from the provided endpoint.
             // (e.g. http://search-blah.{region}.cloudsearch.amazonaws.com)
-            return explode('.', Url::fromString($args['endpoint']))[1];
+            return explode('.', new Uri($args['endpoint']))[1];
         };
 
         return $args;

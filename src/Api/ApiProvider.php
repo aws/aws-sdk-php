@@ -2,7 +2,6 @@
 namespace Aws\Api;
 
 use Aws\Exception\UnresolvedApiException;
-use GuzzleHttp\Utils;
 
 /**
  * API providers.
@@ -244,7 +243,7 @@ class ApiProvider
 
         $path = "{$this->modelsDir}/{$service}-{$version}.{$type}.json";
         if (file_exists($path)) {
-            return Utils::jsonDecode(file_get_contents($path), true);
+            return json_decode(file_get_contents($path), true);
         }
 
         return null;

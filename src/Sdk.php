@@ -75,14 +75,8 @@ class Sdk
     {
         $this->args = $args;
 
-        if (!isset($args['client'])) {
-            $this->args['client'] = static function () {
-                static $handler;
-                if (!$handler) {
-                    $handler = \GuzzleHttp\default_handler();
-                }
-                return new Client(['handler' => $handler]);
-            };
+        if (!isset($args['handler']) && !isset($args['http_handler'])) {
+            // $this->args['http_handler'] = GuzzleBridge::getDefaultHttpHandlerFn();
         }
     }
 

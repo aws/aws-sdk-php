@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Exception;
 
-use Aws\ResultInterface;
 use Psr\Http\Message\ResponseInterface;
 use Aws\CommandInterface;
 
@@ -10,37 +9,45 @@ use Aws\CommandInterface;
  */
 class AwsException extends \RuntimeException
 {
+    /** @var ResponseInterface */
     private $response;
     private $command;
     private $requestId;
     private $errorType;
     private $errorCode;
+    private $connectionError;
 
     /**
-     * @param string            $message   Exception message
-     * @param CommandInterface  $command   Command that was sent
-     * @param ResultInterface   $result    Result that was parsed.
-     * @param ResponseInterface $response  Response received (if any)
-     * @param array             $context   Exception context.
-     * @param \Exception        $previous  Previous exception (if any)
+     * @param string           $message Exception message
+     * @param CommandInterface $command
+     * @param array            $context Exception context
+     * @param \Exception       $previous  Previous exception (if any)
      */
     public function __construct(
         $message,
         CommandInterface $command,
-        ResultInterface $result = null,
-        ResponseInterface $response = null,
-        array $context = [],
+        array $context,
         \Exception $previous = null
     ) {
         $this->command = $command;
-        $this->response = $response;
-        $this->result = $result;
+        $this->response = isset($context['response']) ? $context['response'] : null;
         $this->requestId = isset($context['request_id'])
             ? $context['request_id']
             : null;
         $this->errorType = isset($context['type']) ? $context['type'] : null;
         $this->errorCode = isset($context['code']) ? $context['code'] : null;
+        $this->connectionError = !empty($context['connection_error']);
         parent::__construct($message, 0, $previous);
+    }
+
+    /**
+     * Returns true if this is a connection error.
+     *
+     * @return bool
+     */
+    public function isConnectionError()
+    {
+        return $this->connectionError;
     }
 
     /**

@@ -1,10 +1,8 @@
 <?php
 namespace Aws;
 
-use GuzzleHttp\HandlerStack;
-
 /**
- * AWS command.
+ * AWS command object.
  */
 class Command implements CommandInterface
 {
@@ -13,32 +11,24 @@ class Command implements CommandInterface
     /** @var string */
     private $name;
 
-    /** @var HandlerStack */
-    private $handlerStack;
-
-    /** @var array */
-    private $requestOptions;
+    /** @var HandlerList */
+    private $handlerList;
 
     /**
      * Accepts an associative array of command options, including:
      *
      * - @future: (bool) Mark the command as a future command.
+     * - @http: (array) Associative array of transfer options.
      *
-     * @param string       $name           Name of the command
-     * @param array        $args           Arguments to pass to the command
-     * @param array        $requestOptions HTTP request options.
-     * @param HandlerStack $stack          Handler stack
+     * @param string      $name           Name of the command
+     * @param array       $args           Arguments to pass to the command
+     * @param HandlerList $list           Handler list
      */
-    public function __construct(
-        $name,
-        array $args = [],
-        array $requestOptions = [],
-        HandlerStack $stack
-    ) {
+    public function __construct($name, array $args = [], HandlerList $list = null)
+    {
         $this->name = $name;
         $this->data = $args;
-        $this->handlerStack = $stack;
-        $this->requestOptions = $requestOptions;
+        $this->handlerList = $list;
     }
 
     public function getName()
@@ -51,27 +41,14 @@ class Command implements CommandInterface
         return array_key_exists($name, $this->data);
     }
 
-    public function getHandlerStack()
+    public function getHandlerList()
     {
-        return $this->handlerStack;
+        return $this->handlerList;
     }
 
-    public function getRequestHandlerStack()
+    /** @deprecated */
+    public function get($name)
     {
-        if (!isset($this->requestOptions['stack'])) {
-            $this->requestOptions['stack'] = new HandlerStack();
-        }
-
-        return $this->requestOptions['stack'];
-    }
-
-    public function setRequestOption($path, $value)
-    {
-        \GuzzleHttp\set_path($this->requestOptions, $path, $value);
-    }
-
-    public function getRequestOptions()
-    {
-        return $this->requestOptions;
+        return $this[$name];
     }
 }

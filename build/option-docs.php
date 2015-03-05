@@ -6,7 +6,7 @@ use GuzzleHttp\Ring\Core;
 function generateDocblock(array $args)
 {
     foreach ($args as $name => $value) {
-        if (!isset($value['doc'])) {
+        if (!isset($value['doc']) || !empty($value['internal'])) {
             continue;
         }
 

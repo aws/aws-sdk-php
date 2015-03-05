@@ -29,9 +29,6 @@ class ResultPaginator implements \Iterator
     /** @var int Number of operations/requests performed. */
     private $requestCount = 0;
 
-    /** @var array Event listeners. */
-    private $listeners;
-
     /**
      * @param AwsClientInterface $client
      * @param string             $operation

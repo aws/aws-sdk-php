@@ -31,7 +31,7 @@ class JsonRpcParser extends AbstractParser
 
         return new Result($this->parser->parse(
             $operation->getOutput(),
-            \GuzzleHttp\json_decode($response->getBody(), true)
+            json_decode($response->getBody(), true)
         ));
     }
 }

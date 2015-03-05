@@ -8,7 +8,7 @@ namespace Aws;
 trait HasDataTrait
 {
     /** @var array */
-    protected $data = [];
+    private $data = [];
 
     public function getIterator()
     {
@@ -55,7 +55,7 @@ trait HasDataTrait
      */
     public function getPath($path)
     {
-        return \GuzzleHttp\get_path($this->data, $path);
+        return \GuzzleHttp\Utils::getPath($this->data, $path);
     }
 
     /**
@@ -70,6 +70,6 @@ trait HasDataTrait
      */
     public function setPath($path, $value)
     {
-        \GuzzleHttp\set_path($this->data, $path, $value);
+        \GuzzleHttp\Utils::setPath($this->data, $path, $value);
     }
 }

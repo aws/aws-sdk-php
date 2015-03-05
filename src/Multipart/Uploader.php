@@ -5,8 +5,7 @@ use Aws\AwsClientInterface;
 use Aws\Exception\AwsException;
 use Aws\Exception\MultipartUploadException;
 use Aws\Result;
-use GuzzleHttp\Command\CommandInterface as Command;
-use GuzzleHttp\Command\Event\ProcessEvent;
+use Aws\CommandInterface;
 use transducers as t;
 
 /**
@@ -188,7 +187,7 @@ class Uploader
      * @param string $operation      Name of the operation (e.g., UploadPart).
      * @param array  $computedParams Extra params not stored in the Uploader.
      *
-     * @return Command
+     * @return CommandInterface
      */
     private function createCommand($operation, array $computedParams = [])
     {

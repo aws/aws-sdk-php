@@ -3,7 +3,6 @@ namespace Aws;
 
 use Aws\Api\Service;
 use Aws\Credentials\CredentialsInterface;
-use Aws\Signature\SignatureInterface;
 use GuzzleHttp\Psr7\LazyOpenStream;
 use Psr\Http\Message\RequestInterface;
 
@@ -29,7 +28,10 @@ final class Middleware
             $bodyParameter,
             $sourceParameter
         ) {
-            return function (CommandInterface $command) use (
+            return function (
+                CommandInterface $command,
+                RequestInterface $request = null)
+            use (
                 $handler,
                 $api,
                 $bodyParameter,
@@ -45,7 +47,7 @@ final class Middleware
                     unset($command[$sourceParameter]);
                 }
 
-                return $handler($command);
+                return $handler($command, $request);
             };
         };
     }
@@ -69,14 +71,33 @@ final class Middleware
     public static function validation(Service $api, callable $validator)
     {
         return function (callable $handler) use ($api, $validator) {
-            return function (CommandInterface $command) use ($api, $validator, $handler) {
+            return function (
+                CommandInterface $command,
+                RequestInterface $request = null
+            ) use ($api, $validator, $handler) {
                 $operation = $api->getOperation($command->getName());
                 $validator(
                     $command->getName(),
                     $operation->getInput(),
                     $command->toArray()
                 );
-                return $handler($command);
+                return $handler($command, $request);
+            };
+        };
+    }
+
+    /**
+     * Builds an HTTP request for a command.
+     *
+     * @param callable $serializer Function used to serialize a request for a
+     *                             command.
+     * @return callable
+     */
+    public static function requestBuilder(callable $serializer)
+    {
+        return function (callable $handler) use ($serializer) {
+            return function (CommandInterface $command) use ($serializer, $handler) {
+                return $handler($command, $serializer($command));
             };
         };
     }
@@ -88,30 +109,17 @@ final class Middleware
      * @param callable             $signatureFunction Function that accepts a
      *                                                Command object and returns
      *                                                a SignatureInterface.
-     *
      * @return callable
      */
     public static function signer(CredentialsInterface $creds, callable $signatureFunction)
     {
         return function (callable $handler) use ($signatureFunction, $creds) {
-            return function (CommandInterface $command) use ($handler, $signatureFunction, $creds) {
-                $signature = $signatureFunction($command);
-                $command->getRequestHandlerStack()->push(
-                    self::createSignRequestMiddleware($signature, $creds)
-                );
-                return $handler($command);
-            };
-        };
-    }
-
-    private static function createSignRequestMiddleware(
-        SignatureInterface $signer,
-        CredentialsInterface $creds
-    ) {
-        return function (callable $handler) use ($signer, $creds) {
-            return function (RequestInterface $request, array $options) use ($handler, $signer, $creds) {
-                $request = $signer->signRequest($request, $creds);
-                return $handler($request, $options);
+            return function (
+                CommandInterface $command,
+                RequestInterface $request
+            ) use ($handler, $signatureFunction, $creds) {
+                $signer = $signatureFunction($command);
+                return $handler($command, $signer->signRequest($request, $creds));
             };
         };
     }

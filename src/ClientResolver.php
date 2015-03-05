@@ -1,14 +1,13 @@
 <?php
 namespace Aws;
 
-use Aws\Api\Validator;
 use InvalidArgumentException as IAE;
+use Aws\Api\Validator;
 use Aws\Api\ApiProvider;
 use Aws\Api\Service;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Credentials\NullCredentials;
-use Aws\Api\FilesystemApiProvider;
 use Aws\Signature\SignatureProvider;
 use Aws\Endpoint\EndpointProvider;
 use Aws\Credentials\CredentialProvider;
@@ -38,6 +37,14 @@ class ClientResolver
             'valid'    => ['string'],
             'doc'      => 'Name of the service to utilize. This value will be supplied by default when using one of the SDK clients (e.g., Aws\\S3\\S3Client).',
             'required' => true,
+            'internal' => true
+        ],
+        'exception_class' => [
+            'type'     => 'value',
+            'valid'    => ['string'],
+            'doc'      => 'Exception class to create when an error occurs.',
+            'required' => true,
+            'internal' => true
         ],
         'scheme' => [
             'type'     => 'value',
@@ -101,13 +108,6 @@ class ClientResolver
             'fn'      => [__CLASS__, '_apply_credentials'],
             'default' => [__CLASS__, '_default_credentials'],
         ],
-        'client' => [
-            'type'    => 'value',
-            'valid'   => ['callable', 'GuzzleHttp\ClientInterface'],
-            'default' => [__CLASS__, '_default_client'],
-            'fn'      => [__CLASS__, '_apply_client'],
-            'doc'     => 'A function that accepts an array of options and returns a GuzzleHttp\ClientInterface, or a Muzzle client used to transfer requests over the wire.'
-        ],
         'retry_logger' => [
             'type'  => 'value',
             'valid' => ['string', 'Psr\Log\LoggerInterface'],
@@ -137,14 +137,20 @@ class ClientResolver
             'type'    => 'value',
             'valid'   => ['array'],
             'default' => [],
-            'doc'     => 'Set to an array of Guzzle client request options to apply to each request (e.g., proxy, verify, etc.). See http://docs.guzzlephp.org/en/latest/clients.html#request-options for a list of available options.',
+            'doc'     => 'Set to an array of SDK request options to apply to each request (e.g., proxy, verify, etc.).',
+        ],
+        'http_handler' => [
+            'type'    => 'value',
+            'valid'   => ['callable'],
+            'doc'     => 'An HTTP handler that accepts a request object and returns a promise that is fulfilled with a response object or array of exception data. This option supersedes any provided "handler" option.',
+            'fn'      => [__CLASS__, '_apply_http_handler'],
         ],
         'handler' => [
             'type'    => 'value',
             'valid'   => ['callable'],
-            'doc'     => 'Set to a specific HTTP handler to use when sending commands. This option supersedes any provided "client" option.',
-            'default' => [__CLASS__, '_default_handler'],
+            'doc'     => 'A handler that accepts a command object, request object and returns a promise that is fulfilled with a result object or an AWS exception. A handler does not accept a next handler as it is terminal and expected to fulfill a request.',
             'fn'      => [__CLASS__, '_apply_handler'],
+            'default' => [__CLASS__, '_default_handler']
         ]
     ];
 
@@ -190,14 +196,14 @@ class ClientResolver
     /**
      * Resolves client configuration options and attached event listeners.
      *
-     * @param array        $args  Provided constructor arguments.
-     * @param HandlerStack $stack Stack to augment.
+     * @param array       $args Provided constructor arguments.
+     * @param HandlerList $list Handler list to augment.
      *
      * @return array Returns the array of provided options.
      * @throws \InvalidArgumentException
      * @see Aws\AwsClient::__construct for a list of available options.
      */
-    public function resolve(array $args, HandlerStack $stack)
+    public function resolve(array $args, HandlerList $list)
     {
         $args['config'] = [];
         foreach ($this->argDefinitions as $key => $a) {
@@ -232,7 +238,7 @@ class ClientResolver
             // Apply the value
             is_valid:
             if (isset($a['fn'])) {
-                $a['fn']($args[$key], $args, $stack);
+                $a['fn']($args[$key], $args, $list);
             }
 
             if ($a['type'] === 'config') {
@@ -290,7 +296,7 @@ class ClientResolver
         $expected = implode('|', $this->argDefinitions[$name]['valid']);
         $msg = "Invalid configuration value "
             . "provided for \"{$name}\". Expected {$expected}, but got "
-            . \GuzzleHttp\describe_type($provided) . "\n\n"
+            . Utils::describeType($provided) . "\n\n"
             . $this->getArgMessage($name);
         throw new \InvalidArgumentException($msg);
     }
@@ -361,13 +367,16 @@ class ClientResolver
         }
     }
 
-    public static function _apply_api_provider($value, array &$args)
+    public static function _apply_api_provider($value, array &$args, HandlerList $list)
     {
         $api = new Service($value, $args['service'], $args['version']);
         $args['api'] = $api;
         $args['serializer'] = Service::createSerializer($api, $args['endpoint']);
         $args['parser'] = Service::createParser($api);
         $args['error_parser'] = Service::createErrorParser($api->getProtocol());
+        $list->prepend(Middleware::requestBuilder($args['serializer']), [
+            'step' => 'build'
+        ]);
     }
 
     public static function _apply_endpoint_provider(callable $value, array &$args)
@@ -388,21 +397,10 @@ class ClientResolver
         }
     }
 
-    public static function _apply_debug($value, $_, HandlerStack $stack)
+    public static function _apply_debug($value, $_, HandlerList $list)
     {
         if ($value !== false) {
 
-        }
-    }
-
-    public static function _apply_client($value, array &$args)
-    {
-        if (isset($args['handler'])) {
-            throw new \InvalidArgumentException('You cannot supply both a handler and client option.');
-        }
-
-        if (is_callable($value)) {
-            $args['client'] = $value($args);
         }
     }
 
@@ -411,31 +409,34 @@ class ClientResolver
         $args['credentials'] = CredentialProvider::ini($args['profile']);
     }
 
-    public static function _apply_validate($value, array &$args, HandlerStack $stack)
+    public static function _apply_validate($value, array &$args, HandlerList $list)
     {
         if ($value === true) {
-            $stack->push(Middleware::validation($args['api'], new Validator()));
+            $list->append(Middleware::validation($args['api'], new Validator()));
         }
-    }
-
-    public static function _apply_handler($value, array &$args, HandlerStack $stack)
-    {
-        $stack->setHandler($value);
     }
 
     public static function _default_handler(array $args)
     {
-        return new DefaultHttpHandler(
-            $args['client'],
-            $args['serializer'],
-            $args['parser'],
-            $args['error_parser']
-        );
+        return GuzzleBridge::getDefaultHandler();
     }
 
-    public static function _default_client (array &$args)
+    public static function _apply_handler($value, array &$args, HandlerList $list)
     {
-        return new Client();
+        $list->setHandler($value);
+    }
+
+    public static function _apply_http_handler($value, array &$args, HandlerList $list)
+    {
+        $list->setHandler(
+            new WrappedHttpHandler(
+                $value,
+                $args['parser'],
+                $args['error_parser'],
+                $args['exception_class']
+            )
+        );
+        unset($args['handler']);
     }
 
     public static function _default_credentials()

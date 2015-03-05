@@ -10,9 +10,9 @@ use Aws\Retry\ThrottlingFilter;
 use Aws\ClientResolver;
 use Aws\Retry\S3TimeoutFilter;
 use Aws\CommandInterface;
-use GuzzleHttp\Stream\Stream;
-use GuzzleHttp\Stream\Utils;
-use GuzzleHttp\Stream\AppendStream;
+use GuzzleHttp\Psr7\Stream;
+use GuzzleHttp\Psr7\Utils;
+use GuzzleHttp\Psr7\AppendStream;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamableInterface;
 

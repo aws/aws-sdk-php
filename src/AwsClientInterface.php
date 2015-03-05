@@ -127,11 +127,11 @@ interface AwsClientInterface
     public function getConfig($keyOrPath = null);
 
     /**
-     * Get the handler stack used to transfer commands.
+     * Get the handler list used to transfer commands.
      *
-     * @return HandlerStack
+     * @return HandlerList
      */
-    public function getHandlerStack();
+    public function getHandlerList();
 
     /**
      * Get a resource iterator for the specified operation.

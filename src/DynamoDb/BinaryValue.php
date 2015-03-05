@@ -1,7 +1,7 @@
 <?php
 namespace Aws\DynamoDb;
 
-use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\Psr7\Stream;
 
 /**
  * Special object to represent a DynamoDB binary (B) value.

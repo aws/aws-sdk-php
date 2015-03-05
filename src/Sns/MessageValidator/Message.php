@@ -1,9 +1,6 @@
 <?php
 namespace Aws\Sns\MessageValidator;
 
-use GuzzleHttp\Collection;
-use GuzzleHttp\Utils;
-
 class Message
 {
     private static $requiredKeys = [
@@ -16,9 +13,7 @@ class Message
     private static $signableKeys = ['Message', 'MessageId', 'Subject',
         'SubscribeURL', 'Timestamp', 'Token', 'TopicArn', 'Type'];
 
-    /**
-     * @var Collection The message data
-     */
+    /** @var array The message data */
     private $data;
 
     /**
@@ -27,7 +22,8 @@ class Message
      * @param array $data The message data
      *
      * @return Message
-     * @throws \InvalidArgumentException If a valid type is not provided or there are other required keys missing
+     * @throws \InvalidArgumentException If a valid type is not provided or
+     *     there are other required keys missing
      */
     public static function fromArray(array $data)
     {
@@ -45,7 +41,11 @@ class Message
                 : []
         );
 
-        $data = Collection::fromConfig($data, [], $requiredKeys);
+        foreach ($requiredKeys as $key) {
+            if (empty($data[$key])) {
+                throw new \InvalidArgumentException($key . ' is required');
+            }
+        }
 
         return new self($data);
     }
@@ -62,7 +62,7 @@ class Message
             throw new \RuntimeException('SNS message type header not provided.');
         }
 
-        $data = Utils::jsonDecode(file_get_contents('php://input'), true);
+        $data = json_decode(file_get_contents('php://input'), true);
 
         if (!is_array($data)) {
             throw new \RuntimeException('POST data invalid');
@@ -72,17 +72,17 @@ class Message
     }
 
     /**
-     * @param Collection $data A Collection of message data with all required keys
+     * @param array $data Message data with all required keys.
      */
-    public function __construct(Collection $data)
+    public function __construct(array $data)
     {
         $this->data = $data;
     }
 
     /**
-     * Get the entire message data as a Collection
+     * Get the entire message data as an array.
      *
-     * @return Collection
+     * @return array
      */
     public function getData()
     {
@@ -98,7 +98,7 @@ class Message
      */
     public function get($key)
     {
-        return $this->data->get($key);
+        return isset($this->data[$key]) ? $this->data[$key] : null;
     }
 
     /**
