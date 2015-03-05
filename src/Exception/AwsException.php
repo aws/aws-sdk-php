@@ -3,6 +3,7 @@ namespace Aws\Exception;
 
 use Psr\Http\Message\ResponseInterface;
 use Aws\CommandInterface;
+use Aws\ResultInterface;
 
 /**
  * Represents an AWS exception that is thrown when a command fails.
@@ -11,6 +12,7 @@ class AwsException extends \RuntimeException
 {
     /** @var ResponseInterface */
     private $response;
+    private $result;
     private $command;
     private $requestId;
     private $errorType;
@@ -37,7 +39,18 @@ class AwsException extends \RuntimeException
         $this->errorType = isset($context['type']) ? $context['type'] : null;
         $this->errorCode = isset($context['code']) ? $context['code'] : null;
         $this->connectionError = !empty($context['connection_error']);
+        $this->result = isset($context['result']) ? $context['result'] : null;
         parent::__construct($message, 0, $previous);
+    }
+
+    /**
+     * Get the result of the exception if available
+     *
+     * @return ResultInterface|null
+     */
+    public function getResult()
+    {
+        return $this->result;
     }
 
     /**

@@ -8,6 +8,8 @@ use Psr\Http\Message\RequestInterface;
  * Used to change the style in which buckets are inserted in to the URL
  * (path or virtual style) based on the context.
  *
+ * IMPORTANT: this middleware must be added after the "build" step.
+ *
  * @internal
  */
 class BucketStyleMiddleware
@@ -35,26 +37,16 @@ class BucketStyleMiddleware
         };
     }
 
-    public function __invoke(CommandInterface $command)
+    public function __invoke(CommandInterface $command, RequestInterface $request)
     {
         $nextHandler = $this->nextHandler;
         $bucket = $command['Bucket'];
 
-        if (!$bucket || isset(self::$exclusions[$command->getName()])) {
-            return $nextHandler($command);
+        if ($bucket && !isset(self::$exclusions[$command->getName()])) {
+            $request = $this->modifyRequest($request, $command);
         }
 
-        // In the first middleware, modify the request so that the host or
-        // path is changed based on the bucket.
-        $command->getRequestHandlerStack()->unshift(
-            function (callable $handler) use ($command) {
-                return function (RequestInterface $request, array $options) use ($command, $handler) {
-                    return $handler($this->modifyRequest($request, $command), $options);
-                };
-            }
-        );
-
-        return $nextHandler($command);
+        return $nextHandler($command, $request);
     }
 
     private function removeBucketFromPath($path, $bucket)

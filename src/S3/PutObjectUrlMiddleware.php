@@ -3,6 +3,7 @@ namespace Aws\S3;
 
 use Aws\CommandInterface;
 use Aws\ResultInterface;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * Injects ObjectURL into the result of the PutObject operation.
@@ -34,10 +35,10 @@ class PutObjectUrlMiddleware
         $this->nextHandler = $nextHandler;
     }
 
-    public function __invoke(CommandInterface $command)
+    public function __invoke(CommandInterface $command, RequestInterface $request = null)
     {
         $next = $this->nextHandler;
-        return $next($command)->then(
+        return $next($command, $request)->then(
             function (ResultInterface $result) use ($command) {
                 $name = $command->getName();
                 if ($name === 'PutObject' || $name === 'CopyObject') {

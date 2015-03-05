@@ -129,6 +129,9 @@ interface AwsClientInterface
     /**
      * Get the handler list used to transfer commands.
      *
+     * This list can be modified to add middleware or to change the underlying
+     * handler used to send HTTP requests.
+     *
      * @return HandlerList
      */
     public function getHandlerList();

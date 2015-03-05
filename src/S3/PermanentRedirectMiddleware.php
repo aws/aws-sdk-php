@@ -4,6 +4,7 @@ namespace Aws\S3;
 use Aws\CommandInterface;
 use Aws\ResultInterface;
 use Aws\S3\Exception\PermanentRedirectException;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * Throws a PermanentRedirectException exception when a 301 redirect is
@@ -36,17 +37,17 @@ class PermanentRedirectMiddleware
         $this->nextHandler = $nextHandler;
     }
 
-    public function __invoke(CommandInterface $command)
+    public function __invoke(CommandInterface $command, RequestInterface $request = null)
     {
         $next = $this->nextHandler;
-        return $next($command)->then(
+        return $next($command, $request)->then(
             function (ResultInterface $result) use ($command) {
                 if ($result['@status'] == 301) {
                     throw new PermanentRedirectException(
                         'Encountered a permanent redirect while requesting '
                         . $result['@effectiveUri'],
                         $command,
-                        $result
+                        ['result' => $result]
                     );
                 }
                 return $result;

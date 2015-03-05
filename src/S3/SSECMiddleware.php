@@ -2,6 +2,7 @@
 namespace Aws\S3;
 
 use Aws\CommandInterface;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * Simplifies the SSE-C process by encoding and hashing the key.
@@ -28,7 +29,7 @@ class SSECMiddleware
         };
     }
 
-    public function __invoke(CommandInterface $command)
+    public function __invoke(CommandInterface $command, RequestInterface $request = null)
     {
         // Allows only HTTPS connections when using SSE-C
         if ($command['SSECustomerKey'] ||
@@ -51,7 +52,7 @@ class SSECMiddleware
         }
 
         $f = $this->nextHandler;
-        return $f($command);
+        return $f($command, $request);
     }
 
     private function prepareSseParams(

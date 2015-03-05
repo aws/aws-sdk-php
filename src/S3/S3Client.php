@@ -2,7 +2,7 @@
 namespace Aws\S3;
 
 use Aws\AwsClient;
-use Aws\HandlerStack;
+use Aws\HandlerList;
 use Aws\Middleware;
 use Aws\S3\Exception\S3Exception;
 use Aws\Result;
@@ -40,14 +40,14 @@ class S3Client extends AwsClient
                 'doc'     => 'Set to true to send requests using path style '
                            . 'bucket addressing (e.g., '
                            . 'https://s3.amazonaws.com/bucket/key).',
-                'fn'      => function ($value, $_, HandlerStack $stack) {
+                'fn'      => function ($value, $_, HandlerList $stack) {
                     if ($value === true) {
-                        $stack->push(function (callable $handler) {
-                            return function (CommandInterface $command) use ($handler) {
-                                $command['PathStyle'] = true;
-                                return $handler($command);
+                        $stack->append(function (callable $handler) {
+                            return function ($cmd) use ($handler) {
+                                $cmd['PathStyle'] = true;
+                                return $handler($cmd);
                             };
-                        });
+                        }, ['step' => 'init']);
                     }
                 },
             ],
@@ -95,13 +95,13 @@ class S3Client extends AwsClient
     public function __construct(array $args)
     {
         parent::__construct($args);
-        $stack = $this->getHandlerStack();
-        $stack->push(SSECMiddleware::create($this->getEndpoint()->getScheme()));
-        $stack->push(BucketStyleMiddleware::create($this->getConfig('bucket_endpoint')));
-        $stack->push(ApplyMd5Middleware::create($this->getConfig('calculate_md5')));
-        $stack->push(PutObjectUrlMiddleware::create());
-        $stack->push(PermanentRedirectMiddleware::create());
-        $stack->push(Middleware::sourceFile($this->getApi()));
+        $stack = $this->getHandlerList();
+        $stack->append(SSECMiddleware::create($this->getEndpoint()->getScheme()), ['step' => 'validate']);
+        $stack->append(BucketStyleMiddleware::create($this->getConfig('bucket_endpoint')), ['step' => 'build']);
+        $stack->append(ApplyMd5Middleware::create($this->getConfig('calculate_md5')), ['step' => 'build']);
+        $stack->append(PutObjectUrlMiddleware::create(), ['step' => 'sign']);
+        $stack->append(PermanentRedirectMiddleware::create(), ['step' => 'sign']);
+        $stack->append(Middleware::sourceFile($this->getApi()), ['step' => 'init']);
     }
 
     /**
@@ -147,7 +147,7 @@ class S3Client extends AwsClient
         );
 
         return $signer->createPresignedUrl(
-            $this->initTransaction($command)->request,
+            $this->serialize($command),
             $this->getCredentials(),
             $expires
         );
@@ -174,7 +174,7 @@ class S3Client extends AwsClient
 
         return $expires
             ? $this->createPresignedUrl($command, $expires)
-            : $this->initTransaction($command)->request->getUrl();
+            : (string) $this->serialize($command)->getUri();
     }
 
     /**
@@ -487,8 +487,8 @@ class S3Client extends AwsClient
 
     private static function applyApiProvider()
     {
-        return function ($value, &$args) {
-            ClientResolver::_apply_api_provider($value, $args);
+        return function ($value, &$args, HandlerList $list) {
+            ClientResolver::_apply_api_provider($value, $args, $list);
             $parser = function (ResponseInterface $response) use ($args) {
                 // Call the original parser.
                 $errorData = $args['error_parser']($response);
