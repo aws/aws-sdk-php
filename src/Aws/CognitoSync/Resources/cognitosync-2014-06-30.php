@@ -22,14 +22,49 @@ return array (
     'jsonVersion' => '1.1',
     'signatureVersion' => 'v4',
     'namespace' => 'CognitoSync',
-    'regions' => array(
-        'us-east-1' => array(
-            'http' => false,
-            'https' => true,
-            'hostname' => 'cognito-sync.us-east-1.amazonaws.com',
-        ),
-    ),
     'operations' => array(
+        'BulkPublish' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/identitypools/{IdentityPoolId}/bulkpublish',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'BulkPublishResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'IdentityPoolId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 50,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Thrown when a user is not authorized to access the requested resource.',
+                    'class' => 'NotAuthorizedException',
+                ),
+                array(
+                    'reason' => 'Thrown when a request parameter does not comply with the associated constraints.',
+                    'class' => 'InvalidParameterException',
+                ),
+                array(
+                    'reason' => 'Thrown if the resource doesn\'t exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'Indicates an internal service error.',
+                    'class' => 'InternalErrorException',
+                ),
+                array(
+                    'reason' => 'An exception thrown when there is an IN_PROGRESS bulk publish operation for the given identity pool.',
+                    'class' => 'DuplicateRequestException',
+                ),
+                array(
+                    'reason' => 'An exception thrown when a bulk publish operation is requested less than 24 hours after a previous bulk publish operation completed successfully.',
+                    'class' => 'AlreadyStreamedException',
+                ),
+            ),
+        ),
         'DeleteDataset' => array(
             'httpMethod' => 'DELETE',
             'uri' => '/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}',
@@ -75,6 +110,10 @@ return array (
                 array(
                     'reason' => 'Indicates an internal service error.',
                     'class' => 'InternalErrorException',
+                ),
+                array(
+                    'reason' => 'Thrown if the request is throttled.',
+                    'class' => 'TooManyRequestsException',
                 ),
             ),
         ),
@@ -124,6 +163,10 @@ return array (
                     'reason' => 'Indicates an internal service error.',
                     'class' => 'InternalErrorException',
                 ),
+                array(
+                    'reason' => 'Thrown if the request is throttled.',
+                    'class' => 'TooManyRequestsException',
+                ),
             ),
         ),
         'DescribeIdentityPoolUsage' => array(
@@ -158,6 +201,10 @@ return array (
                     'reason' => 'Indicates an internal service error.',
                     'class' => 'InternalErrorException',
                 ),
+                array(
+                    'reason' => 'Thrown if the request is throttled.',
+                    'class' => 'TooManyRequestsException',
+                ),
             ),
         ),
         'DescribeIdentityUsage' => array(
@@ -175,6 +222,44 @@ return array (
                     'maxLength' => 50,
                 ),
                 'IdentityId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 50,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Thrown when a user is not authorized to access the requested resource.',
+                    'class' => 'NotAuthorizedException',
+                ),
+                array(
+                    'reason' => 'Thrown when a request parameter does not comply with the associated constraints.',
+                    'class' => 'InvalidParameterException',
+                ),
+                array(
+                    'reason' => 'Thrown if the resource doesn\'t exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'Indicates an internal service error.',
+                    'class' => 'InternalErrorException',
+                ),
+                array(
+                    'reason' => 'Thrown if the request is throttled.',
+                    'class' => 'TooManyRequestsException',
+                ),
+            ),
+        ),
+        'GetBulkPublishDetails' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/identitypools/{IdentityPoolId}/getBulkPublishDetails',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'GetBulkPublishDetailsResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'IdentityPoolId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
@@ -233,6 +318,10 @@ return array (
                     'reason' => 'Indicates an internal service error.',
                     'class' => 'InternalErrorException',
                 ),
+                array(
+                    'reason' => 'Thrown if the request is throttled.',
+                    'class' => 'TooManyRequestsException',
+                ),
             ),
         ),
         'ListDatasets' => array(
@@ -280,6 +369,10 @@ return array (
                     'reason' => 'Indicates an internal service error.',
                     'class' => 'InternalErrorException',
                 ),
+                array(
+                    'reason' => 'Thrown if the request is throttled.',
+                    'class' => 'TooManyRequestsException',
+                ),
             ),
         ),
         'ListIdentityPoolUsage' => array(
@@ -312,6 +405,10 @@ return array (
                 array(
                     'reason' => 'Indicates an internal service error.',
                     'class' => 'InternalErrorException',
+                ),
+                array(
+                    'reason' => 'Thrown if the request is throttled.',
+                    'class' => 'TooManyRequestsException',
                 ),
             ),
         ),
@@ -435,6 +532,10 @@ return array (
                 array(
                     'class' => 'InvalidConfigurationException',
                 ),
+                array(
+                    'reason' => 'Thrown if the request is throttled.',
+                    'class' => 'TooManyRequestsException',
+                ),
             ),
         ),
         'SetIdentityPoolConfiguration' => array(
@@ -469,6 +570,25 @@ return array (
                         ),
                     ),
                 ),
+                'CognitoStreams' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'StreamName' => array(
+                            'type' => 'string',
+                            'minLength' => 1,
+                            'maxLength' => 128,
+                        ),
+                        'RoleArn' => array(
+                            'type' => 'string',
+                            'minLength' => 20,
+                            'maxLength' => 2048,
+                        ),
+                        'StreamingStatus' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -486,6 +606,10 @@ return array (
                 array(
                     'reason' => 'Indicates an internal service error.',
                     'class' => 'InternalErrorException',
+                ),
+                array(
+                    'reason' => 'Thrown if the request is throttled.',
+                    'class' => 'TooManyRequestsException',
                 ),
             ),
         ),
@@ -545,6 +669,10 @@ return array (
                 array(
                     'class' => 'InvalidConfigurationException',
                 ),
+                array(
+                    'reason' => 'Thrown if the request is throttled.',
+                    'class' => 'TooManyRequestsException',
+                ),
             ),
         ),
         'UnsubscribeFromDataset' => array(
@@ -602,6 +730,10 @@ return array (
                 ),
                 array(
                     'class' => 'InvalidConfigurationException',
+                ),
+                array(
+                    'reason' => 'Thrown if the request is throttled.',
+                    'class' => 'TooManyRequestsException',
                 ),
             ),
         ),
@@ -719,6 +851,16 @@ return array (
         ),
     ),
     'models' => array(
+        'BulkPublishResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'IdentityPoolId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
         'DeleteDatasetResponse' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -836,6 +978,32 @@ return array (
                 ),
             ),
         ),
+        'GetBulkPublishDetailsResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'IdentityPoolId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'BulkPublishStartTime' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'BulkPublishCompleteTime' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'BulkPublishStatus' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'FailureMessage' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
         'GetIdentityPoolConfigurationResponse' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -856,6 +1024,21 @@ return array (
                             ),
                         ),
                         'RoleArn' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+                'CognitoStreams' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'StreamName' => array(
+                            'type' => 'string',
+                        ),
+                        'RoleArn' => array(
+                            'type' => 'string',
+                        ),
+                        'StreamingStatus' => array(
                             'type' => 'string',
                         ),
                     ),
@@ -1047,6 +1230,21 @@ return array (
                             ),
                         ),
                         'RoleArn' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+                'CognitoStreams' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'StreamName' => array(
+                            'type' => 'string',
+                        ),
+                        'RoleArn' => array(
+                            'type' => 'string',
+                        ),
+                        'StreamingStatus' => array(
                             'type' => 'string',
                         ),
                     ),

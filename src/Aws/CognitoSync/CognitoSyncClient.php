@@ -12,10 +12,12 @@ use Guzzle\Service\Resource\Model;
 /**
  * Client to interact with Amazon Cognito Sync
  *
+ * @method Model bulkPublish(array $args = array()) {@command CognitoSync BulkPublish}
  * @method Model deleteDataset(array $args = array()) {@command CognitoSync DeleteDataset}
  * @method Model describeDataset(array $args = array()) {@command CognitoSync DescribeDataset}
  * @method Model describeIdentityPoolUsage(array $args = array()) {@command CognitoSync DescribeIdentityPoolUsage}
  * @method Model describeIdentityUsage(array $args = array()) {@command CognitoSync DescribeIdentityUsage}
+ * @method Model getBulkPublishDetails(array $args = array()) {@command CognitoSync GetBulkPublishDetails}
  * @method Model getIdentityPoolConfiguration(array $args = array()) {@command CognitoSync GetIdentityPoolConfiguration}
  * @method Model listDatasets(array $args = array()) {@command CognitoSync ListDatasets}
  * @method Model listIdentityPoolUsage(array $args = array()) {@command CognitoSync ListIdentityPoolUsage}
