@@ -3,9 +3,9 @@ namespace Aws\Signature;
 
 use Aws\Credentials\CredentialsInterface;
 use Aws\Exception\CouldNotCreateChecksumException;
+use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Utils;
-use GuzzleHttp\Psr7\QueryParser;
 
 /**
  * Signature Version 4
@@ -14,7 +14,6 @@ use GuzzleHttp\Psr7\QueryParser;
 class SignatureV4 extends AbstractSignature
 {
     const ISO8601_BASIC = 'Ymd\THis\Z';
-    const EMPTY_PAYLOAD = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855';
 
     /** @var string */
     private $service;
@@ -28,9 +27,6 @@ class SignatureV4 extends AbstractSignature
     /** @var int Size of the hash cache */
     private $cacheSize = 0;
 
-    /** @var QueryParser */
-    private $queryParser;
-
     /**
      * @param string $service Service name to use when signing
      * @param string $region  Region name to use when signing
@@ -39,7 +35,6 @@ class SignatureV4 extends AbstractSignature
     {
         $this->service = $service;
         $this->region = $region;
-        $this->queryParser = new QueryParser();
     }
 
     public function signRequest(
@@ -49,21 +44,17 @@ class SignatureV4 extends AbstractSignature
         $ldt = gmdate(self::ISO8601_BASIC);
         $sdt = substr($ldt, 0, 8);
 
-        // Build up a hash of changes to apply.
-        $modify = [
-            'remove_headers' => ['Authorization', 'x-amz-date'],
-            'set_headers'    => ['Date' => $ldt]
-        ];
+        $parsed = $this->parseRequest($request);
+        unset($parsed['headers']['Authorization']);
+        $parsed['headers']['Date'] = $ldt;
 
         if ($token = $credentials->getSecurityToken()) {
-            $modify['set_headers']['x-amz-security-token'] = $token;
+            $parsed['headers']['x-amz-security-token'] = $token;
         }
-
-        $request = Utils::modifyRequest($request, $modify);
 
         $cs = $this->createScope($sdt, $this->region, $this->service);
         $payload = $this->getPayload($request);
-        $context = $this->createContext($request, $payload);
+        $context = $this->createContext($parsed, $payload);
         $context['string_to_sign'] = $this->createStringToSign($ldt, $cs, $context['creq']);
         $signingKey = $this->getSigningKey(
             $sdt,
@@ -72,10 +63,11 @@ class SignatureV4 extends AbstractSignature
             $credentials->getSecretKey()
         );
         $signature = hash_hmac('sha256', $context['string_to_sign'], $signingKey);
-
-        return $request->withHeader('Authorization', "AWS4-HMAC-SHA256 "
+        $parsed['headers']['Authorization'] = "AWS4-HMAC-SHA256 "
             . "Credential={$credentials->getAccessKeyId()}/{$cs}, "
-            . "SignedHeaders={$context['headers']}, Signature={$signature}");
+            . "SignedHeaders={$context['headers']}, Signature={$signature}";
+
+        return $this->buildRequest($parsed);
     }
 
     public function createPresignedUrl(
@@ -83,14 +75,18 @@ class SignatureV4 extends AbstractSignature
         CredentialsInterface $credentials,
         $expires
     ) {
-        $request = $this->createPresignedRequest($request, $credentials);
-        $query = $request->getQuery();
+        $parsed = $this->createPresignedRequest($request, $credentials);
+        $payload = $this->getPresignedPayload($request);
         $httpDate = gmdate(self::ISO8601_BASIC, time());
         $shortDate = substr($httpDate, 0, 8);
         $scope = $this->createScope($shortDate, $this->region, $this->service);
-        $this->addQueryValues($scope, $request, $credentials, $expires);
-        $payload = $this->getPresignedPayload($request);
-        $context = $this->createContext($request, $payload);
+        $credential = $credentials->getAccessKeyId() . '/' . $scope;
+        $parsed['query']['X-Amz-Algorithm'] = 'AWS4-HMAC-SHA256';
+        $parsed['query']['X-Amz-Credential'] = $credential;
+        $parsed['query']['X-Amz-Date'] = gmdate('Ymd\THis\Z', time());
+        $parsed['query']['X-Amz-SignedHeaders'] = 'Host';
+        $parsed['query']['X-Amz-Expires'] = $this->convertExpires($expires);
+        $context = $this->createContext($parsed, $payload);
         $stringToSign = $this->createStringToSign($httpDate, $scope, $context['creq']);
         $key = $this->getSigningKey(
             $shortDate,
@@ -98,9 +94,9 @@ class SignatureV4 extends AbstractSignature
             $this->service,
             $credentials->getSecretKey()
         );
-        $query['X-Amz-Signature'] = hash_hmac('sha256', $stringToSign, $key);
+        $parsed['query']['X-Amz-Signature'] = hash_hmac('sha256', $stringToSign, $key);
 
-        return $request->getUrl();
+        return (string) $this->buildRequest($parsed)->getUri();
     }
 
     /**
@@ -137,19 +133,16 @@ class SignatureV4 extends AbstractSignature
     protected function getPayload(RequestInterface $request)
     {
         // Calculate the request signature payload
-        if ($request->hasHeader('x-amz-content-sha256')) {
+        if ($request->hasHeader('X-Amz-Content-Sha256')) {
             // Handle streaming operations (e.g. Glacier.UploadArchive)
-            return (string) $request->getHeader('x-amz-content-sha256');
+            return $request->getHeader('X-Amz-Content-Sha256');
         }
 
-        if ($body = $request->getBody()) {
-            if (!$body->isSeekable()) {
-                throw new CouldNotCreateChecksumException('sha256');
-            }
-            return Utils::hash($body, 'sha256');
+        if (!$request->getBody()->isSeekable()) {
+            throw new CouldNotCreateChecksumException('sha256');
         }
 
-        return self::EMPTY_PAYLOAD;
+        return Utils::hash($request->getBody(), 'sha256');
     }
 
     protected function getPresignedPayload(RequestInterface $request)
@@ -159,34 +152,31 @@ class SignatureV4 extends AbstractSignature
 
     private function createStringToSign($longDate, $credentialScope, $creq)
     {
-        return "AWS4-HMAC-SHA256\n{$longDate}\n{$credentialScope}\n"
-            . hash('sha256', $creq);
+        $hash = hash('sha256', $creq);
+
+        return "AWS4-HMAC-SHA256\n{$longDate}\n{$credentialScope}\n{$hash}";
     }
 
     private function createPresignedRequest(
         RequestInterface $request,
         CredentialsInterface $credentials
     ) {
-        $sr = clone $request;
+        $parsedRequest = $this->parseRequest($request);
 
         // Make sure to handle temporary credentials
         if ($token = $credentials->getSecurityToken()) {
-            $sr->setHeader('X-Amz-Security-Token', $token);
-            $sr->getQuery()->set('X-Amz-Security-Token', $token);
+            $parsedRequest['headers']['X-Amz-Security-Token'] = $token;
         }
 
-        $this->moveHeadersToQuery($sr);
-
-        return $sr;
+        return $this->moveHeadersToQuery($parsedRequest);
     }
 
     /**
-     * @internal Create the canonical representation of a request
-     * @param RequestInterface $request Request to canonicalize
-     * @param string           $payload Hash of the request payload
+     * @param array  $parsedRequest
+     * @param string $payload Hash of the request payload
      * @return array Returns an array of context information
      */
-    private function createContext(RequestInterface $request, $payload)
+    private function createContext(array $parsedRequest, $payload)
     {
         static $signable = [
             'host'        => true,
@@ -195,14 +185,14 @@ class SignatureV4 extends AbstractSignature
         ];
 
         // Normalize the path as required by SigV4
-        $canon = $request->getMethod() . "\n"
-            . $request->getUri()->getPath() . "\n"
-            . $this->getCanonicalizedQuery($request) . "\n";
+        $canon = $parsedRequest['method'] . "\n"
+            . $parsedRequest['path'] . "\n"
+            . $this->getCanonicalizedQuery($parsedRequest['query']) . "\n";
 
         $canonHeaders = [];
 
         // Always include the "host", "date", and "x-amz-" headers.
-        foreach ($request->getHeaders() as $key => $values) {
+        foreach ($parsedRequest['headers'] as $key => $values) {
             $key = strtolower($key);
             if (isset($signable[$key]) || substr($key, 0, 6) === 'x-amz-') {
                 if (count($values) == 1) {
@@ -243,9 +233,8 @@ class SignatureV4 extends AbstractSignature
         return $this->cache[$k];
     }
 
-    private function getCanonicalizedQuery(RequestInterface $request)
+    private function getCanonicalizedQuery(array $query)
     {
-        $query = $this->queryParser->parse($request->getUri()->getQuery());
         unset($query['X-Amz-Signature']);
 
         if (!$query) {
@@ -290,41 +279,47 @@ class SignatureV4 extends AbstractSignature
 
     private function createScope($shortDate, $region, $service)
     {
-        return $shortDate
-            . '/' . $region
-            . '/' . $service
-            . '/aws4_request';
+        return "$shortDate/$region/$service/aws4_request";
     }
 
-    private function addQueryValues(
-        $scope,
-        RequestInterface $request,
-        CredentialsInterface $credentials,
-        $expires
-    ) {
-        $credential = $credentials->getAccessKeyId() . '/' . $scope;
-
-        // Set query params required for pre-signed URLs
-        $query = $request->getQuery();
-        $query['X-Amz-Algorithm'] = 'AWS4-HMAC-SHA256';
-        $query['X-Amz-Credential'] = $credential;
-        $query['X-Amz-Date'] = gmdate('Ymd\THis\Z', time());
-        $query['X-Amz-SignedHeaders']= 'Host';
-        $query['X-Amz-Expires'] = $this->convertExpires($expires);
-    }
-
-    private function moveHeadersToQuery(RequestInterface $request)
+    private function moveHeadersToQuery(array $parsedRequest)
     {
-        $query = $request->getQuery();
-
-        foreach ($request->getHeaders() as $name => $header) {
+        foreach ($parsedRequest['headers'] as $name => $header) {
             $name = strtolower($name);
             if (substr($name, 0, 5) == 'x-amz') {
-                $query[$name] = $header;
+                $parsedRequest['query'][$name] = $header;
             }
             if ($name !== 'host') {
-                $request->removeHeader($name);
+                unset($parsedRequest['headers'][$name]);
             }
         }
+
+        return $parsedRequest;
+    }
+
+    private function parseRequest(RequestInterface $request)
+    {
+        $uri = $request->getUri();
+
+        return [
+            'method'  => $request->getMethod(),
+            'path'    => $uri->getPath(),
+            'query'   => Utils::parseQuery($uri->getQuery()),
+            'uri'     => $uri,
+            'headers' => $request->getHeaders(),
+            'body'    => $request->getBody(),
+            'version' => $request->getProtocolVersion()
+        ];
+    }
+
+    private function buildRequest(array $req)
+    {
+        return new Request(
+            $req['method'],
+            $req['uri']->withQuery(Utils::buildQuery($req['query'])),
+            $req['headers'],
+            $req['body'],
+            $req['version']
+        );
     }
 }

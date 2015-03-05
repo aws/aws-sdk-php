@@ -5,7 +5,6 @@ use Aws\Credentials\CredentialsInterface;
 use Aws\S3\S3Client;
 use Aws\S3\S3UriParser;
 use GuzzleHttp\Psr7\Utils;
-use GuzzleHttp\Psr7\QueryParser;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -31,13 +30,9 @@ class S3Signature extends AbstractSignature
     /** @var \Aws\S3\S3UriParser S3 URI parser */
     private $parser;
 
-    /** @var QueryParser */
-    private $queryParser;
-
     public function __construct()
     {
         $this->parser = new S3UriParser();
-        $this->queryParser = new QueryParser();
         // Ensure that the signable query string parameters are sorted
         sort($this->signableQueryString);
     }
@@ -175,7 +170,7 @@ class S3Signature extends AbstractSignature
         $query = $request->getUri()->getQuery();
 
         if ($query) {
-            $params = $this->queryParser->parse($query)['data'];
+            $params = Utils::parseQuery($query);
             $first = true;
             foreach ($this->signableQueryString as $key) {
                 if (array_key_exists($key, $params)) {

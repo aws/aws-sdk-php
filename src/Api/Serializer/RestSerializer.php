@@ -9,7 +9,9 @@ use Aws\Api\TimestampShape;
 use Aws\CommandInterface;
 use GuzzleHttp\Psr7\Stream;
 use GuzzleHttp\Psr7\Uri;
+use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\UriInterface;
 use GuzzleHttp\Psr7\Request;
 
 /**
@@ -44,10 +46,15 @@ abstract class RestSerializer
         $operation = $this->api->getOperation($command->getName());
         $args = $command->toArray();
         $opts = $this->serialize($operation, $args);
+        $uri = $this->buildEndpoint($operation, $args);
+
+        if (!empty($opts['query'])) {
+            $uri = $uri->withQuery(Utils::buildQuery($opts['query']));
+        }
 
         return new Request(
             $operation['http']['method'],
-            $this->buildEndpoint($operation, $args),
+            $uri,
             isset($opts['headers']) ? $opts['headers'] : [],
             isset($opts['body']) ? $opts['body'] : null
         );
@@ -152,7 +159,7 @@ abstract class RestSerializer
      * @param Operation $operation
      * @param array     $args
      *
-     * @return array
+     * @return UriInterface
      */
     private function buildEndpoint(Operation $operation, array $args)
     {
