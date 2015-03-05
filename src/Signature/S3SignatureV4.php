@@ -12,8 +12,10 @@ class S3SignatureV4 extends SignatureV4
     /**
      * Always add a x-amz-content-sha-256 for data integrity.
      */
-    public function signRequest(RequestInterface $request, CredentialsInterface $credentials)
-    {
+    public function signRequest(
+        RequestInterface $request,
+        CredentialsInterface $credentials
+    ) {
         if (!$request->hasHeader('x-amz-content-sha256')) {
             $request = $request->withHeader(
                 'X-Amz-Content-Sha256',

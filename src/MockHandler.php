@@ -13,6 +13,7 @@ use Psr\Http\Message\RequestInterface;
 class MockHandler
 {
     private $queue;
+    private $lastRequest;
 
     /**
      * The passed in value can be a {@see Aws\ResultInterface},
@@ -46,6 +47,8 @@ class MockHandler
         CommandInterface $command,
         RequestInterface $request
     ) {
+        $this->lastRequest = $request;
+
         if (!$this->queue) {
             throw new \RuntimeException('Mock queue is empty');
         }
@@ -57,6 +60,16 @@ class MockHandler
         }
 
         return new FulfilledPromise($result);
+    }
+
+    /**
+     * Get the last received request.
+     *
+     * @return RequestInterface
+     */
+    public function getLastRequest()
+    {
+        return $this->lastRequest;
     }
 
     private function add($value)

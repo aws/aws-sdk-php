@@ -1,7 +1,7 @@
 <?php
 namespace Aws\S3;
 
-use GuzzleHttp\Uri;
+use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\UriInterface;
 
 /**

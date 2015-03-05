@@ -4,6 +4,8 @@ namespace Aws\Signature;
 use Aws\Credentials\CredentialsInterface;
 use Aws\S3\S3Client;
 use Aws\S3\S3UriParser;
+use GuzzleHttp\Psr7\Utils;
+use GuzzleHttp\Psr7\QueryParser;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -29,30 +31,35 @@ class S3Signature extends AbstractSignature
     /** @var \Aws\S3\S3UriParser S3 URI parser */
     private $parser;
 
+    /** @var QueryParser */
+    private $queryParser;
+
     public function __construct()
     {
         $this->parser = new S3UriParser();
+        $this->queryParser = new QueryParser();
+        // Ensure that the signable query string parameters are sorted
+        sort($this->signableQueryString);
     }
 
     public function signRequest(
         RequestInterface $request,
         CredentialsInterface $credentials
     ) {
-        // Ensure that the signable query string parameters are sorted
-        sort($this->signableQueryString);
+        $modify = [
+            'remove_headers' => ['X-Amz-Date'],
+            'set_headers'    => ['Date' => gmdate(\DateTime::RFC2822)]
+        ];
 
         // Add the security token header if one is being used by the credentials
         if ($token = $credentials->getSecurityToken()) {
-            $request->setHeader('X-Amz-Security-Token', $token);
+            $modify['set_headers']['X-Amz-Security-Token'] = $token;
         }
 
-        // Add a date header if one is not set
-        $request->removeHeader('X-Amz-Date');
-        $request->setHeader('Date', gmdate(\DateTime::RFC2822));
+        $request = Utils::modifyRequest($request, $modify);
         $stringToSign = $this->createCanonicalizedString($request);
-        $request->getConfig()['aws.signature'] = $stringToSign;
 
-        $request->setHeader(
+        return $request->withHeader(
             'Authorization',
             'AWS ' . $credentials->getAccessKeyId() . ':'
                 . $this->signString($stringToSign, $credentials)
@@ -64,18 +71,17 @@ class S3Signature extends AbstractSignature
         CredentialsInterface $credentials,
         $expires
     ) {
-        // Operate on a clone of the request, so the original is not altered.
-        $request = clone $request;
-
+        $query = [];
         // URL encoding already occurs in the URI template expansion. Undo that
         // and encode using the same encoding as GET object, PUT object, etc.
-        $path = S3Client::encodeKey(rawurldecode($request->getPath()));
-        $request->setPath($path);
+        $uri = $request->getUri();
+        $path = S3Client::encodeKey(rawurldecode($uri->getPath()));
+        $request = $request->withUri($uri->withPath($path));
 
         // Make sure to handle temporary credentials
         if ($token = $credentials->getSecurityToken()) {
-            $request->setHeader('X-Amz-Security-Token', $token);
-            $request->getQuery()->set('X-Amz-Security-Token', $token);
+            $request = $request->withHeader('X-Amz-Security-Token', $token);
+            $query['X-Amz-Security-Token'] = $token;
         }
 
         if ($expires instanceof \DateTime) {
@@ -85,7 +91,6 @@ class S3Signature extends AbstractSignature
         }
 
         // Set query params required for pre-signed URLs
-        $query = $request->getQuery();
         $query['AWSAccessKeyId'] = $credentials->getAccessKeyId();
         $query['Expires'] = $expires;
         $query['Signature'] = $this->signString(
@@ -97,12 +102,13 @@ class S3Signature extends AbstractSignature
         foreach ($request->getHeaders() as $name => $header) {
             $name = strtolower($name);
             if (strpos($name, 'x-amz-') === 0) {
-                $request->getQuery()->set($name, implode(',', $header));
-                $request->removeHeader($name);
+                $query[$name] = implode(',', $header);
             }
         }
 
-        return $request->getUrl();
+        $queryString = http_build_query($query, null, '&', PHP_QUERY_RFC3986);
+
+        return (string) $request->getUri()->withQuery($queryString);
     }
 
     private function signString($string, CredentialsInterface $credentials)
@@ -155,7 +161,7 @@ class S3Signature extends AbstractSignature
 
     private function createCanonicalizedResource(RequestInterface $request)
     {
-        $data = $this->parser->parse($request->getUrl());
+        $data = $this->parser->parse($request->getUri());
         $buffer = '/';
 
         if ($data['bucket']) {
@@ -165,18 +171,22 @@ class S3Signature extends AbstractSignature
             }
         }
 
-        // Add sub resource parameters
-        $query = $request->getQuery();
-        $first = true;
-        foreach ($this->signableQueryString as $key) {
-            if ($query->hasKey($key)) {
-                $value = $query[$key];
-                $buffer .= $first ? '?' : '&';
-                $first = false;
-                $buffer .= $key;
-                // Don't add values for empty sub-resources
-                if (strlen($value)) {
-                    $buffer .= "={$value}";
+        // Add sub resource parameters if present.
+        $query = $request->getUri()->getQuery();
+
+        if ($query) {
+            $params = $this->queryParser->parse($query)['data'];
+            $first = true;
+            foreach ($this->signableQueryString as $key) {
+                if (array_key_exists($key, $params)) {
+                    $value = $params[$key];
+                    $buffer .= $first ? '?' : '&';
+                    $first = false;
+                    $buffer .= $key;
+                    // Don't add values for empty sub-resources
+                    if (strlen($value)) {
+                        $buffer .= "={$value}";
+                    }
                 }
             }
         }
