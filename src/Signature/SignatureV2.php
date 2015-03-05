@@ -2,6 +2,7 @@
 namespace Aws\Signature;
 
 use Aws\Credentials\CredentialsInterface;
+use GuzzleHttp\Psr7\Stream;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -14,38 +15,36 @@ class SignatureV2 extends AbstractSignature
         RequestInterface $request,
         CredentialsInterface $credentials
     ) {
-        /** @var PostBodyInterface $body */
-        $body = $request->getBody();
-        $body->setField('Timestamp', gmdate('c'));
-        $body->setField('SignatureVersion', '2');
-        $body->setField('SignatureMethod', 'HmacSHA256');
-        $body->setField('AWSAccessKeyId', $credentials->getAccessKeyId());
+        parse_str($request->getBody(), $params);
+        $params['Timestamp'] = gmdate('c');
+        $params['SignatureVersion'] = '2';
+        $params['SignatureMethod'] = 'HmacSHA256';
+        $params['AWSAccessKeyId'] = $credentials->getAccessKeyId();
 
         if ($token = $credentials->getSecurityToken()) {
-            $body->setField('SecurityToken', $token);
+            $params['SecurityToken'] = $token;
         }
 
         // build string to sign
         $sign = $request->getMethod() . "\n"
-            . $request->getHost() . "\n"
+            . $request->getHeader('Host') . "\n"
             . '/' . "\n"
-            . $this->getCanonicalizedParameterString($body);
+            . $this->getCanonicalizedParameterString($params);
 
-        $request->getConfig()->set('aws.signature', $sign);
-
-        $body->setField('Signature', base64_encode(
+        $params['Signature'] = base64_encode(
             hash_hmac(
                 'sha256',
                 $sign,
                 $credentials->getSecretKey(),
                 true
             )
-        ));
+        );
+
+        return $request->withBody(Stream::factory(http_build_query($params)));
     }
 
-    private function getCanonicalizedParameterString(PostBodyInterface $body)
+    private function getCanonicalizedParameterString(array $params)
     {
-        $params = $body->getFields();
         unset($params['Signature']);
         uksort($params, 'strcmp');
 
