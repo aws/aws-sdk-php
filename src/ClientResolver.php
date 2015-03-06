@@ -1,6 +1,7 @@
 <?php
 namespace Aws;
 
+use GuzzleHttp\Aws\GuzzleHandler;
 use InvalidArgumentException as IAE;
 use Aws\Api\Validator;
 use Aws\Api\ApiProvider;
@@ -142,15 +143,15 @@ class ClientResolver
         'http_handler' => [
             'type'    => 'value',
             'valid'   => ['callable'],
-            'doc'     => 'An HTTP handler that accepts a request object and returns a promise that is fulfilled with a response object or array of exception data. This option supersedes any provided "handler" option.',
-            'fn'      => [__CLASS__, '_apply_http_handler'],
+            'doc'     => 'An HTTP handler is a function that accepts a PSR-7 request object and returns a promise that is fulfilled with a PSR-7 response object or rejected with an array of exception data. NOTE: This option supersedes any provided "handler" option.',
+            'fn'      => [__CLASS__, '_apply_http_handler']
         ],
         'handler' => [
-            'type'    => 'value',
-            'valid'   => ['callable'],
-            'doc'     => 'A handler that accepts a command object, request object and returns a promise that is fulfilled with a result object or an AWS exception. A handler does not accept a next handler as it is terminal and expected to fulfill a request.',
-            'fn'      => [__CLASS__, '_apply_handler'],
-            'default' => [__CLASS__, '_default_handler']
+            'type'     => 'value',
+            'valid'    => ['callable'],
+            'doc'      => 'A handler that accepts a command object, request object and returns a promise that is fulfilled with an Aws\ResultInterface object or rejected with an Aws\Exception\AwsException. A handler does not accept a next handler as it is terminal and expected to fulfill a command. If no handler is provided, a default Guzzle handler will be utilized.',
+            'fn'       => [__CLASS__, '_apply_handler'],
+            'default'  => [__CLASS__, '_default_handler']
         ]
     ];
 
@@ -416,14 +417,19 @@ class ClientResolver
         }
     }
 
-    public static function _default_handler(array $args)
-    {
-        return GuzzleBridge::getDefaultHandler();
-    }
-
     public static function _apply_handler($value, array &$args, HandlerList $list)
     {
         $list->setHandler($value);
+    }
+
+    public static function _default_handler(array &$args)
+    {
+        return new WrappedHttpHandler(
+            new GuzzleHandler(),
+            $args['parser'],
+            $args['error_parser'],
+            $args['exception_class']
+        );
     }
 
     public static function _apply_http_handler($value, array &$args, HandlerList $list)
