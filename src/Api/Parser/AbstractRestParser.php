@@ -52,7 +52,7 @@ abstract class AbstractRestParser extends AbstractParser
             }
         }
 
-        if (!$payload) {
+        if (!$payload && $response->getBody()->getSize() > 0) {
             // if no payload was found, then parse the contents of the body
             $this->payload($response, $output, $result);
         }

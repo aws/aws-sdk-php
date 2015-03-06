@@ -51,7 +51,12 @@ class BucketStyleMiddleware
 
     private function removeBucketFromPath($path, $bucket)
     {
-        return preg_replace("#^/{$bucket}#", "/", $path);
+        $len = strlen($bucket) + 1;
+        if (substr($path, 0, $len) === "/{$bucket}") {
+            $path = substr($path, $len);
+        }
+
+        return $path;
     }
 
     private function modifyRequest(

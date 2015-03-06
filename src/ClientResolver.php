@@ -428,15 +428,12 @@ class ClientResolver
 
     public static function _apply_http_handler($value, array &$args, HandlerList $list)
     {
-        $list->setHandler(
-            new WrappedHttpHandler(
-                $value,
-                $args['parser'],
-                $args['error_parser'],
-                $args['exception_class']
-            )
+        $args['handler'] = new WrappedHttpHandler(
+            $value,
+            $args['parser'],
+            $args['error_parser'],
+            $args['exception_class']
         );
-        unset($args['handler']);
     }
 
     public static function _default_credentials()

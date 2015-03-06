@@ -74,7 +74,7 @@ class WrappedHttpHandler
                 return $this->parseResponse($command, $request, $response);
             },
             function (array $reason) use ($request, $command) {
-                $exception = $this->parseError($command, $reason, $request);
+                $exception = $this->parseError($reason, $request, $command);
                 return new RejectedPromise($exception);
             }
         );
@@ -94,9 +94,16 @@ class WrappedHttpHandler
     ) {
         $parser = $this->parser;
         $result = $parser($command, $response);
-        $result['@effectiveUri'] = (string) $request->getUri();
-        $result['@responseHeaders'] = $response->getHeaders();
-        $result['@statusCode'] = $response->getStatusCode();
+        $metadata = [
+            'statusCode'   => $response->getStatusCode(),
+            'effectiveUri' => (string) $request->getUri()
+        ];
+
+        if ($rid = $response->getHeader('x-amz-request-id')) {
+            $metadata['requestId'] = $rid;
+        }
+
+        $result['@metadata'] = $metadata;
 
         return $result;
     }

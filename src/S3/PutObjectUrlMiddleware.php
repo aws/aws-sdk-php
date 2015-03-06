@@ -42,7 +42,7 @@ class PutObjectUrlMiddleware
             function (ResultInterface $result) use ($command) {
                 $name = $command->getName();
                 if ($name === 'PutObject' || $name === 'CopyObject') {
-                    $result['ObjectURL'] = $result['@effectiveUri'];
+                    $result['ObjectURL'] = $result['@metadata']['effectiveUri'];
                 } elseif ($name === 'CompleteMultipartUpload') {
                     $result['ObjectURL'] = $result['Location'];
                 }
