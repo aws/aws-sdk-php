@@ -3,23 +3,10 @@ namespace Aws\Test\Signature;
 
 use Aws\Credentials\Credentials;
 use Aws\Signature\SignatureV4;
-use GuzzleHttp\Client;
-use GuzzleHttp\Message\Request;
-use GuzzleHttp\Message\MessageFactory;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Utils;
 
 require_once __DIR__ . '/sig_hack.php';
-
-// Super hacky stuff to get the date right for real request vs the test-suite.
-class HackRequest extends Request
-{
-    public function setHeader($header, $value)
-    {
-        parent::setHeader(
-            $header,
-            $header == 'Date' ? SignatureV4Test::DEFAULT_DATETIME : $value
-        );
-    }
-}
 
 /**
  * @covers Aws\Signature\SignatureV4
@@ -47,27 +34,22 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         $s = new SignatureV4('foo', 'bar');
         $c = new Credentials('a', 'b', 'AddMe!');
         $r = new Request('GET', 'http://httpbin.org');
-        $s->signRequest($r, $c);
-        $this->assertContains('x-amz-security-token: AddMe!', (string) $r);
-        $ctx = $r->getConfig()->get('aws.signature');
-        $this->assertContains('x-amz-security-token:AddMe!', $ctx['creq']);
-        $this->assertContains('date;host;x-amz-security-token', $ctx['creq']);
-        $this->assertContains('x-amz-security-token', $ctx['headers']);
+        $signed = $s->signRequest($r, $c);
+        $this->assertEquals('AddMe!', $signed->getHeader('X-Amz-Security-Token'));
     }
 
     public function testSignsRequestsWithMultiValuedHeaders()
     {
         $s = new SignatureV4('foo', 'bar');
-        $c = new Credentials('a', 'b');
-        $r = new Request('GET', 'http://httpbin.org', [
-            'X-amz-Foo' => ['baz', '  bar ']
-        ]);
-        $s->signRequest($r, $c);
-        $this->assertContains('SignedHeaders=date;host;x-amz-foo', (string) $r);
-        $ctx = $r->getConfig()->get('aws.signature');
-        $this->assertContains('x-amz-foo:bar,baz', $ctx['creq']);
-        $this->assertContains('date;host;x-amz-foo', $ctx['creq']);
-        $this->assertNotContains('x-amz-security-token', $ctx['headers']);
+        $r = new Request('GET', 'http://httpbin.org', ['X-amz-Foo' => ['baz', '  bar ']]);
+        $methA = new \ReflectionMethod($s, 'parseRequest');
+        $methA->setAccessible(true);
+        $reqArray = $methA->invoke($s, $r);
+        $methB = new \ReflectionMethod($s, 'createContext');
+        $methB->setAccessible(true);
+        $result = $methB->invoke($s, $reqArray, '123');
+        $this->assertEquals('host;x-amz-foo', $result['headers']);
+        $this->assertEquals("GET\n/\n\nhost:httpbin.org\nx-amz-foo:bar,baz\n\nhost;x-amz-foo\n123", $result['creq']);
     }
 
     /**
@@ -77,39 +59,30 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
     {
         // Create a request based on the '.req' file
         $requestString = file_get_contents($group['req']);
-        $request = (new MessageFactory)->fromMessage($requestString);
-        // Hack the request to get the broken test suite working.
-        $request = new HackRequest(
-            $request->getMethod(),
-            $request->getUrl(),
-            $request->getHeaders(),
-            $request->getBody()
-        );
-        // Sanitize the request
-        $request->removeHeader('User-Agent');
-        $request->removeHeader('Content-Length');
-        // Sign the request using the test credentials
+        $request = Utils::parseRequest($requestString);
         $credentials = new Credentials(self::DEFAULT_KEY, self::DEFAULT_SECRET);
-        // Get a mock signature object
         $signature = new SignatureV4('host', 'us-east-1');
-        // Sign the request
-        $signature->signRequest($request, $credentials);
-        // Get debug signature information
-        $context = $request->getConfig()['aws.signature'];
+
+        $contextFn = new \ReflectionMethod($signature, 'createContext');
+        $contextFn->setAccessible(true);
+        $parseFn = new \ReflectionMethod($signature, 'parseRequest');
+        $parseFn->setAccessible(true);
+        $parsed = $parseFn->invoke($signature, $request);
+        $payloadFn = new \ReflectionMethod($signature, 'getPayload');
+        $payloadFn->setAccessible(true);
+        $payload = $payloadFn->invoke($signature, $request);
+        $ctx = $contextFn->invoke($signature, $parsed, $payload);
+
         // Test that the canonical request is correct
         $this->assertEquals(
             str_replace("\r", '', file_get_contents($group['creq'])),
-            $context['creq']
+            $ctx['creq']
         );
-        // Test that the string to sign is correct
-        $this->assertEquals(
-            str_replace("\r", '', file_get_contents($group['sts'])),
-            $context['string_to_sign']
-        );
-        // Test that the authorization header is correct
+
+        $signed = $signature->signRequest($request, $credentials);
         $this->assertEquals(
             str_replace("\r", '', file_get_contents($group['authz'])),
-            $request->getHeader('Authorization')
+            $signed->getHeader('Authorization')
         );
     }
 
@@ -149,13 +122,12 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
     public function testUsesExistingSha256HashIfPresent()
     {
         $sig = new SignatureV4('foo', 'bar');
-        $creds = new Credentials('a', 'b');
         $req = new Request('PUT', 'http://foo.com', [
             'x-amz-content-sha256' => '123'
         ]);
-        $sig->signRequest($req, $creds);
-        $creq = $req->getConfig()->get('aws.signature')['creq'];
-        $this->assertContains('amz-content-sha256:123', $creq);
+        $method = new \ReflectionMethod($sig, 'getPayload');
+        $method->setAccessible(true);
+        $this->assertSame('123', $method->invoke($sig, $req));
     }
 
     public function testMaintainsCappedCache()
@@ -182,40 +154,6 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         $credentials = new Credentials('fizz', 'foobar');
         $sig->signRequest($request, $credentials);
         $this->assertEquals(1, count($this->readAttribute($sig, 'cache')));
-    }
-
-    public function queryProvider()
-    {
-        return [
-            [[], ''],
-            [['X-Amz-Signature' => 'foo'], ''],
-            [['Foo' => '123', 'Bar' => '456'], 'Bar=456&Foo=123'],
-            [['Foo' => ['b', 'a'], 'a' => 'bc'], 'Foo=a&Foo=b&a=bc'],
-            [['Foo' => '', 'a' => 'b' ], 'Foo=&a=b']
-        ];
-    }
-
-    /**
-     * @covers Aws\Signature\SignatureV4::getCanonicalizedQuery
-     * @dataProvider queryProvider
-     */
-    public function testCreatesCanonicalizedQuery($data, $string)
-    {
-        $method = new \ReflectionMethod(
-            'Aws\Signature\SignatureV4',
-            'getCanonicalizedQuery'
-        );
-        $method->setAccessible(true);
-
-        // Create a request and replace the headers with the test headers
-        $request = new Request('GET', 'http://www.example.com');
-        $request->getQuery()->replace($data);
-
-        $signature = $this->getMockBuilder('Aws\Signature\SignatureV4')
-            ->disableOriginalConstructor()
-            ->getMockForAbstractClass();
-
-        $this->assertEquals($string, $method->invoke($signature, $request));
     }
 
     private function getFixtures()
@@ -272,14 +210,15 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
 
     public function testConvertsPostToGet()
     {
-        $client = new Client();
-        $request = $client->createRequest('POST', 'http://foo.com');
-        $request->getBody()->setField('foo', 'bar');
-        $request->getBody()->setField('baz', 'bam');
+        $request = new Request(
+            'POST',
+            'http://foo.com',
+            ['Content-Type' => 'application/x-www-form-urlencoded'],
+            'foo=bar&baz=bam'
+        );
         $request = SignatureV4::convertPostToGet($request);
         $this->assertEquals('GET', $request->getMethod());
-        $this->assertEquals('bar', $request->getQuery()->get('foo'));
-        $this->assertEquals('bam', $request->getQuery()->get('baz'));
+        $this->assertEquals('foo=bar&baz=bam', $request->getUri()->getQuery());
     }
 
     /**
@@ -301,8 +240,7 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
             'x-amz-foo' => '123',
             'content-md5' => 'bogus'
         ]);
-        $sig->signRequest($req, $creds);
-        $creq = $req->getConfig()->get('aws.signature')['creq'];
-        $this->assertContains('content-md5;date;host;x-amz-foo', $creq);
+        $signed = $sig->signRequest($req, $creds);
+        $this->assertContains('content-md5;date;host;x-amz-foo', $signed->getHeader('Authorization'));
     }
 }

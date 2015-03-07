@@ -5,7 +5,8 @@ require_once __DIR__ . '/sig_hack.php';
 
 use Aws\Credentials\Credentials;
 use Aws\Signature\SignatureV2;
-use GuzzleHttp\Message\MessageFactory;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Utils;
 
 /**
  * @covers Aws\Signature\SignatureV2
@@ -19,22 +20,20 @@ class SignatureV2Test extends \PHPUnit_Framework_TestCase
     public function testSignsRequestsWithSecurityToken()
     {
         $_SERVER['aws_time'] = true;
-        $request = (new MessageFactory)->createRequest(
+        $request = new Request(
             'POST',
             'http://foo.com',
-            ['body' => ['Test' => '123', 'Other' => '456']]
+            ['Content-Type' => 'application/x-www-form-urlencoded'],
+            'Test=123&Other=456'
         );
-        $request->removeHeader('User-Agent');
         $c = new Credentials(self::DEFAULT_KEY, self::DEFAULT_SECRET, 'foo');
         $sig = new SignatureV2();
-        $sig->signRequest($request, $c);
-        $request->getBody()->applyRequestHeaders($request);
+        $result = $sig->signRequest($request, $c);
 
         $expected = "POST / HTTP/1.1\r\n"
             . "Host: foo.com\r\n"
-            . "Content-Type: application/x-www-form-urlencoded\r\n"
-            . "Content-Length: 212\r\n\r\n"
+            . "Content-Type: application/x-www-form-urlencoded\r\n\r\n"
             . "Test=123&Other=456&Timestamp=Fri%2C+09+Sep+2011+23%3A36%3A00+GMT&SignatureVersion=2&SignatureMethod=HmacSHA256&AWSAccessKeyId=AKIDEXAMPLE&SecurityToken=foo&Signature=NzQ9b5Kx6qlKj2UIK6QHIrmq5ypogh9PhBHVXKA4RU4%3D";
-        $this->assertEquals($expected, (string) $request);
+        $this->assertEquals($expected, Utils::str($result));
     }
 }

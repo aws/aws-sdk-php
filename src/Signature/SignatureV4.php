@@ -4,8 +4,9 @@ namespace Aws\Signature;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Exception\CouldNotCreateChecksumException;
 use GuzzleHttp\Psr7\Request;
-use Psr\Http\Message\RequestInterface;
+use GuzzleHttp\Psr7\Stream;
 use GuzzleHttp\Psr7\Utils;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * Signature Version 4
@@ -43,29 +44,30 @@ class SignatureV4 extends AbstractSignature
     ) {
         $ldt = gmdate(self::ISO8601_BASIC);
         $sdt = substr($ldt, 0, 8);
-
         $parsed = $this->parseRequest($request);
         unset($parsed['headers']['Authorization']);
-        $parsed['headers']['Date'] = $ldt;
+        $parsed['headers']['Date'] = [gmdate('D, d M Y H:i:s \G\M\T')];
 
         if ($token = $credentials->getSecurityToken()) {
-            $parsed['headers']['x-amz-security-token'] = $token;
+            $parsed['headers']['X-Amz-Security-Token'] = [$token];
         }
 
         $cs = $this->createScope($sdt, $this->region, $this->service);
         $payload = $this->getPayload($request);
         $context = $this->createContext($parsed, $payload);
-        $context['string_to_sign'] = $this->createStringToSign($ldt, $cs, $context['creq']);
+        $toSign = $this->createStringToSign($ldt, $cs, $context['creq']);
         $signingKey = $this->getSigningKey(
             $sdt,
             $this->region,
             $this->service,
             $credentials->getSecretKey()
         );
-        $signature = hash_hmac('sha256', $context['string_to_sign'], $signingKey);
-        $parsed['headers']['Authorization'] = "AWS4-HMAC-SHA256 "
+        $signature = hash_hmac('sha256', $toSign, $signingKey);
+        $parsed['headers']['Authorization'] = [
+            "AWS4-HMAC-SHA256 "
             . "Credential={$credentials->getAccessKeyId()}/{$cs}, "
-            . "SignedHeaders={$context['headers']}, Signature={$signature}";
+            . "SignedHeaders={$context['headers']}, Signature={$signature}"
+        ];
 
         return $this->buildRequest($parsed);
     }
@@ -118,13 +120,14 @@ class SignatureV4 extends AbstractSignature
         }
 
         $sr = $request->withMethod('GET')
-            ->withBody('')
+            ->withBody(Stream::factory(''))
             ->withoutHeader('Content-Type')
             ->withoutHeader('Content-Length');
 
         // Move POST fields to the query if they are present
         if ($request->getHeader('Content-Type') === 'application/x-www-form-urlencoded') {
-            // @TODO
+            $body = (string) $request->getBody();
+            $sr = $sr->withUri($sr->getUri()->withQuery($body));
         }
 
         return $sr;
@@ -165,7 +168,7 @@ class SignatureV4 extends AbstractSignature
 
         // Make sure to handle temporary credentials
         if ($token = $credentials->getSecurityToken()) {
-            $parsedRequest['headers']['X-Amz-Security-Token'] = $token;
+            $parsedRequest['headers']['X-Amz-Security-Token'] = [$token];
         }
 
         return $this->moveHeadersToQuery($parsedRequest);
@@ -186,7 +189,7 @@ class SignatureV4 extends AbstractSignature
 
         // Normalize the path as required by SigV4
         $canon = $parsedRequest['method'] . "\n"
-            . $parsedRequest['path'] . "\n"
+            . ($parsedRequest['path'] ?: '/') . "\n"
             . $this->getCanonicalizedQuery($parsedRequest['query']) . "\n";
 
         $canonHeaders = [];
@@ -285,11 +288,11 @@ class SignatureV4 extends AbstractSignature
     private function moveHeadersToQuery(array $parsedRequest)
     {
         foreach ($parsedRequest['headers'] as $name => $header) {
-            $name = strtolower($name);
-            if (substr($name, 0, 5) == 'x-amz') {
+            $lname = strtolower($name);
+            if (substr($lname, 0, 5) == 'x-amz') {
                 $parsedRequest['query'][$name] = $header;
             }
-            if ($name !== 'host') {
+            if ($lname !== 'host') {
                 unset($parsedRequest['headers'][$name]);
             }
         }
@@ -314,9 +317,13 @@ class SignatureV4 extends AbstractSignature
 
     private function buildRequest(array $req)
     {
+        if ($req['query']) {
+            $req['uri'] = $req['uri']->withQuery(Utils::buildQuery($req['query']));
+        }
+
         return new Request(
             $req['method'],
-            $req['uri']->withQuery(Utils::buildQuery($req['query'])),
+            $req['uri'],
             $req['headers'],
             $req['body'],
             $req['version']

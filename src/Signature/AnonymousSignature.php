@@ -21,6 +21,6 @@ class AnonymousSignature implements SignatureInterface
         CredentialsInterface $credentials,
         $expires
     ) {
-        return (string) $request->getUri();
+        return '';
     }
 }

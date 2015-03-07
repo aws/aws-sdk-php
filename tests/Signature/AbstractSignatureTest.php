@@ -2,7 +2,7 @@
 namespace Aws\Test\Signature;
 
 use Aws\Credentials\Credentials;
-use GuzzleHttp\Message\Request;
+use GuzzleHttp\Psr7\Request;
 
 /**
  * @covers Aws\Signature\AbstractSignature

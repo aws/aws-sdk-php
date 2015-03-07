@@ -2,23 +2,23 @@
 namespace Aws\Signature;
 
 use Aws\Test\Signature\SignatureV2Test;
-use Aws\Test\Signature\SignatureV3HttpsTest;
 
 // Hack gmdate() to returned the canned result.
-function gmdate() {
+function gmdate($format, $ts = null) {
 
     if (isset($_SERVER['aws_time'])) {
         switch (basename(debug_backtrace()[0]['file'])) {
             case 'SignatureV4.php':
+                if ($format == 'D, d M Y H:i:s \G\M\T') {
+                    return 'Mon, 09 Sep 2011 23:36:00 GMT';
+                }
                 return '20110909T233600Z';
             case 'SignatureV2.php':
                 return SignatureV2Test::DEFAULT_DATETIME;
-            case 'SignatureV3Https.php':
-                return SignatureV3HttpsTest::DEFAULT_DATETIME;
         }
     }
 
-    return call_user_func_array('gmdate', func_get_args());
+    return gmdate($format, $ts ?: time());
 }
 
 function time()
