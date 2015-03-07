@@ -213,9 +213,14 @@ class CloudFrontClient extends AbstractClient
         } elseif ($scheme == 'rtmp') {
             $parts = parse_url($url);
             $pathParts = pathinfo($parts['path']);
-            // Add path leading to file, strip file extension, and add a query string if present
-            $resource = ltrim($pathParts['dirname'] . '/' . $pathParts['basename'], '/')
-                . (isset($parts['query']) ? "?{$parts['query']}" : '');
+            // Add path leading to file, strip file extension, and add a query
+            // string if present.
+            $resource = ltrim($pathParts['dirname']
+                . '/'
+                . $pathParts['basename'], '/\\');
+            if (isset($parts['query'])) {
+                $resource .= "?{$parts['query']}";
+            }
         } else {
             throw new InvalidArgumentException("Invalid URI scheme: {$scheme}. Must be one of http or rtmp.");
         }
