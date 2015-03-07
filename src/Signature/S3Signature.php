@@ -41,24 +41,13 @@ class S3Signature extends AbstractSignature
         RequestInterface $request,
         CredentialsInterface $credentials
     ) {
-        $modify = [
-            'remove_headers' => ['X-Amz-Date'],
-            'set_headers'    => ['Date' => gmdate(\DateTime::RFC2822)]
-        ];
-
-        // Add the security token header if one is being used by the credentials
-        if ($token = $credentials->getSecurityToken()) {
-            $modify['set_headers']['X-Amz-Security-Token'] = $token;
-        }
-
-        $request = Utils::modifyRequest($request, $modify);
+        $request = $this->prepareRequest($request, $credentials);
         $stringToSign = $this->createCanonicalizedString($request);
+        $auth = 'AWS '
+            . $credentials->getAccessKeyId() . ':'
+            . $this->signString($stringToSign, $credentials);
 
-        return $request->withHeader(
-            'Authorization',
-            'AWS ' . $credentials->getAccessKeyId() . ':'
-                . $this->signString($stringToSign, $credentials)
-        );
+        return $request->withHeader('Authorization', $auth);
     }
 
     public function createPresignedUrl(
@@ -104,6 +93,23 @@ class S3Signature extends AbstractSignature
         $queryString = http_build_query($query, null, '&', PHP_QUERY_RFC3986);
 
         return (string) $request->getUri()->withQuery($queryString);
+    }
+
+    private function prepareRequest(
+        RequestInterface $request,
+        CredentialsInterface $creds
+    ) {
+        $modify = [
+            'remove_headers' => ['X-Amz-Date'],
+            'set_headers'    => ['Date' => gmdate(\DateTime::RFC2822)]
+        ];
+
+        // Add the security token header if one is being used by the credentials
+        if ($token = $creds->getSecurityToken()) {
+            $modify['set_headers']['X-Amz-Security-Token'] = $token;
+        }
+
+        return Utils::modifyRequest($request, $modify);
     }
 
     private function signString($string, CredentialsInterface $credentials)

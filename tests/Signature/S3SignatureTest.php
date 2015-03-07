@@ -3,8 +3,8 @@ namespace Aws\Test\Signature;
 
 use Aws\Credentials\Credentials;
 use Aws\Signature\S3Signature;
-use GuzzleHttp\Message\MessageFactory;
-use GuzzleHttp\Message\Request;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Utils;
 
 /**
  * @covers Aws\Signature\S3Signature
@@ -15,35 +15,18 @@ class S3SignatureTest extends \PHPUnit_Framework_TestCase
     {
         $creds = new Credentials('foo', 'bar', 'baz');
         $signature = new S3Signature();
-        $request = (new MessageFactory)->createRequest(
+        $request = new Request(
             'PUT',
             'http://s3.amazonaws.com/bucket/key',
-            [
-                'body'    => 'body',
-                'headers' => [
-                    'Content-Type'  => 'Baz',
-                    'X-Amz-Meta-Boo' => 'bam'
-                ]
-            ]
+            ['Content-Type' => 'Baz', 'X-Amz-Meta-Boo' => 'bam'],
+            'body'
         );
-
-        $signature->signRequest($request, $creds);
-        $this->assertEquals('baz', $request->getHeader('X-Amz-Security-Token'));
-        $this->assertTrue($request->hasHeader('Date'));
-        $this->assertFalse($request->hasHeader('X-Amz-Date'));
-        $this->assertTrue($request->hasHeader('Authorization'));
-        $this->assertContains('AWS foo:', $request->getHeader('Authorization'));
-
-        $creq = $request->getConfig()->get('aws.signature');
-        $lines = explode("\n", $creq);
-        $this->assertTrue(time() - strtotime($lines[3]) < 100);
-        unset($lines[3]);
-
-        $creq = implode("\n", $lines);
-        $this->assertEquals(
-            "PUT\n\nBaz\nx-amz-meta-boo:bam\nx-amz-security-token:baz\n/bucket/key",
-            $creq
-        );
+        $result = $signature->signRequest($request, $creds);
+        $this->assertEquals('baz', $result->getHeader('X-Amz-Security-Token'));
+        $this->assertTrue($result->hasHeader('Date'));
+        $this->assertFalse($result->hasHeader('X-Amz-Date'));
+        $this->assertTrue($result->hasHeader('Authorization'));
+        $this->assertContains('AWS foo:', $result->getHeader('Authorization'));
     }
 
     public function presignedUrlProvider()
@@ -76,7 +59,7 @@ class S3SignatureTest extends \PHPUnit_Framework_TestCase
         $dt = 'April 20, 2014';
         $creds = new Credentials('foo', 'bar');
         $signature = new S3Signature();
-        $req = (new MessageFactory())->fromMessage($message);
+        $req = Utils::parseRequest($message);
         // Try with string
         $res = $signature->createPresignedUrl($req, $creds, $dt);
         $this->assertSame($url, $res);
@@ -294,13 +277,11 @@ class S3SignatureTest extends \PHPUnit_Framework_TestCase
         $signature = new S3Signature();
         $meth = new \ReflectionMethod($signature, 'createCanonicalizedString');
         $meth->setAccessible(true);
-
-        $request = (new MessageFactory())->createRequest(
+        $request = new Request(
             $input['verb'],
             'http://' . $input['headers']['Host'] . $input['path'],
-            ['headers' => $input['headers']]
+            $input['headers']
         );
-
         $this->assertEquals(
             $result,
             $meth->invoke($signature, $request, $expires)

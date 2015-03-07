@@ -4,8 +4,8 @@ namespace Aws\Signature;
 use Aws\Test\Signature\SignatureV2Test;
 
 // Hack gmdate() to returned the canned result.
-function gmdate($format, $ts = null) {
-
+function gmdate($format, $ts = null)
+{
     if (isset($_SERVER['aws_time'])) {
         switch (basename(debug_backtrace()[0]['file'])) {
             case 'SignatureV4.php':
@@ -17,8 +17,7 @@ function gmdate($format, $ts = null) {
                 return SignatureV2Test::DEFAULT_DATETIME;
         }
     }
-
-    return gmdate($format, $ts ?: time());
+    return \gmdate($format, $ts ?: time());
 }
 
 function time()

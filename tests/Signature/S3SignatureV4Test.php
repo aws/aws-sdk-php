@@ -6,7 +6,7 @@ use Aws\Signature\S3SignatureV4;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Stream;
 
-require __DIR__ . '/sig_hack.php';
+require_once __DIR__ . '/sig_hack.php';
 
 /**
  * @covers Aws\Signature\S3SignatureV4
