@@ -3,8 +3,8 @@ namespace Aws\Test\Signature;
 
 use Aws\Credentials\Credentials;
 use Aws\Signature\S3SignatureV4;
-use GuzzleHttp\Message\Request;
-use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Stream;
 
 require __DIR__ . '/sig_hack.php';
 
@@ -23,42 +23,45 @@ class S3SignatureV4Test extends \PHPUnit_Framework_TestCase
         $request = new Request('GET', 'http://foo.com');
         $credentials = new Credentials('foo', 'bar');
         $signature = new S3SignatureV4('service', 'region');
-
-        return array($request, $credentials, $signature);
+        return [$request, $credentials, $signature];
     }
 
     public function testAlwaysAddsContentSha256()
     {
         list($request, $credentials, $signature) = $this->getFixtures();
-        $signature->signRequest($request, $credentials);
+        $result = $signature->signRequest($request, $credentials);
         $this->assertEquals(
             hash('sha256', ''),
-            $request->getHeader('x-amz-content-sha256')
+            $result->getHeader('x-amz-content-sha256')
         );
     }
 
     public function testAddsContentSha256WhenBodyIsPresent()
     {
-        $request = new Request('PUT', 'http://foo.com');
-        $request->setBody(Stream::factory('foo'));
+        $request = new Request('PUT', 'http://foo.com', [], Stream::factory('foo'));
         $credentials = new Credentials('foo', 'bar');
         $signature = new S3SignatureV4('service', 'region');
-        $signature->signRequest($request, $credentials);
+        $result = $signature->signRequest($request, $credentials);
         $this->assertEquals(
             hash('sha256', 'foo'),
-            $request->getHeader('x-amz-content-sha256')
+            $result->getHeader('x-amz-content-sha256')
         );
     }
 
     public function testDoesNotRemoveDotSegments()
     {
         list($request, $credentials, $signature) = $this->getFixtures();
-        $request->setPath('/.././foo');
-        $signature->signRequest($request, $credentials);
-        $context = $request->getConfig()->get('aws.signature');
+        $uri = $request->getUri()->withPath('/.././foo');
+        $request = $request->withUri($uri);
+        $p = new \ReflectionMethod($signature, 'parseRequest');
+        $p->setAccessible(true);
+        $parsed = $p->invoke($signature, $request);
+        $meth = new \ReflectionMethod($signature, 'createContext');
+        $meth->setAccessible(true);
+        $ctx = $meth->invoke($signature, $parsed, 'foo');
         $this->assertStringStartsWith(
             "GET\n/.././foo",
-            $context['creq']
+            $ctx['creq']
         );
     }
 
