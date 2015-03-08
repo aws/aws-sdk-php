@@ -15,11 +15,10 @@ class SignatureV2Test extends \PHPUnit_Framework_TestCase
 {
     const DEFAULT_KEY = 'AKIDEXAMPLE';
     const DEFAULT_SECRET = 'wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY';
-    const DEFAULT_DATETIME = 'Fri, 09 Sep 2011 23:36:00 GMT';
 
     public function testSignsRequestsWithSecurityToken()
     {
-        $_SERVER['aws_time'] = true;
+        $_SERVER['aws_time'] = 'Fri, 09 Sep 2011 23:36:00 GMT';
         $request = new Request(
             'POST',
             'http://foo.com',

@@ -3,6 +3,7 @@ namespace Aws\Test\Signature;
 
 use Aws\Credentials\Credentials;
 use Aws\Signature\S3SignatureV4;
+use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Stream;
 

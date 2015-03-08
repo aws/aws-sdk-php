@@ -45,8 +45,7 @@ class SignatureV4 extends AbstractSignature
         $ldt = gmdate(self::ISO8601_BASIC);
         $sdt = substr($ldt, 0, 8);
         $parsed = $this->parseRequest($request);
-        unset($parsed['headers']['Authorization']);
-        $parsed['headers']['Date'] = [gmdate('D, d M Y H:i:s \G\M\T')];
+        $parsed['headers']['X-Amz-Date'] = [$ldt];
 
         if ($token = $credentials->getSecurityToken()) {
             $parsed['headers']['X-Amz-Security-Token'] = [$token];
@@ -181,10 +180,29 @@ class SignatureV4 extends AbstractSignature
      */
     private function createContext(array $parsedRequest, $payload)
     {
-        static $signable = [
-            'host'        => true,
-            'date'        => true,
-            'content-md5' => true
+        // The following headers are not signed because signing these headers
+        // would potentially cause a signature mismatch when sending a request
+        // through a proxy or if modified at the HTTP client level.
+        static $blacklist = [
+            'cache-control'       => true,
+            'content-type'        => true,
+            'content-length'      => true,
+            'expect'              => true,
+            'max-forwards'        => true,
+            'pragma'              => true,
+            'range'               => true,
+            'te'                  => true,
+            'if-match'            => true,
+            'if-none-match'       => true,
+            'if-modified-since'   => true,
+            'if-unmodified-since' => true,
+            'if-range'            => true,
+            'accept'              => true,
+            'authorization'       => true,
+            'proxy-authorization' => true,
+            'from'                => true,
+            'referer'             => true,
+            'user-agent'          => true
         ];
 
         // Normalize the path as required by SigV4
@@ -192,24 +210,27 @@ class SignatureV4 extends AbstractSignature
             . ($parsedRequest['path'] ?: '/') . "\n"
             . $this->getCanonicalizedQuery($parsedRequest['query']) . "\n";
 
-        $canonHeaders = [];
-
-        // Always include the "host", "date", and "x-amz-" headers.
+        // Case-insensitively aggregate all of the headers.
+        $aggregate = [];
         foreach ($parsedRequest['headers'] as $key => $values) {
             $key = strtolower($key);
-            if (isset($signable[$key]) || substr($key, 0, 6) === 'x-amz-') {
-                if (count($values) == 1) {
-                    $values = $values[0];
-                } else {
-                    sort($values);
-                    $values = implode(',', $values);
+            if (!isset($blacklist[$key])) {
+                foreach ($values as $v) {
+                    $aggregate[$key][] = $v;
                 }
-                $canonHeaders[$key] = $key . ':' . preg_replace('/\s+/', ' ', $values);
             }
         }
 
-        ksort($canonHeaders);
-        $signedHeadersString = implode(';', array_keys($canonHeaders));
+        ksort($aggregate);
+        $canonHeaders = [];
+        foreach ($aggregate as $k => $v) {
+            if (count($v) > 0) {
+                sort($v);
+            }
+            $canonHeaders[] = $k . ':' . preg_replace('/\s+/', ' ', implode(',', $v));
+        }
+
+        $signedHeadersString = implode(';', array_keys($aggregate));
         $canon .= implode("\n", $canonHeaders) . "\n\n"
             . $signedHeadersString . "\n"
             . $payload;
@@ -302,6 +323,11 @@ class SignatureV4 extends AbstractSignature
 
     private function parseRequest(RequestInterface $request)
     {
+        // Clean up any previously set headers.
+        $request = $request
+            ->withoutHeader('X-Amz-Date')
+            ->withoutHeader('Date')
+            ->withoutHeader('Authorization');
         $uri = $request->getUri();
 
         return [

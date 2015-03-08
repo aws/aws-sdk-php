@@ -4,6 +4,8 @@ namespace Aws\Test\Signature;
 use Aws\Credentials\Credentials;
 use Aws\Signature\SignatureV4;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Stream;
+use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7\Utils;
 
 require_once __DIR__ . '/sig_hack.php';
@@ -50,73 +52,6 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         $result = $methB->invoke($s, $reqArray, '123');
         $this->assertEquals('host;x-amz-foo', $result['headers']);
         $this->assertEquals("GET\n/\n\nhost:httpbin.org\nx-amz-foo:bar,baz\n\nhost;x-amz-foo\n123", $result['creq']);
-    }
-
-    /**
-     * @dataProvider testSuiteProvider
-     */
-    public function testSignsRequestsProperly($group)
-    {
-        // Create a request based on the '.req' file
-        $requestString = file_get_contents($group['req']);
-        $request = Utils::parseRequest($requestString);
-        $credentials = new Credentials(self::DEFAULT_KEY, self::DEFAULT_SECRET);
-        $signature = new SignatureV4('host', 'us-east-1');
-
-        $contextFn = new \ReflectionMethod($signature, 'createContext');
-        $contextFn->setAccessible(true);
-        $parseFn = new \ReflectionMethod($signature, 'parseRequest');
-        $parseFn->setAccessible(true);
-        $parsed = $parseFn->invoke($signature, $request);
-        $payloadFn = new \ReflectionMethod($signature, 'getPayload');
-        $payloadFn->setAccessible(true);
-        $payload = $payloadFn->invoke($signature, $request);
-        $ctx = $contextFn->invoke($signature, $parsed, $payload);
-
-        // Test that the canonical request is correct
-        $this->assertEquals(
-            str_replace("\r", '', file_get_contents($group['creq'])),
-            $ctx['creq']
-        );
-
-        $signed = $signature->signRequest($request, $credentials);
-        $this->assertEquals(
-            str_replace("\r", '', file_get_contents($group['authz'])),
-            $signed->getHeader('Authorization')
-        );
-    }
-
-    /**
-     * @return array
-     */
-    public function testSuiteProvider()
-    {
-        // Gather a list of files sorted by name
-        $files = glob(__DIR__ . DIRECTORY_SEPARATOR
-            . 'aws4_testsuite' . DIRECTORY_SEPARATOR . '*');
-
-        // Skip the get-header-key-duplicate.* and
-        // get-header-value-order.authz.* test files for now; they are believed
-        // to be invalid tests. See https://github.com/aws/aws-sdk-php/issues/161
-        $files = array_filter($files, function($file) {
-            return ((strpos($file, 'get-header-key-duplicate.') === false) &&
-                (strpos($file, 'get-header-value-order.'  ) === false));
-        });
-        sort($files);
-
-        // Break the files up into groups of five for each test case
-        $groups = $group = [];
-        for ($i = 0, $c = count($files); $i < $c; $i++) {
-            $types = explode('.', $files[$i]);
-            $type = end($types);
-            $group[$type] = $files[$i];
-            if (count($group) == 5) {
-                $groups[] = [$group];
-                $group = [];
-            }
-        }
-
-        return $groups;
     }
 
     public function testUsesExistingSha256HashIfPresent()
@@ -235,12 +170,98 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         $sig = new SignatureV4('foo', 'bar');
         $creds = new Credentials('a', 'b');
         $req = new Request('PUT', 'http://foo.com', [
-            'date' => 'today',
+            'x-amz-date' => 'today',
             'host' => 'foo.com',
             'x-amz-foo' => '123',
             'content-md5' => 'bogus'
         ]);
         $signed = $sig->signRequest($req, $creds);
-        $this->assertContains('content-md5;date;host;x-amz-foo', $signed->getHeader('Authorization'));
+        $this->assertContains('content-md5;host;x-amz-date;x-amz-foo', $signed->getHeader('Authorization'));
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CouldNotCreateChecksumException
+     */
+    public function testEnsuresContentSha256CanBeCalculated()
+    {
+        list($request, $credentials, $signature) = $this->getFixtures();
+        $request = $request->withBody(new NoSeekStream(Stream::factory('foo')));
+        $signature->signRequest($request, $credentials);
+    }
+
+    public function testProvider()
+    {
+        return [
+            // Duplicate headers should be signed.
+            [
+                "POST / HTTP/1.1\r\nHost: host.foo.com\r\nx-AMZ-date: 20110909T233600Z\r\nZOO:zoobar\r\nzoo:foobar\r\nzoo:zoobar\r\n\r\n",
+                "POST / HTTP/1.1\r\nHost: host.foo.com\r\nZOO: zoobar\r\nzoo: foobar, zoobar\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date;zoo, Signature=06c496812e2db2f19ca1e4b71b929a6e9d55b460bab5a4e1bbaacb1d3eed9820\r\n\r\n",
+                "POST\n/\n\nhost:host.foo.com\nzoo:foobar,zoobar,zoobar\n\nhost;zoo\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            ],
+            // Changing the method should change the signature.
+            [
+                "GET / HTTP/1.1\r\nHost: host.foo.com\r\nx-AMZ-date: 20110909T233600Z\r\nZOO:zoobar\r\nzoo:foobar\r\nzoo:zoobar\r\n\r\n",
+                "GET / HTTP/1.1\r\nHost: host.foo.com\r\nZOO: zoobar\r\nzoo: foobar, zoobar\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date;zoo, Signature=dbf3cbdd8c38d776f847f9fcc9d81ea59ed27f4c06b3aa57e8fdd97afaa76f7a\r\n\r\n",
+                "GET\n/\n\nhost:host.foo.com\nzoo:foobar,zoobar,zoobar\n\nhost;zoo\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            ],
+            // Duplicate header values must be sorted.
+            [
+                "POST / HTTP/1.1\r\nHost: host.foo.com\r\nx-AMZ-date: 20110909T233600Z\r\np: z\r\np: a\r\np: p\r\np: a\r\n\r\n",
+                "POST / HTTP/1.1\r\nHost: host.foo.com\r\np: z, a, p, a\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;p;x-amz-date, Signature=faca06aa6ae71c0a24116c9a61b01346e6d9d621001bac49d38a6fdb285649ec\r\n\r\n",
+                "POST\n/\n\nhost:host.foo.com\np:a,a,p,z\n\nhost;p\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            ],
+            // Request with space.
+            [
+                "GET /%20/foo HTTP/1.1\r\nHost: host.foo.com\r\n\r\n",
+                "GET /%20/foo HTTP/1.1\r\nHost: host.foo.com\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date, Signature=21c06f2350d850ddc3bb8a463336cb6677214463f29c5354f6678e9efe195712\r\n\r\n",
+                "GET\n/%20/foo\n\nhost:host.foo.com\n\nhost\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            ],
+            // Query order key case.
+            [
+                "GET /?foo=Zoo&foo=aha HTTP/1.1\r\nHost: host.foo.com\r\n\r\n",
+                "GET /?foo=Zoo&foo=aha HTTP/1.1\r\nHost: host.foo.com\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date, Signature=f08b61bce9cc3d3e070423ae098d56d0242c77142c9d5fa5613f350cec4d1925\r\n\r\n",
+                "GET\n/\nfoo=Zoo&foo=aha\nhost:host.foo.com\n\nhost\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            ],
+            // Query order key
+            [
+                "GET /?a=foo&b=foo HTTP/1.1\r\nHost: host.foo.com\r\n\r\n",
+                "GET /?a=foo&b=foo HTTP/1.1\r\nHost: host.foo.com\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date, Signature=1cfa3132ddd1b16d824aacef668c131d9096fe52e6d5718e20e43a7e47f616c6\r\n\r\n",
+                "GET\n/\na=foo&b=foo\nhost:host.foo.com\n\nhost\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            ],
+            // Query order value
+            [
+                "GET /?foo=b&foo=a HTTP/1.1\r\nHost: host.foo.com\r\n\r\n",
+                "GET /?foo=b&foo=a HTTP/1.1\r\nHost: host.foo.com\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date, Signature=425abc77cf8f0539e6ce3bc0a593813b1a10d71adc9067ea2d8d61db38adf11e\r\n\r\n",
+                "GET\n/\nfoo=a&foo=b\nhost:host.foo.com\n\nhost\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            ],
+            // POST with body
+            [
+                "POST / HTTP/1.1\r\nHost: host.foo.com\r\nContent-Length: 4\r\n\r\nTest",
+                "POST / HTTP/1.1\r\nHost: host.foo.com\r\nContent-Length: 4\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date, Signature=277a7dcbb942ea6290173548feee1df1a7550354dc83e22daf5ffea86a44e0db\r\n\r\nTest",
+                "POST\n/\n\nhost:host.foo.com\n\nhost\n532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25"
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider testProvider
+     */
+    public function testSignsRequests($req, $sreq, $creq)
+    {
+        $_SERVER['aws_time'] = '20110909T233600Z';
+        $credentials = new Credentials(self::DEFAULT_KEY, self::DEFAULT_SECRET);
+        $signature = new SignatureV4('host', 'us-east-1');
+        $request = Utils::parseRequest($req);
+        $contextFn = new \ReflectionMethod($signature, 'createContext');
+        $contextFn->setAccessible(true);
+        $parseFn = new \ReflectionMethod($signature, 'parseRequest');
+        $parseFn->setAccessible(true);
+        $parsed = $parseFn->invoke($signature, $request);
+        $payloadFn = new \ReflectionMethod($signature, 'getPayload');
+        $payloadFn->setAccessible(true);
+        $payload = $payloadFn->invoke($signature, $request);
+        $ctx = $contextFn->invoke($signature, $parsed, $payload);
+        $this->assertEquals($creq, $ctx['creq']);
+        $this->assertSame($sreq, Utils::str($signature->signRequest($request, $credentials)));
     }
 }
