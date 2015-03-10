@@ -1,24 +1,27 @@
 <?php
 namespace Aws\Test;
 
-use Aws\FutureResult;
+use Aws\ResultPromise;
 use Aws\Result;
-use React\Promise\FulfilledPromise;
 
 /**
- * @covers Aws\FutureResult
+ * @covers Aws\ResultPromise
  */
 class ResultModelTest extends \PHPUnit_Framework_TestCase
 {
     public function testHasData()
     {
-        $c = new FutureResult(new FulfilledPromise(new Result(['a' => 1])));
+        $c = new ResultPromise(function () use (&$c) {
+            $c->resolve(new Result(['a' => 1]));
+        });
         $this->assertEquals(['a' => 1], $c->wait()->toArray());
     }
 
     public function testResultCanBeToArray()
     {
-        $c = new FutureResult(new FulfilledPromise(new Result(['foo' => 'bar'])));
+        $c = new ResultPromise(function () use (&$c) {
+            $c->resolve(new Result(['foo' => 'bar']));
+        });
         $c->wait();
         $this->assertEquals('bar', $c['foo']);
         $this->assertEquals(1, count($c));
@@ -26,26 +29,27 @@ class ResultModelTest extends \PHPUnit_Framework_TestCase
 
     public function testResultCanBeSearched()
     {
-        $c = new FutureResult(
-            new FulfilledPromise(
-                new Result(['foo' => ['bar' => 'baz']])
-            )
-        );
+        $c = new ResultPromise(function () use (&$c) {
+            $c->resolve(new Result(['foo' => ['bar' => 'baz']]));
+        });
+
         $this->assertEquals('baz', $c->search('foo.bar'));
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException \InvalidArgumentException
      */
     public function testValidatesResult()
     {
-        $c = new FutureResult(new FulfilledPromise('foo'));
+        $c = new ResultPromise(function () use (&$c) { $c->resolve('abc'); });
         $c->wait();
     }
 
     public function testProxiesToUnderlyingData()
     {
-        $c = new FutureResult(new FulfilledPromise(new Result(['a' => 1])));
+        $c = new ResultPromise(function () use (&$c) {
+            $c->resolve(new Result(['a' => 1]));
+        });
         $this->assertEquals(1, count($c));
         $this->assertEquals(['a' => 1], $c->toArray());
         $this->assertEquals(['a' => 1], $c->getIterator()->getArrayCopy());
@@ -64,21 +68,13 @@ class ResultModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException \BadMethodCallException
      */
     public function testThrowsWhenPropertyInvalid()
     {
-        $c = new FutureResult(new FulfilledPromise(new Result(['a' => 1])));
+        $c = new ResultPromise(function () use (&$c) {
+            $c->resolve(new Result(['a' => 1]));
+        });
         $c->notThere;
-    }
-
-    /**
-     * @expectedException \GuzzleHttp\Ring\Exception\CancelledFutureAccessException
-     */
-    public function testThrowsWhenAccessingCancelledFuture()
-    {
-        $c = new FutureResult(new FulfilledPromise(new Result([])));
-        $c->cancel();
-        $c['foo'];
     }
 }

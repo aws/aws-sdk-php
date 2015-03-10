@@ -17,6 +17,20 @@ class ResultPromise extends Promise implements ResultPromiseInterface
         throw new \BadMethodCallException('Unknown value: ' . $name);
     }
 
+    /**
+     * Ensures that the resolved value is an instance of ResultInterface
+     *
+     * {@inheritdoc}
+     */
+    public function resolve($value)
+    {
+        if (!($value instanceof ResultInterface)) {
+            throw new \InvalidArgumentException('A ResultPromise must be resolved with a ResultInterface');
+        }
+
+        parent::resolve($value);
+    }
+
     public function hasKey($name)
     {
         return $this->_value->hasKey($name);
