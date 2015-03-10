@@ -28,7 +28,7 @@ class Command implements CommandInterface
     {
         $this->name = $name;
         $this->data = $args;
-        $this->handlerList = $list;
+        $this->handlerList = $list ?: new HandlerList();
     }
 
     public function getName()

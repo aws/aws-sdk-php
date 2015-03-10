@@ -3,7 +3,7 @@ namespace Aws;
 
 /**
  * Trait implementing ToArrayInterface, \ArrayAccess, \Countable,
- * \IteratorAggregate, and some path style methods.
+ * \IteratorAggregate, and getPath().
  */
 trait HasDataTrait
 {
@@ -56,20 +56,5 @@ trait HasDataTrait
     public function getPath($path)
     {
         return \GuzzleHttp\Utils::getPath($this->data, $path);
-    }
-
-    /**
-     * Set a value into a nested array key. Keys will be created as needed to
-     * set the value.
-     *
-     * @param string $path  Path to set
-     * @param mixed  $value Value to set at the key
-     *
-     * @throws \RuntimeException when trying to setPath using a nested path
-     *     that travels through a scalar value
-     */
-    public function setPath($path, $value)
-    {
-        \GuzzleHttp\Utils::setPath($this->data, $path, $value);
     }
 }
