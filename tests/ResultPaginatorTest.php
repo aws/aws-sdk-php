@@ -2,7 +2,6 @@
 namespace Aws\Test;
 
 use Aws\Result;
-use Aws\Test\UsesServiceTrait;
 
 /**
  * @covers Aws\ResultPaginator
@@ -24,10 +23,14 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
 
         // Create the client and paginator
         $client = $this->getTestClient('dynamodb');
-        $this->addMockResults($client, $results);
-        $paginator = $client->getPaginator('ListTables', [], $config + [
-            'process' => function () use (&$requestCount) {$requestCount++;}
-        ]);
+        $this->addMockResults(
+            $client,
+            $results,
+            function () use (&$requestCount) {
+                $requestCount++;
+            }
+        );
+        $paginator = $client->getPaginator('ListTables', [], $config);
 
         // Iterate over the paginator and keep track of the keys and values
         $tableNames = [];
@@ -112,14 +115,13 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
             new Result(['LastToken' => 'b2', 'TableNames' => []]),
             new Result(['TableNames' => ['c3']]),
             new Result(['TableNames' => ['d4']]),
-        ]);
+        ], function () use (&$requestCount) {
+            $requestCount++;
+        });
 
         $paginator = $client->getPaginator('ListTables', [], [
             'input_token'  => 'NextToken',
-            'output_token' => 'LastToken',
-            'process'      => function () use (&$requestCount) {
-                $requestCount++;
-            }
+            'output_token' => 'LastToken'
         ]);
 
         $tableNames = [];

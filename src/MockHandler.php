@@ -2,7 +2,6 @@
 namespace Aws;
 
 use Aws\Exception\AwsException;
-use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Promise\RejectedPromise;
 use Psr\Http\Message\RequestInterface;
 
@@ -14,16 +13,25 @@ class MockHandler
 {
     private $queue;
     private $lastRequest;
+    private $onFulfilled;
+    private $onRejected;
 
     /**
      * The passed in value can be a {@see Aws\ResultInterface},
      * {@see AwsException}, or an array that acts as a queue of results or
      * exceptions to return each time the handler is invoked.
      *
-     * @param mixed $resultOrQueue
+     * @param mixed    $resultOrQueue
+     * @param callable $onFulfilled Callback to invoke when the return value is fulfilled.
+     * @param callable $onRejected  Callback to invoke when the return value is rejected.
      */
-    public function __construct($resultOrQueue)
-    {
+    public function __construct(
+        $resultOrQueue,
+        callable $onFulfilled = null,
+        callable $onRejected = null
+    ) {
+        $this->onFulfilled = $onFulfilled;
+        $this->onRejected = $onRejected;
         if (is_array($resultOrQueue)) {
             foreach ($resultOrQueue as $value) {
                 $this->add($value);
@@ -56,10 +64,14 @@ class MockHandler
         $result = array_shift($this->queue);
 
         if ($result instanceof AwsException) {
-            return new RejectedPromise($result);
+            $result = new RejectedPromise($result);
+        } else {
+            $result = \GuzzleHttp\Promise\promise_for($result);
         }
 
-        return new FulfilledPromise($result);
+        $result->then($this->onFulfilled, $this->onRejected);
+
+        return $result;
     }
 
     /**

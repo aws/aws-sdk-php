@@ -3,14 +3,10 @@ namespace Aws\Test;
 
 use Aws\AwsClientInterface;
 use Aws\Exception\AwsException;
+use Aws\MockHandler;
 use Aws\Result;
 use Aws\Sdk;
 use Aws\Api\Service;
-use GuzzleHttp\Ring\Client\MockHandler;
-use GuzzleHttp\Command\CommandTransaction;
-use GuzzleHttp\Command\Event\PreparedEvent;
-use GuzzleHttp\Message\Response;
-use GuzzleHttp\Subscriber\Mock;
 
 /**
  * @internal
@@ -49,9 +45,7 @@ trait UsesServiceTrait
             && !isset($args['client'])
             && !isset($args['ringphp_handler'])
         ) {
-            $args['ringphp_handler'] = new MockHandler(function () {
-                return ['error' => new \RuntimeException('No network access')];
-            });
+            $args['handler'] = new MockHandler([]);
         }
 
         return $this->getTestSdk()->createClient($service, $args);
@@ -62,50 +56,25 @@ trait UsesServiceTrait
      *
      * @param AwsClientInterface $client
      * @param Result[]|array[]   $results
+     * @param callable $onFulfilled Callback to invoke when the return value is fulfilled.
+     * @param callable $onRejected  Callback to invoke when the return value is rejected.
      *
      * @return AwsClientInterface
      */
-    private function addMockResults(AwsClientInterface $client, array $results)
-    {
-        $client->getEmitter()->on('prepared',
-            function (PreparedEvent $event) use (&$results) {
-                $result = array_shift($results);
-                if (is_array($result)) {
-                    $event->intercept(new Result($result));
-                    $event->getTransaction()->response = new Response(200);
-                } elseif ($result instanceof Result) {
-                    $event->intercept($result);
-                    $event->getTransaction()->response = new Response(200);
-                } elseif ($result instanceof AwsException) {
-                    throw $result;
-                } else {
-                    throw new \Exception('There are no more mock results left. '
-                        . 'This client executed more commands than expected.');
-                }
-            },
-            'last'
-        );
-
-        return $client;
-    }
-
-    /**
-     * Queues up mock HTTP Response objects for a client
-     *
-     * @param AwsClientInterface $client
-     * @param Response[]         $responses
-     * @param bool               $readBodies
-     *
-     * @return AwsClientInterface
-     * @throws \InvalidArgumentException
-     */
-    private function addMockResponses(
-        $client,
-        array $responses,
-        $readBodies = true
+    private function addMockResults(
+        AwsClientInterface $client,
+        array $results,
+        callable $onFulfilled = null,
+        callable $onRejected = null
     ) {
-        $mock = new Mock($responses, $readBodies);
-        $client->getHttpClient()->getEmitter()->attach($mock);
+        foreach ($results as &$res) {
+            if (is_array($res)) {
+                $res = new Result($res);
+            }
+        }
+
+        $mock = new \Aws\MockHandler($results, $onFulfilled, $onRejected);
+        $client->getHandlerList()->setHandler($mock);
 
         return $client;
     }
@@ -142,14 +111,9 @@ trait UsesServiceTrait
                     'version'
                 )));
 
-        $trans = new CommandTransaction(
-            $client,
-            $this->getMock('GuzzleHttp\Command\CommandInterface')
-        );
-
         return new $type(
             $message ?: 'Test error',
-            $trans,
+            $this->getMock('GuzzleHttp\Command\CommandInterface'),
             [
                 'message' => $message ?: 'Test error',
                 'code'    => $code

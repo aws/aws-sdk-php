@@ -43,4 +43,10 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($comp());
         $this->assertEquals(['a', 'b', 'c'], $called);
     }
+
+    public function testCreatesConstantlyFunctions()
+    {
+        $fn = Utils::constantly('foo');
+        $this->assertSame('foo', $fn());
+    }
 }
