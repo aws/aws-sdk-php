@@ -2,19 +2,25 @@
 namespace Aws;
 
 use Aws\Exception\AwsException;
-use GuzzleHttp\Promise\Promise;
+use GuzzleHttp\Promise;
+use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Promise\RejectedPromise;
 
 /**
- * A "waiter" associated with an AWS resource (e.g., EC2 instance) that polls
- * the resource and waits until the resource is in a particular state.
- *
+ * "Waiters" are associated with an AWS resource (e.g., EC2 instance), and poll
+ * that resource and until it is in a particular state.
+
+ * The Waiter object produces a promise that is either a.) resolved once the
+ * waiting conditions are met, or b.) rejected if the waiting conditions cannot
+ * be met or has exceeded the number of allowed attempts at meeting the
+ * conditions. You can use waiters in a blocking or non-blocking way, depending
+ * on whether you call wait() on the promise.
+
  * The configuration for the waiter must include information about the operation
- * and the conditions for wait completion. Waiters can be used in a blocking or
- * non-blocking manner and implement the same future/promise characteristics
- * that normal operations do.
+ * and the conditions for wait completion.
  */
-class Waiter extends Promise
+class Waiter
 {
     /** @var AwsClientInterface Client used to execute each attempt. */
     private $client;
@@ -27,15 +33,6 @@ class Waiter extends Promise
 
     /** @var array Waiter configuration. */
     private $config;
-
-    /** @var int The number of the current attempt to poll the resource. */
-    private $attempt;
-
-    /** @var callable Callback executed when attempt response is processed. */
-    private $processfn;
-
-    /** @var PromiseInterface Promise of the most recent attempt. */
-    private $currentFuture;
 
     /** @var array Default configuration options. */
     private static $defaults = ['initDelay' => 0, 'retry' => null];
@@ -62,100 +59,95 @@ class Waiter extends Promise
         array $args = [],
         array $config = []
     ) {
-        // Set the necessary items to configure the waiter.
         $this->client = $client;
         $this->name = $name;
-        $this->args = $args;
-        $this->args['@future'] = true; // Ensure all are asynchronous
+
+        // All operations should be asynchronous.
+        $this->args = ['@future' => true] + $args;
+
+        // Prepare and validate config.
         $this->config = $config + self::$defaults;
-        $this->validate();
-        $this->processfn = $this->getProcessFn();
-
-        $this->cancelfn = function () {
-            if ($this->currentFuture) {
-                $this->currentFuture->cancel();
+        foreach (self::$required as $key) {
+            if (!isset($this->config[$key])) {
+                throw new \InvalidArgumentException(
+                    'The provided waiter configuration was incomplete.'
+                );
             }
-        };
+        }
+        if ($this->config['retry'] && !is_callable($this->config['retry'])) {
+            throw new \InvalidArgumentException(
+                'The provided "retry" callback is not callable.'
+            );
+        }
+    }
 
-        // Give the wait function to the parent class.
-        parent::__construct(function () {
-            if ($this->currentFuture) {
-                $this->currentFuture->wait();
+    /**
+     * @return PromiseInterface
+     */
+    public function promise()
+    {
+        return Promise\coroutine(function () {
+            for ($state = 'retry', $attempt = 1; $state === 'retry'; $attempt++) {
+                // Execute the operation.
+                $args = $this->getArgsForAttempt($attempt);
+                try {
+                    $result = (yield $this->client->{$this->config['operation']}($args));
+                } catch (AwsException $e) {
+                    $result = $e;
+                }
+
+                // Determine the waiter's state and what to do next.
+                $state = $this->determineState($result);
+                if ($state === 'success') {
+                    yield new FulfilledPromise($result);
+                } elseif ($state === 'failed') {
+                    $msg = "The {$this->name} waiter entered a failure state.";
+                    if ($result instanceof \Exception) {
+                        $msg .= ' Reason: ' . $result->getMessage();
+                    }
+                    yield new RejectedPromise(new \RuntimeException($msg));
+                } elseif ($state === 'retry') {
+                    if ($attempt < $this->config['maxAttempts']) {
+                        if ($this->config['retry']) {
+                            $this->config['retry']($attempt);
+                        }
+                    } else {
+                        $state = 'failed';
+                        yield new RejectedPromise(new \RuntimeException(
+                            "The {$this->name} waiter failed after attempt #{$attempt}."
+                        ));
+                    }
+                }
             }
         });
-
-        $this->pollResource();
     }
 
     /**
-     * Returns a callback function that will be called during the "process"
-     * event of every attempt of polling the resource.
+     * Gets the operation arguments for the attempt, including the delay.
      *
-     * @return callable
+     * @param $attempt Number of the current attempt.
+     *
+     * @return mixed integer
      */
-    private function getProcessFn()
+    private function getArgsForAttempt($attempt)
     {
-        return function ($result) {
-            // $state = $this->determineState($result);
-            static $tries = 0;
-            $state = ++$tries < 5 ? 'retry' : 'success';
+        $args = $this->args;
 
-            if ($state === 'success') {
-                $this->resolve($result);
-            } elseif ($state === 'failed') {
-                $this->reject("The {$this->name} waiter entered a failure state.", 0, $result);
-            } elseif ($this->attempt < $this->config['maxAttempts']) {
-                if ($this->config['retry']) {
-                    $this->config['retry']($this->attempt);
-                }
-                $this->pollResource();
-            } else {
-                $this->reject(new \RuntimeException(
-                    "Waiter failed after the attempt #{$this->attempt}."
-                ));
-            }
-        };
-    }
-
-    /**
-     * Executes the command that polls the status of the resource to see if the
-     * waiter can stop waiting.
-     */
-    private function pollResource()
-    {
-        // If the waiter's future is realized, do not make any more attempts.
-        if ($this->getState() !== 'pending') {
-            return;
-        }
-
-        $this->attempt++;
-
-        // Create the command use to check the resource's status
-        $command = $this->client->getCommand(
-            $this->config['operation'],
-            $this->args
-        );
-
-        // Get the configured delay for this attempt.
-        $delay = ($this->attempt === 1)
+        // Determine the delay.
+        $delay = ($attempt === 1)
             ? $this->config['initDelay']
             : $this->config['delay'];
-
         if (is_callable($delay)) {
-            $delay = $delay($this->attempt);
+            $delay = $delay($attempt);
         }
 
-        if ($delay) {
-            // $command->setRequestOption('delay', $delay * 1000);
+        // Set the delay. (Note: handlers except delay in milliseconds.)
+        if (!isset($args['@http'])) {
+            $args['@http'] = [];
         }
+        $args['@http']['delay'] = $delay * 1000;
 
-        $this->currentFuture = $this->client->execute($command);
-
-        // Add listeners to set delay for and process results of the attempt.
-        $this->currentFuture->then(
-            $this->processfn,
-            $this->processfn
-        );
+        return $args;
     }
 
     /**
@@ -246,7 +238,7 @@ class Waiter extends Promise
     {
         return !($result instanceof ResultInterface)
             ? false
-            : $acceptor['expected'] == $result['@status'];
+            : $acceptor['expected'] == $result['@metadata']['statusCode'];
     }
 
     /**
@@ -260,22 +252,5 @@ class Waiter extends Promise
         return !($result instanceof AwsException)
             ? false
             : $result->getAwsErrorCode() == $acceptor['expected'];
-    }
-
-    private function validate()
-    {
-        foreach (self::$required as $key) {
-            if (!isset($this->config[$key])) {
-                throw new \InvalidArgumentException(
-                    'The provided waiter configuration was incomplete.'
-                );
-            }
-        }
-
-        if (isset($this->config['retry']) && !is_callable($this->config['retry'])) {
-            throw new \InvalidArgumentException(
-                'The provided "retry" callback is not callable.'
-            );
-        }
     }
 }

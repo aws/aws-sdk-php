@@ -1,11 +1,13 @@
 <?php
 namespace Aws\Test;
 
+use Aws\Exception\AwsException;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Client;
-use GuzzleHttp\Message\Response;
-use GuzzleHttp\Ring\Client\MockHandler;
+use GuzzleHttp\Promise\Promise;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Stream;
 
 /**
  * @covers Aws\Waiter
@@ -27,43 +29,65 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testErrorOnBadRetryCallback()
+    {
+        $client = $this->getTestClient('DynamoDb');
+        $client->waitUntil(
+            'TableExists',
+            ['TableName' => 'Meh'],
+            ['retry' => '%']
+        );
+    }
+
     public function testCanCancel()
     {
         $client = $this->getTestClient('DynamoDb');
+        $this->addMockResults($client, [new Result([])]);
         $client->waitUntil('TableExists', [
             'TableName' => 'Meh',
-            '@future'   => true,
+            '@future' => true,
+            '@http' => ['debug' => true]
         ])->cancel();
+        sleep(1);
     }
 
     public function testCanWait()
     {
-        $i = 0;
+        $iteration = $waitTime = 0;
+        $statusQueue = ['CREATING', 'CREATING', 'CREATING', 'ACTIVE'];
+        $handler = static function (Request $request, array $options) use (
+            $statusQueue, &$waitTime, &$iteration
+        ) {
+            $waitTime += $options['delay'];
+
+            $promise = new Promise();
+            $promise->resolve(new Response(200, [],
+                Stream::factory(sprintf(
+                    '{"Table":{"TableStatus":"%s"}}',
+                    $statusQueue[$iteration]
+                ))
+            ));
+            $iteration++;
+
+            return $promise;
+        };
+
         $client = $this->getTestClient('DynamoDb', [
-            'client' => function () {
-                return new Client([
-                    'handler' => new MockHandler(function () use (&$i) {
-                        if ($i++) {
-                            return [
-                                'status' => 200,
-                                'body' => '{"Table":{"TableStatus":"ACTIVE"}}'
-                            ];
-                        } else {
-                            return [
-                                'status' => 200,
-                                'body' => '{"Table":{"TableStatus":"CREATING"}}'
-                            ];
-                        }
-                    })
-                ]);
-            }
+            'http_handler' => $handler,
         ]);
 
-        $client->waitUntil(
+        $result = $client->waitUntil(
             'TableExists',
             ['TableName' => 'Meh'],
-            ['initDelay' => 0.1, 'delay' => 0.1]
+            ['initDelay' => 3, 'delay' => 1]
         );
+
+        $this->assertEquals(4, $iteration, 'Did not execute enough requests.');
+        $this->assertEquals(6000, $waitTime, 'Did not delay long enough.');
+        $this->assertInstanceOf('Aws\Result', $result);
     }
 
     /**
@@ -121,13 +145,13 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
                     new Result(['Table' => ['TableStatus' => 'CREATING']]),
                     new Result(['Table' => ['TableStatus' => 'CREATING']]),
                 ],
-                'Waiter failed after the attempt #5.'
+                'The TableExists waiter failed after attempt #5.'
             ],
             [
                 [
                     $this->createMockAwsException(null, null, 'foo'),
                 ],
-                'The TableExists waiter entered a failure state.'
+                'The TableExists waiter entered a failure state. Reason: foo'
             ],
         ];
     }
@@ -178,17 +202,14 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getMatchersTestCases
      */
-    public function testMatchers($matcher, $event, $acceptor, $expected)
+    public function testMatchers($matcher, $result, $acceptor, $expected)
     {
         $waiter = new \ReflectionClass('Aws\Waiter');
         $matcher = $waiter->getMethod($matcher);
         $matcher->setAccessible(true);
         $waiter = $waiter->newInstanceWithoutConstructor();
 
-        $this->assertEquals(
-            $expected,
-            $matcher->invoke($waiter, $event, $acceptor)
-        );
+        $this->assertEquals($expected, $matcher->invoke($waiter, $result, $acceptor));
     }
 
     public function getMatchersTestCases()
@@ -196,41 +217,43 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
         return [
             [
                 'matchesPath',
-                $this->getMockProcessEvent(200, null),
+                null,
                 [],
                 false
             ],
             [
                 'matchesPath',
-                $this->getMockProcessEvent(200, ['a' => ['b' => 'c']]),
+                $this->getMockResult(['a' => ['b' => 'c']]),
                 ['argument' => 'a.b', 'expected' => 'c'],
                 true
             ],
             [
                 'matchesPath',
-                $this->getMockProcessEvent(200, ['a' => ['b' => 'c']]),
+                $this->getMockResult(['a' => ['b' => 'c']]),
                 ['argument' => 'a', 'expected' => 'z'],
                 false
             ],
             [
                 'matchesPathAll',
-                $this->getMockProcessEvent(200, null),
+                null,
                 [],
                 false
             ],
             [
                 'matchesPathAll',
-                $this->getMockProcessEvent(200, ['a' => [
-                    ['b' => 'c'],
-                    ['b' => 'c'],
-                    ['b' => 'c']
-                ]]),
+                $this->getMockResult([
+                    'a' => [
+                        ['b' => 'c'],
+                        ['b' => 'c'],
+                        ['b' => 'c']
+                    ]
+                ]),
                 ['argument' => 'a[].b', 'expected' => 'c'],
                 true
             ],
             [
                 'matchesPathAll',
-                $this->getMockProcessEvent(200, ['a' => [
+                $this->getMockResult(['a' => [
                     ['b' => 'c'],
                     ['b' => 'z'],
                     ['b' => 'c']
@@ -240,94 +263,82 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'matchesPathAny',
-                $this->getMockProcessEvent(200, null),
+                null,
                 [],
                 false
             ],
             [
                 'matchesPathAny',
-                $this->getMockProcessEvent(200, ['a' => [
-                    ['b' => 'c'],
-                    ['b' => 'd'],
-                    ['b' => 'e']
-                ]]),
+                $this->getMockResult([
+                    'a' => [
+                        ['b' => 'c'],
+                        ['b' => 'd'],
+                        ['b' => 'e']
+                    ]
+                ]),
                 ['argument' => 'a[].b', 'expected' => 'c'],
                 true
             ],
             [
                 'matchesPathAny',
-                $this->getMockProcessEvent(200, ['a' => [
-                    ['b' => 'x'],
-                    ['b' => 'y'],
-                    ['b' => 'z']
-                ]]),
+                $this->getMockResult([
+                    'a' => [
+                        ['b' => 'x'],
+                        ['b' => 'y'],
+                        ['b' => 'z']
+                    ]
+                ]),
                 ['argument' => 'a[].b', 'expected' => 'c'],
                 false
             ],
             [
                 'matchesStatus',
-                $this->getMockProcessEvent(null),
+                null,
                 [],
                 false
             ],
             [
                 'matchesStatus',
-                $this->getMockProcessEvent(200),
+                $this->getMockResult(),
                 ['expected' => 200],
                 true
             ],
             [
                 'matchesStatus',
-                $this->getMockProcessEvent(200),
+                $this->getMockResult(),
                 ['expected' => 400],
                 false
             ],
             [
                 'matchesError',
-                $this->getMockProcessEvent(),
+                null,
                 [],
                 false
             ],
             [
                 'matchesError',
-                $this->getMockProcessEvent(400, [], 'InvalidData'),
+                $this->getMockResult('InvalidData'),
                 ['expected' => 'InvalidData'],
                 true
             ],
             [
                 'matchesError',
-                $this->getMockProcessEvent(400, [], 'InvalidData'),
+                $this->getMockResult('InvalidData'),
                 ['expected' => 'Foo'],
                 false
             ],
         ];
     }
 
-    private function getMockProcessEvent($status = null, $result = null, $error = null)
+    private function getMockResult($data = [])
     {
-        $event = $this->getMockBuilder('GuzzleHttp\Command\Event\ProcessEvent')
-            ->disableOriginalConstructor()
-            ->setMethods(['getException', 'getResponse', 'getResult', 'setResult'])
-            ->getMock();
-
-        if ($status) {
-            $event->method('getResponse')->willReturn(new Response($status));
+        if (is_string($data)) {
+            return new AwsException('ERROR', $this->getMock('Aws\CommandInterface'), [
+                'code'   => $data,
+                'result' => new Result(['@metadata' => ['statusCode' => 200]])
+            ]);
+        } else {
+            return new Result($data + ['@metadata' => ['statusCode' => 200]]);
         }
-
-        if ($result) {
-            $event->method('getResult')->willReturn(new Result($result));
-        }
-
-        if ($error) {
-            $exception = $this->getMockBuilder('Aws\Exception\AwsException')
-                ->disableOriginalConstructor()
-                ->setMethods(['getAwsErrorCode'])
-                ->getMock();
-            $exception->method('getAwsErrorCode')->willReturn($error);
-            $event->method('getException')->willReturn($exception);
-            $event->method('setResult')->with(true);
-        }
-
-        return $event;
     }
 }

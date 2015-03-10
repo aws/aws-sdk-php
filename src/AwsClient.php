@@ -258,16 +258,17 @@ class AwsClient implements AwsClientInterface
         return new ResultPaginator($this, $name, $args, $config);
     }
 
-    public function getWaiter($name, array $args = [], array $config = [])
+    public function waitUntil($name, array $args = [], array $config = [])
     {
         // Create the waiter. If async, then waiting begins immediately.
         $config += $this->api->getWaiterConfig($name);
-        return new Waiter($this, $name, $args, $config);
-    }
+        $promise = (new Waiter($this, $name, $args, $config))->promise();
 
-    public function waitUntil($name, array $args = [], array $config = [])
-    {
-        $this->getWaiter($name, $args, $config)->wait();
+        if (isset($args['@future']) && $args['@future']) {
+            return $promise;
+        } else {
+            return $promise->wait();
+        }
     }
 
     public function serialize(CommandInterface $command)
