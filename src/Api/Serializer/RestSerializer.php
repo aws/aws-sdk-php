@@ -46,11 +46,7 @@ abstract class RestSerializer
         $operation = $this->api->getOperation($command->getName());
         $args = $command->toArray();
         $opts = $this->serialize($operation, $args);
-        $uri = $this->buildEndpoint($operation, $args);
-
-        if (!empty($opts['query'])) {
-            $uri = $uri->withQuery(Psr7\build_query($opts['query']));
-        }
+        $uri = $this->buildEndpoint($operation, $args, $opts);
 
         return new Request(
             $operation['http']['method'],
@@ -153,15 +149,7 @@ abstract class RestSerializer
         }
     }
 
-    /**
-     * Builds the URI template for a REST based request.
-     *
-     * @param Operation $operation
-     * @param array     $args
-     *
-     * @return UriInterface
-     */
-    private function buildEndpoint(Operation $operation, array $args)
+    private function buildEndpoint(Operation $operation, array $args, array $opts)
     {
         $varspecs = [];
 
@@ -175,9 +163,7 @@ abstract class RestSerializer
             }
         }
 
-        // Expand path place holders using Amazon's slightly different URI
-        // template syntax.
-        return Uri::resolve($this->endpoint, preg_replace_callback(
+        $relative = preg_replace_callback(
             '/\{([^\}]+)\}/',
             function (array $matches) use ($varspecs) {
                 $isGreedy = substr($matches[1], -1, 1) == '+';
@@ -191,6 +177,16 @@ abstract class RestSerializer
                 }
             },
             $operation['http']['requestUri']
-        ));
+        );
+
+        // Add the query string variables or appending to one if needed.
+        if (!empty($opts['query'])) {
+            $append = Psr7\build_query($opts['query']);
+            $relative .= strpos($relative, '?') ? "&{$append}" : "?$append";
+        }
+
+        // Expand path place holders using Amazon's slightly different URI
+        // template syntax.
+        return Uri::resolve($this->endpoint, $relative);
     }
 }

@@ -413,7 +413,10 @@ class ClientResolver
     public static function _apply_validate($value, array &$args, HandlerList $list)
     {
         if ($value === true) {
-            $list->append(Middleware::validation($args['api'], new Validator()));
+            $list->append(
+                Middleware::validation($args['api'], new Validator()),
+                ['step' => 'init']
+            );
         }
     }
 

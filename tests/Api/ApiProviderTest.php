@@ -76,21 +76,6 @@ class ApiProviderTest extends \PHPUnit_Framework_TestCase
         ApiProvider::filesystem('/path/to/invalid/dir');
     }
 
-    public function testEnsuresValidJson()
-    {
-        $path = sys_get_temp_dir() . '/invalid-2010-12-05.api.json';
-        file_put_contents($path, 'foo, bar');
-        $p = ApiProvider::filesystem(sys_get_temp_dir());
-        try {
-            $p('api', 'invalid', '2010-12-05');
-            $this->fail('Did not throw');
-        } catch (\Exception $e) {
-            $this->assertInstanceOf('InvalidArgumentException', $e);
-        } finally {
-            unlink($path);
-        }
-    }
-
     public function testNullOnMissingFile()
     {
         $p = $this->getTestApiProvider();

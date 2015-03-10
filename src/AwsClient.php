@@ -5,7 +5,7 @@ use Aws\Exception\AwsException;
 use Aws\Api\Service;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Signature\SignatureProvider;
-use GuzzleHttp\Message\RequestInterface;
+use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Uri;
 
@@ -307,7 +307,7 @@ class AwsClient implements AwsClientInterface
         $klass = get_class($this);
 
         if ($klass === __CLASS__) {
-            return '';
+            return ['', 'Aws\Exception\AwsException'];
         }
 
         $service = substr($klass, strrpos($klass, '\\') + 1, -6);

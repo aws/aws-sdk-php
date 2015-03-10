@@ -2,7 +2,7 @@
 namespace Aws\Test\Api\ErrorParser;
 
 use Aws\Api\ErrorParser\RestJsonErrorParser;
-use GuzzleHttp\Message\MessageFactory;
+use GuzzleHttp\Psr7;
 
 /**
  * @covers Aws\Api\ErrorParser\RestJsonErrorParser
@@ -12,7 +12,7 @@ class RestJsonErrorParserTest extends \PHPUnit_Framework_TestCase
 {
     public function testParsesClientErrorResponses()
     {
-        $response = (new MessageFactory())->fromMessage(
+        $response = Psr7\parse_response(
             "HTTP/1.1 400 Bad Request\r\n" .
             "x-amzn-requestid: xyz\r\n\r\n" .
             '{ "type": "client", "message": "lorem ipsum", "code": "foo" }'
@@ -34,7 +34,7 @@ class RestJsonErrorParserTest extends \PHPUnit_Framework_TestCase
 
     public function testParsesClientErrorResponseWithCodeInHeader()
     {
-        $response = (new MessageFactory())->fromMessage(
+        $response = Psr7\parse_response(
             "HTTP/1.1 400 Bad Request\r\n" .
             "x-amzn-RequestId: xyz\r\n" .
             "x-amzn-ErrorType: foo:bar\r\n\r\n" .

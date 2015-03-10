@@ -2,7 +2,7 @@
 namespace Aws\Test\Api\ErrorParser;
 
 use Aws\Api\ErrorParser\XmlErrorParser;
-use GuzzleHttp\Message\MessageFactory;
+use GuzzleHttp\Psr7;
 
 /**
  * @covers Aws\Api\ErrorParser\XmlErrorParser
@@ -54,7 +54,7 @@ class XmlErrorParserTest extends \PHPUnit_Framework_TestCase
      */
     public function testParsesResponses($xml)
     {
-        $response = (new MessageFactory)->fromMessage(
+        $response = Psr7\parse_response(
             "HTTP/1.1 400 Bad Request\r\n\r\n{$xml}"
         );
         $parser = new XmlErrorParser();
@@ -69,7 +69,7 @@ class XmlErrorParserTest extends \PHPUnit_Framework_TestCase
 
     public function testParsesResponsesWithNoBodyAndNoRequestId()
     {
-        $response = (new MessageFactory)->fromMessage(
+        $response = Psr7\parse_response(
             "HTTP/1.1 400 Bad Request\r\n\r\n"
         );
         $parser = new XmlErrorParser();
@@ -80,7 +80,7 @@ class XmlErrorParserTest extends \PHPUnit_Framework_TestCase
 
     public function testParsesResponsesWithNoBody()
     {
-        $response = $response = (new MessageFactory)->fromMessage(
+        $response = $response = Psr7\parse_response(
             "HTTP/1.1 400 Bad Request\r\nX-Amz-Request-ID: Foo\r\n\r\n"
         );
         $parser = new XmlErrorParser();

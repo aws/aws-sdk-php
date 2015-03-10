@@ -163,7 +163,8 @@ class Validator
         static $valid = [
             'string'  => true,
             'integer' => true,
-            'double'  => true
+            'double'  => true,
+            'NULL'    => true,
         ];
 
         $type = gettype($value);

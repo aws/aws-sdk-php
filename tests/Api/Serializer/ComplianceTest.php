@@ -5,8 +5,6 @@ use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\Credentials\NullCredentials;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Client;
-use GuzzleHttp\Command\CommandTransaction;
 
 /**
  * @covers Aws\Api\Serializer\QuerySerializer
@@ -73,7 +71,6 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
                 return $service->toArray();
             },
             'credentials'  => new NullCredentials(),
-            'client'       => new Client(),
             'signature'    => $this->getMock('Aws\Signature\SignatureInterface'),
             'region'       => 'us-west-2',
             'endpoint'     => $ep,
@@ -83,11 +80,8 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $command = $client->getCommand($name, $args);
-        $trans = new CommandTransaction($client, $command);
-        /** @var callable $serializer */
-        $serializer = $this->readAttribute($client, 'serializer');
-        $request = $serializer($trans);
-        $this->assertEquals($serialized['uri'], $request->getResource());
+        $request = $client->serialize($command);
+        $this->assertEquals($serialized['uri'], $request->getRequestTarget());
 
         $body = (string) $request->getBody();
         switch ($service->getMetadata('type')) {

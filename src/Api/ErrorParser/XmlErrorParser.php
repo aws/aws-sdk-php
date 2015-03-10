@@ -20,7 +20,8 @@ class XmlErrorParser
             'parsed'      => null
         ];
 
-        if ($body = $response->getBody()) {
+        $body = $response->getBody();
+        if ($body->getSize() > 0) {
             $this->parseBody(new \SimpleXMLElement($body), $data);
         } else {
             $this->parseHeaders($response, $data);

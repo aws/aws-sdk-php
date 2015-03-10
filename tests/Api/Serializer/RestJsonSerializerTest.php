@@ -2,11 +2,9 @@
 namespace Aws\Test\Api\Serializer;
 
 use Aws\Api\Service;
-use GuzzleHttp\Command\Command;
+use Aws\Command;
 use Aws\Api\Serializer\RestJsonSerializer;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Client;
-use GuzzleHttp\Command\CommandTransaction;
 
 /**
  * @covers Aws\Api\Serializer\RestJsonSerializer
@@ -65,28 +63,17 @@ class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
 
     private function getRequest($commandName, $input)
     {
-        $http = new Client();
         $service = $this->getTestService();
         $command = new Command($commandName, $input);
         $j = new RestJsonSerializer($service, 'http://foo.com');
-        $aws = $this->getMockBuilder('Aws\AwsClient')
-            ->setMethods(['getHttpClient'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $aws->expects($this->once())
-            ->method('getHttpClient')
-            ->will($this->returnValue($http));
-        $trans = new CommandTransaction($aws, $command);
-
-        return $j($trans);
+        return $j($command);
     }
 
     public function testPreparesRequestsWithContentType()
     {
         $request = $this->getRequest('foo', ['baz' => 'bar']);
         $this->assertEquals('POST', $request->getMethod());
-        $this->assertEquals('http://foo.com/', $request->getUrl());
-        $this->assertTrue($request->hasHeader('User-Agent'));
+        $this->assertEquals('http://foo.com/', (string) $request->getUri());
         $this->assertEquals('{"baz":"bar"}', (string) $request->getBody());
         $this->assertEquals(
             'application/x-amz-json-1.1',
@@ -98,8 +85,7 @@ class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
     {
         $request = $this->getRequest('bar', ['baz' => 'bar']);
         $this->assertEquals('POST', $request->getMethod());
-        $this->assertEquals('http://foo.com/', $request->getUrl());
-        $this->assertTrue($request->hasHeader('User-Agent'));
+        $this->assertEquals('http://foo.com/', (string) $request->getUri());
         $this->assertEquals('bar', (string) $request->getBody());
         $this->assertEquals('', $request->getHeader('Content-Type'));
     }
@@ -108,8 +94,7 @@ class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
     {
         $request = $this->getRequest('baz', ['baz' => ['baz' => '1234']]);
         $this->assertEquals('POST', $request->getMethod());
-        $this->assertEquals('http://foo.com/', $request->getUrl());
-        $this->assertTrue($request->hasHeader('User-Agent'));
+        $this->assertEquals('http://foo.com/', (string) $request->getUri());
         $this->assertEquals('{"baz":"1234"}', (string) $request->getBody());
         $this->assertEquals(
             'application/x-amz-json-1.1',

@@ -77,7 +77,7 @@ class QueryParamBuilder
     ) {
         // Handle empty list serialization
         if (!$value) {
-            $query[$prefix] = false;
+            $query[$prefix] = '';
             return;
         }
 

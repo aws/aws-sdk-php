@@ -1,12 +1,12 @@
 <?php
 namespace Aws\Test\Api\Parser;
 
-use GuzzleHttp\Command\Command;
+use Aws\Command;
 use Aws\Api\Service;
 use Aws\Api\Shape;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Message\Response;
-use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Stream;
 
 /**
  * @covers Aws\Api\Parser\AbstractParser

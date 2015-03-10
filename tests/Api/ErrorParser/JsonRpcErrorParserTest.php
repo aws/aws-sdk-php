@@ -2,7 +2,7 @@
 namespace Aws\Test\Api\ErrorParser;
 
 use Aws\Api\ErrorParser\JsonRpcErrorParser;
-use GuzzleHttp\Message\MessageFactory;
+use GuzzleHttp\Psr7;
 
 /**
  * @covers Aws\Api\ErrorParser\JsonRpcErrorParser
@@ -12,7 +12,8 @@ class JsonRpcErrorParserTest extends \PHPUnit_Framework_TestCase
 {
     public function testParsesClientErrorResponses()
     {
-        $response = (new MessageFactory())->fromMessage(
+
+        $response = Psr7\parse_response(
             "HTTP/1.1 400 Bad Request\r\n" .
             "x-amzn-requestid: xyz\r\n\r\n" .
             '{ "__type": "foo", "message": "lorem ipsum" }'
@@ -33,7 +34,7 @@ class JsonRpcErrorParserTest extends \PHPUnit_Framework_TestCase
 
     public function testParsesServerErrorResponsesWithMixedCasing()
     {
-        $response = (new MessageFactory())->fromMessage(
+        $response = Psr7\parse_response(
             "HTTP/1.1 500 Internal Server Error\r\n" .
             "x-amzn-requestid: 123\r\n\r\n" .
             '{"__Type": "abc#bazFault", "Message": "dolor"}'
