@@ -5,9 +5,9 @@ use Aws\Multipart\AbstractUploadBuilder;
 use Aws\Multipart\UploadState;
 use Aws\Result;
 use GuzzleHttp\Command\CommandInterface;
-use GuzzleHttp\Stream\Stream;
-use GuzzleHttp\Stream\StreamInterface;
-use GuzzleHttp\Stream\Utils;
+use GuzzleHttp\Psr7\Stream;
+use Psr\Http\Message\StreamableInterface;
+use GuzzleHttp\Psr7;
 use GuzzleHttp\Subscriber\MessageIntegrity\HashingStream;
 use GuzzleHttp\Subscriber\MessageIntegrity\PhpHash;
 
@@ -201,7 +201,7 @@ class UploadBuilder extends AbstractUploadBuilder
             // calculates the linear and tree hashes as the data is read.
             if ($seekable) {
                 // Case 1: Stream is seekable, can make stream from new handle.
-                $body = Utils::open($this->source->getMetadata('uri'), 'r');
+                $body = Psr7\try_fopen($this->source->getMetadata('uri'), 'r');
                 $body = $this->limitPartStream(Stream::factory($body));
                 // Create another stream decorated with hashing streams and read
                 // through it, so we can get the hash values for the part.
@@ -214,7 +214,7 @@ class UploadBuilder extends AbstractUploadBuilder
                 $source = $this->limitPartStream($this->source);
                 $source = $this->decorateWithHashes($source, $data);
                 $body = Stream::factory();
-                Utils::copyToStream($source, $body);
+                Psr7\copy_to_stream($source, $body);
             }
 
             $body->seek(0);
@@ -229,12 +229,12 @@ class UploadBuilder extends AbstractUploadBuilder
     /**
      * Decorates a stream with a tree AND linear sha256 hashing stream.
      *
-     * @param StreamInterface $stream Stream to decorate.
-     * @param array           $data   Data bag that results are injected into.
+     * @param StreamableInterface $stream Stream to decorate.
+     * @param array               $data   Data bag that results are injected into.
      *
-     * @return StreamInterface
+     * @return StreamableInterface
      */
-    private function decorateWithHashes(StreamInterface $stream, array &$data) {
+    private function decorateWithHashes(StreamableInterface $stream, array &$data) {
         // Make sure that a tree hash is calculated.
         $stream = new HashingStream($stream, new TreeHash(),
             function ($result) use (&$data) {

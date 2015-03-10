@@ -6,7 +6,7 @@ use Aws\Signature\SignatureV4;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Stream;
 use GuzzleHttp\Psr7\NoSeekStream;
-use GuzzleHttp\Psr7\Utils;
+use GuzzleHttp\Psr7;
 
 require_once __DIR__ . '/sig_hack.php';
 
@@ -251,7 +251,7 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         $_SERVER['aws_time'] = '20110909T233600Z';
         $credentials = new Credentials(self::DEFAULT_KEY, self::DEFAULT_SECRET);
         $signature = new SignatureV4('host', 'us-east-1');
-        $request = Utils::parseRequest($req);
+        $request = Psr7\parse_request($req);
         $contextFn = new \ReflectionMethod($signature, 'createContext');
         $contextFn->setAccessible(true);
         $parseFn = new \ReflectionMethod($signature, 'parseRequest');
@@ -262,6 +262,6 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         $payload = $payloadFn->invoke($signature, $request);
         $ctx = $contextFn->invoke($signature, $parsed, $payload);
         $this->assertEquals($creq, $ctx['creq']);
-        $this->assertSame($sreq, Utils::str($signature->signRequest($request, $credentials)));
+        $this->assertSame($sreq, Psr7\str($signature->signRequest($request, $credentials)));
     }
 }

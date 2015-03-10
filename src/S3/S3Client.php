@@ -11,7 +11,7 @@ use Aws\ClientResolver;
 use Aws\Retry\S3TimeoutFilter;
 use Aws\CommandInterface;
 use GuzzleHttp\Psr7\Stream;
-use GuzzleHttp\Psr7\Utils;
+use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\AppendStream;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamableInterface;
@@ -400,7 +400,7 @@ class S3Client extends AwsClient
         // Handle the situation where the body size is unknown.
         // Read up to 5MB into a buffer to determine how to upload the body.
         $buffer = Stream::factory();
-        Utils::copyToStream($body, $buffer, 5242880);
+        Psr7\copy_to_stream($body, $buffer, 5242880);
 
         // If body < 5MB, use PutObject with the buffer.
         if ($buffer->getSize() < 5242880) {

@@ -3,7 +3,7 @@ namespace Aws\S3;
 
 use Aws\CommandInterface;
 use Aws\Exception\CouldNotCreateChecksumException;
-use GuzzleHttp\Psr7\Utils;
+use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -76,7 +76,7 @@ class ApplyMd5Middleware
             }
             return $request->withHeader(
                 'Content-MD5',
-                base64_encode(Utils::hash($body, 'md5', true))
+                base64_encode(Psr7\hash($body, 'md5', true))
             );
         }
 

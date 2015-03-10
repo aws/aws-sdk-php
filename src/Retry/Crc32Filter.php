@@ -3,8 +3,7 @@ namespace Aws\Retry;
 
 use GuzzleHttp\Event\AbstractTransferEvent;
 use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
-use GuzzleHttp\Stream;
-use GuzzleHttp\Stream\Utils;
+use GuzzleHttp\Psr7;
 
 /**
  * Retries requests based on the x-amz-crc32 response header.
@@ -21,7 +20,7 @@ class Crc32Filter
             return RetrySubscriber::DEFER;
         }
 
-        $hash = hexdec(Utils::hash($response->getBody(), 'crc32b'));
+        $hash = hexdec(Psr7\hash($response->getBody(), 'crc32b'));
 
         return (int) $response->getHeader('x-amz-crc32') !== $hash
             ? RetrySubscriber::RETRY

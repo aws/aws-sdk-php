@@ -9,7 +9,7 @@ use Aws\Api\TimestampShape;
 use Aws\CommandInterface;
 use GuzzleHttp\Psr7\Stream;
 use GuzzleHttp\Psr7\Uri;
-use GuzzleHttp\Psr7\Utils;
+use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 use GuzzleHttp\Psr7\Request;
@@ -49,7 +49,7 @@ abstract class RestSerializer
         $uri = $this->buildEndpoint($operation, $args);
 
         if (!empty($opts['query'])) {
-            $uri = $uri->withQuery(Utils::buildQuery($opts['query']));
+            $uri = $uri->withQuery(Psr7\build_query($opts['query']));
         }
 
         return new Request(

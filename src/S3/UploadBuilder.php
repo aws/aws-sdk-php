@@ -6,10 +6,10 @@ use Aws\Multipart\UploadState;
 use Aws\Result;
 use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Mimetypes;
-use GuzzleHttp\Stream\LazyOpenStream;
-use GuzzleHttp\Stream\Stream;
-use GuzzleHttp\Stream\StreamInterface;
-use GuzzleHttp\Stream\Utils;
+use GuzzleHttp\Psr7\LazyOpenStream;
+use GuzzleHttp\Psr7\Stream;
+use Psr\Http\Message\StreamableInterface;
+use GuzzleHttp\Psr7;
 use GuzzleHttp\Subscriber\MessageIntegrity\HashingStream;
 use GuzzleHttp\Subscriber\MessageIntegrity\PhpHash;
 
@@ -161,7 +161,7 @@ class UploadBuilder extends AbstractUploadBuilder
                     }
                 );
                 $body = Stream::factory();
-                Utils::copyToStream($source, $body);
+                Psr7\copy_to_stream($source, $body);
                 $data['ContentLength'] = $body->getSize();
             }
 
@@ -204,12 +204,12 @@ class UploadBuilder extends AbstractUploadBuilder
      * the same time, instead of having to buffer the stream to disk and re-read
      * the stream later.
      *
-     * @param StreamInterface $stream   Stream to decorate.
-     * @param callable        $complete Callback to execute for the hash result.
+     * @param StreamableInterface $stream   Stream to decorate.
+     * @param callable            $complete Callback to execute for the hash result.
      *
-     * @return StreamInterface
+     * @return StreamableInterface
      */
-    private function decorateWithHashes(StreamInterface $stream, callable $complete)
+    private function decorateWithHashes(StreamableInterface $stream, callable $complete)
     {
         // Determine if the checksum needs to be calculated.
         if ($this->client->getConfig('signature_version') == 'v4') {

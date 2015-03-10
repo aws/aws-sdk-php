@@ -5,7 +5,7 @@ use Aws\Credentials\CredentialsInterface;
 use Aws\Exception\CouldNotCreateChecksumException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Stream;
-use GuzzleHttp\Psr7\Utils;
+use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -144,7 +144,7 @@ class SignatureV4 extends AbstractSignature
             throw new CouldNotCreateChecksumException('sha256');
         }
 
-        return Utils::hash($request->getBody(), 'sha256');
+        return Psr7\hash($request->getBody(), 'sha256');
     }
 
     protected function getPresignedPayload(RequestInterface $request)
@@ -324,6 +324,7 @@ class SignatureV4 extends AbstractSignature
     private function parseRequest(RequestInterface $request)
     {
         // Clean up any previously set headers.
+        /** @var RequestInterface $request */
         $request = $request
             ->withoutHeader('X-Amz-Date')
             ->withoutHeader('Date')
@@ -333,7 +334,7 @@ class SignatureV4 extends AbstractSignature
         return [
             'method'  => $request->getMethod(),
             'path'    => $uri->getPath(),
-            'query'   => Utils::parseQuery($uri->getQuery()),
+            'query'   => Psr7\parse_query($uri->getQuery()),
             'uri'     => $uri,
             'headers' => $request->getHeaders(),
             'body'    => $request->getBody(),
@@ -344,7 +345,7 @@ class SignatureV4 extends AbstractSignature
     private function buildRequest(array $req)
     {
         if ($req['query']) {
-            $req['uri'] = $req['uri']->withQuery(Utils::buildQuery($req['query']));
+            $req['uri'] = $req['uri']->withQuery(Psr7\build_query($req['query']));
         }
 
         return new Request(

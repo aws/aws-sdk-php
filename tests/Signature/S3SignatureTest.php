@@ -4,7 +4,7 @@ namespace Aws\Test\Signature;
 use Aws\Credentials\Credentials;
 use Aws\Signature\S3Signature;
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Utils;
+use GuzzleHttp\Psr7;
 
 /**
  * @covers Aws\Signature\S3Signature
@@ -59,7 +59,7 @@ class S3SignatureTest extends \PHPUnit_Framework_TestCase
         $dt = 'April 20, 2014';
         $creds = new Credentials('foo', 'bar');
         $signature = new S3Signature();
-        $req = Utils::parseRequest($message);
+        $req = Psr7\parse_request($message);
         // Try with string
         $res = $signature->createPresignedUrl($req, $creds, $dt);
         $this->assertSame($url, $res);

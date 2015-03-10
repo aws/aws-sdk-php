@@ -4,7 +4,7 @@ namespace Aws\Signature;
 use Aws\Credentials\CredentialsInterface;
 use Aws\S3\S3Client;
 use Aws\S3\S3UriParser;
-use GuzzleHttp\Psr7\Utils;
+use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -95,6 +95,12 @@ class S3Signature extends AbstractSignature
         return (string) $request->getUri()->withQuery($queryString);
     }
 
+    /**
+     * @param RequestInterface     $request
+     * @param CredentialsInterface $creds
+     *
+     * @return RequestInterface
+     */
     private function prepareRequest(
         RequestInterface $request,
         CredentialsInterface $creds
@@ -109,7 +115,7 @@ class S3Signature extends AbstractSignature
             $modify['set_headers']['X-Amz-Security-Token'] = $token;
         }
 
-        return Utils::modifyRequest($request, $modify);
+        return Psr7\modify_request($request, $modify);
     }
 
     private function signString($string, CredentialsInterface $credentials)
@@ -176,7 +182,7 @@ class S3Signature extends AbstractSignature
         $query = $request->getUri()->getQuery();
 
         if ($query) {
-            $params = Utils::parseQuery($query);
+            $params = Psr7\parse_query($query);
             $first = true;
             foreach ($this->signableQueryString as $key) {
                 if (array_key_exists($key, $params)) {
