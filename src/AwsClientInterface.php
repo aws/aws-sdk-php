@@ -31,7 +31,7 @@ interface AwsClientInterface
      *   serializing the command.
      * - @http: Associative array of transfer specific options to apply to the
      *   request that is serialized for this command. Available keys include
-     *   "proxy", "verify", "timeout", "connect_timeout", "debug", and
+     *   "proxy", "verify", "timeout", "connect_timeout", "debug", "delay", and
      *   "headers".
      *
      * @param string $name Name of the operation to use in the command
