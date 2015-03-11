@@ -124,20 +124,16 @@ class HandlerList
      * Remove a middleware by instance from the list.
      *
      * @param callable $remove Middleware to remove.
-     *
-     * @return $this
      */
     public function remove(callable $remove)
     {
-        for ($i = 0, $ci = count($this->stack); $i < $ci; $i++) {
-            for ($j = 0, $cj = count($this->stack[$i]); $j < $cj; $j++) {
-                if ($this->stack[$i][$j] === $remove) {
+        foreach ($this->stack as $i => $stack) {
+            foreach ($stack as $j => $fn) {
+                if ($fn === $remove) {
                     unset($this->stack[$i][$j]);
                 }
             }
         }
-
-        return $this;
     }
 
     /**
