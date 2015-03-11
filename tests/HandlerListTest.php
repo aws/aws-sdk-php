@@ -4,7 +4,6 @@ namespace Aws\Test;
 use Aws\Command;
 use Aws\CommandInterface;
 use Aws\HandlerList;
-use GuzzleHttp\Message\RequestInterface;
 
 /**
  * @covers Aws\HandlerList
@@ -52,7 +51,7 @@ class HandlerListTest extends \PHPUnit_Framework_TestCase
     private function createMiddleware(array &$history, $name)
     {
         return function (callable $next) use (&$history, $name) {
-            return function (CommandInterface $cmd, RequestInterface $request = null) use ($next, &$history, $name) {
+            return function (CommandInterface $cmd, $request = null) use ($next, &$history, $name) {
                 $history[] = $name;
                 return $next($cmd, $request);
             };
@@ -61,7 +60,7 @@ class HandlerListTest extends \PHPUnit_Framework_TestCase
 
     public function testWrapsInStepOrderWithAppend()
     {
-        $handler = function (CommandInterface $cmd, RequestInterface $request = null) {
+        $handler = function (CommandInterface $cmd, $request = null) {
             return 'baz';
         };
         $list = new HandlerList($handler);
@@ -79,7 +78,7 @@ class HandlerListTest extends \PHPUnit_Framework_TestCase
 
     public function testWrapsInStepOrderWithPrepend()
     {
-        $handler = function (CommandInterface $cmd, RequestInterface $request = null) {
+        $handler = function (CommandInterface $cmd, $request = null) {
             return 'baz';
         };
         $list = new HandlerList($handler);
@@ -106,7 +105,7 @@ class HandlerListTest extends \PHPUnit_Framework_TestCase
 
     public function testCanStickToFront()
     {
-        $handler = function (CommandInterface $cmd, RequestInterface $request = null) {
+        $handler = function (CommandInterface $cmd, $request = null) {
             return 'baz';
         };
         $list = new HandlerList($handler);

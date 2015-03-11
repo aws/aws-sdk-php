@@ -9,52 +9,58 @@ use Psr\Http\Message\RequestInterface;
  * Returns promises that are rejected or fulfilled using a queue of
  * Aws\ResultInterface and Aws\Exception\AwsException objects.
  */
-class MockHandler
+class MockHandler implements \Countable
 {
     private $queue;
+    private $lastCommand;
     private $lastRequest;
     private $onFulfilled;
     private $onRejected;
 
     /**
-     * The passed in value can be a {@see Aws\ResultInterface},
-     * {@see AwsException}, or an array that acts as a queue of results or
+     * The passed in value must be an array of {@see Aws\ResultInterface} or
+     * {@see AwsException} objects that acts as a queue of results or
      * exceptions to return each time the handler is invoked.
      *
-     * @param mixed    $resultOrQueue
+     * @param array    $resultOrQueue
      * @param callable $onFulfilled Callback to invoke when the return value is fulfilled.
      * @param callable $onRejected  Callback to invoke when the return value is rejected.
      */
     public function __construct(
-        $resultOrQueue,
+        array $resultOrQueue = [],
         callable $onFulfilled = null,
         callable $onRejected = null
     ) {
         $this->onFulfilled = $onFulfilled;
         $this->onRejected = $onRejected;
-        if (is_array($resultOrQueue)) {
-            foreach ($resultOrQueue as $value) {
-                $this->add($value);
-            }
-        } else {
-            $this->add($resultOrQueue);
+
+        if ($resultOrQueue) {
+            call_user_func_array([$this, 'append'], $resultOrQueue);
         }
     }
 
-    public function addException(AwsException $e)
+    /**
+     * Adds one or more variadic ResultInterface or AwsException objects to the
+     * queue.
+     */
+    public function append()
     {
-        $this->queue[] = $e;
-    }
-
-    public function addResult(ResultInterface $response)
-    {
-        $this->queue[] = $response;
+        foreach (func_get_args() as $value) {
+            if ($value instanceof ResultInterface
+                || $value instanceof AwsException
+            ) {
+                $this->queue[] = $value;
+            } else {
+                throw new \InvalidArgumentException('Expected an Aws\ResultInterface or Aws\Exception\AwsException.');
+            }
+        }
     }
 
     public function __invoke(
         CommandInterface $command,
         RequestInterface $request
     ) {
+        $this->lastCommand = $command;
         $this->lastRequest = $request;
 
         if (!$this->queue) {
@@ -84,14 +90,23 @@ class MockHandler
         return $this->lastRequest;
     }
 
-    private function add($value)
+    /**
+     * Get the last received command.
+     *
+     * @return CommandInterface
+     */
+    public function getLastCommand()
     {
-        if ($value instanceof ResultInterface) {
-            $this->addResult($value);
-        } elseif ($value instanceof AwsException) {
-            $this->addException($value);
-        } else {
-            throw new \InvalidArgumentException('Expected a result or AWS exception');
-        }
+        return $this->lastCommand;
+    }
+
+    /**
+     * Returns the number of remaining items in the queue.
+     *
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->queue);
     }
 }

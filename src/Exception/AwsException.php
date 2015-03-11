@@ -28,7 +28,7 @@ class AwsException extends \RuntimeException
     public function __construct(
         $message,
         CommandInterface $command,
-        array $context,
+        array $context = [],
         \Exception $previous = null
     ) {
         $this->command = $command;
