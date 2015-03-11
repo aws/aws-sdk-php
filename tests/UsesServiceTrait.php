@@ -43,7 +43,7 @@ trait UsesServiceTrait
         // disabling is not done.
         if (!isset($_SERVER['INTEGRATION'])
             && !isset($args['client'])
-            && !isset($args['ringphp_handler'])
+            && !isset($args['handler'])
         ) {
             $args['handler'] = new MockHandler([]);
         }
@@ -73,7 +73,7 @@ trait UsesServiceTrait
             }
         }
 
-        $mock = new \Aws\MockHandler($results, $onFulfilled, $onRejected);
+        $mock = new MockHandler($results, $onFulfilled, $onRejected);
         $client->getHandlerList()->setHandler($mock);
 
         return $client;
