@@ -62,8 +62,6 @@ class ResultModelTest extends \PHPUnit_Framework_TestCase
         unset($c['b']);
         $this->assertFalse(isset($c['b']));
         $this->assertEquals(1, $c->getPath('a'));
-        $c->setPath('foo/bar', 'baz');
-        $this->assertEquals('baz', $c['foo']['bar']);
         $this->assertTrue($c->hasKey('a'));
     }
 

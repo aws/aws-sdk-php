@@ -81,11 +81,6 @@ class ResultPromise extends Promise implements ResultPromiseInterface
         return $this->_value->getPath($path);
     }
 
-    public function setPath($path, $value)
-    {
-        $this->_value->setPath($path, $value);
-    }
-
     public function search($expression)
     {
         return $this->_value->search($expression);
