@@ -83,25 +83,6 @@ class SdkTest extends \PHPUnit_Framework_TestCase
             ])
         );
     }
-
-    public function testUsesSharedHandler()
-    {
-        $sdk = new Sdk();
-        $c1 = $sdk->createClient('s3', [
-            'version'     => 'latest',
-            'credentials' => ['key' => 'a', 'secret' => 'b']
-        ]);
-        $c2 = $sdk->createClient('s3', [
-            'version'     => 'latest',
-            'credentials' => ['key' => 'a', 'secret' => 'b']
-        ]);
-        $fsm1 = $this->readAttribute($c1->getHttpClient(), 'fsm');
-        $fsm2 = $this->readAttribute($c2->getHttpClient(), 'fsm');
-        $this->assertSame(
-            $this->readAttribute($fsm1, 'handler'),
-            $this->readAttribute($fsm2, 'handler')
-        );
-    }
 }
 
 class FooFactory
