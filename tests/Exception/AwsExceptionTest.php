@@ -1,10 +1,9 @@
 <?php
 namespace Aws\Test;
 
+use Aws\Command;
 use Aws\Exception\AwsException;
-use GuzzleHttp\Command\Command;
-use GuzzleHttp\Command\CommandTransaction;
-use GuzzleHttp\Message\Response;
+use GuzzleHttp\Psr7\Response;
 
 /**
  * @covers Aws\Exception\AwsException
@@ -15,33 +14,24 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
 
     public function testProvidesContextShortcuts()
     {
-        $coll = [
-            'aws_error' => [
-                'request_id' => '10',
-                'type'       => 'mytype',
-                'code'       => 'mycode'
-            ]
+        $ctx = [
+            'request_id' => '10',
+            'type'       => 'mytype',
+            'code'       => 'mycode'
         ];
 
-        $client = $this->getTestClient('s3');
-        $trans = new CommandTransaction($client, new Command('foo'), $coll);
-        $e = new AwsException('Foo', $trans);
+        $command = new Command('foo');
+        $e = new AwsException('Foo', $command, $ctx);
         $this->assertEquals('10', $e->getAwsRequestId());
-        $this->assertEquals('10', $e->getRequestId());
-
         $this->assertEquals('mytype', $e->getAwsErrorType());
-        $this->assertEquals('mytype', $e->getExceptionType());
-
         $this->assertEquals('mycode', $e->getAwsErrorCode());
-        $this->assertEquals('mycode', $e->getExceptionCode());
     }
 
     public function testReturnsStatusCode()
     {
-        $client = $this->getTestClient('s3');
-        $trans = new CommandTransaction($client, new Command('foo'));
-        $trans->response = new Response(400);
-        $e = new AwsException('Foo', $trans);
+        $ctx = ['response' => new Response(400)];
+        $command = new Command('foo');
+        $e = new AwsException('Foo', $command, $ctx);
         $this->assertEquals(400, $e->getStatusCode());
     }
 }
