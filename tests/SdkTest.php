@@ -84,10 +84,3 @@ class SdkTest extends \PHPUnit_Framework_TestCase
         );
     }
 }
-
-class FooFactory
-{
-    function create($args) {
-        return $args;
-    }
-}
