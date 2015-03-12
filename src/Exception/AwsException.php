@@ -43,6 +43,24 @@ class AwsException extends \RuntimeException
         parent::__construct($message, 0, $previous);
     }
 
+    public function __toString()
+    {
+        if (!$this->getPrevious()) {
+            return parent::__toString();
+        }
+
+        // PHP strangely shows the innermost exception first before the outer
+        // exception message. It also has a default character limit for
+        // exception message strings such that the "next" exception (this one)
+        // might not even get shown, causing developers to attempt to catch
+        // the inner exception instead of the actual exception because they
+        // can't see the outer exception's __toString output.
+        return "exception '" . get_class($this) . "' with message "
+            . $this->getMessage()
+            . "\n\n"
+            . parent::__toString();
+    }
+
     /**
      * Get the result of the exception if available
      *
