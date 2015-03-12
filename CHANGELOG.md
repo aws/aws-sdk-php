@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Next Release
+
+* `Aws\CloudFront` - Fixed #482, which affected pre-signing CloudFront URLs.
+* `Aws\CloudTrail` - Added support for the `LookupEvents` operation.
+* `Aws\CloudWatchLogs` - Added ordering parameters to the `DescribeLogStreams`
+* `Aws\Ec2` - Added pagination parameters to the `DescribeSnapshots` operation.
+  operation.
+
 ## 2.7.21 - 2015-03-04
 
 * `Aws\CognitoSync` - Added support for Amazon Cognito Streams.
@@ -13,20 +21,21 @@
 
 ## 2.7.19 - 2015-02-20
 
+* `Aws\CloudFront` - Added support for origin paths in web distributions.
+* `Aws\Ecs` - Added support for specifying volumes and mount points. Also
+* `Aws\ElasticTranscoder` - Added support for cross-regional resource warnings.
+* `Aws\Route53Domains` - Add iterators for `ListDomains` and `ListOperations`.
 * `Aws\Ssm` - Added support for the **Amazon Simple Systems Management Service
   (SSM)**.
 * `Aws\Sts` - Added support for regional endpoints.
-* `Aws\CloudFront` - Added support for origin paths in web distributions.
-* `Aws\Ecs` - Added support for specifying volumes and mount points. Also
   switched the client to use a JSON protocol.
-* `Aws\ElasticTranscoder` - Added support for cross-regional resource warnings.
-* `Aws\Route53Domains` - Add iterators for `ListDomains` and `ListOperations`.
+* Changed our CHANGELOG format. ;-)
 
 ## 2.7.18 - 2015-02-12
 
-* `Aws\Iam` - Added support for named and managed policies.
-* `Aws\Route53Domains` - Added support for tagging operations.
-* `Aws\ElastiCache` - Added support for tagging operations.
+* Added support for named and managed policies to the IAM client.
+* Added support for tagging operations to the Route 53 Domains client.
+* Added support for tagging operations to the ElastiCache client.
 * Added support for the Scan API for secondary indexes to the DynamoDB client.
 * Added forward compatibility for the `'credentials'`, `'endpoint'`, and
   `'http'` configuration options.

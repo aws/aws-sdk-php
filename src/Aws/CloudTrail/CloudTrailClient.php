@@ -30,6 +30,7 @@ use Guzzle\Service\Resource\Model;
  * @method Model deleteTrail(array $args = array()) {@command CloudTrail DeleteTrail}
  * @method Model describeTrails(array $args = array()) {@command CloudTrail DescribeTrails}
  * @method Model getTrailStatus(array $args = array()) {@command CloudTrail GetTrailStatus}
+ * @method Model lookupEvents(array $args = array()) {@command CloudTrail LookupEvents}
  * @method Model startLogging(array $args = array()) {@command CloudTrail StartLogging}
  * @method Model stopLogging(array $args = array()) {@command CloudTrail StopLogging}
  * @method Model updateTrail(array $args = array()) {@command CloudTrail UpdateTrail}

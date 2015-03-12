@@ -163,10 +163,6 @@ return array (
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
-                    'reason' => 'Returned if the resource cannot be deleted because other resources are still associated with it.',
-                    'class' => 'ResourceInUseException',
-                ),
-                array(
                     'reason' => 'Returned if multiple requests to update the same resource were in conflict.',
                     'class' => 'OperationAbortedException',
                 ),
@@ -364,6 +360,7 @@ return array (
                 'nextToken' => array(
                     'type' => 'string',
                     'location' => 'json',
+                    'minLength' => 1,
                 ),
                 'limit' => array(
                     'type' => 'numeric',
@@ -417,9 +414,19 @@ return array (
                     'minLength' => 1,
                     'maxLength' => 512,
                 ),
+                'orderBy' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'descending' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'json',
+                ),
                 'nextToken' => array(
                     'type' => 'string',
                     'location' => 'json',
+                    'minLength' => 1,
                 ),
                 'limit' => array(
                     'type' => 'numeric',
@@ -480,6 +487,7 @@ return array (
                 'nextToken' => array(
                     'type' => 'string',
                     'location' => 'json',
+                    'minLength' => 1,
                 ),
                 'limit' => array(
                     'type' => 'numeric',
@@ -549,6 +557,7 @@ return array (
                 'nextToken' => array(
                     'type' => 'string',
                     'location' => 'json',
+                    'minLength' => 1,
                 ),
                 'limit' => array(
                     'type' => 'numeric',
@@ -617,7 +626,7 @@ return array (
                     'type' => 'array',
                     'location' => 'json',
                     'minItems' => 1,
-                    'maxItems' => 1000,
+                    'maxItems' => 10000,
                     'items' => array(
                         'name' => 'InputLogEvent',
                         'type' => 'object',
@@ -630,7 +639,6 @@ return array (
                                 'required' => true,
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 32768,
                             ),
                         ),
                     ),
@@ -849,7 +857,6 @@ return array (
                         'name' => 'EventMessage',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 32768,
                     ),
                 ),
             ),
@@ -1039,6 +1046,21 @@ return array (
                 'nextSequenceToken' => array(
                     'type' => 'string',
                     'location' => 'json',
+                ),
+                'rejectedLogEventsInfo' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'tooNewLogEventStartIndex' => array(
+                            'type' => 'numeric',
+                        ),
+                        'tooOldLogEventEndIndex' => array(
+                            'type' => 'numeric',
+                        ),
+                        'expiredLogEventEndIndex' => array(
+                            'type' => 'numeric',
+                        ),
+                    ),
                 ),
             ),
         ),
