@@ -6,6 +6,7 @@ use Aws\Signature\SignatureV4;
 use Aws\Endpoint\EndpointProvider;
 use Aws\CommandInterface;
 use GuzzleHttp\Psr7\Uri;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @internal Adds computed values to the CopySnapshot operation.
@@ -27,7 +28,7 @@ class CopySnapshotMiddleware
         };
     }
 
-    public function __invoke(CommandInterface $command)
+    public function __invoke(CommandInterface $command, RequestInterface $request)
     {
         if ($command->getName() == 'CopySnapshot') {
             $cmd['PresignedUrl'] = $this->createPresignedUrl($this->client, $command);
@@ -35,7 +36,7 @@ class CopySnapshotMiddleware
         }
 
         $f = $this->nextHandler;
-        return $f($command);
+        return $f($command, $request);
     }
 
     private function createPresignedUrl(

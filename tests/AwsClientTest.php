@@ -1,18 +1,18 @@
 <?php
 namespace Aws\Test;
 
+use Aws\Api\ErrorParser\JsonRpcErrorParser;
 use Aws\AwsClient;
 use Aws\Credentials\Credentials;
 use Aws\Ec2\Ec2Client;
+use Aws\MockHandler;
+use Aws\Result;
+use Aws\S3\S3Client;
 use Aws\Signature\SignatureV4;
-use Aws\Sqs\SqsClient;
+use Aws\ImportExport\ImportExportClient;
 use Aws\Sts\StsClient;
-use GuzzleHttp\Client;
-use GuzzleHttp\Command\Event\PreparedEvent;
-use GuzzleHttp\Event\BeforeEvent;
-use GuzzleHttp\Event\RequestEvents;
-use GuzzleHttp\Message\Request;
-use GuzzleHttp\Message\Response;
+use Aws\WrappedHttpHandler;
+use GuzzleHttp\Promise\RejectedPromise;
 
 /**
  * @covers Aws\AwsClient
@@ -36,7 +36,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
     public function testHasGetters()
     {
         $config = [
-            'client'       => new Client(),
+            'handler'      => function () {},
             'credentials'  => new Credentials('foo', 'bar'),
             'region'       => 'foo',
             'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
@@ -48,7 +48,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         ];
 
         $client = new AwsClient($config);
-        $this->assertSame($config['client'], $client->getHttpClient());
+        $this->assertSame($config['handler'], $this->readAttribute($client->getHandlerList(), 'handler'));
         $this->assertSame($config['credentials'], $client->getCredentials());
         $this->assertSame($config['region'], $client->getRegion());
         $this->assertEquals('foo', $client->getApi()->getEndpointPrefix());
@@ -74,47 +74,38 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $this->assertInstanceOf(
-            'GuzzleHttp\Command\CommandInterface',
+            'Aws\CommandInterface',
             $client->getCommand('foo')
         );
     }
 
     /**
-     * @expectedException \Aws\Exception\AwsException
-     * @expectedExceptionMessage Uncaught exception while executing Aws\AwsClient::foo - Baz Bar!
+     * @expectedException \Aws\S3\Exception\S3Exception
+     * @expectedExceptionMessage Error executing foo on "http://us-east-1.foo.amazonaws.com"; AWS HTTP error; Baz Bar!
      */
-    public function testWrapsUncaughtExceptions()
+    public function testWrapsExceptions()
     {
-        $client = $this->createClient(
-            ['operations' => ['foo' => ['http' => ['method' => 'POST']]]]
+        $parser = function () {};
+        $errorParser = new JsonRpcErrorParser();
+        $h = new WrappedHttpHandler(
+            function () {
+                return new RejectedPromise([
+                    'exception'        => new \Exception('Baz Bar!'),
+                    'connection_error' => true,
+                    'response'         => null
+                ]);
+            },
+            $parser,
+            $errorParser,
+            'Aws\S3\Exception\S3Exception'
         );
-        $command = $client->getCommand('foo');
-        $command->getEmitter()->on('init', function () {
-            throw new \RuntimeException('Baz Bar!');
-        });
-        $client->execute($command);
-    }
 
-    /**
-     * @expectedException \Aws\Exception\AwsException
-     * @expectedExceptionMessage Error executing Aws\AwsClient::foo() on "http://foo.com"; Baz Bar!
-     */
-    public function testHandlesNetworkingErrorsGracefully()
-    {
-        $r = new Request('GET', 'http://foo.com');
         $client = $this->createClient(
             ['operations' => ['foo' => ['http' => ['method' => 'POST']]]],
-            [
-                'serializer' => function () use ($r) { return $r; },
-                'endpoint'   => 'http://foo.com'
-            ]
+            ['handler' => $h]
         );
+
         $command = $client->getCommand('foo');
-        $command->getEmitter()->on('prepared', function (PreparedEvent $e) {
-            $e->getRequest()->getEmitter()->on('before', function () {
-                throw new \RuntimeException('Baz Bar!');
-            });
-        });
         $client->execute($command);
     }
 
@@ -125,7 +116,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         ]]]);
 
         $this->assertInstanceOf(
-            'GuzzleHttp\Command\CommandInterface',
+            'Aws\CommandInterface',
             $client->getCommand('foo')
         );
     }
@@ -199,13 +190,12 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatesClientsFromFactoryMethod()
     {
-        $client = new SqsClient([
+        $client = new ImportExportClient([
             'region'  => 'us-west-2',
             'version' => 'latest'
         ]);
-        $this->assertInstanceOf('Aws\Sqs\SqsClient', $client);
+        $this->assertInstanceOf('Aws\ImportExport\ImportExportClient', $client);
         $this->assertEquals('us-west-2', $client->getRegion());
-
         $client = new StsClient([
             'region'  => 'us-west-2',
             'version' => 'latest'
@@ -221,6 +211,93 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'http://us-east-1.foo.amazonaws.com',
             $client->getEndpoint()
         );
+    }
+
+    public function signerProvider()
+    {
+        return [
+            [null, 'AWS4-HMAC-SHA256'],
+            ['v2', 'SignatureVersion']
+        ];
+    }
+
+    /**
+     * @dataProvider signerProvider
+     */
+    public function testSignsRequestsUsingSigner($version, $search)
+    {
+        $mock = new MockHandler([new Result([])]);
+        $conf = [
+            'region'  => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => [
+                'key'    => 'foo',
+                'secret' => 'bar'
+            ],
+            'handler' => $mock
+        ];
+
+        if ($version) {
+            $conf['signature_version'] = $version;
+        }
+
+        $client = new Ec2Client($conf);
+        $client->describeInstances();
+        $request = $mock->getLastRequest();
+        $str = \GuzzleHttp\Psr7\str($request);
+        $this->assertContains($search, $str);
+    }
+
+    public function testAllowsFactoryMethodForBc()
+    {
+        Ec2Client::factory([
+            'region'  => 'us-west-2',
+            'version' => 'latest'
+        ]);
+    }
+
+    public function testSerializesHttpRequests()
+    {
+        $mock = new MockHandler([new Result([])]);
+        $conf = [
+            'region'  => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => [
+                'key'    => 'foo',
+                'secret' => 'bar'
+            ],
+            'handler' => $mock,
+            'signature_version' => 'v4'
+        ];
+
+        $client = new S3Client($conf);
+        $command = $client->getCommand('PutObject', [
+            'Bucket' => 'foo',
+            'Key'    => 'bar',
+            'Body'   => '123'
+        ]);
+        $request = $client->serialize($command);
+        $this->assertEquals('/bar', $request->getRequestTarget());
+        $this->assertEquals('PUT', $request->getMethod());
+        $this->assertEquals('foo.s3.amazonaws.com', $request->getHeader('Host'));
+        $this->assertTrue($request->hasHeader('Authorization'));
+        $this->assertTrue($request->hasHeader('X-Amz-Content-Sha256'));
+        $this->assertTrue($request->hasHeader('X-Amz-Date'));
+        $this->assertEquals('123', (string) $request->getBody());
+    }
+
+    public function testCanGetSignatureProvider()
+    {
+        $client = $this->createClient([]);
+        $ref = new \ReflectionMethod($client, 'getSignatureProvider');
+        $ref->setAccessible(true);
+        $provider = $ref->invoke($client);
+        $this->assertTrue(is_callable($provider));
+    }
+
+    public function testExecutesMultipleRequests()
+    {
+        $this->markTestSkipped();
     }
 
     private function createClient(array $service = [], array $config = [])
@@ -244,7 +321,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         };
 
         return new AwsClient($config + [
-            'client'       => new Client(),
+            'handler'      => new MockHandler(),
             'credentials'  => new Credentials('foo', 'bar'),
             'signature'    => new SignatureV4('foo', 'bar'),
             'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
@@ -254,53 +331,6 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'serializer'   => function () {},
             'error_parser' => function () {},
             'version'      => 'latest'
-        ]);
-    }
-
-    public function signerProvider()
-    {
-        return [
-            [null, 'AWS4-HMAC-SHA256'],
-            ['v2', 'SignatureVersion']
-        ];
-    }
-
-    /**
-     * @dataProvider signerProvider
-     */
-    public function testSignsRequestsUsingSigner($version, $search)
-    {
-        $conf = [
-            'region'  => 'us-east-1',
-            'version' => 'latest',
-            'credentials' => [
-                'key'    => 'foo',
-                'secret' => 'bar'
-            ]
-        ];
-
-        if ($version) {
-            $conf['signature_version'] = $version;
-        }
-
-        $client = new Ec2Client($conf);
-        $client->getHttpClient()->getEmitter()->on(
-            'before',
-            function (BeforeEvent $e) use ($search) {
-                $str = (string) $e->getRequest();
-                $this->assertContains($search, $str);
-                $e->intercept(new Response(200));
-            },
-            RequestEvents::SIGN_REQUEST - 1
-        );
-        $client->describeInstances();
-    }
-
-    public function testAllowsFactoryMethodForBc()
-    {
-        Ec2Client::factory([
-            'region'  => 'us-west-2',
-            'version' => 'latest'
         ]);
     }
 }

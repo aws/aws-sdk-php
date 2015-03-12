@@ -273,7 +273,6 @@ class AwsClient implements AwsClientInterface
     public function serialize(CommandInterface $command)
     {
         $request = null;
-        $command['@future'] = true;
         // Return a mock response.
         $command->getHandlerList()->setHandler(
             function (CommandInterface $cmd, RequestInterface $req) use (&$request) {
@@ -281,7 +280,7 @@ class AwsClient implements AwsClientInterface
                 return new FulfilledPromise(new Result([]));
             }
         );
-        $this->execute($command)->wait();
+        $this->execute($command);
 
         return $request;
     }
