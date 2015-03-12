@@ -44,7 +44,7 @@ class ClientResolver
             'type'     => 'value',
             'valid'    => ['string'],
             'doc'      => 'Exception class to create when an error occurs.',
-            'required' => true,
+            'default'  => 'Aws\Exception\AwsException',
             'internal' => true
         ],
         'scheme' => [

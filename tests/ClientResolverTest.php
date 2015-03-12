@@ -2,13 +2,13 @@
 namespace Aws\Test;
 
 use Aws\ClientResolver;
+use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\DynamoDb\DynamoDbClient;
-use Aws\Exception\AwsException;
 use Aws\S3\S3Client;
-use GuzzleHttp\Client;
-use Aws\Credentials\CredentialProvider;
-use GuzzleHttp\Event\Emitter;
+use Aws\HandlerList;
+use Aws\WrappedHttpHandler;
+use GuzzleHttp\Promise\RejectedPromise;
 
 /**
  * @covers Aws\ClientResolver
@@ -24,7 +24,7 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
     public function testEnsuresRequiredArgumentsAreProvided()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
-        $r->resolve([], new Emitter());
+        $r->resolve([], new HandlerList());
     }
 
     public function testAddsValidationSubscriber()
@@ -38,11 +38,11 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
             // CreateTable requires actual input parameters.
             $c->createTable([]);
             $this->fail('Did not validate');
-        } catch (AwsException $e) {}
+        } catch (\InvalidArgumentException $e) {}
     }
 
     /**
-     * @expectedException \Aws\Exception\AwsException
+     * @expectedException \Aws\S3\Exception\S3Exception
      * @expectedExceptionMessage Throwing!
      */
     public function testCanDisableValidation()
@@ -53,9 +53,12 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
             'validate' => false
         ]);
         $command = $c->getCommand('CreateTable');
-        $command->getEmitter()->on('prepared', function () {
-            throw new \Exception('Throwing!');
-        });
+        $handler = new WrappedHttpHandler(function () {
+            return new RejectedPromise([
+                'exception' => new \Exception('Throwing!')
+            ]);
+        }, function () {}, function () {}, 'Aws\S3\Exception\S3Exception');
+        $command->getHandlerList()->setHandler($handler);
         $c->execute($command);
     }
 
@@ -70,7 +73,7 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
             'region'       => 'x',
             'api_provider' => $provider,
             'version'      => 'latest'
-        ], new Emitter());
+        ], new HandlerList());
         $this->assertArrayHasKey('api', $conf);
         $this->assertArrayHasKey('error_parser', $conf);
         $this->assertArrayHasKey('serializer', $conf);
@@ -88,7 +91,7 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
                 'valid' => ['string']
             ]
         ]);
-        $r->resolve(['foo' => -1], new Emitter());
+        $r->resolve(['foo' => -1], new HandlerList());
     }
 
     /**
@@ -103,7 +106,7 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
                 'valid'  => ['callable']
             ]
         ]);
-        $r->resolve(['foo' => 'c'], new Emitter());
+        $r->resolve(['foo' => 'c'], new HandlerList());
     }
 
 
@@ -116,7 +119,7 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
         $r = new ClientResolver([
             'credentials' => ClientResolver::getDefaultArguments()['credentials']
         ]);
-        $r->resolve(['credentials' => []], new Emitter());
+        $r->resolve(['credentials' => []], new HandlerList());
     }
 
     public function testLoadsFromDefaultChainIfNeeded()
@@ -130,7 +133,7 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
             'service' => 'sqs',
             'region' => 'x',
             'version' => 'latest'
-        ], new Emitter());
+        ], new HandlerList());
         $c = $conf['credentials'];
         $this->assertInstanceOf('Aws\Credentials\CredentialsInterface', $c);
         $this->assertEquals('foo', $c->getAccessKeyId());
@@ -153,7 +156,7 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
                 'token'   => 'tok',
                 'expires' => $exp
             ]
-        ], new Emitter());
+        ], new HandlerList());
         $creds = $conf['credentials'];
         $this->assertEquals('foo', $creds->getAccessKeyId());
         $this->assertEquals('baz', $creds->getSecretKey());
@@ -163,30 +166,26 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
 
     public function testCanDisableRetries()
     {
-        $client = new Client();
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $r->resolve([
             'service'      => 's3',
             'region'       => 'baz',
             'version'      => 'latest',
             'retries'      => 0,
-            'client'       => $client
-        ], new Emitter());
-        $this->assertCount(0, $client->getEmitter()->listeners('error'));
+        ], new HandlerList());
+        $this->markTestSkipped();
     }
 
     public function testCanEnableRetries()
     {
-        $client = new Client();
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $r->resolve([
             'service'      => 's3',
             'region'       => 'baz',
             'version'      => 'latest',
             'retries'      => 2,
-            'client'       => $client
-        ], new Emitter());
-        $this->assertGreaterThan(0, $client->getEmitter()->listeners('error'));
+        ], new HandlerList());
+        $this->markTestSkipped();
     }
 
     public function testCanCreateNullCredentials()
@@ -197,7 +196,7 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
             'region' => 'x',
             'credentials' => false,
             'version' => 'latest'
-        ], new Emitter());
+        ], new HandlerList());
         $this->assertInstanceOf(
             'Aws\Credentials\NullCredentials',
             $conf['credentials']
@@ -214,7 +213,7 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
             'region'      => 'x',
             'credentials' => function () use ($c) { return $c; },
             'version'     => 'latest'
-        ], new Emitter());
+        ], new HandlerList());
         $this->assertSame($c, $conf['credentials']);
     }
 
@@ -239,7 +238,7 @@ EOT;
             'region'      => 'x',
             'profile'     => 'foo',
             'version'     => 'latest'
-        ], new Emitter());
+        ], new HandlerList());
         $creds = $conf['credentials'];
         $this->assertEquals('foo', $creds->getAccessKeyId());
         $this->assertEquals('baz', $creds->getSecretKey());
@@ -257,7 +256,7 @@ EOT;
             'region'      => 'x',
             'credentials' => $c,
             'version'     => 'latest'
-        ], new Emitter());
+        ], new HandlerList());
         $this->assertSame($c, $conf['credentials']);
     }
 
@@ -275,7 +274,7 @@ EOT;
             'region' => 'x',
             'endpoint_provider' => $p,
             'version' => 'latest'
-        ], new Emitter());
+        ], new HandlerList());
         $this->assertEquals('v2', $conf['config']['signature_version']);
     }
 
@@ -291,12 +290,8 @@ EOT;
             'retry_logger' => $logger,
             'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
             'version'      => 'latest'
-        ], new Emitter());
-        $this->assertTrue(SdkTest::hasListener(
-            $conf['client']->getEmitter(),
-            'GuzzleHttp\Subscriber\Retry\RetrySubscriber',
-            'error'
-        ));
+        ], new HandlerList());
+        $this->markTestSkipped();
     }
 
     public function testAddsLoggerWithDebugSettings()
@@ -308,17 +303,13 @@ EOT;
             'retry_logger' => 'debug',
             'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
             'version'      => 'latest'
-        ], new Emitter());
-        $this->assertTrue(SdkTest::hasListener(
-            $conf['client']->getEmitter(),
-            'GuzzleHttp\Subscriber\Retry\RetrySubscriber',
-            'error'
-        ));
+        ], new HandlerList());
+        $this->markTestSkipped();
     }
 
     public function testAddsDebugListener()
     {
-        $em = new Emitter();
+        $em = new HandlerList();
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $r->resolve([
             'service'  => 'sqs',
@@ -327,16 +318,12 @@ EOT;
             'endpoint' => 'http://us-east-1.foo.amazonaws.com',
             'version'  => 'latest'
         ], $em);
-        $this->assertTrue(SdkTest::hasListener(
-            $em,
-            'GuzzleHttp\Command\Subscriber\Debug',
-            'prepared'
-        ));
+        $this->markTestSkipped();
     }
 
     public function canSetDebugToFalse()
     {
-        $em = new Emitter();
+        $em = new HandlerList();
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $r->resolve([
             'service'  => 'sqs',
@@ -345,34 +332,7 @@ EOT;
             'endpoint' => 'http://us-east-1.foo.amazonaws.com',
             'version'  => 'latest'
         ], $em);
-        $this->assertFalse(SdkTest::hasListener(
-            $em,
-            'GuzzleHttp\Command\Subscriber\Debug',
-            'prepared'
-        ));
-    }
-
-    /**
-     * @expectedException \GuzzleHttp\Exception\RequestException
-     * @expectedExceptionMessage foo
-     */
-    public function testCanProvideCallableClient()
-    {
-        $r = new ClientResolver(ClientResolver::getDefaultArguments());
-        $conf = $r->resolve([
-            'service' => 'dynamodb',
-            'region'  => 'x',
-            'version' => 'latest',
-            'client' => function (array $args) {
-                return new Client([
-                    'handler' => function () {
-                        throw new \UnexpectedValueException('foo');
-                    }
-                ]);
-            }
-        ], new Emitter());
-
-        $conf['client']->get('http://localhost:123');
+        $this->markTestSkipped();
     }
 
     public function testCanAddHttpClientDefaultOptions()
@@ -383,8 +343,8 @@ EOT;
             'region'  => 'x',
             'version' => 'latest',
             'http'    => ['foo' => 'bar']
-        ], new Emitter());
-        $this->assertEquals('bar', $conf['client']->getDefaultOption('foo'));
+        ], new HandlerList());
+        $this->assertEquals('bar', $conf['http']['foo']);
     }
 
     public function testCanAddConfigOptions()
@@ -405,7 +365,7 @@ EOT;
                 'type'  => 'value'
             ]
         ]);
-        $r->resolve([], new Emitter());
+        $r->resolve([], new HandlerList());
     }
 
     /**
@@ -416,7 +376,7 @@ EOT;
     {
         $args = ClientResolver::getDefaultArguments()['version'];
         $r = new ClientResolver(['version' => $args]);
-        $r->resolve(['service' => 'foo'], new Emitter());
+        $r->resolve(['service' => 'foo'], new HandlerList());
     }
 
     /**
@@ -427,6 +387,6 @@ EOT;
     {
         $args = ClientResolver::getDefaultArguments()['region'];
         $r = new ClientResolver(['region' => $args]);
-        $r->resolve(['service' => 'foo'], new Emitter());
+        $r->resolve(['service' => 'foo'], new HandlerList());
     }
 }
