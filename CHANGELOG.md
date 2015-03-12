@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next Release
+## 2.7.22 - 2015-03-12
 
 * `Aws\CloudFront` - Fixed #482, which affected pre-signing CloudFront URLs.
 * `Aws\CloudTrail` - Added support for the `LookupEvents` operation.
