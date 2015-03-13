@@ -13,7 +13,7 @@ class CloudFrontClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testEnsuresKeysArePassed()
     {
-        $c = CloudFrontClient::factory([
+        $c = new CloudFrontClient([
             'region'  => 'us-west-2',
             'version' => 'latest'
         ]);
@@ -29,7 +29,7 @@ class CloudFrontClientTest extends \PHPUnit_Framework_TestCase
             }
         }
 
-        $c = CloudFrontClient::factory([
+        $c = new CloudFrontClient([
             'region'  => 'us-west-2',
             'version' => 'latest'
         ]);

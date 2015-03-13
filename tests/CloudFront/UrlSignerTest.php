@@ -3,7 +3,7 @@ namespace Aws\Test\CloudFront;
 
 use Aws\CloudFront\CloudFrontClient;
 use Aws\CloudFront\UrlSigner;
-use GuzzleHttp\Url;
+use GuzzleHttp\Psr7\Uri;
 
 /**
  * @covers Aws\CloudFront\UrlSigner
@@ -38,13 +38,14 @@ class UrlSignerTest extends \PHPUnit_Framework_TestCase
             'key_pair_id' => $kp
         ]);
 
-        $urlObject = Url::fromString($url);
+        $this->assertContains("Key-Pair-Id={$kp}", $url);
         $this->assertStringStartsWith(
             "http://abc.cloudfront.net/images/image.jpg?color=red&Expires={$ts}&Signature=",
             $url
         );
-        $this->assertContains("Key-Pair-Id={$kp}", $url);
-        $signature = $urlObject->getQuery('Signature');
+        $urlObject = new Uri($url);
+        $query = \GuzzleHttp\Psr7\parse_query($urlObject->getQuery());
+        $signature = $query['Signature'];
         $this->assertNotContains('?', $signature);
         $this->assertNotContains('=', $signature);
         $this->assertNotContains('/', $signature);
@@ -65,8 +66,8 @@ class UrlSignerTest extends \PHPUnit_Framework_TestCase
             'private_key' => $_SERVER['CF_PRIVATE_KEY'],
             'key_pair_id' => $_SERVER['CF_KEY_PAIR_ID']
         ));
-        $policy = Url::fromString($url)->getQuery()->get('Policy');
-        $this->assertRegExp('/^[0-9a-zA-Z-_~]+$/', $policy);
+        $policy = (new Uri($url))->getQuery();
+        $this->assertRegExp('/Policy=[0-9a-zA-Z-_~]+/', $policy);
     }
 
     public function testCreatesUrlSignersForRtmp()
@@ -116,7 +117,7 @@ class UrlSignerTest extends \PHPUnit_Framework_TestCase
     public function testEnsuresExpiresIsSetWhenUsingCannedPolicy()
     {
         $s = new UrlSigner('a', $_SERVER['CF_PRIVATE_KEY']);
-        $s->getUrlSigner('http://foo/bar');
+        $s->getSignedUrl('http://foo/bar');
     }
 
     /**
@@ -126,7 +127,7 @@ class UrlSignerTest extends \PHPUnit_Framework_TestCase
     public function testEnsuresUriSchemeIsValid()
     {
         $s = new UrlSigner('a', $_SERVER['CF_PRIVATE_KEY']);
-        $s->getUrlSigner('foo://bar.com', '+10 minutes');
+        $s->getSignedUrl('foo://bar.com', '+10 minutes');
     }
 
     /**
@@ -136,7 +137,7 @@ class UrlSignerTest extends \PHPUnit_Framework_TestCase
     public function testEnsuresUriSchemeIsPresent()
     {
         $s = new UrlSigner('a', $_SERVER['CF_PRIVATE_KEY']);
-        $s->getUrlSigner('bar.com');
+        $s->getSignedUrl('bar.com');
     }
 
     /**
@@ -146,6 +147,6 @@ class UrlSignerTest extends \PHPUnit_Framework_TestCase
     public function testEnsuresPkFileExists()
     {
         $s = new UrlSigner('a', 'b');
-        $s->getUrlSigner('http://bar.com');
+        $s->getSignedUrl('http://bar.com');
     }
 }

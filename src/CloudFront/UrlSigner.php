@@ -58,7 +58,7 @@ class UrlSigner
      * @throws \InvalidArgumentException if the URL provided is invalid
      * @link http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/WorkingWithStreamingDistributions.html
      */
-    public function getUrlSigner($url, $expires = null, $policy = null)
+    public function getSignedUrl($url, $expires = null, $policy = null)
     {
         // Determine the scheme of the url
         $urlSections = explode('://', $url);
@@ -80,7 +80,7 @@ class UrlSigner
         $policy = str_replace(' ', '', $policy);
         $uri = new Uri($scheme . '://' . $urlSections[1]);
         parse_str($uri->getQuery(), $query);
-        $this->prepareQuery($isCustom, $policy, $query, $expires);
+        $query = $this->prepareQuery($isCustom, $policy, $query, $expires);
         $uri = $uri->withQuery(http_build_query($query, null, '&', PHP_QUERY_RFC3986));
 
         return $scheme === 'rtmp'
@@ -100,6 +100,8 @@ class UrlSigner
 
         $query['Signature'] = $this->signPolicy($policy);
         $query['Key-Pair-Id'] = $this->keyPairId;
+
+        return $query;
     }
 
     private function rsaSha1Sign($policy)
@@ -170,10 +172,10 @@ class UrlSigner
     private function createRtmpUrl(UriInterface $uri)
     {
         // Use a relative URL when creating Flash player URLs
-        $result = $uri->getPath();
+        $result = ltrim($uri->getPath(), '/');
 
         if ($query = $uri->getQuery()) {
-            $result .= $query;
+            $result .= '?' . $query;
         }
 
         return $result;

@@ -45,10 +45,10 @@ class CloudFrontClient extends AwsClient
             $options['private_key']
         );
 
-        return $UrlSigner->getUrlSigner(
+        return $UrlSigner->getSignedUrl(
             $options['url'],
-            $options['expires'],
-            $options['policy']
+            isset($options['expires']) ? $options['expires'] : null,
+            isset($options['policy']) ? $options['policy'] : null
         );
     }
 }
