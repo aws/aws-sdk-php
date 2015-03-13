@@ -1,8 +1,7 @@
 <?php
 namespace Aws;
 
-use GuzzleHttp\Promise\PromiseInterface;
-use GuzzleHttp\Promise\RejectedPromise;
+use GuzzleHttp\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -44,7 +43,7 @@ class WrappedHttpHandler
         callable $httpHandler,
         callable $parser,
         callable $errorParser,
-        $exceptionClass
+        $exceptionClass = 'Aws\Exception\AwsException'
     ) {
         $this->httpHandler = $httpHandler;
         $this->parser = $parser;
@@ -59,25 +58,24 @@ class WrappedHttpHandler
      * @param CommandInterface $command Command being executed.
      * @param RequestInterface $request Request to send.
      *
-     * @return PromiseInterface
+     * @return Promise\PromiseInterface
      */
     public function __invoke(
         CommandInterface $command,
         RequestInterface $request
     ) {
         $fn = $this->httpHandler;
-        /** @var PromiseInterface $promise */
-        $promise = $fn($request, $command['@http'] ?: []);
 
-        return $promise->then(
-            function (ResponseInterface $response) use ($command, $request) {
-                return $this->parseResponse($command, $request, $response);
-            },
-            function (array $reason) use ($request, $command) {
-                $exception = $this->parseError($reason, $request, $command);
-                return new RejectedPromise($exception);
-            }
-        );
+        return Promise\promise_for($fn($request, $command['@http'] ?: []))
+            ->then(
+                function (ResponseInterface $res) use ($command, $request) {
+                    return $this->parseResponse($command, $request, $res);
+                },
+                function (array $err) use ($request, $command) {
+                    $exception = $this->parseError($err, $request, $command);
+                    return new Promise\RejectedPromise($exception);
+                }
+            );
     }
 
     /**
@@ -93,14 +91,20 @@ class WrappedHttpHandler
         ResponseInterface $response
     ) {
         $parser = $this->parser;
-        $result = $parser($command, $response);
-        $metadata = [
-            'statusCode'   => $response->getStatusCode(),
-            'effectiveUri' => (string) $request->getUri()
-        ];
+        $status = $response->getStatusCode();
+        $result = $status < 300
+            ? $parser($command, $response)
+            : new Result();
 
-        if ($rid = $response->getHeader('x-amz-request-id')) {
-            $metadata['requestId'] = $rid;
+        $metadata = [
+            'statusCode'   => $status,
+            'effectiveUri' => (string) $request->getUri(),
+            'headers'      => []
+         ];
+
+        // Bring headers into the metadata array.
+        foreach ($response->getHeaders() as $name => $values) {
+            $metadata['headers'][strtolower($name)] = $values[0];
         }
 
         $result['@metadata'] = $metadata;
@@ -111,52 +115,47 @@ class WrappedHttpHandler
     /**
      * Parses a rejection into an AWS error.
      *
-     * @param array            $reason  Rejection array.
+     * @param array            $err     Rejection error array.
      * @param RequestInterface $request Request that was sent.
      * @param CommandInterface $command Command being sent.
      *
      * @return \Exception
      */
     private function parseError(
-        array $reason,
+        array $err,
         RequestInterface $request,
         CommandInterface $command
     ) {
-        if (!isset($reason['exception'])) {
+        if (!isset($err['exception'])) {
             throw new \RuntimeException('The HTTP handler was rejected without an "exception" key value pair.');
         }
 
-        $serviceError = "AWS HTTP error; "
-            . $reason['exception']->getMessage();
+        $serviceError = "AWS HTTP error: " . $err['exception']->getMessage();
 
-        if (!isset($reason['response'])) {
-            $parts = [];
+        if (!isset($err['response'])) {
+            $parts = ['response' => null];
         } else {
             $errorParser = $this->errorParser;
-            $parts = $errorParser($reason['response']);
-            $serviceError = $parts['code'] . '(' . $parts['type'] . '): '
-                . $parts['message'] . ' (' . $serviceError . ') - '
-                . $reason['response']->getBody();
+            $parts = $errorParser($err['response']);
+            $parts['response'] = $err['response'];
+            $serviceError .= " {$parts['code']} ({$parts['type']}): "
+                . "{$parts['message']} - " . $err['response']->getBody();
         }
 
-        if (isset($reason['response'])) {
-            $parts['response'] = $reason['response'];
-        }
-
-        if (!empty($reason['connection_error'])) {
-            $parts['connection_error'] = true;
-        }
+        $parts['exception'] = $err['exception'];
+        $parts['request'] = $request;
+        $parts['connection_error'] = !empty($err['connection_error']);
 
         return new $this->exceptionClass(
             sprintf(
-                'Error executing %s on "%s"; %s',
+                'Error executing "%s" on "%s"; %s',
                 $command->getName(),
                 $request->getUri(),
                 $serviceError
             ),
             $command,
             $parts,
-            $reason['exception']
+            $err['exception']
         );
     }
 }
