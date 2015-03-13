@@ -20,7 +20,7 @@ class StsClientTest extends \PHPUnit_Framework_TestCase
             ]
         ]);
 
-        $client = StsClient::factory(['version' => 'latest']);
+        $client = new StsClient(['region' => 'us-east-1', 'version' => 'latest']);
         $credentials = $client->createCredentials($result);
         $this->assertInstanceOf(
             'Aws\Credentials\CredentialsInterface',
