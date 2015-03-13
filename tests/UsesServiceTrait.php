@@ -42,13 +42,13 @@ trait UsesServiceTrait
         // Disable network access. If the INTEGRATION envvar is set, then this
         // disabling is not done.
         if (!isset($_SERVER['INTEGRATION'])
-            && !isset($args['client'])
             && !isset($args['handler'])
+            && !isset($args['http_handler'])
         ) {
             $args['handler'] = new MockHandler([]);
         }
 
-        return $this->getTestSdk()->createClient($service, $args);
+        return $this->getTestSdk($args)->createClient($service);
     }
 
     /**
@@ -113,7 +113,7 @@ trait UsesServiceTrait
 
         return new $type(
             $message ?: 'Test error',
-            $this->getMock('GuzzleHttp\Command\CommandInterface'),
+            $this->getMock('Aws\CommandInterface'),
             [
                 'message' => $message ?: 'Test error',
                 'code'    => $code

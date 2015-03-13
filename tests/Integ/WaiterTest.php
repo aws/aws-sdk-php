@@ -2,8 +2,7 @@
 namespace Aws\Test\Integ;
 
 use Aws\Exception\AwsException;
-use GuzzleHttp\Command\Event\PreparedEvent;
-use GuzzleHttp\Command\Event\ProcessEvent;
+use GuzzleHttp\Promise;
 
 class WaitersTest extends \PHPUnit_Framework_TestCase
 {
@@ -63,17 +62,15 @@ class WaitersTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function asyncTestAsyncWaiters()
+    public function testWaiterWorkflows()
     {
+        self::log('Testing complicated waiter workflows.');
         $sdk = self::getSdk();
-
-        $client = $sdk->createDynamoDb();
-        $table = self::getResourcePrefix() . '-test-table';
-
-        self::log('Testing asynchronous waiters.');
-
         $promises = [];
 
+        self::log('Creating a DynamoDB table.');
+        $client = $sdk->createDynamoDb();
+        $table = self::getResourcePrefix() . '-test-table';
         $promises[] = $client->createTable([
             'TableName' => $table,
             'AttributeDefinitions' => [
@@ -89,7 +86,6 @@ class WaitersTest extends \PHPUnit_Framework_TestCase
             '@future' => true
         ])->then(
             function () use ($client, $table) {
-                self::log('Creating table.');
                 self::log('Waiting for the table to be active.');
                 return $client->waitUntil('TableExists', [
                     'TableName' => $table,
@@ -103,7 +99,7 @@ class WaitersTest extends \PHPUnit_Framework_TestCase
                 return $client->deleteTable([
                     'TableName' => $table,
                     '@future'   => true
-                ])->promise();
+                ]);
             }
         )->then(
             function () use ($client, $table) {
@@ -126,19 +122,19 @@ class WaitersTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $s3 = $sdk->getS3();
-        $command = $s3->getCommand('ListBuckets', ['@future' => true]);
-        $command->getEmitter()->on('prepared', function (PreparedEvent $event) {
-            self::log('Initiating a ListBuckets operation.');
-            $event->getRequest()->getConfig()->set('delay', 20000);
-        });
-        $command->getEmitter()->on('process', function (ProcessEvent $event) {
-            self::log('Completed the ListBuckets operation.');
-        });
-        $promises[] = $s3->execute($command);
+        self::log('Initiating an S3 ListBuckets operation.');
+        $promises[] = $sdk->createS3()
+            ->listBuckets(['@future' => true])
+            ->then(function () {
+                self::log('Completed the ListBuckets operation.');
+            });
 
-        \React\Promise\all($promises)->then(function () {
-            self::log('Done with everything!');
-        });
+        try {
+            Promise\all($promises)->then(function () {
+                self::log('Done with everything!');
+            })->wait();
+        } catch (\Exception $e) {
+            $this->fail($e->getMessage());
+        }
     }
 }
