@@ -2,8 +2,8 @@
 namespace Aws\Sns\MessageValidator;
 
 use Aws\Sns\Exception\MessageValidatorException;
-use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Aws\GuzzleHandler;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\UriInterface;
 
@@ -13,18 +13,22 @@ use Psr\Http\Message\UriInterface;
  */
 class MessageValidator
 {
-    /** @var ClientInterface The HTTP client used to fetch the certificate */
-    protected $client;
+    /** @var callable HTTP handler used to fetch the certificate */
+    private $client;
 
     /**
      * Constructs the Message Validator object and ensures that openssl is
      * installed.
      *
-     * @param ClientInterface $client Client used to fetch a certificate
+     * @param callable $httpHandler HTTP handler used to fetch a certificate.
+     *                              The handler accepts a PSR7 RequestInterface
+     *                              and array of request options and returns a
+     *                              promise that fufills with a PSR7
+     *                              ResponseInterface.
      *
      * @throws \RuntimeException If openssl is not installed
      */
-    public function __construct(ClientInterface $client = null)
+    public function __construct(callable $httpHandler = null)
     {
         if (!extension_loaded('openssl')) {
             //@codeCoverageIgnoreStart
@@ -34,7 +38,7 @@ class MessageValidator
             //@codeCoverageIgnoreEnd
         }
 
-        $this->client = $client ?: new Client();
+        $this->client = $httpHandler ?: new GuzzleHandler();
     }
 
     /**
@@ -53,7 +57,10 @@ class MessageValidator
         $this->validateUrl($certUrl);
 
         // Get the cert itself and extract the public key
-        $certificate = $this->client->get((string) $certUrl)->getBody();
+        $request = new Request('GET', (string) $certUrl);
+        $promise = call_user_func($this->client, $request);
+        $certificate = (string) $promise->wait()->getBody();
+
         $key = openssl_get_publickey($certificate);
         if (!$key) {
             throw new MessageValidatorException('Cannot get the public key '

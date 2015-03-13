@@ -3,11 +3,8 @@ namespace Aws\Test\Sns\MessageValidator;
 
 use Aws\Sns\MessageValidator\Message;
 use Aws\Sns\MessageValidator\MessageValidator;
-use GuzzleHttp\Collection;
-use GuzzleHttp\Subscriber\Mock;
-use GuzzleHttp\Message\Response;
-use GuzzleHttp\Client;
-use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Stream;
 
 /**
  * @covers \Aws\Sns\MessageValidator\MessageValidator
@@ -27,7 +24,7 @@ class MessageValidatorTest extends \PHPUnit_Framework_TestCase
     public function testIsValidReturnsFalseOnFailedValidation()
     {
         $validator = new MessageValidator();
-        $message = new Message(new Collection());
+        $message = new Message([]);
         $this->assertFalse($validator->isValid($message));
     }
 
@@ -38,9 +35,9 @@ class MessageValidatorTest extends \PHPUnit_Framework_TestCase
     public function testValidateFailsWhenCertUrlInvalid()
     {
         $validator = new MessageValidator();
-        $message = new Message(new Collection([
+        $message = new Message([
             'SigningCertURL' => 'https://foo.amazonaws.com/bar'
-        ]));
+        ]);
         $validator->validate($message);
     }
 
@@ -52,9 +49,9 @@ class MessageValidatorTest extends \PHPUnit_Framework_TestCase
     {
         $client = $this->getMockClient();
         $validator = new MessageValidator($client);
-        $message = new Message(new Collection([
+        $message = new Message([
             'SigningCertURL' => self::VALID_CERT_URL
-        ]));
+        ]);
         $validator->validate($message);
     }
 
@@ -70,10 +67,10 @@ class MessageValidatorTest extends \PHPUnit_Framework_TestCase
         // the certificate
         $client = $this->getMockClient(new Response(200, [], $certificate));
         $validator = new MessageValidator($client);
-        $message = new Message(new Collection([
+        $message = new Message([
             'SigningCertURL' => self::VALID_CERT_URL,
             'Signature'      => $signature,
-        ]));
+        ]);
         $validator->validate($message);
     }
 
@@ -87,12 +84,14 @@ class MessageValidatorTest extends \PHPUnit_Framework_TestCase
             'TopicArn'       => 'baz',
             'Type'           => 'Notification',
             'SigningCertURL' => self::VALID_CERT_URL,
-            'Signature'      => '',
+            'Signature'      => ' ',
         ]);
 
         // Get the signature for a real message
         list($signature, $certificate) = $this->getSignature($message->getStringToSign());
-        $message->getData()->set('Signature', $signature);
+        $ref = new \ReflectionProperty($message, 'data');
+        $ref->setAccessible(true);
+        $ref->setValue($message, ['Signature' => $signature] + $ref->getValue($message));
 
         // Create the validator with a mock HTTP client that will respond with
         // the certificate
@@ -106,12 +105,10 @@ class MessageValidatorTest extends \PHPUnit_Framework_TestCase
     protected function getMockClient(Response $response = null)
     {
         $response = $response ?: new Response(200);
-        $plugin = new Mock();
-        $plugin->addResponse($response);
-        $client = new Client();
-        $client->getEmitter()->attach($plugin);
 
-        return $client;
+        return function () use ($response) {
+            return \GuzzleHttp\Promise\promise_for($response);
+        };
     }
 
     protected function getSignature($stringToSign)

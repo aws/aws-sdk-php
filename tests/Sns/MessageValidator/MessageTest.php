@@ -2,7 +2,6 @@
 namespace Aws\Test\Sns\MessageValidator;
 
 use Aws\Sns\MessageValidator\Message;
-use GuzzleHttp\Collection;
 
 /**
  * @covers Aws\Sns\MessageValidator\Message
@@ -24,9 +23,8 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
     public function testGetters()
     {
-        $message = new Message(new Collection($this->messageData));
-
-        $this->assertInstanceOf('GuzzleHttp\Collection', $message->getData());
+        $message = new Message($this->messageData);
+        $this->assertInternalType('array', $message->getData());
 
         foreach ($this->messageData as $key => $expectedValue) {
             $this->assertEquals($expectedValue, $message->get($key));
@@ -101,7 +99,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $expectedSubject,
         $expectedStringToSign
     ) {
-        $message = new Message(new Collection($messageData));
+        $message = new Message($messageData);
         $this->assertEquals($expectedSubject, $message->get('Subject'));
         $this->assertEquals($expectedStringToSign, $message->getStringToSign());
     }
