@@ -3,8 +3,8 @@ namespace Aws;
 
 use Aws\Exception\AwsException;
 use GuzzleHttp\Promise;
+use GuzzleHttp\Promise\PromisorInterface;
 use GuzzleHttp\Promise\FulfilledPromise;
-use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\RejectedPromise;
 
 /**
@@ -20,7 +20,7 @@ use GuzzleHttp\Promise\RejectedPromise;
  * The configuration for the waiter must include information about the operation
  * and the conditions for wait completion.
  */
-class Waiter
+class Waiter implements PromisorInterface
 {
     /** @var AwsClientInterface Client used to execute each attempt. */
     private $client;
@@ -81,9 +81,6 @@ class Waiter
         }
     }
 
-    /**
-     * @return PromiseInterface
-     */
     public function promise()
     {
         return Promise\coroutine(function () {
