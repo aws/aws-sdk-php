@@ -75,12 +75,12 @@ final class Utils
      *
      *     $a = function ($x, $y) { return null; };
      *     $b = function ($x, $y) { return $x + $y; };
-     *     $fn = Utils::orFn($a, $b);
+     *     $fn = Utils::orChain($a, $b);
      *     echo $fn(1, 2); // 3
      *
      * @return callable
      */
-    public static function orFn()
+    public static function orChain()
     {
         $fns = func_get_args();
         return function () use ($fns) {

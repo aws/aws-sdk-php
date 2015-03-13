@@ -23,7 +23,7 @@ use Aws\Exception\UnresolvedSignatureException;
  *     $signer = SignatureProvider::resolve($provider, 'no', 's3', 'foo');
  *
  * You can compose multiple providers into a single provider using
- * {@see Aws\Utils::orFn}. This function accepts providers as arguments and
+ * {@see Aws\Utils::orChain}. This function accepts providers as arguments and
  * returns a new function that will invoke each provider until a non-null value
  * is returned.
  *
@@ -33,7 +33,7 @@ use Aws\Exception\UnresolvedSignatureException;
  *             return new MyFooSignature();
  *         }
  *     };
- *     $c = Aws\Utils::orFn($a, $b);
+ *     $c = Aws\Utils::orChain($a, $b);
  *     $signer = $c('v4', 'abc', '123');     // $a handles this.
  *     $signer = $c('foo', 'abc', '123');    // $b handles this.
  *     $nullValue = $c('???', 'abc', '123'); // Neither can handle this.

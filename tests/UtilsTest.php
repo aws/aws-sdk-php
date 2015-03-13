@@ -29,7 +29,7 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
         $a = function ($a, $b) { return null; };
         $b = function ($a, $b) { return $a . $b; };
         $c = function ($a, $b) { return 'C'; };
-        $comp = Utils::orFn($a, $b, $c);
+        $comp = Utils::orChain($a, $b, $c);
         $this->assertEquals('+-', $comp('+', '-'));
     }
 
@@ -39,7 +39,7 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
         $a = function () use (&$called) { $called[] = 'a'; };
         $b = function () use (&$called) { $called[] = 'b'; };
         $c = function () use (&$called) { $called[] = 'c'; };
-        $comp = Utils::orFn($a, $b, $c);
+        $comp = Utils::orChain($a, $b, $c);
         $this->assertNull($comp());
         $this->assertEquals(['a', 'b', 'c'], $called);
     }

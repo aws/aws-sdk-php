@@ -28,7 +28,7 @@ use Aws\Exception\UnresolvedEndpointException;
  *     ]);
  *
  * You can compose multiple providers into a single provider using
- * {@see Aws\Utils::orFn}. This function accepts providers as arguments and
+ * {@see Aws\Utils::orChain}. This function accepts providers as arguments and
  * returns a new function that will invoke each provider until a non-null value
  * is returned.
  *
@@ -38,7 +38,7 @@ use Aws\Exception\UnresolvedEndpointException;
  *         }
  *     };
  *     $b = EndpointProvider::defaultProvider();
- *     $c = Aws\Utils::orFn($a, $b);
+ *     $c = Aws\Utils::orChain($a, $b);
  *     $config = ['service' => 'ec2', 'region' => 'my-test-region'];
  *     $res = $c($config);  // $a handles this.
  *     $config['region'] = 'us-west-2';

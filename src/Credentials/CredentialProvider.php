@@ -29,7 +29,7 @@ use Aws\Utils;
  *     $creds = CredentialProvider::resolve($provider);
  *
  * You can compose multiple providers into a single provider using
- * {@see Aws\Utils::orFn}. This function accepts providers as arguments and
+ * {@see Aws\Utils::orChain}. This function accepts providers as arguments and
  * returns a new function that will invoke each provider until a non-null value
  * is returned.
  *
@@ -40,7 +40,7 @@ use Aws\Utils;
  *     // Then try loading from envrionment variables.
  *     $c = CredentialProvider::env();
  *     // Combine the three providers together.
- *     $composed = Aws\Utils::orFn($a, $b, $c);
+ *     $composed = Aws\Utils::orChain($a, $b, $c);
  *     // Returns creds or NULL
  *     $creds = $composed();
  *     // Returns creds or throws.
@@ -177,7 +177,7 @@ class CredentialProvider
      */
     public static function defaultProvider(array $config = [])
     {
-        return Utils::orFn(
+        return Utils::orChain(
             self::env(),
             self::ini(),
             self::instanceProfile($config)

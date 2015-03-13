@@ -23,14 +23,14 @@ use Aws\Exception\UnresolvedApiException;
  *     $data = ApiProvider::resolve($provider, 'api', 'elasticfood', '2020-01-01');
  *
  * You can compose multiple providers into a single provider using
- * {@see Aws\Utils::orFn}. This method accepts providers as arguments and
+ * {@see Aws\Utils::orChain}. This method accepts providers as arguments and
  * returns a new function that will invoke each provider until a non-null value
  * is returned.
  *
  *     $a = ApiProvider::filesystem(sys_get_temp_dir() . '/aws-beta-models');
  *     $b = ApiProvider::manifest();
  *
- *     $c = Aws\Utils::orFn($a, $b);
+ *     $c = Aws\Utils::orChain($a, $b);
  *     $data = $c('api', 'betaservice', '2015-08-08'); // $a handles this.
  *     $data = $c('api', 's3', '2006-03-01');          // $b handles this.
  *     $data = $c('api', 'invalid', '2014-12-15');     // Neither handles this.

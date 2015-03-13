@@ -313,7 +313,7 @@ to create a credential provider. As an example, here's the source of the
 Chaining providers
 ~~~~~~~~~~~~~~~~~~
 
-Credential providers can be chained using the ``Aws\Utils::orFn()`` function.
+Credential providers can be chained using the ``Aws\Utils::orChain()`` function.
 This function accepts a variadic number of arguments, each of which are
 credential provider functions. This function then returns a new function that
 is the composition of the provided functions such that they are invoked one
@@ -321,7 +321,7 @@ after the other until a function returns a non-null value.
 
 The ``defaultProvider`` uses this composition in order to check multiple
 providers before returning ``NULL``. The source of the ``defaultProvider``
-demonstrates the use of the ``orFn``.
+demonstrates the use of the ``orChain``.
 
 .. code-block:: php
 
@@ -330,7 +330,7 @@ demonstrates the use of the ``orFn``.
     {
         // This function is the provider, which is actually the composition
         // of multiple providers.
-        return Utils::orFn(
+        return Utils::orChain(
             self::env(),
             self::ini(),
             self::instanceProfile($config)
