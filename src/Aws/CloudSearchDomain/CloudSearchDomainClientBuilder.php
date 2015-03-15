@@ -77,7 +77,7 @@ class CloudSearchDomainClientBuilder extends ClientBuilder
                         // Retry failed requests due to transient network or cURL problems
                         new CurlBackoffStrategy(null,
                             // Retry failed requests with 500-level responses
-                            new HttpBackoffStrategy(array(500, 503, 509),
+                            new HttpBackoffStrategy(array(500, 503, 504, 509),
                                 new ExponentialBackoffStrategy()
                             )
                         )
