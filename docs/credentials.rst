@@ -234,11 +234,9 @@ the service builder:
             // providing a default region setting.
             'default_settings' => array(
                 'params' => array(
-                    array(
-                        'credentials' => array(
-                            'key'    => 'YOUR_AWS_ACCESS_KEY_ID',
-                            'secret' => 'YOUR_AWS_SECRET_ACCESS_KEY',
-                        )
+                    'credentials' => array(
+                        'key'    => 'YOUR_AWS_ACCESS_KEY_ID',
+                        'secret' => 'YOUR_AWS_SECRET_ACCESS_KEY',
                     ),
                     'region' => 'us-west-1'
                 )
