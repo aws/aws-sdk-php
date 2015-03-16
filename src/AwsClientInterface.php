@@ -12,6 +12,9 @@ interface AwsClientInterface
     /**
      * Creates and executes a command for an operation by name.
      *
+     * Suffixing an operation name with "Async" will return a
+     * promise that can be used to execute commands asynchronously.
+     *
      * @param string $name      Name of the command to execute.
      * @param array  $arguments Arguments to pass to the getCommand method.
      *
@@ -26,9 +29,6 @@ interface AwsClientInterface
      * Special keys may be set on the command to control how it behaves,
      * including:
      *
-     * - @future: Set to true to create a future if possible. When processed,
-     *   the "@future" key value pair can be removed from the input data before
-     *   serializing the command.
      * - @http: Associative array of transfer specific options to apply to the
      *   request that is serialized for this command. Available keys include
      *   "proxy", "verify", "timeout", "connect_timeout", "debug", "delay", and
@@ -53,30 +53,13 @@ interface AwsClientInterface
     public function execute(CommandInterface $command);
 
     /**
-     * Executes many commands concurrently using a fixed pool size.
+     * Execute a command asynchronously.
      *
-     * Exceptions encountered while executing the commands will not be thrown.
-     * Instead, callers are expected to handle errors using callbacks.
+     * @param CommandInterface $command Command to execute
      *
-     *     $commands = [$client->getCommand('foo', ['baz' => 'bar'])];
-     *     $client->executeAll($commands, [
-     *         'then' => [function ($fulfilled) {}, function ($rejected) {}]
-     *     ]);
-     *
-     * @param array|\Iterator $commands Array or iterator that contains
-     *     CommandInterface objects to execute with the client.
-     * @param array $options Associative array of options to apply.
-     *     - pool_size: (int) Max number of commands to send concurrently.
-     *       When this number of concurrent requests are created, the sendAll
-     *       function blocks until all of the futures have completed.
-     *     - request_options: (array) Request options to apply to each request.
-     *     - then: (array) Array containing two elements. The first element may
-     *       contain NULL or a function to call when a command succeeds. This
-     *       callback is provided the result object. The second element is null
-     *       or a callback to invoke with an exception as an argument when a
-     *       command fails.
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function executeAll($commands, array $options = []);
+    public function executeAsync(CommandInterface $command);
 
     /**
      * Serialize a request for a command but do not send it.

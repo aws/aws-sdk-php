@@ -13,11 +13,11 @@ class PromisesTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('string', $result['Owner']['ID']);
     }
 
-    public function testProvidesFutures()
+    public function testProvidesPromises()
     {
         $client = $this->getSdk()->createClient('s3');
-        $result = $client->listBuckets(['@future' => true]);
-        $this->assertInstanceOf('Aws\FutureResult', $result);
+        $result = $client->listBucketsAsync();
+        $this->assertInstanceOf('GuzzleHttp\Promise\PromiseInterface', $result);
         // Block until it's ready
         $this->assertInternalType('string', $result['Owner']['ID']);
     }
@@ -26,7 +26,7 @@ class PromisesTest extends \PHPUnit_Framework_TestCase
     {
         $client = $this->getSdk()->createClient('s3');
         $resolved = null;
-        $result = $client->listBuckets(['@future' => true]);
+        $result = $client->listBucketsAsync();
         $result
             ->then(function ($result) use (&$resolved) {
                 $resolved = $result;

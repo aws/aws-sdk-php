@@ -61,9 +61,7 @@ class Waiter implements PromisorInterface
     ) {
         $this->client = $client;
         $this->name = $name;
-
-        // All operations should be asynchronous.
-        $this->args = ['@future' => true] + $args;
+        $this->args = $args;
 
         // Prepare and validate config.
         $this->config = $config + self::$defaults;
@@ -79,6 +77,8 @@ class Waiter implements PromisorInterface
                 'The provided "retry" callback is not callable.'
             );
         }
+
+        $this->config['method'] = $config['operation'] . 'Async';
     }
 
     public function promise()
@@ -88,7 +88,7 @@ class Waiter implements PromisorInterface
                 // Execute the operation.
                 $args = $this->getArgsForAttempt($attempt);
                 try {
-                    $result = (yield $this->client->{$this->config['operation']}($args));
+                    $result = (yield $this->client->{$this->config['method']}($args));
                 } catch (AwsException $e) {
                     $result = $e;
                 }

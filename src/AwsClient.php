@@ -1,7 +1,6 @@
 <?php
 namespace Aws;
 
-use Aws\Exception\AwsException;
 use Aws\Api\Service;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Signature\SignatureProvider;
@@ -157,8 +156,15 @@ class AwsClient implements AwsClientInterface
 
     public function __call($name, array $args)
     {
-        $cmd = $this->getCommand($name, isset($args[0]) ? $args[0] : []);
-        return $this->execute($cmd);
+        $params = isset($args[0]) ? $args[0] : [];
+
+        if (substr($name, -5) !== 'Async') {
+            return $this->execute($this->getCommand($name, $params));
+        }
+
+        return $this->executeAsync(
+            $this->getCommand(substr($name, 0, -5), $params)
+        );
     }
 
     public function getConfig($keyOrPath = null)
@@ -166,11 +172,6 @@ class AwsClient implements AwsClientInterface
         return $keyOrPath === null
             ? $this->config
             : \GuzzleHttp\Utils::getPath($this->config, $keyOrPath);
-    }
-
-    public function executeAll($commands, array $options = [])
-    {
-
     }
 
     public function getCredentials()
@@ -193,20 +194,15 @@ class AwsClient implements AwsClientInterface
         return $this->api;
     }
 
-    /**
-     * Executes an AWS command.
-     *
-     * @param CommandInterface $command Command to execute
-     *
-     * @return ResultInterface
-     * @throws AwsException when an error occurs during transfer
-     */
     public function execute(CommandInterface $command)
     {
-        $handler = $command->getHandlerList()->resolve();
-        $promise = $handler($command);
+        return $this->executeAsync($command)->wait();
+    }
 
-        return empty($command['@future']) ? $promise->wait() : $promise;
+    public function executeAsync(CommandInterface $command)
+    {
+        $handler = $command->getHandlerList()->resolve();
+        return $handler($command);
     }
 
     public function getCommand($name, array $args = [])

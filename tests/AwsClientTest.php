@@ -121,6 +121,16 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testReturnsAsyncResultsUsingMagicCall()
+    {
+        $client = $this->createClient(['operations' => ['Foo' => [
+            'http' => ['method' => 'POST']
+        ]]]);
+        $client->getHandlerList()->setHandler(new MockHandler([new Result()]));
+        $result = $client->fooAsync();
+        $this->assertInstanceOf('GuzzleHttp\Promise\PromiseInterface', $result);
+    }
+
     public function testCanGetIterator()
     {
         $client = $this->getTestClient('s3');

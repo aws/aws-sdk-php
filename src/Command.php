@@ -17,7 +17,6 @@ class Command implements CommandInterface
     /**
      * Accepts an associative array of command options, including:
      *
-     * - @future: (bool) Mark the command as a future command.
      * - @http: (array) Associative array of transfer options.
      *
      * @param string      $name           Name of the command

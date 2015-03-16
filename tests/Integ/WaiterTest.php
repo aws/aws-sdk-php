@@ -71,7 +71,7 @@ class WaitersTest extends \PHPUnit_Framework_TestCase
         self::log('Creating a DynamoDB table.');
         $client = $sdk->createDynamoDb();
         $table = self::getResourcePrefix() . '-test-table';
-        $promises[] = $client->createTable([
+        $promises[] = $client->createTableAsync([
             'TableName' => $table,
             'AttributeDefinitions' => [
                 ['AttributeName' => 'id', 'AttributeType' => 'N']
@@ -82,35 +82,29 @@ class WaitersTest extends \PHPUnit_Framework_TestCase
                 'ProvisionedThroughput' => [
                 'ReadCapacityUnits'  => 20,
                 'WriteCapacityUnits' => 20
-            ],
-            '@future' => true
+            ]
         ])->then(
             function () use ($client, $table) {
                 self::log('Waiting for the table to be active.');
-                return $client->waitUntil('TableExists', [
-                    'TableName' => $table,
-                    '@future'   => true,
-                ])->then(null, null, function ($attempt) {
-                    self::log("TableExists waiter has made {$attempt} attempts.");
-                });
+                return $client->getWaiter('TableExists', ['TableName' => $table])
+                    ->promise()
+                    ->then(null, null, function ($attempt) {
+                        self::log("TableExists waiter has made {$attempt} attempts.");
+                    });
             }
         )->then(
             function () use ($client, $table) {
-                return $client->deleteTable([
-                    'TableName' => $table,
-                    '@future'   => true
-                ]);
+                return $client->deleteTableAsync(['TableName' => $table]);
             }
         )->then(
             function () use ($client, $table) {
                 self::log('Deleting table.');
                 self::log('Waiting for the table to be deleted.');
-                return $client->waitUntil('TableNotExists', [
-                    'TableName' => $table,
-                    '@future'   => true,
-                ])->then(null, null, function ($attempt) {
-                    self::log("TableNotExists waiter has made {$attempt} attempts.");
-                });
+                return $client->getWaiter('TableNotExists', ['TableName' => $table])
+                    ->promise()
+                    ->then(null, null, function ($attempt) {
+                        self::log("TableNotExists waiter has made {$attempt} attempts.");
+                    });
             }
         )->then(
             function () use ($client, $table) {
@@ -124,7 +118,7 @@ class WaitersTest extends \PHPUnit_Framework_TestCase
 
         self::log('Initiating an S3 ListBuckets operation.');
         $promises[] = $sdk->createS3()
-            ->listBuckets(['@future' => true])
+            ->listBucketsAsync()
             ->then(function () {
                 self::log('Completed the ListBuckets operation.');
             });
