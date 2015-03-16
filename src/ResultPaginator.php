@@ -2,6 +2,7 @@
 namespace Aws;
 
 use transducers as t;
+use GuzzleHttp\Promise;
 
 /**
  * Iterator that yields each page of results of a pageable operation.
@@ -48,6 +49,28 @@ class ResultPaginator implements \Iterator
     }
 
     /**
+     * Runs a paginator asynchronously and uses a callback to handle results.
+     *
+     * The callback should have the signature: function (|Aws\Result $result)
+     *
+     * @param callable $handleResult Callback for handling each page of results.
+     *
+     * @return Promise\Promise
+     */
+    public function each(callable $handleResult)
+    {
+        return Promise\coroutine(function () use ($handleResult) {
+            $nextToken = null;
+            do {
+                $command = $this->createNextCommand($this->args, $nextToken);
+                $result = (yield $this->client->executeAsync($command));
+                $nextToken = $this->determineNextToken($result);
+                $handleResult($result);
+            } while ($nextToken);
+        });
+    }
+
+    /**
      * Returns an iterator that iterates over the values of applying a JMESPath
      * search to each result yielded by the iterator as a flat sequence.
      *
@@ -88,76 +111,67 @@ class ResultPaginator implements \Iterator
 
     public function next()
     {
-        $this->getNext();
+        $this->result = null;
     }
 
     public function valid()
     {
-        return (bool) $this->result;
+        if ($this->result) {
+            return true;
+        }
+
+        if ($this->nextToken || !$this->requestCount) {
+            $this->result = $this->client->execute(
+                $this->createNextCommand($this->args, $this->nextToken)
+            );
+            $this->nextToken = $this->determineNextToken($this->result);
+            $this->requestCount++;
+            return true;
+        }
+
+        return false;
     }
 
     public function rewind()
     {
         $this->requestCount = 0;
         $this->nextToken = null;
-        $this->next();
+        $this->result = null;
     }
 
-    /**
-     * Loads the next result by executing another command using the next token.
-     */
-    private function loadNextResult()
+    private function createNextCommand(array $args, $nextToken)
     {
-        // Create the command
-        $args = $this->args;
-        $command = $this->client->getCommand($this->operation, $args);
-
-        // Set the next token
-        if ($this->nextToken) {
+        // Prepare arguments
+        if ($nextToken) {
             $inputArg = $this->config['input_token'];
-            if (is_array($this->nextToken) && is_array($inputArg)) {
-                foreach ($inputArg as $index => $arg) {
-                    $command[$arg] = $this->nextToken[$index];
+            if (is_array($nextToken) && is_array($inputArg)) {
+                foreach ($inputArg as $index => $key) {
+                    $args[$key] = $nextToken[$index];
                 }
             } else {
-                $command[$inputArg] = $this->nextToken;
+                $args[$inputArg] = $nextToken;
             }
         }
 
-        // Get the next result
-        $this->result = $this->client->execute($command);
-        $this->requestCount++;
-        $this->nextToken = null;
-
-        // If there is no more_results to check or more_results is true
-        if ($this->config['more_results'] === null
-            || $this->result->search($this->config['more_results'])
-        ) {
-            // Get the next token's value
-            if ($key = $this->config['output_token']) {
-                if (is_array($key)) {
-                    $this->nextToken = $this->result->search(json_encode($key));
-                    $this->nextToken = array_filter($this->nextToken);
-                } else {
-                    $this->nextToken = $this->result->search($key);
-                }
-            }
-        }
+        return $this->client->getCommand($this->operation, $args);
     }
 
-    /**
-     * Fetch the next result for the command managed by the paginator.
-     *
-     * @return Result|null
-     */
-    private function getNext()
+    private function determineNextToken(Result $result)
     {
-        $this->result = null;
-        // Load next result if there's a next token or it's the first request.
-        if (!$this->requestCount || $this->nextToken) {
-            $this->loadNextResult();
+        if (!$this->config['output_token']) {
+            return null;
         }
 
-        return $this->result;
+        if ($this->config['more_results']
+            && !$result->search($this->config['more_results'])
+        ) {
+            return null;
+        }
+
+        $nextToken = is_array($this->config['output_token'])
+            ? array_filter($result->search(json_encode($this->config['output_token'])))
+            : $result->search($this->config['output_token']);
+
+        return $nextToken;
     }
 }
