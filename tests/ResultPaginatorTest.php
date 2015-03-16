@@ -47,6 +47,30 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedTableNames, $tableNames);
     }
 
+    /**
+     * @dataProvider getPaginatorIterationData
+     */
+    public function testAsyncWorkflow(
+        array $config,
+        array $results,
+        $expectedRequestCount,
+        array $expectedTableNames
+    ) {
+        // Create the client and paginator
+        $client = $this->getTestClient('dynamodb');
+        $this->addMockResults($client, $results);
+        $paginator = $client->getPaginator('ListTables', [], $config);
+
+        $tables = [];
+        $lastResult = $paginator->each(function (Result $result) use (&$tables) {
+            $tables = array_merge($tables, $result['TableNames']);
+        })->wait();
+
+        // Make sure the paginator yields the expected results
+        $this->assertInstanceOf('Aws\\Result', $lastResult);
+        $this->assertEquals($expectedTableNames, $tables);
+    }
+
     public function testNonIterator()
     {
         // Get test data
@@ -57,15 +81,14 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
         $client = $this->getTestClient('dynamodb');
         $this->addMockResults($client, $results);
         $paginator = $client->getPaginator('ListTables', [], $config);
-        $paginator->next();
         $this->assertEquals(['test1', 'test2'], $paginator->current()['TableNames']);
-        $this->assertEquals('test2', $this->readAttribute($paginator, 'nextToken'));
+        $this->assertEquals('test2', $this->readAttribute($paginator, 'nextToken'), '[1]');
         $paginator->next();
         $this->assertEquals([], $paginator->current()['TableNames']);
-        $this->assertEquals('test2', $this->readAttribute($paginator, 'nextToken'));
+        $this->assertEquals('test2', $this->readAttribute($paginator, 'nextToken'), '[2]');
         $paginator->next();
         $this->assertEquals(['test3'], $paginator->current()['TableNames']);
-        $this->assertNull($this->readAttribute($paginator, 'nextToken'));
+        $this->assertNull($this->readAttribute($paginator, 'nextToken'), '[3]');
     }
 
     /**
@@ -102,6 +125,26 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
                 3,
                 // Table names
                 ['test1', 'test2', 'test3'],
+            ],
+            [
+                // Config
+                ['output_token' => null],
+                // Results
+                [new Result(['TableNames' => ['test1']]),],
+                // Request count
+                1,
+                // Table names
+                ['test1'],
+            ],
+            [
+                // Config
+                ['more_results' => 'IsTruncated'],
+                // Results
+                [new Result(['TableNames' => ['test1'], 'IsTruncated' => false]),],
+                // Request count
+                1,
+                // Table names
+                ['test1'],
             ]
         ];
     }
