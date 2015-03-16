@@ -5,7 +5,7 @@ use Aws\DynamoDb\Marshaler;
 use Aws\DynamoDb\BinaryValue;
 use Aws\DynamoDb\NumberValue;
 use Aws\DynamoDb\SetValue;
-use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\Psr7\Stream;
 
 /**
  * @covers Aws\DynamoDb\Marshaler

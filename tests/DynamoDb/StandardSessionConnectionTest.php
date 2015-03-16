@@ -4,7 +4,6 @@ namespace Aws\Test\DynamoDb;
 use Aws\DynamoDb\StandardSessionConnection;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Command\Event\PreparedEvent;
 
 /**
  * @covers Aws\DynamoDb\StandardSessionConnection

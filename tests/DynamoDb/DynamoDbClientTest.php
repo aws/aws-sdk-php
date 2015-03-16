@@ -1,11 +1,8 @@
 <?php
 namespace Aws\Test\DynamoDb;
 
-use Aws\DynamoDb\DynamoDbClient;
-use Aws\Test\SdkTest;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Stream\Stream;
-use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
+use GuzzleHttp\Psr7\Stream;
 
 /**
  * @covers \Aws\DynamoDb\DynamoDbClient
@@ -13,61 +10,6 @@ use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
 class DynamoDbClientTest extends \PHPUnit_Framework_TestCase
 {
     use UsesServiceTrait;
-
-    public function testDisablesRedirects()
-    {
-        $client = new DynamoDbClient([
-            'service' => 'dynamodb',
-            'region'  => 'us-west-2',
-            'version' => 'latest'
-        ]);
-        $this->assertFalse($client->getHttpClient()->getDefaultOption('allow_redirects'));
-    }
-
-    public function testUsesCustomBackoffStrategy()
-    {
-        $client = new DynamoDbClient([
-            'service' => 'dynamodb',
-            'region'  => 'us-west-2',
-            'version' => 'latest'
-        ]);
-        $c = $client->getHttpClient();
-        $found = false;
-
-        foreach ($c->getEmitter()->listeners('error') as $listener) {
-            if (is_array($listener) &&
-                $listener[0] instanceof RetrySubscriber
-            ) {
-                $found = $listener[0];
-            }
-        }
-
-        if (!$found) {
-            $this->fail('RetrySubscriber not registered');
-        }
-
-        $delay = $this->readAttribute($found, 'delayFn');
-        $this->assertInternalType('callable', $delay);
-        $this->assertEquals(0, call_user_func($delay, 0));
-        $this->assertEquals(0.05, call_user_func($delay, 1));
-        $this->assertEquals(0.10, call_user_func($delay, 2));
-    }
-
-    public function testCanDisableRetries()
-    {
-        $client = new DynamoDbClient([
-            'service' => 'dynamodb',
-            'region'  => 'us-west-2',
-            'retries' => 0,
-            'version' => 'latest'
-        ]);
-        $c = $client->getHttpClient();
-        $this->assertFalse(SdkTest::hasListener(
-            $c->getEmitter(),
-            'GuzzleHttp\Subscriber\Retry\RetrySubscriber',
-            'error'
-        ));
-    }
 
     public function testRegisterSessionHandlerReturnsHandler()
     {
