@@ -81,7 +81,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Aws\S3\Exception\S3Exception
-     * @expectedExceptionMessage Error executing foo on "http://us-east-1.foo.amazonaws.com"; AWS HTTP error; Baz Bar!
+     * @expectedExceptionMessage Error executing "foo" on "http://us-east-1.foo.amazonaws.com"; AWS HTTP error: Baz Bar!
      */
     public function testWrapsExceptions()
     {
@@ -186,6 +186,18 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
     {
         $client = $this->createClient();
         $client->waitUntil('PigsFly');
+    }
+
+    public function testGetWaiterPromisor()
+    {
+        $s3 = new S3Client(['region' => 'us-east-1', 'version' => 'latest']);
+        $s3->getHandlerList()->setHandler(new MockHandler([
+            new Result(['@metadata' => ['statusCode' => '200']])
+        ]));
+        $waiter = $s3->getWaiter('BucketExists', ['Bucket' => 'foo']);
+        $this->assertInstanceOf('Aws\Waiter', $waiter);
+        $promise = $waiter->promise();
+        $promise->wait();
     }
 
     public function testCreatesClientsFromFactoryMethod()

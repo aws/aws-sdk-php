@@ -46,11 +46,10 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
     {
         $client = $this->getTestClient('DynamoDb');
         $this->addMockResults($client, [new Result([])]);
-        $client->waitUntil('TableExists', [
+        $client->getWaiter('TableExists', [
             'TableName' => 'Meh',
-            '@future' => true,
             '@http' => ['debug' => true]
-        ])->cancel();
+        ])->promise()->cancel();
         sleep(1);
     }
 
@@ -79,7 +78,7 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
             'http_handler' => $handler,
         ]);
 
-        $result = $client->waitUntil(
+        $client->waitUntil(
             'TableExists',
             ['TableName' => 'Meh'],
             ['initDelay' => 3, 'delay' => 1]
@@ -87,7 +86,6 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(4, $iteration, 'Did not execute enough requests.');
         $this->assertEquals(6000, $waitTime, 'Did not delay long enough.');
-        $this->assertInstanceOf('Aws\Result', $result);
     }
 
     /**

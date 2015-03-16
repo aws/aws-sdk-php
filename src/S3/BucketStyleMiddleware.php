@@ -56,7 +56,7 @@ class BucketStyleMiddleware
             $path = substr($path, $len);
         }
 
-        return $path;
+        return $path ?: '/';
     }
 
     private function modifyRequest(

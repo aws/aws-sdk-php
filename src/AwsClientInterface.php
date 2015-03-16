@@ -165,13 +165,32 @@ interface AwsClientInterface
      * @param string|callable $name Name of the waiter that defines the wait
      *                              configuration and conditions.
      * @param array  $args          Args to be used with each command executed
-     *                              by the waiter. Use `'@future' => true` to
-     *                              make the waiter work asynchronously.
+     *                              by the waiter.
      * @param array  $config        Waiter configuration. Use this to override
      *                              the defaults for the specified waiter.
      *
-     * @return \Aws\Waiter|void
+     * @return void
      * @throws \UnexpectedValueException if the waiter is invalid.
      */
     public function waitUntil($name, array $args = [], array $config = []);
+
+    /**
+     * Get a waiter that waits until a resource is in a particular state.
+     *
+     * Retrieving a waiter can be useful when you wish to wait asynchronously:
+     *
+     *     $waiter = $client->getWaiter('foo', ['bar' => 'baz']);
+     *     $waiter->promise()->then(function () { echo 'Done!'; });
+     *
+     * @param string|callable $name Name of the waiter that defines the wait
+     *                              configuration and conditions.
+     * @param array  $args          Args to be used with each command executed
+     *                              by the waiter.
+     * @param array  $config        Waiter configuration. Use this to override
+     *                              the defaults for the specified waiter.
+     *
+     * @return \Aws\Waiter
+     * @throws \UnexpectedValueException if the waiter is invalid.
+     */
+    public function getWaiter($name, array $args = [], array $config = []);
 }

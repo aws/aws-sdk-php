@@ -260,15 +260,14 @@ class AwsClient implements AwsClientInterface
 
     public function waitUntil($name, array $args = [], array $config = [])
     {
-        // Create the waiter. If async, then waiting begins immediately.
-        $config += $this->api->getWaiterConfig($name);
-        $promise = (new Waiter($this, $name, $args, $config))->promise();
+        $this->getWaiter($name, $args, $config)->promise()->wait();
+    }
 
-        if (isset($args['@future']) && $args['@future']) {
-            return $promise;
-        } else {
-            return $promise->wait();
-        }
+    public function getWaiter($name, array $args = [], array $config = [])
+    {
+        $config += $this->api->getWaiterConfig($name);
+
+        return new Waiter($this, $name, $args, $config);
     }
 
     public function serialize(CommandInterface $command)
