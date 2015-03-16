@@ -18,19 +18,17 @@ class CloudSearchClient extends AwsClient
      *
      * @return CloudSearchDomainClient
      */
-    public function getDomainClient($domainName, array $config = [])
+    public function createDomainClient($domainName, array $config = [])
     {
         $config['endpoint'] = $this->describeDomains([
             'DomainNames' => [$domainName]
         ])->getPath('DomainStatusList/0/SearchService/Endpoint');
 
-        if (!isset($config['scheme'])) {
-            $config['scheme'] = 'https';
-        }
+        $config += ['scheme' => 'https', 'version' => 'latest'];
 
         // Create an absolute URI for the endpoint.
         $config['endpoint'] = $config['scheme'] . '://' . $config['endpoint'];
 
-        return CloudSearchDomainClient::factory($config);
+        return new CloudSearchDomainClient($config);
     }
 }
