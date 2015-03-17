@@ -77,18 +77,17 @@ class Waiter implements PromisorInterface
                 'The provided "retry" callback is not callable.'
             );
         }
-
-        $this->config['method'] = $config['operation'] . 'Async';
     }
 
     public function promise()
     {
         return Promise\coroutine(function () {
+            $method = $this->config['operation'] . 'Async';
             for ($state = 'retry', $attempt = 1; $state === 'retry'; $attempt++) {
                 // Execute the operation.
                 $args = $this->getArgsForAttempt($attempt);
                 try {
-                    $result = (yield $this->client->{$this->config['method']}($args));
+                    $result = (yield $this->client->{$method}($args));
                 } catch (AwsException $e) {
                     $result = $e;
                 }
