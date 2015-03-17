@@ -19,4 +19,21 @@ class ResultTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('b', $c->search('a'));
         $this->assertContains('Model Data', (string) $c);
     }
+
+    public function testCanIndirectlyModifyLikeAnArray()
+    {
+        $result = new Result([
+            'foo' => ['baz' => 'bar'],
+            'qux' => 0
+        ]);
+        $this->assertNull($result['missing']);
+        $this->assertEquals(['baz' => 'bar'], $result['foo']);
+        $result['foo']['lorem'] = 'ipsum';
+        $this->assertEquals(['baz' => 'bar', 'lorem' => 'ipsum'], $result['foo']);
+        unset($result['foo']['baz']);
+        $this->assertEquals(['lorem' => 'ipsum'], $result['foo']);
+        $q = $result['qux'];
+        $q = 100;
+        $this->assertSame(0, $result['qux']);
+    }
 }

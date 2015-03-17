@@ -2,27 +2,28 @@
 namespace Aws\Test\CloudTrail;
 
 use Aws\CloudTrail\LogFileReader;
-use Aws\S3\S3Client;
-use GuzzleHttp\Subscriber\Mock;
-use GuzzleHttp\Message\Response;
-use GuzzleHttp\Stream\Stream;
+use Aws\Result;
+use Aws\Test\UsesServiceTrait;
 
 /**
  * @covers Aws\CloudTrail\LogFileReader
  */
 class LogFileReaderTest extends \PHPUnit_Framework_TestCase
 {
+    use UsesServiceTrait;
+
     /**
      * @dataProvider dataForLogReadingTest
      */
     public function testCorrectlyReadsLogFiles($responseBody, $recordCount)
     {
-        $mock = new Mock([new Response(200, [], Stream::factory($responseBody))]);
-        $s3Client = S3Client::factory([
-            'version'     => 'latest',
-            'credentials' => ['key' => 'foo', 'secret' => 'bar'],
+        $s3Client = $this->getTestClient('s3', [
+            'version' => 'latest',
+            'region'  => 'us-east-1'
         ]);
-        $s3Client->getHttpClient()->getEmitter()->attach($mock);
+        $this->addMockResults($s3Client, [
+            new Result(['Body' => $responseBody])
+        ]);
         $reader = new LogFileReader($s3Client);
         $records = $reader->read('test-bucket', 'test-key');
         $this->assertCount($recordCount, $records);

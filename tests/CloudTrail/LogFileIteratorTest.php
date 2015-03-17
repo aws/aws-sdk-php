@@ -1,29 +1,31 @@
 <?php
 namespace Aws\Test\CloudTrail;
 
+use Aws\Api\Parser\RestXmlParser;
 use Aws\CloudTrail\CloudTrailClient;
 use Aws\CloudTrail\LogFileIterator;
+use Aws\Result;
 use Aws\S3\S3Client;
-use GuzzleHttp\Subscriber\Mock;
-use GuzzleHttp\Message\Response;
-use GuzzleHttp\Stream\Stream;
+use Aws\Test\UsesServiceTrait;
+use GuzzleHttp\Psr7\Response;
 
 /**
  * @covers Aws\CloudTrail\LogFileIterator
  */
 class LogFileIteratorTest extends \PHPUnit_Framework_TestCase
 {
+    use UsesServiceTrait;
+
     public function testFactoryCanCreateForTrail()
     {
         $s3Client = $this->getMockS3Client();
-        $cloudTrailClient = CloudTrailClient::factory([
+        $cloudTrailClient = new CloudTrailClient([
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
             'region'      => 'us-west-2',
             'version'     => 'latest'
         ]);
         $json = '{"trailList":[{"IncludeGlobalServiceEvents":true,"Name":"Default","S3BucketName":"log-bucket"}]}';
-        $mock = new Mock([new Response(200, [], Stream::factory($json))]);
-        $cloudTrailClient->getHttpClient()->getEmitter()->attach($mock);
+        $this->addMockResults($cloudTrailClient, [new Result(json_decode($json, true))]);
         $files = LogFileIterator::forTrail($s3Client, $cloudTrailClient);
         $this->assertInstanceOf('Aws\CloudTrail\LogFileIterator', $files);
     }
@@ -37,8 +39,9 @@ class LogFileIteratorTest extends \PHPUnit_Framework_TestCase
             'version'     => 'latest',
             'region'      => 'us-west-2',
         ]);
-        $mock = new Mock([new Response(200, [], Stream::factory('{"trailList":[]}'))]);
-        $cloudTrailClient->getHttpClient()->getEmitter()->attach($mock);
+        $this->addMockResults($cloudTrailClient, [
+            new Result(['trailList' => []])
+        ]);
         $files = LogFileIterator::forTrail($s3Client, $cloudTrailClient);
     }
 
@@ -115,12 +118,16 @@ class LogFileIteratorTest extends \PHPUnit_Framework_TestCase
 </ListBucketResult>
 XML;
 
-        $client = S3Client::factory([
+        $client = new S3Client([
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
+            'region'      => 'us-east-1',
             'version'     => 'latest'
         ]);
-        $mock = new Mock([new Response(200, [], Stream::factory($xml))]);
-        $client->getHttpClient()->getEmitter()->attach($mock);
+
+        $command = $client->getCommand('ListObjects');
+        $parser = new RestXmlParser($client->getApi());
+        $response = new Response(200, [], $xml);
+        $this->addMockResults($client, [$parser($command, $response)]);
 
         return $client;
     }

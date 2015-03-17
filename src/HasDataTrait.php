@@ -15,9 +15,22 @@ trait HasDataTrait
         return new \ArrayIterator($this->data);
     }
 
-    public function offsetGet($offset)
+    /**
+     * This method returns a reference to the variable to allow for indirect
+     * array modification (e.g., $foo['bar']['baz'] = 'qux').
+     *
+     * @param $offset
+     *
+     * @return mixed|null
+     */
+    public function & offsetGet($offset)
     {
-        return isset($this->data[$offset]) ? $this->data[$offset] : null;
+        if (isset($this->data[$offset])) {
+            return $this->data[$offset];
+        }
+
+        $value = null;
+        return $value;
     }
 
     public function offsetSet($offset, $value)

@@ -36,11 +36,11 @@ class LogFileReader
     public function read($s3BucketName, $logFileKey)
     {
         // Create a command for getting the log file object
-        $command = $this->s3Client->getCommand('GetObject', array(
+        $command = $this->s3Client->getCommand('GetObject', [
             'Bucket' => (string) $s3BucketName,
             'Key' => (string) $logFileKey,
             'ResponseContentEncoding' => 'x-gzip'
-        ));
+        ]);
 
         // Make sure gzip encoding header is sent and accepted in order to
         // inflate the response data.
