@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Glacier;
 
-use GuzzleHttp\Subscriber\MessageIntegrity\HashInterface;
+use Aws\HashInterface;
 
 /**
  * Encapsulates the creation of a tree hash from streamed data

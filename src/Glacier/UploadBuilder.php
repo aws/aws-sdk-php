@@ -4,12 +4,12 @@ namespace Aws\Glacier;
 use Aws\Multipart\AbstractUploadBuilder;
 use Aws\Multipart\UploadState;
 use Aws\Result;
-use GuzzleHttp\Command\CommandInterface;
+use Aws\CommandInterface;
 use GuzzleHttp\Psr7\Stream;
 use Psr\Http\Message\StreamableInterface;
 use GuzzleHttp\Psr7;
-use GuzzleHttp\Subscriber\MessageIntegrity\HashingStream;
-use GuzzleHttp\Subscriber\MessageIntegrity\PhpHash;
+use Aws\HashingStream;
+use Aws\PhpHash;
 
 /**
  * Creates a multipart uploader used to easily upload large archives to Glacier.

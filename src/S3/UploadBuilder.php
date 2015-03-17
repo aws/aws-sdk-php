@@ -4,14 +4,14 @@ namespace Aws\S3;
 use Aws\Multipart\AbstractUploadBuilder;
 use Aws\Multipart\UploadState;
 use Aws\Result;
-use GuzzleHttp\Command\CommandInterface;
+use Aws\CommandInterface;
 use GuzzleHttp\Mimetypes;
 use GuzzleHttp\Psr7\LazyOpenStream;
 use GuzzleHttp\Psr7\Stream;
 use Psr\Http\Message\StreamableInterface;
 use GuzzleHttp\Psr7;
-use GuzzleHttp\Subscriber\MessageIntegrity\HashingStream;
-use GuzzleHttp\Subscriber\MessageIntegrity\PhpHash;
+use Aws\HashingStream;
+use Aws\PhpHash;
 
 /**
  * Creates a multipart uploader used to easily upload large objects to S3.

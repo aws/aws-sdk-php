@@ -4,8 +4,8 @@ namespace Aws\Glacier;
 use Aws\Exception\CouldNotCreateChecksumException;
 use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Event\SubscriberInterface;
-use GuzzleHttp\Subscriber\MessageIntegrity\HashingStream;
-use GuzzleHttp\Subscriber\MessageIntegrity\PhpHash;
+use Aws\HashingStream;
+use Aws\PhpHash;
 
 /**
  * Adds the content sha256 and tree hash to Glacier upload requests if not set
