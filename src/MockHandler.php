@@ -48,6 +48,7 @@ class MockHandler implements \Countable
         foreach (func_get_args() as $value) {
             if ($value instanceof ResultInterface
                 || $value instanceof AwsException
+                || is_callable($value)
             ) {
                 $this->queue[] = $value;
             } else {
@@ -69,11 +70,13 @@ class MockHandler implements \Countable
 
         $result = array_shift($this->queue);
 
-        if ($result instanceof AwsException) {
-            $result = new RejectedPromise($result);
-        } else {
-            $result = \GuzzleHttp\Promise\promise_for($result);
+        if (is_callable($result)) {
+            $result = $result($command, $request);
         }
+
+        $result = $result instanceof AwsException
+            ? new RejectedPromise($result)
+            : \GuzzleHttp\Promise\promise_for($result);
 
         $result->then($this->onFulfilled, $this->onRejected);
 

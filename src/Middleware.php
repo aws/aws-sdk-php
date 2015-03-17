@@ -123,4 +123,29 @@ final class Middleware
             };
         };
     }
+
+    /**
+     * Creates a middleware that invokes a callback at a given step.
+     *
+     * The tap callback accepts a CommandInterface and RequestInterface as
+     * arguments but is not expected to return a new value or proxy to
+     * downstream middleware. It's simply a way to "tap" into the handler chain
+     * to debug or get an intermediate value.
+     *
+     * @param callable $fn Tap function
+     *
+     * @return callable
+     */
+    public static function tap(callable $fn)
+    {
+        return function (callable $handler) use ($fn) {
+            return function (
+                CommandInterface $command,
+                RequestInterface $request
+            ) use ($handler, $fn) {
+                $fn($command, $request);
+                return $handler($command, $request);
+            };
+        };
+    }
 }

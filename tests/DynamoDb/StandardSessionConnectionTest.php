@@ -1,7 +1,9 @@
 <?php
 namespace Aws\Test\DynamoDb;
 
+use Aws\CommandInterface;
 use Aws\DynamoDb\StandardSessionConnection;
+use Aws\Middleware;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 
@@ -21,13 +23,15 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
                 'otherkey'  => ['S' => 'foo'],
             ]]),
         ]);
-        $client->getEmitter()->on('prepared', function (PreparedEvent $e) {
-            $this->assertEquals(
-                ['sessionid' => ['S' => 'session1']],
-                $e->getCommand()['Key']
-            );
-        });
-
+        $client->getHandlerList()->append(
+            Middleware::tap(function ($command) {
+                $this->assertEquals(
+                    ['sessionid' => ['S' => 'session1']],
+                    $command['Key']
+                );
+            }),
+            ['step' => 'build']
+        );
         $connection = new StandardSessionConnection($client, [
             'hash_key' => 'sessionid',
         ]);
@@ -55,16 +59,17 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
     {
         $client = $this->getTestSdk()->createDynamoDb();
         $this->addMockResults($client, [new Result([])]);
-        $client->getEmitter()->on('prepared', function (PreparedEvent $e) {
-            $updates = $e->getCommand()['AttributeUpdates'];
-            $this->assertArrayHasKey('expires', $updates);
-            $this->assertArrayHasKey('lock', $updates);
-            $this->assertArrayHasKey('data', $updates);
-        });
-
+        $client->getHandlerList()->append(
+            Middleware::tap(function ($command) {
+                $updates = $command['AttributeUpdates'];
+                $this->assertArrayHasKey('expires', $updates);
+                $this->assertArrayHasKey('lock', $updates);
+                $this->assertArrayHasKey('data', $updates);
+            }),
+            ['step' => 'build']
+        );
         $connection = new StandardSessionConnection($client);
         $return = $connection->write('s1', serialize(['foo' => 'bar']), true);
-
         $this->assertTrue($return);
     }
 
@@ -74,13 +79,15 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
         $this->addMockResults($client, [
             $this->createMockAwsException('ERROR', 'Aws\DynamoDb\Exception\DynamoDbException')
         ]);
-        $client->getEmitter()->on('prepared', function (PreparedEvent $e) {
-            $this->assertEquals(
-                ['Action' => 'DELETE'],
-                $e->getCommand()['AttributeUpdates']['data']
-            );
-        });
-
+        $client->getHandlerList()->append(
+            Middleware::tap(function ($command) {
+                $this->assertEquals(
+                    ['Action' => 'DELETE'],
+                    $command['AttributeUpdates']['data']
+                );
+            }),
+            ['step' => 'build']
+        );
         $connection = new StandardSessionConnection($client);
         $return = $connection->write('s1', '', true);
 
@@ -108,25 +115,27 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
     {
         $client = $this->getTestSdk()->createDynamoDb();
         $this->addMockResults($client, [
+            new Result([]),
             new Result(['Items' => [
                 ['id' => ['S' => 'foo']],
                 ['id' => ['S' => 'bar']],
                 ['id' => ['S' => 'baz']],
-            ]]),
-            new Result([]),
+            ]])
         ]);
 
-        $called = 0;
-        $client->getEmitter()->on('prepared', function (PreparedEvent $e) use (&$called) {
-            $called++;
-            if ($called === 1) {
-                $this->assertEquals('Scan', $e->getCommand()->getName());
-            } elseif ($called === 2) {
-                $this->assertEquals('Scan', $e->getCommand()->getName());
-            } else {
-                $this->fail('Unexpected state.');
-            }
-        });
+        $client->getHandlerList()->append(
+            Middleware::tap(function (CommandInterface $command) {
+                static $called = 0;
+                if (++$called === 1) {
+                    $this->assertEquals('Scan', $command->getName());
+                } elseif ($called === 2) {
+                    $this->assertEquals('Scan', $command->getName());
+                } else {
+                    $this->fail('Unexpected state.');
+                }
+            }),
+            ['step' => 'build']
+        );
 
         (new StandardSessionConnection($client))->deleteExpired();
     }

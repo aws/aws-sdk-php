@@ -1,7 +1,11 @@
 <?php
 namespace Aws\DynamoDb;
 
+use Aws\AwsClientInterface;
 use Aws\CommandInterface;
+use Aws\CommandPool;
+use Aws\Exception\AwsException;
+use Aws\ResultInterface;
 
 /**
  * The WriteRequestBatch is an object that is capable of efficiently sending
@@ -25,8 +29,8 @@ class WriteRequestBatch
      * Creates a WriteRequestBatch object that is capable of efficiently sending
      * DynamoDB BatchWriteItem requests from queued up Put and Delete requests.
      *
-     * @param DynamoDbClient $client DynamoDB client used to send batches.
-     * @param array          $config Batch configuration options.
+     * @param AwsClientInterface $client DynamoDB client used to send batches.
+     * @param array              $config Batch configuration options.
      *     - table: DynamoDB table used by the batch, this can be overridden for
      *       each individual put() or delete() call.
      *     - batch_size: The size of each batch (default: 25). The batch size
@@ -46,13 +50,10 @@ class WriteRequestBatch
      *       executed by the batch, otherwise errors are ignored. The callback
      *       should accept a \GuzzleHttp\Command\Event\ProcessEvent as its
      *       argument.
-     *     - flush: Set this to a callback to perform an action after the batch
-     *       has been autoflushed. The callback will not be triggered on manual
-     *       flushes.
      *
      * @throws \DomainException if the batch size is not between 2 and 25.
      */
-    public function __construct(DynamoDbClient $client, array $config = [])
+    public function __construct(AwsClientInterface $client, array $config = [])
     {
         // Apply defaults
         $config += [
@@ -60,8 +61,7 @@ class WriteRequestBatch
             'batch_size' => 25,
             'pool_size'  => 1,
             'autoflush'  => true,
-            'error'      => null,
-            'flush'      => null
+            'error'      => null
         ];
 
         // Ensure the batch size is valid
@@ -149,25 +149,26 @@ class WriteRequestBatch
         $keepFlushing = true;
         while ($this->queue && $keepFlushing) {
             $commands = $this->prepareCommands();
-            $this->client->executeAll($commands, [
-                'pool_size' => $this->config['pool_size'],
-                'process' => function (ProcessEvent $e) {
-                    if ($ex = $e->getException()) {
-                        $code = $ex->getAwsErrorCode();
+            $pool = new CommandPool($this->client, $commands, [
+                'limit'     => $this->config['pool_size'],
+                'fulfilled' => function (ResultInterface $result) {
+                    // Re-queue any unprocessed items
+                    if ($result->hasKey('UnprocessedItems')) {
+                        $this->retryUnprocessed($result['UnprocessedItems']);
+                    }
+                },
+                'rejected' => function ($reason) {
+                    if ($reason instanceof AwsException) {
+                        $code = $reason->getAwsErrorCode();
                         if ($code === 'ProvisionedThroughputExceededException') {
-                            $this->retryUnprocessed($e->getCommand()['RequestItems']);
+                            $this->retryUnprocessed($reason->getCommand()['RequestItems']);
                         } elseif (is_callable($this->config['error'])) {
-                            $this->config['error']($e);
-                        }
-                    } else {
-                        // Re-queue any unprocessed items
-                        $result = $e->getResult();
-                        if ($result->hasKey('UnprocessedItems')) {
-                            $this->retryUnprocessed($result['UnprocessedItems']);
+                            $this->config['error']($reason);
                         }
                     }
                 }
             ]);
+            $pool->promise()->wait();
             $keepFlushing = (bool) $untilEmpty;
         }
 
@@ -233,11 +234,6 @@ class WriteRequestBatch
         ) {
             // Flush only once. Unprocessed items are handled in a later flush.
             $this->flush(false);
-
-            // Call the flush callback if one was provided
-            if (is_callable($this->config['flush'])) {
-                $this->config['flush']();
-            }
         }
     }
 

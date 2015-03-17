@@ -6,6 +6,7 @@ use Aws\CommandInterface;
 use Aws\Exception\AwsException;
 use Aws\MockHandler;
 use Aws\Result;
+use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
 
 /**
@@ -99,5 +100,19 @@ class MockHandlerTest extends \PHPUnit_Framework_TestCase
         $h($cmd, $request);
         $this->assertSame($request, $h->getLastRequest());
         $this->assertSame($cmd, $h->getLastCommand());
+    }
+
+    public function testCanEnqueueCallables()
+    {
+        $h = new MockHandler();
+        $r1 = new Result([]);
+        $cmd = new Command('foo');
+        $req = new Request('GET', 'http://www.example.com');
+        $h->append(function (CommandInterface $command, RequestInterface $request) use ($cmd, $req, $r1) {
+            $this->assertSame($cmd, $command);
+            $this->assertSame($req, $request);
+            return $r1;
+        });
+        $this->assertSame($r1, $h($cmd, $req)->wait());
     }
 }

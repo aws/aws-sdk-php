@@ -1,11 +1,12 @@
 <?php
 namespace Aws\Test\DynamoDb;
 
+use Aws\CommandInterface;
+use Aws\Exception\AwsException;
+use Aws\MockHandler;
 use Aws\Result;
 use Aws\DynamoDb\WriteRequestBatch;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Message\Response;
-use GuzzleHttp\Stream\Stream;
 
 /**
  * @covers Aws\DynamoDb\WriteRequestBatch
@@ -17,7 +18,7 @@ class WriteRequestBatchTest extends \PHPUnit_Framework_TestCase
     public function testInstantiateWriteRequestBatch()
     {
         // Ensure threshold is correctly calculated
-        $batch = new WriteRequestBatch($this->getMockClient(), ['pool_size' => 2]);
+        $batch = new WriteRequestBatch($this->getTestClient('DynamoDb'), ['pool_size' => 2]);
         $this->assertEquals(
             50,
             $this->readAttribute($batch, 'config')['threshold']
@@ -25,12 +26,12 @@ class WriteRequestBatchTest extends \PHPUnit_Framework_TestCase
 
         // Ensure exception is thrown if batch size is invalid
         $this->setExpectedException('DomainException');
-        $batch = new WriteRequestBatch($this->getMockClient(), ['batch_size' => 1]);
+        new WriteRequestBatch($this->getTestClient('DynamoDb'), ['batch_size' => 1]);
     }
 
     public function testAddItems()
     {
-        $batch = new WriteRequestBatch($this->getMockClient(), [
+        $batch = new WriteRequestBatch($this->getTestClient('DynamoDb'), [
             'autoflush' => false,
             'table'     => 'foo',
         ]);
@@ -54,33 +55,34 @@ class WriteRequestBatchTest extends \PHPUnit_Framework_TestCase
 
     public function testMustProvideTable()
     {
-        $batch = new WriteRequestBatch($this->getMockClient());
-
+        $batch = new WriteRequestBatch($this->getTestClient('DynamoDb'));
         $this->setExpectedException('RuntimeException');
         $batch->put(['a' => 'b']);
     }
 
     public function testCreateCommandsFromQueueViaAutoflush()
     {
-        $commandCount = 0;
-        $flushCount = 0;
+        $commandCount = [];
 
-        // Setup client to not actually execute any commands, just keep track
-        // of how many commands are created.
-        $client = $this->getMockClient();
-        $client->expects($this->any())
-            ->method('executeAll')
-            ->willReturnCallback(function($commands) use (&$commandCount) {
-                $commandCount = count($commands);
-            });
+        $client = $this->getTestClient('DynamoDb');
+        $client->getHandlerList()->append(\Aws\Middleware::tap(
+            function (CommandInterface $command) use (&$commandCount) {
+                if ($command->getName() == 'BatchWriteItem') {
+                    $commandCount[] = count($command['RequestItems']);
+                }
+            }
+        ));
+
+        $client->getHandlerList()->setHandler(new MockHandler([
+            new Result(),
+            new Result()
+        ]));
 
         // Configure batch such so autoflush will happen for every 4 items.
-        // The flush callback will keep track of how many flushed happen.
         $batch = new WriteRequestBatch($client, [
             'batch_size' => 2,
             'pool_size'  => 2,
-            'table'      => 'foo',
-            'flush'      => function() use (&$flushCount) {$flushCount++;}
+            'table'      => 'foo'
         ]);
 
         // Adding 5 items (Note: only 4 should be flushed)
@@ -91,8 +93,7 @@ class WriteRequestBatchTest extends \PHPUnit_Framework_TestCase
         $batch->put(['letter' => ['S' => 'e']]);
 
         // Ensure that 2 commands and 1 flush happened, with 1 left in queue.
-        $this->assertEquals(2, $commandCount);
-        $this->assertEquals(1, $flushCount);
+        $this->assertEquals([1, 1], $commandCount);
         $this->assertCount(1, $this->readAttribute($batch, 'queue'));
     }
 
@@ -124,10 +125,26 @@ class WriteRequestBatchTest extends \PHPUnit_Framework_TestCase
         // Setup client with 3 error responses. The first should cause the items
         // to be re-queued; then second and third should trigger the callback.
         $client = $this->getTestClient('dynamodb');
-        $this->addMockResponses($client, [
-            new Response(400, [], Stream::factory('{"__type":"ProvisionedThroughputExceededException","message":"foo"}')),
-            new Response(400, [], Stream::factory('{"__type":"ValidationError","message":"foo"}')),
-            new Response(413),
+
+        $this->addMockResults($client, [
+            function ($command, $request) {
+                return new AwsException('error', $command, [
+                    'request' => $request,
+                    'code'    => 'ProvisionedThroughputExceededException'
+                ]);
+            },
+            function ($command, $request) {
+                return new AwsException('error', $command, [
+                    'request' => $request,
+                    'code'    => 'ValidationError'
+                ]);
+            },
+            function ($command, $request) {
+                return new AwsException('error', $command, [
+                    'request' => $request,
+                    'code'    => 'ServerError'
+                ]);
+            }
         ]);
 
         $batch = new WriteRequestBatch($client, [
@@ -157,12 +174,5 @@ class WriteRequestBatchTest extends \PHPUnit_Framework_TestCase
         // been 2 unhandled errors that would have triggered the callback.
         $this->assertCount(0, $this->readAttribute($batch, 'queue'));
         $this->assertEquals(2, $unhandledErrors);
-    }
-
-    private function getMockClient()
-    {
-        return $this->getMockBuilder('Aws\DynamoDb\DynamoDbClient')
-            ->disableOriginalConstructor()
-            ->getMock();
     }
 }
