@@ -13,17 +13,18 @@ as a guide that will help you to achieve optimal performance with the SDK.
 Upgrade PHP
 -----------
 
-Using an up-to-date version of PHP will generally improve the performance of your PHP applications. Did you know that
-PHP 5.4 is `20-40% faster <http://news.php.net/php.internals/57760>`_ than PHP 5.3?
-`Upgrading to PHP 5.4 <http://www.php.net/manual/en/migration54.php>`_ or greater will provide better performance and
-lower memory usage. If you cannot upgrade from PHP 5.3 to PHP 5.4 or PHP 5.5, upgrading to PHP 5.3.18 or greater will
-improve performance over older versions of PHP 5.3.
+Using an up-to-date version of PHP will generally improve the performance of
+your PHP applications. `Upgrading to PHP 5.5 <http://php.net/manual/en/migration55.php>`_
+or greater will provide better performance and lower memory usage. If you cannot
+upgrade from PHP 5.3 to PHP 5.5 (or PHP 5.4), upgrading to the latest PHP 5.3.x
+will improve performance over older versions of PHP 5.3.
 
-You can install PHP 5.4 on an Amazon Linux AMI using the following command.
+You can install PHP 5.5 on an Amazon Linux AMI using the following command.
 
 .. code-block:: bash
 
-    yum install php54
+    yum install php55 php55-opcache
+
 
 Use PHP 5.5 or an opcode cache like APC
 ---------------------------------------
