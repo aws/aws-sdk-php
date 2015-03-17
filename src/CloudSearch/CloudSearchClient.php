@@ -24,7 +24,11 @@ class CloudSearchClient extends AwsClient
             'DomainNames' => [$domainName]
         ])->getPath('DomainStatusList/0/SearchService/Endpoint');
 
-        $config += ['scheme' => 'https', 'version' => 'latest'];
+        $config += [
+            'credentials' => $this->getCredentials(),
+            'scheme'      => 'https',
+            'version'     => 'latest',
+        ];
 
         // Create an absolute URI for the endpoint.
         $config['endpoint'] = $config['scheme'] . '://' . $config['endpoint'];
