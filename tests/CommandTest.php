@@ -61,12 +61,6 @@ class CommandTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(2, $c);
     }
 
-    public function testCanGetByPath()
-    {
-        $c = new Command('foo', ['bar' => ['baz' => 'qux']]);
-        $this->assertEquals('qux', $c->getPath('bar/baz'));
-    }
-
     public function testCanAccessLikeArray()
     {
         $c = new Command('foo', ['bar' => 'baz', 'qux' => 'boo']);

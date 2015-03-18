@@ -45,4 +45,9 @@ expressions on the result data using the search() method.
 
 EOT;
     }
+
+    public function getPath($path)
+    {
+        return \GuzzleHttp\Utils::getPath($this->data, $path);
+    }
 }

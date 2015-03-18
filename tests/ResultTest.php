@@ -36,4 +36,10 @@ class ResultTest extends \PHPUnit_Framework_TestCase
         $q = 100;
         $this->assertSame(0, $result['qux']);
     }
+
+    public function testCanGetByPath()
+    {
+        $r = new Result(['bar' => ['baz' => 'qux']]);
+        $this->assertEquals('qux', $r->getPath('bar/baz'));
+    }
 }

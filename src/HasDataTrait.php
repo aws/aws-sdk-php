@@ -2,8 +2,8 @@
 namespace Aws;
 
 /**
- * Trait implementing ToArrayInterface, \ArrayAccess, \Countable,
- * \IteratorAggregate, and getPath().
+ * Trait implementing ToArrayInterface, \ArrayAccess, \Countable, and
+ * \IteratorAggregate
  */
 trait HasDataTrait
 {
@@ -56,18 +56,5 @@ trait HasDataTrait
     public function count()
     {
         return count($this->data);
-    }
-
-    /**
-     * Get a value from the collection using a path syntax to retrieve nested
-     * data.
-     *
-     * @param string $path Path to traverse and retrieve a value from
-     *
-     * @return mixed|null
-     */
-    public function getPath($path)
-    {
-        return \GuzzleHttp\Utils::getPath($this->data, $path);
     }
 }
