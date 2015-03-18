@@ -88,4 +88,14 @@ class XmlErrorParserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('400 Bad Request (Request-ID: Foo)', $result['message']);
         $this->assertEquals('Foo', $result['request_id']);
     }
+
+    public function testUsesNotFoundWhen404()
+    {
+        $response = $response = Psr7\parse_response(
+            "HTTP/1.1 404 Not Found\r\nX-Amz-Request-ID: Foo\r\n\r\n"
+        );
+        $parser = new XmlErrorParser();
+        $result = $parser($response);
+        $this->assertEquals('NotFound', $result['code']);
+    }
 }

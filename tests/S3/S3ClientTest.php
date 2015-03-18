@@ -5,7 +5,6 @@ use Aws\Credentials\NullCredentials;
 use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Stream\FnStream;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Stream\StreamInterface;

@@ -1,7 +1,9 @@
 <?php
 namespace Aws\Test\DynamoDb;
 
+use Aws\DynamoDb\DynamoDbClient;
 use Aws\Test\UsesServiceTrait;
+use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Stream;
 
 /**
@@ -72,5 +74,35 @@ class DynamoDbClientTest extends \PHPUnit_Framework_TestCase
             [ $handle,       '{"B":"foo"}' ],
             [ $stream,       '{"B":"bar"}' ],
         ];
+    }
+
+    public function testValidatesAndRetriesCrc32()
+    {
+        $queue = [
+            new Response(200, ['x-amz-crc32' => '123'], 'foo'),
+            new Response(200, ['x-amz-crc32' => '2356372769'], 'foo')
+        ];
+
+        $handler = function ($request, $options) use (&$queue) {
+            // Test the custom retry policy.
+            if (count($queue) == 1) {
+                $this->assertSame(0, $options['delay']);
+            }
+
+            return \GuzzleHttp\Promise\promise_for(array_shift($queue));
+        };
+
+        $client = new DynamoDbClient([
+            'region'       => 'us-east-1',
+            'version'      => 'latest',
+            'http_handler' => $handler
+        ]);
+
+        $client->getItem([
+            'TableName' => 'foo',
+            'Key' => ['baz' => ['S' => 'foo']]
+        ]);
+
+        $this->assertEmpty($queue);
     }
 }

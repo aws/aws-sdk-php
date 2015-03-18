@@ -148,4 +148,29 @@ final class Middleware
             };
         };
     }
+
+    /**
+     * Middleware wrapper function that retries requests based on the boolean
+     * result of invoking the provided "decider" function.
+     *
+     * If no delay function is provided, a simple implementation of exponential
+     * backoff will be utilized.
+     *
+     * @param callable $decider Function that accepts the number of retries,
+     *                          a request, [result], and [exception] and
+     *                          returns true if the command is to be retried.
+     * @param callable $delay   Function that accepts the number of retries and
+     *                          returns the number of milliseconds to delay.
+     *
+     * @return callable
+     */
+    public static function retry(callable $decider = null, callable $delay = null)
+    {
+        $decider = $decider ?: RetryMiddleware::createDefaultDecider();
+        $delay = $delay ?: [RetryMiddleware::class, 'exponentialDelay'];
+
+        return function (callable $handler) use ($decider, $delay) {
+            return new RetryMiddleware($decider, $delay, $handler);
+        };
+    }
 }

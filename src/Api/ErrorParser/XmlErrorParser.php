@@ -32,6 +32,10 @@ class XmlErrorParser
 
     private function parseHeaders(ResponseInterface $response, array &$data)
     {
+        if ($response->getStatusCode() == '404') {
+            $data['code'] = 'NotFound';
+        }
+
         $data['message'] = $response->getStatusCode() . ' '
             . $response->getReasonPhrase();
 

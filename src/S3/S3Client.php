@@ -2,18 +2,16 @@
 namespace Aws\S3;
 
 use Aws\AwsClient;
+use Aws\Exception\AwsException;
 use Aws\HandlerList;
 use Aws\Middleware;
+use Aws\RetryMiddleware;
 use Aws\S3\Exception\S3Exception;
 use Aws\Result;
-use Aws\Retry\ThrottlingFilter;
-use Aws\ClientResolver;
-use Aws\Retry\S3TimeoutFilter;
 use Aws\CommandInterface;
 use GuzzleHttp\Psr7\Stream;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\AppendStream;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamableInterface;
 
 /**
@@ -26,12 +24,8 @@ class S3Client extends AwsClient
         $args = parent::getArguments();
         // S3 does not require a region for the "classic" endpoint.
         $args['region']['default'] = 'us-east-1';
-
         // Apply custom retry strategy.
-        //$args['retries']['fn'] = self::createRetry();
-
-        // Handle HEAD request error parsing.
-        $args['api_provider']['fn'] = self::applyApiProvider();
+        $args['retries']['fn'] = [__CLASS__, '_applyRetryConfig'];
 
         return $args + [
             'force_path_style' => [
@@ -465,47 +459,31 @@ class S3Client extends AwsClient
         return self::isBucketDnsCompatible($bucket);
     }
 
-    private static function createRetry()
+    /** @internal */
+    public static function _applyRetryConfig($value, $_, HandlerList $list)
     {
-        return function ($value, array &$args) {
-            if ($value) {
-                $args['client']->getEmitter()->attach(new RetrySubscriber(
-                    ClientResolver::_wrapDebugLogger($args, [
-                        'max'    => $value,
-                        'delay'  => 'GuzzleHttp\Subscriber\Retry\RetrySubscriber::exponentialDelay',
-                        'filter' => RetrySubscriber::createChainFilter([
-                            new S3TimeoutFilter(),
-                            new ThrottlingFilter($args['error_parser']),
-                            RetrySubscriber::createStatusFilter(),
-                            RetrySubscriber::createConnectFilter()
-                        ])
-                    ])
-                ));
-            }
-        };
-    }
+        if (!$value) {
+            return;
+        }
 
-    private static function applyApiProvider()
-    {
-        return function ($value, &$args, HandlerList $list) {
-            ClientResolver::_apply_api_provider($value, $args, $list);
-            $parser = function (ResponseInterface $response) use ($args) {
-                // Call the original parser.
-                $errorData = $args['error_parser']($response);
-                // Handle 404 responses where the code was not parsed.
-                if (!isset($errorData['code'])
-                    && $response->getStatusCode() == 404
-                ) {
-                    $url = (new S3UriParser)->parse($response->getEffectiveUrl());
-                    if (isset($url['key'])) {
-                        $errorData['code'] = 'NoSuchKey';
-                    } elseif ($url['bucket']) {
-                        $errorData['code'] = 'NoSuchBucket';
-                    }
-                }
-                return $errorData;
-            };
-            $args['error_parser'] = $parser;
+        $decider = RetryMiddleware::createDefaultDecider($value);
+        $decider = function ($retries, $request, $result, $error) use ($decider) {
+            if ($decider($retries, $request, $result, $error)) {
+                return true;
+            } elseif ($error instanceof AwsException) {
+                return $error->getResponse()
+                    && strpos(
+                        $error->getResponse()->getBody(),
+                        'Your socket connection to the server'
+                    ) !== false;
+            }
+            return false;
         };
+
+        $delay = [RetryMiddleware::class, 'exponentialDelay'];
+        $list->append(
+            Middleware::retry($decider, $delay),
+            ['step' => 'sign']
+        );
     }
 }

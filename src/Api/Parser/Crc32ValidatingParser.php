@@ -29,28 +29,19 @@ class Crc32ValidatingParser extends AbstractParser
         if ($expected = $response->getHeader('x-amz-crc32')) {
             $hash = hexdec(Psr7\hash($response->getBody(), 'crc32b'));
             if ((int) $expected !== $hash) {
-                $this->throwMismatch($command, $response, $expected, $hash);
+                throw new AwsException(
+                    "crc32 mismatch. Expected {$expected}, found {$hash}.",
+                    $command,
+                    [
+                        'code'             => 'ClientChecksumMismatch',
+                        'connection_error' => true,
+                        'response'         => $response
+                    ]
+                );
             }
         }
 
         $fn = $this->parser;
         return $fn($command, $response);
-    }
-
-    private function throwMismatch(
-        CommandInterface $command,
-        ResponseInterface $response,
-        $expected,
-        $actual
-    ) {
-        throw new AwsException(
-            "crc32 mismatch. Expected {$expected}, found {$actual}.",
-            $command,
-            [
-                'code'             => 'ClientChecksumMismatch',
-                'connection_error' => true,
-                'response'         => $response
-            ]
-        );
     }
 }

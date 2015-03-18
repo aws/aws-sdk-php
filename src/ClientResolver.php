@@ -109,11 +109,6 @@ class ClientResolver
             'fn'      => [__CLASS__, '_apply_credentials'],
             'default' => [__CLASS__, '_default_credentials'],
         ],
-        'retry_logger' => [
-            'type'  => 'value',
-            'valid' => ['string', 'Psr\Log\LoggerInterface'],
-            'doc'   => 'When the string "debug" is provided, all retries will be logged to STDOUT. Provide a PSR-3 logger to log retries to a specific logger instance.'
-        ],
         'retries' => [
             'type'    => 'value',
             'valid'   => ['int'],
@@ -325,22 +320,12 @@ class ClientResolver
         throw new IAE($msg);
     }
 
-    public static function _apply_retries($value, array &$args)
+    public static function _apply_retries($value, array &$args, HandlerList $list)
     {
-        /*
         if ($value) {
-            $retry = new RetrySubscriber(self::_wrapDebugLogger($args, [
-                'max'    => $value,
-                'delay'  => 'GuzzleHttp\Subscriber\Retry\RetrySubscriber::exponentialDelay',
-                'filter' => RetrySubscriber::createChainFilter([
-                    new ThrottlingFilter($args['error_parser']),
-                    RetrySubscriber::createStatusFilter(),
-                    RetrySubscriber::createConnectFilter()
-                ])
-            ]));
-            $args['client']->getEmitter()->attach($retry);
+            $decider = RetryMiddleware::createDefaultDecider($value);
+            $list->append(Middleware::retry($decider), ['step' => 'sign']);
         }
-        */
     }
 
     public static function _apply_credentials($value, array &$args)
@@ -507,22 +492,5 @@ A "region" configuration value is required for the "{$service}" service
 (e.g., "us-west-2"). A list of available public regions and endpoints can be
 found at http://docs.aws.amazon.com/general/latest/gr/rande.html.
 EOT;
-    }
-
-    public static function _wrapDebugLogger(array $clientArgs, array $conf)
-    {
-        /*
-        // Add retry logger
-        if (isset($clientArgs['retry_logger'])) {
-            $conf['delay'] = RetrySubscriber::createLoggingDelay(
-                $conf['delay'],
-                ($clientArgs['retry_logger'] === 'debug')
-                    ? new SimpleLogger()
-                    : $clientArgs['retry_logger']
-            );
-        }
-        */
-
-        return $conf;
     }
 }

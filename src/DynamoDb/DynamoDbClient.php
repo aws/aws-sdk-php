@@ -1,10 +1,12 @@
 <?php
 namespace Aws\DynamoDb;
 
+use Aws\Api\Parser\Crc32ValidatingParser;
 use Aws\AwsClient;
 use Aws\ClientResolver;
-use Aws\Retry\ThrottlingFilter;
-use Aws\Retry\Crc32Filter;
+use Aws\HandlerList;
+use Aws\Middleware;
+use Aws\RetryMiddleware;
 
 /**
  * This client is used to interact with the **Amazon DynamoDB** service.
@@ -14,9 +16,9 @@ class DynamoDbClient extends AwsClient
     public static function getArguments()
     {
         $args = parent::getArguments();
-        // Apply custom retry strategy for DynamoDB.
-        //$args['retries']['default'] = 11;
-        //$args['retries']['fn'] = [__CLASS__, '_applyRetryConfig'];
+        $args['retries']['default'] = 11;
+        $args['retries']['fn'] = [__CLASS__, '_applyRetryConfig'];
+        $args['api_provider']['fn'] = [__CLASS__, '_applyApiProvider'];
 
         return $args;
     }
@@ -38,27 +40,28 @@ class DynamoDbClient extends AwsClient
     }
 
     /** @internal */
-    public static function _applyRetryConfig($value, array &$args)
+    public static function _applyRetryConfig($value, array &$args, HandlerList $list)
     {
         if (!$value) {
             return;
         }
 
-        $args['client']->getEmitter()->attach(new RetrySubscriber(
-            ClientResolver::_wrapDebugLogger($args, [
-                'max'    => $value,
-                'delay'  => function ($retries) {
+        $list->append(
+            Middleware::retry(
+                RetryMiddleware::createDefaultDecider($value),
+                function ($retries) {
                     return $retries
-                        ? (50 * (int)pow(2, $retries - 1)) / 1000
+                        ? (50 * (int) pow(2, $retries - 1)) / 1000
                         : 0;
-                },
-                'filter' => RetrySubscriber::createChainFilter([
-                    new ThrottlingFilter($args['error_parser']),
-                    new Crc32Filter($args['error_parser']),
-                    RetrySubscriber::createStatusFilter(),
-                    RetrySubscriber::createConnectFilter()
-                ])
-            ])
-        ));
+                }
+            ),
+            ['step' => 'sign']
+        );
+    }
+
+    public static function _applyApiProvider($value, array &$args, HandlerList $list)
+    {
+        ClientResolver::_apply_api_provider($value, $args, $list);
+        $args['parser'] = new Crc32ValidatingParser($args['parser']);
     }
 }

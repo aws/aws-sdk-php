@@ -91,9 +91,6 @@ class AwsClient implements AwsClientInterface
      *   available regions.
      * - retries: (int, default=int(3)) Configures the maximum number of
      *   allowed retries for a client (pass 0 to disable retries).
-     * - retry_logger: (string|Psr\Log\LoggerInterface) When the string
-     *   "debug" is provided, all retries will be logged to STDOUT. Provide a
-     *   PSR-3 logger to log retries to a specific logger instance.
      * - scheme: (string, default=string(5) "https") URI scheme to use when
      *   connecting connect. The SDK will utilize "https" endpoints (i.e.,
      *   utilize SSL/TLS connections) by default. You can attempt to connect to
