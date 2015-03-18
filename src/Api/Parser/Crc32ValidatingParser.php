@@ -1,0 +1,56 @@
+<?php
+namespace Aws\Api\Parser;
+
+use Aws\CommandInterface;
+use Aws\Exception\AwsException;
+use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Psr7;
+
+/**
+ * @internal Decorates a parser and validates the x-amz-crc32 header.
+ */
+class Crc32ValidatingParser extends AbstractParser
+{
+    /** @var callable */
+    private $parser;
+
+    /**
+     * @param callable $parser Parser to wrap.
+     */
+    public function __construct(callable $parser)
+    {
+        $this->parser = $parser;
+    }
+
+    public function __invoke(
+        CommandInterface $command,
+        ResponseInterface $response
+    ) {
+        if ($expected = $response->getHeader('x-amz-crc32')) {
+            $hash = hexdec(Psr7\hash($response->getBody(), 'crc32b'));
+            if ((int) $expected !== $hash) {
+                $this->throwMismatch($command, $response, $expected, $hash);
+            }
+        }
+
+        $fn = $this->parser;
+        return $fn($command, $response);
+    }
+
+    private function throwMismatch(
+        CommandInterface $command,
+        ResponseInterface $response,
+        $expected,
+        $actual
+    ) {
+        throw new AwsException(
+            "crc32 mismatch. Expected {$expected}, found {$actual}.",
+            $command,
+            [
+                'code'             => 'ClientChecksumMismatch',
+                'connection_error' => true,
+                'response'         => $response
+            ]
+        );
+    }
+}
