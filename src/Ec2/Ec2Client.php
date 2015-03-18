@@ -15,9 +15,11 @@ class Ec2Client extends AwsClient
                 CopySnapshotMiddleware::create(
                     $this,
                     $args['endpoint_provider']
-                )
+                ),
+                ['step' => 'init']
             );
         };
+
         parent::__construct($args);
     }
 }

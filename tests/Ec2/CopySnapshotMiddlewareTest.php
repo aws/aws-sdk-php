@@ -5,9 +5,9 @@ use Aws\Ec2\Ec2Client;
 use Aws\Test\UsesServiceTrait;
 
 /**
- * @covers Aws\Ec2\CopySnapshotSubscriber
+ * @covers Aws\Ec2\CopySnapshotMiddleware
  */
-class CopySnapshotSubscriberTest extends \PHPUnit_Framework_TestCase
+class CopySnapshotMiddlewareTest extends \PHPUnit_Framework_TestCase
 {
     use UsesServiceTrait;
 

@@ -20,23 +20,32 @@ class CopySnapshotMiddleware
     public static function create(AwsClientInterface $client, callable $endpointProvider)
     {
         return function (callable $handler) use ($endpointProvider, $client) {
-            $f = new CopySnapshotMiddleware();
-            $f->endpointProvider = $endpointProvider;
-            $f->client = $client;
-            $f->nextHandler = $handler;
+            $f = new CopySnapshotMiddleware($endpointProvider, $client, $handler);
             return $f;
         };
     }
 
-    public function __invoke(CommandInterface $command, RequestInterface $request)
+    public function __construct(
+        callable $endpointProvider,
+        AwsClientInterface $client,
+        callable $nextHandler
+    ) {
+        $this->endpointProvider = $endpointProvider;
+        $this->client = $client;
+        $this->nextHandler = $nextHandler;
+    }
+
+    public function __invoke(CommandInterface $cmd, RequestInterface $request = null)
     {
-        if ($command->getName() == 'CopySnapshot') {
-            $cmd['PresignedUrl'] = $this->createPresignedUrl($this->client, $command);
+        if ($cmd->getName() == 'CopySnapshot'
+            && (!isset($cmd->__skipCopySnapshot))
+        ) {
+            $cmd['PresignedUrl'] = $this->createPresignedUrl($this->client, $cmd);
             $cmd['DestinationRegion'] = $this->client->getRegion();
         }
 
         $f = $this->nextHandler;
-        return $f($command, $request);
+        return $f($cmd, $request);
     }
 
     private function createPresignedUrl(
@@ -44,10 +53,10 @@ class CopySnapshotMiddleware
         CommandInterface $cmd
     ) {
         $newCmd = $client->getCommand('CopySnapshot', $cmd->toArray());
-        $newCmd->getHandlerList()->remove($this);
+        // Avoid infinite recursion by flagging the new command.
+        $newCmd->__skipCopySnapshot = true;
         // Serialize a request for the CopySnapshot operation.
         $request = $client->serialize($newCmd);
-
         // Create the new endpoint for the target endpoint.
         $endpoint = EndpointProvider::resolve($this->endpointProvider, [
             'region'  => $cmd['SourceRegion'],
@@ -57,7 +66,6 @@ class CopySnapshotMiddleware
         // Set the request to hit the target endpoint.
         $uri = $request->getUri()->withHost((new Uri($endpoint))->getHost());
         $request = $request->withUri($uri);
-
         // Create a presigned URL for our generated request.
         $signer = new SignatureV4('ec2', $cmd['SourceRegion']);
 
