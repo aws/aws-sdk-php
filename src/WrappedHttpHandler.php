@@ -71,9 +71,12 @@ class WrappedHttpHandler
                 function (ResponseInterface $res) use ($command, $request) {
                     return $this->parseResponse($command, $request, $res);
                 },
-                function (array $err) use ($request, $command) {
-                    $exception = $this->parseError($err, $request, $command);
-                    return new Promise\RejectedPromise($exception);
+                function ($err) use ($request, $command) {
+                    if (is_array($err)) {
+                        $exception = $this->parseError($err, $request, $command);
+                        return new Promise\RejectedPromise($exception);
+                    }
+                    return new Promise\RejectedPromise($err);
                 }
             );
     }

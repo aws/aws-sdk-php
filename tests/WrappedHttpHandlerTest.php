@@ -113,4 +113,22 @@ class WrappedHttpHandlerTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals('123', $e->getAwsRequestId());
         }
     }
+
+    public function testCanRejectWithException()
+    {
+        $e = new \Exception('a');
+        $cmd = new Command('foo');
+        $req = new Request('GET', 'http://foo.com');
+        $handler = function () use ($e) { throw $e; };
+        $parser = [$this, 'fail'];
+        $errorParser = [$this, 'fail'];
+        $wrapped = new WrappedHttpHandler($handler, $parser, $errorParser);
+
+        try {
+            $wrapped($cmd, $req)->wait();
+            $this->fail();
+        } catch (\Exception $e2) {
+            $this->assertSame($e, $e2);
+        }
+    }
 }
