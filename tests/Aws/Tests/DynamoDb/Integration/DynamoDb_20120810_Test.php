@@ -228,7 +228,6 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
             'ReturnConsumedCapacity' => 'TOTAL'
         ));
 
-        // The result will always contain ConsumedCapacityUnits
         echo $result->getPath('ConsumedCapacity/CapacityUnits') . "\n";
 
         // @end
@@ -256,9 +255,6 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
                 'message' => array('S' => 'no vacant areas')
             )
         ));
-
-        // The result will always contain ConsumedCapacityUnits
-        echo $result->getPath('ConsumedCapacity/CapacityUnits') . "\n";
 
         // @end
         return $time;
