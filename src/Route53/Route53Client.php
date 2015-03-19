@@ -32,6 +32,8 @@ class Route53Client extends AwsClient
 
     private function cleanId($id)
     {
-        return str_replace(['/hostedzone/', '/change/'], '', $id);
+        static $toClean = ['/hostedzone/', '/change/', '/delegationset/'];
+
+        return str_replace($toClean, '', $id);
     }
 }
