@@ -2081,6 +2081,9 @@ return array (
                                         ),
                                     ),
                                 ),
+                                'AppliedColorSpaceConversion' => array(
+                                    'type' => 'string',
+                                ),
                             ),
                         ),
                         'Outputs' => array(
@@ -2337,6 +2340,9 @@ return array (
                                                 'type' => 'string',
                                             ),
                                         ),
+                                    ),
+                                    'AppliedColorSpaceConversion' => array(
+                                        'type' => 'string',
                                     ),
                                 ),
                             ),
@@ -3032,6 +3038,9 @@ return array (
                                             ),
                                         ),
                                     ),
+                                    'AppliedColorSpaceConversion' => array(
+                                        'type' => 'string',
+                                    ),
                                 ),
                             ),
                             'Outputs' => array(
@@ -3288,6 +3297,9 @@ return array (
                                                     'type' => 'string',
                                                 ),
                                             ),
+                                        ),
+                                        'AppliedColorSpaceConversion' => array(
+                                            'type' => 'string',
                                         ),
                                     ),
                                 ),
@@ -3676,6 +3688,9 @@ return array (
                                             ),
                                         ),
                                     ),
+                                    'AppliedColorSpaceConversion' => array(
+                                        'type' => 'string',
+                                    ),
                                 ),
                             ),
                             'Outputs' => array(
@@ -3932,6 +3947,9 @@ return array (
                                                     'type' => 'string',
                                                 ),
                                             ),
+                                        ),
+                                        'AppliedColorSpaceConversion' => array(
+                                            'type' => 'string',
                                         ),
                                     ),
                                 ),
@@ -4625,6 +4643,9 @@ return array (
                                         ),
                                     ),
                                 ),
+                                'AppliedColorSpaceConversion' => array(
+                                    'type' => 'string',
+                                ),
                             ),
                         ),
                         'Outputs' => array(
@@ -4881,6 +4902,9 @@ return array (
                                                 'type' => 'string',
                                             ),
                                         ),
+                                    ),
+                                    'AppliedColorSpaceConversion' => array(
+                                        'type' => 'string',
                                     ),
                                 ),
                             ),

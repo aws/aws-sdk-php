@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.7.23 - 2015-03-19
+
+* `Aws\ElasticTranscoder` - API update to support AppliedColorSpaceConversion.
+* `Aws\CloudSearchDomain` - Adding 504 status code to retry list.
+
 ## 2.7.22 - 2015-03-12
 
 * `Aws\CloudFront` - Fixed #482, which affected pre-signing CloudFront URLs.
