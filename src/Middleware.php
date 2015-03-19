@@ -2,6 +2,7 @@
 namespace Aws;
 
 use Aws\Api\Service;
+use Aws\Api\Validator;
 use Aws\Credentials\CredentialsInterface;
 use GuzzleHttp\Psr7\LazyOpenStream;
 use Psr\Http\Message\RequestInterface;
@@ -53,30 +54,22 @@ final class Middleware
     }
 
     /**
-     * The provided validator function is a callable that accepts the
-     * following positional arguments:
+     * Adds a middleware that uses client-side validation.
      *
-     * - string, name of the operation
-     * - Aws\Api\Shape, shape being validated against
-     * - array, input data being validated
-     *
-     * The callable is expected to throw an \InvalidArgumentException when the
-     * provided input data does not match the shape.
-     *
-     * @param Service  $api       API being hit.
-     * @param callable $validator Function used to validate input.
+     * @param Service $api API being accessed.
      *
      * @return callable
      */
-    public static function validation(Service $api, callable $validator)
+    public static function validation(Service $api)
     {
+        $validator = new Validator();
         return function (callable $handler) use ($api, $validator) {
             return function (
                 CommandInterface $command,
                 RequestInterface $request = null
             ) use ($api, $validator, $handler) {
                 $operation = $api->getOperation($command->getName());
-                $validator(
+                $validator->validate(
                     $command->getName(),
                     $operation->getInput(),
                     $command->toArray()
