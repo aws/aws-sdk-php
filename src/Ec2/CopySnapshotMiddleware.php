@@ -17,7 +17,7 @@ class CopySnapshotMiddleware
     private $endpointProvider;
     private $nextHandler;
 
-    public static function create(AwsClientInterface $client, callable $endpointProvider)
+    public static function wrap(AwsClientInterface $client, callable $endpointProvider)
     {
         return function (callable $handler) use ($endpointProvider, $client) {
             $f = new CopySnapshotMiddleware($endpointProvider, $client, $handler);
