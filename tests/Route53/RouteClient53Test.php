@@ -2,14 +2,13 @@
 namespace Aws\Test\Route53;
 
 use Aws\Route53\Route53Client;
-use Aws\Test\SdkTest;
 
 /**
  * @covers Aws\Route53\Route53Client
  */
 class Route53ClientTest extends \PHPUnit_Framework_TestCase
 {
-    public function testAttachesSubscribers()
+    public function testCleansIds()
     {
         $client = new Route53Client([
             'service' => 'route53',
@@ -17,10 +16,26 @@ class Route53ClientTest extends \PHPUnit_Framework_TestCase
             'version' => 'latest'
         ]);
 
-        $this->assertTrue(SdkTest::hasListener(
-            $client->getEmitter(),
-            'Aws\Route53\CleanIdSubscriber',
-            'init'
-        ));
+        $command = $client->getCommand('ChangeResourceRecordSets', [
+            'HostedZoneId' => '/hostedzone/foo',
+            'ChangeBatch'  => [
+                'Changes' => [
+                    'bar' => [
+                        'Action' => 'foo',
+                        'ResourceRecordSet' => [
+                            'Name' => 'baz',
+                            'Type' => 'abc'
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+
+        $request = $client->serialize($command);
+
+        $this->assertContains(
+            '/hostedzone/foo/rrset/',
+            (string) $request->getUri()
+        );
     }
 }
