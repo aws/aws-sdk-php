@@ -27,14 +27,17 @@ class BucketStyleMiddleware
      *
      * @return callable
      */
-    public static function create($bucketEndpoint = false)
+    public static function wrap($bucketEndpoint = false)
     {
         return function (callable $handler) use ($bucketEndpoint) {
-            $f = new self();
-            $f->bucketEndpoint = $bucketEndpoint;
-            $f->nextHandler = $handler;
-            return $f;
+            return new self($bucketEndpoint, $handler);
         };
+    }
+
+    public function __construct($bucketEndpoint, callable $nextHandler)
+    {
+        $this->bucketEndpoint = $bucketEndpoint;
+        $this->nextHandler = $nextHandler;
     }
 
     public function __invoke(CommandInterface $command, RequestInterface $request)

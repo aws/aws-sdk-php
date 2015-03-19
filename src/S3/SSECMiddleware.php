@@ -19,14 +19,17 @@ class SSECMiddleware
      *
      * @return callable
      */
-    public static function create($endpointScheme)
+    public static function wrap($endpointScheme)
     {
         return function (callable $handler) use ($endpointScheme) {
-            $f = new self();
-            $f->nextHandler = $handler;
-            $f->endpointScheme = $endpointScheme;
-            return $f;
+            return new self($endpointScheme, $handler);
         };
+    }
+
+    public function __construct($endpointScheme, callable $nextHandler)
+    {
+        $this->nextHandler = $nextHandler;
+        $this->endpointScheme = $endpointScheme;
     }
 
     public function __invoke(CommandInterface $command, RequestInterface $request = null)

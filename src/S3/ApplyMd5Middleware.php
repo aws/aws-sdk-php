@@ -36,14 +36,14 @@ class ApplyMd5Middleware
      *
      * @return callable
      */
-    public static function create($calculateMd5)
+    public static function wrap($calculateMd5)
     {
         return function (callable $handler) use ($calculateMd5) {
-            return new self($handler, $calculateMd5);
+            return new self($calculateMd5, $handler);
         };
     }
 
-    private function __construct(callable $nextHandler, $calculateMd5)
+    public function __construct($calculateMd5, callable $nextHandler)
     {
         $this->nextHandler = $nextHandler;
         $this->byDefault = $calculateMd5;

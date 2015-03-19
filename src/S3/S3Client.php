@@ -90,11 +90,11 @@ class S3Client extends AwsClient
     {
         parent::__construct($args);
         $stack = $this->getHandlerList();
-        $stack->append(SSECMiddleware::create($this->getEndpoint()->getScheme()), ['step' => 'validate']);
-        $stack->append(BucketStyleMiddleware::create($this->getConfig('bucket_endpoint')), ['step' => 'build']);
-        $stack->append(ApplyMd5Middleware::create($this->getConfig('calculate_md5')), ['step' => 'build']);
-        $stack->append(PutObjectUrlMiddleware::create(), ['step' => 'sign']);
-        $stack->append(PermanentRedirectMiddleware::create(), ['step' => 'sign']);
+        $stack->append(SSECMiddleware::wrap($this->getEndpoint()->getScheme()), ['step' => 'validate']);
+        $stack->append(BucketStyleMiddleware::wrap($this->getConfig('bucket_endpoint')), ['step' => 'build']);
+        $stack->append(ApplyMd5Middleware::wrap($this->getConfig('calculate_md5')), ['step' => 'build']);
+        $stack->append(PutObjectUrlMiddleware::wrap(), ['step' => 'sign']);
+        $stack->append(PermanentRedirectMiddleware::wrap(), ['step' => 'sign']);
         $stack->append(Middleware::sourceFile($this->getApi()), ['step' => 'init']);
     }
 

@@ -22,7 +22,7 @@ class PermanentRedirectMiddleware
      *
      * @return callable
      */
-    public static function create()
+    public static function wrap()
     {
         return function (callable $handler) {
             return new self($handler);
@@ -32,7 +32,7 @@ class PermanentRedirectMiddleware
     /**
      * @param callable $nextHandler Next handler to invoke.
      */
-    private function __construct(callable $nextHandler)
+    public function __construct(callable $nextHandler)
     {
         $this->nextHandler = $nextHandler;
     }

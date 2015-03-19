@@ -20,7 +20,7 @@ class PutObjectUrlMiddleware
      *
      * @return callable
      */
-    public static function create()
+    public static function wrap()
     {
         return function (callable $handler) {
             return new self($handler);
@@ -30,7 +30,7 @@ class PutObjectUrlMiddleware
     /**
      * @param callable $nextHandler Next handler to invoke.
      */
-    private function __construct(callable $nextHandler)
+    public function __construct(callable $nextHandler)
     {
         $this->nextHandler = $nextHandler;
     }
