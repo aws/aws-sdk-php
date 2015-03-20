@@ -134,7 +134,7 @@ final class Middleware
         return function (callable $handler) use ($fn) {
             return function (
                 CommandInterface $command,
-                RequestInterface $request
+                RequestInterface $request = null
             ) use ($handler, $fn) {
                 $fn($command, $request);
                 return $handler($command, $request);
