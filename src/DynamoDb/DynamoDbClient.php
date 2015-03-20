@@ -47,6 +47,7 @@ class DynamoDbClient extends AwsClient
         }
 
         $list->append(
+            'sign:retry',
             Middleware::retry(
                 RetryMiddleware::createDefaultDecider($value),
                 function ($retries) {
@@ -54,8 +55,7 @@ class DynamoDbClient extends AwsClient
                         ? (50 * (int) pow(2, $retries - 1)) / 1000
                         : 0;
                 }
-            ),
-            ['step' => 'sign']
+            )
         );
     }
 

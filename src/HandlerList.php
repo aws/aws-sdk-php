@@ -3,17 +3,17 @@ namespace Aws;
 
 /**
  * Builds a single handler function from zero or more middleware functions and
- * an HTTP handler. The handler function is then used to send command objects
- * and return a promise that is resolved with an AWS result object.
+ * a handler. The handler function is then used to send command objects and
+ * return a promise that is resolved with an AWS result object.
  *
  * The "front" of the list is invoked before the "end" of the list. You can add
  * middleware to the front of the list using the "prepend" method, and the end
  * of the list using the "append" method. The last function invoked in a
- * handler list is the HTTP handler (a function that does not accept a next
+ * handler list is the handler (a function that does not accept a next
  * handler but rather is responsible for returning a promise that is fulfilled
- * with a PSR-7 response object).
+ * with an Aws\ResultInterface object).
  *
- * Handlers can be ordered using a "step" that describes the step at which the
+ * Handlers are ordered using a "step" that describes the step at which the
  * SDK is when sending a command. The available steps are:
  *
  * - init: The command is being initialized, allowing you to do things like add
@@ -25,24 +25,37 @@ namespace Aws;
  *   subsequent middleware.
  * - sign: The request is being signed and prepared to be sent over the wire.
  *
- * You can control if a middleware is added to the front or end of a specific
- * step or the entire list by setting the "sticky" option to true when calling
- * the prepend or append method.
+ * Middleware can be registered with a name to allow you to easily add a
+ * middleware before or after another middleware by name. This also allows you
+ * to remove a middleware by name (in addition to removing by instance). You
+ * can provide a name for a middleware by specifying the step as "step:name"
+ * (e.g., "init:name").
  */
-class HandlerList
+class HandlerList implements \Countable
 {
+    const INIT = 'init';
+    const VALIDATE = 'validate';
+    const BUILD = 'build';
+    const SIGN = 'sign';
+
     /** @var callable */
     private $handler;
 
     /** @var array */
-    private $stack = [];
+    private $named = [];
 
     /** @var array */
-    private $order = [
-        'init'     => 400,
-        'validate' => 300,
-        'build'    => 200,
-        'sign'     => 100
+    private $sorted;
+
+    /** @var callable|null */
+    private $interposeFn;
+
+    /** @var array Steps (in reverse order) */
+    private $steps = [
+        self::SIGN     => [],
+        self::BUILD    => [],
+        self::VALIDATE => [],
+        self::INIT     => [],
     ];
 
     /**
@@ -51,6 +64,34 @@ class HandlerList
     public function __construct(callable $handler = null)
     {
         $this->handler = $handler;
+    }
+
+    /**
+     * Dumps a string representation of the list.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $str = '';
+        $i = 0;
+
+        foreach (array_reverse($this->steps) as $k => $step) {
+            foreach (array_reverse($step) as $j => $tuple) {
+                $str .= "{$i}) Step: {$k}, ";
+                if ($tuple[1]) {
+                    $str .= "Name: {$tuple[1]}, ";
+                }
+                $str .= "Function: " . $this->debugCallable($tuple[0]) . "\n";
+                $i++;
+            }
+        }
+
+        if ($this->handler) {
+            $str .= "{$i}) Handler: " . $this->debugCallable($this->handler) . "\n";
+        }
+
+        return $str;
     }
 
     /**
@@ -75,65 +116,109 @@ class HandlerList
     }
 
     /**
-     * Prepend a middleware to the front of the list.
+     * Append a middleware to the end of a step.
      *
-     * Available options are:
-     *
-     * - sticky: When set to true, the the prepended middleware will always be
-     *   invoked before non-sticky prepended middleware. Subsequently prepended
-     *   sticky middleware will push the middleware before the previously added
-     *   middleware in the list.
-     * - step: Places the middleware at a specific position in the list based on
-     *   the lifecycle of sending a command. In order of invoked first to last,
-     *   this option may be one of "init", "validate", "build", "sign".
-     *   If not specified, middleware will be prepended to the front of the
-     *   entire list.
-     *
-     * @param callable $middleware Middleware function to prepend.
-     * @param array    $options    Middleware options.
+     * @param string   $stepAndName Step to add the middleware to followed by
+     *                              an optional name, separated with ":"
+     *                              (e.g., "init:name").
+     * @param callable $middleware Middleware function to add.
      */
-    public function prepend(callable $middleware, array $options = [])
+    public function append($stepAndName, callable $middleware)
     {
-        $this->stack[$this->calculatePriority(1, $options)][] = $middleware;
-    }
+        list($step, $name) = $this->parseStepAndName($stepAndName);
 
-    /**
-     * Append a middleware to the end of the list.
-     *
-     * Available options are:
-     *
-     * - sticky: When set to true, the the appended middleware will always be
-     *   invoked after non-sticky appended middleware. Subsequently appended
-     *   sticky middleware will push the middleware after the previously
-     *   appended middleware in the list.
-     * - step: Places the middleware at a specific position in the list based on
-     *   the lifecycle of sending a command. In order of invoked first to last,
-     *   this option may be one of "init", "validate", "build", "sign".
-     *   If not specified, middleware will be prepended to the front of the
-     *   entire list.
-     *
-     * @param callable $middleware Middleware function to append.
-     * @param array    $options    Middleware options.
-     */
-    public function append(callable $middleware, array $options = [])
-    {
-        $this->stack[$this->calculatePriority(-1, $options)][] = $middleware;
-    }
-
-    /**
-     * Remove a middleware by instance from the list.
-     *
-     * @param callable $remove Middleware to remove.
-     */
-    public function remove(callable $remove)
-    {
-        foreach ($this->stack as $i => $stack) {
-            foreach ($stack as $j => $fn) {
-                if ($fn === $remove) {
-                    unset($this->stack[$i][$j]);
-                }
-            }
+        if (!isset($this->steps[$step])) {
+            throw new \InvalidArgumentException("Invalid step: $step");
         }
+
+        $this->sorted = null;
+        array_unshift($this->steps[$step], [$middleware, $name]);
+
+        if ($name) {
+            $this->named[$name] = $step;
+        }
+    }
+
+    /**
+     * Prepend a middleware to the beginning of a step.
+     *
+     * @param string   $stepAndName Step to add the middleware to followed by
+     *                              an optional name, separated with ":"
+     *                              (e.g., "init:name").
+     * @param callable $middleware Middleware function to add.
+     */
+    public function prepend($stepAndName, callable $middleware)
+    {
+        list($step, $name) = $this->parseStepAndName($stepAndName);
+
+        if (!isset($this->steps[$step])) {
+            throw new \InvalidArgumentException("Invalid step: $step");
+        }
+
+        $this->sorted = null;
+        $this->steps[$step][] = [$middleware, $name];
+
+        if ($name) {
+            $this->named[$name] = $step;
+        }
+    }
+
+    /**
+     * Add a middleware before the given middleware by name.
+     *
+     * @param string|callable $findName   Add before this
+     * @param string          $withName   Optional name to give the middleware
+     * @param callable        $middleware Middleware to add.
+     */
+    public function before($findName, $withName, callable $middleware)
+    {
+        $this->splice($findName, $withName, $middleware, true);
+    }
+
+    /**
+     * Add a middleware after the given middleware by name.
+     *
+     * @param string|callable $findName   Add after this
+     * @param string          $withName   Optional name to give the middleware
+     * @param callable        $middleware Middleware to add.
+     */
+    public function after($findName, $withName, callable $middleware)
+    {
+        $this->splice($findName, $withName, $middleware, false);
+    }
+
+    /**
+     * Remove a middleware by name or by instance from the list.
+     *
+     * @param string|callable $nameOrInstance Middleware to remove.
+     */
+    public function remove($nameOrInstance)
+    {
+        if (is_callable($nameOrInstance)) {
+            $this->removeByInstance($nameOrInstance);
+        } elseif (is_string($nameOrInstance)) {
+            $this->removeByName($nameOrInstance);
+        }
+    }
+
+    /**
+     * Interpose a function between each middleware (e.g., allowing for a trace
+     * through the middleware layers).
+     *
+     * The interpose function is a function that accepts a "step" argument as a
+     * string and a "name" argument string. This function must then return a
+     * function that accepts the next handler in the list. This function must
+     * then return a function that accepts a CommandInterface and optional
+     * RequestInterface and returns a promise that is fulfilled with an
+     * Aws\ResultInterface or rejected with an Aws\Exception\AwsException
+     * object.
+     *
+     * @param callable|null $fn Pass null to remove any previously set function
+     */
+    public function interpose(callable $fn = null)
+    {
+        $this->sorted = null;
+        $this->interposeFn = $fn;
     }
 
     /**
@@ -147,34 +232,143 @@ class HandlerList
             throw new \LogicException('No handler has been specified');
         }
 
-        ksort($this->stack);
-        foreach ($this->stack as $stack) {
-            foreach (array_reverse($stack) as $fn) {
-                /** @var callable $fn */
-                $prev = $fn($prev);
-            }
+        if ($this->sorted === null) {
+            $this->sortMiddleware();
+        }
+
+        foreach ($this->sorted as $fn) {
+            $prev = $fn($prev);
         }
 
         return $prev;
     }
 
-    private function calculatePriority($stickyModifier, $options)
+    public function count()
     {
-        if (!isset($options['step'])) {
-            // Push to the front or back of the entire list.
-            $priority = $stickyModifier < 0 ? -100 : 500;
-        } elseif (!isset($this->order[$options['step']])) {
-            throw new \InvalidArgumentException("Invalid step: {$options['step']}");
+        return count($this->steps[self::INIT])
+            + count($this->steps[self::VALIDATE])
+            + count($this->steps[self::BUILD])
+            + count($this->steps[self::SIGN]);
+    }
+
+    private function parseStepAndName($step)
+    {
+        $parts = explode(':', $step);
+
+        if (!isset($parts[1])) {
+            $parts[] = null;
+        }
+
+        return $parts;
+    }
+
+    /**
+     * Splices a function into the middleware list at a specific position.
+     *
+     * @param          $findName
+     * @param          $withName
+     * @param callable $middleware
+     * @param          $before
+     */
+    private function splice($findName, $withName, callable $middleware, $before)
+    {
+        if (!isset($this->named[$findName])) {
+            throw new \InvalidArgumentException("$findName not found");
+        }
+
+        $idx = $this->sorted = null;
+        $step = $this->named[$findName];
+
+        if ($withName) {
+            $this->named[$withName] = $step;
+        }
+
+        foreach ($this->steps[$step] as $i => $tuple) {
+            if ($tuple[1] === $findName) {
+                $idx = $i;
+                break;
+            }
+        }
+
+        $replacement = $before
+            ? [$this->steps[$step][$idx], [$middleware, $withName]]
+            : [[$middleware, $withName], $this->steps[$step][$idx]];
+        array_splice($this->steps[$step], $idx, 1, $replacement);
+    }
+
+    /**
+     * Provides a debug string for a given callable.
+     *
+     * @param array|callable $fn Function to write as a string.
+     *
+     * @return string
+     */
+    private function debugCallable($fn)
+    {
+        if (is_string($fn)) {
+            return "callable({$fn})";
+        } elseif (is_array($fn)) {
+            $ele = is_string($fn[0]) ? $fn[0] : get_class($fn[0]);
+            return "callable(['{$ele}', '{$fn[1]}'])";
         } else {
-            // Push to a specific step in the list.
-            $priority = $this->order[$options['step']];
+            return 'callable(' . spl_object_hash($fn) . ')';
+        }
+    }
+
+    /**
+     * Sort the middleware, and interpose if needed in the sorted list.
+     */
+    private function sortMiddleware()
+    {
+        $this->sorted = [];
+
+        if (!$this->interposeFn) {
+            foreach ($this->steps as $step) {
+                foreach ($step as $fn) {
+                    $this->sorted[] = $fn[0];
+                }
+            }
+            return;
         }
 
-        // Adjust the priority if sticky is set.
-        if (!empty($options['sticky'])) {
-            $priority += $stickyModifier;
+        $ifn = $this->interposeFn;
+        // Interpose the interposeFn into the handler stack.
+        foreach ($this->steps as $stepName => $step) {
+            foreach ($step as $fn) {
+                $this->sorted[] = $ifn($stepName, $fn[1]);
+                $this->sorted[] = $fn[0];
+            }
+        }
+    }
+
+    private function removeByName($name)
+    {
+        if (!isset($this->named[$name])) {
+            return;
         }
 
-        return $priority;
+        $this->sorted = null;
+        $step = $this->named[$name];
+        $this->steps[$step] = array_values(
+            array_filter(
+                $this->steps[$step],
+                function ($tuple) use ($name) {
+                    return $tuple[1] !== $name;
+                }
+            )
+        );
+    }
+
+    private function removeByInstance(callable $fn)
+    {
+        foreach ($this->steps as $k => $step) {
+            foreach ($step as $j => $tuple) {
+                if ($tuple[0] === $fn) {
+                    $this->sorted = null;
+                    unset($this->named[$this->steps[$k][$j][1]]);
+                    unset($this->steps[$k][$j]);
+                }
+            }
+        }
     }
 }

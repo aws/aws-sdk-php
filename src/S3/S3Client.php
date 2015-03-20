@@ -36,12 +36,12 @@ class S3Client extends AwsClient
                            . 'https://s3.amazonaws.com/bucket/key).',
                 'fn'      => function ($value, $_, HandlerList $stack) {
                     if ($value === true) {
-                        $stack->append(function (callable $handler) {
+                        $stack->append('init', function (callable $handler) {
                             return function ($cmd) use ($handler) {
                                 $cmd['PathStyle'] = true;
                                 return $handler($cmd);
                             };
-                        }, ['step' => 'init']);
+                        });
                     }
                 },
             ],
@@ -90,12 +90,12 @@ class S3Client extends AwsClient
     {
         parent::__construct($args);
         $stack = $this->getHandlerList();
-        $stack->append(SSECMiddleware::wrap($this->getEndpoint()->getScheme()), ['step' => 'validate']);
-        $stack->append(BucketStyleMiddleware::wrap($this->getConfig('bucket_endpoint')), ['step' => 'build']);
-        $stack->append(ApplyMd5Middleware::wrap($this->getConfig('calculate_md5')), ['step' => 'build']);
-        $stack->append(PutObjectUrlMiddleware::wrap(), ['step' => 'sign']);
-        $stack->append(PermanentRedirectMiddleware::wrap(), ['step' => 'sign']);
-        $stack->append(Middleware::sourceFile($this->getApi()), ['step' => 'init']);
+        $stack->append('validate:s3.ssec', SSECMiddleware::wrap($this->getEndpoint()->getScheme()));
+        $stack->append('build:s3.bucket_style', BucketStyleMiddleware::wrap($this->getConfig('bucket_endpoint')));
+        $stack->append('build:s3.md5', ApplyMd5Middleware::wrap($this->getConfig('calculate_md5')));
+        $stack->append('sign:s3.put_object_url', PutObjectUrlMiddleware::wrap());
+        $stack->append('sign:s3.permanent_redirect', PermanentRedirectMiddleware::wrap());
+        $stack->append('init:s3.source_file', Middleware::sourceFile($this->getApi()));
     }
 
     /**
@@ -481,9 +481,6 @@ class S3Client extends AwsClient
         };
 
         $delay = [RetryMiddleware::class, 'exponentialDelay'];
-        $list->append(
-            Middleware::retry($decider, $delay),
-            ['step' => 'sign']
-        );
+        $list->append('sign:retry', Middleware::retry($decider, $delay));
     }
 }

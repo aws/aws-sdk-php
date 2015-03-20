@@ -315,6 +315,7 @@ class AwsClient implements AwsClientInterface
         // Sign requests. This may need to be modified later to support
         // variable signatures per/operation.
         $this->handlerList->append(
+            'sign:signer',
             Middleware::signer(
                 $this->credentials,
                 Utils::constantly(SignatureProvider::resolve(
@@ -323,8 +324,7 @@ class AwsClient implements AwsClientInterface
                     $this->api->getSigningName(),
                     $this->region
                 ))
-            ),
-            ['step' => 'sign']
+            )
         );
     }
 

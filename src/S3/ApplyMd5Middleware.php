@@ -49,8 +49,10 @@ class ApplyMd5Middleware
         $this->byDefault = $calculateMd5;
     }
 
-    public function __invoke(CommandInterface $command, RequestInterface $request)
-    {
+    public function __invoke(
+        CommandInterface $command,
+        RequestInterface $request
+    ) {
         $name = $command->getName();
 
         if (!$request->hasHeader('Content-MD5')

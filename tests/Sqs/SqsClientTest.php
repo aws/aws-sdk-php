@@ -59,7 +59,7 @@ class SqsClientTest extends \PHPUnit_Framework_TestCase
             'version' => 'latest'
         ]);
         $this->addMockResults($client, [[]]);
-        $client->getHandlerList()->append(Middleware::tap(function ($c, $r) use ($newUrl) {
+        $client->getHandlerList()->append('sign', Middleware::tap(function ($c, $r) use ($newUrl) {
             $this->assertEquals($newUrl, $r->getUri());
         }));
         $client->receiveMessage(['QueueUrl' => $newUrl]);

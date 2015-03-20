@@ -32,8 +32,10 @@ class SSECMiddleware
         $this->endpointScheme = $endpointScheme;
     }
 
-    public function __invoke(CommandInterface $command, RequestInterface $request = null)
-    {
+    public function __invoke(
+        CommandInterface $command,
+        RequestInterface $request = null
+    ) {
         // Allows only HTTPS connections when using SSE-C
         if ($command['SSECustomerKey'] ||
             $command['CopySourceSSECustomerKey']

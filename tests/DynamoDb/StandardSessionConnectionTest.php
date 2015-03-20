@@ -24,13 +24,13 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
             ]]),
         ]);
         $client->getHandlerList()->append(
+            'build',
             Middleware::tap(function ($command) {
                 $this->assertEquals(
                     ['sessionid' => ['S' => 'session1']],
                     $command['Key']
                 );
-            }),
-            ['step' => 'build']
+            })
         );
         $connection = new StandardSessionConnection($client, [
             'hash_key' => 'sessionid',
@@ -60,13 +60,13 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
         $client = $this->getTestSdk()->createDynamoDb();
         $this->addMockResults($client, [new Result([])]);
         $client->getHandlerList()->append(
+            'build',
             Middleware::tap(function ($command) {
                 $updates = $command['AttributeUpdates'];
                 $this->assertArrayHasKey('expires', $updates);
                 $this->assertArrayHasKey('lock', $updates);
                 $this->assertArrayHasKey('data', $updates);
-            }),
-            ['step' => 'build']
+            })
         );
         $connection = new StandardSessionConnection($client);
         $return = $connection->write('s1', serialize(['foo' => 'bar']), true);
@@ -80,13 +80,13 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
             $this->createMockAwsException('ERROR', 'Aws\DynamoDb\Exception\DynamoDbException')
         ]);
         $client->getHandlerList()->append(
+            'build',
             Middleware::tap(function ($command) {
                 $this->assertEquals(
                     ['Action' => 'DELETE'],
                     $command['AttributeUpdates']['data']
                 );
-            }),
-            ['step' => 'build']
+            })
         );
         $connection = new StandardSessionConnection($client);
         $return = $connection->write('s1', '', true);
@@ -124,6 +124,7 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $client->getHandlerList()->append(
+            'build',
             Middleware::tap(function (CommandInterface $command) {
                 static $called = 0;
                 if (++$called === 1) {
@@ -133,8 +134,7 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
                 } else {
                     $this->fail('Unexpected state.');
                 }
-            }),
-            ['step' => 'build']
+            })
         );
 
         (new StandardSessionConnection($client))->deleteExpired();

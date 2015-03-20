@@ -23,7 +23,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
     {
         $list = new HandlerList();
         $list->setHandler(new MockHandler([new Result()]));
-        $list->append(Middleware::tap(function () use (&$called) {
+        $list->append('sign', Middleware::tap(function () use (&$called) {
             $called = func_get_args();
         }));
         $handler = $list->resolve();
@@ -37,7 +37,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
     {
         $list = new HandlerList();
         $list->setHandler(new MockHandler([new Result()]));
-        $list->append(Middleware::retry(function () use (&$called) {
+        $list->append('sign', Middleware::retry(function () use (&$called) {
             $called = true;
         }));
         $handler = $list->resolve();
@@ -54,7 +54,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         ]);
         $this->assertCount(2, $mock);
         $list->setHandler($mock);
-        $list->append(Middleware::retry());
+        $list->append('sign', Middleware::retry());
         $handler = $list->resolve();
         $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
         $this->assertCount(0, $mock);
@@ -72,7 +72,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         $list->setHandler($mock);
         $creds = new Credentials('foo', 'bar');
         $signature = new SignatureV4('a', 'b');
-        $list->append(Middleware::signer($creds, Utils::constantly($signature)));
+        $list->append('sign', Middleware::signer($creds, Utils::constantly($signature)));
         $handler = $list->resolve();
         $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
         $this->assertTrue($req->hasHeader('Authorization'));
@@ -87,7 +87,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         };
         $list = new HandlerList();
         $list->setHandler(new MockHandler([new Result()]));
-        $list->append(Middleware::requestBuilder($serializer));
+        $list->append('sign', Middleware::requestBuilder($serializer));
         $handler = $list->resolve();
         $handler(new Command('foo'));
         $this->assertTrue($called);
@@ -124,7 +124,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
             'a',
             'b'
         );
-        $list->append(Middleware::validation($api));
+        $list->append('validate', Middleware::validation($api));
         $handler = $list->resolve();
 
         try {
@@ -146,7 +146,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         });
         $provider = ApiProvider::defaultProvider();
         $service = new Service($provider, 's3', 'latest');
-        $list->append(Middleware::sourceFile($service));
+        $list->append('init', Middleware::sourceFile($service));
         $handler = $list->resolve();
         $handler(new Command('PutObject', [
             'Bucket'     => 'test',
