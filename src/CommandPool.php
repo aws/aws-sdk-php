@@ -18,10 +18,10 @@ class CommandPool implements PromisorInterface
     /**
      * The CommandPool constructor accepts a hash of configuration options:
      *
-     * - limit: (callable|int) Maximum number of commands to execute concurrently.
-     *   Provide a function to resize the pool dynamically. The function will be
-     *   provided the current number of pending requests and is expected to return
-     *   an integer representing the new pool size limit.
+     * - concurrency: (callable|int) Maximum number of commands to execute
+     *   concurrently. Provide a function to resize the pool dynamically. The
+     *   function will be provided the current number of pending requests and
+     *   is expected to return an integer representing the new pool size limit.
      * - before: (callable) function to invoke before sending each command. The
      *   before function accepts the command and the key of the iterator of the
      *   command. You can mutate the command as needed in the before function
@@ -44,8 +44,8 @@ class CommandPool implements PromisorInterface
         $commands,
         array $config = []
     ) {
-        if (!isset($config['limit'])) {
-            $config['limit'] = 25;
+        if (!isset($config['concurrency'])) {
+            $config['concurrency'] = 25;
         }
 
         $config['mapfn'] = $this->createMapFn($config, $client);

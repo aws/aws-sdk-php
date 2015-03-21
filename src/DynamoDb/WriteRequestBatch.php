@@ -150,8 +150,8 @@ class WriteRequestBatch
         while ($this->queue && $keepFlushing) {
             $commands = $this->prepareCommands();
             $pool = new CommandPool($this->client, $commands, [
-                'limit'     => $this->config['pool_size'],
-                'fulfilled' => function (ResultInterface $result) {
+                'concurrency' => $this->config['pool_size'],
+                'fulfilled'   => function (ResultInterface $result) {
                     // Re-queue any unprocessed items
                     if ($result->hasKey('UnprocessedItems')) {
                         $this->retryUnprocessed($result['UnprocessedItems']);

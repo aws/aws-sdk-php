@@ -156,8 +156,8 @@ class Uploader
 
         // Execute the commands concurrently and process results.
         $results = CommandPool::batch($this->client, $commands, [
-            'limit' => $concurrency,
-            'before' => $before,
+            'concurrency' => $concurrency,
+            'before'      => $before,
         ]);
 
         // Process errors out from the batch results and throw exception if any.
