@@ -68,7 +68,8 @@ class TraceMiddleware
                         ]);
                         return $value;
                     },
-                    function ($reason) use ($step, $name, $start) {
+                    function ($reason) use ($step, $name, $start, $command) {
+                        $this->flushHttpDebug($command);
                         $this->stepOutput($start, [
                             'step'   => $step,
                             'name'   => $name,
