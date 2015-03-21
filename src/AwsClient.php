@@ -60,9 +60,15 @@ class AwsClient implements AwsClientInterface
      *   credentials or return null. See Aws\Credentials\CredentialProvider for
      *   a list of built-in credentials providers. If no credentials are
      *   provided, the SDK will attempt to load them from the environment.
-     * - debug: (bool|resource) Set to true to display debug information
-     *   when sending requests. Provide a stream resource to write debug
-     *   information to a specific resource.
+     * - debug: (bool|array) Set to true to display debug information when
+     *   sending requests. Alternatively, you can provide an associative array
+     *   with the following keys: logfn: (callable) Function that is invoked
+     *   with log messages; stream_size: (int) When the size of a stream is
+     *   greater than this number, the stream data will not be logged (set to
+     *   "0" to not log any stream data); scrub_auth: (bool) Set to false to
+     *   disable the scrubbing of auth data from the logged messages; http:
+     *   (bool) Set to false to disable the "debug" feature of lower level HTTP
+     *   adapters (e.g., verbose curl output).
      * - endpoint: (string) The full URI of the webservice. This is only
      *   required when connecting to a custom endpoint (e.g., a local version
      *   of S3).
@@ -72,15 +78,17 @@ class AwsClient implements AwsClientInterface
      *   is required. See Aws\Endpoint\EndpointProvider for a list of built-in
      *   providers.
      * - handler: (callable) A handler that accepts a command object,
-     *   request object and returns a promise that is fulfilled with a result
-     *   object or an AWS exception. A handler does not accept a next handler
-     *   as it is terminal and expected to fulfill a request.
+     *   request object and returns a promise that is fulfilled with an
+     *   Aws\ResultInterface object or rejected with an
+     *   Aws\Exception\AwsException. A handler does not accept a next handler
+     *   as it is terminal and expected to fulfill a command. If no handler is
+     *   provided, a default Guzzle handler will be utilized.
      * - http: (array, default=array(0)) Set to an array of SDK request
      *   options to apply to each request (e.g., proxy, verify, etc.).
-     * - http_handler: (callable) An HTTP handler that accepts a request
-     *   object and returns a promise that is fulfilled with a response object
-     *   or array of exception data. This option supersedes any provided
-     *   "handler" option.
+     * - http_handler: (callable) An HTTP handler is a function that
+     *   accepts a PSR-7 request object and returns a promise that is fulfilled
+     *   with a PSR-7 response object or rejected with an array of exception
+     *   data. NOTE: This option supersedes any provided "handler" option.
      * - profile: (string) Allows you to specify which profile to use when
      *   credentials are created from the AWS credentials file in your HOME
      *   directory. This setting overrides the AWS_PROFILE environment

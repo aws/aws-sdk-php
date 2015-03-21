@@ -125,8 +125,8 @@ class ClientResolver
         ],
         'debug' => [
             'type'  => 'value',
-            'valid' => ['bool', 'resource'],
-            'doc'   => 'Set to true to display debug information when sending requests. Provide a stream resource to write debug information to a specific resource.',
+            'valid' => ['bool', 'array'],
+            'doc'   => 'Set to true to display debug information when sending requests. Alternatively, you can provide an associative array with the following keys: logfn: (callable) Function that is invoked with log messages; stream_size: (int) When the size of a stream is greater than this number, the stream data will not be logged (set to "0" to not log any stream data); scrub_auth: (bool) Set to false to disable the scrubbing of auth data from the logged messages; http: (bool) Set to false to disable the "debug" feature of lower level HTTP adapters (e.g., verbose curl output).',
             'fn'    => [__CLASS__, '_apply_debug'],
         ],
         'http' => [
@@ -381,10 +381,10 @@ class ClientResolver
         }
     }
 
-    public static function _apply_debug($value, $_, HandlerList $list)
+    public static function _apply_debug($value, array &$args, HandlerList $list)
     {
         if ($value !== false) {
-
+            $list->interpose(new TraceMiddleware($value === true ? [] : $value));
         }
     }
 
