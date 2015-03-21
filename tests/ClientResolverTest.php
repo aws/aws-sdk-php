@@ -389,4 +389,19 @@ EOT;
         $r = new ClientResolver(['region' => $args]);
         $r->resolve(['service' => 'foo'], new HandlerList());
     }
+
+    public function testAddsTraceMiddleware()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $list = new HandlerList();
+        $r->resolve([
+            'service'     => 'sqs',
+            'region'      => 'x',
+            'credentials' => ['key' => 'a', 'secret' => 'b'],
+            'version'     => 'latest',
+            'debug'       => ['logfn' => function ($value) use (&$str) { $str .= $value; }]
+        ], $list);
+        $value = $this->readAttribute($list, 'interposeFn');
+        $this->assertTrue(is_callable($value));
+    }
 }
