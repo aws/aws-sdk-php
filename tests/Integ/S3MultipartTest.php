@@ -17,7 +17,7 @@ class S3Multipart extends \PHPUnit_Framework_TestCase
 
     public static function setUpBeforeClass()
     {
-        $client = self::getSdk()->getS3();
+        $client = self::getSdk()->createS3();
         if (!$client->doesBucketExist(self::BUCKET)) {
             $client->createBucket(['Bucket' => self::BUCKET]);
             $client->waitUntil('BucketExists', ['Bucket' => self::BUCKET]);
@@ -26,7 +26,7 @@ class S3Multipart extends \PHPUnit_Framework_TestCase
 
     public static function tearDownAfterClass()
     {
-        $client = self::getSdk()->getS3();
+        $client = self::getSdk()->createS3();
         (new ClearBucket($client, self::BUCKET))->clear();
         $client->deleteBucket(['Bucket' => self::BUCKET]);
     }
@@ -50,7 +50,7 @@ class S3Multipart extends \PHPUnit_Framework_TestCase
     public function testMultipartUpload($key, $seekable, $concurrency)
     {
         // Create a temp file
-        $client = self::getSdk()->getS3();
+        $client = self::getSdk()->createS3();
         $tmpFile = sys_get_temp_dir() . '/aws-php-sdk-integ-s3-mup';
         file_put_contents($tmpFile, str_repeat('x', 10 * self::MB + 1024));
 

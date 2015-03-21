@@ -2,10 +2,13 @@
 namespace Aws\Multipart;
 
 use Aws\AwsClientInterface;
+use Aws\CommandPool;
 use Aws\Exception\AwsException;
 use Aws\Exception\MultipartUploadException;
 use Aws\Result;
 use Aws\CommandInterface;
+use Aws\ResultInterface;
+use Psr\Http\Message\RequestInterface;
 use transducers as t;
 
 /**
@@ -151,28 +154,20 @@ class Uploader
             return $this->createCommand('upload', $partData);
         }));
 
-        // Execute the commands in parallel and process results. This collects
-        // unhandled errors along the way and throws an exception at the end
-        // that contains the state and a list of the failed parts.
-        $errors = [];
-        $this->client->executeAll($commands, [
-            'pool_size' => $concurrency,
-            'prepared'  => $before,
-            'process'   => [
-                'fn' => function (ProcessEvent $event) use (&$errors) {
-                    $command = $event->getCommand();
-                    $partNumber = $command[$this->config['part']['param']];
-                    if ($ex = $event->getException()) {
-                        $errors[$partNumber] = $ex->getMessage();
-                    } else {
-                        unset($errors[$partNumber]);
-                        $this->config['fn']['result']($command, $event->getResult());
-                    }
-                },
-                'priority' => 'last'
-            ]
+        // Execute the commands concurrently and process results.
+        $results = CommandPool::batch($this->client, $commands, [
+            'limit' => $concurrency,
+            'before' => $before,
         ]);
 
+        // Process errors out from the batch results and throw exception if any.
+        $errors = [];
+        foreach ($results as $result) {
+            if ($result instanceof AwsException) {
+                $num = $result->getCommand()[$this->config['part']['param']];
+                $errors[$num] = $result;
+            }
+        }
         if ($errors) {
             throw new MultipartUploadException($this->state, $errors);
         }
@@ -193,9 +188,28 @@ class Uploader
     {
         $configuredParams = $this->state->getUploadId() + $this->config[$operation]['params'];
 
-        return $this->client->getCommand(
+        $command = $this->client->getCommand(
             $this->config[$operation]['command'],
             $computedParams + $configuredParams
         );
+
+        if ($operation === 'upload') {
+            $middleware = function (callable $handler) {
+                return function (
+                    CommandInterface $command,
+                    RequestInterface $request = null
+                ) use ($handler) {
+                    return $handler($command, $request)->then(
+                        function (ResultInterface $result) use ($command) {
+                            $this->config['fn']['result']($command, $result);
+                            return $result;
+                        }
+                    );
+                };
+            };
+            $command->getHandlerList()->append('sign:s3.mups', $middleware);
+        }
+
+        return $command;
     }
 }

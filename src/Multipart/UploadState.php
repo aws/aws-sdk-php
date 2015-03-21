@@ -58,7 +58,7 @@ class UploadState
     /**
      * Set the part size.
      *
-     * @param $partSize Size of upload parts.
+     * @param $partSize int Size of upload parts.
      */
     public function setPartSize($partSize)
     {

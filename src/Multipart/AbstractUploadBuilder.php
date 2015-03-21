@@ -289,9 +289,9 @@ abstract class AbstractUploadBuilder
 
         for (
             $partNumber = 1;
-            $seekable ?
-                $this->source->tell() < $this->source->getSize() :
-                !$this->source->eof();
+            $seekable
+                ? $this->source->tell() < $this->source->getSize()
+                : !$this->source->eof();
             $partNumber++
         ) {
             // If we haven't already uploaded this part, yield a new part.

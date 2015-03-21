@@ -1,53 +1,59 @@
 <?php
 namespace Aws\Test\Glacier;
 
+use Aws\Exception\CouldNotCreateChecksumException;
 use Aws\Glacier\GlacierClient;
 use Aws\Result;
-use GuzzleHttp\Command\Event\PreparedEvent;
+use Aws\Test\Exception\CouldNotCreateChecksumExceptionTest;
+use Aws\Test\UsesServiceTrait;
+use GuzzleHttp\Psr7\NoSeekStream;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Stream;
 
 /**
  * @covers Aws\Glacier\GlacierClient
  */
 class GlacierClientTest extends \PHPUnit_Framework_TestCase
 {
-    public function testHasNecessaryDefaults()
+    use UsesServiceTrait;
+
+    public function testAddsRequiredParamsAndHeadersAutomatically()
     {
         $client = new GlacierClient([
             'service' => 'glacier',
             'region'  => 'us-west-2',
-            'version' => 'latest'
+            'version' => 'latest',
+            'http_handler' => function ($req, $opt) use (&$request) {
+                $request = $req;
+                return new Response(200);
+            }
         ]);
 
-        $command = $client->getCommand('ListVaults');
-        $this->assertEquals('-', $command['accountId']);
+        $command = $client->getCommand('UploadArchive', [
+            'vaultName' => 'foo',
+            'body' => 'foo',
+        ]);
+        $client->execute($command);
 
-        $command->getEmitter()->on('prepared', function (PreparedEvent $event) {
-            $event->setResult(new Result([]));
-            $this->assertEquals(
-                $event->createClient()->getApi()->getMetadata('apiVersion'),
-                $event->getRequest()->getHeader('x-amz-glacier-version')
-            );
-        });
+        // Adds default accountId and the API version header.
+        $this->assertEquals('-', $command['accountId']);
+        $this->assertEquals(
+            $client->getApi()->getMetadata('apiVersion'),
+            $request->getHeader('x-amz-glacier-version')
+        );
+
+        // Added the tree and content hashes.
+        $hash = hash('sha256', 'foo');
+        $this->assertEquals($hash, $request->getHeader('x-amz-content-sha256'));
+        $this->assertEquals($hash, $request->getHeader('x-amz-sha256-tree-hash'));
     }
 
-    public function testCreatesClientWithSubscribers()
+    public function testErrorWhenHashingNonSeekableStream()
     {
-        $client = new GlacierClient([
-            'service' => 'glacier',
-            'region'  => 'us-west-2',
-            'version' => 'latest'
+        $this->setExpectedException(CouldNotCreateChecksumException::class);
+        $this->getTestClient('Glacier')->uploadArchive([
+            'vaultName' => 'foo',
+            'body'      => new NoSeekStream(Stream::factory('foo')),
         ]);
-
-        $found = [];
-        foreach ($client->getEmitter()->listeners() as $value) {
-            foreach ($value as $val) {
-                $found[] = is_array($val)
-                    ? get_class($val[0])
-                    : get_class($val);
-            }
-        }
-
-        $this->assertContains('Aws\Subscriber\SourceFile', $found);
-        $this->assertContains('Aws\Glacier\ApplyChecksumsSubscriber', $found);
     }
 }

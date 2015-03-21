@@ -3,8 +3,8 @@ namespace Aws\Test\Multipart;
 
 use Aws\Multipart\UploadState;
 use Aws\Multipart\Uploader;
-use GuzzleHttp\Stream\NoSeekStream;
-use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\Psr7\NoSeekStream;
+use GuzzleHttp\Psr7\Stream;
 
 /**
  * @covers Aws\Multipart\AbstractUploadBuilder
@@ -45,7 +45,7 @@ class AbstractUploadBuilderTest extends \PHPUnit_Framework_TestCase
         // CASE 1: Filename exists.
         $builder = (new TestUploadBuilder)->setSource(__FILE__);
         $this->assertInstanceOf(
-            'GuzzleHttp\Stream\StreamInterface',
+            'Psr\Http\Message\StreamableInterface',
             $this->readAttribute($builder, 'source')
         );
 

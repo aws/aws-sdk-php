@@ -7,7 +7,7 @@ use Aws\Multipart\UploadState;
 use Aws\Glacier\UploadBuilder;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\Psr7\Stream;
 
 /**
  * @covers Aws\Glacier\UploadBuilder
@@ -100,12 +100,12 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
         $data = $createPart(true);
         // Range is an odd value here, because we are using a non-file stream
         $this->assertEquals('bytes 0--1/*', $data['range']);
-        $this->assertInstanceOf('GuzzleHttp\Stream\LimitStream', $data['body']);
+        $this->assertInstanceOf('GuzzleHttp\Psr7\LimitStream', $data['body']);
 
         $source->seek(0);
         $data = $createPart(false);
         $this->assertEquals('bytes 0-2/*', $data['range']);
-        $this->assertInstanceOf('GuzzleHttp\Stream\Stream', $data['body']);
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Stream', $data['body']);
         $this->assertArrayHasKey('checksum', $data);
         $this->assertArrayHasKey('ContentSHA256', $data);
     }
@@ -181,7 +181,7 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
         $handleResult = $method->invoke($builder);
 
         // Mock arguments.
-        $command = $this->getMockBuilder('GuzzleHttp\Command\Command')
+        $command = $this->getMockBuilder('Aws\Command')
             ->disableOriginalConstructor()
             ->getMock();
         $command->method('offsetGet')

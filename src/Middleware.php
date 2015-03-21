@@ -4,6 +4,7 @@ namespace Aws;
 use Aws\Api\Service;
 use Aws\Api\Validator;
 use Aws\Credentials\CredentialsInterface;
+use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\LazyOpenStream;
 use Psr\Http\Message\RequestInterface;
 
@@ -164,6 +165,36 @@ final class Middleware
 
         return function (callable $handler) use ($decider, $delay) {
             return new RetryMiddleware($decider, $delay, $handler);
+        };
+    }
+
+    /**
+     * Middleware wrapper function that adds a Content-Type header to requests.
+     *
+     * This is only done when the Content-Type has not already been set, and the
+     * request body's URI is available. It then checks the file extension of the
+     * URI to determine the mime-type.
+     *
+     * @return callable
+     */
+    public static function contentType()
+    {
+        return function (callable $handler) {
+            return function (
+                CommandInterface $command,
+                RequestInterface $request = null
+            ) use ($handler) {
+                if (!$request->hasHeader('Content-Type')
+                    && ($uri = $request->getBody()->getMetadata('uri'))
+                ) {
+                    $request = $request->withHeader(
+                        'Content-Type',
+                        Psr7\mimetype_from_filename($uri) ?: 'application/octet-stream'
+                    );
+                }
+
+                return $handler($command, $request);
+            };
         };
     }
 }
