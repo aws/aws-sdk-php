@@ -22,7 +22,7 @@ class CloudSearchClient extends AwsClient
     {
         $config['endpoint'] = $this->describeDomains([
             'DomainNames' => [$domainName]
-        ])->getPath('DomainStatusList/0/SearchService/Endpoint');
+        ])->search('DomainStatusList[0].SearchService.Endpoint');
 
         $config += [
             'credentials' => $this->getCredentials(),

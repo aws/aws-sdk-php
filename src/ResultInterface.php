@@ -7,6 +7,20 @@ namespace Aws;
 interface ResultInterface extends \ArrayAccess, \IteratorAggregate, \Countable
 {
     /**
+     * Provides debug information about the result object
+     *
+     * @return string
+     */
+    public function __toString();
+
+    /**
+     * Convert the result to an array.
+     *
+     * @return array
+     */
+    public function toArray();
+
+    /**
      * Check if the model contains a key by name
      *
      * @param string $name Name of the key to retrieve
@@ -37,28 +51,4 @@ interface ResultInterface extends \ArrayAccess, \IteratorAggregate, \Countable
      * @link http://jmespath.readthedocs.org/en/latest/ JMESPath documentation
      */
     public function search($expression);
-
-    /**
-     * Provides debug information about the result object
-     *
-     * @return string
-     */
-    public function __toString();
-
-    /**
-     * Convert the result to an array.
-     *
-     * @return array
-     */
-    public function toArray();
-
-    /**
-     * Get an element from the model using path notation.
-     *
-     * @param string $path Path to the data to retrieve
-     *
-     * @return mixed|null Returns the result or null if the path is not found
-     * @deprecated
-     */
-    public function getPath($path);
 };

@@ -172,11 +172,13 @@ class AwsClient implements AwsClientInterface
         );
     }
 
-    public function getConfig($keyOrPath = null)
+    public function getConfig($option = null)
     {
-        return $keyOrPath === null
+        return $option === null
             ? $this->config
-            : \GuzzleHttp\Utils::getPath($this->config, $keyOrPath);
+            : (isset($this->config[$option])
+                ? $this->config[$option]
+                : null);
     }
 
     public function getCredentials()

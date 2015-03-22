@@ -101,13 +101,11 @@ interface AwsClientInterface
     /**
      * Get a client configuration value.
      *
-     * @param string|int|null $keyOrPath The Path to a particular configuration
-     *     value. The syntax uses a path notation that allows you to retrieve
-     *     nested array values without throwing warnings.
-     *
-     * @return mixed
+     * @param string|null $option The option to retrieve. Pass null to retrieve
+     *                            all options.
+     * @return mixed|null
      */
-    public function getConfig($keyOrPath = null);
+    public function getConfig($option = null);
 
     /**
      * Get the handler list used to transfer commands.

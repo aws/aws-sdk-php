@@ -24,11 +24,13 @@ class StsClient extends AwsClient
             throw new \InvalidArgumentException('Result contains no credentials');
         }
 
+        $c = $result['Credentials'];
+
         return new Credentials(
-            $result->getPath('Credentials/AccessKeyId'),
-            $result->getPath('Credentials/SecretAccessKey'),
-            $result->getPath('Credentials/SessionToken'),
-            $result->getPath('Credentials/Expiration')
+            $c['AccessKeyId'],
+            $c['SecretAccessKey'],
+            isset($c['SessionToken']) ? $c['SessionToken'] : null,
+            isset($c['Expiration']) ? $c['Expiration'] : null
         );
     }
 }
