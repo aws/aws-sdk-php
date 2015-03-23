@@ -1,7 +1,7 @@
 <?php
 namespace Aws\DynamoDb;
 
-use GuzzleHttp\Psr7\Stream;
+use GuzzleHttp\Psr7;
 
 /**
  * Special object to represent a DynamoDB binary (B) value.
@@ -19,7 +19,7 @@ class BinaryValue implements \JsonSerializable
     public function __construct($value)
     {
         if (!is_string($value)) {
-            $value = Stream::factory($value);
+            $value = Psr7\stream_for($value);
         }
         $this->value = (string) $value;
     }

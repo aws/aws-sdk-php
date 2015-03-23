@@ -328,7 +328,7 @@ class AwsClient implements AwsClientInterface
             'sign:signer',
             Middleware::signer(
                 $this->credentials,
-                Utils::constantly(SignatureProvider::resolve(
+                constantly(SignatureProvider::resolve(
                     $this->signatureProvider,
                     $this->config['signature_version'],
                     $this->api->getSigningName(),

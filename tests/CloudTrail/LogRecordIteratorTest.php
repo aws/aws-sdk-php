@@ -7,7 +7,7 @@ use Aws\CloudTrail\CloudTrailClient;
 use Aws\CloudTrail\LogFileReader;
 use Aws\CloudTrail\LogRecordIterator;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Psr7\Stream;
+use GuzzleHttp\Psr7;
 
 /**
  * @covers Aws\CloudTrail\LogRecordIterator
@@ -95,16 +95,16 @@ class LogRecordIteratorTest extends \PHPUnit_Framework_TestCase
      */
     private function getMockS3Client()
     {
-        $client = S3Client::factory([
+        $client = new S3Client([
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
             'region'      => 'foo',
             'version'     => 'latest'
         ]);
 
         $this->addMockResults($client, [
-            new Result(['Body' => Stream::factory('{"Records":[{"r1":"r1"},{"r2":"r2"},{"r3":"r3"}]}')]),
-            new Result(['Body' => Stream::factory('{}')]),
-            new Result(['Body' => Stream::factory('{"Records":[{"r4":"r4"},{"r5":"r5"}]}')]),
+            new Result(['Body' => Psr7\stream_for('{"Records":[{"r1":"r1"},{"r2":"r2"},{"r3":"r3"}]}')]),
+            new Result(['Body' => Psr7\stream_for('{}')]),
+            new Result(['Body' => Psr7\stream_for('{"Records":[{"r4":"r4"},{"r5":"r5"}]}')]),
         ]);
 
         return $client;

@@ -5,7 +5,7 @@ use Aws\DynamoDb\Marshaler;
 use Aws\DynamoDb\BinaryValue;
 use Aws\DynamoDb\NumberValue;
 use Aws\DynamoDb\SetValue;
-use GuzzleHttp\Psr7\Stream;
+use GuzzleHttp\Psr7;
 
 /**
  * @covers Aws\DynamoDb\Marshaler
@@ -164,7 +164,7 @@ class MarshalerTest extends \PHPUnit_Framework_TestCase
             // Binary
             [$m->binary('foo'), ['B' => 'foo']],
             [$resource, ['B' => 'foo']],
-            [Stream::factory('foo'), ['B' => 'foo']],
+            [Psr7\stream_for('foo'), ['B' => 'foo']],
 
             // Set
             [$m->set(['a', 'b', 'c']), ['SS' => ['a', 'b', 'c']]],

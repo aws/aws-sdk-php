@@ -3,11 +3,10 @@ namespace Aws\Test;
 
 use Aws\Exception\AwsException;
 use Aws\Result;
-use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\Stream;
+use GuzzleHttp\Psr7;
 
 /**
  * @covers Aws\Waiter
@@ -64,7 +63,7 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
 
             $promise = new Promise();
             $promise->resolve(new Response(200, [],
-                Stream::factory(sprintf(
+                Psr7\stream_for(sprintf(
                     '{"Table":{"TableStatus":"%s"}}',
                     $statusQueue[$iteration]
                 ))

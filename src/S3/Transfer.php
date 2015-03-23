@@ -1,10 +1,7 @@
 <?php
 namespace Aws\S3;
 
-use Aws\Utils;
-use GuzzleHttp\Command\Command;
-use GuzzleHttp\Command\CommandInterface;
-use GuzzleHttp\Command\Event\PreparedEvent;
+use Aws;
 use transducers as t;
 
 /**
@@ -70,7 +67,7 @@ class Transfer
         $client->registerStreamWrapper();
         if (is_string($source)) {
             $this->base_dir = $source;
-            $source = Utils::recursiveDirIterator($source);
+            $source = Aws\recursive_dir_iterator($source);
         } elseif (!$source instanceof \Iterator) {
             throw new \InvalidArgumentException('source must be the path to a '
                 . 'directory or an iterator that yields file names.');

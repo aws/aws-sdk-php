@@ -3,8 +3,7 @@ namespace Aws\Test\Sns\MessageValidator;
 
 use Aws\Sns\MessageValidator\Message;
 use Aws\Sns\MessageValidator\MessageValidator;
-use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\Stream;
+use GuzzleHttp\Psr7;
 
 /**
  * @covers \Aws\Sns\MessageValidator\MessageValidator
@@ -65,7 +64,7 @@ class MessageValidatorTest extends \PHPUnit_Framework_TestCase
         list($signature, $certificate) = $this->getSignature('foo');
         // Create the validator with a mock HTTP client that will respond with
         // the certificate
-        $client = $this->getMockClient(new Response(200, [], $certificate));
+        $client = $this->getMockClient(new Psr7\Response(200, [], $certificate));
         $validator = new MessageValidator($client);
         $message = new Message([
             'SigningCertURL' => self::VALID_CERT_URL,
@@ -95,16 +94,16 @@ class MessageValidatorTest extends \PHPUnit_Framework_TestCase
 
         // Create the validator with a mock HTTP client that will respond with
         // the certificate
-        $client = $this->getMockClient(new Response(200, [], $certificate));
+        $client = $this->getMockClient(new Psr7\Response(200, [], $certificate));
         $validator = new MessageValidator($client);
 
         // The message should validate
         $this->assertTrue($validator->isValid($message));
     }
 
-    protected function getMockClient(Response $response = null)
+    protected function getMockClient(Psr7\Response $response = null)
     {
-        $response = $response ?: new Response(200);
+        $response = $response ?: new Psr7\Response(200);
 
         return function () use ($response) {
             return \GuzzleHttp\Promise\promise_for($response);
@@ -125,6 +124,6 @@ class MessageValidatorTest extends \PHPUnit_Framework_TestCase
         openssl_pkey_free($keypair);
         openssl_x509_free($x509);
 
-        return [base64_encode($signature), Stream::factory($certificate)];
+        return [base64_encode($signature), Psr7\stream_for($certificate)];
     }
 }

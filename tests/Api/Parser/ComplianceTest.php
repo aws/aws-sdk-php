@@ -5,8 +5,7 @@ use Aws\Command;
 use Aws\Api\Service;
 use Aws\Api\Shape;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\Stream;
+use GuzzleHttp\Psr7;
 
 /**
  * @covers Aws\Api\Parser\AbstractParser
@@ -69,10 +68,10 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
         $command = new Command($name);
 
         // Create a response based on the serialized property of the test.
-        $response = new Response(
+        $response = new Psr7\Response(
             $res['status_code'],
             $res['headers'],
-            Stream::factory($res['body'])
+            Psr7\stream_for($res['body'])
         );
 
         $result = $parser($command, $response)->toArray();

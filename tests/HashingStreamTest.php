@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Test;
 
-use GuzzleHttp\Psr7\Stream;
+use GuzzleHttp\Psr7;
 use Aws\PhpHash;
 use Aws\HashingStream;
 
@@ -9,7 +9,7 @@ class HashingStreamTest extends \PHPUnit_Framework_TestCase
 {
     public function testCanCreateRollingMd5()
     {
-        $source = Stream::factory('foobar');
+        $source = Psr7\stream_for('foobar');
         $hash = new PhpHash('md5');
         (new HashingStream($source, $hash))->getContents();
         $this->assertEquals(md5('foobar'), bin2hex($hash->complete()));
@@ -17,7 +17,7 @@ class HashingStreamTest extends \PHPUnit_Framework_TestCase
 
     public function testCallbackTriggeredWhenComplete()
     {
-        $source = Stream::factory('foobar');
+        $source = Psr7\stream_for('foobar');
         $hash = new PhpHash('md5');
         $called = false;
         $stream = new HashingStream($source, $hash, function () use (&$called) {
@@ -29,7 +29,7 @@ class HashingStreamTest extends \PHPUnit_Framework_TestCase
 
     public function testCanOnlySeekToTheBeginning()
     {
-        $source = Stream::factory('foobar');
+        $source = Psr7\stream_for('foobar');
         $hash = new PhpHash('md5');
         $stream = new HashingStream($source, $hash);
 

@@ -70,7 +70,7 @@ class LogFileIterator extends \IteratorIterator
                 'trailNameList' => [$trailName]
             ]);
             $s3BucketName = $result->search('trailList[0].S3BucketName');
-            $options[self::KEY_PREFIX] = $result->getSearch(
+            $options[self::KEY_PREFIX] = $result->search(
                 'trailList[0].S3KeyPrefix'
             );
         } catch (CloudTrailException $e) {

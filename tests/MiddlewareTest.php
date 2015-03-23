@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test;
 
+use Aws;
 use Aws\Api\ApiProvider;
 use Aws\Api\Service;
 use Aws\Command;
@@ -11,7 +12,6 @@ use Aws\Middleware;
 use Aws\MockHandler;
 use Aws\Result;
 use Aws\Signature\SignatureV4;
-use Aws\Utils;
 use GuzzleHttp\Psr7\Request;
 
 /**
@@ -72,7 +72,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         $list->setHandler($mock);
         $creds = new Credentials('foo', 'bar');
         $signature = new SignatureV4('a', 'b');
-        $list->append('sign', Middleware::signer($creds, Utils::constantly($signature)));
+        $list->append('sign', Middleware::signer($creds, Aws\constantly($signature)));
         $handler = $list->resolve();
         $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
         $this->assertTrue($req->hasHeader('Authorization'));

@@ -7,7 +7,7 @@ use Aws\Multipart\UploadState;
 use Aws\Glacier\UploadBuilder;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Psr7\Stream;
+use GuzzleHttp\Psr7;
 
 /**
  * @covers Aws\Glacier\UploadBuilder
@@ -83,7 +83,7 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testCanCreatePartGeneratorCallback()
     {
-        $source = Stream::factory('foo');
+        $source = Psr7\stream_for('foo');
         $state = new UploadState([]);
         $state->setPartSize(5);
         $builder = (new UploadBuilder)
@@ -149,7 +149,7 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
         $builder = (new UploadBuilder)
             ->setClient($this->getTestClient('s3'))
             ->setState($state)
-            ->setSource(Stream::factory('foo'));
+            ->setSource(Psr7\stream_for('foo'));
 
         // Get the function.
         $method = (new \ReflectionObject($builder))
@@ -157,7 +157,7 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
         $method->setAccessible(true);
         /** @var callable $getCommandParams */
         $getCommandParams = $method->invoke($builder);
-        
+
         // Validate function results.
         $params = $getCommandParams();
         $this->assertEquals(9, $params['archiveSize']);
@@ -172,7 +172,7 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
         $builder = (new UploadBuilder)
             ->setClient($this->getTestClient('s3'))
             ->setState($state)
-            ->setSource(Stream::factory('foo'));
+            ->setSource(Psr7\stream_for('foo'));
 
         $method = (new \ReflectionObject($builder))
             ->getMethod('getResultHandlerFn');

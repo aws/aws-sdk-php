@@ -3,8 +3,7 @@ namespace Aws\Test\Multipart;
 
 use Aws\Multipart\UploadState;
 use Aws\Multipart\Uploader;
-use GuzzleHttp\Psr7\NoSeekStream;
-use GuzzleHttp\Psr7\Stream;
+use GuzzleHttp\Psr7;
 
 /**
  * @covers Aws\Multipart\AbstractUploadBuilder
@@ -15,7 +14,7 @@ class AbstractUploadBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $client = $this->getMockForAbstractClass('Aws\\AwsClientInterface');
         $state = new UploadState([]);
-        $source = Stream::factory();
+        $source = Psr7\stream_for();
 
         $builder = (new TestUploadBuilder)
             ->setClient($client)
@@ -105,10 +104,10 @@ class AbstractUploadBuilderTest extends \PHPUnit_Framework_TestCase
         // Prepare a pseudo createPartFn closure.
         $createPartFn = function ($seekable, $partNumber) {
             if ($seekable) {
-                $body = Stream::factory(fopen($this->source->getMetadata('uri'), 'r'));
+                $body = Psr7\stream_for(fopen($this->source->getMetadata('uri'), 'r'));
                 $body = $this->limitPartStream($body);
             } else {
-                $body = Stream::factory($this->source->read($this->state->getPartSize()));
+                $body = Psr7\stream_for($this->source->read($this->state->getPartSize()));
             }
             return ['Body' => $body->getContents()];
         };
@@ -151,9 +150,9 @@ class AbstractUploadBuilderTest extends \PHPUnit_Framework_TestCase
 
     private function getTestSource($seekable)
     {
-        $source = Stream::factory(fopen(__DIR__ . '/source.txt', 'r'));
+        $source = Psr7\stream_for(fopen(__DIR__ . '/source.txt', 'r'));
         if (!$seekable) {
-            $source = new NoSeekStream($source);
+            $source = new Psr7\NoSeekStream($source);
         }
         return $source;
     }

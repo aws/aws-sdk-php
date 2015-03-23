@@ -5,7 +5,6 @@ use Aws\Multipart\AbstractUploadBuilder;
 use Aws\Multipart\UploadState;
 use Aws\Result;
 use Aws\CommandInterface;
-use GuzzleHttp\Psr7\Stream;
 use Psr\Http\Message\StreamableInterface;
 use GuzzleHttp\Psr7;
 use Aws\HashingStream;
@@ -202,7 +201,7 @@ class UploadBuilder extends AbstractUploadBuilder
             if ($seekable) {
                 // Case 1: Stream is seekable, can make stream from new handle.
                 $body = Psr7\try_fopen($this->source->getMetadata('uri'), 'r');
-                $body = $this->limitPartStream(Stream::factory($body));
+                $body = $this->limitPartStream(Psr7\stream_for($body));
                 // Create another stream decorated with hashing streams and read
                 // through it, so we can get the hash values for the part.
                 $decoratedBody = $this->decorateWithHashes($body, $data);
@@ -213,7 +212,7 @@ class UploadBuilder extends AbstractUploadBuilder
                 // Case 2: Stream is not seekable, must store part in temp stream.
                 $source = $this->limitPartStream($this->source);
                 $source = $this->decorateWithHashes($source, $data);
-                $body = Stream::factory();
+                $body = Psr7\stream_for();
                 Psr7\copy_to_stream($source, $body);
             }
 

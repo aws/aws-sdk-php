@@ -2,7 +2,7 @@
 namespace Aws\Signature;
 
 use Aws\Credentials\CredentialsInterface;
-use GuzzleHttp\Psr7\Stream;
+use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -40,7 +40,7 @@ class SignatureV2 extends AbstractSignature
             )
         );
 
-        return $request->withBody(Stream::factory(http_build_query($params)));
+        return $request->withBody(Psr7\stream_for(http_build_query($params)));
     }
 
     private function getCanonicalizedParameterString(array $params)

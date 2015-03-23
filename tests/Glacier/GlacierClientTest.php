@@ -3,12 +3,10 @@ namespace Aws\Test\Glacier;
 
 use Aws\Exception\CouldNotCreateChecksumException;
 use Aws\Glacier\GlacierClient;
-use Aws\Result;
-use Aws\Test\Exception\CouldNotCreateChecksumExceptionTest;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\Stream;
+use GuzzleHttp\Psr7;
 
 /**
  * @covers Aws\Glacier\GlacierClient
@@ -53,7 +51,7 @@ class GlacierClientTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException(CouldNotCreateChecksumException::class);
         $this->getTestClient('Glacier')->uploadArchive([
             'vaultName' => 'foo',
-            'body'      => new NoSeekStream(Stream::factory('foo')),
+            'body'      => new NoSeekStream(Psr7\stream_for('foo')),
         ]);
     }
 }

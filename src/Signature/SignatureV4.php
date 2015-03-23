@@ -3,8 +3,6 @@ namespace Aws\Signature;
 
 use Aws\Credentials\CredentialsInterface;
 use Aws\Exception\CouldNotCreateChecksumException;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Stream;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
 
@@ -119,7 +117,7 @@ class SignatureV4 extends AbstractSignature
         }
 
         $sr = $request->withMethod('GET')
-            ->withBody(Stream::factory(''))
+            ->withBody(Psr7\stream_for(''))
             ->withoutHeader('Content-Type')
             ->withoutHeader('Content-Length');
 
@@ -348,7 +346,7 @@ class SignatureV4 extends AbstractSignature
             $req['uri'] = $req['uri']->withQuery(Psr7\build_query($req['query']));
         }
 
-        return new Request(
+        return new Psr7\Request(
             $req['method'],
             $req['uri'],
             $req['headers'],

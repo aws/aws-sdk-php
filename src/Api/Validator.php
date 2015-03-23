@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Api;
 
-use Aws\Utils;
+use Aws;
 
 /**
  * Validates a schema against a hash of input.
@@ -91,7 +91,7 @@ class Validator
     private function check_list(ListShape $shape, $value)
     {
         if (!is_array($value)) {
-            $this->addError('must be an array. Found ' . Utils::describeType($value));
+            $this->addError('must be an array. Found ' . Aws\describe_type($value));
             return;
         }
 
@@ -131,7 +131,7 @@ class Validator
             if ($type != 'object' || !method_exists($value, '__toString')) {
                 $this->addError('must be an fopen resource, a '
                     . 'GuzzleHttp\Stream\StreamInterface object, or something '
-                    . 'that can be cast to a string. Found ' . Utils::describeType($value));
+                    . 'that can be cast to a string. Found ' . Aws\describe_type($value));
             }
         }
     }
@@ -139,14 +139,14 @@ class Validator
     private function check_numeric(Shape $shape, $value)
     {
         if (!is_numeric($value)) {
-            $this->addError('must be numeric. Found ' . Utils::describeType($value));
+            $this->addError('must be numeric. Found ' . Aws\describe_type($value));
         }
     }
 
     private function check_boolean(Shape $shape, $value)
     {
         if (!is_bool($value)) {
-            $this->addError('must be a boolean. Found ' . Utils::describeType($value));
+            $this->addError('must be a boolean. Found ' . Aws\describe_type($value));
         }
     }
 
@@ -154,7 +154,7 @@ class Validator
     {
         if (!$this->checkCanString($value)) {
             $this->addError('must be a string or an object that implements '
-                . '__toString(). Found ' . Utils::describeType($value));
+                . '__toString(). Found ' . Aws\describe_type($value));
         }
     }
 
@@ -177,7 +177,7 @@ class Validator
     {
         if (!is_array($value) || isset($value[0])) {
             $this->addError('must be an associative array. Found '
-                . Utils::describeType($value));
+                . Aws\describe_type($value));
             return false;
         }
 

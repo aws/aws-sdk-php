@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Test;
 
-use Aws\Utils;
+use Aws;
 
 /**
  * @covers Aws\Utils
@@ -10,7 +10,7 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreatesRecursiveDirIterator()
     {
-        $iter = Utils::recursiveDirIterator(__DIR__);
+        $iter = Aws\recursive_dir_iterator(__DIR__);
         $this->assertInstanceOf('Iterator', $iter);
         $files = iterator_to_array($iter);
         $this->assertContains(__FILE__, $files);
@@ -18,10 +18,10 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatesNonRecursiveDirIterator()
     {
-        $iter = Utils::dirIterator(__DIR__);
+        $iter = Aws\dir_iterator(__DIR__);
         $this->assertInstanceOf('Iterator', $iter);
         $files = iterator_to_array($iter);
-        $this->assertContains('UtilsTest.php', $files);
+        $this->assertContains('FunctionsTest.php', $files);
     }
 
     public function testComposesOrFunctions()
@@ -29,7 +29,7 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
         $a = function ($a, $b) { return null; };
         $b = function ($a, $b) { return $a . $b; };
         $c = function ($a, $b) { return 'C'; };
-        $comp = Utils::orChain($a, $b, $c);
+        $comp = Aws\or_chain($a, $b, $c);
         $this->assertEquals('+-', $comp('+', '-'));
     }
 
@@ -39,14 +39,14 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
         $a = function () use (&$called) { $called[] = 'a'; };
         $b = function () use (&$called) { $called[] = 'b'; };
         $c = function () use (&$called) { $called[] = 'c'; };
-        $comp = Utils::orChain($a, $b, $c);
+        $comp = Aws\or_chain($a, $b, $c);
         $this->assertNull($comp());
         $this->assertEquals(['a', 'b', 'c'], $called);
     }
 
     public function testCreatesConstantlyFunctions()
     {
-        $fn = Utils::constantly('foo');
+        $fn = Aws\constantly('foo');
         $this->assertSame('foo', $fn());
     }
 }

@@ -2,8 +2,7 @@
 namespace Aws\Multipart;
 
 use Aws\AwsClientInterface;
-use GuzzleHttp\Psr7\LimitStream;
-use GuzzleHttp\Psr7\Stream;
+use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamableInterface;
 
 /**
@@ -93,7 +92,7 @@ abstract class AbstractUploadBuilder
             $source = fopen($source, 'r');
         }
 
-        $this->source = Stream::factory($source);
+        $this->source = Psr7\stream_for($source);
         if (!$this->source->isReadable()) {
             throw new \InvalidArgumentException('Source stream must be readable.');
         }
@@ -167,12 +166,12 @@ abstract class AbstractUploadBuilder
      *
      * @param StreamableInterface $stream
      *
-     * @return LimitStream
+     * @return Psr7\LimitStream
      */
     protected function limitPartStream(StreamableInterface $stream)
     {
         // Limit what is read from the stream to the part size.
-        return new LimitStream(
+        return new Psr7\LimitStream(
             $stream,
             $this->state->getPartSize(),
             $this->source->tell()

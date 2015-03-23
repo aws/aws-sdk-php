@@ -292,7 +292,7 @@ class ClientResolver
         $expected = implode('|', $this->argDefinitions[$name]['valid']);
         $msg = "Invalid configuration value "
             . "provided for \"{$name}\". Expected {$expected}, but got "
-            . Utils::describeType($provided) . "\n\n"
+            . describe_type($provided) . "\n\n"
             . $this->getArgMessage($name);
         throw new \InvalidArgumentException($msg);
     }

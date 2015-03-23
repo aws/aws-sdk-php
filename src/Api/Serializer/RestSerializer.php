@@ -7,12 +7,8 @@ use Aws\Api\Shape;
 use Aws\Api\StructureShape;
 use Aws\Api\TimestampShape;
 use Aws\CommandInterface;
-use GuzzleHttp\Psr7\Stream;
-use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\UriInterface;
-use GuzzleHttp\Psr7\Request;
 
 /**
  * Serializes HTTP locations like header, uri, payload, etc...
@@ -23,7 +19,7 @@ abstract class RestSerializer
     /** @var Service */
     private $api;
 
-    /** @var Uri */
+    /** @var Psr7\Uri */
     private $endpoint;
 
     /**
@@ -33,7 +29,7 @@ abstract class RestSerializer
     public function __construct(Service $api, $endpoint)
     {
         $this->api = $api;
-        $this->endpoint = new Uri($endpoint);
+        $this->endpoint = Psr7\uri_for($endpoint);
     }
 
     /**
@@ -48,7 +44,7 @@ abstract class RestSerializer
         $opts = $this->serialize($operation, $args);
         $uri = $this->buildEndpoint($operation, $args, $opts);
 
-        return new Request(
+        return new Psr7\Request(
             $operation['http']['method'],
             $uri,
             isset($opts['headers']) ? $opts['headers'] : [],
@@ -115,7 +111,7 @@ abstract class RestSerializer
         ) {
             // Streaming bodies or payloads that are strings are
             // always just a stream of data.
-            $opts['body'] = Stream::factory($args[$name]);
+            $opts['body'] = Psr7\stream_for($args[$name]);
             return;
         }
 
@@ -187,6 +183,6 @@ abstract class RestSerializer
 
         // Expand path place holders using Amazon's slightly different URI
         // template syntax.
-        return Uri::resolve($this->endpoint, $relative);
+        return Psr7\Uri::resolve($this->endpoint, $relative);
     }
 }
