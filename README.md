@@ -142,26 +142,26 @@ try {
 [install-packagist]: https://packagist.org/packages/aws/aws-sdk-php
 [latest-release]: https://github.com/aws/aws-sdk-php/releases/latest
 
-[docs-api]: http://docs.aws.amazon.com/aws-sdk-php/latest/index.html
-[docs-guide]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/index.html
+[docs-api]: http://docs.aws.amazon.com/aws-sdk-php/v2/api/index.html
+[docs-guide]: http://docs.aws.amazon.com/aws-sdk-php/v2/guide/index.html
 [docs-contribution]: https://github.com/aws/aws-sdk-php/blob/master/CONTRIBUTING.md
-[docs-performance]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/performance.html
-[docs-migration]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/migration-guide.html
-[docs-signup]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/awssignup.html
-[docs-requirements]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/requirements.html
-[docs-installation]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/installation.html
-[docs-quickstart]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/quick-start.html
-[docs-iterators]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/quick-start.html#iterators
-[docs-waiters]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/feature-waiters.html
-[docs-models]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/feature-models.html
-[docs-exceptions]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/quick-start.html#error-handling
-[docs-wire-logging]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/faq.html#how-can-i-see-what-data-is-sent-over-the-wire
-[docs-services]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/index.html#supported-services
-[docs-ddbsh]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/feature-dynamodb-session-handler.html
+[docs-performance]: http://docs.aws.amazon.com/aws-sdk-php/v2/guide/performance.html
+[docs-migration]: http://docs.aws.amazon.com/aws-sdk-php/v2/guide/migration-guide.html
+[docs-signup]: http://docs.aws.amazon.com/aws-sdk-php/v2/guide/awssignup.html
+[docs-requirements]: http://docs.aws.amazon.com/aws-sdk-php/v2/guide/requirements.html
+[docs-installation]: http://docs.aws.amazon.com/aws-sdk-php/v2/guide/installation.html
+[docs-quickstart]: http://docs.aws.amazon.com/aws-sdk-php/v2/guide/quick-start.html
+[docs-iterators]: http://docs.aws.amazon.com/aws-sdk-php/v2/guide/quick-start.html#iterators
+[docs-waiters]: http://docs.aws.amazon.com/aws-sdk-php/v2/guide/feature-waiters.html
+[docs-models]: http://docs.aws.amazon.com/aws-sdk-php/v2/guide/feature-models.html
+[docs-exceptions]: http://docs.aws.amazon.com/aws-sdk-php/v2/guide/quick-start.html#error-handling
+[docs-wire-logging]: http://docs.aws.amazon.com/aws-sdk-php/v2/guide/faq.html#how-can-i-see-what-data-is-sent-over-the-wire
+[docs-services]: http://docs.aws.amazon.com/aws-sdk-php/v2/guide/index.html#supported-services
+[docs-ddbsh]: http://docs.aws.amazon.com/aws-sdk-php/v2/guide/feature-dynamodb-session-handler.html
 [docs-rande]: http://docs.aws.amazon.com/general/latest/gr/rande.html
-[docs-streamwrapper]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-s3.html#amazon-s3-stream-wrapper
+[docs-streamwrapper]: http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-s3.html#amazon-s3-stream-wrapper
 [docs-s3-sync]: http://blogs.aws.amazon.com/php/post/Tx2W9JAA7RXVOXA/Syncing-Data-with-Amazon-S3
-[docs-s3-multipart]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-s3.html#uploading-large-files-using-multipart-uploads
+[docs-s3-multipart]: http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-s3.html#uploading-large-files-using-multipart-uploads
 
 [aws]: http://aws.amazon.com
 [aws-iam-credentials]: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances
@@ -175,10 +175,10 @@ try {
 [psr-2]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
 [symfony2-events]: http://symfony.com/doc/2.3/components/event_dispatcher/introduction.html
 
-[example-sqs-sendmessage]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-sqs.html#sending-messages
-[example-s3-getobject]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-s3.html#saving-objects-to-a-file
-[example-s3-multipart]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-s3.html#uploading-large-files-using-multipart-uploads
-[example-dynamodb-putitem]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-dynamodb.html#adding-items
+[example-sqs-sendmessage]: http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-sqs.html#sending-messages
+[example-s3-getobject]: http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-s3.html#saving-objects-to-a-file
+[example-s3-multipart]: http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-s3.html#uploading-large-files-using-multipart-uploads
+[example-dynamodb-putitem]: http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-dynamodb.html#adding-items
 
 [mod-laravel]: https://github.com/aws/aws-sdk-php-laravel
 [mod-zf2]: https://github.com/aws/aws-sdk-php-zf2
