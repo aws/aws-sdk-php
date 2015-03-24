@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next Release
+## 2.7.24 - 2015-03-24
 
 * `Aws\S3` - Added support for cross-region replication.
 * `Aws\S3` - Added support for ["Requester Pays" buckets](http://docs.aws.amazon.com/AmazonS3/latest/dev/RequesterPaysBuckets.html).
