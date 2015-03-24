@@ -1,11 +1,10 @@
 <?php
 namespace Aws\Test\S3\Subscriber;
 
-use Aws\S3\Exception\S3Exception;
+use Aws\Middleware;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Message\Response;
-use GuzzleHttp\Stream\Stream;
-use GuzzleHttp\Stream\NoSeekStream;
+use GuzzleHttp\Psr7;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @covers Aws\S3\ApplyMd5Middleware
@@ -14,23 +13,18 @@ class ApplyMd5MiddlewareTest extends \PHPUnit_Framework_TestCase
 {
     use UsesServiceTrait;
 
+    /**
+     * @expectedException \Aws\Exception\CouldNotCreateChecksumException
+     */
     public function testThrowsExceptionIfBodyIsNotSeekable()
     {
         $s3 = $this->getTestClient('s3');
         $command = $s3->getCommand('PutObject', [
             'Bucket' => 'foo',
             'Key'    => 'bar',
-            'Body'   => new NoSeekStream(Stream::factory('foo')),
+            'Body'   => new Psr7\NoSeekStream(Psr7\stream_for('foo')),
         ]);
-        try {
-            $s3->execute($command);
-            $this->fail('An exception should have been thrown.');
-        } catch (S3Exception $e) {
-            $this->assertInstanceOf(
-                'Aws\Exception\CouldNotCreateChecksumException',
-                $e->getPrevious()
-            );
-        }
+        $s3->execute($command);
     }
 
     /**
@@ -39,15 +33,17 @@ class ApplyMd5MiddlewareTest extends \PHPUnit_Framework_TestCase
     public function testAddsContentMd5AsAppropriate($options, $operation, $args, $md5Added, $md5Value)
     {
         $s3 = $this->getTestClient('s3', $options);
-        $this->addMockResponses($s3, [new Response(200)]);
-
+        $this->addMockResults($s3, [[]]);
         $command = $s3->getCommand($operation, $args);
-        $command->getEmitter()->on('prepared', function (PreparedEvent $e) use ($md5Added, $md5Value) {
-            $this->assertSame($md5Added, $e->getRequest()->hasHeader('Content-MD5'));
-            if ($md5Value !== 'SKIP') {
-                $this->assertEquals($md5Value, $e->getRequest()->getHeader('Content-MD5'));
-            }
-        }, 'last');
+        $command->getHandlerList()->append(
+            'build',
+            Middleware::tap(function ($cmd, RequestInterface $request) use ($md5Added, $md5Value) {
+                $this->assertSame($md5Added, $request->hasHeader('Content-MD5'));
+                if ($md5Value !== 'SKIP') {
+                    $this->assertEquals($md5Value, $request->getHeader('Content-MD5'));
+                }
+            })
+        );
         $s3->execute($command);
     }
 
