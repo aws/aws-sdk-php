@@ -1,17 +1,17 @@
 <?php
 namespace Aws;
 
-use GuzzleHttp\Aws\GuzzleHandler;
-use InvalidArgumentException as IAE;
 use Aws\Api\Validator;
 use Aws\Api\ApiProvider;
 use Aws\Api\Service;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Credentials\NullCredentials;
+use Aws\Handler\GuzzleV5\GuzzleHandler;
 use Aws\Signature\SignatureProvider;
 use Aws\Endpoint\EndpointProvider;
 use Aws\Credentials\CredentialProvider;
+use InvalidArgumentException as IAE;
 
 /**
  * @internal Resolves a hash of client arguments to construct a client.

@@ -1,7 +1,7 @@
 <?php
 namespace Aws;
 
-use GuzzleHttp\Aws\GuzzleHandler;
+use Aws\Handler\GuzzleV5\GuzzleHandler;
 
 /**
  * Builds AWS clients based on configuration settings.

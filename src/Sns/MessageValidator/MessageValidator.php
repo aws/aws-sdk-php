@@ -1,8 +1,8 @@
 <?php
 namespace Aws\Sns\MessageValidator;
 
+use Aws\Handler\GuzzleV5\GuzzleHandler;
 use Aws\Sns\Exception\MessageValidatorException;
-use GuzzleHttp\Aws\GuzzleHandler;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\UriInterface;
