@@ -62,8 +62,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getListHostedZonesIterator(array $args = array()) The input array uses the parameters of the ListHostedZones operation
  * @method ResourceIteratorInterface getListResourceRecordSetsIterator(array $args = array()) The input array uses the parameters of the ListResourceRecordSets operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-route53.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Route53.Route53Client.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-route53.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.Route53.Route53Client.html API docs
  */
 class Route53Client extends AbstractClient
 {
@@ -75,7 +75,7 @@ class Route53Client extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

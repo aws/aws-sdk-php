@@ -175,7 +175,7 @@ type: ``Aws\S3\Exception\S3Exception``.
     }
 
 Exceptions thrown by the SDK like this all extend the ``ServiceResponseException`` class (`see the API docs
-<http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Common.Exception.ServiceResponseException.html>`_), which has
+<http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.Common.Exception.ServiceResponseException.html>`_), which has
 some custom methods that might help you discover what went wrong.
 
 Waiters

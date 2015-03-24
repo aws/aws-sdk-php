@@ -52,8 +52,8 @@ use Guzzle\Service\Resource\Model;
  * @method Model updateApplication(array $args = array()) {@command CodeDeploy UpdateApplication}
  * @method Model updateDeploymentGroup(array $args = array()) {@command CodeDeploy UpdateDeploymentGroup}
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-codedeploy.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.CodeDeploy.CodeDeployClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-codedeploy.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.CodeDeploy.CodeDeployClient.html API docs
  */
 class CodeDeployClient extends AbstractClient
 {
@@ -62,12 +62,12 @@ class CodeDeployClient extends AbstractClient
     /**
      * Factory method to create a new AWS CodeDeploy client using an array of configuration options.
      *
-     * See http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * See http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      *
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

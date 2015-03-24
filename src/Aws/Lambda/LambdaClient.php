@@ -40,8 +40,8 @@ use Guzzle\Service\Resource\Model;
  * @method ResourceIteratorInterface getListEventSourcesIterator(array $args = array()) The input array uses the parameters of the ListEventSources operation
  * @method ResourceIteratorInterface getListFunctionsIterator(array $args = array()) The input array uses the parameters of the ListFunctions operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-lambda.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Lambda.LambdaClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-lambda.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.Lambda.LambdaClient.html API docs
  */
 class LambdaClient extends AbstractClient
 {
@@ -50,12 +50,12 @@ class LambdaClient extends AbstractClient
     /**
      * Factory method to create a new AWS Lambda client using an array of configuration options.
      *
-     * See http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * See http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      *
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

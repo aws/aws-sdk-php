@@ -38,8 +38,8 @@ use Symfony\Component\EventDispatcher\Event;
  * @method Model getFederationToken(array $args = array()) {@command Sts GetFederationToken}
  * @method Model getSessionToken(array $args = array()) {@command Sts GetSessionToken}
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-sts.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Sts.StsClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-sts.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.Sts.StsClient.html API docs
  */
 class StsClient extends AbstractClient
 {
@@ -52,7 +52,7 @@ class StsClient extends AbstractClient
      *
      * @return self
      * @throws InvalidArgumentException
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

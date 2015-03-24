@@ -15,8 +15,8 @@ use Guzzle\Service\Resource\Model;
  * @method Model suggest(array $args = array()) {@command CloudSearchDomain Suggest}
  * @method Model uploadDocuments(array $args = array()) {@command CloudSearchDomain UploadDocuments}
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-cloudsearchdomain.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.CloudSearchDomain.CloudSearchDomainClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-cloudsearchdomain.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.CloudSearchDomain.CloudSearchDomainClient.html API docs
  */
 class CloudSearchDomainClient extends AbstractClient
 {
@@ -30,7 +30,7 @@ class CloudSearchDomainClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

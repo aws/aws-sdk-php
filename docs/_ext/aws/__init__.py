@@ -137,7 +137,7 @@ class ServiceDescriptionDirective(Directive):
 
     def get_api_ref_url(self, namespace):
         """Determine the PHP API documentation link for a service"""
-        return "http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws." + namespace + "." + namespace + "Client.html"
+        return "http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws." + namespace + "." + namespace + "Client.html"
 
     def get_locator_name(self, name):
         """Determine the service locator name for an endpoint"""

@@ -27,8 +27,8 @@ use Guzzle\Service\Resource\Model;
  * @method Model updateDomainContactPrivacy(array $args = array()) {@command Route53Domains UpdateDomainContactPrivacy}
  * @method Model updateDomainNameservers(array $args = array()) {@command Route53Domains UpdateDomainNameservers}
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-route53domains.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Route53Domains.Route53DomainsClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-route53domains.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.Route53Domains.Route53DomainsClient.html API docs
  */
 class Route53DomainsClient extends AbstractClient
 {

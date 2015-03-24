@@ -39,8 +39,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getListDomainsIterator(array $args = array()) The input array uses the parameters of the ListDomains operation
  * @method ResourceIteratorInterface getSelectIterator(array $args = array()) The input array uses the parameters of the Select operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-simpledb.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.SimpleDb.SimpleDbClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-simpledb.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.SimpleDb.SimpleDbClient.html API docs
  */
 class SimpleDbClient extends AbstractClient
 {
@@ -52,7 +52,7 @@ class SimpleDbClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

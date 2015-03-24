@@ -43,8 +43,8 @@ use Guzzle\Service\Resource\Model;
  * @method Model modifyHsm(array $args = array()) {@command CloudHsm ModifyHsm}
  * @method Model modifyLunaClient(array $args = array()) {@command CloudHsm ModifyLunaClient}
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-cloudhsm.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.CloudHsm.CloudHsmClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-cloudhsm.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.CloudHsm.CloudHsmClient.html API docs
  */
 class CloudHsmClient extends AbstractClient
 {
@@ -53,12 +53,12 @@ class CloudHsmClient extends AbstractClient
     /**
      * Factory method to create a new Amazon CloudHSM client using an array of configuration options.
      *
-     * See http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * See http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      *
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

@@ -52,8 +52,8 @@ use Guzzle\Service\Resource\Model;
  * @method Model revokeGrant(array $args = array()) {@command Kms RevokeGrant}
  * @method Model updateKeyDescription(array $args = array()) {@command Kms UpdateKeyDescription}
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-kms.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Kms.KmsClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-kms.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.Kms.KmsClient.html API docs
  */
 class KmsClient extends AbstractClient
 {
@@ -62,12 +62,12 @@ class KmsClient extends AbstractClient
     /**
      * Factory method to create a new AWS KMS client using an array of configuration options.
      *
-     * See http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * See http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      *
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

@@ -29,7 +29,7 @@ Similar to the way other service clients are used, you can instantiate the ``Clo
 The ``CloudSearchDomainClient`` is unlike other clients, because it does not require you to provide a region. Instead,
 you must provide the ``endpoint`` option, which represents the domain's endpoint. Domain endpoints are unique to each
 domain, and you can get it using the `DescribeDomains operation
-<http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.CloudSearch.CloudSearchClient.html#_describeDomains>`_ of the
+<http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.CloudSearch.CloudSearchClient.html#_describeDomains>`_ of the
 :doc:`Amazon CloudSearch configuration client<service-cloudsearch>`.
 
 Service builder

@@ -102,8 +102,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getDescribeReservedDBInstancesOfferingsIterator(array $args = array()) The input array uses the parameters of the DescribeReservedDBInstancesOfferings operation
  * @method ResourceIteratorInterface getListTagsForResourceIterator(array $args = array()) The input array uses the parameters of the ListTagsForResource operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-rds.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Rds.RdsClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-rds.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.Rds.RdsClient.html API docs
  */
 class RdsClient extends AbstractClient
 {
@@ -115,7 +115,7 @@ class RdsClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

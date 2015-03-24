@@ -108,8 +108,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getDescribeUserProfilesIterator(array $args = array()) The input array uses the parameters of the DescribeUserProfiles operation
  * @method ResourceIteratorInterface getDescribeVolumesIterator(array $args = array()) The input array uses the parameters of the DescribeVolumes operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-opsworks.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.OpsWorks.OpsWorksClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-opsworks.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.OpsWorks.OpsWorksClient.html API docs
  */
 class OpsWorksClient extends AbstractClient
 {
@@ -121,7 +121,7 @@ class OpsWorksClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

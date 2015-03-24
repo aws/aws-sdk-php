@@ -51,8 +51,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getListInstancesIterator(array $args = array()) The input array uses the parameters of the ListInstances operation
  * @method ResourceIteratorInterface getListStepsIterator(array $args = array()) The input array uses the parameters of the ListSteps operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-emr.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Emr.EmrClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-emr.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.Emr.EmrClient.html API docs
  */
 class EmrClient extends AbstractClient
 {
@@ -64,7 +64,7 @@ class EmrClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

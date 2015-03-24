@@ -42,8 +42,8 @@ use Guzzle\Service\Resource\Model;
  * @method ResourceIteratorInterface getDescribeStreamIterator(array $args = array()) The input array uses the parameters of the DescribeStream operation
  * @method ResourceIteratorInterface getListStreamsIterator(array $args = array()) The input array uses the parameters of the ListStreams operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-kinesis.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Kinesis.KinesisClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-kinesis.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.Kinesis.KinesisClient.html API docs
  */
 class KinesisClient extends AbstractClient
 {
@@ -55,7 +55,7 @@ class KinesisClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

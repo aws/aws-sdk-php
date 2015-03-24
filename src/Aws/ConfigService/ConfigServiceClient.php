@@ -38,8 +38,8 @@ use Guzzle\Service\Resource\Model;
  * @method Model startConfigurationRecorder(array $args = array()) {@command ConfigService StartConfigurationRecorder}
  * @method Model stopConfigurationRecorder(array $args = array()) {@command ConfigService StopConfigurationRecorder}
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-configservice.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.ConfigService.ConfigServiceClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-configservice.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.ConfigService.ConfigServiceClient.html API docs
  */
 class ConfigServiceClient extends AbstractClient
 {
@@ -48,12 +48,12 @@ class ConfigServiceClient extends AbstractClient
     /**
      * Factory method to create a new AWS Config client using an array of configuration options.
      *
-     * See http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * See http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      *
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

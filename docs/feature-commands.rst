@@ -75,7 +75,7 @@ examples show how to work with command objects:
     $result = $command->getResult();
 
 Also, see the `API docs for commands
-<http://docs.aws.amazon.com/aws-sdk-php/latest/class-Guzzle.Service.Command.AbstractCommand.html>`_.
+<http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Guzzle.Service.Command.AbstractCommand.html>`_.
 
 .. _requests_and_responses:
 
@@ -143,8 +143,8 @@ You can also take advantage of the ``__toString`` behavior of the request and re
 (e.g., ``echo $request;``), you can see the raw request and response data that was sent over the wire.
 
 To learn more, read the API docs for the `Request
-<http://docs.aws.amazon.com/aws-sdk-php/latest/class-Guzzle.Http.Message.Request.html>`_ and `Response
-<http://docs.aws.amazon.com/aws-sdk-php/latest/class-Guzzle.Http.Message.Response.html>`_ classes.
+<http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Guzzle.Http.Message.Request.html>`_ and `Response
+<http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Guzzle.Http.Message.Response.html>`_ classes.
 
 .. _parallel_commands:
 
@@ -185,7 +185,7 @@ Error handling with parallel commands
 When executing commands in parallel, error handling becomes a bit trickier. If an exception is thrown, then the SDK (via
 Guzzle) will aggregate the exceptions together and throw a single ``Guzzle\Service\Exception\CommandTransferException``
 (`see the API docs
-<http://docs.aws.amazon.com/aws-sdk-php/latest/class-Guzzle.Service.Exception.CommandTransferException.html>`_) once all
+<http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Guzzle.Service.Exception.CommandTransferException.html>`_) once all
 of the commands have completed execution. This exception class keeps track of which commands succeeded and which failed
 and also allows you to fetch the original exceptions thrown for failed commands.
 

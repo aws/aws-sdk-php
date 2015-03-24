@@ -49,8 +49,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getListPipelinesIterator(array $args = array()) The input array uses the parameters of the ListPipelines operation
  * @method ResourceIteratorInterface getListPresetsIterator(array $args = array()) The input array uses the parameters of the ListPresets operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-elastictranscoder.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.ElasticTranscoder.ElasticTranscoderClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-elastictranscoder.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.ElasticTranscoder.ElasticTranscoderClient.html API docs
  */
 class ElasticTranscoderClient extends AbstractClient
 {
@@ -62,7 +62,7 @@ class ElasticTranscoderClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

@@ -50,8 +50,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getDescribePipelinesIterator(array $args = array()) The input array uses the parameters of the DescribePipelines operation
  * @method ResourceIteratorInterface getQueryObjectsIterator(array $args = array()) The input array uses the parameters of the QueryObjects operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-datapipeline.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.DataPipeline.DataPipelineClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-datapipeline.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.DataPipeline.DataPipelineClient.html API docs
  */
 class DataPipelineClient extends AbstractClient
 {
@@ -63,7 +63,7 @@ class DataPipelineClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

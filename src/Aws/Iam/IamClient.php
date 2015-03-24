@@ -148,8 +148,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getListUsersIterator(array $args = array()) The input array uses the parameters of the ListUsers operation
  * @method ResourceIteratorInterface getListVirtualMFADevicesIterator(array $args = array()) The input array uses the parameters of the ListVirtualMFADevices operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-iam.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Iam.IamClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-iam.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.Iam.IamClient.html API docs
  */
 class IamClient extends AbstractClient
 {
@@ -161,7 +161,7 @@ class IamClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

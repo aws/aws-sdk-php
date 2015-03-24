@@ -57,8 +57,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getDescribeIndexFieldsIterator(array $args = array()) The input array uses the parameters of the DescribeIndexFields operation
  * @method ResourceIteratorInterface getDescribeSuggestersIterator(array $args = array()) The input array uses the parameters of the DescribeSuggesters operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-cloudsearch.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.CloudSearch.CloudSearchClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-cloudsearch.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.CloudSearch.CloudSearchClient.html API docs
  */
 class CloudSearchClient extends AbstractClient
 {
@@ -70,7 +70,7 @@ class CloudSearchClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {
@@ -91,7 +91,7 @@ class CloudSearchClient extends AbstractClient
      * @param array  $config     Config options for the CloudSearchDomainClient
      *
      * @return CloudSearchDomainClient
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public function getDomainClient($domainName, array $config = array())
     {

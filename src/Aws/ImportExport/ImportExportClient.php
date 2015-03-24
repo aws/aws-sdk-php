@@ -34,8 +34,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model updateJob(array $args = array()) {@command ImportExport UpdateJob}
  * @method ResourceIteratorInterface getListJobsIterator(array $args = array()) The input array uses the parameters of the ListJobs operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-importexport.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.ImportExport.ImportExportClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-importexport.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.ImportExport.ImportExportClient.html API docs
  */
 class ImportExportClient extends AbstractClient
 {
@@ -47,7 +47,7 @@ class ImportExportClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

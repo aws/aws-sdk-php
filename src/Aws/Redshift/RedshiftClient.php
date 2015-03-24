@@ -101,8 +101,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getDescribeReservedNodeOfferingsIterator(array $args = array()) The input array uses the parameters of the DescribeReservedNodeOfferings operation
  * @method ResourceIteratorInterface getDescribeReservedNodesIterator(array $args = array()) The input array uses the parameters of the DescribeReservedNodes operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-redshift.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Redshift.RedshiftClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-redshift.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.Redshift.RedshiftClient.html API docs
  */
 class RedshiftClient extends AbstractClient
 {
@@ -114,7 +114,7 @@ class RedshiftClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

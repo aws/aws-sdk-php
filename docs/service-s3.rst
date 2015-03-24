@@ -294,7 +294,7 @@ control the transfer.
 =========== ============================================================================================================
 params      Array of parameters to use with each ``PutObject`` or ``CreateMultipartUpload`` operation performed during
             the transfer. For example, you can specify an ``ACL`` key to change the ACL of each uploaded object.
-            See `PutObject <http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.S3.S3Client.html#_putObject>`_
+            See `PutObject <http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.S3.S3Client.html#_putObject>`_
             for a list of available options.
 base_dir    Base directory to remove from each object key. By default, the ``$directory`` passed into the
             ``uploadDirectory()`` method will be removed from each object key.
@@ -379,7 +379,7 @@ control the transfer.
 
 =============== ============================================================================================================
 params          Array of parameters to use with each ``GetObject`` operation performed during the transfer. See
-                `GetObject <http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.S3.S3Client.html#_getObject>`_
+                `GetObject <http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.S3.S3Client.html#_getObject>`_
                 for a list of available options.
 base_dir        Base directory to remove from each object key when downloading. By default, the entire object key is
                 used to determine the path to the file on the local filesystem.
