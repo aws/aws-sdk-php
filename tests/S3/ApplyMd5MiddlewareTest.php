@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Test\S3\Subscriber;
+namespace Aws\Test\S3;
 
 use Aws\Middleware;
 use Aws\Test\UsesServiceTrait;

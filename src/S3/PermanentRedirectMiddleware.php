@@ -42,7 +42,10 @@ class PermanentRedirectMiddleware
         $next = $this->nextHandler;
         return $next($command, $request)->then(
             function (ResultInterface $result) use ($command) {
-                if ($result['@statusCode'] == 301) {
+                $status = isset($result['@metadata']['statusCode'])
+                    ? $result['@metadata']['statusCode']
+                    : null;
+                if ($status == 301) {
                     throw new PermanentRedirectException(
                         'Encountered a permanent redirect while requesting '
                         . $result['@effectiveUri'],

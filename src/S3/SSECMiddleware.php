@@ -37,13 +37,11 @@ class SSECMiddleware
         RequestInterface $request = null
     ) {
         // Allows only HTTPS connections when using SSE-C
-        if ($command['SSECustomerKey'] ||
-            $command['CopySourceSSECustomerKey']
+        if (($command['SSECustomerKey'] || $command['CopySourceSSECustomerKey'])
+            && $this->endpointScheme !== 'https'
         ) {
-            if ($this->endpointScheme !== 'https') {
-                throw new \RuntimeException('You must configure your S3 client '
-                    . 'to use HTTPS in order to use the SSE-C features.');
-            }
+            throw new \RuntimeException('You must configure your S3 client to '
+                . 'use HTTPS in order to use the SSE-C features.');
         }
 
         // Prepare the normal SSE-CPK headers
@@ -53,25 +51,24 @@ class SSECMiddleware
 
         // If it's a copy operation, prepare the SSE-CPK headers for the source.
         if ($command['CopySourceSSECustomerKey']) {
-            $this->prepareSseParams($command, true);
+            $this->prepareSseParams($command, 'CopySource');
         }
 
         $f = $this->nextHandler;
         return $f($command, $request);
     }
 
-    private function prepareSseParams(
-        CommandInterface $command,
-        $isCopy = false
-    ) {
-        $prefix = $isCopy ? 'CopySource' : '';
+    private function prepareSseParams(CommandInterface $command, $prefix = '')
+    {
         // Base64 encode the provided key
-        $key = $command["{$prefix}SSECustomerKey"];
-        $command["{$prefix}SSECustomerKey"] = base64_encode($key);
+        $key = $command[$prefix . 'SSECustomerKey'];
+        $command[$prefix . 'SSECustomerKey'] = base64_encode($key);
+
         // Base64 the provided MD5 or, generate an MD5 if not provided
-        $md5 = $command["{$prefix}SSECustomerKeyMD5"];
-        $command["{$prefix}SSECustomerKeyMD5"] = $md5
-            ? base64_encode($md5)
-            : base64_encode(md5($key, true));
+        if ($md5 = $command[$prefix . 'SSECustomerKeyMD5']) {
+            $command[$prefix . 'SSECustomerKeyMD5'] = base64_encode($md5);
+        } else {
+            $command[$prefix . 'SSECustomerKeyMD5'] = base64_encode(md5($key, true));
+        }
     }
 }

@@ -1,10 +1,10 @@
 <?php
-namespace Aws\Test\S3\Subscriber;
+namespace Aws\Test\S3;
 
 use Aws\Test\UsesServiceTrait;
 
 /**
- * @covers Aws\S3\PermanentRedirectSubscriber
+ * @covers Aws\S3\PermanentRedirectMiddleware
  */
 class PermanentRedirectTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,26 +12,19 @@ class PermanentRedirectTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Aws\S3\Exception\PermanentRedirectException
-     * @expectedExceptionMessage Encountered a permanent redirect while requesting https://test.s3.amazonaws.com/key
+     * @expectedExceptionMessage Encountered a permanent redirect while requesting
      */
     public function testThrowsSpecificException()
     {
-        $http = new Client();
-        $http->getEmitter()->on('before', function (BeforeEvent $e) {
-            $e->intercept(new Response(301));
-        });
-
-        $client = $this->getTestClient('s3', ['client' => $http]);
-        $client->getObject(['Bucket' => 'test', 'Key' => 'key']);
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [['@metadata' => ['statusCode' => 301]]]);
+        $s3->getObject(['Bucket' => 'test', 'Key' => 'key']);
     }
 
     public function testPassesThroughUntouched()
     {
-        $http = new Client();
-        $http->getEmitter()->on('before', function (BeforeEvent $e) {
-            $e->intercept(new Response(200));
-        });
-        $client = $this->getTestClient('s3', ['client' => $http]);
-        $client->getObject(['Bucket' => 'test', 'Key' => 'key']);
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [['@metadata' => ['statusCode' => 200]]]);
+        $s3->getObject(['Bucket' => 'test', 'Key' => 'key']);
     }
 }

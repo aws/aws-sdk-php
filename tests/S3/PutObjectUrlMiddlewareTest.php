@@ -1,10 +1,10 @@
 <?php
-namespace Aws\Test\S3\Subscriber;
+namespace Aws\Test\S3;
 
 use Aws\Test\UsesServiceTrait;
 
 /**
- * @covers Aws\S3\PutObjectUrlSubscriber
+ * @covers Aws\S3\PutObjectUrlMiddleware
  */
 class PutObjectUrlTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,40 +12,39 @@ class PutObjectUrlTest extends \PHPUnit_Framework_TestCase
 
     public function testAddsObjectUrl()
     {
-        $http = new Client();
-        $http->getEmitter()->on('before', function (BeforeEvent $e) {
-            $e->intercept(new Response(200));
-        });
-
-        $client = $this->getTestClient('s3', ['client' => $http]);
+        $client = $this->getTestClient('s3');
+        $this->addMockResults($client, [
+            ['@metadata' => ['effectiveUri' => 'http://foo.com']]
+        ]);
         $result = $client->putObject([
             'Bucket' => 'test',
             'Key'    => 'key',
             'Body'   => 'hi'
         ]);
-
-        $this->assertEquals(
-            'https://test.s3.amazonaws.com/key',
-            $result['ObjectURL']
-        );
+        $this->assertEquals('http://foo.com', $result['ObjectURL']);
     }
 
     public function testAddsObjectUrlToCompleteMultipart()
     {
-        $http = new Client();
-        $http->getEmitter()->on('before', function (BeforeEvent $e) {
-            $e->intercept(new Response(200, [
-                'Location' => 'https://test.s3.amazonaws.com/key'
-            ]));
-        });
-
-        $client = $this->getTestClient('s3', ['client' => $http]);
+        $client = $this->getTestClient('s3');
+        $this->addMockResults($client, [
+            [
+                '@metadata' => [
+                    'effectiveUri' => 'http://foo.com',
+                    'headers' => [
+                        'location' => 'https://test.s3.amazonaws.com/key'
+                    ]
+                ]
+            ]
+        ]);
         $result = $client->completeMultipartUpload([
             'Bucket'   => 'test',
             'Key'      => 'key',
             'UploadId' => '123'
         ]);
-
-        $this->assertTrue(array_key_exists('ObjectURL', $result->toArray()));
+        $this->assertEquals(
+            'https://test.s3.amazonaws.com/key',
+            $result['ObjectURL']
+        );
     }
 }

@@ -90,7 +90,7 @@ class S3Client extends AwsClient
     {
         parent::__construct($args);
         $stack = $this->getHandlerList();
-        $stack->append('validate:s3.ssec', SSECMiddleware::wrap($this->getEndpoint()->getScheme()));
+        $stack->append('init:s3.ssec', SSECMiddleware::wrap($this->getEndpoint()->getScheme()));
         $stack->append('build:s3.bucket_style', BucketStyleMiddleware::wrap($this->getConfig('bucket_endpoint')));
         $stack->append('build:s3.md5', ApplyMd5Middleware::wrap($this->getConfig('calculate_md5')));
         $stack->append('build:s3.content_type', Middleware::contentType());

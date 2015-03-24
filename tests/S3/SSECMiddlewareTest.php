@@ -1,12 +1,12 @@
 <?php
 namespace Aws\Tests\S3;
 
-use Aws\S3\SSECMiddleware;
+use Aws\Middleware;
+use Aws\Result;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Psr7\Response;
 
 /**
- * @covers Aws\S3\SSECSubscriber
+ * @covers Aws\S3\SSECMiddleware
  */
 class SseCpkListenerTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,56 +17,62 @@ class SseCpkListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function testSseCpkListener($operation, array $params, array $expectedResults)
     {
-        $command = new Command($operation, $params);
-        $transaction = new CommandTransaction(
-            $this->getTestClient('s3'),
-            $command
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [[]]);
+        $cmd = $s3->getCommand($operation, $params);
+        $cmd->getHandlerList()->append(
+            'init',
+            Middleware::tap(function ($cmd, $req) use ($expectedResults) {
+                foreach ($expectedResults as $key => $value) {
+                    $this->assertEquals($value, $cmd[$key]);
+                }
+            })
         );
-        $event = new InitEvent($transaction);
-        $listener = new SSECSubscriber();
-        $listener->onInit($event);
-        foreach ($expectedResults as $key => $value) {
-            $this->assertEquals($value, $expectedResults[$key]);
-        }
+        $s3->execute($cmd);
     }
 
     public function getListenerTestCases()
     {
-        return array(
-            array(
+        return [
+            [
                 'CopyObject',
-                array(
+                [
+                    'Bucket' => 'a',
+                    'Key' => 'b',
+                    'CopySource' => 'd/e',
                     'SSECustomerKey' => 'foo',
                     'CopySourceSSECustomerKey' => 'bar',
-                ),
-                array(
+                ],
+                [
                     'SSECustomerAlgorithm' => null,
                     'SSECustomerKey' => base64_encode('foo'),
                     'SSECustomerKeyMD5' => base64_encode(md5('foo', true)),
                     'CopySourceSSECustomerKey' => base64_encode('bar'),
                     'CopySourceSSECustomerKeyMD5' => base64_encode(md5('bar', true)),
-                )
-            ),
-            array(
+                ]
+            ],
+            [
                 'PutObject',
-                array(
+                [
+                    'Bucket' => 'a',
+                    'Key' => 'b',
                     'SSECustomerKey' => 'foo',
                     'SSECustomerKeyMD5' => 'bar',
-                ),
-                array(
+                ],
+                [
                     'SSECustomerKey' => base64_encode('foo'),
                     'SSECustomerKeyMD5' => base64_encode('bar'),
-                )
-            ),
-            array(
+                ]
+            ],
+            [
                 'ListObjects',
-                array(),
-                array(
+                ['Bucket' => 'a'],
+                [
                     'SSECustomerKey' => null,
                     'SSECustomerKeyMD5' => null,
-                )
-            ),
-        );
+                ]
+            ],
+        ];
     }
 
     /**
@@ -84,7 +90,7 @@ class SseCpkListenerTest extends \PHPUnit_Framework_TestCase
     public function testCanUseWithoutHttpsForNonSse()
     {
         $client = $this->getTestClient('s3', ['scheme' => 'http']);
-        $client->getHttpClient()->getEmitter()->attach(new Mock([new Response(200)]));
+        $this->addMockResults($client, [new Result()]);
         $client->listBuckets();
     }
 }
