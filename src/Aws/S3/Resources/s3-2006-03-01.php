@@ -109,6 +109,11 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'uploadId',
                 ),
+                'RequestPayer' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-payer',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -171,6 +176,11 @@ return array (
                     'type' => 'string',
                     'location' => 'query',
                     'sentAs' => 'uploadId',
+                ),
+                'RequestPayer' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-payer',
                 ),
                 'command.expects' => array(
                     'static' => true,
@@ -364,6 +374,11 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-copy-source-server-side-encryption-customer-key-MD5',
+                ),
+                'RequestPayer' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-payer',
                 ),
                 'ACP' => array(
                     'type' => 'object',
@@ -579,6 +594,11 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id',
                 ),
+                'RequestPayer' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-payer',
+                ),
                 'ACP' => array(
                     'type' => 'object',
                     'additionalProperties' => true,
@@ -649,6 +669,20 @@ return array (
                 ),
             ),
         ),
+        'DeleteBucketReplication' => array(
+            'httpMethod' => 'DELETE',
+            'uri' => '/{Bucket}?replication',
+            'class' => 'Aws\\S3\\Command\\S3Command',
+            'responseClass' => 'DeleteBucketReplicationOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Bucket' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+            ),
+        ),
         'DeleteBucketTagging' => array(
             'httpMethod' => 'DELETE',
             'uri' => '/{Bucket}?tagging',
@@ -710,6 +744,11 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'versionId',
                 ),
+                'RequestPayer' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-payer',
+                ),
             ),
         ),
         'DeleteObjects' => array(
@@ -765,6 +804,11 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-mfa',
+                ),
+                'RequestPayer' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-payer',
                 ),
                 'command.expects' => array(
                     'static' => true,
@@ -894,6 +938,24 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
+                ),
+            ),
+        ),
+        'GetBucketReplication' => array(
+            'httpMethod' => 'GET',
+            'uri' => '/{Bucket}?replication',
+            'class' => 'Aws\\S3\\Command\\S3Command',
+            'responseClass' => 'GetBucketReplicationOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Bucket' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
                 ),
             ),
         ),
@@ -1083,6 +1145,11 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5',
                 ),
+                'RequestPayer' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-payer',
+                ),
                 'SaveAs' => array(
                     'location' => 'response_body',
                 ),
@@ -1120,6 +1187,11 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'versionId',
                 ),
+                'RequestPayer' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-payer',
+                ),
                 'command.expects' => array(
                     'static' => true,
                     'default' => 'application/xml',
@@ -1152,6 +1224,11 @@ return array (
                     'filters' => array(
                         'Aws\\S3\\S3Client::explodeKey',
                     ),
+                ),
+                'RequestPayer' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-payer',
                 ),
             ),
         ),
@@ -1250,6 +1327,11 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5',
+                ),
+                'RequestPayer' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-payer',
                 ),
             ),
             'errorResponses' => array(
@@ -1457,6 +1539,11 @@ return array (
                     'type' => 'string',
                     'location' => 'query',
                     'sentAs' => 'uploadId',
+                ),
+                'RequestPayer' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-payer',
                 ),
                 'command.expects' => array(
                     'static' => true,
@@ -1968,6 +2055,69 @@ return array (
                 ),
             ),
         ),
+        'PutBucketReplication' => array(
+            'httpMethod' => 'PUT',
+            'uri' => '/{Bucket}?replication',
+            'class' => 'Aws\\S3\\Command\\S3Command',
+            'responseClass' => 'PutBucketReplicationOutput',
+            'responseType' => 'model',
+            'data' => array(
+                'xmlRoot' => array(
+                    'name' => 'ReplicationConfiguration',
+                    'namespaces' => array(
+                        'http://s3.amazonaws.com/doc/2006-03-01/',
+                    ),
+                ),
+            ),
+            'parameters' => array(
+                'Bucket' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+                'Role' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'Rules' => array(
+                    'required' => true,
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'data' => array(
+                        'xmlFlattened' => true,
+                    ),
+                    'items' => array(
+                        'name' => 'ReplicationRule',
+                        'type' => 'object',
+                        'sentAs' => 'Rule',
+                        'properties' => array(
+                            'ID' => array(
+                                'type' => 'string',
+                            ),
+                            'Prefix' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'Status' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'Destination' => array(
+                                'required' => true,
+                                'type' => 'object',
+                                'properties' => array(
+                                    'Bucket' => array(
+                                        'required' => true,
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
         'PutBucketRequestPayment' => array(
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}?requestPayment',
@@ -2326,6 +2476,11 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id',
                 ),
+                'RequestPayer' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-payer',
+                ),
                 'ACP' => array(
                     'type' => 'object',
                     'additionalProperties' => true,
@@ -2443,6 +2598,11 @@ return array (
                         'Aws\\S3\\S3Client::explodeKey',
                     ),
                 ),
+                'RequestPayer' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-payer',
+                ),
                 'ACP' => array(
                     'type' => 'object',
                     'additionalProperties' => true,
@@ -2493,6 +2653,11 @@ return array (
                     'required' => true,
                     'type' => 'numeric',
                     'location' => 'xml',
+                ),
+                'RequestPayer' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-payer',
                 ),
             ),
             'errorResponses' => array(
@@ -2577,6 +2742,11 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5',
+                ),
+                'RequestPayer' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-payer',
                 ),
             ),
         ),
@@ -2692,6 +2862,11 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-copy-source-server-side-encryption-customer-key-MD5',
                 ),
+                'RequestPayer' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-payer',
+                ),
                 'command.expects' => array(
                     'static' => true,
                     'default' => 'application/xml',
@@ -2704,6 +2879,11 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
+                'RequestCharged' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-charged',
+                ),
                 'RequestId' => array(
                     'location' => 'header',
                     'sentAs' => 'x-amz-request-id',
@@ -2749,6 +2929,11 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id',
+                ),
+                'RequestCharged' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-charged',
                 ),
                 'RequestId' => array(
                     'location' => 'header',
@@ -2797,6 +2982,11 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id',
+                ),
+                'RequestCharged' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-charged',
                 ),
                 'RequestId' => array(
                     'location' => 'header',
@@ -2855,6 +3045,11 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id',
                 ),
+                'RequestCharged' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-charged',
+                ),
                 'RequestId' => array(
                     'location' => 'header',
                     'sentAs' => 'x-amz-request-id',
@@ -2901,6 +3096,16 @@ return array (
                 ),
             ),
         ),
+        'DeleteBucketReplicationOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
         'DeleteBucketTaggingOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -2934,6 +3139,11 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-version-id',
+                ),
+                'RequestCharged' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-charged',
                 ),
                 'RequestId' => array(
                     'location' => 'header',
@@ -2969,6 +3179,11 @@ return array (
                             ),
                         ),
                     ),
+                ),
+                'RequestCharged' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-charged',
                 ),
                 'Errors' => array(
                     'type' => 'array',
@@ -3403,6 +3618,52 @@ return array (
                 ),
             ),
         ),
+        'GetBucketReplicationOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Role' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'Rules' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'sentAs' => 'Rule',
+                    'data' => array(
+                        'xmlFlattened' => true,
+                    ),
+                    'items' => array(
+                        'name' => 'ReplicationRule',
+                        'type' => 'object',
+                        'sentAs' => 'Rule',
+                        'properties' => array(
+                            'ID' => array(
+                                'type' => 'string',
+                            ),
+                            'Prefix' => array(
+                                'type' => 'string',
+                            ),
+                            'Status' => array(
+                                'type' => 'string',
+                            ),
+                            'Destination' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'Bucket' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'RequestId' => array(
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
         'GetBucketRequestPaymentOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -3660,6 +3921,16 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id',
                 ),
+                'RequestCharged' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-charged',
+                ),
+                'ReplicationStatus' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-replication-status',
+                ),
                 'RequestId' => array(
                     'location' => 'header',
                     'sentAs' => 'x-amz-request-id',
@@ -3722,6 +3993,11 @@ return array (
                         ),
                     ),
                 ),
+                'RequestCharged' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-charged',
+                ),
                 'RequestId' => array(
                     'location' => 'header',
                     'sentAs' => 'x-amz-request-id',
@@ -3736,6 +4012,11 @@ return array (
                     'type' => 'string',
                     'instanceOf' => 'Guzzle\\Http\\EntityBody',
                     'location' => 'body',
+                ),
+                'RequestCharged' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-charged',
                 ),
                 'RequestId' => array(
                     'location' => 'header',
@@ -3862,6 +4143,16 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id',
+                ),
+                'RequestCharged' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-charged',
+                ),
+                'ReplicationStatus' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-replication-status',
                 ),
                 'RequestId' => array(
                     'location' => 'header',
@@ -4358,6 +4649,11 @@ return array (
                     'type' => 'string',
                     'location' => 'xml',
                 ),
+                'RequestCharged' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-charged',
+                ),
                 'RequestId' => array(
                     'location' => 'header',
                     'sentAs' => 'x-amz-request-id',
@@ -4415,6 +4711,16 @@ return array (
             ),
         ),
         'PutBucketPolicyOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'PutBucketReplicationOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
@@ -4502,6 +4808,11 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id',
                 ),
+                'RequestCharged' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-charged',
+                ),
                 'RequestId' => array(
                     'location' => 'header',
                     'sentAs' => 'x-amz-request-id',
@@ -4514,6 +4825,11 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
+                'RequestCharged' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-charged',
+                ),
                 'RequestId' => array(
                     'location' => 'header',
                     'sentAs' => 'x-amz-request-id',
@@ -4524,6 +4840,11 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
+                'RequestCharged' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-charged',
+                ),
                 'RequestId' => array(
                     'location' => 'header',
                     'sentAs' => 'x-amz-request-id',
@@ -4557,6 +4878,11 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id',
+                ),
+                'RequestCharged' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-charged',
                 ),
                 'RequestId' => array(
                     'location' => 'header',
@@ -4600,6 +4926,11 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id',
+                ),
+                'RequestCharged' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-charged',
                 ),
                 'RequestId' => array(
                     'location' => 'header',

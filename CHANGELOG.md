@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Next Release
+
+* `Aws\S3` - Added support for cross-region replication.
+* `Aws\S3` - Added support for ["Requester Pays" buckets](http://docs.aws.amazon.com/AmazonS3/latest/dev/RequesterPaysBuckets.html).
+
 ## 2.7.23 - 2015-03-19
 
 * `Aws\ElasticTranscoder` - API update to support AppliedColorSpaceConversion.

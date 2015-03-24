@@ -61,6 +61,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model deleteBucketCors(array $args = array()) {@command S3 DeleteBucketCors}
  * @method Model deleteBucketLifecycle(array $args = array()) {@command S3 DeleteBucketLifecycle}
  * @method Model deleteBucketPolicy(array $args = array()) {@command S3 DeleteBucketPolicy}
+ * @method Model deleteBucketReplication(array $args = array()) {@command S3 DeleteBucketReplication}
  * @method Model deleteBucketTagging(array $args = array()) {@command S3 DeleteBucketTagging}
  * @method Model deleteBucketWebsite(array $args = array()) {@command S3 DeleteBucketWebsite}
  * @method Model deleteObject(array $args = array()) {@command S3 DeleteObject}
@@ -72,6 +73,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model getBucketLogging(array $args = array()) {@command S3 GetBucketLogging}
  * @method Model getBucketNotification(array $args = array()) {@command S3 GetBucketNotification}
  * @method Model getBucketPolicy(array $args = array()) {@command S3 GetBucketPolicy}
+ * @method Model getBucketReplication(array $args = array()) {@command S3 GetBucketReplication}
  * @method Model getBucketRequestPayment(array $args = array()) {@command S3 GetBucketRequestPayment}
  * @method Model getBucketTagging(array $args = array()) {@command S3 GetBucketTagging}
  * @method Model getBucketVersioning(array $args = array()) {@command S3 GetBucketVersioning}
@@ -92,6 +94,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model putBucketLogging(array $args = array()) {@command S3 PutBucketLogging}
  * @method Model putBucketNotification(array $args = array()) {@command S3 PutBucketNotification}
  * @method Model putBucketPolicy(array $args = array()) {@command S3 PutBucketPolicy}
+ * @method Model putBucketReplication(array $args = array()) {@command S3 PutBucketReplication}
  * @method Model putBucketRequestPayment(array $args = array()) {@command S3 PutBucketRequestPayment}
  * @method Model putBucketTagging(array $args = array()) {@command S3 PutBucketTagging}
  * @method Model putBucketVersioning(array $args = array()) {@command S3 PutBucketVersioning}
