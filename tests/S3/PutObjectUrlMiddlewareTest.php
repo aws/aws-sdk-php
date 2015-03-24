@@ -2,9 +2,6 @@
 namespace Aws\Test\S3\Subscriber;
 
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Client;
-use GuzzleHttp\Event\BeforeEvent;
-use GuzzleHttp\Message\Response;
 
 /**
  * @covers Aws\S3\PutObjectUrlSubscriber

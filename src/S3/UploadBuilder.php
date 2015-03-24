@@ -1,17 +1,14 @@
 <?php
 namespace Aws\S3;
 
+use Aws\CommandInterface;
+use Aws\HashingStream;
 use Aws\Multipart\AbstractUploadBuilder;
 use Aws\Multipart\UploadState;
-use Aws\Result;
-use Aws\CommandInterface;
-use GuzzleHttp\Mimetypes;
-use GuzzleHttp\Psr7\LazyOpenStream;
-use GuzzleHttp\Psr7\Stream;
-use Psr\Http\Message\StreamableInterface;
-use GuzzleHttp\Psr7;
-use Aws\HashingStream;
 use Aws\PhpHash;
+use Aws\Result;
+use GuzzleHttp\Psr7;
+use Psr\Http\Message\StreamableInterface;
 
 /**
  * Creates a multipart uploader used to easily upload large objects to S3.
@@ -92,7 +89,8 @@ class UploadBuilder extends AbstractUploadBuilder
         if (!isset($this->config['initiate']['params']['ContentType'])
             && ($uri = $this->source->getMetadata('uri'))
         ) {
-            if ($mimeType = Mimetypes::getInstance()->fromFilename($uri)) {
+            $mimeType = Psr7\mimetype_from_filename($uri);
+            if ($mimeType) {
                 $this->config['initiate']['params']['ContentType'] = $mimeType;
             }
         }
@@ -150,7 +148,7 @@ class UploadBuilder extends AbstractUploadBuilder
             if ($seekable) {
                 // Case 1: Source is seekable, use lazy stream to defer work.
                 $body = $this->limitPartStream(
-                    new LazyOpenStream($this->source->getMetadata('uri'), 'r')
+                    new Psr7\LazyOpenStream($this->source->getMetadata('uri'), 'r')
                 );
             } else {
                 // Case 2: Stream is not seekable; must store in temp stream.
@@ -160,7 +158,7 @@ class UploadBuilder extends AbstractUploadBuilder
                         $data['Content' . strtoupper($type)] = $result;
                     }
                 );
-                $body = Stream::factory();
+                $body = Psr7\stream_for();
                 Psr7\copy_to_stream($source, $body);
                 $data['ContentLength'] = $body->getSize();
             }

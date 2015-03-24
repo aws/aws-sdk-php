@@ -133,7 +133,7 @@ class TraceMiddleware
             'headers'  => $request->getHeaders(),
             'body'     => $this->streamStr($request->getBody()),
             'scheme'   => $request->getUri()->getScheme(),
-            'port'     => $request->getUri()->getPath(),
+            'port'     => $request->getUri()->getPort(),
             'path'     => $request->getUri()->getPath(),
             'query'    => $request->getUri()->getQuery(),
         ]);
@@ -217,7 +217,7 @@ class TraceMiddleware
 
     private function createHttpDebug(CommandInterface $command)
     {
-        if ($this->config['http']) {
+        if ($this->config['http'] && !isset($command['@http']['debug'])) {
             $command['@http']['debug'] = fopen('php://temp', 'w+');
         }
     }
@@ -236,11 +236,13 @@ class TraceMiddleware
     {
         if ($this->config['scrub_auth']) {
             // SignatureV2 query string and S3Signature
-            $value = preg_replace('/AWSAccessKeyId=AKI.+&/i', 'AWSAccessKeyId=AKI****&', $value);
+            $value = preg_replace('/AWSAccessKeyId=AKI.+&/i', 'AWSAccessKeyId=AKI[KEY]&', $value);
             // SignatureV4 Signature and S3Signature
-            $value = preg_replace('/Signature=.+/i', 'Signature=****', $value);
+            $value = preg_replace('/Signature=.+/i', 'Signature=[SIGNATURE]', $value);
             // SignatureV4 access key ID
-            $value = preg_replace('/Credential=AKI.+\//i', 'Credential=AKI***/', $value);
+            $value = preg_replace('/Credential=AKI.+\//i', 'Credential=AKI[KEY]/', $value);
+            // S3 signatures
+            $value = preg_replace('/AWS AKI.+:.+/', 'AWS AKI[KEY]:[SIGNATURE]', $value);
         }
 
         call_user_func($this->config['logfn'], $value);

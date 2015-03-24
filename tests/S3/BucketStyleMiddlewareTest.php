@@ -1,16 +1,13 @@
 <?php
 namespace Aws\Test\S3;
 
-use Aws\S3\BucketStyleSubscriber;
+use Aws\S3\BucketStyleMiddleware;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Command\CommandTransaction;
-use GuzzleHttp\Command\Event\PreparedEvent;
-use GuzzleHttp\Command\Event\ProcessEvent;
-use GuzzleHttp\Message\Request;
-use GuzzleHttp\Message\Response;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 
 /**
- * @covers Aws\S3\BucketStyleSubscriber
+ * @covers Aws\S3\BucketStyleMiddleware
  */
 class BucketStyleTest extends \PHPUnit_Framework_TestCase
 {

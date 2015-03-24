@@ -1,13 +1,12 @@
 <?php
 namespace Aws\S3;
 
-use GuzzleHttp\Collection;
-use GuzzleHttp\Url;
+use GuzzleHttp\Psr7\Uri;
 
 /**
  * Encapsulates the logic for getting the data for an S3 object POST upload form
  */
-class PostObject extends Collection
+class PostObject
 {
     /** @var S3Client The S3 client being used to sign the policy */
     private $client;

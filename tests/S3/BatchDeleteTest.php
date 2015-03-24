@@ -5,7 +5,6 @@ use Aws\S3\S3Client;
 use Aws\S3\BatchDelete;
 use Aws\S3\Exception\DeleteMultipleObjectsException;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Command\Event\PreparedEvent;
 
 /**
  * @covers Aws\S3\BatchDelete

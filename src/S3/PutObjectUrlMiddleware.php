@@ -41,10 +41,14 @@ class PutObjectUrlMiddleware
         return $next($command, $request)->then(
             function (ResultInterface $result) use ($command) {
                 $name = $command->getName();
-                if ($name === 'PutObject' || $name === 'CopyObject') {
-                    $result['ObjectURL'] = $result['@metadata']['effectiveUri'];
-                } elseif ($name === 'CompleteMultipartUpload') {
-                    $result['ObjectURL'] = $result['Location'];
+                switch ($name) {
+                    case 'PutObject':
+                    case 'CopyObject':
+                        $result['ObjectURL'] = $result['@metadata']['effectiveUri'];
+                        break;
+                    case 'CompleteMultipartUpload':
+                        $result['ObjectURL'] = $result['Location'];
+                        break;
                 }
                 return $result;
             }

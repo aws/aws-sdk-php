@@ -5,7 +5,7 @@ use Aws\Multipart\UploadState;
 use Aws\S3\UploadBuilder;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\Psr7;
 
 /**
  * @covers Aws\S3\UploadBuilder
@@ -86,7 +86,7 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
     public function testKnowsWhenToCalculateChecksums($client, $expected)
     {
         $uploader = (new UploadBuilder)->setClient($client);
-        $stream = Stream::factory('foo');
+        $stream = Psr7\stream_for('foo');
 
         $method = (new \ReflectionClass('Aws\S3\UploadBuilder'))
             ->getMethod('decorateWithHashes');
@@ -124,7 +124,7 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testCanCreatePartGeneratorCallback()
     {
-        $source = Stream::factory('foo');
+        $source = Psr7\stream_for('foo');
         $state = new UploadState([]);
         $state->setPartSize(5);
         $builder = (new UploadBuilder)
@@ -140,12 +140,12 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
 
         $data = $createPart(true, 2);
         $this->assertEquals(2, $data['PartNumber']);
-        $this->assertInstanceOf('GuzzleHttp\Stream\LimitStream', $data['Body']);
+        $this->assertInstanceOf('GuzzleHttp\Psr7\LimitStream', $data['Body']);
 
         $source->seek(0);
         $data = $createPart(false, 2);
         $this->assertEquals(2, $data['PartNumber']);
-        $this->assertInstanceOf('GuzzleHttp\Stream\Stream', $data['Body']);
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Stream', $data['Body']);
         $this->assertArrayHasKey('ContentLength', $data);
         $this->assertArrayHasKey('ContentMD5', $data);
     }
@@ -167,7 +167,7 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
         $builder = (new UploadBuilder)
             ->setClient($this->getTestClient('S3'))
             ->setState($state)
-            ->setSource(Stream::factory('foo'));
+            ->setSource(Psr7\stream_for('foo'));
 
         // Get function.
         $method = (new \ReflectionObject($builder))
@@ -189,7 +189,7 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
         $builder = (new UploadBuilder)
             ->setClient($this->getTestClient('S3'))
             ->setState($state)
-            ->setSource(Stream::factory('foo'));
+            ->setSource(Psr7\stream_for('foo'));
 
         $method = (new \ReflectionObject($builder))
             ->getMethod('getResultHandlerFn');
@@ -198,7 +198,7 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
         $handleResult = $method->invoke($builder);
 
         // Mock arguments.
-        $command = $this->getMockBuilder('GuzzleHttp\Command\Command')
+        $command = $this->getMockBuilder('Aws\Command')
             ->disableOriginalConstructor()
             ->getMock();
         $command->method('offsetGet')->willReturn(2);

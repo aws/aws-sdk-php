@@ -3,15 +3,14 @@ namespace Aws\Test\S3\Subscriber;
 
 use Aws\S3\Exception\S3Exception;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Stream\NoSeekStream;
 
 /**
- * @covers Aws\S3\ApplyMd5Subscriber
+ * @covers Aws\S3\ApplyMd5Middleware
  */
-class ApplyMd5SubscriberTest extends \PHPUnit_Framework_TestCase
+class ApplyMd5MiddlewareTest extends \PHPUnit_Framework_TestCase
 {
     use UsesServiceTrait;
 

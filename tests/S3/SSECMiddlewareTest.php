@@ -1,13 +1,9 @@
 <?php
 namespace Aws\Tests\S3;
 
-use Aws\S3\SSECSubscriber;
+use Aws\S3\SSECMiddleware;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Command\Command;
-use GuzzleHttp\Command\CommandTransaction;
-use GuzzleHttp\Command\Event\InitEvent;
-use GuzzleHttp\Message\Response;
-use GuzzleHttp\Subscriber\Mock;
+use GuzzleHttp\Psr7\Response;
 
 /**
  * @covers Aws\S3\SSECSubscriber

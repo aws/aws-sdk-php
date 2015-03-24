@@ -4,9 +4,6 @@ namespace Aws\Tests\S3;
 use Aws\Result;
 use Aws\S3\Transfer;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Command\CommandInterface;
-use GuzzleHttp\Command\Event\PreparedEvent;
-use GuzzleHttp\Event\RequestEvents;
 
 /**
  * @covers Aws\S3\Transfer

@@ -41,8 +41,8 @@ class SSECMiddleware
             $command['CopySourceSSECustomerKey']
         ) {
             if ($this->endpointScheme !== 'https') {
-                throw new \RuntimeException('You must configure your S3 client to '
-                    . 'use HTTPS in order to use the SSE-C features.');
+                throw new \RuntimeException('You must configure your S3 client '
+                    . 'to use HTTPS in order to use the SSE-C features.');
             }
         }
 
@@ -65,16 +65,13 @@ class SSECMiddleware
         $isCopy = false
     ) {
         $prefix = $isCopy ? 'CopySource' : '';
-
         // Base64 encode the provided key
-        $key = $command[$prefix . 'SSECustomerKey'];
-        $command[$prefix . 'SSECustomerKey'] = base64_encode($key);
-
+        $key = $command["{$prefix}SSECustomerKey"];
+        $command["{$prefix}SSECustomerKey"] = base64_encode($key);
         // Base64 the provided MD5 or, generate an MD5 if not provided
-        if ($md5 = $command[$prefix . 'SSECustomerKeyMD5']) {
-            $command[$prefix . 'SSECustomerKeyMD5'] = base64_encode($md5);
-        } else {
-            $command[$prefix . 'SSECustomerKeyMD5'] = base64_encode(md5($key, true));
-        }
+        $md5 = $command["{$prefix}SSECustomerKeyMD5"];
+        $command["{$prefix}SSECustomerKeyMD5"] = $md5
+            ? base64_encode($md5)
+            : base64_encode(md5($key, true));
     }
 }

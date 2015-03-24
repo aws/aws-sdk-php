@@ -1,7 +1,7 @@
 <?php
 namespace Aws\S3;
 
-use GuzzleHttp\Psr7\Uri;
+use GuzzleHttp\Psr7;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -26,14 +26,14 @@ class S3UriParser
      * - path_style: Set to true if using path style, or false if not
      * - region: Set to a string if a non-class endpoint is used or null.
      *
-     * @param $uri
+     * @param string|UriInterface $uri
      *
      * @return array
      * @throws \InvalidArgumentException
      */
     public function parse($uri)
     {
-        $url = new Uri($uri);
+        $url = Psr7\uri_for($uri);
         if (!$url->getHost()) {
             throw new \InvalidArgumentException('No hostname found in URI: '
                 . $uri);
