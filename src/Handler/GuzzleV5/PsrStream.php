@@ -3,7 +3,6 @@ namespace Aws\Handler\GuzzleV5;
 
 use GuzzleHttp\Stream\StreamDecoratorTrait;
 use GuzzleHttp\Stream\StreamInterface as GuzzleStreamInterface;
-use GuzzleHttp\Stream\Utils;
 use Psr\Http\Message\StreamableInterface as Psr7StreamInterface;
 
 class PsrStream implements Psr7StreamInterface
@@ -25,6 +24,6 @@ class PsrStream implements Psr7StreamInterface
 
     public function getContents()
     {
-        return Utils::copyToString($this->stream);
+        return $this->stream->getContents();
     }
 }
