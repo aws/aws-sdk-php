@@ -51,11 +51,6 @@ class Uploader
         $this->config = $config;
     }
 
-    public function __invoke($concurrency = 1, callable $before = null)
-    {
-        return $this->upload($concurrency, $before);
-    }
-
     /**
      * Returns the current state of the upload
      *

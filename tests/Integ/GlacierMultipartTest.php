@@ -16,7 +16,7 @@ class GlacierMultipart extends \PHPUnit_Framework_TestCase
 
     public static function setUpBeforeClass()
     {
-        $client = self::getSdk()->getGlacier();
+        $client = self::getSdk()->createGlacier();
         $client->createVault(['vaultName' => self::VAULT]);
         $client->waitUntil('VaultExists', ['vaultName' => self::VAULT]);
     }
@@ -39,7 +39,7 @@ class GlacierMultipart extends \PHPUnit_Framework_TestCase
      */
     public function testMultipartUpload($description, $seekable, $concurrency)
     {
-        $client = self::getSdk()->getGlacier();
+        $client = self::getSdk()->createGlacier();
         $tmpFile = sys_get_temp_dir() . '/aws-php-sdk-integ-glacier-mup';
         file_put_contents($tmpFile, str_repeat('x', 2 * self::MB + 1024));
 

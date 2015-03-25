@@ -22,7 +22,10 @@ class GlacierClient extends AwsClient
         $stack = $this->getHandlerList();
         $stack->append('build:glacier.api_version',$this->getApiVersionMiddleware());
         $stack->append('build:glacier.checksum', $this->getChecksumsMiddleware());
-        $stack->append('build:glacier.content_type', Middleware::contentType());
+        $stack->append(
+            'build:glacier.content_type',
+            Middleware::contentType(['UploadArchive', 'UploadPart'])
+        );
         $stack->append(
             'init:glacier.source_file',
             Middleware::sourceFile($this->getApi(), 'body', 'sourceFile')

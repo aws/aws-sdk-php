@@ -89,10 +89,8 @@ class UploadBuilder extends AbstractUploadBuilder
         if (!isset($this->config['initiate']['params']['ContentType'])
             && ($uri = $this->source->getMetadata('uri'))
         ) {
-            $mimeType = Psr7\mimetype_from_filename($uri);
-            if ($mimeType) {
-                $this->config['initiate']['params']['ContentType'] = $mimeType;
-            }
+            $mimeType = Psr7\mimetype_from_filename($uri) ?: 'application/octet-stream';
+            $this->config['initiate']['params']['ContentType'] = $mimeType;
         }
     }
 

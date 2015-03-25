@@ -170,21 +170,23 @@ final class Middleware
 
     /**
      * Middleware wrapper function that adds a Content-Type header to requests.
-     *
      * This is only done when the Content-Type has not already been set, and the
      * request body's URI is available. It then checks the file extension of the
      * URI to determine the mime-type.
      *
+     * @param array $operations Operations that Content-Type should be added to.
+     *
      * @return callable
      */
-    public static function contentType()
+    public static function contentType(array $operations)
     {
-        return function (callable $handler) {
+        return function (callable $handler) use ($operations) {
             return function (
                 CommandInterface $command,
                 RequestInterface $request = null
-            ) use ($handler) {
+            ) use ($handler, $operations) {
                 if (!$request->hasHeader('Content-Type')
+                    && in_array($command->getName(), $operations, true)
                     && ($uri = $request->getBody()->getMetadata('uri'))
                 ) {
                     $request = $request->withHeader(
