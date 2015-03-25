@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Test\Integ\Multipart;
+namespace Aws\Test\Integ;
 
 use Aws\Exception\MultipartUploadException;
 use Aws\S3\ClearBucket;
