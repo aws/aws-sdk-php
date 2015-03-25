@@ -2,18 +2,15 @@
 namespace Aws\S3;
 
 use Aws\AwsClientInterface;
-use Aws\ResultInterface;
 use Aws\S3\Exception\DeleteMultipleObjectsException;
+use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromisorInterface;
 use GuzzleHttp\Promise\PromiseInterface;
 
 /**
  * Efficiently deletes many objects from a single Amazon S3 bucket using an
- * iterator that yields keys. Deletes are made using the DeleteMultipleObjects
- * API operation.
- *
- * The easiest way to use this class using through the static fromListObjects()
- * method. For example:
+ * iterator that yields keys. Deletes are made using the DeleteObjects API
+ * operation.
  *
  *     $s3 = new Aws\S3\Client([
  *         'region' => 'us-west-2',
@@ -27,6 +24,14 @@ use GuzzleHttp\Promise\PromiseInterface;
  *     // Force synchronous completion
  *     $delete->delete();
  *
+ * When using one of the batch delete creational static methods, you can supply
+ * an associative array of options:
+ *
+ * - before: Function invoked before executing a command. The function is
+ *   passed the command that is about to be executed. This can be useful
+ *   for logging, adding custom request headers, etc.
+ * - batch_size: The size of each delete batch. Defaults to 1000.
+ *
  * @link http://docs.aws.amazon.com/AmazonS3/latest/API/multiobjectdeleteapi.html
  */
 class BatchDelete implements PromisorInterface
@@ -34,58 +39,14 @@ class BatchDelete implements PromisorInterface
     private $bucket;
     /** @var AwsClientInterface */
     private $client;
-    /** @var \Iterator */
-    private $iterator;
     /** @var callable */
     private $before;
     /** @var PromiseInterface */
     private $cachedPromise;
+    /** @var callable */
+    private $promiseCreator;
     private $batchSize = 1000;
     private $queue = [];
-
-    /**
-     * Each value yielded by the iterator must be an associative array that
-     * contains a "Key" key mapping to the Key in the bucket to delete.
-     * Additional parameters may be present (e.g., "VersionId').
-     *
-     * The constructor accepts an optional hash of configuration options:
-     *
-     * - before: Function invoked before executing a command. The function is
-     *   passed the command that is about to be executed. This can be useful
-     *   for logging, adding custom request headers, etc.
-     * - batch_size: The size of each delete batch. Defaults to 1000.
-     *
-     * @param AwsClientInterface $client   Client used to transfer the requests
-     * @param string             $bucket   Bucket to delete from.
-     * @param \Iterator          $iterator Yields assoc of keys to delete.
-     * @param array              $options  Hash of options used with the batch
-     *
-     * @throws \InvalidArgumentException if the provided batch_size is <= 0
-     */
-    public function __construct(
-        AwsClientInterface $client,
-        $bucket,
-        \Iterator $iterator,
-        array $options = []
-    ) {
-        $this->client = $client;
-        $this->bucket = $bucket;
-        $this->iterator = $iterator;
-
-        if (isset($options['before'])) {
-            if (!is_callable($options['before'])) {
-                throw new \InvalidArgumentException('before must be callable');
-            }
-            $this->before = $options['before'];
-        }
-
-        if (isset($options['batch_size'])) {
-            if ($options['batch_size'] <= 0) {
-                throw new \InvalidArgumentException('batch_size is not > 0');
-            }
-            $this->batchSize = min($options['batch_size'], 1000);
-        }
-    }
 
     /**
      * Creates a BatchDelete object from all of the paginated results of a
@@ -103,14 +64,50 @@ class BatchDelete implements PromisorInterface
         array $listObjectsParams,
         array $options = []
     ) {
-        $iter = $client->getIterator('ListObjects', $listObjectsParams);
+        $iter = $client->getPaginator('ListObjects', $listObjectsParams);
+        $bucket = $listObjectsParams['Bucket'];
+        $fn = function (BatchDelete $that) use ($iter) {
+            return $iter->each(function ($result) use ($that) {
+                $promises = [];
+                foreach ($result['Contents'] as $object) {
+                    if ($promise = $that->enqueue($object)) {
+                        $promises[] = $promise;
+                    }
+                }
+                return $promises ? Promise\all($promises) : null;
+            });
+        };
 
-        return new self(
-            $client,
-            $listObjectsParams['Bucket'],
-            $iter,
-            $options
-        );
+        return new self($client, $bucket, $fn, $options);
+    }
+
+    /**
+     * Creates a BatchDelete object from an iterator that yields results.
+     *
+     * @param AwsClientInterface $client  AWS Client to use to execute commands
+     * @param string             $bucket  Bucket where the objects are stored
+     * @param \Iterator          $iter    Iterator that yields assoc arrays
+     * @param array              $options BatchDelete options
+     *
+     * @return BatchDelete
+     */
+    public static function fromIterator(
+        AwsClientInterface $client,
+        $bucket,
+        \Iterator $iter,
+        array $options = []
+    ) {
+        $fn = function (BatchDelete $that) use ($iter) {
+            return \GuzzleHttp\Promise\coroutine(function () use ($that, $iter) {
+                foreach ($iter as $obj) {
+                    if ($promise = $that->enqueue($obj)) {
+                        yield $promise;
+                    }
+                }
+            });
+        };
+
+        return new self($client, $bucket, $fn, $options);
     }
 
     public function promise()
@@ -132,13 +129,36 @@ class BatchDelete implements PromisorInterface
         $this->promise()->wait();
     }
 
-    private function process(ResultInterface $result)
-    {
-        if (!empty($result['Errors'])) {
-            throw new DeleteMultipleObjectsException(
-                $result['Deleted'] ?: [],
-                $result['Errors']
-            );
+    /**
+     * @param AwsClientInterface $client    Client used to transfer the requests
+     * @param string             $bucket    Bucket to delete from.
+     * @param callable           $promiseFn Creates a promise.
+     * @param array              $options   Hash of options used with the batch
+     *
+     * @throws \InvalidArgumentException if the provided batch_size is <= 0
+     */
+    private function __construct(
+        AwsClientInterface $client,
+        $bucket,
+        callable $promiseFn,
+        array $options = []
+    ) {
+        $this->client = $client;
+        $this->bucket = $bucket;
+        $this->promiseCreator = $promiseFn;
+
+        if (isset($options['before'])) {
+            if (!is_callable($options['before'])) {
+                throw new \InvalidArgumentException('before must be callable');
+            }
+            $this->before = $options['before'];
+        }
+
+        if (isset($options['batch_size'])) {
+            if ($options['batch_size'] <= 0) {
+                throw new \InvalidArgumentException('batch_size is not > 0');
+            }
+            $this->batchSize = min($options['batch_size'], 1000);
         }
     }
 
@@ -172,7 +192,16 @@ class BatchDelete implements PromisorInterface
             call_user_func($this->before, $command);
         }
 
-        return $this->client->executeAsync($command);
+        return $this->client->executeAsync($command)
+            ->then(function ($result) {
+                if (!empty($result['Errors'])) {
+                    throw new DeleteMultipleObjectsException(
+                        $result['Deleted'] ?: [],
+                        $result['Errors']
+                    );
+                }
+                return $result;
+            });
     }
 
     /**
@@ -182,24 +211,24 @@ class BatchDelete implements PromisorInterface
      */
     private function createPromise()
     {
-        return \GuzzleHttp\Promise\coroutine(function () {
-            foreach ($this->iterator as $obj) {
-                if ($promise = $this->enqueue($obj)) {
-                    $this->process((yield $promise));
-                }
-            }
-            if ($promise = $this->flushQueue()) {
-                $this->process((yield $promise));
-            }
-            yield null;
-        })->then(
-            function ($value) {
-                $this->iterator = $this->before = $this->client = null;
-                return $value;
+        // Create the promise
+        $promise = call_user_func($this->promiseCreator, $this);
+        $this->promiseCreator = null;
+
+        // Cleans up the promise state and references.
+        $cleanup = function () {
+            $this->before = $this->client = $this->queue = null;
+        };
+
+        // When done, ensure cleanup and that any remaining are processed.
+        return $promise->then(
+            function () use ($cleanup)  {
+                return Promise\promise_for($this->flushQueue())
+                    ->then($cleanup);
             },
-            function ($reason) {
-                $this->iterator = $this->before = $this->client = null;
-                return \GuzzleHttp\Promise\rejection_for($reason);
+            function ($reason) use ($cleanup)  {
+                $cleanup();
+                return Promise\rejection_for($reason);
             }
         );
     }

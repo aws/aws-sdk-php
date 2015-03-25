@@ -248,10 +248,8 @@ class S3Client extends AwsClient
             throw new \RuntimeException('A prefix or regex is required.');
         }
 
-        $iter = $this->getIterator('ListObjects', [
-            'Bucket' => $bucket,
-            'Prefix' => $prefix
-        ]);
+        $params = ['Bucket' => $bucket, 'Prefix' => $prefix];
+        $iter = $this->getIterator('ListObjects', $params);
 
         if ($regex) {
             $iter = t\to_iter(
@@ -262,7 +260,7 @@ class S3Client extends AwsClient
             );
         }
 
-        (new BatchDelete($this, $bucket, $iter, $options))->delete();
+        BatchDelete::fromIterator($this, $bucket, $iter, $options)->delete();
     }
 
     /**
