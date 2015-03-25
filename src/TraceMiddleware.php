@@ -20,7 +20,7 @@ class TraceMiddleware
      * Configuration array can contain the following key value pairs.
      *
      * - logfn: (callable) Function that is invoked with log messages. By
-     *   default, PHP's "printf" function will be utilized.
+     *   default, PHP's "echo" function will be utilized.
      * - stream_size: (int) When the size of a stream is greater than this
      *   number, the stream data will not be logged. Set to "0" to not log any
      *   stream data.
@@ -32,7 +32,7 @@ class TraceMiddleware
     public function __construct(array $config = [])
     {
         $this->config = $config + [
-            'logfn'       => 'printf',
+            'logfn'       => function ($value) { echo $value; },
             'stream_size' => 524288,
             'scrub_auth'  => true,
             'http'        => true
