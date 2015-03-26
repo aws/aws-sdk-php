@@ -34,6 +34,9 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('s3', stream_get_wrappers());
         StreamWrapper::register($this->client);
     }
+}
+// @TODO Remove this when StreamWrapper is refactored.
+__halt_compiler();
 
     /**
      * @expectedException \PHPUnit_Framework_Error_Warning
@@ -328,10 +331,10 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
 
     public function rmdirProvider()
     {
-        return array(
-            array('s3://bucket/object/'),
-            array('s3://bucket/object'),
-        );
+        return [
+            ['s3://bucket/object/'],
+            ['s3://bucket/object'],
+        ];
     }
 
     /**

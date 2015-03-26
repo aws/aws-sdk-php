@@ -3,10 +3,9 @@ namespace Aws\Test\Signature;
 
 use Aws\Credentials\Credentials;
 use Aws\Signature\SignatureV4;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Stream;
-use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\NoSeekStream;
 
 require_once __DIR__ . '/sig_hack.php';
 
@@ -185,7 +184,7 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
     public function testEnsuresContentSha256CanBeCalculated()
     {
         list($request, $credentials, $signature) = $this->getFixtures();
-        $request = $request->withBody(new NoSeekStream(Stream::factory('foo')));
+        $request = $request->withBody(new NoSeekStream(Psr7\stream_for('foo')));
         $signature->signRequest($request, $credentials);
     }
 
