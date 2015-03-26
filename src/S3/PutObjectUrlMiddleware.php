@@ -47,9 +47,7 @@ class PutObjectUrlMiddleware
                         $result['ObjectURL'] = $result['@metadata']['effectiveUri'];
                         break;
                     case 'CompleteMultipartUpload':
-                        if (isset($result['@metadata']['headers']['location'])) {
-                            $result['ObjectURL'] = $result['@metadata']['headers']['location'];
-                        }
+                        $result['ObjectURL'] = $result['Location'];
                         break;
                 }
                 return $result;

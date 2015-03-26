@@ -29,11 +29,9 @@ class PutObjectUrlTest extends \PHPUnit_Framework_TestCase
         $client = $this->getTestClient('s3');
         $this->addMockResults($client, [
             [
+                'Location' => 'https://test.s3.amazonaws.com/key',
                 '@metadata' => [
                     'effectiveUri' => 'http://foo.com',
-                    'headers' => [
-                        'location' => 'https://test.s3.amazonaws.com/key'
-                    ]
                 ]
             ]
         ]);

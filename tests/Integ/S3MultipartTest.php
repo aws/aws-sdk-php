@@ -13,7 +13,7 @@ class S3Multipart extends \PHPUnit_Framework_TestCase
     use IntegUtils;
 
     const MB = 1048576;
-    const BUCKET = 'php-integ-s3multipart-test';
+    const BUCKET = 'php-integ-s3-multipart-test';
 
     public static function setUpBeforeClass()
     {

@@ -105,17 +105,26 @@ class GuzzleHandler
             $psrRequest->getUri(),
             $options
         );
-        $request->setBody(new GuzzleStream($psrRequest->getBody()));
-        $request->setHeaders($psrRequest->getHeaders());
-        if ($delay) {
-            $request->getConfig()->set('delay', $delay);
+
+        // For the request body, adapt the PSR stream to a Guzzle stream.
+        $body = $psrRequest->getBody();
+        if ($body->getSize() === 0) {
+            $request->setBody(null);
+        } else {
+            $request->setBody(new GuzzleStream($body));
         }
 
-        // Append the Guzzle UA string to current one.
+        // Apply the headers and append the Guzzle UA string to current one.
+        $request->setHeaders($psrRequest->getHeaders());
         $request->setHeader(
             'user-agent',
             $request->getHeader('user-agent') . ' ' . Client::getDefaultUserAgent()
         );
+
+        // Make sure the delay is configured, if provided.
+        if ($delay) {
+            $request->getConfig()->set('delay', $delay);
+        }
 
         return $request;
     }
