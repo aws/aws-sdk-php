@@ -148,6 +148,26 @@ return array (
                                 ),
                             ),
                         ),
+                        'DetectedProperties' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Width' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'Height' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'FrameRate' => array(
+                                    'type' => 'string',
+                                ),
+                                'FileSize' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'DurationMillis' => array(
+                                    'type' => 'numeric',
+                                ),
+                            ),
+                        ),
                     ),
                 ),
                 'Output' => array(
@@ -1827,6 +1847,26 @@ return array (
                                         ),
                                     ),
                                 ),
+                                'DetectedProperties' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'Width' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                        'Height' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                        'FrameRate' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'FileSize' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                        'DurationMillis' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                         'Output' => array(
@@ -1880,6 +1920,15 @@ return array (
                                     'type' => 'numeric',
                                 ),
                                 'Height' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'FrameRate' => array(
+                                    'type' => 'string',
+                                ),
+                                'FileSize' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'DurationMillis' => array(
                                     'type' => 'numeric',
                                 ),
                                 'Watermarks' => array(
@@ -2140,6 +2189,15 @@ return array (
                                         'type' => 'numeric',
                                     ),
                                     'Height' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'FrameRate' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'FileSize' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'DurationMillis' => array(
                                         'type' => 'numeric',
                                     ),
                                     'Watermarks' => array(
@@ -2408,6 +2466,20 @@ return array (
                             'type' => 'object',
                             'additionalProperties' => array(
                                 'type' => 'string',
+                            ),
+                        ),
+                        'Timing' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'SubmitTimeMillis' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'StartTimeMillis' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'FinishTimeMillis' => array(
+                                    'type' => 'numeric',
+                                ),
                             ),
                         ),
                     ),
@@ -2784,6 +2856,26 @@ return array (
                                             ),
                                         ),
                                     ),
+                                    'DetectedProperties' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'Width' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                            'Height' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                            'FrameRate' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'FileSize' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                            'DurationMillis' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                        ),
+                                    ),
                                 ),
                             ),
                             'Output' => array(
@@ -2837,6 +2929,15 @@ return array (
                                         'type' => 'numeric',
                                     ),
                                     'Height' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'FrameRate' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'FileSize' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'DurationMillis' => array(
                                         'type' => 'numeric',
                                     ),
                                     'Watermarks' => array(
@@ -3097,6 +3198,15 @@ return array (
                                             'type' => 'numeric',
                                         ),
                                         'Height' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                        'FrameRate' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'FileSize' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                        'DurationMillis' => array(
                                             'type' => 'numeric',
                                         ),
                                         'Watermarks' => array(
@@ -3365,6 +3475,20 @@ return array (
                                 'type' => 'object',
                                 'additionalProperties' => array(
                                     'type' => 'string',
+                                ),
+                            ),
+                            'Timing' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'SubmitTimeMillis' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'StartTimeMillis' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'FinishTimeMillis' => array(
+                                        'type' => 'numeric',
+                                    ),
                                 ),
                             ),
                         ),
@@ -3434,6 +3558,26 @@ return array (
                                             ),
                                         ),
                                     ),
+                                    'DetectedProperties' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'Width' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                            'Height' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                            'FrameRate' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'FileSize' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                            'DurationMillis' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                        ),
+                                    ),
                                 ),
                             ),
                             'Output' => array(
@@ -3487,6 +3631,15 @@ return array (
                                         'type' => 'numeric',
                                     ),
                                     'Height' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'FrameRate' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'FileSize' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'DurationMillis' => array(
                                         'type' => 'numeric',
                                     ),
                                     'Watermarks' => array(
@@ -3747,6 +3900,15 @@ return array (
                                             'type' => 'numeric',
                                         ),
                                         'Height' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                        'FrameRate' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'FileSize' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                        'DurationMillis' => array(
                                             'type' => 'numeric',
                                         ),
                                         'Watermarks' => array(
@@ -4015,6 +4177,20 @@ return array (
                                 'type' => 'object',
                                 'additionalProperties' => array(
                                     'type' => 'string',
+                                ),
+                            ),
+                            'Timing' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'SubmitTimeMillis' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'StartTimeMillis' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'FinishTimeMillis' => array(
+                                        'type' => 'numeric',
+                                    ),
                                 ),
                             ),
                         ),
@@ -4389,6 +4565,26 @@ return array (
                                         ),
                                     ),
                                 ),
+                                'DetectedProperties' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'Width' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                        'Height' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                        'FrameRate' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'FileSize' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                        'DurationMillis' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                         'Output' => array(
@@ -4442,6 +4638,15 @@ return array (
                                     'type' => 'numeric',
                                 ),
                                 'Height' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'FrameRate' => array(
+                                    'type' => 'string',
+                                ),
+                                'FileSize' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'DurationMillis' => array(
                                     'type' => 'numeric',
                                 ),
                                 'Watermarks' => array(
@@ -4702,6 +4907,15 @@ return array (
                                         'type' => 'numeric',
                                     ),
                                     'Height' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'FrameRate' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'FileSize' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'DurationMillis' => array(
                                         'type' => 'numeric',
                                     ),
                                     'Watermarks' => array(
@@ -4970,6 +5184,20 @@ return array (
                             'type' => 'object',
                             'additionalProperties' => array(
                                 'type' => 'string',
+                            ),
+                        ),
+                        'Timing' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'SubmitTimeMillis' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'StartTimeMillis' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'FinishTimeMillis' => array(
+                                    'type' => 'numeric',
+                                ),
                             ),
                         ),
                     ),

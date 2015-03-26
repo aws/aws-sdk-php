@@ -5411,6 +5411,22 @@ return array (
                                     'sentAs' => 'member',
                                 ),
                             ),
+                            'AttachedManagedPolicies' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'AttachedPolicy',
+                                    'type' => 'object',
+                                    'sentAs' => 'member',
+                                    'properties' => array(
+                                        'PolicyName' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'PolicyArn' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -5448,6 +5464,22 @@ return array (
                                             'type' => 'string',
                                         ),
                                         'PolicyDocument' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'AttachedManagedPolicies' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'AttachedPolicy',
+                                    'type' => 'object',
+                                    'sentAs' => 'member',
+                                    'properties' => array(
+                                        'PolicyName' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'PolicyArn' => array(
                                             'type' => 'string',
                                         ),
                                     ),
@@ -5546,6 +5578,85 @@ return array (
                                             'type' => 'string',
                                         ),
                                         'PolicyDocument' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'AttachedManagedPolicies' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'AttachedPolicy',
+                                    'type' => 'object',
+                                    'sentAs' => 'member',
+                                    'properties' => array(
+                                        'PolicyName' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'PolicyArn' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'Policies' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'ManagedPolicyDetail',
+                        'type' => 'object',
+                        'sentAs' => 'member',
+                        'properties' => array(
+                            'PolicyName' => array(
+                                'type' => 'string',
+                            ),
+                            'PolicyId' => array(
+                                'type' => 'string',
+                            ),
+                            'Arn' => array(
+                                'type' => 'string',
+                            ),
+                            'Path' => array(
+                                'type' => 'string',
+                            ),
+                            'DefaultVersionId' => array(
+                                'type' => 'string',
+                            ),
+                            'AttachmentCount' => array(
+                                'type' => 'numeric',
+                            ),
+                            'IsAttachable' => array(
+                                'type' => 'boolean',
+                            ),
+                            'Description' => array(
+                                'type' => 'string',
+                            ),
+                            'CreateDate' => array(
+                                'type' => 'string',
+                            ),
+                            'UpdateDate' => array(
+                                'type' => 'string',
+                            ),
+                            'PolicyVersionList' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'PolicyVersion',
+                                    'type' => 'object',
+                                    'sentAs' => 'member',
+                                    'properties' => array(
+                                        'Document' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'VersionId' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'IsDefaultVersion' => array(
+                                            'type' => 'boolean',
+                                        ),
+                                        'CreateDate' => array(
                                             'type' => 'string',
                                         ),
                                     ),

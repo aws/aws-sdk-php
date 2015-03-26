@@ -28,7 +28,7 @@ class Aws extends ServiceBuilder
     /**
      * @var string Current version of the SDK
      */
-    const VERSION = '2.7.24';
+    const VERSION = '2.7.25';
 
     /**
      * Create a new service locator for the AWS SDK

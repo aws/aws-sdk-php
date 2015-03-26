@@ -697,6 +697,46 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'BlockDeviceMappings' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'BlockDeviceMapping',
+                        'type' => 'object',
+                        'properties' => array(
+                            'DeviceName' => array(
+                                'type' => 'string',
+                            ),
+                            'NoDevice' => array(
+                                'type' => 'string',
+                            ),
+                            'VirtualName' => array(
+                                'type' => 'string',
+                            ),
+                            'Ebs' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'SnapshotId' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Iops' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'VolumeSize' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'VolumeType' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'DeleteOnTermination' => array(
+                                        'type' => 'boolean',
+                                        'format' => 'boolean-string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
                 'InstallUpdatesOnBoot' => array(
                     'type' => 'boolean',
                     'format' => 'boolean-string',
@@ -4455,11 +4495,52 @@ return array (
                             'RootDeviceVolumeId' => array(
                                 'type' => 'string',
                             ),
+                            'BlockDeviceMappings' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'BlockDeviceMapping',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'DeviceName' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'NoDevice' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'VirtualName' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Ebs' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'SnapshotId' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Iops' => array(
+                                                    'type' => 'numeric',
+                                                ),
+                                                'VolumeSize' => array(
+                                                    'type' => 'numeric',
+                                                ),
+                                                'VolumeType' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'DeleteOnTermination' => array(
+                                                    'type' => 'boolean',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
                             'InstallUpdatesOnBoot' => array(
                                 'type' => 'boolean',
                             ),
                             'EbsOptimized' => array(
                                 'type' => 'boolean',
+                            ),
+                            'ReportedAgentVersion' => array(
+                                'type' => 'string',
                             ),
                             'ReportedOs' => array(
                                 'type' => 'object',
