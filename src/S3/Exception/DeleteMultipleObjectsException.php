@@ -16,8 +16,8 @@ class DeleteMultipleObjectsException extends \Exception
      */
     public function __construct(array $deleted, array $errors)
     {
-        $this->deleted = $deleted;
-        $this->errors = $errors;
+        $this->deleted = array_values($deleted);
+        $this->errors = array_values($errors);
         parent::__construct('Unable to delete certain keys when executing a'
             . ' DeleteMultipleObjects request: '
             . self::createMessageFromErrors($errors));
@@ -32,10 +32,8 @@ class DeleteMultipleObjectsException extends \Exception
      */
     public static function createMessageFromErrors(array $errors)
     {
-        return implode('; ', array_map(function ($key) {
-            $value = '<' . (isset($key['Code']) ? $key['Code'] : '') . '> ';
-            $value .= isset($key['Message']) ? $key['Message'] : '';
-            return trim($value);
+        return "\n- " . implode("\n- ", array_map(function ($key) {
+            return json_encode($key);
         }, $errors));
     }
 

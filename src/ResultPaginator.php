@@ -54,6 +54,8 @@ class ResultPaginator implements \Iterator
      * The callback should have the signature: function (|Aws\Result $result)
      *
      * @param callable $handleResult Callback for handling each page of results.
+     *                               If the callback returns a promise, the
+     *                               promise will be merged into the coroutine.
      *
      * @return Promise\Promise
      */
@@ -65,7 +67,9 @@ class ResultPaginator implements \Iterator
                 $command = $this->createNextCommand($this->args, $nextToken);
                 $result = (yield $this->client->executeAsync($command));
                 $nextToken = $this->determineNextToken($result);
-                $handleResult($result);
+                if ($retVal = $handleResult($result)) {
+                    yield Promise\promise_for($retVal);
+                }
             } while ($nextToken);
         });
     }

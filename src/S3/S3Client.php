@@ -9,10 +9,9 @@ use Aws\RetryMiddleware;
 use Aws\S3\Exception\S3Exception;
 use Aws\Result;
 use Aws\CommandInterface;
-use GuzzleHttp\Psr7\Stream;
 use GuzzleHttp\Psr7;
-use GuzzleHttp\Psr7\AppendStream;
 use Psr\Http\Message\StreamableInterface;
+use transducers as t;
 
 /**
  * Client used to interact with **Amazon Simple Storage Service (Amazon S3)**.
@@ -237,13 +236,9 @@ class S3Client extends AwsClient
      * @param string $bucket  Bucket that contains the object keys
      * @param string $prefix  Optionally delete only objects under this key prefix
      * @param string $regex   Delete only objects that match this regex
-     * @param array  $options Options used when deleting the object:
-     *       - before: Callable to invoke before each delete is called. This
-     *       callable accepts the underlying iterator being used and an array
-     *       of the keys that are about to be deleted.
+     * @param array  $options Aws\S3\BatchDelete options array.
      *
      * @see Aws\S3\S3Client::listObjects
-     * @see Aws\S3\ClearBucket For more options or customization
      * @throws \RuntimeException if no prefix and no regex is given
      */
     public function deleteMatchingObjects(
@@ -256,22 +251,19 @@ class S3Client extends AwsClient
             throw new \RuntimeException('A prefix or regex is required.');
         }
 
-        $options['iterator'] = $this->getIterator('ListObjects', [
-            'Bucket' => $bucket,
-            'Prefix' => $prefix
-        ]);
+        $params = ['Bucket' => $bucket, 'Prefix' => $prefix];
+        $iter = $this->getIterator('ListObjects', $params);
 
         if ($regex) {
-            $options['iterator'] = new \CallbackFilterIterator(
-                $options['iterator'],
-                function ($c) use ($regex) {
+            $iter = t\to_iter(
+                $iter,
+                t\filter(function ($c) use ($regex) {
                     return preg_match($regex, $c['Key']);
-                }
+                })
             );
-            $options['iterator']->rewind();
         }
 
-        (new ClearBucket($this, $bucket, $options))->clear();
+        BatchDelete::fromIterator($this, $bucket, $iter, $options)->delete();
     }
 
     /**
@@ -318,7 +310,7 @@ class S3Client extends AwsClient
         ];
 
         // Perform the needed operations to upload the S3 Object.
-        $body = Stream::factory($body);
+        $body = Psr7\stream_for($body);
         $params = ['ACL' => $acl] + $options['params'];
 
         if (!$this->requiresMultipart($body, $options['threshold'])) {
@@ -397,7 +389,7 @@ class S3Client extends AwsClient
 
         // Handle the situation where the body size is unknown.
         // Read up to 5MB into a buffer to determine how to upload the body.
-        $buffer = Stream::factory();
+        $buffer = Psr7\stream_for();
         Psr7\copy_to_stream($body, $buffer, 5242880);
 
         // If body < 5MB, use PutObject with the buffer.
@@ -418,7 +410,7 @@ class S3Client extends AwsClient
         // needing to seek and unnecessary disc usage, while requiring
         // only the 5 MB buffer to be re-read by the Multipart system.
         $buffer->seek(0);
-        $body = new AppendStream([$buffer, $body]);
+        $body = new Psr7\AppendStream([$buffer, $body]);
 
         return true;
     }
@@ -445,14 +437,6 @@ class S3Client extends AwsClient
             }
             return false;
         }
-    }
-
-    /**
-     * @deprecated This method is deprecated. Use Aws\S3\ClearBucket directly.
-     */
-    public function clearBucket($bucket)
-    {
-        (new ClearBucket($this, $bucket))->clear();
     }
 
     /**

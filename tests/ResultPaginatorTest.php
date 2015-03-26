@@ -1,7 +1,9 @@
 <?php
 namespace Aws\Test;
 
+use Aws\CommandInterface;
 use Aws\Result;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @covers Aws\ResultPaginator
@@ -196,5 +198,53 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->assertEquals(['a1', 'c3'], $tableNames);
+    }
+
+    public function testYieldsReturnedCallbackPromises()
+    {
+        $client = $this->getTestClient('s3');
+        $results = [
+            [
+                'IsTruncated' => true,
+                'Contents' => [
+                    ['Key' => 0],
+                    ['Key' => 1],
+                ]
+            ],
+            [],
+            [
+                'IsTruncated' => false,
+                'Contents' => [
+                    ['Key' => 2],
+                    ['Key' => 3],
+                ]
+            ],
+            []
+        ];
+
+        $handler = function (CommandInterface $cmd, RequestInterface $request) use (&$results, &$cmds) {
+            $cmds[] = $cmd;
+            return \GuzzleHttp\Promise\promise_for(
+                new Result(array_shift($results))
+            );
+        };
+
+        $client->getHandlerList()->setHandler($handler);
+        $p = $client->getPaginator('ListObjects', ['Bucket' => 'foo']);
+        $promise = $p->each(function ($page) use ($client) {
+            return $client->headObjectAsync([
+                'Bucket' => 'foo',
+                'Key'    => implode('.', \JmesPath\search('Contents[].Key', $page))
+            ]);
+        });
+
+        $promise->wait();
+        $this->assertCount(4, $cmds);
+        $this->assertEquals('ListObjects', $cmds[0]->getName());
+        $this->assertEquals('HeadObject', $cmds[1]->getName());
+        $this->assertEquals('ListObjects', $cmds[2]->getName());
+        $this->assertEquals('HeadObject', $cmds[3]->getName());
+        $this->assertEquals('0.1', $cmds[1]['Key']);
+        $this->assertEquals('2.3', $cmds[3]['Key']);
     }
 }

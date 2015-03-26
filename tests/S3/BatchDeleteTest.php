@@ -1,7 +1,9 @@
 <?php
 namespace Aws\Test\S3;
 
-use Aws\S3\S3Client;
+use Aws\CommandInterface;
+use Aws\MockHandler;
+use Aws\Result;
 use Aws\S3\BatchDelete;
 use Aws\S3\Exception\DeleteMultipleObjectsException;
 use Aws\Test\UsesServiceTrait;
@@ -13,125 +15,178 @@ class BatchDeleteTest extends \PHPUnit_Framework_TestCase
 {
     use UsesServiceTrait;
 
-    /** @var S3Client */
-    protected $client;
-
-    public function setUp()
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testValidatesBatchSizeIsGreatherThanZero()
     {
-        $this->client = $this->getTestClient('s3', ['region' => 'us-east-1']);
-    }
-
-    public function testCountsAndReturnsQueue()
-    {
-        $b = new BatchDelete($this->client, 'bucket');
-        $this->assertCount(0, $b);
-        $b->addObject('foo');
-        $this->assertCount(1, $b);
-        $this->assertEquals([['Key' => 'foo']], $b->getQueue());
-    }
-
-    public function testSendsBatchRequestsPerThousand()
-    {
-        $b = new BatchDelete($this->client, 'bucket', ['batch_size' => 10]);
-
-        $batches = $deleted = [];
-        foreach ([0, 1] as $batch) {
-            for ($i = 0; $i < 10; $i++) {
-                $name = 'o-' . (($batch * 10) + $i);
-                $b->addObject($name);
-                $deleted[] = ['Key' => $name];
-                $batches[$batch][] = ['Key' => $name];
-            }
-        }
-
-        $called = 0;
-        $this->client->getEmitter()->on(
-            'prepared',
-            function (PreparedEvent $e) use (&$called, $batches) {
-                $this->assertSame(
-                    $batches[$called],
-                    $e->getCommand()['Delete']['Objects']
-                );
-                $called++;
-            }
-        );
-
-        $this->addMockResults($this->client, [
-            ['Deleted' => $batches[0]],
-            ['Deleted' => $batches[1]],
-        ]);
-
-        $this->assertEquals($deleted, $b->delete());
-    }
-
-    public function testDeletesWithVersionId()
-    {
-        $b = new BatchDelete($this->client, 'bucket');
-        $b->addObject('foo', 'bar');
-        $deleted = [['Key' => 'foo', 'VersionId' => 'bar']];
-
-        $this->client->getEmitter()->on(
-            'prepared',
-            function (PreparedEvent $e) {
-                $this->assertEquals(
-                    [['Key' => 'foo', 'VersionId' => 'bar']],
-                    $e->getCommand()['Delete']['Objects']
-                );
-            }
-        );
-
-        $this->addMockResults($this->client, [
-            ['Deleted' => $deleted]
-        ]);
-
-        $this->assertEquals($deleted, $b->delete());
-    }
-
-    public function testValidatesErrors()
-    {
-        $b = new BatchDelete($this->client, 'bucket');
-        $b->addObject('foo');
-        $b->addObject('bar');
-        $deleted = [['Key' => 'foo']];
-        $errors = [['Key' => 'bar', 'Code' => 'code', 'Message' => 'msg']];
-
-        $this->addMockResults($this->client, [
-            ['Deleted' => $deleted, 'Errors' => $errors]
-        ]);
-
-        try {
-            $b->delete();
-            $this->fail('Did not throw');
-        } catch (DeleteMultipleObjectsException $e) {
-            $this->assertSame($deleted, $e->getDeleted());
-            $this->assertSame($errors, $e->getErrors());
-        }
-    }
-
-    public function testAddsMfa()
-    {
-        $b = new BatchDelete($this->client, 'bucket', ['mfa' => 'mfa!']);
-        $b->addObject('foo', 'bar');
-
-        $this->client->getEmitter()->on(
-            'prepared',
-            function (PreparedEvent $e) {
-                $this->assertEquals(
-                    'mfa!',
-                    $e->getRequest()->getHeader('x-amz-mfa')
-                );
-            }, -1
-        );
-
-        $this->addMockResults($this->client, [['Deleted' => []]]);
-        $b->delete();
+        $client = $this->getTestClient('s3');
+        BatchDelete::fromIterator($client, 'foo', new \ArrayIterator(), ['batch_size' => 0]);
     }
 
     /**
      * @expectedException \InvalidArgumentException
      */
-    public function testEnsuresBatchSizeIsGtZero()
+    public function testValidatesBeforeIsCallable()
     {
-        new BatchDelete($this->client, 'bucket', ['batch_size' => 0]);
+        $client = $this->getTestClient('s3');
+        BatchDelete::fromIterator($client, 'foo', new \ArrayIterator(), ['before' => 0]);
+    }
+
+    public function testReturnsSamePromiseInstance()
+    {
+        $client = $this->getTestClient('s3');
+        $this->addMockResults($client, [[]]);
+        $batch = BatchDelete::fromIterator($client, 'foo', new \ArrayIterator());
+        $this->assertSame($batch->promise(), $batch->promise());
+    }
+
+    public function testBatchesInBatchSize()
+    {
+        $cmds = [];
+        $client = $this->getTestClient('s3');
+        // Executes three commands.
+        $this->addMockResults($client, [[], [], []]);
+        $keys = [];
+        for ($i = 0; $i < 100; $i++) {
+            $keys[] = ['Key' => 'foo/$i'];
+        }
+
+        $batch = BatchDelete::fromIterator(
+            $client,
+            'foo',
+            new \ArrayIterator($keys),
+            [
+                'batch_size' => 40,
+                'before'     => function ($cmd) use (&$cmds) {
+                    $cmds[] = $cmd;
+                }
+            ]
+        );
+
+        $batch->delete();
+        $this->assertCount(3, $cmds);
+        $this->assertCount(40, $cmds[0]['Delete']['Objects']);
+        $this->assertCount(40, $cmds[1]['Delete']['Objects']);
+        $this->assertCount(20, $cmds[2]['Delete']['Objects']);
+    }
+
+    public function testThrowsWhenErrorsInIterator()
+    {
+        $client = $this->getTestClient('s3');
+        $this->addMockResults($client, [
+            [
+                'Deleted' => [['Key' => 'baz']],
+                'Errors'  => [
+                    ['Key' => 'foo', 'Code' => 'bar', 'Message' => 'baz']
+                ]
+            ]
+        ]);
+        $keys = [['Key' => 'baz'], ['Key' => 'foo']];
+        $batch = BatchDelete::fromIterator($client, 'foo', new \ArrayIterator($keys));
+        try {
+            $batch->delete();
+            $this->fail();
+        } catch (DeleteMultipleObjectsException $e) {
+            $this->assertCount(1, $e->getErrors());
+            $this->assertEquals('foo', $e->getErrors()[0]['Key']);
+            $this->assertCount(1, $e->getDeleted());
+            $this->assertEquals('baz', $e->getDeleted()[0]['Key']);
+        }
+    }
+
+    public function testThrowsWhenErrorsInEach()
+    {
+        $client = $this->getTestClient('s3');
+        $this->addMockResults($client, [
+            [
+                'Contents' => [
+                    ['Key' => 'baz'],
+                    ['Key' => 'foo']
+                ]
+            ],
+            [
+                'Deleted' => [['Key' => 'baz']],
+                'Errors'  => [
+                    ['Key' => 'foo', 'Code' => 'bar', 'Message' => 'baz']
+                ]
+            ]
+        ]);
+        $batch = BatchDelete::fromListObjects($client, ['Bucket' => 'foo']);
+        try {
+            $batch->delete();
+            $this->fail();
+        } catch (DeleteMultipleObjectsException $e) {
+            $this->assertCount(1, $e->getErrors());
+            $this->assertEquals('foo', $e->getErrors()[0]['Key']);
+            $this->assertCount(1, $e->getDeleted());
+            $this->assertEquals('baz', $e->getDeleted()[0]['Key']);
+        }
+    }
+
+    public function testCanCreateFromListObjects()
+    {
+        $client = $this->getTestClient('s3');
+        $mock = new MockHandler([
+            new Result([
+                'IsTruncated' => false,
+                'Contents'    => [
+                    ['Key' => 'foo'],
+                    ['Key' => 'bar'],
+                ]
+            ]),
+            new Result([])
+        ]);
+        $client->getHandlerList()->setHandler($mock);
+        $params = ['Bucket' => 'foo'];
+        $batch = BatchDelete::fromListObjects($client, $params);
+        $batch->delete();
+        $last = $mock->getLastCommand();
+        $this->assertEquals('DeleteObjects', $last->getName());
+        $this->assertEquals(2, count($last['Delete']['Objects']));
+        $this->assertEquals('foo', $last['Bucket']);
+    }
+
+    public function testDeletesYieldedCommadnsWhenEachCallbackReturns()
+    {
+        $client = $this->getTestClient('s3');
+        $this->addMockResults($client, [
+            [
+                'Contents' => [
+                    ['Key' => 0],
+                    ['Key' => 1],
+                    ['Key' => 2],
+                    ['Key' => 3],
+                    ['Key' => 4],
+                    ['Key' => 5],
+                    ['Key' => 6],
+                    ['Key' => 7],
+                    ['Key' => 8],
+                    ['Key' => 9],
+                ]
+            ],
+            ['Deleted' => []],
+            ['Deleted' => []],
+            ['Deleted' => []],
+            ['Deleted' => []],
+        ]);
+
+        $cmds = [];
+        $batch = BatchDelete::fromListObjects(
+            $client,
+            ['Bucket' => 'foo'],
+            [
+                'batch_size' => 4,
+                'before'     => function (CommandInterface $cmd) use (&$cmds) {
+                    $cmds[] = $cmd;
+                }
+            ]
+        );
+
+        $batch->delete();
+        $this->assertCount(3, $cmds);
+
+        $keys = \JmesPath\search('[].Delete.Objects[].Key', $cmds);
+        $this->assertEquals(range(0, 9), $keys);
     }
 }
