@@ -3,9 +3,6 @@ namespace Aws\Test;
 
 use Aws;
 
-/**
- * @covers Aws\Utils
- */
 class UtilsTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreatesRecursiveDirIterator()
