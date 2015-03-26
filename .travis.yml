@@ -3,20 +3,18 @@ language: php
 php:
   - 5.5
   - 5.6
-  - 7.0
   - hhvm
-
-env:
-- AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar
 
 matrix:
   allow_failures:
-    - php: 7.0
     - php: hhvm
   fast_finish: true
 
 sudo: false
 
-install: travis_retry composer install --no-interaction --prefer-source
+install:
+  - export AWS_ACCESS_KEY_ID=foo
+  - export AWS_SECRET_ACCESS_KEY=bar
+  - travis_retry composer install --no-interaction --prefer-source
 
 script: vendor/bin/phpunit --colors --testsuite=unit
