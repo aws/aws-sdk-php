@@ -19,4 +19,4 @@ sudo: false
 
 install: travis_retry composer install --no-interaction --prefer-source
 
-script: make travis
+script: vendor/bin/phpunit --colors --testsuite=unit
