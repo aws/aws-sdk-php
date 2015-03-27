@@ -3,11 +3,10 @@ namespace Aws\S3;
 
 use Aws\Result;
 use Aws\S3\Exception\S3Exception;
-use GuzzleHttp\Command\Event\PreparedEvent;
-use GuzzleHttp\Stream\StreamInterface;
-use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\Psr7\Stream;
 use GuzzleHttp\Mimetypes;
-use GuzzleHttp\Stream\CachingStream;
+use GuzzleHttp\Psr7\CachingStream;
+use Psr\Http\Message\StreamableInterface;
 use transducers as t;
 
 /**
@@ -64,7 +63,7 @@ class StreamWrapper
     /** @var resource|null Stream context (this is set by PHP) */
     public $context;
 
-    /** @var StreamInterface Underlying stream resource */
+    /** @var StreamableInterface Underlying stream resource */
     private $body;
 
     /** @var array Hash of opened stream parameters */
@@ -225,7 +224,7 @@ class StreamWrapper
 
         return $this->boolCall(function () use ($parts, $path) {
             try {
-                $result = $this->getClient()->headObject($parts)->toArray();
+                $result = $this->getClient()->headObject($parts);
                 if (substr($parts['Key'], -1, 1) == '/' &&
                     $result['ContentLength'] == 0
                 ) {
@@ -234,7 +233,7 @@ class StreamWrapper
                     return $this->formatUrlStat($path);
                 } else {
                     // Attempt to stat and cache regular object
-                    return $this->formatUrlStat($result);
+                    return $this->formatUrlStat($result->toArray());
                 }
             } catch (S3Exception $e) {
                 // Maybe this isn't an actual key, but a prefix. Do a prefix
@@ -602,11 +601,7 @@ class StreamWrapper
     {
         $client = $this->getClient();
         $command = $client->getCommand('GetObject', $this->getOptions());
-
-        // Ensure that a streaming adapter is utilized
-        $command->getEmitter()->on('prepared', function (PreparedEvent $e) {
-            $e->getRequest()->getConfig()->set('stream', true);
-        });
+        $command['@http']['stream'] = true;
 
         $result = $client->execute($command);
         $this->body = $result['Body'];
@@ -686,15 +681,18 @@ class StreamWrapper
                 $stat['mode'] = $stat[2] = 0040777;
                 break;
             case 'array':
+                // Regular file with 0777 access - see "man 2 stat".
+                $stat['mode'] = $stat[2] = 0100777;
+                // Pluck the content-type if available.
+                if (isset($result['ContentLength'])) {
+                    $stat['size'] = $stat[7] = $result['ContentLength'];
+                } elseif (isset($stat['Size'])) {
+                    $stat['size'] = $stat[7] = $result['Size'];
+                }
                 if (isset($result['LastModified'])) {
                     // ListObjects or HeadObject result
                     $stat['mtime'] = $stat[9] = $stat['ctime'] = $stat[10]
                         = strtotime($result['LastModified']);
-                    $stat['size'] = $stat[7] = (isset($result['ContentLength'])
-                        ? $result['ContentLength']
-                        : $result['Size']);
-                    // Regular file with 0777 access - see "man 2 stat".
-                    $stat['mode'] = $stat[2] = 0100777;
                 }
         }
 

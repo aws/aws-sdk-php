@@ -4,6 +4,7 @@ namespace Aws;
 use Aws\Api\Service;
 use Aws\Api\Validator;
 use Aws\Credentials\CredentialsInterface;
+use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\LazyOpenStream;
 use Psr\Http\Message\RequestInterface;
@@ -196,6 +197,38 @@ final class Middleware
                 }
 
                 return $handler($command, $request);
+            };
+        };
+    }
+
+    /**
+     * Tracks command and request history using a history container.
+     *
+     * This is useful for testing.
+     *
+     * @param History $history History container to store entries.
+     *
+     * @return callable
+     */
+    public static function history(History $history)
+    {
+        return function (callable $handler) use ($history) {
+            return function (
+                CommandInterface $command,
+                RequestInterface $request = null
+            ) use ($handler, $history) {
+                $ticket = $history->start($command, $request);
+                return $handler($command, $request)
+                    ->then(
+                        function ($result) use ($history, $ticket) {
+                            $history->finish($ticket, $result);
+                            return $result;
+                        },
+                        function ($reason) use ($history, $ticket) {
+                            $history->finish($ticket, $reason);
+                            return Promise\rejection_for($reason);
+                        }
+                    );
             };
         };
     }

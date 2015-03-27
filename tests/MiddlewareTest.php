@@ -155,4 +155,17 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         ]), new Request('PUT', 'http://foo.com'));
         $this->assertTrue($called);
     }
+
+    public function testAppliesHistory()
+    {
+        $h = new Aws\History();
+        $mock = new MockHandler([new Result()]);
+        $list = new HandlerList($mock);
+        $list->append('sign', Middleware::history($h));
+        $handler = $list->resolve();
+        $req = new Request('GET', 'http://www.foo.com');
+        $cmd = new Command('foo');
+        $handler($cmd, $req);
+        $this->assertCount(1, $h);
+    }
 }
