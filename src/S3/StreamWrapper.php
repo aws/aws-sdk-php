@@ -683,7 +683,7 @@ class StreamWrapper
             case 'array':
                 // Regular file with 0777 access - see "man 2 stat".
                 $stat['mode'] = $stat[2] = 0100777;
-                // Pluck the content-type if available.
+                // Pluck the content-length if available.
                 if (isset($result['ContentLength'])) {
                     $stat['size'] = $stat[7] = $result['ContentLength'];
                 } elseif (isset($stat['Size'])) {
