@@ -2,6 +2,7 @@
 namespace Aws\S3;
 
 use Aws;
+use Aws\Command;
 use transducers as t;
 
 /**
@@ -114,8 +115,9 @@ class Transfer
             $this->source->rewind();
         }
 
-        $options = ['pool_size' => $this->concurrency];
-        $this->client->executeAll($this->source, $options);
+        $options = ['concurrency' => $this->concurrency];
+        $pool = new Aws\CommandPool($this->client, $this->source, $options);
+        $pool->promise()->wait();
     }
 
     /**

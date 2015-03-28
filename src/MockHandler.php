@@ -2,6 +2,7 @@
 namespace Aws;
 
 use Aws\Exception\AwsException;
+use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\RejectedPromise;
 use Psr\Http\Message\RequestInterface;
 
@@ -74,9 +75,20 @@ class MockHandler implements \Countable
             $result = $result($command, $request);
         }
 
-        $result = $result instanceof AwsException
-            ? new RejectedPromise($result)
-            : \GuzzleHttp\Promise\promise_for($result);
+        if ($result instanceof \Exception) {
+            $result = new RejectedPromise($result);
+        } else {
+            // Add an effective URI and statusCode if not present.
+            $meta = $result['@metadata'];
+            if (!isset($meta['effectiveUri'])) {
+                $meta['effectiveUri'] = (string) $request->getUri();
+            }
+            if (!isset($result['statusCode'])) {
+                $meta['statusCode'] = 200;
+            }
+            $result['@metadata'] = $meta;
+            $result = Promise\promise_for($result);
+        }
 
         $result->then($this->onFulfilled, $this->onRejected);
 

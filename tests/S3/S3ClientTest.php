@@ -32,28 +32,6 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($command['PathStyle']);
     }
 
-    public function testCreatesClientWithSubscribers()
-    {
-        $this->markTestIncomplete('Needs refactoring.');
-        $c = new S3Client(['version' => 'latest']);
-        $l = $c->getEmitter()->listeners();
-
-        $found = [];
-        foreach ($l as $value) {
-            foreach ($value as $val) {
-                $found[] = is_array($val)
-                    ? get_class($val[0])
-                    : get_class($val);
-            }
-        }
-
-        $this->assertContains('Aws\Subscriber\SourceFile', $found);
-        $this->assertContains('Aws\S3\BucketStyleSubscriber', $found);
-        $this->assertContains('Aws\S3\ApplyMd5Subscriber', $found);
-        $this->assertContains('Aws\S3\PermanentRedirectSubscriber', $found);
-        $this->assertContains('Aws\S3\PutObjectUrlSubscriber', $found);
-    }
-
     public function testCanUseBucketEndpoint()
     {
         $c = new S3Client([
@@ -144,14 +122,6 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
             'https://s3.amazonaws.com/foobar%20test%3A%20abc/%2B%25.a?AWSAccessKeyId=',
             $url
         );
-    }
-
-    public function testClearsBucket()
-    {
-        $this->markTestIncomplete('Needs refactoring.');
-        $s3 = $this->getTestClient('S3', ['region' => 'us-east-1']);
-        $this->addMockResults($s3, [[]]);
-        $s3->clearBucket('foo');
     }
 
     public function testRegistersStreamWrapper()
@@ -261,10 +231,9 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
     public function testDeletesMatchingObjectsByPrefixAndRegex()
     {
         $client = $this->getTestClient('S3');
-
-        $client->getEmitter()->on('prepared', function (PreparedEvent $e) {
-            $this->assertEquals('bucket', $e->getCommand()['Bucket']);
-            $e->intercept(new Result([
+        $client->getHandlerList()->setHandler(function ($c, $r) {
+            $this->assertEquals('bucket', $c['Bucket']);
+            return \GuzzleHttp\Promise\promise_for(new Result([
                 'IsTruncated' => false,
                 'Marker' => '',
                 'Contents' => [
@@ -280,8 +249,8 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
 
         $agg = [];
         $client->deleteMatchingObjects('bucket', 'foo/bar/', '/^foo\/bar\/[a-z]+$/', [
-            'before' => function ($iter, array $keys) use (&$agg) {
-                foreach ($keys as $k) {
+            'before' => function ($cmd) use (&$agg) {
+                foreach ($cmd['Delete']['Objects'] as $k) {
                     $agg[] = $k['Key'];
                 }
             }
@@ -352,28 +321,29 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
     public function testProxiesToTransferObjectPut()
     {
         $client = $this->getTestClient('S3');
-        $c = null;
-        $client->getEmitter()->on('prepared', function (PreparedEvent $e) use (&$c) {
-            $this->assertEquals('PutObject', $e->getCommand()->getName());
-            $this->assertEquals('test', $e->getCommand()['Bucket']);
-            $e->intercept(new Result([]));
-            $c = true;
+        $ca = null;
+        $client->getHandlerList()->setHandler(function ($c, $r) use (&$ca) {
+            $this->assertEquals('PutObject', $c->getName());
+            $this->assertEquals('test', $c['Bucket']);
+            $ca = true;
+            return \GuzzleHttp\Promise\promise_for(new Result());
         });
         $client->uploadDirectory(__DIR__, 'test');
-        $this->assertTrue($c);
+        $this->assertTrue($ca);
     }
 
     public function testProxiesToTransferObjectGet()
     {
         $client = $this->getTestClient('S3');
-        $c = null;
-        $client->getEmitter()->on('prepared', function (PreparedEvent $e) use (&$c) {
-            $n = $e->getCommand()->getName();
+        $ca = null;
+        $client->getHandlerList()->setHandler(function ($c, $r) use (&$ca) {
+            $n = $c->getName();
             $this->assertTrue($n == 'GetObject' || $n == 'ListObjects');
-            $e->intercept(new Result([]));
-            $c = true;
+            $this->assertEquals('test', $c['Bucket']);
+            $ca = true;
+            return \GuzzleHttp\Promise\promise_for(new Result());
         });
         $client->downloadBucket(__DIR__, 'test');
-        $this->assertTrue($c);
+        $this->assertTrue($ca);
     }
 }
