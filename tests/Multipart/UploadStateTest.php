@@ -11,24 +11,22 @@ class UploadStateTest extends \PHPUnit_Framework_TestCase
     public function testCanManageStatusAndUploadId()
     {
         $state = new UploadState(['a' => true]);
-        $this->assertArrayHasKey('a', $state->getUploadId());
+        $this->assertArrayHasKey('a', $state->getId());
         // Note: the state should not be initiated at first.
         $this->assertFalse($state->isInitiated());
+        $this->assertFalse($state->isCompleted());
 
-        $state->setStatus(UploadState::INITIATED, ['b' => true]);
-        // Note: Specified uploadId data should wholly replace the current data.
-        $this->assertArrayHasKey('b', $state->getUploadId());
-        $this->assertArrayNotHasKey('a', $state->getUploadId());
+        $state->setUploadId('b', true);
+        $this->assertArrayHasKey('b', $state->getId());
+        $this->assertArrayHasKey('a', $state->getId());
+
+        $state->setStatus(UploadState::INITIATED);
+        $this->assertFalse($state->isCompleted());
         $this->assertTrue($state->isInitiated());
 
         $state->setStatus(UploadState::COMPLETED);
-        $this->assertTrue($state->isInitiated());
+        $this->assertFalse($state->isInitiated());
         $this->assertTrue($state->isCompleted());
-
-        $state->setStatus(UploadState::ABORTED);
-        $this->assertTrue($state->isInitiated());
-        $this->assertTrue($state->isAborted());
-        $this->assertFalse($state->isCompleted());
     }
 
     public function testCanStorePartSize()
@@ -60,7 +58,8 @@ class UploadStateTest extends \PHPUnit_Framework_TestCase
         $state = new UploadState([]);
         $state->setPartSize(5);
         $state->markPartAsUploaded(1);
-        $state->setStatus($state::INITIATED, ['foo' => 'bar']);
+        $state->setStatus($state::INITIATED);
+        $state->setUploadId('foo', 'bar');
         $serializedState = serialize($state);
 
         /** @var UploadState $newState */
@@ -68,6 +67,6 @@ class UploadStateTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(5, $newState->getPartSize());
         $this->assertArrayHasKey(1, $state->getUploadedParts());
         $this->assertTrue($newState->isInitiated());
-        $this->assertArrayHasKey('foo', $newState->getUploadId());
+        $this->assertArrayHasKey('foo', $newState->getId());
     }
 }

@@ -1,6 +1,8 @@
 <?php
 namespace Aws\Test\Exception;
 
+use Aws\Command;
+use Aws\Exception\AwsException;
 use Aws\Exception\MultipartUploadException;
 use Aws\Multipart\UploadState;
 
@@ -9,31 +11,43 @@ use Aws\Multipart\UploadState;
  */
 class MultipartUploadExceptionTest extends \PHPUnit_Framework_TestCase
 {
-    public function testCanCreateSimpleException()
+    /**
+     * @dataProvider getTestCases
+     */
+    public function testCanCreateMultipartException($commandName, $status)
     {
         $state = new UploadState([]);
-        $prev = new \InvalidArgumentException('TEST');
-        $exception = new MultipartUploadException($state, 'DOING STUFF WITH', $prev);
+        $prev = new AwsException('WHATEVER', new Command($commandName));
+        $exception = new MultipartUploadException($state, $prev);
 
         $this->assertEquals(
-            'An exception occurred while DOING STUFF WITH a multipart upload.',
+            "An exception occurred while {$status} a multipart upload.",
             $exception->getMessage()
         );
         $this->assertSame($state, $exception->getState());
         $this->assertSame($prev, $exception->getPrevious());
     }
 
+    public function getTestCases()
+    {
+        return [
+            ['CreateMultipartUpload', 'initiating'],
+            ['InitiateMultipartUpload', 'initiating'],
+            ['CompleteMultipartUpload', 'completing'],
+            ['OtherCommands', 'performing'],
+        ];
+    }
+
     public function testCanCreateExceptionListingFailedParts()
     {
         $state = new UploadState([]);
-        $prev = new \InvalidArgumentException('TEST');
         $failed = [
-            1 => 'Bad digest.',
-            5 => 'Missing header.',
-            8 => 'Needs more love.',
+            1 => new AwsException('Bad digest.', new Command('UploadPart')),
+            5 => new AwsException('Missing header.', new Command('UploadPart')),
+            8 => new AwsException('Needs more love.', new Command('UploadPart')),
         ];
 
-        $exception = new MultipartUploadException($state, $failed, $prev);
+        $exception = new MultipartUploadException($state, $failed);
 
         $expected = <<<MSG
 An exception occurred while uploading parts to a multipart upload. The following parts had errors:

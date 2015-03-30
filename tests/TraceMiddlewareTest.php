@@ -108,7 +108,7 @@ class TraceMiddlewareTest extends \PHPUnit_Framework_TestCase
             'Authorization' => 'Credential=AKI123/..., Signature=abcdef'
         ]);
         $handler($command, $request);
-        $this->assertContains("'Credential=AKI[KEY]/..., Signature=[SIGNATURE]", $str);
+        $this->assertContains("Credential=AKI[KEY]/..., Signature=[SIGNATURE]", $str);
         $this->assertNotContains('AKI123', $str);
         $this->assertNotContains('abcdef', $str);
     }

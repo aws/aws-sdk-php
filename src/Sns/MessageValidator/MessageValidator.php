@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Sns\MessageValidator;
 
-use Aws\Handler\GuzzleV5\GuzzleHandler;
 use Aws\Sns\Exception\MessageValidatorException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
@@ -38,7 +37,7 @@ class MessageValidator
             //@codeCoverageIgnoreEnd
         }
 
-        $this->client = $httpHandler ?: new GuzzleHandler();
+        $this->client = $httpHandler ?: \Aws\default_http_handler();
     }
 
     /**

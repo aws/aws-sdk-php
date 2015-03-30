@@ -12,10 +12,9 @@ class UploadState
     const CREATED = 0;
     const INITIATED = 1;
     const COMPLETED = 2;
-    const ABORTED = 3;
 
     /** @var array Params used to identity the upload. */
-    private $uploadId;
+    private $id;
 
     /** @var int Part size being used by the upload. */
     private $partSize;
@@ -27,22 +26,34 @@ class UploadState
     private $status = self::CREATED;
 
     /**
-     * @param array $uploadId
+     * @param array $id Params used to identity the upload.
      */
-    public function __construct(array $uploadId)
+    public function __construct(array $id)
     {
-        $this->uploadId = $uploadId;
+        $this->id = $id;
     }
 
     /**
-     * Get the upload's ID, which is a triad of parameters that can uniquely
+     * Get the upload's ID, which is a tuple of parameters that can uniquely
      * identify the upload.
      *
      * @return array
      */
-    public function getUploadId()
+    public function getId()
     {
-        return $this->uploadId;
+        return $this->id;
+    }
+
+    /**
+     * Set's the "upload_id", or 3rd part of the upload's ID. This typically
+     * only needs to be done after initiating an upload.
+     *
+     * @param string $key   The param key of the upload_id.
+     * @param string $value The param value of the upload_id.
+     */
+    public function setUploadId($key, $value)
+    {
+        $this->id[$key] = $value;
     }
 
     /**
@@ -104,20 +115,12 @@ class UploadState
     /**
      * Set the status of the upload.
      *
-     * @param int   $status      Status is an integer code defined by the
-     *                           constants CREATED, INITIATED, COMPLETED, and
-     *                           ABORTED defined on this class.
-     * @param array $newUploadId An array representing an upload ID that you'd
-     *                           like to set for this upload state at the time
-     *                           of a status change. This is only when setting
-     *                           the status to INITIATED.
+     * @param int $status Status is an integer code defined by the constants
+     *                    CREATED, INITIATED, and COMPLETED on this class.
      */
-    public function setStatus($status, array $newUploadId = null)
+    public function setStatus($status)
     {
         $this->status = $status;
-        if (is_array($newUploadId)) {
-            $this->uploadId = $newUploadId;
-        }
     }
 
     /**
@@ -127,17 +130,7 @@ class UploadState
      */
     public function isInitiated()
     {
-        return $this->status >= self::INITIATED;
-    }
-
-    /**
-     * Determines whether the upload state is in the ABORTED status.
-     *
-     * @return bool
-     */
-    public function isAborted()
-    {
-        return $this->status === self::ABORTED;
+        return $this->status === self::INITIATED;
     }
 
     /**
