@@ -82,7 +82,7 @@ class CommandPool implements PromisorInterface
 
         return (new self($client, $commands, $config))
             ->promise()
-            ->then(function () use (&$results) {
+            ->then(static function () use (&$results) {
                 ksort($results);
                 return $results;
             })
@@ -96,13 +96,17 @@ class CommandPool implements PromisorInterface
     {
         $before = $this->getBefore($config);
 
-        return function ($command) use ($client, $before) {
+        return static function ($command) use ($client, $before) {
             if (!($command instanceof CommandInterface)) {
                 throw new \InvalidArgumentException('Each value yielded by the '
                     . 'iterator must be an Aws\CommandInterface.');
             }
             if ($before) {
                 $before($command);
+            }
+            // Add a delay to ensure execution on the next tick.
+            if (empty($command['@http']['delay'])) {
+                $command['@http']['delay'] = 0.0001;
             }
             return $client->executeAsync($command);
         };
