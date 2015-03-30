@@ -7,10 +7,10 @@ use Aws\Api\Service;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Credentials\NullCredentials;
-use Aws\Handler\GuzzleV5\GuzzleHandler;
 use Aws\Signature\SignatureProvider;
 use Aws\Endpoint\EndpointProvider;
 use Aws\Credentials\CredentialProvider;
+use GuzzleHttp\ClientInterface;
 use InvalidArgumentException as IAE;
 
 /**
@@ -410,8 +410,17 @@ class ClientResolver
 
     public static function _default_handler(array &$args)
     {
+        $version = (string) ClientInterface::VERSION;
+        if ($version[0] === '5') {
+            $handler = new \Aws\Handler\GuzzleV5\GuzzleHandler();
+        } elseif ($version[0] === '6') {
+            $handler = new \Aws\Handler\GuzzleV6\GuzzleHandler();
+        } else {
+            throw new \RuntimeException('Unknown Guzzle version: ' . $version);
+        }
+
         return new WrappedHttpHandler(
-            new GuzzleHandler(),
+            $handler,
             $args['parser'],
             $args['error_parser'],
             $args['exception_class']
