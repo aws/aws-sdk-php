@@ -66,10 +66,6 @@ class RefreshableCredentials implements CredentialsInterface
     {
         $this->credentials = null;
         $fn = $this->provider;
-        $creds = CredentialProvider::resolve($fn);
-        if ($creds->isExpired()) {
-            throw new CredentialsException('Could not refresh credentials');
-        }
-        $this->credentials = $creds;
+        $this->credentials = CredentialProvider::resolve($fn);
     }
 }

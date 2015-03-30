@@ -60,16 +60,18 @@ class CredentialProvider
      * @param callable $provider Credential provider function
      *
      * @return CredentialsInterface
-     * @throws CredentialsException
+     * @throws CredentialsException|\LogicException
      */
     public static function resolve(callable $provider)
     {
         $result = $provider();
-        if ($result instanceof CredentialsInterface) {
-            return $result;
+        if (!($result instanceof CredentialsInterface)) {
+            throw new UnresolvedCredentialsException('Could not load credentials');
+        } elseif ($result->isExpired()) {
+            throw new CredentialsException('The credentials are expired');
         }
 
-        throw new UnresolvedCredentialsException('Could not load credentials');
+        return $result;
     }
 
     /**

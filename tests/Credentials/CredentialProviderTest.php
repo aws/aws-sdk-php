@@ -46,6 +46,16 @@ class CredentialProviderTest extends \PHPUnit_Framework_TestCase
         CredentialProvider::resolve(function () {});
     }
 
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     */
+    public function testEnsuresCredentialsAreNotExpired()
+    {
+        CredentialProvider::resolve(function () {
+            return new Credentials('foo', 'bar', 'baz', time() - 1000);
+        });
+    }
+
     public function testCreatesFromEnvironmentVariables()
     {
         $this->clearEnv();
