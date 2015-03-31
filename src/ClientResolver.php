@@ -410,17 +410,8 @@ class ClientResolver
 
     public static function _default_handler(array &$args)
     {
-        $version = (string) ClientInterface::VERSION;
-        if ($version[0] === '5') {
-            $handler = new \Aws\Handler\GuzzleV5\GuzzleHandler();
-        } elseif ($version[0] === '6') {
-            $handler = new \Aws\Handler\GuzzleV6\GuzzleHandler();
-        } else {
-            throw new \RuntimeException('Unknown Guzzle version: ' . $version);
-        }
-
         return new WrappedHttpHandler(
-            $handler,
+            default_http_handler(),
             $args['parser'],
             $args['error_parser'],
             $args['exception_class']

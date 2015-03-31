@@ -83,7 +83,7 @@ class MockHandler implements \Countable
             if (!isset($meta['effectiveUri'])) {
                 $meta['effectiveUri'] = (string) $request->getUri();
             }
-            if (!isset($result['statusCode'])) {
+            if (!isset($meta['statusCode'])) {
                 $meta['statusCode'] = 200;
             }
             $result['@metadata'] = $meta;

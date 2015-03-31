@@ -4,7 +4,7 @@ namespace Aws\Test\Api;
 use Aws\Api\Shape;
 use Aws\Api\ShapeMap;
 use Aws\Api\Validator;
-use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\Psr7;
 
 /**
  * @covers Aws\Api\Validator
@@ -295,7 +295,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'type' => 'structure',
                     'members' => ['foo' => ['type' => 'blob']]
                 ],
-                ['foo' => Stream::factory('test')],
+                ['foo' => Psr7\stream_for('test')],
                 true
             ],
         ];

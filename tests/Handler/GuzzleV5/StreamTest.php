@@ -12,6 +12,13 @@ use GuzzleHttp\Stream\Stream as GuzzleStream;
  */
 class StreamTest extends \PHPUnit_Framework_TestCase
 {
+    public function setup()
+    {
+        if (class_exists('GuzzleHttp\Promise\Promise')) {
+            $this->markTestSkipped();
+        }
+    }
+
     public function testCanAdaptGuzzleStreamToPsr()
     {
         $stream = new PsrStreamAdapter(GuzzleStream::factory('foo'));

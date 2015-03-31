@@ -56,7 +56,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         $list->setHandler($mock);
         $list->append('sign', Middleware::retry());
         $handler = $list->resolve();
-        $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
+        $handler(new Command('foo'), new Request('GET', 'http://127.0.0.1'))->wait();
         $this->assertCount(0, $mock);
     }
 

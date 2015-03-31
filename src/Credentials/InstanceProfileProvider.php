@@ -2,7 +2,7 @@
 namespace Aws\Credentials;
 
 use Aws\Exception\CredentialsException;
-use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
 
 /**
  * Loads credentials from the EC2 metadata server. If the profile cannot bef
@@ -10,13 +10,15 @@ use GuzzleHttp\Client;
  */
 class InstanceProfileProvider
 {
+    const SERVER_URI = 'http://169.254.169.254/latest/';
+
     /** @var string */
     private $profile;
 
     /** @var int */
     private $retries;
 
-    /** @var Client */
+    /** @var callable */
     private $client;
 
     /**
@@ -33,16 +35,9 @@ class InstanceProfileProvider
         $this->timeout = isset($config['timeout']) ? $config['timeout'] : 1.0;
         $this->profile = isset($config['profile']) ? $config['profile'] : null;
         $this->retries = isset($config['retries']) ? $config['retries'] : 3;
-
-        if (isset($config['client'])) {
-            // Internal use only. Not part of the public API.
-            $this->client = $config['client'];
-        } else {
-            $this->client = $this->client = new Client([
-                'base_uri' => 'http://169.254.169.254/latest/',
-                'defaults' => ['connect_timeout' => 1]
-            ]);
-        }
+        $this->client = isset($config['client'])
+            ? $config['client'] // internal use only
+            : \Aws\default_http_handler();
     }
 
     /**
@@ -86,10 +81,13 @@ class InstanceProfileProvider
      */
     private function request($url)
     {
+        $fn = $this->client;
+        $request = new Request('GET', self::SERVER_URI . $url);
         $retryCount = 0;
         start_over:
         try {
-            return (string) $this->client->get($url)->getBody();
+            $result = $fn($request, ['timeout' => $this->timeout]);
+            return (string) $result->wait()->getBody();
         } catch (\Exception $e) {
             if (++$retryCount > $this->retries) {
                 $message = $this->createErrorMessage($e->getMessage());

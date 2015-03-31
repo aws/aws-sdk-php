@@ -38,8 +38,18 @@ class GuzzleHandler
 
         return $this->client->sendAsync($request, $options)->then(
             null,
-            function (\Exception $e) {
-                return $this->prepareError($e);
+            static function (\Exception $e) {
+                $error = [
+                    'exception'        => $e,
+                    'connection_error' => $e instanceof ConnectException,
+                    'response'         => null,
+                ];
+
+                if ($e instanceof RequestException && $e->getResponse()) {
+                    $error['response'] = $e->getResponse();
+                }
+
+                return new Promise\RejectedPromise($error);
             }
         );
     }
@@ -53,20 +63,5 @@ class GuzzleHandler
         );
 
         return $request;
-    }
-
-    private function prepareError(Exception $e)
-    {
-        $error = [
-            'exception'        => $e,
-            'connection_error' => $e instanceof ConnectException,
-            'response'         => null,
-        ];
-
-        if ($e instanceof RequestException && $e->getResponse()) {
-            $error['response'] = $e->getResponse();
-        }
-
-        return new Promise\RejectedPromise($error);
     }
 }

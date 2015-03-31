@@ -1,6 +1,7 @@
 <?php
 namespace Aws;
 
+use GuzzleHttp\ClientInterface;
 use transducers as t;
 
 /**
@@ -125,5 +126,22 @@ function describe_type($input)
             var_dump($input);
             // normalize float vs double
             return str_replace('double(', 'float(', rtrim(ob_get_clean()));
+    }
+}
+
+/**
+ * Creates a default HTTP handler based on the available clients.
+ *
+ * @return callable
+ */
+function default_http_handler()
+{
+    $version = (string) ClientInterface::VERSION;
+    if ($version[0] === '5') {
+        return new \Aws\Handler\GuzzleV5\GuzzleHandler();
+    } elseif ($version[0] === '6') {
+        return new \Aws\Handler\GuzzleV6\GuzzleHandler();
+    } else {
+        throw new \RuntimeException('Unknown Guzzle version: ' . $version);
     }
 }

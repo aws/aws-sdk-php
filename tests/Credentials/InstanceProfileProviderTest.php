@@ -2,12 +2,9 @@
 namespace Aws\Test\Credentials;
 
 use Aws\Credentials\InstanceProfileProvider;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Message\Request;
-use GuzzleHttp\Message\Response;
-use GuzzleHttp\Stream\Stream;
-use GuzzleHttp\Subscriber\Mock;
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @covers Aws\Credentials\InstanceProfileProvider
@@ -28,19 +25,18 @@ class InstanceProfileProviderTest extends \PHPUnit_Framework_TestCase
 
     private function getTestCreds($result, $profile = null, Response $more = null)
     {
-        $client = new Client([
-            'base_url' => 'http://169.254.169.254/latest/'
-        ]);
-
         $responses = [];
         if (!$profile) {
-            $responses[] = new Response(200, [], Stream::factory('test'));
+            $responses[] = new Response(200, [], Psr7\stream_for('test'));
         }
-        $responses[] = new Response(200, [], Stream::factory(json_encode($result)));
+        $responses[] = new Response(200, [], Psr7\stream_for(json_encode($result)));
         if ($more) {
             $responses[] = $more;
         }
-        $client->getEmitter()->attach(new Mock($responses));
+
+        $client = function (RequestInterface $req, array $options) use (&$responses) {
+            return \GuzzleHttp\Promise\promise_for(array_shift($responses));
+        };
 
         $args = ['profile' => $profile];
         $args['client'] = $client;
@@ -64,12 +60,9 @@ class InstanceProfileProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testReturnsNullIfProfileIsNotAvailable()
     {
-        $client = new Client(['base_url' => 'http://169.254.169.254/latest/']);
-        $client->getEmitter()->attach(
-            new Mock([
-                new RequestException('foo', new Request('GET', 'http://foo'))
-            ])
-        );
+        $client = function (RequestInterface $req, array $options) use (&$responses) {
+            return \GuzzleHttp\Promise\rejection_for('error');
+        };
         $p = new InstanceProfileProvider(['client' => $client]);
         $this->assertNull($p());
     }
@@ -80,12 +73,9 @@ class InstanceProfileProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testThrowsExceptionIfCredentialsNotAvailable()
     {
-        $client = new Client(['base_url' => 'http://169.254.169.254/latest/']);
-        $client->getEmitter()->attach(
-            new Mock([
-                new RequestException('foo', new Request('GET', 'http://foo'))
-            ])
-        );
+        $client = function (RequestInterface $req, array $options) use (&$responses) {
+            return \GuzzleHttp\Promise\rejection_for('error');
+        };
         $args['client'] = $client;
         $args['profile'] = 'foo';
         $p = new InstanceProfileProvider([

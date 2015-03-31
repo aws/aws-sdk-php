@@ -3,8 +3,8 @@ namespace Aws\S3;
 
 use Aws\Result;
 use Aws\S3\Exception\S3Exception;
+use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Stream;
-use GuzzleHttp\Mimetypes;
 use GuzzleHttp\Psr7\CachingStream;
 use Psr\Http\Message\StreamableInterface;
 use transducers as t;
@@ -154,7 +154,7 @@ class StreamWrapper
         // Attempt to guess the ContentType of the upload based on the
         // file extension of the key
         if (!isset($params['ContentType']) &&
-            ($type = Mimetypes::getInstance()->fromFilename($params['Key']))
+            ($type = Psr7\mimetype_from_filename($params['Key']))
         ) {
             $params['ContentType'] = $type;
         }
