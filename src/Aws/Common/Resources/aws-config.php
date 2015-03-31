@@ -221,6 +221,12 @@ return array(
             'class'   => 'Aws\ImportExport\ImportExportClient'
         ),
 
+        'machinelearning' => array(
+            'alias'   => 'MachineLearning',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\MachineLearning\MachineLearningClient'
+        ),
+
         'opsworks' => array(
             'alias'   => 'OpsWorks',
             'extends' => 'default_settings',
