@@ -17,9 +17,19 @@ Aws\DynamoDb\DynamoDbClient::factory($conf);
 \JmesPath\search('foo', ['foo' => 'bar']);
 
 // React autoloader
-if (!function_exists('React\\Promise\\map')) {
-    echo 'React not loaded';
-    exit(1);
+$checks = [
+    'GuzzleHttp\\uri_template',
+    'GuzzleHttp\\Psr7\\stream_for',
+    'GuzzleHttp\\Promise\\inspect',
+    'JmesPath\\search',
+    'Aws\\dir_iterator',
+];
+
+foreach ($checks as $check) {
+    if (!function_exists($check)) {
+        echo $checks . ' not found';
+        exit(1);
+    }
 }
 
 echo 'Version=' . Aws\Sdk::VERSION;
