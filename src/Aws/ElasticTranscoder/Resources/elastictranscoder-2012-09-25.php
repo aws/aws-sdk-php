@@ -750,6 +750,32 @@ return array (
                                     ),
                                 ),
                             ),
+                            'PlayReadyDrm' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'Format' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Key' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'KeyMd5' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'KeyId' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'InitializationVector' => array(
+                                        'type' => 'string',
+                                        'maxLength' => 255,
+                                    ),
+                                    'LicenseAcquisitionUrl' => array(
+                                        'type' => 'string',
+                                        'minLength' => 1,
+                                        'maxLength' => 512,
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -2450,6 +2476,29 @@ return array (
                                             ),
                                         ),
                                     ),
+                                    'PlayReadyDrm' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'Format' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Key' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'KeyMd5' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'KeyId' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'InitializationVector' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'LicenseAcquisitionUrl' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
                                     'Status' => array(
                                         'type' => 'string',
                                     ),
@@ -3459,6 +3508,29 @@ return array (
                                                 ),
                                             ),
                                         ),
+                                        'PlayReadyDrm' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'Format' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Key' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'KeyMd5' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'KeyId' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'InitializationVector' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'LicenseAcquisitionUrl' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
                                         'Status' => array(
                                             'type' => 'string',
                                         ),
@@ -4157,6 +4229,29 @@ return array (
                                                     'type' => 'string',
                                                 ),
                                                 'KeyStoragePolicy' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                        'PlayReadyDrm' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'Format' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Key' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'KeyMd5' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'KeyId' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'InitializationVector' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'LicenseAcquisitionUrl' => array(
                                                     'type' => 'string',
                                                 ),
                                             ),
@@ -5164,6 +5259,29 @@ return array (
                                                 'type' => 'string',
                                             ),
                                             'KeyStoragePolicy' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                    'PlayReadyDrm' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'Format' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Key' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'KeyMd5' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'KeyId' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'InitializationVector' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'LicenseAcquisitionUrl' => array(
                                                 'type' => 'string',
                                             ),
                                         ),

@@ -3,6 +3,8 @@
 ## Next Release
 
 * `Aws\Rds` - Added support for the `DescribeCertificates` operation.
+* `Aws\ElasticTranscoder` - Added support for protecting content with PlayReady
+  Digital Rights Management (DRM).
 
 ## 2.7.25 - 2015-03-26
 
