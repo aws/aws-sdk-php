@@ -2,6 +2,7 @@
 
 ## Next Release
 
+* `Aws\CodeDeploy` - Added support deployments to on-premises instances.
 * `Aws\Rds` - Added support for the `DescribeCertificates` operation.
 * `Aws\ElasticTranscoder` - Added support for protecting content with PlayReady
   Digital Rights Management (DRM).

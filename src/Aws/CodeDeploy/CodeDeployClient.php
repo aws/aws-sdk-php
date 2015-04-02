@@ -26,8 +26,10 @@ use Guzzle\Service\Resource\Model;
 /**
  * Client to interact with AWS CodeDeploy
  *
+ * @method Model addTagsToOnPremisesInstances(array $args = array()) {@command CodeDeploy AddTagsToOnPremisesInstances}
  * @method Model batchGetApplications(array $args = array()) {@command CodeDeploy BatchGetApplications}
  * @method Model batchGetDeployments(array $args = array()) {@command CodeDeploy BatchGetDeployments}
+ * @method Model batchGetOnPremisesInstances(array $args = array()) {@command CodeDeploy BatchGetOnPremisesInstances}
  * @method Model createApplication(array $args = array()) {@command CodeDeploy CreateApplication}
  * @method Model createDeployment(array $args = array()) {@command CodeDeploy CreateDeployment}
  * @method Model createDeploymentConfig(array $args = array()) {@command CodeDeploy CreateDeploymentConfig}
@@ -35,19 +37,24 @@ use Guzzle\Service\Resource\Model;
  * @method Model deleteApplication(array $args = array()) {@command CodeDeploy DeleteApplication}
  * @method Model deleteDeploymentConfig(array $args = array()) {@command CodeDeploy DeleteDeploymentConfig}
  * @method Model deleteDeploymentGroup(array $args = array()) {@command CodeDeploy DeleteDeploymentGroup}
+ * @method Model deregisterOnPremisesInstance(array $args = array()) {@command CodeDeploy DeregisterOnPremisesInstance}
  * @method Model getApplication(array $args = array()) {@command CodeDeploy GetApplication}
  * @method Model getApplicationRevision(array $args = array()) {@command CodeDeploy GetApplicationRevision}
  * @method Model getDeployment(array $args = array()) {@command CodeDeploy GetDeployment}
  * @method Model getDeploymentConfig(array $args = array()) {@command CodeDeploy GetDeploymentConfig}
  * @method Model getDeploymentGroup(array $args = array()) {@command CodeDeploy GetDeploymentGroup}
  * @method Model getDeploymentInstance(array $args = array()) {@command CodeDeploy GetDeploymentInstance}
+ * @method Model getOnPremisesInstance(array $args = array()) {@command CodeDeploy GetOnPremisesInstance}
  * @method Model listApplicationRevisions(array $args = array()) {@command CodeDeploy ListApplicationRevisions}
  * @method Model listApplications(array $args = array()) {@command CodeDeploy ListApplications}
  * @method Model listDeploymentConfigs(array $args = array()) {@command CodeDeploy ListDeploymentConfigs}
  * @method Model listDeploymentGroups(array $args = array()) {@command CodeDeploy ListDeploymentGroups}
  * @method Model listDeploymentInstances(array $args = array()) {@command CodeDeploy ListDeploymentInstances}
  * @method Model listDeployments(array $args = array()) {@command CodeDeploy ListDeployments}
+ * @method Model listOnPremisesInstances(array $args = array()) {@command CodeDeploy ListOnPremisesInstances}
  * @method Model registerApplicationRevision(array $args = array()) {@command CodeDeploy RegisterApplicationRevision}
+ * @method Model registerOnPremisesInstance(array $args = array()) {@command CodeDeploy RegisterOnPremisesInstance}
+ * @method Model removeTagsFromOnPremisesInstances(array $args = array()) {@command CodeDeploy RemoveTagsFromOnPremisesInstances}
  * @method Model stopDeployment(array $args = array()) {@command CodeDeploy StopDeployment}
  * @method Model updateApplication(array $args = array()) {@command CodeDeploy UpdateApplication}
  * @method Model updateDeploymentGroup(array $args = array()) {@command CodeDeploy UpdateDeploymentGroup}
