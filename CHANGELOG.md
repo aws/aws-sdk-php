@@ -1,10 +1,14 @@
 # CHANGELOG
 
+## Next Release
+
+* `Aws\Rds` - Added support for the `DescribeCertificates` operation.
+
 ## 2.7.25 - 2015-03-26
 
 * `Aws\ElasticTranscoder` - Added support for job timing.
-* `Aws\Iam` - Adding NamedPolicy to GetAccountAuthorizationDetails.
-* `Aws\OpsWorks` - Adding BlockDeviceMapping support.
+* `Aws\Iam` - Added `NamedPolicy` to `GetAccountAuthorizationDetails`.
+* `Aws\OpsWorks` - Added `BlockDeviceMapping` support.
 
 ## 2.7.24 - 2015-03-24
 

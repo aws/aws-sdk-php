@@ -202,7 +202,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified Resource ID was not found.',
+                    'reason' => 'The specified resource ID was not found.',
                     'class' => 'ResourceNotFoundException',
                 ),
             ),
@@ -1542,6 +1542,86 @@ return array (
                 ),
             ),
         ),
+        'DescribeAccountAttributes' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'AccountAttributesMessage',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeAccountAttributes',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-31',
+                ),
+            ),
+        ),
+        'DescribeCertificates' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'CertificateMessage',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeCertificates',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-31',
+                ),
+                'CertificateIdentifier' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Name' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'Values' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'Values.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'MaxRecords' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'CertificateIdentifier does not refer to an existing certificate.',
+                    'class' => 'CertificateNotFoundException',
+                ),
+            ),
+        ),
         'DescribeDBEngineVersions' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -2580,7 +2660,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified Resource ID was not found.',
+                    'reason' => 'The specified resource ID was not found.',
                     'class' => 'ResourceNotFoundException',
                 ),
             ),
@@ -2970,6 +3050,10 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'CACertificateIdentifier' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -3027,6 +3111,10 @@ return array (
                 array(
                     'reason' => 'Specified CIDRIP or EC2 security group is not authorized for the specified DB security group.    RDS may not also be authorized via IAM to perform necessary actions on your behalf.',
                     'class' => 'AuthorizationNotFoundException',
+                ),
+                array(
+                    'reason' => 'CertificateIdentifier does not refer to an existing certificate.',
+                    'class' => 'CertificateNotFoundException',
                 ),
             ),
         ),
@@ -4184,6 +4272,9 @@ return array (
                                     'CurrentApplyDate' => array(
                                         'type' => 'string',
                                     ),
+                                    'Description' => array(
+                                        'type' => 'string',
+                                    ),
                                 ),
                             ),
                         ),
@@ -4668,6 +4759,9 @@ return array (
                                 'StorageType' => array(
                                     'type' => 'string',
                                 ),
+                                'CACertificateIdentifier' => array(
+                                    'type' => 'string',
+                                ),
                             ),
                         ),
                         'LatestRestorableTime' => array(
@@ -4761,6 +4855,9 @@ return array (
                         'DbiResourceId' => array(
                             'type' => 'string',
                         ),
+                        'CACertificateIdentifier' => array(
+                            'type' => 'string',
+                        ),
                     ),
                 ),
             ),
@@ -4813,6 +4910,68 @@ return array (
                             ),
                         ),
                     ),
+                ),
+            ),
+        ),
+        'AccountAttributesMessage' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'AccountQuotas' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'AccountQuota',
+                        'type' => 'object',
+                        'sentAs' => 'AccountQuota',
+                        'properties' => array(
+                            'AccountQuotaName' => array(
+                                'type' => 'string',
+                            ),
+                            'Used' => array(
+                                'type' => 'numeric',
+                            ),
+                            'Max' => array(
+                                'type' => 'numeric',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'CertificateMessage' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Certificates' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'Certificate',
+                        'type' => 'object',
+                        'sentAs' => 'Certificate',
+                        'properties' => array(
+                            'CertificateIdentifier' => array(
+                                'type' => 'string',
+                            ),
+                            'CertificateType' => array(
+                                'type' => 'string',
+                            ),
+                            'Thumbprint' => array(
+                                'type' => 'string',
+                            ),
+                            'ValidFrom' => array(
+                                'type' => 'string',
+                            ),
+                            'ValidTill' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
                 ),
             ),
         ),
@@ -5064,6 +5223,9 @@ return array (
                                     'StorageType' => array(
                                         'type' => 'string',
                                     ),
+                                    'CACertificateIdentifier' => array(
+                                        'type' => 'string',
+                                    ),
                                 ),
                             ),
                             'LatestRestorableTime' => array(
@@ -5155,6 +5317,9 @@ return array (
                                 'type' => 'string',
                             ),
                             'DbiResourceId' => array(
+                                'type' => 'string',
+                            ),
+                            'CACertificateIdentifier' => array(
                                 'type' => 'string',
                             ),
                         ),
@@ -5992,6 +6157,9 @@ return array (
                                             'type' => 'string',
                                         ),
                                         'CurrentApplyDate' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Description' => array(
                                             'type' => 'string',
                                         ),
                                     ),

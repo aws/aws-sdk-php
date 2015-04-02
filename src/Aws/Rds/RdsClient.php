@@ -48,6 +48,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model deleteDBSubnetGroup(array $args = array()) {@command Rds DeleteDBSubnetGroup}
  * @method Model deleteEventSubscription(array $args = array()) {@command Rds DeleteEventSubscription}
  * @method Model deleteOptionGroup(array $args = array()) {@command Rds DeleteOptionGroup}
+ * @method Model describeAccountAttributes(array $args = array()) {@command Rds DescribeAccountAttributes}
+ * @method Model describeCertificates(array $args = array()) {@command Rds DescribeCertificates}
  * @method Model describeDBEngineVersions(array $args = array()) {@command Rds DescribeDBEngineVersions}
  * @method Model describeDBInstances(array $args = array()) {@command Rds DescribeDBInstances}
  * @method Model describeDBLogFiles(array $args = array()) {@command Rds DescribeDBLogFiles}
