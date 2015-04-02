@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next Release
+## 2.7.26 - 2015-04-02
 
 * `Aws\CodeDeploy` - Added support deployments to on-premises instances.
 * `Aws\Rds` - Added support for the `DescribeCertificates` operation.
