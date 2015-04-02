@@ -1,6 +1,6 @@
 all: clean coverage docs
 
-clean:
+clean: clear-cache
 	rm -rf build/artifacts/*
 	cd docs && make clean
 
@@ -45,8 +45,8 @@ api-package:
 
 api-all: api-clean api api-package api-show
 
-build-apis:
-	cd build && . build-apis.sh $(SRC)
+api-manifest:
+	php build/build-version-manifest.php
 
 # Ensures that the TAG variable was passed to the make command
 check_tag:
@@ -82,4 +82,7 @@ release: check_tag package
 # Tags the repo and publishes a release.
 full_release: tag release
 
-.PHONY: docs build-apis
+clear-cache:
+	php build/aws-clear-cache.php
+
+.PHONY: docs clear-cache

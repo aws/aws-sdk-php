@@ -331,8 +331,8 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
                     : ['pagination' => []];
             } elseif ($type == 'waiter') {
                 return isset($service['waiters'])
-                    ? ['waiters' => $service['waiters']]
-                    : ['waiters' => []];
+                    ? ['waiters' => $service['waiters'], 'version' => 2]
+                    : ['waiters' => [], 'version' => 2];
             } else {
                 if (!isset($service['metadata'])) {
                     $service['metadata'] = [];

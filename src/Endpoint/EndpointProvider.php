@@ -76,7 +76,7 @@ class EndpointProvider
      */
     public static function defaultProvider()
     {
-        $data = require __DIR__ . '/../data/public-endpoints.php';
+        $data = \Aws\load_compiled_json(__DIR__ . '/../data/endpoints.json');
 
         return new PatternEndpointProvider($data['endpoints']);
     }

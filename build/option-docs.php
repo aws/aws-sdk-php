@@ -1,8 +1,6 @@
 <?php
 require __DIR__  . '/../vendor/autoload.php';
 
-use GuzzleHttp\Ring\Core;
-
 function generateDocblock(array $args)
 {
     foreach ($args as $name => $value) {
@@ -22,7 +20,7 @@ function generateDocblock(array $args)
         }
 
         if (isset($value['default']) && !is_callable($value['default'])) {
-            $modifiers[] = 'default=' . Core::describeType($value['default']);
+            $modifiers[] = 'default=' . \Aws\describe_type($value['default']);
         }
 
         if ($modifiers) {

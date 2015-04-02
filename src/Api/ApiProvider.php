@@ -39,9 +39,10 @@ class ApiProvider
 {
     /** @var array A map of public API type names to their file suffix. */
     private static $typeMap = [
-        'api'       => 'api',
-        'paginator' => 'paginators',
-        'waiter'    => 'waiters2',
+        'api'       => 'api-2',
+        'paginator' => 'paginators-2',
+        'waiter'    => 'waiters-2',
+        'docs'      => 'docs-2',
     ];
 
     /** @var array The available API version manifest for each service. */
@@ -74,12 +75,13 @@ class ApiProvider
 
         // Throw an exception with a message depending on the inputs.
         if (!isset(self::$typeMap[$type])) {
-            $msg = "The type must be one of: " . join(', ', self::$typeMap);
+            $msg = "The type must be one of: " . implode(', ', self::$typeMap);
         } elseif ($service) {
             $msg = "The {$service} service does not have version: {$version}.";
         } else {
             $msg = "You must specify a service name to retrieve its API data.";
         }
+
         throw new UnresolvedApiException($msg);
     }
 
@@ -94,7 +96,7 @@ class ApiProvider
     {
         $dir = __DIR__ . '/../data';
 
-        return new self($dir, require $dir . '/api-version-manifest.php');
+        return new self($dir, \Aws\load_compiled_json("$dir/version-manifest.json"));
     }
 
     /**
@@ -185,13 +187,19 @@ class ApiProvider
         if (!isset($this->versions[$service]) && !$this->hasManifest) {
             $this->buildVersionsList($service);
         }
+
         if (!isset($this->versions[$service][$version])) {
             return null;
         }
-        $version = $this->versions[$service][$version];
 
-        // Return the loaded API data for the specified type.
-        return $this->loadApiData($type, $service, $version);
+        $version = $this->versions[$service][$version];
+        $path = "{$this->modelsDir}/{$service}/{$version}/{$type}.json";
+
+        try {
+            return \Aws\load_compiled_json($path);
+        } catch (\InvalidArgumentException $e) {
+            return null;
+        }
     }
 
     /**
@@ -215,37 +223,20 @@ class ApiProvider
      */
     private function buildVersionsList($service)
     {
-        $results = [];
-        $len = strlen($service) + 1;
-        foreach (glob("{$this->modelsDir}/{$service}-*.api.*") as $f) {
-            $results[] = substr(basename($f), $len, 10);
+        $dir = "{$this->modelsDir}/{$service}/";
+
+        if (!is_dir($dir)) {
+            return;
         }
 
+        // Get versions, remove . and .., and sort in descending order.
+        $results = array_diff(scandir($dir, SCANDIR_SORT_DESCENDING), ['..', '.']);
+
         if ($results) {
-            rsort($results);
             $this->versions[$service] = ['latest' => $results[0]];
             $this->versions[$service] += array_combine($results, $results);
         } else {
             $this->versions[$service] = [];
         }
-    }
-
-    /**
-     * Load the file containing the API data for the given type/service/version.
-     */
-    private function loadApiData($type, $service, $version)
-    {
-       // First check for PHP files, then fall back to JSON.
-        $path = "{$this->modelsDir}/{$service}-{$version}.{$type}.php";
-        if (file_exists($path)) {
-            return require $path;
-        }
-
-        $path = "{$this->modelsDir}/{$service}-{$version}.{$type}.json";
-        if (file_exists($path)) {
-            return json_decode(file_get_contents($path), true);
-        }
-
-        return null;
     }
 }

@@ -7,10 +7,8 @@ $conf = [
     'version'     => 'latest'
 ];
 
-// Normal autoloading of real classes.
-Aws\S3\S3Client::factory($conf);
-
-// Autoloading of legacy class names.
+new Aws\S3\S3Client($conf);
+// Legacy factory instantiation.
 Aws\DynamoDb\DynamoDbClient::factory($conf);
 
 // JMESPath autolaoder

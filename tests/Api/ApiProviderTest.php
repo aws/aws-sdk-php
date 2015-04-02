@@ -15,7 +15,7 @@ class ApiProviderTest extends \PHPUnit_Framework_TestCase
     private function getTestApiProvider($useManifest = true)
     {
         $dir = __DIR__ . '/api_provider_fixtures';
-        $manifest = include $dir . '/api-version-manifest.php';
+        $manifest = json_decode(file_get_contents($dir . '/version-manifest.json'), true);
 
         return $useManifest
             ? ApiProvider::manifest($dir, $manifest)
@@ -86,12 +86,6 @@ class ApiProviderTest extends \PHPUnit_Framework_TestCase
     {
         $p = ApiProvider::filesystem(__DIR__ . '/api_provider_fixtures');
         $this->assertEquals(['foo' => 'bar'], $p('api', 'dynamodb', 'latest'));
-    }
-
-    public function testCanLoadPhpFile()
-    {
-        $p = ApiProvider::filesystem(__DIR__ . '/api_provider_fixtures');
-        $this->assertEquals(['foo' => 'bar'], $p('api', 'dynamodb', '2010-02-04'));
     }
 
     public function testReturnsNullWhenNoLatestVersionIsAvailable()

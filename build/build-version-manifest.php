@@ -1,10 +1,8 @@
 <?php
 
-require __DIR__ . '/functions.php';
-
 $manifest = [];
-foreach (glob(__DIR__ . '/../src/data/*.api.php') as $file) {
-    $model = include $file;
+foreach (glob(__DIR__ . '/../src/data/**/**/api-2.json') as $file) {
+    $model = json_decode(file_get_contents($file), true);
     $metadata = $model['metadata'] + ['compatibleApiVersions' => []];
     $manifest[$metadata['endpointPrefix']] = [
         'latest' => $metadata['apiVersion'],
@@ -15,8 +13,8 @@ foreach (glob(__DIR__ . '/../src/data/*.api.php') as $file) {
     }
 }
 
-$data = get_code_for_array($manifest);
-$file = __DIR__ . '/../src/data/api-version-manifest.php';
+$data = json_encode($manifest, JSON_PRETTY_PRINT);
+$file = __DIR__ . '/../src/data/version-manifest.json';
 file_put_contents($file, $data);
 
 echo "Wrote the following data to {$file}:\n>>>>>\n{$data}<<<<<\n";

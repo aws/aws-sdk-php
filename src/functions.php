@@ -5,6 +5,34 @@ use GuzzleHttp\ClientInterface;
 use transducers as t;
 
 /**
+ * Loads a compiled JSON file from a PHP file.
+ *
+ * If the JSON file has not been cached to disk as a PHP file, it will be loaded
+ * from the JSON source file, written to disk as a PHP file, and returned. This
+ * allows subsequent access of the JSON file to be read from a compiled PHP
+ * script which is added to PHP's in-memory opcode cache.
+ *
+ * The directory used to save compiled PHP scripts is stored in the ./cache
+ * directory of the SDK by default. You can customize where the cache files are
+ * stored by specifying the `AWS_PHP_CACHE_DIR` environment variable.
+ *
+ * @param string $path Path to the JSON file on disk
+ *
+ * @return mixed Returns the JSON decoded data. Note that JSON objects are
+ *     decoded as associative arrays.
+ */
+function load_compiled_json($path)
+{
+    static $loader;
+
+    if (!$loader) {
+        $loader = new JsonCompiler();
+    }
+
+    return $loader->load($path);
+}
+
+/**
  * Iterates over the files in a directory and works with custom wrappers.
  *
  * @param string   $path Path to open (e.g., "s3://foo/bar").

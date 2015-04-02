@@ -46,4 +46,12 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
         $fn = Aws\constantly('foo');
         $this->assertSame('foo', $fn());
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testUsesJsonCompiler()
+    {
+        Aws\load_compiled_json('/path/to/not/here.json');
+    }
 }
