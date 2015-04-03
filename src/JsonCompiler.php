@@ -25,7 +25,8 @@ class JsonCompiler
         $this->useCache = $useCache && extension_loaded('Zend OPcache');
         $this->hasOpcacheCheck = $this->useCache
             && function_exists('opcache_is_script_cached');
-        $this->cacheDir = getenv(self::CACHE_ENV) ?: (__DIR__ . '/cache');
+        $this->cacheDir = getenv(self::CACHE_ENV)
+            ?: sys_get_temp_dir() . '/aws-cache';
 
         if (!is_dir($this->cacheDir)) {
             if (!mkdir($this->cacheDir, 0777, true)) {
@@ -55,7 +56,7 @@ class JsonCompiler
      */
     public function purge()
     {
-        foreach (glob($this->cacheDir . '/*.php') as $file) {
+        foreach (glob($this->cacheDir . '/*.json.php') as $file) {
             unlink($file);
         }
     }

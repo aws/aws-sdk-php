@@ -12,9 +12,10 @@ use transducers as t;
  * allows subsequent access of the JSON file to be read from a compiled PHP
  * script which is added to PHP's in-memory opcode cache.
  *
- * The directory used to save compiled PHP scripts is stored in the ./cache
- * directory of the SDK by default. You can customize where the cache files are
- * stored by specifying the `AWS_PHP_CACHE_DIR` environment variable.
+ * The default directory used to save compiled PHP scripts is the "aws-cache"
+ * sub-directory of PHP temp directory (return value of sys_get_temp_dir()).
+ * You can customize where the cache files are stored by specifying the
+ * `AWS_PHP_CACHE_DIR` environment variable.
  *
  * @param string $path Path to the JSON file on disk
  *
@@ -30,6 +31,16 @@ function load_compiled_json($path)
     }
 
     return $loader->load($path);
+}
+
+/**
+ * Clears the compiled JSON cache, deleting all "*.json.php" files that are
+ * used by the SDK.
+ */
+function clear_compiled_json()
+{
+    $loader = new JsonCompiler();
+    $loader->purge();
 }
 
 /**
