@@ -30,7 +30,7 @@ html_static_path = ['_static']
 html_show_sourcelink = False
 html_sidebars = {
     '**': ['sidebarlogo.html',
-           'localtoc.html',
+           'globaltoc.html',
            'searchbox.html',
            'feedback.html']
 }
@@ -45,8 +45,5 @@ html_theme = 'guzzle_sphinx_theme'
 html_theme_options = {
     # hack to add tracking
     "google_analytics_account": os.getenv('TRACKING', False),
-    "project_nav_name": "AWS SDK for PHP",
-    "github_user": "aws",
-    "github_repo": "aws-sdk-php",
     "base_url": "http://docs.aws.amazon.com/aws-sdk-php/guide/latest/"
 }
