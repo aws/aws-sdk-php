@@ -73,4 +73,31 @@ class JsonCompilerTest extends \PHPUnit_Framework_TestCase
         $entries = array_diff(scandir($c->getCacheDir()), ['.', '..']);
         $this->assertEmpty($entries);
     }
+
+    public function pathProvider()
+    {
+        return [
+            ['/foo/baz/bar.qux', '/foo/baz/bar.qux'],
+            ['/foo/baz/../bar.qux', '/foo/bar.qux'],
+            ['/foo/baz/./bar.qux', '/foo/baz/bar.qux'],
+            ['/foo/baz/../../bar.qux', '/bar.qux'],
+            ['/../../bar.qux', '/bar.qux'],
+            // Extra slashes
+            ['/foo//baz///bar.qux', '/foo/baz/bar.qux'],
+            // Relative with no leading slash
+            ['foo/baz/../bar.qux', 'foo/bar.qux'],
+            ['\\foo\\baz\\..\\.\\bar.qux', '/foo/bar.qux'],
+        ];
+    }
+
+    /**
+     * @dataProvider pathProvider
+     */
+    public function testResolvesRelativePaths($path, $resolved)
+    {
+        $j = new JsonCompiler();
+        $meth = new \ReflectionMethod('Aws\JsonCompiler', 'normalize');
+        $meth->setAccessible(true);
+        $this->assertEquals($resolved, $meth->invoke($j, $path));
+    }
 }

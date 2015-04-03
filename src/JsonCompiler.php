@@ -73,7 +73,7 @@ class JsonCompiler
             return json_decode(file_get_contents($path), true);
         }
 
-        $real = realpath($path);
+        $real = $this->normalize($path);
         $cache = str_replace($this->stripPath, '', $real);
         $cache = str_replace(['\\', '/'], '_', $cache);
         $cache = $this->cacheDir . DIRECTORY_SEPARATOR . $cache . '.php';
@@ -92,5 +92,45 @@ class JsonCompiler
         file_put_contents($cache, "<?php return " . var_export($data, true) . ';');
 
         return $data;
+    }
+
+    /**
+     * Resolve relative paths without using realpath (which causes an
+     * unnecessary fstat).
+     *
+     * @param $path
+     *
+     * @return string
+     */
+    private function normalize($path)
+    {
+        static $replace = ['/', '\\'];
+
+        $parts = explode(
+            DIRECTORY_SEPARATOR,
+            // Normalize path separators
+            str_replace($replace, DIRECTORY_SEPARATOR, $path)
+        );
+
+        $segments = [];
+        foreach ($parts as $part) {
+            if ($part === '' || $part === '.') {
+                continue;
+            }
+            if ($part === '..') {
+                array_pop($segments);
+            } else {
+                $segments[] = $part;
+            }
+        }
+
+        $resolved = implode(DIRECTORY_SEPARATOR, $segments);
+
+        // Add a leading slash if necessary.
+        if (isset($parts[0]) && $parts[0] === '') {
+            $resolved = DIRECTORY_SEPARATOR . $resolved;
+        }
+
+        return $resolved;
     }
 }
