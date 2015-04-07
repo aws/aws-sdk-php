@@ -31,11 +31,12 @@ guide:
 guide-show:
 	open docs/_build/html/index.html
 
-api:
-	time php build/artifacts/sami.phar update build/docs.php
+api-get-sami:
+	mkdir -p build/artifacts
+	[ -f build/artifacts/sami.phar ] || wget -q -O build/artifacts/sami.phar http://get.sensiolabs.org/sami.phar
 
-api-clean:
-	rm -rf build/artifacts/docs/build build/artifacts/docs/cache build/artifacts/docs/theme build/artifacts/aws-docs-api.zip
+api: api-get-sami
+	time php build/artifacts/sami.phar update build/docs.php
 
 api-show:
 	open build/artifacts/docs/build/index.html
@@ -43,7 +44,7 @@ api-show:
 api-package:
 	zip -r build/artifacts/aws-docs-api.zip build/artifacts/docs/build
 
-api-all: api-clean api api-package api-show
+api-all: clean api api-package api-show
 
 api-manifest:
 	php build/build-version-manifest.php
