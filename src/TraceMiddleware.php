@@ -205,7 +205,13 @@ class TraceMiddleware
 
     private function str($value)
     {
-        return is_scalar($value) ? (string) $value : var_export($value, true);
+        if (is_scalar($value)) {
+            return (string) $value;
+        } else {
+            ob_start();
+            var_dump($value);
+            return ob_get_clean();
+        }
     }
 
     private function streamStr(StreamableInterface $body)

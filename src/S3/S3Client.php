@@ -270,27 +270,31 @@ class S3Client extends AwsClient
      * Upload a file, stream, or string to a bucket.
      *
      * If the upload size exceeds the specified threshold, the upload will be
-     * performed using parallel multipart uploads.
+     * performed using concurrent multipart uploads. The options array accepts
+     * the following options:
      *
-     * @param string $bucket  Bucket to upload the object
-     * @param string $key     Key of the object
+     * - before: (callable) Callback to invoke before any upload operations
+     *   during the upload process. The callback should have a function
+     *   signature like `function (Aws\Command $command) {...}`.
+     * - concurrency: (int, default=int(3) Maximum number of concurrent
+     *   `UploadPart` operations allowed during a multipart upload.
+     * - params: (array) Custom parameters to use with the upload. For single
+     *   uploads, they must correspond to those used for the `PutObject`
+     *   operation. For multipart uploads, they correspond to the parameters of
+     *   the `CreateMultipartUpload` operation.
+     * - part_size: (int) Part size to use when doing a multipart upload.
+     * - threshold: (int, default=int(16777216)) The size, in bytes, allowed
+     *   before the upload must be sent via a multipart upload. Default: 16 MB.
+     *
+     * @param string $bucket  Bucket to upload the object.
+     * @param string $key     Key of the object.
      * @param mixed  $body    Object data to upload. Can be a
-     *                        StreamableInterface, PHP stream
-     *                        resource, or a string of data to upload.
-     * @param string $acl     ACL to apply to the object
-     * @param array  $options Custom options used when executing commands:
+     *                        StreamableInterface, PHP stream resource, or a
+     *                        string of data to upload.
+     * @param string $acl     ACL to apply to the object (default: private).
+     * @param array  $options Custom options used when executing commands.
      *
-     *     - before_upload: Callback to invoke before each multipart upload.
-     *       The callback will receive a relevant Guzzle Event object.
-     *     - concurrency: Maximum number of concurrent multipart uploads.
-     *     - params: Custom parameters to use with the upload. The parameters
-     *       must map to the parameters specified in the PutObject operation.
-     *     - part_size: Minimum size to allow for each uploaded part when
-     *       performing a multipart upload.
-     *     - threshold: The minimum size, in bytes, the upload must be before
-     *       a multipart upload is required.
-     *
-     * @see Aws\S3\Model\MultipartUpload\UploadBuilder for more information.
+     * @see Aws\S3\MultipartUploader for more information about multipart uploads.
      * @return Result Returns the modeled result of the performed operation.
      */
     public function upload(
@@ -300,36 +304,44 @@ class S3Client extends AwsClient
         $acl = 'private',
         array $options = []
     ) {
-        // Apply default options.
         $options += [
             'before_upload' => null,
-            'concurrency'   => 1,
+            'concurrency'   => 3,
             'params'        => [],
             'part_size'     => null,
             'threshold'     => 16777216 // 16 MB
         ];
-
-        // Perform the needed operations to upload the S3 Object.
         $body = Psr7\stream_for($body);
-        $params = ['ACL' => $acl] + $options['params'];
 
-        if (!$this->requiresMultipart($body, $options['threshold'])) {
-            return $this->execute($this->getCommand('PutObject', [
+        // Perform the required operations to upload the S3 Object.
+        if ($this->requiresMultipart($body, $options['threshold'])) {
+            // Perform a multipart upload.
+            $options['before_initiate'] = function ($command) use ($options) {
+                foreach ($options['params'] as $k => $v) {
+                    $command[$k] = $v;
+                }
+            };
+            $uploader = new MultipartUploader($this, $body, [
+                'bucket' => $bucket,
+                'key'    => $key,
+                'acl'    => $acl
+            ] + $options);
+            $result = $uploader->upload();
+        } else {
+            // Perform a regular PutObject operation.
+            $command = $this->getCommand('PutObject', [
                 'Bucket' => $bucket,
                 'Key'    => $key,
                 'Body'   => $body,
-            ] + $params));
+                'ACL'    => $acl,
+            ] + $options['params']);
+            if (is_callable($options['before_upload'])) {
+                $options['before_upload']($command);
+            }
+            $result = $this->execute($command);
         }
 
-        return (new UploadBuilder)
-            ->setClient($this)
-            ->setSource($body)
-            ->setBucket($bucket)
-            ->setKey($key)
-            ->addParams('initiate', $params)
-            ->setPartSize($options['part_size'])
-            ->build()
-            ->upload($options['concurrency'], $options['before_upload']);
+        return $result;
     }
 
     /**

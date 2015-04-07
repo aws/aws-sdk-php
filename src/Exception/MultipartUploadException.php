@@ -5,33 +5,43 @@ use Aws\Multipart\UploadState;
 
 class MultipartUploadException extends \RuntimeException
 {
-    const MSG_TEMPLATE = 'An exception occurred while %s a multipart upload.';
-
     /** @var UploadState State of the erroneous transfer */
     private $state;
 
     /**
-     * @param UploadState $state  Upload state at time of the exception.
-     * @param string      $action Action being taken.
-     * @param \Exception  $prev   Exception being thrown.
+     * @param UploadState      $state Upload state at time of the exception.
+     * @param \Exception|array $prev  Exception being thrown.
      */
-    public function __construct(
-        UploadState $state,
-        $action,
-        \Exception $prev = null
-    ) {
-        if (is_array($action)) {
-            $message = sprintf(self::MSG_TEMPLATE, 'uploading parts to');
-            $message .= " The following parts had errors:\n";
-            foreach ($action as $part => $error) {
-                $message .= "- Part {$part}: {$error}\n";
+    public function __construct(UploadState $state, $prev = null) {
+        $msg = 'An exception occurred while performing a multipart upload.';
+
+        if (is_array($prev)) {
+            $msg = strtr($msg, ['performing' => 'uploading parts to']);
+            $msg .= " The following parts had errors:\n";
+            /** @var $error AwsException */
+            foreach ($prev as $part => $error) {
+                $msg .= "- Part {$part}: " . $error->getMessage(). "\n";
             }
-        } else {
-            $message = sprintf(self::MSG_TEMPLATE, $action);
+        } elseif ($prev instanceof AwsException) {
+            switch ($prev->getCommand()->getName()) {
+                case 'CreateMultipartUpload':
+                case 'InitiateMultipartUpload':
+                    $action = 'initiating';
+                    break;
+                case 'CompleteMultipartUpload':
+                    $action = 'completing';
+                    break;
+            }
+            if (isset($action)) {
+                $msg = strtr($msg, ['performing' => $action]);
+            }
         }
 
-        parent::__construct($message, 0, $prev);
+        if (!$prev instanceof \Exception) {
+            $prev = null;
+        }
 
+        parent::__construct($msg, 0, $prev);
         $this->state = $state;
     }
 

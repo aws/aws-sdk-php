@@ -79,7 +79,7 @@ class Sdk
         $this->args = $args;
 
         if (!isset($args['handler']) && !isset($args['http_handler'])) {
-            $this->args['http_handler'] = new GuzzleHandler();
+            $this->args['http_handler'] = default_http_handler();
         }
     }
 

@@ -320,6 +320,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testProxiesToTransferObjectPut()
     {
+        $this->markTestIncomplete();
         $client = $this->getTestClient('S3');
         $ca = null;
         $client->getHandlerList()->setHandler(function ($c, $r) use (&$ca) {
@@ -334,6 +335,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testProxiesToTransferObjectGet()
     {
+        $this->markTestIncomplete();
         $client = $this->getTestClient('S3');
         $ca = null;
         $client->getHandlerList()->setHandler(function ($c, $r) use (&$ca) {

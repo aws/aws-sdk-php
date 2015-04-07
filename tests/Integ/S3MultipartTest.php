@@ -2,18 +2,18 @@
 namespace Aws\Test\Integ;
 
 use Aws\Exception\MultipartUploadException;
-use Aws\S3\ClearBucket;
-use Aws\S3\UploadBuilder;
+use Aws\S3\BatchDelete;
+use Aws\S3\MultipartUploader;
 use Aws\Test\Integ\IntegUtils;
-use GuzzleHttp\Stream\NoSeekStream;
-use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\Psr7\NoSeekStream;
+use GuzzleHttp\Psr7;
 
 class S3Multipart extends \PHPUnit_Framework_TestCase
 {
     use IntegUtils;
 
     const MB = 1048576;
-    const BUCKET = 'php-integ-s3-multipart-test';
+    const BUCKET = 'php-s3-integration-multipart-test';
 
     public static function setUpBeforeClass()
     {
@@ -27,7 +27,7 @@ class S3Multipart extends \PHPUnit_Framework_TestCase
     public static function tearDownAfterClass()
     {
         $client = self::getSdk()->createS3();
-        (new ClearBucket($client, self::BUCKET))->clear();
+        BatchDelete::fromListObjects($client, ['Bucket' => self::BUCKET])->delete();
         $client->deleteBucket(['Bucket' => self::BUCKET]);
     }
 
@@ -55,26 +55,24 @@ class S3Multipart extends \PHPUnit_Framework_TestCase
         file_put_contents($tmpFile, str_repeat('x', 10 * self::MB + 1024));
 
         // Create a stream
-        $stream = Stream::factory(fopen($tmpFile, 'r'));
+        $stream = Psr7\stream_for(fopen($tmpFile, 'r'));
         if (!$seekable) {
             $stream = new NoSeekStream($stream);
         }
 
         // Create the uploader
-        $uploader = (new UploadBuilder)
-            ->setClient($client)
-            ->setBucket(self::BUCKET)
-            ->setKey($key)
-            ->setSource($stream)
-            ->setPartSize(5 * self::MB)
-            ->build();
+        $uploader = new MultipartUploader($client, $stream, [
+            'bucket'      => self::BUCKET,
+            'key'         => $key,
+            'concurrency' => $concurrency
+        ]);
 
         // Perform the upload
         try {
-            $result = $uploader->upload($concurrency);
+            $result = $uploader->upload();
             $this->assertArrayHasKey('ObjectURL', $result);
         } catch (MultipartUploadException $e) {
-            $uploader->abort();
+            $client->abortMultipartUpload($e->getState()->getId());
             $message = "=====\n";
             while ($e) {
                 $message .= $e->getMessage() . "\n";

@@ -2,10 +2,10 @@
 namespace Aws\Test\Integ;
 
 use Aws\Exception\MultipartUploadException;
-use Aws\Glacier\UploadBuilder;
+use Aws\Glacier\MultipartUploader;
 use Aws\Test\Integ\IntegUtils;
-use GuzzleHttp\Stream\NoSeekStream;
-use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\Psr7\NoSeekStream;
+use GuzzleHttp\Psr7;
 
 class GlacierMultipart extends \PHPUnit_Framework_TestCase
 {
@@ -43,24 +43,22 @@ class GlacierMultipart extends \PHPUnit_Framework_TestCase
         $tmpFile = sys_get_temp_dir() . '/aws-php-sdk-integ-glacier-mup';
         file_put_contents($tmpFile, str_repeat('x', 2 * self::MB + 1024));
 
-        $stream = Stream::factory(fopen($tmpFile, 'r'));
+        $stream = Psr7\stream_for(fopen($tmpFile, 'r'));
         if (!$seekable) {
             $stream = new NoSeekStream($stream);
         }
 
-        $uploader = (new UploadBuilder)
-            ->setClient($client)
-            ->setVaultName(self::VAULT)
-            ->setArchiveDescription($description)
-            ->setSource($stream)
-            ->setPartSize(self::MB)
-            ->build();
+        $uploader = (new MultipartUploader($client, $stream, [
+            'vault_name'          => self::VAULT,
+            'archive_description' => $description,
+            'concurrency'         => $concurrency,
+        ]));
 
         try {
             $result = $uploader->upload($concurrency);
             $this->assertArrayHasKey('location', $result);
         } catch (MultipartUploadException $e) {
-            $uploader->abort();
+            $client->abortMultipartUpload($e->getState()->getId());
             $message = "=====\n";
             while ($e) {
                 $message .= $e->getMessage() . "\n";

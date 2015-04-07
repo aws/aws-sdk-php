@@ -62,12 +62,16 @@ class MockHandler implements \Countable
         CommandInterface $command,
         RequestInterface $request
     ) {
+        if (!$this->queue) {
+            $last = $this->lastCommand
+                ? ' The last command sent was ' . $this->lastCommand->getName() . '.'
+                : '';
+            throw new \RuntimeException('Mock queue is empty. Trying to send a '
+                . $command->getName() . ' command failed.' . $last);
+        }
+
         $this->lastCommand = $command;
         $this->lastRequest = $request;
-
-        if (!$this->queue) {
-            throw new \RuntimeException('Mock queue is empty');
-        }
 
         $result = array_shift($this->queue);
 
