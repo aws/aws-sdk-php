@@ -1,8 +1,8 @@
 <?php
 namespace Aws\Build\Docs;
 
-use GuzzleHttp\Collection;
-use GuzzleHttp\Utils;
+use Aws\Api\ApiProvider;
+use JmesPath;
 
 /**
  * Encapsulates the documentation strings for a given service-version and
@@ -19,17 +19,17 @@ class DocModel
     /** @var string */
     private $apiVersion;
 
-    /** @var Collection */
+    /** @var array */
     private $docs;
 
     /**
-     * @param string $docModelsDir
+     * @param ApiProvider $provider
      * @param string $serviceName
      * @param string $apiVersion
      *
      * @throws \RuntimeException
      */
-    public function __construct($docModelsDir, $serviceName, $apiVersion)
+    public function __construct(ApiProvider $provider, $serviceName, $apiVersion)
     {
         if (!extension_loaded('tidy')) {
             throw new \RuntimeException('The "tidy" PHP extension is required.');
@@ -37,16 +37,7 @@ class DocModel
 
         $this->serviceName = $serviceName;
         $this->apiVersion = $apiVersion;
-
-        $docModel = "{$docModelsDir}/{$serviceName}-{$apiVersion}.docs.json";
-        if (!is_readable($docModel)) {
-            throw new \RuntimeException("The doc model for the {$apiVersion} "
-                . "of {$serviceName} could not be loaded.");
-        }
-
-        $this->docs = new Collection(
-            Utils::jsonDecode(file_get_contents($docModel), true)
-        );
+        $this->docs = $provider('docs', $serviceName, $apiVersion);
     }
 
     /**
@@ -68,7 +59,7 @@ class DocModel
      */
     public function getOperationDocs($operation)
     {
-        return $this->getContent("operations/{$operation}");
+        return $this->getContent("operations.\"{$operation}\"");
     }
 
     /**
@@ -80,7 +71,7 @@ class DocModel
      */
     public function getErrorDocs($error)
     {
-        return $this->getContent("shapes/{$error}/base");
+        return $this->getContent("shapes.\"{$error}/base\"");
     }
 
     /**
@@ -94,36 +85,38 @@ class DocModel
      */
     public function getShapeDocs($shapeName, $parentName, $ref)
     {
-        $prefix = "shapes/{$shapeName}";
-        return $this->getContent("{$prefix}/refs/{$parentName}\${$ref}")
-            ?: $this->getContent("{$prefix}/base");
+        $prefix = "shapes.{$shapeName}";
+        return $this->getContent("{$prefix}.refs.\"{$parentName}\${$ref}\"")
+            ?: $this->getContent("{$prefix}.base");
     }
 
     /**
-     * @param string $path A Guzzle getPath expression to evaluate on the model.
+     * @param string $path A JMESPath expression to evaluate on the model.
      *
      * @return null|string
      */
     private function getContent($path)
     {
-        if ($content = $this->docs->getPath($path)) {
-            $tidy = new \Tidy();
-            $tidy->parseString($content, [
-                'indent' => true,
-                'doctype' => 'omit',
-                'output-html' => true,
-                'show-body-only' => true,
-                'drop-empty-paras' => true,
-                'drop-font-tags' => true,
-                'drop-proprietary-attributes' => true,
-                'hide-comments' => true,
-                'logical-emphasis' => true
-            ]);
-            $tidy->cleanRepair();
+        $content = JmesPath\search($path, $this->docs);
 
-            return (string) $content;
+        if (!$content) {
+            return null;
         }
 
-        return null;
+        $tidy = new \Tidy();
+        $tidy->parseString($content, [
+            'indent' => true,
+            'doctype' => 'omit',
+            'output-html' => true,
+            'show-body-only' => true,
+            'drop-empty-paras' => true,
+            'drop-font-tags' => true,
+            'drop-proprietary-attributes' => true,
+            'hide-comments' => true,
+            'logical-emphasis' => true
+        ]);
+        $tidy->cleanRepair();
+
+        return (string) $content;
     }
 }

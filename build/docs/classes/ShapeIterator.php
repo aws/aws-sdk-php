@@ -2,10 +2,10 @@
 
 namespace Aws\Build\Docs;
 
-use Aws\Common\Api\ListShape;
-use Aws\Common\Api\MapShape;
-use Aws\Common\Api\Shape;
-use Aws\Common\Api\StructureShape;
+use Aws\Api\ListShape;
+use Aws\Api\MapShape;
+use Aws\Api\Shape;
+use Aws\Api\StructureShape;
 
 class ShapeIterator implements \Iterator
 {

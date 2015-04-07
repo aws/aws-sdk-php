@@ -85,7 +85,7 @@ class ExampleBuilder
             case 'boolean':
                 return 'true || false';
             case 'stream':
-                return '<GuzzleHttp\\Stream\\Stream>';
+                return '<Psr\\Http\\Message\\StreamableInterface>';
             case 'timestamp':
                 return '<integer || string || DateTime>';
             case 'float':

@@ -1,9 +1,9 @@
 <?php
 namespace Aws\Build\Docs;
 
-use Aws\Common\Api\FilesystemApiProvider;
-use Aws\Common\Api\Operation;
-use Aws\Common\Api\Service as Api;
+use Aws\Api\ApiProvider;
+use Aws\Api\Operation;
+use Aws\Api\Service as Api;
 
 class DocsBuilder
 {
@@ -11,14 +11,14 @@ class DocsBuilder
     private $themeSource;
 
     /** @var string */
-    private $apiModelsDir;
-
-    /** @var string */
     private $outputDir;
 
-    public function __construct($apiModelsDir, $outputDir)
+    /** @var ApiProvider */
+    private $apiProvider;
+
+    public function __construct(ApiProvider $provider, $outputDir)
     {
-        $this->apiModelsDir = $apiModelsDir;
+        $this->apiProvider = $provider;
         $this->outputDir = $outputDir;
         $this->themeSource = realpath(__DIR__ . '/../theme');
     }
@@ -47,20 +47,22 @@ class DocsBuilder
         $services = [];
         $manifest = '';
         $indexes = '';
+        $serviceVersions = $this->gatherServiceVersions();
 
-        foreach (glob($this->apiModelsDir . '/*.api.php') as $file) {
-            $file = basename($file, '.api.php');
-            if (preg_match('/([a-z0-9-]+?)-([0-9-]+)/', $file, $matches)) {
-                list(/*skip*/, $name, $version) = $matches;
-                $apiProvider = new FilesystemApiProvider($this->apiModelsDir);
+        // Collect versions
+        foreach ($serviceVersions as $name => $versions) {
+            foreach ($versions as $alias => $version) {
+                if ($alias === 'latest') {
+                    continue;
+                }
+
                 $service = new Service(
                     $name,
-                    new Api($apiProvider, $name, $version),
-                    new DocModel($this->apiModelsDir, $name, $version)
+                    new Api($this->apiProvider, $name, $version),
+                    new DocModel($this->apiProvider, $name, $version)
                 );
 
                 $indexes .= $this->createIndexEntryForService($service);
-
                 $html = (new HtmlDocument)->open('section', 'Operations');
                 $html->append($this->createHtmlForToc($service->api->getOperations()));
                 foreach ($service->api->getOperations() as $opName => $operation) {
@@ -69,13 +71,11 @@ class DocsBuilder
                 }
                 $html->close();
                 $this->writeServiceApiPage($service, $html);
-
                 $manifest .= "    '{$service->slug}.twig': '{$service->serviceLink}'\n";
-
-                if (!isset($services[$service->title])) $services[$service->title] = [];
                 $services[$service->title][$version] = $service;
             }
         }
+
         $this->writeThemeFile('manifest.yml', [':manifest' => $manifest]);
         $this->writeThemeFile('sami.js.twig', [':indexes' => $indexes]);
         $this->writeThemeFile('layout/layout.twig');
@@ -238,5 +238,12 @@ class DocsBuilder
         } else {
             return copy("{$this->themeSource}/{$in}", "{$this->outputDir}/theme/{$out}");
         }
+    }
+
+    private function gatherServiceVersions()
+    {
+        $manifest = __DIR__ . '/../../../src/data/version-manifest.json';
+
+        return json_decode(file_get_contents($manifest), true);
     }
 }

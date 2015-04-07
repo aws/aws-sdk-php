@@ -1,7 +1,8 @@
 <?php
 namespace Aws\Build\Docs;
 
-use Aws\Common\Api\Service as Api;
+use Aws\Api\Service as Api;
+use Aws\Sdk;
 
 /**
  * Serves as a DTO for information about a service required to build various
@@ -78,16 +79,21 @@ class Service
     private function getServiceNamespace($service)
     {
         static $namespaces;
+
         if (!$namespaces) {
-            // Get the namespaces from the Aws\Sdk class from a private property.
-            $property = (new \ReflectionClass('Aws\Sdk'))->getProperty('services');
-            $property->setAccessible(true);
-            $namespaces = $property->getValue(null);
+            // Get the namespaces from the directories.
+            foreach (glob(__DIR__ . '/../../../src/*') as $dir) {
+                $base = basename($dir);
+                if (class_exists("Aws\\{$base}\\{$base}Client")) {
+                    $namespaces[Sdk::getEndpointPrefix($base)] = $base;
+                }
+            }
         }
 
         if (!isset($namespaces[$service])) {
             throw new \RuntimeException("Could not determine the namespace for {$service}.");
         }
+
         return $namespaces[$service];
     }
 }

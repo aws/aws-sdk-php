@@ -7,9 +7,9 @@ $loader->addPsr4('Aws\\Build\\Docs\\', __DIR__ . '/docs/classes');
 
 // Setup directories.
 $sourceDir = __DIR__ . '/artifacts/staging';
-$apiModelsDir = realpath(__DIR__ . '/../src/Common/Resources/api');
 $outputDir = __DIR__ . '/artifacts/docs';
 $themeDir = $outputDir . '/theme';
+$apiProvider = \Aws\Api\ApiProvider::defaultProvider();
 
 foreach ([$outputDir, $themeDir, $themeDir . '/layout', $themeDir . '/img'] as $dir) {
     if (!is_dir($dir)) {
@@ -21,7 +21,7 @@ foreach ([$outputDir, $themeDir, $themeDir . '/layout', $themeDir . '/img'] as $
 }
 
 // Generate API docs
-$builder = new DocsBuilder($apiModelsDir, $outputDir);
+$builder = new DocsBuilder($apiProvider, $outputDir);
 return $builder->getSami($sourceDir);
 
 /**
