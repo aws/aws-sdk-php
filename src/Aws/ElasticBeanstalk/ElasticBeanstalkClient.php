@@ -26,6 +26,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
 /**
  * Client to interact with AWS Elastic Beanstalk
  *
+ * @method Model abortEnvironmentUpdate(array $args = array()) {@command ElasticBeanstalk AbortEnvironmentUpdate}
  * @method Model checkDNSAvailability(array $args = array()) {@command ElasticBeanstalk CheckDNSAvailability}
  * @method Model createApplication(array $args = array()) {@command ElasticBeanstalk CreateApplication}
  * @method Model createApplicationVersion(array $args = array()) {@command ElasticBeanstalk CreateApplicationVersion}

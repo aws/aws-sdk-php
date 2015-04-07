@@ -30,6 +30,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model activatePipeline(array $args = array()) {@command DataPipeline ActivatePipeline}
  * @method Model addTags(array $args = array()) {@command DataPipeline AddTags}
  * @method Model createPipeline(array $args = array()) {@command DataPipeline CreatePipeline}
+ * @method Model deactivatePipeline(array $args = array()) {@command DataPipeline DeactivatePipeline}
  * @method Model deletePipeline(array $args = array()) {@command DataPipeline DeletePipeline}
  * @method Model describeObjects(array $args = array()) {@command DataPipeline DescribeObjects}
  * @method Model describePipelines(array $args = array()) {@command DataPipeline DescribePipelines}

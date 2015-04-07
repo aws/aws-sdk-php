@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.7.27 - 2015-04-07
+
+* `Aws\DataPipeline` - Added support for `DeactivatePipeline`
+* `Aws\ElasticBeanstalk` - Added support for `AbortEnvironmentUpdate`
+
 ## 2.7.26 - 2015-04-02
 
 * `Aws\CodeDeploy` - Added support deployments to on-premises instances.
