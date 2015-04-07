@@ -86,7 +86,9 @@ class JsonCompiler
         }
 
         if (!file_exists($real)) {
-            throw new \InvalidArgumentException("File not found: {$path}");
+            throw new \InvalidArgumentException(
+                sprintf("File not found: %s, realpath: %s", $path, $real)
+            );
         }
 
         $data = json_decode(file_get_contents($real), true);
@@ -106,6 +108,13 @@ class JsonCompiler
     private function normalize($path)
     {
         static $replace = ['/', '\\'];
+        static $skip = ['' => true, '.' => true];
+
+        $isPhar = substr($path, 0, 7) === 'phar://';
+
+        if ($isPhar) {
+            $path = substr($path, 7);
+        }
 
         $parts = explode(
             DIRECTORY_SEPARATOR,
@@ -115,10 +124,9 @@ class JsonCompiler
 
         $segments = [];
         foreach ($parts as $part) {
-            if ($part === '' || $part === '.') {
+            if (isset($skip[$part])) {
                 continue;
-            }
-            if ($part === '..') {
+            } elseif ($part === '..') {
                 array_pop($segments);
             } else {
                 $segments[] = $part;
@@ -132,6 +140,6 @@ class JsonCompiler
             $resolved = DIRECTORY_SEPARATOR . $resolved;
         }
 
-        return $resolved;
+        return $isPhar ? 'phar://' . $resolved : $resolved;
     }
 }
