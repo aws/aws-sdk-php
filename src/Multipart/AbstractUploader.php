@@ -22,11 +22,12 @@ abstract class AbstractUploader implements Promise\PromisorInterface
 {
     /** @var array Default values for base multipart configuration */
     private static $defaultConfig = [
-        'part_size'   => null,
-        'state'       => null,
-        'concurrency' => 3,
-        'before'      => null,
-        'params'      => [],
+        'part_size'       => null,
+        'state'           => null,
+        'concurrency'     => 3,
+        'before_initiate' => null,
+        'before_upload'   => null,
+        'before_complete' => null,
     ];
 
     /** @var Client Client used for the upload. */
@@ -57,11 +58,6 @@ abstract class AbstractUploader implements Promise\PromisorInterface
         $this->client = $client;
         $this->info = $this->loadUploadWorkflowInfo();
         $this->config = $config + self::$defaultConfig;
-        foreach (['initiate', 'upload', 'complete'] as $key) {
-            if (!isset($this->config['params'][$key])) {
-                $this->config['params'][$key] = [];
-            }
-        }
         $this->source = $this->determineSource($source);
         $this->state = $this->determineState();
     }
@@ -122,7 +118,7 @@ abstract class AbstractUploader implements Promise\PromisorInterface
                 $this->getUploadCommands($resultHandler),
                 [
                     'concurrency' => $this->config['concurrency'],
-                    'before'      => $this->config['before'],
+                    'before'      => $this->config['before_upload'],
                 ]
             );
 
@@ -291,12 +287,12 @@ abstract class AbstractUploader implements Promise\PromisorInterface
         // Create the command.
         $command = $this->client->getCommand(
             $this->info['command'][$operation],
-            $params + $this->state->getId() + $this->config['params'][$operation]
+            $params + $this->state->getId()
         );
 
-        // Execute the "before" callback.
-        if ($this->config['before']) {
-            $this->config['before']($command);
+        // Execute the before callback.
+        if (is_callable($this->config["before_{$operation}"])) {
+            $this->config["before_{$operation}"]($command);
         }
 
         // Execute the command asynchronously and return the promise.
@@ -363,7 +359,7 @@ abstract class AbstractUploader implements Promise\PromisorInterface
                 }
                 $command = $this->client->getCommand(
                     $this->info['command']['upload'],
-                    $data + $this->state->getId() + $this->config['params']['upload']
+                    $data + $this->state->getId()
                 );
                 $command->getHandlerList()->append('sign:mup', $resultHandler);
                 yield $command;

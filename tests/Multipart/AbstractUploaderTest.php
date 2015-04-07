@@ -133,9 +133,17 @@ class AbstractUploaderTest extends \PHPUnit_Framework_TestCase
 
     public function testAsyncUpload()
     {
+        $called = 0;
+        $fn = function () use (&$called) {
+            $called++;
+        };
+
         $uploader = $this->getTestUploader(Psr7\stream_for('abcde'), [
-            'bucket'    => 'foo',
-            'key'       => 'bar',
+            'bucket'          => 'foo',
+            'key'             => 'bar',
+            'before_initiate' => $fn,
+            'before_upload'   => $fn,
+            'before_complete' => $fn,
         ], [
             new Result(), // Initiate
             new Result(), // Upload
@@ -147,6 +155,7 @@ class AbstractUploaderTest extends \PHPUnit_Framework_TestCase
         $promise = $uploader->promise();
         $this->assertSame($promise, $uploader->promise());
         $this->assertInstanceOf('Aws\Result', $promise->wait());
+        $this->assertEquals(5, $called);
     }
 
     /**

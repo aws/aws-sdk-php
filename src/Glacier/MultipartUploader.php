@@ -84,17 +84,20 @@ class MultipartUploader extends AbstractUploader
      *
      * The valid configuration options are as follows:
      *
-     * - account_id: (string, required, default=string('-')) Account ID for the
-     *   archive being uploaded.
+     * - account_id: (string, default=string('-')) Account ID for the archive
+     *   being uploaded, if different from the account making the request.
      * - archive_description: (string) Description of the archive.
-     * - before: (callable) Callback to invoke before each operation during the
-     *   multipart upload. The callback should have a function signature like
-     *   `function (Aws\Command $command) {...}`.
+     * - before_complete: (callable) Callback to invoke before the
+     *   `CompleteMultipartUpload` operation. The callback should have a
+     *   function signature like `function (Aws\Command $command) {...}`.
+     * - before_initiate: (callable) Callback to invoke before the
+     *   `InitiateMultipartUpload` operation. The callback should have a
+     *   function signature like `function (Aws\Command $command) {...}`.
+     * - before_upload: (callable) Callback to invoke before any
+     *   `UploadMultipartPart` operations. The callback should have a function
+     *   signature like `function (Aws\Command $command) {...}`.
      * - concurrency: (int, default=int(3)) Maximum number of concurrent
      *   `UploadMultipartPart` operations allowed during the multipart upload.
-     * - params: (array) Associative array of operation names (initiate, upload,
-     *   or complete) to associative arrays of the parameters to use with those
-     *   operations during the upload process.
      * - part_size: (int, default=int(1048576)) Part size, in bytes, to use when
      *   doing a multipart upload. This must between 1 MB and 4 GB, and must be
      *   a power of 2 (in megabytes).

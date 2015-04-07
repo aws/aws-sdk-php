@@ -66,17 +66,22 @@ class MultipartUploader extends AbstractUploader
      *
      * The valid configuration options are as follows:
      *
-     * - before: (callable) Callback to invoke before each operation during the
-     *   multipart upload. The callback should have a function signature like
+     * - acl: (string) ACL to set on the object being upload. Objects are
+     *   private by default.
+     * - before_complete: (callable) Callback to invoke before the
+     *   `CompleteMultipartUpload` operation. The callback should have a
+     *   function signature like `function (Aws\Command $command) {...}`.
+     * - before_initiate: (callable) Callback to invoke before the
+     *   `CreateMultipartUpload` operation. The callback should have a function
+     *   signature like `function (Aws\Command $command) {...}`.
+     * - before_upload: (callable) Callback to invoke before any `UploadPart`
+     *   operations. The callback should have a function signature like
      *   `function (Aws\Command $command) {...}`.
      * - bucket: (string, required) Name of the bucket to which the object is
      *   being uploaded.
      * - concurrency: (int, default=int(3)) Maximum number of concurrent
      *   `UploadPart` operations allowed during the multipart upload.
      * - key: (string, required) Key to use for the object being uploaded.
-     * - params: (array) Associative array of operation names (initiate, upload,
-     *   or complete) to associative arrays of the parameters to use with those
-     *   operations during the upload process.
      * - part_size: (int, default=int(5242880)) Part size, in bytes, to use when
      *   doing a multipart upload. This must between 5 MB and 5 GB, inclusive.
      * - state: (Aws\Multipart\UploadState) An object that represents the state
@@ -182,10 +187,12 @@ class MultipartUploader extends AbstractUploader
     {
         $params = [];
 
-        // Set the content type, if not specified, and can be detected.
-        if (!isset($this->config['params']['initiate']['ContentType'])
-            && ($uri = $this->source->getMetadata('uri'))
-        ) {
+        if (isset($this->config['acl'])) {
+            $params['ACL'] = $this->config['acl'];
+        }
+
+        // Set the content type
+        if ($uri = $this->source->getMetadata('uri')) {
             $params['ContentType'] = Psr7\mimetype_from_filename($uri)
                 ?: 'application/octet-stream';
         }

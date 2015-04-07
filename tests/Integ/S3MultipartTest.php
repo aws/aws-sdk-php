@@ -72,7 +72,7 @@ class S3Multipart extends \PHPUnit_Framework_TestCase
             $result = $uploader->upload();
             $this->assertArrayHasKey('ObjectURL', $result);
         } catch (MultipartUploadException $e) {
-            $uploader->abort();
+            $client->abortMultipartUpload($e->getState()->getId());
             $message = "=====\n";
             while ($e) {
                 $message .= $e->getMessage() . "\n";

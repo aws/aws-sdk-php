@@ -66,7 +66,7 @@ class MultipartUploaderTest extends \PHPUnit_Framework_TestCase
         return [
             [ // Seekable stream, regular config
                 [],
-                $defaults,
+                ['acl' => 'private'] + $defaults,
                 Psr7\stream_for(fopen($filename, 'r'))
             ],
             [ // Non-seekable stream, with SigV4

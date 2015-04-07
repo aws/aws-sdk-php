@@ -273,15 +273,15 @@ class S3Client extends AwsClient
      * performed using concurrent multipart uploads. The options array accepts
      * the following options:
      *
-     * - before: (callable) Callback to invoke before each operation during the
-     *   upload. The callback should have a function signature like
-     *   `function (Aws\Command $command) {...}`.
+     * - before: (callable) Callback to invoke before any upload operations
+     *   during the upload process. The callback should have a function
+     *   signature like `function (Aws\Command $command) {...}`.
      * - concurrency: (int, default=int(3) Maximum number of concurrent
      *   `UploadPart` operations allowed during a multipart upload.
      * - params: (array) Custom parameters to use with the upload. For single
      *   uploads, they must correspond to those used for the `PutObject`
-     *   operation. For multipart uploads, they must correspond to the `params`
-     *   option of the `Aws\S3\MultipartUploader` class.
+     *   operation. For multipart uploads, they correspond to the parameters of
+     *   the `CreateMultipartUpload` operation.
      * - part_size: (int) Part size to use when doing a multipart upload.
      * - threshold: (int, default=int(16777216)) The size, in bytes, allowed
      *   before the upload must be sent via a multipart upload. Default: 16 MB.
@@ -304,27 +304,27 @@ class S3Client extends AwsClient
         $acl = 'private',
         array $options = []
     ) {
-        // Apply default options.
         $options += [
-            'before'      => null,
-            'concurrency' => 3,
-            'params'      => [],
-            'part_size'   => null,
-            'threshold'   => 16777216 // 16 MB
+            'before_upload' => null,
+            'concurrency'   => 3,
+            'params'        => [],
+            'part_size'     => null,
+            'threshold'     => 16777216 // 16 MB
         ];
-
-        // Perform the needed operations to upload the S3 Object.
         $body = Psr7\stream_for($body);
 
+        // Perform the required operations to upload the S3 Object.
         if ($this->requiresMultipart($body, $options['threshold'])) {
             // Perform a multipart upload.
-            if (!isset($options['params']['initiate'])) {
-                $options['params']['initiate'] = [];
-            }
-            $options['params']['initiate']['ACL'] = $acl;
+            $options['before_initiate'] = function ($command) use ($options) {
+                foreach ($options['params'] as $k => $v) {
+                    $command[$k] = $v;
+                }
+            };
             $uploader = new MultipartUploader($this, $body, [
                 'bucket' => $bucket,
                 'key'    => $key,
+                'acl'    => $acl
             ] + $options);
             $result = $uploader->upload();
         } else {
@@ -335,8 +335,8 @@ class S3Client extends AwsClient
                 'Body'   => $body,
                 'ACL'    => $acl,
             ] + $options['params']);
-            if ($options['before']) {
-                $options['before']($command);
+            if (is_callable($options['before_upload'])) {
+                $options['before_upload']($command);
             }
             $result = $this->execute($command);
         }
