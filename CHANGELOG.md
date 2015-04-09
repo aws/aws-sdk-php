@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next Release
+## 2.8.0 - 2015-04-09
 
 See the [Upgrading Guide](https://github.com/aws/aws-sdk-php/blob/master/UPGRADING.md)
 for details about any changes you may need to make to your code for this upgrade.
