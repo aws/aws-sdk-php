@@ -316,5 +316,11 @@ return array(
             'extends' => 'default_settings',
             'class'   => 'Aws\Swf\SwfClient'
         ),
+
+        'workspaces' => array(
+            'alias'   => 'WorkSpaces',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\WorkSpaces\WorkSpacesClient'
+        ),
     )
 );
