@@ -5,6 +5,8 @@
 See the [Upgrading Guide](https://github.com/aws/aws-sdk-php/blob/master/UPGRADING.md)
 for details about any changes you may need to make to your code for this upgrade.
 
+* `Aws\MachineLearning` - Added support for the Amazon Machine Learning service.
+* `Aws\WorkSpaces` - Added support for the Amazon WorkSpaces service.
 * `Aws\Ecs` - Added support for the ECS service scheduler operations.
 * `Aws\S3` - Added support for the `getBucketNotificationConfiguration` and
   `putBucketNotificationConfiguration` operations to the `S3Client` to replace 
@@ -15,7 +17,7 @@ for details about any changes you may need to make to your code for this upgrade
 * `Aws\Common` - Deprecated "facades". They will not be present in Version 3 of
   the SDK.
 * `Aws\Common` - Added `getAwsErrorCode`, `getAwsErrorType` and `getAwsRequestId`
-  methods to the `ServiceResponseException` to be forward compatible with
+  methods to the `ServiceResponseException` to be forward-compatible with
   Version 3 of the SDK.
 
 ## 2.7.27 - 2015-04-07
