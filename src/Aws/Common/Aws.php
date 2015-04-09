@@ -95,6 +95,7 @@ class Aws extends ServiceBuilder
      * @param string|null $namespace The namespace that the facades should be mounted to. Defaults to global namespace
      *
      * @return Aws
+     * @deprecated "Facades" are being removed in version 3.0 of the SDK.
      */
     public function enableFacades($namespace = null)
     {

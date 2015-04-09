@@ -20,6 +20,8 @@ use Aws\Common\Aws;
 
 /**
  * Base facade class that handles the delegation logic
+ *
+ * @deprecated "Facades" are being removed in version 3.0 of the SDK.
  */
 abstract class Facade implements FacadeInterface
 {

@@ -1,6 +1,44 @@
 Upgrading Guide
 ===============
 
+Upgrade from 2.7 to 2.8
+-----------------------
+
+### AWS Lambda
+
+Version 2.8 is backward-compatible with version 2.7, except in the case of the 
+AWS Lambda service. The Lambda service has changed their API significantly based
+on customer feedback during their preview period. The `invokeAsync()` operation
+has not changed, but many aspects of the API has.
+
+If you would like to continue using the old 2014-11-11 previewAPI, you can
+configure this when you instantiate the `LambdaClient`:
+
+```php
+use Aws\Lambda\LambdaClient;
+
+$client = LambdaClient::factory(array(
+    'version' => '2014-11-11',
+    // ...
+));
+```
+
+### Preparations for Version 3 of the SDK
+
+In preparation for Version 3 of the AWS SDK for PHP:
+
+* We marked all of the "facade" classes and methods as deprecated, since they
+  will be removed.
+* We added the `getAwsErrorCode()`, `getAwsErrorType()` and `getAwsRequestId()`
+  methods to the `ServiceResponseException` to be forward-compatible with
+  Version 3's `AwsException` interface.
+* We advise against the use of any `Enum` class, since these will be removed.
+  Instead, use the literal value to which the enum corresponds.
+* We advise against the use of any granular service classes, since these will be
+  removed. Instead, catch the top-level service exception (e.g.,
+  `Aws\S3\Exception\S3Exception`) and use the `getAwsErrorCode()` method if you
+  need to know the granular error code.
+
 Upgrade from 2.6 to 2.7
 -----------------------
 

@@ -72,6 +72,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model getBucketLocation(array $args = array()) {@command S3 GetBucketLocation}
  * @method Model getBucketLogging(array $args = array()) {@command S3 GetBucketLogging}
  * @method Model getBucketNotification(array $args = array()) {@command S3 GetBucketNotification}
+ * @method Model getBucketNotificationConfiguration(array $args = array()) {@command S3 GetBucketNotificationConfiguration}
  * @method Model getBucketPolicy(array $args = array()) {@command S3 GetBucketPolicy}
  * @method Model getBucketReplication(array $args = array()) {@command S3 GetBucketReplication}
  * @method Model getBucketRequestPayment(array $args = array()) {@command S3 GetBucketRequestPayment}
@@ -93,6 +94,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model putBucketLifecycle(array $args = array()) {@command S3 PutBucketLifecycle}
  * @method Model putBucketLogging(array $args = array()) {@command S3 PutBucketLogging}
  * @method Model putBucketNotification(array $args = array()) {@command S3 PutBucketNotification}
+ * @method Model putBucketNotificationConfiguration(array $args = array()) {@command S3 PutBucketNotificationConfiguration}
  * @method Model putBucketPolicy(array $args = array()) {@command S3 PutBucketPolicy}
  * @method Model putBucketReplication(array $args = array()) {@command S3 PutBucketReplication}
  * @method Model putBucketRequestPayment(array $args = array()) {@command S3 PutBucketRequestPayment}

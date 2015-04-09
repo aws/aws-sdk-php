@@ -62,6 +62,83 @@ return array (
                 ),
             ),
         ),
+        'CreateService' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'CreateServiceResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.CreateService',
+                ),
+                'cluster' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'serviceName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'taskDefinition' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'loadBalancers' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'LoadBalancer',
+                        'type' => 'object',
+                        'properties' => array(
+                            'loadBalancerName' => array(
+                                'type' => 'string',
+                            ),
+                            'containerName' => array(
+                                'type' => 'string',
+                            ),
+                            'containerPort' => array(
+                                'type' => 'numeric',
+                            ),
+                        ),
+                    ),
+                ),
+                'desiredCount' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                ),
+                'clientToken' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'role' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'class' => 'ServerException',
+                ),
+                array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'class' => 'ClientException',
+                ),
+            ),
+        ),
         'DeleteCluster' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -84,6 +161,48 @@ return array (
                     'default' => 'AmazonEC2ContainerServiceV20141113.DeleteCluster',
                 ),
                 'cluster' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'class' => 'ServerException',
+                ),
+                array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'class' => 'ClientException',
+                ),
+            ),
+        ),
+        'DeleteService' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'DeleteServiceResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.DeleteService',
+                ),
+                'cluster' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'service' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
@@ -252,6 +371,52 @@ return array (
                     'location' => 'json',
                 ),
                 'containerInstances' => array(
+                    'required' => true,
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'String',
+                        'type' => 'string',
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'class' => 'ServerException',
+                ),
+                array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'class' => 'ClientException',
+                ),
+            ),
+        ),
+        'DescribeServices' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'DescribeServicesResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.DescribeServices',
+                ),
+                'cluster' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'services' => array(
                     'required' => true,
                     'type' => 'array',
                     'location' => 'json',
@@ -483,6 +648,51 @@ return array (
                 ),
             ),
         ),
+        'ListServices' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'ListServicesResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.ListServices',
+                ),
+                'cluster' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'nextToken' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'maxResults' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'class' => 'ServerException',
+                ),
+                array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'class' => 'ClientException',
+                ),
+            ),
+        ),
         'ListTaskDefinitionFamilies' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -614,6 +824,14 @@ return array (
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
+                'startedBy' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'serviceName' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -668,6 +886,21 @@ return array (
                         'properties' => array(
                             '' => array(
                             ),
+                        ),
+                    ),
+                ),
+                'versionInfo' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'agentVersion' => array(
+                            'type' => 'string',
+                        ),
+                        'agentHash' => array(
+                            'type' => 'string',
+                        ),
+                        'dockerVersion' => array(
+                            'type' => 'string',
                         ),
                     ),
                 ),
@@ -914,6 +1147,10 @@ return array (
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
+                'startedBy' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -989,6 +1226,10 @@ return array (
                         'name' => 'String',
                         'type' => 'string',
                     ),
+                ),
+                'startedBy' => array(
+                    'type' => 'string',
+                    'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
@@ -1169,6 +1410,56 @@ return array (
                 ),
             ),
         ),
+        'UpdateService' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'UpdateServiceResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonEC2ContainerServiceV20141113.UpdateService',
+                ),
+                'cluster' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'service' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'desiredCount' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                ),
+                'taskDefinition' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'class' => 'ServerException',
+                ),
+                array(
+                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'class' => 'ClientException',
+                ),
+            ),
+        ),
     ),
     'models' => array(
         'CreateClusterResponse' => array(
@@ -1187,6 +1478,123 @@ return array (
                         ),
                         'status' => array(
                             'type' => 'string',
+                        ),
+                        'registeredContainerInstancesCount' => array(
+                            'type' => 'numeric',
+                        ),
+                        'runningTasksCount' => array(
+                            'type' => 'numeric',
+                        ),
+                        'pendingTasksCount' => array(
+                            'type' => 'numeric',
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'CreateServiceResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'service' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'serviceArn' => array(
+                            'type' => 'string',
+                        ),
+                        'serviceName' => array(
+                            'type' => 'string',
+                        ),
+                        'clusterArn' => array(
+                            'type' => 'string',
+                        ),
+                        'loadBalancers' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'LoadBalancer',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'loadBalancerName' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'containerName' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'containerPort' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'status' => array(
+                            'type' => 'string',
+                        ),
+                        'desiredCount' => array(
+                            'type' => 'numeric',
+                        ),
+                        'runningCount' => array(
+                            'type' => 'numeric',
+                        ),
+                        'pendingCount' => array(
+                            'type' => 'numeric',
+                        ),
+                        'taskDefinition' => array(
+                            'type' => 'string',
+                        ),
+                        'deployments' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Deployment',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'id' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'status' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'taskDefinition' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'desiredCount' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'pendingCount' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'runningCount' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'createdAt' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'updatedAt' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'roleArn' => array(
+                            'type' => 'string',
+                        ),
+                        'events' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'ServiceEvent',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'id' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'createdAt' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'message' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -1208,6 +1616,123 @@ return array (
                         ),
                         'status' => array(
                             'type' => 'string',
+                        ),
+                        'registeredContainerInstancesCount' => array(
+                            'type' => 'numeric',
+                        ),
+                        'runningTasksCount' => array(
+                            'type' => 'numeric',
+                        ),
+                        'pendingTasksCount' => array(
+                            'type' => 'numeric',
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'DeleteServiceResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'service' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'serviceArn' => array(
+                            'type' => 'string',
+                        ),
+                        'serviceName' => array(
+                            'type' => 'string',
+                        ),
+                        'clusterArn' => array(
+                            'type' => 'string',
+                        ),
+                        'loadBalancers' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'LoadBalancer',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'loadBalancerName' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'containerName' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'containerPort' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'status' => array(
+                            'type' => 'string',
+                        ),
+                        'desiredCount' => array(
+                            'type' => 'numeric',
+                        ),
+                        'runningCount' => array(
+                            'type' => 'numeric',
+                        ),
+                        'pendingCount' => array(
+                            'type' => 'numeric',
+                        ),
+                        'taskDefinition' => array(
+                            'type' => 'string',
+                        ),
+                        'deployments' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Deployment',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'id' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'status' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'taskDefinition' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'desiredCount' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'pendingCount' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'runningCount' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'createdAt' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'updatedAt' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'roleArn' => array(
+                            'type' => 'string',
+                        ),
+                        'events' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'ServiceEvent',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'id' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'createdAt' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'message' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -1254,6 +1779,12 @@ return array (
                         ),
                         'agentConnected' => array(
                             'type' => 'boolean',
+                        ),
+                        'runningTasksCount' => array(
+                            'type' => 'numeric',
+                        ),
+                        'pendingTasksCount' => array(
+                            'type' => 'numeric',
                         ),
                     ),
                 ),
@@ -1428,6 +1959,15 @@ return array (
                             'status' => array(
                                 'type' => 'string',
                             ),
+                            'registeredContainerInstancesCount' => array(
+                                'type' => 'numeric',
+                            ),
+                            'runningTasksCount' => array(
+                                'type' => 'numeric',
+                            ),
+                            'pendingTasksCount' => array(
+                                'type' => 'numeric',
+                            ),
                         ),
                     ),
                 ),
@@ -1493,6 +2033,140 @@ return array (
                             ),
                             'agentConnected' => array(
                                 'type' => 'boolean',
+                            ),
+                            'runningTasksCount' => array(
+                                'type' => 'numeric',
+                            ),
+                            'pendingTasksCount' => array(
+                                'type' => 'numeric',
+                            ),
+                        ),
+                    ),
+                ),
+                'failures' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'Failure',
+                        'type' => 'object',
+                        'properties' => array(
+                            'arn' => array(
+                                'type' => 'string',
+                            ),
+                            'reason' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'DescribeServicesResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'services' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'Service',
+                        'type' => 'object',
+                        'properties' => array(
+                            'serviceArn' => array(
+                                'type' => 'string',
+                            ),
+                            'serviceName' => array(
+                                'type' => 'string',
+                            ),
+                            'clusterArn' => array(
+                                'type' => 'string',
+                            ),
+                            'loadBalancers' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'LoadBalancer',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'loadBalancerName' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'containerName' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'containerPort' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'status' => array(
+                                'type' => 'string',
+                            ),
+                            'desiredCount' => array(
+                                'type' => 'numeric',
+                            ),
+                            'runningCount' => array(
+                                'type' => 'numeric',
+                            ),
+                            'pendingCount' => array(
+                                'type' => 'numeric',
+                            ),
+                            'taskDefinition' => array(
+                                'type' => 'string',
+                            ),
+                            'deployments' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'Deployment',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'id' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'status' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'taskDefinition' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'desiredCount' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                        'pendingCount' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                        'runningCount' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                        'createdAt' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'updatedAt' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'roleArn' => array(
+                                'type' => 'string',
+                            ),
+                            'events' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'ServiceEvent',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'id' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'createdAt' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'message' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                     ),
@@ -1762,6 +2436,9 @@ return array (
                                     ),
                                 ),
                             ),
+                            'startedBy' => array(
+                                'type' => 'string',
+                            ),
                         ),
                     ),
                 ),
@@ -1816,6 +2493,24 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'containerInstanceArns' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'String',
+                        'type' => 'string',
+                    ),
+                ),
+                'nextToken' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'ListServicesResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'serviceArns' => array(
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -1924,6 +2619,12 @@ return array (
                         ),
                         'agentConnected' => array(
                             'type' => 'boolean',
+                        ),
+                        'runningTasksCount' => array(
+                            'type' => 'numeric',
+                        ),
+                        'pendingTasksCount' => array(
+                            'type' => 'numeric',
                         ),
                     ),
                 ),
@@ -2176,6 +2877,9 @@ return array (
                                     ),
                                 ),
                             ),
+                            'startedBy' => array(
+                                'type' => 'string',
+                            ),
                         ),
                     ),
                 ),
@@ -2295,6 +2999,9 @@ return array (
                                     ),
                                 ),
                             ),
+                            'startedBy' => array(
+                                'type' => 'string',
+                            ),
                         ),
                     ),
                 ),
@@ -2411,6 +3118,9 @@ return array (
                                 ),
                             ),
                         ),
+                        'startedBy' => array(
+                            'type' => 'string',
+                        ),
                     ),
                 ),
             ),
@@ -2432,6 +3142,114 @@ return array (
                 'acknowledgment' => array(
                     'type' => 'string',
                     'location' => 'json',
+                ),
+            ),
+        ),
+        'UpdateServiceResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'service' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'serviceArn' => array(
+                            'type' => 'string',
+                        ),
+                        'serviceName' => array(
+                            'type' => 'string',
+                        ),
+                        'clusterArn' => array(
+                            'type' => 'string',
+                        ),
+                        'loadBalancers' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'LoadBalancer',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'loadBalancerName' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'containerName' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'containerPort' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'status' => array(
+                            'type' => 'string',
+                        ),
+                        'desiredCount' => array(
+                            'type' => 'numeric',
+                        ),
+                        'runningCount' => array(
+                            'type' => 'numeric',
+                        ),
+                        'pendingCount' => array(
+                            'type' => 'numeric',
+                        ),
+                        'taskDefinition' => array(
+                            'type' => 'string',
+                        ),
+                        'deployments' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Deployment',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'id' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'status' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'taskDefinition' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'desiredCount' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'pendingCount' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'runningCount' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'createdAt' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'updatedAt' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'roleArn' => array(
+                            'type' => 'string',
+                        ),
+                        'events' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'ServiceEvent',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'id' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'createdAt' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'message' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
                 ),
             ),
         ),

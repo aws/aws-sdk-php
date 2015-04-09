@@ -911,9 +911,27 @@ return array (
             'httpMethod' => 'GET',
             'uri' => '/{Bucket}?notification',
             'class' => 'Aws\\S3\\Command\\S3Command',
-            'responseClass' => 'GetBucketNotificationOutput',
+            'responseClass' => 'NotificationConfigurationDeprecated',
             'responseType' => 'model',
             'documentationUrl' => 'http://docs.aws.amazon.com/AmazonS3/latest/API/RESTBucketGETnotification.html',
+            'parameters' => array(
+                'Bucket' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
+            ),
+        ),
+        'GetBucketNotificationConfiguration' => array(
+            'httpMethod' => 'GET',
+            'uri' => '/{Bucket}?notification',
+            'class' => 'Aws\\S3\\Command\\S3Command',
+            'responseClass' => 'NotificationConfiguration',
+            'responseType' => 'model',
             'parameters' => array(
                 'Bucket' => array(
                     'required' => true,
@@ -2020,6 +2038,130 @@ return array (
                         ),
                         'InvocationRole' => array(
                             'type' => 'string',
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'PutBucketNotificationConfiguration' => array(
+            'httpMethod' => 'PUT',
+            'uri' => '/{Bucket}?notification',
+            'class' => 'Aws\\S3\\Command\\S3Command',
+            'responseClass' => 'PutBucketNotificationConfigurationOutput',
+            'responseType' => 'model',
+            'data' => array(
+                'xmlRoot' => array(
+                    'name' => 'NotificationConfiguration',
+                    'namespaces' => array(
+                        'http://s3.amazonaws.com/doc/2006-03-01/',
+                    ),
+                ),
+            ),
+            'parameters' => array(
+                'Bucket' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+                'TopicConfigurations' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'data' => array(
+                        'xmlFlattened' => true,
+                    ),
+                    'items' => array(
+                        'name' => 'TopicConfiguration',
+                        'type' => 'object',
+                        'sentAs' => 'TopicConfiguration',
+                        'properties' => array(
+                            'Id' => array(
+                                'type' => 'string',
+                            ),
+                            'TopicArn' => array(
+                                'required' => true,
+                                'type' => 'string',
+                                'sentAs' => 'Topic',
+                            ),
+                            'Events' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'data' => array(
+                                    'xmlFlattened' => true,
+                                ),
+                                'items' => array(
+                                    'name' => 'Event',
+                                    'type' => 'string',
+                                    'sentAs' => 'Event',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'QueueConfigurations' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'data' => array(
+                        'xmlFlattened' => true,
+                    ),
+                    'items' => array(
+                        'name' => 'QueueConfiguration',
+                        'type' => 'object',
+                        'sentAs' => 'QueueConfiguration',
+                        'properties' => array(
+                            'Id' => array(
+                                'type' => 'string',
+                            ),
+                            'QueueArn' => array(
+                                'required' => true,
+                                'type' => 'string',
+                                'sentAs' => 'Queue',
+                            ),
+                            'Events' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'data' => array(
+                                    'xmlFlattened' => true,
+                                ),
+                                'items' => array(
+                                    'name' => 'Event',
+                                    'type' => 'string',
+                                    'sentAs' => 'Event',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'LambdaFunctionConfigurations' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'data' => array(
+                        'xmlFlattened' => true,
+                    ),
+                    'items' => array(
+                        'name' => 'LambdaFunctionConfiguration',
+                        'type' => 'object',
+                        'sentAs' => 'CloudFunctionConfiguration',
+                        'properties' => array(
+                            'Id' => array(
+                                'type' => 'string',
+                            ),
+                            'LambdaFunctionArn' => array(
+                                'required' => true,
+                                'type' => 'string',
+                                'sentAs' => 'CloudFunction',
+                            ),
+                            'Events' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'data' => array(
+                                    'xmlFlattened' => true,
+                                ),
+                                'items' => array(
+                                    'name' => 'Event',
+                                    'type' => 'string',
+                                    'sentAs' => 'Event',
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -3510,7 +3652,7 @@ return array (
                 ),
             ),
         ),
-        'GetBucketNotificationOutput' => array(
+        'NotificationConfigurationDeprecated' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
@@ -3595,6 +3737,118 @@ return array (
                         ),
                         'InvocationRole' => array(
                             'type' => 'string',
+                        ),
+                    ),
+                ),
+                'RequestId' => array(
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'NotificationConfiguration' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'TopicConfigurations' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'sentAs' => 'TopicConfiguration',
+                    'data' => array(
+                        'xmlFlattened' => true,
+                    ),
+                    'items' => array(
+                        'name' => 'TopicConfiguration',
+                        'type' => 'object',
+                        'sentAs' => 'TopicConfiguration',
+                        'properties' => array(
+                            'Id' => array(
+                                'type' => 'string',
+                            ),
+                            'TopicArn' => array(
+                                'type' => 'string',
+                                'sentAs' => 'Topic',
+                            ),
+                            'Events' => array(
+                                'type' => 'array',
+                                'sentAs' => 'Event',
+                                'data' => array(
+                                    'xmlFlattened' => true,
+                                ),
+                                'items' => array(
+                                    'name' => 'Event',
+                                    'type' => 'string',
+                                    'sentAs' => 'Event',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'QueueConfigurations' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'sentAs' => 'QueueConfiguration',
+                    'data' => array(
+                        'xmlFlattened' => true,
+                    ),
+                    'items' => array(
+                        'name' => 'QueueConfiguration',
+                        'type' => 'object',
+                        'sentAs' => 'QueueConfiguration',
+                        'properties' => array(
+                            'Id' => array(
+                                'type' => 'string',
+                            ),
+                            'QueueArn' => array(
+                                'type' => 'string',
+                                'sentAs' => 'Queue',
+                            ),
+                            'Events' => array(
+                                'type' => 'array',
+                                'sentAs' => 'Event',
+                                'data' => array(
+                                    'xmlFlattened' => true,
+                                ),
+                                'items' => array(
+                                    'name' => 'Event',
+                                    'type' => 'string',
+                                    'sentAs' => 'Event',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'LambdaFunctionConfigurations' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'sentAs' => 'CloudFunctionConfiguration',
+                    'data' => array(
+                        'xmlFlattened' => true,
+                    ),
+                    'items' => array(
+                        'name' => 'LambdaFunctionConfiguration',
+                        'type' => 'object',
+                        'sentAs' => 'CloudFunctionConfiguration',
+                        'properties' => array(
+                            'Id' => array(
+                                'type' => 'string',
+                            ),
+                            'LambdaFunctionArn' => array(
+                                'type' => 'string',
+                                'sentAs' => 'CloudFunction',
+                            ),
+                            'Events' => array(
+                                'type' => 'array',
+                                'sentAs' => 'Event',
+                                'data' => array(
+                                    'xmlFlattened' => true,
+                                ),
+                                'items' => array(
+                                    'name' => 'Event',
+                                    'type' => 'string',
+                                    'sentAs' => 'Event',
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -4702,6 +4956,16 @@ return array (
             ),
         ),
         'PutBucketNotificationOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'PutBucketNotificationConfigurationOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(

@@ -27,16 +27,20 @@ use Guzzle\Service\Resource\Model;
  * Client to interact with Amazon EC2 Container Service
  *
  * @method Model createCluster(array $args = array()) {@command Ecs CreateCluster}
+ * @method Model createService(array $args = array()) {@command Ecs CreateService}
  * @method Model deleteCluster(array $args = array()) {@command Ecs DeleteCluster}
+ * @method Model deleteService(array $args = array()) {@command Ecs DeleteService}
  * @method Model deregisterContainerInstance(array $args = array()) {@command Ecs DeregisterContainerInstance}
  * @method Model deregisterTaskDefinition(array $args = array()) {@command Ecs DeregisterTaskDefinition}
  * @method Model describeClusters(array $args = array()) {@command Ecs DescribeClusters}
  * @method Model describeContainerInstances(array $args = array()) {@command Ecs DescribeContainerInstances}
+ * @method Model describeServices(array $args = array()) {@command Ecs DescribeServices}
  * @method Model describeTaskDefinition(array $args = array()) {@command Ecs DescribeTaskDefinition}
  * @method Model describeTasks(array $args = array()) {@command Ecs DescribeTasks}
  * @method Model discoverPollEndpoint(array $args = array()) {@command Ecs DiscoverPollEndpoint}
  * @method Model listClusters(array $args = array()) {@command Ecs ListClusters}
  * @method Model listContainerInstances(array $args = array()) {@command Ecs ListContainerInstances}
+ * @method Model listServices(array $args = array()) {@command Ecs ListServices}
  * @method Model listTaskDefinitionFamilies(array $args = array()) {@command Ecs ListTaskDefinitionFamilies}
  * @method Model listTaskDefinitions(array $args = array()) {@command Ecs ListTaskDefinitions}
  * @method Model listTasks(array $args = array()) {@command Ecs ListTasks}
@@ -47,6 +51,7 @@ use Guzzle\Service\Resource\Model;
  * @method Model stopTask(array $args = array()) {@command Ecs StopTask}
  * @method Model submitContainerStateChange(array $args = array()) {@command Ecs SubmitContainerStateChange}
  * @method Model submitTaskStateChange(array $args = array()) {@command Ecs SubmitTaskStateChange}
+ * @method Model updateService(array $args = array()) {@command Ecs UpdateService}
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-ecs.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.Ecs.EcsClient.html API docs

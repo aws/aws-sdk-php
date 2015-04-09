@@ -180,4 +180,42 @@ class ServiceResponseException extends RuntimeException
 
         return $message;
     }
+
+    /**
+     * Get the request ID of the error. This value is only present if a
+     * response was received, and is not present in the event of a networking
+     * error.
+     *
+     * Same as `getRequestId()` method, but matches the interface for SDKv3.
+     *
+     * @return string|null Returns null if no response was received
+     */
+    public function getAwsRequestId()
+    {
+        return $this->requestId;
+    }
+
+    /**
+     * Get the AWS error type.
+     *
+     * Same as `getExceptionType()` method, but matches the interface for SDKv3.
+     *
+     * @return string|null Returns null if no response was received
+     */
+    public function getAwsErrorType()
+    {
+        return $this->exceptionType;
+    }
+
+    /**
+     * Get the AWS error code.
+     *
+     * Same as `getExceptionCode()` method, but matches the interface for SDKv3.
+     *
+     * @return string|null Returns null if no response was received
+     */
+    public function getAwsErrorCode()
+    {
+        return $this->exceptionCode;
+    }
 }
