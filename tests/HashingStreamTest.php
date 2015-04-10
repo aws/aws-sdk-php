@@ -5,6 +5,9 @@ use GuzzleHttp\Psr7;
 use Aws\PhpHash;
 use Aws\HashingStream;
 
+/**
+ * @covers Aws\HashingStream
+ */
 class HashingStreamTest extends \PHPUnit_Framework_TestCase
 {
     public function testCanCreateRollingMd5()

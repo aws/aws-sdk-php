@@ -3,6 +3,9 @@ namespace Aws\Test;
 
 use Aws\PhpHash;
 
+/**
+ * @covers Aws\PhpHash
+ */
 class PhpHashTest extends \PHPUnit_Framework_TestCase
 {
     public function testHashesData()
