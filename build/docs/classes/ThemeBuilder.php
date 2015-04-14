@@ -1,7 +1,9 @@
 <?php
-
 namespace Aws\Build\Docs;
 
+/**
+ * Builds HTML for operations.
+ */
 class ThemeBuilder
 {
     private $html;

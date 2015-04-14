@@ -67,9 +67,9 @@ class Service
         $this->slug = $name . '-' . $this->version;
         $this->clientName = $this->namespace . 'Client';
         $this->client = 'Aws\\' . $this->namespace . '\\' . $this->clientName;
-        $this->clientLink = 'Aws/' . $this->namespace . '/' . $this->namespace . 'Client.html';
-        $this->namespaceLink = 'Aws/' . $this->namespace . '.html';
-        $this->serviceLink = 'Aws/' . $this->namespace . '/' . $this->slug . '.html';
+        $this->clientLink = 'class-Aws.' . $this->namespace . '.' . $this->namespace . 'Client.html';
+        $this->namespaceLink = 'namespace-Aws.' . $this->namespace . '.html';
+        $this->serviceLink = 'api-' . $this->slug . '.html';
         $this->shortTitle = $api->getMetadata('serviceAbbreviation');
         $this->title = $api->getServiceFullName();
         $this->fullNamespace = 'Aws\\' . $this->namespace;

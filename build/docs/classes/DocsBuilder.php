@@ -7,8 +7,8 @@ use Aws\Api\Service as Api;
 
 class DocsBuilder
 {
-    /** @var string */
-    private $themeSource;
+    /** @var string HTML template to replace {{ contents }} */
+    private $template;
 
     /** @var string */
     private $outputDir;
@@ -16,117 +16,105 @@ class DocsBuilder
     /** @var ApiProvider */
     private $apiProvider;
 
-    public function __construct(ApiProvider $provider, $outputDir)
+    public function __construct(ApiProvider $provider, $outputDir, $template)
     {
         $this->apiProvider = $provider;
         $this->outputDir = $outputDir;
-        $this->themeSource = realpath(__DIR__ . '/../theme');
+        $this->template = $template;
     }
 
-    public function getSami($sourceDir)
+    public function build()
     {
-        $this->generateTheme();
-
-        if (!class_exists($sami = '\Sami\Sami')) {
-            throw new \RuntimeException('Sami class is not available. Are you sure you are using Sami right now?');
-        }
-
-        return new $sami($sourceDir, [
-            'title'                => 'AWS SDK for PHP',
-            'theme'                => 'aws',
-            'template_dirs'        => ["{$this->outputDir}/theme"],
-            'build_dir'            => "{$this->outputDir}/build",
-            'cache_dir'            => "{$this->outputDir}/cache",
-            'default_opened_level' => 1,
-        ]);
-    }
-
-    private function generateTheme()
-    {
-        // Create API pages, manifest, and sami.js twigs. Copy static artifacts.
-        $services = [];
-        $manifest = '';
-        $indexes = '';
-        $serviceVersions = $this->gatherServiceVersions();
-
+        fwrite(STDOUT, "Parsing available service API versions...\n");
         // Collect versions
-        foreach ($serviceVersions as $name => $versions) {
+        $services = [];
+
+        foreach ($this->gatherServiceVersions() as $name => $versions) {
             foreach ($versions as $alias => $version) {
                 if ($alias === 'latest') {
                     continue;
                 }
-
                 $service = new Service(
                     $name,
                     new Api($this->apiProvider, $name, $version),
                     new DocModel($this->apiProvider, $name, $version)
                 );
-
-                $indexes .= $this->createIndexEntryForService($service);
-                $html = (new HtmlDocument)->open('section', 'Operations');
-                $html->append($this->createHtmlForToc($service->api->getOperations()));
-                foreach ($service->api->getOperations() as $opName => $operation) {
-                    $indexes .= $this->createIndexEntryForOperation($service, $opName);
-                    $html->append($this->createHtmlForOperation($service, $opName, $operation));
-                }
-                $html->close();
-                $this->writeServiceApiPage($service, $html);
-                $manifest .= "    '{$service->slug}.twig': '{$service->serviceLink}'\n";
+                $this->renderService($service);
                 $services[$service->title][$version] = $service;
             }
         }
 
-        $this->writeThemeFile('manifest.yml', [':manifest' => $manifest]);
-        $this->writeThemeFile('sami.js.twig', [':indexes' => $indexes]);
-        $this->writeThemeFile('layout/layout.twig');
-        $this->writeThemeFile('img/service-sprites.png');
-
-        // Create index and class twigs.
         ksort($services, SORT_NATURAL | SORT_FLAG_CASE);
+        $this->updateHomepage($services);
+        $this->updateClients($services);
+    }
+
+    private function updateHomepage(array $services)
+    {
+        fwrite(STDOUT, "Building homepage service table\n");
+        // Build up the list of services for the homepage.
         $servicesTable = '';
-        $classBlocks = '';
+
         foreach ($services as $versions) {
             krsort($versions);
             $service = reset($versions);
             $servicesTable .= "<tr><td><a href=\"{$service->serviceLink}\">{$service->title}</a></td>";
             $servicesTable .= "<td><a href=\"{$service->clientLink}\">{$service->client}</a></td>";
             $servicesTable .= "<td><ul class=\"list-unstyled\">";
-            $classBlocks .= "\t{% elseif class.shortname == '{$service->clientName}' %}\n\t\t{% set apiLinks = '";
             $latest = count($versions) > 1 ? ' (latest)' : '';
             foreach ($versions as $sv) {
                 $servicesTable .= "<li><a href=\"{$sv->serviceLink}\">{$sv->version} {$latest}</a></li>";
-                $classBlocks .= "<li><a href=\"{$sv->slug}.html\">{$sv->shortTitle} &ndash; {$sv->version} API</a></li>";
                 $latest = '';
             }
-            $classBlocks .= "' %}\n\t\t{{ block('client_heading') }}\n";
             $servicesTable .= "</ul></td></tr>";
         }
-        $this->writeThemeFile('index.twig', [':services' => $servicesTable]);
-        $this->writeThemeFile('class.twig', [':services' => $classBlocks]);
+
+        $this->replaceInner('index', $servicesTable, ':services:');
     }
 
-    private function createIndexEntryForService(Service $service)
+    private function renderService(Service $service)
     {
-        return json_encode([
-            'type'     => 'Service',
-            'fromName' => $service->client,
-            'fromLink' => $service->clientLink,
-            'link'     => $service->serviceLink,
-            'name'     => $service->fullTitle,
-            'doc'      => "API documentation for the {$service->version} version of the {$service->title} service.",
-        ]) . ",\n";
-    }
+        $html = new HtmlDocument;
+        $html->open('div', 'page-header');
+        $html->elem('h1', null, "$service->fullTitle <small>{$service->version}</small>");
+        $html->close();
+        $metadata = <<<EOT
+<dd><strong>Client:</strong> <a href="{$service->clientLink}">{$service->client}</a></dd>
+<dd><strong>Service ID:</strong> {$service->name}</dd>
+<dd><strong>Version:</strong> {$service->version}</dd>
+EOT;
+        $html->elem('dl', 'tree well', $metadata);
+        $desc = <<<EOT
+This page describes the parameters and results for the operations of the
+{$service->fullTitle}, and shows how to use the <a href="{$service->clientLink}">{$service->client}</a>
+object to call the described operations. This documentation is specific to the
+{$service->version} API version of the service.
+EOT;
+        $html->elem('p', null, $desc);
+        $html->elem('h2', null, 'Operation Summary');
+        $desc = <<<EOT
+Each of the following operations can be created from a client using
+<code>\$client-&gt;getCommand('CommandName')</code>, where "CommandName" is the
+name of one of the following operations. Note: a command is a value that
+encapsulates an operation and the parameters used to create an HTTP request.
+EOT;
+        $html->elem('p', null, $desc);
+        $desc = <<<EOT
+You can also create and send a command immediately using the magic methods
+available on a client object: <code>\$client-&gt;commandName(/* parameters */)</code>.
+You can send the command asynchronously (returning a promise) by appending the
+word "Async" to the operation name: <code>\$client-&gt;commandNameAsync(/* parameters */)</code>.
+EOT;
+        $html->elem('p', null, $desc);
+        $html->open('section', 'Operations');
+        $html->append($this->createHtmlForToc($service->api->getOperations()));
 
-    private function createIndexEntryForOperation(Service $service, $operation)
-    {
-        return json_encode([
-            'type'     => 'Operation',
-            'fromName' => $service->client,
-            'fromLink' => $service->clientLink,
-            'link'     => $service->serviceLink . '#' . strtolower($operation),
-            'name'     => "{$service->namespace}Client::" . lcfirst($operation) . " ({$service->version})",
-            'doc'      => "API documentation for the {$operation} operation called using the {$service->client}.",
-        ]) . ",\n";
+        foreach ($service->api->getOperations() as $opName => $operation) {
+            $html->append($this->createHtmlForOperation($service, $opName, $operation));
+        }
+
+        $html->close();
+        $this->writeThemeFile($service->serviceLink, $html->render());
     }
 
     private function createHtmlForToc(array $operations)
@@ -212,32 +200,23 @@ class DocsBuilder
         return $html->close();
     }
 
-    private function writeServiceApiPage(Service $service, HtmlDocument $html)
+    private function writeThemeFile($name, $contents)
     {
-        $this->writeThemeFile(['api.twig', "{$service->slug}.twig"], [
-            ':service'   => $service->title,
-            ':namespace' => $service->namespace,
-            ':version'   => $service->version,
-            ':slug'      => "'service:{$service->slug}'",
-            ':content'   => $html->render(),
-        ]);
+        $name = str_replace('.html', '', $name);
+        $name .= '.html';
+        fwrite(STDOUT, "Writing file: {$name}.\n");
+        $html = str_replace('{{ contents }}', $contents, $this->template);
+        return (bool) file_put_contents("{$this->outputDir}/{$name}", $html);
     }
 
-    private function writeThemeFile($name, array $data = null)
+    private function replaceInner($name, $replace, $search = '{{ contents }}')
     {
-        if (is_array($name)) {
-            list($in, $out) = $name;
-        } else {
-            $in = $out = $name;
-        }
-
-        fwrite(STDOUT, "Writing theme file: {$out}.\n");
-        if ($data) {
-            $content = strtr(file_get_contents("{$this->themeSource}/{$in}"), $data);
-            return (bool) file_put_contents("{$this->outputDir}/theme/{$out}", $content);
-        } else {
-            return copy("{$this->themeSource}/{$in}", "{$this->outputDir}/theme/{$out}");
-        }
+        $name = str_replace('.html', '', $name);
+        fwrite(STDOUT, "Updating file: {$name}.\n");
+        $path = "{$this->outputDir}/{$name}.html";
+        $contents = file_get_contents($path);
+        $contents = str_replace($search, $replace, $contents);
+        file_put_contents($path, $contents);
     }
 
     private function gatherServiceVersions()
@@ -245,5 +224,34 @@ class DocsBuilder
         $manifest = __DIR__ . '/../../../src/data/version-manifest.json';
 
         return json_decode(file_get_contents($manifest), true);
+    }
+
+    private function updateClients(array $services)
+    {
+        fwrite(STDOUT, "Updating client pages with service links\n");
+
+        foreach ($services as $versions) {
+            krsort($versions);
+            $service = reset($versions);
+            $html = '<h2>Supported API Versions</h2>';
+            $html .= <<<EOT
+<p>This class uses a <em>service description model</em> that is associated at
+runtime based on the <code>version</code> option given when constructing the
+client. The <code>version</code> option will determine which API operations,
+waiters, and paginators are available for a client. Creating a command or a
+specific API operation can be done using magic methods (e.g.,
+<code>\$client->commandName(/** parameters */)</code>, or using the
+<code>$\client->getCommand</code> method of the client.</p>
+EOT;
+
+            $html .= '<div class="element-summary"><ul>';
+            $latest = count($versions) > 1 ? ' (latest)' : '';
+            foreach ($versions as $sv) {
+                $html .= "<li><a href=\"{$sv->serviceLink}\">{$sv->version} {$latest}</a></li>";
+                $latest = '';
+            }
+            $html .= '</ul></div>';
+            $this->replaceInner($service->clientLink, $html, '<!-- api -->');
+        }
     }
 }
