@@ -106,15 +106,19 @@ You can send the command asynchronously (returning a promise) by appending the
 word "Async" to the operation name: <code>\$client-&gt;commandNameAsync(/* parameters */)</code>.
 EOT;
         $html->elem('p', null, $desc);
+
         $html->open('section', 'Operations');
         $html->append($this->createHtmlForToc($service->api->getOperations()));
+
+        $this->createHtmlForPaginators($html, $service->api);
+        $this->createHtmlForWaiters($html, $service->api);
+
+        $html->section(2, 'Operations');
         foreach ($service->api->getOperations() as $opName => $operation) {
             $html->append($this->createHtmlForOperation($service, $opName, $operation));
         }
         $html->close();
 
-        $this->createHtmlForPaginators($html, $service->api);
-        $this->createHtmlForWaiters($html, $service->api);
         $this->writeThemeFile($service->serviceLink, $html->render());
     }
 
@@ -139,7 +143,7 @@ EOT;
         $html = new HtmlDocument;
 
         // Name
-        $html->section(2, $html->glyph('cog') . ' ' . $name, null, 'operation');
+        $html->section(3, $html->glyph('cog') . ' ' . $name, null, 'method-title');
 
         // Code
         $html->elem('pre', 'opcode', '$result = $client-&gt;<code>' . lcfirst($name) . '</code>([...]);');
@@ -274,7 +278,7 @@ getWaiter(\$waiterName, \$operationParameters)</a> method of a client object.
 This client supports the following waiters:
 EOT;
 
-        $html->elem('h2', null, 'Available waiters');
+        $html->section(2, 'Waiters');
         $html->open('div', 'element-summary');
             $html->elem('p', null, $desc);
             $html->open('table', 'table table-condensed');
@@ -300,6 +304,7 @@ EOT;
                 $html->close();
             $html->close();
         $html->close();
+        $html->close(); // Opening section
     }
 
     private function createHtmlForPaginators(HtmlDocument $html, Api $service)
@@ -319,7 +324,7 @@ getPaginator(\$paginatorName, \$operationParameters)</a>. This client supports
 the following paginators:
 EOT;
 
-        $html->elem('h2', null, 'Available paginators');
+        $html->section(2, 'Paginators');
         $html->open('div', 'element-summary');
             $html->elem('p', null, $desc);
             $html->open('ul');
@@ -331,5 +336,6 @@ EOT;
                 }
             $html->close();
         $html->close();
+        $html->close(); // Opening section
     }
 }

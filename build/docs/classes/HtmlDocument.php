@@ -30,8 +30,12 @@ class HtmlDocument
     {
         $anchor = $this->slug($anchorPrefix . '-' . $text);
         $link = ' <a href="#' . $anchor . '" class="anchor-link">' . $this->glyph('link') . '</a>';
-        $this->open('section', $class ?: strtolower($text));
-        $this->elem("h{$num}", ['id' => $anchor], $text . $link);
+        $this->open('section');
+        $attrs = ['id' => $anchor];
+        if ($class) {
+            $attrs['class'] = $class;
+        }
+        $this->elem("h{$num}", $attrs, $text . $link);
 
         return $this;
     }
