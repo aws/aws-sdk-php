@@ -2,7 +2,11 @@
 namespace Aws\S3;
 
 use Aws;
-use Aws\Command;
+use Aws\CommandInterface;
+use Aws\ResultInterface;
+use GuzzleHttp\Promise;
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Promise\PromisorInterface;
 use transducers as t;
 
 /**
@@ -12,21 +16,16 @@ use transducers as t;
  * This class does not support copying from the local filesystem to somewhere
  * else on the local filesystem or from one S3 bucket to another.
  */
-class Transfer
+class Transfer implements PromisorInterface
 {
     private $client;
+    private $promise;
     private $source;
-    private $sourceScheme;
-    private $dest;
-    private $destScheme;
-    private $s3Args = [];
-
-    // Available options.
-    private $concurrency = 5;
-    private $mup_threshold = 20971520;
-    private $base_dir;
+    private $destination;
+    private $concurrency;
+    private $mupThreshold;
     private $before;
-    private $debug = false;
+    private $s3Args = [];
 
     /**
      * When providing the $source argument, you may provide a string referencing
@@ -65,71 +64,114 @@ class Transfer
         $dest,
         array $options = []
     ) {
-        $client->registerStreamWrapper();
-        if (is_string($source)) {
-            $this->base_dir = $source;
-            $source = Aws\recursive_dir_iterator($source);
-        } elseif (!$source instanceof \Iterator) {
-            throw new \InvalidArgumentException('source must be the path to a '
-                . 'directory or an iterator that yields file names.');
-        } elseif (!$this->base_dir) {
-            throw new \InvalidArgumentException('You must provide the source '
-                . 'argument as a string or provide the "base_dir" option.');
+        $this->client = $client;
+
+        // Prepare the destination.
+        $this->destination = $this->prepareTarget($dest);
+        if ($this->destination['scheme'] === 's3') {
+            $this->s3Args = $this->getS3Args($this->destination['path']);
         }
 
-        $valid = ['mup_threshold', 'base_dir', 'before', 'concurrency', 'debug'];
-        foreach ($valid as $opt) {
-            if (isset($options[$opt])) {
-                $this->{$opt} = $options[$opt];
+        // Prepare the source.
+        if (is_string($source)) {
+            $this->source = $this->prepareTarget($source);
+        } elseif ($source instanceof \Iterator) {
+            if (isset($options['base_dir'])) {
+                $this->source = $this->prepareTarget($options['base_dir']);
+            } else {
+                throw new \InvalidArgumentException('You must provide the source'
+                    . ' argument as a string or provide the "base_dir" option.');
+            }
+        } else {
+            throw new \InvalidArgumentException('source must be the path to a '
+                . 'directory or an iterator that yields file names.');
+        }
+
+        // Validate schemes.
+        if ($this->source['scheme'] === $this->destination['scheme']) {
+            throw new \InvalidArgumentException("You cannot copy from "
+                . "{$this->source['scheme']} to {$this->destination['scheme']}."
+            );
+        }
+
+        // Handle multipart-related options.
+        $this->concurrency = isset($options['concurrency'])
+            ? $options['concurrency']
+            : MultipartUploader::DEFAULT_CONCURRENCY;
+        $this->mupThreshold = isset($options['mup_threshold'])
+            ? $options['mup_threshold']
+            : 16777216;
+        if ($this->mupThreshold < MultipartUploader::PART_MIN_SIZE) {
+            throw new \InvalidArgumentException('mup_threshold must be >= 5MB');
+        }
+
+        // Handle "before" callback option.
+        if (isset($options['before'])) {
+            $this->before = $options['before'];
+            if (!is_callable($this->before)) {
+                throw new \InvalidArgumentException('before must be a callable.');
             }
         }
 
-        if ($this->mup_threshold < 5248000) {
-            throw new \InvalidArgumentException('mup_threshold must be >= 5248000');
+        // Handle "debug" option.
+        if (isset($options['debug'])) {
+            if ($options['debug'] === true) {
+                $options['debug'] = fopen('php://output', 'w');
+            }
+            $this->addDebugToBefore($options['debug']);
         }
-
-        // Normalize the destination and source directory.
-        $this->dest = rtrim(str_replace('\\', '/', $dest), '/');
-        $this->base_dir = rtrim(str_replace('\\', '/', $this->base_dir), '/');
-        $this->destScheme = $this->getScheme($this->dest);
-        $this->sourceScheme = $this->getScheme($this->base_dir);
-        $this->client = $client;
-
-        if ($this->destScheme == 's3') {
-            $this->s3Args = $this->getS3Args($this->dest);
-        }
-
-        if ($this->debug) {
-            $this->wrapDebug();
-        }
-
-        $this->source = $this->wrapIterator($source);
     }
 
     /**
      * Transfers the files.
      */
-    public function transfer()
+    public function promise()
     {
-        if (!$this->source->valid()) {
-            $this->source->rewind();
+        // If the promise has been created, just return it.
+        if ($this->promise) {
+            return $this->promise;
         }
 
-        $options = ['concurrency' => $this->concurrency];
-        $pool = new Aws\CommandPool($this->client, $this->source, $options);
-        $pool->promise()->wait();
+        // Create an upload/download promise for the transfer.
+        if ($this->source['scheme'] === 'file') {
+            return $this->promise = $this->createUploadPromise();
+        } else {
+            return $this->promise = $this->createDownloadPromise();
+        }
+    }
+
+    /**
+     * Transfers the files synchronously.
+     */
+    public function transfer()
+    {
+        $this->promise()->wait();
+    }
+
+    private function prepareTarget($targetPath)
+    {
+        $target = [
+            'path'   => $this->normalizePath($targetPath),
+            'scheme' => $this->determineScheme($targetPath),
+        ];
+
+        if ($target['scheme'] !== 's3' && $target['scheme'] !== 'file') {
+            throw new \InvalidArgumentException('Scheme must be "s3" or "file".');
+        }
+
+        return $target;
     }
 
     /**
      * Creates an array that contains Bucket and Key by parsing the filename.
      *
-     * @param string $filename Filename to parse.
+     * @param string $path Path to parse.
      *
      * @return array
      */
-    private function getS3Args($filename)
+    private function getS3Args($path)
     {
-        $parts = explode('/', str_replace('s3://', '', $filename), 2);
+        $parts = explode('/', str_replace('s3://', '', $path), 2);
         $args = ['Bucket' => $parts[0]];
         if (isset($parts[1])) {
             $args['Key'] = $parts[1];
@@ -139,43 +181,138 @@ class Transfer
     }
 
     /**
-     * Creates an iterator that yields Commands from each filename.
-     *
-     * @param \Iterator $iter Iterator to wrap.
-     *
-     * @return \Iterator
-     */
-    private function wrapIterator(\Iterator $iter)
-    {
-        $comp = [];
-        // Filter out MUP uploads to send separate operations.
-        if ($this->destScheme == 's3' && $this->sourceScheme == 'file') {
-            $comp[] = t\filter(function ($file) {
-                if ($this->sourceScheme == 'file'
-                    && filesize($file) >= $this->mup_threshold
-                ) {
-                    $this->mup($file);
-                    return false;
-                }
-                // Filter out "/" files stored on S3 as buckets.
-                return substr($file, -1, 1) != '/';
-            });
-        }
-        $comp[] = t\map($this->getTransferFunction($this->sourceScheme, $this->destScheme));
-
-        return t\to_iter($iter, call_user_func_array('transducers\comp', $comp));
-    }
-
-    /**
      * Parses the scheme from a filename.
      *
-     * @param string $file Filename to parse.
+     * @param string $path Path to parse.
      *
      * @return string
      */
-    private function getScheme($file)
+    private function determineScheme($path)
     {
-        return !strpos($file, '://') ? 'file' : explode('://', $file)[0];
+        return !strpos($path, '://') ? 'file' : explode('://', $path)[0];
+    }
+
+    /**
+     * Normalize a path so that it has a trailing slash.
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    private function normalizePath($path)
+    {
+        return rtrim(str_replace('\\', '/', $path), '/');
+    }
+
+    private function createDownloadPromise()
+    {
+        // Prepare args for ListObjects.
+        $listArgs = $this->getS3Args($this->source['path']);
+        if (isset($listArgs['Key'])) {
+            $listArgs['Prefix'] = $listArgs['Key'] . '/';
+            unset($listArgs['Key']);
+        }
+
+        // Get the Paginator for ListObjects
+        $objects = $this->client->getPaginator('ListObjects', $listArgs);
+
+        // Asynchronously execute the paginator, building command pools to
+        // download the objects.
+        return $this->promise = $objects->each(function (
+            ResultInterface $result
+        ) use ($listArgs) {
+            $commands = [];
+            $prefix = isset($listArgs['Prefix']) ? $listArgs['Prefix'] : null;
+            foreach ($result->search('Contents[].Key') as $key) {
+                // Skip files on S3 that just mark the existence of a folder.
+                if (substr($key, -1, 1) === '/') {
+                    continue;
+                }
+
+                // Prepare the sink.
+                $localKey = $key;
+                if ($prefix && strpos($localKey, $prefix) === 0) {
+                    $localKey = substr($key, strlen($prefix));
+                }
+                $sink = $this->destination['path'] . '/' . $localKey;
+
+                // Create the directory if needed.
+                $dir = dirname($sink);
+                if (!is_dir($dir) && !mkdir($dir, 0777, true)) {
+                    return Promise\rejection_for(
+                        new \RuntimeException("Could not create dir: {$dir}")
+                    );
+                }
+
+                // Create the command.
+                $commands[] = $this->client->getCommand('GetObject', [
+                    'Bucket' => $listArgs['Bucket'],
+                    'Key'    => $key,
+                    '@http'  => [
+                        'sink'  => $sink,
+                        'delay' => true
+                    ],
+                ]);
+            }
+
+            // Create a GetObject command pool and return the promise.
+            return (new Aws\CommandPool($this->client, $commands, [
+                'concurrency' => $this->concurrency,
+                'before'      => $this->before
+            ]))->promise();
+        });
+    }
+
+    private function createUploadPromise()
+    {
+        // Creates an iterator that yields promises for either upload or
+        // multipart upload operations for each file in the source directory.
+        $filter = t\filter(function ($file) {
+            return !is_dir($file);
+        });
+        $map = t\map(function ($file) {
+            return (filesize($file) >= $this->mupThreshold)
+                ? $this->uploadMultipart($file)
+                : $this->upload($file);
+        });
+        $files = t\to_iter(
+            Aws\recursive_dir_iterator($this->source['path']),
+            t\comp($filter, $map)
+        );
+
+        // Create an EachPromise, that will concurrently handle the upload
+        // operations' yielded promises from the iterator.
+        return $this->promise = (new Promise\EachPromise($files, [
+            'concurrency' => $this->concurrency
+        ]))->promise();
+    }
+
+    private function upload($filename)
+    {
+        $args = $this->s3Args;
+        $args['SourceFile'] = $filename;
+        $args['Key'] = $this->createS3Key($filename);
+        $args['@http'] = ['delay' => true];
+
+        $command = $this->client->getCommand('PutObject', $args);
+        $this->before and call_user_func($this->before, $command);
+
+        return $this->client->executeAsync($command);
+    }
+
+    private function uploadMultipart($filename)
+    {
+        $args = $this->s3Args;
+        $args['Key'] = $this->createS3Key($filename);
+
+        return (new MultipartUploader($this->client, $filename, [
+            'bucket'          => $args['Bucket'],
+            'key'             => $args['Key'],
+            'before_initiate' => $this->before,
+            'before_upload'   => $this->before,
+            'before_complete' => $this->before,
+            'concurrency'     => $this->concurrency,
+        ]))->promise();
     }
 
     private function createS3Key($filename)
@@ -186,103 +323,56 @@ class Transfer
 
         $args = $this->s3Args;
         $args['Key'] = rtrim($args['Key'], '/');
-        $args['Key'] .= preg_replace('#^' . preg_quote($this->base_dir) . '#', '', $filename);
+        $args['Key'] .= preg_replace('#^' . preg_quote($this->source['path']) . '#', '', $filename);
 
         return $args['Key'];
     }
 
-    private function wrapBefore($source, $dest, Command $command)
+    private function addDebugToBefore($debug)
     {
-        if ($this->before) {
-            $command->getEmitter()->on(
-                'init',
-                function () use ($source, $dest, $command) {
-                    call_user_func($this->before, $source, $dest, $command);
-                }
-            );
-        }
-
-        return $command;
-    }
-
-    private function getObject($filename)
-    {
-        $args = $this->getS3Args($filename);
-        $dest = preg_replace('#^' . preg_quote($this->base_dir) . '#', '', $filename);
-        $dest = $this->dest . '/' . ltrim($dest, '/');
-        $args['SaveAs'] = $dest;
-        $cmd = $this->client->getCommand('GetObject', $args);
-        $dir = dirname($args['SaveAs']);
-
-        // Create the directory if needed.
-        if (!is_dir($dir) && !mkdir($dir, 0777, true)) {
-            throw new \RuntimeException("Could not create dir: $dir");
-        }
-
-        return $this->wrapBefore($filename, $dest, $cmd);
-    }
-
-    private function putObject($filename)
-    {
-        $args = $this->s3Args;
-        $args['SourceFile'] = $filename;
-        $args['Key'] = $this->createS3Key($filename);
-        $cmd = $this->client->getCommand('PutObject', $args);
-        $dest = 's3://' . $args['Bucket'] . '/' . $args['Key'];
-
-        return $this->wrapBefore($filename, $dest, $cmd);
-    }
-
-    private function getTransferFunction($source, $dest)
-    {
-        if ($dest == 's3' && $source == 's3') {
-            throw new \InvalidArgumentException('Cannot copy from s3 to s3');
-        } elseif ($dest == 's3') {
-            return function ($f) { return $this->putObject($f); };
-        } elseif ($source == 's3') {
-            return function ($f) { return $this->getObject($f); };
-        }
-
-        throw new \InvalidArgumentException('Cannot copy local file to local file');
-    }
-
-    private function mup($filename)
-    {
-        $dest = 's3://' . $this->s3Args['Bucket']
-            . '/' . $this->createS3Key($filename);
-        $uploader = (new UploadBuilder())
-            ->setBucket($this->s3Args['Bucket'])
-            ->setKey($this->createS3Key($filename))
-            ->setSource($filename)
-            ->setClient($this->client)
-            ->build();
-
-        $fn = null;
-        if ($this->before) {
-            $fn = function(PreparedEvent $e) use ($filename, $dest) {
-                $cmd = $e->getCommand();
-                $cmd->debugStr = "Part={$cmd['PartNumber']}";
-                call_user_func($this->before, $filename, $dest, $cmd);
-            };
-        }
-
-        $uploader->upload($this->concurrency, $fn);
-    }
-
-    private function wrapDebug()
-    {
-        if ($this->debug === true) {
-            $this->debug = fopen('php://output', 'w');
-        }
-
         $before = $this->before;
-        $this->before = function ($source, $dest, CommandInterface $command) use ($before) {
-            $before and $before($source, $dest, $command);
-            $ctx = sprintf('%s -> %s (%s)', $source, $dest, $command->getName());
-            if (!empty($command->debugStr)) {
-                $ctx .= ' : ' . $command->debugStr;
+        $sourcePath = $this->source['path'];
+        $s3Args = $this->s3Args;
+
+        $this->before = static function (
+            CommandInterface $command
+        ) use ($before, $debug, $sourcePath, $s3Args) {
+            // Call the composed before function.
+            $before and $before($command);
+
+            // Determine the source and dest values based on operation.
+            switch ($operation = $command->getName()) {
+                case 'GetObject':
+                    $source = "s3://{$command['Bucket']}/{$command['Key']}";
+                    $dest = $command['@http']['sink'];
+                    break;
+                case 'PutObject':
+                    $source = $command['SourceFile'];
+                    $dest = "s3://{$command['Bucket']}/{$command['Key']}";
+                    break;
+                case 'UploadPart':
+                    $part = $command['PartNumber'];
+                case 'CreateMultipartUpload':
+                case 'CompleteUploadPart':
+                    $sourceKey = $command['Key'];
+                    if (isset($s3Args['Key']) && strpos($sourceKey, $s3Args['Key']) === 0) {
+                        $sourceKey = substr($sourceKey, strlen($s3Args['Key']) + 1);
+                    }
+                    $source = "{$sourcePath}/{$sourceKey}";
+                    $dest = "s3://{$command['Bucket']}/{$command['Key']}";
+                    break;
+                default:
+                    throw new \UnexpectedValueException(
+                        "Transfer encountered an unexpected operation: {$operation}."
+                    );
             }
-            fwrite($this->debug, "Transferring {$ctx}\n");
+
+            // Print the debugging message.
+            $context = sprintf('%s -> %s (%s)', $source, $dest, $operation);
+            if (isset($part)) {
+                $context .= " : Part={$part}";
+            }
+            fwrite($debug, "Transferring {$context}\n");
         };
     }
 }

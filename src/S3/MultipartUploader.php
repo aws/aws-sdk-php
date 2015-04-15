@@ -42,7 +42,7 @@ class MultipartUploader extends AbstractUploader
             'UploadId' => $uploadId,
         ]);
 
-        foreach($client->getPaginator('ListParts', $state->getId()) as $result) {
+        foreach ($client->getPaginator('ListParts', $state->getId()) as $result) {
             // Get the part size from the first part in the first result.
                 if (!$state->getPartSize()) {
                 $state->setPartSize($result->search('Parts[0].Size'));

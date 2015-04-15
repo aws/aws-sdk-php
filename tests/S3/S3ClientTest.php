@@ -5,6 +5,7 @@ use Aws\Credentials\NullCredentials;
 use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
+use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\FnStream;
 use Psr\Http\Message\StreamInterface;
@@ -233,7 +234,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
         $client = $this->getTestClient('S3');
         $client->getHandlerList()->setHandler(function ($c, $r) {
             $this->assertEquals('bucket', $c['Bucket']);
-            return \GuzzleHttp\Promise\promise_for(new Result([
+            return Promise\promise_for(new Result([
                 'IsTruncated' => false,
                 'Marker' => '',
                 'Contents' => [
@@ -318,34 +319,23 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
         ]);
     }
 
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Mock queue is empty. Trying to send a PutObject
+     */
     public function testProxiesToTransferObjectPut()
     {
-        $this->markTestIncomplete();
         $client = $this->getTestClient('S3');
-        $ca = null;
-        $client->getHandlerList()->setHandler(function ($c, $r) use (&$ca) {
-            $this->assertEquals('PutObject', $c->getName());
-            $this->assertEquals('test', $c['Bucket']);
-            $ca = true;
-            return \GuzzleHttp\Promise\promise_for(new Result());
-        });
         $client->uploadDirectory(__DIR__, 'test');
-        $this->assertTrue($ca);
     }
 
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Mock queue is empty. Trying to send a ListObjects
+     */
     public function testProxiesToTransferObjectGet()
     {
-        $this->markTestIncomplete();
         $client = $this->getTestClient('S3');
-        $ca = null;
-        $client->getHandlerList()->setHandler(function ($c, $r) use (&$ca) {
-            $n = $c->getName();
-            $this->assertTrue($n == 'GetObject' || $n == 'ListObjects');
-            $this->assertEquals('test', $c['Bucket']);
-            $ca = true;
-            return \GuzzleHttp\Promise\promise_for(new Result());
-        });
         $client->downloadBucket(__DIR__, 'test');
-        $this->assertTrue($ca);
     }
 }

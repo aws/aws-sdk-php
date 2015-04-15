@@ -1,9 +1,12 @@
 <?php
 namespace Aws\Tests\S3;
 
+use Aws\CommandInterface;
 use Aws\Result;
 use Aws\S3\Transfer;
 use Aws\Test\UsesServiceTrait;
+use GuzzleHttp\Promise;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @covers Aws\S3\Transfer
@@ -18,124 +21,117 @@ class TransferTest extends \PHPUnit_Framework_TestCase
      */
     public function testEnsuresBaseDirIsAvailable()
     {
-        $this->markTestIncomplete();
         $s3 = $this->getTestClient('s3');
-        (new Transfer($s3, new \ArrayIterator([]), 's3://foo/bar'));
+        new Transfer($s3, new \ArrayIterator([]), 's3://foo/bar');
     }
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Cannot copy from s3 to s3
+     * @expectedExceptionMessage You cannot copy from s3 to s3.
      */
     public function testCannotCopyS3ToS3()
     {
-        $this->markTestIncomplete();
         $s3 = $this->getTestClient('s3');
-        $s3->getEmitter()->on('prepared', function (PreparedEvent $e) {
-            $e->intercept(new Result([]));
-        });
-        (new Transfer($s3, 's3://baz/bam', 's3://foo/bar'));
+        new Transfer($s3, 's3://baz/bam', 's3://foo/bar');
     }
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Cannot copy local file to local file
+     * @expectedExceptionMessage You cannot copy from file to file.
      */
     public function testCannotCopyLocal()
     {
-        $this->markTestIncomplete();
         $s3 = $this->getTestClient('s3');
-        (new Transfer($s3, __DIR__, __DIR__));
+        new Transfer($s3, __DIR__, __DIR__);
     }
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage mup_threshold must be >= 5248000
+     * @expectedExceptionMessage mup_threshold must be >= 5MB
      */
     public function testEnsuresMupSizeIsValid()
     {
-        $this->markTestIncomplete();
         $s3 = $this->getTestClient('s3');
-        (new Transfer($s3, __DIR__, 's3://foo/bar', ['mup_threshold' => 10]));
+        new Transfer($s3, __DIR__, 's3://foo/bar', ['mup_threshold' => 10]);
     }
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage source must be the path to a directory or an iterator that yields file names
+     * @expectedExceptionMessage source must be the path to a directory or an
+     *                           iterator that yields file names
      */
     public function testEnsuresSourceIsValid()
     {
-        $this->markTestIncomplete();
         $s3 = $this->getTestClient('s3');
-        (new Transfer($s3, false, 's3://foo/bar'));
+        new Transfer($s3, false, 's3://foo/bar');
     }
 
-    public function testUsesFileIteratorIfStringIsProvided()
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Scheme must be "s3" or "file"
+     */
+    public function testEnsuresValidScheme()
     {
-        $this->markTestIncomplete();
         $s3 = $this->getTestClient('s3');
-        $t = new Transfer($s3, __DIR__, 's3://foo/bar');
-        $this->assertInstanceOf('Iterator', $this->readAttribute($t, 'source'));
+        new Transfer($s3, __DIR__, 'monkey://foo/bar');
     }
 
-    public function testCanSetCustomOptions()
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage before must be a callable
+     */
+    public function testEnsuresBeforeIsCallable()
     {
-        $this->markTestIncomplete();
-        $opts = [
-            'mup_threshold' => 5248000,
-            'base_dir'      => 'foo!',
-            'concurrency'   => 12
-        ];
         $s3 = $this->getTestClient('s3');
-        $t = new Transfer($s3, __DIR__, 's3://foo/bar', $opts);
-        foreach ($opts as $k => $v) {
-            $this->assertSame($v, $this->readAttribute($t, $k));
-        }
+        new Transfer($s3, __DIR__, 's3://foo/bar', ['before' => 'cheese']);
     }
 
     public function testCanSetBeforeOptionForUploadsAndUsedWithDebug()
     {
-        $this->markTestIncomplete();
         $s3 = $this->getTestClient('s3');
+        $s3->getHandlerList()->append(
+            'sign:s3.test',
+            $this->mockResult(function() {
+                return new Result();
+            }
+        ));
+
         $c = [];
-        $t = new Transfer($s3, __DIR__, 's3://foo/bar', [
-            'before' => function ($source, $dest, CommandInterface $command) use (&$c) {
-                $c[] = func_get_args();
+        $i = \Aws\recursive_dir_iterator(__DIR__);
+        $t = new Transfer($s3, $i, 's3://foo/bar', [
+            'before' => function ($command) use (&$c) {
+                $c[] = $command;
             },
-            'debug' => true
+            'debug' => true,
+            'base_dir' => __DIR__,
         ]);
-        $s3->getEmitter()->on('prepared', function (PreparedEvent $e) {
-            $e->intercept(new Result([]));
-        });
+
         ob_start();
-        $t->transfer();
+        $p = $t->promise();
+        $p2 = $t->promise();
+        $this->assertSame($p, $p2);
+        $p->wait();
         $output = ob_get_clean();
         $this->assertNotEmpty($c);
 
+        /** @var CommandInterface $test */
         foreach ($c as $test) {
-            $this->assertContains(__DIR__, $test[0]);
-            $this->assertContains('s3://foo/bar', $test[1]);
-            $this->assertEquals('PutObject', $test[2]->getName());
-            $this->assertEquals('foo', $test[2]['Bucket']);
-            $this->assertStringStartsWith('bar/', $test[2]['Key']);
-            $this->assertContains($test[2]['SourceFile'] . ' -> s3://foo/bar', $output);
+            $this->assertEquals('PutObject', $test->getName());
+            $this->assertEquals('foo', $test['Bucket']);
+            $this->assertStringStartsWith('bar/', $test['Key']);
+            $this->assertContains($test['SourceFile'] . ' -> s3://foo/bar', $output);
         }
     }
 
-    public function testDoesMupUploadsForLargeFiles()
+    public function testDoesMultipartForLargeFiles()
     {
-        $this->markTestIncomplete();
         $s3 = $this->getTestClient('s3');
-        $q = [
-            ['UploadId' => '123'],
-            ['ETag' => 'a'],
-            ['ETag' => 'b'],
-            ['UploadId' => '123']
-        ];
-
-        $s3->getEmitter()->on('prepared', function (PreparedEvent $e) use (&$q) {
-            $e->intercept(new Result(array_shift($q)));
-        }, RequestEvents::LATE);
+        $this->addMockResults($s3, [
+            new Result(['UploadId' => '123']),
+            new Result(['ETag' => 'a']),
+            new Result(['ETag' => 'b']),
+            new Result(['UploadId' => '123']),
+        ]);
 
         $dir = sys_get_temp_dir() . '/unittest';
         `rm -rf $dir`;
@@ -158,46 +154,48 @@ class TransferTest extends \PHPUnit_Framework_TestCase
         rewind($res);
         $output = stream_get_contents($res);
         $this->assertContains("Transferring $filename -> s3://foo/bar/large.txt (UploadPart) : Part=1", $output);
-
-        unlink($filename);
-        rmdir($dir);
+        `rm -rf $dir`;
     }
 
     public function testDownloadsObjects()
     {
-        $this->markTestIncomplete();
         $s3 = $this->getTestClient('s3');
         $lso = [
             'IsTruncated' => false,
             'Contents' => [
-                ['Key' => 'foo/bar'],
-                ['Key' => 'baz/bam'],
+                ['Key' => 'bar/f/'],
+                ['Key' => 'bar/a/b'],
+                ['Key' => 'bar/c/d'],
             ]
         ];
-
-        $q = [
-            $lso,
-            $lso,
-            ['Body' => 'test'],
-            ['Body' => '123']
-        ];
-
-        $s3->getEmitter()->on('prepared', function (PreparedEvent $e) use (&$q) {
-            $e->intercept(new Result(array_shift($q)));
-        });
+        $this->addMockResults($s3, [
+            new Result($lso),
+            new Result(['Body' => 'test']),
+            new Result(['Body' => '123']),
+        ]);
 
         $dir = sys_get_temp_dir() . '/unittest';
-        !is_dir($dir) and mkdir($dir);
+        `rm -rf $dir`;
+        mkdir($dir);
         $res = fopen('php://temp', 'r+');
         $t = new Transfer($s3, 's3://foo/bar', $dir, ['debug' => $res]);
         $t->transfer();
         rewind($res);
         $output = stream_get_contents($res);
-        $this->assertContains('s3://foo/bar/foo/bar -> ', $output);
-        $this->assertContains('s3://foo/bar/baz/bam -> ', $output);
+        $this->assertContains('s3://foo/bar/a/b -> ', $output);
+        $this->assertContains('s3://foo/bar/c/d -> ', $output);
+        `rm -rf $dir`;
+    }
 
-        rmdir($dir . '/foo');
-        rmdir($dir . '/baz');
-        rmdir($dir);
+    private function mockResult(callable $fn)
+    {
+        return function (callable $handler) use ($fn) {
+            return function (
+                CommandInterface $command,
+                RequestInterface $request = null
+            ) use ($handler, $fn) {
+                return Promise\promise_for($fn($command, $request));
+            };
+        };
     }
 }

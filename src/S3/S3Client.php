@@ -7,7 +7,7 @@ use Aws\HandlerList;
 use Aws\Middleware;
 use Aws\RetryMiddleware;
 use Aws\S3\Exception\S3Exception;
-use Aws\Result;
+use Aws\ResultInterface;
 use Aws\CommandInterface;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
@@ -272,21 +272,22 @@ class S3Client extends AwsClient
      * Upload a file, stream, or string to a bucket.
      *
      * If the upload size exceeds the specified threshold, the upload will be
-     * performed using concurrent multipart uploads. The options array accepts
-     * the following options:
+     * performed using concurrent multipart uploads.
      *
-     * - before: (callable) Callback to invoke before any upload operations
-     *   during the upload process. The callback should have a function
-     *   signature like `function (Aws\Command $command) {...}`.
-     * - concurrency: (int, default=int(3) Maximum number of concurrent
+     * The options array accepts the following options:
+     *
+     * - before_upload: (callable) Callback to invoke before any upload
+     *   operations during the upload process. The callback should have a
+     *   function signature like `function (Aws\Command $command) {...}`.
+     * - concurrency: (int, default=int(3)) Maximum number of concurrent
      *   `UploadPart` operations allowed during a multipart upload.
-     * - params: (array) Custom parameters to use with the upload. For single
-     *   uploads, they must correspond to those used for the `PutObject`
-     *   operation. For multipart uploads, they correspond to the parameters of
-     *   the `CreateMultipartUpload` operation.
-     * - part_size: (int) Part size to use when doing a multipart upload.
-     * - threshold: (int, default=int(16777216)) The size, in bytes, allowed
+     * - mup_threshold: (int, default=int(16777216)) The size, in bytes, allowed
      *   before the upload must be sent via a multipart upload. Default: 16 MB.
+     * - params: (array, default=array([])) Custom parameters to use with the
+     *   upload. For single uploads, they must correspond to those used for the
+     *   `PutObject` operation. For multipart uploads, they correspond to the
+     *   parameters of the `CreateMultipartUpload` operation.
+     * - part_size: (int) Part size to use when doing a multipart upload.
      *
      * @param string $bucket  Bucket to upload the object.
      * @param string $key     Key of the object.
@@ -294,41 +295,37 @@ class S3Client extends AwsClient
      *                        StreamInterface, PHP stream resource, or a
      *                        string of data to upload.
      * @param string $acl     ACL to apply to the object (default: private).
-     * @param array  $options Custom options used when executing commands.
+     * @param array  $options Options used to configure the upload process.
      *
-     * @see Aws\S3\MultipartUploader for more information about multipart uploads.
-     * @return Result Returns the modeled result of the performed operation.
+     * @see Aws\S3\MultipartUploader for more info about multipart uploads.
+     * @return ResultInterface Returns the result of the upload.
      */
-    public function upload(
-        $bucket,
-        $key,
-        $body,
-        $acl = 'private',
-        array $options = []
-    ) {
-        $options += [
+    public function upload($bucket, $key, $body, $acl = 'private', array $options = [])
+    {
+        // Prepare the options.
+        static $defaults = [
             'before_upload' => null,
             'concurrency'   => 3,
+            'mup_threshold' => 16777216,
             'params'        => [],
             'part_size'     => null,
-            'threshold'     => 16777216 // 16 MB
         ];
-        $body = Psr7\stream_for($body);
+        $options = array_intersect_key($options + $defaults, $defaults);
 
         // Perform the required operations to upload the S3 Object.
-        if ($this->requiresMultipart($body, $options['threshold'])) {
+        $body = Psr7\stream_for($body);
+        if ($this->requiresMultipart($body, $options['mup_threshold'])) {
             // Perform a multipart upload.
             $options['before_initiate'] = function ($command) use ($options) {
                 foreach ($options['params'] as $k => $v) {
                     $command[$k] = $v;
                 }
             };
-            $uploader = new MultipartUploader($this, $body, [
+            return (new MultipartUploader($this, $body, [
                 'bucket' => $bucket,
                 'key'    => $key,
                 'acl'    => $acl
-            ] + $options);
-            $result = $uploader->upload();
+            ] + $options))->upload();
         } else {
             // Perform a regular PutObject operation.
             $command = $this->getCommand('PutObject', [
@@ -340,10 +337,8 @@ class S3Client extends AwsClient
             if (is_callable($options['before_upload'])) {
                 $options['before_upload']($command);
             }
-            $result = $this->execute($command);
+            return $this->execute($command);
         }
-
-        return $result;
     }
 
     /**
@@ -398,33 +393,33 @@ class S3Client extends AwsClient
     {
         // If body size known, compare to threshold to determine if Multipart.
         if ($body->getSize() !== null) {
-            return $body->getSize() < $threshold ? false : true;
+            return $body->getSize() >= $threshold;
         }
 
         // Handle the situation where the body size is unknown.
         // Read up to 5MB into a buffer to determine how to upload the body.
         $buffer = Psr7\stream_for();
-        Psr7\copy_to_stream($body, $buffer, 5242880);
+        Psr7\copy_to_stream($body, $buffer, MultipartUploader::PART_MIN_SIZE);
 
         // If body < 5MB, use PutObject with the buffer.
-        if ($buffer->getSize() < 5242880) {
+        if ($buffer->getSize() < MultipartUploader::PART_MIN_SIZE) {
             $buffer->seek(0);
             $body = $buffer;
             return false;
         }
 
-        // If >= 5 MB, and seekable, use Multipart with rewound body.
+        // If body >= 5 MB, then use multipart. [YES]
         if ($body->isSeekable()) {
+            // If the body is seekable, just rewind the body.
             $body->seek(0);
-            return true;
+        } else {
+            // If the body is non-seekable, stitch the rewind the buffer and
+            // the partially read body together into one stream. This avoids
+            // unnecessary disc usage and does not require seeking on the
+            // original stream.
+            $buffer->seek(0);
+            $body = new Psr7\AppendStream([$buffer, $body]);
         }
-
-        // If >= 5 MB, and non-seekable, use Multipart, but stitch the
-        // buffer and the body together into one stream. This avoids
-        // needing to seek and unnecessary disc usage, while requiring
-        // only the 5 MB buffer to be re-read by the Multipart system.
-        $buffer->seek(0);
-        $body = new Psr7\AppendStream([$buffer, $body]);
 
         return true;
     }
