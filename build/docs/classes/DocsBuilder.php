@@ -108,12 +108,13 @@ EOT;
         $html->elem('p', null, $desc);
         $html->open('section', 'Operations');
         $html->append($this->createHtmlForToc($service->api->getOperations()));
-
         foreach ($service->api->getOperations() as $opName => $operation) {
             $html->append($this->createHtmlForOperation($service, $opName, $operation));
         }
-
         $html->close();
+
+        $this->createHtmlForPaginators($html, $service->api);
+        $this->createHtmlForWaiters($html, $service->api);
         $this->writeThemeFile($service->serviceLink, $html->render());
     }
 
@@ -253,5 +254,82 @@ EOT;
             $html .= '</ul></div>';
             $this->replaceInner($service->clientLink, $html, '<!-- api -->');
         }
+    }
+
+    private function createHtmlForWaiters(HtmlDocument $html, Api $service)
+    {
+        $waiters = $service->getWaiters();
+
+        if (!$waiters) {
+            return;
+        }
+
+        $desc = <<<EOT
+Waiters allow you to poll a resource until it enters into a desired state.
+A waiter has a name used to describe what it does, and is associated with an
+API operation. When creating a waiter, you can provide the API operation
+parameters associated with the corresponding operation. Waiters can be
+accessed using the <a href="class-Aws.AwsClientInterface.html#_getWaiter">
+getWaiter(\$waiterName, \$operationParameters)</a> method of a client object.
+This client supports the following waiters:
+EOT;
+
+        $html->elem('h2', null, 'Available waiters');
+        $html->open('div', 'element-summary');
+            $html->elem('p', null, $desc);
+            $html->open('table', 'table table-condensed');
+                $html->open('thead');
+                    $html->open('tr');
+                        $html->elem('th', null, 'Waiter name');
+                        $html->elem('th', null, 'API Operation');
+                        $html->elem('th', null, 'Delay');
+                        $html->elem('th', null, 'Max Attempts');
+                    $html->close();
+                $html->close();
+                $html->open('tbody');
+                    foreach ($waiters as $name => $config) {
+                        $html->open('tr');
+                            $html->elem('td', null, $name);
+                            $html->elem('td', null, '<a href="#'
+                                . strtolower($config['operation'])
+                                . '">' . $config['operation'] . '</a>');
+                            $html->elem('td', null, $config['delay']);
+                            $html->elem('td', null, $config['maxAttempts']);
+                        $html->close();
+                    }
+                $html->close();
+            $html->close();
+        $html->close();
+    }
+
+    private function createHtmlForPaginators(HtmlDocument $html, Api $service)
+    {
+        $paginators = $service->getPaginators();
+
+        if (!$paginators) {
+            return;
+        }
+
+        $desc = <<<EOT
+Paginators handle automatically iterating over paginated API results. Paginators
+are associated with specific API operations, and they accept the parameters
+that the corresponding API operation accepts. You can get a paginator from a
+client class using <a href="class-Aws.AwsClientInterface.html#_getPaginator">
+getPaginator(\$paginatorName, \$operationParameters)</a>. This client supports
+the following paginators:
+EOT;
+
+        $html->elem('h2', null, 'Available paginators');
+        $html->open('div', 'element-summary');
+            $html->elem('p', null, $desc);
+            $html->open('ul');
+                foreach ($paginators as $name => $config) {
+                    $html->open('li');
+                        $attr = ['href' => '#' . strtolower($name)];
+                        $html->elem('a', $attr, $name);
+                    $html->close();
+                }
+            $html->close();
+        $html->close();
     }
 }

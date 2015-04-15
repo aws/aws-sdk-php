@@ -22,10 +22,10 @@ class Service extends AbstractModel
     /** @var Operation[] */
     private $operations = [];
 
-    /** @var array|null */
+    /** @var array */
     private $paginators = null;
 
-    /** @var array|null */
+    /** @var array */
     private $waiters = null;
 
     /**
@@ -274,13 +274,14 @@ class Service extends AbstractModel
     }
 
     /**
-     * Determines if the service has a paginator by name.
+     * Gets an associative array of available paginator configurations where
+     * the key is the name of the paginator, and the value is the paginator
+     * configuration.
      *
-     * @param string $name Name of the paginator.
-     *
-     * @return bool
+     * @return array
+     * @unstable The configuration format of paginators may change in the future
      */
-    public function hasPaginator($name)
+    public function getPaginators()
     {
         if (!isset($this->paginators)) {
             $res = call_user_func(
@@ -289,10 +290,24 @@ class Service extends AbstractModel
                 $this->serviceName,
                 $this->apiVersion
             );
-            $this->paginators = isset($res['pagination']) ? $res['pagination'] : [];
+            $this->paginators = isset($res['pagination'])
+                ? $res['pagination']
+                : [];
         }
 
-        return isset($this->paginators[$name]);
+        return $this->paginators;
+    }
+
+    /**
+     * Determines if the service has a paginator by name.
+     *
+     * @param string $name Name of the paginator.
+     *
+     * @return bool
+     */
+    public function hasPaginator($name)
+    {
+        return isset($this->getPaginators()[$name]);
     }
 
     /**
@@ -302,6 +317,7 @@ class Service extends AbstractModel
      *                     typically the operation name.
      * @return array
      * @throws \UnexpectedValueException if the paginator does not exist.
+     * @unstable The configuration format of paginators may change in the future
      */
     public function getPaginatorConfig($name)
     {
@@ -322,13 +338,13 @@ class Service extends AbstractModel
     }
 
     /**
-     * Determines if the service has a waiter by name.
+     * Gets an associative array of available waiter configurations where the
+     * key is the name of the waiter, and the value is the waiter
+     * configuration.
      *
-     * @param string $name Name of the waiter.
-     *
-     * @return bool
+     * @return array
      */
-    public function hasWaiter($name)
+    public function getWaiters()
     {
         if (!isset($this->waiters)) {
             $res = call_user_func(
@@ -337,10 +353,24 @@ class Service extends AbstractModel
                 $this->serviceName,
                 $this->apiVersion
             );
-            $this->waiters = isset($res['waiters']) ? $res['waiters'] : [];
+            $this->waiters = isset($res['waiters'])
+                ? $res['waiters']
+                : [];
         }
 
-        return isset($this->waiters[$name]);
+        return $this->waiters;
+    }
+
+    /**
+     * Determines if the service has a waiter by name.
+     *
+     * @param string $name Name of the waiter.
+     *
+     * @return bool
+     */
+    public function hasWaiter($name)
+    {
+        return isset($this->getWaiters()[$name]);
     }
 
     /**
