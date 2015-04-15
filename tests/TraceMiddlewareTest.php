@@ -9,6 +9,7 @@ use Aws\TraceMiddleware;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Promise;
 
 /**
  * @covers Aws\TraceMiddleware
@@ -43,6 +44,7 @@ class TraceMiddlewareTest extends \PHPUnit_Framework_TestCase
         $command = new Command('foo', ['a' => '1', 'b' => '2']);
         $request = new Request('GET', 'http://foo.com');
         $handler($command, $request);
+        Promise\trampoline()->run();
         $this->assertContains("-> Entering step init, name ''", $str);
         $this->assertContains('command was set to array', $str);
         $this->assertContains('request was set to array', $str);
@@ -81,6 +83,7 @@ class TraceMiddlewareTest extends \PHPUnit_Framework_TestCase
         $command = new Command('foo');
         $request = new Request('GET', 'http://foo.com');
         $handler($command, $request);
+        Promise\trampoline()->run();
         $this->assertContains('error was set to array', $str);
     }
 

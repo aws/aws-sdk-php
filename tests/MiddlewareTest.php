@@ -13,6 +13,7 @@ use Aws\MockHandler;
 use Aws\Result;
 use Aws\Signature\SignatureV4;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Promise;
 
 /**
  * @covers Aws\Middleware
@@ -28,6 +29,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         }));
         $handler = $list->resolve();
         $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
+        Promise\trampoline()->run();
         $this->assertCount(2, $called);
         $this->assertInstanceOf('Aws\CommandInterface', $called[0]);
         $this->assertInstanceOf('Psr\Http\Message\RequestInterface', $called[1]);
@@ -42,6 +44,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         }));
         $handler = $list->resolve();
         $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
+        Promise\trampoline()->run();
         $this->assertTrue($called);
     }
 
@@ -75,6 +78,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         $list->append('sign', Middleware::signer($creds, Aws\constantly($signature)));
         $handler = $list->resolve();
         $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
+        Promise\trampoline()->run();
         $this->assertTrue($req->hasHeader('Authorization'));
     }
 
@@ -153,6 +157,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
             'Key'        => 'key',
             'SourceFile' => __FILE__
         ]), new Request('PUT', 'http://foo.com'));
+        Promise\trampoline()->run();
         $this->assertTrue($called);
     }
 
@@ -166,6 +171,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         $req = new Request('GET', 'http://www.foo.com');
         $cmd = new Command('foo');
         $handler($cmd, $req);
+        Promise\trampoline()->run();
         $this->assertCount(1, $h);
     }
 }

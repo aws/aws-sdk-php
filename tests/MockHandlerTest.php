@@ -8,6 +8,7 @@ use Aws\MockHandler;
 use Aws\Result;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Promise;
 
 /**
  * @covers Aws\MockHandler
@@ -89,6 +90,7 @@ class MockHandlerTest extends \PHPUnit_Framework_TestCase
         $cmd = new Command('foo');
         $h($cmd, $request);
         $h($cmd, $request);
+        Promise\trampoline()->run();
         $this->assertEquals([$r1, $e], $thens);
     }
 
