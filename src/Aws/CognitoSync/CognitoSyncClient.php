@@ -1,5 +1,4 @@
 <?php
-
 namespace Aws\CognitoSync;
 
 use Aws\Common\Client\AbstractClient;
@@ -18,11 +17,13 @@ use Guzzle\Service\Resource\Model;
  * @method Model describeIdentityPoolUsage(array $args = array()) {@command CognitoSync DescribeIdentityPoolUsage}
  * @method Model describeIdentityUsage(array $args = array()) {@command CognitoSync DescribeIdentityUsage}
  * @method Model getBulkPublishDetails(array $args = array()) {@command CognitoSync GetBulkPublishDetails}
+ * @method Model getCognitoEvents(array $args = array()) {@command CognitoSync GetCognitoEvents}
  * @method Model getIdentityPoolConfiguration(array $args = array()) {@command CognitoSync GetIdentityPoolConfiguration}
  * @method Model listDatasets(array $args = array()) {@command CognitoSync ListDatasets}
  * @method Model listIdentityPoolUsage(array $args = array()) {@command CognitoSync ListIdentityPoolUsage}
  * @method Model listRecords(array $args = array()) {@command CognitoSync ListRecords}
  * @method Model registerDevice(array $args = array()) {@command CognitoSync RegisterDevice}
+ * @method Model setCognitoEvents(array $args = array()) {@command CognitoSync SetCognitoEvents}
  * @method Model setIdentityPoolConfiguration(array $args = array()) {@command CognitoSync SetIdentityPoolConfiguration}
  * @method Model subscribeToDataset(array $args = array()) {@command CognitoSync SubscribeToDataset}
  * @method Model unsubscribeFromDataset(array $args = array()) {@command CognitoSync UnsubscribeFromDataset}
