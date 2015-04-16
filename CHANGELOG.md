@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2.8.1 - 2015-04-16
+
+* `Aws\ConfigService` - Add the 'GetResourceConfigHistory' iterator.
+* `Aws\CognitoSync` - Added support for events.
+* `Aws\Lambda` - Fixed an issue with the Invoke operation.
+
 ## 2.8.0 - 2015-04-09
 
 See the [Upgrading Guide](https://github.com/aws/aws-sdk-php/blob/master/UPGRADING.md)
