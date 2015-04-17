@@ -18,6 +18,9 @@ namespace Aws\Tests\S3;
 
 use Aws\S3\S3Client;
 use Aws\S3\StreamWrapper;
+use Doctrine\Common\Cache\ArrayCache;
+use Doctrine\Common\Cache\PhpFileCache;
+use Guzzle\Cache\DoctrineCacheAdapter;
 use Guzzle\Http\Message\Response;
 use Guzzle\Http\EntityBody;
 
@@ -589,6 +592,76 @@ EOT;
         $this->assertEquals(5, $stat['size']);
         $this->assertEquals($ts, $stat['mtime']);
         $this->assertEquals($ts, $stat['ctime']);
+    }
+
+    /**
+     * Test that a cache can be attached and detached.
+     */
+    public function testAttachCache() {
+        StreamWrapper::attachCache(new DoctrineCacheAdapter(new ArrayCache()));
+        $this->assertTrue(StreamWrapper::hasCache());
+        StreamWrapper::detachCache();
+        $this->assertFalse(StreamWrapper::hasCache());
+    }
+
+    /**
+     * Test that stat calls are properly cached.
+     */
+    public function testDoctrineStatCache()
+    {
+        StreamWrapper::attachCache(new DoctrineCacheAdapter(new ArrayCache()));
+        $ts = strtotime('Tuesday, April 9 2013');
+        $this->setMockResponse($this->client, array(new Response(200, array(
+          'Content-Length' => 5,
+          'Last-Modified'  => gmdate('r', $ts)
+        ))));
+
+        // We do two stat() calls, but have only queued a single response. If the
+        // cache isn't working, the second stat() call will throw an exception.
+        clearstatcache('s3://bucket/key');
+        $stat = stat('s3://bucket/key');
+        clearstatcache('s3://bucket/key');
+        $stat = stat('s3://bucket/key');
+        $this->assertEquals(0100777, $stat['mode']);
+        $this->assertEquals(5, $stat['size']);
+        $this->assertEquals($ts, $stat['mtime']);
+        $this->assertEquals($ts, $stat['ctime']);
+        StreamWrapper::detachCache();
+    }
+
+    /**
+     * Test that cache lifetimes are respected.
+     *
+     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedExceptionCode 512
+     */
+    public function testStatCacheLifetime() {
+        // We can't use ArrayCache as it doesn't support lifetimes.
+        $cacheDir = sys_get_temp_dir() . '/' . uniqid('S3StreamWrapperTest-');
+        $cache = new PhpFileCache($cacheDir);
+
+        StreamWrapper::attachCache(new DoctrineCacheAdapter($cache), 1);
+        $ts = strtotime('Tuesday, April 9 2013');
+        $this->setMockResponse($this->client, array(new Response(200, array(
+          'Content-Length' => 5,
+          'Last-Modified'  => gmdate('r', $ts)
+        ))));
+
+        clearstatcache('s3://bucket/key');
+        $stat = stat('s3://bucket/key');
+        clearstatcache('s3://bucket/key');
+        sleep(2);
+        try {
+            $stat = stat('s3://bucket/key');
+        }
+        catch (\Exception $e) {
+            StreamWrapper::detachCache();
+            throw $e;
+        }
+
+        // If our test failed, we still want to detach our cache since it's
+        // global across all tests.
+        StreamWrapper::detachCache();
     }
 
     public function testCanStatPrefix()
