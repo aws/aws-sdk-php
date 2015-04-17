@@ -140,73 +140,6 @@ EOT;
         return $html;
     }
 
-    private function createHtmlForOperation(Service $service, $name, Operation $operation)
-    {
-        $html = new HtmlDocument;
-
-        // Name
-        $html->section(3, $html->glyph('cog') . ' ' . $name, null, 'method-title');
-
-        // Code
-        $html->elem('pre', 'opcode', '$result = $client-&gt;<code>' . lcfirst($name) . '</code>([...]);');
-
-        // Description
-        if ($description = $service->docs->getOperationDocs($name)) {
-            $html->elem('div', 'well', $description);
-        }
-
-        // Parameters
-        $inputShapes = new ShapeIterator($operation->getInput(), $service->docs);
-        $inputExample = new ExampleBuilder($name);
-        $inputDocs = new ThemeBuilder($name);
-        foreach ($inputShapes as $shape) {
-            $inputExample->addShape($shape);
-            $inputDocs->addShape($shape);
-        }
-        $html->section(3, 'Parameters', $name)
-            ->elem('h5', null, 'Formatting Example')
-            ->elem('pre', null, htmlentities($inputExample->getCode()))
-            ->elem('h5', null, 'Parameter Details')
-            ->open('ul')->append($inputDocs->getHtml())->close()
-            ->close();
-
-        // Results
-        $html->section(3, 'Results', $name);
-        if (count($operation->getOutput()->getMembers())) {
-            $outputShapes = new ShapeIterator($operation->getOutput(), $service->docs);
-            $outputExample = new ExampleBuilder($name, false);
-            $outputDocs = new ThemeBuilder($name, false);
-            foreach ($outputShapes as $shape) {
-                $outputExample->addShape($shape);
-                $outputDocs->addShape($shape);
-            }
-            $html->elem('h5', null, 'Formatting Example')
-                ->elem('pre', null, htmlentities($outputExample->getCode()))
-                ->elem('h5', null, 'Results Details')
-                ->open('ul')->append($outputDocs->getHtml())->close();
-        } else {
-            $html->elem('div', 'alert alert-info', 'The results for this operation are always empty.');
-        }
-        $html->close();
-
-        // Errors
-        $html->section(3, 'Errors', $name);
-        if ($errors = $operation->getErrors()) {
-            foreach ($errors as $error) {
-                $html->open('div', 'panel panel-default')
-                    ->open('div', 'panel-heading')->elem('h5', 'panel-title', $error['name'])->close()
-                    ->elem('div', 'panel-body', $service->docs->getErrorDocs($error->getName())
-                                    ?: 'This error does not currently have a description.')
-                    ->close();
-            }
-        } else {
-            $html->elem('p', null, 'There are no errors described for this operation.');
-        }
-        $html->close();
-
-        return $html->close();
-    }
-
     private function writeThemeFile($name, $contents)
     {
         $name = str_replace('.html', '', $name);
@@ -339,5 +272,82 @@ EOT;
             $html->close();
         $html->close();
         $html->close(); // Opening section
+    }
+
+    private function createHtmlForOperation(Service $service, $name, Operation $operation)
+    {
+        $html = new HtmlDocument;
+
+        // Name
+        $html->section(3, $html->glyph('cog') . ' ' . $name, null, 'method-title');
+
+        // Code
+        $html->elem('pre', 'opcode', '$result = $client-&gt;<code>' . lcfirst($name) . '</code>([...]);');
+
+        // Description
+        if ($description = $service->docs->getOperationDocs($name)) {
+            $html->elem('div', 'operation-docs', $description);
+        }
+
+        // Parameters
+        $inputShapes = new ShapeIterator($operation->getInput(), $service->docs);
+        $inputExample = new ExampleBuilder($name);
+        $inputDocs = new ParameterHtmlBuilder($name);
+        foreach ($inputShapes as $shape) {
+            $inputExample->addShape($shape);
+            $inputDocs->addShape($shape);
+        }
+        $html
+            ->section(4, 'Parameters', $name)
+                ->elem('h5', null, 'Formatting Example')
+                ->elem('pre', null, htmlentities($inputExample->getCode()))
+                ->elem('h5', null, 'Parameter Details')
+                ->open('div', 'tree param-tree')
+                    ->open('ul', 'complex-shape')
+                        ->append($inputDocs->getHtml())
+                    ->close()
+                ->close()
+            ->close();
+
+        // Results
+        $html->section(4, 'Results', $name);
+        if (!count($operation->getOutput()->getMembers())) {
+            $html->elem('div', 'alert alert-info', 'The results for this operation are always empty.');
+        } else {
+            $outputShapes = new ShapeIterator($operation->getOutput(), $service->docs);
+            $outputExample = new ExampleBuilder($name, false);
+            $outputDocs = new ParameterHtmlBuilder($name, false);
+            foreach ($outputShapes as $shape) {
+                $outputExample->addShape($shape);
+                $outputDocs->addShape($shape);
+            }
+            $html
+                ->elem('h5', null, 'Formatting Example')
+                ->elem('pre', null, htmlentities($outputExample->getCode()))
+                ->elem('h5', null, 'Results Details')
+                ->open('div', 'tree param-tree')
+                    ->open('ul', 'complex-shape')
+                        ->append($outputDocs->getHtml())
+                    ->close()
+                ->close();
+        }
+        $html->close();
+
+        // Errors
+        $html->section(4, 'Errors', $name);
+        if ($errors = $operation->getErrors()) {
+            foreach ($errors as $error) {
+                $html->open('div', 'panel panel-default')
+                    ->open('div', 'panel-heading')->elem('h5', 'panel-title', $error['name'])->close()
+                    ->elem('div', 'panel-body', $service->docs->getErrorDocs($error->getName())
+                        ?: 'This error does not currently have a description.')
+                    ->close();
+            }
+        } else {
+            $html->elem('p', null, 'There are no errors described for this operation.');
+        }
+        $html->close();
+
+        return $html->close();
     }
 }

@@ -2,9 +2,9 @@
 namespace Aws\Build\Docs;
 
 /**
- * Builds HTML for operations.
+ * Builds HTML for operation input and output parameters.
  */
-class ThemeBuilder
+class ParameterHtmlBuilder
 {
     private $html;
     private $operation;
@@ -33,51 +33,43 @@ class ThemeBuilder
         } elseif ($shape['name'] === 'closer') {
             $this->html->close();
             $this->html->close();
+            $this->html->close();
             return;
         }
 
         // Write the parameter key.
         $this->html->open('li', 'parameter');
+        $this->html->open('div', $shape['complex'] ? 'notlast' : 'last');
 
         $key = htmlentities($shape['param'] . ' => ' . $this->getTypeLabel($shape));
-        $this->html->open('h4', ['id' => $this->getPathAnchor($shape['path'])])
-            ->elem('span', 'param-title', $key);
+        $this->html->open('div', ['class' => 'param-name', 'id' => $this->getPathAnchor($shape['path'])]);
+        $this->html->elem('span', 'param-title', $key);
         if ($this->isInput && $shape['required']) {
             $this->html->elem('span', 'required label label-danger', 'required');
         }
         $this->html->close(true);
 
-        if (is_array($shape['enum'])) {
-            $message = $this->getEnumConstraint($shape);
-            $this->html->elem('div', 'alert alert-info', "<b>Constraint:</b> {$message}");
-        }
-
-        if ($shape['min'] || $shape['max']) {
-            $message = $this->addMinMaxConstraint($shape);
-            $this->html->elem('div', 'alert alert-info', "<b>Constraint:</b> {$message}");
-        }
+        $this->addConstraintHtml($shape);
 
         if ($shape['docs']) {
-            $this->html->elem('div', 'well', $shape['docs']);
+            $this->html->elem('div', 'param-docs', $shape['docs']);
         }
 
         // Write the parameter value.
-        if ($shape['complex']) {
-            if ($shape['recursive']) {
-                $path = implode('.', $shape['recursive']);
-                $this->html->elem('div', 'alert alert-warning', '<strong>This '
-                    . 'is a recursive parameter.</strong> Click <a href="#'
-                    . $this->getPathAnchor($path) . '">here</a> to jump back to'
-                    . ' <code>' . htmlentities($path) . '</code>.');
-                $this->html->close();
-            } elseif (!in_array($shape['complex'], ['structure', 'list', 'map', 'mixed'])) {
-                $this->skipLevel += 2;
-                $this->html->close();
-            } else {
-                $this->html->open('ul');
-            }
-        } else {
+        if (!$shape['complex']) {
             $this->html->close();
+        } elseif ($shape['recursive']) {
+            $path = implode('.', $shape['recursive']);
+            $this->html->elem('div', 'alert alert-warning', '<strong>This '
+                . 'is a recursive parameter.</strong> Click <a href="#'
+                . $this->getPathAnchor($path) . '">here</a> to jump back to'
+                . ' <code>' . htmlentities($path) . '</code>.');
+            $this->html->close();
+        } elseif (!in_array($shape['complex'], ['structure', 'list', 'map', 'mixed'])) {
+            $this->skipLevel += 2;
+            $this->html->close();
+        } else {
+            $this->html->open('ul', 'complex-shape');
         }
     }
 
@@ -137,12 +129,12 @@ class ThemeBuilder
 
         switch ($shape['type']) {
             case 'structure':
-                return ($shape['complex']) ? 'array<string,mixed>' : 'array';
+                return ($shape['complex']) ? 'array<string, mixed>' : 'array';
             case 'map':
                 $type = 'array';
                 if ($subType = $shape['complex']) {
                     $subType = $this->getTypeLabel($subType);
-                    $type .= "<string,{$subType}>";
+                    $type .= "<string, {$subType}>";
                 }
                 return $type;
             case 'list':
@@ -155,9 +147,30 @@ class ThemeBuilder
             case 'timestamp':
                 return 'string|int|\\DateTime';
             case 'stream':
-                return 'GuzzleHttp\\Stream\\Stream';
+                return 'Psr\\Http\\Message\\StreamInterface';
             default:
                 return $shape['type'];
+        }
+    }
+
+    private function addConstraintHtml($shape)
+    {
+        $constraints = [];
+        if (is_array($shape['enum'])) {
+            $constraints[] = $this->getEnumConstraint($shape);
+        }
+
+        if ($shape['min'] || $shape['max']) {
+            $constraints[] = $this->addMinMaxConstraint($shape);
+        }
+
+        if ($constraints) {
+            $constraintHtml = '<ul>';
+            foreach ($constraints as $c) {
+                $constraintHtml .= '<li>' . $c . '</li>';
+            }
+            $constraintHtml .= '</ul>';
+            $this->html->elem('div', 'param-constraints', $constraintHtml);
         }
     }
 }
