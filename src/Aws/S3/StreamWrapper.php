@@ -249,6 +249,7 @@ class StreamWrapper
 
         try {
             static::$client->putObject($params);
+            $this->clearStatInfo('s3://' . $params['Bucket'] . '/' . $params['Key']);
             return true;
         } catch (\Exception $e) {
             return $this->triggerError($e->getMessage());
@@ -372,11 +373,7 @@ class StreamWrapper
                 }
             } catch (NoSuchKeyException $e) {
                 // Maybe this isn't an actual key, but a prefix. Do a prefix listing of objects to determine.
-                $result = static::$client->listObjects(array(
-                    'Bucket'  => $parts['Bucket'],
-                    'Prefix'  => rtrim($parts['Key'], '/') . '/',
-                    'MaxKeys' => 1
-                ));
+                $result = $this->getPrefixMetadata($path);
                 if (!$result['Contents'] && !$result['CommonPrefixes']) {
                     return $this->triggerError("File or directory not found: {$path}", $flags);
                 }
@@ -844,7 +841,8 @@ class StreamWrapper
         if ($path) {
             clearstatcache(true, $path);
             if ($this->hasCache()) {
-                static::$cache->delete($path);
+                static::$cache->delete('metadata:' . $path);
+                static::$cache->delete('prefix:' . $path);
             }
         }
     }
@@ -931,14 +929,56 @@ class StreamWrapper
      */
     protected function getMetadata($path)
     {
-        if ($this->hasCache() && $result = static::$cache->fetch($path)) {
+        $key = 'metadata:' . $path;
+        if ($this->hasCache() && $result = static::$cache->fetch($key)) {
+            $result = unserialize($result);
+            if ($result instanceof NoSuchKeyException) {
+                throw $result;
+            }
+        }
+        else {
+            $parts = $this->getParams($path);
+            try {
+                $result = static::$client->headObject($parts)->toArray();
+            }
+            catch (NoSuchKeyException $e) {
+                // In the event of a 404, we cache the exception itself so we can
+                // throw it later.
+                if ($this->hasCache()) {
+                    static::$cache->save($key, serialize($e), static::$cacheLifetime);
+                }
+                throw $e;
+            }
+
+            if ($this->hasCache()) {
+                static::$cache->save($key, serialize($result), static::$cacheLifetime);
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Fetch metadata for a key prefix, from cache if possible.
+     *
+     * @param string $path The path to fetch metadata for.
+     *
+     * @return array The metadata associated with the path.
+     */
+    protected function getPrefixMetadata($path) {
+        $key = 'prefix:' . $path;
+        if ($this->hasCache() && $result = static::$cache->fetch($key)) {
             $result = unserialize($result);
         }
         else {
             $parts = $this->getParams($path);
-            $result = static::$client->headObject($parts)->toArray();
+            $result = static::$client->listObjects(array(
+              'Bucket'  => $parts['Bucket'],
+              'Prefix'  => rtrim($parts['Key'], '/') . '/',
+              'MaxKeys' => 1
+            ));
             if ($this->hasCache()) {
-                static::$cache->save($path, serialize($result), static::$cacheLifetime);
+                static::$cache->save($key, serialize($result), static::$cacheLifetime);
             }
         }
 
