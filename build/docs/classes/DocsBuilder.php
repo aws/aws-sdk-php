@@ -106,9 +106,7 @@ You can send the command asynchronously (returning a promise) by appending the
 word "Async" to the operation name: <code>\$client-&gt;commandNameAsync(/* parameters */)</code>.
 EOT;
         $html->elem('p', null, $desc);
-
-        $html->open('section', 'Operations');
-        $html->append($this->createHtmlForToc($service->api->getOperations()));
+        $html->append($this->createHtmlForToc($service, $service->api->getOperations()));
 
         $this->createHtmlForPaginators($html, $service->api);
         $this->createHtmlForWaiters($html, $service->api);
@@ -119,19 +117,23 @@ EOT;
         }
         $html->close();
 
+
         $this->writeThemeFile($service->serviceLink, $html->render());
     }
 
-    private function createHtmlForToc(array $operations)
+    private function createHtmlForToc(Service $service, array $operations)
     {
-        $html = (new HtmlDocument)->open('div', 'toc list-group');
+        $html = (new HtmlDocument)->open('ul', 'methods-summary');
         foreach ($operations as $opName => $operation) {
-            $item = '<strong>' . $html->glyph('cog') . ' '
-                . '<a href="#' . $html->slug($opName) . '">' . "{$opName}</a></strong> &mdash; "
-                . '<a href="#' . $html->slug($opName . '-parameters') . '">Parameters</a> | '
-                . '<a href="#' . $html->slug($opName . '-results') . '">Results</a> | '
-                . '<a href="#' . $html->slug($opName . '-errors') . '">Errors</a>';
-            $html->elem('div', 'list-group-item', $item);
+            $item = '<a class="method-summary-link" href="#' . $html->slug($opName)
+                . '"><strong>' . "{$opName}</strong></a>";
+
+            if ($description = $service->docs->getOperationDocs($opName)) {
+                $shortened = strip_tags($description);
+                $item .= '<div class="summary-info"><p>' . $shortened . '</p></div>';
+            }
+
+            $html->elem('li', null, $item);
         }
         $html->close();
 
