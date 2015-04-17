@@ -104,10 +104,6 @@ class CommandPool implements PromisorInterface
             if ($before) {
                 $before($command);
             }
-            // Add a delay to ensure execution on the next tick.
-            if (empty($command['@http']['delay'])) {
-                $command['@http']['delay'] = true;
-            }
             return $client->executeAsync($command);
         };
     }
