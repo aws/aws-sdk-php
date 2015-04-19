@@ -270,7 +270,7 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
         RequestInterface $request,
         CredentialsInterface $credentials
     ) {
-        $sr = RequestFactory::getInstance()->cloneRequestWithMethod($request, 'GET');
+        $sr = RequestFactory::getInstance()->cloneRequestWithMethod($request, $request->getMethod());
 
         // Move POST fields to the query if they are present
         if ($request instanceof EntityEnclosingRequestInterface) {
