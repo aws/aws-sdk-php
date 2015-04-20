@@ -321,9 +321,9 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
     public function testCreatesPresignedWithPostFieldsToGet()
     {
         $_SERVER['override_v4_time'] = true;
-        $request = new EntityEnclosingRequest('POST', 'http://foo.com', [
+        $request = new EntityEnclosingRequest('POST', 'http://foo.com', array(
             'Content-Type' => 'application/x-www-form-urlencoded'
-        ]);
+        ));
         $request->setPostField('Foo', 'Bar');
         $credentials = new Credentials('foo', 'bar');
         $signature = new SignatureV4('service', 'region');
