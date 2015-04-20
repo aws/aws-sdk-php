@@ -318,6 +318,20 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals(518400, $ref->invoke($signature, 'December 11, 2013 00:00:00 UTC'));
     }
 
+    public function testCreatesPresignedWithPostFieldsToGet()
+    {
+        $_SERVER['override_v4_time'] = true;
+        $request = new EntityEnclosingRequest('POST', 'http://foo.com', [
+            'Content-Type' => 'application/x-www-form-urlencoded'
+        ]);
+        $request->setPostField('Foo', 'Bar');
+        $credentials = new Credentials('foo', 'bar');
+        $signature = new SignatureV4('service', 'region');
+        $ts = 'December 11, 2013 00:00:00 UTC';
+        $url = $signature->createPresignedUrl($request, $credentials, $ts);
+        $this->assertContains('Foo=Bar', $url);
+    }
+
     public function testAddsSecurityTokenIfPresent()
     {
         $_SERVER['override_v4_time'] = true;
