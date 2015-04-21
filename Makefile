@@ -62,6 +62,9 @@ api: api-get-apigen
 	# Delete a previously built API build to avoid the prompt.
 	rm -rf build/artifacts/docs
 	php build/artifacts/apigen.phar generate --config build/docs/apigen.neon --debug
+	make api-models
+
+api-models:
 	# Build custom docs
 	php build/docs.php
 

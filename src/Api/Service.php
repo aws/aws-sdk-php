@@ -391,4 +391,14 @@ class Service extends AbstractModel
         throw new \UnexpectedValueException("There is no {$name} waiter "
             . "defined for the {$this->serviceName} service.");
     }
+
+    /**
+     * Get the shape map used by the API.
+     *
+     * @return ShapeMap
+     */
+    public function getShapeMap()
+    {
+        return $this->shapeMap;
+    }
 }

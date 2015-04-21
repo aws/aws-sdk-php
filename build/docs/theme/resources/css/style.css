@@ -14,9 +14,9 @@ h1, h2, h3, h4, h5, h6 {
 
 h2 {
     background-color: #EDF3FE;
-    padding: 8px;
     font-size: 25px;
-    margin: 20px 0;
+    padding: 10px 10px 10px 32px;
+    margin: 20px 0 20px -30px;
 }
 
 ul, ol {
@@ -198,7 +198,7 @@ pre code {
 
 
 /* Right side
- -------------------------------------*/*/
+ -------------------------------------*/
 #right {
   overflow: auto;
   margin-left: 275px;
@@ -213,7 +213,7 @@ pre code {
 }
 
 /* Navigation
- -------------------------------------*/*/
+ -------------------------------------*/
 
 #navigation {
   margin-bottom: 0;
@@ -354,7 +354,7 @@ td.name, td.attributes {
 }
 
 /* Splitter
- -------------------------------------*/*/
+ -------------------------------------*/
 #splitter {
   position: fixed;
   height: 100%;
@@ -369,7 +369,7 @@ td.name, td.attributes {
 }
 
 /* Footer
- -------------------------------------*/*/
+ -------------------------------------*/
 #footer {
   border-top: 1px solid #e5e5e5;
   clear: both;
@@ -526,13 +526,12 @@ span.l a.l:hover, span.l a.l:active, span.l a.l:focus {
 }
 
 h3.method-title {
-    padding: 8px 8px 8px 38px;
-    margin-bottom: 20px;
+    padding: 10px 10px 10px 32px;
+    margin: 20px 10px 20px -32px;
     font-size: 16px;
     background-color: #eee;
     font-family: monospace;
-    border-bottom: 1px solid #ccc;
-    margin-left: -30px;
+    border-bottom: 3px solid #ccc;
 }
 
 h3.inherited {
@@ -540,9 +539,7 @@ h3.inherited {
     font-family: "Lucida Sans", "Lucida Grande", Verdana, Arial, sans-serif;
     font-weight: normal;
     padding: 0;
-    margin: 0;
-    margin-top: 12px;
-    margin-bottom: 3px;
+    margin: 12px 0 3px 0;
     font-size: 13px;
 }
 
@@ -611,49 +608,57 @@ ul.methods-summary {
     margin: 12px 0;
 }
 
-/* API Parameter Tree
+/* API Parameters
  -------------------------------------*/
-div.param-tree ul.complex-shape {
-    list-style: none;
-    background: url('../tree-vertical.png') left repeat-y;
-    padding: 0;
-    margin-left: 20px;
+
+.operation-container h4 {
+    font-weight: bold;
+    margin: 24px 0;
+    font-size: 20px;
+    color: #069;
 }
 
-div.param-tree li.shape {
-    margin: 0;
-    padding: 0;
+.operation-container li.required {
+    color: #AE1E1E;
 }
 
-div.param-tree div {
-    padding-left: 20px;
+.shape-container h5 {
+    color: #c60;
+    font-weight: bold;
+    margin: 24px 0;
+    font-size: 18px;
 }
 
-div.param-tree div.notlast {
-    background: url('../tree-hasnext.png') left 10px no-repeat;
+dt.param-def {
+    font-weight: bold;
 }
 
-div.param-tree div.last {
-    background: url('../tree-last.png') left -240px no-repeat;
+dt.param-def {
+    margin-bottom: 20px;
 }
 
-div.param-tree li.last {
-    background: url('../tree-cleaner.png') left center repeat-y;
+.param-def .table {
+    width: 1%;
 }
 
-div.param-tree span.padding {
-    padding-left: 15px;
+dd.param-def {
+    margin-left: 40px;
 }
 
-div.param-tree .param-title {
-    font-size: 16px;
+dd.param-def {
+    margin: 0 0 20px 40px;
 }
 
-div.param-name .label {
-    padding-left: 20px;
+.param-attributes {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    margin: 12px 0;
+    padding: 12px 24px;
+    background: #FAFAFA;
+    display: inline-block;
 }
 
-div.param-tree .param-docs {
-    font-style: italic;
-    color: #555;
+.param-attributes ul {
+    padding-left: 0;
+    list-style-type: none;
 }

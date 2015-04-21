@@ -1,9 +1,13 @@
 <?php
 namespace Aws\Build\Docs;
 
+use Aws\Api\AbstractModel;
 use Aws\Api\ApiProvider;
+use Aws\Api\ListShape;
+use Aws\Api\MapShape;
 use Aws\Api\Operation;
 use Aws\Api\Service as Api;
+use Aws\Api\StructureShape;
 
 class DocsBuilder
 {
@@ -16,6 +20,9 @@ class DocsBuilder
     /** @var ApiProvider */
     private $apiProvider;
 
+    /** @var \SplObjectStorage Hash of members to skip when generating shape docs. */
+    private $skipMembers;
+
     public function __construct(ApiProvider $provider, $outputDir, $template)
     {
         $this->apiProvider = $provider;
@@ -25,6 +32,7 @@ class DocsBuilder
 
     public function build()
     {
+        $this->skipMembers = new \SplObjectStorage();
         fwrite(STDOUT, "Parsing available service API versions...\n");
         // Collect versions
         $services = [];
@@ -115,21 +123,37 @@ EOT;
         foreach ($service->api->getOperations() as $opName => $operation) {
             $html->append($this->createHtmlForOperation($service, $opName, $operation));
         }
-        $html->close();
 
+        $html->section(2, 'Shapes');
+        $map = $service->api->getShapeMap();
+        $keys = array_keys($service->api['shapes']);
+        sort($keys);
+        foreach ($keys as $name) {
+            $shape = $map->resolve(['shape' => $name]);
+            // Do not render top-level input or output shapes.
+            if ($shape['type'] == 'structure'
+                && !isset($this->skipMembers[$shape])
+            ) {
+                $html->section(3, $name, 'shape', 'method-title');
+                $html->append($this->renderShape($service->docs, $shape));
+            }
+        }
 
         $this->writeThemeFile($service->serviceLink, $html->render());
     }
 
     private function createHtmlForToc(Service $service, array $operations)
     {
-        $html = (new HtmlDocument)->open('ul', 'methods-summary');
+        $html = new HtmlDocument();
+        $html->open('ul', 'methods-summary');
         foreach ($operations as $opName => $operation) {
             $item = '<a class="method-summary-link" href="#' . $html->slug($opName)
                 . '"><strong>' . "{$opName}</strong></a>";
 
             if ($description = $service->docs->getOperationDocs($opName)) {
                 $shortened = strip_tags($description);
+                $firstPeriod = strpos($shortened, '.') + 1;
+                $shortened = substr($shortened, 0, $firstPeriod);
                 $item .= '<div class="summary-info"><p>' . $shortened . '</p></div>';
             }
 
@@ -239,7 +263,6 @@ EOT;
                 $html->close();
             $html->close();
         $html->close();
-        $html->close(); // Opening section
     }
 
     private function createHtmlForPaginators(HtmlDocument $html, Api $service)
@@ -271,18 +294,18 @@ EOT;
                 }
             $html->close();
         $html->close();
-        $html->close(); // Opening section
     }
 
     private function createHtmlForOperation(Service $service, $name, Operation $operation)
     {
         $html = new HtmlDocument;
+        $html->open('div', 'operation-container');
 
         // Name
         $html->section(3, $html->glyph('cog') . ' ' . $name, null, 'method-title');
 
         // Code
-        $html->elem('pre', 'opcode', '$result = $client-&gt;<code>' . lcfirst($name) . '</code>([...]);');
+        $html->elem('pre', 'opcode', '$result = $client-&gt;<code>' . lcfirst($name) . '</code>([/* ... */]);');
 
         // Description
         if ($description = $service->docs->getOperationDocs($name)) {
@@ -290,64 +313,171 @@ EOT;
         }
 
         // Parameters
-        $inputShapes = new ShapeIterator($operation->getInput(), $service->docs);
+        $input = $operation->getInput();
+        $this->skipMembers->attach($input);
+        $output = $operation->getOutput();
+        $this->skipMembers->attach($output);
+
+        $inputShapes = new ShapeIterator($input, $service->docs);
         $inputExample = new ExampleBuilder($name);
-        $inputDocs = new ParameterHtmlBuilder($name);
         foreach ($inputShapes as $shape) {
             $inputExample->addShape($shape);
-            $inputDocs->addShape($shape);
         }
+
         $html
-            ->section(4, 'Parameters', $name)
-                ->elem('h5', null, 'Formatting Example')
-                ->elem('pre', null, htmlentities($inputExample->getCode()))
-                ->elem('h5', null, 'Parameter Details')
-                ->open('div', 'tree param-tree')
-                    ->open('ul', 'complex-shape')
-                        ->append($inputDocs->getHtml())
-                    ->close()
-                ->close()
-            ->close();
+            ->elem('h4', null, 'Parameter Syntax')
+            ->elem('pre', null, htmlentities($inputExample->getCode()))
+            ->elem('h4', null, 'Parameter Details')
+            ->append($this->renderShape($service->docs, $input, false));
 
         // Results
-        $html->section(4, 'Results', $name);
-        if (!count($operation->getOutput()->getMembers())) {
+        if (!count($output->getMembers())) {
             $html->elem('div', 'alert alert-info', 'The results for this operation are always empty.');
         } else {
-            $outputShapes = new ShapeIterator($operation->getOutput(), $service->docs);
+            $outputShapes = new ShapeIterator($output, $service->docs);
             $outputExample = new ExampleBuilder($name, false);
-            $outputDocs = new ParameterHtmlBuilder($name, false);
             foreach ($outputShapes as $shape) {
                 $outputExample->addShape($shape);
-                $outputDocs->addShape($shape);
             }
             $html
-                ->elem('h5', null, 'Formatting Example')
+                ->elem('h4', null, 'Result Syntax')
                 ->elem('pre', null, htmlentities($outputExample->getCode()))
-                ->elem('h5', null, 'Results Details')
-                ->open('div', 'tree param-tree')
-                    ->open('ul', 'complex-shape')
-                        ->append($outputDocs->getHtml())
-                    ->close()
-                ->close();
+                ->elem('h4', null, 'Result Details')
+                ->append($this->renderShape($service->docs, $output, false));
         }
-        $html->close();
 
         // Errors
-        $html->section(4, 'Errors', $name);
-        if ($errors = $operation->getErrors()) {
+        $html->elem('h4', null, 'Errors');
+        $errors = $operation->getErrors();
+        if (!$errors) {
+            $html->elem('p', null, 'There are no errors described for this operation.');
+        } else {
+            $html->open('ul');
             foreach ($errors as $error) {
-                $html->open('div', 'panel panel-default')
-                    ->open('div', 'panel-heading')->elem('h5', 'panel-title', $error['name'])->close()
-                    ->elem('div', 'panel-body', $service->docs->getErrorDocs($error->getName())
-                        ?: 'This error does not currently have a description.')
+                $desc = $service->docs->getErrorDocs($error->getName())
+                    ?: 'This error does not currently have a description.';
+                $html
+                    ->open('li')
+                        ->elem('p', null, $error['name'] . ': ' . $desc)
                     ->close();
             }
-        } else {
-            $html->elem('p', null, 'There are no errors described for this operation.');
+            $html->close();
         }
+
+        $html->close(); // operation-container
+
+        return $html;
+    }
+
+    private function renderShape(
+        DocModel $docs,
+        StructureShape $shape,
+        $showTitle = true
+    ) {
+        $html = new HtmlDocument();
+
+        $html->open('div', 'shape-container');
+
+        // Disable show title for input and output parameters.
+        if ($showTitle) {
+            $html->elem('h5', null, 'Description');
+            $d = $docs->getShapeDocs($shape['name'], null, null);
+            $html->elem('div', 'shape-description', $d);
+        }
+
+        $html->elem('h5', null, 'Members');
+        $html->open('dl', 'shape-members');
+
+        $members = $shape->getMembers();
+        ksort($members);
+        foreach ($members as $name => $member) {
+            $html->open('dt', 'param-def');
+            $html->elem('a', ['href' => '#' . $this->memberSlug($name)], '');
+            $html->elem('span', 'term', $name);
+            $html->close();
+            $html->open('dd', 'param-def');
+                $html->append($this->describeParam($member));
+                $desc = $docs->getShapeDocs($member['name'], $shape['name'], $name);
+                $html->elem('div', 'param-def-doc', $desc);
+            $html->close();
+        }
+
+        $html->close();
         $html->close();
 
-        return $html->close();
+        return $html;
+    }
+
+    private function describeParam(AbstractModel $member)
+    {
+        $html = new HtmlDocument();
+        if ($member instanceof StructureShape) {
+            $typeDesc = $this->getMemberText($member);
+        } elseif ($member instanceof ListShape) {
+            $typeDesc = 'Array of ' . $this->getMemberText($member->getMember()) . 's';
+        } elseif ($member instanceof MapShape) {
+            $typeDesc = 'Associative array of custom strings keys ('
+                . $member->getKey()->getName() . ') to '
+                . $this->getMemberText($member->getValue()) . 's';
+        } else {
+            $typeDesc = $this->getPrimitivePhpType($member['type']);
+        }
+
+        $html->open('div', 'param-attributes')->open('ul');
+        if ($member['required']) {
+            $html->elem('li', 'required', 'Required: Yes');
+        }
+        $html->elem('li', '', 'Type: ' . $typeDesc);
+        $html->close();
+        $html->close();
+
+        return $html;
+    }
+
+    private function getMemberText(AbstractModel $member)
+    {
+        if ($member instanceof StructureShape) {
+            return $this->memberLink($member->getName()) . ' structure';
+        } elseif ($member instanceof ListShape) {
+            switch ($member->getMember()['type']) {
+                case 'string': return 'strings';
+                case 'double': return 'floats';
+                case 'integer': return 'integers';
+                case 'boolean': return 'booleans';
+                case 'structure': return $this->getMemberText($member->getMember()) . 's';
+            }
+        } elseif ($member instanceof MapShape) {
+            switch ($member->getValue()['type']) {
+                case 'string': return 'strings';
+                case 'double': return 'floats';
+                case 'integer': return 'integers';
+                case 'boolean': return 'booleans';
+                case 'structure': return $this->getMemberText($member->getValue()) . 's';
+            }
+        }
+
+        return $this->getPrimitivePhpType($member['type']);
+    }
+
+    private function getPrimitivePhpType($type)
+    {
+        switch ($type) {
+            case 'long': return 'long (int|float)';
+            case 'integer': return 'int';
+            case 'blob': return 'blob (string|resource|Psr\Http\Message\StreamInterface)';
+            case 'char': return 'char (string)';
+            case 'timestamp': return 'timesamp (string|DateTime or anything parsable by strtotime)';
+            default: return $type;
+        }
+    }
+
+    private function memberSlug($name)
+    {
+        return 'shape-' . strtolower($name);
+    }
+
+    private function memberLink($name)
+    {
+        return '<a href="#' . $this->memberSlug($name) . '">' . $name . '</a>';
     }
 }
