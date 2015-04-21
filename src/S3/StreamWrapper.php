@@ -147,7 +147,9 @@ class StreamWrapper
             return false;
         }
 
-        $this->body->seek(0);
+        if ($this->body->isSeekable()) {
+            $this->body->seek(0);
+        }
         $params = $this->getOptions();
         $params['Body'] = $this->body;
 
@@ -171,12 +173,17 @@ class StreamWrapper
 
     public function stream_seek($offset, $whence = SEEK_SET)
     {
-        return $this->body->seek($offset, $whence);
+        return !$this->body->isSeekable()
+            ? false
+            : $this->boolCall(function () use ($offset, $whence) {
+                $this->body->seek($offset, $whence);
+                return true;
+            });
     }
 
     public function stream_tell()
     {
-        return $this->body->tell();
+        return $this->boolCall(function() { return $this->body->tell(); });
     }
 
     public function stream_write($data)
