@@ -3,6 +3,7 @@ namespace Aws\Test\S3;
 
 use Aws\CommandInterface;
 use Aws\History;
+use Aws\LruArrayCache;
 use Aws\Middleware;
 use Aws\Result;
 use Aws\S3\Exception\S3Exception;
@@ -21,8 +22,14 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
     /** @var S3Client */
     private $client;
 
+    /** @var LruArrayCache */
+    private $cache;
+
     public function setUp()
     {
+        // use a fresh LRU cache for each test.
+        $this->cache = new LruArrayCache();
+        stream_context_set_default(['s3' => ['cache' => $this->cache]]);
         $this->client = $this->getTestClient('S3', ['region' => 'us-east-1']);
         $this->client->registerStreamWrapper();
     }
@@ -489,6 +496,12 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0040777, $stat['mode']);
     }
 
+    public function testCanPullStatDataFromCache()
+    {
+        $this->cache->set('s3://foo/bar', ['size' => 123, 7 => 123]);
+        $this->assertEquals(123, filesize('s3://foo/bar'));
+    }
+
     /**
      * @expectedException \PHPUnit_Framework_Error_Warning
      * @expectedExceptionMessage Forbidden
@@ -770,29 +783,6 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
 
         $context = stream_context_create(['s3' => ['delimiter' => '']]);
         $r = opendir('s3://bucket', $context);
-        closedir($r);
-    }
-
-    public function testCanClearStatCache()
-    {
-        StreamWrapper::clearCache();
-        $this->assertEmpty($this->readAttribute('Aws\S3\StreamWrapper', 'statCache'));
-        $results = [
-            [
-                'IsTruncated' => false,
-                'Delimiter'   => '/',
-                'Name'        => 'bucket',
-                'Prefix'      => '',
-                'MaxKeys'     => 1000,
-                'Contents'    => [['Key' => 'a'], ['Key' => 'b']],
-            ]
-        ];
-
-        $this->addMockResults($this->client, $results);
-        $dir = 's3://bucket/key/';
-        $r = opendir($dir);
-        while (($file = readdir($r)) !== false);
-        $this->assertNotEmpty($this->readAttribute('Aws\S3\StreamWrapper', 'statCache'));
         closedir($r);
     }
 }
