@@ -96,8 +96,8 @@ class GuzzleHandler
             unset($options['delay']);
         }
 
-        // Ensure that all requests are async.
-        $options['future'] = true;
+        // Ensure that all requests are async and lazy like Guzzle 6.
+        $options['future'] = 'lazy';
 
         // Create the Guzzle 5 request from the provided PSR7 request.
         $request = $this->client->createRequest(

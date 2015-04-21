@@ -30,8 +30,11 @@ class HtmlDocument
     {
         $anchor = $this->slug($anchorPrefix . '-' . $text);
         $link = ' <a href="#' . $anchor . '" class="anchor-link">' . $this->glyph('link') . '</a>';
-        $this->open('section', $class ?: strtolower($text));
-        $this->elem("h{$num}", ['id' => $anchor], $text . $link);
+        $attrs = ['id' => $anchor];
+        if ($class) {
+            $attrs['class'] = $class;
+        }
+        $this->elem("h{$num}", $attrs, $text . $link);
 
         return $this;
     }
@@ -65,8 +68,8 @@ class HtmlDocument
 
     public function elem($tag, $attr = null, $content = null)
     {
-        $attr = $attr ?
-            (is_string($attr) ? ['class' => $attr] : (array) $attr)
+        $attr = $attr
+            ? (is_string($attr) ? ['class' => $attr] : (array) $attr)
             : [];
 
         $buffer = $this->getTab() . '<' . $tag;
@@ -75,7 +78,7 @@ class HtmlDocument
         }
         $buffer .= '>';
 
-        if ($content) {
+        if ($content !== null) {
             $buffer .= $content . '</' . $tag . '>';
         }
 

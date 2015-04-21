@@ -68,8 +68,6 @@ class S3Client extends AwsClient
     }
 
     /**
-     * {@inheritdoc}
-     *
      * In addition to the options available to
      * {@see Aws\AwsClient::__construct}, S3Client accepts the following
      * options:
@@ -82,6 +80,10 @@ class S3Client extends AwsClient
      *   for all Amazon S3 signed uploads.
      * - force_path_style: (bool) Set to true to send requests using path
      *   style bucket addressing (e.g., https://s3.amazonaws.com/bucket/key).
+     *
+     * AwsClient options:
+     *
+     * {@inheritdoc}
      *
      * @param array $args
      */
