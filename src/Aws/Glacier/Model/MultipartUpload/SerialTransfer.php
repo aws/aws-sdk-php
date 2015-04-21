@@ -26,10 +26,10 @@ class SerialTransfer extends AbstractTransfer
      */
     protected function transfer()
     {
-        /** @var $partGenerator UploadPartGenerator */
+        /** @var UploadPartGenerator $partGenerator */
         $partGenerator = $this->state->getPartGenerator();
 
-        /** @var $part UploadPart */
+        /** @var UploadPart $part */
         foreach ($partGenerator as $part) {
             $command = $this->getCommandForPart($part);
 

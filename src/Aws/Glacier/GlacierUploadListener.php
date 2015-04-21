@@ -44,11 +44,11 @@ class GlacierUploadListener implements EventSubscriberInterface
      */
     public function onCommandBeforeSend(Event $event)
     {
-        /** @var $command AbstractCommand */
+        /** @var AbstractCommand $command */
         $command = $event['command'];
         $contentHash = $command->get('ContentSHA256');
         if ($contentHash === true) {
-            /** @var $request EntityEnclosingRequest */
+            /** @var EntityEnclosingRequest $request */
             $request = $command->getRequest();
             $upload = UploadPartGenerator::createSingleUploadPart($request->getBody());
             $request->addHeader('x-amz-content-sha256', $upload->getContentHash());

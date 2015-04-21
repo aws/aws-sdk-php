@@ -40,7 +40,7 @@ class QueueUrlListener implements EventSubscriberInterface
      */
     public function onCommandBeforeSend(Event $event)
     {
-        /** @var $command AbstractCommand */
+        /** @var AbstractCommand $command */
         $command = $event['command'];
         if ($command->hasKey('QueueUrl')) {
             $request = $command->getRequest();

@@ -71,7 +71,7 @@ class UploadBodyListener implements EventSubscriberInterface
      */
     public function onCommandBeforePrepare(Event $event)
     {
-        /** @var $command Command */
+        /** @var Command $command */
         $command = $event['command'];
         if (in_array($command->getName(), $this->commands)) {
             // Get the interesting parameters

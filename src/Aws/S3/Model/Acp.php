@@ -140,7 +140,7 @@ class Acp implements ToArrayInterface, \IteratorAggregate, \Countable
 
         if ($grants) {
             if (is_array($grants) || $grants instanceof \Traversable) {
-                /** @var $grant Grant */
+                /** @var Grant $grant */
                 foreach ($grants as $grant) {
                     $this->addGrant($grant);
                 }
@@ -211,7 +211,7 @@ class Acp implements ToArrayInterface, \IteratorAggregate, \Countable
     {
         $parameters = array();
         foreach ($this->grants as $grant) {
-            /** @var $grant Grant */
+            /** @var Grant $grant */
             $parameters = array_merge_recursive($parameters, $grant->getParameterArray());
         }
 

@@ -45,13 +45,13 @@ class ParallelTransfer extends AbstractTransfer
      */
     protected function transfer()
     {
-        /** @var $parts UploadPartGenerator */
+        /** @var UploadPartGenerator $parts */
         $parts     = $this->state->getPartGenerator();
         $chunkSize = min($this->options['concurrency'], count($parts));
         $partSets  = new ChunkedIterator($parts, $chunkSize);
 
         foreach ($partSets as $partSet) {
-            /** @var $part UploadPart */
+            /** @var UploadPart $part */
             $commands = array();
             foreach ($partSet as $index => $part) {
                 $command = $this->getCommandForPart($part, (bool) $index)->set('part', $part);
@@ -65,7 +65,7 @@ class ParallelTransfer extends AbstractTransfer
             }
 
             // Execute each command, iterate over the results, and add to the transfer state
-            /** @var $command \Guzzle\Service\Command\OperationCommand */
+            /** @var \Guzzle\Service\Command\OperationCommand $command */
             foreach ($this->client->execute($commands) as $command) {
                 $this->state->addPart($command->get('part'));
                 $this->dispatch(self::AFTER_PART_UPLOAD, $this->getEventData($command));

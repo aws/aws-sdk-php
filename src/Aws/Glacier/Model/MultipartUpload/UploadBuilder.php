@@ -16,12 +16,10 @@
 
 namespace Aws\Glacier\Model\MultipartUpload;
 
-use Aws\Common\Enum\Size;
 use Aws\Common\Enum\UaString as Ua;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Model\MultipartUpload\AbstractUploadBuilder;
 use Aws\Common\Model\MultipartUpload\TransferStateInterface as State;
-use Aws\Glacier\Model\MultipartUpload\UploadPartGenerator;
 
 /**
  * Easily create a multipart uploader used to quickly and reliably upload a
@@ -169,7 +167,7 @@ class UploadBuilder extends AbstractUploadBuilder
             if (!$this->partGenerator) {
                 throw new InvalidArgumentException('You must provide an UploadPartGenerator when resuming an upload.');
             }
-            /** @var $state \Aws\Glacier\Model\MultipartUpload\TransferState */
+            /** @var TransferState $state */
             $this->state = TransferState::fromUploadId($this->client, UploadId::fromParams(array(
                 'accountId' => $this->accountId,
                 'vaultName' => $this->vaultName,
