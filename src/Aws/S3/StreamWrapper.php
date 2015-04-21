@@ -20,6 +20,7 @@ use Aws\Common\Exception\RuntimeException;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\Exception\NoSuchKeyException;
 use Aws\S3\Iterator\ListObjectsIterator;
+use Guzzle\Cache\CacheAdapterInterface;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\CachingEntityBody;
 use Guzzle\Http\Mimetypes;
@@ -122,6 +123,16 @@ class StreamWrapper
     protected static $nextStat = array();
 
     /**
+     * @var CacheAdapterInterface An optional cache for stat calls.
+     */
+    protected static $cache;
+
+    /**
+     * @var bool|int The lifetime of stat cache calls, or false for no expiry.
+     */
+    protected static $cacheLifetime;
+
+    /**
      * Register the 's3://' stream wrapper
      *
      * @param S3Client $client Client to use with the stream wrapper
@@ -134,6 +145,24 @@ class StreamWrapper
 
         stream_wrapper_register('s3', get_called_class(), STREAM_IS_URL);
         static::$client = $client;
+    }
+
+    /**
+     * Attach a cache to this stream wrapper.
+     *
+     * @param \Guzzle\Cache\CacheAdapterInterface $cache
+     * @param bool|int $lifetime (optional) Lifetime of cache items, defaults to no expiry.
+     */
+    public static function attachCache(CacheAdapterInterface $cache, $lifetime = false) {
+        static::$cache = $cache;
+        static::$cacheLifetime = $lifetime;
+    }
+
+    /**
+     * Remove an attached cache from this stream wrapper.
+     */
+    public static function detachCache() {
+        static::$cache = null;
     }
 
     /**
@@ -220,6 +249,7 @@ class StreamWrapper
 
         try {
             static::$client->putObject($params);
+            $this->clearStatInfo('s3://' . $params['Bucket'] . '/' . $params['Key']);
             return true;
         } catch (\Exception $e) {
             return $this->triggerError($e->getMessage());
@@ -333,7 +363,7 @@ class StreamWrapper
 
         try {
             try {
-                $result = static::$client->headObject($parts)->toArray();
+                $result = $this->getMetadata($path);
                 if (substr($parts['Key'], -1, 1) == '/' && $result['ContentLength'] == 0) {
                     // Return as if it is a bucket to account for console bucket objects (e.g., zero-byte object "foo/")
                     return $this->formatUrlStat($path);
@@ -343,11 +373,7 @@ class StreamWrapper
                 }
             } catch (NoSuchKeyException $e) {
                 // Maybe this isn't an actual key, but a prefix. Do a prefix listing of objects to determine.
-                $result = static::$client->listObjects(array(
-                    'Bucket'  => $parts['Bucket'],
-                    'Prefix'  => rtrim($parts['Key'], '/') . '/',
-                    'MaxKeys' => 1
-                ));
+                $result = $this->getPrefixMetadata($path);
                 if (!$result['Contents'] && !$result['CommonPrefixes']) {
                     return $this->triggerError("File or directory not found: {$path}", $flags);
                 }
@@ -814,6 +840,10 @@ class StreamWrapper
         static::$nextStat = array();
         if ($path) {
             clearstatcache(true, $path);
+            if ($this->hasCache()) {
+                static::$cache->delete('metadata:' . $path);
+                static::$cache->delete('prefix:' . $path);
+            }
         }
     }
 
@@ -888,5 +918,80 @@ class StreamWrapper
         }
 
         return 'private';
+    }
+
+    /**
+     * Fetch object metadata, from the cache if possible.
+     *
+     * @param string $path The path to fetch metadata for.
+     *
+     * @return array The metadata associated with the path.
+     */
+    protected function getMetadata($path)
+    {
+        $key = 'metadata:' . $path;
+        if ($this->hasCache() && $result = static::$cache->fetch($key)) {
+            $result = unserialize($result);
+            if ($result instanceof NoSuchKeyException) {
+                throw $result;
+            }
+        }
+        else {
+            $parts = $this->getParams($path);
+            try {
+                $result = static::$client->headObject($parts)->toArray();
+            }
+            catch (NoSuchKeyException $e) {
+                // In the event of a 404, we cache the exception itself so we can
+                // throw it later.
+                if ($this->hasCache()) {
+                    static::$cache->save($key, serialize($e), static::$cacheLifetime);
+                }
+                throw $e;
+            }
+
+            if ($this->hasCache()) {
+                static::$cache->save($key, serialize($result), static::$cacheLifetime);
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Fetch metadata for a key prefix, from cache if possible.
+     *
+     * @param string $path The path to fetch metadata for.
+     *
+     * @return array The metadata associated with the path.
+     */
+    protected function getPrefixMetadata($path) {
+        $key = 'prefix:' . $path;
+        if ($this->hasCache() && $result = static::$cache->fetch($key)) {
+            $result = unserialize($result);
+        }
+        else {
+            $parts = $this->getParams($path);
+            $result = static::$client->listObjects(array(
+              'Bucket'  => $parts['Bucket'],
+              'Prefix'  => rtrim($parts['Key'], '/') . '/',
+              'MaxKeys' => 1
+            ));
+            if ($this->hasCache()) {
+                static::$cache->save($key, serialize($result), static::$cacheLifetime);
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Determine if this stream wrapper has an associated cache.
+     *
+     * @return bool True if a cache is attached, false otherwise.
+     */
+    public static function hasCache()
+    {
+        return (bool) static::$cache;
     }
 }
