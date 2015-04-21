@@ -22,6 +22,7 @@ use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with Amazon Kinesis
