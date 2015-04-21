@@ -118,7 +118,7 @@ class GuzzleHandler
         $request->setHeaders($psrRequest->getHeaders());
         $request->setHeader(
             'user-agent',
-            $request->getHeader('user-agent') . ' ' . Client::getDefaultUserAgent()
+            $request->getHeaderLine('user-agent') . ' ' . Client::getDefaultUserAgent()
         );
 
         // Make sure the delay is configured, if provided.

@@ -3,7 +3,7 @@ namespace Aws\Test;
 
 use Aws\Exception\AwsException;
 use Aws\Result;
-use GuzzleHttp\Promise\Promise;
+use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7;
@@ -61,7 +61,7 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
         ) {
             $waitTime += $options['delay'];
 
-            $promise = new Promise();
+            $promise = new Promise\Promise();
             $promise->resolve(new Response(200, [],
                 Psr7\stream_for(sprintf(
                     '{"Table":{"TableStatus":"%s"}}',

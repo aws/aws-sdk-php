@@ -39,7 +39,7 @@ class XmlErrorParser
         $data['message'] = $response->getStatusCode() . ' '
             . $response->getReasonPhrase();
 
-        if ($requestId = $response->getHeader('x-amz-request-id')) {
+        if ($requestId = $response->getHeaderLine('x-amz-request-id')) {
             $data['request_id'] = $requestId;
             $data['message'] .= " (Request-ID: $requestId)";
         }

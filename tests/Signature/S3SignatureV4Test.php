@@ -32,7 +32,7 @@ class S3SignatureV4Test extends \PHPUnit_Framework_TestCase
         $result = $signature->signRequest($request, $credentials);
         $this->assertEquals(
             hash('sha256', ''),
-            $result->getHeader('x-amz-content-sha256')
+            $result->getHeaderLine('x-amz-content-sha256')
         );
     }
 
@@ -44,7 +44,7 @@ class S3SignatureV4Test extends \PHPUnit_Framework_TestCase
         $result = $signature->signRequest($request, $credentials);
         $this->assertEquals(
             hash('sha256', 'foo'),
-            $result->getHeader('x-amz-content-sha256')
+            $result->getHeaderLine('x-amz-content-sha256')
         );
     }
 

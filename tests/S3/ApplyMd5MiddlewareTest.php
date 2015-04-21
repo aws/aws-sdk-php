@@ -40,7 +40,7 @@ class ApplyMd5MiddlewareTest extends \PHPUnit_Framework_TestCase
             Middleware::tap(function ($cmd, RequestInterface $request) use ($md5Added, $md5Value) {
                 $this->assertSame($md5Added, $request->hasHeader('Content-MD5'));
                 if ($md5Value !== 'SKIP') {
-                    $this->assertEquals($md5Value, $request->getHeader('Content-MD5'));
+                    $this->assertEquals($md5Value, $request->getHeaderLine('Content-MD5'));
                 }
             })
         );

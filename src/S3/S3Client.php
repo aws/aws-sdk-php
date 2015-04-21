@@ -10,7 +10,7 @@ use Aws\S3\Exception\S3Exception;
 use Aws\Result;
 use Aws\CommandInterface;
 use GuzzleHttp\Psr7;
-use Psr\Http\Message\StreamableInterface;
+use Psr\Http\Message\StreamInterface;
 use transducers as t;
 
 /**
@@ -291,7 +291,7 @@ class S3Client extends AwsClient
      * @param string $bucket  Bucket to upload the object.
      * @param string $key     Key of the object.
      * @param mixed  $body    Object data to upload. Can be a
-     *                        StreamableInterface, PHP stream resource, or a
+     *                        StreamInterface, PHP stream resource, or a
      *                        string of data to upload.
      * @param string $acl     ACL to apply to the object (default: private).
      * @param array  $options Custom options used when executing commands.
@@ -389,12 +389,12 @@ class S3Client extends AwsClient
      * Multipart Upload System. It also modifies the passed-in $body as needed
      * to support the upload.
      *
-     * @param StreamableInterface $body      Stream representing the body.
+     * @param StreamInterface $body      Stream representing the body.
      * @param integer             $threshold Minimum bytes before using Multipart.
      *
      * @return bool
      */
-    private function requiresMultipart(StreamableInterface &$body, $threshold)
+    private function requiresMultipart(StreamInterface &$body, $threshold)
     {
         // If body size known, compare to threshold to determine if Multipart.
         if ($body->getSize() !== null) {

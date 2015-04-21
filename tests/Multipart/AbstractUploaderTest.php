@@ -173,7 +173,7 @@ class AbstractUploaderTest extends \PHPUnit_Framework_TestCase
         // CASE 1: Filename exists.
         $uploader = $this->getTestUploader(__FILE__, $config);
         $this->assertInstanceOf(
-            'Psr\Http\Message\StreamableInterface',
+            'Psr\Http\Message\StreamInterface',
             $this->readAttribute($uploader, 'source')
         );
 

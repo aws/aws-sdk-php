@@ -42,9 +42,9 @@ class JsonRpcSerializerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('http://foo.com', (string) $request->getUri());
         $this->assertEquals(
             'application/x-amz-json-1.1',
-            $request->getHeader('Content-Type')
+            $request->getHeaderLine('Content-Type')
         );
-        $this->assertEquals('test.foo', $request->getHeader('X-Amz-Target'));
+        $this->assertEquals('test.foo', $request->getHeaderLine('X-Amz-Target'));
         $this->assertEquals('{"baz":"bam"}', (string) $request->getBody());
     }
 }

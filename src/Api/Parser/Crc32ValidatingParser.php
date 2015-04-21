@@ -26,7 +26,7 @@ class Crc32ValidatingParser extends AbstractParser
         CommandInterface $command,
         ResponseInterface $response
     ) {
-        if ($expected = $response->getHeader('x-amz-crc32')) {
+        if ($expected = $response->getHeaderLine('x-amz-crc32')) {
             $hash = hexdec(Psr7\hash($response->getBody(), 'crc32b'));
             if ((int) $expected !== $hash) {
                 throw new AwsException(

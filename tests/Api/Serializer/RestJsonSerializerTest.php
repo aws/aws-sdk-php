@@ -77,7 +77,7 @@ class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('{"baz":"bar"}', (string) $request->getBody());
         $this->assertEquals(
             'application/x-amz-json-1.1',
-            $request->getHeader('Content-Type')
+            $request->getHeaderLine('Content-Type')
         );
     }
 
@@ -87,7 +87,7 @@ class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('POST', $request->getMethod());
         $this->assertEquals('http://foo.com/', (string) $request->getUri());
         $this->assertEquals('bar', (string) $request->getBody());
-        $this->assertEquals('', $request->getHeader('Content-Type'));
+        $this->assertEquals('', $request->getHeaderLine('Content-Type'));
     }
 
     public function testPreparesRequestsWithStructPayload()
@@ -98,7 +98,7 @@ class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('{"baz":"1234"}', (string) $request->getBody());
         $this->assertEquals(
             'application/x-amz-json-1.1',
-            $request->getHeader('Content-Type')
+            $request->getHeaderLine('Content-Type')
         );
     }
 }

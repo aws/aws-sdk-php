@@ -6,7 +6,7 @@ use Aws\S3\Exception\S3Exception;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Stream;
 use GuzzleHttp\Psr7\CachingStream;
-use Psr\Http\Message\StreamableInterface;
+use Psr\Http\Message\StreamInterface;
 use transducers as t;
 
 /**
@@ -63,7 +63,7 @@ class StreamWrapper
     /** @var resource|null Stream context (this is set by PHP) */
     public $context;
 
-    /** @var StreamableInterface Underlying stream resource */
+    /** @var StreamInterface Underlying stream resource */
     private $body;
 
     /** @var array Hash of opened stream parameters */

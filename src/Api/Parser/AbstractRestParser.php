@@ -87,7 +87,7 @@ abstract class AbstractRestParser extends AbstractParser
         ResponseInterface $response,
         &$result
     ) {
-        $result[$name] = $response->getHeader($shape['locationName'] ?: $name);
+        $result[$name] = $response->getHeaderLine($shape['locationName'] ?: $name);
     }
 
     /**

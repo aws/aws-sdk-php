@@ -8,7 +8,7 @@ use Aws\Multipart\UploadState;
 use Aws\PhpHash;
 use Aws\ResultInterface;
 use GuzzleHttp\Psr7;
-use Psr\Http\Message\StreamableInterface as Stream;
+use Psr\Http\Message\StreamInterface as Stream;
 
 /**
  * Encapsulates the execution of a multipart upload to S3 or Glacier.

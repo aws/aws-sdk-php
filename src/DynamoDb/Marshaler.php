@@ -1,7 +1,7 @@
 <?php
 namespace Aws\DynamoDb;
 
-use Psr\Http\Message\StreamableInterface;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * Marshals and unmarshals JSON documents and PHP arrays into DynamoDB items.
@@ -203,7 +203,7 @@ class Marshaler
         }
 
         // Handle binary values.
-        if (is_resource($value) || $value instanceof StreamableInterface) {
+        if (is_resource($value) || $value instanceof StreamInterface) {
             $value = $this->binary($value);
         }
         if ($value instanceof BinaryValue) {

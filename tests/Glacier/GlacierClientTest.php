@@ -37,13 +37,13 @@ class GlacierClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('-', $command['accountId']);
         $this->assertEquals(
             $client->getApi()->getMetadata('apiVersion'),
-            $request->getHeader('x-amz-glacier-version')
+            $request->getHeaderLine('x-amz-glacier-version')
         );
 
         // Added the tree and content hashes.
         $hash = hash('sha256', 'foo');
-        $this->assertEquals($hash, $request->getHeader('x-amz-content-sha256'));
-        $this->assertEquals($hash, $request->getHeader('x-amz-sha256-tree-hash'));
+        $this->assertEquals($hash, $request->getHeaderLine('x-amz-content-sha256'));
+        $this->assertEquals($hash, $request->getHeaderLine('x-amz-sha256-tree-hash'));
     }
 
     public function testErrorWhenHashingNonSeekableStream()

@@ -133,10 +133,10 @@ class S3Signature extends AbstractSignature
 
         // Add the interesting headers
         foreach ($this->signableHeaders as $header) {
-            $buffer .= $request->getHeader($header) . "\n";
+            $buffer .= $request->getHeaderLine($header) . "\n";
         }
 
-        $date = $expires ?: $request->getHeader('date');
+        $date = $expires ?: $request->getHeaderLine('date');
         $buffer .= "{$date}\n"
             . $this->createCanonicalizedAmzHeaders($request)
             . $this->createCanonicalizedResource($request);

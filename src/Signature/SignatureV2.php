@@ -27,7 +27,7 @@ class SignatureV2 extends AbstractSignature
 
         // build string to sign
         $sign = $request->getMethod() . "\n"
-            . $request->getHeader('Host') . "\n"
+            . $request->getHeaderLine('Host') . "\n"
             . '/' . "\n"
             . $this->getCanonicalizedParameterString($params);
 

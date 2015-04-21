@@ -5,7 +5,7 @@ use Aws\Glacier\MultipartUploader;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
-use Psr\Http\Message\StreamableInterface;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * @covers Aws\Glacier\MultipartUploader
@@ -27,7 +27,7 @@ class MultipartUploaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testGlacierMultipartUploadWorkflow(
         array $uploadOptions = [],
-        StreamableInterface $source,
+        StreamInterface $source,
         $error = false
     ) {
         $client = $this->getTestClient('glacier');

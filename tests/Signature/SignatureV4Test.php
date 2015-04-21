@@ -36,7 +36,7 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         $c = new Credentials('a', 'b', 'AddMe!');
         $r = new Request('GET', 'http://httpbin.org');
         $signed = $s->signRequest($r, $c);
-        $this->assertEquals('AddMe!', $signed->getHeader('X-Amz-Security-Token'));
+        $this->assertEquals('AddMe!', $signed->getHeaderLine('X-Amz-Security-Token'));
     }
 
     public function testSignsRequestsWithMultiValuedHeaders()
@@ -175,7 +175,7 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
             'content-md5' => 'bogus'
         ]);
         $signed = $sig->signRequest($req, $creds);
-        $this->assertContains('content-md5;host;x-amz-date;x-amz-foo', $signed->getHeader('Authorization'));
+        $this->assertContains('content-md5;host;x-amz-date;x-amz-foo', $signed->getHeaderLine('Authorization'));
     }
 
     /**

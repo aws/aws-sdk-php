@@ -13,7 +13,7 @@ use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7;
 use InvalidArgumentException as IAE;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\StreamableInterface as Stream;
+use Psr\Http\Message\StreamInterface as Stream;
 
 /**
  * Encapsulates the execution of a multipart upload to S3 or Glacier.

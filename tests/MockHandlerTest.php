@@ -90,7 +90,7 @@ class MockHandlerTest extends \PHPUnit_Framework_TestCase
         $cmd = new Command('foo');
         $h($cmd, $request);
         $h($cmd, $request);
-        Promise\trampoline()->run();
+        Promise\queue()->run();
         $this->assertEquals([$r1, $e], $thens);
     }
 

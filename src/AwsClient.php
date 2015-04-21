@@ -263,7 +263,7 @@ class AwsClient implements AwsClientInterface
 
     public function waitUntil($name, array $args = [], array $config = [])
     {
-        $this->getWaiter($name, $args, $config)->promise()->wait();
+        return $this->getWaiter($name, $args, $config)->promise()->wait();
     }
 
     public function getWaiter($name, array $args = [], array $config = [])

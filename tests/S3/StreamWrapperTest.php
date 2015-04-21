@@ -141,7 +141,7 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         });
         file_put_contents('s3://foo/bar.xml', 'test');
         $this->assertCount(1, $h);
-        $this->assertEquals('application/xml', $h[0][1]->getHeader('Content-Type'));
+        $this->assertEquals('application/xml', $h[0][1]->getHeaderLine('Content-Type'));
     }
 
     public function testCanOpenWriteOnlyStreams()
@@ -298,9 +298,9 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('PUT', $entries[1]['request']->getMethod());
         $this->assertEquals('/', $entries[1]['request']->getUri()->getPath());
         $this->assertEquals('bucket.s3.amazonaws.com', $entries[1]['request']->getUri()->getHost());
-        $this->assertEquals('public-read', (string) $entries[1]['request']->getHeader('x-amz-acl'));
-        $this->assertEquals('authenticated-read', (string) $entries[3]['request']->getHeader('x-amz-acl'));
-        $this->assertEquals('private', (string) $entries[5]['request']->getHeader('x-amz-acl'));
+        $this->assertEquals('public-read', (string) $entries[1]['request']->getHeaderLine('x-amz-acl'));
+        $this->assertEquals('authenticated-read', (string) $entries[3]['request']->getHeaderLine('x-amz-acl'));
+        $this->assertEquals('private', (string) $entries[5]['request']->getHeaderLine('x-amz-acl'));
     }
 
     public function testCreatesNestedSubfolder()
@@ -318,7 +318,7 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         $entries = $history->toArray();
         $this->assertEquals('HEAD', $entries[0]['request']->getMethod());
         $this->assertEquals('PUT', $entries[1]['request']->getMethod());
-        $this->assertContains('public-read', $entries[1]['request']->getHeader('x-amz-acl'));
+        $this->assertContains('public-read', $entries[1]['request']->getHeaderLine('x-amz-acl'));
     }
 
     /**
@@ -437,11 +437,11 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('other.s3.amazonaws.com', $entries[0]['request']->getUri()->getHost());
         $this->assertEquals(
             '/bucket/key',
-            $entries[0]['request']->getHeader('x-amz-copy-source')
+            $entries[0]['request']->getHeaderLine('x-amz-copy-source')
         );
         $this->assertEquals(
             'COPY',
-            $entries[0]['request']->getHeader('x-amz-metadata-directive')
+            $entries[0]['request']->getHeaderLine('x-amz-metadata-directive')
         );
         $this->assertEquals('DELETE', $entries[1]['request']->getMethod());
         $this->assertEquals('/key', $entries[1]['request']->getUri()->getPath());
@@ -468,11 +468,11 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('other.s3.amazonaws.com', $entries[0]['request']->getUri()->getHost());
         $this->assertEquals(
             '/bucket/key',
-            $entries[0]['request']->getHeader('x-amz-copy-source')
+            $entries[0]['request']->getHeaderLine('x-amz-copy-source')
         );
         $this->assertEquals(
             'REPLACE',
-            $entries[0]['request']->getHeader('x-amz-metadata-directive')
+            $entries[0]['request']->getHeaderLine('x-amz-metadata-directive')
         );
     }
 

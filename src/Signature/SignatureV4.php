@@ -122,7 +122,7 @@ class SignatureV4 extends AbstractSignature
             ->withoutHeader('Content-Length');
 
         // Move POST fields to the query if they are present
-        if ($request->getHeader('Content-Type') === 'application/x-www-form-urlencoded') {
+        if ($request->getHeaderLine('Content-Type') === 'application/x-www-form-urlencoded') {
             $body = (string) $request->getBody();
             $sr = $sr->withUri($sr->getUri()->withQuery($body));
         }
@@ -135,7 +135,7 @@ class SignatureV4 extends AbstractSignature
         // Calculate the request signature payload
         if ($request->hasHeader('X-Amz-Content-Sha256')) {
             // Handle streaming operations (e.g. Glacier.UploadArchive)
-            return $request->getHeader('X-Amz-Content-Sha256');
+            return $request->getHeaderLine('X-Amz-Content-Sha256');
         }
 
         if (!$request->getBody()->isSeekable()) {

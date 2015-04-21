@@ -22,11 +22,11 @@ class S3SignatureTest extends \PHPUnit_Framework_TestCase
             'body'
         );
         $result = $signature->signRequest($request, $creds);
-        $this->assertEquals('baz', $result->getHeader('X-Amz-Security-Token'));
+        $this->assertEquals('baz', $result->getHeaderLine('X-Amz-Security-Token'));
         $this->assertTrue($result->hasHeader('Date'));
         $this->assertFalse($result->hasHeader('X-Amz-Date'));
         $this->assertTrue($result->hasHeader('Authorization'));
-        $this->assertContains('AWS foo:', $result->getHeader('Authorization'));
+        $this->assertContains('AWS foo:', $result->getHeaderLine('Authorization'));
     }
 
     public function presignedUrlProvider()

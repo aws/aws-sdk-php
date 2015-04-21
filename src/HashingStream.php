@@ -2,12 +2,12 @@
 namespace Aws;
 
 use GuzzleHttp\Psr7\StreamDecoratorTrait;
-use Psr\Http\Message\StreamableInterface;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * Stream decorator that calculates a rolling hash of the stream as it is read.
  */
-class HashingStream implements StreamableInterface
+class HashingStream implements StreamInterface
 {
     use StreamDecoratorTrait;
 
@@ -18,13 +18,13 @@ class HashingStream implements StreamableInterface
     private $callback;
 
     /**
-     * @param StreamableInterface $stream     Stream that is being read.
-     * @param HashInterface       $hash       Hash used to calculate checksum.
-     * @param callable            $onComplete Optional function invoked when the
-     *                                        hash calculation is completed.
+     * @param StreamInterface $stream     Stream that is being read.
+     * @param HashInterface   $hash       Hash used to calculate checksum.
+     * @param callable        $onComplete Optional function invoked when the
+     *                                    hash calculation is completed.
      */
     public function __construct(
-        StreamableInterface $stream,
+        StreamInterface $stream,
         HashInterface $hash,
         callable $onComplete = null
     ) {

@@ -58,7 +58,7 @@ class GuzzleHandler
     {
         $request = $request->withHeader(
             'user-agent',
-            $request->getHeader('user-agent')
+            $request->getHeaderLine('user-agent')
                 . ' ' . \GuzzleHttp\default_user_agent()
         );
 

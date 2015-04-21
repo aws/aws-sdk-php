@@ -109,7 +109,7 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
 
         if (isset($serialized['headers'])) {
             foreach ($serialized['headers'] as $key => $value) {
-                $this->assertSame($value, $request->getHeader($key));
+                $this->assertSame($value, $request->getHeaderLine($key));
             }
         }
     }

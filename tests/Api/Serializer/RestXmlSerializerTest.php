@@ -27,7 +27,7 @@ class RestXmlSerializerTest extends \PHPUnit_Framework_TestCase
             'Body'        => 'baz',
             'ContentType' => 'abc'
         ]);
-        $this->assertEquals('abc', $request->getHeader('Content-Type'));
+        $this->assertEquals('abc', $request->getHeaderLine('Content-Type'));
     }
 
     public function testPreparesRequestsWithNoContentType()
@@ -37,7 +37,7 @@ class RestXmlSerializerTest extends \PHPUnit_Framework_TestCase
             'Key'         => 'bar',
             'Body'        => 'baz'
         ]);
-        $this->assertEquals('', $request->getHeader('Content-Type'));
+        $this->assertEquals('', $request->getHeaderLine('Content-Type'));
     }
 
     public function testPreparesRequestsWithStructurePayloadXmlContentType()
@@ -54,7 +54,7 @@ class RestXmlSerializerTest extends \PHPUnit_Framework_TestCase
         ]);
         $this->assertEquals(
             'application/xml',
-            $request->getHeader('Content-Type')
+            $request->getHeaderLine('Content-Type')
         );
     }
 }

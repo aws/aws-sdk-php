@@ -5,7 +5,7 @@ use Aws\Exception\AwsException;
 use GuzzleHttp\Promise\RejectedPromise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamableInterface;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * Traces state changes between middlewares.
@@ -214,7 +214,7 @@ class TraceMiddleware
         }
     }
 
-    private function streamStr(StreamableInterface $body)
+    private function streamStr(StreamInterface $body)
     {
         return $body->getSize() < $this->config['stream_size']
             ? (string) $body

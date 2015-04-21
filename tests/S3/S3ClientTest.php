@@ -7,7 +7,7 @@ use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\FnStream;
-use Psr\Http\Message\StreamableInterface;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * @covers Aws\S3\S3Client
@@ -207,7 +207,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
      * @dataProvider getUploadTestCases
      */
     public function testUploadHelperDoesCorrectOperation(
-        StreamableInterface $body,
+        StreamInterface $body,
         array $mockedResults,
         array $options
     ) {

@@ -5,7 +5,7 @@ use Aws\S3\MultipartUploader;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
-use Psr\Http\Message\StreamableInterface;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * @covers Aws\S3\MultipartUploader
@@ -28,7 +28,7 @@ class MultipartUploaderTest extends \PHPUnit_Framework_TestCase
     public function testS3MultipartUploadWorkflow(
         array $clientOptions = [],
         array $uploadOptions = [],
-        StreamableInterface $source,
+        StreamInterface $source,
         $error = false
     ) {
         $client = $this->getTestClient('s3', $clientOptions);
