@@ -1,11 +1,11 @@
 <?php
-
 namespace Aws\Build\Docs;
 
 use Aws\Api\ListShape;
 use Aws\Api\MapShape;
 use Aws\Api\Shape;
 use Aws\Api\StructureShape;
+use Aws\Api\DocModel;
 
 class ShapeIterator implements \Iterator
 {

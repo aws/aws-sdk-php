@@ -8,6 +8,7 @@ use Aws\Api\MapShape;
 use Aws\Api\Operation;
 use Aws\Api\Service as Api;
 use Aws\Api\StructureShape;
+use Aws\Api\DocModel;
 
 class DocsBuilder
 {

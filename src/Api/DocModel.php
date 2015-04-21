@@ -1,15 +1,10 @@
 <?php
-namespace Aws\Build\Docs;
-
-use Aws\Api\ApiProvider;
-use JmesPath;
+namespace Aws\Api;
 
 /**
  * Encapsulates the documentation strings for a given service-version and
  * provides methods for extracting the desired parts related to a service,
  * operation, error, or shape (i.e., parameter).
- *
- * @internal
  */
 class DocModel
 {
@@ -97,7 +92,7 @@ class DocModel
      */
     private function getContent($path)
     {
-        $content = JmesPath\search($path, $this->docs);
+        $content = \JmesPath\search($path, $this->docs);
 
         if (!$content) {
             return null;

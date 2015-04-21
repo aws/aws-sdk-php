@@ -2,6 +2,7 @@
 namespace Aws\Build\Docs;
 
 use Aws\Api\Service as Api;
+use Aws\Api\DocModel;
 use Aws\Sdk;
 
 /**
