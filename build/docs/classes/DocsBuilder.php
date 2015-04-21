@@ -85,7 +85,7 @@ class DocsBuilder
     {
         $html = new HtmlDocument;
         $html->open('div', 'page-header');
-        $html->elem('h1', null, "$service->fullTitle <small>{$service->version}</small>");
+        $html->elem('h1', null, "$service->title <small>{$service->version}</small>");
         $html->close();
         $metadata = <<<EOT
 <dd><strong>Client:</strong> <a href="{$service->clientLink}">{$service->client}</a></dd>
@@ -381,9 +381,11 @@ EOT;
 
         // Disable show title for input and output parameters.
         if ($showTitle) {
-            $html->elem('h5', null, 'Description');
-            $d = $docs->getShapeDocs($shape['name'], null, null);
-            $html->elem('div', 'shape-description', $d);
+            $desc = $docs->getShapeDocs($shape['name'], null, null);
+            if ($desc) {
+                $html->elem('h5', null, 'Description');
+                $html->elem('div', 'shape-description', $desc);
+            }
         }
 
         $html->elem('h5', null, 'Members');
