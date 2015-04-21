@@ -96,7 +96,7 @@ class WriteRequestBatchTransfer implements BatchTransferInterface
             $unhandledExceptions = new ExceptionCollection();
 
             // Loop through caught exceptions and handle RequestTooLarge scenarios
-            /** @var $e DynamoDbException */
+            /** @var DynamoDbException $e */
             foreach ($exceptions as $e) {
                 if ($e instanceof DynamoDbException) {
                     $request = $e->getRequest();
@@ -134,7 +134,7 @@ class WriteRequestBatchTransfer implements BatchTransferInterface
             $items = array();
             foreach ($chunk as $item) {
                 if ($item instanceof AbstractWriteRequest) {
-                    /** @var $item AbstractWriteRequest */
+                    /** @var AbstractWriteRequest $item */
                     $table = $item->getTableName();
                     if (!isset($items[$table])) {
                         $items[$table] = array();
@@ -164,7 +164,7 @@ class WriteRequestBatchTransfer implements BatchTransferInterface
         array $commands,
         UnprocessedWriteRequestsException $unprocessedRequests
     ) {
-        /** @var $command CommandInterface */
+        /** @var CommandInterface $command */
         foreach ($commands as $command) {
             if ($command instanceof CommandInterface && $command->isExecuted()) {
                 $result = $command->getResult();

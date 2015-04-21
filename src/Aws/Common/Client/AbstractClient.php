@@ -189,7 +189,7 @@ abstract class AbstractClient extends Client implements AwsClientInterface
             // Update the signature if necessary
             $signature = $this->getSignature();
             if ($signature instanceof EndpointSignatureInterface) {
-                /** @var $signature EndpointSignatureInterface */
+                /** @var EndpointSignatureInterface $signature */
                 $signature->setRegionName($region);
             }
 

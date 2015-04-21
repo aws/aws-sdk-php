@@ -35,7 +35,7 @@ class CopySnapshotListener implements EventSubscriberInterface
 
     public function onCommandBeforePrepare(Event $event)
     {
-        /** @var $command \Guzzle\Service\Command\CommandInterface */
+        /** @var CommandInterface $command */
         $command = $event['command'];
 
         if ($command->getName() !== 'CopySnapshot') {
@@ -46,7 +46,7 @@ class CopySnapshotListener implements EventSubscriberInterface
             return;
         }
 
-        /** @var $client \Aws\Common\Client\AwsClientInterface */
+        /** @var AwsClientInterface $client */
         $client = $command->getClient();
         $presignedUrl = $this->createPresignedUrl($client, $command);
         $command['DestinationRegion'] = $client->getRegion();

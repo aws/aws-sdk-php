@@ -66,7 +66,7 @@ abstract class AbstractTransfer extends CommonAbstractTransfer
         $params = $this->state->getUploadId()->toParams();
         $params[Ua::OPTION] = Ua::MULTIPART_UPLOAD;
 
-        /** @var $command OperationCommand */
+        /** @var OperationCommand $command */
         $command = $this->client->getCommand('AbortMultipartUpload', $params);
 
         return $command;
@@ -83,7 +83,7 @@ abstract class AbstractTransfer extends CommonAbstractTransfer
     protected function getCommandForPart(UploadPart $part, $useSourceCopy = false)
     {
         // Setup the command with identifying parameters (accountId, vaultName, and uploadId)
-        /** @var $command OperationCommand */
+        /** @var OperationCommand $command */
         $command = $this->client->getCommand('UploadMultipartPart', $this->state->getUploadId()->toParams());
         $command->set(Ua::OPTION, Ua::MULTIPART_UPLOAD);
 

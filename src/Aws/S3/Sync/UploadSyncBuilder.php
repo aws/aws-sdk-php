@@ -16,7 +16,7 @@
 
 namespace Aws\S3\Sync;
 
-use \FilesystemIterator as FI;
+use FilesystemIterator as FI;
 use Aws\Common\Model\MultipartUpload\AbstractTransfer;
 use Aws\S3\Model\Acp;
 use Guzzle\Common\HasDispatcherInterface;

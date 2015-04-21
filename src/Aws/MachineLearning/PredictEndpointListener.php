@@ -23,7 +23,7 @@ class PredictEndpointListener implements EventSubscriberInterface
      */
     public function onCommandBeforeSend(Event $event)
     {
-        /** @var $command AbstractCommand */
+        /** @var AbstractCommand $command */
         $command = $event['command'];
         if ($command->getName() === 'Predict') {
             $request = $command->getRequest();

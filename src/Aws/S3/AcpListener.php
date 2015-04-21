@@ -43,7 +43,7 @@ class AcpListener implements EventSubscriberInterface
      */
     public function onCommandBeforePrepare(Event $event)
     {
-        /** @var $command \Guzzle\Service\Command\AbstractCommand */
+        /** @var \Guzzle\Service\Command\AbstractCommand $command */
         $command = $event['command'];
         $operation = $command->getOperation();
         if ($operation->hasParam('ACP') && $command->hasKey('ACP')) {
