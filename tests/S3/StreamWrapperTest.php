@@ -3,6 +3,7 @@ namespace Aws\Test\S3;
 
 use Aws\CommandInterface;
 use Aws\History;
+use Aws\LruArrayCache;
 use Aws\Middleware;
 use Aws\Result;
 use Aws\S3\Exception\S3Exception;
@@ -21,8 +22,14 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
     /** @var S3Client */
     private $client;
 
+    /** @var LruArrayCache */
+    private $cache;
+
     public function setUp()
     {
+        // use a fresh LRU cache for each test.
+        $this->cache = new LruArrayCache();
+        stream_context_set_default(['s3' => ['cache' => $this->cache]]);
         $this->client = $this->getTestClient('S3', ['region' => 'us-east-1']);
         $this->client->registerStreamWrapper();
     }
@@ -489,6 +496,12 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0040777, $stat['mode']);
     }
 
+    public function testCanPullStatDataFromCache()
+    {
+        $this->cache->set('s3://foo/bar', ['size' => 123, 7 => 123]);
+        $this->assertEquals(123, filesize('s3://foo/bar'));
+    }
+
     /**
      * @expectedException \PHPUnit_Framework_Error_Warning
      * @expectedExceptionMessage Forbidden
@@ -673,28 +686,32 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         $results = [
             [
                 'IsTruncated' => true,
-                'NextMarker'  => 'b/',
-                'Delimiter'   => '/',
+                'NextMarker'  => 'key/b/',
                 'Name'        => 'bucket',
                 'Prefix'      => '',
                 'MaxKeys'     => 1000,
-                'CommonPrefixes' => [['Prefix' => 'a/'], ['Prefix' => 'b/']]
+                'CommonPrefixes' => [
+                    ['Prefix' => 'key/a/'],
+                    ['Prefix' => 'key/b/']
+                ]
+            ],
+            [
+                'IsTruncated' => true,
+                'Marker'      => '',
+                'Contents'    => [['Key' => 'key/c']],
+                'Name'        => 'bucket',
+                'Prefix'      => '',
+                'MaxKeys'     => 1000,
+                'CommonPrefixes' => [['Prefix' => 'key/d/']]
             ],
             [
                 'IsTruncated' => true,
                 'Marker'      => '',
                 'Delimiter'   => '/',
-                'Contents'    => [['Key' => 'c']],
-                'Name'        => 'bucket',
-                'Prefix'      => '',
-                'MaxKeys'     => 1000,
-                'CommonPrefixes' => [['Prefix' => 'd/']]
-            ],
-            [
-                'IsTruncated' => true,
-                'Marker'      => '',
-                'Delimiter'   => '/',
-                'Contents'    => [['Key' => 'e'], ['Key' => 'f']],
+                'Contents'    => [
+                    ['Key' => 'key/e', 'Size' => 1],
+                    ['Key' => 'key/f', 'Size' => 2]
+                ],
                 'Name'        => 'bucket',
                 'Prefix'      => '',
                 'MaxKeys'     => 1000
@@ -702,7 +719,6 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
             [
                 'IsTruncated' => true,
                 'Marker'      => '',
-                'Delimiter'   => '/',
                 'Name'        => 'bucket',
                 'Prefix'      => '',
                 'NextMarker'  => 'DUMMY',
@@ -710,11 +726,10 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'IsTruncated' => false,
-                'Delimiter'   => '/',
                 'Name'        => 'bucket',
                 'NextMarker'  => 'DUMMY',
                 'MaxKeys'     => 1000,
-                'CommonPrefixes' => [['Prefix' => 'g/']]
+                'CommonPrefixes' => [['Prefix' => 'key/g/']]
             ]
         ];
 
@@ -741,6 +756,10 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         // This is the order that the mock responses should provide
         $expected = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
         $this->assertEquals($expected, $files);
+
+        // Get size from cache
+        $this->assertSame(1, filesize('s3://bucket/key/e'));
+        $this->assertSame(2, filesize('s3://bucket/key/f'));
 
         closedir($r);
     }
@@ -773,26 +792,32 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         closedir($r);
     }
 
-    public function testCanClearStatCache()
+    public function testCachesReaddirs()
     {
-        StreamWrapper::clearCache();
-        $this->assertEmpty($this->readAttribute('Aws\S3\StreamWrapper', 'statCache'));
         $results = [
             [
                 'IsTruncated' => false,
+                'Marker'      => '',
                 'Delimiter'   => '/',
+                'Contents'    => [
+                    ['Key' => 'key/e', 'Size' => 1],
+                    ['Key' => 'key/f', 'Size' => 2]
+                ],
                 'Name'        => 'bucket',
                 'Prefix'      => '',
-                'MaxKeys'     => 1000,
-                'Contents'    => [['Key' => 'a'], ['Key' => 'b']],
+                'MaxKeys'     => 1000
             ]
         ];
 
-        $this->addMockResults($this->client, $results);
+        $this->addMockResults($this->client, array_merge($results, $results));
         $dir = 's3://bucket/key/';
         $r = opendir($dir);
-        while (($file = readdir($r)) !== false);
-        $this->assertNotEmpty($this->readAttribute('Aws\S3\StreamWrapper', 'statCache'));
+        $file1 = readdir($r);
+        $this->assertEquals('e', $file1);
+        $this->assertEquals(1, filesize('s3://bucket/key/' . $file1));
+        $file2 = readdir($r);
+        $this->assertEquals('f', $file2);
+        $this->assertEquals(2, filesize('s3://bucket/key/' . $file2));
         closedir($r);
     }
 }

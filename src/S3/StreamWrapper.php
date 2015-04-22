@@ -1,6 +1,8 @@
 <?php
 namespace Aws\S3;
 
+use Aws\CacheInterface;
+use Aws\LruArrayCache;
 use Aws\Result;
 use Aws\S3\Exception\S3Exception;
 use GuzzleHttp\Psr7;
@@ -84,38 +86,43 @@ class StreamWrapper
     /** @var string Opened bucket path */
     private $openedPath;
 
-    /** @var array LRU cache containing a hash of "time" and "value" items */
-    private static $statCache = [];
+    /** @var CacheInterface Cache for object and dir lookups */
+    private $cache;
 
     /**
      * Register the 's3://' stream wrapper
      *
-     * @param S3Client $client Client to use with the stream wrapper
+     * @param S3Client       $client   Client to use with the stream wrapper
+     * @param string         $protocol Protocol to register as.
+     * @param CacheInterface $cache    Default cache for the protocol.
      */
-    public static function register(S3Client $client)
-    {
-        if (in_array('s3', stream_get_wrappers())) {
-            stream_wrapper_unregister('s3');
+    public static function register(
+        S3Client $client,
+        $protocol = 's3',
+        CacheInterface $cache = null
+    ) {
+        if (in_array($protocol, stream_get_wrappers())) {
+            stream_wrapper_unregister($protocol);
         }
 
         // Set the client passed in as the default stream context client
-        stream_wrapper_register('s3', get_called_class(), STREAM_IS_URL);
+        stream_wrapper_register($protocol, get_called_class(), STREAM_IS_URL);
         $default = stream_context_get_options(stream_context_get_default());
-        $default['s3']['client'] = $client;
-        stream_context_set_default($default);
-    }
+        $default[$protocol]['client'] = $client;
 
-    /**
-     * Clears the internal LRU cache of the stream wrapper.
-     */
-    public static function clearCache()
-    {
-        static::$statCache = [];
+        if ($cache) {
+            $default[$protocol]['cache'] = $cache;
+        } elseif (!isset($default[$protocol]['cache'])) {
+            // Set a default cache adapter.
+            $default[$protocol]['cache'] = new LruArrayCache();
+        }
+
+        stream_context_set_default($default);
     }
 
     public function stream_close()
     {
-        $this->body = null;
+        $this->body = $this->cache = null;
     }
 
     public function stream_open($path, $mode, $options, &$opened_path)
@@ -194,7 +201,7 @@ class StreamWrapper
     public function unlink($path)
     {
         return $this->boolCall(function () use ($path) {
-            self::clearCacheKey($path);
+            $this->clearCacheKey($path);
             $this->getClient()->deleteObject($this->withPath($path));
             return true;
         });
@@ -217,14 +224,27 @@ class StreamWrapper
     public function url_stat($path, $flags)
     {
         // Some paths come through as S3:// for some reason.
-        $path = trim(str_replace('S3://', 's3://', $path));
+        $split = explode('://', $path);
+        $path = strtolower($split[0]) . '://' . $split[1];
 
         // Check if this path is in the url_stat cache
-        if ($value = self::getCache($path)) {
+        if ($value = $this->getCacheStorage()->get($path)) {
             return $value;
         }
 
+        $stat = $this->createStat($path, $flags);
+
+        if (is_array($stat)) {
+            $this->getCacheStorage()->set($path, $stat);
+        }
+
+        return $stat;
+    }
+
+    private function createStat($path, $flags)
+    {
         $parts = $this->withPath($path);
+
         if (!$parts['Key']) {
             return $this->statDirectory($parts, $path, $flags);
         }
@@ -287,7 +307,7 @@ class StreamWrapper
     public function mkdir($path, $mode, $options)
     {
         $params = $this->withPath($path);
-        self::clearCacheKey($path);
+        $this->clearCacheKey($path);
         if (!$params['Bucket']) {
             return false;
         }
@@ -303,7 +323,7 @@ class StreamWrapper
 
     public function rmdir($path, $options)
     {
-        self::clearCacheKey($path);
+        $this->clearCacheKey($path);
         $params = $this->withPath($path);
         $client = $this->getClient();
 
@@ -421,33 +441,41 @@ class StreamWrapper
             return false;
         }
 
+        // First we need to create a cache key. This key is the full path to
+        // then object in s3: protocol://bucket/key.
+        // Next we need to create a result value. The result value is the
+        // current value of the iterator without the opened bucket prefix to
+        // emulate how readdir() works on directories.
+        // The cache key and result value will depend on if this is a prefix
+        // or a key.
         $cur = $this->objectIterator->current();
         if (isset($cur['Prefix'])) {
             // Include "directories". Be sure to strip a trailing "/"
             // on prefixes.
-            $prefix = rtrim($cur['Prefix'], '/');
-            $key = $this->formatKey($prefix);
-            $result = str_replace($this->openedBucketPrefix, '', $prefix);
-            $stat = $this->formatUrlStat($prefix);
+            $result = rtrim($cur['Prefix'], '/');
+            $key = $this->formatKey($result);
+            $stat = $this->formatUrlStat($key);
         } else {
-            // Remove the prefix from the result to emulate other
-            // stream wrappers.
-            $result = str_replace($this->openedBucketPrefix, '', $cur['Key']);
+            $result = $cur['Key'];
             $key = $this->formatKey($cur['Key']);
             $stat = $this->formatUrlStat($cur);
         }
 
         // Cache the object data for quick url_stat lookups used with
         // RecursiveDirectoryIterator.
-        self::setCache($key, $stat);
+        $this->getCacheStorage()->set($key, $stat);
         $this->objectIterator->next();
 
-        return $result;
+        // Remove the prefix from the result to emulate other stream wrappers.
+        return $this->openedBucketPrefix
+            ? substr($result, strlen($this->openedBucketPrefix))
+            : $result;
     }
 
     private function formatKey($key)
     {
-        return "s3://{$this->openedBucket}/{$key}";
+        $protocol = explode('://', $this->openedPath)[0];
+        return "{$protocol}://{$this->openedBucket}/{$key}";
     }
 
     /**
@@ -464,8 +492,8 @@ class StreamWrapper
     {
         $partsFrom = $this->withPath($path_from);
         $partsTo = $this->withPath($path_to);
-        self::clearCacheKey($path_from);
-        self::clearCacheKey($path_to);
+        $this->clearCacheKey($path_from);
+        $this->clearCacheKey($path_to);
 
         if (!$partsFrom['Key'] || !$partsTo['Key']) {
             return $this->triggerError('The Amazon S3 stream wrapper only '
@@ -581,7 +609,10 @@ class StreamWrapper
 
     private function getBucketKey($path)
     {
-        $parts = explode('/', substr($path, 5), 2);
+        // Remove the protocol
+        $parts = explode('://', $path);
+        // Get the bucket, key
+        $parts = explode('/', $parts[1], 2);
 
         return [
             'Bucket' => $parts[0],
@@ -609,13 +640,8 @@ class StreamWrapper
         $client = $this->getClient();
         $command = $client->getCommand('GetObject', $this->getOptions());
         $command['@http']['stream'] = true;
-
         $result = $client->execute($command);
         $this->body = $result['Body'];
-
-        if ($result['ContentLength']) {
-            $this->body->setSize($result['ContentLength']);
-        }
 
         // Wrap the body in a caching entity body if seeking is allowed
         if ($this->getOption('seekable') && !$this->body->isSeekable()) {
@@ -693,7 +719,7 @@ class StreamWrapper
                 // Pluck the content-length if available.
                 if (isset($result['ContentLength'])) {
                     $stat['size'] = $stat[7] = $result['ContentLength'];
-                } elseif (isset($stat['Size'])) {
+                } elseif (isset($result['Size'])) {
                     $stat['size'] = $stat[7] = $result['Size'];
                 }
                 if (isset($result['LastModified'])) {
@@ -722,7 +748,7 @@ class StreamWrapper
 
         return $this->boolCall(function () use ($params, $path) {
             $this->getClient()->createBucket($params);
-            self::clearCacheKey($path);
+            $this->clearCacheKey($path);
             return true;
         });
     }
@@ -751,7 +777,7 @@ class StreamWrapper
 
         return $this->boolCall(function () use ($params, $path) {
             $this->getClient()->putObject($params);
-            self::clearCacheKey($path);
+            $this->clearCacheKey($path);
             return true;
         });
     }
@@ -785,7 +811,6 @@ class StreamWrapper
             ? $this->triggerError('Subfolder contains nested folders')
             : true;
     }
-
 
     /**
      * Determine the most appropriate ACL based on a file mode.
@@ -846,62 +871,25 @@ class StreamWrapper
     }
 
     /**
-     * Clears a specific stat cache value from the stat cache.
+     * @return LruArrayCache
+     */
+    private function getCacheStorage()
+    {
+        if (!$this->cache) {
+            $this->cache = $this->getOption('cache') ?: new LruArrayCache();
+        }
+
+        return $this->cache;
+    }
+
+    /**
+     * Clears a specific stat cache value from the stat cache and LRU cache.
      *
      * @param string $key S3 path (s3://bucket/key).
      */
-    private static function clearCacheKey($key)
+    private function clearCacheKey($key)
     {
         clearstatcache(true, $key);
-        unset(self::$statCache[$key]);
-    }
-
-    /**
-     * Gets a value from the stat cache.
-     *
-     * @param string $key S3 path (s3://bucket/key).
-     *
-     * @return array|null
-     */
-    private static function getCache($key)
-    {
-        if (isset(self::$statCache[$key])) {
-            self::$statCache[$key]['time'] = microtime(true);
-            return self::$statCache[$key]['value'];
-        }
-
-        return null;
-    }
-
-    /**
-     * Adds a value to the stat cache, marking the time it was added.
-     *
-     * @param string $key   S3 path (e.g., s3://bucket/key).
-     * @param array  $value stat() array.
-     */
-    private static function setCache($key, $value)
-    {
-        if (count(self::$statCache) === 1001) {
-            self::purgeLru();
-        }
-
-        self::$statCache[$key] = [
-            'value' => $value,
-            'time'  => microtime(true)
-        ];
-    }
-
-    /**
-     * Purges half of the items in the cache, removing the least recently used.
-     */
-    private static function purgeLru()
-    {
-        usort(self::$statCache, function ($a, $b) {
-            return $a['time'] > $b['time']
-                ? 1
-                : ($a['time'] < $b['time'] ? -1 : 0);
-        });
-
-        self::$statCache = array_slice(self::$statCache, 0, 500);
+        $this->getCacheStorage()->remove($key);
     }
 }
