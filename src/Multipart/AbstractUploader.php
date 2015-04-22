@@ -20,11 +20,13 @@ use Psr\Http\Message\StreamInterface as Stream;
  */
 abstract class AbstractUploader implements Promise\PromisorInterface
 {
+    const DEFAULT_CONCURRENCY = 5;
+
     /** @var array Default values for base multipart configuration */
     private static $defaultConfig = [
         'part_size'       => null,
         'state'           => null,
-        'concurrency'     => 3,
+        'concurrency'     => self::DEFAULT_CONCURRENCY,
         'before_initiate' => null,
         'before_upload'   => null,
         'before_complete' => null,
@@ -289,6 +291,12 @@ abstract class AbstractUploader implements Promise\PromisorInterface
             $this->info['command'][$operation],
             $params + $this->state->getId()
         );
+
+        // Wait for the next tick.
+        if (!$command['@http']) {
+            $command['@http'] = [];
+        }
+        $command['@http']['delay'] = true;
 
         // Execute the before callback.
         if (is_callable($this->config["before_{$operation}"])) {
