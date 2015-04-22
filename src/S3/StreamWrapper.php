@@ -441,18 +441,22 @@ class StreamWrapper
             return false;
         }
 
+        // First we need to create a cache key. This key is the full path to
+        // then object in s3: protocol://bucket/key.
+        // Next we need to create a result value. The result value is the
+        // current value of the iterator without the opened bucket prefix to
+        // emulate how readdir() works on directories.
+        // The cache key and result value will depend on if this is a prefix
+        // or a key.
         $cur = $this->objectIterator->current();
         if (isset($cur['Prefix'])) {
             // Include "directories". Be sure to strip a trailing "/"
             // on prefixes.
-            $prefix = rtrim($cur['Prefix'], '/');
-            $key = $this->formatKey($prefix);
-            $result = str_replace($this->openedBucketPrefix, '', $prefix);
-            $stat = $this->formatUrlStat($prefix);
+            $result = rtrim($cur['Prefix'], '/');
+            $key = $this->formatKey($result);
+            $stat = $this->formatUrlStat($key);
         } else {
-            // Remove the prefix from the result to emulate other
-            // stream wrappers.
-            $result = str_replace($this->openedBucketPrefix, '', $cur['Key']);
+            $result = $cur['Key'];
             $key = $this->formatKey($cur['Key']);
             $stat = $this->formatUrlStat($cur);
         }
@@ -462,7 +466,10 @@ class StreamWrapper
         $this->getCacheStorage()->set($key, $stat);
         $this->objectIterator->next();
 
-        return $result;
+        // Remove the prefix from the result to emulate other stream wrappers.
+        return $this->openedBucketPrefix
+            ? substr($result, strlen($this->openedBucketPrefix))
+            : $result;
     }
 
     private function formatKey($key)
@@ -712,6 +719,8 @@ class StreamWrapper
                 // Pluck the content-length if available.
                 if (isset($result['ContentLength'])) {
                     $stat['size'] = $stat[7] = $result['ContentLength'];
+                } elseif (isset($result['Size'])) {
+                    $stat['size'] = $stat[7] = $result['Size'];
                 }
                 if (isset($result['LastModified'])) {
                     // ListObjects or HeadObject result
@@ -802,7 +811,6 @@ class StreamWrapper
             ? $this->triggerError('Subfolder contains nested folders')
             : true;
     }
-
 
     /**
      * Determine the most appropriate ACL based on a file mode.

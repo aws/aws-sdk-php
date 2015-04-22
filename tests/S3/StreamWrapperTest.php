@@ -686,28 +686,32 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         $results = [
             [
                 'IsTruncated' => true,
-                'NextMarker'  => 'b/',
-                'Delimiter'   => '/',
+                'NextMarker'  => 'key/b/',
                 'Name'        => 'bucket',
                 'Prefix'      => '',
                 'MaxKeys'     => 1000,
-                'CommonPrefixes' => [['Prefix' => 'a/'], ['Prefix' => 'b/']]
+                'CommonPrefixes' => [
+                    ['Prefix' => 'key/a/'],
+                    ['Prefix' => 'key/b/']
+                ]
+            ],
+            [
+                'IsTruncated' => true,
+                'Marker'      => '',
+                'Contents'    => [['Key' => 'key/c']],
+                'Name'        => 'bucket',
+                'Prefix'      => '',
+                'MaxKeys'     => 1000,
+                'CommonPrefixes' => [['Prefix' => 'key/d/']]
             ],
             [
                 'IsTruncated' => true,
                 'Marker'      => '',
                 'Delimiter'   => '/',
-                'Contents'    => [['Key' => 'c']],
-                'Name'        => 'bucket',
-                'Prefix'      => '',
-                'MaxKeys'     => 1000,
-                'CommonPrefixes' => [['Prefix' => 'd/']]
-            ],
-            [
-                'IsTruncated' => true,
-                'Marker'      => '',
-                'Delimiter'   => '/',
-                'Contents'    => [['Key' => 'e'], ['Key' => 'f']],
+                'Contents'    => [
+                    ['Key' => 'key/e', 'Size' => 1],
+                    ['Key' => 'key/f', 'Size' => 2]
+                ],
                 'Name'        => 'bucket',
                 'Prefix'      => '',
                 'MaxKeys'     => 1000
@@ -715,7 +719,6 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
             [
                 'IsTruncated' => true,
                 'Marker'      => '',
-                'Delimiter'   => '/',
                 'Name'        => 'bucket',
                 'Prefix'      => '',
                 'NextMarker'  => 'DUMMY',
@@ -723,11 +726,10 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'IsTruncated' => false,
-                'Delimiter'   => '/',
                 'Name'        => 'bucket',
                 'NextMarker'  => 'DUMMY',
                 'MaxKeys'     => 1000,
-                'CommonPrefixes' => [['Prefix' => 'g/']]
+                'CommonPrefixes' => [['Prefix' => 'key/g/']]
             ]
         ];
 
@@ -754,6 +756,10 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         // This is the order that the mock responses should provide
         $expected = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
         $this->assertEquals($expected, $files);
+
+        // Get size from cache
+        $this->assertSame(1, filesize('s3://bucket/key/e'));
+        $this->assertSame(2, filesize('s3://bucket/key/f'));
 
         closedir($r);
     }
@@ -783,6 +789,35 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
 
         $context = stream_context_create(['s3' => ['delimiter' => '']]);
         $r = opendir('s3://bucket', $context);
+        closedir($r);
+    }
+
+    public function testCachesReaddirs()
+    {
+        $results = [
+            [
+                'IsTruncated' => false,
+                'Marker'      => '',
+                'Delimiter'   => '/',
+                'Contents'    => [
+                    ['Key' => 'key/e', 'Size' => 1],
+                    ['Key' => 'key/f', 'Size' => 2]
+                ],
+                'Name'        => 'bucket',
+                'Prefix'      => '',
+                'MaxKeys'     => 1000
+            ]
+        ];
+
+        $this->addMockResults($this->client, array_merge($results, $results));
+        $dir = 's3://bucket/key/';
+        $r = opendir($dir);
+        $file1 = readdir($r);
+        $this->assertEquals('e', $file1);
+        $this->assertEquals(1, filesize('s3://bucket/key/' . $file1));
+        $file2 = readdir($r);
+        $this->assertEquals('f', $file2);
+        $this->assertEquals(2, filesize('s3://bucket/key/' . $file2));
         closedir($r);
     }
 }
