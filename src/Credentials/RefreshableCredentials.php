@@ -1,12 +1,10 @@
 <?php
 namespace Aws\Credentials;
 
-use Aws\Exception\CredentialsException;
-
 /**
  * Refreshes credentials using a callback function when they are expired.
  */
-class RefreshableCredentials implements CredentialsInterface
+class RefreshableCredentials implements RefreshableCredentialsInterface
 {
     /** @var CredentialsInterface Wrapped credentials object */
     private $credentials;
@@ -53,6 +51,13 @@ class RefreshableCredentials implements CredentialsInterface
         return $this->credentials->isExpired();
     }
 
+    public function refresh()
+    {
+        $this->credentials = null;
+        $fn = $this->provider;
+        $this->credentials = CredentialProvider::resolve($fn);
+    }
+
     private function getCreds()
     {
         if ($this->credentials->isExpired()) {
@@ -60,12 +65,5 @@ class RefreshableCredentials implements CredentialsInterface
         }
 
         return $this->credentials;
-    }
-
-    private function refresh()
-    {
-        $this->credentials = null;
-        $fn = $this->provider;
-        $this->credentials = CredentialProvider::resolve($fn);
     }
 }
