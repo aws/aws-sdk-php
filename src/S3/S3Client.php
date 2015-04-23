@@ -35,7 +35,8 @@ class S3Client extends AwsClient
                 . "send requests to the global\nAmazon S3 endpoint, which is "
                 . "generally able to send requests to any region\n(though you "
                 . "may need to use a region specific endpoint when sending "
-                . "requests\nover https to buckets with dots in them.";
+                . "requests\nover https to buckets with dots in them or "
+                . "contacting signature version\n4 only regions.";
         };
 
         return $args + [
