@@ -2172,6 +2172,38 @@ return array (
                 ),
             ),
         ),
+        'GetAccessKeyLastUsed' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'GetAccessKeyLastUsedResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'GetAccessKeyLastUsed',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-05-08',
+                ),
+                'AccessKeyId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 16,
+                    'maxLength' => 32,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The request was rejected because it referenced an entity that does not exist. The error message describes the entity.',
+                    'class' => 'NoSuchEntityException',
+                ),
+            ),
+        ),
         'GetAccountAuthorizationDetails' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -5360,6 +5392,31 @@ return array (
                 ),
             ),
         ),
+        'GetAccessKeyLastUsedResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'UserName' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'AccessKeyLastUsed' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'LastUsedDate' => array(
+                            'type' => 'string',
+                        ),
+                        'ServiceName' => array(
+                            'type' => 'string',
+                        ),
+                        'Region' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+            ),
+        ),
         'GetAccountAuthorizationDetailsResponse' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -7175,13 +7232,6 @@ return array (
         ),
     ),
     'iterators' => array(
-        'GetAccountAuthorizationDetails' => array(
-            'input_token' => 'Marker',
-            'output_token' => 'Marker',
-            'more_results' => 'IsTruncated',
-            'limit_key' => 'MaxItems',
-            'result_key' => 'UserDetailList || GroupDetailList || RoleDetailList',
-        ),
         'GetGroup' => array(
             'input_token' => 'Marker',
             'output_token' => 'Marker',
@@ -7296,6 +7346,12 @@ return array (
             'more_results' => 'IsTruncated',
             'limit_key' => 'MaxItems',
             'result_key' => 'VirtualMFADevices',
+        ),
+        'GetAccountAuthorizationDetails' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'Marker',
+            'more_results' => 'IsTruncated',
+            'limit_key' => 'MaxItems',
         ),
     ),
 );

@@ -191,6 +191,12 @@ return array (
                                             ),
                                         ),
                                     ),
+                                    'exprs' => array(
+                                        'type' => 'object',
+                                        'additionalProperties' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
                                     'highlights' => array(
                                         'type' => 'object',
                                         'additionalProperties' => array(

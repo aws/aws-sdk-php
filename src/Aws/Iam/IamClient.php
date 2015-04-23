@@ -69,6 +69,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model detachUserPolicy(array $args = array()) {@command Iam DetachUserPolicy}
  * @method Model enableMFADevice(array $args = array()) {@command Iam EnableMFADevice}
  * @method Model generateCredentialReport(array $args = array()) {@command Iam GenerateCredentialReport}
+ * @method Model getAccessKeyLastUsed(array $args = array()) {@command Iam GetAccessKeyLastUsed}
  * @method Model getAccountAuthorizationDetails(array $args = array()) {@command Iam GetAccountAuthorizationDetails}
  * @method Model getAccountPasswordPolicy(array $args = array()) {@command Iam GetAccountPasswordPolicy}
  * @method Model getAccountSummary(array $args = array()) {@command Iam GetAccountSummary}

@@ -3,6 +3,8 @@
 ## Next Release
 
 * `Aws\Ec2` - Added support for new VM Import APIs, `including ImportImage`.
+* `Aws\Iam` - Added support for the `GetAccessKeyLastUsed` operation.
+* `Aws\CloudSearchDomain` - Search responses now include the expressions requested.
 
 ## 2.8.1 - 2015-04-16
 
