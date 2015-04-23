@@ -2,6 +2,7 @@
 namespace Aws\Test\S3;
 
 use Aws\Credentials\NullCredentials;
+use Aws\MockHandler;
 use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
@@ -19,23 +20,28 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testCanForcePathStyleOnAllOperations()
     {
+        $mock = new MockHandler([new Result()]);
         $c = new S3Client([
+            'region'           => 'us-standard',
             'version'          => 'latest',
-            'force_path_style' => true
+            'force_path_style' => true,
+            'handler'          => $mock
         ]);
-
-        $this->addMockResults($c, [[]]);
         $command = $c->getCommand('GetObject', [
             'Bucket' => 'foo',
             'Key'    => 'baz'
         ]);
         $c->execute($command);
-        $this->assertTrue($command['PathStyle']);
+        $this->assertEquals(
+            'https://s3.amazonaws.com/foo/baz',
+            (string) $mock->getLastRequest()->getUri()
+        );
     }
 
     public function testCanUseBucketEndpoint()
     {
         $c = new S3Client([
+            'region'          => 'us-standard',
             'version'         => 'latest',
             'endpoint'        => 'http://test.domain.com',
             'bucket_endpoint' => true
@@ -49,6 +55,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
     public function testAddsMd5ToConfig()
     {
         $c = new S3Client([
+            'region'          => 'us-standard',
             'version'         => 'latest',
             'calculate_md5'   => true
         ]);
@@ -81,7 +88,6 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
     public function testValidatesDnsBucketNames($bucket, $valid)
     {
         $this->assertEquals($valid, S3Client::isBucketDnsCompatible($bucket));
-        $this->assertEquals($valid, S3Client::isValidBucketName($bucket));
     }
 
     /**

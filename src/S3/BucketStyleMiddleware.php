@@ -72,13 +72,12 @@ class BucketStyleMiddleware
 
         if ($this->bucketEndpoint) {
             $path = $this->removeBucketFromPath($path, $bucket);
-        } elseif (!$command['PathStyle']
-            && S3Client::isBucketDnsCompatible($bucket)
+        } elseif (S3Client::isBucketDnsCompatible($bucket)
             && !($uri->getScheme() == 'https' && strpos($bucket, '.'))
         ) {
-            // Switch to virtual if PathStyle is disabled, or not a DNS
-            // compatible bucket name, or the scheme is https and there are no
-            // dots in the hostheader (avoids SSL issues).
+            // Switch to virtual if not a DNS compatible bucket name, or the
+            // scheme is https and there are no dots in the host header
+            // (avoids SSL issues).
             $uri = $uri->withHost($bucket . '.' . $uri->getHost());
             $path = $this->removeBucketFromPath($path, $bucket);
         }

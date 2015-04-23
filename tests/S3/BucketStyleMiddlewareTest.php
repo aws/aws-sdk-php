@@ -50,12 +50,11 @@ class BucketStyleTest extends \PHPUnit_Framework_TestCase
 
     public function testUsesPathStyleWhenForced()
     {
-        $s3 = $this->getTestClient('s3');
+        $s3 = $this->getTestClient('s3', ['force_path_style' => true]);
         $this->addMockResults($s3, [[]]);
         $command = $s3->getCommand('GetObject', [
-            'Bucket'    => 'foo',
-            'Key'       => 'Bar',
-            'PathStyle' => true
+            'Bucket' => 'foo',
+            'Key'    => 'Bar'
         ]);
         $command->getHandlerList()->append(
             'sign',
