@@ -70,8 +70,9 @@ class JsonCompiler
      */
     public function load($path)
     {
+        $real = $this->normalize($path);
         if (!$this->useCache) {
-            return json_decode(file_get_contents($path), true);
+            return $this->loadJsonFromFile($path, $real);
         }
 
         $real = $this->normalize($path);
@@ -85,13 +86,7 @@ class JsonCompiler
             return require $cache;
         }
 
-        if (!file_exists($real)) {
-            throw new \InvalidArgumentException(
-                sprintf("File not found: %s, realpath: %s", $path, $real)
-            );
-        }
-
-        $data = json_decode(file_get_contents($real), true);
+        $data = $this->loadJsonFromFile($path, $real);
         file_put_contents($cache, "<?php return " . var_export($data, true) . ';');
 
         return $data;
@@ -141,5 +136,25 @@ class JsonCompiler
         }
 
         return $isPhar ? 'phar://' . $resolved : $resolved;
+    }
+
+    /**
+     * Loads a JSON file.
+     *
+     * @param string $path Provided path.
+     * @param string $real Normalized path.
+     *
+     * @return array
+     * @throw \InvalidArgumentException if file does not exist.
+     */
+    private function loadJsonFromFile($path, $real)
+    {
+        if (!file_exists($real)) {
+            throw new \InvalidArgumentException(
+                sprintf("File not found: %s, realpath: %s", $path, $real)
+            );
+        }
+
+        return json_decode(file_get_contents($real), true);
     }
 }
