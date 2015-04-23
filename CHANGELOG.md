@@ -1,8 +1,12 @@
 # CHANGELOG
 
+## Next Release
+
+* `Aws\Ec2` - Added support for new VM Import APIs, `including ImportImage`.
+
 ## 2.8.1 - 2015-04-16
 
-* `Aws\ConfigService` - Add the 'GetResourceConfigHistory' iterator.
+* `Aws\ConfigService` - Added the 'GetResourceConfigHistory' iterator.
 * `Aws\CognitoSync` - Added support for events.
 * `Aws\Lambda` - Fixed an issue with the Invoke operation.
 

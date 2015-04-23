@@ -43,6 +43,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model cancelBundleTask(array $args = array()) {@command Ec2 CancelBundleTask}
  * @method Model cancelConversionTask(array $args = array()) {@command Ec2 CancelConversionTask}
  * @method Model cancelExportTask(array $args = array()) {@command Ec2 CancelExportTask}
+ * @method Model cancelImportTask(array $args = array()) {@command Ec2 CancelImportTask}
  * @method Model cancelReservedInstancesListing(array $args = array()) {@command Ec2 CancelReservedInstancesListing}
  * @method Model cancelSpotInstanceRequests(array $args = array()) {@command Ec2 CancelSpotInstanceRequests}
  * @method Model confirmProductInstance(array $args = array()) {@command Ec2 ConfirmProductInstance}
@@ -105,6 +106,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model describeExportTasks(array $args = array()) {@command Ec2 DescribeExportTasks}
  * @method Model describeImageAttribute(array $args = array()) {@command Ec2 DescribeImageAttribute}
  * @method Model describeImages(array $args = array()) {@command Ec2 DescribeImages}
+ * @method Model describeImportImageTasks(array $args = array()) {@command Ec2 DescribeImportImageTasks}
+ * @method Model describeImportSnapshotTasks(array $args = array()) {@command Ec2 DescribeImportSnapshotTasks}
  * @method Model describeInstanceAttribute(array $args = array()) {@command Ec2 DescribeInstanceAttribute}
  * @method Model describeInstanceStatus(array $args = array()) {@command Ec2 DescribeInstanceStatus}
  * @method Model describeInstances(array $args = array()) {@command Ec2 DescribeInstances}
@@ -151,8 +154,10 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model enableVpcClassicLink(array $args = array()) {@command Ec2 EnableVpcClassicLink}
  * @method Model getConsoleOutput(array $args = array()) {@command Ec2 GetConsoleOutput}
  * @method Model getPasswordData(array $args = array()) {@command Ec2 GetPasswordData}
+ * @method Model importImage(array $args = array()) {@command Ec2 ImportImage}
  * @method Model importInstance(array $args = array()) {@command Ec2 ImportInstance}
  * @method Model importKeyPair(array $args = array()) {@command Ec2 ImportKeyPair}
+ * @method Model importSnapshot(array $args = array()) {@command Ec2 ImportSnapshot}
  * @method Model importVolume(array $args = array()) {@command Ec2 ImportVolume}
  * @method Model modifyImageAttribute(array $args = array()) {@command Ec2 ModifyImageAttribute}
  * @method Model modifyInstanceAttribute(array $args = array()) {@command Ec2 ModifyInstanceAttribute}
@@ -224,6 +229,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getDescribeReservedInstancesIterator(array $args = array()) The input array uses the parameters of the DescribeReservedInstances operation
  * @method ResourceIteratorInterface getDescribeReservedInstancesListingsIterator(array $args = array()) The input array uses the parameters of the DescribeReservedInstancesListings operation
  * @method ResourceIteratorInterface getDescribeReservedInstancesOfferingsIterator(array $args = array()) The input array uses the parameters of the DescribeReservedInstancesOfferings operation
+ * @method ResourceIteratorInterface getDescribeReservedInstancesModificationsIterator(array $args = array()) The input array uses the parameters of the DescribeReservedInstancesModifications operation
  * @method ResourceIteratorInterface getDescribeRouteTablesIterator(array $args = array()) The input array uses the parameters of the DescribeRouteTables operation
  * @method ResourceIteratorInterface getDescribeSecurityGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeSecurityGroups operation
  * @method ResourceIteratorInterface getDescribeSnapshotsIterator(array $args = array()) The input array uses the parameters of the DescribeSnapshots operation
@@ -242,7 +248,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  */
 class Ec2Client extends AbstractClient
 {
-    const LATEST_API_VERSION = '2014-10-01';
+    const LATEST_API_VERSION = '2015-03-01';
 
     /**
      * Factory method to create a new AWS Elastic Compute Cloud client using an array of configuration options.
