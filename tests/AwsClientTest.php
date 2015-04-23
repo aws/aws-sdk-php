@@ -28,7 +28,8 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
                 'metadata' => [
                     'protocol'       => 'query',
                     'endpointPrefix' => 'foo'
-                ]
+                ],
+                'shapes' => []
             ];
         };
     }

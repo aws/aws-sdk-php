@@ -15,7 +15,7 @@ class ApiProviderTest extends \PHPUnit_Framework_TestCase
     private function getTestApiProvider($useManifest = true)
     {
         $dir = __DIR__ . '/api_provider_fixtures';
-        $manifest = json_decode(file_get_contents($dir . '/version-manifest.json'), true);
+        $manifest = json_decode(file_get_contents($dir . '/manifest.json'), true);
 
         return $useManifest
             ? ApiProvider::manifest($dir, $manifest)
@@ -51,7 +51,7 @@ class ApiProviderTest extends \PHPUnit_Framework_TestCase
     public function testCanGetDefaultProvider()
     {
         $p = ApiProvider::defaultProvider();
-        $this->assertArrayHasKey('s3', $this->readAttribute($p, 'versions'));
+        $this->assertArrayHasKey('s3', $this->readAttribute($p, 'manifest'));
     }
 
     public function testManifestProviderReturnsNullForMissingService()

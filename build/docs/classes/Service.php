@@ -58,14 +58,14 @@ class Service
     /** @var string */
     public $version;
 
-    public function __construct($name, Api $api, DocModel $docs)
+    public function __construct(Api $api, DocModel $docs)
     {
+        $this->name = $api->getEndpointPrefix();
         $this->api = $api;
-        $this->name = $name;
-        $this->namespace = $this->getServiceNamespace($name);
+        $this->namespace = $this->getServiceNamespace($this->name);
         $this->version = $api->getApiVersion();
         $this->docs = $docs;
-        $this->slug = $name . '-' . $this->version;
+        $this->slug = $this->name . '-' . $this->version;
         $this->clientName = $this->namespace . 'Client';
         $this->client = 'Aws\\' . $this->namespace . '\\' . $this->clientName;
         $this->clientLink = 'class-Aws.' . $this->namespace . '.' . $this->namespace . 'Client.html';

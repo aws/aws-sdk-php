@@ -29,33 +29,33 @@ class Service extends AbstractModel
     private $waiters = null;
 
     /**
+     * @param array    $definition
      * @param callable $provider
-     * @param string   $serviceName
-     * @param string   $apiVersion
      *
      * @internal param array $definition Service description
      */
-    public function __construct(callable $provider, $serviceName, $apiVersion)
+    public function __construct(array $definition, callable $provider)
     {
         static $defaults = [
             'operations' => [],
             'shapes'     => [],
             'metadata'   => []
         ], $defaultMeta = [
-            'serviceFullName'  => null,
             'apiVersion'       => null,
+            'serviceFullName'  => null,
             'endpointPrefix'   => null,
             'signingName'      => null,
             'signatureVersion' => null,
             'protocol'         => null
         ];
 
-        $this->apiProvider = $provider;
-        $this->serviceName = $serviceName;
-        $this->apiVersion = $apiVersion;
-        $definition = ApiProvider::resolve($provider, 'api', $serviceName, $apiVersion) + $defaults;
+        $definition += $defaults;
         $definition['metadata'] += $defaultMeta;
+        $this->definition = $definition;
+        $this->apiProvider = $provider;
         parent::__construct($definition, new ShapeMap($definition['shapes']));
+        $this->serviceName = $this->getEndpointPrefix();
+        $this->apiVersion = $this->getApiVersion();
     }
 
     /**

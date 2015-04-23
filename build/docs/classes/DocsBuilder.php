@@ -10,6 +10,11 @@ use Aws\Api\Service as Api;
 use Aws\Api\StructureShape;
 use Aws\Api\DocModel;
 
+/**
+ * Builds documentation for a given service.
+ *
+ * @internal
+ */
 class DocsBuilder
 {
     /** @var string HTML template to replace {{ contents }} */
@@ -38,16 +43,17 @@ class DocsBuilder
         // Collect versions
         $services = [];
 
-        foreach ($this->gatherServiceVersions() as $name => $versions) {
-            foreach ($versions as $alias => $version) {
-                if ($alias === 'latest') {
-                    continue;
-                }
-                $service = new Service(
-                    $name,
-                    new Api($this->apiProvider, $name, $version),
-                    new DocModel($this->apiProvider, $name, $version)
+        foreach ($this->gatherServiceVersions() as $name => $data) {
+            // Skip "latest"
+            unset($data['versions']['latest']);
+            $ns = $data['namespace'];
+            foreach ($data['versions'] as $alias => $version) {
+                list($api, $docModel) = call_user_func(
+                    "Aws\\{$ns}\\{$ns}Client::applyDocFilters",
+                    call_user_func($this->apiProvider, 'api', $name, $version),
+                    call_user_func($this->apiProvider, 'docs', $name, $version)
                 );
+                $service = new Service($api, $docModel);
                 $this->renderService($service);
                 $services[$service->title][$version] = $service;
             }
@@ -186,7 +192,7 @@ EOT;
 
     private function gatherServiceVersions()
     {
-        $manifest = __DIR__ . '/../../../src/data/version-manifest.json';
+        $manifest = __DIR__ . '/../../../src/data/manifest.json';
 
         return json_decode(file_get_contents($manifest), true);
     }
@@ -332,7 +338,11 @@ EOT;
             ->append($this->renderShape($service->docs, $input, false));
 
         // Results
+        $html->elem('h4', null, 'Result Syntax');
+
         if (!count($output->getMembers())) {
+            $html->elem('pre', null, '[]');
+            $html->elem('h4', null, 'Result Details');
             $html->elem('div', 'alert alert-info', 'The results for this operation are always empty.');
         } else {
             $outputShapes = new ShapeIterator($output, $service->docs);
@@ -340,9 +350,7 @@ EOT;
             foreach ($outputShapes as $shape) {
                 $outputExample->addShape($shape);
             }
-            $html
-                ->elem('h4', null, 'Result Syntax')
-                ->elem('pre', null, htmlentities($outputExample->getCode()))
+            $html->elem('pre', null, htmlentities($outputExample->getCode()))
                 ->elem('h4', null, 'Result Details')
                 ->append($this->renderShape($service->docs, $output, false));
         }

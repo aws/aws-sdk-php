@@ -17,7 +17,8 @@ class Crc32ValidatingParserTest extends \PHPUnit_Framework_TestCase
     private function getWrapped()
     {
         $provider = ApiProvider::defaultProvider();
-        $parser = new JsonRpcParser(new Service($provider, 'dynamodb', 'latest'));
+        $data = $provider('api', 'dynamodb', 'latest');
+        $parser = new JsonRpcParser(new Service($data, $provider));
         return new Crc32ValidatingParser($parser);
     }
 

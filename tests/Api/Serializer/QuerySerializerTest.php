@@ -15,8 +15,8 @@ class QuerySerializerTest extends \PHPUnit_Framework_TestCase
 
     public function testSerializesEmptyLists()
     {
-        $service = new Service(function () {
-            return [
+        $service = new Service(
+            [
                 'metadata'=> [
                     'protocol'   => 'query',
                     'apiVersion' => '1'
@@ -35,8 +35,9 @@ class QuerySerializerTest extends \PHPUnit_Framework_TestCase
                         ]
                     ]
                 ]
-            ];
-        }, 'service', 'region');
+            ],
+            function () {}
+        );
 
         $q = new QuerySerializer($service, 'http://foo.com');
         $cmd = new Command('foo', ['baz' => []]);

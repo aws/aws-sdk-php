@@ -7,6 +7,9 @@ use Aws\Api\Shape;
 use Aws\Api\StructureShape;
 use Aws\Api\DocModel;
 
+/**
+ * @internal
+ */
 class ShapeIterator implements \Iterator
 {
     private static $keys = ['name', 'param', 'type', 'docs', 'recursive',
@@ -98,7 +101,9 @@ class ShapeIterator implements \Iterator
 
     private function walkStructure(StructureShape $shape, array $visited, array $path)
     {
-        foreach ($shape->getMembers() as $ref => $member) {
+        $shapeMembers = $shape->getMembers();
+        ksort($shapeMembers);
+        foreach ($shapeMembers as $ref => $member) {
             // Create the shape data from the Shape object.
             $data = $this->createShapeData($member);
             $path[] = $data['param'] = "'{$ref}'";

@@ -1,6 +1,8 @@
 <?php
 namespace Aws;
 
+use Aws\Api\ApiProvider;
+use Aws\Api\DocModel;
 use Aws\Api\Service;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Signature\SignatureProvider;
@@ -336,6 +338,25 @@ class AwsClient implements AwsClientInterface
                 ))
             )
         );
+    }
+
+    /**
+     * Returns a service model and doc model with any necessary changes
+     * applied.
+     *
+     * @param array $api  Array of service data being documented.
+     * @param array $docs Array of doc model data.
+     *
+     * @return array Tuple containing a [Service, DocModel]
+     *
+     * @internal This should only used to document the service API.
+     */
+    public static function applyDocFilters(array $api, array $docs)
+    {
+        return [
+            new Service($api, ApiProvider::defaultProvider()),
+            new DocModel($docs)
+        ];
     }
 
     /**
