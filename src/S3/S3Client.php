@@ -5,6 +5,7 @@ use Aws\Api\ApiProvider;
 use Aws\Api\DocModel;
 use Aws\Api\Service;
 use Aws\AwsClient;
+use Aws\ClientResolver;
 use Aws\Exception\AwsException;
 use Aws\HandlerList;
 use Aws\Middleware;
@@ -24,34 +25,26 @@ class S3Client extends AwsClient
     public static function getArguments()
     {
         $args = parent::getArguments();
-        // S3 does not require a region for the "classic" endpoint.
-        $args['region']['default'] = 'us-east-1';
         // Apply custom retry strategy.
         $args['retries']['fn'] = [__CLASS__, '_applyRetryConfig'];
 
+        // Show information about the "us-standard" region in the error message
+        $args['region']['required'] = function (array $args) {
+            $base = ClientResolver::_missing_region($args);
+            return "{$base}\nUse the 'us-standard' or 'us-east-1' region to "
+                . "send requests to the global\nAmazon S3 endpoint, which is "
+                . "generally able to send requests to any region\n(though you "
+                . "may need to use a region specific endpoint when sending "
+                . "requests\nover https to buckets with dots in them or "
+                . "contacting signature version\n4 only regions.";
+        };
+
         return $args + [
-            'force_path_style' => [
-                'type'    => 'config',
-                'valid'   => ['bool'],
-                'doc'     => 'Set to true to send requests using path style '
-                           . 'bucket addressing (e.g., '
-                           . 'https://s3.amazonaws.com/bucket/key).',
-                'fn'      => function ($value, $_, HandlerList $stack) {
-                    if ($value === true) {
-                        $stack->append('init', function (callable $handler) {
-                            return function ($cmd) use ($handler) {
-                                $cmd['PathStyle'] = true;
-                                return $handler($cmd);
-                            };
-                        });
-                    }
-                },
-            ],
             'calculate_md5' => [
                 'type'    => 'config',
                 'valid'   => ['bool'],
                 'doc'     => 'Set to false to disable calculating an MD5 for '
-                           . 'all Amazon S3 signed uploads.',
+                    . 'all Amazon S3 signed uploads.',
                 'default' => function (array &$args) {
                     // S3Client should calculate MD5 checksums for uploads
                     // unless explicitly disabled or using a v4 signer.
@@ -59,18 +52,31 @@ class S3Client extends AwsClient
                 },
             ],
             'bucket_endpoint' => [
-                'type'  => 'config',
-                'valid' => ['bool'],
-                'doc'   => 'Set to true to send requests to a hardcoded bucket '
-                         . 'endpoint rather than create an endpoint as a '
-                         . 'result of injecting the bucket into the URL. This '
-                         . 'option is useful for interacting with CNAME '
-                         . 'endpoints.',
-            ]
+                'type'    => 'config',
+                'valid'   => ['bool'],
+                'doc'     => 'Set to true to send requests to a hardcoded '
+                    . 'bucket endpoint rather than create an endpoint as a '
+                    . 'result of injecting the bucket into the URL. This '
+                    . 'option is useful for interacting with CNAME endpoints.',
+            ],
+            'force_path_style' => [
+                'type'    => 'config',
+                'valid'   => ['bool'],
+                'doc'     => 'Set to true to send requests using path style '
+                    . 'bucket addressing (e.g., '
+                    . 'https://s3.amazonaws.com/bucket/key). All requests sent '
+                    . 'to region specific endpoints will use path style by '
+                    . 'default. This option is only relevant when you wish to '
+                    . 'use the us-standard or us-east-1 region AND force a '
+                    . 'path style request. This option has no effect when '
+                    . 'using a "bucket_endpoint".'
+            ],
         ];
     }
 
     /**
+     * {@inheritdoc}
+     *
      * In addition to the options available to
      * {@see Aws\AwsClient::__construct}, S3Client accepts the following
      * options:
@@ -83,24 +89,59 @@ class S3Client extends AwsClient
      *   for all Amazon S3 signed uploads.
      * - force_path_style: (bool) Set to true to send requests using path
      *   style bucket addressing (e.g., https://s3.amazonaws.com/bucket/key).
+     *   All requests sent to region specific endpoints will use path style by
+     *   default. This option is only relevant when you wish to use the
+     *   us-standard or us-east-1 region AND force a path style request. This
+     *   option has no effect when using a "bucket_endpoint".
      *
-     * AwsClient options:
-     *
-     * {@inheritdoc}
+     * The S3Client requires that a region is provided. You can provide the
+     * "us-standard" or "us-east-1" region to use a custom region that connects
+     * to the global endpoint (s3.amazonaws.com). This region should be used
+     * when you do not know the actual region of the bucket or wish to attempt
+     * to use the same client to connect to multiple buckets. Using the
+     * "us-standard" region may encounter errors in specific cases. For example,
+     * we will attempt to place the bucket in the host header so that the
+     * us-standard region works with buckets created for a specific region.
+     * However, if the bucket contains dots ".", then the bucket must remain in
+     * the path of the URI to ensure that SSL certificate verification does not
+     * fail. In this case, you may receive a 301 redirect which will require
+     * you to use a client with a specific region setting. You may also be
+     * required to provide a region other than us-standard or us-east-1 when
+     * the bucket is in a signature version 4 only region.
      *
      * @param array $args
      */
     public function __construct(array $args)
     {
+        $region = isset($args['region']) ? $args['region'] : null;
+        $standard = ($region == 'us-standard' || $region == 'us-east-1');
+        // Rewrite us-standard to us-east-1 so that we can sign correctly.
+        if ($standard) {
+            $args['region'] = 'us-east-1';
+        }
+
         parent::__construct($args);
         $stack = $this->getHandlerList();
         $stack->append('init:s3.ssec', SSECMiddleware::wrap($this->getEndpoint()->getScheme()));
-        $stack->append('build:s3.bucket_style', BucketStyleMiddleware::wrap($this->getConfig('bucket_endpoint')));
         $stack->append('build:s3.md5', ApplyMd5Middleware::wrap($this->getConfig('calculate_md5')));
         $stack->append(
             'build:s3.content_type',
             Middleware::contentType(['PutObject', 'UploadPart'])
         );
+
+        // Use the bucket style middleware when using a "bucket_endpoint" or
+        // to move the bucket to the host if using us-standard and
+        // force_path_style is false.
+        $bucketEndpoint = $this->getConfig('bucket_endpoint');
+        if ($bucketEndpoint
+            || ($standard && !$this->getConfig('force_path_style'))
+        ) {
+            $stack->append(
+                'build:s3.bucket_style',
+                BucketStyleMiddleware::wrap($bucketEndpoint)
+            );
+        }
+
         $stack->append('sign:s3.put_object_url', PutObjectUrlMiddleware::wrap());
         $stack->append('sign:s3.permanent_redirect', PermanentRedirectMiddleware::wrap());
         $stack->append('init:s3.source_file', Middleware::sourceFile($this->getApi()));
@@ -449,14 +490,6 @@ class S3Client extends AwsClient
             }
             return false;
         }
-    }
-
-    /**
-     * @deprecated Use Aws\S3\S3Client::isBucketDnsCompatible() directly
-     */
-    public static function isValidBucketName($bucket)
-    {
-        return self::isBucketDnsCompatible($bucket);
     }
 
     /** @internal */
