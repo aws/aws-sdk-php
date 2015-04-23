@@ -45,11 +45,8 @@ class ApiProvider
         'docs'      => 'docs-2',
     ];
 
-    /** @var array The available API version manifest for each service. */
-    private $versions;
-
-    /** @var bool Whether or not the manifest is provided or calculated. */
-    private $hasManifest;
+    /** @var array API manifest */
+    private $manifest;
 
     /** @var string The directory containing service models. */
     private $modelsDir;
@@ -96,7 +93,7 @@ class ApiProvider
     {
         $dir = __DIR__ . '/../data';
 
-        return new self($dir, \Aws\load_compiled_json("$dir/version-manifest.json"));
+        return new self($dir, \Aws\load_compiled_json("$dir/manifest.json"));
     }
 
     /**
@@ -155,14 +152,15 @@ class ApiProvider
      */
     public function getVersions($service)
     {
-        if (!isset($this->versions[$service])) {
-            if ($this->hasManifest) {
-                return [];
-            }
+        if (!isset($this->manifest)) {
             $this->buildVersionsList($service);
         }
 
-        return array_values(array_unique($this->versions[$service]));
+        if (!isset($this->manifest[$service]['versions'])) {
+            return [];
+        }
+
+        return array_values(array_unique($this->manifest[$service]['versions']));
     }
 
     /**
@@ -184,15 +182,15 @@ class ApiProvider
         }
 
         // Resolve the version or return null.
-        if (!isset($this->versions[$service]) && !$this->hasManifest) {
+        if (!isset($this->manifest)) {
             $this->buildVersionsList($service);
         }
 
-        if (!isset($this->versions[$service][$version])) {
+        if (!isset($this->manifest[$service]['versions'][$version])) {
             return null;
         }
 
-        $version = $this->versions[$service][$version];
+        $version = $this->manifest[$service]['versions'][$version];
         $path = "{$this->modelsDir}/{$service}/{$version}/{$type}.json";
 
         try {
@@ -208,8 +206,7 @@ class ApiProvider
      */
     private function __construct($modelsDir, array $manifest = null)
     {
-        $this->hasManifest = is_array($manifest);
-        $this->versions = $manifest ?: [];
+        $this->manifest = $manifest;
         $this->modelsDir = rtrim($modelsDir, '/');
         if (!is_dir($this->modelsDir)) {
             throw new \InvalidArgumentException(
@@ -232,11 +229,15 @@ class ApiProvider
         // Get versions, remove . and .., and sort in descending order.
         $results = array_diff(scandir($dir, SCANDIR_SORT_DESCENDING), ['..', '.']);
 
-        if ($results) {
-            $this->versions[$service] = ['latest' => $results[0]];
-            $this->versions[$service] += array_combine($results, $results);
+        if (!$results) {
+            $this->manifest[$service] = ['versions' => []];
         } else {
-            $this->versions[$service] = [];
+            $this->manifest[$service] = [
+                'versions' => [
+                    'latest' => $results[0]
+                ]
+            ];
+            $this->manifest[$service]['versions'] += array_combine($results, $results);
         }
     }
 }

@@ -8,31 +8,31 @@ namespace Aws\Api;
  */
 class DocModel
 {
-    /** @var string */
-    private $serviceName;
-
-    /** @var string */
-    private $apiVersion;
-
     /** @var array */
     private $docs;
 
     /**
-     * @param ApiProvider $provider
-     * @param string $serviceName
-     * @param string $apiVersion
+     * @param array $docs
      *
      * @throws \RuntimeException
      */
-    public function __construct(ApiProvider $provider, $serviceName, $apiVersion)
+    public function __construct(array $docs)
     {
         if (!extension_loaded('tidy')) {
             throw new \RuntimeException('The "tidy" PHP extension is required.');
         }
 
-        $this->serviceName = $serviceName;
-        $this->apiVersion = $apiVersion;
-        $this->docs = $provider('docs', $serviceName, $apiVersion);
+        $this->docs = $docs;
+    }
+
+    /**
+     * Convert the doc model to an array.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->docs;
     }
 
     /**
@@ -42,7 +42,7 @@ class DocModel
      */
     public function getServiceDocs()
     {
-        return $this->getContent('service');
+        return isset($this->docs['service']) ? $this->docs['service'] : null;
     }
 
     /**
@@ -54,7 +54,9 @@ class DocModel
      */
     public function getOperationDocs($operation)
     {
-        return $this->getContent("operations.\"{$operation}\"");
+        return isset($this->docs['operations'][$operation])
+            ? $this->docs['operations'][$operation]
+            : null;
     }
 
     /**
@@ -66,7 +68,9 @@ class DocModel
      */
     public function getErrorDocs($error)
     {
-        return $this->getContent("shapes.\"{$error}/base\"");
+        return isset($this->docs['shapes'][$error]['base'])
+            ? $this->docs['shapes'][$error]['base']
+            : null;
     }
 
     /**
@@ -80,22 +84,29 @@ class DocModel
      */
     public function getShapeDocs($shapeName, $parentName, $ref)
     {
-        $prefix = "shapes.{$shapeName}";
-        return $this->getContent("{$prefix}.refs.\"{$parentName}\${$ref}\"")
-            ?: $this->getContent("{$prefix}.base");
+        if (!isset($this->docs['shapes'][$shapeName])) {
+            return '';
+        }
+
+        $result = '';
+        $d = $this->docs['shapes'][$shapeName];
+        if (isset($d['refs']["{$parentName}\$${ref}"])) {
+            $result = $d['refs']["{$parentName}\$${ref}"];
+        } elseif (isset($d['base'])) {
+            $result = $d['base'];
+        }
+
+        if (isset($d['append'])) {
+            $result .= $d['append'];
+        }
+
+        return $this->clean($result);
     }
 
-    /**
-     * @param string $path A JMESPath expression to evaluate on the model.
-     *
-     * @return null|string
-     */
-    private function getContent($path)
+    private function clean($content)
     {
-        $content = \JmesPath\search($path, $this->docs);
-
         if (!$content) {
-            return null;
+            return '';
         }
 
         $tidy = new \Tidy();

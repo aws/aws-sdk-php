@@ -1,6 +1,9 @@
 <?php
 namespace Aws\Glacier;
 
+use Aws\Api\ApiProvider;
+use Aws\Api\DocModel;
+use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\CommandInterface;
 use Aws\Exception\CouldNotCreateChecksumException;
@@ -127,5 +130,34 @@ class GlacierClient extends AwsClient
                 ));
             };
         };
+    }
+
+    /** @internal */
+    public static function applyDocFilters(array $api, array $docs)
+    {
+        // Add the SourceFile parameter.
+        $docs['shapes']['SourceFile']['base'] = 'The path to a file on disk to use instead of the body parameter.';
+        $api['shapes']['SourceFile'] = ['type' => 'string'];
+        $api['shapes']['UploadArchiveInput']['members']['SourceFile'] = ['shape' => 'SourceFile'];
+        $api['shapes']['UploadMultipartPartInput']['members']['SourceFile'] = ['shape' => 'SourceFile'];
+
+        // Add information about "checksum" being optional.
+        $docs['shapes']['checksum']['append'] =
+            '<div class="alert alert-info">The SDK will compute this value '
+            . 'for you on your behalf if it is not supplied.</div>';
+
+        // Add information about "accountId" being optional.
+        $optional = '<div class="alert alert-info">The SDK will set this value '
+            . 'to "-" by default.</div>';
+        foreach ($docs['shapes']['string']['refs'] as $name => &$ref) {
+            if (strpos($name, 'accountId')) {
+                $ref .= $optional;
+            }
+        }
+
+        return [
+            new Service($api, ApiProvider::defaultProvider()),
+            new DocModel($docs)
+        ];
     }
 }

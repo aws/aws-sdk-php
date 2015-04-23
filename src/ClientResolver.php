@@ -10,7 +10,6 @@ use Aws\Credentials\NullCredentials;
 use Aws\Signature\SignatureProvider;
 use Aws\Endpoint\EndpointProvider;
 use Aws\Credentials\CredentialProvider;
-use GuzzleHttp\ClientInterface;
 use InvalidArgumentException as IAE;
 
 /**
@@ -353,9 +352,16 @@ class ClientResolver
         }
     }
 
-    public static function _apply_api_provider($value, array &$args, HandlerList $list)
+    public static function _apply_api_provider(callable $value, array &$args, HandlerList $list)
     {
-        $api = new Service($value, $args['service'], $args['version']);
+        $api = new Service(
+            ApiProvider::resolve(
+                $value, 'api',
+                $args['service'],
+                $args['version']
+            ),
+            $value
+        );
         $args['api'] = $api;
         $args['serializer'] = Service::createSerializer($api, $args['endpoint']);
         $args['parser'] = Service::createParser($api);

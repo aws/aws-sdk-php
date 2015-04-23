@@ -1,6 +1,9 @@
 <?php
 namespace Aws\S3;
 
+use Aws\Api\ApiProvider;
+use Aws\Api\DocModel;
+use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\Exception\AwsException;
 use Aws\HandlerList;
@@ -479,5 +482,44 @@ class S3Client extends AwsClient
 
         $delay = [RetryMiddleware::class, 'exponentialDelay'];
         $list->append('sign:retry', Middleware::retry($decider, $delay));
+    }
+
+    /** @internal */
+    public static function applyDocFilters(array $api, array $docs)
+    {
+        $b64 = '<div class="alert alert-info">This value will be base64 '
+            . 'encoded on your behalf.</div>';
+
+        // Add the SourceFile parameter.
+        $docs['shapes']['SourceFile']['base'] = 'The path to a file on disk to use instead of the Body parameter.';
+        $api['shapes']['SourceFile'] = ['type' => 'string'];
+        $api['shapes']['PutObjectRequest']['members']['SourceFile'] = ['shape' => 'SourceFile'];
+        $api['shapes']['UploadPartRequest']['members']['SourceFile'] = ['shape' => 'SourceFile'];
+
+        // Several SSECustomerKey documentation updates.
+        $docs['shapes']['SSECustomerKey']['append'] = $b64;
+        $docs['shapes']['CopySourceSSECustomerKey']['append'] = $b64;
+        $docs['shapes']['SSECustomerKeyMd5']['append'] =
+            '<div class="alert alert-info">The value will be computed on your '
+            . 'behalf if it is not supplied.</div>';
+
+        // Add the ObjectURL to various output shapes and documentation.
+        $objectUrl = 'The URI of the created object.';
+        $api['shapes']['ObjectURL'] = ['type' => 'string'];
+        $api['shapes']['PutObjectOutput']['members']['ObjectURL'] = ['shape' => 'ObjectURL'];
+        $api['shapes']['CopyObjectOutput']['members']['ObjectURL'] = ['shape' => 'ObjectURL'];
+        $api['shapes']['CompleteMultipartUploadOutput']['members']['ObjectURL'] = ['shape' => 'ObjectURL'];
+        $docs['shapes']['ObjectURL']['base'] = $objectUrl;
+
+        // Add a note that the ContentMD5 is optional.
+        $docs['shapes']['ContentMD5']['append'] =
+            '<div class="alert alert-info">The SDK will compute this value '
+            . 'for you on your behalf if it is required or if you  are using '
+            . 'the "s3" signature version.</div>';
+
+        return [
+            new Service($api, ApiProvider::defaultProvider()),
+            new DocModel($docs)
+        ];
     }
 }

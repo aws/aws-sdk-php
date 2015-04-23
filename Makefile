@@ -75,7 +75,7 @@ api-package:
 	zip -r build/artifacts/aws-docs-api.zip build/artifacts/docs/build
 
 api-manifest:
-	php build/build-version-manifest.php
+	php build/build-manifest.php
 
 # Ensures that the TAG variable was passed to the make command
 check-tag:

@@ -1,6 +1,9 @@
 <?php
 namespace Aws\Build\Docs;
 
+/**
+ * @internal
+ */
 class HtmlDocument
 {
     /** @var array */

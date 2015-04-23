@@ -104,11 +104,13 @@ trait UsesServiceTrait
             ->method('getApi')
             ->will($this->returnValue(
                 new Service(
-                    function () {
-                        return ['metadata' => ['endpointPrefix' => 'foo']];
-                    },
-                    'service',
-                    'version'
+                    [
+                        'metadata' => [
+                            'endpointPrefix' => 'foo',
+                            'apiVersion' => 'version'
+                        ]
+                    ],
+                    function () { return []; }
                 )));
 
         return new $type(

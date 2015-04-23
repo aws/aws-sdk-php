@@ -106,27 +106,28 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         $list = new HandlerList();
         $list->setHandler(new MockHandler([new Result()]));
         $api = new Service(
-            function () {
-                return [
-                    'operations' => [
-                        'foo' => [
-                            'input' => ['shape'=> 'foo']
+            [
+                'metadata' => [
+                    'endpointPrefix' => 'a',
+                    'apiVersion'     => 'b'
+                ],
+                'operations' => [
+                    'foo' => [
+                        'input' => ['shape'=> 'foo']
+                    ]
+                ],
+                'shapes' => [
+                    'foo' => [
+                        'type' => 'structure',
+                        'required' => ['a'],
+                        'members' => [
+                            'a' => ['shape' => 'a']
                         ]
                     ],
-                    'shapes' => [
-                        'foo' => [
-                            'type' => 'structure',
-                            'required' => ['a'],
-                            'members' => [
-                                'a' => ['shape' => 'a']
-                            ]
-                        ],
-                        'a' => ['type' => 'string']
-                    ]
-                ];
-            },
-            'a',
-            'b'
+                    'a' => ['type' => 'string']
+                ]
+            ],
+            function () { return []; }
         );
         $list->append('validate', Middleware::validation($api));
         $handler = $list->resolve();
@@ -149,7 +150,8 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
             $this->assertNull($command['SourceFile']);
         });
         $provider = ApiProvider::defaultProvider();
-        $service = new Service($provider, 's3', 'latest');
+        $data = $provider('api', 's3', 'latest');
+        $service = new Service($data, $provider);
         $list->append('init', Middleware::sourceFile($service));
         $handler = $list->resolve();
         $handler(new Command('PutObject', [

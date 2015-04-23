@@ -1,7 +1,9 @@
 <?php
-
 namespace Aws\Build\Docs;
 
+/**
+ * @internal
+ */
 class ExampleBuilder
 {
     private $buffer;
