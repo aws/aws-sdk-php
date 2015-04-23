@@ -1,4 +1,5 @@
 {
+  "version":"2.0",
   "metadata":{
     "apiVersion":"2010-12-01",
     "endpointPrefix":"elasticbeanstalk",
@@ -9,6 +10,25 @@
     "protocol":"query"
   },
   "operations":{
+    "AbortEnvironmentUpdate":{
+      "name":"AbortEnvironmentUpdate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AbortEnvironmentUpdateMessage"},
+      "errors":[
+        {
+          "shape":"InsufficientPrivilegesException",
+          "error":{
+            "code":"InsufficientPrivilegesException",
+            "httpStatusCode":403,
+            "senderFault":true
+          },
+          "exception":true
+        }
+      ]
+    },
     "CheckDNSAvailability":{
       "name":"CheckDNSAvailability",
       "http":{
@@ -564,6 +584,14 @@
     }
   },
   "shapes":{
+    "AbortEnvironmentUpdateMessage":{
+      "type":"structure",
+      "members":{
+        "EnvironmentId":{"shape":"EnvironmentId"},
+        "EnvironmentName":{"shape":"EnvironmentName"}
+      }
+    },
+    "AbortableOperationInProgress":{"type":"boolean"},
     "ApplicationDescription":{
       "type":"structure",
       "members":{
@@ -968,6 +996,7 @@
         "DateCreated":{"shape":"CreationDate"},
         "DateUpdated":{"shape":"UpdateDate"},
         "Status":{"shape":"EnvironmentStatus"},
+        "AbortableOperationInProgress":{"shape":"AbortableOperationInProgress"},
         "Health":{"shape":"EnvironmentHealth"},
         "Resources":{"shape":"EnvironmentResourcesDescription"},
         "Tier":{"shape":"EnvironmentTier"}
@@ -1491,6 +1520,7 @@
         "Tier":{"shape":"EnvironmentTier"},
         "VersionLabel":{"shape":"VersionLabel"},
         "TemplateName":{"shape":"ConfigurationTemplateName"},
+        "SolutionStackName":{"shape":"SolutionStackName"},
         "OptionSettings":{"shape":"ConfigurationOptionSettingsList"},
         "OptionsToRemove":{"shape":"OptionsSpecifierList"}
       }

@@ -1,12 +1,12 @@
 {
   "version":"2.0",
   "metadata":{
-    "apiVersion":"2014-10-01",
+    "apiVersion":"2015-03-01",
     "endpointPrefix":"ec2",
     "serviceAbbreviation":"Amazon EC2",
     "serviceFullName":"Amazon Elastic Compute Cloud",
     "signatureVersion":"v4",
-    "xmlNamespace":"http://ec2.amazonaws.com/doc/2014-10-01",
+    "xmlNamespace":"http://ec2.amazonaws.com/doc/2015-03-01",
     "protocol":"ec2"
   },
   "operations":{
@@ -158,6 +158,15 @@
         "requestUri":"/"
       },
       "input":{"shape":"CancelExportTaskRequest"}
+    },
+    "CancelImportTask":{
+      "name":"CancelImportTask",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CancelImportTaskRequest"},
+      "output":{"shape":"CancelImportTaskResult"}
     },
     "CancelReservedInstancesListing":{
       "name":"CancelReservedInstancesListing",
@@ -703,6 +712,24 @@
       "input":{"shape":"DescribeImagesRequest"},
       "output":{"shape":"DescribeImagesResult"}
     },
+    "DescribeImportImageTasks":{
+      "name":"DescribeImportImageTasks",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeImportImageTasksRequest"},
+      "output":{"shape":"DescribeImportImageTasksResult"}
+    },
+    "DescribeImportSnapshotTasks":{
+      "name":"DescribeImportSnapshotTasks",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeImportSnapshotTasksRequest"},
+      "output":{"shape":"DescribeImportSnapshotTasksResult"}
+    },
     "DescribeInstanceAttribute":{
       "name":"DescribeInstanceAttribute",
       "http":{
@@ -1112,6 +1139,15 @@
       "input":{"shape":"GetPasswordDataRequest"},
       "output":{"shape":"GetPasswordDataResult"}
     },
+    "ImportImage":{
+      "name":"ImportImage",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ImportImageRequest"},
+      "output":{"shape":"ImportImageResult"}
+    },
     "ImportInstance":{
       "name":"ImportInstance",
       "http":{
@@ -1129,6 +1165,15 @@
       },
       "input":{"shape":"ImportKeyPairRequest"},
       "output":{"shape":"ImportKeyPairResult"}
+    },
+    "ImportSnapshot":{
+      "name":"ImportSnapshot",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ImportSnapshotRequest"},
+      "output":{"shape":"ImportSnapshotResult"}
     },
     "ImportVolume":{
       "name":"ImportVolume",
@@ -2121,6 +2166,31 @@
         }
       }
     },
+    "CancelImportTaskRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "ImportTaskId":{"shape":"String"},
+        "CancelReason":{"shape":"String"}
+      }
+    },
+    "CancelImportTaskResult":{
+      "type":"structure",
+      "members":{
+        "ImportTaskId":{
+          "shape":"String",
+          "locationName":"importTaskId"
+        },
+        "State":{
+          "shape":"String",
+          "locationName":"state"
+        },
+        "PreviousState":{
+          "shape":"String",
+          "locationName":"previousState"
+        }
+      }
+    },
     "CancelReservedInstancesListingRequest":{
       "type":"structure",
       "required":["ReservedInstancesListingId"],
@@ -2219,6 +2289,15 @@
       "member":{
         "shape":"ClassicLinkInstance",
         "locationName":"item"
+      }
+    },
+    "ClientData":{
+      "type":"structure",
+      "members":{
+        "UploadStart":{"shape":"DateTime"},
+        "UploadEnd":{"shape":"DateTime"},
+        "UploadSize":{"shape":"Double"},
+        "Comment":{"shape":"String"}
       }
     },
     "ConfirmProductInstanceRequest":{
@@ -3670,6 +3749,58 @@
         "Images":{
           "shape":"ImageList",
           "locationName":"imagesSet"
+        }
+      }
+    },
+    "DescribeImportImageTasksRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "ImportTaskIds":{
+          "shape":"ImportTaskIdList",
+          "locationName":"ImportTaskId"
+        },
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"Integer"},
+        "Filters":{"shape":"FilterList"}
+      }
+    },
+    "DescribeImportImageTasksResult":{
+      "type":"structure",
+      "members":{
+        "ImportImageTasks":{
+          "shape":"ImportImageTaskList",
+          "locationName":"importImageTaskSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "DescribeImportSnapshotTasksRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "ImportTaskIds":{
+          "shape":"ImportTaskIdList",
+          "locationName":"ImportTaskId"
+        },
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"Integer"},
+        "Filters":{"shape":"FilterList"}
+      }
+    },
+    "DescribeImportSnapshotTasksResult":{
+      "type":"structure",
+      "members":{
+        "ImportSnapshotTasks":{
+          "shape":"ImportSnapshotTaskList",
+          "locationName":"importSnapshotTaskSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
         }
       }
     },
@@ -5485,8 +5616,27 @@
         "ramdisk",
         "launchPermission",
         "productCodes",
-        "blockDeviceMapping"
+        "blockDeviceMapping",
+        "sriovNetSupport"
       ]
+    },
+    "ImageDiskContainer":{
+      "type":"structure",
+      "members":{
+        "Description":{"shape":"String"},
+        "Format":{"shape":"String"},
+        "Url":{"shape":"String"},
+        "UserBucket":{"shape":"UserBucket"},
+        "DeviceName":{"shape":"String"},
+        "SnapshotId":{"shape":"String"}
+      }
+    },
+    "ImageDiskContainerList":{
+      "type":"list",
+      "member":{
+        "shape":"ImageDiskContainer",
+        "locationName":"item"
+      }
     },
     "ImageIdStringList":{
       "type":"list",
@@ -5516,6 +5666,129 @@
         "kernel",
         "ramdisk"
       ]
+    },
+    "ImportImageRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "Description":{"shape":"String"},
+        "DiskContainers":{
+          "shape":"ImageDiskContainerList",
+          "locationName":"DiskContainer"
+        },
+        "LicenseType":{"shape":"String"},
+        "Hypervisor":{"shape":"String"},
+        "Architecture":{"shape":"String"},
+        "Platform":{"shape":"String"},
+        "ClientData":{"shape":"ClientData"},
+        "ClientToken":{"shape":"String"},
+        "RoleName":{"shape":"String"}
+      }
+    },
+    "ImportImageResult":{
+      "type":"structure",
+      "members":{
+        "ImportTaskId":{
+          "shape":"String",
+          "locationName":"importTaskId"
+        },
+        "Architecture":{
+          "shape":"String",
+          "locationName":"architecture"
+        },
+        "LicenseType":{
+          "shape":"String",
+          "locationName":"licenseType"
+        },
+        "Platform":{
+          "shape":"String",
+          "locationName":"platform"
+        },
+        "Hypervisor":{
+          "shape":"String",
+          "locationName":"hypervisor"
+        },
+        "Description":{
+          "shape":"String",
+          "locationName":"description"
+        },
+        "SnapshotDetails":{
+          "shape":"SnapshotDetailList",
+          "locationName":"snapshotDetailSet"
+        },
+        "ImageId":{
+          "shape":"String",
+          "locationName":"imageId"
+        },
+        "Progress":{
+          "shape":"String",
+          "locationName":"progress"
+        },
+        "StatusMessage":{
+          "shape":"String",
+          "locationName":"statusMessage"
+        },
+        "Status":{
+          "shape":"String",
+          "locationName":"status"
+        }
+      }
+    },
+    "ImportImageTask":{
+      "type":"structure",
+      "members":{
+        "ImportTaskId":{
+          "shape":"String",
+          "locationName":"importTaskId"
+        },
+        "Architecture":{
+          "shape":"String",
+          "locationName":"architecture"
+        },
+        "LicenseType":{
+          "shape":"String",
+          "locationName":"licenseType"
+        },
+        "Platform":{
+          "shape":"String",
+          "locationName":"platform"
+        },
+        "Hypervisor":{
+          "shape":"String",
+          "locationName":"hypervisor"
+        },
+        "Description":{
+          "shape":"String",
+          "locationName":"description"
+        },
+        "SnapshotDetails":{
+          "shape":"SnapshotDetailList",
+          "locationName":"snapshotDetailSet"
+        },
+        "ImageId":{
+          "shape":"String",
+          "locationName":"imageId"
+        },
+        "Progress":{
+          "shape":"String",
+          "locationName":"progress"
+        },
+        "StatusMessage":{
+          "shape":"String",
+          "locationName":"statusMessage"
+        },
+        "Status":{
+          "shape":"String",
+          "locationName":"status"
+        }
+      }
+    },
+    "ImportImageTaskList":{
+      "type":"list",
+      "member":{
+        "shape":"ImportImageTask",
+        "locationName":"item"
+      }
     },
     "ImportInstanceLaunchSpecification":{
       "type":"structure",
@@ -5702,6 +5975,65 @@
           "shape":"String",
           "locationName":"keyFingerprint"
         }
+      }
+    },
+    "ImportSnapshotRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "Description":{"shape":"String"},
+        "DiskContainer":{"shape":"SnapshotDiskContainer"},
+        "ClientData":{"shape":"ClientData"},
+        "ClientToken":{"shape":"String"},
+        "RoleName":{"shape":"String"}
+      }
+    },
+    "ImportSnapshotResult":{
+      "type":"structure",
+      "members":{
+        "ImportTaskId":{
+          "shape":"String",
+          "locationName":"importTaskId"
+        },
+        "SnapshotTaskDetail":{
+          "shape":"SnapshotTaskDetail",
+          "locationName":"snapshotTaskDetail"
+        },
+        "Description":{
+          "shape":"String",
+          "locationName":"description"
+        }
+      }
+    },
+    "ImportSnapshotTask":{
+      "type":"structure",
+      "members":{
+        "ImportTaskId":{
+          "shape":"String",
+          "locationName":"importTaskId"
+        },
+        "SnapshotTaskDetail":{
+          "shape":"SnapshotTaskDetail",
+          "locationName":"snapshotTaskDetail"
+        },
+        "Description":{
+          "shape":"String",
+          "locationName":"description"
+        }
+      }
+    },
+    "ImportSnapshotTaskList":{
+      "type":"list",
+      "member":{
+        "shape":"ImportSnapshotTask",
+        "locationName":"item"
+      }
+    },
+    "ImportTaskIdList":{
+      "type":"list",
+      "member":{
+        "shape":"String",
+        "locationName":"ImportTaskId"
       }
     },
     "ImportVolumeRequest":{
@@ -6510,7 +6842,11 @@
         "r3.xlarge",
         "r3.2xlarge",
         "r3.4xlarge",
-        "r3.8xlarge"
+        "r3.8xlarge",
+        "d2.xlarge",
+        "d2.2xlarge",
+        "d2.4xlarge",
+        "d2.8xlarge"
       ]
     },
     "InstanceTypeList":{
@@ -7009,6 +7345,7 @@
       "type":"string",
       "enum":[
         "disabled",
+        "disabling",
         "enabled",
         "pending"
       ]
@@ -8926,6 +9263,67 @@
         "createVolumePermission"
       ]
     },
+    "SnapshotDetail":{
+      "type":"structure",
+      "members":{
+        "DiskImageSize":{
+          "shape":"Double",
+          "locationName":"diskImageSize"
+        },
+        "Description":{
+          "shape":"String",
+          "locationName":"description"
+        },
+        "Format":{
+          "shape":"String",
+          "locationName":"format"
+        },
+        "Url":{
+          "shape":"String",
+          "locationName":"url"
+        },
+        "UserBucket":{
+          "shape":"UserBucketDetails",
+          "locationName":"userBucket"
+        },
+        "DeviceName":{
+          "shape":"String",
+          "locationName":"deviceName"
+        },
+        "SnapshotId":{
+          "shape":"String",
+          "locationName":"snapshotId"
+        },
+        "Progress":{
+          "shape":"String",
+          "locationName":"progress"
+        },
+        "StatusMessage":{
+          "shape":"String",
+          "locationName":"statusMessage"
+        },
+        "Status":{
+          "shape":"String",
+          "locationName":"status"
+        }
+      }
+    },
+    "SnapshotDetailList":{
+      "type":"list",
+      "member":{
+        "shape":"SnapshotDetail",
+        "locationName":"item"
+      }
+    },
+    "SnapshotDiskContainer":{
+      "type":"structure",
+      "members":{
+        "Description":{"shape":"String"},
+        "Format":{"shape":"String"},
+        "Url":{"shape":"String"},
+        "UserBucket":{"shape":"UserBucket"}
+      }
+    },
     "SnapshotIdStringList":{
       "type":"list",
       "member":{
@@ -8947,6 +9345,47 @@
         "completed",
         "error"
       ]
+    },
+    "SnapshotTaskDetail":{
+      "type":"structure",
+      "members":{
+        "DiskImageSize":{
+          "shape":"Double",
+          "locationName":"diskImageSize"
+        },
+        "Description":{
+          "shape":"String",
+          "locationName":"description"
+        },
+        "Format":{
+          "shape":"String",
+          "locationName":"format"
+        },
+        "Url":{
+          "shape":"String",
+          "locationName":"url"
+        },
+        "UserBucket":{
+          "shape":"UserBucketDetails",
+          "locationName":"userBucket"
+        },
+        "SnapshotId":{
+          "shape":"String",
+          "locationName":"snapshotId"
+        },
+        "Progress":{
+          "shape":"String",
+          "locationName":"progress"
+        },
+        "StatusMessage":{
+          "shape":"String",
+          "locationName":"statusMessage"
+        },
+        "Status":{
+          "shape":"String",
+          "locationName":"status"
+        }
+      }
     },
     "SpotDatafeedSubscription":{
       "type":"structure",
@@ -9427,6 +9866,26 @@
         "InstanceMonitorings":{
           "shape":"InstanceMonitoringList",
           "locationName":"instancesSet"
+        }
+      }
+    },
+    "UserBucket":{
+      "type":"structure",
+      "members":{
+        "S3Bucket":{"shape":"String"},
+        "S3Key":{"shape":"String"}
+      }
+    },
+    "UserBucketDetails":{
+      "type":"structure",
+      "members":{
+        "S3Bucket":{
+          "shape":"String",
+          "locationName":"s3Bucket"
+        },
+        "S3Key":{
+          "shape":"String",
+          "locationName":"s3Key"
         }
       }
     },

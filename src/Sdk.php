@@ -29,6 +29,8 @@ namespace Aws;
  * @method \Aws\Iam\IamClient createIam(array $args = [])
  * @method \Aws\ImportExport\ImportExportClient createImportExport(array $args = [])
  * @method \Aws\Kinesis\KinesisClient createKinesis(array $args = [])
+ * @method \Aws\Lambda\LambdaClient createLambda(array $args = [])
+ * @method \Aws\MachineLearning\MachineLearningClient createMachineLearning(array $args = [])
  * @method \Aws\OpsWorks\OpsWorksClient createOpsWorks(array $args = [])
  * @method \Aws\Rds\RdsClient createRds(array $args = [])
  * @method \Aws\Redshift\RedshiftClient createRedshift(array $args = [])
@@ -39,10 +41,12 @@ namespace Aws;
  * @method \Aws\SimpleDb\SimpleDbClient createSimpleDb(array $args = [])
  * @method \Aws\Sns\SnsClient createSns(array $args = [])
  * @method \Aws\Sqs\SqsClient createSqs(array $args = [])
+ * @method \Aws\Ssm\SsmClient createSsm(array $args = [])
  * @method \Aws\StorageGateway\StorageGatewayClient createStorageGateway(array $args = [])
  * @method \Aws\Sts\StsClient createSts(array $args = [])
  * @method \Aws\Support\SupportClient createSupport(array $args = [])
  * @method \Aws\Swf\SwfClient createSwf(array $args = [])
+ * @method \Aws\WorkSpaces\WorkSpacesClient createWorkSpaces(array $args = [])
  */
 class Sdk
 {

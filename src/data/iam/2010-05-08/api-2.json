@@ -1938,6 +1938,29 @@
         }
       ]
     },
+    "GetAccessKeyLastUsed":{
+      "name":"GetAccessKeyLastUsed",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAccessKeyLastUsedRequest"},
+      "output":{
+        "shape":"GetAccessKeyLastUsedResponse",
+        "resultWrapper":"GetAccessKeyLastUsedResult"
+      },
+      "errors":[
+        {
+          "shape":"NoSuchEntityException",
+          "error":{
+            "code":"NoSuchEntity",
+            "httpStatusCode":404,
+            "senderFault":true
+          },
+          "exception":true
+        }
+      ]
+    },
     "GetAccountAuthorizationDetails":{
       "name":"GetAccountAuthorizationDetails",
       "http":{
@@ -4086,6 +4109,19 @@
         "CreateDate":{"shape":"dateType"}
       }
     },
+    "AccessKeyLastUsed":{
+      "type":"structure",
+      "required":[
+        "LastUsedDate",
+        "ServiceName",
+        "Region"
+      ],
+      "members":{
+        "LastUsedDate":{"shape":"dateType"},
+        "ServiceName":{"shape":"stringType"},
+        "Region":{"shape":"stringType"}
+      }
+    },
     "AccessKeyMetadata":{
       "type":"structure",
       "members":{
@@ -4667,6 +4703,20 @@
       "members":{
         "State":{"shape":"ReportStateType"},
         "Description":{"shape":"ReportStateDescriptionType"}
+      }
+    },
+    "GetAccessKeyLastUsedRequest":{
+      "type":"structure",
+      "required":["AccessKeyId"],
+      "members":{
+        "AccessKeyId":{"shape":"accessKeyIdType"}
+      }
+    },
+    "GetAccessKeyLastUsedResponse":{
+      "type":"structure",
+      "members":{
+        "UserName":{"shape":"existingUserNameType"},
+        "AccessKeyLastUsed":{"shape":"AccessKeyLastUsed"}
       }
     },
     "GetAccountAuthorizationDetailsRequest":{
@@ -6332,6 +6382,7 @@
         "Inactive"
       ]
     },
+    "stringType":{"type":"string"},
     "summaryKeyType":{
       "type":"string",
       "enum":[

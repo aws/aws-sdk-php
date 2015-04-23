@@ -1,8 +1,9 @@
 {
+  "version": "2.0",
   "operations": {
     "AddSourceIdentifierToSubscription": "<p>Adds a source identifier to an existing RDS event notification subscription.</p>",
     "AddTagsToResource": "<p> Adds metadata tags to an Amazon RDS resource. These tags can also be used with cost allocation reporting to track cost associated with Amazon RDS resources, or used in Condition statement in IAM policy for Amazon RDS.</p> <p>For an overview on tagging Amazon RDS resources, see <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Tagging.html\">Tagging Amazon RDS Resources</a>.</p>",
-    "ApplyPendingMaintenanceAction": "<p>Applies a pending maintenance action to a resource.</p>",
+    "ApplyPendingMaintenanceAction": "<p>Applies a pending maintenance action to a resource (for example, a DB instance).</p>",
     "AuthorizeDBSecurityGroupIngress": "<p> Enables ingress to a DBSecurityGroup using one of two forms of authorization. First, EC2 or VPC security groups can be added to the DBSecurityGroup if the application using the database is running on EC2 or VPC instances. Second, IP ranges are available if the application accessing your database is running on the Internet. Required parameters for this API are one of CIDR range, EC2SecurityGroupId for VPC, or (EC2SecurityGroupOwnerId and either EC2SecurityGroupName or EC2SecurityGroupId for non-VPC). </p> <note> You cannot authorize ingress from an EC2 security group in one Region to an Amazon RDS DB instance in another. You cannot authorize ingress from a VPC security group in one VPC to an Amazon RDS DB instance in another. </note> <p>For an overview of CIDR ranges, go to the <a href=\"http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing\">Wikipedia Tutorial</a>. </p>",
     "CopyDBParameterGroup": "<p> Copies the specified DB parameter group. </p>",
     "CopyDBSnapshot": "<p> Copies the specified DBSnapshot. The source DBSnapshot must be in the \"available\" state. </p>",
@@ -16,12 +17,14 @@
     "CreateEventSubscription": "<p>Creates an RDS event notification subscription. This action requires a topic ARN (Amazon Resource Name) created by either the RDS console, the SNS console, or the SNS API. To obtain an ARN with SNS, you must create a topic in Amazon SNS and subscribe to the topic. The ARN is displayed in the SNS console.</p> <p>You can specify the type of source (SourceType) you want to be notified of, provide a list of RDS sources (SourceIds) that triggers the events, and provide a list of event categories (EventCategories) for events you want to be notified of. For example, you can specify SourceType = db-instance, SourceIds = mydbinstance1, mydbinstance2 and EventCategories = Availability, Backup.</p> <p>If you specify both the SourceType and SourceIds, such as SourceType = db-instance and SourceIdentifier = myDBInstance1, you will be notified of all the db-instance events for the specified source. If you specify a SourceType but do not specify a SourceIdentifier, you will receive notice of the events for that source type for all your RDS sources. If you do not specify either the SourceType nor the SourceIdentifier, you will be notified of events generated from all RDS sources belonging to your customer account.</p>",
     "CreateOptionGroup": "<p> Creates a new option group. You can create up to 20 option groups. </p>",
     "DeleteDBInstance": "<p> The DeleteDBInstance action deletes a previously provisioned DB instance. A successful response from the web service indicates the request was received correctly. When you delete a DB instance, all automated backups for that instance are deleted and cannot be recovered. Manual DB snapshots of the DB instance to be deleted are not deleted. </p> <p> If a final DB snapshot is requested the status of the RDS instance will be \"deleting\" until the DB snapshot is created. The API action <code>DescribeDBInstance</code> is used to monitor the status of this operation. The action cannot be canceled or reverted once submitted. </p>",
-    "DeleteDBParameterGroup": "<p> Deletes a specified DBParameterGroup. The DBParameterGroup to be deleted cannot be associated with any DB instances. </p> <note> The specified DB parameter group cannot be associated with any DB instances. </note>",
+    "DeleteDBParameterGroup": "<p> Deletes a specified DBParameterGroup. The DBParameterGroup to be deleted cannot be associated with any DB instances. </p>",
     "DeleteDBSecurityGroup": "<p> Deletes a DB security group. </p> <note>The specified DB security group must not be associated with any DB instances.</note>",
     "DeleteDBSnapshot": "<p> Deletes a DBSnapshot. If the snapshot is being copied, the copy operation is terminated. </p> <note>The DBSnapshot must be in the <code>available</code> state to be deleted.</note>",
     "DeleteDBSubnetGroup": "<p> Deletes a DB subnet group. </p> <note>The specified database subnet group must not be associated with any DB instances.</note>",
     "DeleteEventSubscription": "<p>Deletes an RDS event notification subscription.</p>",
     "DeleteOptionGroup": "<p> Deletes an existing option group. </p>",
+    "DescribeAccountAttributes": "<p>Lists all of the attributes for a customer account. The attributes include Amazon RDS quotas for the account, such as the number of DB instances allowed. The description for a quota includes the quota name, current usage toward that quota, and the quota's maximum value. </p> <p>This command does not take any parameters.</p>",
+    "DescribeCertificates": "<p> Lists the set of CA certificates provided by Amazon RDS for this AWS account. </p>",
     "DescribeDBEngineVersions": "<p> Returns a list of the available DB engines. </p>",
     "DescribeDBInstances": "<p> Returns information about provisioned RDS instances. This API supports pagination. </p>",
     "DescribeDBLogFiles": "<p> Returns a list of DB log files for the DB instance. </p>",
@@ -37,7 +40,7 @@
     "DescribeOptionGroupOptions": "<p> Describes all available options. </p>",
     "DescribeOptionGroups": "<p> Describes the available option groups. </p>",
     "DescribeOrderableDBInstanceOptions": "<p> Returns a list of orderable DB instance options for the specified engine. </p>",
-    "DescribePendingMaintenanceActions": "<p>Returns a list of resources (for example, DB Instances) that have at least one pending maintenance action.</p>",
+    "DescribePendingMaintenanceActions": "<p>Returns a list of resources (for example, DB instances) that have at least one pending maintenance action.</p>",
     "DescribeReservedDBInstances": "<p> Returns information about reserved DB instances for this account, or about a specified reserved DB instance. </p>",
     "DescribeReservedDBInstancesOfferings": "<p> Lists available reserved DB instance offerings. </p>",
     "DownloadDBLogFilePortion": "<p> Downloads all or a portion of the specified log file. </p>",
@@ -47,7 +50,7 @@
     "ModifyDBSubnetGroup": "<p> Modifies an existing DB subnet group. DB subnet groups must contain at least one subnet in at least two AZs in the region. </p>",
     "ModifyEventSubscription": "<p>Modifies an existing RDS event notification subscription. Note that you cannot modify the source identifiers using this call; to change source identifiers for a subscription, use the <a>AddSourceIdentifierToSubscription</a> and <a>RemoveSourceIdentifierFromSubscription</a> calls.</p> <p>You can see a list of the event categories for a given SourceType in the <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Events.html\">Events</a> topic in the Amazon RDS User Guide or by using the <b>DescribeEventCategories</b> action.</p>",
     "ModifyOptionGroup": "<p> Modifies an existing option group. </p>",
-    "PromoteReadReplica": "<p> Promotes a Read Replica DB instance to a standalone DB instance. </p> <note><p>We recommend that you enable automated backups on your Read Replica before promoting the Read Replica. This ensures that no backup is taken during the promotion process. Once the instance is promoted to a primary instance, backups are taken based on your backup settings.</p></note>",
+    "PromoteReadReplica": "<p> Promotes a Read Replica DB instance to a standalone DB instance. </p> <note> <p>We recommend that you enable automated backups on your Read Replica before promoting the Read Replica. This ensures that no backup is taken during the promotion process. Once the instance is promoted to a primary instance, backups are taken based on your backup settings.</p> </note>",
     "PurchaseReservedDBInstancesOffering": "<p> Purchases a reserved DB instance offering. </p>",
     "RebootDBInstance": "<p> Rebooting a DB instance restarts the database engine service. A reboot also applies to the DB instance any modifications to the associated DB parameter group that were pending. Rebooting a DB instance results in a momentary outage of the instance, during which the DB instance status is set to rebooting. If the RDS instance is configured for MultiAZ, it is possible that the reboot will be conducted through a failover. An Amazon RDS event is created when the reboot is completed. </p> <p> If your DB instance is deployed in multiple Availability Zones, you can force a failover from one AZ to the other during the reboot. You might force a failover to test the availability of your DB instance deployment or to restore operations to the original AZ after a failover occurs. </p> <p> The time required to reboot is a function of the specific database engine's crash recovery process. To improve the reboot time, we recommend that you reduce database activities as much as possible during the reboot process to reduce rollback activity for in-transit transactions. </p>",
     "RemoveSourceIdentifierFromSubscription": "<p>Removes a source identifier from an existing RDS event notification subscription.</p>",
@@ -57,8 +60,25 @@
     "RestoreDBInstanceToPointInTime": "<p> Restores a DB instance to an arbitrary point-in-time. Users can restore to any point in time before the LatestRestorableTime for up to BackupRetentionPeriod days. The target database is created from the source database with the same configuration as the original database except that the DB instance is created with the default DB security group. </p>",
     "RevokeDBSecurityGroupIngress": "<p> Revokes ingress from a DBSecurityGroup for previously authorized IP ranges or EC2 or VPC Security Groups. Required parameters for this API are one of CIDRIP, EC2SecurityGroupId for VPC, or (EC2SecurityGroupOwnerId and either EC2SecurityGroupName or EC2SecurityGroupId). </p>"
   },
-  "service": "<fullname>Amazon Relational Database Service</fullname> <p> Amazon Relational Database Service (Amazon RDS) is a web service that makes it easier to set up, operate, and scale a relational database in the cloud. It provides cost-efficient, resizable capacity for an industry-standard relational database and manages common database administration tasks, freeing up developers to focus on what makes their applications and businesses unique. </p> <p> Amazon RDS gives you access to the capabilities of a MySQL, PostgreSQL, Microsoft SQL Server, or Oracle database server. This means the code, applications, and tools you already use today with your existing databases work with Amazon RDS without modification. Amazon RDS automatically backs up your database and maintains the database software that powers your DB instance. Amazon RDS is flexible: you can scale your database instance's compute resources and storage capacity to meet your application's demand. As with all Amazon Web Services, there are no up-front investments, and you pay only for the resources you use. </p> <p> This is an interface reference for Amazon RDS. It contains documentation for a programming or command line interface you can use to manage Amazon RDS. Note that Amazon RDS is asynchronous, which means that some interfaces may require techniques such as polling or callback functions to determine when a command has been applied. In this reference, the parameter descriptions indicate whether a command is applied immediately, on the next instance reboot, or during the maintenance window. For a summary of the Amazon RDS interfaces, go to <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html#Welcome.Interfaces\">Available RDS Interfaces</a>. </p>",
+  "service": "<fullname>Amazon Relational Database Service</fullname> <p> Amazon Relational Database Service (Amazon RDS) is a web service that makes it easier to set up, operate, and scale a relational database in the cloud. It provides cost-efficient, resizable capacity for an industry-standard relational database and manages common database administration tasks, freeing up developers to focus on what makes their applications and businesses unique. </p> <p> Amazon RDS gives you access to the capabilities of a MySQL, PostgreSQL, Microsoft SQL Server, Oracle, or Aurora database server. This means the code, applications, and tools you already use today with your existing databases work with Amazon RDS without modification. Amazon RDS automatically backs up your database and maintains the database software that powers your DB instance. Amazon RDS is flexible: you can scale your database instance's compute resources and storage capacity to meet your application's demand. As with all Amazon Web Services, there are no up-front investments, and you pay only for the resources you use. </p> <p> This is an interface reference for Amazon RDS. It contains documentation for a programming or command line interface you can use to manage Amazon RDS. Note that Amazon RDS is asynchronous, which means that some interfaces may require techniques such as polling or callback functions to determine when a command has been applied. In this reference, the parameter descriptions indicate whether a command is applied immediately, on the next instance reboot, or during the maintenance window. For a summary of the Amazon RDS interfaces, go to <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html#Welcome.Interfaces\">Available RDS Interfaces</a>. </p>",
   "shapes": {
+    "AccountAttributesMessage": {
+      "base": "<p>Data returned by the <b>DescribeAccountAttributes</b> action.</p>",
+      "refs": {
+      }
+    },
+    "AccountQuota": {
+      "base": "<p>Describes a quota for an AWS account, for example, the number of DB instances allowed.</p>",
+      "refs": {
+        "AccountQuotaList$member": null
+      }
+    },
+    "AccountQuotaList": {
+      "base": null,
+      "refs": {
+        "AccountAttributesMessage$AccountQuotas": "<p>A list of <a>AccountQuota</a> objects. Within this list, each quota has a name, a count of usage toward the quota maximum, and a maximum value for the quota.</p>"
+      }
+    },
     "AddSourceIdentifierToSubscriptionMessage": {
       "base": "<p></p>",
       "refs": {
@@ -96,12 +116,12 @@
       }
     },
     "AuthorizeDBSecurityGroupIngressMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
     "AvailabilityZone": {
-      "base": "<p> Contains Availability Zone information. </p> <p> This data type is used as an element in the following data type: <ul> <li><a>OrderableDBInstanceOption</a></li> </ul> </p>",
+      "base": "<p> Contains Availability Zone information. </p> <p> This data type is used as an element in the following data type: <ul><li><a>OrderableDBInstanceOption</a></li></ul></p>",
       "refs": {
         "AvailabilityZoneList$member": null,
         "Subnet$SubnetAvailabilityZone": null
@@ -177,6 +197,28 @@
         "RestoreDBInstanceToPointInTimeMessage$AutoMinorVersionUpgrade": "<p> Indicates that minor version upgrades will be applied automatically to the DB instance during the maintenance window. </p>"
       }
     },
+    "Certificate": {
+      "base": "<p>A CA certificate for an AWS account. </p>",
+      "refs": {
+        "CertificateList$member": null
+      }
+    },
+    "CertificateList": {
+      "base": null,
+      "refs": {
+        "CertificateMessage$Certificates": "<p>The list of <a>Certificate</a> objects for the AWS account.</p>"
+      }
+    },
+    "CertificateMessage": {
+      "base": "<p>Data returned by the <b>DescribeCertificates</b> action.</p>",
+      "refs": {
+      }
+    },
+    "CertificateNotFoundFault": {
+      "base": "<p><i>CertificateIdentifier</i> does not refer to an existing certificate. </p>",
+      "refs": {
+      }
+    },
     "CharacterSet": {
       "base": "<p> This data type is used as a response element in the action <a>DescribeDBEngineVersions</a>. </p>",
       "refs": {
@@ -185,22 +227,22 @@
       }
     },
     "CopyDBParameterGroupMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
     "CopyDBSnapshotMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
     "CopyOptionGroupMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
     "CreateDBInstanceMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
@@ -210,22 +252,22 @@
       }
     },
     "CreateDBParameterGroupMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
     "CreateDBSecurityGroupMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
     "CreateDBSnapshotMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
     "CreateDBSubnetGroupMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
@@ -257,7 +299,7 @@
       }
     },
     "DBInstance": {
-      "base": "<p> Contains the result of a successful invocation of the following actions: </p> <ul> <li><a>CreateDBInstance</a></li> <li><a>DeleteDBInstance</a></li> <li><a>ModifyDBInstance</a></li> </ul> <p>This data type is used as a response element in the <a>DescribeDBInstances</a> action.</p>",
+      "base": "<p> Contains the result of a successful invocation of the following actions: </p> <ul> <li> <a>CreateDBInstance</a> </li> <li> <a>DeleteDBInstance</a> </li> <li> <a>ModifyDBInstance</a> </li> </ul> <p>This data type is used as a response element in the <a>DescribeDBInstances</a> action.</p>",
       "refs": {
         "DBInstanceList$member": null,
         "CreateDBInstanceResult$DBInstance": null,
@@ -343,7 +385,7 @@
       }
     },
     "DBParameterGroupStatus": {
-      "base": "<p> The status of the DB parameter group. </p> <p>This data type is used as a response element in the following actions:</p> <ul> <li><a>CreateDBInstance</a></li> <li><a>CreateDBInstanceReadReplica</a></li> <li><a>DeleteDBInstance</a></li> <li><a>ModifyDBInstance</a></li> <li><a>RebootDBInstance</a></li> <li><a>RestoreDBInstanceFromDBSnapshot</a></li> </ul>",
+      "base": "<p> The status of the DB parameter group. </p> <p>This data type is used as a response element in the following actions:</p> <ul> <li> <a>CreateDBInstance</a> </li> <li> <a>CreateDBInstanceReadReplica</a> </li> <li> <a>DeleteDBInstance</a> </li> <li> <a>ModifyDBInstance</a> </li> <li> <a>RebootDBInstance</a> </li> <li> <a>RestoreDBInstanceFromDBSnapshot</a> </li> </ul>",
       "refs": {
         "DBParameterGroupStatusList$member": null
       }
@@ -360,7 +402,7 @@
       }
     },
     "DBSecurityGroup": {
-      "base": "<p> Contains the result of a successful invocation of the following actions: </p> <ul> <li><a>DescribeDBSecurityGroups</a></li> <li><a>AuthorizeDBSecurityGroupIngress</a></li> <li><a>CreateDBSecurityGroup</a></li> <li><a>RevokeDBSecurityGroupIngress</a></li> </ul> <p>This data type is used as a response element in the <a>DescribeDBSecurityGroups</a> action.</p>",
+      "base": "<p> Contains the result of a successful invocation of the following actions: </p> <ul> <li> <a>DescribeDBSecurityGroups</a> </li> <li> <a>AuthorizeDBSecurityGroupIngress</a> </li> <li> <a>CreateDBSecurityGroup</a> </li> <li> <a>RevokeDBSecurityGroupIngress</a> </li> </ul> <p>This data type is used as a response element in the <a>DescribeDBSecurityGroups</a> action.</p>",
       "refs": {
         "DBSecurityGroups$member": null,
         "AuthorizeDBSecurityGroupIngressResult$DBSecurityGroup": null,
@@ -374,7 +416,7 @@
       }
     },
     "DBSecurityGroupMembership": {
-      "base": "<p> This data type is used as a response element in the following actions: </p> <ul> <li><a>ModifyDBInstance</a></li> <li><a>RebootDBInstance</a></li> <li><a>RestoreDBInstanceFromDBSnapshot</a></li> <li><a>RestoreDBInstanceToPointInTime</a></li> </ul>",
+      "base": "<p> This data type is used as a response element in the following actions: </p> <ul> <li> <a>ModifyDBInstance</a> </li> <li> <a>RebootDBInstance</a> </li> <li> <a>RestoreDBInstanceFromDBSnapshot</a> </li> <li> <a>RestoreDBInstanceToPointInTime</a> </li> </ul>",
       "refs": {
         "DBSecurityGroupMembershipList$member": null
       }
@@ -421,7 +463,7 @@
       }
     },
     "DBSnapshot": {
-      "base": "<p> Contains the result of a successful invocation of the following actions: </p> <ul> <li><a>CreateDBSnapshot</a></li> <li><a>DeleteDBSnapshot</a></li> </ul> <p>This data type is used as a response element in the <a>DescribeDBSnapshots</a> action.</p>",
+      "base": "<p> Contains the result of a successful invocation of the following actions: </p> <ul> <li> <a>CreateDBSnapshot</a> </li> <li> <a>DeleteDBSnapshot</a> </li> </ul> <p>This data type is used as a response element in the <a>DescribeDBSnapshots</a> action.</p>",
       "refs": {
         "DBSnapshotList$member": null,
         "CopyDBSnapshotResult$DBSnapshot": null,
@@ -451,7 +493,7 @@
       }
     },
     "DBSubnetGroup": {
-      "base": "<p> Contains the result of a successful invocation of the following actions: </p> <ul> <li><a>CreateDBSubnetGroup</a></li> <li><a>ModifyDBSubnetGroup</a></li> <li><a>DescribeDBSubnetGroups</a></li> <li><a>DeleteDBSubnetGroup</a></li> </ul> <p>This data type is used as a response element in the <a>DescribeDBSubnetGroups</a> action.</p>",
+      "base": "<p> Contains the result of a successful invocation of the following actions: </p> <ul> <li> <a>CreateDBSubnetGroup</a> </li> <li> <a>ModifyDBSubnetGroup</a> </li> <li> <a>DescribeDBSubnetGroups</a> </li> <li> <a>DeleteDBSubnetGroup</a> </li> </ul> <p>This data type is used as a response element in the <a>DescribeDBSubnetGroups</a> action.</p>",
       "refs": {
         "DBInstance$DBSubnetGroup": "<p> Specifies information on the subnet group associated with the DB instance, including the name, description, and subnets in the subnet group. </p>",
         "DBSubnetGroups$member": null,
@@ -506,27 +548,27 @@
       }
     },
     "DeleteDBInstanceMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
     "DeleteDBParameterGroupMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
     "DeleteDBSecurityGroupMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
     "DeleteDBSnapshotMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
     "DeleteDBSubnetGroupMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
@@ -536,7 +578,17 @@
       }
     },
     "DeleteOptionGroupMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
+      "refs": {
+      }
+    },
+    "DescribeAccountAttributesMessage": {
+      "base": "<p></p>",
+      "refs": {
+      }
+    },
+    "DescribeCertificatesMessage": {
+      "base": "<p></p>",
       "refs": {
       }
     },
@@ -546,7 +598,7 @@
       }
     },
     "DescribeDBInstancesMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
@@ -563,7 +615,7 @@
       }
     },
     "DescribeDBLogFilesMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
@@ -573,7 +625,7 @@
       }
     },
     "DescribeDBParameterGroupsMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
@@ -583,22 +635,22 @@
       }
     },
     "DescribeDBSecurityGroupsMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
     "DescribeDBSnapshotsMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
     "DescribeDBSubnetGroupsMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
     "DescribeEngineDefaultParametersMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
@@ -613,22 +665,22 @@
       }
     },
     "DescribeEventsMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
     "DescribeOptionGroupOptionsMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
     "DescribeOptionGroupsMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
     "DescribeOrderableDBInstanceOptionsMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
@@ -638,12 +690,12 @@
       }
     },
     "DescribeReservedDBInstancesMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
     "DescribeReservedDBInstancesOfferingsMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
@@ -663,12 +715,12 @@
       }
     },
     "DownloadDBLogFilePortionMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
     "EC2SecurityGroup": {
-      "base": "<p> This data type is used as a response element in the following actions: </p> <ul> <li><a>AuthorizeDBSecurityGroupIngress</a></li> <li><a>DescribeDBSecurityGroups</a></li> <li><a>RevokeDBSecurityGroupIngress</a></li> </ul>",
+      "base": "<p> This data type is used as a response element in the following actions: </p> <ul> <li> <a>AuthorizeDBSecurityGroupIngress</a> </li> <li> <a>DescribeDBSecurityGroups</a> </li> <li> <a>RevokeDBSecurityGroupIngress</a> </li> </ul>",
       "refs": {
         "EC2SecurityGroupList$member": null
       }
@@ -680,7 +732,7 @@
       }
     },
     "Endpoint": {
-      "base": "<p> This data type is used as a response element in the following actions: </p> <ul> <li><a>CreateDBInstance</a></li> <li><a>DescribeDBInstances</a></li> <li><a>DeleteDBInstance</a></li> </ul>",
+      "base": "<p> This data type is used as a response element in the following actions: </p> <ul> <li> <a>CreateDBInstance</a> </li> <li> <a>DescribeDBInstances</a> </li> <li> <a>DeleteDBInstance</a> </li> </ul>",
       "refs": {
         "DBInstance$Endpoint": "<p> Specifies the connection endpoint. </p>"
       }
@@ -772,6 +824,7 @@
     "FilterList": {
       "base": null,
       "refs": {
+        "DescribeCertificatesMessage$Filters": "<p>This parameter is not currently supported.</p>",
         "DescribeDBEngineVersionsMessage$Filters": "<p> Not currently supported. </p>",
         "DescribeDBInstancesMessage$Filters": "<p>This parameter is not currently supported.</p>",
         "DescribeDBLogFilesMessage$Filters": "<p>This parameter is not currently supported.</p>",
@@ -787,7 +840,7 @@
         "DescribeOptionGroupOptionsMessage$Filters": "<p>This parameter is not currently supported.</p>",
         "DescribeOptionGroupsMessage$Filters": "<p>This parameter is not currently supported.</p>",
         "DescribeOrderableDBInstanceOptionsMessage$Filters": "<p>This parameter is not currently supported.</p>",
-        "DescribePendingMaintenanceActionsMessage$Filters": "<p>Supported filters:</p> <ul><li> <code>db-instance-id</code> - Accepts DB instance identifiers and DB instance ARNs. The result list will only include maintenance actions for the specified DB Instances.</li></ul>",
+        "DescribePendingMaintenanceActionsMessage$Filters": "<p>A filter that specifies one or more resources to return pending maintenance actions for.</p> <p>Supported filters:</p> <ul> <li> <code>db-instance-id</code> - Accepts DB instance identifiers and DB instance Amazon Resource Names (ARNs). The results list will only include pending maintenance actions for the DB instances identified by these ARNs.</li> </ul>",
         "DescribeReservedDBInstancesMessage$Filters": "<p>This parameter is not currently supported.</p>",
         "DescribeReservedDBInstancesOfferingsMessage$Filters": "<p>This parameter is not currently supported.</p>",
         "ListTagsForResourceMessage$Filters": "<p>This parameter is not currently supported.</p>"
@@ -829,7 +882,7 @@
         "DBSnapshot$AllocatedStorage": "<p> Specifies the allocated storage size in gigabytes (GB). </p>",
         "DBSnapshot$Port": "<p> Specifies the port that the database engine was listening on at the time of the snapshot. </p>",
         "DBSnapshot$PercentProgress": "<p> The percentage of the estimated data that has been transferred. </p>",
-        "DownloadDBLogFilePortionMessage$NumberOfLines": "<p> The number of lines to download. </p> <p>If the NumberOfLines parameter is specified, then the block of lines returned can be from the beginning or the end of the log file, depending on the value of the Marker parameter. <ul> <li><p>If neither Marker or NumberOfLines are specified, the entire log file is returned.</p></li> <li><p>If NumberOfLines is specified and Marker is not specified, then the most recent lines from the end of the log file are returned.</p></li> <li><p>If Marker is specified as \"0\", then the specified number of lines from the beginning of the log file are returned.</p></li> <li><p>You can download the log file in blocks of lines by specifying the size of the block using the NumberOfLines parameter, and by specifying a value of \"0\" for the Marker parameter in your first request. Include the Marker value returned in the response as the Marker value for the next request, continuing until the AdditionalDataPending response element returns false.</p></li> </ul> </p>",
+        "DownloadDBLogFilePortionMessage$NumberOfLines": "<p> The number of lines to download. </p> <p>If the NumberOfLines parameter is specified, then the block of lines returned can be from the beginning or the end of the log file, depending on the value of the Marker parameter. <ul> <li><p>If neither Marker or NumberOfLines are specified, the entire log file is returned.</p></li> <li><p>If NumberOfLines is specified and Marker is not specified, then the most recent lines from the end of the log file are returned.</p></li> <li><p>If Marker is specified as \"0\", then the specified number of lines from the beginning of the log file are returned.</p></li> <li><p>You can download the log file in blocks of lines by specifying the size of the block using the NumberOfLines parameter, and by specifying a value of \"0\" for the Marker parameter in your first request. Include the Marker value returned in the response as the Marker value for the next request, continuing until the AdditionalDataPending response element returns false.</p></li> </ul></p>",
         "Endpoint$Port": "<p> Specifies the port that the database engine is listening on. </p>",
         "ReservedDBInstance$Duration": "<p> The duration of the reservation in seconds. </p>",
         "ReservedDBInstance$DBInstanceCount": "<p> The number of reserved DB instances. </p>",
@@ -839,14 +892,15 @@
     "IntegerOptional": {
       "base": null,
       "refs": {
-        "CreateDBInstanceMessage$AllocatedStorage": "<p> The amount of storage (in gigabytes) to be initially allocated for the database instance. </p> <p> Type: Integer</p> <p><b>MySQL</b></p> <p> Constraints: Must be an integer from 5 to 3072.</p> <p><b>PostgreSQL</b></p> <p> Constraints: Must be an integer from 5 to 3072.</p> <p><b>Oracle</b></p> <p> Constraints: Must be an integer from 10 to 3072.</p> <p><b>SQL Server</b></p> <p> Constraints: Must be an integer from 200 to 1024 (Standard Edition and Enterprise Edition) or from 20 to 1024 (Express Edition and Web Edition)</p>",
+        "CreateDBInstanceMessage$AllocatedStorage": "<p> The amount of storage (in gigabytes) to be initially allocated for the database instance. </p> <p> Type: Integer</p> <p> <b>MySQL</b> </p> <p> Constraints: Must be an integer from 5 to 3072.</p> <p> <b>PostgreSQL</b> </p> <p> Constraints: Must be an integer from 5 to 3072.</p> <p> <b>Oracle</b> </p> <p> Constraints: Must be an integer from 10 to 3072.</p> <p> <b>SQL Server</b> </p> <p> Constraints: Must be an integer from 200 to 1024 (Standard Edition and Enterprise Edition) or from 20 to 1024 (Express Edition and Web Edition)</p>",
         "CreateDBInstanceMessage$BackupRetentionPeriod": "<p> The number of days for which automated backups are retained. Setting this parameter to a positive number enables backups. Setting this parameter to 0 disables automated backups. </p> <p> Default: 1 </p> <p>Constraints:</p> <ul> <li>Must be a value from 0 to 35</li> <li>Cannot be set to 0 if the DB instance is a source to Read Replicas</li> </ul>",
-        "CreateDBInstanceMessage$Port": "<p> The port number on which the database accepts connections. </p> <p><b>MySQL</b></p> <p> Default: <code>3306</code> </p> <p> Valid Values: <code>1150-65535</code> </p> <p>Type: Integer </p> <p><b>PostgreSQL</b></p> <p> Default: <code>5432</code> </p> <p> Valid Values: <code>1150-65535</code> </p> <p>Type: Integer </p> <p><b>Oracle</b></p> <p> Default: <code>1521</code> </p> <p> Valid Values: <code>1150-65535</code> </p> <p><b>SQL Server</b></p> <p> Default: <code>1433</code> </p> <p> Valid Values: <code>1150-65535</code> except for <code>1434</code>, <code>3389</code>, <code>47001</code>, <code>49152</code>, and <code>49152</code> through <code>49156</code>. </p>",
+        "CreateDBInstanceMessage$Port": "<p> The port number on which the database accepts connections. </p> <p> <b>MySQL</b> </p> <p> Default: <code>3306</code></p> <p> Valid Values: <code>1150-65535</code></p> <p>Type: Integer </p> <p> <b>PostgreSQL</b> </p> <p> Default: <code>5432</code></p> <p> Valid Values: <code>1150-65535</code></p> <p>Type: Integer </p> <p> <b>Oracle</b> </p> <p> Default: <code>1521</code></p> <p> Valid Values: <code>1150-65535</code></p> <p> <b>SQL Server</b> </p> <p> Default: <code>1433</code></p> <p> Valid Values: <code>1150-65535</code> except for <code>1434</code>, <code>3389</code>, <code>47001</code>, <code>49152</code>, and <code>49152</code> through <code>49156</code>. </p>",
         "CreateDBInstanceMessage$Iops": "<p> The amount of Provisioned IOPS (input/output operations per second) to be initially allocated for the DB instance. </p> <p> Constraints: To use PIOPS, this value must be an integer greater than 1000.</p>",
         "CreateDBInstanceReadReplicaMessage$Port": "<p> The port number that the DB instance uses for connections. </p> <p>Default: Inherits from the source DB instance</p> <p>Valid Values: <code>1150-65535</code></p>",
         "CreateDBInstanceReadReplicaMessage$Iops": "<p> The amount of Provisioned IOPS (input/output operations per second) to be initially allocated for the DB instance. </p>",
         "DBInstance$Iops": "<p> Specifies the Provisioned IOPS (I/O operations per second) value. </p>",
         "DBSnapshot$Iops": "<p> Specifies the Provisioned IOPS (I/O operations per second) value of the DB instance at the time of the snapshot. </p>",
+        "DescribeCertificatesMessage$MaxRecords": "<p> The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that the remaining results can be retrieved. </p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100</p>",
         "DescribeDBEngineVersionsMessage$MaxRecords": "<p> The maximum number of records to include in the response. If more than the <code>MaxRecords</code> value is available, a pagination token called a marker is included in the response so that the following results can be retrieved. </p> <p>Default: 100</p> <p>Constraints: minimum 20, maximum 100</p>",
         "DescribeDBInstancesMessage$MaxRecords": "<p> The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that the remaining results may be retrieved. </p> <p>Default: 100</p> <p>Constraints: minimum 20, maximum 100</p>",
         "DescribeDBLogFilesMessage$MaxRecords": "<p> The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a pagination token called a marker is included in the response so that the remaining results can be retrieved. </p>",
@@ -865,9 +919,9 @@
         "DescribePendingMaintenanceActionsMessage$MaxRecords": "<p> The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that the remaining results can be retrieved. </p> <p>Default: 100</p> <p>Constraints: minimum 20, maximum 100</p>",
         "DescribeReservedDBInstancesMessage$MaxRecords": "<p> The maximum number of records to include in the response. If more than the <code>MaxRecords</code> value is available, a pagination token called a marker is included in the response so that the following results can be retrieved. </p> <p>Default: 100</p> <p>Constraints: minimum 20, maximum 100</p>",
         "DescribeReservedDBInstancesOfferingsMessage$MaxRecords": "<p> The maximum number of records to include in the response. If more than the <code>MaxRecords</code> value is available, a pagination token called a marker is included in the response so that the following results can be retrieved. </p> <p>Default: 100</p> <p>Constraints: minimum 20, maximum 100</p>",
-        "ModifyDBInstanceMessage$AllocatedStorage": "<p> The new storage capacity of the RDS instance. Changing this setting does not result in an outage and the change is applied during the next maintenance window unless <code>ApplyImmediately</code> is set to <code>true</code> for this request. </p> <p><b>MySQL</b></p> <p>Default: Uses existing setting</p> <p>Valid Values: 5-3072</p> <p>Constraints: Value supplied must be at least 10% greater than the current value. Values that are not at least 10% greater than the existing value are rounded up so that they are 10% greater than the current value.</p> <p>Type: Integer</p> <p><b>PostgreSQL</b></p> <p>Default: Uses existing setting</p> <p>Valid Values: 5-3072</p> <p>Constraints: Value supplied must be at least 10% greater than the current value. Values that are not at least 10% greater than the existing value are rounded up so that they are 10% greater than the current value.</p> <p>Type: Integer</p> <p><b>Oracle</b></p> <p>Default: Uses existing setting</p> <p>Valid Values: 10-3072</p> <p>Constraints: Value supplied must be at least 10% greater than the current value. Values that are not at least 10% greater than the existing value are rounded up so that they are 10% greater than the current value.</p> <p><b>SQL Server</b></p> <p>Cannot be modified.</p> <p> If you choose to migrate your DB instance from using standard storage to using Provisioned IOPS, or from using Provisioned IOPS to using standard storage, the process can take time. The duration of the migration depends on several factors such as database load, storage size, storage type (standard or Provisioned IOPS), amount of IOPS provisioned (if any), and the number of prior scale storage operations. Typical migration times are under 24 hours, but the process can take up to several days in some cases. During the migration, the DB instance will be available for use, but may experience performance degradation. While the migration takes place, nightly backups for the instance will be suspended. No other Amazon RDS operations can take place for the instance, including modifying the instance, rebooting the instance, deleting the instance, creating a Read Replica for the instance, and creating a DB snapshot of the instance. </p>",
+        "ModifyDBInstanceMessage$AllocatedStorage": "<p> The new storage capacity of the RDS instance. Changing this setting does not result in an outage and the change is applied during the next maintenance window unless <code>ApplyImmediately</code> is set to <code>true</code> for this request. </p> <p> <b>MySQL</b> </p> <p>Default: Uses existing setting</p> <p>Valid Values: 5-3072</p> <p>Constraints: Value supplied must be at least 10% greater than the current value. Values that are not at least 10% greater than the existing value are rounded up so that they are 10% greater than the current value.</p> <p>Type: Integer</p> <p> <b>PostgreSQL</b> </p> <p>Default: Uses existing setting</p> <p>Valid Values: 5-3072</p> <p>Constraints: Value supplied must be at least 10% greater than the current value. Values that are not at least 10% greater than the existing value are rounded up so that they are 10% greater than the current value.</p> <p>Type: Integer</p> <p> <b>Oracle</b> </p> <p>Default: Uses existing setting</p> <p>Valid Values: 10-3072</p> <p>Constraints: Value supplied must be at least 10% greater than the current value. Values that are not at least 10% greater than the existing value are rounded up so that they are 10% greater than the current value.</p> <p> <b>SQL Server</b> </p> <p>Cannot be modified.</p> <p> If you choose to migrate your DB instance from using standard storage to using Provisioned IOPS, or from using Provisioned IOPS to using standard storage, the process can take time. The duration of the migration depends on several factors such as database load, storage size, storage type (standard or Provisioned IOPS), amount of IOPS provisioned (if any), and the number of prior scale storage operations. Typical migration times are under 24 hours, but the process can take up to several days in some cases. During the migration, the DB instance will be available for use, but may experience performance degradation. While the migration takes place, nightly backups for the instance will be suspended. No other Amazon RDS operations can take place for the instance, including modifying the instance, rebooting the instance, deleting the instance, creating a Read Replica for the instance, and creating a DB snapshot of the instance. </p>",
         "ModifyDBInstanceMessage$BackupRetentionPeriod": "<p> The number of days to retain automated backups. Setting this parameter to a positive number enables backups. Setting this parameter to 0 disables automated backups. </p> <p>Changing this parameter can result in an outage if you change from 0 to a non-zero value or from a non-zero value to 0. These changes are applied during the next maintenance window unless the <code>ApplyImmediately</code> parameter is set to <code>true</code> for this request. If you change the parameter from one non-zero value to another non-zero value, the change is asynchronously applied as soon as possible.</p> <p>Default: Uses existing setting</p> <p>Constraints:</p> <ul> <li>Must be a value from 0 to 35</li> <li>Can be specified for a MySQL Read Replica only if the source is running MySQL 5.6</li> <li>Can be specified for a PostgreSQL Read Replica only if the source is running PostgreSQL 9.3.5</li> <li>Cannot be set to 0 if the DB instance is a source to Read Replicas</li> </ul>",
-        "ModifyDBInstanceMessage$Iops": "<p> The new Provisioned IOPS (I/O operations per second) value for the RDS instance. Changing this setting does not result in an outage and the change is applied during the next maintenance window unless the <code>ApplyImmediately</code> parameter is set to <code>true</code> for this request. </p> <p>Default: Uses existing setting</p> <p>Constraints: Value supplied must be at least 10% greater than the current value. Values that are not at least 10% greater than the existing value are rounded up so that they are 10% greater than the current value. If you are migrating from Provisioned IOPS to standard storage, set this value to 0. The DB instance will require a reboot for the change in storage type to take effect.</p> <p><b>SQL Server</b></p> <p>Setting the IOPS value for the SQL Server database engine is not supported.</p> <p>Type: Integer</p> <p> If you choose to migrate your DB instance from using standard storage to using Provisioned IOPS, or from using Provisioned IOPS to using standard storage, the process can take time. The duration of the migration depends on several factors such as database load, storage size, storage type (standard or Provisioned IOPS), amount of IOPS provisioned (if any), and the number of prior scale storage operations. Typical migration times are under 24 hours, but the process can take up to several days in some cases. During the migration, the DB instance will be available for use, but may experience performance degradation. While the migration takes place, nightly backups for the instance will be suspended. No other Amazon RDS operations can take place for the instance, including modifying the instance, rebooting the instance, deleting the instance, creating a Read Replica for the instance, and creating a DB snapshot of the instance. </p>",
+        "ModifyDBInstanceMessage$Iops": "<p> The new Provisioned IOPS (I/O operations per second) value for the RDS instance. Changing this setting does not result in an outage and the change is applied during the next maintenance window unless the <code>ApplyImmediately</code> parameter is set to <code>true</code> for this request. </p> <p>Default: Uses existing setting</p> <p>Constraints: Value supplied must be at least 10% greater than the current value. Values that are not at least 10% greater than the existing value are rounded up so that they are 10% greater than the current value. If you are migrating from Provisioned IOPS to standard storage, set this value to 0. The DB instance will require a reboot for the change in storage type to take effect.</p> <p> <b>SQL Server</b> </p> <p>Setting the IOPS value for the SQL Server database engine is not supported.</p> <p>Type: Integer</p> <p> If you choose to migrate your DB instance from using standard storage to using Provisioned IOPS, or from using Provisioned IOPS to using standard storage, the process can take time. The duration of the migration depends on several factors such as database load, storage size, storage type (standard or Provisioned IOPS), amount of IOPS provisioned (if any), and the number of prior scale storage operations. Typical migration times are under 24 hours, but the process can take up to several days in some cases. During the migration, the DB instance will be available for use, but may experience performance degradation. While the migration takes place, nightly backups for the instance will be suspended. No other Amazon RDS operations can take place for the instance, including modifying the instance, rebooting the instance, deleting the instance, creating a Read Replica for the instance, and creating a DB snapshot of the instance. </p>",
         "Option$Port": "<p> If required, the port configured for this option to use. </p>",
         "OptionConfiguration$Port": "<p> The optional port for the option. </p>",
         "OptionGroupOption$DefaultPort": "<p> If the option requires a port, specifies the default port for the option. </p>",
@@ -878,9 +932,9 @@
         "PromoteReadReplicaMessage$BackupRetentionPeriod": "<p> The number of days to retain automated backups. Setting this parameter to a positive number enables backups. Setting this parameter to 0 disables automated backups. </p> <p> Default: 1 </p> <p>Constraints:</p> <ul> <li>Must be a value from 0 to 8</li> </ul>",
         "PurchaseReservedDBInstancesOfferingMessage$DBInstanceCount": "<p> The number of instances to reserve. </p> <p>Default: <code>1</code></p>",
         "RestoreDBInstanceFromDBSnapshotMessage$Port": "<p> The port number on which the database accepts connections. </p> <p>Default: The same port as the original DB instance</p> <p>Constraints: Value must be <code>1150-65535</code></p>",
-        "RestoreDBInstanceFromDBSnapshotMessage$Iops": "<p> Specifies the amount of provisioned IOPS for the DB instance, expressed in I/O operations per second. If this parameter is not specified, the IOPS value will be taken from the backup. If this parameter is set to 0, the new instance will be converted to a non-PIOPS instance, which will take additional time, though your DB instance will be available for connections before the conversion starts. </p> <p> Constraints: Must be an integer greater than 1000.</p> <p><b>SQL Server</b></p> <p>Setting the IOPS value for the SQL Server database engine is not supported.</p>",
+        "RestoreDBInstanceFromDBSnapshotMessage$Iops": "<p> Specifies the amount of provisioned IOPS for the DB instance, expressed in I/O operations per second. If this parameter is not specified, the IOPS value will be taken from the backup. If this parameter is set to 0, the new instance will be converted to a non-PIOPS instance, which will take additional time, though your DB instance will be available for connections before the conversion starts. </p> <p> Constraints: Must be an integer greater than 1000.</p> <p> <b>SQL Server</b> </p> <p>Setting the IOPS value for the SQL Server database engine is not supported.</p>",
         "RestoreDBInstanceToPointInTimeMessage$Port": "<p> The port number on which the database accepts connections. </p> <p>Constraints: Value must be <code>1150-65535</code></p> <p>Default: The same port as the original DB instance.</p>",
-        "RestoreDBInstanceToPointInTimeMessage$Iops": "<p> The amount of Provisioned IOPS (input/output operations per second) to be initially allocated for the DB instance. </p> <p> Constraints: Must be an integer greater than 1000.</p> <p><b>SQL Server</b></p> <p>Setting the IOPS value for the SQL Server database engine is not supported.</p>"
+        "RestoreDBInstanceToPointInTimeMessage$Iops": "<p> The amount of Provisioned IOPS (input/output operations per second) to be initially allocated for the DB instance. </p> <p> Constraints: Must be an integer greater than 1000.</p> <p> <b>SQL Server</b> </p> <p>Setting the IOPS value for the SQL Server database engine is not supported.</p>"
       }
     },
     "InvalidDBInstanceStateFault": {
@@ -962,6 +1016,8 @@
     "Long": {
       "base": null,
       "refs": {
+        "AccountQuota$Used": "<p>The amount currently used toward the quota maximum.</p>",
+        "AccountQuota$Max": "<p>The maximum allowed value for the quota.</p>",
         "DescribeDBLogFilesDetails$LastWritten": "<p> A POSIX timestamp when the last log entry was written. </p>",
         "DescribeDBLogFilesDetails$Size": "<p> The size, in bytes, of the log file for the specified DB instance. </p>",
         "DescribeDBLogFilesMessage$FileLastWritten": "<p> Filters the available log files for files written since the specified date, in POSIX timestamp format. </p>",
@@ -969,17 +1025,17 @@
       }
     },
     "ModifyDBInstanceMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
     "ModifyDBParameterGroupMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
     "ModifyDBSubnetGroupMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
@@ -989,7 +1045,7 @@
       }
     },
     "ModifyOptionGroupMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
@@ -1012,7 +1068,7 @@
       }
     },
     "OptionGroup": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
         "OptionGroupsList$member": null,
         "CopyOptionGroupResult$OptionGroup": null,
@@ -1067,7 +1123,7 @@
       }
     },
     "OptionGroupOptionsMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
@@ -1153,7 +1209,7 @@
         "DBParameterGroupDetails$Parameters": "<p> A list of <a>Parameter</a> values. </p>",
         "EngineDefaults$Parameters": "<p> Contains a list of engine default parameters. </p>",
         "ModifyDBParameterGroupMessage$Parameters": "<p> An array of parameter names, values, and the apply method for the parameter update. At least one parameter name, value, and apply method must be supplied; subsequent arguments are optional. A maximum of 20 parameters may be modified in a single request. </p> <p>Valid Values (for the application method): <code>immediate | pending-reboot</code></p> <note>You can use the immediate value with dynamic parameters only. You can use the pending-reboot value for both dynamic and static parameters, and changes are applied when you reboot the DB instance without failover. </note>",
-        "ResetDBParameterGroupMessage$Parameters": "<p> An array of parameter names, values, and the apply method for the parameter update. At least one parameter name, value, and apply method must be supplied; subsequent arguments are optional. A maximum of 20 parameters may be modified in a single request. </p> <p><b>MySQL</b></p> <p>Valid Values (for Apply method): <code>immediate</code> | <code>pending-reboot</code></p> <p>You can use the immediate value with dynamic parameters only. You can use the <code>pending-reboot</code> value for both dynamic and static parameters, and changes are applied when DB instance reboots.</p> <p><b>Oracle</b></p> <p>Valid Values (for Apply method): <code>pending-reboot</code></p>"
+        "ResetDBParameterGroupMessage$Parameters": "<p> An array of parameter names, values, and the apply method for the parameter update. At least one parameter name, value, and apply method must be supplied; subsequent arguments are optional. A maximum of 20 parameters may be modified in a single request. </p> <p> <b>MySQL</b> </p> <p>Valid Values (for Apply method): <code>immediate</code> | <code>pending-reboot</code></p> <p>You can use the immediate value with dynamic parameters only. You can use the <code>pending-reboot</code> value for both dynamic and static parameters, and changes are applied when DB instance reboots.</p> <p> <b>Oracle</b> </p> <p>Valid Values (for Apply method): <code>pending-reboot</code></p>"
       }
     },
     "PendingMaintenanceAction": {
@@ -1165,13 +1221,13 @@
     "PendingMaintenanceActionDetails": {
       "base": null,
       "refs": {
-        "ResourcePendingMaintenanceActions$PendingMaintenanceActionDetails": "<p>Provides details about the pending maintenance actions for the resource.</p>"
+        "ResourcePendingMaintenanceActions$PendingMaintenanceActionDetails": "<p>A list that provides details about the pending maintenance actions for the resource.</p>"
       }
     },
     "PendingMaintenanceActions": {
       "base": null,
       "refs": {
-        "PendingMaintenanceActionsMessage$PendingMaintenanceActions": "<p>Provides a list of the pending maintenance actions for the resource.</p>"
+        "PendingMaintenanceActionsMessage$PendingMaintenanceActions": "<p>A list of the pending maintenance actions for the resource.</p>"
       }
     },
     "PendingMaintenanceActionsMessage": {
@@ -1191,7 +1247,7 @@
       }
     },
     "PromoteReadReplicaMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
@@ -1201,7 +1257,7 @@
       }
     },
     "PurchaseReservedDBInstancesOfferingMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
@@ -1212,7 +1268,7 @@
       }
     },
     "RebootDBInstanceMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
@@ -1295,12 +1351,12 @@
       }
     },
     "ResetDBParameterGroupMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
     "ResourceNotFoundFault": {
-      "base": "<p>The specified Resource ID was not found. </p>",
+      "base": "<p>The specified resource ID was not found. </p>",
       "refs": {
       }
     },
@@ -1312,17 +1368,17 @@
       }
     },
     "RestoreDBInstanceFromDBSnapshotMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
     "RestoreDBInstanceToPointInTimeMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
     "RevokeDBSecurityGroupIngressMessage": {
-      "base": "<p> </p>",
+      "base": "<p></p>",
       "refs": {
       }
     },
@@ -1378,18 +1434,23 @@
     "String": {
       "base": null,
       "refs": {
+        "AccountQuota$AccountQuotaName": "<p>The name of the Amazon RDS quota for this AWS account.</p>",
         "AddSourceIdentifierToSubscriptionMessage$SubscriptionName": "<p>The name of the RDS event notification subscription you want to add a source identifier to.</p>",
         "AddSourceIdentifierToSubscriptionMessage$SourceIdentifier": "<p> The identifier of the event source to be added. An identifier must begin with a letter and must contain only ASCII letters, digits, and hyphens; it cannot end with a hyphen or contain two consecutive hyphens. </p> <p>Constraints:</p> <ul> <li>If the source type is a DB instance, then a <code>DBInstanceIdentifier</code> must be supplied.</li> <li>If the source type is a DB security group, a <code>DBSecurityGroupName</code> must be supplied.</li> <li>If the source type is a DB parameter group, a <code>DBParameterGroupName</code> must be supplied.</li> <li>If the source type is a DB snapshot, a <code>DBSnapshotIdentifier</code> must be supplied.</li> </ul>",
         "AddTagsToResourceMessage$ResourceName": "<p>The Amazon RDS resource the tags will be added to. This value is an Amazon Resource Name (ARN). For information about creating an ARN, see <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Tagging.html#USER_Tagging.ARN\"> Constructing an RDS Amazon Resource Name (ARN)</a>.</p>",
-        "ApplyPendingMaintenanceActionMessage$ResourceIdentifier": "<p>The ARN of the resource (for example, a DB Instance) that the pending maintenance action applies to.</p>",
+        "ApplyPendingMaintenanceActionMessage$ResourceIdentifier": "<p>The ARN of the resource that the pending maintenance action applies to.</p>",
         "ApplyPendingMaintenanceActionMessage$ApplyAction": "<p>The pending maintenance action to apply to this resource.</p>",
-        "ApplyPendingMaintenanceActionMessage$OptInType": "<p>Specify an opt-in request, or undo an opt-in request. An opt-in request of type <code>immediate</code> cannot be undone.</p> <p>Valid values:</p> <ul> <li> <code>immediate</code> - Apply the maintenance action immediately.</li> <li> <code>next-maintenance</code> - Apply the maintenance action during the next maintenance window for the resource.</li> <li> <code>undo-opt-in</code> - Cancel any existing <code>next-maintenance</code> opt-in requests.</li> </ul>",
+        "ApplyPendingMaintenanceActionMessage$OptInType": "<p>A value that specifies the type of opt-in request, or undoes an opt-in request. An opt-in request of type <code>immediate</code> cannot be undone.</p> <p>Valid values:</p> <ul> <li> <code>immediate</code> - Apply the maintenance action immediately.</li> <li> <code>next-maintenance</code> - Apply the maintenance action during the next maintenance window for the resource.</li> <li> <code>undo-opt-in</code> - Cancel any existing <code>next-maintenance</code> opt-in requests.</li> </ul>",
         "AuthorizeDBSecurityGroupIngressMessage$DBSecurityGroupName": "<p> The name of the DB security group to add authorization to. </p>",
         "AuthorizeDBSecurityGroupIngressMessage$CIDRIP": "<p> The IP range to authorize. </p>",
         "AuthorizeDBSecurityGroupIngressMessage$EC2SecurityGroupName": "<p> Name of the EC2 security group to authorize. For VPC DB security groups, <code>EC2SecurityGroupId</code> must be provided. Otherwise, EC2SecurityGroupOwnerId and either <code>EC2SecurityGroupName</code> or <code>EC2SecurityGroupId</code> must be provided. </p>",
         "AuthorizeDBSecurityGroupIngressMessage$EC2SecurityGroupId": "<p> Id of the EC2 security group to authorize. For VPC DB security groups, <code>EC2SecurityGroupId</code> must be provided. Otherwise, EC2SecurityGroupOwnerId and either <code>EC2SecurityGroupName</code> or <code>EC2SecurityGroupId</code> must be provided. </p>",
         "AuthorizeDBSecurityGroupIngressMessage$EC2SecurityGroupOwnerId": "<p> AWS Account Number of the owner of the EC2 security group specified in the EC2SecurityGroupName parameter. The AWS Access Key ID is not an acceptable value. For VPC DB security groups, <code>EC2SecurityGroupId</code> must be provided. Otherwise, EC2SecurityGroupOwnerId and either <code>EC2SecurityGroupName</code> or <code>EC2SecurityGroupId</code> must be provided. </p>",
         "AvailabilityZone$Name": "<p> The name of the availability zone. </p>",
+        "Certificate$CertificateIdentifier": "<p>The unique key that identifies a certificate. </p>",
+        "Certificate$CertificateType": "<p>The type of the certificate. </p>",
+        "Certificate$Thumbprint": "<p>The thumbprint of the certificate. </p>",
+        "CertificateMessage$Marker": "<p> An optional pagination token provided by a previous <a>DescribeCertificates</a> request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code> . </p>",
         "CharacterSet$CharacterSetName": "<p> The name of the character set. </p>",
         "CharacterSet$CharacterSetDescription": "<p> The description of the character set. </p>",
         "CopyDBParameterGroupMessage$SourceDBParameterGroupIdentifier": "<p> The identifier or ARN for the source DB parameter group. </p> <p>Constraints:</p> <ul> <li>Must specify a valid DB parameter group.</li> <li>If the source DB parameter group is in the same region as the copy, specify a valid DB parameter group identifier, for example <code>my-db-param-group</code>, or a valid ARN.</li> <li>If the source DB parameter group is in a different region than the copy, specify a valid DB parameter group ARN, for example <code>arn:aws:rds:us-west-2:123456789012:pg:special-parameters</code>.</li> </ul>",
@@ -1400,32 +1461,32 @@
         "CopyOptionGroupMessage$SourceOptionGroupIdentifier": "<p>The identifier or ARN for the source option group. </p> <p>Constraints:</p> <ul> <li>Must specify a valid option group.</li> <li>If the source option group is in the same region as the copy, specify a valid option group identifier, for example <code>my-option-group</code>, or a valid ARN.</li> <li>If the source option group is in a different region than the copy, specify a valid option group ARN, for example <code>arn:aws:rds:us-west-2:123456789012:og:special-options</code>.</li> </ul>",
         "CopyOptionGroupMessage$TargetOptionGroupIdentifier": "<p>The identifier for the copied option group. </p> <p>Constraints:</p> <ul> <li>Cannot be null, empty, or blank</li> <li>Must contain from 1 to 255 alphanumeric characters or hyphens</li> <li>First character must be a letter</li> <li>Cannot end with a hyphen or contain two consecutive hyphens</li> </ul> <p>Example: <code>my-option-group</code></p>",
         "CopyOptionGroupMessage$TargetOptionGroupDescription": "<p>The description for the copied option group. </p>",
-        "CreateDBInstanceMessage$DBName": "<p>The meaning of this parameter differs according to the database engine you use.</p> <p>Type: String</p> <p><b>MySQL</b></p> <p>The name of the database to create when the DB instance is created. If this parameter is not specified, no database is created in the DB instance. </p> <p>Constraints:</p> <ul> <li>Must contain 1 to 64 alphanumeric characters</li> <li>Cannot be a word reserved by the specified database engine</li> </ul> <p><b>PostgreSQL</b></p> <p>The name of the database to create when the DB instance is created. If this parameter is not specified, no database is created in the DB instance. </p> <p>Constraints:</p> <ul> <li>Must contain 1 to 63 alphanumeric characters</li> <li>Must begin with a letter or an underscore. Subsequent characters can be letters, underscores, or digits (0-9).</li> <li>Cannot be a word reserved by the specified database engine</li> </ul> <p><b>Oracle</b></p> <p> The Oracle System ID (SID) of the created DB instance. </p> <p>Default: <code>ORCL</code></p> <p>Constraints:</p> <ul> <li>Cannot be longer than 8 characters</li> </ul> <p><b>SQL Server</b></p> <p>Not applicable. Must be null.</p>",
+        "CreateDBInstanceMessage$DBName": "<p>The meaning of this parameter differs according to the database engine you use.</p> <p>Type: String</p> <p> <b>MySQL</b> </p> <p>The name of the database to create when the DB instance is created. If this parameter is not specified, no database is created in the DB instance. </p> <p>Constraints:</p> <ul> <li>Must contain 1 to 64 alphanumeric characters</li> <li>Cannot be a word reserved by the specified database engine</li> </ul> <p> <b>PostgreSQL</b> </p> <p>The name of the database to create when the DB instance is created. If this parameter is not specified, no database is created in the DB instance. </p> <p>Constraints:</p> <ul> <li>Must contain 1 to 63 alphanumeric characters</li> <li>Must begin with a letter or an underscore. Subsequent characters can be letters, underscores, or digits (0-9).</li> <li>Cannot be a word reserved by the specified database engine</li> </ul> <p> <b>Oracle</b> </p> <p> The Oracle System ID (SID) of the created DB instance. </p> <p>Default: <code>ORCL</code></p> <p>Constraints:</p> <ul> <li>Cannot be longer than 8 characters</li> </ul> <p> <b>SQL Server</b> </p> <p>Not applicable. Must be null.</p>",
         "CreateDBInstanceMessage$DBInstanceIdentifier": "<p> The DB instance identifier. This parameter is stored as a lowercase string. </p> <p>Constraints:</p> <ul> <li>Must contain from 1 to 63 alphanumeric characters or hyphens (1 to 15 for SQL Server).</li> <li>First character must be a letter.</li> <li>Cannot end with a hyphen or contain two consecutive hyphens.</li> </ul> <p>Example: <code>mydbinstance</code></p>",
-        "CreateDBInstanceMessage$DBInstanceClass": "<p> The compute and memory capacity of the DB instance. </p> <p> Valid Values: <code>db.t1.micro | db.m1.small | db.m1.medium | db.m1.large | db.m1.xlarge | db.m2.xlarge |db.m2.2xlarge | db.m2.4xlarge | db.m3.medium | db.m3.large | db.m3.xlarge | db.m3.2xlarge | db.r3.large | db.r3.xlarge | db.r3.2xlarge | db.r3.4xlarge | db.r3.8xlarge | db.t2.micro | db.t2.small | db.t2.medium</code> </p>",
-        "CreateDBInstanceMessage$Engine": "<p> The name of the database engine to be used for this instance. </p> <p> Valid Values: <code>MySQL</code> | <code>oracle-se1</code> | <code>oracle-se</code> | <code>oracle-ee</code> | <code>sqlserver-ee</code> | <code>sqlserver-se</code> | <code>sqlserver-ex</code> | <code>sqlserver-web</code> | <code>postgres</code> </p> <p> Not every database engine is available for every AWS region. </p>",
-        "CreateDBInstanceMessage$MasterUsername": "<p> The name of master user for the client DB instance. </p> <p><b>MySQL</b></p> <p>Constraints:</p> <ul> <li>Must be 1 to 16 alphanumeric characters.</li> <li>First character must be a letter.</li> <li>Cannot be a reserved word for the chosen database engine.</li> </ul> <p>Type: String</p> <p><b>Oracle</b></p> <p>Constraints:</p> <ul> <li>Must be 1 to 30 alphanumeric characters.</li> <li>First character must be a letter.</li> <li>Cannot be a reserved word for the chosen database engine.</li> </ul> <p><b>SQL Server</b></p> <p>Constraints:</p> <ul> <li>Must be 1 to 128 alphanumeric characters.</li> <li>First character must be a letter.</li> <li>Cannot be a reserved word for the chosen database engine.</li> </ul>",
-        "CreateDBInstanceMessage$MasterUserPassword": "<p> The password for the master database user. Can be any printable ASCII character except \"/\", \"\"\", or \"@\". </p> <p>Type: String</p> <p><b>MySQL</b></p> <p> Constraints: Must contain from 8 to 41 characters. </p> <p><b>Oracle</b></p> <p> Constraints: Must contain from 8 to 30 characters. </p> <p><b>SQL Server</b></p> <p> Constraints: Must contain from 8 to 128 characters. </p>",
-        "CreateDBInstanceMessage$AvailabilityZone": "<p> The EC2 Availability Zone that the database instance will be created in. For information on regions and Availability Zones, see <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html\">Regions and Availability Zones</a>. </p> <p> Default: A random, system-chosen Availability Zone in the endpoint's region. </p> <p> Example: <code>us-east-1d</code> </p> <p> Constraint: The AvailabilityZone parameter cannot be specified if the MultiAZ parameter is set to <code>true</code>. The specified Availability Zone must be in the same region as the current endpoint. </p>",
+        "CreateDBInstanceMessage$DBInstanceClass": "<p> The compute and memory capacity of the DB instance. </p> <p> Valid Values: <code>db.t1.micro | db.m1.small | db.m1.medium | db.m1.large | db.m1.xlarge | db.m2.xlarge |db.m2.2xlarge | db.m2.4xlarge | db.m3.medium | db.m3.large | db.m3.xlarge | db.m3.2xlarge | db.r3.large | db.r3.xlarge | db.r3.2xlarge | db.r3.4xlarge | db.r3.8xlarge | db.t2.micro | db.t2.small | db.t2.medium</code></p>",
+        "CreateDBInstanceMessage$Engine": "<p> The name of the database engine to be used for this instance. </p> <p> Valid Values: <code>MySQL</code> | <code>oracle-se1</code> | <code>oracle-se</code> | <code>oracle-ee</code> | <code>sqlserver-ee</code> | <code>sqlserver-se</code> | <code>sqlserver-ex</code> | <code>sqlserver-web</code> | <code>postgres</code></p> <p> Not every database engine is available for every AWS region. </p>",
+        "CreateDBInstanceMessage$MasterUsername": "<p> The name of master user for the client DB instance. </p> <p> <b>MySQL</b> </p> <p>Constraints:</p> <ul> <li>Must be 1 to 16 alphanumeric characters.</li> <li>First character must be a letter.</li> <li>Cannot be a reserved word for the chosen database engine.</li> </ul> <p>Type: String</p> <p> <b>Oracle</b> </p> <p>Constraints:</p> <ul> <li>Must be 1 to 30 alphanumeric characters.</li> <li>First character must be a letter.</li> <li>Cannot be a reserved word for the chosen database engine.</li> </ul> <p> <b>SQL Server</b> </p> <p>Constraints:</p> <ul> <li>Must be 1 to 128 alphanumeric characters.</li> <li>First character must be a letter.</li> <li>Cannot be a reserved word for the chosen database engine.</li> </ul> <p> <b>PostgreSQL</b> </p> <p>Constraints:</p> <ul> <li>Must be 1 to 63 alphanumeric characters.</li> <li>First character must be a letter.</li> <li>Cannot be a reserved word for the chosen database engine.</li> </ul>",
+        "CreateDBInstanceMessage$MasterUserPassword": "<p> The password for the master database user. Can be any printable ASCII character except \"/\", \"\"\", or \"@\". </p> <p>Type: String</p> <p> <b>MySQL</b> </p> <p> Constraints: Must contain from 8 to 41 characters. </p> <p> <b>Oracle</b> </p> <p> Constraints: Must contain from 8 to 30 characters. </p> <p> <b>SQL Server</b> </p> <p> Constraints: Must contain from 8 to 128 characters. </p> <p> <b>PostgreSQL</b> </p> <p> Constraints: Must contain from 8 to 128 characters. </p>",
+        "CreateDBInstanceMessage$AvailabilityZone": "<p> The EC2 Availability Zone that the database instance will be created in. For information on regions and Availability Zones, see <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html\">Regions and Availability Zones</a>. </p> <p> Default: A random, system-chosen Availability Zone in the endpoint's region. </p> <p> Example: <code>us-east-1d</code></p> <p> Constraint: The AvailabilityZone parameter cannot be specified if the MultiAZ parameter is set to <code>true</code>. The specified Availability Zone must be in the same region as the current endpoint. </p>",
         "CreateDBInstanceMessage$DBSubnetGroupName": "<p> A DB subnet group to associate with this DB instance. </p> <p> If there is no DB subnet group, then it is a non-VPC DB instance. </p>",
-        "CreateDBInstanceMessage$PreferredMaintenanceWindow": "<p> The weekly time range (in UTC) during which system maintenance can occur. For more information, see <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBMaintenance.html\">DB Instance Maintenance</a>. </p> <p> Format: <code>ddd:hh24:mi-ddd:hh24:mi</code> </p> <p> Default: A 30-minute window selected at random from an 8-hour block of time per region, occurring on a random day of the week. To see the time blocks available, see <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/AdjustingTheMaintenanceWindow.html\"> Adjusting the Preferred Maintenance Window</a> in the Amazon RDS User Guide. </p> <p>Valid Days: Mon, Tue, Wed, Thu, Fri, Sat, Sun</p> <p>Constraints: Minimum 30-minute window.</p>",
+        "CreateDBInstanceMessage$PreferredMaintenanceWindow": "<p> The weekly time range (in UTC) during which system maintenance can occur. For more information, see <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBMaintenance.html\">DB Instance Maintenance</a>. </p> <p> Format: <code>ddd:hh24:mi-ddd:hh24:mi</code></p> <p> Default: A 30-minute window selected at random from an 8-hour block of time per region, occurring on a random day of the week. To see the time blocks available, see <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/AdjustingTheMaintenanceWindow.html\"> Adjusting the Preferred Maintenance Window</a> in the Amazon RDS User Guide. </p> <p>Valid Days: Mon, Tue, Wed, Thu, Fri, Sat, Sun</p> <p>Constraints: Minimum 30-minute window.</p>",
         "CreateDBInstanceMessage$DBParameterGroupName": "<p> The name of the DB parameter group to associate with this DB instance. If this argument is omitted, the default DBParameterGroup for the specified engine will be used. </p> <p> Constraints: </p> <ul> <li>Must be 1 to 255 alphanumeric characters</li> <li>First character must be a letter</li> <li>Cannot end with a hyphen or contain two consecutive hyphens</li> </ul>",
         "CreateDBInstanceMessage$PreferredBackupWindow": "<p> The daily time range during which automated backups are created if automated backups are enabled, using the <code>BackupRetentionPeriod</code> parameter. For more information, see <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.BackingUpAndRestoringAmazonRDSInstances.html\">DB Instance Backups</a>. </p> <p> Default: A 30-minute window selected at random from an 8-hour block of time per region. See the Amazon RDS User Guide for the time blocks for each region from which the default backup windows are assigned. </p> <p> Constraints: Must be in the format <code>hh24:mi-hh24:mi</code>. Times should be Universal Time Coordinated (UTC). Must not conflict with the preferred maintenance window. Must be at least 30 minutes. </p>",
-        "CreateDBInstanceMessage$EngineVersion": "<p> The version number of the database engine to use. </p> <p> The following are the database engines and major and minor versions that are available with Amazon RDS. Not every database engine is available for every AWS region. </p> <p><b>MySQL</b></p> <ul> <li> <b>Version 5.1:</b> <code> 5.1.45 | 5.1.49 | 5.1.50 | 5.1.57 | 5.1.61 | 5.1.62 | 5.1.63 | 5.1.69 | 5.1.71 | 5.1.73</code> </li> <li> <b>Version 5.5:</b> <code> 5.5.12 | 5.5.20 | 5.5.23 | 5.5.25a | 5.5.27 | 5.5.31 | 5.5.33 | 5.5.37 | 5.5.38 | 5.5.8</code> </li> <li> <b>Version 5.6:</b> <code> 5.6.12 | 5.6.13 | 5.6.17 | 5.6.19 | 5.6.21</code> </li> </ul> <p><b>Oracle Database Enterprise Edition (oracle-ee)</b></p> <ul> <li> <b>Version 11.2:</b> <code> 11.2.0.2.v3 | 11.2.0.2.v4 | 11.2.0.2.v5 | 11.2.0.2.v6 | 11.2.0.2.v7 | 11.2.0.3.v1 | 11.2.0.4.v1</code> </li> </ul> <p><b>Oracle Database Standard Edition (oracle-se)</b></p> <ul> <li> <b>Version 11.2:</b> <code> 11.2.0.2.v3 | 11.2.0.2.v4 | 11.2.0.2.v5 | 11.2.0.2.v6 | 11.2.0.2.v7 | 11.2.0.3.v1 | 11.2.0.4.v1</code> </li> </ul> <p><b>Oracle Database Standard Edition One (oracle-se1)</b></p> <ul> <li> <b>Version 11.2:</b> <code> 11.2.0.2.v3 | 11.2.0.2.v4 | 11.2.0.2.v5 | 11.2.0.2.v6 | 11.2.0.2.v7 | 11.2.0.3.v1 | 11.2.0.4.v1</code> </li> </ul> <p><b>PostgreSQL</b></p> <ul> <li> <b>Version 9.3:</b> <code> 9.3.1 | 9.3.2 | 9.3.3</code> </li> </ul> <p><b>Microsoft SQL Server Enterprise Edition (sqlserver-ee)</b></p> <ul> <li> <b>Version 10.5:</b> <code> 10.50.2789.0.v1</code> </li> <li> <b>Version 11.0:</b> <code> 11.00.2100.60.v1</code> </li> </ul> <p><b>Microsoft SQL Server Express Edition (sqlserver-ex)</b></p> <ul> <li> <b>Version 10.5:</b> <code> 10.50.2789.0.v1</code> </li> <li> <b>Version 11.0:</b> <code> 11.00.2100.60.v1</code> </li> </ul> <p><b>Microsoft SQL Server Standard Edition (sqlserver-se)</b></p> <ul> <li> <b>Version 10.5:</b> <code> 10.50.2789.0.v1</code> </li> <li> <b>Version 11.0:</b> <code> 11.00.2100.60.v1</code> </li> </ul> <p><b>Microsoft SQL Server Web Edition (sqlserver-web)</b></p> <ul> <li> <b>Version 10.5:</b> <code> 10.50.2789.0.v1</code> </li> <li> <b>Version 11.0:</b> <code> 11.00.2100.60.v1</code> </li> </ul>",
-        "CreateDBInstanceMessage$LicenseModel": "<p> License model information for this DB instance. </p> <p> Valid values: <code>license-included</code> | <code>bring-your-own-license</code> | <code>general-public-license</code> </p>",
+        "CreateDBInstanceMessage$EngineVersion": "<p> The version number of the database engine to use. </p> <p> The following are the database engines and major and minor versions that are available with Amazon RDS. Not every database engine is available for every AWS region. </p> <p> <b>MySQL</b> </p> <ul> <li> <b>Version 5.1 (Only available in the following regions: ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-west-1, us-west-2):</b> <code> 5.1.73a | 5.1.73b</code> </li> <li> <b>Version 5.5 (Only available in the following regions: ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-west-1, us-west-2):</b> <code> 5.5.40 | 5.5.40a</code> </li> <li> <b>Version 5.5 (Available in all regions):</b> <code> 5.5.40b | 5.5.41</code> </li> <li> <b>Version 5.6 (Available in all regions):</b> <code> 5.6.19a | 5.6.19b | 5.6.21 | 5.6.21b | 5.6.22</code> </li> </ul> <p> <b>MySQL</b> </p> <ul> <li> <b>Version 5.1 (Only available in the following regions: ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-west-1, us-west-2):</b> <code> 5.1.73a | 5.1.73b</code> </li> <li> <b>Version 5.5 (Only available in the following regions: ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-west-1, us-west-2):</b> <code> 5.5.40 | 5.5.40a</code> </li> <li> <b>Version 5.5 (Available in all regions):</b> <code> 5.5.40b | 5.5.41</code> </li> <li> <b>Version 5.6 (Available in all regions):</b> <code> 5.6.19a | 5.6.19b | 5.6.21 | 5.6.21b | 5.6.22</code> </li> </ul> <p> <b>MySQL</b> </p> <ul> <li> <b>Version 5.1 (Only available in the following regions: ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-west-1, us-west-2):</b> <code> 5.1.73a | 5.1.73b</code> </li> <li> <b>Version 5.5 (Only available in the following regions: ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-west-1, us-west-2):</b> <code> 5.5.40 | 5.5.40a</code> </li> <li> <b>Version 5.5 (Available in all regions):</b> <code> 5.5.40b | 5.5.41</code> </li> <li> <b>Version 5.6 (Available in all regions):</b> <code> 5.6.19a | 5.6.19b | 5.6.21 | 5.6.21b | 5.6.22</code> </li> </ul> <p> <b>MySQL</b> </p> <ul> <li> <b>Version 5.1 (Only available in the following regions: ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-west-1, us-west-2):</b> <code> 5.1.73a | 5.1.73b</code> </li> <li> <b>Version 5.5 (Only available in the following regions: ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-west-1, us-west-2):</b> <code> 5.5.40 | 5.5.40a</code> </li> <li> <b>Version 5.5 (Available in all regions):</b> <code> 5.5.40b | 5.5.41</code> </li> <li> <b>Version 5.6 (Available in all regions):</b> <code> 5.6.19a | 5.6.19b | 5.6.21 | 5.6.21b | 5.6.22</code> </li> </ul> <p> <b>Oracle Database Enterprise Edition (oracle-ee)</b> </p> <ul> <li> <b>Version 11.2 (Only available in the following regions: ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-west-1, us-west-2):</b> <code> 11.2.0.2.v3 | 11.2.0.2.v4 | 11.2.0.2.v5 | 11.2.0.2.v6 | 11.2.0.2.v7</code> </li> <li> <b>Version 11.2 (Available in all regions):</b> <code> 11.2.0.3.v1 | 11.2.0.3.v2 | 11.2.0.4.v1 | 11.2.0.4.v3</code> </li> </ul> <p> <b>Oracle Database Enterprise Edition (oracle-ee)</b> </p> <ul> <li> <b>Version 11.2 (Only available in the following regions: ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-west-1, us-west-2):</b> <code> 11.2.0.2.v3 | 11.2.0.2.v4 | 11.2.0.2.v5 | 11.2.0.2.v6 | 11.2.0.2.v7</code> </li> <li> <b>Version 11.2 (Available in all regions):</b> <code> 11.2.0.3.v1 | 11.2.0.3.v2 | 11.2.0.4.v1 | 11.2.0.4.v3</code> </li> </ul> <p> <b>Oracle Database Standard Edition (oracle-se)</b> </p> <ul> <li> <b>Version 11.2 (Only available in the following regions: us-west-1):</b> <code> 11.2.0.2.v3 | 11.2.0.2.v4 | 11.2.0.2.v5 | 11.2.0.2.v6 | 11.2.0.2.v7</code> </li> <li> <b>Version 11.2 (Only available in the following regions: eu-central-1, us-west-1):</b> <code> 11.2.0.3.v1 | 11.2.0.3.v2 | 11.2.0.4.v1 | 11.2.0.4.v3</code> </li> </ul> <p> <b>Oracle Database Standard Edition (oracle-se)</b> </p> <ul> <li> <b>Version 11.2 (Only available in the following regions: us-west-1):</b> <code> 11.2.0.2.v3 | 11.2.0.2.v4 | 11.2.0.2.v5 | 11.2.0.2.v6 | 11.2.0.2.v7</code> </li> <li> <b>Version 11.2 (Only available in the following regions: eu-central-1, us-west-1):</b> <code> 11.2.0.3.v1 | 11.2.0.3.v2 | 11.2.0.4.v1 | 11.2.0.4.v3</code> </li> </ul> <p> <b>Oracle Database Standard Edition One (oracle-se1)</b> </p> <ul> <li> <b>Version 11.2 (Only available in the following regions: us-west-1):</b> <code> 11.2.0.2.v3 | 11.2.0.2.v4 | 11.2.0.2.v5 | 11.2.0.2.v6 | 11.2.0.2.v7</code> </li> <li> <b>Version 11.2 (Only available in the following regions: eu-central-1, us-west-1):</b> <code> 11.2.0.3.v1 | 11.2.0.3.v2 | 11.2.0.4.v1 | 11.2.0.4.v3</code> </li> </ul> <p> <b>Oracle Database Standard Edition One (oracle-se1)</b> </p> <ul> <li> <b>Version 11.2 (Only available in the following regions: us-west-1):</b> <code> 11.2.0.2.v3 | 11.2.0.2.v4 | 11.2.0.2.v5 | 11.2.0.2.v6 | 11.2.0.2.v7</code> </li> <li> <b>Version 11.2 (Only available in the following regions: eu-central-1, us-west-1):</b> <code> 11.2.0.3.v1 | 11.2.0.3.v2 | 11.2.0.4.v1 | 11.2.0.4.v3</code> </li> </ul> <p> <b>PostgreSQL</b> </p> <ul> <li> <b>Version 9.3 (Only available in the following regions: ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-west-1, us-west-2):</b> <code> 9.3.1 | 9.3.2</code> </li> <li> <b>Version 9.3 (Available in all regions):</b> <code> 9.3.3 | 9.3.5</code> </li> </ul> <p> <b>PostgreSQL</b> </p> <ul> <li> <b>Version 9.3 (Only available in the following regions: ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-west-1, us-west-2):</b> <code> 9.3.1 | 9.3.2</code> </li> <li> <b>Version 9.3 (Available in all regions):</b> <code> 9.3.3 | 9.3.5</code> </li> </ul> <p> <b>Microsoft SQL Server Enterprise Edition (sqlserver-ee)</b> </p> <ul> <li> <b>Version 10.50 (Only available in the following regions: eu-central-1, us-west-1):</b> <code> 10.50.2789.0.v1</code> </li> <li> <b>Version 11.00 (Only available in the following regions: eu-central-1, us-west-1):</b> <code> 11.00.2100.60.v1</code> </li> </ul> <p> <b>Microsoft SQL Server Enterprise Edition (sqlserver-ee)</b> </p> <ul> <li> <b>Version 10.50 (Only available in the following regions: eu-central-1, us-west-1):</b> <code> 10.50.2789.0.v1</code> </li> <li> <b>Version 11.00 (Only available in the following regions: eu-central-1, us-west-1):</b> <code> 11.00.2100.60.v1</code> </li> </ul> <p> <b>Microsoft SQL Server Express Edition (sqlserver-ex)</b> </p> <ul> <li> <b>Version 10.50 (Available in all regions):</b> <code> 10.50.2789.0.v1</code> </li> <li> <b>Version 11.00 (Available in all regions):</b> <code> 11.00.2100.60.v1</code> </li> </ul> <p> <b>Microsoft SQL Server Express Edition (sqlserver-ex)</b> </p> <ul> <li> <b>Version 10.50 (Available in all regions):</b> <code> 10.50.2789.0.v1</code> </li> <li> <b>Version 11.00 (Available in all regions):</b> <code> 11.00.2100.60.v1</code> </li> </ul> <p> <b>Microsoft SQL Server Standard Edition (sqlserver-se)</b> </p> <ul> <li> <b>Version 10.50 (Available in all regions):</b> <code> 10.50.2789.0.v1</code> </li> <li> <b>Version 11.00 (Available in all regions):</b> <code> 11.00.2100.60.v1</code> </li> </ul> <p> <b>Microsoft SQL Server Standard Edition (sqlserver-se)</b> </p> <ul> <li> <b>Version 10.50 (Available in all regions):</b> <code> 10.50.2789.0.v1</code> </li> <li> <b>Version 11.00 (Available in all regions):</b> <code> 11.00.2100.60.v1</code> </li> </ul> <p> <b>Microsoft SQL Server Web Edition (sqlserver-web)</b> </p> <ul> <li> <b>Version 10.50 (Available in all regions):</b> <code> 10.50.2789.0.v1</code> </li> <li> <b>Version 11.00 (Available in all regions):</b> <code> 11.00.2100.60.v1</code> </li> </ul> <p> <b>Microsoft SQL Server Web Edition (sqlserver-web)</b> </p> <ul> <li> <b>Version 10.50 (Available in all regions):</b> <code> 10.50.2789.0.v1</code> </li> <li> <b>Version 11.00 (Available in all regions):</b> <code> 11.00.2100.60.v1</code> </li> </ul>",
+        "CreateDBInstanceMessage$LicenseModel": "<p> License model information for this DB instance. </p> <p> Valid values: <code>license-included</code> | <code>bring-your-own-license</code> | <code>general-public-license</code></p>",
         "CreateDBInstanceMessage$OptionGroupName": "<p> Indicates that the DB instance should be associated with the specified option group. </p> <p> Permanent options, such as the TDE option for Oracle Advanced Security TDE, cannot be removed from an option group, and that option group cannot be removed from a DB instance once it is associated with a DB instance </p>",
         "CreateDBInstanceMessage$CharacterSetName": "<p> For supported engines, indicates that the DB instance should be associated with the specified CharacterSet. </p>",
-        "CreateDBInstanceMessage$StorageType": "<p> Specifies the storage type to be associated with the DB instance. </p> <p> Valid values: <code>standard | gp2 | io1</code> </p> <p> If you specify <code>io1</code>, you must also include a value for the <code>Iops</code> parameter. </p> <p> Default: <code>io1</code> if the <code>Iops</code> parameter is specified; otherwise <code>standard</code> </p>",
+        "CreateDBInstanceMessage$StorageType": "<p> Specifies the storage type to be associated with the DB instance. </p> <p> Valid values: <code>standard | gp2 | io1</code></p> <p> If you specify <code>io1</code>, you must also include a value for the <code>Iops</code> parameter. </p> <p> Default: <code>io1</code> if the <code>Iops</code> parameter is specified; otherwise <code>standard</code></p>",
         "CreateDBInstanceMessage$TdeCredentialArn": "<p> The ARN from the Key Store with which to associate the instance for TDE encryption. </p>",
         "CreateDBInstanceMessage$TdeCredentialPassword": "<p> The password for the given ARN from the Key Store in order to access the device. </p>",
         "CreateDBInstanceMessage$KmsKeyId": "<p> The KMS key identifier for an encrypted DB instance. </p> <p>The KMS key identifier is the Amazon Resoure Name (ARN) for the KMS encryption key. If you are creating a DB instance with the same AWS account that owns the KMS encryption key used to encrypt the new DB instance, then you can use the KMS key alias instead of the ARN for the KM encryption key.</p> <p>If the <code>StorageEncrypted</code> parameter is true, and you do not specify a value for the <code>KmsKeyId</code> parameter, then Amazon RDS will use your default encryption key. AWS KMS creates the default encryption key for your AWS account. Your AWS account has a different default encryption key for each AWS region.</p>",
         "CreateDBInstanceReadReplicaMessage$DBInstanceIdentifier": "<p> The DB instance identifier of the Read Replica. This is the unique key that identifies a DB instance. This parameter is stored as a lowercase string. </p>",
         "CreateDBInstanceReadReplicaMessage$SourceDBInstanceIdentifier": "<p> The identifier of the DB instance that will act as the source for the Read Replica. Each DB instance can have up to five Read Replicas. </p> <p>Constraints:</p> <ul> <li>Must be the identifier of an existing DB instance.</li> <li>Can specify a DB instance that is a MySQL Read Replica only if the source is running MySQL 5.6.</li> <li>Can specify a DB instance that is a PostgreSQL Read Replica only if the source is running PostgreSQL 9.3.5.</li> <li>The specified DB instance must have automatic backups enabled, its backup retention period must be greater than 0.</li> <li>If the source DB instance is in the same region as the Read Replica, specify a valid DB instance identifier.</li> <li>If the source DB instance is in a different region than the Read Replica, specify a valid DB instance ARN. For more information, go to <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Tagging.html#USER_Tagging.ARN\"> Constructing a Amazon RDS Amazon Resource Name (ARN)</a>.</li> </ul>",
-        "CreateDBInstanceReadReplicaMessage$DBInstanceClass": "<p> The compute and memory capacity of the Read Replica. </p> <p> Valid Values: <code>db.m1.small | db.m1.medium | db.m1.large | db.m1.xlarge | db.m2.xlarge |db.m2.2xlarge | db.m2.4xlarge | db.m3.medium | db.m3.large | db.m3.xlarge | db.m3.2xlarge | db.r3.large | db.r3.xlarge | db.r3.2xlarge | db.r3.4xlarge | db.r3.8xlarge | db.t2.micro | db.t2.small | db.t2.medium</code> </p> <p>Default: Inherits from the source DB instance.</p>",
-        "CreateDBInstanceReadReplicaMessage$AvailabilityZone": "<p> The Amazon EC2 Availability Zone that the Read Replica will be created in. </p> <p> Default: A random, system-chosen Availability Zone in the endpoint's region. </p> <p> Example: <code>us-east-1d</code> </p>",
+        "CreateDBInstanceReadReplicaMessage$DBInstanceClass": "<p> The compute and memory capacity of the Read Replica. </p> <p> Valid Values: <code>db.m1.small | db.m1.medium | db.m1.large | db.m1.xlarge | db.m2.xlarge |db.m2.2xlarge | db.m2.4xlarge | db.m3.medium | db.m3.large | db.m3.xlarge | db.m3.2xlarge | db.r3.large | db.r3.xlarge | db.r3.2xlarge | db.r3.4xlarge | db.r3.8xlarge | db.t2.micro | db.t2.small | db.t2.medium</code></p> <p>Default: Inherits from the source DB instance.</p>",
+        "CreateDBInstanceReadReplicaMessage$AvailabilityZone": "<p> The Amazon EC2 Availability Zone that the Read Replica will be created in. </p> <p> Default: A random, system-chosen Availability Zone in the endpoint's region. </p> <p> Example: <code>us-east-1d</code></p>",
         "CreateDBInstanceReadReplicaMessage$OptionGroupName": "<p> The option group the DB instance will be associated with. If omitted, the default option group for the engine specified will be used. </p>",
         "CreateDBInstanceReadReplicaMessage$DBSubnetGroupName": "<p> Specifies a DB subnet group for the DB instance. The new DB instance will be created in the VPC associated with the DB subnet group. If no DB subnet group is specified, then the new DB instance is not created in a VPC. </p> <p>Constraints:</p> <ul> <li>Can only be specified if the source DB instance identifier specifies a DB instance in another region.</li> <li>The specified DB subnet group must be in the same region in which the operation is running.</li> <li> All Read Replicas in one region that are created from the same source DB instance must either: <ul> <li>Specify DB subnet groups from the same VPC. All these Read Replicas will be created in the same VPC.</li> <li>Not specify a DB subnet group. All these Read Replicas will be created outside of any VPC.</li> </ul> </li> </ul>",
-        "CreateDBInstanceReadReplicaMessage$StorageType": "<p> Specifies the storage type to be associated with the Read Replica. </p> <p> Valid values: <code>standard | gp2 | io1</code> </p> <p> If you specify <code>io1</code>, you must also include a value for the <code>Iops</code> parameter. </p> <p> Default: <code>io1</code> if the <code>Iops</code> parameter is specified; otherwise <code>standard</code> </p>",
+        "CreateDBInstanceReadReplicaMessage$StorageType": "<p> Specifies the storage type to be associated with the Read Replica. </p> <p> Valid values: <code>standard | gp2 | io1</code></p> <p> If you specify <code>io1</code>, you must also include a value for the <code>Iops</code> parameter. </p> <p> Default: <code>io1</code> if the <code>Iops</code> parameter is specified; otherwise <code>standard</code></p>",
         "CreateDBParameterGroupMessage$DBParameterGroupName": "<p> The name of the DB parameter group. </p> <p> Constraints: </p> <ul> <li>Must be 1 to 255 alphanumeric characters</li> <li>First character must be a letter</li> <li>Cannot end with a hyphen or contain two consecutive hyphens</li> </ul> <note>This value is stored as a lower-case string.</note>",
         "CreateDBParameterGroupMessage$DBParameterGroupFamily": "<p> The DB parameter group family name. A DB parameter group can be associated with one and only one DB parameter group family, and can be applied only to a DB instance running a database engine and engine version compatible with that DB parameter group family. </p>",
         "CreateDBParameterGroupMessage$Description": "<p> The description for the DB parameter group. </p>",
@@ -1453,7 +1514,7 @@
         "DBInstance$Engine": "<p> Provides the name of the database engine to be used for this DB instance. </p>",
         "DBInstance$DBInstanceStatus": "<p> Specifies the current state of this database. </p>",
         "DBInstance$MasterUsername": "<p> Contains the master username for the DB instance. </p>",
-        "DBInstance$DBName": "<p>The meaning of this parameter differs according to the database engine you use. For example, this value returns either MySQL or PostgreSQL information when returning values from CreateDBInstanceReadReplica since Read Replicas are only supported for MySQL and PostgreSQL.</p> <p><b>MySQL, SQL Server, PostgreSQL</b></p> <p> Contains the name of the initial database of this instance that was provided at create time, if one was specified when the DB instance was created. This same name is returned for the life of the DB instance. </p> <p>Type: String</p> <p><b>Oracle</b></p> <p> Contains the Oracle System ID (SID) of the created DB instance. Not shown when the returned parameters do not apply to an Oracle DB instance. </p>",
+        "DBInstance$DBName": "<p>The meaning of this parameter differs according to the database engine you use. For example, this value returns either MySQL or PostgreSQL information when returning values from CreateDBInstanceReadReplica since Read Replicas are only supported for MySQL and PostgreSQL.</p> <p> <b>MySQL, SQL Server, PostgreSQL</b> </p> <p> Contains the name of the initial database of this instance that was provided at create time, if one was specified when the DB instance was created. This same name is returned for the life of the DB instance. </p> <p>Type: String</p> <p> <b>Oracle</b> </p> <p> Contains the Oracle System ID (SID) of the created DB instance. Not shown when the returned parameters do not apply to an Oracle DB instance. </p>",
         "DBInstance$PreferredBackupWindow": "<p> Specifies the daily time range during which automated backups are created if automated backups are enabled, as determined by the <code>BackupRetentionPeriod</code>. </p>",
         "DBInstance$AvailabilityZone": "<p> Specifies the name of the Availability Zone the DB instance is located in. </p>",
         "DBInstance$PreferredMaintenanceWindow": "<p> Specifies the weekly time range (in UTC) during which system maintenance can occur. </p>",
@@ -1466,6 +1527,7 @@
         "DBInstance$TdeCredentialArn": "<p> The ARN from the Key Store with which the instance is associated for TDE encryption. </p>",
         "DBInstance$KmsKeyId": "<p> If <code>StorageEncrypted</code> is true, the KMS key identifier for the encrypted DB instance. </p>",
         "DBInstance$DbiResourceId": "<p> If <code>StorageEncrypted</code> is true, the region-unique, immutable identifier for the encrypted DB instance. This identifier is found in AWS CloudTrail log entries whenever the KMS key for the DB instance is accessed. </p>",
+        "DBInstance$CACertificateIdentifier": "<p>The identifier of the CA certificate for this DB instance.</p>",
         "DBInstanceMessage$Marker": "<p> An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code> . </p>",
         "DBInstanceStatusInfo$StatusType": "<p> This value is currently \"read replication.\" </p>",
         "DBInstanceStatusInfo$Status": "<p> Status of the DB instance. For a StatusType of read replica, the values can be replicating, error, stopped, or terminated. </p>",
@@ -1515,6 +1577,8 @@
         "DeleteDBSubnetGroupMessage$DBSubnetGroupName": "<p> The name of the database subnet group to delete. </p> <note>You cannot delete the default subnet group.</note> <p> Constraints: </p> <ul> <li>Must be 1 to 255 alphanumeric characters</li> <li>First character must be a letter</li> <li>Cannot end with a hyphen or contain two consecutive hyphens</li> </ul>",
         "DeleteEventSubscriptionMessage$SubscriptionName": "<p>The name of the RDS event notification subscription you want to delete.</p>",
         "DeleteOptionGroupMessage$OptionGroupName": "<p> The name of the option group to be deleted. </p> <note>You cannot delete default option groups.</note>",
+        "DescribeCertificatesMessage$CertificateIdentifier": "<p> The user-supplied certificate identifier. If this parameter is specified, information for only the identified certificate is returned. This parameter isn't case-sensitive. </p> <p>Constraints:</p> <ul> <li>Must contain from 1 to 63 alphanumeric characters or hyphens</li> <li>First character must be a letter</li> <li>Cannot end with a hyphen or contain two consecutive hyphens</li> </ul>",
+        "DescribeCertificatesMessage$Marker": "<p> An optional pagination token provided by a previous <a>DescribeCertificates</a> request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>. </p>",
         "DescribeDBEngineVersionsMessage$Engine": "<p> The database engine to return. </p>",
         "DescribeDBEngineVersionsMessage$EngineVersion": "<p> The database engine version to return. </p> <p>Example: <code>5.1.49</code></p>",
         "DescribeDBEngineVersionsMessage$DBParameterGroupFamily": "<p> The name of a specific DB parameter group family to return details for. </p> <p>Constraints:</p> <ul> <li>Must be 1 to 255 alphanumeric characters</li> <li>First character must be a letter</li> <li>Cannot end with a hyphen or contain two consecutive hyphens</li> </ul>",
@@ -1558,8 +1622,8 @@
         "DescribeOrderableDBInstanceOptionsMessage$DBInstanceClass": "<p> The DB instance class filter value. Specify this parameter to show only the available offerings matching the specified DB instance class. </p>",
         "DescribeOrderableDBInstanceOptionsMessage$LicenseModel": "<p> The license model filter value. Specify this parameter to show only the available offerings matching the specified license model. </p>",
         "DescribeOrderableDBInstanceOptionsMessage$Marker": "<p> An optional pagination token provided by a previous DescribeOrderableDBInstanceOptions request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code> . </p>",
-        "DescribePendingMaintenanceActionsMessage$ResourceIdentifier": "<p>The ARN of the resource to return pending maintenance actions for.</p>",
-        "DescribePendingMaintenanceActionsMessage$Marker": "<p> An optional pagination token provided by a previous <code>DescribePendingMaintenanceActions</code> request. If this parameter is specified, the response includes only records beyond the marker, up to a number of records specified by <code>MaxRecords</code> . </p>",
+        "DescribePendingMaintenanceActionsMessage$ResourceIdentifier": "<p>The ARN of a resource to return pending maintenance actions for.</p>",
+        "DescribePendingMaintenanceActionsMessage$Marker": "<p> An optional pagination token provided by a previous <code>DescribePendingMaintenanceActions</code> request. If this parameter is specified, the response includes only records beyond the marker, up to a number of records specified by <code>MaxRecords</code>. </p>",
         "DescribeReservedDBInstancesMessage$ReservedDBInstanceId": "<p> The reserved DB instance identifier filter value. Specify this parameter to show only the reservation that matches the specified reservation ID. </p>",
         "DescribeReservedDBInstancesMessage$ReservedDBInstancesOfferingId": "<p> The offering identifier filter value. Specify this parameter to show only purchased reservations matching the specified offering identifier. </p>",
         "DescribeReservedDBInstancesMessage$DBInstanceClass": "<p> The DB instance class filter value. Specify this parameter to show only those reservations matching the specified DB instances class. </p>",
@@ -1605,16 +1669,17 @@
         "ListTagsForResourceMessage$ResourceName": "<p>The Amazon RDS resource with tags to be listed. This value is an Amazon Resource Name (ARN). For information about creating an ARN, see <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Tagging.html#USER_Tagging.ARN\"> Constructing an RDS Amazon Resource Name (ARN)</a>.</p>",
         "ModifyDBInstanceMessage$DBInstanceIdentifier": "<p> The DB instance identifier. This value is stored as a lowercase string. </p> <p>Constraints:</p> <ul> <li>Must be the identifier for an existing DB instance</li> <li>Must contain from 1 to 63 alphanumeric characters or hyphens</li> <li>First character must be a letter</li> <li>Cannot end with a hyphen or contain two consecutive hyphens</li> </ul>",
         "ModifyDBInstanceMessage$DBInstanceClass": "<p> The new compute and memory capacity of the DB instance. To determine the instance classes that are available for a particular DB engine, use the <a>DescribeOrderableDBInstanceOptions</a> action. </p> <p> Passing a value for this setting causes an outage during the change and is applied during the next maintenance window, unless <code>ApplyImmediately</code> is specified as <code>true</code> for this request. </p> <p>Default: Uses existing setting</p> <p>Valid Values: <code>db.t1.micro | db.m1.small | db.m1.medium | db.m1.large | db.m1.xlarge | db.m2.xlarge | db.m2.2xlarge | db.m2.4xlarge | db.m3.medium | db.m3.large | db.m3.xlarge | db.m3.2xlarge | db.r3.large | db.r3.xlarge | db.r3.2xlarge | db.r3.4xlarge | db.r3.8xlarge | db.t2.micro | db.t2.small | db.t2.medium</code></p>",
-        "ModifyDBInstanceMessage$MasterUserPassword": "<p> The new password for the DB instance master user. Can be any printable ASCII character except \"/\", \"\"\", or \"@\".</p> <p> Changing this parameter does not result in an outage and the change is asynchronously applied as soon as possible. Between the time of the request and the completion of the request, the <code>MasterUserPassword</code> element exists in the <code>PendingModifiedValues</code> element of the operation response. </p> <p>Default: Uses existing setting</p> <p>Constraints: Must be 8 to 41 alphanumeric characters (MySQL), 8 to 30 alphanumeric characters (Oracle), or 8 to 128 alphanumeric characters (SQL Server).</p> <note> Amazon RDS API actions never return the password, so this action provides a way to regain access to a master instance user if the password is lost. This includes restoring privileges that may have been accidentally revoked. </note>",
+        "ModifyDBInstanceMessage$MasterUserPassword": "<p> The new password for the DB instance master user. Can be any printable ASCII character except \"/\", \"\"\", or \"@\".</p> <p> Changing this parameter does not result in an outage and the change is asynchronously applied as soon as possible. Between the time of the request and the completion of the request, the <code>MasterUserPassword</code> element exists in the <code>PendingModifiedValues</code> element of the operation response. </p> <p>Default: Uses existing setting</p> <p>Constraints: Must be 8 to 41 alphanumeric characters (MySQL), 8 to 30 alphanumeric characters (Oracle), or 8 to 128 alphanumeric characters (SQL Server).</p> <note> Amazon RDS API actions never return the password, so this action provides a way to regain access to a primary instance user if the password is lost. This includes restoring privileges that may have been accidentally revoked. </note>",
         "ModifyDBInstanceMessage$DBParameterGroupName": "<p> The name of the DB parameter group to apply to the DB instance. Changing this setting does not result in an outage. The parameter group name itself is changed immediately, but the actual parameter changes are not applied until you reboot the instance without failover. The db instance will NOT be rebooted automatically and the parameter changes will NOT be applied during the next maintenance window. </p> <p>Default: Uses existing setting</p> <p>Constraints: The DB parameter group must be in the same DB parameter group family as this DB instance.</p>",
         "ModifyDBInstanceMessage$PreferredBackupWindow": "<p> The daily time range during which automated backups are created if automated backups are enabled, as determined by the <code>BackupRetentionPeriod</code>. Changing this parameter does not result in an outage and the change is asynchronously applied as soon as possible. </p> <p>Constraints:</p> <ul> <li>Must be in the format hh24:mi-hh24:mi</li> <li>Times should be Universal Time Coordinated (UTC)</li> <li>Must not conflict with the preferred maintenance window</li> <li>Must be at least 30 minutes</li> </ul>",
         "ModifyDBInstanceMessage$PreferredMaintenanceWindow": "<p> The weekly time range (in UTC) during which system maintenance can occur, which may result in an outage. Changing this parameter does not result in an outage, except in the following situation, and the change is asynchronously applied as soon as possible. If there are pending actions that cause a reboot, and the maintenance window is changed to include the current time, then changing this parameter will cause a reboot of the DB instance. If moving this window to the current time, there must be at least 30 minutes between the current time and end of the window to ensure pending changes are applied. </p> <p>Default: Uses existing setting</p> <p>Format: ddd:hh24:mi-ddd:hh24:mi</p> <p>Valid Days: Mon | Tue | Wed | Thu | Fri | Sat | Sun</p> <p>Constraints: Must be at least 30 minutes</p>",
         "ModifyDBInstanceMessage$EngineVersion": "<p> The version number of the database engine to upgrade to. Changing this parameter results in an outage and the change is applied during the next maintenance window unless the <code>ApplyImmediately</code> parameter is set to <code>true</code> for this request. </p> <p> For major version upgrades, if a non-default DB parameter group is currently in use, a new DB parameter group in the DB parameter group family for the new engine version must be specified. The new DB parameter group can be the default for that DB parameter group family. </p> <p>For a list of valid engine versions, see <a>CreateDBInstance</a>.</p>",
         "ModifyDBInstanceMessage$OptionGroupName": "<p> Indicates that the DB instance should be associated with the specified option group. Changing this parameter does not result in an outage except in the following case and the change is applied during the next maintenance window unless the <code>ApplyImmediately</code> parameter is set to <code>true</code> for this request. If the parameter change results in an option group that enables OEM, this change can cause a brief (sub-second) period during which new connections are rejected but existing connections are not interrupted. </p> <p> Permanent options, such as the TDE option for Oracle Advanced Security TDE, cannot be removed from an option group, and that option group cannot be removed from a DB instance once it is associated with a DB instance </p>",
         "ModifyDBInstanceMessage$NewDBInstanceIdentifier": "<p> The new DB instance identifier for the DB instance when renaming a DB instance. When you change the DB instance identifier, an instance reboot will occur immediately if you set <code>Apply Immediately</code> to true, or will occur during the next maintenance window if <code>Apply Immediately</code> to false. This value is stored as a lowercase string. </p> <p>Constraints:</p> <ul> <li>Must contain from 1 to 63 alphanumeric characters or hyphens</li> <li>First character must be a letter</li> <li>Cannot end with a hyphen or contain two consecutive hyphens</li> </ul>",
-        "ModifyDBInstanceMessage$StorageType": "<p> Specifies the storage type to be associated with the DB instance. </p> <p> Valid values: <code>standard | gp2 | io1</code> </p> <p> If you specify <code>io1</code>, you must also include a value for the <code>Iops</code> parameter. </p> <p> Default: <code>io1</code> if the <code>Iops</code> parameter is specified; otherwise <code>standard</code> </p>",
+        "ModifyDBInstanceMessage$StorageType": "<p> Specifies the storage type to be associated with the DB instance. </p> <p> Valid values: <code>standard | gp2 | io1</code></p> <p> If you specify <code>io1</code>, you must also include a value for the <code>Iops</code> parameter. </p> <p> Default: <code>io1</code> if the <code>Iops</code> parameter is specified; otherwise <code>standard</code></p>",
         "ModifyDBInstanceMessage$TdeCredentialArn": "<p> The ARN from the Key Store with which to associate the instance for TDE encryption. </p>",
         "ModifyDBInstanceMessage$TdeCredentialPassword": "<p> The password for the given ARN from the Key Store in order to access the device. </p>",
+        "ModifyDBInstanceMessage$CACertificateIdentifier": "<p> Indicates the certificate which needs to be associated with the instance. </p>",
         "ModifyDBParameterGroupMessage$DBParameterGroupName": "<p> The name of the DB parameter group. </p> <p>Constraints:</p> <ul> <li>Must be the name of an existing DB parameter group</li> <li>Must be 1 to 255 alphanumeric characters</li> <li>First character must be a letter</li> <li>Cannot end with a hyphen or contain two consecutive hyphens</li> </ul>",
         "ModifyDBSubnetGroupMessage$DBSubnetGroupName": "<p> The name for the DB subnet group. This value is stored as a lowercase string. </p> <p>Constraints: Must contain no more than 255 alphanumeric characters or hyphens. Must not be \"Default\".</p> <p>Example: <code>mySubnetgroup</code></p>",
         "ModifyDBSubnetGroupMessage$DBSubnetGroupDescription": "<p> The description for the DB subnet group. </p>",
@@ -1669,12 +1734,14 @@
         "Parameter$MinimumEngineVersion": "<p> The earliest engine version to which the parameter can apply. </p>",
         "PendingMaintenanceAction$Action": "<p>The type of pending maintenance action that is available for the resource.</p>",
         "PendingMaintenanceAction$OptInStatus": "<p>Indicates the type of opt-in request that has been received for the resource.</p>",
-        "PendingMaintenanceActionsMessage$Marker": "<p> An optional pagination token provided by a previous <code>DescribePendingMaintenanceActions</code> request. If this parameter is specified, the response includes only records beyond the marker, up to a number of records specified by <code>MaxRecords</code> . </p>",
+        "PendingMaintenanceAction$Description": "<p>A description providing more detail about the maintenance action.</p>",
+        "PendingMaintenanceActionsMessage$Marker": "<p> An optional pagination token provided by a previous <code>DescribePendingMaintenanceActions</code> request. If this parameter is specified, the response includes only records beyond the marker, up to a number of records specified by <code>MaxRecords</code>. </p>",
         "PendingModifiedValues$DBInstanceClass": "<p> Contains the new <code>DBInstanceClass</code> for the DB instance that will be applied or is in progress. </p>",
         "PendingModifiedValues$MasterUserPassword": "<p> Contains the pending or in-progress change of the master credentials for the DB instance. </p>",
         "PendingModifiedValues$EngineVersion": "<p> Indicates the database engine version. </p>",
         "PendingModifiedValues$DBInstanceIdentifier": "<p> Contains the new <code>DBInstanceIdentifier</code> for the DB instance that will be applied or is in progress. </p>",
         "PendingModifiedValues$StorageType": "<p> Specifies the storage type to be associated with the DB instance. </p>",
+        "PendingModifiedValues$CACertificateIdentifier": "<p>Specifies the identifier of the CA certificate for the DB instance.</p>",
         "PromoteReadReplicaMessage$DBInstanceIdentifier": "<p> The DB instance identifier. This value is stored as a lowercase string. </p> <p>Constraints:</p> <ul> <li>Must be the identifier for an existing Read Replica DB instance</li> <li>Must contain from 1 to 63 alphanumeric characters or hyphens</li> <li>First character must be a letter</li> <li>Cannot end with a hyphen or contain two consecutive hyphens</li> </ul> <p>Example: <copy>mydbinstance</copy></p>",
         "PromoteReadReplicaMessage$PreferredBackupWindow": "<p> The daily time range during which automated backups are created if automated backups are enabled, using the <code>BackupRetentionPeriod</code> parameter. </p> <p> Default: A 30-minute window selected at random from an 8-hour block of time per region. See the Amazon RDS User Guide for the time blocks for each region from which the default backup windows are assigned. </p> <p> Constraints: Must be in the format <code>hh24:mi-hh24:mi</code>. Times should be Universal Time Coordinated (UTC). Must not conflict with the preferred maintenance window. Must be at least 30 minutes. </p>",
         "PurchaseReservedDBInstancesOfferingMessage$ReservedDBInstancesOfferingId": "<p> The ID of the Reserved DB instance offering to purchase. </p> <p>Example: 438012d3-4052-4cc7-b2e3-8d3372e0e706</p>",
@@ -1700,17 +1767,17 @@
         "ReservedDBInstancesOffering$OfferingType": "<p> The offering type. </p>",
         "ReservedDBInstancesOfferingMessage$Marker": "<p> An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>. </p>",
         "ResetDBParameterGroupMessage$DBParameterGroupName": "<p> The name of the DB parameter group. </p> <p>Constraints:</p> <ul> <li>Must be 1 to 255 alphanumeric characters</li> <li>First character must be a letter</li> <li>Cannot end with a hyphen or contain two consecutive hyphens</li> </ul>",
-        "ResourcePendingMaintenanceActions$ResourceIdentifier": "<p>The ARN of this resource that has pending maintenance actions.</p>",
+        "ResourcePendingMaintenanceActions$ResourceIdentifier": "<p>The ARN of the resource that has pending maintenance actions.</p>",
         "RestoreDBInstanceFromDBSnapshotMessage$DBInstanceIdentifier": "<p> Name of the DB instance to create from the DB snapshot. This parameter isn't case sensitive. </p> <p>Constraints:</p> <ul> <li>Must contain from 1 to 255 alphanumeric characters or hyphens</li> <li>First character must be a letter</li> <li>Cannot end with a hyphen or contain two consecutive hyphens</li> </ul> <p>Example: <code>my-snapshot-id</code></p>",
         "RestoreDBInstanceFromDBSnapshotMessage$DBSnapshotIdentifier": "<p> The identifier for the DB snapshot to restore from. </p> <p>Constraints:</p> <ul> <li>Must contain from 1 to 63 alphanumeric characters or hyphens</li> <li>First character must be a letter</li> <li>Cannot end with a hyphen or contain two consecutive hyphens</li> </ul>",
         "RestoreDBInstanceFromDBSnapshotMessage$DBInstanceClass": "<p> The compute and memory capacity of the Amazon RDS DB instance. </p> <p>Valid Values: <code>db.t1.micro | db.m1.small | db.m1.medium | db.m1.large | db.m1.xlarge | db.m2.2xlarge | db.m2.4xlarge | db.m3.medium | db.m3.large | db.m3.xlarge | db.m3.2xlarge | db.r3.large | db.r3.xlarge | db.r3.2xlarge | db.r3.4xlarge | db.r3.8xlarge | db.t2.micro | db.t2.small | db.t2.medium</code></p>",
         "RestoreDBInstanceFromDBSnapshotMessage$AvailabilityZone": "<p> The EC2 Availability Zone that the database instance will be created in. </p> <p>Default: A random, system-chosen Availability Zone.</p> <p>Constraint: You cannot specify the AvailabilityZone parameter if the MultiAZ parameter is set to <code>true</code>.</p> <p>Example: <code>us-east-1a</code></p>",
         "RestoreDBInstanceFromDBSnapshotMessage$DBSubnetGroupName": "<p> The DB subnet group name to use for the new instance. </p>",
-        "RestoreDBInstanceFromDBSnapshotMessage$LicenseModel": "<p> License model information for the restored DB instance. </p> <p> Default: Same as source. </p> <p> Valid values: <code>license-included</code> | <code>bring-your-own-license</code> | <code>general-public-license</code> </p>",
+        "RestoreDBInstanceFromDBSnapshotMessage$LicenseModel": "<p> License model information for the restored DB instance. </p> <p> Default: Same as source. </p> <p> Valid values: <code>license-included</code> | <code>bring-your-own-license</code> | <code>general-public-license</code></p>",
         "RestoreDBInstanceFromDBSnapshotMessage$DBName": "<p> The database name for the restored DB instance. </p> <note> <p>This parameter doesn't apply to the MySQL engine.</p> </note>",
-        "RestoreDBInstanceFromDBSnapshotMessage$Engine": "<p> The database engine to use for the new instance. </p> <p>Default: The same as source</p> <p>Constraint: Must be compatible with the engine of the source</p> <p> Valid Values: <code>MySQL</code> | <code>oracle-se1</code> | <code>oracle-se</code> | <code>oracle-ee</code> | <code>sqlserver-ee</code> | <code>sqlserver-se</code> | <code>sqlserver-ex</code> | <code>sqlserver-web</code> | <code>postgres</code> </p>",
+        "RestoreDBInstanceFromDBSnapshotMessage$Engine": "<p> The database engine to use for the new instance. </p> <p>Default: The same as source</p> <p>Constraint: Must be compatible with the engine of the source</p> <p> Valid Values: <code>MySQL</code> | <code>oracle-se1</code> | <code>oracle-se</code> | <code>oracle-ee</code> | <code>sqlserver-ee</code> | <code>sqlserver-se</code> | <code>sqlserver-ex</code> | <code>sqlserver-web</code> | <code>postgres</code></p>",
         "RestoreDBInstanceFromDBSnapshotMessage$OptionGroupName": "<p>The name of the option group to be used for the restored DB instance.</p> <p>Permanent options, such as the TDE option for Oracle Advanced Security TDE, cannot be removed from an option group, and that option group cannot be removed from a DB instance once it is associated with a DB instance </p>",
-        "RestoreDBInstanceFromDBSnapshotMessage$StorageType": "<p> Specifies the storage type to be associated with the DB instance. </p> <p> Valid values: <code>standard | gp2 | io1</code> </p> <p> If you specify <code>io1</code>, you must also include a value for the <code>Iops</code> parameter. </p> <p> Default: <code>io1</code> if the <code>Iops</code> parameter is specified; otherwise <code>standard</code> </p>",
+        "RestoreDBInstanceFromDBSnapshotMessage$StorageType": "<p> Specifies the storage type to be associated with the DB instance. </p> <p> Valid values: <code>standard | gp2 | io1</code></p> <p> If you specify <code>io1</code>, you must also include a value for the <code>Iops</code> parameter. </p> <p> Default: <code>io1</code> if the <code>Iops</code> parameter is specified; otherwise <code>standard</code></p>",
         "RestoreDBInstanceFromDBSnapshotMessage$TdeCredentialArn": "<p> The ARN from the Key Store with which to associate the instance for TDE encryption. </p>",
         "RestoreDBInstanceFromDBSnapshotMessage$TdeCredentialPassword": "<p> The password for the given ARN from the Key Store in order to access the device. </p>",
         "RestoreDBInstanceToPointInTimeMessage$SourceDBInstanceIdentifier": "<p> The identifier of the source DB instance from which to restore. </p> <p>Constraints:</p> <ul> <li>Must be the identifier of an existing database instance</li> <li>Must contain from 1 to 63 alphanumeric characters or hyphens</li> <li>First character must be a letter</li> <li>Cannot end with a hyphen or contain two consecutive hyphens</li> </ul>",
@@ -1718,11 +1785,11 @@
         "RestoreDBInstanceToPointInTimeMessage$DBInstanceClass": "<p> The compute and memory capacity of the Amazon RDS DB instance. </p> <p>Valid Values: <code>db.t1.micro | db.m1.small | db.m1.medium | db.m1.large | db.m1.xlarge | db.m2.2xlarge | db.m2.4xlarge | db.m3.medium | db.m3.large | db.m3.xlarge | db.m3.2xlarge | db.r3.large | db.r3.xlarge | db.r3.2xlarge | db.r3.4xlarge | db.r3.8xlarge | db.t2.micro | db.t2.small | db.t2.medium</code></p> <p>Default: The same DBInstanceClass as the original DB instance.</p>",
         "RestoreDBInstanceToPointInTimeMessage$AvailabilityZone": "<p> The EC2 Availability Zone that the database instance will be created in. </p> <p>Default: A random, system-chosen Availability Zone.</p> <p>Constraint: You cannot specify the AvailabilityZone parameter if the MultiAZ parameter is set to true.</p> <p>Example: <code>us-east-1a</code></p>",
         "RestoreDBInstanceToPointInTimeMessage$DBSubnetGroupName": "<p> The DB subnet group name to use for the new instance. </p>",
-        "RestoreDBInstanceToPointInTimeMessage$LicenseModel": "<p> License model information for the restored DB instance. </p> <p> Default: Same as source. </p> <p> Valid values: <code>license-included</code> | <code>bring-your-own-license</code> | <code>general-public-license</code> </p>",
+        "RestoreDBInstanceToPointInTimeMessage$LicenseModel": "<p> License model information for the restored DB instance. </p> <p> Default: Same as source. </p> <p> Valid values: <code>license-included</code> | <code>bring-your-own-license</code> | <code>general-public-license</code></p>",
         "RestoreDBInstanceToPointInTimeMessage$DBName": "<p> The database name for the restored DB instance. </p> <note> <p>This parameter is not used for the MySQL engine.</p> </note>",
-        "RestoreDBInstanceToPointInTimeMessage$Engine": "<p> The database engine to use for the new instance. </p> <p>Default: The same as source</p> <p>Constraint: Must be compatible with the engine of the source</p> <p> Valid Values: <code>MySQL</code> | <code>oracle-se1</code> | <code>oracle-se</code> | <code>oracle-ee</code> | <code>sqlserver-ee</code> | <code>sqlserver-se</code> | <code>sqlserver-ex</code> | <code>sqlserver-web</code> | <code>postgres</code> </p>",
+        "RestoreDBInstanceToPointInTimeMessage$Engine": "<p> The database engine to use for the new instance. </p> <p>Default: The same as source</p> <p>Constraint: Must be compatible with the engine of the source</p> <p> Valid Values: <code>MySQL</code> | <code>oracle-se1</code> | <code>oracle-se</code> | <code>oracle-ee</code> | <code>sqlserver-ee</code> | <code>sqlserver-se</code> | <code>sqlserver-ex</code> | <code>sqlserver-web</code> | <code>postgres</code></p>",
         "RestoreDBInstanceToPointInTimeMessage$OptionGroupName": "<p>The name of the option group to be used for the restored DB instance.</p> <p>Permanent options, such as the TDE option for Oracle Advanced Security TDE, cannot be removed from an option group, and that option group cannot be removed from a DB instance once it is associated with a DB instance </p>",
-        "RestoreDBInstanceToPointInTimeMessage$StorageType": "<p> Specifies the storage type to be associated with the DB instance. </p> <p> Valid values: <code>standard | gp2 | io1</code> </p> <p> If you specify <code>io1</code>, you must also include a value for the <code>Iops</code> parameter. </p> <p> Default: <code>io1</code> if the <code>Iops</code> parameter is specified; otherwise <code>standard</code> </p>",
+        "RestoreDBInstanceToPointInTimeMessage$StorageType": "<p> Specifies the storage type to be associated with the DB instance. </p> <p> Valid values: <code>standard | gp2 | io1</code></p> <p> If you specify <code>io1</code>, you must also include a value for the <code>Iops</code> parameter. </p> <p> Default: <code>io1</code> if the <code>Iops</code> parameter is specified; otherwise <code>standard</code></p>",
         "RestoreDBInstanceToPointInTimeMessage$TdeCredentialArn": "<p> The ARN from the Key Store with which to associate the instance for TDE encryption. </p>",
         "RestoreDBInstanceToPointInTimeMessage$TdeCredentialPassword": "<p> The password for the given ARN from the Key Store in order to access the device. </p>",
         "RevokeDBSecurityGroupIngressMessage$DBSecurityGroupName": "<p> The name of the DB security group to revoke ingress from. </p>",
@@ -1789,16 +1856,18 @@
     "TStamp": {
       "base": null,
       "refs": {
+        "Certificate$ValidFrom": "<p>The starting date from which the certificate is valid. </p>",
+        "Certificate$ValidTill": "<p>The final date that the certificate continues to be valid. </p>",
         "DBInstance$InstanceCreateTime": "<p> Provides the date and time the DB instance was created. </p>",
         "DBInstance$LatestRestorableTime": "<p> Specifies the latest time to which a database can be restored with point-in-time restore. </p>",
         "DBSnapshot$SnapshotCreateTime": "<p> Provides the time (UTC) when the snapshot was taken. </p>",
         "DBSnapshot$InstanceCreateTime": "<p> Specifies the time (UTC) when the snapshot was taken. </p>",
-        "DescribeEventsMessage$StartTime": "<p> The beginning of the time interval to retrieve events for, specified in ISO 8601 format. For more information about ISO 8601, go to the <a href=\"http://en.wikipedia.org/wiki/ISO_8601\">ISO8601 Wikipedia page.</a> </p> <p>Example: 2009-07-08T18:00Z</p>",
-        "DescribeEventsMessage$EndTime": "<p> The end of the time interval for which to retrieve events, specified in ISO 8601 format. For more information about ISO 8601, go to the <a href=\"http://en.wikipedia.org/wiki/ISO_8601\">ISO8601 Wikipedia page.</a> </p> <p>Example: 2009-07-08T18:00Z</p>",
+        "DescribeEventsMessage$StartTime": "<p> The beginning of the time interval to retrieve events for, specified in ISO 8601 format. For more information about ISO 8601, go to the <a href=\"http://en.wikipedia.org/wiki/ISO_8601\">ISO8601 Wikipedia page.</a></p> <p>Example: 2009-07-08T18:00Z</p>",
+        "DescribeEventsMessage$EndTime": "<p> The end of the time interval for which to retrieve events, specified in ISO 8601 format. For more information about ISO 8601, go to the <a href=\"http://en.wikipedia.org/wiki/ISO_8601\">ISO8601 Wikipedia page.</a></p> <p>Example: 2009-07-08T18:00Z</p>",
         "Event$Date": "<p> Specifies the date and time of the event. </p>",
         "PendingMaintenanceAction$AutoAppliedAfterDate": "<p>The date of the maintenance window when the action will be applied. The maintenance action will be applied to the resource during its first maintenance window after this date. If this date is specified, any <code>next-maintenance</code> opt-in requests are ignored.</p>",
         "PendingMaintenanceAction$ForcedApplyDate": "<p>The date when the maintenance action will be automatically applied. The maintenance action will be applied to the resource on this date regardless of the maintenance window for the resource. If this date is specified, any <code>immediate</code> opt-in requests are ignored.</p>",
-        "PendingMaintenanceAction$CurrentApplyDate": "<p>The effective date when the pending maintenance action will be applied to the resource. This takes into account opt-in requests received from the <a>ApplyPendingMaintenanceAction</a> API, the <code>AutoAppliedAfterDate</code>, and the <code>ForcedApplyDate</code>. This value is blank if an opt-in request has not been received and no value has been specified for the <code>AutoAppliedAfterDate</code> or <code>ForcedApplyDate</code>.</p>",
+        "PendingMaintenanceAction$CurrentApplyDate": "<p>The effective date when the pending maintenance action will be applied to the resource. This date takes into account opt-in requests received from the <a>ApplyPendingMaintenanceAction</a> API, the <code>AutoAppliedAfterDate</code>, and the <code>ForcedApplyDate</code>. This value is blank if an opt-in request has not been received and nothing has been specified as <code>AutoAppliedAfterDate</code> or <code>ForcedApplyDate</code>.</p>",
         "ReservedDBInstance$StartTime": "<p> The time the reservation started. </p>",
         "RestoreDBInstanceToPointInTimeMessage$RestoreTime": "<p> The date and time to restore from. </p> <p>Valid Values: Value must be a UTC time</p> <p>Constraints:</p> <ul> <li>Must be before the latest restorable time for the DB instance</li> <li>Cannot be specified if UseLatestRestorableTime parameter is true</li> </ul> <p>Example: <code>2009-09-07T23:45:00Z</code></p>"
       }

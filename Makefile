@@ -76,6 +76,7 @@ api-package:
 
 api-manifest:
 	php build/build-manifest.php
+	make clear-cache
 
 # Ensures that the TAG variable was passed to the make command
 check-tag:

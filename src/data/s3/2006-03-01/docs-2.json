@@ -20,7 +20,8 @@
     "GetBucketLifecycle": "Returns the lifecycle configuration information set on the bucket.",
     "GetBucketLocation": "Returns the region the bucket resides in.",
     "GetBucketLogging": "Returns the logging status of a bucket and the permissions users have to view and modify that status. To use GET, you must be the bucket owner.",
-    "GetBucketNotification": "Return the notification configuration of a bucket.",
+    "GetBucketNotification": "Deprecated, see the GetBucketNotificationConfiguration operation.",
+    "GetBucketNotificationConfiguration": "Returns the notification configuration of a bucket.",
     "GetBucketPolicy": "Returns the policy of a specified bucket.",
     "GetBucketReplication": null,
     "GetBucketRequestPayment": "Returns the request payment configuration of a bucket.",
@@ -41,7 +42,8 @@
     "PutBucketCors": "Sets the cors configuration for a bucket.",
     "PutBucketLifecycle": "Sets lifecycle configuration for your bucket. If a lifecycle configuration exists, it replaces it.",
     "PutBucketLogging": "Set the logging parameters for a bucket and to specify permissions for who can view and modify the logging parameters. To set the logging status of a bucket, you must be the bucket owner.",
-    "PutBucketNotification": "Enables notifications of specified events for a bucket.",
+    "PutBucketNotification": "Deprecated, see the PutBucketNotificationConfiguraiton operation.",
+    "PutBucketNotificationConfiguration": "Enables notifications of specified events for a bucket.",
     "PutBucketPolicy": "Replaces a policy on a bucket. If the bucket already has a policy, the one in this request completely replaces it.",
     "PutBucketReplication": "Creates a new replication configuration (or replaces an existing one, if present).",
     "PutBucketRequestPayment": "Sets the request payment configuration for a bucket. By default, the bucket owner pays for downloads from the bucket. This configuration parameter enables the bucket owner (only) to specify that the person requesting the download will be charged for the download. Documentation on requester pays buckets can be found at http://docs.aws.amazon.com/AmazonS3/latest/dev/RequesterPaysBuckets.html",
@@ -188,7 +190,7 @@
         "GetBucketLifecycleRequest$Bucket": null,
         "GetBucketLocationRequest$Bucket": null,
         "GetBucketLoggingRequest$Bucket": null,
-        "GetBucketNotificationRequest$Bucket": null,
+        "GetBucketNotificationConfigurationRequest$Bucket": "Name of the buket to get the notification configuration for.",
         "GetBucketPolicyRequest$Bucket": null,
         "GetBucketReplicationRequest$Bucket": null,
         "GetBucketRequestPaymentRequest$Bucket": null,
@@ -212,6 +214,7 @@
         "PutBucketCorsRequest$Bucket": null,
         "PutBucketLifecycleRequest$Bucket": null,
         "PutBucketLoggingRequest$Bucket": null,
+        "PutBucketNotificationConfigurationRequest$Bucket": null,
         "PutBucketNotificationRequest$Bucket": null,
         "PutBucketPolicyRequest$Bucket": null,
         "PutBucketReplicationRequest$Bucket": null,
@@ -277,8 +280,7 @@
     "CloudFunctionConfiguration": {
       "base": null,
       "refs": {
-        "GetBucketNotificationOutput$CloudFunctionConfiguration": null,
-        "NotificationConfiguration$CloudFunctionConfiguration": null
+        "NotificationConfigurationDeprecated$CloudFunctionConfiguration": null
       }
     },
     "CloudFunctionInvocationRole": {
@@ -727,20 +729,23 @@
       }
     },
     "Event": {
-      "base": null,
+      "base": "Bucket event for which to send notifications.",
       "refs": {
         "CloudFunctionConfiguration$Event": null,
-        "Events$member": null,
-        "QueueConfiguration$Event": null,
-        "TopicConfiguration$Event": "Bucket event for which to send notifications."
+        "EventList$member": null,
+        "QueueConfigurationDeprecated$Event": null,
+        "TopicConfigurationDeprecated$Event": "Bucket event for which to send notifications."
       }
     },
-    "Events": {
+    "EventList": {
       "base": null,
       "refs": {
         "CloudFunctionConfiguration$Events": null,
+        "LambdaFunctionConfiguration$Events": null,
         "QueueConfiguration$Events": null,
-        "TopicConfiguration$Events": null
+        "QueueConfigurationDeprecated$Events": null,
+        "TopicConfiguration$Events": null,
+        "TopicConfigurationDeprecated$Events": null
       }
     },
     "Expiration": {
@@ -831,12 +836,7 @@
       "refs": {
       }
     },
-    "GetBucketNotificationOutput": {
-      "base": null,
-      "refs": {
-      }
-    },
-    "GetBucketNotificationRequest": {
+    "GetBucketNotificationConfigurationRequest": {
       "base": null,
       "refs": {
       }
@@ -1127,6 +1127,24 @@
         "Condition$KeyPrefixEquals": "The object key name prefix when the redirect is applied. For example, to redirect requests for ExamplePage.html, the key prefix will be ExamplePage.html. To redirect request for all pages with the prefix docs/, the key prefix will be /docs, which identifies all objects in the docs/ folder. Required when the parent element Condition is specified and sibling HttpErrorCodeReturnedEquals is not specified. If both conditions are specified, both must be true for the redirect to be applied."
       }
     },
+    "LambdaFunctionArn": {
+      "base": null,
+      "refs": {
+        "LambdaFunctionConfiguration$LambdaFunctionArn": "Lambda cloud function ARN that Amazon S3 can invoke when it detects events of the specified type."
+      }
+    },
+    "LambdaFunctionConfiguration": {
+      "base": "Container for specifying the AWS Lambda notification configuration.",
+      "refs": {
+        "LambdaFunctionConfigurationList$member": null
+      }
+    },
+    "LambdaFunctionConfigurationList": {
+      "base": null,
+      "refs": {
+        "NotificationConfiguration$LambdaFunctionConfigurations": null
+      }
+    },
     "LastModified": {
       "base": null,
       "refs": {
@@ -1392,17 +1410,26 @@
       }
     },
     "NotificationConfiguration": {
+      "base": "Container for specifying the notification configuration of the bucket. If this element is empty, notifications are turned off on the bucket.",
+      "refs": {
+        "PutBucketNotificationConfigurationRequest$NotificationConfiguration": null
+      }
+    },
+    "NotificationConfigurationDeprecated": {
       "base": null,
       "refs": {
         "PutBucketNotificationRequest$NotificationConfiguration": null
       }
     },
     "NotificationId": {
-      "base": null,
+      "base": "Optional unique identifier for configurations in a notification configuration. If you don't provide one, Amazon S3 will assign an ID.",
       "refs": {
         "CloudFunctionConfiguration$Id": null,
+        "LambdaFunctionConfiguration$Id": null,
         "QueueConfiguration$Id": null,
-        "TopicConfiguration$Id": null
+        "QueueConfigurationDeprecated$Id": null,
+        "TopicConfiguration$Id": null,
+        "TopicConfigurationDeprecated$Id": null
       }
     },
     "Object": {
@@ -1627,6 +1654,11 @@
       "refs": {
       }
     },
+    "PutBucketNotificationConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
     "PutBucketNotificationRequest": {
       "base": null,
       "refs": {
@@ -1682,17 +1714,29 @@
       "refs": {
       }
     },
-    "Queue": {
+    "QueueArn": {
       "base": null,
       "refs": {
-        "QueueConfiguration$Queue": null
+        "QueueConfiguration$QueueArn": "Amazon SQS queue ARN to which Amazon S3 will publish a message when it detects events of specified type.",
+        "QueueConfigurationDeprecated$Queue": null
       }
     },
     "QueueConfiguration": {
+      "base": "Container for specifying an configuration when you want Amazon S3 to publish events to an Amazon Simple Queue Service (Amazon SQS) queue.",
+      "refs": {
+        "QueueConfigurationList$member": null
+      }
+    },
+    "QueueConfigurationDeprecated": {
       "base": null,
       "refs": {
-        "GetBucketNotificationOutput$QueueConfiguration": null,
-        "NotificationConfiguration$QueueConfiguration": null
+        "NotificationConfigurationDeprecated$QueueConfiguration": null
+      }
+    },
+    "QueueConfigurationList": {
+      "base": null,
+      "refs": {
+        "NotificationConfiguration$QueueConfigurations": null
       }
     },
     "Quiet": {
@@ -2053,17 +2097,29 @@
         "LoggingEnabled$TargetPrefix": "This element lets you specify a prefix for the keys that the log files will be stored under."
       }
     },
-    "Topic": {
+    "TopicArn": {
       "base": null,
       "refs": {
-        "TopicConfiguration$Topic": "Amazon SNS topic to which Amazon S3 will publish a message to report the specified events for the bucket."
+        "TopicConfiguration$TopicArn": "Amazon SNS topic ARN to which Amazon S3 will publish a message when it detects events of specified type.",
+        "TopicConfigurationDeprecated$Topic": "Amazon SNS topic to which Amazon S3 will publish a message to report the specified events for the bucket."
       }
     },
     "TopicConfiguration": {
+      "base": "Container for specifying the configuration when you want Amazon S3 to publish events to an Amazon Simple Notification Service (Amazon SNS) topic.",
+      "refs": {
+        "TopicConfigurationList$member": null
+      }
+    },
+    "TopicConfigurationDeprecated": {
       "base": null,
       "refs": {
-        "GetBucketNotificationOutput$TopicConfiguration": null,
-        "NotificationConfiguration$TopicConfiguration": null
+        "NotificationConfigurationDeprecated$TopicConfiguration": null
+      }
+    },
+    "TopicConfigurationList": {
+      "base": null,
+      "refs": {
+        "NotificationConfiguration$TopicConfigurations": null
       }
     },
     "Transition": {

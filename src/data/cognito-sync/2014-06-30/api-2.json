@@ -129,6 +129,15 @@
             "senderFault":true
           },
           "exception":true
+        },
+        {
+          "shape":"ResourceConflictException",
+          "error":{
+            "code":"ResourceConflict",
+            "httpStatusCode":409,
+            "senderFault":true
+          },
+          "exception":true
         }
       ]
     },
@@ -348,6 +357,63 @@
           },
           "exception":true,
           "fault":true
+        }
+      ]
+    },
+    "GetCognitoEvents":{
+      "name":"GetCognitoEvents",
+      "http":{
+        "method":"GET",
+        "requestUri":"/identitypools/{IdentityPoolId}/events",
+        "responseCode":200
+      },
+      "input":{"shape":"GetCognitoEventsRequest"},
+      "output":{"shape":"GetCognitoEventsResponse"},
+      "errors":[
+        {
+          "shape":"InvalidParameterException",
+          "error":{
+            "code":"InvalidParameter",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"ResourceNotFoundException",
+          "error":{
+            "code":"ResourceNotFound",
+            "httpStatusCode":404,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"NotAuthorizedException",
+          "error":{
+            "code":"NotAuthorizedError",
+            "httpStatusCode":403,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"InternalErrorException",
+          "error":{
+            "code":"InternalError",
+            "httpStatusCode":500
+          },
+          "exception":true,
+          "fault":true
+        },
+        {
+          "shape":"TooManyRequestsException",
+          "error":{
+            "code":"TooManyRequests",
+            "httpStatusCode":429,
+            "senderFault":true
+          },
+          "exception":true
         }
       ]
     },
@@ -618,6 +684,62 @@
         }
       ]
     },
+    "SetCognitoEvents":{
+      "name":"SetCognitoEvents",
+      "http":{
+        "method":"POST",
+        "requestUri":"/identitypools/{IdentityPoolId}/events",
+        "responseCode":200
+      },
+      "input":{"shape":"SetCognitoEventsRequest"},
+      "errors":[
+        {
+          "shape":"InvalidParameterException",
+          "error":{
+            "code":"InvalidParameter",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"ResourceNotFoundException",
+          "error":{
+            "code":"ResourceNotFound",
+            "httpStatusCode":404,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"NotAuthorizedException",
+          "error":{
+            "code":"NotAuthorizedError",
+            "httpStatusCode":403,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"InternalErrorException",
+          "error":{
+            "code":"InternalError",
+            "httpStatusCode":500
+          },
+          "exception":true,
+          "fault":true
+        },
+        {
+          "shape":"TooManyRequestsException",
+          "error":{
+            "code":"TooManyRequests",
+            "httpStatusCode":429,
+            "senderFault":true
+          },
+          "exception":true
+        }
+      ]
+    },
     "SetIdentityPoolConfiguration":{
       "name":"SetIdentityPoolConfiguration",
       "http":{
@@ -863,6 +985,24 @@
           "exception":true
         },
         {
+          "shape":"InvalidLambdaFunctionOutputException",
+          "error":{
+            "code":"InvalidLambdaFunctionOutput",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"LambdaThrottledException",
+          "error":{
+            "code":"LambdaThrottled",
+            "httpStatusCode":429,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
           "shape":"TooManyRequestsException",
           "error":{
             "code":"TooManyRequests",
@@ -939,6 +1079,7 @@
       ]
     },
     "ClientContext":{"type":"string"},
+    "CognitoEventType":{"type":"string"},
     "CognitoStreams":{
       "type":"structure",
       "members":{
@@ -1092,6 +1233,12 @@
       },
       "exception":true
     },
+    "Events":{
+      "type":"map",
+      "key":{"shape":"CognitoEventType"},
+      "value":{"shape":"LambdaFunctionArn"},
+      "max":1
+    },
     "ExceptionMessage":{"type":"string"},
     "GetBulkPublishDetailsRequest":{
       "type":"structure",
@@ -1112,6 +1259,23 @@
         "BulkPublishCompleteTime":{"shape":"Date"},
         "BulkPublishStatus":{"shape":"BulkPublishStatus"},
         "FailureMessage":{"shape":"String"}
+      }
+    },
+    "GetCognitoEventsRequest":{
+      "type":"structure",
+      "required":["IdentityPoolId"],
+      "members":{
+        "IdentityPoolId":{
+          "shape":"IdentityPoolId",
+          "location":"uri",
+          "locationName":"IdentityPoolId"
+        }
+      }
+    },
+    "GetCognitoEventsResponse":{
+      "type":"structure",
+      "members":{
+        "Events":{"shape":"Events"}
       }
     },
     "GetIdentityPoolConfigurationRequest":{
@@ -1196,6 +1360,19 @@
       },
       "exception":true
     },
+    "InvalidLambdaFunctionOutputException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"ExceptionMessage"}
+      },
+      "error":{
+        "code":"InvalidLambdaFunctionOutput",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "InvalidParameterException":{
       "type":"structure",
       "required":["message"],
@@ -1205,6 +1382,20 @@
       "error":{
         "code":"InvalidParameter",
         "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "LambdaFunctionArn":{"type":"string"},
+    "LambdaThrottledException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"ExceptionMessage"}
+      },
+      "error":{
+        "code":"LambdaThrottled",
+        "httpStatusCode":429,
         "senderFault":true
       },
       "exception":true
@@ -1481,6 +1672,21 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "SetCognitoEventsRequest":{
+      "type":"structure",
+      "required":[
+        "IdentityPoolId",
+        "Events"
+      ],
+      "members":{
+        "IdentityPoolId":{
+          "shape":"IdentityPoolId",
+          "location":"uri",
+          "locationName":"IdentityPoolId"
+        },
+        "Events":{"shape":"Events"}
+      }
     },
     "SetIdentityPoolConfigurationRequest":{
       "type":"structure",

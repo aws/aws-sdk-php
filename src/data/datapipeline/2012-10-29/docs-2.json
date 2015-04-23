@@ -1,89 +1,100 @@
 {
   "version": "2.0",
   "operations": {
-    "ActivatePipeline": "<p> Validates a pipeline and initiates processing. If the pipeline does not pass validation, activation fails. You cannot perform this operation on FINISHED pipelines and attempting to do so will return an InvalidRequestException. </p> <p> Call this action to start processing pipeline tasks of a pipeline you've created using the <a>CreatePipeline</a> and <a>PutPipelineDefinition</a> actions. A pipeline cannot be modified after it has been successfully activated. </p>",
-    "AddTags": "<p>Add or modify tags in an existing pipeline.</p>",
-    "CreatePipeline": "<p>Creates a new empty pipeline. When this action succeeds, you can then use the <a>PutPipelineDefinition</a> action to populate the pipeline.</p>",
-    "DeletePipeline": "<p> Permanently deletes a pipeline, its pipeline definition and its run history. You cannot query or restore a deleted pipeline. AWS Data Pipeline will attempt to cancel instances associated with the pipeline that are currently being processed by task runners. Deleting a pipeline cannot be undone. </p> <p> To temporarily pause a pipeline instead of deleting it, call <a>SetStatus</a> with the status set to Pause on individual components. Components that are paused by <a>SetStatus</a> can be resumed. </p>",
-    "DescribeObjects": "<p> Returns the object definitions for a set of objects associated with the pipeline. Object definitions are composed of a set of fields that define the properties of the object. </p>",
-    "DescribePipelines": "<p> Retrieve metadata about one or more pipelines. The information retrieved includes the name of the pipeline, the pipeline identifier, its current state, and the user account that owns the pipeline. Using account credentials, you can retrieve metadata about pipelines that you or your IAM users have created. If you are using an IAM user account, you can retrieve metadata about only those pipelines you have read permission for. </p> <p> To retrieve the full pipeline definition instead of metadata about the pipeline, call the <a>GetPipelineDefinition</a> action. </p>",
-    "EvaluateExpression": "<p>Evaluates a string in the context of a specified object. A task runner can use this action to evaluate SQL queries stored in Amazon S3. </p>",
-    "GetPipelineDefinition": "<p>Returns the definition of the specified pipeline. You can call <a>GetPipelineDefinition</a> to retrieve the pipeline definition you provided using <a>PutPipelineDefinition</a>.</p>",
-    "ListPipelines": "<p>Returns a list of pipeline identifiers for all active pipelines. Identifiers are returned only for pipelines you have permission to access. </p>",
-    "PollForTask": "<p> Task runners call this action to receive a task to perform from AWS Data Pipeline. The task runner specifies which tasks it can perform by setting a value for the workerGroup parameter of the <a>PollForTask</a> call. The task returned by <a>PollForTask</a> may come from any of the pipelines that match the workerGroup value passed in by the task runner and that was launched using the IAM user credentials specified by the task runner. </p> <p> If tasks are ready in the work queue, <a>PollForTask</a> returns a response immediately. If no tasks are available in the queue, <a>PollForTask</a> uses long-polling and holds on to a poll connection for up to a 90 seconds during which time the first newly scheduled task is handed to the task runner. To accomodate this, set the socket timeout in your task runner to 90 seconds. The task runner should not call <a>PollForTask</a> again on the same <code>workerGroup</code> until it receives a response, and this may take up to 90 seconds. </p>",
-    "PutPipelineDefinition": "<p>Adds tasks, schedules, and preconditions that control the behavior of the pipeline. You can use PutPipelineDefinition to populate a new pipeline. </p> <p> <a>PutPipelineDefinition</a> also validates the configuration as it adds it to the pipeline. Changes to the pipeline are saved unless one of the following three validation errors exists in the pipeline. <ol> <li>An object is missing a name or identifier field.</li> <li>A string or reference field is empty.</li> <li>The number of objects in the pipeline exceeds the maximum allowed objects.</li> <li>The pipeline is in a FINISHED state.</li> </ol> </p> <p> Pipeline object definitions are passed to the <a>PutPipelineDefinition</a> action and returned by the <a>GetPipelineDefinition</a> action. </p>",
-    "QueryObjects": "<p>Queries a pipeline for the names of objects that match a specified set of conditions.</p> <p>The objects returned by <a>QueryObjects</a> are paginated and then filtered by the value you set for query. This means the action may return an empty result set with a value set for marker. If <code>HasMoreResults</code> is set to <code>True</code>, you should continue to call <a>QueryObjects</a>, passing in the returned value for marker, until <code>HasMoreResults</code> returns <code>False</code>.</p>",
-    "RemoveTags": "<p>Remove existing tags from a pipeline.</p>",
-    "ReportTaskProgress": "<p> Updates the AWS Data Pipeline service on the progress of the calling task runner. When the task runner is assigned a task, it should call ReportTaskProgress to acknowledge that it has the task within 2 minutes. If the web service does not recieve this acknowledgement within the 2 minute window, it will assign the task in a subsequent <a>PollForTask</a> call. After this initial acknowledgement, the task runner only needs to report progress every 15 minutes to maintain its ownership of the task. You can change this reporting time from 15 minutes by specifying a <code>reportProgressTimeout</code> field in your pipeline. If a task runner does not report its status after 5 minutes, AWS Data Pipeline will assume that the task runner is unable to process the task and will reassign the task in a subsequent response to <a>PollForTask</a>. task runners should call <a>ReportTaskProgress</a> every 60 seconds. </p>",
-    "ReportTaskRunnerHeartbeat": "<p>Task runners call <a>ReportTaskRunnerHeartbeat</a> every 15 minutes to indicate that they are operational. In the case of AWS Data Pipeline Task Runner launched on a resource managed by AWS Data Pipeline, the web service can use this call to detect when the task runner application has failed and restart a new instance.</p>",
-    "SetStatus": "<p>Requests that the status of an array of physical or logical pipeline objects be updated in the pipeline. This update may not occur immediately, but is eventually consistent. The status that can be set depends on the type of object, e.g. DataNode or Activity. You cannot perform this operation on FINISHED pipelines and attempting to do so will return an InvalidRequestException.</p>",
-    "SetTaskStatus": "<p> Notifies AWS Data Pipeline that a task is completed and provides information about the final status. The task runner calls this action regardless of whether the task was sucessful. The task runner does not need to call <a>SetTaskStatus</a> for tasks that are canceled by the web service during a call to <a>ReportTaskProgress</a>. </p>",
-    "ValidatePipelineDefinition": "<p>Tests the pipeline definition with a set of validation checks to ensure that it is well formed and can run without error. </p>"
+    "ActivatePipeline": "<p>Validates the specified pipeline and starts processing pipeline tasks. If the pipeline does not pass validation, activation fails.</p> <p>If you need to pause the pipeline to investigate an issue with a component, such as a data source or script, call <a>DeactivatePipeline</a>.</p> <p>To activate a finished pipeline, modify the end date for the pipeline and then activate it.</p>",
+    "AddTags": "<p>Adds or modifies tags for the specified pipeline.</p>",
+    "CreatePipeline": "<p>Creates a new, empty pipeline. Use <a>PutPipelineDefinition</a> to populate the pipeline.</p>",
+    "DeactivatePipeline": "<p>Deactivates the specified running pipeline. The pipeline is set to the <code>DEACTIVATING</code> state until the deactivation process completes.</p> <p>To resume a deactivated pipeline, use <a>ActivatePipeline</a>. By default, the pipeline resumes from the last completed execution. Optionally, you can specify the date and time to resume the pipeline.</p>",
+    "DeletePipeline": "<p>Deletes a pipeline, its pipeline definition, and its run history. AWS Data Pipeline attempts to cancel instances associated with the pipeline that are currently being processed by task runners.</p> <p>Deleting a pipeline cannot be undone. You cannot query or restore a deleted pipeline. To temporarily pause a pipeline instead of deleting it, call <a>SetStatus</a> with the status set to <code>PAUSE</code> on individual components. Components that are paused by <a>SetStatus</a> can be resumed.</p>",
+    "DescribeObjects": "<p>Gets the object definitions for a set of objects associated with the pipeline. Object definitions are composed of a set of fields that define the properties of the object.</p>",
+    "DescribePipelines": "<p>Retrieves metadata about one or more pipelines. The information retrieved includes the name of the pipeline, the pipeline identifier, its current state, and the user account that owns the pipeline. Using account credentials, you can retrieve metadata about pipelines that you or your IAM users have created. If you are using an IAM user account, you can retrieve metadata about only those pipelines for which you have read permissions.</p> <p>To retrieve the full pipeline definition instead of metadata about the pipeline, call <a>GetPipelineDefinition</a>.</p>",
+    "EvaluateExpression": "<p>Task runners call <code>EvaluateExpression</code> to evaluate a string in the context of the specified object. For example, a task runner can evaluate SQL queries stored in Amazon S3.</p>",
+    "GetPipelineDefinition": "<p>Gets the definition of the specified pipeline. You can call <code>GetPipelineDefinition</code> to retrieve the pipeline definition that you provided using <a>PutPipelineDefinition</a>.</p>",
+    "ListPipelines": "<p>Lists the pipeline identifiers for all active pipelines that you have permission to access.</p>",
+    "PollForTask": "<p>Task runners call <code>PollForTask</code> to receive a task to perform from AWS Data Pipeline. The task runner specifies which tasks it can perform by setting a value for the <code>workerGroup</code> parameter. The task returned can come from any of the pipelines that match the <code>workerGroup</code> value passed in by the task runner and that was launched using the IAM user credentials specified by the task runner.</p> <p>If tasks are ready in the work queue, <code>PollForTask</code> returns a response immediately. If no tasks are available in the queue, <code>PollForTask</code> uses long-polling and holds on to a poll connection for up to a 90 seconds, during which time the first newly scheduled task is handed to the task runner. To accomodate this, set the socket timeout in your task runner to 90 seconds. The task runner should not call <code>PollForTask</code> again on the same <code>workerGroup</code> until it receives a response, and this can take up to 90 seconds. </p>",
+    "PutPipelineDefinition": "<p>Adds tasks, schedules, and preconditions to the specified pipeline. You can use <code>PutPipelineDefinition</code> to populate a new pipeline.</p> <p> <code>PutPipelineDefinition</code> also validates the configuration as it adds it to the pipeline. Changes to the pipeline are saved unless one of the following three validation errors exists in the pipeline. </p> <ol> <li>An object is missing a name or identifier field.</li> <li>A string or reference field is empty.</li> <li>The number of objects in the pipeline exceeds the maximum allowed objects.</li> <li>The pipeline is in a FINISHED state.</li> </ol> <p> Pipeline object definitions are passed to the <code>PutPipelineDefinition</code> action and returned by the <a>GetPipelineDefinition</a> action. </p>",
+    "QueryObjects": "<p>Queries the specified pipeline for the names of objects that match the specified set of conditions.</p>",
+    "RemoveTags": "<p>Removes existing tags from the specified pipeline.</p>",
+    "ReportTaskProgress": "<p>Task runners call <code>ReportTaskProgress</code> when assigned a task to acknowledge that it has the task. If the web service does not receive this acknowledgement within 2 minutes, it assigns the task in a subsequent <a>PollForTask</a> call. After this initial acknowledgement, the task runner only needs to report progress every 15 minutes to maintain its ownership of the task. You can change this reporting time from 15 minutes by specifying a <code>reportProgressTimeout</code> field in your pipeline.</p> <p>If a task runner does not report its status after 5 minutes, AWS Data Pipeline assumes that the task runner is unable to process the task and reassigns the task in a subsequent response to <a>PollForTask</a>. Task runners should call <code>ReportTaskProgress</code> every 60 seconds.</p>",
+    "ReportTaskRunnerHeartbeat": "<p>Task runners call <code>ReportTaskRunnerHeartbeat</code> every 15 minutes to indicate that they are operational. If the AWS Data Pipeline Task Runner is launched on a resource managed by AWS Data Pipeline, the web service can use this call to detect when the task runner application has failed and restart a new instance.</p>",
+    "SetStatus": "<p>Requests that the status of the specified physical or logical pipeline objects be updated in the specified pipeline. This update might not occur immediately, but is eventually consistent. The status that can be set depends on the type of object (for example, DataNode or Activity). You cannot perform this operation on <code>FINISHED</code> pipelines and attempting to do so returns <code>InvalidRequestException</code>.</p>",
+    "SetTaskStatus": "<p>Task runners call <code>SetTaskStatus</code> to notify AWS Data Pipeline that a task is completed and provide information about the final status. A task runner makes this call regardless of whether the task was sucessful. A task runner does not need to call <code>SetTaskStatus</code> for tasks that are canceled by the web service during a call to <a>ReportTaskProgress</a>.</p>",
+    "ValidatePipelineDefinition": "<p>Validates the specified pipeline definition to ensure that it is well formed and can be run without error.</p>"
   },
-  "service": "<p> AWS Data Pipeline is a web service that configures and manages a data-driven workflow called a pipeline. AWS Data Pipeline handles the details of scheduling and ensuring that data dependencies are met so your application can focus on processing the data.</p> <p> The AWS Data Pipeline SDKs and CLI implements two main sets of functionality. The first set of actions configure the pipeline in the web service. You perform these actions to create a pipeline and define data sources, schedules, dependencies, and the transforms to be performed on the data. </p> <p> The second set of actions are used by a task runner application that calls the AWS Data Pipeline service to receive the next task ready for processing. The logic for performing the task, such as querying the data, running data analysis, or converting the data from one format to another, is contained within the task runner. The task runner performs the task assigned to it by the web service, reporting progress to the web service as it does so. When the task is done, the task runner reports the final success or failure of the task to the web service. </p> <p> AWS Data Pipeline provides a JAR implementation of a task runner called AWS Data Pipeline Task Runner. AWS Data Pipeline Task Runner provides logic for common data management scenarios, such as performing database queries and running data analysis using Amazon Elastic MapReduce (Amazon EMR). You can use AWS Data Pipeline Task Runner as your task runner, or you can write your own task runner to provide custom data management. </p>",
+  "service": "<p>AWS Data Pipeline configures and manages a data-driven workflow called a pipeline. AWS Data Pipeline handles the details of scheduling and ensuring that data dependencies are met so that your application can focus on processing the data.</p> <p>AWS Data Pipeline provides a JAR implementation of a task runner called AWS Data Pipeline Task Runner. AWS Data Pipeline Task Runner provides logic for common data management scenarios, such as performing database queries and running data analysis using Amazon Elastic MapReduce (Amazon EMR). You can use AWS Data Pipeline Task Runner as your task runner, or you can write your own task runner to provide custom data management.</p> <p>AWS Data Pipeline implements two main sets of functionality. Use the first set to create a pipeline and define data sources, schedules, dependencies, and the transforms to be performed on the data. Use the second set in your task runner application to receive the next task ready for processing. The logic for performing the task, such as querying the data, running data analysis, or converting the data from one format to another, is contained within the task runner. The task runner performs the task assigned to it by the web service, reporting progress to the web service as it does so. When the task is done, the task runner reports the final success or failure of the task to the web service.</p>",
   "shapes": {
     "ActivatePipelineInput": {
-      "base": "<p>The input of the ActivatePipeline action.</p>",
+      "base": "<p>Contains the parameters for ActivatePipeline.</p>",
       "refs": {
       }
     },
     "ActivatePipelineOutput": {
-      "base": "<p>Contains the output from the <a>ActivatePipeline</a> action.</p>",
+      "base": "<p>Contains the output of ActivatePipeline.</p>",
       "refs": {
       }
     },
     "AddTagsInput": {
-      "base": "<p>The input to the AddTags action.</p>",
+      "base": "<p>Contains the parameters for AddTags.</p>",
       "refs": {
       }
     },
     "AddTagsOutput": {
-      "base": "<p>The response from the AddTags action.</p>",
+      "base": "<p>Contains the output of AddTags.</p>",
       "refs": {
       }
     },
     "CreatePipelineInput": {
-      "base": "<p>The input for the <a>CreatePipeline</a> action.</p>",
+      "base": "<p>Contains the parameters for CreatePipeline.</p>",
       "refs": {
       }
     },
     "CreatePipelineOutput": {
-      "base": "<p>Contains the output from the <a>CreatePipeline</a> action.</p>",
+      "base": "<p>Contains the output of CreatePipeline.</p>",
+      "refs": {
+      }
+    },
+    "DeactivatePipelineInput": {
+      "base": "<p>Contains the parameters for DeactivatePipeline.</p>",
+      "refs": {
+      }
+    },
+    "DeactivatePipelineOutput": {
+      "base": "<p>Contains the output of DeactivatePipeline.</p>",
       "refs": {
       }
     },
     "DeletePipelineInput": {
-      "base": "<p>The input for the <a>DeletePipeline</a> action.</p>",
+      "base": "<p>Contains the parameters for DeletePipeline.</p>",
       "refs": {
       }
     },
     "DescribeObjectsInput": {
-      "base": "<p> The <a>DescribeObjects</a> action returns the object definitions for a specified set of object identifiers. You can filter the results to named fields and used markers to page through the results. </p>",
+      "base": "<p>Contains the parameters for DescribeObjects.</p>",
       "refs": {
       }
     },
     "DescribeObjectsOutput": {
-      "base": "<p>If <code>True</code>, there are more results that can be returned in another call to <a>DescribeObjects</a>.</p>",
+      "base": "<p>Contains the output of DescribeObjects.</p>",
       "refs": {
       }
     },
     "DescribePipelinesInput": {
-      "base": "<p>The input to the <a>DescribePipelines</a> action.</p>",
+      "base": "<p>Contains the parameters for DescribePipelines.</p>",
       "refs": {
       }
     },
     "DescribePipelinesOutput": {
-      "base": "<p>Contains the output from the <a>DescribePipelines</a> action.</p>",
+      "base": "<p>Contains the output of DescribePipelines.</p>",
       "refs": {
       }
     },
     "EvaluateExpressionInput": {
-      "base": "<p>The input for the <a>EvaluateExpression</a> action.</p>",
+      "base": "<p>Contains the parameters for EvaluateExpression.</p>",
       "refs": {
       }
     },
     "EvaluateExpressionOutput": {
-      "base": "<p>Contains the output from the <a>EvaluateExpression</a> action.</p>",
+      "base": "<p>Contains the output of EvaluateExpression.</p>",
       "refs": {
       }
     },
@@ -94,19 +105,19 @@
       }
     },
     "GetPipelineDefinitionInput": {
-      "base": "<p>The input for the <a>GetPipelineDefinition</a> action.</p>",
+      "base": "<p>Contains the parameters for GetPipelineDefinition.</p>",
       "refs": {
       }
     },
     "GetPipelineDefinitionOutput": {
-      "base": "<p>Contains the output from the <a>GetPipelineDefinition</a> action.</p>",
+      "base": "<p>Contains the output of GetPipelineDefinition.</p>",
       "refs": {
       }
     },
     "InstanceIdentity": {
-      "base": "<p><p>Identity information for the Amazon EC2 instance that is hosting the task runner. You can get this value by calling a metadata URI from the EC2 instance. For more information, go to <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AESDG-chapter-instancedata.html\">Instance Metadata</a> in the <i>Amazon Elastic Compute Cloud User Guide.</i> Passing in this value proves that your task runner is running on an EC2 instance, and ensures the proper AWS Data Pipeline service charges are applied to your pipeline.</p></p>",
+      "base": "<p><p>Identity information for the EC2 instance that is hosting the task runner. You can get this value by calling a metadata URI from the EC2 instance. For more information, see <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AESDG-chapter-instancedata.html\">Instance Metadata</a> in the <i>Amazon Elastic Compute Cloud User Guide.</i> Passing in this value proves that your task runner is running on an EC2 instance, and ensures the proper AWS Data Pipeline service charges are applied to your pipeline.</p></p>",
       "refs": {
-        "PollForTaskInput$instanceIdentity": "<p>Identity information for the Amazon EC2 instance that is hosting the task runner. You can get this value by calling the URI, <code>http://169.254.169.254/latest/meta-data/instance-id</code>, from the EC2 instance. For more information, go to <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AESDG-chapter-instancedata.html\">Instance Metadata</a> in the <i>Amazon Elastic Compute Cloud User Guide.</i> Passing in this value proves that your task runner is running on an EC2 instance, and ensures the proper AWS Data Pipeline service charges are applied to your pipeline.</p>"
+        "PollForTaskInput$instanceIdentity": "<p>Identity information for the EC2 instance that is hosting the task runner. You can get this value from the instance using <code>http://169.254.169.254/latest/meta-data/instance-id</code>. For more information, see <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AESDG-chapter-instancedata.html\">Instance Metadata</a> in the <i>Amazon Elastic Compute Cloud User Guide.</i> Passing in this value proves that your task runner is running on an EC2 instance, and ensures the proper AWS Data Pipeline service charges are applied to your pipeline.</p>"
       }
     },
     "InternalServiceError": {
@@ -120,12 +131,12 @@
       }
     },
     "ListPipelinesInput": {
-      "base": "<p>The input to the <a>ListPipelines</a> action.</p>",
+      "base": "<p>Contains the parameters for ListPipelines.</p>",
       "refs": {
       }
     },
     "ListPipelinesOutput": {
-      "base": "<p>Contains the output from the <a>ListPipelines</a> action.</p>",
+      "base": "<p>Contains the output of ListPipelines.</p>",
       "refs": {
       }
     },
@@ -162,9 +173,9 @@
     "ParameterObjectList": {
       "base": null,
       "refs": {
-        "GetPipelineDefinitionOutput$parameterObjects": "<p>Returns a list of parameter objects used in the pipeline definition.</p>",
-        "PutPipelineDefinitionInput$parameterObjects": "<p>A list of parameter objects used with the pipeline.</p>",
-        "ValidatePipelineDefinitionInput$parameterObjects": "<p>A list of parameter objects used with the pipeline.</p>"
+        "GetPipelineDefinitionOutput$parameterObjects": "<p>The parameter objects used in the pipeline definition.</p>",
+        "PutPipelineDefinitionInput$parameterObjects": "<p>The parameter objects used with the pipeline.</p>",
+        "ValidatePipelineDefinitionInput$parameterObjects": "<p>The parameter objects used with the pipeline.</p>"
       }
     },
     "ParameterValue": {
@@ -176,10 +187,10 @@
     "ParameterValueList": {
       "base": null,
       "refs": {
-        "ActivatePipelineInput$parameterValues": "<p>Returns a list of parameter values to pass to the pipeline at activation.</p>",
-        "GetPipelineDefinitionOutput$parameterValues": "<p>Returns a list of parameter values used in the pipeline definition.</p>",
-        "PutPipelineDefinitionInput$parameterValues": "<p>A list of parameter values used with the pipeline.</p>",
-        "ValidatePipelineDefinitionInput$parameterValues": "<p>A list of parameter values used with the pipeline.</p>"
+        "ActivatePipelineInput$parameterValues": "<p>A list of parameter values to pass to the pipeline at activation.</p>",
+        "GetPipelineDefinitionOutput$parameterValues": "<p>The parameter values used in the pipeline definition.</p>",
+        "PutPipelineDefinitionInput$parameterValues": "<p>The parameter values used with the pipeline.</p>",
+        "ValidatePipelineDefinitionInput$parameterValues": "<p>The parameter values used with the pipeline.</p>"
       }
     },
     "PipelineDeletedException": {
@@ -196,7 +207,7 @@
     "PipelineDescriptionList": {
       "base": null,
       "refs": {
-        "DescribePipelinesOutput$pipelineDescriptionList": "<p>An array of descriptions returned for the specified pipelines.</p>"
+        "DescribePipelinesOutput$pipelineDescriptionList": "<p>An array of descriptions for the specified pipelines.</p>"
       }
     },
     "PipelineIdName": {
@@ -220,10 +231,10 @@
     "PipelineObjectList": {
       "base": null,
       "refs": {
-        "DescribeObjectsOutput$pipelineObjects": "<p>An array of object definitions that are returned by the call to <a>DescribeObjects</a>.</p>",
-        "GetPipelineDefinitionOutput$pipelineObjects": "<p>An array of objects defined in the pipeline.</p>",
-        "PutPipelineDefinitionInput$pipelineObjects": "<p>The objects that define the pipeline. These will overwrite the existing pipeline definition.</p>",
-        "ValidatePipelineDefinitionInput$pipelineObjects": "<p>A list of objects that define the pipeline changes to validate against the pipeline.</p>"
+        "DescribeObjectsOutput$pipelineObjects": "<p>An array of object definitions.</p>",
+        "GetPipelineDefinitionOutput$pipelineObjects": "<p>The objects defined in the pipeline.</p>",
+        "PutPipelineDefinitionInput$pipelineObjects": "<p>The objects that define the pipeline. These objects overwrite the existing pipeline definition.</p>",
+        "ValidatePipelineDefinitionInput$pipelineObjects": "<p>The objects that define the pipeline changes to validate against the pipeline.</p>"
       }
     },
     "PipelineObjectMap": {
@@ -233,68 +244,68 @@
       }
     },
     "PollForTaskInput": {
-      "base": "<p>The data type passed in as input to the PollForTask action.</p>",
+      "base": "<p>Contains the parameters for PollForTask.</p>",
       "refs": {
       }
     },
     "PollForTaskOutput": {
-      "base": "<p>Contains the output from the PollForTask action.</p>",
+      "base": "<p>Contains the output of PollForTask.</p>",
       "refs": {
       }
     },
     "PutPipelineDefinitionInput": {
-      "base": "<p>The input of the <a>PutPipelineDefinition</a> action.</p>",
+      "base": "<p>Contains the parameters for PutPipelineDefinition.</p>",
       "refs": {
       }
     },
     "PutPipelineDefinitionOutput": {
-      "base": "<p>Contains the output of the <a>PutPipelineDefinition</a> action.</p>",
+      "base": "<p>Contains the output of PutPipelineDefinition.</p>",
       "refs": {
       }
     },
     "Query": {
       "base": "<p>Defines the query to run against an object.</p>",
       "refs": {
-        "QueryObjectsInput$query": "<p> Query that defines the objects to be returned. The <a>Query</a> object can contain a maximum of ten selectors. The conditions in the query are limited to top-level String fields in the object. These filters can be applied to components, instances, and attempts. </p>"
+        "QueryObjectsInput$query": "<p>The query that defines the objects to be returned. The <code>Query</code> object can contain a maximum of ten selectors. The conditions in the query are limited to top-level String fields in the object. These filters can be applied to components, instances, and attempts.</p>"
       }
     },
     "QueryObjectsInput": {
-      "base": "<p>The input for the <a>QueryObjects</a> action.</p>",
+      "base": "<p>Contains the parameters for QueryObjects.</p>",
       "refs": {
       }
     },
     "QueryObjectsOutput": {
-      "base": "<p>Contains the output from the <a>QueryObjects</a> action.</p>",
+      "base": "<p>Contains the output of QueryObjects.</p>",
       "refs": {
       }
     },
     "RemoveTagsInput": {
-      "base": "<p>The input to the RemoveTags action.</p>",
+      "base": "<p>Contains the parameters for RemoveTags.</p>",
       "refs": {
       }
     },
     "RemoveTagsOutput": {
-      "base": "<p>The result of the RemoveTags action.</p>",
+      "base": "<p>Contains the output of RemoveTags.</p>",
       "refs": {
       }
     },
     "ReportTaskProgressInput": {
-      "base": "<p>The input for the ReportTaskProgress action.</p>",
+      "base": "<p>Contains the parameters for ReportTaskProgress.</p>",
       "refs": {
       }
     },
     "ReportTaskProgressOutput": {
-      "base": "<p>Contains the output from the ReportTaskProgress action.</p>",
+      "base": "<p>Contains the output of ReportTaskProgress.</p>",
       "refs": {
       }
     },
     "ReportTaskRunnerHeartbeatInput": {
-      "base": "<p>The input for the ReportTaskRunnerHeartbeat action.</p>",
+      "base": "<p>Contains the parameters for ReportTaskRunnerHeartbeat.</p>",
       "refs": {
       }
     },
     "ReportTaskRunnerHeartbeatOutput": {
-      "base": "<p>Contains the output from the <a>ReportTaskRunnerHeartbeat</a> action.</p>",
+      "base": "<p>Contains the output of ReportTaskRunnerHeartbeat.</p>",
       "refs": {
       }
     },
@@ -311,17 +322,17 @@
       }
     },
     "SetStatusInput": {
-      "base": "<p>The input to the <a>SetStatus</a> action.</p>",
+      "base": "<p>Contains the parameters for SetStatus.</p>",
       "refs": {
       }
     },
     "SetTaskStatusInput": {
-      "base": "<p>The input of the SetTaskStatus action.</p>",
+      "base": "<p>Contains the parameters for SetTaskStatus.</p>",
       "refs": {
       }
     },
     "SetTaskStatusOutput": {
-      "base": "<p>The output from the <a>SetTaskStatus</a> action.</p>",
+      "base": "<p>Contains the output of SetTaskStatus.</p>",
       "refs": {
       }
     },
@@ -339,27 +350,27 @@
     "TaskObject": {
       "base": "<p>Contains information about a pipeline task that is assigned to a task runner.</p>",
       "refs": {
-        "PollForTaskOutput$taskObject": "<p>An instance of <a>TaskObject</a>. The returned object contains all the information needed to complete the task that is being assigned to the task runner. One of the fields returned in this object is taskId, which contains an identifier for the task being assigned. The calling task runner uses taskId in subsequent calls to <a>ReportTaskProgress</a> and <a>SetTaskStatus</a>.</p>"
+        "PollForTaskOutput$taskObject": "<p>The information needed to complete the task that is being assigned to the task runner. One of the fields returned in this object is <code>taskId</code>, which contains an identifier for the task being assigned. The calling task runner uses <code>taskId</code> in subsequent calls to <a>ReportTaskProgress</a> and <a>SetTaskStatus</a>.</p>"
       }
     },
     "TaskStatus": {
       "base": null,
       "refs": {
-        "SetTaskStatusInput$taskStatus": "<p>If <code>FINISHED</code>, the task successfully completed. If <code>FAILED</code> the task ended unsuccessfully. The <code>FALSE</code> value is used by preconditions.</p>"
+        "SetTaskStatusInput$taskStatus": "<p>If <code>FINISHED</code>, the task successfully completed. If <code>FAILED</code>, the task ended unsuccessfully. Preconditions use false.</p>"
       }
     },
     "ValidatePipelineDefinitionInput": {
-      "base": "<p>The input of the <a>ValidatePipelineDefinition</a> action.</p>",
+      "base": "<p>Contains the parameters for ValidatePipelineDefinition.</p>",
       "refs": {
       }
     },
     "ValidatePipelineDefinitionOutput": {
-      "base": "<p>Contains the output from the <a>ValidatePipelineDefinition</a> action.</p>",
+      "base": "<p>Contains the output of ValidatePipelineDefinition.</p>",
       "refs": {
       }
     },
     "ValidationError": {
-      "base": "<p>Defines a validation error returned by <a>PutPipelineDefinition</a> or <a>ValidatePipelineDefinition</a>. Validation errors prevent pipeline activation. The set of validation errors that can be returned are defined by AWS Data Pipeline.</p>",
+      "base": "<p>Defines a validation error. Validation errors prevent pipeline activation. The set of validation errors that can be returned are defined by AWS Data Pipeline.</p>",
       "refs": {
         "ValidationErrors$member": null
       }
@@ -367,12 +378,12 @@
     "ValidationErrors": {
       "base": null,
       "refs": {
-        "PutPipelineDefinitionOutput$validationErrors": "<p>A list of the validation errors that are associated with the objects defined in <code>pipelineObjects</code>.</p>",
-        "ValidatePipelineDefinitionOutput$validationErrors": "<p>Lists the validation errors that were found by <a>ValidatePipelineDefinition</a>.</p>"
+        "PutPipelineDefinitionOutput$validationErrors": "<p>The validation errors that are associated with the objects defined in <code>pipelineObjects</code>.</p>",
+        "ValidatePipelineDefinitionOutput$validationErrors": "<p>Any validation errors that were found.</p>"
       }
     },
     "ValidationWarning": {
-      "base": "<p>Defines a validation warning returned by <a>PutPipelineDefinition</a> or <a>ValidatePipelineDefinition</a>. Validation warnings do not prevent pipeline activation. The set of validation warnings that can be returned are defined by AWS Data Pipeline.</p>",
+      "base": "<p>Defines a validation warning. Validation warnings do not prevent pipeline activation. The set of validation warnings that can be returned are defined by AWS Data Pipeline.</p>",
       "refs": {
         "ValidationWarnings$member": null
       }
@@ -380,8 +391,8 @@
     "ValidationWarnings": {
       "base": null,
       "refs": {
-        "PutPipelineDefinitionOutput$validationWarnings": "<p>A list of the validation warnings that are associated with the objects defined in <code>pipelineObjects</code>.</p>",
-        "ValidatePipelineDefinitionOutput$validationWarnings": "<p>Lists the validation warnings that were found by <a>ValidatePipelineDefinition</a>.</p>"
+        "PutPipelineDefinitionOutput$validationWarnings": "<p>The validation warnings that are associated with the objects defined in <code>pipelineObjects</code>.</p>",
+        "ValidatePipelineDefinitionOutput$validationWarnings": "<p>Any validation warnings that were found.</p>"
       }
     },
     "attributeNameString": {
@@ -400,13 +411,19 @@
       "base": null,
       "refs": {
         "DescribeObjectsInput$evaluateExpressions": "<p>Indicates whether any expressions in the object should be evaluated when the object descriptions are returned.</p>",
-        "DescribeObjectsOutput$hasMoreResults": "<p>If <code>True</code>, there are more pages of results to return.</p>",
-        "ListPipelinesOutput$hasMoreResults": "<p>If <code>True</code>, there are more results that can be obtained by a subsequent call to <a>ListPipelines</a>.</p>",
-        "PutPipelineDefinitionOutput$errored": "<p>If <code>True</code>, there were validation errors. If errored is <code>True</code>, the pipeline definition is stored but cannot be activated until you correct the pipeline and call <a>PutPipelineDefinition</a> to commit the corrected pipeline.</p>",
-        "QueryObjectsOutput$hasMoreResults": "<p>If <code>True</code>, there are more results that can be obtained by a subsequent call to <a>QueryObjects</a>.</p>",
-        "ReportTaskProgressOutput$canceled": "<p>If <code>True</code>, the calling task runner should cancel processing of the task. The task runner does not need to call <a>SetTaskStatus</a> for canceled tasks.</p>",
-        "ReportTaskRunnerHeartbeatOutput$terminate": "<p>Indicates whether the calling task runner should terminate. If <code>True</code>, the task runner that called <a>ReportTaskRunnerHeartbeat</a> should terminate. </p>",
-        "ValidatePipelineDefinitionOutput$errored": "<p>If <code>True</code>, there were validation errors.</p>"
+        "DescribeObjectsOutput$hasMoreResults": "<p>Indicates whether there are more results to return.</p>",
+        "ListPipelinesOutput$hasMoreResults": "<p>Indicates whether there are more results that can be obtained by a subsequent call.</p>",
+        "PutPipelineDefinitionOutput$errored": "<p>Indicates whether there were validation errors, and the pipeline definition is stored but cannot be activated until you correct the pipeline and call <code>PutPipelineDefinition</code> to commit the corrected pipeline.</p>",
+        "QueryObjectsOutput$hasMoreResults": "<p>Indicates whether there are more results that can be obtained by a subsequent call.</p>",
+        "ReportTaskProgressOutput$canceled": "<p>If true, the calling task runner should cancel processing of the task. The task runner does not need to call <a>SetTaskStatus</a> for canceled tasks.</p>",
+        "ReportTaskRunnerHeartbeatOutput$terminate": "<p>Indicates whether the calling task runner should terminate.</p>",
+        "ValidatePipelineDefinitionOutput$errored": "<p>Indicates whether there were validation errors.</p>"
+      }
+    },
+    "cancelActive": {
+      "base": null,
+      "refs": {
+        "DeactivatePipelineInput$cancelActive": "<p>Indicates whether to cancel any running objects. The default is true, which sets the state of any running objects to <code>CANCELED</code>. If this value is false, the pipeline is deactivated after all running objects finish.</p>"
       }
     },
     "errorMessage": {
@@ -433,8 +450,8 @@
       "refs": {
         "Field$key": "<p>The field identifier.</p>",
         "Field$refValue": "<p>The field value, expressed as the identifier of another object.</p>",
-        "ParameterObject$id": "<p>Identifier of the parameter object. </p>",
-        "ParameterValue$id": "<p>Identifier of the parameter value.</p>"
+        "ParameterObject$id": "<p>The ID of the parameter object. </p>",
+        "ParameterValue$id": "<p>The ID of the parameter value.</p>"
       }
     },
     "fieldStringValue": {
@@ -447,33 +464,34 @@
     "id": {
       "base": null,
       "refs": {
-        "ActivatePipelineInput$pipelineId": "<p>The identifier of the pipeline to activate. </p>",
-        "AddTagsInput$pipelineId": "<p>The identifier of the pipeline to which you want to add the tags.</p>",
-        "CreatePipelineInput$name": "<p> The name of the new pipeline. You can use the same name for multiple pipelines associated with your AWS account, because AWS Data Pipeline assigns each new pipeline a unique pipeline identifier. </p>",
-        "CreatePipelineInput$uniqueId": "<p> A unique identifier that you specify. This identifier is not the same as the pipeline identifier assigned by AWS Data Pipeline. You are responsible for defining the format and ensuring the uniqueness of this identifier. You use this parameter to ensure idempotency during repeated calls to <a>CreatePipeline</a>. For example, if the first call to <a>CreatePipeline</a> does not return a clear success, you can pass in the same unique identifier and pipeline name combination on a subsequent call to <a>CreatePipeline</a>. <a>CreatePipeline</a> ensures that if a pipeline already exists with the same name and unique identifier, a new pipeline will not be created. Instead, you'll receive the pipeline identifier from the previous attempt. The uniqueness of the name and unique identifier combination is scoped to the AWS account or IAM user credentials. </p>",
-        "CreatePipelineOutput$pipelineId": "<p>The ID that AWS Data Pipeline assigns the newly created pipeline. The ID is a string of the form: df-06372391ZG65EXAMPLE.</p>",
-        "DeletePipelineInput$pipelineId": "<p>The identifier of the pipeline to be deleted.</p>",
-        "DescribeObjectsInput$pipelineId": "<p>Identifier of the pipeline that contains the object definitions.</p>",
-        "EvaluateExpressionInput$pipelineId": "<p>The identifier of the pipeline.</p>",
-        "EvaluateExpressionInput$objectId": "<p>The identifier of the object.</p>",
-        "GetPipelineDefinitionInput$pipelineId": "<p>The identifier of the pipeline.</p>",
+        "ActivatePipelineInput$pipelineId": "<p>The ID of the pipeline.</p>",
+        "AddTagsInput$pipelineId": "<p>The ID of the pipeline.</p>",
+        "CreatePipelineInput$name": "<p>The name for the pipeline. You can use the same name for multiple pipelines associated with your AWS account, because AWS Data Pipeline assigns each pipeline a unique pipeline identifier.</p>",
+        "CreatePipelineInput$uniqueId": "<p>A unique identifier. This identifier is not the same as the pipeline identifier assigned by AWS Data Pipeline. You are responsible for defining the format and ensuring the uniqueness of this identifier. You use this parameter to ensure idempotency during repeated calls to <code>CreatePipeline</code>. For example, if the first call to <code>CreatePipeline</code> does not succeed, you can pass in the same unique identifier and pipeline name combination on a subsequent call to <code>CreatePipeline</code>. <code>CreatePipeline</code> ensures that if a pipeline already exists with the same name and unique identifier, a new pipeline is not created. Instead, you'll receive the pipeline identifier from the previous attempt. The uniqueness of the name and unique identifier combination is scoped to the AWS account or IAM user credentials.</p>",
+        "CreatePipelineOutput$pipelineId": "<p>The ID that AWS Data Pipeline assigns the newly created pipeline. For example, <code>df-06372391ZG65EXAMPLE</code>.</p>",
+        "DeactivatePipelineInput$pipelineId": "<p>The ID of the pipeline.</p>",
+        "DeletePipelineInput$pipelineId": "<p>The ID of the pipeline.</p>",
+        "DescribeObjectsInput$pipelineId": "<p>The ID of the pipeline that contains the object definitions.</p>",
+        "EvaluateExpressionInput$pipelineId": "<p>The ID of the pipeline.</p>",
+        "EvaluateExpressionInput$objectId": "<p>The ID of the object.</p>",
+        "GetPipelineDefinitionInput$pipelineId": "<p>The ID of the pipeline.</p>",
         "PipelineDescription$pipelineId": "<p>The pipeline identifier that was assigned by AWS Data Pipeline. This is a string of the form <code>df-297EG78HU43EEXAMPLE</code>.</p>",
-        "PipelineDescription$name": "<p>Name of the pipeline.</p>",
-        "PipelineIdName$id": "<p>Identifier of the pipeline that was assigned by AWS Data Pipeline. This is a string of the form <code>df-297EG78HU43EEXAMPLE</code>.</p>",
-        "PipelineIdName$name": "<p>Name of the pipeline.</p>",
-        "PipelineObject$id": "<p>Identifier of the object.</p>",
-        "PipelineObject$name": "<p>Name of the object.</p>",
+        "PipelineDescription$name": "<p>The name of the pipeline.</p>",
+        "PipelineIdName$id": "<p>The ID of the pipeline that was assigned by AWS Data Pipeline. This is a string of the form <code>df-297EG78HU43EEXAMPLE</code>.</p>",
+        "PipelineIdName$name": "<p>The name of the pipeline.</p>",
+        "PipelineObject$id": "<p>The ID of the object.</p>",
+        "PipelineObject$name": "<p>The name of the object.</p>",
         "PipelineObjectMap$key": null,
         "PollForTaskInput$hostname": "<p>The public DNS name of the calling task runner.</p>",
-        "PutPipelineDefinitionInput$pipelineId": "<p>The identifier of the pipeline to be configured.</p>",
-        "QueryObjectsInput$pipelineId": "<p>Identifier of the pipeline to be queried for object names.</p>",
-        "RemoveTagsInput$pipelineId": "<p>The pipeline from which you want to remove tags.</p>",
-        "ReportTaskRunnerHeartbeatInput$taskrunnerId": "<p>The identifier of the task runner. This value should be unique across your AWS account. In the case of AWS Data Pipeline Task Runner launched on a resource managed by AWS Data Pipeline, the web service provides a unique identifier when it launches the application. If you have written a custom task runner, you should assign a unique identifier for the task runner.</p>",
-        "ReportTaskRunnerHeartbeatInput$hostname": "<p>The public DNS name of the calling task runner.</p>",
-        "SetStatusInput$pipelineId": "<p>Identifies the pipeline that contains the objects.</p>",
-        "TaskObject$pipelineId": "<p>Identifier of the pipeline that provided the task.</p>",
-        "TaskObject$attemptId": "<p>Identifier of the pipeline task attempt object. AWS Data Pipeline uses this value to track how many times a task is attempted.</p>",
-        "ValidatePipelineDefinitionInput$pipelineId": "<p>Identifies the pipeline whose definition is to be validated.</p>",
+        "PutPipelineDefinitionInput$pipelineId": "<p>The ID of the pipeline.</p>",
+        "QueryObjectsInput$pipelineId": "<p>The ID of the pipeline.</p>",
+        "RemoveTagsInput$pipelineId": "<p>The ID of the pipeline.</p>",
+        "ReportTaskRunnerHeartbeatInput$taskrunnerId": "<p>The ID of the task runner. This value should be unique across your AWS account. In the case of AWS Data Pipeline Task Runner launched on a resource managed by AWS Data Pipeline, the web service provides a unique identifier when it launches the application. If you have written a custom task runner, you should assign a unique identifier for the task runner.</p>",
+        "ReportTaskRunnerHeartbeatInput$hostname": "<p>The public DNS name of the task runner.</p>",
+        "SetStatusInput$pipelineId": "<p>The ID of the pipeline that contains the objects.</p>",
+        "TaskObject$pipelineId": "<p>The ID of the pipeline that provided the task.</p>",
+        "TaskObject$attemptId": "<p>The ID of the pipeline task attempt object. AWS Data Pipeline uses this value to track how many times a task is attempted.</p>",
+        "ValidatePipelineDefinitionInput$pipelineId": "<p>The ID of the pipeline.</p>",
         "ValidationError$id": "<p>The identifier of the object that contains the validation error.</p>",
         "ValidationWarning$id": "<p>The identifier of the object that contains the validation warning.</p>",
         "idList$member": null
@@ -482,16 +500,16 @@
     "idList": {
       "base": null,
       "refs": {
-        "DescribeObjectsInput$objectIds": "<p>Identifiers of the pipeline objects that contain the definitions to be described. You can pass as many as 25 identifiers in a single call to DescribeObjects.</p>",
-        "DescribePipelinesInput$pipelineIds": "<p>Identifiers of the pipelines to describe. You can pass as many as 25 identifiers in a single call to <a>DescribePipelines</a>. You can obtain pipeline identifiers by calling <a>ListPipelines</a>.</p>",
-        "QueryObjectsOutput$ids": "<p>A list of identifiers that match the query selectors.</p>",
-        "SetStatusInput$objectIds": "<p>Identifies an array of objects. The corresponding objects can be either physical or components, but not a mix of both types.</p>"
+        "DescribeObjectsInput$objectIds": "<p>The IDs of the pipeline objects that contain the definitions to be described. You can pass as many as 25 identifiers in a single call to <code>DescribeObjects</code>.</p>",
+        "DescribePipelinesInput$pipelineIds": "<p>The IDs of the pipelines to describe. You can pass as many as 25 identifiers in a single call. To obtain pipeline IDs, call <a>ListPipelines</a>.</p>",
+        "QueryObjectsOutput$ids": "<p>The identifiers that match the query selectors.</p>",
+        "SetStatusInput$objectIds": "<p>The IDs of the objects. The corresponding objects can be either physical or components, but not a mix of both types.</p>"
       }
     },
     "int": {
       "base": null,
       "refs": {
-        "QueryObjectsInput$limit": "<p>Specifies the maximum number of object names that <a>QueryObjects</a> will return in a single call. The default value is 100. </p>"
+        "QueryObjectsInput$limit": "<p>The maximum number of object names that <code>QueryObjects</code> will return in a single call. The default value is 100. </p>"
       }
     },
     "longString": {
@@ -504,29 +522,29 @@
     "pipelineList": {
       "base": null,
       "refs": {
-        "ListPipelinesOutput$pipelineIdList": "<p> A list of all the pipeline identifiers that your account has permission to access. If you require additional information about the pipelines, you can use these identifiers to call <a>DescribePipelines</a> and <a>GetPipelineDefinition</a>. </p>"
+        "ListPipelinesOutput$pipelineIdList": "<p>The pipeline identifiers. If you require additional information about the pipelines, you can use these identifiers to call <a>DescribePipelines</a> and <a>GetPipelineDefinition</a>.</p>"
       }
     },
     "string": {
       "base": null,
       "refs": {
-        "CreatePipelineInput$description": "<p>The description of the new pipeline.</p>",
-        "DescribeObjectsInput$marker": "<p>The starting point for the results to be returned. The first time you call <a>DescribeObjects</a>, this value should be empty. As long as the action returns <code>HasMoreResults</code> as <code>True</code>, you can call <a>DescribeObjects</a> again and pass the marker value from the response to retrieve the next set of results.</p>",
-        "DescribeObjectsOutput$marker": "<p> The starting point for the next page of results. To view the next page of results, call <a>DescribeObjects</a> again with this marker value. </p>",
-        "GetPipelineDefinitionInput$version": "<p>The version of the pipeline definition to retrieve. This parameter accepts the values <code>latest</code> (default) and <code>active</code>. Where <code>latest</code> indicates the last definition saved to the pipeline and <code>active</code> indicates the last definition of the pipeline that was activated.</p>",
-        "InstanceIdentity$document": "<p>A description of an Amazon EC2 instance that is generated when the instance is launched and exposed to the instance via the instance metadata service in the form of a JSON representation of an object.</p>",
+        "CreatePipelineInput$description": "<p>The description for the pipeline.</p>",
+        "DescribeObjectsInput$marker": "<p>The starting point for the results to be returned. For the first call, this value should be empty. As long as there are more results, continue to call <code>DescribeObjects</code> with the marker value from the previous call to retrieve the next set of results.</p>",
+        "DescribeObjectsOutput$marker": "<p>The starting point for the next page of results. To view the next page of results, call <code>DescribeObjects</code> again with this marker value. If the value is null, there are no more results.</p>",
+        "GetPipelineDefinitionInput$version": "<p>The version of the pipeline definition to retrieve. Set this parameter to <code>latest</code> (default) to use the last definition saved to the pipeline or <code>active</code> to use the last definition that was activated.</p>",
+        "InstanceIdentity$document": "<p>A description of an EC2 instance that is generated when the instance is launched and exposed to the instance via the instance metadata service in the form of a JSON representation of an object.</p>",
         "InstanceIdentity$signature": "<p>A signature which can be used to verify the accuracy and authenticity of the information provided in the instance identity document.</p>",
-        "ListPipelinesInput$marker": "<p>The starting point for the results to be returned. The first time you call <a>ListPipelines</a>, this value should be empty. As long as the action returns <code>HasMoreResults</code> as <code>True</code>, you can call <a>ListPipelines</a> again and pass the marker value from the response to retrieve the next set of results.</p>",
-        "ListPipelinesOutput$marker": "<p>If not null, indicates the starting point for the set of pipeline identifiers that the next call to <a>ListPipelines</a> will retrieve. If null, there are no more pipeline identifiers.</p>",
+        "ListPipelinesInput$marker": "<p>The starting point for the results to be returned. For the first call, this value should be empty. As long as there are more results, continue to call <code>ListPipelines</code> with the marker value from the previous call to retrieve the next set of results.</p>",
+        "ListPipelinesOutput$marker": "<p>The starting point for the next page of results. To view the next page of results, call <code>ListPipelinesOutput</code> again with this marker value. If the value is null, there are no more results.</p>",
         "PipelineDescription$description": "<p>Description of the pipeline.</p>",
-        "PollForTaskInput$workerGroup": "<p>Indicates the type of task the task runner is configured to accept and process. The worker group is set as a field on objects in the pipeline when they are created. You can only specify a single value for <code>workerGroup</code> in the call to <a>PollForTask</a>. There are no wildcard values permitted in <code>workerGroup</code>, the string must be an exact, case-sensitive, match. </p>",
-        "QueryObjectsInput$sphere": "<p> Specifies whether the query applies to components or instances. Allowable values: <code>COMPONENT</code>, <code>INSTANCE</code>, <code>ATTEMPT</code>. </p>",
-        "QueryObjectsInput$marker": "<p> The starting point for the results to be returned. The first time you call <a>QueryObjects</a>, this value should be empty. As long as the action returns <code>HasMoreResults</code> as <code>True</code>, you can call <a>QueryObjects</a> again and pass the marker value from the response to retrieve the next set of results. </p>",
-        "QueryObjectsOutput$marker": "<p> The starting point for the results to be returned. As long as the action returns <code>HasMoreResults</code> as <code>True</code>, you can call <a>QueryObjects</a> again and pass the marker value from the response to retrieve the next set of results. </p>",
-        "ReportTaskRunnerHeartbeatInput$workerGroup": "<p>Indicates the type of task the task runner is configured to accept and process. The worker group is set as a field on objects in the pipeline when they are created. You can only specify a single value for <code>workerGroup</code> in the call to <a>ReportTaskRunnerHeartbeat</a>. There are no wildcard values permitted in <code>workerGroup</code>, the string must be an exact, case-sensitive, match.</p>",
+        "PollForTaskInput$workerGroup": "<p>The type of task the task runner is configured to accept and process. The worker group is set as a field on objects in the pipeline when they are created. You can only specify a single value for <code>workerGroup</code> in the call to <code>PollForTask</code>. There are no wildcard values permitted in <code>workerGroup</code>; the string must be an exact, case-sensitive, match.</p>",
+        "QueryObjectsInput$sphere": "<p>Indicates whether the query applies to components or instances. The possible values are: <code>COMPONENT</code>, <code>INSTANCE</code>, and <code>ATTEMPT</code>.</p>",
+        "QueryObjectsInput$marker": "<p>The starting point for the results to be returned. For the first call, this value should be empty. As long as there are more results, continue to call <code>QueryObjects</code> with the marker value from the previous call to retrieve the next set of results.</p>",
+        "QueryObjectsOutput$marker": "<p>The starting point for the next page of results. To view the next page of results, call <code>QueryObjects</code> again with this marker value. If the value is null, there are no more results.</p>",
+        "ReportTaskRunnerHeartbeatInput$workerGroup": "<p>The type of task the task runner is configured to accept and process. The worker group is set as a field on objects in the pipeline when they are created. You can only specify a single value for <code>workerGroup</code>. There are no wildcard values permitted in <code>workerGroup</code>; the string must be an exact, case-sensitive, match.</p>",
         "Selector$fieldName": "<p>The name of the field that the operator will be applied to. The field name is the \"key\" portion of the field definition in the pipeline definition syntax that is used by the AWS Data Pipeline API. If the field is not set on the object, the condition fails.</p>",
-        "SetStatusInput$status": "<p>Specifies the status to be set on all the objects in <code>objectIds</code>. For components, this can be either <code>PAUSE</code> or <code>RESUME</code>. For instances, this can be either <code>TRY_CANCEL</code>, <code>RERUN</code>, or <code>MARK_FINISHED</code>.</p>",
-        "SetTaskStatusInput$errorId": "<p>If an error occurred during the task, this value specifies an id value that represents the error. This value is set on the physical attempt object. It is used to display error information to the user. It should not start with string \"Service_\" which is reserved by the system.</p>",
+        "SetStatusInput$status": "<p>The status to be set on all the objects specified in <code>objectIds</code>. For components, use <code>PAUSE</code> or <code>RESUME</code>. For instances, use <code>TRY_CANCEL</code>, <code>RERUN</code>, or <code>MARK_FINISHED</code>.</p>",
+        "SetTaskStatusInput$errorId": "<p>If an error occurred during the task, this value specifies the error code. This value is set on the physical attempt object. It is used to display error information to the user. It should not start with string \"Service_\" which is reserved by the system.</p>",
         "SetTaskStatusInput$errorStackTrace": "<p>If an error occurred during the task, this value specifies the stack trace associated with the error. This value is set on the physical attempt object. It is used to display error information to the user. The web service does not parse this value.</p>",
         "stringList$member": null
       }
@@ -535,7 +553,7 @@
       "base": null,
       "refs": {
         "Operator$values": "<p>The value that the actual field value will be compared with.</p>",
-        "RemoveTagsInput$tagKeys": "<p>The keys of the tags you wish to remove.</p>"
+        "RemoveTagsInput$tagKeys": "<p>The keys of the tags to remove.</p>"
       }
     },
     "tagKey": {
@@ -547,8 +565,8 @@
     "tagList": {
       "base": null,
       "refs": {
-        "AddTagsInput$tags": "<p>The tags as key/value pairs to add to the pipeline.</p>",
-        "CreatePipelineInput$tags": "<p>A list of tags to associate with a pipeline at creation time. Tags let you control access to pipelines. For more information, see <a href=\"http://docs.aws.amazon.com/datapipeline/latest/DeveloperGuide/dp-control-access.html\">Controlling User Access to Pipelines</a> in the <i>AWS Data Pipeline Developer Guide</i>.</p>",
+        "AddTagsInput$tags": "<p>The tags to add, as key/value pairs.</p>",
+        "CreatePipelineInput$tags": "<p>A list of tags to associate with the pipeline at creation. Tags let you control access to pipelines. For more information, see <a href=\"http://docs.aws.amazon.com/datapipeline/latest/DeveloperGuide/dp-control-access.html\">Controlling User Access to Pipelines</a> in the <i>AWS Data Pipeline Developer Guide</i>.</p>",
         "PipelineDescription$tags": "<p>A list of tags to associated with a pipeline. Tags let you control access to pipelines. For more information, see <a href=\"http://docs.aws.amazon.com/datapipeline/latest/DeveloperGuide/dp-control-access.html\">Controlling User Access to Pipelines</a> in the <i>AWS Data Pipeline Developer Guide</i>.</p>"
       }
     },
@@ -561,9 +579,15 @@
     "taskId": {
       "base": null,
       "refs": {
-        "ReportTaskProgressInput$taskId": "<p>Identifier of the task assigned to the task runner. This value is provided in the <a>TaskObject</a> that the service returns with the response for the <a>PollForTask</a> action.</p>",
-        "SetTaskStatusInput$taskId": "<p>Identifies the task assigned to the task runner. This value is set in the <a>TaskObject</a> that is returned by the <a>PollForTask</a> action.</p>",
+        "ReportTaskProgressInput$taskId": "<p>The ID of the task assigned to the task runner. This value is provided in the response for <a>PollForTask</a>.</p>",
+        "SetTaskStatusInput$taskId": "<p>The ID of the task assigned to the task runner. This value is provided in the response for <a>PollForTask</a>.</p>",
         "TaskObject$taskId": "<p>An internal identifier for the task. This ID is passed to the <a>SetTaskStatus</a> and <a>ReportTaskProgress</a> actions.</p>"
+      }
+    },
+    "timestamp": {
+      "base": null,
+      "refs": {
+        "ActivatePipelineInput$startTimestamp": "<p>The date and time to resume the pipeline. By default, the pipeline resumes from the last completed execution.</p>"
       }
     },
     "validationMessage": {

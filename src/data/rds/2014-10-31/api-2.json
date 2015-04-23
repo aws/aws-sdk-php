@@ -1,4 +1,5 @@
 {
+  "version":"2.0",
   "metadata":{
     "apiVersion":"2014-10-31",
     "endpointPrefix":"rds",
@@ -1142,6 +1143,41 @@
         }
       ]
     },
+    "DescribeAccountAttributes":{
+      "name":"DescribeAccountAttributes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeAccountAttributesMessage"},
+      "output":{
+        "shape":"AccountAttributesMessage",
+        "resultWrapper":"DescribeAccountAttributesResult"
+      }
+    },
+    "DescribeCertificates":{
+      "name":"DescribeCertificates",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeCertificatesMessage"},
+      "output":{
+        "shape":"CertificateMessage",
+        "resultWrapper":"DescribeCertificatesResult"
+      },
+      "errors":[
+        {
+          "shape":"CertificateNotFoundFault",
+          "error":{
+            "code":"CertificateNotFound",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
+        }
+      ]
+    },
     "DescribeDBEngineVersions":{
       "name":"DescribeDBEngineVersions",
       "http":{
@@ -1681,6 +1717,15 @@
           "error":{
             "code":"AuthorizationNotFound",
             "httpStatusCode":404,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"CertificateNotFoundFault",
+          "error":{
+            "code":"CertificateNotFound",
+            "httpStatusCode":400,
             "senderFault":true
           },
           "exception":true
@@ -2453,6 +2498,28 @@
     }
   },
   "shapes":{
+    "AccountAttributesMessage":{
+      "type":"structure",
+      "members":{
+        "AccountQuotas":{"shape":"AccountQuotaList"}
+      }
+    },
+    "AccountQuota":{
+      "type":"structure",
+      "members":{
+        "AccountQuotaName":{"shape":"String"},
+        "Used":{"shape":"Long"},
+        "Max":{"shape":"Long"}
+      },
+      "wrapper":true
+    },
+    "AccountQuotaList":{
+      "type":"list",
+      "member":{
+        "shape":"AccountQuota",
+        "locationName":"AccountQuota"
+      }
+    },
     "AddSourceIdentifierToSubscriptionMessage":{
       "type":"structure",
       "required":[
@@ -2555,6 +2622,42 @@
     },
     "Boolean":{"type":"boolean"},
     "BooleanOptional":{"type":"boolean"},
+    "Certificate":{
+      "type":"structure",
+      "members":{
+        "CertificateIdentifier":{"shape":"String"},
+        "CertificateType":{"shape":"String"},
+        "Thumbprint":{"shape":"String"},
+        "ValidFrom":{"shape":"TStamp"},
+        "ValidTill":{"shape":"TStamp"}
+      },
+      "wrapper":true
+    },
+    "CertificateList":{
+      "type":"list",
+      "member":{
+        "shape":"Certificate",
+        "locationName":"Certificate"
+      }
+    },
+    "CertificateMessage":{
+      "type":"structure",
+      "members":{
+        "Certificates":{"shape":"CertificateList"},
+        "Marker":{"shape":"String"}
+      }
+    },
+    "CertificateNotFoundFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"CertificateNotFound",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "CharacterSet":{
       "type":"structure",
       "members":{
@@ -2814,7 +2917,8 @@
         "TdeCredentialArn":{"shape":"String"},
         "StorageEncrypted":{"shape":"Boolean"},
         "KmsKeyId":{"shape":"String"},
-        "DbiResourceId":{"shape":"String"}
+        "DbiResourceId":{"shape":"String"},
+        "CACertificateIdentifier":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -3259,6 +3363,20 @@
       "required":["OptionGroupName"],
       "members":{
         "OptionGroupName":{"shape":"String"}
+      }
+    },
+    "DescribeAccountAttributesMessage":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DescribeCertificatesMessage":{
+      "type":"structure",
+      "members":{
+        "CertificateIdentifier":{"shape":"String"},
+        "Filters":{"shape":"FilterList"},
+        "MaxRecords":{"shape":"IntegerOptional"},
+        "Marker":{"shape":"String"}
       }
     },
     "DescribeDBEngineVersionsMessage":{
@@ -3870,7 +3988,8 @@
         "NewDBInstanceIdentifier":{"shape":"String"},
         "StorageType":{"shape":"String"},
         "TdeCredentialArn":{"shape":"String"},
-        "TdeCredentialPassword":{"shape":"String"}
+        "TdeCredentialPassword":{"shape":"String"},
+        "CACertificateIdentifier":{"shape":"String"}
       }
     },
     "ModifyDBParameterGroupMessage":{
@@ -4176,7 +4295,8 @@
         "AutoAppliedAfterDate":{"shape":"TStamp"},
         "ForcedApplyDate":{"shape":"TStamp"},
         "OptInStatus":{"shape":"String"},
-        "CurrentApplyDate":{"shape":"TStamp"}
+        "CurrentApplyDate":{"shape":"TStamp"},
+        "Description":{"shape":"String"}
       }
     },
     "PendingMaintenanceActionDetails":{
@@ -4212,7 +4332,8 @@
         "EngineVersion":{"shape":"String"},
         "Iops":{"shape":"IntegerOptional"},
         "DBInstanceIdentifier":{"shape":"String"},
-        "StorageType":{"shape":"String"}
+        "StorageType":{"shape":"String"},
+        "CACertificateIdentifier":{"shape":"String"}
       }
     },
     "PointInTimeRestoreNotEnabledFault":{

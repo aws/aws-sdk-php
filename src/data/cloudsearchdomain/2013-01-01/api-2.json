@@ -107,6 +107,11 @@
       "member":{"shape":"DocumentServiceWarning"}
     },
     "Expr":{"type":"string"},
+    "Exprs":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
+    },
     "Facet":{"type":"string"},
     "Facets":{
       "type":"map",
@@ -134,6 +139,7 @@
       "members":{
         "id":{"shape":"String"},
         "fields":{"shape":"Fields"},
+        "exprs":{"shape":"Exprs"},
         "highlights":{"shape":"Highlights"}
       }
     },

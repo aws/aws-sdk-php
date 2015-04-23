@@ -1,14 +1,16 @@
 {
+  "version": "2.0",
   "operations": {
+    "AbortEnvironmentUpdate": "<p>Cancels in-progress environment configuration update or application version deployment.</p>",
     "CheckDNSAvailability": "<p> Checks if the specified CNAME is available. </p>",
-    "CreateApplication": "<p> Creates an application that has one configuration template named <code>default</code> and no application versions. </p> <?oxy_delete author=\"brussard\" timestamp=\"20131024T142047-0700\" content=\"&lt;note&gt; The &lt;code&gt;default&lt;/code&gt; configuration template is for a 32-bit version of the Amazon Linux operating system running the Tomcat 6 application container. &lt;/note&gt;\">",
-    "CreateApplicationVersion": "<p>Creates an application version for the specified application.</p>",
+    "CreateApplication": "<p> Creates an application that has one configuration template named <code>default</code> and no application versions. </p>",
+    "CreateApplicationVersion": "<p>Creates an application version for the specified application.</p> <note>Once you create an application version with a specified Amazon S3 bucket and key location, you cannot change that Amazon S3 location. If you change the Amazon S3 location, you receive an exception when you attempt to launch an environment from the application version. </note>",
     "CreateConfigurationTemplate": "<p>Creates a configuration template. Templates are associated with a specific application and are used to deploy different versions of the application with the same configuration settings.</p> <p>Related Topics</p> <ul> <li> <a>DescribeConfigurationOptions</a> </li> <li> <a>DescribeConfigurationSettings</a> </li> <li> <a>ListAvailableSolutionStacks</a> </li> </ul>",
     "CreateEnvironment": "<p> Launches an environment for the specified application using the specified configuration. </p>",
     "CreateStorageLocation": "<p> Creates the Amazon S3 storage location for the account. </p> <p> This location is used to store user log files. </p>",
-    "DeleteApplication": "<p> Deletes the specified application along with all associated versions and configurations. The application versions will not be deleted from your Amazon S3 bucket. </p>",
-    "DeleteApplicationVersion": "<p> Deletes the specified version from the specified application. </p>",
-    "DeleteConfigurationTemplate": "<p>Deletes the specified configuration template.</p>",
+    "DeleteApplication": "<p> Deletes the specified application along with all associated versions and configurations. The application versions will not be deleted from your Amazon S3 bucket. </p> <note>You cannot delete an application that has a running environment. </note>",
+    "DeleteApplicationVersion": "<p> Deletes the specified version from the specified application. </p> <note>You cannot delete an application version that is associated with a running environment.</note>",
+    "DeleteConfigurationTemplate": "<p>Deletes the specified configuration template.</p> <note>When you launch an environment using a configuration template, the environment gets a copy of the template. You can delete or modify the environment's copy of the template without affecting the running environment.</note>",
     "DeleteEnvironmentConfiguration": "<p> Deletes the draft configuration associated with the running environment. </p> <p> Updating a running environment with any configuration changes creates a draft configuration set. You can get the draft configuration using <a>DescribeConfigurationSettings</a> while the update is in progress or if the update fails. The <code>DeploymentStatus</code> for the draft configuration indicates whether the deployment is in process or has failed. The draft configuration remains in existence until it is deleted with this action. </p>",
     "DescribeApplicationVersions": "<p>Returns descriptions for existing application versions.</p>",
     "DescribeApplications": "<p>Returns the descriptions of existing applications.</p>",
@@ -16,7 +18,7 @@
     "DescribeConfigurationSettings": "<p> Returns a description of the settings for the specified configuration set, that is, either a configuration template or the configuration set associated with a running environment. </p> <p> When describing the settings for the configuration set associated with a running environment, it is possible to receive two sets of setting descriptions. One is the deployed configuration set, and the other is a draft configuration of an environment that is either in the process of deployment or that failed to deploy. </p> <p>Related Topics</p> <ul> <li> <a>DeleteEnvironmentConfiguration</a> </li> </ul>",
     "DescribeEnvironmentResources": "<p>Returns AWS resources for this environment.</p>",
     "DescribeEnvironments": "<p>Returns descriptions for existing environments.</p>",
-    "DescribeEvents": "<p>Returns list of event descriptions matching criteria up to the last 6 weeks.</p>",
+    "DescribeEvents": "<p>Returns list of event descriptions matching criteria up to the last 6 weeks.</p> <note> This action returns the most recent 1,000 events from the specified <code>NextToken</code>. </note>",
     "ListAvailableSolutionStacks": "<p> Returns a list of the available solution stack names. </p>",
     "RebuildEnvironment": "<p> Deletes and recreates all of the AWS resources (for example: the Auto Scaling group, load balancer, etc.) for a specified environment and forces a restart. </p>",
     "RequestEnvironmentInfo": "<p> Initiates a request to compile the specified type of information of the deployed environment. </p> <p> Setting the <code>InfoType</code> to <code>tail</code> compiles the last lines from the application server log files of every Amazon EC2 instance in your environment. </p> <p> Setting the <code>InfoType</code> to <code>bundle</code> compresses the application server log files for every Amazon EC2 instance into a <code>.zip</code> file. Legacy and .NET containers do not support bundle logs. </p> <p> Use <a>RetrieveEnvironmentInfo</a> to obtain the set of logs. </p> <p>Related Topics</p> <ul> <li> <a>RetrieveEnvironmentInfo</a> </li> </ul>",
@@ -24,14 +26,25 @@
     "RetrieveEnvironmentInfo": "<p> Retrieves the compiled information from a <a>RequestEnvironmentInfo</a> request. </p> <p>Related Topics</p> <ul> <li> <a>RequestEnvironmentInfo</a> </li> </ul>",
     "SwapEnvironmentCNAMEs": "<p> Swaps the CNAMEs of two environments. </p>",
     "TerminateEnvironment": "<p> Terminates the specified environment. </p>",
-    "UpdateApplication": "<p>Updates the specified application to have the specified properties. </p>",
-    "UpdateApplicationVersion": "<p> Updates the specified application version to have the specified properties. </p>",
-    "UpdateConfigurationTemplate": "<p> Updates the specified configuration template to have the specified properties or configuration option values. </p> <p>Related Topics</p> <ul> <li> <a>DescribeConfigurationOptions</a> </li> </ul>",
+    "UpdateApplication": "<p>Updates the specified application to have the specified properties. </p> <note> If a property (for example, <code>description</code>) is not provided, the value remains unchanged. To clear these properties, specify an empty string. </note>",
+    "UpdateApplicationVersion": "<p> Updates the specified application version to have the specified properties. </p> <note> If a property (for example, <code>description</code>) is not provided, the value remains unchanged. To clear properties, specify an empty string. </note>",
+    "UpdateConfigurationTemplate": "<p> Updates the specified configuration template to have the specified properties or configuration option values. </p> <note> If a property (for example, <code>ApplicationName</code>) is not provided, its value remains unchanged. To clear such properties, specify an empty string. </note> <p>Related Topics</p> <ul> <li> <a>DescribeConfigurationOptions</a> </li> </ul>",
     "UpdateEnvironment": "<p> Updates the environment description, deploys a new application version, updates the configuration settings to an entirely new configuration template, or updates select configuration option values in the running environment. </p> <p> Attempting to update both the release and configuration is not allowed and AWS Elastic Beanstalk returns an <code>InvalidParameterCombination</code> error. </p> <p> When updating the configuration settings to a new template or individual settings, a draft configuration is created and <a>DescribeConfigurationSettings</a> for this environment returns two setting descriptions with different <code>DeploymentStatus</code> values. </p>",
     "ValidateConfigurationSettings": "<p> Takes a set of configuration settings and either a configuration template or environment, and determines whether those values are valid. </p> <p> This action returns a list of messages indicating any errors or warnings associated with the selection of option values. </p>"
   },
   "service": "<fullname>AWS Elastic Beanstalk</fullname> <p> This is the AWS Elastic Beanstalk API Reference. This guide provides detailed information about AWS Elastic Beanstalk actions, data types, parameters, and errors. </p> <p>AWS Elastic Beanstalk is a tool that makes it easy for you to create, deploy, and manage scalable, fault-tolerant applications running on Amazon Web Services cloud resources. </p> <p> For more information about this product, go to the <a href=\"http://aws.amazon.com/elasticbeanstalk/\">AWS Elastic Beanstalk</a> details page. The location of the latest AWS Elastic Beanstalk WSDL is <a href=\"http://elasticbeanstalk.s3.amazonaws.com/doc/2010-12-01/AWSElasticBeanstalk.wsdl\">http://elasticbeanstalk.s3.amazonaws.com/doc/2010-12-01/AWSElasticBeanstalk.wsdl</a>. </p> <p><b>Endpoints</b></p> <p>For a list of region-specific endpoints that AWS Elastic Beanstalk supports, go to <a href=\"http://docs.aws.amazon.com/general/latest/gr/rande.html#elasticbeanstalk_region\">Regions and Endpoints</a> in the <i>Amazon Web Services Glossary</i>.</p>",
   "shapes": {
+    "AbortEnvironmentUpdateMessage": {
+      "base": "<p></p>",
+      "refs": {
+      }
+    },
+    "AbortableOperationInProgress": {
+      "base": null,
+      "refs": {
+        "EnvironmentDescription$AbortableOperationInProgress": "<p>Lists in-progress environment updates and application version deployments that you can cancel.</p>"
+      }
+    },
     "ApplicationDescription": {
       "base": "<p>Describes the properties of an application.</p>",
       "refs": {
@@ -455,6 +468,7 @@
     "EnvironmentId": {
       "base": null,
       "refs": {
+        "AbortEnvironmentUpdateMessage$EnvironmentId": "<p>This specifies the ID of the environment with the in-progress update that you want to cancel.</p>",
         "CreateConfigurationTemplateMessage$EnvironmentId": "<p> The ID of the environment used with this configuration template. </p>",
         "DescribeEnvironmentResourcesMessage$EnvironmentId": "<p> The ID of the environment to retrieve AWS resource usage data. </p> <p> Condition: You must specify either this or an EnvironmentName, or both. If you do not specify either, AWS Elastic Beanstalk returns <code>MissingRequiredParameter</code> error. </p>",
         "DescribeEventsMessage$EnvironmentId": "<p> If specified, AWS Elastic Beanstalk restricts the returned descriptions to those associated with this environment. </p>",
@@ -499,6 +513,7 @@
     "EnvironmentName": {
       "base": null,
       "refs": {
+        "AbortEnvironmentUpdateMessage$EnvironmentName": "<p>This specifies the name of the environment with the in-progress update that you want to cancel.</p>",
         "ConfigurationSettingsDescription$EnvironmentName": "<p> If not <code>null</code>, the name of the environment for this configuration set. </p>",
         "CreateEnvironmentMessage$EnvironmentName": "<p> A unique name for the deployment environment. Used in the application URL. </p> <p>Constraint: Must be from 4 to 23 characters in length. The name can contain only letters, numbers, and hyphens. It cannot start or end with a hyphen. This name must be unique in your account. If the specified name already exists, AWS Elastic Beanstalk returns an <code>InvalidParameterValue</code> error. </p> <p>Default: If the CNAME parameter is not specified, the environment name becomes part of the CNAME, and therefore part of the visible URL for your application.</p>",
         "DeleteEnvironmentConfigurationMessage$EnvironmentName": "<p> The name of the environment to delete the draft configuration from. </p>",
@@ -871,7 +886,8 @@
         "CreateEnvironmentMessage$SolutionStackName": "<p> This is an alternative to specifying a configuration name. If specified, AWS Elastic Beanstalk sets the configuration values to the default values associated with the specified solution stack. </p> <p> Condition: You must specify either this or a <code>TemplateName</code>, but not both. If you specify both, AWS Elastic Beanstalk returns an <code>InvalidParameterCombination</code> error. If you do not specify either, AWS Elastic Beanstalk returns a <code>MissingRequiredParameter</code> error. </p>",
         "DescribeConfigurationOptionsMessage$SolutionStackName": "<p> The name of the solution stack whose configuration options you want to describe. </p>",
         "EnvironmentDescription$SolutionStackName": "<p> The name of the <code>SolutionStack</code> deployed with this environment. </p>",
-        "SolutionStackDescription$SolutionStackName": "<p> The name of the solution stack. </p>"
+        "SolutionStackDescription$SolutionStackName": "<p> The name of the solution stack. </p>",
+        "UpdateEnvironmentMessage$SolutionStackName": "<p> This specifies the platform version that the environment will run after the environment is updated. </p>"
       }
     },
     "SourceBundleDeletionException": {
@@ -899,7 +915,7 @@
       }
     },
     "SwapEnvironmentCNAMEsMessage": {
-      "base": "<p></p>",
+      "base": "<p>Swaps the CNAMEs of two environments.</p>",
       "refs": {
       }
     },
@@ -1069,7 +1085,7 @@
       "refs": {
         "ApplicationVersionDescription$VersionLabel": "<p> A label uniquely identifying the version for the associated application. </p>",
         "CreateApplicationVersionMessage$VersionLabel": "<p>A label identifying this version.</p> <p>Constraint: Must be unique per application. If an application version already exists with this label for the specified application, AWS Elastic Beanstalk returns an <code>InvalidParameterValue</code> error. </p>",
-        "CreateEnvironmentMessage$VersionLabel": "<p>The name of the application version to deploy.</p> <p> If the specified application has no associated application versions, AWS Elastic Beanstalk <code>UpdateEnvironment</code> returns an <code>InvalidParameterValue</code> error. </p> <p> Default: If not specified, AWS Elastic Beanstalk attempts to launch the <?oxy_delete author=\"brussard\" timestamp=\"20131030T145730-0700\" content=\"most recently created application version\"><?oxy_insert_start author=\"brussard\" timestamp=\"20131030T145730-0700\">sample application in the container<?oxy_insert_end>. </p>",
+        "CreateEnvironmentMessage$VersionLabel": "<p>The name of the application version to deploy.</p> <p> If the specified application has no associated application versions, AWS Elastic Beanstalk <code>UpdateEnvironment</code> returns an <code>InvalidParameterValue</code> error. </p> <p> Default: If not specified, AWS Elastic Beanstalk attempts to launch the sample application in the container. </p>",
         "DeleteApplicationVersionMessage$VersionLabel": "<p> The label of the version to delete. </p>",
         "DescribeEnvironmentsMessage$VersionLabel": "<p> If specified, AWS Elastic Beanstalk restricts the returned descriptions to include only those that are associated with this application version. </p>",
         "DescribeEventsMessage$VersionLabel": "<p> If specified, AWS Elastic Beanstalk restricts the returned descriptions to those associated with this application version. </p>",

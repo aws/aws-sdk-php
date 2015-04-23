@@ -40,7 +40,7 @@ class ApiProvider
     /** @var array A map of public API type names to their file suffix. */
     private static $typeMap = [
         'api'       => 'api-2',
-        'paginator' => 'paginators-2',
+        'paginator' => 'paginators-1',
         'waiter'    => 'waiters-2',
         'docs'      => 'docs-2',
     ];

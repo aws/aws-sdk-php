@@ -555,6 +555,12 @@
         "UpdatePipelineRequest$AwsKmsKeyArn": "<p>The AWS Key Management Service (AWS KMS) key that you want to use with this pipeline.</p> <p>If you use either <code>S3</code> or <code>S3-AWS-KMS</code> as your <code>Encryption:Mode</code>, you don't need to provide a key with your job because a default key, known as an AWS-KMS key, is created for you automatically. You need to provide an AWS-KMS key only if you want to use a non-default AWS-KMS key, or if you are using an <code>Encryption:Mode</code> of <code>AES-PKCS7</code>, <code>AES-CTR</code>, or <code>AES-GCM</code>.</p>"
       }
     },
+    "KeyIdGuid": {
+      "base": null,
+      "refs": {
+        "PlayReadyDrm$KeyId": "<p>The ID for your DRM key, so that your DRM license provider knows which key to provide.</p> <p>The key ID must be provided in big endian, and Elastic Transcoder will convert it to little endian before inserting it into the PlayReady DRM headers. If you are unsure whether your license server provides your key ID in big or little endian, check with your DRM provider.</p>"
+      }
+    },
     "KeyStoragePolicy": {
       "base": null,
       "refs": {
@@ -635,6 +641,13 @@
         "UpdatePipelineRequest$Name": "<p>The name of the pipeline. We recommend that the name be unique within the AWS account, but uniqueness is not enforced.</p> <p>Constraints: Maximum 40 characters</p>"
       }
     },
+    "NonEmptyBase64EncodedString": {
+      "base": null,
+      "refs": {
+        "PlayReadyDrm$Key": "<p>The DRM key for your file, provided by your DRM license provider. The key must be base64-encoded, and it must be one of the following bit lengths before being base64-encoded:</p> <p><code>128</code>, <code>192</code>, or <code>256</code>. </p> <p>The key must also be encrypted by using AWS KMS.</p>",
+        "PlayReadyDrm$KeyMd5": "<p>The MD5 digest of the key used for DRM on your file, and that you want Elastic Transcoder to use as a checksum to make sure your key was not corrupted in transit. The key MD5 must be base64-encoded, and it must be exactly 16 bytes before being base64-encoded.</p>"
+      }
+    },
     "Notifications": {
       "base": "<p>The Amazon Simple Notification Service (Amazon SNS) topic or topics to notify in order to report job status.</p> <important>To receive notifications, you must also subscribe to the new topic in the Amazon SNS console.</important>",
       "refs": {
@@ -664,6 +677,12 @@
         "Timing$SubmitTimeMillis": "<p>The time the job was submitted to Elastic Transcoder, in epoch milliseconds.</p>",
         "Timing$StartTimeMillis": "<p>The time the job began transcoding, in epoch milliseconds.</p>",
         "Timing$FinishTimeMillis": "<p>The time the job finished transcoding, in epoch milliseconds.</p>"
+      }
+    },
+    "OneTo512String": {
+      "base": null,
+      "refs": {
+        "PlayReadyDrm$LicenseAcquisitionUrl": "<p>The location of the license key required to play DRM content. The URL must be an absolute path, and is referenced by the PlayReady header. The PlayReady header is referenced in the protection header of the client manifest for Smooth Streaming outputs, and in the EXT-X-DXDRM and EXT-XDXDRMINFO metadata tags for HLS playlist outputs. An example URL looks like this: <programlisting>https://www.example.com/exampleKey/</programlisting></p>"
       }
     },
     "Opacity": {
@@ -741,6 +760,19 @@
         "PresetWatermark$MaxHeight": "<p>The maximum height of the watermark in one of the following formats: <ul> <li>number of pixels (px): The minimum value is 16 pixels, and the maximum value is the value of <code>MaxHeight</code>.</li> <li>integer percentage (%): The range of valid values is 0 to 100. Use the value of <code>Target</code> to specify whether you want Elastic Transcoder to include the black bars that are added by Elastic Transcoder, if any, in the calculation.</li> </ul> If you specify the value in pixels, it must be less than or equal to the value of <code>MaxHeight</code>.</p>",
         "PresetWatermark$HorizontalOffset": "<p>The amount by which you want the horizontal position of the watermark to be offset from the position specified by HorizontalAlign: <ul> <li>number of pixels (px): The minimum value is 0 pixels, and the maximum value is the value of MaxWidth.</li> <li>integer percentage (%): The range of valid values is 0 to 100.</li> </ul>For example, if you specify Left for <code>HorizontalAlign</code> and 5px for <code>HorizontalOffset</code>, the left side of the watermark appears 5 pixels from the left border of the output video.</p> <p><code>HorizontalOffset</code> is only valid when the value of <code>HorizontalAlign</code> is <code>Left</code> or <code>Right</code>. If you specify an offset that causes the watermark to extend beyond the left or right border and Elastic Transcoder has not added black bars, the watermark is cropped. If Elastic Transcoder has added black bars, the watermark extends into the black bars. If the watermark extends beyond the black bars, it is cropped.</p> <p>Use the value of <code>Target</code> to specify whether you want to include the black bars that are added by Elastic Transcoder, if any, in the offset calculation.</p>",
         "PresetWatermark$VerticalOffset": "<code>VerticalOffset</code> <p>The amount by which you want the vertical position of the watermark to be offset from the position specified by VerticalAlign:<ul> <li>number of pixels (px): The minimum value is 0 pixels, and the maximum value is the value of <code>MaxHeight</code>.</li> <li>integer percentage (%): The range of valid values is 0 to 100.</li> </ul> For example, if you specify <code>Top</code> for <code>VerticalAlign</code> and <code>5px</code> for <code>VerticalOffset</code>, the top of the watermark appears 5 pixels from the top border of the output video.</p> <p><code>VerticalOffset</code> is only valid when the value of VerticalAlign is Top or Bottom.</p> <p>If you specify an offset that causes the watermark to extend beyond the top or bottom border and Elastic Transcoder has not added black bars, the watermark is cropped. If Elastic Transcoder has added black bars, the watermark extends into the black bars. If the watermark extends beyond the black bars, it is cropped.</p> <p>Use the value of <code>Target</code> to specify whether you want Elastic Transcoder to include the black bars that are added by Elastic Transcoder, if any, in the offset calculation.</p>"
+      }
+    },
+    "PlayReadyDrm": {
+      "base": "<p>The PlayReady DRM settings, if any, that you want Elastic Transcoder to apply to the output files associated with this playlist.</p> <p>PlayReady DRM encrypts your media files using <code>AES-CTR</code> encryption.</p> <p>If you use DRM for an <code>HLSv3</code> playlist, your outputs must have a master playlist.</p>",
+      "refs": {
+        "CreateJobPlaylist$PlayReadyDrm": "<p>The DRM settings, if any, that you want Elastic Transcoder to apply to the output files associated with this playlist.</p>",
+        "Playlist$PlayReadyDrm": "<p>The DRM settings, if any, that you want Elastic Transcoder to apply to the output files associated with this playlist.</p>"
+      }
+    },
+    "PlayReadyDrmFormatString": {
+      "base": null,
+      "refs": {
+        "PlayReadyDrm$Format": "<p>The type of DRM, if any, that you want Elastic Transcoder to apply to the output files associated with this playlist.</p>"
       }
     },
     "Playlist": {
@@ -1082,7 +1114,8 @@
       "base": null,
       "refs": {
         "Encryption$InitializationVector": "<p>The series of random bits created by a random bit generator, unique for every encryption operation, that you used to encrypt your input files or that you want Elastic Transcoder to use to encrypt your output files. The initialization vector must be base64-encoded, and it must be exactly 16 bytes long before being base64-encoded.</p>",
-        "HlsContentProtection$InitializationVector": "<p>If Elastic Transcoder is generating your key for you, you must leave this field blank.</p> <p>The series of random bits created by a random bit generator, unique for every encryption operation, that you want Elastic Transcoder to use to encrypt your output files. The initialization vector must be base64-encoded, and it must be exactly 16 bytes before being base64-encoded.</p>"
+        "HlsContentProtection$InitializationVector": "<p>If Elastic Transcoder is generating your key for you, you must leave this field blank.</p> <p>The series of random bits created by a random bit generator, unique for every encryption operation, that you want Elastic Transcoder to use to encrypt your output files. The initialization vector must be base64-encoded, and it must be exactly 16 bytes before being base64-encoded.</p>",
+        "PlayReadyDrm$InitializationVector": "<p>The series of random bits created by a random bit generator, unique for every encryption operation, that you want Elastic Transcoder to use to encrypt your files. The initialization vector must be base64-encoded, and it must be exactly 8 bytes long before being base64-encoded. If no initialization vector is provided, Elastic Transcoder generates one for you.</p>"
       }
     },
     "ZeroTo512String": {

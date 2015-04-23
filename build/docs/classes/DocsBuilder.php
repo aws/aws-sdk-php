@@ -50,8 +50,8 @@ class DocsBuilder
             foreach ($data['versions'] as $alias => $version) {
                 list($api, $docModel) = call_user_func(
                     "Aws\\{$ns}\\{$ns}Client::applyDocFilters",
-                    call_user_func($this->apiProvider, 'api', $name, $version),
-                    call_user_func($this->apiProvider, 'docs', $name, $version)
+                    ApiProvider::resolve($this->apiProvider, 'api', $name, $version),
+                    ApiProvider::resolve($this->apiProvider, 'docs', $name, $version)
                 );
                 $service = new Service($api, $docModel);
                 $this->renderService($service);

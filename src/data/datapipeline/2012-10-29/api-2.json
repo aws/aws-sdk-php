@@ -86,6 +86,34 @@
         }
       ]
     },
+    "DeactivatePipeline":{
+      "name":"DeactivatePipeline",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeactivatePipelineInput"},
+      "output":{"shape":"DeactivatePipelineOutput"},
+      "errors":[
+        {
+          "shape":"PipelineNotFoundException",
+          "exception":true
+        },
+        {
+          "shape":"PipelineDeletedException",
+          "exception":true
+        },
+        {
+          "shape":"InternalServiceError",
+          "exception":true,
+          "fault":true
+        },
+        {
+          "shape":"InvalidRequestException",
+          "exception":true
+        }
+      ]
+    },
     "DeletePipeline":{
       "name":"DeletePipeline",
       "http":{
@@ -499,7 +527,8 @@
       "required":["pipelineId"],
       "members":{
         "pipelineId":{"shape":"id"},
-        "parameterValues":{"shape":"ParameterValueList"}
+        "parameterValues":{"shape":"ParameterValueList"},
+        "startTimestamp":{"shape":"timestamp"}
       }
     },
     "ActivatePipelineOutput":{
@@ -541,6 +570,19 @@
       "required":["pipelineId"],
       "members":{
         "pipelineId":{"shape":"id"}
+      }
+    },
+    "DeactivatePipelineInput":{
+      "type":"structure",
+      "required":["pipelineId"],
+      "members":{
+        "pipelineId":{"shape":"id"},
+        "cancelActive":{"shape":"cancelActive"}
+      }
+    },
+    "DeactivatePipelineOutput":{
+      "type":"structure",
+      "members":{
       }
     },
     "DeletePipelineInput":{
@@ -1039,6 +1081,7 @@
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },
     "boolean":{"type":"boolean"},
+    "cancelActive":{"type":"boolean"},
     "errorMessage":{"type":"string"},
     "fieldList":{
       "type":"list",
@@ -1109,6 +1152,7 @@
       "max":2048,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },
+    "timestamp":{"type":"timestamp"},
     "validationMessage":{
       "type":"string",
       "min":0,

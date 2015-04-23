@@ -222,9 +222,19 @@
         "method":"GET",
         "requestUri":"/{Bucket}?notification"
       },
-      "input":{"shape":"GetBucketNotificationRequest"},
-      "output":{"shape":"GetBucketNotificationOutput"},
+      "input":{"shape":"GetBucketNotificationConfigurationRequest"},
+      "output":{"shape":"NotificationConfigurationDeprecated"},
+      "deprecated":true,
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETnotification.html"
+    },
+    "GetBucketNotificationConfiguration":{
+      "name":"GetBucketNotificationConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/{Bucket}?notification"
+      },
+      "input":{"shape":"GetBucketNotificationConfigurationRequest"},
+      "output":{"shape":"NotificationConfiguration"}
     },
     "GetBucketPolicy":{
       "name":"GetBucketPolicy",
@@ -459,7 +469,16 @@
         "requestUri":"/{Bucket}?notification"
       },
       "input":{"shape":"PutBucketNotificationRequest"},
+      "deprecated":true,
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTnotification.html"
+    },
+    "PutBucketNotificationConfiguration":{
+      "name":"PutBucketNotificationConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/{Bucket}?notification"
+      },
+      "input":{"shape":"PutBucketNotificationConfigurationRequest"}
     },
     "PutBucketPolicy":{
       "name":"PutBucketPolicy",
@@ -762,7 +781,7 @@
           "deprecated":true
         },
         "Events":{
-          "shape":"Events",
+          "shape":"EventList",
           "locationName":"Event"
         },
         "CloudFunction":{"shape":"CloudFunction"},
@@ -1611,7 +1630,7 @@
         "s3:ObjectCreated:CompleteMultipartUpload"
       ]
     },
-    "Events":{
+    "EventList":{
       "type":"list",
       "member":{"shape":"Event"},
       "flattened":true
@@ -1726,15 +1745,7 @@
         }
       }
     },
-    "GetBucketNotificationOutput":{
-      "type":"structure",
-      "members":{
-        "TopicConfiguration":{"shape":"TopicConfiguration"},
-        "QueueConfiguration":{"shape":"QueueConfiguration"},
-        "CloudFunctionConfiguration":{"shape":"CloudFunctionConfiguration"}
-      }
-    },
-    "GetBucketNotificationRequest":{
+    "GetBucketNotificationConfigurationRequest":{
       "type":"structure",
       "required":["Bucket"],
       "members":{
@@ -2429,6 +2440,30 @@
     "IsTruncated":{"type":"boolean"},
     "KeyMarker":{"type":"string"},
     "KeyPrefixEquals":{"type":"string"},
+    "LambdaFunctionArn":{"type":"string"},
+    "LambdaFunctionConfiguration":{
+      "type":"structure",
+      "required":[
+        "LambdaFunctionArn",
+        "Events"
+      ],
+      "members":{
+        "Id":{"shape":"NotificationId"},
+        "LambdaFunctionArn":{
+          "shape":"LambdaFunctionArn",
+          "locationName":"CloudFunction"
+        },
+        "Events":{
+          "shape":"EventList",
+          "locationName":"Event"
+        }
+      }
+    },
+    "LambdaFunctionConfigurationList":{
+      "type":"list",
+      "member":{"shape":"LambdaFunctionConfiguration"},
+      "flattened":true
+    },
     "LastModified":{"type":"timestamp"},
     "LifecycleConfiguration":{
       "type":"structure",
@@ -2796,8 +2831,25 @@
     "NotificationConfiguration":{
       "type":"structure",
       "members":{
-        "TopicConfiguration":{"shape":"TopicConfiguration"},
-        "QueueConfiguration":{"shape":"QueueConfiguration"},
+        "TopicConfigurations":{
+          "shape":"TopicConfigurationList",
+          "locationName":"TopicConfiguration"
+        },
+        "QueueConfigurations":{
+          "shape":"QueueConfigurationList",
+          "locationName":"QueueConfiguration"
+        },
+        "LambdaFunctionConfigurations":{
+          "shape":"LambdaFunctionConfigurationList",
+          "locationName":"CloudFunctionConfiguration"
+        }
+      }
+    },
+    "NotificationConfigurationDeprecated":{
+      "type":"structure",
+      "members":{
+        "TopicConfiguration":{"shape":"TopicConfigurationDeprecated"},
+        "QueueConfiguration":{"shape":"QueueConfigurationDeprecated"},
         "CloudFunctionConfiguration":{"shape":"CloudFunctionConfiguration"}
       }
     },
@@ -3056,6 +3108,26 @@
       },
       "payload":"BucketLoggingStatus"
     },
+    "PutBucketNotificationConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "Bucket",
+        "NotificationConfiguration"
+      ],
+      "members":{
+        "Bucket":{
+          "shape":"BucketName",
+          "location":"uri",
+          "locationName":"Bucket"
+        },
+        "NotificationConfiguration":{
+          "shape":"NotificationConfiguration",
+          "xmlNamespace":{"uri":"http://s3.amazonaws.com/doc/2006-03-01/"},
+          "locationName":"NotificationConfiguration"
+        }
+      },
+      "payload":"NotificationConfiguration"
+    },
     "PutBucketNotificationRequest":{
       "type":"structure",
       "required":[
@@ -3074,7 +3146,7 @@
           "locationName":"Content-MD5"
         },
         "NotificationConfiguration":{
-          "shape":"NotificationConfiguration",
+          "shape":"NotificationConfigurationDeprecated",
           "xmlNamespace":{"uri":"http://s3.amazonaws.com/doc/2006-03-01/"},
           "locationName":"NotificationConfiguration"
         }
@@ -3486,8 +3558,26 @@
       },
       "payload":"Body"
     },
-    "Queue":{"type":"string"},
+    "QueueArn":{"type":"string"},
     "QueueConfiguration":{
+      "type":"structure",
+      "required":[
+        "QueueArn",
+        "Events"
+      ],
+      "members":{
+        "Id":{"shape":"NotificationId"},
+        "QueueArn":{
+          "shape":"QueueArn",
+          "locationName":"Queue"
+        },
+        "Events":{
+          "shape":"EventList",
+          "locationName":"Event"
+        }
+      }
+    },
+    "QueueConfigurationDeprecated":{
       "type":"structure",
       "members":{
         "Id":{"shape":"NotificationId"},
@@ -3496,11 +3586,16 @@
           "deprecated":true
         },
         "Events":{
-          "shape":"Events",
+          "shape":"EventList",
           "locationName":"Event"
         },
-        "Queue":{"shape":"Queue"}
+        "Queue":{"shape":"QueueArn"}
       }
+    },
+    "QueueConfigurationList":{
+      "type":"list",
+      "member":{"shape":"QueueConfiguration"},
+      "flattened":true
     },
     "Quiet":{"type":"boolean"},
     "Range":{"type":"string"},
@@ -3748,21 +3843,44 @@
       }
     },
     "TargetPrefix":{"type":"string"},
-    "Topic":{"type":"string"},
+    "TopicArn":{"type":"string"},
     "TopicConfiguration":{
+      "type":"structure",
+      "required":[
+        "TopicArn",
+        "Events"
+      ],
+      "members":{
+        "Id":{"shape":"NotificationId"},
+        "TopicArn":{
+          "shape":"TopicArn",
+          "locationName":"Topic"
+        },
+        "Events":{
+          "shape":"EventList",
+          "locationName":"Event"
+        }
+      }
+    },
+    "TopicConfigurationDeprecated":{
       "type":"structure",
       "members":{
         "Id":{"shape":"NotificationId"},
         "Events":{
-          "shape":"Events",
+          "shape":"EventList",
           "locationName":"Event"
         },
         "Event":{
           "shape":"Event",
           "deprecated":true
         },
-        "Topic":{"shape":"Topic"}
+        "Topic":{"shape":"TopicArn"}
       }
+    },
+    "TopicConfigurationList":{
+      "type":"list",
+      "member":{"shape":"TopicConfiguration"},
+      "flattened":true
     },
     "Transition":{
       "type":"structure",

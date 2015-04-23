@@ -78,6 +78,12 @@
         "SearchRequest$expr": "<p>Defines one or more numeric expressions that can be used to sort results or specify search or filter criteria. You can also specify expressions as return fields. </p> <p>You specify the expressions in JSON using the form <code>{\"EXPRESSIONNAME\":\"EXPRESSION\"}</code>. You can define and use multiple expressions in a search request. For example:</p> <p><code> {\"expression1\":\"_score*rating\", \"expression2\":\"(1/rank)*year\"} </code> </p> <p>For information about the variables, operators, and functions you can use in expressions, see <a href=\"http://docs.aws.amazon.com/cloudsearch/latest/developerguide/configuring-expressions.html#writing-expressions\">Writing Expressions</a> in the <i>Amazon CloudSearch Developer Guide</i>.</p>"
       }
     },
+    "Exprs": {
+      "base": null,
+      "refs": {
+        "Hit$exprs": "<p>The expressions returned from a document that matches the search request.</p>"
+      }
+    },
     "Facet": {
       "base": null,
       "refs": {
@@ -227,6 +233,8 @@
         "DocumentServiceException$status": "<p>The return status of a document upload request, <code>error</code> or <code>success</code>.</p>",
         "DocumentServiceException$message": "<p>The description of the errors returned by the document service.</p>",
         "DocumentServiceWarning$message": "<p>The description for a warning returned by the document service.</p>",
+        "Exprs$key": null,
+        "Exprs$value": null,
         "Facets$key": null,
         "FieldValue$member": null,
         "Fields$key": null,
