@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next Release
+## 2.8.2 - 2015-04-23
 
 * `Aws\Ec2` - Added support for new VM Import APIs, `including ImportImage`.
 * `Aws\Iam` - Added support for the `GetAccessKeyLastUsed` operation.
