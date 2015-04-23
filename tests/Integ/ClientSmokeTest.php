@@ -2,7 +2,8 @@
 namespace Aws\Test\Integ;
 
 use Aws\Exception\AwsException;
-use GuzzleHttp\Event\BeforeEvent;
+use Aws\Middleware;
+use Psr\Http\Message\RequestInterface;
 
 class ClientSmokeTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,12 +21,12 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
 
         // Setup event to get the request's host value.
         $host = null;
-        $client->getHttpClient()->getEmitter()->on(
-            'before',
-            function (BeforeEvent $event) use (&$host) {
-                $host = $event->getRequest()->getHost();
+        $client->getHandlerList()->append(
+            'sign:integ',
+            Middleware::tap(function ($command, RequestInterface $request) use (&$host) {
+                $host = $request->getUri()->getHost();
             }
-        );
+        ));
 
         // Execute the request and check if it behaved as intended.
         try {
@@ -146,7 +147,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
                 'Search',
                 ['query' => 'foo'],
                 false,
-                'GuzzleHttp\Ring\Exception\ConnectException'
+                'GuzzleHttp\Exception\ConnectException'
             ],
             [
                 'cloudtrail',
@@ -269,7 +270,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
                 'ResourceNotFoundException'
             ],
             [
-                'elb',
+                'elasticloadbalancing',
                 'Aws\\ElasticLoadBalancing\\ElasticLoadBalancingClient',
                 [],
                 'elasticloadbalancing.us-east-1.amazonaws.com',
@@ -389,7 +390,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
                 'NoSuchBucket'
             ],
             [
-                'sdb',
+                'simpledb',
                 'Aws\\SimpleDb\\SimpleDbClient',
                 [],
                 'sdb.amazonaws.com',

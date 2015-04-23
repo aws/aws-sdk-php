@@ -1,62 +1,42 @@
 <?php
 namespace Aws\Test\Integ;
 
-use GuzzleHttp\Command\Event\ProcessEvent;
+use Aws\CommandPool;
+use GuzzleHttp\Promise;
 
 class ConcurrencyTest extends \PHPUnit_Framework_TestCase
 {
     use IntegUtils;
 
-    public function testSendsRequestsConcurrently()
+    public function testSendsRequestsAsynchronously()
     {
-        $s3 = $this->getSdk()->getS3();
+        /** @var \Aws\S3\S3Client $s3 */
+        $s3 = $this->getSdk()->createS3();
 
-        $commands = [
-            $s3->getCommand('ListBuckets'),
-            $s3->getCommand('ListBuckets'),
-            $s3->getCommand('ListBuckets')
-        ];
-        $results = [];
-        $s3->executeAll($commands, [
-            'process' => function (ProcessEvent $e) use (&$results) {
-                $results[] = $e->getResult();
-            }
+        $promise = Promise\all([
+            $s3->listBucketsAsync(),
+            $s3->listBucketsAsync(),
+            $s3->listBucketsAsync()
         ]);
+        $results = $promise->wait();
+
         $this->assertCount(3, $results);
         $this->assertCount(1, array_unique(\JmesPath\search('[*].Owner.ID', $results)));
     }
 
     public function testSendsRequestsConcurrentlyWithPool()
     {
-        $s3 = $this->getSdk()->getS3();
+        /** @var \Aws\S3\S3Client $s3 */
+        $s3 = $this->getSdk()->createS3();
 
         $commands = [
             $s3->getCommand('ListBuckets'),
             $s3->getCommand('ListBuckets'),
             $s3->getCommand('ListBuckets')
         ];
+        $results = CommandPool::batch($s3, $commands);
 
-        $resolved = false;
-        $processResults = $progress = [];
-        $pool = $s3->createPool($commands, [
-            'process' => function (ProcessEvent $e) use (&$processResults) {
-                $processResults[] = $e->getResult();
-            }
-        ]);
-
-        $pool->then(
-            function ($result) use (&$resolved) {
-                $resolved = $result;
-            },
-            null,
-            function ($result) use (&$progress) {
-                $progress[] = $result;
-            }
-        );
-
-        $pool->wait();
-        $this->assertCount(3, $processResults);
-        $this->assertCount(3, $progress);
-        $this->assertSame(true, $resolved);
+        $this->assertCount(3, $results);
+        $this->assertCount(1, array_unique(\JmesPath\search('[*].Owner.ID', $results)));
     }
 }

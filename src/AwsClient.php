@@ -165,13 +165,13 @@ class AwsClient implements AwsClientInterface
     {
         $params = isset($args[0]) ? $args[0] : [];
 
-        if (substr($name, -5) !== 'Async') {
-            return $this->execute($this->getCommand($name, $params));
+        if (substr($name, -5) === 'Async') {
+            return $this->executeAsync(
+                $this->getCommand(substr($name, 0, -5), $params)
+            );
         }
 
-        return $this->executeAsync(
-            $this->getCommand(substr($name, 0, -5), $params)
-        );
+        return $this->execute($this->getCommand($name, $params));
     }
 
     public function getConfig($option = null)
