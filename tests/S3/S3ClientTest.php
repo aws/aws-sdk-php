@@ -237,6 +237,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testDeletesMatchingObjectsByPrefixAndRegex()
     {
+        /** @var S3Client $client */
         $client = $this->getTestClient('S3');
         $client->getHandlerList()->setHandler(function ($c, $r) {
             $this->assertEquals('bucket', $c['Bucket']);

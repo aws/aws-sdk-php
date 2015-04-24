@@ -19,14 +19,23 @@ class WriteRequestBatchTest extends \PHPUnit_Framework_TestCase
     {
         // Ensure threshold is correctly calculated
         $batch = new WriteRequestBatch($this->getTestClient('DynamoDb'), ['pool_size' => 2]);
-        $this->assertEquals(
-            50,
-            $this->readAttribute($batch, 'config')['threshold']
-        );
+        $this->assertEquals(50, $this->readAttribute($batch, 'config')['threshold']);
+    }
 
-        // Ensure exception is thrown if batch size is invalid
-        $this->setExpectedException('DomainException');
-        new WriteRequestBatch($this->getTestClient('DynamoDb'), ['batch_size' => 1]);
+    /** @dataProvider getInvalidArgUseCases */
+    public function testInstantiationFailsOnInvalidArgs($config)
+    {
+        $this->setExpectedException('InvalidArgumentException');
+        new WriteRequestBatch($this->getTestClient('DynamoDb'), $config);
+    }
+
+    public function getInvalidArgUseCases()
+    {
+        return [
+            [['batch_size' => 1]],
+            [['before' => 'cheese']],
+            [['error' => 'cheese']],
+        ];
     }
 
     public function testAddItems()

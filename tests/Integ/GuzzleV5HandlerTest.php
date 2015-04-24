@@ -9,6 +9,13 @@ use GuzzleHttp\Psr7\Response;
 
 class GuzzleV5HandlerTest extends \PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        if (class_exists('GuzzleHttp\Promise\Promise')) {
+            $this->markTestSkipped();
+        }
+    }
+
     public function testSendRequest()
     {
         $handler = new GuzzleHandler();

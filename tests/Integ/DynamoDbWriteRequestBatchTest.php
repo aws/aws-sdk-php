@@ -3,7 +3,7 @@ namespace Aws\Test\Integ;
 
 use Aws\DynamoDb\Exception\DynamoDbException;
 use Aws\DynamoDb\WriteRequestBatch;
-use GuzzleHttp\Command\Event\ProcessEvent;
+use Aws\Exception\AwsException;
 
 class DynamoDbWriteRequestBatchTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,16 +15,17 @@ class DynamoDbWriteRequestBatchTest extends \PHPUnit_Framework_TestCase
     public function testWriteRequestBatch()
     {
         self::log("Creating WriteRequestBatch.");
+        $autoFlushCount = 0;
         $batch = new WriteRequestBatch($this->client, [
             'table' => $this->table,
             'batch_size' => 3,
             'pool_size'  => 2,
-            'flush' => function () use (&$autoFlushCount) {
+            'before' => function () use (&$autoFlushCount) {
                 self::log("The WriteRequestBatch was auto-flushed.");
                 $autoFlushCount++;
             },
-            'error' => function (ProcessEvent $event) {
-                self::log("There was an error: " . $event->getException()->getMessage());
+            'error' => function (AwsException $e) {
+                self::log("There was an error: " . $e->getMessage());
             }
         ]);
 
@@ -41,7 +42,7 @@ class DynamoDbWriteRequestBatchTest extends \PHPUnit_Framework_TestCase
         // Assert that all the items were actually written.
         $this->assertEquals($itemCount, iterator_count($actualItems));
         // Assert that there were the correct number of auto-flushes.
-        $this->assertEquals(3, $autoFlushCount);
+        $this->assertEquals(7, $autoFlushCount);
     }
 
     public function setUp()

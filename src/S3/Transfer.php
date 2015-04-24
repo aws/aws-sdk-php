@@ -42,7 +42,7 @@ class Transfer implements PromisorInterface
      *
      * The options array can contain the following key value pairs:
      *
-     * - base_dir: The directory to remove from the filename when saving.
+     * - base_dir: (string) Base dir of the source, if $source is an iterator.
      * - before: A callable that accepts the following positional arguments:
      *   source, dest, command; where command is an instance of a Command
      *   object. The provided command will be either a GetObject, PutObject,

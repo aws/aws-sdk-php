@@ -1,8 +1,8 @@
 <?php
 namespace Aws\Test\Integ;
 
+use Aws\S3\BatchDelete;
 use Aws\S3\S3Client;
-use Aws\S3\ClearBucket;
 
 class S3StreamWrapperTest extends \PHPUnit_Framework_TestCase
 {
@@ -14,11 +14,10 @@ class S3StreamWrapperTest extends \PHPUnit_Framework_TestCase
     {
         if ($client->doesBucketExist($bucket)) {
             self::log($bucket . ' exists... Deleting');
-            $client = self::getSdk()->getS3();
-            $clear = new ClearBucket($client, $bucket);
-            $clear->clear();
+            $delete = BatchDelete::fromListObjects($client, ['Bucket' => $bucket]);
+            $delete->delete();
             try {
-                $client->deleteBucket(array('Bucket' => $bucket));
+                $client->deleteBucket(['Bucket' => $bucket]);
             } catch (\Exception $e) {}
             self::log($bucket . ' deleted');
             return true;
@@ -29,8 +28,8 @@ class S3StreamWrapperTest extends \PHPUnit_Framework_TestCase
 
     public static function setUpBeforeClass()
     {
-        $bucket = self::getResourcePrefix() . 'stream';
-        $client = self::getSdk()->getS3();
+        $bucket = self::getResourcePrefix() . 'php-stream';
+        $client = self::getSdk()->createS3();
         $client->registerStreamWrapper();
         if (self::cleanup($client, $bucket)) {
             $client->waitUntil('BucketNotExists', ['Bucket' => $bucket]);
@@ -42,15 +41,15 @@ class S3StreamWrapperTest extends \PHPUnit_Framework_TestCase
 
     public static function tearDownAfterClass()
     {
-        $bucket = self::getResourcePrefix() . 'stream';
-        $client = self::getSdk()->getS3();
+        $bucket = self::getResourcePrefix() . 'php-stream';
+        $client = self::getSdk()->createS3();
         self::cleanup($client, $bucket);
     }
 
     public function setUp()
     {
-        $this->bucket = $this->getResourcePrefix() . 'stream';
-        $client = self::getSdk()->getS3();
+        $this->bucket = $this->getResourcePrefix() . 'php-stream';
+        $client = self::getSdk()->createS3();
         $client->waitUntil('BucketExists', ['Bucket' => $this->bucket]);
     }
 
@@ -114,7 +113,7 @@ class S3StreamWrapperTest extends \PHPUnit_Framework_TestCase
     {
         $path = $this->getKey('stream');
         file_put_contents($path, 'testing');
-        $client = self::getSdk()->getS3();
+        $client = self::getSdk()->createS3();
         $client->waitUntil('ObjectExists', ['Bucket' => $this->bucket, 'Key' => 'stream']);
         $this->assertEquals('testing', file_get_contents($path));
         $h = fopen($path, 'r');
@@ -144,7 +143,7 @@ class S3StreamWrapperTest extends \PHPUnit_Framework_TestCase
         $file = 's3://' . $this->bucket . '/empty/';
         file_put_contents($file, '');
         file_put_contents($file . 'bar', 'hello');
-        $this->assertEquals(array('bar'), scandir($file));
+        $this->assertEquals(['bar'], scandir($file));
     }
 
     private function getKey($name)

@@ -1,9 +1,9 @@
 <?php
 namespace Aws\Test\Integ;
 
+use Aws\CommandInterface;
+use Aws\Exception\AwsException;
 use Aws\S3\S3Client;
-use GuzzleHttp\Command\Command;
-use GuzzleHttp\Command\Exception\CommandException;
 
 class S3SignatureTest extends \PHPUnit_Framework_TestCase
 {
@@ -31,11 +31,11 @@ class S3SignatureTest extends \PHPUnit_Framework_TestCase
         $this->ensureNot403($command, $s3);
     }
 
-    private function ensureNot403(Command $command, S3Client $client)
+    private function ensureNot403(CommandInterface $command, S3Client $client)
     {
         try {
             $client->execute($command);
-        } catch (CommandException $e) {
+        } catch (AwsException $e) {
             $this->assertNotEquals(403, $e->getResponse()->getStatusCode());
         }
     }

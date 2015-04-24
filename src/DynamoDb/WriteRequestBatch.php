@@ -29,31 +29,32 @@ class WriteRequestBatch
      * Creates a WriteRequestBatch object that is capable of efficiently sending
      * DynamoDB BatchWriteItem requests from queued up Put and Delete requests.
      *
-     * @param AwsClientInterface $client DynamoDB client used to send batches.
-     * @param array              $config Batch configuration options.
-     *     - table: DynamoDB table used by the batch, this can be overridden for
-     *       each individual put() or delete() call.
-     *     - batch_size: The size of each batch (default: 25). The batch size
-     *       must be between 2 and 25. If you are sending batches of large
+     * @param DynamoDbClient $client DynamoDB client used to send batches.
+     * @param array          $config Batch configuration options.
+     *     - table: (string) DynamoDB table used by the batch, this can be
+     *       overridden for each individual put() or delete() call.
+     *     - batch_size: (int) The size of each batch (default: 25). The batch
+     *       size must be between 2 and 25. If you are sending batches of large
      *       items, you may consider lowering the batch size, otherwise, you
      *       should use 25.
-     *     - pool_size: This number dictates how many BatchWriteItem requests
-     *       you would like to do in parallel. For example, if the "batch_size"
-     *       is 25, and "pool_size" is 3, then you would send 3 BatchWriteItem
-     *       requests at a time, each with 25 items. Please keep your
-     *       throughput in mind when choosing the "pool_size" option.
-     *     - autoflush: This option allows the batch to automatically flush once
-     *       there are enough items (i.e., "batch_size" * "pool_size") in the
-     *       queue. This defaults to true, so you must set this to false to
-     *       stop autoflush.
-     *     - error: Set this to a callback to handle errors from the commands
-     *       executed by the batch, otherwise errors are ignored. The callback
-     *       should accept a \GuzzleHttp\Command\Event\ProcessEvent as its
-     *       argument.
+     *     - pool_size: (int) This number dictates how many BatchWriteItem
+     *       requests you would like to do in parallel. For example, if the
+     *       "batch_size" is 25, and "pool_size" is 3, then you would send 3
+     *       BatchWriteItem requests at a time, each with 25 items. Please keep
+     *       your throughput in mind when choosing the "pool_size" option.
+     *     - autoflush: (bool) This option allows the batch to automatically
+     *       flush once there are enough items (i.e., "batch_size" * "pool_size")
+     *       in the queue. This defaults to true, so you must set this to false
+     *       to stop autoflush.
+     *     - before: (callable) Executed before every BatchWriteItem operation.
+     *       It should accept an \Aws\CommandInterface object as its argument.
+     *     - error: Executed if an error was encountered executing a,
+     *       BatchWriteItem operation, otherwise errors are ignored. It should
+     *       accept an \Aws\Exception\AwsException as its argument.
      *
-     * @throws \DomainException if the batch size is not between 2 and 25.
+     * @throws \InvalidArgumentException if the batch size is not between 2 and 25.
      */
-    public function __construct(AwsClientInterface $client, array $config = [])
+    public function __construct(DynamoDbClient $client, array $config = [])
     {
         // Apply defaults
         $config += [
@@ -61,12 +62,21 @@ class WriteRequestBatch
             'batch_size' => 25,
             'pool_size'  => 1,
             'autoflush'  => true,
+            'before'     => null,
             'error'      => null
         ];
 
         // Ensure the batch size is valid
         if ($config['batch_size'] > 25 || $config['batch_size'] < 2) {
-            throw new \DomainException('batch_size must be between 2 and 25.');
+            throw new \InvalidArgumentException('"batch_size" must be between 2 and 25.');
+        }
+
+        // Ensure the callbacks are valid
+        if ($config['before'] && !is_callable($config['before'])) {
+            throw new \InvalidArgumentException('"before" must be callable.');
+        }
+        if ($config['error'] && !is_callable($config['error'])) {
+            throw new \InvalidArgumentException('"error" must be callable.');
         }
 
         // If autoflush is enabled, set the threshold
@@ -150,6 +160,7 @@ class WriteRequestBatch
         while ($this->queue && $keepFlushing) {
             $commands = $this->prepareCommands();
             $pool = new CommandPool($this->client, $commands, [
+                'before' => $this->config['before'],
                 'concurrency' => $this->config['pool_size'],
                 'fulfilled'   => function (ResultInterface $result) {
                     // Re-queue any unprocessed items

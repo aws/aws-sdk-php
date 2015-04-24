@@ -17,7 +17,7 @@ use React\Promise\Deferred;
  */
 class HandlerTest extends \PHPUnit_Framework_TestCase
 {
-    public function setup()
+    public function setUp()
     {
         if (class_exists('GuzzleHttp\Promise\Promise')) {
             $this->markTestSkipped();
