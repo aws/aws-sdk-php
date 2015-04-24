@@ -36,8 +36,7 @@ class GuzzleHandler
     {
         $request = $this->prepareRequest($request, $options);
 
-        return $this->client->sendAsync($request, $options)->then(
-            null,
+        return $this->client->sendAsync($request, $options)->otherwise(
             static function (\Exception $e) {
                 $error = [
                     'exception'        => $e,

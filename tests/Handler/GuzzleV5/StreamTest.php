@@ -14,7 +14,7 @@ class StreamTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        if (class_exists('GuzzleHttp\Promise\Promise')) {
+        if (!class_exists('GuzzleHttp\Ring\Core')) {
             $this->markTestSkipped();
         }
     }

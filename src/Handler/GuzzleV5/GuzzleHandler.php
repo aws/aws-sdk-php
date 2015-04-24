@@ -10,6 +10,7 @@ use GuzzleHttp\Message\ResponseInterface as GuzzleResponse;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Response as Psr7Response;
 use Psr\Http\Message\RequestInterface as Psr7Request;
+use Psr\Http\Message\StreamInterface as Psr7StreamInterface;
 
 /**
  * A request handler that sends PSR-7-compatible requests with Guzzle 5.
@@ -28,6 +29,7 @@ class GuzzleHandler
         'connect_timeout' => true,
         'stream'          => true,
         'delay'           => true,
+        'sink'            => true,
     ];
 
     /** @var ClientInterface */
@@ -82,6 +84,8 @@ class GuzzleHandler
 
     private function createGuzzleRequest(Psr7Request $psrRequest, array $options)
     {
+        $ringConfig = [];
+
         // Remove unsupported options.
         foreach (array_keys($options) as $key) {
             if (isset(self::$validOptions[$key])) {
@@ -90,10 +94,17 @@ class GuzzleHandler
         }
 
         // Handle delay option.
-        $delay = null;
         if (isset($options['delay'])) {
-            $delay = $options['delay'];
+            $ringConfig['delay'] = $options['delay'];
             unset($options['delay']);
+        }
+
+        // Prepare sink option.
+        if (isset($options['sink'])) {
+            $ringConfig['save_to'] = ($options['sink'] instanceof Psr7StreamInterface)
+                ? new GuzzleStream($options['sink'])
+                : $options['sink'];
+            unset($options['sink']);
         }
 
         // Ensure that all requests are async and lazy like Guzzle 6.
@@ -118,12 +129,14 @@ class GuzzleHandler
         $request->setHeaders($psrRequest->getHeaders());
         $request->setHeader(
             'user-agent',
-            $request->getHeaderLine('user-agent') . ' ' . Client::getDefaultUserAgent()
+            $request->getHeader('user-agent') . ' ' . Client::getDefaultUserAgent()
         );
 
         // Make sure the delay is configured, if provided.
-        if ($delay) {
-            $request->getConfig()->set('delay', $delay);
+        if ($ringConfig) {
+            foreach ($ringConfig as $k => $v) {
+                $request->getConfig()->set($k, $v);
+            }
         }
 
         return $request;

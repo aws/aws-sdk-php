@@ -292,12 +292,6 @@ abstract class AbstractUploader implements Promise\PromisorInterface
             $params + $this->state->getId()
         );
 
-        // Wait for the next tick.
-        if (!$command['@http']) {
-            $command['@http'] = [];
-        }
-        $command['@http']['delay'] = true;
-
         // Execute the before callback.
         if (is_callable($this->config["before_{$operation}"])) {
             $this->config["before_{$operation}"]($command);

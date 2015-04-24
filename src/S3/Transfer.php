@@ -43,15 +43,15 @@ class Transfer implements PromisorInterface
      * The options array can contain the following key value pairs:
      *
      * - base_dir: (string) Base dir of the source, if $source is an iterator.
-     * - before: A callable that accepts the following positional arguments:
+     * - before: (callable) Accepts the following positional arguments:
      *   source, dest, command; where command is an instance of a Command
      *   object. The provided command will be either a GetObject, PutObject,
      *   InitiateMultipartUpload, or UploadPart command.
-     * - mup_threshold: Size in bytes in which a multipart upload should be
-     *   used instead of PutObject. Defaults to 20971520 (20 MB).
-     * - concurrency: Number of files to upload concurrently. Defaults to 5.
-     * - debug: Set to true to print out debug information for transfers. Set
-     *   to an fopen() resource to write to a specific stream.
+     * - mup_threshold: (int) Size in bytes in which a multipart upload should
+     *   be used instead of PutObject. Defaults to 20971520 (20 MB).
+     * - concurrency: (int, default=5) Number of files to upload concurrently.
+     * - debug: (bool) Set to true to print out debug information for transfers.
+     *   Set to an fopen() resource to write to a specific stream.
      *
      * @param S3Client         $client  Client used for transfers.
      * @param string|\Iterator $source  Where the files are transferred from.
@@ -248,10 +248,7 @@ class Transfer implements PromisorInterface
                 $commands[] = $this->client->getCommand('GetObject', [
                     'Bucket' => $listArgs['Bucket'],
                     'Key'    => $key,
-                    '@http'  => [
-                        'sink'  => $sink,
-                        'delay' => true
-                    ],
+                    '@http'  => ['sink'  => $sink],
                 ]);
             }
 
@@ -292,7 +289,6 @@ class Transfer implements PromisorInterface
         $args = $this->s3Args;
         $args['SourceFile'] = $filename;
         $args['Key'] = $this->createS3Key($filename);
-        $args['@http'] = ['delay' => true];
 
         $command = $this->client->getCommand('PutObject', $args);
         $this->before and call_user_func($this->before, $command);

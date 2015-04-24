@@ -11,7 +11,7 @@ class GuzzleV5HandlerTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        if (class_exists('GuzzleHttp\Promise\Promise')) {
+        if (!class_exists('GuzzleHttp\Ring\Core')) {
             $this->markTestSkipped();
         }
     }
@@ -25,9 +25,10 @@ class GuzzleV5HandlerTest extends \PHPUnit_Framework_TestCase
             ['c' => '3', 'd' => '4', 'user-agent' => 'AWS/3'],
             Psr7\stream_for('{"f":6,"g":7}')
         );
+        $sink = Psr7\stream_for();
 
         /** @var \GuzzleHttp\Promise\Promise $responsePromise */
-        $responsePromise = $handler($request);
+        $responsePromise = $handler($request, ['sink' => $sink]);
         $responsePromise = $responsePromise->then(
             function (Response $resp) {
                 return $resp->withHeader('e', '5');
@@ -39,9 +40,10 @@ class GuzzleV5HandlerTest extends \PHPUnit_Framework_TestCase
 
         /** @var Response $response */
         $response = $responsePromise->wait();
-        $data = json_decode($response->getBody()->getContents(), true);
+        $body = $response->getBody()->getContents();
+        $data = json_decode($body, true);
 
-        // Check request data.
+        // Check response data.
         $this->assertArrayHasKey('C', $data['headers']);
         $this->assertArrayHasKey('D', $data['headers']);
         $this->assertStringStartsWith('AWS/3 Guzzle/5', $data['headers']['User-Agent']);
@@ -52,6 +54,10 @@ class GuzzleV5HandlerTest extends \PHPUnit_Framework_TestCase
 
         // Check response data.
         $this->assertTrue($response->hasHeader('E'));
+
+        // Check the sink.
+        $sink->seek(0);
+        $this->assertEquals($body, $sink->getContents());
     }
 
     public function testProduceErrorData()

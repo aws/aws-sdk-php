@@ -7,6 +7,7 @@ use GuzzleHttp\Message\FutureResponse;
 use GuzzleHttp\Message\Request as GuzzleRequest;
 use GuzzleHttp\Message\Response as GuzzleResponse;
 use GuzzleHttp\Promise\RejectionException;
+use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request as PsrRequest;
 use GuzzleHttp\Psr7\Response as PsrResponse;
 use GuzzleHttp\Stream\Stream;
@@ -19,7 +20,7 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        if (class_exists('GuzzleHttp\Promise\Promise')) {
+        if (!class_exists('GuzzleHttp\Ring\Core')) {
             $this->markTestSkipped();
         }
     }
@@ -29,8 +30,9 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
         $deferred = new Deferred();
         $handler = $this->getHandler($deferred);
         $request = new PsrRequest('PUT', 'http://example.com', [], '{}');
+        $sink = Psr7\stream_for();
 
-        $promise = $handler($request, ['delay' => 500]);
+        $promise = $handler($request, ['delay' => 500, 'sink' => $sink]);
         $this->assertInstanceOf('GuzzleHttp\\Promise\\PromiseInterface', $promise);
         $deferred->resolve(new GuzzleResponse(200, [], Stream::factory('foo')));
 
@@ -38,7 +40,8 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
         $response = $promise->wait();
         $this->assertInstanceOf(PsrResponse::class, $response);
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('foo', $response->getBody()->getContents());
+        $this->assertEquals('foo', (string) $sink);
     }
 
     public function testHandlerWorksWithFailedRequest()
@@ -87,7 +90,12 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
         $future = new FutureResponse($deferred->promise());
         $client->method('send')->willReturn($future);
 
-        /** @var $client \GuzzleHttp\Client */
-        return new GuzzleHandler($client);
+        return function ($request, $options = []) use ($client) {
+            /** @var $client \GuzzleHttp\Client */
+            if (isset($options['sink'])) {
+                $options['sink']->write('foo');
+            }
+            return call_user_func(new GuzzleHandler($client), $request, $options);
+        };
     }
 }
