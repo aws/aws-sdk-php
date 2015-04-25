@@ -36,16 +36,11 @@ You can find out more on how to install Composer, configure autoloading, and
 other best-practices for defining dependencies at
 `getcomposer.org <http://getcomposer.org>`_.
 
-If you are deploying your application to `AWS Elastic Beanstalk
-<http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_PHP_eb.html>`_,
-and you have a ``composer.json`` file in the root of your package, then Elastic
-Beanstalk will automatically perform a ``composer install`` when you deploy
-your application.
 
 Installing via Phar
 -------------------
 
-You can `download the packaged Phar <https://github.com/aws/aws-sdk-php/releases>`_
+You can `download the packaged phar <https://github.com/aws/aws-sdk-php/releases>`_
 and simply include it in your scripts to get started:
 
 .. code-block:: php
@@ -57,14 +52,7 @@ Each release of the AWS SDK for PHP ships with a pre-packaged
 `phar <http://php.net/manual/en/book.phar.php>`_ (PHP archive) file containing
 all of the classes and dependencies you need to run the SDK. Additionally, the
 phar file automatically registers a class autoloader for the AWS SDK for PHP
-and all of its dependencies when included. Bundled with the phar file are the
-following required and suggested libraries:
-
--  `Guzzle <https://github.com/guzzle/guzzle>`_
--  `RingPHP <https://github.com/guzzle/RingPHP>`_
--  `jmespath.php <https://github.com/jmespath/jmespath.php>`_
--  `transducers.php <https://github.com/mtdowling/transducers.php>`_
--  `React/Promise <https://github.com/reactphp/promise>`_
+and all of its dependencies when included.
 
 .. note::
 

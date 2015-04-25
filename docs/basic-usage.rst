@@ -55,7 +55,7 @@ client's constructor.
 
     $s3 = new Aws\S3\S3Client([
         'version' => 'latest',
-        'region'  => 'us-west-2'
+        'region'  => 'us-standard'
     ]);
 
 Notice that we did **not** explicitly provide credentials to the client. That's
@@ -65,11 +65,7 @@ because the credentials should be detected by the SDK from either
 :ref:`AWS credentials INI file <credential_profiles>` in your HOME
 directory, AWS Identity and Access Management (IAM)
 :ref:`instance profile credentials <instance_profile_credentials>`, or
-:ref:`credential providers <credential_provider>`. If needed, you can also
-explicitly set your credentials by passing the ``key`` and ``secret`` (and
-``token``, if using temporary credentials) key-value pairs in the
-``credentials`` client configuration setting array. We recommend against
-hardcoding credentials into your application code for your own security.
+:ref:`credential providers <credential_provider>`.
 
 All of the general client configuration options are described in detail in
 the :doc:`configuration guide <configuration>`. The array of options provided
@@ -84,8 +80,8 @@ Using the Sdk class
 
 The ``Aws\Sdk`` class is used to manage shared configuration options across
 multiple clients. For example, the ``Aws\Sdk`` class will automatically ensure
-that each client it creates shares the same RingPHP adapter, allowing the
-clients to send asynchronous requests concurrently, even to different services.
+that each client it creates shares the same HTTP client, allowing the clients
+to send asynchronous requests concurrently, even to different services.
 
 The same options that can be provided to a specific client constructor can also
 be supplied to the ``Aws\Sdk`` class. These options are then applied to each
@@ -164,18 +160,40 @@ Operations methods like ``putObject()`` all accept a single argument that is an
 associative array of values representing the parameters to the operation. The
 structure of this array (and the structure of the result object) is defined for
 each operation in the SDK's API Documentation (e.g., see the API docs for
-`putObject operation <http://docs.aws.amazon.com/aws-sdk-php/v3/api/Aws/S3/s3-2006-03-01.html#putObject>`__).
+`putObject operation <http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-s3-2006-03-01.html#putobject>`__).
 
-You can send requests concurrently and utilize the command event system by
-using a command object. Please refer to the :doc:`command object guide
-<commands>` for more information.
+You can send requests concurrently by suffixing an operation name with
+``Async``. This will initiate the request and return a promise. The promise
+will be fulfilled with the result object on success or rejected with an
+exception on failure.
+
+.. code-block:: php
+
+    $promise = $s3->listBucketsAsync();
+    $promise
+        ->then(function (\Aws\Result $value) {
+            echo 'Got the result: ' . $value;
+        })
+        ->otherwise(\Exception $reason) {
+            echo 'Encountered an error: ' . $reason->getMessage();
+        });
+
+You can force a promise to complete synchronously using the ``wait`` method of
+the promise. Forcing the promise to complete will also "unwrap" the state of
+the promise by default, meaning it will either return the result of the promise
+or throw the exception that was encountered.
+
+.. code-block:: php
+
+    $promise = $s3->listBucketsAsync();
+    $result = $promise->wait();
 
 
 Working with Result objects
 ---------------------------
 
-Executing an successful operation return an ``Aws\Result`` object. Instead of
-returning the raw XML or JSON data of a service, the SDK coerces the response
+Executing an successful operation will return an ``Aws\Result`` object. Instead
+of returning the raw XML or JSON data of a service, the SDK coerces the response
 data into an associative array structure and normalizes some aspects of the data
 based on its knowledge of the specific service and the underlying response
 structure.
@@ -197,8 +215,7 @@ You can access data from the result object like an associative PHP array.
 
 The contents of the result object depends on the operation that was executed
 and the version of a service. The result structure of each API operation is
-documented in the API docs for each operation (e.g., see the *Results* section
-in the API docs for each operation.
+documented in the API docs for each operation.
 
 The SDK is integrated with `JMESPath <http://jmespath.org/>`_, a `DSL
 <http://en.wikipedia.org/wiki/Domain-specific_language>`_ use to search and
@@ -211,16 +228,18 @@ result.
     $s3 = $sdk->createS3();
     $result = $s3Client->listBuckets();
     // Get the name of each bucket
-    $results = $result->search('Buckets[*].Name');
+    $results = $result->search('Buckets[].Name');
 
 
 Handling errors
 ---------------
 
-The return value of performing an operation is an ``Aws\Result`` object. If an
-error occurs while performing an operation, then an exception is thrown. For
-this reason, you should use ``try``/``catch`` blocks around your operations if
-you need to handle errors in your code. The SDK throws service-specific
+Synchronous Error Handling
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If an error occurs while performing an operation, then an exception is thrown.
+For this reason, you should use ``try``/``catch`` blocks around your operations
+if you need to handle errors in your code. The SDK throws service-specific
 exceptions when an error occurs.
 
 In the following example, the ``Aws\S3\S3Client`` is used. If there is an
@@ -245,4 +264,39 @@ about the failure, including the request-id, error code, and error type.
         echo $e->getAwsRequestId() . "\n";
         echo $e->getAwsErrorType() . "\n";
         echo $e->getAwsErrorCode() . "\n"
+    }
+
+
+Async Error Handling
+~~~~~~~~~~~~~~~~~~~~
+
+Exceptions are not thrown when sending asynchronous requests. Instead, you must
+use the ``then()`` or ``otherwise()`` methods of the returned promise to
+receive the result or error.
+
+.. code-block:: php
+
+    $promise = $s3Client->createBucketAsync(['Bucket' => 'my-bucket']);
+
+    $promise->otherwise(function ($reason) {
+        var_dump($reason);
+    });
+
+    // This does the same thing as the "otherwise" function.
+    $promise->then(null, function ($reason) {
+        var_dump($reason);
+    });
+
+You can "unwrap" the promise and cause the exception to be thrown instead.
+
+.. code-block:: php
+
+    use Aws\S3\Exception\S3Exception;
+
+    $promise = $s3Client->createBucketAsync(['Bucket' => 'my-bucket']);
+
+    try {
+        $result = $promise->wait();
+    } catch (S3Exception $e) {
+        echo $e->getMessage();
     }

@@ -32,50 +32,7 @@ an array of corresponding configuration data. The type value can be one of
 ``api``, ``waiter``, or ``paginator``.
 
 By default, the SDK will use an instance of ``Aws\Api\FileSystemApiProvider``
-that loads credentials from the ``src/data`` folder of the SDK.
-
-
-client
-~~~~~~
-
-:Type: ``callable|GuzzleHttp\ClientInterface``
-
-A function that accepts an array of options and returns a
-``GuzzleHttp\ClientInterface``, or a ``GuzzleHttp\ClientInterface`` client used
-to transfer requests over the wire.
-
-.. note::
-
-    If you do not specify a client and use the ``Aws\Sdk`` class to create
-    clients, then the SDK will create a new client that uses a shared Ring
-    HTTP handler.
-
-.. code-block:: php
-
-    use Aws\S3\S3Client;
-    use GuzzleHttp\Client;
-
-    // Create a custom Guzzle client.
-    $myClient = new Client();
-
-    // Pass the Guzzle client into an Amazon S3 client.
-    $s3 = new S3Client([
-        'version' => 'latest',
-        'region'  => 'us-west-2',
-        'client'  => $myClient
-    ]);
-
-    $clientFactory = function (array $options) {
-        return new Client([
-            // 'handler' => $myCustomHandler
-        ]);
-    };
-
-    $s3 = new S3Client([
-        'version' => 'latest',
-        'region'  => 'us-west-2',
-        'client'  => $clientFactory
-    ]);
+that loads API files from the ``src/data`` folder of the SDK.
 
 
 credentials
@@ -135,7 +92,9 @@ create credentials using a function.
 
     use Aws\Credentials\CredentialProvider;
 
+    // Only load credentials from environment variables.
     $provider = CredentialProvider::env();
+
     $s3 = new Aws\S3\S3Client([
         'version'     => 'latest',
         'region'      => 'us-west-2',
@@ -149,29 +108,60 @@ You can find more information about providing credentials to a client in the
 debug
 ~~~~~
 
-:Type: ``bool|resource``
+:Type: ``bool|array``
 
-Set to ``true`` to display debug information when sending requests. Provide a
-stream resource to write debug information to a specific resource.
+Outputs debug information about each transfer. Debug information contains
+information about each state change of a transaction as it is prepared and sent
+over the wire. Also included in the debug output is information of the specific
+HTTP handler used by a client (e.g., debug cURL output).
 
-Debug information contains information about each state change of a transaction
-as it is prepared and sent over the wire. Also included in the debug output
-is information of the specific RingPHP adapter used by a client (e.g., debug
-cURL output).
+Set to ``true`` to display debug information when sending requests.
 
 .. code-block:: php
 
-    // Write debug output to STDOUT
     $s3 = new Aws\S3\S3Client([
         'version' => 'latest',
         'region'  => 'us-west-2',
         'debug'   => true
     ]);
 
+    // Perform an operation to see the debug output.
     $s3->listBuckets();
 
-Running the above example will have output similar to
-:download:`this example <_downloads/debug-example.txt>`.
+Alternatively, you can provide an associative array with the following keys:
+
+- logfn: (callable) Function that is invoked with log messages. By
+  default, PHP's ``echo`` function will be utilized.
+- stream_size: (int) When the size of a stream is greater than this
+  number, the stream data will not be logged. Set to ``0`` to not log any
+  stream data.
+- scrub_auth: (bool) Set to ``false`` to disable the scrubbing of auth data
+  from the logged messages (meaning your AWS Access Key ID and signature will
+  be passed through to the ``logfn``).
+- http: (bool) Set to ``false`` to disable the "debug" feature of lower
+  level HTTP adapters (e.g., verbose curl output).
+
+.. code-block:: php
+
+    $s3 = new Aws\S3\S3Client([
+        'version' => 'latest',
+        'region'  => 'us-west-2',
+        'debug'   => [
+            'logfn'       => function ($msg) { echo $msg . "\n"; },
+            'stream_size' => 0,
+            'scrub_auth'  => true,
+            'http'        => true,
+        ]
+    ]);
+
+    // Perform an operation to see the debug output.
+    $s3->listBuckets();
+
+.. tip::
+
+    The debug output is extremely useful when diagnosing issues in the AWS
+    SDK for PHP. Please provide the debug output for an isolated failure case
+    when opening issues on the SDK.
 
 
 endpoint
@@ -180,10 +170,10 @@ endpoint
 :Type: ``string``
 
 The full URI of the webservice. This is only required when connecting to a
-custom endpoint (e.g., a local version of Amazon S3 or Amazon DynamoDB
-local).
+custom endpoint (e.g., a local version of Amazon S3 or
+`Amazon DynamoDB Local <http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tools.DynamoDBLocal.html>`_).
 
-Here's an example of connecting to `Amazon DynamoDB Local <http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tools.DynamoDBLocal.html>`_:
+Here's an example of connecting to Amazon DynamoDB Local:
 
 .. code-block:: php
 
@@ -206,23 +196,269 @@ An optional PHP callable that accepts a hash of options including a "service"
 and "region" key and returns ``NULL`` or a hash of endpoint data, of which the
 "endpoint" key is required.
 
+Here's an example of how to create a minimal endpoint provider:
+
+.. code-block:: php
+
+    $provider = function (array $params) {
+        if ($params['service'] == 'foo') {
+            return ['endpoint' => $params['region'] . '.example.com'];
+        }
+        // Return null when the provider cannot handle the parameters.
+        return null;
+    });
+
+
+handler
+~~~~~~~
+
+:Type: ``callable``
+
+A handler that accepts a command object, request object and returns a promise
+(``GuzzleHttp\Promise\PromiseInterface``) that is fulfilled with an
+``Aws\ResultInterface`` object or rejected with an
+``Aws\Exception\AwsException``. A handler does not accept a next handler as it
+is terminal and expected to fulfill a command. If no handler is provided, a
+default Guzzle handler will be utilized.
+
+You can use the ``Aws\MockHandler`` to return mocked results or throw mock
+exceptions. You enqueue results or exceptions, and the MockHandler will dequeue
+them in FIFO order.
+
+.. code-block:: php
+
+    use Aws\Result;
+    use Aws\MockHandler;
+    use Aws\DynamoDb\DynamoDbClient;
+    use Aws\CommandInterface;
+    use Psr\Http\Message\RequestInterface;
+
+    $mock = new MockHandler();
+
+    // Return a mocked result.
+    $mock->append(new Result(['foo' => 'bar']);
+
+    // You can provide a function to invoke. Here we throw a mock exception.
+    $mock->append(function (CommandInterface $cmd, RequestInterface $req) {
+        return new AwsException('Mock exception', $command);
+    });
+
+    // Create a client with the mock handler.
+    $client = new DynamoDbClient([
+        'region'  => 'us-west-2',
+        'version' => 'latest',
+        'handler' => $mock
+    ]);
+
+    // Result object response will contain ['foo' => 'bar']
+    $result = $client->listTables();
+
+    // This will throw the exception that was enqueued
+    $client->listTables();
+
 
 http
 ~~~~
 
 :Type: ``array``
 
-Set to an array of Guzzle client request options (e.g., proxy, verify, etc.).
-See http://docs.guzzlephp.org/en/latest/clients.html#request-options for a
-list of available options. The following are examples of some of the more
-common request options you may need to set.
+Set to an array of HTTP options that are applied to HTTP requests and transfers
+created by the SDK.
+
+The SDK supports the following configuration options:
 
 
-SSL/TLS certificate verification
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+connect_timeout
+^^^^^^^^^^^^^^^
+
+A float describing the number of seconds to wait while trying to connect to a
+server. Use ``0`` to wait indefinitely (the default behavior).
+
+.. code-block:: php
+
+    use Aws\DynamoDb\DynamoDbClient;
+
+    // Timeout after attempting to connect for 5 seconds.
+    $client = new DynamoDbClient([
+        'region'  => 'us-west-2',
+        'version' => 'latest',
+        'http'    => [
+            'connect_timeout' => 5
+        ]
+    ]);
+
+
+debug
+^^^^^
+
+:Type: ``bool|resource``
+
+Instructs the underlying HTTP handler to output debug information. The debug
+information provided by different HTTP handlers will vary.
+
+* Pass ``true`` to write debug output to STDOUT.
+* Pass a ``resource`` as returned by ``fopen`` to write debug output to a
+  specific PHP stream resource.
+
+
+delay
+^^^^^
+
+:Type: ``int``
+
+The number of milliseconds to delay before sending the request. This is often
+used for delaying before retrying a request.
+
+
+progress
+^^^^^^^^
+
+:Type: ``callable``
+
+Defines a function to invoke when transfer progress is made. The function
+accepts the following arguments:
+
+1. The total number of bytes expected to be downloaded.
+2. The number of bytes downloaded so far.
+3. The number of bytes expected to be uploaded.
+4. The number of bytes uploaded so far.
+
+.. code-block:: php
+
+    use Aws\S3\S3Client;
+
+    $client = new S3Client([
+        'region'  => 'us-west-2',
+        'version' => 'latest'
+    ]);
+
+    // Apply the http option to a specific command using the "@http"
+    // command parameter.
+    $result = $client->getObject([
+        'Bucket' => 'my-bucket',
+        'Key'    => 'large.mov',
+        '@http' => [
+            'progress' => function ($expectedDl, $dl, $expectedUl, $ul) {
+                printf(
+                    "%s of %s downloaded, %s of %s uploaded.\n",
+                    $expectedDl,
+                    $dl,
+                    $expectedUl,
+                    $ul
+                );
+            }
+        ]
+    ]);
+
+
+proxy
+^^^^^
+
+:Type: ``string|array``
+
+You can connect to an AWS service through a proxy using the ``proxy`` option.
+
+* Provide a string value to connect to a proxy for all types of URIs. The proxy
+  string value can contain a scheme, username, and password. For example,
+  ``"http://username:password@192.168.16.1:10"``.
+
+* Provide an associative array of proxy settings where the key is the
+  scheme of the URI, and the value is the proxy for the given URI (i.e., you
+  can give different proxies for "http" and "https" endpoints).
+
+.. code-block:: php
+
+    use Aws\DynamoDb\DynamoDbClient;
+
+    // Send requests through a single proxy.
+    $client = new DynamoDbClient([
+        'region'  => 'us-west-2',
+        'version' => 'latest',
+        'http'    => [
+            'proxy' => 'http://192.168.16.1:10'
+        ]
+    ]);
+
+    // Send requests through a a different proxy per/scheme
+    $client = new DynamoDbClient([
+        'region'  => 'us-west-2',
+        'version' => 'latest',
+        'http'    => [
+            'proxy' =>
+                'http' => 'tcp://192.168.16.1:10',
+                'https' => 'tcp://192.168.16.1:11',
+            ]
+        ]
+    ]);
+
+You can use the ``HTTP_PROXY`` environment variable to configure an "http"
+protocol specific proxy, and the ``HTTPS_PROXY`` environment variable to
+configure an "https" specific proxy.
+
+
+sink
+^^^^
+
+:Type: ``resource|string|Psr\Http\Message\StreamInterface``
+
+The ``sink`` option controls where the response data of an operation is
+downloaded to.
+
+* Provide a ``resource`` as returned by ``fopen`` to download the response body
+  to a PHP stream.
+* Provide the path to a file on disk as a ``string`` value to download the
+  response body to a specific file on disk.
+* Provide a ``Psr\Http\Message\StreamInterface`` to download the response body
+  to a specific PSR stream object.
+
+.. note::
+
+    The SDK will download the response body to a PHP temp stream by default.
+    This means that the data will stay in memory until the size of the body
+    reaches 2MB, at which point the data will be written to a temporary file on
+    disk.
+
+
+stream
+^^^^^^
+
+:Type: ``bool``
+
+Set to ``true`` to tell the underlying HTTP handler that you wish to stream the
+response body of a response from the web service rather than download it all
+up-front. For example, this option is relied upon in the Amazon S3 stream
+wrapper class to ensure that the data is streamed.
+
+
+timeout
+^^^^^^^
+
+:Type: ``float``
+
+A float describing the timeout of the request in seconds. Use ``0`` to wait
+indefinitely (the default behavior).
+
+.. code-block:: php
+
+    use Aws\DynamoDb\DynamoDbClient;
+
+    // Timeout after 5 seconds.
+    $client = new DynamoDbClient([
+        'region'  => 'us-west-2',
+        'version' => 'latest',
+        'http'    => [
+            'timeout' => 5
+        ]
+    ]);
+
+
+verify
+^^^^^^
+
+:Type: ``bool|string``
 
 You can customize the peer SSL/TLS certificate verification behavior of the SDK
-using the ``verify`` ``http`` option.
+using the ``verify`` http option.
 
 * Set to ``true`` to enable SSL/TLS peer certificate verification and use the
   default CA bundle provided by operating system.
@@ -264,72 +500,34 @@ Much more detail on SSL certificates can be found on the
     ]);
 
 
-Using a proxy
-^^^^^^^^^^^^^
+http_handler
+~~~~~~~~~~~~
 
-You can connect to an AWS service through a proxy using the ``proxy`` ``http``
-option. You can provide proxy URLs that contain a scheme, username, and
-password. For example, ``"http://username:password@192.168.16.1:10"``.
+:Type: ``callable``
 
-.. code-block:: php
+The ``http_handler`` option is used to integrate the SDK with other HTTP
+clients. An ``http_handler`` option is a function that accepts a
+``Psr\Http\Message\RequestInterface`` object and an array of ``http`` options
+applied to the command, and returns a ``GuzzleHttp\Promise\PromiseInterface``
+object that is fulfilled with a ``Psr\Http\Message\ResponseInterface`` object
+or rejected with an array of the following exception data:
 
-    use Aws\DynamoDb\DynamoDbClient;
-
-    // Send requests through a proxy.
-    $client = new DynamoDbClient([
-        'region'  => 'us-west-2',
-        'version' => 'latest',
-        'http'    => [
-            'proxy' => 'http://192.168.16.1:10'
-        ]
-    ]);
-
-You can use the ``HTTP_PROXY`` environment variable to configure an "http"
-protocol specific proxy, and the ``HTTPS_PROXY`` environment variable to
-configure an "https" specific proxy.
-
-See http://docs.guzzlephp.org/en/latest/clients.html#proxy for more information
-on configuring a Guzzle client proxy.
+* ``exception``: (``\Exception``) the exception that was encountered.
+* ``response``: (``Psr\Http\Message\ResponseInterface``) the response that was
+  received (if any).
+* ``connection_error``: (bool) set to ``true`` to mark the error as a
+  connection error. Setting this value to ``true`` will also allow the SDK to
+  automatically retry the operation if needed.
 
 
-Timeouts
-^^^^^^^^
 
-You can modify the timeout settings of the SDK by configuring the ``timeout``
-and ``connect_timeout`` ``http`` options.
+The SDK will automatically convert the given ``http_handler`` into a normal
+``handler`` option by wrapping the provided ``http_handler`` with a
+``Aws\WrappedHttpHandler`` object.
 
-``timeout`` is a float describing the timeout of the request in seconds. Use
-``0`` to wait indefinitely (the default behavior).
+.. note::
 
-.. code-block:: php
-
-    use Aws\DynamoDb\DynamoDbClient;
-
-    // Timeout after 5 seconds.
-    $client = new DynamoDbClient([
-        'region'  => 'us-west-2',
-        'version' => 'latest',
-        'http'    => [
-            'timeout' => 5
-        ]
-    ]);
-
-``connect_timeout`` is a float describing the number of seconds to wait while
-trying to connect to a server. Use 0 to wait indefinitely (the default
-behavior).
-
-.. code-block:: php
-
-    use Aws\DynamoDb\DynamoDbClient;
-
-    // Timeout after attempting to connect for 5 seconds.
-    $client = new DynamoDbClient([
-        'region'  => 'us-west-2',
-        'version' => 'latest',
-        'http'    => [
-            'connect_timeout' => 5
-        ]
-    ]);
+    This option supersedes any provided ``handler`` option.
 
 
 profile
@@ -396,38 +594,6 @@ The following example disables retries for the Amazon DynamoDB client.
     ]);
 
 
-retry_logger
-~~~~~~~~~~~~
-
-:Type: ``string|Psr\Log\LoggerInterface``
-
-When the string "debug" is provided, all retries will be logged to STDOUT.
-Provide a `PSR-3 logger <http://www.php-fig.org/psr/psr-3/>`_ to log
-retries to a specific logger instance. A retry is typically triggered when a
-service returns some type of throttling response.
-
-The following example uses `Monolog <https://github.com/Seldaek/monolog>`_ to
-log retries. Each time the SDK retries a request, the following information
-about the retry is logged: timestamp, HTTP method, URI, status code, reason
-phrase, number of retries, connection time, total time, and error message.
-
-.. code-block:: php
-
-    use Monolog\Logger;
-    use Monolog\Handler\StreamHandler;
-    use Aws\DynamoDb\DynamoDbClient;
-
-    $logger = new Logger('retries');
-    $handler = new StreamHandler('path/to/your.log', Logger::WARNING);
-    $logger->pushHandler($handler);
-
-    $client = new DynamoDbClient([
-        'version'      => '2012-08-10',
-        'region'       => 'us-west-2',
-        'retry_logger' => $logger
-    ]);
-
-
 scheme
 ~~~~~~
 
@@ -468,9 +634,10 @@ signature_provider
 
 :Type: ``callable``
 
-A callable that accepts a signature version name (e.g., v4, s3), a service
-name, and region, and returns a ``Aws\Signature\SignatureInterface`` object or
-``NULL``. This provider is used to create signers utilized by the client.
+A callable that accepts a signature version name (e.g., ``v4``, ``s3``), a
+service name, and region, and returns a ``Aws\Signature\SignatureInterface``
+object or ``NULL`` if the provider is able to create a signer for the given
+parameters. This provider is used to create signers utilized by the client.
 
 There are various functions provided by the SDK in the
 ``Aws\Signature\SignatureProvider`` class that can be used to create customized
@@ -483,8 +650,8 @@ signature_version
 :Type: ``string``
 
 A string representing a custom signature version to use with a service
-(e.g., ``v4``, ``s3``, ``v2``, etc.). Note that per/operation signature version
-MAY override this requested signature version if needed.
+(e.g., ``v4``, ``s3``, ``v2``, etc.). Per/operation signature version MAY
+override this requested signature version if needed.
 
 The following examples show how to configure an Amazon S3 client to use
 `signature version 4 <http://docs.aws.amazon.com/general/latest/gr/signature-version-4.html>`_:
@@ -556,7 +723,7 @@ your copy of the SDK.
 You may provide the string ``latest`` to the "version" configuration value to
 utilize the most recent available API version that your client's API provider
 can find (the default api_provider will scan the ``src/data`` directory of the
-SDK for ``*.api.php`` and ``*.api.json`` files).
+SDK for API models).
 
 .. code-block:: php
 

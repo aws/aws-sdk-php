@@ -16,9 +16,10 @@ Minimum requirements
 Optional requirements
 ---------------------
 
-`OpenSSL PHP extension <http://php.net/manual/en/book.openssl.php>`_
-  To work with Amazon CloudFront private distributions, you must have the
-  OpenSSL PHP extension to sign private CloudFront URLs.
+* `OpenSSL PHP extension <http://php.net/manual/en/book.openssl.php>`_
+
+  You must have the OpenSSL PHP extension to sign private Amazon CloudFront
+  URLs.
 
 
 .. _optimal-settings:
@@ -26,42 +27,32 @@ Optional requirements
 Optimal settings
 ----------------
 
-`cURL <http://php.net/manual/en/book.curl.php>`_ >= 7.16.2
+* `cURL <http://php.net/manual/en/book.curl.php>`_ >= 7.16.2
+
   While not required, we recommend installing a recent version of cURL compiled
   with OpenSSL/NSS and zlib. If cURL is not installed on your system and you do
-  not configure a custom `RingPHP adapter <http://ringphp.readthedocs.org/en/latest/>`_,
-  the SDK will use the PHP stream wrapper.
+  not configure a custom ``http_handler`` for your client, then the SDK will
+  use the PHP stream wrapper (a very underpowered HTTP client).
 
-  The AWS SDK for PHP utilizes Guzzle as an HTTP client. Guzzle uses a handler
-  system called `RingPHP <http://ringphp.readthedocs.org/en/latest/>`_ to allow
-  Guzzle to utilize any sort of underlying transport (whether it's cURL, PHP
-  sockets, PHP stream wrappers, etc.). You can configure which handler is used
-  by the SDK using the ``client`` client constructor option and supplying a
-  custom "handler" option to the created client.
+* `OPCache <http://php.net/manual/en/book.opcache.php>`_
 
-`OPCache <http://php.net/manual/en/book.opcache.php>`_
   Using the OPcache extension improves PHP performance by storing precompiled
   script bytecode in shared memory, thereby removing the need for PHP to load
   and parse scripts on each request. This extension is typically enabled by
   default.
 
-  When running on Amazon Linux, you need to install the ``php55-opcache``
-  yum package to utilize the OPCache extension.
+  When running on Amazon Linux, you need to install the ``php56-opcache`` or
+  ``php55-opcache`` yum package to utilize the OPCache extension.
 
-Uninstall `Xdebug <http://xdebug.org/>`_
+* Uninstall `Xdebug <http://xdebug.org/>`_
+
   Xdebug is an amazing tool that can be used to identify performance
   bottlenecks. However, if performance is critical to your application, do not
   install the Xdebug extension on your production environment. Simply loading
   the extension will greatly slow down the SDK.
 
-  When running on Amazon Linux, Xdebug can be removed with the following
-  command:
+* Use a `Composer <http://getcomposer.org>`_ classmap autoloader
 
-  .. code-block:: bash
-
-      yum remove php55-pecl-xdebug
-
-Use a `Composer <http://getcomposer.org>`_ classmap autoloader
   Autoloaders are used to lazily load classes as they are required by a PHP
   script. Composer will generate an autoloader that is able to autoload the PHP
   scripts of your application and all of the PHP scripts of the vendors
