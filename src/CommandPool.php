@@ -48,8 +48,21 @@ class CommandPool implements PromisorInterface
             $config['concurrency'] = 25;
         }
 
-        $config['mapfn'] = $this->createMapFn($config, $client);
-        $this->each = new EachPromise($commands, $config);
+        $before = $this->getBefore($config);
+        $mapFn = function ($commands) use ($client, $before) {
+            foreach ($commands as $command) {
+                if (!($command instanceof CommandInterface)) {
+                    throw new \InvalidArgumentException('Each value yielded by '
+                        . 'the iterator must be an Aws\CommandInterface.');
+                }
+                if ($before) {
+                    $before($command);
+                }
+                yield $client->executeAsync($command);
+            }
+        };
+
+        $this->each = new EachPromise($mapFn($commands), $config);
     }
 
     /**
@@ -87,25 +100,6 @@ class CommandPool implements PromisorInterface
                 return $results;
             })
             ->wait();
-    }
-
-    /**
-     * @return callable
-     */
-    private function createMapFn(array $config, AwsClientInterface $client)
-    {
-        $before = $this->getBefore($config);
-
-        return static function ($command) use ($client, $before) {
-            if (!($command instanceof CommandInterface)) {
-                throw new \InvalidArgumentException('Each value yielded by the '
-                    . 'iterator must be an Aws\CommandInterface.');
-            }
-            if ($before) {
-                $before($command);
-            }
-            return $client->executeAsync($command);
-        };
     }
 
     /**
