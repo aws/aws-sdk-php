@@ -27,7 +27,7 @@ class CloudSearchClient extends AwsClient
         $config += [
             'credentials' => $this->getCredentials(),
             'scheme'      => 'https',
-            'version'     => 'latest',
+            'version'     => 'latest'
         ];
 
         // Create an absolute URI for the endpoint.

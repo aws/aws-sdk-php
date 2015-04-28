@@ -26,7 +26,10 @@ class Ec2Client extends AwsClient
         parent::__construct($args);
     }
 
-    /** @internal */
+    /**
+     * @internal
+     * @codeCoverageIgnore
+     */
     public static function applyDocFilters(array $api, array $docs)
     {
         // Several copy snapshot parameters are optional.

@@ -173,7 +173,6 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
             'version'      => 'latest',
             'retries'      => 0,
         ], new HandlerList());
-        $this->markTestSkipped();
     }
 
     public function testCanEnableRetries()
@@ -185,7 +184,6 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
             'version'      => 'latest',
             'retries'      => 2,
         ], new HandlerList());
-        $this->markTestSkipped();
     }
 
     public function testCanCreateNullCredentials()
@@ -291,7 +289,6 @@ EOT;
             'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
             'version'      => 'latest'
         ], new HandlerList());
-        $this->markTestSkipped();
     }
 
     public function testAddsLoggerWithDebugSettings()
@@ -304,7 +301,6 @@ EOT;
             'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
             'version'      => 'latest'
         ], new HandlerList());
-        $this->markTestSkipped();
     }
 
     public function testAddsDebugListener()
@@ -318,7 +314,6 @@ EOT;
             'endpoint' => 'http://us-east-1.foo.amazonaws.com',
             'version'  => 'latest'
         ], $em);
-        $this->markTestSkipped();
     }
 
     public function canSetDebugToFalse()
@@ -332,7 +327,6 @@ EOT;
             'endpoint' => 'http://us-east-1.foo.amazonaws.com',
             'version'  => 'latest'
         ], $em);
-        $this->markTestSkipped();
     }
 
     public function testCanAddHttpClientDefaultOptions()

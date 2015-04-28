@@ -12,6 +12,7 @@ use Aws\Middleware;
 use Aws\MockHandler;
 use Aws\Result;
 use Aws\Signature\SignatureV4;
+use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise;
 
@@ -175,5 +176,23 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         $handler($cmd, $req);
         Promise\queue()->run();
         $this->assertCount(1, $h);
+    }
+
+    public function testCanSetContentTypeOfCommandsWithPayloads()
+    {
+        $h = new Aws\History();
+        $list = new HandlerList();
+        $list->setHandler(new MockHandler([new Result()]));
+        $list->append('build', Middleware::contentType(['Foo']));
+        $list->append('sign', Middleware::history($h));
+        $handler = $list->resolve();
+        $payload = Psr7\stream_for(fopen(__DIR__ . '/../docs/_static/logo.png', 'r'));
+        $request = new Request('PUT', 'http://exmaple.com', [], $payload);
+        $handler(new Command('Foo'), $request);
+
+        $this->assertEquals(
+            'image/png',
+            $h->getLastRequest()->getHeaderLine('Content-Type')
+        );
     }
 }

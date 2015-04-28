@@ -42,11 +42,10 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
                 // Ensure the presence of the specified key.
                 $this->assertArrayHasKey($value, $result);
             }
-
         } catch (AwsException $e) {
             if ($succeed) {
                 $this->fail("The {$operation} operation of the {$service} "
-                    . "service was supposed to succeed.");
+                    . "service was supposed to succeed. (" . $e->getMessage() . ")");
             }
 
             // The exception class should have the same namespace as the client.
@@ -239,6 +238,26 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
                 true,
                 'Reservations'
             ],
+            [ // ECS Success
+                'ecs',
+                'Aws\\Ecs\\EcsClient',
+                [],
+                'ecs.us-east-1.amazonaws.com',
+                'DescribeClusters',
+                ['clusters' => ['foo']],
+                true,
+                'clusters'
+            ],
+            [ // ECS Failure
+                'ecs',
+                'Aws\\Ecs\\EcsClient',
+                [],
+                'ecs.us-east-1.amazonaws.com',
+                'DeleteCluster',
+                ['cluster' => 'foo'],
+                false,
+                'ClientException'
+            ],
             [
                 'elasticache',
                 'Aws\\ElastiCache\\ElastiCacheClient',
@@ -328,6 +347,66 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
                 [],
                 true,
                 'StreamNames'
+            ],
+            [ // KMS Success
+                'kms',
+                'Aws\\Kms\\KmsClient',
+                [],
+                'kms.us-east-1.amazonaws.com',
+                'ListAliases',
+                [],
+                true,
+                'Aliases'
+            ],
+            [ // KMS Failure
+                'kms',
+                'Aws\\Kms\\KmsClient',
+                [],
+                'kms.us-east-1.amazonaws.com',
+                'DeleteAlias',
+                ['AliasName' => 'foo'],
+                false,
+                'ValidationException'
+            ],
+            [ // Lambda Success
+                'lambda',
+                'Aws\\Lambda\\LambdaClient',
+                [],
+                'lambda.us-east-1.amazonaws.com',
+                'ListFunctions',
+                [],
+                true,
+                'Functions'
+            ],
+            [ // Lambda Failure
+                'lambda',
+                'Aws\\Lambda\\LambdaClient',
+                [],
+                'lambda.us-east-1.amazonaws.com',
+                'DeleteFunction',
+                ['FunctionName' => 'foo'],
+                false,
+                'ResourceNotFoundException'
+            ],
+            [ // MachineLearning Success
+                'machinelearning',
+                'Aws\\MachineLearning\\MachineLearningClient',
+                [],
+                'machinelearning.us-east-1.amazonaws.com',
+                'DescribeDataSources',
+                [],
+                true,
+                'Results'
+            ],
+            [ // MachineLearning Failure
+                'machinelearning',
+                'Aws\\MachineLearning\\MachineLearningClient',
+                [],
+                'machinelearning.us-east-1.amazonaws.com',
+                'DeleteDataSource',
+                ['DataSourceId' => 'foo'],
+                false,
+                'ResourceNotFoundException'
             ],
             [
                 'opsworks',
@@ -429,6 +508,26 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
                 true,
                 'QueueUrls'
             ],
+            [ // SSM Success
+                'ssm',
+                'Aws\\Ssm\\SsmClient',
+                [],
+                'ssm.us-east-1.amazonaws.com',
+                'ListDocuments',
+                [],
+                true,
+                'DocumentIdentifiers'
+            ],
+            [ // SSM Failure
+                'ssm',
+                'Aws\\Ssm\\SsmClient',
+                [],
+                'ssm.us-east-1.amazonaws.com',
+                'DeleteDocument',
+                ['Name' => 'foo'],
+                false,
+                'InvalidDocument'
+            ],
             [
                 'storagegateway',
                 'Aws\\StorageGateway\\StorageGatewayClient',
@@ -468,6 +567,26 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
                 ['name' => 'foo'],
                 false,
                 'UnknownResourceFault'
+            ],
+            [ // WorkSpaces Success
+                'workspaces',
+                'Aws\\Workspaces\\WorkspacesClient',
+                [],
+                'workspaces.us-east-1.amazonaws.com',
+                'DescribeWorkspaces',
+                [],
+                true,
+                'Workspaces'
+            ],
+            [ // WorkSpaces Failure
+                'workspaces',
+                'Aws\\WorkSpaces\\WorkSpacesClient',
+                [],
+                'workspaces.us-east-1.amazonaws.com',
+                'TerminateWorkspaces',
+                ['TerminateWorkspaceRequests' => [['WorkspaceId'=> 'foo']]],
+                false,
+                'ValidationException'
             ],
         ];
     }

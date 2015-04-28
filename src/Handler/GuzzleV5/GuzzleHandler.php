@@ -18,6 +18,8 @@ use Psr\Http\Message\StreamInterface as Psr7StreamInterface;
  * The handler accepts a PSR-7 Request object and an array of transfer options
  * and returns a Guzzle 6 Promise. The promise is either resolved with a
  * PSR-7 Response object or rejected with an array of error data.
+ *
+ * @codeCoverageIgnore
  */
 class GuzzleHandler
 {

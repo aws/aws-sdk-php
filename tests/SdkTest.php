@@ -2,47 +2,12 @@
 namespace Aws\Test;
 
 use Aws\Sdk;
-use GuzzleHttp\Event\EmitterInterface;
-use JmesPath\Env as JmesPath;
 
 /**
  * @covers Aws\Sdk
  */
 class SdkTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * Check if the given emitter has the provided event listener
-     *
-     * @param EmitterInterface $emitter Emitter to search
-     * @param string|object    $value   Can be a class name or listener object
-     * @param null             $event   Specific event to search (optional)
-     *
-     * @return bool
-     */
-    public static function hasListener(
-        EmitterInterface $emitter,
-        $value,
-        $event = null
-    ) {
-        $expression = $event
-            ? '[*][0]'
-            : '*[*][0]';
-
-        $listeners = $event
-            ? $emitter->listeners($event)
-            : $emitter->listeners();
-
-        $result = JmesPath::search($expression, $listeners) ?: [];
-
-        if (!is_object($value)) {
-            $result = array_map(function($o) {
-                return get_class($o);
-            }, $result);
-        }
-
-        return in_array($value, $result, true);
-    }
-
     /**
      * @expectedException \BadMethodCallException
      */
@@ -82,5 +47,20 @@ class SdkTest extends \PHPUnit_Framework_TestCase
                 'version' => 'latest'
             ])
         );
+    }
+
+    /**
+     * @expectedException \Aws\Exception\UnresolvedApiException
+     */
+    public function testCreatesGenericClient()
+    {
+        // Use a config that contains a service-specific config.
+        $sdk = new Sdk([
+            'version' => 'latest',
+            'foo' => ['region' => 'us-east-1']
+        ]);
+
+        // Create a client with an unknown name.
+        $client = $sdk->createClient('foo');
     }
 }

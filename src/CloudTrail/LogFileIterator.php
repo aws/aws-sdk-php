@@ -307,23 +307,16 @@ class LogFileIterator extends \IteratorIterator
         // If either a start or end date was provided, filter out dates that
         // don't match the date range.
         if ($startDate || $endDate) {
-            $objectsIterator = new \CallbackFilterIterator(
-                $objectsIterator,
-                function ($object) use ($startDate, $endDate) {
-                    if (!preg_match(
-                        '/[0-9]{8}T[0-9]{4}Z/',
-                        $object['Key'],
-                        $matches)
-                    ) {
-                        return false;
-                    }
-
-                    $date = strtotime($matches[0]);
-
-                    return (!$startDate || $date >= $startDate) &&
-                        (!$endDate || $date <= $endDate);
+            $fn = function ($object) use ($startDate, $endDate) {
+                if (!preg_match('/[0-9]{8}T[0-9]{4}Z/', $object['Key'], $m)) {
+                    return false;
                 }
-            );
+                $date = strtotime($m[0]);
+
+                return (!$startDate || $date >= $startDate)
+                    && (!$endDate || $date <= $endDate);
+            };
+            $objectsIterator = new \CallbackFilterIterator($objectsIterator, $fn);
         }
 
         return $objectsIterator;

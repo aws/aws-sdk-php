@@ -107,6 +107,9 @@ class LogFileIteratorTest extends \PHPUnit_Framework_TestCase
         <Key>AWSLogs/12345/CloudTrail/us-east-1/2013/11/15/foo-20131115T1453Z-log.json.gz</Key>
     </Contents>
     <Contents>
+        <Key>AWSLogs/12345/CloudTrail/us-east-1/2013/11/15/foo-20131115TFILTERME-log.json.gz</Key>
+    </Contents>
+    <Contents>
         <Key>AWSLogs/12345/CloudTrail/us-east-1/2013/11/28/foo-20131128T1822Z-log.json.gz</Key>
     </Contents>
     <Contents>
