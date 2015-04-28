@@ -3,11 +3,27 @@ namespace Aws\Test\Integ;
 
 use Aws\Exception\AwsException;
 use Aws\Middleware;
+use Aws\Sdk;
+use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 
 class ClientSmokeTest extends \PHPUnit_Framework_TestCase
 {
     use IntegUtils;
+
+    public function testUserAgentApplied()
+    {
+        $guzzleVersion = class_exists('GuzzleHttp\Ring\Core') ? 5 : 6;
+        $handlerClass = "Aws\\Handler\\GuzzleV{$guzzleVersion}\\GuzzleHandler";
+        $handler = new $handlerClass;
+
+        $request = new Request('GET', 'http://httpbin.org/get');
+        $response = $handler($request)->wait();
+
+        $data = json_decode($response->getBody()->getContents(), true);
+        $ua = $data['headers']['User-Agent'];
+        $this->assertStringStartsWith('aws-sdk-php/' . Sdk::VERSION, $ua);
+    }
 
     /**
      * @dataProvider provideServiceTestCases

@@ -9,7 +9,6 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use Psr\Http\Message\RequestInterface as Psr7Request;
-use Psr\Http\Message\RequestInterface;
 
 /**
  * A request handler that sends PSR-7-compatible requests with Guzzle 6.
