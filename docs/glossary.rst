@@ -1,6 +1,6 @@
-============
-SDK Concepts
-============
+========
+Glossary
+========
 
 SDK
     The term "SDK" can refer to the AWS SDK for PHP library as a whole, but also

@@ -130,16 +130,22 @@ Set to ``true`` to display debug information when sending requests.
 
 Alternatively, you can provide an associative array with the following keys:
 
-- logfn: (callable) Function that is invoked with log messages. By
-  default, PHP's ``echo`` function will be utilized.
-- stream_size: (int) When the size of a stream is greater than this
-  number, the stream data will not be logged. Set to ``0`` to not log any
-  stream data.
-- scrub_auth: (bool) Set to ``false`` to disable the scrubbing of auth data
-  from the logged messages (meaning your AWS Access Key ID and signature will
-  be passed through to the ``logfn``).
-- http: (bool) Set to ``false`` to disable the "debug" feature of lower
-  level HTTP adapters (e.g., verbose curl output).
+logfn (callable)
+    Function that is invoked with log messages. By default, PHP's ``echo``
+    function will be utilized.
+
+stream_size (int)
+    When the size of a stream is greater than this number, the stream data will
+    not be logged. Set to ``0`` to not log any stream data.
+
+scrub_auth (bool)
+    Set to ``false`` to disable the scrubbing of auth data from the logged
+    messages (meaning your AWS Access Key ID and signature will be passed
+    through to the ``logfn``).
+
+http (bool)
+    Set to ``false`` to disable the "debug" feature of lower level HTTP
+    handlers (e.g., verbose curl output).
 
 .. code-block:: php
 

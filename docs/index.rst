@@ -9,13 +9,13 @@ AWS SDK for PHP
     installation
     basic-usage
 
-    concepts
     configuration
     credentials
     commands
     waiters
     paginators
     faq
+    glossary
 
     service-cloudfront
     service-dynamodb
@@ -58,13 +58,13 @@ Getting Started
 SDK Details
 -----------
 
-* :doc:`concepts`
 * :doc:`configuration`
 * :doc:`credentials`
 * :doc:`paginators`
 * :doc:`waiters`
 * :doc:`commands`
 * :doc:`faq`
+* :doc:`concepts`
 * `Contributing to the SDK <https://github.com/aws/aws-sdk-php/blob/master/CONTRIBUTING.md>`_
 * `Guzzle Documentation <http://guzzlephp.org>`_
 
