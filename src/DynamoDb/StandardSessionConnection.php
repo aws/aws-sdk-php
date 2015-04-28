@@ -96,7 +96,7 @@ class StandardSessionConnection implements SessionConnectionInterface
     public function deleteExpired()
     {
         // Create a Scan iterator for finding expired session items
-        $scan = $this->client->getIterator('Scan', [
+        $scan = $this->client->getPaginator('Scan', [
             'TableName' => $this->config['table_name'],
             'AttributesToGet' => [$this->config['hash_key']],
             'ScanFilter' => [
@@ -114,7 +114,7 @@ class StandardSessionConnection implements SessionConnectionInterface
         $batch = new WriteRequestBatch($this->client, $this->config['batch_config']);
 
         // Perform Scan and BatchWriteItem (delete) operations as needed
-        foreach ($scan as $item) {
+        foreach ($scan->search('Items') as $item) {
             $batch->delete(
                 [$this->config['hash_key'] => $item[$this->config['hash_key']]],
                 $this->config['table_name']

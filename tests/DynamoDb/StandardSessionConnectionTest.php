@@ -94,7 +94,7 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($return);
     }
 
-    public function testDeleteReturnsBoolBasedOnRSuccess()
+    public function testDeleteReturnsBoolBasedOnSuccess()
     {
         $client = $this->getTestSdk()->createDynamoDb();
         $this->addMockResults($client, [
@@ -111,32 +111,29 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($return);
     }
 
-    public function testDeleteReturnsBoolBasedOnSuccess()
+    public function testDeleteExpiredReturnsBoolBasedOnSuccess()
     {
         $client = $this->getTestSdk()->createDynamoDb();
         $this->addMockResults($client, [
-            new Result([]),
+            new Result(['LastEvaluatedKey' => ['foo' => ['S' => 'bar']]]),
             new Result(['Items' => [
                 ['id' => ['S' => 'foo']],
                 ['id' => ['S' => 'bar']],
                 ['id' => ['S' => 'baz']],
-            ]])
+            ]]),
+            new Result(),
         ]);
 
+        $commands = [];
         $client->getHandlerList()->append(
             'build',
-            Middleware::tap(function (CommandInterface $command) {
-                static $called = 0;
-                if (++$called === 1) {
-                    $this->assertEquals('Scan', $command->getName());
-                } elseif ($called === 2) {
-                    $this->assertEquals('Scan', $command->getName());
-                } else {
-                    $this->fail('Unexpected state.');
-                }
+            Middleware::tap(function (CommandInterface $command) use (&$commands) {
+                $commands[] = $command->getName();
             })
         );
 
         (new StandardSessionConnection($client))->deleteExpired();
+
+        $this->assertEquals(['Scan', 'Scan', 'BatchWriteItem'], $commands);
     }
 }
