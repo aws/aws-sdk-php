@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Handler\GuzzleV6;
 
+use Aws\Sdk;
 use Exception;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\RequestException;
@@ -34,7 +35,10 @@ class GuzzleHandler
      */
     public function __invoke(Psr7Request $request, array $options = [])
     {
-        $request = $this->prepareRequest($request, $options);
+        $request = $request->withHeader(
+            'User-Agent',
+            'aws-sdk-php/' . Sdk::VERSION . ' ' . \GuzzleHttp\default_user_agent()
+        );
 
         return $this->client->sendAsync($request, $options)->otherwise(
             static function (\Exception $e) {
@@ -51,16 +55,5 @@ class GuzzleHandler
                 return new Promise\RejectedPromise($error);
             }
         );
-    }
-
-    private function prepareRequest(RequestInterface $request, array $options)
-    {
-        $request = $request->withHeader(
-            'user-agent',
-            $request->getHeaderLine('user-agent')
-                . ' ' . \GuzzleHttp\default_user_agent()
-        );
-
-        return $request;
     }
 }

@@ -147,7 +147,6 @@ class AwsClient implements AwsClientInterface
         $this->region = isset($config['region']) ? $config['region'] : null;
         $this->config = $config['config'];
         $this->defaultRequestOptions = $config['http'];
-        $this->defaultRequestOptions['headers']['User-Agent'] = 'aws-sdk-php/' . Sdk::VERSION;
         $this->addSignatureMiddleware();
 
         if (isset($args['with_resolved'])) {

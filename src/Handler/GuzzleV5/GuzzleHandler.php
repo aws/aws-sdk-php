@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Handler\GuzzleV5;
 
+use Aws\Sdk;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -127,11 +128,10 @@ class GuzzleHandler
             $request->setBody(new GuzzleStream($body));
         }
 
-        // Apply the headers and append the Guzzle UA string to current one.
         $request->setHeaders($psrRequest->getHeaders());
         $request->setHeader(
-            'user-agent',
-            $request->getHeader('user-agent') . ' ' . Client::getDefaultUserAgent()
+            'User-Agent',
+            'aws-sdk-php/' . Sdk::VERSION . ' ' . Client::getDefaultUserAgent()
         );
 
         // Make sure the delay is configured, if provided.
