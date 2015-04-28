@@ -5,6 +5,11 @@ use GuzzleHttp\Stream\StreamDecoratorTrait;
 use GuzzleHttp\Stream\StreamInterface as GuzzleStreamInterface;
 use Psr\Http\Message\StreamInterface as Psr7StreamInterface;
 
+/**
+ * Adapts a PSR-7 Stream to a Guzzle 5 Stream.
+ *
+ * @codeCoverageIgnore
+ */
 class GuzzleStream implements GuzzleStreamInterface
 {
     use StreamDecoratorTrait;

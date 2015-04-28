@@ -90,9 +90,6 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($valid, S3Client::isBucketDnsCompatible($bucket));
     }
 
-    /**
-     * @covers Aws\S3\S3Client::createPresignedUrl
-     */
     public function testCreatesPresignedUrls()
     {
         /** @var S3Client $client */
@@ -110,9 +107,6 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('Signature=', $url);
     }
 
-    /**
-     * @covers Aws\S3\S3Client::createPresignedUrl
-     */
     public function testCreatesPresignedUrlsWithSpecialCharacters()
     {
         $client = S3Client::factory([
@@ -279,7 +273,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
                 // 3 MB, known-size stream (put)
                 $this->generateStream(1024 * 1024 * 3),
                 [$putObject],
-                []
+                ['before_upload' => function () {}]
             ],
             [
                 // 3 MB, unknown-size stream (put)

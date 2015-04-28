@@ -50,6 +50,7 @@ class MarshalerTest extends \PHPUnit_Framework_TestCase
             [1.23, ['N' => '1.23']],
             [1e10, ['N' => '10000000000']],
             [$m->number('9999999999999999'), ['N' => '9999999999999999']],
+            [$m->number(20), ['N' => '20']],
 
             // "BOOL" & "NULL"
             [true, ['BOOL' => true]],

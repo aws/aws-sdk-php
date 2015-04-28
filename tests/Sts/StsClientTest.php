@@ -34,10 +34,11 @@ class StsClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Result contains no credentials
      */
     public function testThrowsExceptionWhenCreatingCredentialsFromInvalidInput()
     {
-        $client = StsClient::factory(['version' => 'latest']);
-        $client->createCredentials(new Result([]));
+        $client = new StsClient(['region' => 'us-east-1', 'version' => 'latest']);
+        $client->createCredentials(new Result());
     }
 }

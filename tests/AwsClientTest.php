@@ -318,11 +318,6 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_callable($provider));
     }
 
-    public function testExecutesMultipleRequests()
-    {
-        $this->markTestSkipped();
-    }
-
     private function createClient(array $service = [], array $config = [])
     {
         $apiProvider = function ($type) use ($service, $config) {

@@ -517,7 +517,10 @@ class S3Client extends AwsClient
         $list->append('sign:retry', Middleware::retry($decider, $delay));
     }
 
-    /** @internal */
+    /**
+     * @internal
+     * @codeCoverageIgnore
+     */
     public static function applyDocFilters(array $api, array $docs)
     {
         $b64 = '<div class="alert alert-info">This value will be base64 '

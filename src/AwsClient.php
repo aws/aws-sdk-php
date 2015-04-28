@@ -350,6 +350,7 @@ class AwsClient implements AwsClientInterface
      * @return array Tuple containing a [Service, DocModel]
      *
      * @internal This should only used to document the service API.
+     * @codeCoverageIgnore
      */
     public static function applyDocFilters(array $api, array $docs)
     {

@@ -132,7 +132,10 @@ class GlacierClient extends AwsClient
         };
     }
 
-    /** @internal */
+    /**
+     * @internal
+     * @codeCoverageIgnore
+     */
     public static function applyDocFilters(array $api, array $docs)
     {
         // Add the SourceFile parameter.
