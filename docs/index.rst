@@ -18,13 +18,9 @@ AWS SDK for PHP
     glossary
 
     service-cloudfront
-    service-dynamodb
     feature-dynamodb-session-handler
-    service-redshift
     service-s3
     feature-s3-stream-wrapper
-    service-sqs
-    service-sts
 
     migration-guide
 
@@ -79,7 +75,6 @@ Supported Services
 - :apiref:`Amazon CloudWatch | CloudWatch`
 - :apiref:`Amazon DynamoDB | DynamoDb`
 
-  - :doc:`service-dynamodb`
   - :doc:`DynamoDB Session Handler <feature-dynamodb-session-handler>`
 
 - :apiref:`Amazon Elastic Compute Cloud (Amazon EC2) | Ec2`
@@ -89,17 +84,12 @@ Supported Services
 - :apiref:`Amazon Glacier | Glacier`
 - :apiref:`Amazon Kinesis | Kinesis`
 - :apiref:`Amazon Redshift | Redshift`
-
-  - :doc:`service-redshift`
 - :apiref:`Amazon Relational Database Service (Amazon RDS) | Rds`
 
 - :apiref:`Amazon Route 53 | Route53`
 - :apiref:`Amazon Simple Email Service (Amazon SES) | Ses`
 - :apiref:`Amazon Simple Notification Service (Amazon SNS) | Sns`
 - :apiref:`Amazon Simple Queue Service (Amazon SQS) | Sqs`
-
-  - :doc:`service-sqs`
-
 - :apiref:`Amazon Simple Storage Service (Amazon S3) | S3`
 
   - :doc:`service-s3`
@@ -117,9 +107,6 @@ Supported Services
 - :apiref:`AWS Import/Export | ImportExport`
 - :apiref:`AWS OpsWorks | OpsWorks`
 - :apiref:`AWS Security Token Service (AWS STS) | Sts`
-
-  - :doc:`service-sts`
-
 - :apiref:`AWS Storage Gateway | StorageGateway`
 - :apiref:`AWS Support | Support`
 - :apiref:`Elastic Load Balancing | ElasticLoadBalancing`

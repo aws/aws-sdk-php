@@ -354,6 +354,12 @@ constructor: a credential provider. When instantiated, the
 provided credentials. When the decorated credentials expire, the class will
 automatically invoke the credential provider to retrieve new credentials.
 
+``Aws\Credentials\RefreshableCredentials`` is a concrete implementation of
+``Aws\Credentials\RefreshableCredentialsInterface``, which exposes a
+``refresh()`` method on a credentials object. This method is invoked
+automatically when credentials are expired, but it may also be triggered
+manually to force credentials to refresh early.
+
 
 Memoizing Credentials
 ~~~~~~~~~~~~~~~~~~~~~
