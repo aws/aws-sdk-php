@@ -1903,7 +1903,7 @@ return array (
                     'type' => 'array',
                     'location' => 'xml',
                     'items' => array(
-                        'name' => 'IPAddressCidr',
+                        'name' => 'member',
                         'type' => 'string',
                     ),
                 ),
