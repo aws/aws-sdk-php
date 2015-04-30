@@ -32,6 +32,7 @@ class RefreshableInstanceProfileCredentialsIntegrationTest extends \Aws\Tests\In
      */
     public function testUsesInstanceProfileCredentialsByDefault()
     {
+        $_SERVER['HOME'] = '/tmp';
         $client = InstanceMetadataClient::factory();
         $credentials = Credentials::factory(array(
             'credentials.client' => $client
@@ -73,6 +74,7 @@ class RefreshableInstanceProfileCredentialsIntegrationTest extends \Aws\Tests\In
      */
     public function testClientsUseInstanceProfileCredentialsByDefault()
     {
+        $_SERVER['HOME'] = '/tmp';
         $client = DynamoDbClient::factory(array(
             'region' => 'us-east-1'
         ));
@@ -108,6 +110,7 @@ class RefreshableInstanceProfileCredentialsIntegrationTest extends \Aws\Tests\In
 
     public function testCredentialsUsesApcCacheWhenCacheIsTrue()
     {
+        $_SERVER['HOME'] = '/tmp';
         if (!extension_loaded('apc')) {
             $this->markTestSkipped('APC is not installed');
         }
@@ -124,6 +127,7 @@ class RefreshableInstanceProfileCredentialsIntegrationTest extends \Aws\Tests\In
 
     public function testCredentialsCanInjectCacheAndUsesHostnameBasedKey()
     {
+        $_SERVER['HOME'] = '/tmp';
         $cache = new DoctrineCacheAdapter(new ArrayCache());
         $cache->save('credentials_' . crc32(gethostname()), new Credentials('ABC', '123', 'Listen to me', time() + 10000));
         $credentials = Credentials::factory(array(

@@ -48,6 +48,9 @@ class RefreshableInstanceProfileCredentialsTest extends \Guzzle\Tests\GuzzleTest
 
         $credentials->getSecurityToken();
 
+        // Should expire 30 minutes before the returned expiration date.
+        $this->assertEquals(1904598340, $credentials->getExpiration());
+
         $mockedRequests = $mock->getReceivedRequests();
         $this->assertEquals(2, count($mockedRequests));
         $this->assertContains('/webapp', (string) $mockedRequests[1]->getUrl());
