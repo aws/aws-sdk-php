@@ -5,8 +5,6 @@ Waiters
 Introduction
 ------------
 
-.. include:: _snippets/waiters-intro.txt
-
 If the waiter has to poll the bucket too many times, it will throw an ``Aws\Common\Exception\RuntimeException``
 exception.
 

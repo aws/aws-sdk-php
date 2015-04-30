@@ -5,24 +5,11 @@ AWS SDK for PHP
 .. toctree::
     :hidden:
 
-    requirements
-    installation
-    basic-usage
-
-    configuration
-    credentials
-    commands
-    waiters
-    paginators
+    getting-started/index
+    guide/index
+    service/index
     faq
     glossary
-
-    service-cloudfront
-    feature-dynamodb-session-handler
-    service-s3
-    feature-s3-stream-wrapper
-
-    migration-guide
 
 The **AWS SDK for PHP** enables PHP developers to use
 `Amazon Web Services <http://aws.amazon.com/>`_ from their PHP code, and build
@@ -44,39 +31,54 @@ External links: `API Docs <http://docs.aws.amazon.com/aws-sdk-php/v3/api/>`_
 Getting Started
 ---------------
 
-1. :doc:`requirements`
-2. :doc:`installation`
-3. :doc:`basic-usage`
-
-.. 4. `Sample Project <http://aws.amazon.com/developers/getting-started/php/>`_
+1. :doc:`getting-started/requirements`
+2. :doc:`getting-started/installation`
+3. :doc:`getting-started/basic-usage`
 
 
-SDK Details
------------
+SDK Guides
+----------
 
-* :doc:`configuration`
-* :doc:`credentials`
-* :doc:`paginators`
-* :doc:`waiters`
-* :doc:`commands`
+* :doc:`guide/configuration`
+* :doc:`guide/credentials`
+* :doc:`guide/commands`
+* :doc:`guide/paginators`
+* :doc:`guide/waiters`
+* :doc:`guide/jmespath`
+* :doc:`guide/migration`
+
+
+Service Features
+----------------
+
+* :doc:`service/cloudfront`
+* :doc:`service/dynamodb-session-handler`
+* :doc:`guide/paginators`
+* :doc:`service/s3-presigned-url`
+* :doc:`service/s3-stream-wrapper`
+* :doc:`service/s3-transfer`
+
+
+Reference
+---------
+
 * :doc:`faq`
-* :doc:`concepts`
+* :doc:`glossary`
 * `Contributing to the SDK <https://github.com/aws/aws-sdk-php/blob/master/CONTRIBUTING.md>`_
 * `Guzzle Documentation <http://guzzlephp.org>`_
 
 
 .. _supported-services:
 
-Supported Services
-------------------
+API Documentation
+-----------------
+
+API documentation for the SDK can be found at http://docs.aws.amazon.com/aws-sdk-php/v3/api/.
+Documentation for specific AWS services can found below.
 
 - :apiref:`Amazon CloudFront | CloudFront`
-  - :doc:`service-cloudfront`
 - :apiref:`Amazon CloudWatch | CloudWatch`
 - :apiref:`Amazon DynamoDB | DynamoDb`
-
-  - :doc:`DynamoDB Session Handler <feature-dynamodb-session-handler>`
-
 - :apiref:`Amazon Elastic Compute Cloud (Amazon EC2) | Ec2`
 - :apiref:`Amazon Elastic MapReduce (Amazon EMR) | Emr`
 - :apiref:`Amazon Elastic Transcoder | ElasticTranscoder`
@@ -85,16 +87,11 @@ Supported Services
 - :apiref:`Amazon Kinesis | Kinesis`
 - :apiref:`Amazon Redshift | Redshift`
 - :apiref:`Amazon Relational Database Service (Amazon RDS) | Rds`
-
 - :apiref:`Amazon Route 53 | Route53`
 - :apiref:`Amazon Simple Email Service (Amazon SES) | Ses`
 - :apiref:`Amazon Simple Notification Service (Amazon SNS) | Sns`
 - :apiref:`Amazon Simple Queue Service (Amazon SQS) | Sqs`
 - :apiref:`Amazon Simple Storage Service (Amazon S3) | S3`
-
-  - :doc:`service-s3`
-  - :doc:`Amazon S3 Stream Wrapper <feature-s3-stream-wrapper>`
-
 - :apiref:`Amazon Simple Workflow Service (Amazon SWF) | Swf`
 - :apiref:`Amazon SimpleDB | SimpleDb`
 - :apiref:`Auto Scaling | AutoScaling`

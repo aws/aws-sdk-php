@@ -1,6 +1,6 @@
-================================
-Frequently Asked Questions (FAQ)
-================================
+===
+FAQ
+===
 
 
 What methods are available on a client?
@@ -146,4 +146,4 @@ If you are seeing this error and you are **not** intending to use instance
 profile credentials, then you need to make sure that you are properly providing
 credentials to the SDK.
 
-For more information, see :doc:`credentials`.
+For more information, see :doc:`/guide/credentials`.

@@ -8,7 +8,8 @@ SDK
     <http://docs.aws.amazon.com/aws-sdk-php/v3/api/Aws/Sdk.html>`_, which acts
     as a factory for the client objects for each **service**. The ``Sdk`` class
     also let's you provide a set of :doc:`global configuration values
-    <configuration>` that are applied to all client objects that it creates.
+    </guide/configuration>` that are applied to all client objects that it
+    creates.
 
 Service
     A general way to refer to any of the AWS services (e.g., Amazon S3, Amazon
@@ -29,8 +30,8 @@ Client
     Client objects are used to execute operations for a service. Each service
     that is supported in the SDK has a corresponding client object. Client
     objects have methods that correspond one-to-one with the service operations.
-    See the :doc:`basic usage guide <basic-usage>` for details on how to create
-    and use client objects.
+    See the :doc:`basic usage guide </getting-started/basic-usage>` for details
+    on how to create and use client objects.
 
 API Version
     Services have one or more API versions, and which version you are using
@@ -53,8 +54,8 @@ Credentials
     <http://aws.amazon.com/developers/access-keys/>`_. Your access keys consist
     of two parts: your access key ID, which identifies your account, and your
     secret access, which is used to create **signatures** when executing
-    operations. You must :doc:`provide credentials <credentials>` when you
-    configure a client object.
+    operations. You must :doc:`provide credentials </guide/credentials>` when
+    you configure a client object.
 
 Signature
     When executing operations, the SDK uses your credentials to create a digital
@@ -64,11 +65,11 @@ Signature
 
 Command
     Command objects encapsulate the execution of an operation. When following
-    the :doc:`basic usage patterns <basic-usage>` of the SDK, you will not deal
-    directly with command objects. Command objects can be accessed using the
-    ``getCommand()`` method of a client, in order to use advanced features of
-    the SDK like concurrent requests and batching. See the :doc:`commands` guide
-    for more details.
+    the :doc:`basic usage patterns </getting-started/basic-usage>` of the SDK,
+    you will not deal directly with command objects. Command objects can be
+    accessed using the ``getCommand()`` method of a client, in order to use
+    advanced features of the SDK like concurrent requests and batching. See
+    the :doc:`/guide/commands` guide for more details.
 
 Paginator
     Some AWS service operations are paginated and respond with truncated
@@ -78,7 +79,7 @@ Paginator
     results. Paginators are a feature of the SDK that act as an abstraction over
     this process to make it easier for developers to use paginated APIs. They
     are accessed via the ``getPaginator()`` method of the client. See the
-    :doc:`paginators` guide for more details.
+    :doc:`/guide/paginators` guide for more details.
 
 Waiter
     Waiters are a feature of the SDK that make it easier to work with operations
@@ -88,4 +89,4 @@ Waiter
     to access for several seconds. Executing a waiter allows you to wait until a
     resource enters into a particular state by sleeping and polling the
     resource's status. Waiters are accessed using the ``waitUntil()`` method of
-    the client. See the :doc:`waiters` guide for more details.
+    the client. See the :doc:`/guide/waiters` guide for more details.

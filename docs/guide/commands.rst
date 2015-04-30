@@ -10,8 +10,6 @@ sending asynchronous requests.
 Typical SDK usage
 -----------------
 
-.. include:: _snippets/performing-operations.txt
-
 
 A peek under the hood
 ---------------------

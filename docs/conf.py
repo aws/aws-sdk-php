@@ -31,6 +31,7 @@ html_show_sourcelink = False
 html_sidebars = {
     '**': ['sidebarlogo.html',
            'globaltoc.html',
+           'localtoc.html',
            'searchbox.html',
            'feedback.html']
 }

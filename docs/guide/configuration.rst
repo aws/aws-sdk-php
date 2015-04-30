@@ -3,8 +3,16 @@ Configuration
 =============
 
 This guide describes client constructor options. These options can be provided
-in a client constructor or to the ``Aws\Sdk`` class. The following example
-shows how to pass options into an Amazon S3 client constructor.
+in a client constructor or to the ``Aws\Sdk`` class.
+
+
+.. contents:: Configuration Options
+    :depth: 1
+    :local:
+
+
+The following example shows how to pass options into an Amazon S3 client
+constructor.
 
 .. code-block:: php
 
@@ -18,7 +26,7 @@ shows how to pass options into an Amazon S3 client constructor.
 
     $s3Client = new S3Client($options);
 
-Refer to the :doc:`basic usage guide <basic-usage>` for more
+Refer to the :doc:`basic usage guide </getting-started/basic-usage>` for more
 information on constructing clients.
 
 
