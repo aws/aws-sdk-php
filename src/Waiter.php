@@ -95,7 +95,7 @@ class Waiter implements PromisorInterface
                 // Determine the waiter's state and what to do next.
                 $state = $this->determineState($result);
                 if ($state === 'success') {
-                    yield new FulfilledPromise($result);
+                    yield true;
                 } elseif ($state === 'failed') {
                     $msg = "The {$this->name} waiter entered a failure state.";
                     if ($result instanceof \Exception) {
@@ -232,9 +232,13 @@ class Waiter implements PromisorInterface
      */
     private function matchesStatus($result, array $acceptor)
     {
-        return !($result instanceof ResultInterface)
-            ? false
-            : $acceptor['expected'] == $result['@metadata']['statusCode'];
+        if ($result instanceof ResultInterface) {
+            return $acceptor['expected'] == $result['@metadata']['statusCode'];
+        } elseif ($result instanceof AwsException) {
+            return $acceptor['expected'] == $result->getResponse()->getStatusCode();
+        } else {
+            return false;
+        }
     }
 
     /**
