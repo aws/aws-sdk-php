@@ -230,7 +230,7 @@ objects, so we will need to map over the ``SplFileInfo`` objects to return
     // Create a pool and provide an optional array of configuration.
     $pool = new CommandPool($client, $commands, [
         // Only send 5 files at a time (this is set to 25 by default).
-        'concurrencty' => 5,
+        'concurrency' => 5,
         // Invoke this function before executing each command.
         'before' => function (CommandInterface $cmd, $iterKey) {
             echo "About to send {$iterKey}: "
