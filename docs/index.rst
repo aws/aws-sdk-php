@@ -42,6 +42,7 @@ SDK Guides
 * :doc:`guide/configuration`
 * :doc:`guide/credentials`
 * :doc:`guide/commands`
+* :doc:`guide/promises`
 * :doc:`guide/paginators`
 * :doc:`guide/waiters`
 * :doc:`guide/jmespath`

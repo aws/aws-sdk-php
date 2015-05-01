@@ -44,8 +44,8 @@ class CommandPoolTest extends \PHPUnit_Framework_TestCase
             $client->getCommand('HeadBucket', ['Bucket' => 'Foo'])
         ];
         $pool = new CommandPool($client, $iter, [
-            'before' => function ($command) use (&$called) {
-                $called[] = $command;
+            'before' => function ($command, $key) use (&$called) {
+                $called[$key] = $command;
             }
         ]);
         $pool->promise()->wait();

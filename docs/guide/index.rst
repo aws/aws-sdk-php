@@ -11,6 +11,7 @@ guides describe the components that are used in the SDK.
     configuration
     credentials
     commands
+    promises
     paginators
     waiters
     jmespath

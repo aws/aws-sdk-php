@@ -50,13 +50,13 @@ class CommandPool implements PromisorInterface
 
         $before = $this->getBefore($config);
         $mapFn = function ($commands) use ($client, $before) {
-            foreach ($commands as $command) {
+            foreach ($commands as $key => $command) {
                 if (!($command instanceof CommandInterface)) {
                     throw new \InvalidArgumentException('Each value yielded by '
                         . 'the iterator must be an Aws\CommandInterface.');
                 }
                 if ($before) {
-                    $before($command);
+                    $before($command, $key);
                 }
                 yield $client->executeAsync($command);
             }

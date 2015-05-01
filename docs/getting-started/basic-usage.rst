@@ -156,37 +156,52 @@ Operations available to a client and the structure of the input and output are
 defined at runtime based on a service description file. When creating a client,
 you must provide a version (e.g., `"2006-03-01"` or `"latest"`). The SDK will
 find the corresponding configuration file based on the provided version.
-Operations methods like ``putObject()`` all accept a single argument that is an
-associative array of values representing the parameters to the operation. The
-structure of this array (and the structure of the result object) is defined for
-each operation in the SDK's API Documentation (e.g., see the API docs for
+
+Operation methods like ``putObject()`` all accept a single argument -- an
+associative array representing the parameters of the operation. The structure
+of this array (and the structure of the result object) is defined for each
+operation in the SDK's API Documentation (e.g., see the API docs for
 `putObject operation <http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-s3-2006-03-01.html#putobject>`__).
 
-You can send requests concurrently by suffixing an operation name with
+
+Asynchronous Requests
+---------------------
+
+You can send commands concurrently using the asynchronous features of the SDK.
+You can send requests asynchronously by suffixing an operation name with
 ``Async``. This will initiate the request and return a promise. The promise
 will be fulfilled with the result object on success or rejected with an
-exception on failure.
+exception on failure. This allows you to create multiple promises and
+have them send HTTP requests concurrently when the underlying HTTP handler
+transfers the requests.
 
 .. code-block:: php
 
-    $promise = $s3->listBucketsAsync();
-    $promise
-        ->then(function (\Aws\Result $value) {
-            echo 'Got the result: ' . $value;
-        })
-        ->otherwise(\Exception $reason) {
-            echo 'Encountered an error: ' . $reason->getMessage();
-        });
+    $promise = $s3Client->listBucketsAsync();
+    // Block until the result is ready.
+    $result = $promise->wait();
 
 You can force a promise to complete synchronously using the ``wait`` method of
 the promise. Forcing the promise to complete will also "unwrap" the state of
 the promise by default, meaning it will either return the result of the promise
-or throw the exception that was encountered.
+or throw the exception that was encountered. When calling ``wait()`` on a
+promise, the process will block until the HTTP request has completed and the
+result has been populated or an exception is thrown.
+
+When using the SDK with an event loop library, you will not want to block on
+results, but rather use the ``then()`` method of a result to access a promise
+that is resolved or rejected when the operation completes.
 
 .. code-block:: php
 
-    $promise = $s3->listBucketsAsync();
-    $result = $promise->wait();
+    $promise = $s3Client->listBucketsAsync();
+    $promise
+        ->then(function ($result) {
+            echo 'Got a result: ' . var_export($result, true);
+        })
+        ->otherwise(function ($reason) {
+            echo 'Encountered an error: ' . $reason->getMessage();
+        });
 
 
 Working with Result objects

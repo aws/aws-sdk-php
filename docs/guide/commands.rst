@@ -2,63 +2,63 @@
 Command Objects
 ===============
 
-Command objects are useful for performing :ref:`performing operations
-concurrently <concurrent_commands>`, using the command event system, and
-sending asynchronous requests.
+The SDK uses the `command pattern <http://en.wikipedia.org/wiki/Command_pattern>`_
+to encapsulate the parameters and handler that will be used to transfer an HTTP
+request at a later point in time.
 
 
-Typical SDK usage
------------------
+Implicit use of commands
+------------------------
 
+If you examine any client class, you will see that the methods corresponding to
+API operations do not actually exist. They are implemented using the
+``__call()`` magic method. These pseudo-methods are actually shortcuts that
+encapsulate the SDK's use of command objects.
 
-A peek under the hood
----------------------
+You do not typically need to interact with command objects directly. When you
+call methods like ``Aws\S3\S3Client::putObject()``, the SDK actually creates an
+``Aws\CommandInterface`` object based on the provided parameters, executes the
+command, and returns a populated ``Aws\ResultInterface`` object (or throws an
+exception on error). A similar flow occurs when calling any of the ``Async``
+methods of a client (e.g., ``Aws\S3\S3Client::putObjectAsync()``): the client
+creates a command based on the provided parameters, serializes an HTTP request,
+initiates the request, and returns a promise.
 
-If you examine a client class, you will see that the methods corresponding to
-the operations do not actually exist. They are implemented using the
-``__call()`` magic method behavior. These pseudo-methods are actually shortcuts
-that encapsulate the SDK's — and the underlying Guzzle library's — use of
-command objects.
-
-For example, you could perform the same ``DescribeTable`` operation from the
-preceding section using command objects:
+The following examples are functionally equivalent:
 
 .. code-block:: php
 
-    $command = $dynamoDbClient->getCommand('DescribeTable', [
-        'TableName' => 'YourTableName',
+    $s3Client = new Aws\S3\S3Client([
+        'version' => '2006-03-01',
+        'region'  => 'us-standard'
     ]);
 
-    $result = $dynamoDbClient->execute($command);
+    $params = [
+        'Bucket' => 'foo',
+        'Key'    => 'baz',
+        'Body'   => 'bar'
+    ];
 
-A **Command** is an object that represents the execution of a service
-operation. Command objects are an abstraction of the process of formatting a
-request to a service, executing the request, receiving the response, and
-formatting the results. Commands are created and executed by the client and
-contain references to **Request** and **Response** objects.
+    // Using operation methods creates command implicitly.
+    $result = $s3Client->putObject($params);
 
-
-Using command objects
----------------------
-
-Using the magic-methods for performing operations is preferred for typical use
-cases, but command objects provide greater flexibility and access to additional
-data.
+    // Using commands explicitly.
+    $command = $s3Client->getCommand('PutObject', $params);
+    $result = $s3Client->execute($command);
 
 
-Manipulating command objects before execution
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Command Parameters
+------------------
 
 When you create a command using a client's ``getCommand()`` method, it does not
-immediately execute. Because commands are lazily executed, it is possible to
-pass the command object around and add or modify the parameters. The following
-examples show how to work with command objects:
+immediately execute or transfer an HTTP request. The command is only executed
+when it is passed to the ``execute()`` method of the client. This gives you the
+opportunity to modify the command object before executing the command.
 
 .. code-block:: php
 
-    // You can add parameters after instantiation
     $command = $s3Client->getCommand('ListObjects');
-    $command[MaxKeys'] = 50;
+    $command['MaxKeys'] = 50;
     $command['Prefix'] = 'foo/baz/';
     $result = $s3Client->execute($command);
 
@@ -70,82 +70,225 @@ examples show how to work with command objects:
     $command['MaxKeys'] = 100;
     $result = $s3Client->execute($command);
 
-Take a look at the `API docs for commands
-<http://docs.aws.amazon.com/aws-sdk-php/v3/api/GuzzleHttp/Command/Command.html>`_.
-for more information on the PHP API.
 
+Command HandlerList
+-------------------
 
-.. _concurrent_commands:
+When a command is created from a client, it is given a clone of the client's
+``Aws\HandlerList`` object. The command is a given of a **clone** of the
+client's handler list to allow a command to utilize custom middlewares and
+handlers that do not affect other commands executed by the client.
 
-Executing commands concurrently
--------------------------------
-
-You can send commands concurrently using the asynchronous features of Guzzle.
-Setting the ``@future`` option of a command to true will create a futue result
-object that is completed asynchronously. This allows you to create multiple
-futures and have them send HTTP request concurrently when the underlying HTTP
-handler transfers the requests.
+What this means is that you can use a different HTTP client per/command
+(e.g., ``Aws\MockHandler``) and add custom behavior per/command through
+middleware. The following example uses a ``MockHandler`` to create mock results
+instead of sending actual HTTP requests.
 
 .. code-block:: php
 
-    use Aws\S3\Exception\S3Exception;
+    use Aws\Result;
+    use Aws\MockHandler;
 
-    // Create a future result. This call returns almost immediately.
-    $futureResult = $s3Client->listBuckets(['@future' => true]);
+    // Create a mock handler.
+    $mock = new MockHandler();
+    // Enqueue a mock result to the handler.
+    $mock->append(new Result(['foo' => 'bar']));
+    // Create a "ListObjects" command.
+    $command = $s3Client->getCommand('ListObjects');
+    // Associate the mock handler with the command.
+    $command->getHandlerList()->setHandler($mock);
+    // Executing the command will use the mock handler, which will return the
+    // mocked result object.
+    $result = $client->execute($command);
 
-    // Do other stuff...
-    // ...
+    echo $result['foo']; // Outputs 'bar'
 
-    // Block until the result is ready.
-    try {
-        $result = $futureResult->wait();
-    } catch (S3Exception $e) {
-        echo $e->getMessage();
-    }
-
-When a future result is used in a blocking manner (whether by accessing the
-result as a normal result object or explicitly calling the ``wait()`` method),
-the result will complete and an exception could be raised if an error was
-encountered while completing the request.
-
-When using the SDK with an event loop library, you will not want to block on
-results, but rather use the ``then()`` method of a result to access a promise
-that is resolved or rejected when the operation completes.
+In addition to changing the handler used by the command, you can also inject
+custom middleware to the command. The following example uses the ``tap``
+middleware, which functions as an observer in the handler list.
 
 .. code-block:: php
 
-    $futureResult = $s3Client->listBuckets(['@future' => true]);
-    $futureResult->then(
-        function ($result) {
-            echo 'Got a result: ' . var_export($result, true);
-        },
-        function ($error) {
-            echo 'Got an error: ' . $error->getMessage();
+    use Aws\CommandInterface;
+    use Aws\Middleware;
+    use Psr\Http\Message\RequestInterface;
+
+    $command = $s3Client->getCommand('ListObjects');
+    $list = $command->getHandlerList();
+
+    // Create a middleware that just dumps the command and request that is
+    // about to be sent.
+    $middleware = Middleware::tap(
+        function (CommandInterface $command, RequestInterface $request) {
+            var_dump($command->toArray());
+            var_dump($request);
         }
     );
 
-If you want to send a large number of requests concurrently and wait until all
-of the requests have completed, then you should use the ``executeAll`` method
-of a client. The ``executeAll`` method takes an iterator or array that contains
-command object and sends them concurrently using a fixed pool size. As commands
-complete, more are added to the pool of requests.
+    // Append the middleware to the "sign" step of the handler list. The sign
+    // step is the last step before transferring an HTTP request.
+    $list->append('sign', $middleware);
+
+    // Now transfer the command and see the var_dump data.
+    $s3Client->execute($command);
+
+
+.. _command_pool:
+
+CommandPool
+-----------
+
+The ``Aws\CommandPool`` allows you to execute commands concurrently using a
+iterator that yields ``Aws\CommandInterface`` objects. The ``CommandPool``
+ensures that a constant number of commands are executed concurrently while
+iterating over the commands in the pool (as commands complete, more are
+executed to ensure a constant pool size).
+
+Here's a very simple example of just sending a few commands using a
+``CommandPool``.
 
 .. code-block:: php
 
-    use GuzzleHttp\Command\Event\ProcessEvent;
+    use Aws\S3\S3Client;
+    use Aws\CommandPool;
 
-    $generator = function ($total) use ($s3Client) {
-        while ($i-- > 0) {
-            yield $s3Client->getCommand('ListBuckets');
+    // Create the client.
+    $client = new S3Client([
+        'region'  => 'us-standard',
+        'version' => '2006-03-01'
+    ]);
+
+    $bucket = 'example';
+    $commands = [
+        $client->getCommand('HeadObject', ['Bucket' => $bucket, 'Key' => 'a']),
+        $client->getCommand('HeadObject', ['Bucket' => $bucket, 'Key' => 'b']),
+        $client->getCommand('HeadObject', ['Bucket' => $bucket, 'Key' => 'c'])
+    ];
+
+    $pool = new CommandPool($client, $commands);
+
+    // Initiate the pool transfers
+    $promise = $pool->promise();
+
+    // Force the pool to complete synchronously
+    $promise->wait();
+
+That example is pretty underpowered for the ``CommandPool``. Let's try a more
+complex example. Let's say you want to upload files on disk to an Amazon S3
+bucket. To get a list of files from disk, we can use PHP's
+``DirectoryIterator``. This iterator yields ``SplFileInfo`` objects. The
+``CommandPool`` accepts an iterator that yields ``Aws\CommandInterface``
+objects, so we will need to map over the ``SplFileInfo`` objects to return
+``Aws\CommandInterface`` objects.
+
+.. code-block:: php
+
+    <?php
+    require 'vendor/autoload.php';
+
+    use Aws\Exception\AwsException;
+    use Aws\S3\S3Client;
+    use Aws\CommandPool;
+    use Aws\CommandInterface;
+    use Aws\ResultInterface;
+    use GuzzleHttp\Promise\PromiseInterface;
+
+    // Create the client.
+    $client = new S3Client([
+        'region'  => 'us-standard',
+        'version' => '2006-03-01'
+    ]);
+
+    $fromDir = '/path/to/dir';
+    $toBucket = 'my-bucket';
+
+    // Create an iterator that yields files from a directory.
+    $files = new DirectoryIterator($fromDir);
+
+    // Create a generator that converts the SplFileInfo objects into
+    // Aws\CommandInterface objects. This generator accepts the iterator that
+    // yields files and the name of the bucket to upload the files to.
+    $commandGenerator = function (\Iterator $files, $bucket) use ($client) {
+        foreach ($files as $file) {
+            // Skip "." and ".." files.
+            if ($file->isDot()) {
+                continue;
+            }
+            $filename = $file->getPath() . '/' . $file->getFilename();
+            // Yield a command that will be executed by the pool.
+            yield $client->getCommand('PutObject', [
+                'Bucket' => $bucket,
+                'Key'    => $file->getBaseName(),
+                'Body'   => fopen($filename, 'r')
+            ]);
         }
     };
 
-    $s3Client->executeAll($generator(10), [
-        'process' => function (ProcessEvent $e) {
-            if ($e->getException()) {
-                echo 'Got error: ' . $e->getException()->getMessage();
-            } else {
-                echo 'Got result: ' . var_export($e->getResult(), true);
-            }
-        }
+    // Now create the generator using the files iterator.
+    $commands = $commandGenerator($files, $toBucket);
+
+    // Create a pool and provide an optional array of configuration.
+    $pool = new CommandPool($client, $commands, [
+        // Only send 5 files at a time (this is set to 25 by default).
+        'concurrencty' => 5,
+        // Invoke this function before executing each command.
+        'before' => function (CommandInterface $cmd, $iterKey) {
+            echo "About to send {$iterKey}: "
+                . print_r($cmd->toArray(), true) . "\n";
+        },
+        // Invoke this function for each successful transfer.
+        'fulfilled' => function (
+            ResultInterface $result,
+            $iterKey,
+            PromiseInterface $aggregatePromise
+        ) {
+            echo "Completed {$iterKey}: {$result}\n";
+        },
+        // Invoke this function for each failed transfer.
+        'rejected' => function (
+            AwsException $reason,
+            $iterKey,
+            PromiseInterface $aggregatePromise
+        ) {
+            echo "Failed {$iterKey}: {$reason}\n";
+        },
     ]);
+
+    // Initiate the pool transfers
+    $promise = $pool->promise();
+
+    // Force the pool to complete synchronously
+    $promise->wait();
+
+    // Or you can chain then calls off of the pool
+    $promise->then(function() { echo "Done\n"; });
+
+
+CommandPool Config
+~~~~~~~~~~~~~~~~~~
+
+The ``Aws\CommandPool`` constructor accepts various configuration options.
+
+concurrency
+    (callable|int) Maximum number of commands to execute concurrently.
+    Provide a function to resize the pool dynamically. The function will be
+    provided the current number of pending requests and is expected to return
+    an integer representing the new pool size limit.
+
+before
+    (callable) function to invoke before sending each command. The before
+    function accepts the command and the key of the iterator of the command.
+    You can mutate the command as needed in the before function before sending
+    the command.
+
+fulfilled
+    (callable) Function to invoke when a promise is fulfilled. The function is
+    provided the result object, id of the iterator that the result came from,
+    and the aggregate promise that can be resolved/rejected if you need to
+    short-circuit the pool.
+
+rejected
+    (callable) Function to invoke when a promise is rejected. The function is
+    provided an AwsException object, id of the iterator that the exception came
+    from, and the aggregate promise that can be resolved/rejected if you need
+    to short-circuit the pool.
