@@ -153,6 +153,30 @@ class S3Client extends AbstractClient
         'DeleteObjectExpirationConfig'  => 'DeleteBucketLifecycle',
     );
 
+    /**
+     * Query parameters for a GetObject request that require signing.
+     *
+     * @var array
+     */
+    protected static $getObjectSigningRequired = array(
+        'response-content-type',
+        'response-content-language',
+        'response-expires',
+        'response-cache-control',
+        'response-content-disposition',
+        'response-content-encoding',
+    );
+
+    /**
+     * The default URL expiry time for signed requests.
+     *
+     * This is used as a fallback when a query parameter in a Request requires
+     * signing a URL.
+     *
+     * @var int
+     */
+    protected $defaultExpires = 60;
+
     protected $directory = __DIR__;
 
     /**
@@ -363,6 +387,14 @@ class S3Client extends AbstractClient
             $request = $command->remove('Scheme')->prepare()->setScheme($scheme)->setPort(null);
         } else {
             $request = $command->prepare();
+        }
+
+        // If the returned request requires signing, but $expires hasn't been
+        // set, use a default expiry.
+        if (!$expires && array_intersect(static::$getObjectSigningRequired,
+            $request->getQuery()->getKeys()
+          )) {
+            $expires = time() + $this->getDefaultExpires();
         }
 
         return $expires ? $this->createPresignedUrl($request, $expires) : $request->getUrl();
@@ -681,5 +713,21 @@ class S3Client extends AbstractClient
         }
 
         return $exists;
+    }
+
+    /**
+     * @return int
+     */
+    protected function setDefaultExpires($expires)
+    {
+        $this->defaultExpires = $expires;
+    }
+
+    /**
+     * @return int
+     */
+    protected function getDefaultExpires()
+    {
+        return $this->defaultExpires;
     }
 }
