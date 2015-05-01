@@ -19,7 +19,7 @@ namespace Aws\S3
 {
     function time()
     {
-        return $_SERVER['override_s3_time'] ? strtotime('December 5, 2013 00:00:00 UTC') : \time();
+        return !empty($_SERVER['override_s3_time']) ? strtotime('December 5, 2013 00:00:00 UTC') : \time();
     }
 }
 
