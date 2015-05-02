@@ -158,7 +158,7 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
         $this->addMockResults($client, [
             new Result(['LastToken' => 'b2', 'TableNames' => ['a1', 'b2']]),
             new Result(['LastToken' => 'b2', 'TableNames' => []]),
-            new Result(['TableNames' => ['c3']]),
+            new Result(['LastToken' => 'b2', 'TableNames' => ['c3']]),
             new Result(['TableNames' => ['d4']]),
         ], function () use (&$requestCount) {
             $requestCount++;
@@ -170,12 +170,12 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $tableNames = [];
-        foreach ($paginator->search('TableNames[][::-1]', 3) as $table) {
+        foreach ($paginator->search('TableNames[][::-1]') as $table) {
             $tableNames[] = $table;
         }
 
-        $this->assertEquals(3, $requestCount);
-        $this->assertEquals(['1a', '2b', '3c'], $tableNames);
+        $this->assertEquals(4, $requestCount);
+        $this->assertEquals(['1a', '2b', '3c', '4d'], $tableNames);
     }
 
     public function testGracefullyHandlesSingleValueResults()
