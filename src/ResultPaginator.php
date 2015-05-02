@@ -51,11 +51,19 @@ class ResultPaginator implements \Iterator
     /**
      * Runs a paginator asynchronously and uses a callback to handle results.
      *
-     * The callback should have the signature: function (|Aws\Result $result)
+     * The callback should have the signature: function (Aws\Result $result).
+     * A non-null return value from the callback will be yielded by the
+     * promise. This means that you can return promises from the callback that
+     * will need to be resolved before continuing iteration over the remaining
+     * items, essentially merging in other promises to the iteration. The last
+     * non-null value returned by the callback will be the result that fulfills
+     * the promise to any downstream promises.
      *
      * @param callable $handleResult Callback for handling each page of results.
-     *                               If the callback returns a promise, the
-     *                               promise will be merged into the coroutine.
+     *                               The callback accepts the result that was
+     *                               yielded as a single argument. If the
+     *                               callback returns a promise, the promise
+     *                               will be merged into the coroutine.
      *
      * @return Promise\Promise
      */
@@ -67,7 +75,8 @@ class ResultPaginator implements \Iterator
                 $command = $this->createNextCommand($this->args, $nextToken);
                 $result = (yield $this->client->executeAsync($command));
                 $nextToken = $this->determineNextToken($result);
-                if ($retVal = $handleResult($result)) {
+                $retVal = $handleResult($result);
+                if ($retVal !== null) {
                     yield Promise\promise_for($retVal);
                 }
             } while ($nextToken);

@@ -2,6 +2,7 @@
 Paginators
 ==========
 
+
 Introduction
 ------------
 
@@ -21,7 +22,9 @@ object using ``foreach`` to get individual ``Aws\Result`` objects.
 
 .. code-block:: php
 
-    $results = $s3Client->getPaginator('ListObjects', ['Bucket' => 'my-bucket']);
+    $results = $s3Client->getPaginator('ListObjects', [
+        'Bucket' => 'my-bucket'
+    ]);
 
     foreach ($results as $result) {
         foreach ($result['Contents'] as $object) {
@@ -29,10 +32,11 @@ object using ``foreach`` to get individual ``Aws\Result`` objects.
         }
     }
 
+
 Paginator Objects
 -----------------
 
-The actual object returned by ``getPaginator()`` method is an instance of the
+The object returned by ``getPaginator()`` method is an instance of the
 ``Aws\ResultPaginator`` class. This class implements PHP's native ``Iterator``
 interface, which is why it works with ``foreach``. It can also be used with
 iterator functions, like ``iterator_to_array``, and integrates well with
@@ -46,6 +50,7 @@ returns up to 1000 objects at a time, so if your bucket has ~10000 objects, then
 the paginator would need to do 10 requests total. When you iterate through the
 results, the first request is executed when you start iterating, the second in
 the second iteration of the loop, and so forth.
+
 
 Enumerating Data from Results
 -----------------------------
@@ -62,17 +67,13 @@ The following example is equivalent to the preceding code sample, but uses the
 
 .. code-block:: php
 
-    $results = $s3Client->getPaginator('ListObjects', ['Bucket' => 'my-bucket']);
+    $results = $s3Client->getPaginator('ListObjects', [
+        'Bucket' => 'my-bucket'
+    ]);
+
     foreach ($results->search('Contents[].Key') as $key) {
         echo $key . "\n";
     }
-
-You can also limit the number of items you want returned by using the second
-argument of ``search()``.
-
-.. code-block:: php
-
-    $keys = $results->search('Contents[].Key', 2500);
 
 JMESPath expressions allow you to do fairly complex things. For example, if you
 wanted to print all of the object keys and common prefixes (i.e., do an ``ls``
@@ -85,6 +86,65 @@ of a bucket), you could do the following.
         'Bucket'    => 'my-bucket',
         'Delimiter' => '/'
     ]);
-    foreach ($paginator->search('[CommonPrefixes[].Prefix, Contents[].Key][]') as $item) {
+
+    $expression = '[CommonPrefixes[].Prefix, Contents[].Key][]';
+    foreach ($paginator->search($expression) as $item) {
         echo $item . "\n";
     }
+
+
+Asynchronous Pagination
+-----------------------
+
+You can iterate over the results of a paginator asynchronously by providing a
+callback the the ``each()`` method of an ``Aws\ResultPaginator``. The callback
+is invoked for each value that is yielded by the paginator.
+
+.. code-block:: php
+
+    $results = $s3Client->getPaginator('ListObjects', [
+        'Bucket' => 'my-bucket'
+    ]);
+
+    $promise = $results->each(function ($result) {
+        echo 'Got ' . var_export($result, true) . "\n";
+    });
+
+.. tip::
+
+    Using the ``each()`` method allows you to paginate over the results of an
+    API operation while concurrently sending other requests asynchronously.
+
+A non-null return value from the callback will be yielded by the underlying
+coroutine based promise. This means that you can return promises from the
+callback that must be resolved before continuing iteration over the remaining
+items, essentially merging in other promises to the iteration. The last
+non-null value returned by the callback will be the result that fulfills the
+promise to any downstream promises. If the last return value is a promise, then
+the resolution of that promise will be the result that fulfills or rejects
+downstream promises.
+
+.. code-block:: php
+
+    // Delete all keys that end with "Foo"
+    $promise = $results->each(function ($result) use ($s3Client) {
+        if (substr($result['Key'], -3) === 'Foo') {
+            // Merge this promise into the iterator.
+            return $client->deleteAsync([
+                'Bucket' => 'my-bucket',
+                'Key'    => 'Foo'
+            ]);
+        }
+    });
+
+    $promise
+        ->then(function ($result) {
+            // Result would be the last result to the deleteAsync operation.
+        })
+        ->otherwise($reason) {
+            // Reason would be an exception that was encountered either in the
+            // call to deleteAsync or calls performed while iterating.
+        });
+
+    // Forcing a synchronous wait will also wait on all of the deletAsync calls
+    $promise->wait();
