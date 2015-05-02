@@ -359,7 +359,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         ));
         $result = $command->execute();
         $this->assertContains('Grantee', (string) $command->getRequest()->getBody());
-        $this->assertEquals(array('RequestId'), array_keys($result->toArray()));
+        $this->assertArrayHasKey('RequestId', array_keys($result->toArray()));
         // Ensure that the RequestId model value is being populated correctly
         $this->assertEquals((string) $command->getResponse()->getHeader('x-amz-request-id'), $result['RequestId']);
     }
@@ -503,7 +503,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             'UploadId' => $uploadId
         ));
         $result = $command->execute();
-        $this->assertEquals(array('RequestId'), array_keys($result->toArray()));
+        $this->assertArrayHasKey('RequestId', array_keys($result->toArray()));
     }
 
     /**

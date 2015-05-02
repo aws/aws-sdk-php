@@ -90,9 +90,9 @@ class ParallelTransfer extends AbstractTransfer
             /** @var \Guzzle\Service\Command\OperationCommand $command */
             foreach ($this->client->execute($commands) as $command) {
                 $this->state->addPart(UploadPart::fromArray(array(
-                    'PartNumber'   => count($this->state) + 1,
+                    'PartNumber'   => $command['PartNumber'],
                     'ETag'         => $command->getResponse()->getEtag(),
-                    'Size'         => (int) $command->getResponse()->getContentLength(),
+                    'Size'         => (int) $command->getRequest()->getBody()->getContentLength(),
                     'LastModified' => gmdate(DateFormat::RFC2822)
                 )));
                 $eventData['command'] = $command;
