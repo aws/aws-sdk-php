@@ -15,7 +15,6 @@ use Aws\ResultInterface;
 use Aws\CommandInterface;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
-use transducers as t;
 
 /**
  * Client used to interact with **Amazon Simple Storage Service (Amazon S3)**.
@@ -301,12 +300,9 @@ class S3Client extends AwsClient
         $iter = $this->getIterator('ListObjects', $params);
 
         if ($regex) {
-            $iter = t\to_iter(
-                $iter,
-                t\filter(function ($c) use ($regex) {
-                    return preg_match($regex, $c['Key']);
-                })
-            );
+            $iter = \Aws\filter($iter, function ($c) use ($regex) {
+                return preg_match($regex, $c['Key']);
+            });
         }
 
         BatchDelete::fromIterator($this, $bucket, $iter, $options)->delete();

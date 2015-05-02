@@ -9,7 +9,6 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Stream;
 use GuzzleHttp\Psr7\CachingStream;
 use Psr\Http\Message\StreamInterface;
-use transducers as t;
 
 /**
  * Amazon S3 stream wrapper to use "s3://<bucket>/<key>" files with PHP
@@ -382,9 +381,9 @@ class StreamWrapper
 
         // Filter our "/" keys added by the console as directories, and ensure
         // that if a filter function is provided that it passes the filter.
-        $this->objectIterator = t\to_iter(
+        $this->objectIterator = \Aws\flatmap(
             $this->getClient()->getPaginator('ListObjects', $op),
-            t\mapcat(function (Result $result) use ($filterFn) {
+            function (Result $result) use ($filterFn) {
                 $contentsAndPrefixes = $result->search('[Contents[], CommonPrefixes[]][]');
                 // Filter out dir place holder keys and use the filter fn.
                 return array_filter(
@@ -394,7 +393,7 @@ class StreamWrapper
                             && (!isset($key['Key']) || substr($key['Key'], -1, 1) !== '/');
                     }
                 );
-            })
+            }
         );
 
         return true;

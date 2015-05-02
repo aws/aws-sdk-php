@@ -7,7 +7,6 @@ use Aws\ResultInterface;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Promise\PromisorInterface;
-use transducers as t;
 
 /**
  * Transfers files from the local filesystem to S3 or from S3 to the local
@@ -264,18 +263,17 @@ class Transfer implements PromisorInterface
     {
         // Creates an iterator that yields promises for either upload or
         // multipart upload operations for each file in the source directory.
-        $filter = t\filter(function ($file) {
+        $files = Aws\recursive_dir_iterator($this->source['path']);
+        // Filter out directories.
+        $files = \Aws\filter($files, function ($file) {
             return !is_dir($file);
         });
-        $map = t\map(function ($file) {
+        // Map each file into a promise that performs the actual transfer.
+        $files = \Aws\map($files, function ($file) {
             return (filesize($file) >= $this->mupThreshold)
                 ? $this->uploadMultipart($file)
                 : $this->upload($file);
         });
-        $files = t\to_iter(
-            Aws\recursive_dir_iterator($this->source['path']),
-            t\comp($filter, $map)
-        );
 
         // Create an EachPromise, that will concurrently handle the upload
         // operations' yielded promises from the iterator.

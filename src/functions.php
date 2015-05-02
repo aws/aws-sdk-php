@@ -2,7 +2,129 @@
 namespace Aws;
 
 use GuzzleHttp\ClientInterface;
-use transducers as t;
+
+//-----------------------------------------------------------------------------
+// Functional functions
+//-----------------------------------------------------------------------------
+
+/**
+ * Returns a function that always returns the same value;
+ *
+ * @param mixed $value Value to return.
+ *
+ * @return callable
+ */
+function constantly($value)
+{
+    return function () use ($value) { return $value; };
+}
+
+/**
+ * Filters values that do not satisfy the predicate function $pred.
+ *
+ * @param mixed    $iterable Iterable sequence of data.
+ * @param callable $pred Function that accepts a value and returns true/false
+ *
+ * @return \Generator
+ */
+function filter($iterable, callable $pred)
+{
+    foreach ($iterable as $value) {
+        if ($pred($value)) {
+            yield $value;
+        }
+    }
+}
+
+/**
+ * Applies a map function $f to each value in a collection.
+ *
+ * @param mixed    $iterable Iterable sequence of data.
+ * @param callable $f        Map function to apply.
+ *
+ * @return \Generator
+ */
+function map($iterable, callable $f)
+{
+    foreach ($iterable as $value) {
+        yield $f($value);
+    }
+}
+
+/**
+ * Creates a generator that iterates over a sequence, then iterates over each
+ * value in the sequence and yields the application of the map function to each
+ * value.
+ *
+ * @param mixed    $iterable Iterable sequence of data.
+ * @param callable $f        Map function to apply.
+ *
+ * @return \Generator
+ */
+function flatmap($iterable, callable $f)
+{
+    foreach (map($iterable, $f) as $outer) {
+        foreach ($outer as $inner) {
+            yield $inner;
+        }
+    }
+}
+
+/**
+ * Partitions the input sequence into partitions of the specified size.
+ *
+ * @param mixed    $iterable Iterable sequence of data.
+ * @param int $size Size to make each partition (except possibly the last chunk)
+ *
+ * @return \Generator
+ */
+function partition($iterable, $size)
+{
+    $buffer = [];
+    foreach ($iterable as $value) {
+        $buffer[] = $value;
+        if (count($buffer) === $size) {
+            yield $buffer;
+            $buffer = [];
+        }
+    }
+
+    if ($buffer) {
+        yield $buffer;
+    }
+}
+
+/**
+ * Returns a function that invokes the provided variadic functions one
+ * after the other until one of the functions returns a non-null value.
+ * The return function will call each passed function with any arguments it
+ * is provided.
+ *
+ *     $a = function ($x, $y) { return null; };
+ *     $b = function ($x, $y) { return $x + $y; };
+ *     $fn = \Aws\or_chain($a, $b);
+ *     echo $fn(1, 2); // 3
+ *
+ * @return callable
+ */
+function or_chain()
+{
+    $fns = func_get_args();
+    return function () use ($fns) {
+        $args = func_get_args();
+        foreach ($fns as $fn) {
+            $result = $args ? call_user_func_array($fn, $args) : $fn();
+            if ($result) {
+                return $result;
+            }
+        }
+        return null;
+    };
+}
+
+//-----------------------------------------------------------------------------
+// JSON compiler and loading functions
+//-----------------------------------------------------------------------------
 
 /**
  * Loads a compiled JSON file from a PHP file.
@@ -42,6 +164,10 @@ function clear_compiled_json()
     $loader = new JsonCompiler();
     $loader->purge();
 }
+
+//-----------------------------------------------------------------------------
+// Directory iterator functions.
+//-----------------------------------------------------------------------------
 
 /**
  * Iterates over the files in a directory and works with custom wrappers.
@@ -92,11 +218,11 @@ function recursive_dir_iterator($path, $context = null)
             yield $fullPath;
             if (is_dir($fullPath)) {
                 $queue[] = $iterator;
-                $iterator = t\to_iter(
+                $iterator = map(
                     dir_iterator($fullPath, $context),
-                    t\map(function ($file) use ($fullPath, $pathLen) {
+                    function ($file) use ($fullPath, $pathLen) {
                         return substr("{$fullPath}/{$file}", $pathLen);
-                    })
+                    }
                 );
                 continue;
             }
@@ -105,45 +231,9 @@ function recursive_dir_iterator($path, $context = null)
     } while ($iterator);
 }
 
-/**
- * Returns a function that invokes the provided variadic functions one
- * after the other until one of the functions returns a non-null value.
- * The return function will call each passed function with any arguments it
- * is provided.
- *
- *     $a = function ($x, $y) { return null; };
- *     $b = function ($x, $y) { return $x + $y; };
- *     $fn = \Aws\or_chain($a, $b);
- *     echo $fn(1, 2); // 3
- *
- * @return callable
- */
-function or_chain()
-{
-    $fns = func_get_args();
-    return function () use ($fns) {
-        $args = func_get_args();
-        foreach ($fns as $fn) {
-            $result = $args ? call_user_func_array($fn, $args) : $fn();
-            if ($result) {
-                return $result;
-            }
-        }
-        return null;
-    };
-}
-
-/**
- * Returns a function that always returns the same value;
- *
- * @param mixed $value Value to return.
- *
- * @return callable
- */
-function constantly($value)
-{
-    return function () use ($value) { return $value; };
-}
+//-----------------------------------------------------------------------------
+// Misc. functions.
+//-----------------------------------------------------------------------------
 
 /**
  * Debug function used to describe the provided value type and class.

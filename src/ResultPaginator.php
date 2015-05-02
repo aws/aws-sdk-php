@@ -1,7 +1,6 @@
 <?php
 namespace Aws;
 
-use transducers as t;
 use GuzzleHttp\Promise;
 
 /**
@@ -94,12 +93,9 @@ class ResultPaginator implements \Iterator
     public function search($expression)
     {
         // Apply JMESPath expression on each result, but as a flat sequence.
-        $xf = t\mapcat(function (Result $result) use ($expression) {
+        return flatmap($this, function (Result $result) use ($expression) {
             return (array) $result->search($expression);
         });
-
-        // Return items as an iterator.
-        return t\to_iter($this, $xf);
     }
 
     /**
