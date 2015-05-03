@@ -21,15 +21,20 @@ and adopt the latest PHP standards.
 What's New?
 -----------
 
-- Follows the `PSR-4 and PSR-7 standards <http://php-fig.org>`_
+- Follows the `PSR-4 and PSR-7 standards <http://php-fig.org>`_.
 - Built on `Guzzle 6 <http://guzzlephp.org>`_.
+
   - Decoupled HTTP layer so that Guzzle 5 is also supported.
   - Swappable HTTP handlers, including non-cURL options like a PHP stream
     wrapper handler.
+
 - Asynchronous requests.
-  - Features like *waiters* and *multipart uploaders* can be used asynchronously.
+
+  - Features like *waiters* and *multipart uploaders* can also be used
+    asynchronously.
   - Asynchronous workflows can be created using *promises* and *coroutines*.
   - Improved performance of concurrent/batched requests.
+
 - Middleware system for customizing service client behavior.
 - Flexible *paginators* for iterating through paginated results.
 - Ability to query data from *result* and *paginator* objects with *JMESPath*.
@@ -66,123 +71,51 @@ The dependencies of the SDK have changed a little in this version.
   within that paradigm.
 - The PHP implementation of JMESPath (``mtdowling/jmespath.php``) is used in the
   SDK to provide the data querying ability of the ``Aws\Result::search()`` and
-  ``Aws\ResultPaginator::search()``.
+  ``Aws\ResultPaginator::search()`` methods.
 
-====
+Region & Version Options Required
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. note::
-
-    The remainder of this guide is still being updated.
-
-Required Regions & Versions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The `region <http://docs.aws.amazon.com/general/latest/gr/rande.html>`_ must be provided to instantiate a client
-(except in the case where the service has a single endpoint like Amazon CloudFront). The AWS region you select may
-affect both your performance and costs.
+When instantiating a client, you must specify both the ``'region'`` and
+``'version'`` options. In version 2 of the SDK, ``'version'`` was completely
+optional, and ``'region'`` was sometimes optional. In version 3, both are always
+required. Being explicit about both of these options allows you to lock into the
+API version and region you are coding against. When new API versions are created
+or new regions become available, you will be isolated from those changes until
+you explicitly update your configuration.
 
 Client Instantiation
 ~~~~~~~~~~~~~~~~~~~~
 
-Factory methods instantiate service clients and do the work of setting up the signature,
-exponential backoff settings, exception handler, and so forth. At a minimum you must provide your access key, secret
-key, and region to the client factory, but there are many other settings you can use to customize the client
-behavior.
+In version 3 of the SDK, the way you instantiate a client has changed. Instead
+of the ``factory`` methods in version 2, you can simply instantiate a client
+with the ``new`` keyword.
 
 .. code-block:: php
 
-    $dynamodb = Aws\DynamoDb\DynamoDbClient::factory(array(
-        'key'    => 'your-aws-access-key-id',
-        'secret' => 'your-aws-secret-access-key',
-        'region' => 'us-west-2',
-    ));
+    use Aws\DynamoDb\DynamoDbClient;
 
-Client Configuration
-~~~~~~~~~~~~~~~~~~~~
+    // Version 2 style
+    $client = DynamoDbClient::factory([
+        'region'  => 'us-east-2'
+    ]);
 
-A global configuration file can be used to inject credentials into clients
-automatically via the service builder. The service builder acts as a dependency injection container for the service
-clients. (**Note:** The SDK does not automatically attempt to load the configuration file like in Version 1 of the
-SDK.)
+    // Version 3 style
+    $client = new DynamoDbClient([
+        'region'  => 'us-east-2',
+        'version' => '2012-08-10'
+    ]);
 
-.. code-block:: php
+.. note::
 
-    $aws = Aws\Common\Aws::factory('/path/to/custom/config.php');
-    $s3 = $aws->get('s3');
-
-This technique is the preferred way for instantiating service clients. Your ``config.php`` might look similar to the
-following:
-
-.. code-block:: php
-
-    <?php
-    return array(
-        'includes' => array('_aws'),
-        'services' => array(
-            'default_settings' => array(
-                'params' => array(
-                    'key'    => 'your-aws-access-key-id',
-                    'secret' => 'your-aws-secret-access-key',
-                    'region' => 'us-west-2'
-                )
-            )
-        )
-    );
-
-The line that says ``'includes' => array('_aws')`` includes the default configuration file packaged with the SDK. This
-sets up all of the service clients for you so you can retrieve them by name with the ``get()`` method of the service
-builder.
-
-Iterators
-~~~~~~~~~
-
-The SDK provides iterator classes that make it easier to traverse results from list and describe type
-operations. Instead of having to code solutions that perform multiple requests in a loop and keep track of tokens or
-markers, the iterator classes do that for you. You can simply foreach over the iterator:
-
-.. code-block:: php
-
-    $objects = $s3->getIterator('ListObjects', array(
-        'Bucket' => 'my-bucket-name'
-    ));
-
-    foreach ($objects as $object) {
-        echo $object['Key'] . PHP_EOL;
-    }
+    Instantiating a client using the ``factory()`` method still works, it is
+    just considered deprecated.
 
 Comparing Code Samples from Both SDKs
 -------------------------------------
 
-Example 1 - Amazon S3 ListParts Operation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-From Version 1 of the SDK
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. code-block:: php
-
-    <?php
-
-    require '/path/to/sdk.class.php';
-    require '/path/to/config.inc.php';
-
-    $s3 = new AmazonS3();
-
-    $response = $s3->list_parts('my-bucket-name', 'my-object-key', 'my-upload-id', array(
-        'max-parts' => 10
-    ));
-
-    if ($response->isOK())
-    {
-        // Loop through and display the part numbers
-        foreach ($response->body->Part as $part) {
-            echo "{$part->PartNumber}\n";
-        }
-    }
-    else
-    {
-        echo "Error during S3 ListParts operation.\n";
-    }
+Example: Amazon S3 ListObjects Operation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 From Version 2 of the SDK
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -193,109 +126,34 @@ From Version 2 of the SDK
 
     require '/path/to/vendor/autoload.php';
 
-    use Aws\Common\Aws;
+    use Aws\S3\S3Client;
     use Aws\S3\Exception\S3Exception;
 
-    $aws = Aws::factory('/path/to/config.php');
-    $s3 = $aws->get('s3');
+    $s3 = S3Client::factory([
+        'profile' => 'my-credential-profile',
+        'region'  => 'us-east-1'
+    ]);
 
     try {
-        $result = $s3->listParts(array(
-            'Bucket'   => 'my-bucket-name',
-            'Key'      => 'my-object-key',
-            'UploadId' => 'my-upload-id',
-            'MaxParts' => 10
-        ));
+        $result = $s3->listObjects([
+            'Bucket' => 'my-bucket-name',
+            'Key'    => 'my-object-key'
+        ]);
 
-        // Loop through and display the part numbers
-        foreach ($result['Part'] as $part) {
-            echo "{$part[PartNumber]}\n";
+        foreach ($result['Contents'] as $object) {
+            echo $object['Key'] . "\n";
         }
     } catch (S3Exception $e) {
-        echo "Error during S3 ListParts operation.\n";
+        echo $e->getMessage() . "\n";
     }
 
-Example 2 - Amazon DynamoDB Scan Operation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-From Version 1 of the SDK
+From Version 3 of the SDK
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: php
+Key differences:
 
-    <?php
-
-    require '/path/to/sdk.class.php';
-    require '/path/to/config.inc.php';
-
-    $dynamo_db = new AmazonDynamoDB();
-
-    $start_key = null;
-    $people = array();
-
-    // Perform as many Scan operations as needed to acquire all the names of people
-    // that are 16 or older
-    do
-    {
-        // Setup the parameters for the DynamoDB Scan operation
-        $params = array(
-            'TableName'       => 'people',
-            'AttributesToGet' => array('id', 'age', 'name'),
-            'ScanFilter'      => array(
-                'age' => array(
-                    'ComparisonOperator' =>
-                        AmazonDynamoDB::CONDITION_GREATER_THAN_OR_EQUAL,
-                    'AttributeValueList' => array(
-                        array(AmazonDynamoDB::TYPE_NUMBER => '16')
-                    )
-                ),
-            )
-        );
-
-        // Add the exclusive start key parameter if needed
-        if ($start_key)
-        {
-            $params['ExclusiveStartKey'] = array(
-                'HashKeyElement' => array(
-                    AmazonDynamoDB::TYPE_STRING => $start_key
-                )
-            );
-
-            $start_key = null;
-        }
-
-        // Perform the Scan operation and get the response
-        $response = $dynamo_db->scan($params);
-
-        // If the response succeeded, get the results
-        if ($response->isOK())
-        {
-            foreach ($response->body->Items as $item)
-            {
-                $people[] = (string) $item->name->{AmazonDynamoDB::TYPE_STRING};
-            }
-
-            // Get the last evaluated key if it is provided
-            if ($response->body->LastEvaluatedKey)
-            {
-                $start_key = (string) $response->body
-                    ->LastEvaluatedKey
-                    ->HashKeyElement
-                    ->{AmazonDynamoDB::TYPE_STRING};
-            }
-        }
-        else
-        {
-            // Throw an exception if the response was not OK (200-level)
-            throw new DynamoDB_Exception('DynamoDB Scan operation failed.');
-        }
-    }
-    while ($start_key);
-
-    print_r($people);
-
-From Version 2 of the SDK
-^^^^^^^^^^^^^^^^^^^^^^^^^
+- Use ``new`` instead of ``factory()`` to instantiate the client.
+- The ``'version'`` option is required during instantiation.
 
 .. code-block:: php
 
@@ -303,32 +161,24 @@ From Version 2 of the SDK
 
     require '/path/to/vendor/autoload.php';
 
-    use Aws\Common\Aws;
-    use Aws\DynamoDb\Enum\ComparisonOperator;
-    use Aws\DynamoDb\Enum\Type;
+    use Aws\S3\S3Client;
+    use Aws\S3\Exception\S3Exception;
 
-    $aws = Aws::factory('/path/to/config.php');
-    $dynamodb = $aws->get('dynamodb');
+    $s3 = new S3Client([
+        'profile' => 'my-credential-profile',
+        'region'  => 'us-east-1',
+        'version' => '2006-03-01'
+    ]);
 
-    // Create a ScanIterator and setup the parameters for the DynamoDB Scan operation
-    $scan = $dynamodb->getIterator('Scan', array(
-        'TableName'       => 'people',
-        'AttributesToGet' => array('id', 'age', 'name'),
-        'ScanFilter'      => array(
-            'age' => array(
-                'ComparisonOperator' => ComparisonOperator::GE,
-                'AttributeValueList' => array(
-                    array(Type::NUMBER => '16')
-                )
-            ),
-        )
-    ));
+    try {
+        $result = $s3->listObjects([
+            'Bucket' => 'my-bucket-name',
+            'Key'    => 'my-object-key'
+        ]);
 
-    // Perform as many Scan operations as needed to acquire all the names of people
-    // that are 16 or older
-    $people = array();
-    foreach ($scan as $item) {
-        $people[] = $item['name'][Type::STRING];
+        foreach ($result['Contents'] as $object) {
+            echo $object['Key'] . "\n";
+        }
+    } catch (S3Exception $e) {
+        echo $e->getMessage() . "\n";
     }
-
-    print_r($people);
