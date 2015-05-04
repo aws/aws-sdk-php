@@ -346,6 +346,12 @@ class S3Client extends AbstractClient
      * Returns the URL to an object identified by its bucket and key. If an expiration time is provided, the URL will
      * be signed and set to expire at the provided time.
      *
+     * Note: This method does not ensure that the generated URL is valid. For example, the bucket referenced may not
+     * exist, the key referenced may not exist, and the URL might include parameters that require it to be signed.
+     * If you need to use parameters that require a signed URL (e.g., ResponseCacheControl), then you must sign the
+     * URL either by providing an $expires argument or by signing the URL returned by this method in some other
+     * manner.
+     *
      * @param string $bucket  The name of the bucket where the object is located
      * @param string $key     The key of the object
      * @param mixed  $expires The time at which the URL should expire
