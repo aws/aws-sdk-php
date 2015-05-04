@@ -127,12 +127,9 @@ class AwsClient implements AwsClientInterface
     public function __construct(array $args)
     {
         list($service, $exceptionClass) = $this->parseClass();
-        $withResolved = null;
-
         if (!isset($args['service'])) {
             $args['service'] = $service;
         }
-
         if (!isset($args['exception_class'])) {
             $args['exception_class'] = $exceptionClass;
         }
@@ -150,7 +147,6 @@ class AwsClient implements AwsClientInterface
         $this->addSignatureMiddleware();
 
         if (isset($args['with_resolved'])) {
-            /** @var callable $withResolved */
             $args['with_resolved']($config);
         }
     }
