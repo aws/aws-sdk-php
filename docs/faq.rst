@@ -7,9 +7,9 @@ What methods are available on a client?
 ---------------------------------------
 
 The AWS SDK for PHP utilizes service descriptions and dynamic
-`magic __call() methods <http://www.php.net/manual/en/language.oop5.overloading.php#object.call>`_ to execute API
-operations. You can find a full list of methods available for a web service
-client in the `API documentation <http://docs.aws.amazon.com/aws-sdk-php/v3/api/index.html>`_
+`magic __call() methods <http://www.php.net/manual/en/language.oop5.overloading.php#object.call>`_
+to execute API operations. You can find a full list of methods available for a
+web service client in the `API documentation <http://docs.aws.amazon.com/aws-sdk-php/v3/api/index.html>`_
 of the client.
 
 
@@ -64,7 +64,7 @@ case of Microsoft® Windows®, there are no official builds of PHP that support
 The recommended solution is to use a `64-bit Linux stack <http://aws.amazon.com/amazon-linux-ami/>`_,
 such as the 64-bit Amazon Linux AMI with the latest version of PHP installed.
 
-For more information, please see: `PHP filesize :Return values <http://docs.php.net/manual/en/function.filesize.php#refsect1-function.filesize-returnvalues>`_.
+For more information, please see: `PHP filesize: Return values <http://docs.php.net/manual/en/function.filesize.php#refsect1-function.filesize-returnvalues>`_.
 
 
 How can I see what data is sent over the wire?
@@ -73,7 +73,7 @@ How can I see what data is sent over the wire?
 You can get debug information, including the data sent over the wire, using the
 ``debug`` option in a client constructor. When this option is set to ``true``
 all of the mutations of the command being executed, the request being sent, the
-response being recieved, and the result be processed will be emitted to STDOUT.
+response being received, and the result be processed will be emitted to STDOUT.
 This includes the data that is sent and received over the wire.
 
 .. code-block:: php
@@ -103,7 +103,6 @@ Amazon S3 PutObject operation.
     $command->getEmitter()->on('prepared', function (PreparedEvent $e) {
         $e->getRequest()->setHeader('X-Foo-Baz', 'Bar');
     });
-
 
 
 Why am I seeing a "Cannot redeclare class" error?
@@ -147,3 +146,11 @@ profile credentials, then you need to make sure that you are properly providing
 credentials to the SDK.
 
 For more information, see :doc:`/guide/credentials`.
+
+
+Does the SDK work on HHVM?
+--------------------------
+
+The SDK does not currently run on HHVM, and won't be able to until the
+`issue with the yield syntax in HHVM <https://github.com/facebook/hhvm/issues/1627>`_
+is resolved.

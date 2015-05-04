@@ -27,6 +27,11 @@ External links: `API Docs <http://docs.aws.amazon.com/aws-sdk-php/v3/api/>`_
 | `Forum <https://forums.aws.amazon.com/forum.jspa?forumID=80>`_
 | `Packagist <https://packagist.org/packages/aws/aws-sdk-php>`_
 
+.. note::
+
+    Are you migrating your project's code from using Version 2 of the SDK to
+    Version 3? If so, you should read our :doc:`guide/migration`.
+
 
 Getting Started
 ---------------
@@ -36,8 +41,8 @@ Getting Started
 3. :doc:`getting-started/basic-usage`
 
 
-SDK Guides
-----------
+SDK Features
+------------
 
 * :doc:`guide/configuration`
 * :doc:`guide/credentials`
@@ -46,18 +51,22 @@ SDK Guides
 * :doc:`guide/paginators`
 * :doc:`guide/waiters`
 * :doc:`guide/jmespath`
-* :doc:`guide/migration`
 
 
-Service Features
-----------------
+Service-Specific Features
+-------------------------
 
 * :doc:`service/cloudfront`
 * :doc:`service/dynamodb-session-handler`
-* :doc:`guide/paginators`
 * :doc:`service/s3-presigned-url`
 * :doc:`service/s3-stream-wrapper`
 * :doc:`service/s3-transfer`
+
+
+Additional Guides
+-----------------
+
+* :doc:`Migration Guide - From Version 2 to Version 3 <guide/migration>`
 
 
 Reference

@@ -75,17 +75,15 @@ custom client configuration options are described in the
 client.
 
 
+.. _sdk-class:
+
 Using the Sdk class
 -------------------
 
-The ``Aws\Sdk`` class is used to manage shared configuration options across
-multiple clients. For example, the ``Aws\Sdk`` class will automatically ensure
-that each client it creates shares the same HTTP client, allowing the clients
-to send asynchronous requests concurrently, even to different services.
-
-The same options that can be provided to a specific client constructor can also
-be supplied to the ``Aws\Sdk`` class. These options are then applied to each
-client constructor.
+The ``Aws\Sdk`` class acts as a client factory and is used to manage shared
+configuration options across multiple clients. The same options that can be
+provided to a specific client constructor can also be supplied to the
+``Aws\Sdk`` class. These options are then applied to each client constructor.
 
 .. code-block:: php
 
@@ -103,7 +101,7 @@ client constructor.
 
 Options that are shared across all clients are placed in root-level key-value
 pairs. Service-specific configuration data can be provided in a key that is the
-namespace of a service (e.g., "S3", "DynamoDb", etc.).
+same as the namespace of a service (e.g., "S3", "DynamoDb", etc.).
 
 .. code-block:: php
 
