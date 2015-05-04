@@ -198,25 +198,23 @@ class S3Client extends AwsClient
     /**
      * Returns the URL to an object identified by its bucket and key.
      *
-     * If an expiration time is provided, the URL will be signed and set to
-     * expire at the provided time.
+     * The URL returned by this method is not signed nor does it ensure the the
+     * bucket and key given to the method exist. If you need a signed URL, then
+     * use the {@see \Aws\S3\S3Client::createPresignedUrl} method.
      *
      * @param string $bucket  The name of the bucket where the object is located
      * @param string $key     The key of the object
-     * @param mixed  $expires The time at which the URL should expire.
-     * @param array  $args    Associative array of additional arguments found
-     *                        in the GetObject API operation.
      *
      * @return string The URL to the object
      */
-    public function getObjectUrl($bucket, $key, $expires = null, array $args = [])
+    public function getObjectUrl($bucket, $key)
     {
-        $args = ['Bucket' => $bucket, 'Key' => $key] + $args;
-        $command = $this->getCommand('GetObject', $args);
+        $command = $this->getCommand('GetObject', [
+            'Bucket' => $bucket,
+            'Key'    => $key
+        ]);
 
-        return $expires
-            ? $this->createPresignedUrl($command, $expires)
-            : (string) $this->serialize($command)->getUri();
+        return (string) $this->serialize($command)->getUri();
     }
 
     /**
