@@ -153,6 +153,20 @@ class S3Client extends AbstractClient
         'DeleteObjectExpirationConfig'  => 'DeleteBucketLifecycle',
     );
 
+    /**
+     * Query parameters for a GetObject request that require signing.
+     *
+     * @var array
+     */
+    protected static $getObjectSigningRequired = array(
+        'response-content-type',
+        'response-content-language',
+        'response-expires',
+        'response-cache-control',
+        'response-content-disposition',
+        'response-content-encoding',
+    );
+
     protected $directory = __DIR__;
 
     /**
@@ -369,6 +383,14 @@ class S3Client extends AbstractClient
             $request = $command->remove('Scheme')->prepare()->setScheme($scheme)->setPort(null);
         } else {
             $request = $command->prepare();
+        }
+
+        // If the returned request requires signing, but $expires hasn't been
+        // set, use a default expiry.
+        if (!$expires && array_intersect(static::$getObjectSigningRequired,
+            $request->getQuery()->getKeys()
+          )) {
+            throw new \InvalidArgumentException('A query parameter requires the URL to be signed, but no expiry value was set.');
         }
 
         return $expires ? $this->createPresignedUrl($request, $expires) : $request->getUrl();
