@@ -167,16 +167,6 @@ class S3Client extends AbstractClient
         'response-content-encoding',
     );
 
-    /**
-     * The default URL expiry time for signed requests.
-     *
-     * This is used as a fallback when a query parameter in a Request requires
-     * signing a URL.
-     *
-     * @var int
-     */
-    protected $defaultExpires = 60;
-
     protected $directory = __DIR__;
 
     /**
@@ -394,7 +384,7 @@ class S3Client extends AbstractClient
         if (!$expires && array_intersect(static::$getObjectSigningRequired,
             $request->getQuery()->getKeys()
           )) {
-            $expires = time() + $this->getDefaultExpires();
+            throw new \InvalidArgumentException('A query parameter requires the URL to be signed, but no expiry value was set.');
         }
 
         return $expires ? $this->createPresignedUrl($request, $expires) : $request->getUrl();
@@ -713,21 +703,5 @@ class S3Client extends AbstractClient
         }
 
         return $exists;
-    }
-
-    /**
-     * @return int
-     */
-    protected function setDefaultExpires($expires)
-    {
-        $this->defaultExpires = $expires;
-    }
-
-    /**
-     * @return int
-     */
-    protected function getDefaultExpires()
-    {
-        return $this->defaultExpires;
     }
 }

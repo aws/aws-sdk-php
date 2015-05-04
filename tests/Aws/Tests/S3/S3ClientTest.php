@@ -236,7 +236,7 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
             array(null, array('Scheme' => 'ftp'), 'ftp://foo.s3.amazonaws.com/bar'),
             array(null, array('Scheme' => ''), '://foo.s3.amazonaws.com/bar'),
             array(null, array('Scheme' => null), '//foo.s3.amazonaws.com/bar'),
-            array(null, array('ResponseContentType' => 'image/png'), '#^https\://foo\.s3\.amazonaws\.com/bar\?response-content-type=' . urlencode('image/png') . '&AWSAccessKeyId=foo&Expires=\d+&Signature=.+$#'),
+            array(60, array('ResponseContentType' => 'image/png'), '#^https\://foo\.s3\.amazonaws\.com/bar\?response-content-type=' . urlencode('image/png') . '&AWSAccessKeyId=foo&Expires=\d+&Signature=.+$#'),
         );
     }
 
