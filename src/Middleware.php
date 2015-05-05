@@ -232,4 +232,66 @@ final class Middleware
             };
         };
     }
+
+    /**
+     * Creates a middleware that applies a map function to requests as they
+     * pass through the middleware.
+     *
+     * @param callable $f Map function that accepts a RequestInterface and
+     *                    returns a RequestInterface.
+     *
+     * @return callable
+     */
+    public static function mapRequest(callable $f)
+    {
+        return function (callable $handler) use ($f) {
+            return function (
+                CommandInterface $command,
+                RequestInterface $request = null
+            ) use ($handler, $f) {
+                return $handler($command, $f($request));
+            };
+        };
+    }
+
+    /**
+     * Creates a middleware that applies a map function to commands as they
+     * pass through the middleware.
+     *
+     * @param callable $f Map function that accepts a command and returns a
+     *                    command.
+     *
+     * @return callable
+     */
+    public static function mapCommand(callable $f)
+    {
+        return function (callable $handler) use ($f) {
+            return function (
+                CommandInterface $command,
+                RequestInterface $request = null
+            ) use ($handler, $f) {
+                return $handler($f($command), $request);
+            };
+        };
+    }
+
+    /**
+     * Creates a middleware that applies a map function to results.
+     *
+     * @param callable $f Map function that accepts an Aws\ResultInterface and
+     *                    returns an Aws\ResultInterface.
+     *
+     * @return callable
+     */
+    public static function mapResult(callable $f)
+    {
+        return function (callable $handler) use ($f) {
+            return function (
+                CommandInterface $command,
+                RequestInterface $request = null
+            ) use ($handler, $f) {
+                return $handler($command, $request)->then($f);
+            };
+        };
+    }
 }

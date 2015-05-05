@@ -11,16 +11,23 @@ use Aws\HandlerList;
 use Aws\Middleware;
 use Aws\MockHandler;
 use Aws\Result;
+use Aws\ResultInterface;
 use Aws\Signature\SignatureV4;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @covers Aws\Middleware
  */
 class MiddlewareTest extends \PHPUnit_Framework_TestCase
 {
+    public function setup()
+    {
+        \GuzzleHttp\Promise\queue()->run();
+    }
+
     public function testCanTapIntoHandlerList()
     {
         $list = new HandlerList();
@@ -194,5 +201,49 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
             'image/png',
             $h->getLastRequest()->getHeaderLine('Content-Type')
         );
+    }
+
+    public function testCanMapCommands()
+    {
+        $list = new HandlerList();
+        $mock = new MockHandler([new Result()]);
+        $list->setHandler($mock);
+        $list->append('init', Middleware::mapCommand(function (CommandInterface $c) {
+            $c['Hi'] = 'test';
+            return $c;
+        }));
+        $handler = $list->resolve();
+        $request = new Request('GET', 'http://exmaple.com');
+        $handler(new Command('Foo'), $request);
+        $this->assertEquals('test', $mock->getLastCommand()->offsetGet('Hi'));
+    }
+
+    public function testCanMapRequests()
+    {
+        $list = new HandlerList();
+        $mock = new MockHandler([new Result()]);
+        $list->setHandler($mock);
+        $list->append('init', Middleware::mapRequest(function (RequestInterface $r) {
+            return $r->withHeader('X-Foo', 'Bar');
+        }));
+        $handler = $list->resolve();
+        $request = new Request('GET', 'http://exmaple.com');
+        $handler(new Command('Foo'), $request);
+        $this->assertEquals(['Bar'], $mock->getLastRequest()->getHeader('X-Foo'));
+    }
+
+    public function testCanMapResults()
+    {
+        $list = new HandlerList();
+        $mock = new MockHandler([new Result()]);
+        $list->setHandler($mock);
+        $list->append('sign', Middleware::mapResult(function (ResultInterface $r) {
+            $r['Test'] = 'hi';
+            return $r;
+        }));
+        $handler = $list->resolve();
+        $request = new Request('GET', 'http://exmaple.com');
+        $result = $handler(new Command('Foo'), $request)->wait();
+        $this->assertEquals('hi', $result['Test']);
     }
 }

@@ -19,36 +19,48 @@ What do I do about a cURL SSL certificate error?
 This issue can occur when using an out of date CA bundle with cURL and SSL. You
 can get around this issue by updating the CA bundle on your server or
 downloading a more up to date CA bundle from the
-`cURL website directly <http://curl.haxx.se/ca/cacert.pem>`_.
+`cURL website directly <http://curl.haxx.se/docs/caextract.html>`_.
 
 The SDK will by default use the CA bundle that is configured when PHP is
 compiled. You can change the default CA bundle used by PHP by modifying the
 ``openssl.cafile`` PHP ini configuration setting to be set to the path a CA
-file on disk. You can find out more about how cURL bundles the CA bundle here:
-http://curl.haxx.se/docs/caextract.html
+file on disk.
 
 
-How do I disable SSL?
----------------------
+What API versions are available for a client?
+---------------------------------------------
+
+A ``version`` option is required when creating a client. A list of available
+API versions can be found on each client's API documentation page:
+http://docs.aws.amazon.com/aws-sdk-php/v3/api/index.html. If you are unable to
+load a specific API version, then you may need to update your copy of the SDK.
+
+You may provide the string ``latest`` to the "version" configuration value to
+utilize the most recent available API version that your client's API provider
+can find (the default api_provider will scan the ``src/data`` directory of the
+SDK for API models).
 
 .. warning::
 
-    Because SSL requires all data to be encrypted and requires more TCP packets
-    to complete a connection handshake than just TCP, disabling SSL may provide
-    a small performance improvement. However, with SSL disabled, all data is
-    sent over the wire unencrypted. Before disabling SSL, you must carefully
-    consider the security implications and the potential for eavesdropping over
-    the network.
+    Using ``latest`` in a production application is not recommended because
+    pulling in a new minor version of the SDK that includes an API update could
+    break your production application.
 
-You can disable SSL by setting the ``scheme`` parameter in a client factory
-method to 'http'.
+
+What regions versions are available for a client?
+-------------------------------------------------
+
+A ``region`` option is required when creating a client, and is specified using
+a string value. A list of available regions an endpoints can be found at:
+http://docs.aws.amazon.com/general/latest/gr/rande.html
 
 .. code-block:: php
 
-    $client = Aws\DynamoDb\DynamoDbClient::factory(array(
-        'region' => 'us-west-2',
-        'scheme' => 'http'
-    ));
+    // Set the region to the EU (Frankfurt) region.
+    $s3 = new Aws\S3\S3Client([
+        'region'  => 'eu-central-1',
+        'version' => '2006-03-01'
+    ]);
 
 
 Why can't I upload or download files greater than 2GB?
@@ -78,64 +90,96 @@ This includes the data that is sent and received over the wire.
 
 .. code-block:: php
 
-    $s3Client = S3Client::factory(['debug' => true]);
+    $s3Client = new Aws\S3\S3Client([
+        'region'  => 'us-standard',
+        'version' => '2006-03-01',
+        'debug'   => true
+    ]);
 
 
 How can I set arbitrary headers on a request?
 ---------------------------------------------
 
-You can add any arbitrary headers to a service operation by listening to the
-command's ``prepared`` event and mutating the request object associated with
-the event. The following example shows how to add an ``X-Foo-Baz`` header to an
-Amazon S3 PutObject operation.
+You can add any arbitrary headers to a service operation by adding a custom
+middleware to the ``Aws\HandlerList`` of an ``Aws\CommandInterface`` or
+``Aws\ClientInterface``. The following example shows how to add an
+``X-Foo-Baz`` header to a specific Amazon S3 PutObject operation using the
+``Aws\Middleware::mapRequest`` helper method.
 
 .. code-block:: php
 
-    use GuzzleHttp\Command\Event\PreparedEvent;
+    use Aws\Middleware;
+    use Psr\Http\Message\RequestInterface;
 
-    $s3Client = S3Client::factory();
-
-    $command = $s3Client->getCommand('PutObject', [
+    // Create a command so that we can access the handler list.
+    $command = $s3Client->getCommand('HeadObject', [
         'Key'    => 'test',
         'Bucket' => 'mybucket'
-    ));
+    ]);
 
-    $command->getEmitter()->on('prepared', function (PreparedEvent $e) {
-        $e->getRequest()->setHeader('X-Foo-Baz', 'Bar');
-    });
+    // Apply a custom middleware named "add-header" to the "build" lifecycle step
+    $command->getHandlerList()->prepend(
+        'build:add-header',
+        Middleware::mapRequest(function (RequestInterface $request) {
+            // Return a new request with the added header
+            return $request->withHeader('X-Foo-Baz', 'Bar');
+        })
+    );
 
+Now when the command is executed, it will be sent with the custom header.
 
-Why am I seeing a "Cannot redeclare class" error?
--------------------------------------------------
+.. important::
 
-We have observed this error a few times when using the ``aws.phar`` from the
-CLI with APC enabled. This is due to some kind of issue with phars and APC.
-Luckily there are a few ways to get around this. Please choose the one that
-makes the most sense for your environment and application.
-
-1. **Don't use APC** - PHP 5.5, for example, comes with Zend OpCache built in.
-   This problem has not been observed with Zend OpCache.
-2. **Disable APC for CLI** - Change the ``apc.enable_cli`` INI setting to
-   ``Off``.
-3. **Tell APC not to cache phars** - Change the ``apc.filters`` INI setting to
-   include ``"^phar://"``.
-4. **Don't use the phar** - When all else fails, you should install the SDK
-   through Composer (recommended) or by using the zip file.
+    Notice that the middleware was prepended to the handler list at the
+    ``init`` step. This is to ensure that the command parameters are not
+    validated before adding the default parameter.
 
 
-What is an InstanceProfileCredentialsException?
------------------------------------------------
+How can I modify a command before sending it?
+---------------------------------------------
 
-If you are seeing an ``Aws\Common\Exception\InstanceProfileCredentialsException``
-while using the SDK, this means that the SDK was not provided with any
-credentials.
+You can modify a command before sending it by adding a custom
+middleware to the ``Aws\HandlerList`` of an ``Aws\CommandInterface`` or
+``Aws\ClientInterface``. The following example shows how to add custom command
+parameters to a command before it is sent, essentially adding default options.
+This example uses the ``Aws\Middleware::mapCommand`` helper method.
+
+.. code-block:: php
+
+    use Aws\Middleware;
+    use Aws\CommandInterface;
+
+    // Here we've omitted the require Bucket paramater. We'll add it in the
+    // custom middleware.
+    $command = $s3Client->getCommand('HeadObject', ['Key' => 'test']);
+
+    // Apply a custom middleware named "add-param" to the "init" lifecycle step
+    $command->getHandlerList()->append(
+        'init:add-param',
+        Middleware::mapCommand(function (CommandInterface $command) {
+            $command['Bucket'] = 'mybucket';
+            // Be sure to return the command!
+            return $command;
+        })
+    );
+
+Now when the command is executed, it will not fail validation due to a
+missing ``Bucket`` parameter.
+
+
+What is an UnresolvedCredentialsException?
+------------------------------------------
+
+If you are seeing an ``Aws\Exception\UnresolvedCredentialsException`` while
+while using the SDK, then this means that the SDK was not provided with any
+credentials and was unable to find credentials in the environment.
 
 If you instantiate a client *without* credentials, on the first time that you
 perform a service operation, the SDK will attempt to find credentials. It first
 checks in some specific environment variables, then it looks for instance
 profile credentials, which are only available on configured Amazon EC2
 instances. If absolutely no credentials are provided or found, an
-``Aws\Common\Exception\InstanceProfileCredentialsException`` is thrown.
+``Aws\Exception\UnresolvedCredentialsException`` is thrown.
 
 If you are seeing this error and you are intending to use instance profile
 credentials, then you need to make sure that the Amazon EC2 instance that the
@@ -154,3 +198,29 @@ Does the SDK work on HHVM?
 The SDK does not currently run on HHVM, and won't be able to until the
 `issue with the yield syntax in HHVM <https://github.com/facebook/hhvm/issues/1627>`_
 is resolved.
+
+
+How do I disable SSL?
+---------------------
+
+You can disable SSL by setting the ``scheme`` parameter in a client factory
+method to 'http'. It is important to note that not all services support
+``http`` access. Please see `regions and endpoints <http://docs.aws.amazon.com/general/latest/gr/rande.html>`_
+for a list of regions, endpoints, and the supported schemes.
+
+.. code-block:: php
+
+    $client = new Aws\DynamoDb\DynamoDbClient([
+        'version' => '2012-08-10',
+        'region'  => 'us-west-2',
+        'scheme'  => 'http'
+    ]);
+
+.. warning::
+
+    Because SSL requires all data to be encrypted and requires more TCP packets
+    to complete a connection handshake than just TCP, disabling SSL may provide
+    a small performance improvement. However, with SSL disabled, all data is
+    sent over the wire unencrypted. Before disabling SSL, you must carefully
+    consider the security implications and the potential for eavesdropping over
+    the network.
