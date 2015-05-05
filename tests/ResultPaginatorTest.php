@@ -1,7 +1,9 @@
 <?php
 namespace Aws\Test;
 
+use Aws\Api\ApiProvider;
 use Aws\CommandInterface;
+use Aws\DynamoDb\DynamoDbClient;
 use Aws\Result;
 use Psr\Http\Message\RequestInterface;
 
@@ -11,6 +13,26 @@ use Psr\Http\Message\RequestInterface;
 class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
 {
     use UsesServiceTrait;
+
+    private function getCustomClientProvider(array $config)
+    {
+        // Create the client and paginator
+        $provider = ApiProvider::defaultProvider();
+        return new DynamoDbClient([
+            'region'  => 'us-west-2',
+            'version' => 'latest',
+            'api_provider' => function ($t, $s, $v) use ($provider, $config) {
+                if ($t === 'paginator') {
+                    $res = $provider($t, $s, $v);
+                    $res['pagination']['ListTables'] = $config
+                        + $res['pagination']['ListTables'];
+                    return $res;
+                } else {
+                    return $provider($t, $s, $v);
+                }
+            }
+        ]);
+    }
 
     /**
      * @dataProvider getPaginatorIterationData
@@ -22,9 +44,7 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
         array $expectedTableNames
     ) {
         $requestCount = 0;
-
-        // Create the client and paginator
-        $client = $this->getTestClient('dynamodb');
+        $client = $this->getCustomClientProvider($config);
         $this->addMockResults(
             $client,
             $results,
@@ -32,7 +52,8 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
                 $requestCount++;
             }
         );
-        $paginator = $client->getPaginator('ListTables', [], $config);
+
+        $paginator = $client->getPaginator('ListTables');
 
         // Iterate over the paginator and keep track of the keys and values
         $tableNames = [];
@@ -58,10 +79,9 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
         $expectedRequestCount,
         array $expectedTableNames
     ) {
-        // Create the client and paginator
-        $client = $this->getTestClient('dynamodb');
+        $client = $this->getCustomClientProvider($config);
         $this->addMockResults($client, $results);
-        $paginator = $client->getPaginator('ListTables', [], $config);
+        $paginator = $client->getPaginator('ListTables', []);
 
         $tables = [];
         $lastResult = $paginator->each(function (Result $result) use (&$tables) {
@@ -78,9 +98,8 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
         // Get test data
         $config = $this->getPaginatorIterationData()[0][0];
         $results = $this->getPaginatorIterationData()[0][1];
-
         // Create the client and paginator
-        $client = $this->getTestClient('dynamodb');
+        $client = $this->getCustomClientProvider($config);
         $this->addMockResults($client, $results);
         $paginator = $client->getPaginator('ListTables', [], $config);
         $this->assertEquals(['test1', 'test2'], $paginator->current()['TableNames']);
@@ -154,7 +173,11 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
     public function testCanSearchOverResultsUsingFlatMap()
     {
         $requestCount = 0;
-        $client = $this->getTestClient('dynamodb');
+        $client = $this->getCustomClientProvider([
+            'input_token'  => 'NextToken',
+            'output_token' => 'LastToken'
+        ]);
+
         $this->addMockResults($client, [
             new Result(['LastToken' => 'b2', 'TableNames' => ['a1', 'b2']]),
             new Result(['LastToken' => 'b2', 'TableNames' => []]),
@@ -164,10 +187,7 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
             $requestCount++;
         });
 
-        $paginator = $client->getPaginator('ListTables', [], [
-            'input_token'  => 'NextToken',
-            'output_token' => 'LastToken'
-        ]);
+        $paginator = $client->getPaginator('ListTables');
 
         $tableNames = [];
         foreach ($paginator->search('TableNames[][::-1]') as $table) {
@@ -180,17 +200,17 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
 
     public function testGracefullyHandlesSingleValueResults()
     {
-        $client = $this->getTestClient('dynamodb');
+        $client = $this->getCustomClientProvider([
+            'input_token'  => 'NextToken',
+            'output_token' => 'LastToken'
+        ]);
         $this->addMockResults($client, [
             new Result(['LastToken' => 'b2', 'TableNames' => ['a1', 'b2']]),
             new Result(['LastToken' => 'b2', 'TableNames' => []]),
             new Result(['TableNames' => ['c3']]),
         ]);
 
-        $paginator = $client->getPaginator('ListTables', [], [
-            'input_token'  => 'NextToken',
-            'output_token' => 'LastToken'
-        ]);
+        $paginator = $client->getPaginator('ListTables');
 
         $tableNames = [];
         foreach ($paginator->search('TableNames[0]') as $table) {

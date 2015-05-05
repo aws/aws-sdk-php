@@ -251,20 +251,21 @@ class AwsClient implements AwsClientInterface
         return new \ArrayIterator((array) $result);
     }
 
-    public function getPaginator($name, array $args = [], array $config = [])
+    public function getPaginator($name, array $args = [])
     {
-        $config += $this->api->getPaginatorConfig($name);
+        $config = $this->api->getPaginatorConfig($name);
 
         return new ResultPaginator($this, $name, $args, $config);
     }
 
-    public function waitUntil($name, array $args = [], array $config = [])
+    public function waitUntil($name, array $args = [])
     {
-        return $this->getWaiter($name, $args, $config)->promise()->wait();
+        return $this->getWaiter($name, $args)->promise()->wait();
     }
 
-    public function getWaiter($name, array $args = [], array $config = [])
+    public function getWaiter($name, array $args = [])
     {
+        $config = isset($args['@waiter']) ? $args['@waiter'] : [];
         $config += $this->api->getWaiterConfig($name);
 
         return new Waiter($this, $name, $args, $config);
