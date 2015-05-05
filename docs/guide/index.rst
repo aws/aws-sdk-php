@@ -1,6 +1,6 @@
-============
-SDK Features
-============
+==========
+SDK Guides
+==========
 
 The AWS SDK for PHP consists of various features and components. Each of the
 following guides describe the components that are used in the SDK.
@@ -15,3 +15,4 @@ following guides describe the components that are used in the SDK.
     paginators
     waiters
     jmespath
+    migration

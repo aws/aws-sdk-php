@@ -41,8 +41,8 @@ Getting Started
 3. :doc:`getting-started/basic-usage`
 
 
-SDK Features
-------------
+SDK Guides
+----------
 
 * :doc:`guide/configuration`
 * :doc:`guide/credentials`
@@ -51,6 +51,7 @@ SDK Features
 * :doc:`guide/paginators`
 * :doc:`guide/waiters`
 * :doc:`guide/jmespath`
+* :doc:`guide/migration`
 
 
 Service-Specific Features
@@ -61,12 +62,6 @@ Service-Specific Features
 * :doc:`service/s3-presigned-url`
 * :doc:`service/s3-stream-wrapper`
 * :doc:`service/s3-transfer`
-
-
-Additional Guides
------------------
-
-* :doc:`Migration Guide - From Version 2 to Version 3 <guide/migration>`
 
 
 Reference
