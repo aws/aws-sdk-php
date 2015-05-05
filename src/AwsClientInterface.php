@@ -133,12 +133,11 @@ interface AwsClientInterface
      *
      * @param string $name   Name of the operation used for iterator
      * @param array  $args   Command args to be used with each command
-     * @param array  $config Hash of paginator options.
      *
      * @return \Aws\ResultPaginator
      * @throws \UnexpectedValueException if the iterator config is invalid.
      */
-    public function getPaginator($name, array $args = [], array $config = []);
+    public function getPaginator($name, array $args = []);
 
     /**
      * Wait until a resource is in a particular state.
@@ -146,14 +145,13 @@ interface AwsClientInterface
      * @param string|callable $name Name of the waiter that defines the wait
      *                              configuration and conditions.
      * @param array  $args          Args to be used with each command executed
-     *                              by the waiter.
-     * @param array  $config        Waiter configuration. Use this to override
-     *                              the defaults for the specified waiter.
-     *
+     *                              by the waiter. Waiter configuration options
+     *                              can be provided in an associative array in
+     *                              the @waiter key.
      * @return void
      * @throws \UnexpectedValueException if the waiter is invalid.
      */
-    public function waitUntil($name, array $args = [], array $config = []);
+    public function waitUntil($name, array $args = []);
 
     /**
      * Get a waiter that waits until a resource is in a particular state.
@@ -166,12 +164,11 @@ interface AwsClientInterface
      * @param string|callable $name Name of the waiter that defines the wait
      *                              configuration and conditions.
      * @param array  $args          Args to be used with each command executed
-     *                              by the waiter.
-     * @param array  $config        Waiter configuration. Use this to override
-     *                              the defaults for the specified waiter.
-     *
+     *                              by the waiter. Waiter configuration options
+     *                              can be provided in an associative array in
+     *                              the @waiter key.
      * @return \Aws\Waiter
      * @throws \UnexpectedValueException if the waiter is invalid.
      */
-    public function getWaiter($name, array $args = [], array $config = []);
+    public function getWaiter($name, array $args = []);
 }

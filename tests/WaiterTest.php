@@ -1,6 +1,9 @@
 <?php
 namespace Aws\Test;
 
+use Aws\Api\ApiProvider;
+use Aws\CommandInterface;
+use Aws\DynamoDb\DynamoDbClient;
 use Aws\Exception\AwsException;
 use Aws\Result;
 use GuzzleHttp\Promise;
@@ -20,24 +23,34 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
      */
     public function testErrorOnBadConfig()
     {
-        $client = $this->getTestClient('DynamoDb');
+        $provider = ApiProvider::defaultProvider();
+        $client = new DynamoDbClient([
+            'region' => 'foo',
+            'version' => 'latest',
+            'api_provider' => function ($type, $service, $version) use ($provider) {
+                return $type === 'waiter'
+                    ? ['waiters' => ['TableExists' => []]]
+                    : $provider($type, $service, $version);
+            }
+        ]);
         $client->waitUntil(
             'TableExists',
-            ['TableName' => 'Meh'],
-            ['delay' => null]
+            ['TableName' => 'Meh']
         );
     }
 
     /**
      * @expectedException \InvalidArgumentException
      */
-    public function testErrorOnBadRetryCallback()
+    public function testErrorOnBadBeforeCallback()
     {
         $client = $this->getTestClient('DynamoDb');
         $client->waitUntil(
             'TableExists',
-            ['TableName' => 'Meh'],
-            ['retry' => '%']
+            [
+                'TableName' => 'Meh',
+                '@waiter' => ['before' => '%']
+            ]
         );
     }
 
@@ -79,8 +92,13 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
 
         $client->waitUntil(
             'TableExists',
-            ['TableName' => 'Meh'],
-            ['initDelay' => 3, 'delay' => 1]
+            [
+                'TableName' => 'Meh',
+                '@waiter' => [
+                    'initDelay' => 3,
+                    'delay'     => 1
+                ]
+            ]
         );
 
         $this->assertEquals(4, $iteration, 'Did not execute enough requests.');
@@ -101,17 +119,21 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
         // Execute the waiter and verify the number of requests.
         $actualAttempt = 0;
         try {
-            $client->waitUntil('TableExists', ['TableName' => 'WhoCares'], [
-                'retry' => function ($attempt) use (&$actualAttempt) {
-                    $actualAttempt = $attempt;
-                }
+            $client->waitUntil('TableExists', [
+                'TableName' => 'WhoCares',
+                '@waiter'    => [
+                    'before' => function (CommandInterface $cmd, $attempt)
+                    use (&$actualAttempt) {
+                        $actualAttempt = $attempt;
+                    }
+                ]
             ]);
             $actualException = null;
         } catch (\Exception $e) {
             $actualException = $e->getMessage();
         }
 
-        $this->assertEquals(count($results) - 1, $actualAttempt);
+        $this->assertEquals(count($results), $actualAttempt);
         $this->assertEquals($expectedException, $actualException);
     }
 

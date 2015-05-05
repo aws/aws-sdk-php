@@ -2,132 +2,155 @@
 Waiters
 =======
 
+
 Introduction
 ------------
 
-If the waiter has to poll the bucket too many times, it will throw an ``Aws\Common\Exception\RuntimeException``
-exception.
+Waiters help make it easier to work with *eventually consistent* systems by
+providing an abstracted way to wait until a resource enters into a particular
+state by polling the resource. You can find a list of the waiters supported by
+a client by viewing the API Documentation of a service client.
 
-The "``waitUntil[…]``" methods are all implemented via the ``__call`` magic method, and are a more discoverable shortcut
-to using the concrete ``waitUntil()`` method, since many IDEs can auto-complete methods defined using the ``@method``
-annotation. The following code uses the ``waitUntil()`` method, but is equivalent to the previous code sample.
-
-.. code-block:: php
-
-    $s3Client->waitUntil('BucketExists', array('Bucket' => 'my-bucket'));
-
-Basic Configuration
--------------------
-
-You can tune the number of polling attempts issued by a waiter or the number of seconds to delay between each poll by
-passing optional values prefixed with "waiter.":
+In the following example, the Amazon S3 Client is used to create a bucket. Then
+the waiter is used to wait until the bucket exists.
 
 .. code-block:: php
 
-    $s3Client->waitUntilBucketExists(array(
-        'Bucket'              => 'my-bucket',
-        'waiter.interval'     => 10,
-        'waiter.max_attempts' => 3
-    ));
+    // Create a bucket
+    $s3Client->createBucket(['Bucket' => 'my-bucket']);
 
-Waiter Objects
---------------
+    // Wait until the created bucket is available
+    $s3Client->waitUntil('BucketExists', ['Bucket' => 'my-bucket']);
 
-To interact with the waiter object directly, you must use the ``getWaiter()`` method. The following code is equivalent
-to the example in the preceding section.
+If the waiter has to poll the bucket too many times, it will throw a
+``\RuntimeException`` exception.
 
-.. code-block:: php
 
-    $bucketExistsWaiter = $s3Client->getWaiter('BucketExists')
-        ->setConfig(array('Bucket' => 'my-bucket'))
-        ->setInterval(10)
-        ->setMaxAttempts(3);
-    $bucketExistsWaiter->wait();
+Waiter Configuration
+--------------------
 
-Waiter Events
--------------
+Waiters are driven by an associative array of configuration options. All of the
+options used by a particular waiter have default values, but they can be
+overridden to support different waiting strategies.
 
-One benefit of working directly with the waiter object is that you can attach event listeners. Waiters emit up to two
-events in each **wait cycle**. A wait cycle does the following:
-
-#. Dispatch the ``waiter.before_attempt`` event.
-#. Attempt to resolve the wait condition by making a request to the service and checking the result.
-#. If the wait condition is resolved, the wait cycle exits. If ``max_attempts`` is reached, an exception is thrown.
-#. Dispatch the ``waiter.before_wait`` event.
-#. Sleep ``interval`` amount of seconds.
-
-Waiter objects extend the ``Guzzle\Common\AbstractHasDispatcher`` class which exposes the ``addSubscriber()`` method and
-``getEventDispatcher()`` method. To attach listeners, you can use the following example, which is a modified version of
-the previous one.
+You can modify waiter configuration options by passing an associative array of
+``@waiter`` options to the ``$args`` argument of a client's ``waitUntil()`` and
+``getWaiter()`` methods.
 
 .. code-block:: php
 
-    // Get and configure the waiter object
-    $waiter = $s3Client->getWaiter('BucketExists')
-        ->setConfig(array('Bucket' => 'my-bucket'))
-        ->setInterval(10)
-        ->setMaxAttempts(3);
+    // Providing custom waiter configuration options to a waiter.
+    $s3Client->waitUntil('BucketExists', [
+        'Bucket'  => 'my-bucket',
+        '@waiter' => [
+            'delay'       => 3,
+            'maxAttempts' => 10
+        ]
+    ]);
 
-    // Get the event dispatcher and register listeners for both events emitted by the waiter
-    $dispatcher = $waiter->getEventDispatcher();
-    $dispatcher->addListener('waiter.before_attempt', function () {
-        echo "Checking if the wait condition has been met…\n";
-    });
-    $dispatcher->addListener('waiter.before_wait', function () use ($waiter) {
-        $interval = $waiter->getInterval();
-        echo "Sleeping for {$interval} seconds…\n";
-    });
+delay
+    (int) Number of seconds to delay between polling attempts. Each waiter has
+    a default ``delay`` configuration value, but you may need to modify this
+    setting for specific use cases.
 
-    $waiter->wait();
+maxAttempts
+    (int) Maximum number of polling attempts to issue before failing the
+    waiter. This option ensures that you will not wait on a resource
+    indefinitely. Each waiter has a default ``maxAttempts`` configuration
+    value, but you may need to modify this setting for specific use cases.
 
-Custom Waiters
---------------
+initDelay
+    (int) Amount of time in seconds to wait before the first polling attempt.
+    This might be useful when waiting on a resource that you know will take a
+    while to enter into the desired state.
 
-It is possible to implement custom waiter objects if your use case requires application-specific waiter logic or waiters
-that are not yet supported by the SDK. You can use the ``getWaiterFactory()`` and ``setWaiterFactory()`` methods on the
-client to manipulate the waiter factory used by the client such that your custom waiter can be instantiated. By default
-the service clients use a ``Aws\Common\Waiter\CompositeWaiterFactory`` which allows you to add additional factories if
-needed. The following example shows how to implement a contrived custom waiter class and then modify a client's waiter
-factory such that it can create instances of the custom waiter.
+before
+    (callable) A PHP callable function that is invoked before each attempt. The
+    callable is invoked with the ``Aws\CommandInterface`` command that is about
+    to be executed and the number of attempts that have been executed so far.
+    Uses of the ``before`` callable might be to modify commands before they are
+    executed or provide progress information.
 
-.. code-block:: php
+    .. code-block:: php
 
-    namespace MyApp\FakeWaiters
-    {
-        use Aws\Common\Waiter\AbstractResourceWaiter;
+        use Aws\CommandInterface;
 
-        class SleptThreeTimes extends AbstractResourceWaiter
-        {
-            public function doWait()
-            {
-                if ($this->attempts < 3) {
-                    echo "Need to sleep…\n";
-                    return false;
-                } else {
-                    echo "Now I've slept 3 times.\n";
-                    return true;
+        $s3Client->waitUntil('BucketExists', [
+            'Bucket'  => 'my-bucket',
+            '@waiter' => [
+                'before' => function (CommandInterface $command, $attempts) {
+                    printf(
+                        "About to send %s. Attempt %d\n",
+                        $command->getName(),
+                        $attempts
+                    );
                 }
-            }
-        }
-    }
+            ]
+        ]);
 
-    namespace
-    {
-        use Aws\S3\S3Client;
-        use Aws\Common\Waiter\WaiterClassFactory;
 
-        $s3Client = S3Client::factory();
+Waiting Asynchronously
+----------------------
 
-        $compositeFactory = $s3Client->getWaiterFactory();
-        $compositeFactory->addFactory(new WaiterClassFactory('MyApp\FakeWaiters'));
+In addition to wait synchronously, you can invoke a waiter to wait
+asynchronously while sending other requests or waiting on multiple resources
+at once.
 
-        $waiter = $s3Client->waitUntilSleptThreeTimes();
-    }
+You can access a waiter promise by retrieving a waiter from a client using the
+client's ``getWaiter($name, array $args = [])`` method. Use the ``promise()``
+method of a waiter to initiate the waiter. A waiter promise is fulfilled with
+the last ``Aws\CommandInterface`` that was executed in the waiter, and rejected
+with a ``RuntimeException`` on error.
 
-The result of this code should look like the following::
+.. code-block:: php
 
-    Need to sleep…
-    Need to sleep…
-    Need to sleep…
-    Now I've slept 3 times.
+    use Aws\CommandInterface;
 
+    $waiterName = 'BucketExists';
+    $waiterOptions = ['Bucket' => 'my-bucket'];
+
+    // Create a waiter promise.
+    $waiter = $s3Client->getWaiter($waiterName, $waiterOptions);
+
+    // Initiate the waiter and retrieve a promise.
+    $promise = $waiter->promise();
+
+    // Call methods when the promise is resolved.
+    $promise
+        ->then(function () {
+            echo "Waiter completed\n";
+        })
+        ->otherwise(function (\Exception $e) {
+            echo "Waiter failed: " . $e . "\n";
+        });
+
+    // Block until the waiter completes or fails. Note that this might throw
+    // a \RuntimeException if the waiter fails.
+    $promise->wait();
+
+Exposing a promise based waiters API allows for some powerful and relatively
+low overhead use cases. For example, what if you wanted to wait on multiple
+resources, and do something with the first waiter that successfully resolved?
+
+.. code-block:: php
+
+    use Aws\CommandInterface;
+
+    // Create an array of waiter promises.
+    $promises = [
+        $s3Client->getWaiter('BucketExists', ['Bucket' => 'a'])->promise(),
+        $s3Client->getWaiter('BucketExists', ['Bucket' => 'b'])->promise(),
+        $s3Client->getWaiter('BucketExists', ['Bucket' => 'c'])->promise()
+    ];
+
+    // Initiate a race between the waiters, fulfilling the promise with the
+    // first waiter to complete (or the first bucket to become available).
+    $any = Promise\any($promises)
+        ->then(function (CommandInterface $command) {
+            // This is invoked with the command that succeeded in polling the
+            // resource. Here was can know which bucket won the race.
+            echo "The {$command['Bucket']} waiter completed first!\n";
+        });
+
+    // Force the promise to complete.
+    $any->wait();
