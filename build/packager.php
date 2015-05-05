@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/artifacts/Burgomaster.php';
+require __DIR__ . '/Burgomaster.php';
 require __DIR__ . '/../vendor/autoload.php';
 
 $stageDirectory = __DIR__ . '/artifacts/staging';
@@ -13,7 +13,6 @@ foreach ($metaFiles as $file) {
 }
 
 $burgomaster->recursiveCopy('src', 'Aws', ['php', 'json']);
-$burgomaster->recursiveCopy('vendor/mtdowling/transducers/src', 'Transducers');
 $burgomaster->recursiveCopy('vendor/mtdowling/jmespath.php/src', 'JmesPath');
 $burgomaster->recursiveCopy('vendor/guzzlehttp/guzzle/src', 'GuzzleHttp');
 $burgomaster->recursiveCopy('vendor/guzzlehttp/psr7/src', 'GuzzleHttp/Psr7');
@@ -26,7 +25,6 @@ $burgomaster->createAutoloader([
     'GuzzleHttp/Psr7/functions.php',
     'GuzzleHttp/Promise/functions.php',
     'JmesPath/JmesPath.php',
-    'Transducers/transducers.php'
 ], $autoloaderFilename);
 
 $burgomaster->createZip(__DIR__ . "/artifacts/aws.zip");

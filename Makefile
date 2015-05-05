@@ -38,13 +38,8 @@ integ:
 	vendor/bin/phpunit --debug --testsuite=integ $(TEST)
 
 # Packages the phar and zip
-package: burgomaster
+package:
 	time php build/packager.php $(SERVICE)
-
-# Downloads a copy of Burgomaster
-burgomaster:
-	mkdir -p build/artifacts
-	curl -s https://raw.githubusercontent.com/mtdowling/Burgomaster/0.0.2/src/Burgomaster.php > build/artifacts/Burgomaster.php
 
 guide:
 	cd docs && make html
@@ -112,6 +107,6 @@ release: check-tag package
 # Tags the repo and publishes a release.
 full_release: tag release
 
-.PHONY: help clean test coverage coverage-show integ package burgomaster\
+.PHONY: help clean test coverage coverage-show integ package \
 guide guide-show api-get-apigen api api-show api-package api-manifest \
 check-tag tag release full-release clear-cache
