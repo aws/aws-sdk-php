@@ -276,21 +276,6 @@ EOT;
         $this->assertEquals('v2', $conf['config']['signature_version']);
     }
 
-    public function testAddsLogger()
-    {
-        $r = new ClientResolver(ClientResolver::getDefaultArguments());
-        $logger = $this->getMockBuilder('Psr\Log\LoggerInterface')
-            ->getMockForAbstractClass();
-        $conf = $r->resolve([
-            'service'      => 'sqs',
-            'region'       => 'x',
-            'retries'      => 2,
-            'retry_logger' => $logger,
-            'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
-            'version'      => 'latest'
-        ], new HandlerList());
-    }
-
     public function testAddsLoggerWithDebugSettings()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
