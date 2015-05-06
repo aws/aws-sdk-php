@@ -326,7 +326,6 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->setMockResponse($client, array(
             's3/initiate_multipart_upload',
             's3/upload_part',
-            's3/upload_part',
             's3/complete_multipart_upload'
         ));
         $history = new HistoryPlugin();
@@ -494,5 +493,24 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $s3 = S3Client::factory(array(Options::REGION => 'cn-north-1'));
         $this->assertInstanceOf('Aws\S3\S3SignatureV4', $s3->getSignature());
+    }
+
+    /**
+     * @covers Aws\S3\IncompleteMultipartUploadChecker
+     */
+    public function testHandlesDelayedErrorsInCompleteMultipartUpload()
+    {
+        $client = $this->getServiceBuilder()->get('s3', true);
+        $this->setMockResponse($client, array(
+            's3/complete_multipart_upload_error',
+            's3/complete_multipart_upload'
+        ));
+        $result = $client->completeMultipartUpload(array(
+            'Bucket'   => 'foo',
+            'Key'      => 'bar',
+            'UploadId' => 'baz',
+            'Parts'    => array()
+        ));
+        $this->assertTrue(isset($result['Location']));
     }
 }
