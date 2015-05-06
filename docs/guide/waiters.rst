@@ -89,6 +89,8 @@ before
         ]);
 
 
+.. _async_waiters:
+
 Waiting Asynchronously
 ----------------------
 

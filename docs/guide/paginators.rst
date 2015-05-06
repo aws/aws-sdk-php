@@ -93,6 +93,8 @@ of a bucket), you could do the following.
     }
 
 
+.. _async_paginators:
+
 Asynchronous Pagination
 -----------------------
 

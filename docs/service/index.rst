@@ -11,6 +11,7 @@ higher level features per service.
 
     cloudfront
     dynamodb-session-handler
+    s3-multipart-upload
     s3-presigned-url
     s3-stream-wrapper
     s3-transfer
