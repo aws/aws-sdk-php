@@ -12,6 +12,7 @@ following guides describe the components that are used in the SDK.
     credentials
     commands
     promises
+    handlers-and-middleware
     paginators
     waiters
     jmespath
