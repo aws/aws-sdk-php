@@ -22,7 +22,7 @@ version_command = 'git describe --abbrev=0 --tags'
 git_verson = subprocess.check_output(version_command, shell=True)
 version = os.getenv('VERSION', git_verson.strip())
 
-exclude_patterns = ['_build']
+exclude_patterns = ['_build', 'venv']
 html_static_path = ['_static']
 
 # -- HTML theme settings ------------------------------------------------
