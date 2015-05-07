@@ -269,6 +269,43 @@ return array (
                 ),
             ),
         ),
+        'DeleteVaultAccessPolicy' => array(
+            'httpMethod' => 'DELETE',
+            'uri' => '/{accountId}/vaults/{vaultName}/access-policy',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'accountId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+                'vaultName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Returned if the specified resource, such as a vault, upload ID, or job ID, does not exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'Returned if a parameter of the request is incorrectly specified.',
+                    'class' => 'InvalidParameterValueException',
+                ),
+                array(
+                    'reason' => 'Returned if a required header or parameter is missing from the request.',
+                    'class' => 'MissingParameterValueException',
+                ),
+                array(
+                    'reason' => 'Returned if the service cannot complete the request.',
+                    'class' => 'ServiceUnavailableException',
+                ),
+            ),
+        ),
         'DeleteVaultNotifications' => array(
             'httpMethod' => 'DELETE',
             'uri' => '/{accountId}/vaults/{vaultName}/notification-configuration',
@@ -442,6 +479,43 @@ return array (
                 ),
                 'saveAs' => array(
                     'location' => 'response_body',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Returned if the specified resource, such as a vault, upload ID, or job ID, does not exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'Returned if a parameter of the request is incorrectly specified.',
+                    'class' => 'InvalidParameterValueException',
+                ),
+                array(
+                    'reason' => 'Returned if a required header or parameter is missing from the request.',
+                    'class' => 'MissingParameterValueException',
+                ),
+                array(
+                    'reason' => 'Returned if the service cannot complete the request.',
+                    'class' => 'ServiceUnavailableException',
+                ),
+            ),
+        ),
+        'GetVaultAccessPolicy' => array(
+            'httpMethod' => 'GET',
+            'uri' => '/{accountId}/vaults/{vaultName}/access-policy',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'GetVaultAccessPolicyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'accountId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+                'vaultName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
                 ),
             ),
             'errorResponses' => array(
@@ -867,6 +941,47 @@ return array (
                 ),
             ),
         ),
+        'SetVaultAccessPolicy' => array(
+            'httpMethod' => 'PUT',
+            'uri' => '/{accountId}/vaults/{vaultName}/access-policy',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'accountId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+                'vaultName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+                'Policy' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Returned if the specified resource, such as a vault, upload ID, or job ID, does not exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'Returned if a parameter of the request is incorrectly specified.',
+                    'class' => 'InvalidParameterValueException',
+                ),
+                array(
+                    'reason' => 'Returned if a required header or parameter is missing from the request.',
+                    'class' => 'MissingParameterValueException',
+                ),
+                array(
+                    'reason' => 'Returned if the service cannot complete the request.',
+                    'class' => 'ServiceUnavailableException',
+                ),
+            ),
+        ),
         'SetVaultNotifications' => array(
             'httpMethod' => 'PUT',
             'uri' => '/{accountId}/vaults/{vaultName}/notification-configuration',
@@ -1266,6 +1381,16 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-archive-description',
+                ),
+            ),
+        ),
+        'GetVaultAccessPolicyOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Policy' => array(
+                    'type' => 'string',
+                    'location' => 'json',
                 ),
             ),
         ),
