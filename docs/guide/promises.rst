@@ -31,16 +31,16 @@ loop.
 Promises in the SDK
 -------------------
 
-Promises are used throughout the SDK. Promises are used in most high level
-abstractions provided by the SDK: :ref:`paginators <async_paginators>`,
+Promises are used throughout the SDK. For example, promises are used in most
+high level abstractions provided by the SDK: :ref:`paginators <async_paginators>`,
 :ref:`waiters <async_waiters>`, :ref:`command pools <command_pool>`,
 :doc:`multipart uploads <../service/s3-multipart-upload>`,
 :doc:`Amazon S3 directory/bucket transfers <../service/s3-transfer>`, etc.
 
-All of the clients provided by the SDK
-will return promises when you invoke any of the ``Async`` suffixed methods. For
-example, the following code shows how to create a promise for getting the
-results of an Amazon DynamoDB ``DescribeTable`` operation.
+All of the clients provided by the SDK will return promises when you invoke any
+of the ``Async`` suffixed methods. For example, the following code shows how to
+create a promise for getting the results of an Amazon DynamoDB ``DescribeTable``
+operation.
 
 .. code-block:: php
 
@@ -89,9 +89,10 @@ rejected (meaning it failed).
 Executing commands concurrently
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Promises allows us to create multiple promises and execute the concurrently.
-This can be achieved by integrating the SDK with a non-blocking event loop, or
-by building up multiple promises and waiting on them to complete concurrently.
+Multiple promises can be composed together such that they are executed
+concurrently. This can be achieved by integrating the SDK with a non-blocking
+event loop, or by building up multiple promises and waiting on them to complete
+concurrently.
 
 .. code-block:: php
 
