@@ -73,11 +73,11 @@ The dependencies of the SDK have changed in this version.
   interfaces for managing asynchronous requests and coroutines. While Guzzle's
   multi-cURL HTTP handler ultimately implements the non-blocking I/O model that
   allows for asynchronous requests, this package provides the ability to program
-  within that paradigm.
+  within that paradigm. See :doc:`promises` for more details.
 - The PHP implementation of `JMESPath <http://jmespath.org/>`_
   (``mtdowling/jmespath.php``) is used in the SDK to provide the data querying
   ability of the ``Aws\Result::search()`` and ``Aws\ResultPaginator::search()``
-  methods.
+  methods. See :doc:`jmespath` for more details.
 
 
 Region & version options and now required
@@ -157,38 +157,6 @@ It also does not support the same configuration file format from Version 2 of
 the SDK. That configuration format was specific to Guzzle 3 and is now obsolete.
 Configuration can be done more simply with basic arrays, and is documented
 in :ref:`sdk-class`.
-
-
-Enum classes have been removed
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-We have removed the ``Enum`` classes (e.g., ``Aws\S3\Enum\CannedAcl``) that
-existed in Version 2 of the SDK. Enums were concrete classes within the public
-API of the SDK that contained constants representing groups of valid parameter
-values. Since these enums are specific to API versions, can change over time,
-can conflict with PHP reserved words, and ended up not being very useful, we
-have removed them in Version 3. This supports the data-driven and API version
-agnostic nature of Version 3.
-
-Instead of using values from ``Enum`` objects, you should just use the literal
-values directly (e.g., ``CannedAcl::PUBLIC_READ`` → ``'public-read'``).
-
-Fine-grained Exception classes have been removed
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-We have removed the fine-grained exception classes that existed in the each of
-the services' namespaces (e.g., ``Aws\Rds\Exception\{SpecificError}Exception``)
-for very similar reasons that we removed Enums. The exceptions thrown by
-service/operation are dependent on which API version is used (i.e., they can
-change from version to version). Also, the complete list of what exceptions can
-be thrown by a given operation is not available, which made Version 2's
-fine-grained exception classes incomplete.
-
-You should handle errors by catching the root exception class for each service
-(e.g., ``Aws\Rds\Exception\RdsException``). You can use the ``getAwsErrorCode()``
-method of the exception to check for specific error codes. This is functionally
-equivalent to catching different exception classes, but provides that function
-without adding bloat to the SDK.
 
 
 Some API results have changed
@@ -304,6 +272,92 @@ output of the result (provided below in parenthesis):
   - RotateEncryptionKey (Cluster)
 
 
+Enum classes have been removed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+We have removed the ``Enum`` classes (e.g., ``Aws\S3\Enum\CannedAcl``) that
+existed in Version 2 of the SDK. Enums were concrete classes within the public
+API of the SDK that contained constants representing groups of valid parameter
+values. Since these enums are specific to API versions, can change over time,
+can conflict with PHP reserved words, and ended up not being very useful, we
+have removed them in Version 3. This supports the data-driven and API version
+agnostic nature of Version 3.
+
+Instead of using values from ``Enum`` objects, you should just use the literal
+values directly (e.g., ``CannedAcl::PUBLIC_READ`` → ``'public-read'``).
+
+
+Fine-grained Exception classes have been removed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+We have removed the fine-grained exception classes that existed in the each of
+the services' namespaces (e.g., ``Aws\Rds\Exception\{SpecificError}Exception``)
+for very similar reasons that we removed Enums. The exceptions thrown by
+service/operation are dependent on which API version is used (i.e., they can
+change from version to version). Also, the complete list of what exceptions can
+be thrown by a given operation is not available, which made Version 2's
+fine-grained exception classes incomplete.
+
+You should handle errors by catching the root exception class for each service
+(e.g., ``Aws\Rds\Exception\RdsException``). You can use the ``getAwsErrorCode()``
+method of the exception to check for specific error codes. This is functionally
+equivalent to catching different exception classes, but provides that function
+without adding bloat to the SDK.
+
+
+Paginators supersede Iterators
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Version 2 of the SDK had a feature called *Iterators*, which were objects that
+were used for iterating over paginated results. One complaint we had about these
+was that they were not flexible enough, because the iterator only emitted
+specific values from each result, and if there were other values you needed from
+the results, you could only retrieve them via event listeners.
+
+In Version 3, Iterators have been replaced with :doc:`Paginators <paginators>`.
+They are similar in purpose, but Paginators are more flexible, because they
+yield result objects instead of values from a response.
+
+The following examples illustrate how Paginators are different from Iterators,
+by showing how to retrieve paginated results for the S3 ListObjects operation
+in both Version 2 and Version 3.
+
+.. code-block:: php
+
+    // Version 2
+    $objects = $s3Client->getIterator('ListObjects', ['Bucket' => 'my-bucket']);
+    foreach ($objects as $object) {
+        echo $object['Key'] . "\n";
+    }
+
+.. code-block:: php
+
+    // Version 3
+    $results = $s3Client->getPaginator('ListObjects', ['Bucket' => 'my-bucket']);
+    foreach ($results as $result) {
+        // You can extract any data that you want from the result.
+        foreach ($result['Contents'] as $object) {
+            echo $object['Key'] . "\n";
+        }
+    }
+
+Paginator objects have a ``search()`` method that allows you to use :doc:`JMESPath <jmespath>`
+expressions to extract data more easily from the result set.
+
+.. code-block:: php
+
+    $results = $s3Client->getPaginator('ListObjects', ['Bucket' => 'my-bucket']);
+    foreach ($results->search('Contents[].Key') as $key) {
+        echo $key . "\n";
+    }
+
+.. note::
+
+    The ``getIterator()`` method is still supported to allow for a smooth
+    transition to Version 3, but encourage you to upgrade your code to use
+    Paginators.
+
+
 Comparing Code Samples from Both SDKs
 -------------------------------------
 
@@ -311,7 +365,7 @@ The following examples illustrate some of the ways in which using Version 3 of
 the SDK may differ from Version 2.
 
 
-Example: Amazon S3 ListObjects Operation
+Example: Amazon S3 ListObjects operation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 From Version 2 of the SDK
@@ -381,8 +435,8 @@ Key differences:
     }
 
 
-Example: Instantiating a Client with Global Config
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Example: Instantiating a client with global configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 From Version 2 of the SDK
 ^^^^^^^^^^^^^^^^^^^^^^^^^
