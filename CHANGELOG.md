@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 2.8.3 - 2015-05-07
+
+* `Aws\Glacier` - Added support for vault access policies.
+* `Aws\Route53` - Fixed a `GetCheckerIpRangesResponse` response parsing issue.
+* `Aws\S3` - Retrying CompleteMultipartUpload failures by retrying the request.
+* `Aws\S3` - Corrected some response handling in the S3 multipart upload
+   abstraction.
+* Expiring instance metadata credentials 30 minutes in advance for more eager
+  refreshes before the credentials expire.
+
 ## 2.8.2 - 2015-04-23
 
 * `Aws\Ec2` - Added support for new VM Import APIs, `including ImportImage`.
