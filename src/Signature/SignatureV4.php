@@ -69,7 +69,7 @@ class SignatureV4 implements SignatureInterface
         return $this->buildRequest($parsed);
     }
 
-    public function createPresignedUrl(
+    public function presign(
         RequestInterface $request,
         CredentialsInterface $credentials,
         $expires
@@ -95,7 +95,7 @@ class SignatureV4 implements SignatureInterface
         );
         $parsed['query']['X-Amz-Signature'] = hash_hmac('sha256', $stringToSign, $key);
 
-        return (string) $this->buildRequest($parsed)->getUri();
+        return $this->buildRequest($parsed);
     }
 
     /**

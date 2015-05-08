@@ -50,7 +50,7 @@ class S3Signature implements SignatureInterface
         return $request->withHeader('Authorization', $auth);
     }
 
-    public function createPresignedUrl(
+    public function presign(
         RequestInterface $request,
         CredentialsInterface $credentials,
         $expires
@@ -92,7 +92,7 @@ class S3Signature implements SignatureInterface
 
         $queryString = http_build_query($query, null, '&', PHP_QUERY_RFC3986);
 
-        return (string) $request->getUri()->withQuery($queryString);
+        return $request->withUri($request->getUri()->withQuery($queryString));
     }
 
     /**

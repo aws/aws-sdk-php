@@ -61,11 +61,11 @@ class S3SignatureTest extends \PHPUnit_Framework_TestCase
         $signature = new S3Signature();
         $req = Psr7\parse_request($message);
         // Try with string
-        $res = $signature->createPresignedUrl($req, $creds, $dt);
-        $this->assertSame($url, $res);
+        $res = $signature->presign($req, $creds, $dt);
+        $this->assertSame($url, (string) $res->getUri());
         // Try with timestamp
-        $res = $signature->createPresignedUrl($req, $creds, new \DateTime($dt));
-        $this->assertSame($url, $res);
+        $res = $signature->presign($req, $creds, new \DateTime($dt));
+        $this->assertSame($url, (string) $res->getUri());
     }
 
     public function signatureDataProvider()
@@ -304,11 +304,11 @@ class S3SignatureTest extends \PHPUnit_Framework_TestCase
             $meth->invoke($signature, $request, time())
         );
 
-        $result = $signature->createPresignedUrl(
+        $result = (string) $signature->presign(
             $request,
             new Credentials('foo', 'bar', 'baz'),
             time()
-        );
+        )->getUri();
 
         $this->assertContains('&x-amz-acl=public-read', $result);
         $this->assertContains('x-amz-foo=bar', $result);

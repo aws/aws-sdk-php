@@ -14,6 +14,7 @@ use Aws\S3\Exception\S3Exception;
 use Aws\ResultInterface;
 use Aws\CommandInterface;
 use GuzzleHttp\Psr7;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 
 /**
@@ -176,11 +177,13 @@ class S3Client extends AwsClient
      *                                      expire. This can be a Unix
      *                                      timestamp, a PHP DateTime object,
      *                                      or a string that can be evaluated
-     *                                      by strtotime
-     * @return string
+     *                                      by strtotime().
+     *
+     * @return RequestInterface
      */
-    public function createPresignedUrl(CommandInterface $command, $expires)
+    public function createPresignedRequest(CommandInterface $command, $expires)
     {
+        /** @var \Aws\Signature\SignatureInterface $signer */
         $signer = call_user_func(
             $this->getSignatureProvider(),
             $this->getConfig('signature_version'),
@@ -188,7 +191,7 @@ class S3Client extends AwsClient
             $this->getRegion()
         );
 
-        return $signer->createPresignedUrl(
+        return $signer->presign(
             $this->serialize($command),
             $this->getCredentials(),
             $expires
@@ -200,7 +203,8 @@ class S3Client extends AwsClient
      *
      * The URL returned by this method is not signed nor does it ensure the the
      * bucket and key given to the method exist. If you need a signed URL, then
-     * use the {@see \Aws\S3\S3Client::createPresignedUrl} method.
+     * use the {@see \Aws\S3\S3Client::createPresignedRequest} method and get
+     * the URI of the signed request.
      *
      * @param string $bucket  The name of the bucket where the object is located
      * @param string $key     The key of the object

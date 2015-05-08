@@ -16,11 +16,11 @@ class AnonymousSignature implements SignatureInterface
         return $request;
     }
 
-    public function createPresignedUrl(
+    public function presign(
         RequestInterface $request,
         CredentialsInterface $credentials,
         $expires
     ) {
-        return '';
+        return $request;
     }
 }

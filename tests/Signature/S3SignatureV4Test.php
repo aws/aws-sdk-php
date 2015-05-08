@@ -68,33 +68,33 @@ class S3SignatureV4Test extends \PHPUnit_Framework_TestCase
     public function testCreatesPresignedDatesFromDateTime()
     {
         list($request, $credentials, $signature) = $this->getFixtures();
-        $url = $signature->createPresignedUrl(
+        $url = (string) $signature->presign(
             $request,
             $credentials,
             new \DateTime('December 11, 2013 00:00:00 UTC')
-        );
+        )->getUri();
         $this->assertContains('X-Amz-Expires=518400', $url);
     }
 
     public function testCreatesPresignedDatesFromUnixTimestamp()
     {
         list($request, $credentials, $signature) = $this->getFixtures();
-        $url = $signature->createPresignedUrl(
+        $url = (string) $signature->presign(
             $request,
             $credentials,
             1386720000
-        );
+        )->getUri();
         $this->assertContains('X-Amz-Expires=518400', $url);
     }
 
     public function testCreatesPresignedDateFromStrtotime()
     {
         list($request, $credentials, $signature) = $this->getFixtures();
-        $url = $signature->createPresignedUrl(
+        $url = (string) $signature->presign(
             $request,
             $credentials,
             'December 11, 2013 00:00:00 UTC'
-        );
+        )->getUri();
         $this->assertContains('X-Amz-Expires=518400', $url);
     }
 
@@ -106,11 +106,11 @@ class S3SignatureV4Test extends \PHPUnit_Framework_TestCase
             $credentials->getSecretKey(),
             '123'
         );
-        $url = $signature->createPresignedUrl(
+        $url = (string) $signature->presign(
             $request,
             $credentials,
             1386720000
-        );
+        )->getUri();
         $this->assertContains('X-Amz-Security-Token=123', $url);
         $this->assertContains('X-Amz-Expires=518400', $url);
     }
@@ -121,10 +121,10 @@ class S3SignatureV4Test extends \PHPUnit_Framework_TestCase
     public function testEnsuresSigV4DurationIsLessThanOneWeek()
     {
         list($request, $credentials, $signature) = $this->getFixtures();
-        $signature->createPresignedUrl(
+        $signature->presign(
             $request,
             $credentials,
             'December 31, 2026 00:00:00 UTC'
-        );
+        )->getUri();
     }
 }

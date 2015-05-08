@@ -89,7 +89,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($valid, S3Client::isBucketDnsCompatible($bucket));
     }
 
-    public function testCreatesPresignedUrls()
+    public function testCreatesPresignedRequests()
     {
         /** @var S3Client $client */
         $client = $this->getTestClient('S3', [
@@ -97,7 +97,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
             'credentials' => ['key' => 'foo', 'secret' => 'bar']
         ]);
         $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
-        $url = $client->createPresignedUrl($command, 1342138769);
+        $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
         $this->assertContains(
             'https://foo.s3.amazonaws.com/bar?AWSAccessKeyId=',
             $url
@@ -117,7 +117,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
             'Bucket' => 'foobar test: abc',
             'Key'    => '+%.a'
         ]);
-        $url = $client->createPresignedUrl($command, 1342138769);
+        $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
         $this->assertContains(
             'https://s3.amazonaws.com/foobar%20test%3A%20abc/%2B%25.a?AWSAccessKeyId=',
             $url
