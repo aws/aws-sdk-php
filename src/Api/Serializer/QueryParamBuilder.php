@@ -133,4 +133,9 @@ class QueryParamBuilder
     ) {
         $query[$prefix] = TimestampShape::format($value, 'iso8601');
     }
+
+    protected function format_boolean(Shape $shape, $value, $prefix, array &$query)
+    {
+        $query[$prefix] = ($value) ? 'true' : 'false';
+    }
 }
