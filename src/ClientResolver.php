@@ -448,9 +448,7 @@ class ClientResolver
 
     public static function _default_signature_provider()
     {
-        return SignatureProvider::memoize(
-            SignatureProvider::defaultProvider()
-        );
+        return SignatureProvider::defaultProvider();
     }
 
     public static function _default_signature_version(array &$args)

@@ -276,7 +276,7 @@ class AwsClient implements AwsClientInterface
         $request = null;
         // Return a mock response.
         $command->getHandlerList()->setHandler(
-            function (CommandInterface $cmd, RequestInterface $req) use (&$request) {
+            static function (CommandInterface $cmd, RequestInterface $req) use (&$request) {
                 $request = $req;
                 return new FulfilledPromise(new Result([]));
             }

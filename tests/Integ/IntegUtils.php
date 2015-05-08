@@ -3,9 +3,9 @@ namespace Aws\Test\Integ;
 
 trait IntegUtils
 {
-    private static function getSdk()
+    private static function getSdk(array $args = [])
     {
-        return new \Aws\Sdk([
+        return new \Aws\Sdk($args + [
             'region'  => 'us-east-1',
             'profile' => 'integ',
             'version' => 'latest',
