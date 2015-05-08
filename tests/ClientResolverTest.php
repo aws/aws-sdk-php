@@ -196,7 +196,7 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
             'version' => 'latest'
         ], new HandlerList());
         $this->assertInstanceOf(
-            'Aws\Credentials\NullCredentials',
+            'Aws\Credentials\Credentials',
             $conf['credentials']
         );
         $this->assertEquals('anonymous', $conf['config']['signature_version']);

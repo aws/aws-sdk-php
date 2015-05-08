@@ -342,7 +342,7 @@ class ClientResolver
                 isset($value['expires']) ? $value['expires'] : null
             );
         } elseif ($value === false) {
-            $args['credentials'] = new NullCredentials();
+            $args['credentials'] = new Credentials('', '');
             $args['config']['signature_version'] = 'anonymous';
         } else {
             throw new IAE('Credentials must be an instance of '

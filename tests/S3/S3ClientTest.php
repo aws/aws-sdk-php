@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Test\S3;
 
-use Aws\Credentials\NullCredentials;
 use Aws\MockHandler;
 use Aws\Result;
 use Aws\S3\S3Client;
@@ -186,7 +185,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
     {
         $s3 = $this->getTestClient('S3', [
             'region'      => 'us-east-1',
-            'credentials' => new NullCredentials()
+            'credentials' => false
         ]);
         $this->assertEquals('https://foo.s3.amazonaws.com/bar', $s3->getObjectUrl('foo', 'bar'));
     }
@@ -196,7 +195,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
         /** @var S3Client $s3 */
         $s3 = $this->getTestClient('S3', [
             'region'      => 'us-east-1',
-            'credentials' => new NullCredentials()
+            'credentials' => false
         ]);
         $this->assertEquals(
             'https://s3.amazonaws.com/foo.baz/bar',

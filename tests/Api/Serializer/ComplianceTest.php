@@ -3,7 +3,6 @@ namespace Aws\Test\Api\Serializer;
 
 use Aws\Api\Service;
 use Aws\AwsClient;
-use Aws\Credentials\NullCredentials;
 use Aws\Test\UsesServiceTrait;
 
 /**
@@ -72,7 +71,7 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
             'api_provider' => function () use ($service) {
                 return $service->toArray();
             },
-            'credentials'  => new NullCredentials(),
+            'credentials'  => false,
             'signature'    => $this->getMock('Aws\Signature\SignatureInterface'),
             'region'       => 'us-west-2',
             'endpoint'     => $ep,
