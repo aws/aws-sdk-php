@@ -10,7 +10,7 @@ use Psr\Http\Message\RequestInterface;
  * Signature Version 4
  * @link http://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
  */
-class SignatureV4 extends AbstractSignature
+class SignatureV4 implements SignatureInterface
 {
     const ISO8601_BASIC = 'Ymd\THis\Z';
 

@@ -9,7 +9,7 @@ use Psr\Http\Message\RequestInterface;
  * Implementation of Signature Version 2
  * @link http://aws.amazon.com/articles/1928
  */
-class SignatureV2 extends AbstractSignature
+class SignatureV2 implements SignatureInterface
 {
     public function signRequest(
         RequestInterface $request,
@@ -41,6 +41,14 @@ class SignatureV2 extends AbstractSignature
         );
 
         return $request->withBody(Psr7\stream_for(http_build_query($params)));
+    }
+
+    public function createPresignedUrl(
+        RequestInterface $request,
+        CredentialsInterface $credentials,
+        $expires
+    ) {
+        throw new \BadMethodCallException(__METHOD__ . ' not implemented');
     }
 
     private function getCanonicalizedParameterString(array $params)
