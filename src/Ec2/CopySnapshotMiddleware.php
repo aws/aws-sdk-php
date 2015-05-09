@@ -69,10 +69,10 @@ class CopySnapshotMiddleware
         // Create a presigned URL for our generated request.
         $signer = new SignatureV4('ec2', $cmd['SourceRegion']);
 
-        return $signer->createPresignedUrl(
+        return (string) $signer->presign(
             SignatureV4::convertPostToGet($request),
             $client->getCredentials(),
             '+1 hour'
-        );
+        )->getUri();
     }
 }

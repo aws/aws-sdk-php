@@ -127,7 +127,7 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         $_SERVER['override_v4_time'] = true;
         list($request, $credentials, $signature) = $this->getFixtures();
         $credentials = new Credentials('foo', 'bar', '123');
-        $url = $signature->createPresignedUrl($request, $credentials, 1386720000);
+        $url = (string) $signature->presign($request, $credentials, 1386720000)->getUri();
         $this->assertContains('X-Amz-Security-Token=123', $url);
         $this->assertContains('X-Amz-Expires=518400', $url);
     }
@@ -139,7 +139,7 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
     {
         $_SERVER['override_v4_time'] = true;
         list($request, $credentials, $signature) = $this->getFixtures();
-        $signature->createPresignedUrl($request, $credentials, 'December 31, 2013 00:00:00 UTC');
+        $signature->presign($request, $credentials, 'December 31, 2013 00:00:00 UTC');
     }
 
     public function testConvertsPostToGet()

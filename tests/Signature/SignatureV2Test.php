@@ -44,6 +44,6 @@ class SignatureV2Test extends \PHPUnit_Framework_TestCase
         $mock = $sig = new SignatureV2();
         $request = new Request('GET', 'http://foo.com');
         $credentials = new Credentials('foo', 'bar');
-        $mock->createPresignedUrl($request, $credentials, '+10 minutes');
+        $mock->presign($request, $credentials, '+10 minutes');
     }
 }

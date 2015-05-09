@@ -25,9 +25,9 @@ class AnonymousTest extends \PHPUnit_Framework_TestCase
         );
 
         $result = $signature->signRequest($request, $creds);
-        $this->assertSame($result, $request);
+        $this->assertSame($request, $result);
 
-        $this->assertEquals('', $signature->createPresignedUrl(
+        $this->assertEquals($request, $signature->presign(
             $request,
             $creds,
             '+1 minute'

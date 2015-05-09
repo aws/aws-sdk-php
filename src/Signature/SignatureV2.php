@@ -43,7 +43,7 @@ class SignatureV2 implements SignatureInterface
         return $request->withBody(Psr7\stream_for(http_build_query($params)));
     }
 
-    public function createPresignedUrl(
+    public function presign(
         RequestInterface $request,
         CredentialsInterface $credentials,
         $expires
