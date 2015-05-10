@@ -192,8 +192,8 @@ class S3Client extends AwsClient
         );
 
         return $signer->presign(
-            $this->serialize($command),
-            $this->getCredentials(),
+            \Aws\serialize($command),
+            $this->getCredentials()->wait(),
             $expires
         );
     }
@@ -218,7 +218,7 @@ class S3Client extends AwsClient
             'Key'    => $key
         ]);
 
-        return (string) $this->serialize($command)->getUri();
+        return (string) \Aws\serialize($command)->getUri();
     }
 
     /**

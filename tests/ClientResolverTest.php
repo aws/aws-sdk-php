@@ -109,7 +109,6 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
         $r->resolve(['foo' => 'c'], new HandlerList());
     }
 
-
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Credentials must be an
@@ -134,7 +133,7 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
             'region' => 'x',
             'version' => 'latest'
         ], new HandlerList());
-        $c = $conf['credentials'];
+        $c = call_user_func($conf['credentials'])->wait();
         $this->assertInstanceOf('Aws\Credentials\CredentialsInterface', $c);
         $this->assertEquals('foo', $c->getAccessKeyId());
         $this->assertEquals('bar', $c->getSecretKey());
@@ -157,7 +156,7 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
                 'expires' => $exp
             ]
         ], new HandlerList());
-        $creds = $conf['credentials'];
+        $creds = call_user_func($conf['credentials'])->wait();
         $this->assertEquals('foo', $creds->getAccessKeyId());
         $this->assertEquals('baz', $creds->getSecretKey());
         $this->assertEquals('tok', $creds->getSecurityToken());
@@ -195,10 +194,8 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
             'credentials' => false,
             'version' => 'latest'
         ], new HandlerList());
-        $this->assertInstanceOf(
-            'Aws\Credentials\Credentials',
-            $conf['credentials']
-        );
+        $creds = call_user_func($conf['credentials'])->wait();
+        $this->assertInstanceOf('Aws\Credentials\Credentials', $creds);
         $this->assertEquals('anonymous', $conf['config']['signature_version']);
     }
 
@@ -209,10 +206,12 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
         $conf = $r->resolve([
             'service'     => 'sqs',
             'region'      => 'x',
-            'credentials' => function () use ($c) { return $c; },
+            'credentials' => function () use ($c) {
+                return \GuzzleHttp\Promise\promise_for($c);
+            },
             'version'     => 'latest'
         ], new HandlerList());
-        $this->assertSame($c, $conf['credentials']);
+        $this->assertSame($c, call_user_func($conf['credentials'])->wait());
     }
 
     public function testCanCreateCredentialsFromProfile()
@@ -232,12 +231,12 @@ EOT;
         putenv('HOME=' . dirname($dir));
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $r->resolve([
-            'service'     => 'sqs',
-            'region'      => 'x',
-            'profile'     => 'foo',
-            'version'     => 'latest'
+            'service' => 'sqs',
+            'region'  => 'x',
+            'profile' => 'foo',
+            'version' => 'latest'
         ], new HandlerList());
-        $creds = $conf['credentials'];
+        $creds = call_user_func($conf['credentials'])->wait();
         $this->assertEquals('foo', $creds->getAccessKeyId());
         $this->assertEquals('baz', $creds->getSecretKey());
         $this->assertEquals('tok', $creds->getSecurityToken());
@@ -255,7 +254,7 @@ EOT;
             'credentials' => $c,
             'version'     => 'latest'
         ], new HandlerList());
-        $this->assertSame($c, $conf['credentials']);
+        $this->assertSame($c, call_user_func($conf['credentials'])->wait());
     }
 
     public function testCanUseCustomEndpointProviderWithExtraData()

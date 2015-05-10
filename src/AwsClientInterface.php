@@ -2,7 +2,7 @@
 namespace Aws;
 
 use Psr\Http\Message\UriInterface;
-use Psr\Http\Message\RequestInterface;
+use GuzzleHttp\Promise\PromiseInterface;
 
 /**
  * Represents an AWS client.
@@ -62,18 +62,13 @@ interface AwsClientInterface
     public function executeAsync(CommandInterface $command);
 
     /**
-     * Serialize a request for a command but do not send it.
+     * Returns a promise that is fulfilled with an
+     * {@see \Aws\Credentials\CredentialsInterface} object.
      *
-     * @param CommandInterface $command Command to serialize.
+     * If you need the credentials synchronously, then call the wait() method
+     * on the returned promise.
      *
-     * @return RequestInterface
-     */
-    public function serialize(CommandInterface $command);
-
-    /**
-     * Returns the AWS credentials associated with the client.
-     *
-     * @return \Aws\Credentials\CredentialsInterface
+     * @return PromiseInterface
      */
     public function getCredentials();
 

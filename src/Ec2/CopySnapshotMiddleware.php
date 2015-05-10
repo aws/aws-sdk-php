@@ -56,7 +56,7 @@ class CopySnapshotMiddleware
         // Avoid infinite recursion by flagging the new command.
         $newCmd->__skipCopySnapshot = true;
         // Serialize a request for the CopySnapshot operation.
-        $request = $client->serialize($newCmd);
+        $request = \Aws\serialize($newCmd);
         // Create the new endpoint for the target endpoint.
         $endpoint = EndpointProvider::resolve($this->endpointProvider, [
             'region'  => $cmd['SourceRegion'],
@@ -71,7 +71,7 @@ class CopySnapshotMiddleware
 
         return (string) $signer->presign(
             SignatureV4::convertPostToGet($request),
-            $client->getCredentials(),
+            $client->getCredentials()->wait(),
             '+1 hour'
         )->getUri();
     }

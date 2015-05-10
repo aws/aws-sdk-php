@@ -2,6 +2,7 @@
 namespace Aws\Test\Credentials;
 
 use Aws\Credentials\InstanceProfileProvider;
+use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
@@ -29,13 +30,17 @@ class InstanceProfileProviderTest extends \PHPUnit_Framework_TestCase
         if (!$profile) {
             $responses[] = new Response(200, [], Psr7\stream_for('test'));
         }
+
         $responses[] = new Response(200, [], Psr7\stream_for(json_encode($result)));
         if ($more) {
             $responses[] = $more;
         }
 
-        $client = function (RequestInterface $req, array $options) use (&$responses) {
-            return \GuzzleHttp\Promise\promise_for(array_shift($responses));
+        $client = function () use (&$responses) {
+            if (empty($responses)) {
+                throw new \Exception('No responses');
+            }
+            return Promise\promise_for(array_shift($responses));
         };
 
         $args = ['profile' => $profile];
@@ -51,20 +56,24 @@ class InstanceProfileProviderTest extends \PHPUnit_Framework_TestCase
         $c = $this->getTestCreds(
             $this->getCredentialArray('foo', 'baz', null, "@{$t}"),
             'foo'
-        );
+        )->wait();
         $this->assertEquals('foo', $c->getAccessKeyId());
         $this->assertEquals('baz', $c->getSecretKey());
         $this->assertEquals(null, $c->getSecurityToken());
         $this->assertEquals($t, $c->getExpiration());
     }
 
-    public function testReturnsNullIfProfileIsNotAvailable()
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage Error retrieving credentials from the instance profile metadata server
+     */
+    public function testRejectsIfProfileIsNotAvailable()
     {
         $client = function (RequestInterface $req, array $options) use (&$responses) {
-            return \GuzzleHttp\Promise\rejection_for('error');
+            return Promise\rejection_for('error');
         };
         $p = new InstanceProfileProvider(['client' => $client]);
-        $this->assertNull($p());
+        $p()->wait();
     }
 
     /**
@@ -73,8 +82,8 @@ class InstanceProfileProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testThrowsExceptionIfCredentialsNotAvailable()
     {
-        $client = function (RequestInterface $req, array $options) use (&$responses) {
-            return \GuzzleHttp\Promise\rejection_for('error');
+        $client = function () use (&$responses) {
+            return Promise\rejection_for('error');
         };
         $args['client'] = $client;
         $args['profile'] = 'foo';
@@ -82,7 +91,7 @@ class InstanceProfileProviderTest extends \PHPUnit_Framework_TestCase
             'client'  => $client,
             'profile' => 'foo'
         ]);
-        $p();
+        $p()->wait();
     }
 
     /**
@@ -94,7 +103,7 @@ class InstanceProfileProviderTest extends \PHPUnit_Framework_TestCase
         $this->getTestCreds(
             $this->getCredentialArray(null, null, null, null, false),
             'foo'
-        );
+        )->wait();
     }
 
     public function testLoadsCredentialsAndProfile()
@@ -102,7 +111,7 @@ class InstanceProfileProviderTest extends \PHPUnit_Framework_TestCase
         $t = time() + 1000;
         $c = $this->getTestCreds(
             $this->getCredentialArray('foo', 'baz', null, "@{$t}")
-        );
+        )->wait();
         $this->assertEquals('foo', $c->getAccessKeyId());
         $this->assertEquals('baz', $c->getSecretKey());
         $this->assertEquals(null, $c->getSecurityToken());

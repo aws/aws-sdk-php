@@ -1,6 +1,7 @@
 <?php
 namespace Aws\S3;
 
+use Aws\Credentials\CredentialsInterface;
 use GuzzleHttp\Psr7\Uri;
 
 /**
@@ -45,9 +46,10 @@ class PostObject
             'method'  => 'POST',
             'enctype' => 'multipart/form-data'
         ];
+
         $this->formInputs = $formInputs + ['key' => '${filename}'];
-        $this->formInputs['AWSAccessKeyId'] = $client->getCredentials()->getAccessKeyId();
-        $this->formInputs += $this->getPolicyAndSignature();
+        $credentials = $client->getCredentials()->wait();
+        $this->formInputs += $this->getPolicyAndSignature($credentials);
     }
 
     /**
@@ -139,16 +141,17 @@ class PostObject
         return (string) $uri;
     }
 
-    protected function getPolicyAndSignature()
+    protected function getPolicyAndSignature(CredentialsInterface $creds)
     {
         $jsonPolicy64 = base64_encode($this->jsonPolicy);
 
         return [
+            'AWSAccessKeyId' => $creds->getAccessKeyId(),
             'policy'    => $jsonPolicy64,
             'signature' => base64_encode(hash_hmac(
                 'sha1',
                 $jsonPolicy64,
-                $this->client->getCredentials()->getSecretKey(),
+                $creds->getSecretKey(),
                 true
             ))
         ];

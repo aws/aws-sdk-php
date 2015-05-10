@@ -38,30 +38,12 @@ class CredentialProviderTest extends \PHPUnit_Framework_TestCase
         putenv(CredentialProvider::ENV_PROFILE . '=' . $this->profile);
     }
 
-    /**
-     * @expectedException \Aws\Exception\UnresolvedCredentialsException
-     */
-    public function testEnsuresCredentialsAreFound()
-    {
-        CredentialProvider::resolve(function () {});
-    }
-
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     */
-    public function testEnsuresCredentialsAreNotExpired()
-    {
-        CredentialProvider::resolve(function () {
-            return new Credentials('foo', 'bar', 'baz', time() - 1000);
-        });
-    }
-
     public function testCreatesFromEnvironmentVariables()
     {
         $this->clearEnv();
         putenv(CredentialProvider::ENV_KEY . '=abc');
         putenv(CredentialProvider::ENV_SECRET . '=123');
-        $creds = CredentialProvider::resolve(CredentialProvider::env());
+        $creds = call_user_func(CredentialProvider::env())->wait();
         $this->assertEquals('abc', $creds->getAccessKeyId());
         $this->assertEquals('abc', $creds->getAccessKeyId());
     }
@@ -82,7 +64,7 @@ aws_security_token = tok
 EOT;
         file_put_contents($dir . '/credentials', $ini);
         putenv('HOME=' . dirname($dir));
-        $creds = CredentialProvider::resolve(CredentialProvider::ini());
+        $creds = call_user_func(CredentialProvider::ini())->wait();
         $this->assertEquals('foo', $creds->getAccessKeyId());
         $this->assertEquals('baz', $creds->getSecretKey());
         $this->assertEquals('tok', $creds->getSecurityToken());
@@ -106,7 +88,7 @@ EOT;
         putenv('HOME=' . dirname($dir));
 
         try {
-            @CredentialProvider::resolve(CredentialProvider::ini());
+            @call_user_func(CredentialProvider::ini())->wait();
         } catch (\Exception $e) {
             unlink($dir . '/credentials');
             throw $e;
@@ -120,7 +102,7 @@ EOT;
     {
         $this->clearEnv();
         putenv('HOME=/does/not/exist');
-        CredentialProvider::resolve(CredentialProvider::ini());
+        call_user_func(CredentialProvider::ini())->wait();
     }
 
     /**
@@ -139,7 +121,7 @@ EOT;
         putenv('HOME=' . dirname($dir));
 
         try {
-            CredentialProvider::resolve(CredentialProvider::ini('foo'));
+            call_user_func(CredentialProvider::ini('foo'))->wait();
         } catch (\Exception $e) {
             unlink($dir . '/credentials');
             throw $e;
@@ -169,12 +151,12 @@ EOT;
         $creds = new Credentials('foo', 'bar');
         $f = function () use (&$called, $creds) {
             $called++;
-            return $creds;
+            return \GuzzleHttp\Promise\promise_for($creds);
         };
         $p = CredentialProvider::memoize($f);
-        $this->assertSame($creds, $p());
+        $this->assertSame($creds, $p()->wait());
         $this->assertEquals(1, $called);
-        $this->assertSame($creds, $p());
+        $this->assertSame($creds, $p()->wait());
         $this->assertEquals(1, $called);
     }
 
@@ -185,7 +167,7 @@ EOT;
         putenv(CredentialProvider::ENV_KEY . '=abc');
         putenv(CredentialProvider::ENV_SECRET . '=123');
         $provider = CredentialProvider::defaultProvider();
-        $creds = $provider();
+        $creds = $provider()->wait();
         putenv(CredentialProvider::ENV_KEY . "={$k}");
         putenv(CredentialProvider::ENV_SECRET . "={$s}");
         $this->assertEquals('abc', $creds->getAccessKeyId());

@@ -31,7 +31,7 @@ class Route53ClientTest extends \PHPUnit_Framework_TestCase
             ]
         ]);
 
-        $request = $client->serialize($command);
+        $request = \Aws\serialize($command);
 
         $this->assertContains(
             '/hostedzone/foo/rrset/',

@@ -127,16 +127,14 @@ class Transfer implements PromisorInterface
     public function promise()
     {
         // If the promise has been created, just return it.
-        if ($this->promise) {
-            return $this->promise;
+        if (!$this->promise) {
+            // Create an upload/download promise for the transfer.
+            $this->promise = $this->source['scheme'] === 'file'
+                ? $this->createUploadPromise()
+                : $this->createDownloadPromise();
         }
 
-        // Create an upload/download promise for the transfer.
-        if ($this->source['scheme'] === 'file') {
-            return $this->promise = $this->createUploadPromise();
-        } else {
-            return $this->promise = $this->createDownloadPromise();
-        }
+        return $this->promise;
     }
 
     /**
@@ -217,7 +215,7 @@ class Transfer implements PromisorInterface
 
         // Asynchronously execute the paginator, building command pools to
         // download the objects.
-        return $this->promise = $objects->each(function (
+        return $objects->each(function (
             ResultInterface $result
         ) use ($listArgs) {
             $commands = [];
@@ -254,7 +252,8 @@ class Transfer implements PromisorInterface
             // Create a GetObject command pool and return the promise.
             return (new Aws\CommandPool($this->client, $commands, [
                 'concurrency' => $this->concurrency,
-                'before'      => $this->before
+                'before'      => $this->before,
+                'rejected'    => $this->getRejectFn()
             ]))->promise();
         });
     }
@@ -277,7 +276,12 @@ class Transfer implements PromisorInterface
 
         // Create an EachPromise, that will concurrently handle the upload
         // operations' yielded promises from the iterator.
-        return $this->promise = Promise\each_limit($files, $this->concurrency);
+        return Promise\each_limit(
+            $files,
+            $this->concurrency,
+            null,
+            $this->getRejectFn()
+        );
     }
 
     private function upload($filename)
@@ -285,7 +289,6 @@ class Transfer implements PromisorInterface
         $args = $this->s3Args;
         $args['SourceFile'] = $filename;
         $args['Key'] = $this->createS3Key($filename);
-
         $command = $this->client->getCommand('PutObject', $args);
         $this->before and call_user_func($this->before, $command);
 
@@ -338,6 +341,7 @@ class Transfer implements PromisorInterface
                     $source = "s3://{$command['Bucket']}/{$command['Key']}";
                     $dest = $command['@http']['sink'];
                     break;
+                case 'CompleteMultipartUpload':
                 case 'PutObject':
                     $source = $command['SourceFile'];
                     $dest = "s3://{$command['Bucket']}/{$command['Key']}";
@@ -365,6 +369,18 @@ class Transfer implements PromisorInterface
                 $context .= " : Part={$part}";
             }
             fwrite($debug, "Transferring {$context}\n");
+        };
+    }
+
+    /**
+     * Reject an aggregate promise on the first failure.
+     *
+     * @return callable
+     */
+    private function getRejectFn()
+    {
+        return function ($reason, $idx, Promise\PromiseInterface $p) {
+            $p->reject($reason);
         };
     }
 }

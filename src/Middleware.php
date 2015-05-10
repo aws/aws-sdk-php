@@ -100,21 +100,32 @@ final class Middleware
     /**
      * Creates a middleware that signs requests for a command.
      *
-     * @param CredentialsInterface $creds             Credentials to sign with.
-     * @param callable             $signatureFunction Function that accepts a
-     *                                                Command object and returns
-     *                                                a SignatureInterface.
+     * @param callable $credProvider      Credentials provider function that
+     *                                    returns a promise that is resolved
+     *                                    with a CredentialsInterface object.
+     * @param callable $signatureFunction Function that accepts a Command
+     *                                    object and returns a
+     *                                    SignatureInterface.
+     *
      * @return callable
      */
-    public static function signer(CredentialsInterface $creds, callable $signatureFunction)
+    public static function signer(callable $credProvider, callable $signatureFunction)
     {
-        return function (callable $handler) use ($signatureFunction, $creds) {
+        return function (callable $handler) use ($signatureFunction, $credProvider) {
             return function (
                 CommandInterface $command,
                 RequestInterface $request
-            ) use ($handler, $signatureFunction, $creds) {
+            ) use ($handler, $signatureFunction, $credProvider) {
                 $signer = $signatureFunction($command);
-                return $handler($command, $signer->signRequest($request, $creds));
+                return $credProvider()->then(
+                    function (CredentialsInterface $creds)
+                    use ($handler, $command, $signer, $request) {
+                        return $handler(
+                            $command,
+                            $signer->signRequest($request, $creds)
+                        );
+                    }
+                );
             };
         };
     }

@@ -2,21 +2,21 @@
 namespace Aws\Credentials;
 
 use Aws\Exception\CredentialsException;
+use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Promise\PromiseInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
- * Loads credentials from the EC2 metadata server. If the profile cannot bef
- * found, the provider returns null.
+ * Credential provider that provides credentials from the EC2 metadata server.
  */
 class InstanceProfileProvider
 {
     const SERVER_URI = 'http://169.254.169.254/latest/';
+    const CRED_PATH = 'meta-data/iam/security-credentials/';
 
     /** @var string */
     private $profile;
-
-    /** @var int */
-    private $retries;
 
     /** @var callable */
     private $client;
@@ -25,7 +25,6 @@ class InstanceProfileProvider
      * The constructor accepts the following options:
      *
      * - timeout: Connection timeout, in seconds.
-     * - retries: Optional number of exponential backoff retries to use.
      * - profile: Optional EC2 profile name, if known.
      *
      * @param array $config Configuration options.
@@ -34,37 +33,25 @@ class InstanceProfileProvider
     {
         $this->timeout = isset($config['timeout']) ? $config['timeout'] : 1.0;
         $this->profile = isset($config['profile']) ? $config['profile'] : null;
-        $this->retries = isset($config['retries']) ? $config['retries'] : 3;
         $this->client = isset($config['client'])
             ? $config['client'] // internal use only
             : \Aws\default_http_handler();
     }
 
     /**
-     * Loads refreshable profile credentials if they are available, otherwise
-     * returns null.
+     * Loads instance profile credentials.
      *
-     * @return RefreshableCredentials|null
+     * @return PromiseInterface
      */
     public function __invoke()
     {
-        // Pass if the profile cannot be loaded or was not provided.
-        if (!$this->profile) {
-            try {
-                $this->profile = $this->request('meta-data/iam/security-credentials/');
-            } catch (CredentialsException $e) {
-                return null;
+        return Promise\coroutine(function () {
+            if (!$this->profile) {
+                $this->profile = (yield $this->request(self::CRED_PATH));
             }
-        }
-
-        return new RefreshableCredentials(function () {
-            $response = $this->request("meta-data/iam/security-credentials/$this->profile");
-            $result = json_decode($response, true);
-            if ($result['Code'] !== 'Success') {
-                throw new CredentialsException('Unexpected instance profile response'
-                    . " code: {$result['Code']}");
-            }
-            return new Credentials(
+            $json = (yield $this->request(self::CRED_PATH . $this->profile));
+            $result = $this->decodeResult($json);
+            yield new Credentials(
                 $result['AccessKeyId'],
                 $result['SecretAccessKey'],
                 $result['Token'],
@@ -75,31 +62,44 @@ class InstanceProfileProvider
 
     /**
      * @param string $url
-     *
-     * @throws CredentialsException
-     * @return string
+     * @return PromiseInterface Returns a promise that is fulfilled with the
+     *                          body of the response as a string.
      */
     private function request($url)
     {
         $fn = $this->client;
         $request = new Request('GET', self::SERVER_URI . $url);
-        $retryCount = 0;
-        start_over:
-        try {
-            $result = $fn($request, ['timeout' => $this->timeout]);
-            return (string) $result->wait()->getBody();
-        } catch (\Exception $e) {
-            if (++$retryCount > $this->retries) {
-                $message = $this->createErrorMessage($e->getMessage());
-                throw new CredentialsException($message, $e->getCode());
-            }
-            goto start_over;
-        }
+
+        return $fn($request, ['timeout' => $this->timeout])
+            ->then(function (ResponseInterface $response) {
+                return (string) $response->getBody();
+            })->otherwise(function ($reason) {
+                if ($reason instanceof \Exception) {
+                    throw new CredentialsException(
+                        $this->createErrorMessage($reason->getMessage()),
+                        $reason->getCode(),
+                        $reason
+                    );
+                }
+                throw new CredentialsException($this->createErrorMessage($reason));
+            });
     }
 
     private function createErrorMessage($previous)
     {
         return "Error retrieving credentials from the instance profile "
             . "metadata server. ({$previous})";
+    }
+
+    private function decodeResult($response)
+    {
+        $result = json_decode($response, true);
+
+        if ($result['Code'] !== 'Success') {
+            throw new CredentialsException('Unexpected instance profile '
+                .  'response code: ' . $result['Code']);
+        }
+
+        return $result;
     }
 }

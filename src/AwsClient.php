@@ -4,10 +4,7 @@ namespace Aws;
 use Aws\Api\ApiProvider;
 use Aws\Api\DocModel;
 use Aws\Api\Service;
-use Aws\Credentials\CredentialsInterface;
 use Aws\Signature\SignatureProvider;
-use Psr\Http\Message\RequestInterface;
-use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Uri;
 
 /**
@@ -15,9 +12,6 @@ use GuzzleHttp\Psr7\Uri;
  */
 class AwsClient implements AwsClientInterface
 {
-    /** @var CredentialsInterface AWS credentials */
-    private $credentials;
-
     /** @var string */
     private $region;
 
@@ -29,6 +23,9 @@ class AwsClient implements AwsClientInterface
 
     /** @var callable */
     private $signatureProvider;
+
+    /** @var callable */
+    private $credentialProvider;
 
     /** @var HandlerList */
     private $handlerList;
@@ -140,7 +137,7 @@ class AwsClient implements AwsClientInterface
         $this->api = $config['api'];
         $this->signatureProvider = $config['signature_provider'];
         $this->endpoint = new Uri($config['endpoint']);
-        $this->credentials = $config['credentials'];
+        $this->credentialProvider = $config['credentials'];
         $this->region = isset($config['region']) ? $config['region'] : null;
         $this->config = $config['config'];
         $this->defaultRequestOptions = $config['http'];
@@ -180,7 +177,8 @@ class AwsClient implements AwsClientInterface
 
     public function getCredentials()
     {
-        return $this->credentials;
+        $fn = $this->credentialProvider;
+        return $fn();
     }
 
     public function getEndpoint()
@@ -271,21 +269,6 @@ class AwsClient implements AwsClientInterface
         return new Waiter($this, $name, $args, $config);
     }
 
-    public function serialize(CommandInterface $command)
-    {
-        $request = null;
-        // Return a mock response.
-        $command->getHandlerList()->setHandler(
-            static function (CommandInterface $cmd, RequestInterface $req) use (&$request) {
-                $request = $req;
-                return new FulfilledPromise(new Result([]));
-            }
-        );
-        $this->execute($command);
-
-        return $request;
-    }
-
     /**
      * Get the signature_provider function of the client.
      *
@@ -325,7 +308,7 @@ class AwsClient implements AwsClientInterface
         $this->handlerList->append(
             'sign:signer',
             Middleware::signer(
-                $this->credentials,
+                $this->credentialProvider,
                 constantly(SignatureProvider::resolve(
                     $this->signatureProvider,
                     $this->config['signature_version'],

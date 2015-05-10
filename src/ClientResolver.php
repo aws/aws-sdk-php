@@ -6,10 +6,10 @@ use Aws\Api\ApiProvider;
 use Aws\Api\Service;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
-use Aws\Credentials\NullCredentials;
 use Aws\Signature\SignatureProvider;
 use Aws\Endpoint\EndpointProvider;
 use Aws\Credentials\CredentialProvider;
+use GuzzleHttp\Promise;
 use InvalidArgumentException as IAE;
 
 /**
@@ -106,7 +106,7 @@ class ClientResolver
             'valid'   => ['Aws\Credentials\CredentialsInterface', 'array', 'bool', 'callable'],
             'doc'     => 'Specifies the credentials used to sign requests. Provide an Aws\Credentials\CredentialsInterface object, an associative array of "key", "secret", and an optional "token" key, `false` to use null credentials, or a callable credentials provider used to create credentials or return null. See Aws\\Credentials\\CredentialProvider for a list of built-in credentials providers. If no credentials are provided, the SDK will attempt to load them from the environment.',
             'fn'      => [__CLASS__, '_apply_credentials'],
-            'default' => [__CLASS__, '_default_credentials'],
+            'default' => [CredentialProvider::class, 'defaultProvider'],
         ],
         'retries' => [
             'type'    => 'value',
@@ -329,20 +329,26 @@ class ClientResolver
 
     public static function _apply_credentials($value, array &$args)
     {
-        if ($value instanceof CredentialsInterface) {
+        if (is_callable($value)) {
             return;
-        } elseif (is_callable($value)) {
-            // Invoke the credentials provider and throw if it does not resolve.
-            $args['credentials'] = CredentialProvider::resolve($value);
-        } elseif (is_array($value) && isset($value['key']) && isset($value['secret'])) {
-            $args['credentials'] = new Credentials(
-                $value['key'],
-                $value['secret'],
-                isset($value['token']) ? $value['token'] : null,
-                isset($value['expires']) ? $value['expires'] : null
+        } elseif ($value instanceof CredentialsInterface) {
+            $args['credentials'] = CredentialProvider::fromCredentials($value);
+        } elseif (is_array($value)
+            && isset($value['key'])
+            && isset($value['secret'])
+        ) {
+            $args['credentials'] = CredentialProvider::fromCredentials(
+                new Credentials(
+                    $value['key'],
+                    $value['secret'],
+                    isset($value['token']) ? $value['token'] : null,
+                    isset($value['expires']) ? $value['expires'] : null
+                )
             );
         } elseif ($value === false) {
-            $args['credentials'] = new Credentials('', '');
+            $args['credentials'] = CredentialProvider::fromCredentials(
+                new Credentials('', '')
+            );
             $args['config']['signature_version'] = 'anonymous';
         } else {
             throw new IAE('Credentials must be an instance of '
@@ -431,13 +437,6 @@ class ClientResolver
             $args['parser'],
             $args['error_parser'],
             $args['exception_class']
-        );
-    }
-
-    public static function _default_credentials()
-    {
-        return CredentialProvider::resolve(
-            CredentialProvider::defaultProvider()
         );
     }
 

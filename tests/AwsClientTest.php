@@ -50,7 +50,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
 
         $client = new AwsClient($config);
         $this->assertSame($config['handler'], $this->readAttribute($client->getHandlerList(), 'handler'));
-        $this->assertSame($config['credentials'], $client->getCredentials());
+        $this->assertSame($config['credentials'], $client->getCredentials()->wait());
         $this->assertSame($config['region'], $client->getRegion());
         $this->assertEquals('foo', $client->getApi()->getEndpointPrefix());
     }
@@ -277,36 +277,6 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'region'  => 'us-west-2',
             'version' => 'latest'
         ]);
-    }
-
-    public function testSerializesHttpRequests()
-    {
-        $mock = new MockHandler([new Result([])]);
-        $conf = [
-            'region'  => 'us-east-1',
-            'version' => 'latest',
-            'credentials' => [
-                'key'    => 'foo',
-                'secret' => 'bar'
-            ],
-            'handler' => $mock,
-            'signature_version' => 'v4'
-        ];
-
-        $client = new S3Client($conf);
-        $command = $client->getCommand('PutObject', [
-            'Bucket' => 'foo',
-            'Key'    => 'bar',
-            'Body'   => '123'
-        ]);
-        $request = $client->serialize($command);
-        $this->assertEquals('/bar', $request->getRequestTarget());
-        $this->assertEquals('PUT', $request->getMethod());
-        $this->assertEquals('foo.s3.amazonaws.com', $request->getHeaderLine('Host'));
-        $this->assertTrue($request->hasHeader('Authorization'));
-        $this->assertTrue($request->hasHeader('X-Amz-Content-Sha256'));
-        $this->assertTrue($request->hasHeader('X-Amz-Date'));
-        $this->assertEquals('123', (string) $request->getBody());
     }
 
     public function testCanGetSignatureProvider()

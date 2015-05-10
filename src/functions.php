@@ -1,7 +1,9 @@
 <?php
 namespace Aws;
 
+use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Promise\FulfilledPromise;
 
 //-----------------------------------------------------------------------------
 // Functional functions
@@ -273,4 +275,37 @@ function default_http_handler()
     } else {
         throw new \RuntimeException('Unknown Guzzle version: ' . $version);
     }
+}
+
+/**
+ * Serialize a request for a command but do not send it.
+ *
+ * Returns a promise that is fulfilled with the serialized request.
+ *
+ * @param CommandInterface $command Command to serialize.
+ *
+ * @return RequestInterface
+ * @throws \RuntimeException
+ */
+function serialize(CommandInterface $command)
+{
+    $request = null;
+    $handlerList = $command->getHandlerList();
+
+    // Return a mock result.
+    $handlerList->setHandler(
+        function (CommandInterface $_, RequestInterface $r) use (&$request) {
+            $request = $r;
+            return new FulfilledPromise(new Result([]));
+        }
+    );
+
+    call_user_func($handlerList->resolve(), $command)->wait();
+    if (!$request instanceof RequestInterface) {
+        throw new \RuntimeException(
+            'Calling handler did not serialize request'
+        );
+    }
+
+    return $request;
 }

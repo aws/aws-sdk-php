@@ -7,6 +7,7 @@ use Aws\Api\Service;
 use Aws\Command;
 use Aws\CommandInterface;
 use Aws\Credentials\Credentials;
+use Aws\Credentials\CredentialProvider;
 use Aws\HandlerList;
 use Aws\Middleware;
 use Aws\MockHandler;
@@ -81,7 +82,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
             );
         };
         $list->setHandler($mock);
-        $creds = new Credentials('foo', 'bar');
+        $creds = CredentialProvider::fromCredentials(new Credentials('foo', 'bar'));
         $signature = new SignatureV4('a', 'b');
         $list->append('sign', Middleware::signer($creds, Aws\constantly($signature)));
         $handler = $list->resolve();

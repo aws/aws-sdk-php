@@ -3,48 +3,41 @@ namespace Aws\Credentials;
 
 use Aws;
 use Aws\Exception\CredentialsException;
-use Aws\Exception\UnresolvedCredentialsException;
+use GuzzleHttp\Promise;
 
 /**
- * Credential providers are functions that create credentials and can be
- * composed to create credentials using conditional logic that can create
- * different credentials in different environments.
+ * Credential providers are functions that accept no arguments and return a
+ * promise that is fulfilled with an {@see \Aws\Credentials\CredentialsInterface}
+ * or rejected with an {@see \Aws\Exception\CredentialsException}.
  *
- * A credential provider is a function that accepts no arguments and returns
- * {@see CredentialsInterface} object on success or NULL if no credentials can
- * be created. Note: exceptions MAY be thrown in credential providers if
- * necessary though this should only be the result of an error (e.g., malformed
- * file, bad permissions, etc.) and not the result of missing credentials.
+ * <code>
+ * use Aws\Credentials\CredentialProvider;
+ * $provider = CredentialProvider::defaultProvider();
+ * // Returns a CredentialsInterface or throws.
+ * $creds = $provider()->wait();
+ * </code>
  *
- * You can wrap your calls to a credential provider with the
- * {@see CredentialProvider::resolve} function to ensure that a credentials
- * object is created. If a credentials object is not created, then the
- * resolve() function will throw a {@see Aws\Exception\UnresolvedCredentialsException}.
+ * Credential providers can be composed to create credentials using conditional
+ * logic that can create different credentials in different environments. You
+ * can compose multiple providers into a single provider using
+ * {@see Aws\Credentials\CredentialProvider::chain}. This function accepts
+ * providers as variadic arguments and returns a new function that will invoke
+ * each provider until a successful set of credentials is returned.
  *
- *     use Aws\Credentials\CredentialProvider;
- *     $provider = CredentialProvider::defaultProvider();
- *     // Returns a CredentialsInterface or NULL.
- *     $creds = $provider();
- *     // Returns a CredentialsInterface or throws.
- *     $creds = CredentialProvider::resolve($provider);
- *
- * You can compose multiple providers into a single provider using
- * {@see Aws\or_chain}. This function accepts providers as arguments and
- * returns a new function that will invoke each provider until a non-null value
- * is returned.
- *
- *     // First try an INI file at this location.
- *     $a = CredentialProvider::ini(null, '/path/to/file.ini');
- *     // Then try an INI file at this location.
- *     $b = CredentialProvider::ini(null, '/path/to/other-file.ini');
- *     // Then try loading from envrionment variables.
- *     $c = CredentialProvider::env();
- *     // Combine the three providers together.
- *     $composed = \Aws\or_chain($a, $b, $c);
- *     // Returns creds or NULL
- *     $creds = $composed();
- *     // Returns creds or throws.
- *     $creds = CredentialProvider::resolve($composed);
+ * <code>
+ * // First try an INI file at this location.
+ * $a = CredentialProvider::ini(null, '/path/to/file.ini');
+ * // Then try an INI file at this location.
+ * $b = CredentialProvider::ini(null, '/path/to/other-file.ini');
+ * // Then try loading from envrionment variables.
+ * $c = CredentialProvider::env();
+ * // Combine the three providers together.
+ * $composed = CredentialProvider::chain($a, $b, $c);
+ * // Returns a promise that is fulfilled with credentials or throws.
+ * $promise = $composed();
+ * // Wait on the credentials to resolve.
+ * $creds = $promise->wait();
+ * </code>
  */
 class CredentialProvider
 {
@@ -54,24 +47,96 @@ class CredentialProvider
     const ENV_PROFILE = 'AWS_PROFILE';
 
     /**
-     * Invokes a credential provider and ensures that the provider returns a
-     * CredentialsInterface object.
+     * Create a default credential provider that first checks for environment
+     * variables, then checks for the "default" profile in ~/.aws/credentials,
+     * and finally checks for credentials using EC2 instance profile
+     * credentials.
      *
-     * @param callable $provider Credential provider function
+     * This provider is automatically wrapped in a memoize function that caches
+     * previously provided credentials.
      *
-     * @return CredentialsInterface
-     * @throws CredentialsException|\LogicException
+     * @param array $config Optional array of instance profile credentials
+     *                      provider options.
+     * @return callable
      */
-    public static function resolve(callable $provider)
+    public static function defaultProvider(array $config = [])
     {
-        $result = $provider();
-        if (!($result instanceof CredentialsInterface)) {
-            throw new UnresolvedCredentialsException('Could not load credentials');
-        } elseif ($result->isExpired()) {
-            throw new CredentialsException('The credentials are expired');
+        return self::memoize(
+            self::chain(
+                self::env(),
+                self::ini(),
+                self::instanceProfile($config)
+            )
+        );
+    }
+
+    /**
+     * Create a credential provider function from a set of static credentials.
+     *
+     * @param CredentialsInterface $creds
+     *
+     * @return callable
+     */
+    public static function fromCredentials(CredentialsInterface $creds)
+    {
+        $promise = Promise\promise_for($creds);
+
+        return function () use ($promise) {
+            return $promise;
+        };
+    }
+
+    /**
+     * Creates an aggregate credentials provider that invokes the provided
+     * variadic providers one after the other until a provider returns
+     * credentials.
+     *
+     * @return callable
+     */
+    public static function chain()
+    {
+        $links = func_get_args();
+        if (empty($links)) {
+            throw new \InvalidArgumentException('No providers in chain');
         }
 
-        return $result;
+        return function () use ($links) {
+            /** @var callable $parent */
+            $parent = array_shift($links);
+            $promise = $parent();
+            while ($next = array_shift($links)) {
+                $promise = $promise->otherwise($next);
+            }
+            return $promise;
+        };
+    }
+
+    /**
+     * Wraps a credential provider and caches previously provided credentials.
+     *
+     * Ensures that cached credentials are refreshed when they expire.
+     *
+     * @param callable $provider Credentials provider function to wrap.
+     *
+     * @return callable
+     */
+    public static function memoize(callable $provider)
+    {
+        // Create the initial promise that will be used as the cached value
+        // until it expires.
+        $result = $provider();
+
+        return function () use (&$result, $provider) {
+            return $result
+                ->then(function (CredentialsInterface $creds) use ($provider, &$result) {
+                    // Refresh expired credentials.
+                    if (!$creds->isExpired()) {
+                        return $creds;
+                    }
+                    // Refresh the result and forward the promise.
+                    return $result = $provider();
+                });
+        };
     }
 
     /**
@@ -86,9 +151,14 @@ class CredentialProvider
             // Use credentials from environment variables, if available
             $key = getenv(self::ENV_KEY);
             $secret = getenv(self::ENV_SECRET);
-            return $key && $secret
-                ? new Credentials($key, $secret, getenv(self::ENV_SESSION))
-                : null;
+            if ($key && $secret) {
+                return Promise\promise_for(
+                    new Credentials($key, $secret, getenv(self::ENV_SESSION))
+                );
+            }
+
+            return self::reject('Could not find environment variable '
+                . 'credentials in ' . self::ENV_KEY . '/' . self::ENV_SECRET);
         };
     }
 
@@ -123,67 +193,28 @@ class CredentialProvider
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');
 
         return function () use ($profile, $filename) {
-            if (!file_exists($filename)) {
-                return null;
-            }
             if (!is_readable($filename)) {
-                throw new CredentialsException("Cannot read credentials from $filename");
+                return self::reject("Cannot read credentials from $filename");
             }
             if (!($data = parse_ini_file($filename, true))) {
-                throw new CredentialsException("Invalid credentials file: {$filename}");
+                return self::reject("Invalid credentials file: $filename");
             }
             if (!isset($data[$profile]['aws_access_key_id'])
                 || !isset($data[$profile]['aws_secret_access_key'])
             ) {
-                return null;
+                return self::reject("No credentials present in INI profile '$profile' ($filename)");
             }
-            return new Credentials(
-                $data[$profile]['aws_access_key_id'],
-                $data[$profile]['aws_secret_access_key'],
-                isset($data[$profile]['aws_security_token'])
-                    ? $data[$profile]['aws_security_token']
-                    : null
+
+            return Promise\promise_for(
+                new Credentials(
+                    $data[$profile]['aws_access_key_id'],
+                    $data[$profile]['aws_secret_access_key'],
+                    isset($data[$profile]['aws_security_token'])
+                        ? $data[$profile]['aws_security_token']
+                        : null
+                )
             );
         };
-    }
-
-    /**
-     * Wraps a credential provider and caches previously provided credentials.
-     *
-     * Ensures that cached credentials are refreshed when they expire.
-     *
-     * @param callable $provider Credentials provider function to wrap.
-     *
-     * @return callable
-     */
-    public static function memoize(callable $provider)
-    {
-        $result = null;
-        return function () use (&$result, $provider) {
-            if (!$result || $result->isExpired()) {
-                $result = $provider();
-            }
-            return $result;
-        };
-    }
-
-    /**
-     * Create a default credential provider that first checks for environment
-     * variables, then checks for the "default" profile in ~/.aws/credentials,
-     * and finally checks for credentials using EC2 instance profile
-     * credentials.
-     *
-     * @param array $config Optional array of instance profile credentials
-     *                      provider options.
-     * @return callable
-     */
-    public static function defaultProvider(array $config = [])
-    {
-        return Aws\or_chain(
-            self::env(),
-            self::ini(),
-            self::instanceProfile($config)
-        );
     }
 
     /**
@@ -203,5 +234,10 @@ class CredentialProvider
         $homePath = getenv('HOMEPATH');
 
         return ($homeDrive && $homePath) ? $homeDrive . $homePath : null;
+    }
+
+    private static function reject($msg)
+    {
+        return new Promise\RejectedPromise(new CredentialsException($msg));
     }
 }

@@ -2,6 +2,9 @@
 namespace Aws\Test;
 
 use Aws;
+use Aws\MockHandler;
+use Aws\Result;
+use Aws\S3\S3Client;
 
 class FunctionsTest extends \PHPUnit_Framework_TestCase
 {
@@ -82,5 +85,35 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
         $data = [0, 1, 2, 3, 4, 5];
         $result = \Aws\partition($data, 2);
         $this->assertEquals([[1, 2], [3, 4], [5]], iterator_to_array($result));
+    }
+
+    public function testSerializesHttpRequests()
+    {
+        $mock = new MockHandler([new Result([])]);
+        $conf = [
+            'region'  => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => [
+                'key'    => 'foo',
+                'secret' => 'bar'
+            ],
+            'handler' => $mock,
+            'signature_version' => 'v4'
+        ];
+
+        $client = new S3Client($conf);
+        $command = $client->getCommand('PutObject', [
+            'Bucket' => 'foo',
+            'Key'    => 'bar',
+            'Body'   => '123'
+        ]);
+        $request = \Aws\serialize($command);
+        $this->assertEquals('/bar', $request->getRequestTarget());
+        $this->assertEquals('PUT', $request->getMethod());
+        $this->assertEquals('foo.s3.amazonaws.com', $request->getHeaderLine('Host'));
+        $this->assertTrue($request->hasHeader('Authorization'));
+        $this->assertTrue($request->hasHeader('X-Amz-Content-Sha256'));
+        $this->assertTrue($request->hasHeader('X-Amz-Date'));
+        $this->assertEquals('123', (string) $request->getBody());
     }
 }

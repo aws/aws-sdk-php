@@ -81,7 +81,7 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $command = $client->getCommand($name, $args);
-        $request = $client->serialize($command);
+        $request = \Aws\serialize($command);
         $this->assertEquals($serialized['uri'], $request->getRequestTarget());
 
         $body = (string) $request->getBody();

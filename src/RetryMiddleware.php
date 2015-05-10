@@ -94,10 +94,6 @@ class RetryMiddleware
         CommandInterface $command,
         RequestInterface $request = null
     ) {
-        if (!isset($options['retries'])) {
-            $options['retries'] = 0;
-        }
-
         $retries = 0;
         $handler = $this->nextHandler;
         $decider = $this->decider;
@@ -108,7 +104,9 @@ class RetryMiddleware
                 if (!$decider($retries, $command, $request, null, $value)) {
                     return \GuzzleHttp\Promise\rejection_for($value);
                 }
-            } elseif (!$decider($retries, $command, $request, $value, null)) {
+            } elseif ($value instanceof ResultInterface
+                && !$decider($retries, $command, $request, $value, null)
+            ) {
                 return $value;
             }
 
