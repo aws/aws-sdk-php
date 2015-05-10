@@ -125,8 +125,23 @@ class CredentialProvider
         // Create the initial promise that will be used as the cached value
         // until it expires.
         $result = $provider();
+        $isConstant = false;
 
-        return function () use (&$result, $provider) {
+        return function () use (&$result, &$isConstant, $provider) {
+            // Constant credentials will be returned constantly.
+            if ($isConstant) {
+                return $result;
+            }
+
+            // Determine if these are constant credentials.
+            if ($result->getState() === Promise\PromiseInterface::FULFILLED
+                && !$result->wait()->getExpiration()
+            ) {
+                $isConstant = true;
+                return $result;
+            }
+
+            // Return credentials that could expire and refresh when needed.
             return $result
                 ->then(function (CredentialsInterface $creds) use ($provider, &$result) {
                     // Refresh expired credentials.
@@ -202,7 +217,8 @@ class CredentialProvider
             if (!isset($data[$profile]['aws_access_key_id'])
                 || !isset($data[$profile]['aws_secret_access_key'])
             ) {
-                return self::reject("No credentials present in INI profile '$profile' ($filename)");
+                return self::reject("No credentials present in INI profile "
+                    . "'$profile' ($filename)");
             }
 
             return Promise\promise_for(
