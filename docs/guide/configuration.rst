@@ -112,6 +112,10 @@ create credentials using a function.
 You can find more information about providing credentials to a client in the
 :doc:`credentials` guide.
 
+.. note::
+
+    Credentials are loaded and validated lazily when they are used.
+
 
 debug
 ~~~~~

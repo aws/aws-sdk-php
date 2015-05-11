@@ -164,20 +164,27 @@ a client constructor.
 Using a credential provider
 ---------------------------
 
-A credential provider is a function that returns ``NULL`` or an
-``Aws\Credentials\CredentialsInterface`` object. You can use credential
-providers to implement your own custom logic for creating credentials.
+A credential provider is a function that returns a ``GuzzleHttp\Promise\PromiseInterface``
+that is fulfilled with an ``Aws\Credentials\CredentialsInterface`` instance or
+rejected with an ``Aws\Exception\CredentialsException``. You can use credential
+providers to implement your own custom logic for creating credentials or to
+optimize credential loading.
 
 Credential providers are passed into the ``credentials`` client constructor
-option:
+option. Credential providers are asynchronous, which forces them to be lazily
+evaluated each time an API operation is invoked. As such, passing in a
+credential provider function to an SDK client constructor will not immediately
+validate the credentials. If the credential provider does not return a
+credentials object, an API operation will be rejected with an
+``Aws\Exception\CredentialsException``.
 
 .. code-block:: php
 
     use Aws\Credentials\CredentialProvider;
     use Aws\S3\S3Client;
 
-    // Only allow environment variable credentials.
-    $provider = CredentialProvider::env();
+    // Use the default credential provider
+    $provider = CredentialProvider::defaultProvider();
 
     // Pass the provider to the client.
     $client = new S3Client([
@@ -186,14 +193,17 @@ option:
         'credentials' => $provider
     ]);
 
-Passing in a credential provider function to a SDK client constructor will
-invoke the provider and ensure that it returns an instance of
-``Aws\Credentials\CredentialsInterface``. If the provider does not return a
-credential object, an ``Aws\Exception\UnresolvedCredentialsException`` is
-thrown.
-
 The SDK ships with several built-in providers that can be combined together
 along with any custom providers.
+
+.. important::
+
+    Credential providers are invoked every time an API operation is performed.
+    If loading credentials is an expensive task (e.g., loading from disk or a
+    network resource) or if credentials are not cached by your provider, then
+    you should consider wrapping your credential provider in an
+    ``Aws\Credentials\CredentialProvider::memoize`` function. The default
+    credential provider used by the SDK is automatically memoized.
 
 
 env provider
@@ -227,10 +237,15 @@ attempt to load the "default" profile from a file located at
     use Aws\Credentials\CredentialProvider;
     use Aws\S3\S3Client;
 
+    $provider = CredentialProvider::ini();
+    // Cache the results in a memoize function to avoid loading and parsing
+    // the ini file on every API operation.
+    $provider = CredentialProvider::memoize($provider);
+
     $client = new S3Client([
         'region'      => 'us-west-2',
         'version'     => '2006-03-01',
-        'credentials' => CredentialProvider::ini()
+        'credentials' => $provider
     ]);
 
 You can use a custom profile or ini file location by providing arguments to
@@ -241,10 +256,13 @@ the function that creates the provider.
     $profile = 'production';
     $path = '/full/path/to/credentials.ini';
 
+    $provider = CredentialProvider::ini($profile, $path);
+    $provider = CredentialProvider::memoize($provider);
+
     $client = new S3Client([
         'region'      => 'us-west-2',
         'version'     => '2006-03-01',
-        'credentials' => CredentialProvider::ini($profile, $path)
+        'credentials' => $provider
     ]);
 
 
@@ -259,10 +277,14 @@ credentials from Amazon EC2 instance profiles.
     use Aws\Credentials\CredentialProvider;
     use Aws\S3\S3Client;
 
+    $provider = CredentialProvider::instanceProfile();
+    // Be sure to memoize the credentials
+    $memoizedProvider = CredentialProvider::memoize($provider);
+
     $client = new S3Client([
         'region'      => 'us-west-2',
         'version'     => '2006-03-01',
-        'credentials' => CredentialProvider::instanceProfile()
+        'credentials' => $memoizedProvider
     ]);
 
 
@@ -274,26 +296,29 @@ credential provider. This provider is used if you omit a ``credentials`` option
 when creating a client. It first attempts to load credentials from environment
 variables, then from an ini file, then from an instance profile.
 
+.. note::
+
+    The result of the default provider is automatically memoized.
+
 
 Creating a custom provider
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Credential providers are simply functions that when invoked return either
-``NULL`` or an ``Aws\Credentials\CredentialsInterface`` object. A credential
-provider should have the following logic:
-
-1. Return ``NULL`` if the provider is not capable of providing credentials
-   given the arguments in which it was created.
-2. Throw an ``Aws\Exception\CredentialsException`` if the provider encounters
-   an exceptional situation (e.g., a corrupted file, an invalid format, etc.).
-3. Return an instance of ``Aws\Credentials\CredentialsInterface`` if the
-   provider is able to provide credentials.
+Credential providers are simply functions that when invoked return a promise
+(``GuzzleHttp\Promise\PromiseInterface``) that is fulfilled with an
+``Aws\Credentials\CredentialsInterface`` object or rejected with an
+``Aws\Exception\CredentialsException``.
 
 A best practice for creating providers is to create a function that is invoked
-to create a credential provider. As an example, here's the source of the
-``env`` provider:
+to create the actual credential provider. As an example, here's the source of
+the ``env`` provider (slightly modified for example purposes). Notice that it
+is a function that returns the actual provider function. This allows you to
+easily compose credential providers and pass them around as values.
 
 .. code-block:: php
+
+    use GuzzleHttp\Promise;
+    use GuzzleHttp\Promise\RejectecPromise;
 
     // This function CREATES a credential provider.
     public static function env()
@@ -303,78 +328,35 @@ to create a credential provider. As an example, here's the source of the
             // Use credentials from environment variables, if available
             $key = getenv(self::ENV_KEY);
             $secret = getenv(self::ENV_SECRET);
-            return $key && $secret
-                ? new Credentials($key, $secret, getenv(self::ENV_SESSION))
-                : null;
+            if ($key && $secret) {
+                return Promise\promise_for(
+                    new Credentials($key, $secret, getenv(self::ENV_SESSION))
+                );
+            }
+
+            $msg = 'Could not find environment variable '
+                . 'credentials in ' . self::ENV_KEY . '/' . self::ENV_SECRET;
+            return new RejectedPromise(new CredentialsException($msg));
         };
     }
-
-
-Chaining providers
-~~~~~~~~~~~~~~~~~~
-
-Credential providers can be chained using the ``Aws\Utils::orChain()`` function.
-This function accepts a variadic number of arguments, each of which are
-credential provider functions. This function then returns a new function that
-is the composition of the provided functions such that they are invoked one
-after the other until a function returns a non-null value.
-
-The ``defaultProvider`` uses this composition in order to check multiple
-providers before returning ``NULL``. The source of the ``defaultProvider``
-demonstrates the use of the ``orChain``.
-
-.. code-block:: php
-
-    // This function returns a provider.
-    public static function defaultProvider(array $config = [])
-    {
-        // This function is the provider, which is actually the composition
-        // of multiple providers.
-        return Utils::orChain(
-            self::env(),
-            self::ini(),
-            self::instanceProfile($config)
-        );
-    }
-
-
-Refreshable Credentials
-~~~~~~~~~~~~~~~~~~~~~~~
-
-Some credentials are only temporary and must be periodically refreshed. In
-fact, the instance profile credentials provided by the ``instanceProfile``
-provider will create credentials that automatically refresh when they expire.
-Use the ``Aws\Credentials\RefreshableCredentials`` class if you need to create
-a custom credential provider that returns temporary credentials that are
-automatically refreshed.
-
-The ``RefreshableCredentials`` class accepts a single argument in the
-constructor: a credential provider. When instantiated, the
-``RefreshableCredentials`` class immediately invokes the provider and uses the
-provided credentials. When the decorated credentials expire, the class will
-automatically invoke the credential provider to retrieve new credentials.
-
-``Aws\Credentials\RefreshableCredentials`` is a concrete implementation of
-``Aws\Credentials\RefreshableCredentialsInterface``, which exposes a
-``refresh()`` method on a credentials object. This method is invoked
-automatically when credentials are expired, but it may also be triggered
-manually to force credentials to refresh early.
 
 
 Memoizing Credentials
 ~~~~~~~~~~~~~~~~~~~~~
 
 It is sometimes necessary to create a credential provider that remembers the
-previous return value. This can be useful when using the ``Aws\Sdk`` class to
+previous return value. This can be useful for performance when loading
+credentials is an expensive operation or when using the ``Aws\Sdk`` class to
 share a credential provider across multiple clients. You can add memoization to
 a credential provider by wrapping the credential provider function in a
-memoization  function:
+``memoize`` function:
 
 .. code-block:: php
 
     use Aws\Credentials\CredentialProvider;
 
     $provider = CredentialProvider::instanceProfile();
+    // Wrap the actual provider in a memoize function.
     $provider = CredentialProvider::memoize($provider);
 
     // Pass the provider into the Sdk class and share the provider
@@ -387,6 +369,41 @@ memoization  function:
     $ec2 = $sdk->getEc2(['region' => 'us-west-2', 'version' => 'latest']);
 
     assert($s3->getCredentials() === $ec2->getCredentials());
+
+When the memoized credentials become expired, the memoize wrapper will invoke
+the wrapped provider in an attempt to refresh the credentials.
+
+
+Chaining providers
+~~~~~~~~~~~~~~~~~~
+
+Credential providers can be chained using the
+``Aws\Credentials\CredentialProvider::chain()`` function. This function accepts
+a variadic number of arguments, each of which are credential provider
+functions. This function then returns a new function that is the composition of
+the provided functions such that they are invoked one after the other until one
+of the providers returns a promise that is fulfilled successfully.
+
+The ``defaultProvider`` uses this composition in order to check multiple
+providers before failing. The source of the ``defaultProvider`` demonstrates
+the use of the ``chain`` function.
+
+.. code-block:: php
+
+    // This function returns a provider.
+    public static function defaultProvider(array $config = [])
+    {
+        // This function is the provider, which is actually the composition
+        // of multiple providers. Notice that we are memoizing the result by
+        // default as well.
+        return self::memoize(
+            self::chain(
+                self::env(),
+                self::ini(),
+                self::instanceProfile($config)
+            )
+        );
+    }
 
 
 .. _temporary_credentials:
