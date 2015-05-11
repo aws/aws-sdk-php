@@ -341,7 +341,6 @@ class Transfer implements PromisorInterface
                     $source = "s3://{$command['Bucket']}/{$command['Key']}";
                     $dest = $command['@http']['sink'];
                     break;
-                case 'CompleteMultipartUpload':
                 case 'PutObject':
                     $source = $command['SourceFile'];
                     $dest = "s3://{$command['Bucket']}/{$command['Key']}";
@@ -349,7 +348,7 @@ class Transfer implements PromisorInterface
                 case 'UploadPart':
                     $part = $command['PartNumber'];
                 case 'CreateMultipartUpload':
-                case 'CompleteUploadPart':
+                case 'CompleteMultipartUpload':
                     $sourceKey = $command['Key'];
                     if (isset($s3Args['Key']) && strpos($sourceKey, $s3Args['Key']) === 0) {
                         $sourceKey = substr($sourceKey, strlen($s3Args['Key']) + 1);
