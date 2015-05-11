@@ -15,30 +15,29 @@ class GlacierClientTest extends \PHPUnit_Framework_TestCase
 {
     use UsesServiceTrait;
 
-    public function testAddsRequiredParamsAndHeadersAutomatically()
+    public function testAppliesAllMiddleware()
     {
         $client = new GlacierClient([
             'service' => 'glacier',
             'region'  => 'us-west-2',
-            'version' => 'latest',
-            'http_handler' => function ($req, $opt) use (&$request) {
-                $request = $req;
-                return new Response(200);
-            }
+            'version' => 'latest'
         ]);
-
         $command = $client->getCommand('UploadArchive', [
-            'vaultName' => 'foo',
-            'body' => 'foo',
+            'vaultName'  => 'foo',
+            'sourceFile' => __DIR__ . '/test-content.txt',
         ]);
-        $client->execute($command);
+        $request = \Aws\serialize($command);
 
-        // Adds default accountId and the API version header.
+        // Added default accountId and the API version header.
         $this->assertEquals('-', $command['accountId']);
         $this->assertEquals(
             $client->getApi()->getMetadata('apiVersion'),
             $request->getHeaderLine('x-amz-glacier-version')
         );
+
+        // Added Content-Type and Body
+        $this->assertEquals('foo', $command['body']);
+        $this->assertEquals('text/plain', $request->getHeaderLine('Content-Type'));
 
         // Added the tree and content hashes.
         $hash = hash('sha256', 'foo');
