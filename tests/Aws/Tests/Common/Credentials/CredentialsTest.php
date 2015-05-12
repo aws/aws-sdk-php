@@ -151,6 +151,19 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
      * @covers Aws\Common\Credentials\Credentials::factory
      * @covers Aws\Common\Credentials\Credentials::createFromEnvironment
      */
+    public function testFallsbackToInstanceProfileWhenCredentialsFileFails()
+    {
+        unset($_SERVER[Credentials::ENV_KEY], $_SERVER[Credentials::ENV_SECRET]);
+        putenv('AWS_ACCESS_KEY_ID=');
+        putenv('AWS_SECRET_KEY=');
+        $credentials = Credentials::factory(array('profile' => 'other'));
+        $this->assertInstanceOf('Aws\Common\Credentials\RefreshableInstanceProfileCredentials', $credentials);
+    }
+
+    /**
+     * @covers Aws\Common\Credentials\Credentials::factory
+     * @covers Aws\Common\Credentials\Credentials::createFromEnvironment
+     */
     public function testFactoryCreatesCredentialsFromEnvCredentials()
     {
         $_SERVER[Credentials::ENV_KEY] = 'foo';
@@ -215,16 +228,20 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testFactoryCreatesCredentialsFromCredentialFile(
         array $envVars = array(),
+        $profile = null,
         $expKey = null,
         $expSecret = null,
-        $profile = null
+        $expExMessage = null
     ) {
         foreach ($envVars as $key => $value) {
             $_SERVER[$key] = $value;
+            putenv("{$key}=");
         }
 
-        if (!$expKey && !$expSecret) {
-            $this->setExpectedException('RuntimeException');
+        if ($expExMessage) {
+            $this->setExpectedExceptionRegExp(
+                'RuntimeException', "/Invalid AWS credentials {$expExMessage}/"
+            );
         }
         $credentials = Credentials::fromIni($profile);
 
@@ -235,12 +252,58 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
     public function getDataForCredentialFileTest()
     {
         return array(
-            array(array('HOME' => __DIR__), 'foo', 'bar'),
-            array(array('HOMEDRIVE' => '/', 'HOMEPATH' => __DIR__), 'foo', 'bar'),
-            array(),
-            array(array('HOME' => __DIR__), null, null, 'invalid'),
-            array(array('HOME' => __DIR__), 'fizz', 'buzz', 'test'),
-            array(array('HOME' => __DIR__, Credentials::ENV_PROFILE => 'test'), 'fizz', 'buzz'),
+            array(
+                array('HOME' => __DIR__),
+                null,
+                'foo',
+                'bar',
+            ),
+            array(
+                array('HOMEDRIVE' => '/', 'HOMEPATH' => __DIR__),
+                null,
+                'foo',
+                'bar',
+            ),
+            array(
+                array(),
+                null,
+                null,
+                null,
+                'file'
+            ),
+            array(
+                array('HOME' => __DIR__),
+                'invalid',
+                null,
+                null,
+                'profile',
+            ),
+            array(
+                array('HOME' => __DIR__),
+                'test',
+                'fizz',
+                'buzz',
+            ),
+            array(
+                array('HOME' => __DIR__, Credentials::ENV_PROFILE => 'test'),
+                null,
+                'fizz',
+                'buzz'
+            ),
+            array(
+                array('HOME' => __DIR__),
+                'other',
+                null,
+                null,
+                'profile'
+            ),
+            array(
+                array('HOME' => __DIR__ . '/invalid'),
+                'other',
+                null,
+                null,
+                'file'
+            ),
         );
     }
 }
