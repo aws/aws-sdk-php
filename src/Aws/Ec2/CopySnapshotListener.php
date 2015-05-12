@@ -59,10 +59,9 @@ class CopySnapshotListener implements EventSubscriberInterface
     ) {
         // Create a temporary client used to generate the presigned URL
         $newClient = Ec2Client::factory(array(
-            'region'    => $command['SourceRegion'],
-            'signature' => 'v4',
-            'key'       => $client->getCredentials()->getAccessKeyId(),
-            'secret'    => $client->getCredentials()->getSecretKey()
+            'region'      => $command['SourceRegion'],
+            'signature'   => 'v4',
+            'credentials' => $client->getCredentials(),
         ));
 
         $preCommand = $newClient->getCommand(
