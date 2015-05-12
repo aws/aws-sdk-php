@@ -10,23 +10,55 @@ a "pre-signed" request and encode it as a URL that an end-user's browser can
 retrieve. Additionally, you can limit a pre-signed request by specifying an
 expiration time.
 
-The most common scenario is creating a pre-signed URL to GET an object. The
-easiest way to do this is to use the ``getObjectUrl`` method of the Amazon S3
-client. This same method can also be used to get an unsigned URL of a public
-S3 object.
 
-.. S3/Integration/S3_20060301_Test.php testGetObjectUrl
+Creating a presigned request
+----------------------------
 
-You can also create pre-signed URLs for any Amazon S3 operation using the
-``getCommand`` method for creating a Guzzle command object and then calling the
-``createPresignedUrl()`` method on the command.
+You can get the pre-signed URL to an Amazon S3 object using the
+``Aws\S3\S3Client::createPresignedRequest()`` method. This method accepts an
+``Aws\CommandInteface`` object and expires timestamp and returns a pre-signed
+``Psr\Http\Message\RequestInterface`` object. You can retrieve the pre-signed
+URL of the object using the ``getUri()`` method of the request.
 
-.. S3/Integration/S3_20060301_Test.php testCreatePresignedUrlFromCommand
+The most common scenario is creating a pre-signed URL to GET an object:
 
-If you need more flexibility in creating your pre-signed URL, then you can
-create a pre-signed URL for a completely custom
-``Guzzle\Http\Message\RequestInterface`` object. You can use the ``get()``,
-``post()``, ``head()``, ``put()``, and ``delete()`` methods of a client object
-to easily create a Guzzle request object.
+.. code-block:: php
 
-.. S3/Integration/S3_20060301_Test.php testCreatePresignedUrl
+    $s3Client = new Aws\S3\S3Client([
+        'region'  => 'us-standard',
+        'version' => '2006-03-01',
+    ]);
+
+    $cmd = $s3Client->getCommand('GetObject', [
+        'Bucket' => 'my-bucket',
+        'Key'    => 'testKey'
+    ]);
+
+    $request = $s3Client->createPresignedRequest($cmd, '+20 minutes');
+
+    // Get the actual presigned-url
+    $presignedUrl = (string) $request->getUri();
+
+You can create pre-signed URLs for any Amazon S3 operation using the
+``getCommand`` method for creating a command object and then calling the
+``createPresignedRequest()`` method with the command. When ultimately sending
+the request, be sure to use the same method and the same headers as the
+returned request.
+
+
+Getting the URL to an object
+----------------------------
+
+If you only need the public URL to an object stored in an Amazon S3 bucket,
+then you can use the ``Aws\S3\S3Client::getObjectUrl()`` method. This method
+returns an unsigned URL to the given bucket and key.
+
+.. code-block:: php
+
+    $url = $s3Client->getObjectUrl('my-bucket', 'my-key');
+
+.. important::
+
+    The URL returned by this method is not validated to ensure that the bucket
+    or key exists, nor does this method ensure that the object allows
+    unauthenticated access.
