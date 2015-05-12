@@ -211,8 +211,12 @@ class CredentialProvider
             if (!is_readable($filename)) {
                 return self::reject("Cannot read credentials from $filename");
             }
-            if (!($data = parse_ini_file($filename, true))) {
+            $data = parse_ini_file($filename, true);
+            if ($data === false) {
                 return self::reject("Invalid credentials file: $filename");
+            }
+            if (!isset($data[$profile])) {
+                return self::reject("'$profile' not found in credentials file");
             }
             if (!isset($data[$profile]['aws_access_key_id'])
                 || !isset($data[$profile]['aws_secret_access_key'])

@@ -16,6 +16,14 @@ class CredentialProviderTest extends \PHPUnit_Framework_TestCase
         putenv(CredentialProvider::ENV_KEY . '=');
         putenv(CredentialProvider::ENV_SECRET . '=');
         putenv(CredentialProvider::ENV_PROFILE . '=');
+
+        $dir = sys_get_temp_dir() . '/.aws';
+
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        return $dir;
     }
 
     public function setUp()
@@ -50,12 +58,7 @@ class CredentialProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatesFromIniFile()
     {
-        $this->clearEnv();
-
-        $dir = sys_get_temp_dir() . '/.aws';
-        if (!is_dir($dir)) {
-            mkdir($dir, 0777, true);
-        }
+        $dir = $this->clearEnv();
         $ini = <<<EOT
 [default]
 aws_access_key_id = foo
@@ -77,13 +80,7 @@ EOT;
      */
     public function testEnsuresIniFileIsValid()
     {
-        $this->clearEnv();
-        $dir = sys_get_temp_dir() . '/.aws';
-
-        if (!is_dir($dir)) {
-            mkdir($dir, 0777, true);
-        }
-
+        $dir = $this->clearEnv();
         file_put_contents($dir . '/credentials', "wef \n=\nwef");
         putenv('HOME=' . dirname($dir));
 
@@ -110,14 +107,28 @@ EOT;
      */
     public function testEnsuresProfileIsNotEmpty()
     {
-        $this->clearEnv();
-        $dir = sys_get_temp_dir() . '/.aws';
-        if (!is_dir($dir)) {
-            mkdir($dir, 0777, true);
-        }
+        $dir = $this->clearEnv();
         $ini = "[default]\naws_access_key_id = foo\n"
             . "aws_secret_access_key = baz\n[foo]";
         file_put_contents($dir . '/credentials', $ini);
+        putenv('HOME=' . dirname($dir));
+
+        try {
+            call_user_func(CredentialProvider::ini('foo'))->wait();
+        } catch (\Exception $e) {
+            unlink($dir . '/credentials');
+            throw $e;
+        }
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage 'foo' not found in credentials file
+     */
+    public function testEnsuresFileIsNotEmpty()
+    {
+        $dir = $this->clearEnv();
+        file_put_contents($dir . '/credentials', '');
         putenv('HOME=' . dirname($dir));
 
         try {
@@ -172,5 +183,21 @@ EOT;
         putenv(CredentialProvider::ENV_SECRET . "={$s}");
         $this->assertEquals('abc', $creds->getAccessKeyId());
         $this->assertEquals('123', $creds->getSecretKey());
+    }
+
+    public function testChainsCredentials()
+    {
+        $dir = $this->clearEnv();
+        $ini = "[default]\naws_access_key_id = foo\n"
+            . "aws_secret_access_key = baz\n[foo]";
+        file_put_contents($dir . '/credentials', $ini);
+        putenv('HOME=' . dirname($dir));
+        $a = CredentialProvider::ini('foo');
+        $b = CredentialProvider::ini();
+        $c = function () { $this->fail('Should not have called'); };
+        $provider = CredentialProvider::chain($a, $b, $c);
+        $creds = $provider()->wait();
+        $this->assertEquals('foo', $creds->getAccessKeyId());
+        $this->assertEquals('baz', $creds->getSecretKey());
     }
 }
