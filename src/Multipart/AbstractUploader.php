@@ -363,7 +363,7 @@ abstract class AbstractUploader implements Promise\PromisorInterface
                     $this->info['command']['upload'],
                     $data + $this->state->getId()
                 );
-                $command->getHandlerList()->append('sign:mup', $resultHandler);
+                $command->getHandlerList()->appendSign($resultHandler, 'mup');
                 yield $command;
                 if ($this->source->tell() > $partStartPos) {
                     continue;

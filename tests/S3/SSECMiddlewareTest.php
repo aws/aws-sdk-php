@@ -20,8 +20,7 @@ class SseCpkListenerTest extends \PHPUnit_Framework_TestCase
         $s3 = $this->getTestClient('s3');
         $this->addMockResults($s3, [[]]);
         $cmd = $s3->getCommand($operation, $params);
-        $cmd->getHandlerList()->append(
-            'init',
+        $cmd->getHandlerList()->appendInit(
             Middleware::tap(function ($cmd, $req) use ($expectedResults) {
                 foreach ($expectedResults as $key => $value) {
                     $this->assertEquals($value, $cmd[$key]);

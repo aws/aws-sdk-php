@@ -7,11 +7,11 @@ namespace Aws;
  * return a promise that is resolved with an AWS result object.
  *
  * The "front" of the list is invoked before the "end" of the list. You can add
- * middleware to the front of the list using the "prepend" method, and the end
- * of the list using the "append" method. The last function invoked in a
- * handler list is the handler (a function that does not accept a next
- * handler but rather is responsible for returning a promise that is fulfilled
- * with an Aws\ResultInterface object).
+ * middleware to the front of the list using one of the "prepend" method, and
+ * the end of the list using one of the "append" method. The last function
+ * invoked in a handler list is the handler (a function that does not accept a
+ * next handler but rather is responsible for returning a promise that is
+ * fulfilled with an Aws\ResultInterface object).
  *
  * Handlers are ordered using a "step" that describes the step at which the
  * SDK is when sending a command. The available steps are:
@@ -27,9 +27,7 @@ namespace Aws;
  *
  * Middleware can be registered with a name to allow you to easily add a
  * middleware before or after another middleware by name. This also allows you
- * to remove a middleware by name (in addition to removing by instance). You
- * can provide a name for a middleware by specifying the step as "step:name"
- * (e.g., "init:name").
+ * to remove a middleware by name (in addition to removing by instance).
  */
 class HandlerList implements \Countable
 {
@@ -116,51 +114,91 @@ class HandlerList implements \Countable
     }
 
     /**
-     * Append a middleware to the end of a step.
+     * Append a middleware to the init step.
      *
-     * @param string   $stepAndName Step to add the middleware to followed by
-     *                              an optional name, separated with ":"
-     *                              (e.g., "init:name").
      * @param callable $middleware Middleware function to add.
+     * @param string   $name       Name of the middleware.
      */
-    public function append($stepAndName, callable $middleware)
+    public function appendInit(callable $middleware, $name = null)
     {
-        list($step, $name) = $this->parseStepAndName($stepAndName);
-
-        if (!isset($this->steps[$step])) {
-            throw new \InvalidArgumentException("Invalid step: $step");
-        }
-
-        $this->sorted = null;
-        array_unshift($this->steps[$step], [$middleware, $name]);
-
-        if ($name) {
-            $this->named[$name] = $step;
-        }
+        $this->add(self::INIT, $name, $middleware);
     }
 
     /**
-     * Prepend a middleware to the beginning of a step.
+     * Prepend a middleware to the init step.
      *
-     * @param string   $stepAndName Step to add the middleware to followed by
-     *                              an optional name, separated with ":"
-     *                              (e.g., "init:name").
      * @param callable $middleware Middleware function to add.
+     * @param string   $name       Name of the middleware.
      */
-    public function prepend($stepAndName, callable $middleware)
+    public function prependInit(callable $middleware, $name = null)
     {
-        list($step, $name) = $this->parseStepAndName($stepAndName);
+        $this->add(self::INIT, $name, $middleware, true);
+    }
 
-        if (!isset($this->steps[$step])) {
-            throw new \InvalidArgumentException("Invalid step: $step");
-        }
+    /**
+     * Append a middleware to the validate step.
+     *
+     * @param callable $middleware Middleware function to add.
+     * @param string   $name       Name of the middleware.
+     */
+    public function appendValidate(callable $middleware, $name = null)
+    {
+        $this->add(self::VALIDATE, $name, $middleware);
+    }
 
-        $this->sorted = null;
-        $this->steps[$step][] = [$middleware, $name];
+    /**
+     * Prepend a middleware to the validate step.
+     *
+     * @param callable $middleware Middleware function to add.
+     * @param string   $name       Name of the middleware.
+     */
+    public function prependValidate(callable $middleware, $name = null)
+    {
+        $this->add(self::VALIDATE, $name, $middleware, true);
+    }
 
-        if ($name) {
-            $this->named[$name] = $step;
-        }
+    /**
+     * Append a middleware to the build step.
+     *
+     * @param callable $middleware Middleware function to add.
+     * @param string   $name       Name of the middleware.
+     */
+    public function appendBuild(callable $middleware, $name = null)
+    {
+        $this->add(self::BUILD, $name, $middleware);
+    }
+
+    /**
+     * Prepend a middleware to the build step.
+     *
+     * @param callable $middleware Middleware function to add.
+     * @param string   $name       Name of the middleware.
+     */
+    public function prependBuild(callable $middleware, $name = null)
+    {
+        $this->add(self::BUILD, $name, $middleware, true);
+    }
+
+    /**
+     * Append a middleware to the sign step.
+     *
+     * @param callable $middleware Middleware function to add.
+     * @param string   $name       Name of the middleware.
+     */
+    public function appendSign(callable $middleware, $name = null)
+    {
+        $this->add(self::SIGN, $name, $middleware);
+    }
+
+    /**
+     * Prepend a middleware to the sign step.
+     *
+     * @param callable $middleware Middleware function to add.
+     * @param string   $name       Name of the middleware.
+     */
+    public function prependSign(callable $middleware, $name = null)
+    {
+        $this->add(self::SIGN, $name, $middleware, true);
     }
 
     /**
@@ -249,17 +287,6 @@ class HandlerList implements \Countable
             + count($this->steps[self::VALIDATE])
             + count($this->steps[self::BUILD])
             + count($this->steps[self::SIGN]);
-    }
-
-    private function parseStepAndName($step)
-    {
-        $parts = explode(':', $step);
-
-        if (!isset($parts[1])) {
-            $parts[] = null;
-        }
-
-        return $parts;
     }
 
     /**
@@ -369,6 +396,29 @@ class HandlerList implements \Countable
                     unset($this->steps[$k][$j]);
                 }
             }
+        }
+    }
+
+    /**
+     * Add a middleware to a step.
+     *
+     * @param string   $step       Middleware step.
+     * @param string   $name       Middleware name.
+     * @param callable $middleware Middleware function to add.
+     * @param bool     $prepend    Prepend instead of append.
+     */
+    private function add($step, $name, callable $middleware, $prepend = false)
+    {
+        $this->sorted = null;
+
+        if ($prepend) {
+            $this->steps[$step][] = [$middleware, $name];
+        } else {
+            array_unshift($this->steps[$step], [$middleware, $name]);
+        }
+
+        if ($name) {
+            $this->named[$name] = $step;
         }
     }
 }

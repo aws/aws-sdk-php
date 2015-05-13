@@ -323,7 +323,7 @@ class ClientResolver
     {
         if ($value) {
             $decider = RetryMiddleware::createDefaultDecider($value);
-            $list->append('sign:retry', Middleware::retry($decider));
+            $list->appendSign(Middleware::retry($decider), 'retry');
         }
     }
 
@@ -372,7 +372,7 @@ class ClientResolver
         $args['serializer'] = Service::createSerializer($api, $args['endpoint']);
         $args['parser'] = Service::createParser($api);
         $args['error_parser'] = Service::createErrorParser($api->getProtocol());
-        $list->prepend('build:builder', Middleware::requestBuilder($args['serializer']));
+        $list->prependBuild(Middleware::requestBuilder($args['serializer']), 'builder');
     }
 
     public static function _apply_endpoint_provider(callable $value, array &$args)
@@ -408,9 +408,9 @@ class ClientResolver
     public static function _apply_validate($value, array &$args, HandlerList $list)
     {
         if ($value === true) {
-            $list->append(
-                'init:validation',
-                Middleware::validation($args['api'], new Validator())
+            $list->appendValidate(
+                Middleware::validation($args['api'], new Validator()),
+                'validation'
             );
         }
     }

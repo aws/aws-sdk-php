@@ -154,7 +154,7 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
     public function testCanOpenWriteOnlyStreams()
     {
         $history = new History();
-        $this->client->getHandlerList()->append('sign', Middleware::history($history));
+        $this->client->getHandlerList()->appendSign(Middleware::history($history));
         $this->addMockResults($this->client, [new Result()]);
         $s = fopen('s3://bucket/key', 'w');
         $this->assertEquals(4, fwrite($s, 'test'));
@@ -186,7 +186,7 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
     public function testCanOpenAppendStreamsWithOriginalFile()
     {
         $history = new History();
-        $this->client->getHandlerList()->append('sign', Middleware::history($history));
+        $this->client->getHandlerList()->appendSign(Middleware::history($history));
 
         // Queue the 200 response that will load the original, and queue the
         // 204 flush response
@@ -228,7 +228,7 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
     public function testCanUnlinkFiles()
     {
         $history = new History();
-        $this->client->getHandlerList()->append('sign', Middleware::history($history));
+        $this->client->getHandlerList()->appendSign(Middleware::history($history));
         $this->addMockResults($this->client, [
             new Result(['@metadata' => ['statusCode' => 204]])
         ]);
@@ -280,7 +280,7 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
     public function testCreatingBucketsSetsAclBasedOnPermissions()
     {
         $history = new History();
-        $this->client->getHandlerList()->append('sign', Middleware::history($history));
+        $this->client->getHandlerList()->appendSign(Middleware::history($history));
 
         $this->addMockResults($this->client, [
             function ($cmd, $r) { return new S3Exception('404', $cmd); },
@@ -313,7 +313,7 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
     public function testCreatesNestedSubfolder()
     {
         $history = new History();
-        $this->client->getHandlerList()->append('sign', Middleware::history($history));
+        $this->client->getHandlerList()->appendSign(Middleware::history($history));
 
         $this->addMockResults($this->client, [
             function ($cmd, $r) { return new S3Exception('404', $cmd); },
@@ -352,7 +352,7 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
     public function testCanDeleteBucketWithRmDir()
     {
         $history = new History();
-        $this->client->getHandlerList()->append('sign', Middleware::history($history));
+        $this->client->getHandlerList()->appendSign(Middleware::history($history));
         $this->addMockResults($this->client, [new Result()]);
         $this->assertTrue(rmdir('s3://bucket'));
         $this->assertEquals(1, count($history));
@@ -376,7 +376,7 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
     public function testCanDeleteObjectWithRmDir($path)
     {
         $history = new History();
-        $this->client->getHandlerList()->append('sign', Middleware::history($history));
+        $this->client->getHandlerList()->appendSign(Middleware::history($history));
         $this->addMockResults($this->client, [new Result(), new Result()]);
         $this->assertTrue(rmdir($path));
         $this->assertCount(1, $history);
@@ -388,7 +388,7 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
     public function testCanDeleteNestedFolderWithRmDir()
     {
         $history = new History();
-        $this->client->getHandlerList()->append('sign', Middleware::history($history));
+        $this->client->getHandlerList()->appendSign(Middleware::history($history));
         $this->addMockResults($this->client, [
             new Result([
                 'Name' => 'foo',
@@ -431,7 +431,7 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
     public function testCanRenameObjects()
     {
         $history = new History();
-        $this->client->getHandlerList()->append('sign', Middleware::history($history));
+        $this->client->getHandlerList()->appendSign(Middleware::history($history));
         $this->addMockResults($this->client, [
             new Result(),
             new Result()
@@ -458,7 +458,7 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
     public function testCanRenameObjectsWithCustomSettings()
     {
         $history = new History();
-        $this->client->getHandlerList()->append('sign', Middleware::history($history));
+        $this->client->getHandlerList()->appendSign(Middleware::history($history));
         $this->addMockResults($this->client, [
             new Result(), // 204
             new Result()  // 204
@@ -617,7 +617,7 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
     public function testDeterminesIfFileOrDir($uri, $queue, $result)
     {
         $history = new History();
-        $this->client->getHandlerList()->append('sign', Middleware::history($history));
+        $this->client->getHandlerList()->appendSign(Middleware::history($history));
 
         if ($queue) {
             $this->addMockResults($this->client, $queue);
@@ -735,8 +735,7 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
 
         $this->addMockResults($this->client, array_merge($results, $results));
 
-        $this->client->getHandlerList()->append(
-            'build',
+        $this->client->getHandlerList()->appendBuild(
             Middleware::tap(function (CommandInterface $c, $req) {
                 $this->assertEquals('bucket', $c['Bucket']);
                 $this->assertEquals('/', $c['Delimiter']);
@@ -778,8 +777,7 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
             ]
         ]);
 
-        $this->client->getHandlerList()->append(
-            'build',
+        $this->client->getHandlerList()->appendBuild(
             Middleware::tap(function (CommandInterface $c, $req) {
                 $this->assertEquals('bucket', $c['Bucket']);
                 $this->assertEquals('', $c['Delimiter']);

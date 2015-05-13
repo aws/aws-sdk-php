@@ -42,7 +42,7 @@ class HandlerListTest extends \PHPUnit_Framework_TestCase
     public function testCanPrependWithName()
     {
         $list = new HandlerList();
-        $list->prepend('init:foo', function () {});
+        $list->prependInit(function () {}, 'foo');
         $this->assertCount(1, $list);
     }
 
@@ -51,7 +51,7 @@ class HandlerListTest extends \PHPUnit_Framework_TestCase
         $handler = function () {};
         $list = new HandlerList($handler);
         $middleware = function () { return function () {}; };
-        $list->append('init', $middleware);
+        $list->appendInit($middleware);
         $this->assertCount(1, $list);
         $this->assertNotSame($handler, $list->resolve());
         $list->remove($middleware);
@@ -70,7 +70,7 @@ class HandlerListTest extends \PHPUnit_Framework_TestCase
         $handler = function () {};
         $list = new HandlerList($handler);
         $middleware = function () { return function () {}; };
-        $list->append('init:foo', $middleware);
+        $list->appendInit($middleware, 'foo');
         $this->assertCount(1, $list);
         $this->assertNotSame($handler, $list->resolve());
         $list->remove('foo');
@@ -95,10 +95,10 @@ class HandlerListTest extends \PHPUnit_Framework_TestCase
         };
         $list = new HandlerList($handler);
         $h = [];
-        $steps = ['init', 'validate', 'build', 'sign'];
+        $steps = ['Init', 'Validate', 'Build', 'Sign'];
         foreach ($steps as $step) {
             $m = $this->createMiddleware($h, $step);
-            $list->append($step, $m);
+            $list->{'append' . $step}($m);
         }
         $built = $list->resolve();
         $cmd = new Command('foo');
@@ -113,10 +113,10 @@ class HandlerListTest extends \PHPUnit_Framework_TestCase
         };
         $list = new HandlerList($handler);
         $h = [];
-        $steps = ['init', 'validate', 'build', 'sign'];
+        $steps = ['Init', 'Validate', 'Build', 'Sign'];
         foreach ($steps as $step) {
             $m = $this->createMiddleware($h, $step);
-            $list->prepend($step, $m);
+            $list->{'prepend' . $step}($m);
         }
         $built = $list->resolve();
         $cmd = new Command('foo');
@@ -124,31 +124,13 @@ class HandlerListTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($steps, $h);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testValidatesAppendStep()
-    {
-        $list = new HandlerList();
-        $list->append('nope', function () {});
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testValidatesPrependStep()
-    {
-        $list = new HandlerList();
-        $list->prepend('nope', function () {});
-    }
-
     public function testCanPrintStack()
     {
         $list = new HandlerList();
-        $list->append('init:foo', function () {});
-        $list->append('init:bar', [$this, 'bar']);
-        $list->append('validate', __CLASS__ . '::foo');
-        $list->append('sign:baz', [Middleware::class, 'tap']);
+        $list->appendInit(function () {}, 'foo');
+        $list->appendInit([$this, 'bar'], 'bar');
+        $list->appendValidate(__CLASS__ . '::foo');
+        $list->appendSign([Middleware::class, 'tap'], 'baz');
         $list->setHandler(function () {});
         $lines = explode("\n", (string) $list);
         $this->assertCount(6, $lines);
@@ -165,8 +147,8 @@ class HandlerListTest extends \PHPUnit_Framework_TestCase
     public function testCanAddBefore()
     {
         $list = new HandlerList();
-        $list->append('init', function () {});
-        $list->append('build:test', function () {});
+        $list->appendInit(function () {});
+        $list->appendBuild(function () {}, 'test');
         $list->before('test', 'a', function () {});
         $lines = explode("\n", (string) $list);
         $this->assertContains("1) Step: build, Name: a", $lines[1]);
@@ -176,9 +158,9 @@ class HandlerListTest extends \PHPUnit_Framework_TestCase
     public function testCanAddAfter()
     {
         $list = new HandlerList();
-        $list->append('build:test', function () {});
-        $list->append('build:after_test', function () {});
-        $list->append('init', function () {});
+        $list->appendBuild(function () {}, 'test');
+        $list->appendBuild(function () {}, 'after_test');
+        $list->appendInit(function () {});
         $list->after('test', 'a', function () {});
         $lines = explode("\n", (string) $list);
         $this->assertContains("1) Step: build, Name: test", $lines[1]);
@@ -198,10 +180,10 @@ class HandlerListTest extends \PHPUnit_Framework_TestCase
     public function testCanInterposeMiddleware()
     {
         $list = new HandlerList(function () {});
-        $list->append('init:a', Middleware::tap(function () {}));
-        $list->append('validate:b', Middleware::tap(function () {}));
-        $list->append('build:c', Middleware::tap(function () {}));
-        $list->append('sign:d', Middleware::tap(function () {}));
+        $list->appendInit(Middleware::tap(function () {}), 'a');
+        $list->appendValidate(Middleware::tap(function () {}), 'b');
+        $list->appendBuild(Middleware::tap(function () {}), 'c');
+        $list->appendSign(Middleware::tap(function () {}), 'd');
 
         $list->interpose(function ($step, $name) use (&$res) {
             return function (callable $h) use ($step, $name, &$res) {

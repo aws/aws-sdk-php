@@ -122,11 +122,11 @@ class S3Client extends AwsClient
 
         parent::__construct($args);
         $stack = $this->getHandlerList();
-        $stack->append('init:s3.ssec', SSECMiddleware::wrap($this->getEndpoint()->getScheme()));
-        $stack->append('build:s3.md5', ApplyMd5Middleware::wrap($this->getConfig('calculate_md5')));
-        $stack->append(
-            'build:s3.content_type',
-            Middleware::contentType(['PutObject', 'UploadPart'])
+        $stack->appendInit(SSECMiddleware::wrap($this->getEndpoint()->getScheme()), 's3.ssec');
+        $stack->appendBuild(ApplyMd5Middleware::wrap($this->getConfig('calculate_md5')), 's3.md5');
+        $stack->appendBuild(
+            Middleware::contentType(['PutObject', 'UploadPart']),
+            's3.content_type'
         );
 
         // Use the bucket style middleware when using a "bucket_endpoint" or
@@ -136,15 +136,15 @@ class S3Client extends AwsClient
         if ($bucketEndpoint
             || ($standard && !$this->getConfig('force_path_style'))
         ) {
-            $stack->append(
-                'build:s3.bucket_style',
-                BucketStyleMiddleware::wrap($bucketEndpoint)
+            $stack->appendBuild(
+                BucketStyleMiddleware::wrap($bucketEndpoint),
+                's3.bucket_style'
             );
         }
 
-        $stack->append('sign:s3.put_object_url', PutObjectUrlMiddleware::wrap());
-        $stack->append('sign:s3.permanent_redirect', PermanentRedirectMiddleware::wrap());
-        $stack->append('init:s3.source_file', Middleware::sourceFile($this->getApi()));
+        $stack->appendSign(PutObjectUrlMiddleware::wrap(), 's3.put_object_url');
+        $stack->appendSign(PermanentRedirectMiddleware::wrap(), 's3.permanent_redirect');
+        $stack->appendInit(Middleware::sourceFile($this->getApi()), 's3.source_file');
     }
 
     /**
@@ -512,7 +512,7 @@ class S3Client extends AwsClient
         };
 
         $delay = [RetryMiddleware::class, 'exponentialDelay'];
-        $list->append('sign:retry', Middleware::retry($decider, $delay));
+        $list->appendSign(Middleware::retry($decider, $delay), 'retry');
     }
 
     /**

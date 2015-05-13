@@ -35,8 +35,7 @@ class ApplyMd5MiddlewareTest extends \PHPUnit_Framework_TestCase
         $s3 = $this->getTestClient('s3', $options);
         $this->addMockResults($s3, [[]]);
         $command = $s3->getCommand($operation, $args);
-        $command->getHandlerList()->append(
-            'build',
+        $command->getHandlerList()->appendBuild(
             Middleware::tap(function ($cmd, RequestInterface $request) use ($md5Added, $md5Value) {
                 $this->assertSame($md5Added, $request->hasHeader('Content-MD5'));
                 if ($md5Value !== 'SKIP') {

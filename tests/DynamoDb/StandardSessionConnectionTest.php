@@ -23,15 +23,12 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
                 'otherkey'  => ['S' => 'foo'],
             ]]),
         ]);
-        $client->getHandlerList()->append(
-            'build',
-            Middleware::tap(function ($command) {
-                $this->assertEquals(
-                    ['sessionid' => ['S' => 'session1']],
-                    $command['Key']
-                );
-            })
-        );
+        $client->getHandlerList()->appendBuild(Middleware::tap(function ($command) {
+            $this->assertEquals(
+                ['sessionid' => ['S' => 'session1']],
+                $command['Key']
+            );
+        }));
         $connection = new StandardSessionConnection($client, [
             'hash_key' => 'sessionid',
         ]);
@@ -59,15 +56,12 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
     {
         $client = $this->getTestSdk()->createDynamoDb();
         $this->addMockResults($client, [new Result([])]);
-        $client->getHandlerList()->append(
-            'build',
-            Middleware::tap(function ($command) {
-                $updates = $command['AttributeUpdates'];
-                $this->assertArrayHasKey('expires', $updates);
-                $this->assertArrayHasKey('lock', $updates);
-                $this->assertArrayHasKey('data', $updates);
-            })
-        );
+        $client->getHandlerList()->appendBuild(Middleware::tap(function ($command) {
+            $updates = $command['AttributeUpdates'];
+            $this->assertArrayHasKey('expires', $updates);
+            $this->assertArrayHasKey('lock', $updates);
+            $this->assertArrayHasKey('data', $updates);
+        }));
         $connection = new StandardSessionConnection($client);
         $return = $connection->write('s1', serialize(['foo' => 'bar']), true);
         $this->assertTrue($return);
@@ -79,15 +73,12 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
         $this->addMockResults($client, [
             $this->createMockAwsException('ERROR', 'Aws\DynamoDb\Exception\DynamoDbException')
         ]);
-        $client->getHandlerList()->append(
-            'build',
-            Middleware::tap(function ($command) {
-                $this->assertEquals(
-                    ['Action' => 'DELETE'],
-                    $command['AttributeUpdates']['data']
-                );
-            })
-        );
+        $client->getHandlerList()->appendBuild(Middleware::tap(function ($command) {
+            $this->assertEquals(
+                ['Action' => 'DELETE'],
+                $command['AttributeUpdates']['data']
+            );
+        }));
         $connection = new StandardSessionConnection($client);
         $return = $connection->write('s1', '', true);
 
@@ -125,9 +116,8 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $commands = [];
-        $client->getHandlerList()->append(
-            'build',
-            Middleware::tap(function (CommandInterface $command) use (&$commands) {
+        $client->getHandlerList()->appendBuild(Middleware::tap(
+            function (CommandInterface $command) use (&$commands) {
                 $commands[] = $command->getName();
             })
         );
