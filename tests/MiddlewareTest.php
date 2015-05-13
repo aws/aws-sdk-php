@@ -33,7 +33,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
     {
         $list = new HandlerList();
         $list->setHandler(new MockHandler([new Result()]));
-        $list->append('sign', Middleware::tap(function () use (&$called) {
+        $list->appendSign(Middleware::tap(function () use (&$called) {
             $called = func_get_args();
         }));
         $handler = $list->resolve();
@@ -48,7 +48,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
     {
         $list = new HandlerList();
         $list->setHandler(new MockHandler([new Result()]));
-        $list->append('sign', Middleware::retry(function () use (&$called) {
+        $list->appendSign(Middleware::retry(function () use (&$called) {
             $called = true;
         }));
         $handler = $list->resolve();
@@ -66,7 +66,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         ]);
         $this->assertCount(2, $mock);
         $list->setHandler($mock);
-        $list->append('sign', Middleware::retry());
+        $list->appendSign(Middleware::retry());
         $handler = $list->resolve();
         $handler(new Command('foo'), new Request('GET', 'http://127.0.0.1'))->wait();
         $this->assertCount(0, $mock);
@@ -84,7 +84,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         $list->setHandler($mock);
         $creds = CredentialProvider::fromCredentials(new Credentials('foo', 'bar'));
         $signature = new SignatureV4('a', 'b');
-        $list->append('sign', Middleware::signer($creds, Aws\constantly($signature)));
+        $list->appendSign(Middleware::signer($creds, Aws\constantly($signature)));
         $handler = $list->resolve();
         $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
         Promise\queue()->run();
@@ -100,7 +100,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         };
         $list = new HandlerList();
         $list->setHandler(new MockHandler([new Result()]));
-        $list->append('sign', Middleware::requestBuilder($serializer));
+        $list->appendSign(Middleware::requestBuilder($serializer));
         $handler = $list->resolve();
         $handler(new Command('foo'));
         $this->assertTrue($called);
@@ -138,7 +138,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
             ],
             function () { return []; }
         );
-        $list->append('validate', Middleware::validation($api));
+        $list->appendValidate(Middleware::validation($api));
         $handler = $list->resolve();
 
         try {
@@ -161,7 +161,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         $provider = ApiProvider::defaultProvider();
         $data = $provider('api', 's3', 'latest');
         $service = new Service($data, $provider);
-        $list->append('init', Middleware::sourceFile($service));
+        $list->appendInit(Middleware::sourceFile($service));
         $handler = $list->resolve();
         $handler(new Command('PutObject', [
             'Bucket'     => 'test',
@@ -177,7 +177,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         $h = new Aws\History();
         $mock = new MockHandler([new Result()]);
         $list = new HandlerList($mock);
-        $list->append('sign', Middleware::history($h));
+        $list->appendSign(Middleware::history($h));
         $handler = $list->resolve();
         $req = new Request('GET', 'http://www.foo.com');
         $cmd = new Command('foo');
@@ -191,8 +191,8 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         $h = new Aws\History();
         $list = new HandlerList();
         $list->setHandler(new MockHandler([new Result()]));
-        $list->append('build', Middleware::contentType(['Foo']));
-        $list->append('sign', Middleware::history($h));
+        $list->appendBuild(Middleware::contentType(['Foo']));
+        $list->appendSign(Middleware::history($h));
         $handler = $list->resolve();
         $payload = Psr7\stream_for(fopen(__DIR__ . '/../docs/_static/logo.png', 'r'));
         $request = new Request('PUT', 'http://exmaple.com', [], $payload);
@@ -209,7 +209,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         $list = new HandlerList();
         $mock = new MockHandler([new Result()]);
         $list->setHandler($mock);
-        $list->append('init', Middleware::mapCommand(function (CommandInterface $c) {
+        $list->appendInit(Middleware::mapCommand(function (CommandInterface $c) {
             $c['Hi'] = 'test';
             return $c;
         }));
@@ -224,7 +224,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         $list = new HandlerList();
         $mock = new MockHandler([new Result()]);
         $list->setHandler($mock);
-        $list->append('init', Middleware::mapRequest(function (RequestInterface $r) {
+        $list->appendInit(Middleware::mapRequest(function (RequestInterface $r) {
             return $r->withHeader('X-Foo', 'Bar');
         }));
         $handler = $list->resolve();
@@ -238,7 +238,7 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         $list = new HandlerList();
         $mock = new MockHandler([new Result()]);
         $list->setHandler($mock);
-        $list->append('sign', Middleware::mapResult(function (ResultInterface $r) {
+        $list->appendSign(Middleware::mapResult(function (ResultInterface $r) {
             $r['Test'] = 'hi';
             return $r;
         }));

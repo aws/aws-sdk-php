@@ -13,7 +13,7 @@ class Route53Client extends AwsClient
     public function __construct(array $args)
     {
         parent::__construct($args);
-        $this->getHandlerList()->append('init:route53.clean_id', $this->cleanIdFn());
+        $this->getHandlerList()->appendInit($this->cleanIdFn(), 'route53.clean_id');
     }
 
     private function cleanIdFn()

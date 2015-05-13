@@ -89,12 +89,12 @@ class TransferTest extends \PHPUnit_Framework_TestCase
     public function testCanSetBeforeOptionForUploadsAndUsedWithDebug()
     {
         $s3 = $this->getTestClient('s3');
-        $s3->getHandlerList()->append(
-            'sign:s3.test',
+        $s3->getHandlerList()->appendSign(
             $this->mockResult(function() {
                 return new Result();
-            }
-        ));
+            }),
+            's3.test'
+        );
 
         $c = [];
         $i = \Aws\recursive_dir_iterator(__DIR__);

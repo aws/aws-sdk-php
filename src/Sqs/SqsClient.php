@@ -16,8 +16,8 @@ class SqsClient extends AwsClient
     {
         parent::__construct($config);
         $list = $this->getHandlerList();
-        $list->append('build:sqs.queue_url', $this->queueUrl());
-        $list->append('sign:sqs.md5', $this->validateMd5());
+        $list->appendBuild($this->queueUrl(), 'sqs.queue_url');
+        $list->appendSign($this->validateMd5(), 'sqs.md5');
     }
 
     /**

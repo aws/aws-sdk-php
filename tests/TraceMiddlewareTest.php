@@ -27,13 +27,13 @@ class TraceMiddlewareTest extends \PHPUnit_Framework_TestCase
                 'bam' => 'qux'
             ]));
         });
-        $list->append('init', function ($handler) {
+        $list->appendInit(function ($handler) {
             return function ($cmd, $req = null) use ($handler) {
                 $req = $req->withHeader('foo', 'bar');
                 return $handler($cmd, $req);
             };
         });
-        $list->append('validate', function ($handler) {
+        $list->appendValidate(function ($handler) {
             return function ($cmd, $req = null) use ($handler) {
                 unset($cmd['b']);
                 return $handler($cmd, $req);
@@ -64,13 +64,13 @@ class TraceMiddlewareTest extends \PHPUnit_Framework_TestCase
         $list->setHandler(function ($cmd, $req) {
             return \GuzzleHttp\Promise\promise_for(new Result());
         });
-        $list->append('init', function ($handler) {
+        $list->appendInit(function ($handler) {
             return function ($cmd, $req = null) use ($handler) {
                 $req = $req->withHeader('foo', 'bar');
                 return $handler($cmd, $req);
             };
         });
-        $list->append('validate', function ($handler) {
+        $list->appendValidate(function ($handler) {
             return function ($cmd, $req = null) use ($handler) {
                 return new RejectedPromise(new AwsException('error', $cmd, [
                     'request'  => $req,
@@ -99,7 +99,7 @@ class TraceMiddlewareTest extends \PHPUnit_Framework_TestCase
             return \GuzzleHttp\Promise\promise_for(new Result());
         });
 
-        $list->append('init', function ($handler) {
+        $list->appendInit(function ($handler) {
             return function ($cmd, $req) use ($handler) {
                 return $handler($cmd, $req);
             };

@@ -74,7 +74,7 @@ class WriteRequestBatchTest extends \PHPUnit_Framework_TestCase
         $commandCount = [];
 
         $client = $this->getTestClient('DynamoDb');
-        $client->getHandlerList()->append('sign', \Aws\Middleware::tap(
+        $client->getHandlerList()->appendSign(\Aws\Middleware::tap(
             function (CommandInterface $command) use (&$commandCount) {
                 if ($command->getName() == 'BatchWriteItem') {
                     $commandCount[] = count($command['RequestItems']);
