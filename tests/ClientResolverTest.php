@@ -262,7 +262,7 @@ EOT;
         $p = function () {
             return [
                 'endpoint' => 'http://foo.com',
-                'signatureVersion' => 'v2'
+                'signatureVersion' => 'v4'
             ];
         };
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
@@ -272,7 +272,7 @@ EOT;
             'endpoint_provider' => $p,
             'version' => 'latest'
         ], new HandlerList());
-        $this->assertEquals('v2', $conf['config']['signature_version']);
+        $this->assertEquals('v4', $conf['config']['signature_version']);
     }
 
     public function testAddsLoggerWithDebugSettings()

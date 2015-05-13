@@ -27,7 +27,6 @@ namespace Aws;
  * @method \Aws\Emr\EmrClient createEmr(array $args = [])
  * @method \Aws\Glacier\GlacierClient createGlacier(array $args = [])
  * @method \Aws\Iam\IamClient createIam(array $args = [])
- * @method \Aws\ImportExport\ImportExportClient createImportExport(array $args = [])
  * @method \Aws\Kinesis\KinesisClient createKinesis(array $args = [])
  * @method \Aws\Lambda\LambdaClient createLambda(array $args = [])
  * @method \Aws\MachineLearning\MachineLearningClient createMachineLearning(array $args = [])
@@ -38,7 +37,6 @@ namespace Aws;
  * @method \Aws\Route53Domains\Route53DomainsClient createRoute53Domains(array $args = [])
  * @method \Aws\S3\S3Client createS3(array $args = [])
  * @method \Aws\Ses\SesClient createSes(array $args = [])
- * @method \Aws\SimpleDb\SimpleDbClient createSimpleDb(array $args = [])
  * @method \Aws\Sns\SnsClient createSns(array $args = [])
  * @method \Aws\Sqs\SqsClient createSqs(array $args = [])
  * @method \Aws\Ssm\SsmClient createSsm(array $args = [])
@@ -60,7 +58,6 @@ class Sdk
         'cognitoidentity' => 'cognito-identity',
         'cognitosync'     => 'cognito-sync',
         'emr'             => 'elasticmapreduce',
-        'simpledb'        => 'sdb',
         'ses'             => 'email',
     ];
 

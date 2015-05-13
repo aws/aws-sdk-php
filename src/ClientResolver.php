@@ -92,7 +92,7 @@ class ClientResolver
         'signature_version' => [
             'type'    => 'config',
             'valid'   => ['string'],
-            'doc'     => 'A string representing a custom signature version to use with a service (e.g., v4, s3, v2). Note that per/operation signature version MAY override this requested signature version.',
+            'doc'     => 'A string representing a custom signature version to use with a service (e.g., v4, s3). Note that per/operation signature version MAY override this requested signature version.',
             'default' => [__CLASS__, '_default_signature_version'],
         ],
         'profile' => [
