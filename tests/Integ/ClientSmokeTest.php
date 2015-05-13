@@ -345,16 +345,6 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
                 'Groups'
             ],
             [
-                'importexport',
-                'Aws\\ImportExport\\ImportExportClient',
-                [],
-                'importexport.amazonaws.com',
-                'GetStatus',
-                ['JobId' => 'foo'],
-                false,
-                'InvalidJobIdException'
-            ],
-            [
                 'kinesis',
                 'Aws\\Kinesis\\KinesisClient',
                 [],
@@ -483,16 +473,6 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
                 ['Bucket' => 't0tally-1nval1d-8uck3t-nam3'],
                 false,
                 'NoSuchBucket'
-            ],
-            [
-                'simpledb',
-                'Aws\\SimpleDb\\SimpleDbClient',
-                [],
-                'sdb.amazonaws.com',
-                'ListDomains',
-                ['MaxNumberOfDomains' => 1],
-                true,
-                null
             ],
             [
                 'ses',

@@ -109,7 +109,7 @@ class AwsClient implements AwsClientInterface
      *   create signers utilized by the client. See
      *   Aws\Signature\SignatureProvider for a list of built-in providers
      * - signature_version: (string) A string representing a custom
-     *   signature version to use with a service (e.g., v4, s3, v2). Note that
+     *   signature version to use with a service (e.g., v4, s3). Note that
      *   per/operation signature version MAY override this requested signature
      *   version.
      * - validate: (bool, default=bool(true)) Set to false to disable

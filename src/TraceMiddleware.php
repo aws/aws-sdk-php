@@ -241,7 +241,7 @@ class TraceMiddleware
     private function write($value)
     {
         if ($this->config['scrub_auth']) {
-            // SignatureV2 query string and S3Signature
+            // S3Signature
             $value = preg_replace('/AWSAccessKeyId=AKI.+&/i', 'AWSAccessKeyId=AKI[KEY]&', $value);
             // SignatureV4 Signature and S3Signature
             $value = preg_replace('/Signature=.+/i', 'Signature=[SIGNATURE]', $value);

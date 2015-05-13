@@ -99,7 +99,6 @@ Documentation for specific AWS services can found below.
 - :apiref:`Amazon Simple Queue Service (Amazon SQS) | Sqs`
 - :apiref:`Amazon Simple Storage Service (Amazon S3) | S3`
 - :apiref:`Amazon Simple Workflow Service (Amazon SWF) | Swf`
-- :apiref:`Amazon SimpleDB | SimpleDb`
 - :apiref:`Auto Scaling | AutoScaling`
 - :apiref:`AWS CloudFormation | CloudFormation`
 - :apiref:`AWS CloudTrail | CloudTrail`
@@ -107,7 +106,6 @@ Documentation for specific AWS services can found below.
 - :apiref:`AWS Direct Connect | DirectConnect`
 - :apiref:`AWS Elastic Beanstalk | ElasticBeanstalk`
 - :apiref:`AWS Identity and Access Management (AWS IAM) | Iam`
-- :apiref:`AWS Import/Export | ImportExport`
 - :apiref:`AWS OpsWorks | OpsWorks`
 - :apiref:`AWS Security Token Service (AWS STS) | Sts`
 - :apiref:`AWS Storage Gateway | StorageGateway`

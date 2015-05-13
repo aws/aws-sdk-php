@@ -668,7 +668,7 @@ signature_version
 :Type: ``string``
 
 A string representing a custom signature version to use with a service
-(e.g., ``v4``, ``s3``, ``v2``, etc.). Per/operation signature version MAY
+(e.g., ``v4``, ``s3``, etc.). Per/operation signature version MAY
 override this requested signature version if needed.
 
 The following examples show how to configure an Amazon S3 client to use
@@ -687,7 +687,7 @@ The following examples show how to configure an Amazon S3 client to use
 
     The ``signature_provider`` used by your client MUST be able to create the
     ``signature_version`` option you provide. The default ``signature_provider``
-    used by the SDK can create signature objects for "v2", "v4", and "s3"
+    used by the SDK can create signature objects for "v4" and "s3"
     signature versions.
 
 

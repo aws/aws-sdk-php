@@ -1,8 +1,6 @@
 <?php
 namespace Aws\Signature;
 
-use Aws\Test\Signature\SignatureV2Test;
-
 // Hack gmdate() to returned the canned result.
 function gmdate($format, $ts = null)
 {

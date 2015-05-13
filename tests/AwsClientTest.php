@@ -9,7 +9,6 @@ use Aws\MockHandler;
 use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\Signature\SignatureV4;
-use Aws\ImportExport\ImportExportClient;
 use Aws\Sts\StsClient;
 use Aws\WrappedHttpHandler;
 use GuzzleHttp\Promise\RejectedPromise;
@@ -211,14 +210,8 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         $promise->wait();
     }
 
-    public function testCreatesClientsFromFactoryMethod()
+    public function testCreatesClientsFromConstructor()
     {
-        $client = new ImportExportClient([
-            'region'  => 'us-west-2',
-            'version' => 'latest'
-        ]);
-        $this->assertInstanceOf('Aws\ImportExport\ImportExportClient', $client);
-        $this->assertEquals('us-west-2', $client->getRegion());
         $client = new StsClient([
             'region'  => 'us-west-2',
             'version' => 'latest'
@@ -236,18 +229,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function signerProvider()
-    {
-        return [
-            [null, 'AWS4-HMAC-SHA256'],
-            ['v2', 'SignatureVersion']
-        ];
-    }
-
-    /**
-     * @dataProvider signerProvider
-     */
-    public function testSignsRequestsUsingSigner($version, $search)
+    public function testSignsRequestsUsingSigner()
     {
         $mock = new MockHandler([new Result([])]);
         $conf = [
@@ -260,15 +242,11 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'handler' => $mock
         ];
 
-        if ($version) {
-            $conf['signature_version'] = $version;
-        }
-
         $client = new Ec2Client($conf);
         $client->describeInstances();
         $request = $mock->getLastRequest();
         $str = \GuzzleHttp\Psr7\str($request);
-        $this->assertContains($search, $str);
+        $this->assertContains('AWS4-HMAC-SHA256', $str);
     }
 
     public function testAllowsFactoryMethodForBc()
