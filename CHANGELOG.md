@@ -5,6 +5,8 @@
 * `Aws\CloudWatchLogs` - Adds support for the FilterLogEvents operation.
 * `Aws\CloudFormation` - Adds additional data to the GetTemplateSummary
   operation.
+* `Aws\Ec2` - Adds support for Amazon VPC endpoints for Amazon S3 and APIs for
+  migrating Elastic IP Address from EC2-Classic to EC2-VPC.
 * `Aws\Ec2` - Fixed an issue with cross-region CopySnapshot such that it now
   works with temporary credentials.
 * `Aws\Common` - During credential discovery, an invalid credentials file now

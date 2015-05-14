@@ -69,6 +69,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model createTags(array $args = array()) {@command Ec2 CreateTags}
  * @method Model createVolume(array $args = array()) {@command Ec2 CreateVolume}
  * @method Model createVpc(array $args = array()) {@command Ec2 CreateVpc}
+ * @method Model createVpcEndpoint(array $args = array()) {@command Ec2 CreateVpcEndpoint}
  * @method Model createVpcPeeringConnection(array $args = array()) {@command Ec2 CreateVpcPeeringConnection}
  * @method Model createVpnConnection(array $args = array()) {@command Ec2 CreateVpnConnection}
  * @method Model createVpnConnectionRoute(array $args = array()) {@command Ec2 CreateVpnConnectionRoute}
@@ -90,6 +91,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model deleteTags(array $args = array()) {@command Ec2 DeleteTags}
  * @method Model deleteVolume(array $args = array()) {@command Ec2 DeleteVolume}
  * @method Model deleteVpc(array $args = array()) {@command Ec2 DeleteVpc}
+ * @method Model deleteVpcEndpoints(array $args = array()) {@command Ec2 DeleteVpcEndpoints}
  * @method Model deleteVpcPeeringConnection(array $args = array()) {@command Ec2 DeleteVpcPeeringConnection}
  * @method Model deleteVpnConnection(array $args = array()) {@command Ec2 DeleteVpnConnection}
  * @method Model deleteVpnConnectionRoute(array $args = array()) {@command Ec2 DeleteVpnConnectionRoute}
@@ -113,10 +115,12 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model describeInstances(array $args = array()) {@command Ec2 DescribeInstances}
  * @method Model describeInternetGateways(array $args = array()) {@command Ec2 DescribeInternetGateways}
  * @method Model describeKeyPairs(array $args = array()) {@command Ec2 DescribeKeyPairs}
+ * @method Model describeMovingAddresses(array $args = array()) {@command Ec2 DescribeMovingAddresses}
  * @method Model describeNetworkAcls(array $args = array()) {@command Ec2 DescribeNetworkAcls}
  * @method Model describeNetworkInterfaceAttribute(array $args = array()) {@command Ec2 DescribeNetworkInterfaceAttribute}
  * @method Model describeNetworkInterfaces(array $args = array()) {@command Ec2 DescribeNetworkInterfaces}
  * @method Model describePlacementGroups(array $args = array()) {@command Ec2 DescribePlacementGroups}
+ * @method Model describePrefixLists(array $args = array()) {@command Ec2 DescribePrefixLists}
  * @method Model describeRegions(array $args = array()) {@command Ec2 DescribeRegions}
  * @method Model describeReservedInstances(array $args = array()) {@command Ec2 DescribeReservedInstances}
  * @method Model describeReservedInstancesListings(array $args = array()) {@command Ec2 DescribeReservedInstancesListings}
@@ -136,6 +140,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model describeVolumes(array $args = array()) {@command Ec2 DescribeVolumes}
  * @method Model describeVpcAttribute(array $args = array()) {@command Ec2 DescribeVpcAttribute}
  * @method Model describeVpcClassicLink(array $args = array()) {@command Ec2 DescribeVpcClassicLink}
+ * @method Model describeVpcEndpointServices(array $args = array()) {@command Ec2 DescribeVpcEndpointServices}
+ * @method Model describeVpcEndpoints(array $args = array()) {@command Ec2 DescribeVpcEndpoints}
  * @method Model describeVpcPeeringConnections(array $args = array()) {@command Ec2 DescribeVpcPeeringConnections}
  * @method Model describeVpcs(array $args = array()) {@command Ec2 DescribeVpcs}
  * @method Model describeVpnConnections(array $args = array()) {@command Ec2 DescribeVpnConnections}
@@ -167,7 +173,9 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model modifySubnetAttribute(array $args = array()) {@command Ec2 ModifySubnetAttribute}
  * @method Model modifyVolumeAttribute(array $args = array()) {@command Ec2 ModifyVolumeAttribute}
  * @method Model modifyVpcAttribute(array $args = array()) {@command Ec2 ModifyVpcAttribute}
+ * @method Model modifyVpcEndpoint(array $args = array()) {@command Ec2 ModifyVpcEndpoint}
  * @method Model monitorInstances(array $args = array()) {@command Ec2 MonitorInstances}
+ * @method Model moveAddressToVpc(array $args = array()) {@command Ec2 MoveAddressToVpc}
  * @method Model purchaseReservedInstancesOffering(array $args = array()) {@command Ec2 PurchaseReservedInstancesOffering}
  * @method Model rebootInstances(array $args = array()) {@command Ec2 RebootInstances}
  * @method Model registerImage(array $args = array()) {@command Ec2 RegisterImage}
@@ -183,6 +191,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model resetInstanceAttribute(array $args = array()) {@command Ec2 ResetInstanceAttribute}
  * @method Model resetNetworkInterfaceAttribute(array $args = array()) {@command Ec2 ResetNetworkInterfaceAttribute}
  * @method Model resetSnapshotAttribute(array $args = array()) {@command Ec2 ResetSnapshotAttribute}
+ * @method Model restoreAddressToClassic(array $args = array()) {@command Ec2 RestoreAddressToClassic}
  * @method Model revokeSecurityGroupEgress(array $args = array()) {@command Ec2 RevokeSecurityGroupEgress}
  * @method Model revokeSecurityGroupIngress(array $args = array()) {@command Ec2 RevokeSecurityGroupIngress}
  * @method Model runInstances(array $args = array()) {@command Ec2 RunInstances}
@@ -248,7 +257,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  */
 class Ec2Client extends AbstractClient
 {
-    const LATEST_API_VERSION = '2015-03-01';
+    const LATEST_API_VERSION = '2015-04-15';
 
     /**
      * Factory method to create a new AWS Elastic Compute Cloud client using an array of configuration options.
