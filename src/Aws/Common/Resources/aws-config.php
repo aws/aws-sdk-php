@@ -130,6 +130,12 @@ return array(
             'class'   => 'Aws\DirectConnect\DirectConnectClient'
         ),
 
+        'ds' => array(
+            'alias'   => 'DirectoryService',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\DirectoryService\DirectoryServiceClient'
+        ),
+
         'dynamodb' => array(
             'alias'   => 'DynamoDb',
             'extends' => 'default_settings',

@@ -2,6 +2,7 @@
 
 ## Next Release
 
+* `Aws\DirectoryService` - Added support for the AWS Directory Service.
 * `Aws\CloudWatchLogs` - Adds support for the FilterLogEvents operation.
 * `Aws\CloudFormation` - Adds additional data to the GetTemplateSummary
   operation.
