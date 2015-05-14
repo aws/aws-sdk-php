@@ -2,6 +2,7 @@
 
 ## Next Release
 
+* `Aws\DirectoryService` - Added support for the AWS Directory Service.
 * `Aws\Ec2` - Fixed an issue with cross-region CopySnapshot such that it now
   works with temporary credentials.
 * `Aws\Common` - During credential discovery, an invalid credentials file now
