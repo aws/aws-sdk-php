@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next Release
+## 2.8.4 - 2015-05-14
 
 * `Aws\DirectoryService` - Added support for the AWS Directory Service.
 * `Aws\CloudWatchLogs` - Adds support for the FilterLogEvents operation.
