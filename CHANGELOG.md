@@ -2,6 +2,9 @@
 
 ## Next Release
 
+* `Aws\CloudWatchLogs` - Adds support for the FilterLogEvents operation.
+* `Aws\CloudFormation` - Adds additional data to the GetTemplateSummary
+  operation.
 * `Aws\Ec2` - Fixed an issue with cross-region CopySnapshot such that it now
   works with temporary credentials.
 * `Aws\Common` - During credential discovery, an invalid credentials file now

@@ -21,11 +21,16 @@ use Guzzle\Service\Resource\Model;
  * @method Model describeLogGroups(array $args = array()) {@command CloudWatchLogs DescribeLogGroups}
  * @method Model describeLogStreams(array $args = array()) {@command CloudWatchLogs DescribeLogStreams}
  * @method Model describeMetricFilters(array $args = array()) {@command CloudWatchLogs DescribeMetricFilters}
+ * @method Model filterLogEvents(array $args = array()) {@command CloudWatchLogs FilterLogEvents}
  * @method Model getLogEvents(array $args = array()) {@command CloudWatchLogs GetLogEvents}
  * @method Model putLogEvents(array $args = array()) {@command CloudWatchLogs PutLogEvents}
  * @method Model putMetricFilter(array $args = array()) {@command CloudWatchLogs PutMetricFilter}
  * @method Model putRetentionPolicy(array $args = array()) {@command CloudWatchLogs PutRetentionPolicy}
  * @method Model testMetricFilter(array $args = array()) {@command CloudWatchLogs TestMetricFilter}
+ * @method ResourceIteratorInterface getDescribeLogGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeLogGroups operation
+ * @method ResourceIteratorInterface getDescribeLogStreamsIterator(array $args = array()) The input array uses the parameters of the DescribeLogStreams operation
+ * @method ResourceIteratorInterface getDescribeMetricFiltersIterator(array $args = array()) The input array uses the parameters of the DescribeMetricFilters operation
+ * @method ResourceIteratorInterface getGetLogEventsIterator(array $args = array()) The input array uses the parameters of the GetLogEvents operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-cloudwatchlogs.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.CloudWatchLogs.CloudWatchLogsClient.html API docs

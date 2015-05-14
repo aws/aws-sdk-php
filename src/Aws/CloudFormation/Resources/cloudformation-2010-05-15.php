@@ -1117,6 +1117,19 @@ return array (
                             'Description' => array(
                                 'type' => 'string',
                             ),
+                            'ParameterConstraints' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'AllowedValues' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'AllowedValue',
+                                            'type' => 'string',
+                                            'sentAs' => 'member',
+                                        ),
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -1138,6 +1151,10 @@ return array (
                     'location' => 'xml',
                 ),
                 'Version' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'Metadata' => array(
                     'type' => 'string',
                     'location' => 'xml',
                 ),
