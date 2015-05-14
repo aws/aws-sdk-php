@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## Next Release
+
+* `Aws\Ec2` - Fixed an issue with cross-region CopySnapshot such that it now
+  works with temporary credentials.
+* `Aws\Common` - During credential discovery, an invalid credentials file now
+  allows failover to Instance Profile credentials.
+
 ## 2.8.3 - 2015-05-07
 
 * `Aws\Glacier` - Added support for vault access policies.
