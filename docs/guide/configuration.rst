@@ -286,6 +286,8 @@ created by the SDK.
 The SDK supports the following configuration options:
 
 
+.. _http_connect_timeout:
+
 connect_timeout
 ^^^^^^^^^^^^^^^
 
@@ -306,6 +308,8 @@ server. Use ``0`` to wait indefinitely (the default behavior).
     ]);
 
 
+.. _http_debug:
+
 debug
 ^^^^^
 
@@ -319,6 +323,8 @@ information provided by different HTTP handlers will vary.
   specific PHP stream resource.
 
 
+.. _http_delay:
+
 delay
 ^^^^^
 
@@ -327,6 +333,8 @@ delay
 The number of milliseconds to delay before sending the request. This is often
 used for delaying before retrying a request.
 
+
+.. _http_progress:
 
 progress
 ^^^^^^^^
@@ -368,6 +376,8 @@ accepts the following arguments:
         ]
     ]);
 
+
+.. _http_proxy:
 
 proxy
 ^^^^^
@@ -414,6 +424,8 @@ protocol specific proxy, and the ``HTTPS_PROXY`` environment variable to
 configure an "https" specific proxy.
 
 
+.. _http_sink:
+
 sink
 ^^^^
 
@@ -437,6 +449,19 @@ downloaded to.
     disk.
 
 
+.. _http_sync:
+
+sync
+^^^^
+
+:Type: ``bool``
+
+The ``sync`` option informs the underlying HTTP handler that you intend on
+blocking on the result.
+
+
+.. _http_stream:
+
 stream
 ^^^^^^
 
@@ -447,6 +472,8 @@ response body of a response from the web service rather than download it all
 up-front. For example, this option is relied upon in the Amazon S3 stream
 wrapper class to ensure that the data is streamed.
 
+
+.. _http_timeout:
 
 timeout
 ^^^^^^^
@@ -469,6 +496,8 @@ indefinitely (the default behavior).
         ]
     ]);
 
+
+.. _http_verify:
 
 verify
 ^^^^^^

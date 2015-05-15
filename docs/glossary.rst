@@ -34,13 +34,7 @@ Credentials
     you configure a client object.
 
 Handler
-    A handler is a function that performs the actual transformation of a
-    command and request into a result. A handler typically sends HTTP requests.
-    Handlers can be composed with middlewares to augment their behavior. A
-    handler is a function that accepts an ``Aws\CommandInterface`` and a
-    ``Psr\Http\Message\RequestInterface`` and returns a promise that is
-    fulfilled with an ``Aws\ResultInterface`` or rejected with an
-    ``Aws\Exception\AwsException`` reason.
+    .. include:: _snippets/handler-description.txt
 
 JMESPath
     `JMESPath <http://jmespath.org/>`_ is a query language for JSON-like data.
@@ -49,12 +43,7 @@ JMESPath
     ``Aws\ResultPaginator`` objects via the ``search($expression)`` method.
 
 Middleware
-    Middlewares are a special type of handler that that augment the behavior of
-    transferring a command and delegate to a "next" handler. Middleware
-    functions accept an ``Aws\CommandInterface`` and a
-    ``Psr\Http\Message\RequestInterface`` and return a promise that is
-    fulfilled with an ``Aws\ResultInterface`` or rejected with an
-    ``Aws\Exception\AwsException`` reason.
+    .. include:: _snippets/middleware-description.txt
 
 Operation
     Refers to a single operation within a service's API (e.g., ``CreateTable``

@@ -106,33 +106,7 @@ middleware to the ``Aws\HandlerList`` of an ``Aws\CommandInterface`` or
 ``X-Foo-Baz`` header to a specific Amazon S3 PutObject operation using the
 ``Aws\Middleware::mapRequest`` helper method.
 
-.. code-block:: php
-
-    use Aws\Middleware;
-    use Psr\Http\Message\RequestInterface;
-
-    // Create a command so that we can access the handler list.
-    $command = $s3Client->getCommand('HeadObject', [
-        'Key'    => 'test',
-        'Bucket' => 'mybucket'
-    ]);
-
-    // Apply a custom middleware named "add-header" to the "build" lifecycle step
-    $command->getHandlerList()->prepend(
-        'build:add-header',
-        Middleware::mapRequest(function (RequestInterface $request) {
-            // Return a new request with the added header
-            return $request->withHeader('X-Foo-Baz', 'Bar');
-        })
-    );
-
-Now when the command is executed, it will be sent with the custom header.
-
-.. important::
-
-    Notice that the middleware was prepended to the handler list at the
-    ``init`` step. This is to ensure that the command parameters are not
-    validated before adding the default parameter.
+See :ref:`map-request` for more information.
 
 
 How can I modify a command before sending it?
@@ -144,42 +118,22 @@ middleware to the ``Aws\HandlerList`` of an ``Aws\CommandInterface`` or
 parameters to a command before it is sent, essentially adding default options.
 This example uses the ``Aws\Middleware::mapCommand`` helper method.
 
-.. code-block:: php
-
-    use Aws\Middleware;
-    use Aws\CommandInterface;
-
-    // Here we've omitted the require Bucket paramater. We'll add it in the
-    // custom middleware.
-    $command = $s3Client->getCommand('HeadObject', ['Key' => 'test']);
-
-    // Apply a custom middleware named "add-param" to the "init" lifecycle step
-    $command->getHandlerList()->append(
-        'init:add-param',
-        Middleware::mapCommand(function (CommandInterface $command) {
-            $command['Bucket'] = 'mybucket';
-            // Be sure to return the command!
-            return $command;
-        })
-    );
-
-Now when the command is executed, it will not fail validation due to a
-missing ``Bucket`` parameter.
+See :ref:`map-command` for more information.
 
 
-What is an UnresolvedCredentialsException?
-------------------------------------------
+What is a CredentialsException?
+-------------------------------
 
-If you are seeing an ``Aws\Exception\UnresolvedCredentialsException`` while
-while using the SDK, then this means that the SDK was not provided with any
-credentials and was unable to find credentials in the environment.
+If you are seeing a ``Aws\Exception\CredentialsException`` while while using
+the SDK, then this means that the SDK was not provided with any credentials and
+was unable to find credentials in the environment.
 
 If you instantiate a client *without* credentials, on the first time that you
 perform a service operation, the SDK will attempt to find credentials. It first
 checks in some specific environment variables, then it looks for instance
 profile credentials, which are only available on configured Amazon EC2
 instances. If absolutely no credentials are provided or found, an
-``Aws\Exception\UnresolvedCredentialsException`` is thrown.
+``Aws\Exception\CredentialsException`` is thrown.
 
 If you are seeing this error and you are intending to use instance profile
 credentials, then you need to make sure that the Amazon EC2 instance that the
