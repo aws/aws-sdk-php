@@ -72,7 +72,7 @@ class ClientResolver
         'signature_provider' => [
             'type'    => 'value',
             'valid'   => ['callable'],
-            'doc'     => 'A callable that accepts a signature version name (e.g., "v4", "s3"), a service name, and region, and  returns a SignatureInterface object or null. This provider is used to create signers utilized by the client. See Aws\\Signature\\SignatureProvider for a list of built-in providers',
+            'doc'     => 'A callable that accepts a signature version name (e.g., "v4"), a service name, and region, and  returns a SignatureInterface object or null. This provider is used to create signers utilized by the client. See Aws\\Signature\\SignatureProvider for a list of built-in providers',
             'default' => [__CLASS__, '_default_signature_provider'],
         ],
         'endpoint_provider' => [
@@ -92,7 +92,7 @@ class ClientResolver
         'signature_version' => [
             'type'    => 'config',
             'valid'   => ['string'],
-            'doc'     => 'A string representing a custom signature version to use with a service (e.g., v4, s3). Note that per/operation signature version MAY override this requested signature version.',
+            'doc'     => 'A string representing a custom signature version to use with a service (e.g., v4). Note that per/operation signature version MAY override this requested signature version.',
             'default' => [__CLASS__, '_default_signature_version'],
         ],
         'profile' => [

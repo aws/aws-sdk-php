@@ -37,8 +37,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
 
         // Setup event to get the request's host value.
         $host = null;
-        $client->getHandlerList()->append(
-            'sign:integ',
+        $client->getHandlerList()->appendSign(
             Middleware::tap(function ($command, RequestInterface $request) use (&$host) {
                 $host = $request->getUri()->getHost();
             }
@@ -468,7 +467,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
                 's3',
                 'Aws\\S3\\S3Client',
                 [],
-                't0tally-1nval1d-8uck3t-nam3.s3.amazonaws.com',
+                's3.amazonaws.com',
                 'ListObjects',
                 ['Bucket' => 't0tally-1nval1d-8uck3t-nam3'],
                 false,

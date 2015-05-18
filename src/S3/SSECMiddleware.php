@@ -6,6 +6,7 @@ use Psr\Http\Message\RequestInterface;
 
 /**
  * Simplifies the SSE-C process by encoding and hashing the key.
+ * @internal
  */
 class SSECMiddleware
 {

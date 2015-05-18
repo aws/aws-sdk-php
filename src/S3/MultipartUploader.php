@@ -154,11 +154,7 @@ class MultipartUploader extends AbstractUploader
         } else {
             // Case 2: Stream is not seekable; must store in temp stream.
             $source = $this->limitPartStream($this->source);
-            $source = $this->decorateWithHashes($source,
-                function ($result, $type) use (&$data) {
-                    $data['Content' . strtoupper($type)] = $result;
-                }
-            );
+            $source = $this->decorateWithHashes($source, $data);
             $body = Psr7\stream_for();
             Psr7\copy_to_stream($source, $body);
             $data['ContentLength'] = $body->getSize();
@@ -208,38 +204,19 @@ class MultipartUploader extends AbstractUploader
     }
 
     /**
-     * Decorates a stream with a md5/sha256 linear hashing stream if needed.
+     * Decorates a stream with a sha256 linear hashing stream.
      *
-     * S3 does not typically require content hashes (unless using Signature V4),
-     * but they can be used to ensure the message integrity of the upload.
-     * When using non-seekable/remote streams, we must do the work of reading
-     * through the body to calculate parts. In this case, we can wrap the parts'
-     * body streams with a hashing stream decorator to calculate the hashes at
-     * the same time, instead of having to buffer the stream to disk and re-read
-     * the stream later.
-     *
-     * @param Stream   $stream   Stream to decorate.
-     * @param callable $complete Callback to execute for the hash result.
+     * @param Stream $stream Stream to decorate.
+     * @param array  $data   Part data to augment with the hash result.
      *
      * @return Stream
      */
-    private function decorateWithHashes(Stream $stream, callable $complete)
+    private function decorateWithHashes(Stream $stream, array &$data)
     {
-        // Determine if the checksum needs to be calculated.
-        if ($this->client->getConfig('signature_version') == 'v4') {
-            $type = 'sha256';
-        } elseif ($this->client->getConfig('calculate_md5')) {
-            $type = 'md5';
-        } else {
-            return $stream;
-        }
-
         // Decorate source with a hashing stream
-        $hash = new PhpHash($type, ['base64' => true]);
-        return new HashingStream($stream, $hash,
-            function ($result) use ($type, $complete) {
-                return $complete($result, $type);
-            }
-        );
+        $hash = new PhpHash('sha256', ['base64' => true]);
+        return new HashingStream($stream, $hash, function ($result) use (&$data) {
+            $data['ContentSHA256'] = $result;
+        });
     }
 }

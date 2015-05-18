@@ -39,7 +39,7 @@ class XmlParser
 
     private function parse_structure(
         StructureShape $shape,
-        \SimpleXMLElement  $value
+        \SimpleXMLElement $value
     ) {
         $target = [];
 

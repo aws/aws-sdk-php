@@ -104,12 +104,12 @@ class AwsClient implements AwsClientInterface
      *   a service over an unencrypted "http" endpoint by setting ``scheme`` to
      *   "http".
      * - signature_provider: (callable) A callable that accepts a signature
-     *   version name (e.g., "v4", "s3"), a service name, and region, and
+     *   version name (e.g., "v4"), a service name, and region, and
      *   returns a SignatureInterface object or null. This provider is used to
      *   create signers utilized by the client. See
      *   Aws\Signature\SignatureProvider for a list of built-in providers
      * - signature_version: (string) A string representing a custom
-     *   signature version to use with a service (e.g., v4, s3). Note that
+     *   signature version to use with a service (e.g., v4). Note that
      *   per/operation signature version MAY override this requested signature
      *   version.
      * - validate: (bool, default=bool(true)) Set to false to disable

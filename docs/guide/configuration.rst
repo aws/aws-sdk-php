@@ -681,7 +681,7 @@ signature_provider
 
 :Type: ``callable``
 
-A callable that accepts a signature version name (e.g., ``v4``, ``s3``), a
+A callable that accepts a signature version name (e.g., ``v4``), a
 service name, and region, and returns a ``Aws\Signature\SignatureInterface``
 object or ``NULL`` if the provider is able to create a signer for the given
 parameters. This provider is used to create signers utilized by the client.
@@ -697,8 +697,8 @@ signature_version
 :Type: ``string``
 
 A string representing a custom signature version to use with a service
-(e.g., ``v4``, ``s3``, etc.). Per/operation signature version MAY
-override this requested signature version if needed.
+(e.g., ``v4``, etc.). Per/operation signature version MAY override this
+requested signature version if needed.
 
 The following examples show how to configure an Amazon S3 client to use
 `signature version 4 <http://docs.aws.amazon.com/general/latest/gr/signature-version-4.html>`_:
@@ -716,7 +716,7 @@ The following examples show how to configure an Amazon S3 client to use
 
     The ``signature_provider`` used by your client MUST be able to create the
     ``signature_version`` option you provide. The default ``signature_provider``
-    used by the SDK can create signature objects for "v4" and "s3"
+    used by the SDK can create signature objects for "v4" and "anonymous"
     signature versions.
 
 

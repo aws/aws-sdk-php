@@ -17,26 +17,6 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
 {
     use UsesServiceTrait;
 
-    public function testCanForcePathStyleOnAllOperations()
-    {
-        $mock = new MockHandler([new Result()]);
-        $c = new S3Client([
-            'region'           => 'us-standard',
-            'version'          => 'latest',
-            'force_path_style' => true,
-            'handler'          => $mock
-        ]);
-        $command = $c->getCommand('GetObject', [
-            'Bucket' => 'foo',
-            'Key'    => 'baz'
-        ]);
-        $c->execute($command);
-        $this->assertEquals(
-            'https://s3.amazonaws.com/foo/baz',
-            (string) $mock->getLastRequest()->getUri()
-        );
-    }
-
     public function testCanUseBucketEndpoint()
     {
         $c = new S3Client([
@@ -49,16 +29,6 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
             'http://test.domain.com/key',
             $c->getObjectUrl('test', 'key')
         );
-    }
-
-    public function testAddsMd5ToConfig()
-    {
-        $c = new S3Client([
-            'region'          => 'us-standard',
-            'version'         => 'latest',
-            'calculate_md5'   => true
-        ]);
-        $this->assertTrue($c->getConfig('calculate_md5'));
     }
 
     public function bucketNameProvider()
@@ -98,12 +68,10 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
         ]);
         $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
         $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
-        $this->assertContains(
-            'https://foo.s3.amazonaws.com/bar?AWSAccessKeyId=',
-            $url
-        );
-        $this->assertContains('Expires=', $url);
-        $this->assertContains('Signature=', $url);
+        $this->assertStringStartsWith('https://s3.amazonaws.com/foo/bar?', $url);
+        $this->assertContains('X-Amz-Expires=', $url);
+        $this->assertContains('X-Amz-Credential=', $url);
+        $this->assertContains('X-Amz-Signature=', $url);
     }
 
     public function testCreatesPresignedUrlsWithSpecialCharacters()
@@ -117,11 +85,11 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
             'Bucket' => 'foobar test: abc',
             'Key'    => '+%.a'
         ]);
-        $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
-        $this->assertContains(
-            'https://s3.amazonaws.com/foobar%20test%3A%20abc/%2B%25.a?AWSAccessKeyId=',
-            $url
-        );
+        $url = $client->createPresignedRequest($command, 1342138769)->getUri();
+        $this->assertEquals('/foobar%20test%3A%20abc/%2B%25.a', $url->getPath());
+        $query = Psr7\parse_query($url->getQuery());
+        $this->assertArrayHasKey('X-Amz-Credential', $query);
+        $this->assertArrayHasKey('X-Amz-Signature', $query);
     }
 
     public function testRegistersStreamWrapper()
@@ -187,7 +155,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
             'region'      => 'us-east-1',
             'credentials' => false
         ]);
-        $this->assertEquals('https://foo.s3.amazonaws.com/bar', $s3->getObjectUrl('foo', 'bar'));
+        $this->assertEquals('https://s3.amazonaws.com/foo/bar', $s3->getObjectUrl('foo', 'bar'));
     }
 
     public function testReturnsObjectUrlViaPath()
@@ -215,7 +183,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
         $client = $this->getTestClient('S3');
         $this->addMockResults($client, $mockedResults);
         $result = $client->upload('bucket', 'key', $body, 'private', $options);
-        $this->assertEquals('https://bucket.s3.amazonaws.com/key', $result['ObjectURL']);
+        $this->assertEquals('https://s3.amazonaws.com/bucket/key', $result['ObjectURL']);
     }
 
     /**
@@ -265,7 +233,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
         $putObject = new Result();
         $initiate = new Result(['UploadId' => 'foo']);
         $putPart = new Result(['ETag' => 'bar']);
-        $complete = new Result(['Location' => 'https://bucket.s3.amazonaws.com/key']);
+        $complete = new Result(['Location' => 'https://s3.amazonaws.com/bucket/key']);
 
         return [
             [
@@ -337,5 +305,31 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
     {
         $client = $this->getTestClient('S3');
         $client->downloadBucket(__DIR__, 'test');
+    }
+
+    /**
+     * @dataProvider getTestCasesForLocationConstraints
+     */
+    public function testAddsLocationConstraintAutomatically($region, $command, $contains)
+    {
+        $client = $this->getTestClient('S3', ['region' => $region]);
+        $command = $client->getCommand($command, ['Bucket' => 'foo']);
+
+        $text = "<LocationConstraint>{$region}</LocationConstraint>";
+        $body = (string) \Aws\serialize($command)->getBody();
+        if ($contains) {
+            $this->assertContains($text, $body);
+        } else {
+            $this->assertNotContains($text, $body);
+        }
+    }
+
+    public function getTestCasesForLocationConstraints()
+    {
+        return [
+            ['us-west-2', 'CreateBucket', true],
+            ['us-east-1', 'CreateBucket', false],
+            ['us-west-2', 'HeadBucket',   false],
+        ];
     }
 }
