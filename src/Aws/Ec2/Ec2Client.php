@@ -45,6 +45,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model cancelExportTask(array $args = array()) {@command Ec2 CancelExportTask}
  * @method Model cancelImportTask(array $args = array()) {@command Ec2 CancelImportTask}
  * @method Model cancelReservedInstancesListing(array $args = array()) {@command Ec2 CancelReservedInstancesListing}
+ * @method Model cancelSpotFleetRequests(array $args = array()) {@command Ec2 CancelSpotFleetRequests}
  * @method Model cancelSpotInstanceRequests(array $args = array()) {@command Ec2 CancelSpotInstanceRequests}
  * @method Model confirmProductInstance(array $args = array()) {@command Ec2 ConfirmProductInstance}
  * @method Model copyImage(array $args = array()) {@command Ec2 CopyImage}
@@ -131,6 +132,9 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model describeSnapshotAttribute(array $args = array()) {@command Ec2 DescribeSnapshotAttribute}
  * @method Model describeSnapshots(array $args = array()) {@command Ec2 DescribeSnapshots}
  * @method Model describeSpotDatafeedSubscription(array $args = array()) {@command Ec2 DescribeSpotDatafeedSubscription}
+ * @method Model describeSpotFleetInstances(array $args = array()) {@command Ec2 DescribeSpotFleetInstances}
+ * @method Model describeSpotFleetRequestHistory(array $args = array()) {@command Ec2 DescribeSpotFleetRequestHistory}
+ * @method Model describeSpotFleetRequests(array $args = array()) {@command Ec2 DescribeSpotFleetRequests}
  * @method Model describeSpotInstanceRequests(array $args = array()) {@command Ec2 DescribeSpotInstanceRequests}
  * @method Model describeSpotPriceHistory(array $args = array()) {@command Ec2 DescribeSpotPriceHistory}
  * @method Model describeSubnets(array $args = array()) {@command Ec2 DescribeSubnets}
@@ -186,6 +190,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model replaceRoute(array $args = array()) {@command Ec2 ReplaceRoute}
  * @method Model replaceRouteTableAssociation(array $args = array()) {@command Ec2 ReplaceRouteTableAssociation}
  * @method Model reportInstanceStatus(array $args = array()) {@command Ec2 ReportInstanceStatus}
+ * @method Model requestSpotFleet(array $args = array()) {@command Ec2 RequestSpotFleet}
  * @method Model requestSpotInstances(array $args = array()) {@command Ec2 RequestSpotInstances}
  * @method Model resetImageAttribute(array $args = array()) {@command Ec2 ResetImageAttribute}
  * @method Model resetInstanceAttribute(array $args = array()) {@command Ec2 ResetInstanceAttribute}
