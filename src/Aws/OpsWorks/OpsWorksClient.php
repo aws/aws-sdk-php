@@ -69,6 +69,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model detachElasticLoadBalancer(array $args = array()) {@command OpsWorks DetachElasticLoadBalancer}
  * @method Model disassociateElasticIp(array $args = array()) {@command OpsWorks DisassociateElasticIp}
  * @method Model getHostnameSuggestion(array $args = array()) {@command OpsWorks GetHostnameSuggestion}
+ * @method Model grantAccess(array $args = array()) {@command OpsWorks GrantAccess}
  * @method Model rebootInstance(array $args = array()) {@command OpsWorks RebootInstance}
  * @method Model registerElasticIp(array $args = array()) {@command OpsWorks RegisterElasticIp}
  * @method Model registerInstance(array $args = array()) {@command OpsWorks RegisterInstance}

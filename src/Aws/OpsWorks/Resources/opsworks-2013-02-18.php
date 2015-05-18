@@ -2455,6 +2455,50 @@ return array (
                 ),
             ),
         ),
+        'GrantAccess' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'GrantAccessResult',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'OpsWorks_20130218.GrantAccess',
+                ),
+                'InstanceId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'ValidForInMinutes' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'minimum' => 60,
+                    'maximum' => 1440,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that a request was invalid.',
+                    'class' => 'ValidationException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+            ),
+        ),
         'RebootInstance' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -2758,6 +2802,13 @@ return array (
                         'LoadThreshold' => array(
                             'type' => 'numeric',
                         ),
+                        'Alarms' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'String',
+                                'type' => 'string',
+                            ),
+                        ),
                     ),
                 ),
                 'DownScaling' => array(
@@ -2785,6 +2836,13 @@ return array (
                         ),
                         'LoadThreshold' => array(
                             'type' => 'numeric',
+                        ),
+                        'Alarms' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'String',
+                                'type' => 'string',
+                            ),
                         ),
                     ),
                 ),
@@ -4807,6 +4865,13 @@ return array (
                                     'LoadThreshold' => array(
                                         'type' => 'numeric',
                                     ),
+                                    'Alarms' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'String',
+                                            'type' => 'string',
+                                        ),
+                                    ),
                                 ),
                             ),
                             'DownScaling' => array(
@@ -4829,6 +4894,13 @@ return array (
                                     ),
                                     'LoadThreshold' => array(
                                         'type' => 'numeric',
+                                    ),
+                                    'Alarms' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'String',
+                                            'type' => 'string',
+                                        ),
                                     ),
                                 ),
                             ),
@@ -5411,6 +5483,30 @@ return array (
                 'Hostname' => array(
                     'type' => 'string',
                     'location' => 'json',
+                ),
+            ),
+        ),
+        'GrantAccessResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'TemporaryCredential' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'Username' => array(
+                            'type' => 'string',
+                        ),
+                        'Password' => array(
+                            'type' => 'string',
+                        ),
+                        'ValidForInMinutes' => array(
+                            'type' => 'numeric',
+                        ),
+                        'InstanceId' => array(
+                            'type' => 'string',
+                        ),
+                    ),
                 ),
             ),
         ),
