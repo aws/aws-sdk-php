@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2.8.5 - 2015-05-18
+
+* `Aws\Ec2\Ec2Client` - Added support for the new spot fleet API operations.
+* `Aws\OpsWorks\OpsWorksClient` - Added support for custom auto-scaling based
+  on CloudWatch alarms.
+
 ## 2.8.4 - 2015-05-14
 
 * `Aws\DirectoryService` - Added support for the AWS Directory Service.
