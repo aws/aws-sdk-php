@@ -73,15 +73,12 @@ class InstanceProfileProvider
         return $fn($request, ['timeout' => $this->timeout])
             ->then(function (ResponseInterface $response) {
                 return (string) $response->getBody();
-            })->otherwise(function ($reason) {
-                if ($reason instanceof \Exception) {
-                    throw new CredentialsException(
-                        $this->createErrorMessage($reason->getMessage()),
-                        $reason->getCode(),
-                        $reason
-                    );
-                }
-                throw new CredentialsException($this->createErrorMessage($reason));
+            })->otherwise(function (array $reason) {
+                $reason = $reason['exception'];
+                $msg = $reason->getMessage();
+                throw new CredentialsException(
+                    $this->createErrorMessage($msg, 0, $reason)
+                );
             });
     }
 

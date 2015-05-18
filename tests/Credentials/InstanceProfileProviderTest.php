@@ -69,8 +69,10 @@ class InstanceProfileProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testRejectsIfProfileIsNotAvailable()
     {
-        $client = function (RequestInterface $req, array $options) use (&$responses) {
-            return Promise\rejection_for('error');
+        $client = function () use (&$responses) {
+            return Promise\rejection_for([
+                'exception' => new \Exception('error')
+            ]);
         };
         $p = new InstanceProfileProvider(['client' => $client]);
         $p()->wait();
@@ -83,7 +85,9 @@ class InstanceProfileProviderTest extends \PHPUnit_Framework_TestCase
     public function testThrowsExceptionIfCredentialsNotAvailable()
     {
         $client = function () use (&$responses) {
-            return Promise\rejection_for('error');
+            return Promise\rejection_for([
+                'exception' => new \Exception('error')
+            ]);
         };
         $args['client'] = $client;
         $args['profile'] = 'foo';
