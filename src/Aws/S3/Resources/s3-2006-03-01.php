@@ -5283,5 +5283,10 @@ return array (
                 'NoSuchKey',
             ),
         ),
+		'ObjectNotExists' => array(
+			'operation' => 'HeadObject',
+			'success.type' => 'error',
+			'success.value' => 'NoSuchKey'
+		)
     ),
 );
