@@ -30,6 +30,7 @@ test:
 	vendor/bin/phpunit --testsuite=unit $(TEST)
 
 coverage:
+	AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar \
 	vendor/bin/phpunit --testsuite=unit --coverage-html=build/artifacts/coverage $(TEST)
 
 coverage-show:
