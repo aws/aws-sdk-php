@@ -27,7 +27,6 @@ class S3Client extends AwsClient
         $args = parent::getArguments();
         $args['retries']['fn'] = [__CLASS__, '_applyRetryConfig'];
         $args['api_provider']['fn'] = [__CLASS__, '_applyApiProvider'];
-        $args['signature_version']['default'] = 'v4';
 
         return $args + [
             'bucket_endpoint' => [
