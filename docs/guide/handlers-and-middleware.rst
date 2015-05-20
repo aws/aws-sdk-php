@@ -155,9 +155,10 @@ init
     request has not yet been serialized. This step is typically used to add
     default parameters to a command.
 
-    You can add a middleware to the ``init`` step using the ``appendInit``
-    (add the middleware to the front of the list) and ``prependInit``
-    (add the middleware to the end of the list) methods.
+    You can add a middleware to the ``init`` step using the ``appendInit`` and
+    ``prependInit`` methods where ``appendInit`` adds the middleware to the
+    end of the ``prepend`` list while ``prependInit`` adds the middleware to
+    the front of the ``prepend`` list.
 
     .. code-block:: php
 
@@ -178,8 +179,10 @@ validate
     command.
 
     You can add a middleware to the ``validate`` step using the
-    ``appendValidate`` (add the middleware to the front of the list) and
-    ``prependValidate`` (add the middleware to the end of the list) methods.
+    ``appendValidate`` and ``prependValidate`` methods where ``appendValidate``
+    adds the middleware to the end of the ``validate`` list while
+    ``prependValidate`` adds the middleware to the front of the ``validate``
+    list.
 
     .. code-block:: php
 
@@ -199,9 +202,10 @@ build
     being executed. Downstream lifecycle events will receive a command and
     PSR-7 HTTP request.
 
-    You can add a middleware to the ``build`` step using the ``appendBuild``
-    (add the middleware to the front of the list) and ``prependBuild``
-    (add the middleware to the end of the list) methods.
+    You can add a middleware to the ``build`` step using the ``appendBuild`` and
+    ``prependBuild`` methods where ``appendBuild`` adds the middleware to the
+    end of the ``build`` list while ``prependBuild`` adds the middleware to the
+    front of the ``build`` list.
 
     .. code-block:: php
 
@@ -224,9 +228,10 @@ sign
     This it the last step in the ``HandlerList`` before the HTTP request is
     transferred by a handler.
 
-    You can add a middleware to the ``sign`` step using the ``appendSign``
-    (add the middleware to the front of the list) and ``prependSign``
-    (add the middleware to the end of the list) methods.
+    You can add a middleware to the ``sign`` step using the ``appendSign`` and
+    ``prependSign`` methods where ``appendSign`` adds the middleware to the
+    end of the ``sign`` list while ``prependSign`` adds the middleware to the
+    front of the ``sign`` list.
 
     .. code-block:: php
 
