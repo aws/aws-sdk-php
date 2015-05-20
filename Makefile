@@ -26,6 +26,7 @@ clear-cache:
 	php build/aws-clear-cache.php
 
 test:
+	AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar \
 	vendor/bin/phpunit --testsuite=unit $(TEST)
 
 coverage:
