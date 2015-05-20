@@ -60,7 +60,7 @@ class SignatureProvider
 
         throw new UnresolvedSignatureException(
             "Unable to resolve a signature for $version/$service/$region.\n"
-            . "Valid signature versions include v4, s3, anonymous."
+            . "Valid signature versions include v4 and anonymous."
         );
     }
 
