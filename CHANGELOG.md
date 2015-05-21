@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next Release
+## 2.8.6 - 2015-05-21
 
 * `Aws\ElasticBeanstalk` - Added support for ResourceName configuration.
 * `Aws\ElasticTranscoder` - Added support for configuring AudioPackingMode and
