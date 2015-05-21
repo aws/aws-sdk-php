@@ -155,7 +155,7 @@ EOT;
         $html->open('ul', 'methods-summary');
         foreach ($operations as $opName => $operation) {
             $item = '<a class="method-summary-link" href="#' . $html->slug($opName)
-                . '"><strong>' . "{$opName}</strong></a>";
+                . '"><strong>' . "{$opName}</strong> ( array \$params = [] )</a>";
 
             if ($description = $service->docs->getOperationDocs($opName)) {
                 $shortened = strip_tags($description);
@@ -312,7 +312,12 @@ EOT;
         $html->section(3, $html->glyph('cog') . ' ' . $name, null, 'method-title');
 
         // Code
-        $html->elem('pre', 'opcode', '$result = $client-&gt;<code>' . lcfirst($name) . '</code>([/* ... */]);');
+        $html->elem(
+            'pre',
+            'opcode',
+            '$result = $client-&gt;<code>' . lcfirst($name) . '</code>([/* ... */]);' . "\n"
+            . '$promise = $client-&gt;<code>' . lcfirst($name) . 'Async</code>([/* ... */]);' . "\n"
+        );
 
         // Description
         if ($description = $service->docs->getOperationDocs($name)) {
