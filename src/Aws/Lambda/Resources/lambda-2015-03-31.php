@@ -666,6 +666,7 @@ return array (
                         'string',
                         'object',
                     ),
+                    'location' => 'body'
                 ),
             ),
             'errorResponses' => array(
