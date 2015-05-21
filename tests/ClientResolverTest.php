@@ -328,11 +328,11 @@ EOT;
     public function testCanAddConfigOptions()
     {
         $c = new S3Client([
-            'version'       => 'latest',
-            'region'        => 'us-west-2',
-            'calculate_md5' => true
+            'version'         => 'latest',
+            'region'          => 'us-west-2',
+            'bucket_endpoint' => true,
         ]);
-        $this->assertTrue($c->getConfig('calculate_md5'));
+        $this->assertTrue($c->getConfig('bucket_endpoint'));
     }
 
     public function testSkipsNonRequiredKeys()

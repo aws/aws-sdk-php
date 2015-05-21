@@ -69,13 +69,8 @@ class MultipartUploaderTest extends \PHPUnit_Framework_TestCase
                 ['acl' => 'private'] + $defaults,
                 Psr7\stream_for(fopen($filename, 'r'))
             ],
-            [ // Non-seekable stream, with SigV4
-                ['signature_version' => 'v4'],
-                $defaults,
-                Psr7\stream_for($data)
-            ],
-            [ // Non-seekable stream, no MD5 hash
-                ['calculate_md5' => false],
+            [ // Non-seekable stream
+                [],
                 $defaults,
                 Psr7\stream_for($data)
             ],

@@ -60,7 +60,7 @@ class SignatureProvider
 
         throw new UnresolvedSignatureException(
             "Unable to resolve a signature for $version/$service/$region.\n"
-            . "Valid signature versions include v4, s3, anonymous."
+            . "Valid signature versions include v4 and anonymous."
         );
     }
 
@@ -101,7 +101,6 @@ class SignatureProvider
      * This provider currently recognizes the following signature versions:
      *
      * - v4: Signature version 4.
-     * - s3: Amazon S3 specific signature.
      * - anonymous: Does not sign requests.
      *
      * @return callable
@@ -114,8 +113,6 @@ class SignatureProvider
                     return $service === 's3'
                         ? new S3SignatureV4($service, $region)
                         : new SignatureV4($service, $region);
-                case 's3':
-                    return new S3Signature();
                 case 'anonymous':
                     return new AnonymousSignature();
                 default:
