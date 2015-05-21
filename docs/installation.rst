@@ -1,6 +1,37 @@
-============
 Installation
 ============
+
+There are a number of ways to install the AWS SDK for PHP. This topic covers:
+
+* Installing using Composer (recommended)
+* Installing using the PHP archive (.phar)
+* Installing using the .zip archive
+
+Using Composer is the most flexible approach, since all dependencies will be automatically fetched
+for you, and you can specify a particular SDK version, range of versions, or use the latest
+development version. It is also the easiest way to deploy your code to the AWS cloud using Elastic
+Beanstalk.
+
+Using the .zip archive is useful if you:
+
+1. Prefer not to or cannot use Composer.
+2. Cannot use .phar files due to environment limitations.
+3. Want to use only specific files from the SDK.
+
+
+Dependencies
+------------
+
+The AWS SDK for PHP depends on the following libraries:
+
+-  `Guzzle <https://github.com/guzzle/guzzle>`_ for HTTP requests
+-  `Symfony2 EventDispatcher <http://symfony.com/doc/master/components/event_dispatcher/introduction.html>`_ for events
+-  `Monolog <https://github.com/seldaek/monolog>`_ and `Psr\\Log <https://github.com/php-fig/log>`_ for logging
+-  `Doctrine <https://github.com/doctrine/common>`_ for caching
+
+These libraries are automatically fetched for you if you use Composer, but are also included in the
+.phar and .zip archives if you choose either of those installation options.
+
 
 Installing using Composer
 -------------------------
@@ -101,58 +132,42 @@ Composer documentation.
 Installing using the PHP archive (.phar)
 ----------------------------------------
 
-Each release of the AWS SDK for PHP ships with a pre-packaged `phar <http://php.net/manual/en/book.phar.php>`_ (PHP
-archive) file containing all of the classes and dependencies you need to run the SDK. Additionally, the phar file
-automatically registers a class autoloader for the AWS SDK for PHP and all of its dependencies when included. Bundled
-with the phar file are the following required and suggested libraries:
+Each release of the AWS SDK for PHP provides a PHP archive (`phar
+<http://php.net/manual/en/book.phar.php>`_) that contains the SDK and all of the classes and
+dependencies you need to run the SDK. Additionally, the phar file automatically registers a class
+autoloader for the AWS SDK for PHP and all of its dependencies when it is included.
 
--  `Guzzle <https://github.com/guzzle/guzzle>`_ for HTTP requests
--  `Symfony2 EventDispatcher <http://symfony.com/doc/master/components/event_dispatcher/introduction.html>`_ for events
--  `Monolog <https://github.com/seldaek/monolog>`_ and `Psr\\Log <https://github.com/php-fig/log>`_ for logging
--  `Doctrine <https://github.com/doctrine/common>`_ for caching
-
-You can download specific versions of a packaged Phar from https://github.com/aws/aws-sdk-php/releases
-and simply include it in your scripts to get started::
+You can download specific versions of the AWS SDK for PHP .phar from
+https://github.com/aws/aws-sdk-php/releases. To use it, simply include it in your scripts::
 
     require '/path/to/aws.phar';
 
 .. note::
 
-    If you are using PHP with the Suhosin patch (especially common on Ubuntu and Debian distributions), you may need
-    to enable the use of phars in the ``suhosin.ini``. Without this, including a phar file in your code will cause it to
-    silently fail. You should modify the ``suhosin.ini`` file by adding the line:
+    If you are using PHP with the Suhosin patch (especially common on Ubuntu and Debian
+    distributions), you may need to enable the use of phars in the ``suhosin.ini`` file. Without
+    this, including a phar file in your code will cause it to silently fail. You should modify
+    ``suhosin.ini`` by adding the line::
 
-    ``suhosin.executor.include.whitelist = phar``
+     suhosin.executor.include.whitelist = phar
 
 
 Installing using the .zip archive
 ---------------------------------
 
-Each release of the AWS SDK for PHP since version 2.3.2 ships with a zip file containing all of the
-classes and dependencies that you need to run the SDK in a
-`PSR-0 <https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md>`_ compatible
-directory structure. Additionally, the zip file includes a class autoloader for the AWS SDK for PHP
-and the following required and suggested libraries:
+Each release of the AWS SDK for PHP since version 2.3.2 provides a zip file containing all of the
+classes and dependencies that you need to run the SDK in a `PSR-0
+<https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md>`_ compatible directory
+structure.
 
--  `Guzzle <https://github.com/guzzle/guzzle>`_ for HTTP requests
--  `Symfony2 EventDispatcher <http://symfony.com/doc/master/components/event_dispatcher/introduction.html>`_ for events
--  `Monolog <https://github.com/seldaek/monolog>`_ and `Psr\\Log <https://github.com/php-fig/log>`_ for logging
--  `Doctrine <https://github.com/doctrine/common>`_ for caching
-
-Using the zip file is great if you:
-
-1. Prefer not to or cannot use Composer.
-2. Cannot use phar files due to environment limitations.
-3. Want to use only specific files from the SDK.
-
-To get started, you must download a specific version of the zip file from
-https://github.com/aws/aws-sdk-php/releases, unzip it into your
-project to a location of your choosing, and include the autoloader::
+To get started, download a specific version of the zip file from
+https://github.com/aws/aws-sdk-php/releases, unzip it into your project to a location of your
+choosing, and include the autoloader::
 
     require '/path/to/aws-autoloader.php';
 
 Alternatively, you can write your own autoloader or use an existing one from your project.
 
-If you have `phing <http://www.phing.info/>`_ installed, you can clone the SDK and build a zip file yourself using the
-*"zip"* task.
+If you have `phing <http://www.phing.info/>`_ installed, you can clone the SDK and build a zip file
+yourself using the *"zip"* task.
 
