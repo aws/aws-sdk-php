@@ -99,9 +99,8 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
                 }
                 break;
             case 'Aws\Api\TimestampShape':
-                if (is_string($data)) {
-                    $data = strtotime($data);
-                }
+                // Format the DateTimeResult as a Unix timestamp.
+                $data = $data->format('U');
                 break;
         }
     }

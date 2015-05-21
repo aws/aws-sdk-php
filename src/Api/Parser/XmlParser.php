@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Api\Parser;
 
+use Aws\Api\DateTimeResult;
 use Aws\Api\ListShape;
 use Aws\Api\MapShape;
 use Aws\Api\Shape;
@@ -26,7 +27,8 @@ class XmlParser
             'boolean'   => 'parse_boolean',
             'integer'   => 'parse_integer',
             'float'     => 'parse_float',
-            'double'    => 'parse_float'
+            'double'    => 'parse_float',
+            'timestamp' => 'parse_timestamp',
         ];
 
         $type = $shape['type'];
@@ -119,5 +121,10 @@ class XmlParser
     private function parse_boolean(Shape $shape, $value)
     {
         return $value == 'true' ? true : false;
+    }
+
+    private function parse_timestamp(Shape $shape, $value)
+    {
+        return new DateTimeResult($value);
     }
 }

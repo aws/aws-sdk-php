@@ -89,7 +89,9 @@ class ExampleBuilder
             case 'stream':
                 return '<Psr\\Http\\Message\\StreamableInterface>';
             case 'timestamp':
-                return '<integer || string || DateTime>';
+                return $this->isInput
+                    ? '<integer || string || DateTime>'
+                    : '<DateTime>';
             case 'float':
                 return '<float>';
             default:
