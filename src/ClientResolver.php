@@ -362,7 +362,8 @@ class ClientResolver
     {
         $api = new Service(
             ApiProvider::resolve(
-                $value, 'api',
+                $value,
+                'api',
                 $args['service'],
                 $args['version']
             ),
