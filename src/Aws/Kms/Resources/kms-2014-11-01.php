@@ -525,6 +525,10 @@ return array (
                     'class' => 'NotFoundException',
                 ),
                 array(
+                    'reason' => 'A request was rejected because the specified key was marked as disabled.',
+                    'class' => 'DisabledException',
+                ),
+                array(
                     'reason' => 'The request was rejected because a specified ARN was not valid.',
                     'class' => 'InvalidArnException',
                 ),
@@ -623,6 +627,10 @@ return array (
                 array(
                     'reason' => 'The request was rejected because the specified entity or resource could not be found.',
                     'class' => 'NotFoundException',
+                ),
+                array(
+                    'reason' => 'A request was rejected because the specified key was marked as disabled.',
+                    'class' => 'DisabledException',
                 ),
                 array(
                     'reason' => 'The request was rejected because a specified ARN was not valid.',
@@ -1091,6 +1099,10 @@ return array (
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
+                    'reason' => 'The request was rejected because the marker that specifies where pagination should next begin is not valid.',
+                    'class' => 'InvalidMarkerException',
+                ),
+                array(
                     'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
                     'class' => 'KMSInternalException',
                 ),
@@ -1145,6 +1157,10 @@ return array (
                 array(
                     'reason' => 'The request was rejected because the marker that specifies where pagination should next begin is not valid.',
                     'class' => 'InvalidMarkerException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because a specified ARN was not valid.',
+                    'class' => 'InvalidArnException',
                 ),
                 array(
                     'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
@@ -1460,17 +1476,32 @@ return array (
                     'default' => 'TrentService.RetireGrant',
                 ),
                 'GrantToken' => array(
-                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
                     'maxLength' => 8192,
+                ),
+                'KeyId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 256,
+                ),
+                'GrantId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
                 array(
                     'reason' => 'A grant token provided as part of the request is invalid.',
                     'class' => 'InvalidGrantTokenException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the specified entity or resource could not be found.',
+                    'class' => 'NotFoundException',
                 ),
                 array(
                     'reason' => 'The system timed out while trying to fulfill the request.',
@@ -1526,6 +1557,61 @@ return array (
                 array(
                     'reason' => 'The system timed out while trying to fulfill the request.',
                     'class' => 'DependencyTimeoutException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because a specified ARN was not valid.',
+                    'class' => 'InvalidArnException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'class' => 'KMSInternalException',
+                ),
+            ),
+        ),
+        'UpdateAlias' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'TrentService.UpdateAlias',
+                ),
+                'AliasName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 256,
+                ),
+                'TargetKeyId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 256,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'class' => 'DependencyTimeoutException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the specified entity or resource could not be found.',
+                    'class' => 'NotFoundException',
                 ),
                 array(
                     'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',

@@ -893,6 +893,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'MillisBehindLatest' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                ),
             ),
         ),
         'GetShardIteratorOutput' => array(

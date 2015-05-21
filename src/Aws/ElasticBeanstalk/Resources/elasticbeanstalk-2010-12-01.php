@@ -308,6 +308,11 @@ return array (
                         'name' => 'ConfigurationOptionSetting',
                         'type' => 'object',
                         'properties' => array(
+                            'ResourceName' => array(
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 256,
+                            ),
                             'Namespace' => array(
                                 'type' => 'string',
                             ),
@@ -435,6 +440,11 @@ return array (
                         'name' => 'ConfigurationOptionSetting',
                         'type' => 'object',
                         'properties' => array(
+                            'ResourceName' => array(
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 256,
+                            ),
                             'Namespace' => array(
                                 'type' => 'string',
                             ),
@@ -455,6 +465,11 @@ return array (
                         'name' => 'OptionSpecification',
                         'type' => 'object',
                         'properties' => array(
+                            'ResourceName' => array(
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 256,
+                            ),
                             'Namespace' => array(
                                 'type' => 'string',
                             ),
@@ -788,6 +803,11 @@ return array (
                         'name' => 'OptionSpecification',
                         'type' => 'object',
                         'properties' => array(
+                            'ResourceName' => array(
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 256,
+                            ),
                             'Namespace' => array(
                                 'type' => 'string',
                             ),
@@ -1363,6 +1383,11 @@ return array (
                         'name' => 'ConfigurationOptionSetting',
                         'type' => 'object',
                         'properties' => array(
+                            'ResourceName' => array(
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 256,
+                            ),
                             'Namespace' => array(
                                 'type' => 'string',
                             ),
@@ -1383,6 +1408,11 @@ return array (
                         'name' => 'OptionSpecification',
                         'type' => 'object',
                         'properties' => array(
+                            'ResourceName' => array(
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 256,
+                            ),
                             'Namespace' => array(
                                 'type' => 'string',
                             ),
@@ -1472,6 +1502,11 @@ return array (
                         'name' => 'ConfigurationOptionSetting',
                         'type' => 'object',
                         'properties' => array(
+                            'ResourceName' => array(
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 256,
+                            ),
                             'Namespace' => array(
                                 'type' => 'string',
                             ),
@@ -1492,6 +1527,11 @@ return array (
                         'name' => 'OptionSpecification',
                         'type' => 'object',
                         'properties' => array(
+                            'ResourceName' => array(
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 256,
+                            ),
                             'Namespace' => array(
                                 'type' => 'string',
                             ),
@@ -1554,6 +1594,11 @@ return array (
                         'name' => 'ConfigurationOptionSetting',
                         'type' => 'object',
                         'properties' => array(
+                            'ResourceName' => array(
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 256,
+                            ),
                             'Namespace' => array(
                                 'type' => 'string',
                             ),
@@ -1716,6 +1761,9 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'member',
                         'properties' => array(
+                            'ResourceName' => array(
+                                'type' => 'string',
+                            ),
                             'Namespace' => array(
                                 'type' => 'string',
                             ),
@@ -2048,6 +2096,9 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'member',
                                     'properties' => array(
+                                        'ResourceName' => array(
+                                            'type' => 'string',
+                                        ),
                                         'Namespace' => array(
                                             'type' => 'string',
                                         ),

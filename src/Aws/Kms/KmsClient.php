@@ -50,6 +50,7 @@ use Guzzle\Service\Resource\Model;
  * @method Model reEncrypt(array $args = array()) {@command Kms ReEncrypt}
  * @method Model retireGrant(array $args = array()) {@command Kms RetireGrant}
  * @method Model revokeGrant(array $args = array()) {@command Kms RevokeGrant}
+ * @method Model updateAlias(array $args = array()) {@command Kms UpdateAlias}
  * @method Model updateKeyDescription(array $args = array()) {@command Kms UpdateKeyDescription}
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-kms.html User guide
