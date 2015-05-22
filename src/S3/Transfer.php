@@ -253,7 +253,9 @@ class Transfer implements PromisorInterface
             return (new Aws\CommandPool($this->client, $commands, [
                 'concurrency' => $this->concurrency,
                 'before'      => $this->before,
-                'rejected'    => $this->getRejectFn()
+                'rejected'    => function ($reason, $idx, Promise\PromiseInterface $p) {
+                    $p->reject($reason);
+                }
             ]))->promise();
         });
     }
@@ -276,12 +278,7 @@ class Transfer implements PromisorInterface
 
         // Create an EachPromise, that will concurrently handle the upload
         // operations' yielded promises from the iterator.
-        return Promise\each_limit(
-            $files,
-            $this->concurrency,
-            null,
-            $this->getRejectFn()
-        );
+        return Promise\each_limit_all($files, $this->concurrency);
     }
 
     private function upload($filename)
@@ -368,18 +365,6 @@ class Transfer implements PromisorInterface
                 $context .= " : Part={$part}";
             }
             fwrite($debug, "Transferring {$context}\n");
-        };
-    }
-
-    /**
-     * Reject an aggregate promise on the first failure.
-     *
-     * @return callable
-     */
-    private function getRejectFn()
-    {
-        return function ($reason, $idx, Promise\PromiseInterface $p) {
-            $p->reject($reason);
         };
     }
 }
