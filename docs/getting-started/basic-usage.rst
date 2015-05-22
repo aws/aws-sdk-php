@@ -120,6 +120,16 @@ Service-specific configuration values are a union of the service-specific
 values and the root-level values (i.e., service-specific values are shallow
 merged onto root level values).
 
+.. tip::
+
+    It is highly recommended that you use the ``Sdk`` class to create clients
+    if you are utilizing multiple SDK clients in your application. The ``Sdk``
+    class will automatically utilize the same HTTP client for each SDK client,
+    allowing SDK clients for different services to perform non-blocking HTTP
+    requests. If the SDK clients do not use the same HTTP client, then HTTP
+    requests sent by the SDK client may cause inter-service promise
+    orchestration to block.
+
 
 Executing service operations
 ----------------------------
