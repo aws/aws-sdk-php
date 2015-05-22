@@ -86,11 +86,7 @@ class WaitersTest extends \PHPUnit_Framework_TestCase
         ])->then(
             function () use ($client, $table) {
                 self::log('Waiting for the table to be active.');
-                return $client->getWaiter('TableExists', ['TableName' => $table])
-                    ->promise()
-                    ->then(null, null, function ($attempt) {
-                        self::log("TableExists waiter has made {$attempt} attempts.");
-                    });
+                return $client->getWaiter('TableExists', ['TableName' => $table])->promise();
             }
         )->then(
             function () use ($client, $table) {
@@ -100,11 +96,7 @@ class WaitersTest extends \PHPUnit_Framework_TestCase
             function () use ($client, $table) {
                 self::log('Deleting table.');
                 self::log('Waiting for the table to be deleted.');
-                return $client->getWaiter('TableNotExists', ['TableName' => $table])
-                    ->promise()
-                    ->then(null, null, function ($attempt) {
-                        self::log("TableNotExists waiter has made {$attempt} attempts.");
-                    });
+                return $client->getWaiter('TableNotExists', ['TableName' => $table])->promise();
             }
         )->then(
             function () use ($client, $table) {

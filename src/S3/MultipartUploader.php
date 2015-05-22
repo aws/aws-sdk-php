@@ -79,14 +79,14 @@ class MultipartUploader extends AbstractUploader
      *   `function (Aws\Command $command) {...}`.
      * - bucket: (string, required) Name of the bucket to which the object is
      *   being uploaded.
-     * - concurrency: (int, default=int(3)) Maximum number of concurrent
+     * - concurrency: (int, default=int(5)) Maximum number of concurrent
      *   `UploadPart` operations allowed during the multipart upload.
      * - key: (string, required) Key to use for the object being uploaded.
      * - part_size: (int, default=int(5242880)) Part size, in bytes, to use when
      *   doing a multipart upload. This must between 5 MB and 5 GB, inclusive.
      * - state: (Aws\Multipart\UploadState) An object that represents the state
      *   of the multipart upload and that is used to resume a previous upload.
-     *   When this options is provided, the `bucket`, `key`, and `part_size`
+     *   When this option is provided, the `bucket`, `key`, and `part_size`
      *   options are ignored.
      *
      * @param S3Client $client Client used for the upload.

@@ -16,8 +16,8 @@ Introduction
 ------------
 
 Version 3 of the SDK represents a significant effort to improve the capabilities
-of the SDK, incorporate two years of customer feedback, upgrade our dependencies,
-improve performance, and adopt the latest PHP standards.
+of the SDK, incorporate over two years of customer feedback, upgrade our
+dependencies, improve performance, and adopt the latest PHP standards.
 
 
 What's New?
@@ -80,16 +80,16 @@ The dependencies of the SDK have changed in this version.
   methods. See :doc:`jmespath` for more details.
 
 
-Region & version options and now required
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Region and version options are now required
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When instantiating a client, you must specify both the ``'region'`` and
-``'version'`` options. In version 2 of the SDK, ``'version'`` was completely
+When instantiating a client for any service, you must specify the ``'region'``
+and ``'version'`` options. In version 2 of the SDK, ``'version'`` was completely
 optional, and ``'region'`` was sometimes optional. In version 3, both are always
 required. Being explicit about both of these options allows you to lock into the
 API version and region you are coding against. When new API versions are created
 or new regions become available, you will be isolated from potentially breaking
-changes until you explicitly update your configuration.
+changes until you are ready to explicitly update your configuration.
 
 .. note::
 
@@ -97,6 +97,14 @@ changes until you explicitly update your configuration.
     just set the ``'version'`` option to ``'latest'``. However, it is
     recommended that you set the API version numbers explicitly for production
     code.
+
+.. important::
+
+    When using Amazon S3, and unlike in previous versions of the SDK, you must
+    provide a region when instantiating an ``S3Client``. This client will only
+    be able to operate on buckets that were created in the region you've
+    specified. If you are not sure what region your S3 bucket is in, you can
+    use the ``getBucketLocation`` operation to find out.
 
 
 Client instantiation uses the constructor
@@ -305,6 +313,17 @@ equivalent to catching different exception classes, but provides that function
 without adding bloat to the SDK.
 
 
+Static Facade classes have been removed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In Version 2, there was an obscure feature inspired by Laravel that allowed you
+to call ``enableFacades()`` on the ``Aws`` class to enable static access to the
+various service clients. This feature goes against PHP best practices, and we
+stopped documenting it over a year ago. In Version 3, this feature is gone
+completely. You should retrieve your client objects from the ``Aws\Sdk`` object
+and use them as object instances, not static classes.
+
+
 Paginators supersede Iterators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -356,6 +375,23 @@ expressions to extract data more easily from the result set.
     The ``getIterator()`` method is still supported to allow for a smooth
     transition to Version 3, but encourage you to upgrade your code to use
     Paginators.
+
+
+Many higher-level abstractions have changed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In general, many of the higher-level abstractions (service-specific helper
+objects aside from the clients) have been improved or updated. Some have
+even been removed.
+
+* Updated:
+    * `DynamoDB Session Handler <http://docs.aws.amazon.com/aws-sdk-php/v3/guide/service/dynamodb-session-handler.html>`_
+    * `DynamoDB WriteRequestBatch <http://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.DynamoDb.WriteRequestBatch.html>`_
+
+* Removed:
+    * DynamoDB ``Item``, ``Attribute``, ``PutRequest``, ``DeleteRequest``,
+      and ``ItemIterator`` classes. These were previously deprecated in
+      `Version 2.7.0 <https://github.com/aws/aws-sdk-php/blob/v3/CHANGELOG.md#270---2014-10-08>`_.
 
 
 Comparing Code Samples from Both SDKs
