@@ -36,14 +36,27 @@ The most common scenario is creating a pre-signed URL to GET an object:
 
     $request = $s3Client->createPresignedRequest($cmd, '+20 minutes');
 
-    // Get the actual presigned-url
-    $presignedUrl = (string) $request->getUri();
+
+Creating a presigned URL
+------------------------
 
 You can create pre-signed URLs for any Amazon S3 operation using the
 ``getCommand`` method for creating a command object and then calling the
 ``createPresignedRequest()`` method with the command. When ultimately sending
 the request, be sure to use the same method and the same headers as the
 returned request.
+
+.. code-block:: php
+
+    $cmd = $s3Client->getCommand('GetObject', [
+        'Bucket' => 'my-bucket',
+        'Key'    => 'testKey'
+    ]);
+
+    $request = $s3Client->createPresignedRequest($cmd, '+20 minutes');
+
+    // Get the actual presigned-url
+    $presignedUrl = (string) $request->getUri();
 
 
 Getting the URL to an object
