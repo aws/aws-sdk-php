@@ -212,6 +212,8 @@ that is resolved or rejected when the operation completes.
         });
 
 
+.. _result_objects:
+
 Working with Result objects
 ---------------------------
 
@@ -234,7 +236,7 @@ You can access data from the result object like an associative PHP array.
     }
 
     // Convert the result object to a PHP array
-    $asArray = $result->toArray();
+    $array = $result->toArray();
 
 The contents of the result object depends on the operation that was executed
 and the version of a service. The result structure of each API operation is
