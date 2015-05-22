@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Api\Parser;
 
+use Aws\Api\DateTimeResult;
 use Aws\Api\Shape;
 use Aws\Api\StructureShape;
 use Aws\Result;
@@ -87,7 +88,22 @@ abstract class AbstractRestParser extends AbstractParser
         ResponseInterface $response,
         &$result
     ) {
-        $result[$name] = $response->getHeaderLine($shape['locationName'] ?: $name);
+        $value = $response->getHeaderLine($shape['locationName'] ?: $name);
+        $type = $shape->getType();
+
+        if ($type === 'blob') {
+            $value = base64_decode($value);
+        } elseif ($type === 'timestamp') {
+            try {
+                $value = new DateTimeResult($value);
+            } catch (\Exception $e) {
+                // If the value cannot be parsed, then do not add it to the
+                // output structure.
+                return;
+            }
+        }
+
+        $result[$name] = $value;
     }
 
     /**
