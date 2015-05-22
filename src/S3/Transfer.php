@@ -41,16 +41,24 @@ class Transfer implements PromisorInterface
      *
      * The options array can contain the following key value pairs:
      *
-     * - base_dir: (string) Base dir of the source, if $source is an iterator.
-     * - before: (callable) Accepts the following positional arguments:
-     *   source, dest, command; where command is an instance of a Command
-     *   object. The provided command will be either a GetObject, PutObject,
-     *   InitiateMultipartUpload, or UploadPart command.
+     * - base_dir: (string) Base directory of the source, if $source is an
+     *   iterator. If the $source option is not an array, then this option is
+     *   ignored.
+     * - before: (callable) A callback to invoke before each transfer. The
+     *   callback accepts the following positional arguments: string $source,
+     *   string $dest, Aws\CommandInterface $command. The provided command will
+     *   be either a GetObject, PutObject, InitiateMultipartUpload, or
+     *   UploadPart command.
      * - mup_threshold: (int) Size in bytes in which a multipart upload should
      *   be used instead of PutObject. Defaults to 20971520 (20 MB).
      * - concurrency: (int, default=5) Number of files to upload concurrently.
-     * - debug: (bool) Set to true to print out debug information for transfers.
-     *   Set to an fopen() resource to write to a specific stream.
+     *   The ideal concurrency value will vary based on the number of files
+     *   being uploaded and the average size of each file. Generally speaking,
+     *   smaller files benefit from a higher concurrency while larger files
+     *   will not.
+     * - debug: (bool) Set to true to print out debug information for
+     *   transfers. Set to an fopen() resource to write to a specific stream
+     *   rather than writing to STDOUT.
      *
      * @param S3Client         $client  Client used for transfers.
      * @param string|\Iterator $source  Where the files are transferred from.
