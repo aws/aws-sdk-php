@@ -1,6 +1,7 @@
-==========================
-Amazon CloudFront Features
-==========================
+============================
+Amazon CloudFront Signed URL
+============================
+
 
 Signing CloudFront URLs for Private Distributions
 -------------------------------------------------

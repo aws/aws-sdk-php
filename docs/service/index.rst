@@ -9,7 +9,7 @@ higher level features per service.
 .. toctree::
     :maxdepth: 2
 
-    cloudfront
+    cloudfront-signed-url
     dynamodb-session-handler
     s3-multipart-upload
     s3-presigned-url

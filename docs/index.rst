@@ -57,7 +57,7 @@ SDK Guides
 Service-Specific Features
 -------------------------
 
-* :doc:`service/cloudfront`
+* :doc:`service/cloudfront-signed-url`
 * :doc:`service/dynamodb-session-handler`
 * :doc:`service/s3-multipart-upload`
 * :doc:`service/s3-presigned-url`
