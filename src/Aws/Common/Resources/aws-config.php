@@ -173,6 +173,12 @@ return array(
             'class'   => 'Aws\ElasticBeanstalk\ElasticBeanstalkClient'
         ),
 
+        'efs' => array(
+            'alias'   => 'Efs',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\Efs\EfsClient'
+        ),
+
         'elasticloadbalancing' => array(
             'alias'   => 'ElasticLoadBalancing',
             'extends' => 'default_settings',
