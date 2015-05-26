@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2.8.7 - 2015-05-26
+
+* `Aws\Efs` - [Amazon Elastic File System (Amazon EFS)](http://aws.amazon.com/efs/)
+* Failing to parse an XML error response will now fail gracefully as a
+  `PhpInternalXmlParseError` AWS error code.
+
 ## 2.8.6 - 2015-05-21
 
 * `Aws\ElasticBeanstalk` - Added support for ResourceName configuration.
