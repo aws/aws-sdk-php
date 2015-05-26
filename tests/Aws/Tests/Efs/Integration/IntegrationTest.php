@@ -14,9 +14,9 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
     public function setUp()
     {
-        $this->client = $this->getServiceBuilder()->get('Efs', [
+        $this->client = $this->getServiceBuilder()->get('Efs', array(
             'region' => 'us-west-2'
-        ]);
+        ));
     }
 
     public function testErrorsAreParsedCorrectly()
