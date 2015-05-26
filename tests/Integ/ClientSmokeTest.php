@@ -271,7 +271,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
                 'DeleteCluster',
                 ['cluster' => 'foo'],
                 false,
-                'ClientException'
+                'ClusterNotFoundException'
             ],
             [
                 'elasticache',
@@ -581,7 +581,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
                 'TerminateWorkspaces',
                 ['TerminateWorkspaceRequests' => [['WorkspaceId'=> 'foo']]],
                 false,
-                'ValidationException'
+                'ThrottlingException'
             ],
         ];
     }
