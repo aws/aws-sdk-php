@@ -101,4 +101,15 @@ class DefaultXmlExceptionParserTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals('400 Bad Request (Request-ID: Foo)', $result['message']);
         $this->assertEquals('Foo', $result['request_id']);
     }
+
+    public function testGracefullyHandlesInvalidXmlResponse()
+    {
+        $request = new Request('GET', 'http://example.com');
+        $response = Response::fromMessage("HTTP/1.1 400 Bad Request\r\n\r\nThis is not XML!");
+        $parser = new DefaultXmlExceptionParser();
+        $result = $parser->parse($request, $response);
+        $this->assertEquals('A non-XML response was received', $result['message']);
+        $this->assertEquals('PhpInternalXmlParseError', $result['code']);
+        $this->assertNull($result['request_id']);
+    }
 }

@@ -24,9 +24,6 @@ use Guzzle\Http\Message\Response;
  */
 class DefaultXmlExceptionParser implements ExceptionParserInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function parse(RequestInterface $request, Response $response)
     {
         $data = array(
@@ -37,13 +34,25 @@ class DefaultXmlExceptionParser implements ExceptionParserInterface
             'parsed'     => null
         );
 
-        if ($body = $response->getBody(true)) {
-            $this->parseBody(new \SimpleXMLElement($body), $data);
-        } else {
+        $body = $response->getBody(true);
+
+        if (!$body) {
             $this->parseHeaders($request, $response, $data);
+            return $data;
         }
 
-        return $data;
+        try {
+            $xml = new \SimpleXMLElement($body);
+            $this->parseBody($xml, $data);
+            return $data;
+        } catch (\Exception $e) {
+            // Gracefully handle parse errors. This could happen when the
+            // server responds with a non-XML response (e.g., private beta
+            // services).
+            $data['code'] = 'PhpInternalXmlParseError';
+            $data['message'] = 'A non-XML response was received';
+            return $data;
+        }
     }
 
     /**
