@@ -48,7 +48,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.0.0-beta.1';
+    const VERSION = '3.0.0';
 
     /** @var array Map of custom lowercase names to service endpoint names. */
     private static $aliases = [
