@@ -138,7 +138,7 @@ try {
 [aws]: http://aws.amazon.com
 [aws-iam-credentials]: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances
 [aws-tools]: http://aws.amazon.com/tools
-[guzzle-docs]: https://guzzlephp.org
+[guzzle-docs]: http://guzzlephp.org
 [composer]: http://getcomposer.org
 [packagist]: http://packagist.org
 [psr-7]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md
