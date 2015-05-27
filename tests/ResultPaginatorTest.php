@@ -190,12 +190,12 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
         $paginator = $client->getPaginator('ListTables');
 
         $tableNames = [];
-        foreach ($paginator->search('TableNames[][::-1]') as $table) {
+        foreach ($paginator->search('TableNames[] | [::-1]') as $table) {
             $tableNames[] = $table;
         }
 
         $this->assertEquals(4, $requestCount);
-        $this->assertEquals(['1a', '2b', '3c', '4d'], $tableNames);
+        $this->assertEquals(['b2', 'a1', 'c3', 'd4'], $tableNames);
     }
 
     public function testGracefullyHandlesSingleValueResults()
