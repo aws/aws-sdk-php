@@ -1,3 +1,0 @@
-.. service:: Ecs
-
-.. apiref:: Ecs

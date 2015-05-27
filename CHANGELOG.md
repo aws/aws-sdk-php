@@ -262,6 +262,16 @@ for details about any changes you may need to make to your code for this upgrade
 * Added support for configuring push synchronization to the Cognito Sync client.
 * Updated docblocks in a few S3 and Glacier classes to improve IDE experience.
 
+## 3.0.0-beta.1 - 2014-10-14
+
+* New requirements on Guzzle 5 and PHP 5.5.
+* Event system now uses Guzzle 5 events and no longer utilizes Symfony2.
+* `version` and `region` are noww required parameter for each client
+  constructor. You can op-into using the latest version of a service by
+  setting `version` to `latest`.
+* Removed `Aws\S3\ResumableDownload`.
+* More information to follow.
+
 ## 2.7.2 - 2014-10-23
 
 * Updated AWS Identity and Access Management (IAM) to the latest version.

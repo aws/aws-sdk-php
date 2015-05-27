@@ -1,3 +1,0 @@
-.. service:: ElasticLoadBalancing
-
-.. apiref:: ElasticLoadBalancing

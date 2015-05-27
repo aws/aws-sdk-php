@@ -1,3 +1,0 @@
-.. service:: Kms
-
-.. apiref:: Kms

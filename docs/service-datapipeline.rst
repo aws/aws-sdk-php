@@ -1,3 +1,0 @@
-.. service:: DataPipeline
-
-.. apiref:: DataPipeline

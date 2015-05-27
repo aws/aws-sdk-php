@@ -1,3 +1,0 @@
-.. service:: Rds
-
-.. apiref:: Rds

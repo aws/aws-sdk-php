@@ -1,3 +1,0 @@
-.. service:: Swf
-
-.. apiref:: Swf

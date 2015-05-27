@@ -16,31 +16,34 @@
         "issues": "https://github.com/aws/aws-sdk-php/issues"
     },
     "require": {
-        "php": ">=5.3.3",
-        "guzzle/guzzle": "~3.7"
-    },
-    "suggest": {
-        "doctrine/cache": "Adds support for caching of credentials and responses",
-        "ext-apc": "Allows service description opcode caching, request and response caching, and credentials caching",
-        "ext-openssl": "Allows working with CloudFront private distributions and verifying received SNS messages",
-        "monolog/monolog": "Adds support for logging HTTP requests and responses",
-        "symfony/yaml": "Eases the ability to write manifests for creating jobs in AWS Import/Export"
+        "php": ">=5.5",
+        "guzzlehttp/guzzle": "^5.2 || ^6.0",
+        "guzzlehttp/psr7": "^1.0.0",
+        "guzzlehttp/promises": "^1.0.0",
+        "mtdowling/jmespath.php": "^2.1"
     },
     "require-dev": {
         "ext-openssl": "*",
-        "doctrine/cache": "~1.0",
-        "monolog/monolog": "~1.4",
-        "phpunit/phpunit": "~4.0",
-        "symfony/yaml": "~2.1"
+        "ext-pcre": "*",
+        "ext-spl": "*",
+        "ext-json": "*",
+        "ext-dom": "*",
+        "ext-simplexml": "*",
+        "phpunit/phpunit": "^4.0"
+    },
+    "suggest": {
+        "ext-openssl": "Allows working with CloudFront private distributions and verifying received SNS messages",
+        "ext-curl": "To send requests using cURL"
     },
     "autoload": {
-        "psr-0": {
-            "Aws": "src/"
-        }
+        "psr-4": {
+            "Aws\\": "src/"
+        },
+        "files": ["src/functions.php"]
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.7-dev"
+            "dev-v3": "3.0-dev"
         }
     }
 }

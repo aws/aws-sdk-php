@@ -10,9 +10,8 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Guzzle\Http\Client;
-use Guzzle\Http\Url;
-use Guzzle\Stream;
+use GuzzleHttp\Url;
+use GuzzleHttp\Stream\Utils;
 
 $owner = 'aws';
 $repo = 'aws-sdk-php';
@@ -20,45 +19,46 @@ $token = getenv('OAUTH_TOKEN') or die('An OAUTH_TOKEN environment variable is re
 isset($argv[1]) or die('Usage php gh-release.php X.Y.Z');
 $tag = $argv[1];
 
-assert(file_exists(__DIR__ . '/artifacts/aws.zip'));
-assert(file_exists(__DIR__ . '/artifacts/aws.phar'));
-
 // Grab and validate the tag annotation
 chdir(dirname(__DIR__));
 $message = `chag contents -t "$tag"` or die('Chag could not find or parse the tag');
 
 // Create a GitHub client.
-$client = new Client('https://api.github.com/');
-$client->setDefaultOption('headers/Authorization', "token $token");
+$client = new GuzzleHttp\Client([
+    'base_url' => 'https://api.github.com/',
+    'defaults' => [
+        'headers' => ['Authorization' => "token $token"]
+    ]
+]);
 
 // Create the release
-$response = $client->post(
-    "repos/${owner}/${repo}/releases",
-    array('Content-Type' => 'application/json'),
-    json_encode(array(
+$response = $client->post("repos/${owner}/${repo}/releases", [
+    'json' => [
         'tag_name'   => $tag,
         'name'       => "Version {$tag}",
         'body'       => $message,
-        'prerelease' => false
-    ))
-)->send();
+        'prerelease' => true
+    ]
+]);
 
 // Grab the location of the new release
-$url = (string) $response->getHeader('Location');
+$url = $response->getHeader('Location');
+echo "Release successfully published to: $url\n";
+
 // Uploads go to uploads.github.com
-$uploadUrl = Url::factory($url);
+$uploadUrl = Url::fromString($url);
 $uploadUrl->setHost('uploads.github.com');
 
-$client->post(
-    $uploadUrl . '/assets?name=aws.zip',
-    array('Content-Type' => 'application/zip'),
-    fopen(__DIR__ . '/artifacts/aws.zip', 'r')
-)->send();
+// Upload aws.zip
+$response = $client->post($uploadUrl . '/assets?name=aws.zip', [
+    'headers' => ['Content-Type' => 'application/zip'],
+    'body'    => Utils::open(__DIR__ . '/artifacts/aws.zip', 'r')
+]);
+echo "aws.zip uploaded to: " . $response->json()['browser_download_url'] . "\n";
 
-$client->post(
-    $uploadUrl . '/assets?name=aws.phar',
-    array('Content-Type' => 'application/phar'),
-    fopen(__DIR__ . '/artifacts/aws.phar', 'r')
-)->send();
-
-echo "Release successfully published to: $url\n";
+// Upload aws.phar
+$response = $client->post($uploadUrl . '/assets?name=aws.phar', [
+    'headers' => ['Content-Type' => 'application/phar'],
+    'body'    => Utils::open(__DIR__ . '/artifacts/aws.phar', 'r')
+]);
+echo "aws.phar uploaded to: " . $response->json()['browser_download_url'] . "\n";

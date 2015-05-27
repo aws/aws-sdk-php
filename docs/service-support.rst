@@ -1,3 +1,0 @@
-.. service:: Support
-
-.. apiref:: Support

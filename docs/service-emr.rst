@@ -1,3 +1,0 @@
-.. service:: Emr
-
-.. apiref:: Emr

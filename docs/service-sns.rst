@@ -1,3 +1,0 @@
-.. service:: Sns
-
-.. apiref:: Sns

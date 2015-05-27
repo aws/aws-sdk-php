@@ -1,3 +1,0 @@
-.. service:: CognitoSync
-
-.. apiref:: CognitoSync

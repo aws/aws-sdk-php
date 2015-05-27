@@ -1,20 +1,6 @@
 <?php
-/**
- * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License").
- * You may not use this file except in compliance with the License.
- * A copy of the License is located at
- *
- * http://aws.amazon.com/apache2.0
- *
- * or in the "license" file accompanying this file. This file is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing
- * permissions and limitations under the License.
- */
-
-// Run this script from the command line to see if your system is able to run the AWS SDK for PHP
+// Run this script from the command line to see if your system is able to run
+// the AWS SDK for PHP
 
 class CompatibilityTest
 {
@@ -119,9 +105,9 @@ class CompatibilityTest
 $c = new CompatibilityTest();
 $c->title('System requirements');
 $c->addRequire(
-    'Ensuring that the version of PHP is >= 5.3.3',
-    function () { return version_compare(phpversion(), '5.3.3', '>='); },
-    'You must update your version of PHP to 5.3.3 to run the AWS SDK for PHP'
+    'Ensuring that the version of PHP is >= 5.5.0',
+    function () { return version_compare(phpversion(), '5.5.0', '>='); },
+    'You must update your version of PHP to 5.5.0 to run the AWS SDK for PHP'
 );
 
 $c->iniCheck('Ensuring that detect_unicode is disabled', 'detect_unicode', false, true, 'Enabling detect_unicode may cause errors when using phar files. See https://bugs.php.net/bug.php?id=42396');
@@ -178,15 +164,7 @@ if (extension_loaded('xdebug')) {
 $c->extCheck('openssl', false);
 $c->extCheck('zlib', false);
 $c->extCheck('uri_template', false, 'Installing the uri_template extension will make the SDK faster. Install using pecl install uri_template-alpha');
-
-// Is an opcode cache installed or are they running >= PHP 5.5?
-$c->addRecommend(
-    'Checking if an opcode cache is installed',
-    function () {
-        return version_compare(phpversion(), '5.5.0', '>=') || extension_loaded('apc') || extension_loaded('xcache');
-    },
-    'You are not utilizing an opcode cache. Consider upgrading to PHP >= 5.5 or install APC.'
-);
+$c->iniCheck('Checking if OPCache is enabled', 'opcache.enable', 1, false);
 
 $c->title('PHP information');
 ob_start();

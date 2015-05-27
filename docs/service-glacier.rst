@@ -1,3 +1,0 @@
-.. service:: Glacier
-
-.. apiref:: Glacier

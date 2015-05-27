@@ -1,3 +1,0 @@
-.. service:: OpsWorks
-
-.. apiref:: OpsWorks
