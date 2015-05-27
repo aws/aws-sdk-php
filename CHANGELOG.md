@@ -1,8 +1,33 @@
 # CHANGELOG
 
+## Next Release
+
+* Asynchronous requests.
+    * Features like _waiters_ and _multipart uploaders_ can also be used
+      asynchronously.
+    * Asynchronous workflows can be created using _promises_ and _coroutines_.
+    * Improved performance of concurrent/batched requests via _command pools_.
+* Decoupled HTTP layer.
+    * [Guzzle 6](http://guzzlephp.org) is used by default to send requests,
+      but Guzzle 5 is also supported out of the box.
+    * The SDK can now work in environments where cURL is not available.
+    * Custom HTTP handlers are also supported.
+* Follows the [PSR-4 and PSR-7 standards](http://php-fig.org).
+* Middleware system for customizing service client behavior.
+* Flexible _paginators_ for iterating through paginated results.
+* Ability to query data from _result_ and _paginator_ objects with
+  [JMESPath](http://jmespath.org/).
+* Easy debugging via the `'debug'` client configuration option.
+* Customizable retries via the `'retries'` client configuration option.
+* More flexibility in credential loading via _credential providers_.
+* Strictly follows the [SemVer](http://semver.org/) standard going forward.
+* **For more details about what has changed, see the
+  [Migration Guide](http://docs.aws.amazon.com/aws-sdk-php/v3/guide/guide/migration.html)**.
+
 ## 2.8.7 - 2015-05-26
 
-* `Aws\Efs` - [Amazon Elastic File System (Amazon EFS)](http://aws.amazon.com/efs/)
+* `Aws\Efs` - Added support for the [Amazon Elastic File System (Amazon
+  EFS)](http://aws.amazon.com/efs/)
 * Failing to parse an XML error response will now fail gracefully as a
   `PhpInternalXmlParseError` AWS error code.
 
