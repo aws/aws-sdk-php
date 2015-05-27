@@ -48,7 +48,9 @@ class PermanentRedirectMiddleware
                 if ($status == 301) {
                     throw new PermanentRedirectException(
                         'Encountered a permanent redirect while requesting '
-                        . $result['@effectiveUri'],
+                        . $result->search('"@metadata".effectiveUri') . '. '
+                        . 'Are you sure you are using the correct region for '
+                        . 'this bucket?',
                         $command,
                         ['result' => $result]
                     );
