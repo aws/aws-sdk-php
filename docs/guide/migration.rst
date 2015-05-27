@@ -385,13 +385,28 @@ objects aside from the clients) have been improved or updated. Some have
 even been removed.
 
 * Updated:
-    * `DynamoDB Session Handler <http://docs.aws.amazon.com/aws-sdk-php/v3/guide/service/dynamodb-session-handler.html>`_
-    * `DynamoDB WriteRequestBatch <http://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.DynamoDb.WriteRequestBatch.html>`_
+    * The way you use the :doc:`S3 Multipart Uploader </service/s3-multipart-upload>`
+      has changed. The Glacier Multipart Uploader has been changed in similar ways.
+    * The way to create :doc:`S3 Presigned URLs </service/s3-presigned-url>` has changed.
+    * The ``Aws\S3\Sync`` namespace have been replaced by the ``Aws\S3\Transfer``
+      class. The ``S3Client::uploadDirectory()`` and ``S3Client::downloadBucket()``
+      methods are still available, but have different options. See the docs for
+      :doc:`/service/s3-transfer`.
+    * The ``Aws\S3\Model\ClearBucket`` and ``Aws\S3\Model\DeleteObjectsBatch``
+      have been replaced by ``Aws\S3\BatchDelete`` and ``S3Client::deleteMatchingObjects()``.
+    * The options and behaviors for the :doc:`/service/dynamodb-session-handler`
+      have changed slightly.
+    * The ``Aws\DynamoDb\Model\BatchRequest`` namespace has been replaced by
+      ``Aws\DynamoDb\WriteRequestBatch``. See the docs for
+      `DynamoDB WriteRequestBatch <http://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.DynamoDb.WriteRequestBatch.html>`_.
 
 * Removed:
-    * DynamoDB ``Item``, ``Attribute``, ``PutRequest``, ``DeleteRequest``,
-      and ``ItemIterator`` classes. These were previously deprecated in
-      `Version 2.7.0 <https://github.com/aws/aws-sdk-php/blob/v3/CHANGELOG.md#270---2014-10-08>`_.
+    * DynamoDB ``Item``, ``Attribute``, and ``ItemIterator`` classes - These
+      were previously deprecated in `Version 2.7.0 <https://github.com/aws/aws-sdk-php/blob/v3/CHANGELOG.md#270---2014-10-08>`_.
+    * SNS Message Validator - This will exist in a separate, light-weight
+      project that will not require the SDK as a dependency.
+    * S3 ``AcpBuilder`` and related objects were removed.
+
 
 
 Comparing Code Samples from Both SDKs
@@ -440,7 +455,7 @@ From Version 3 of the SDK
 Key differences:
 
 - Use ``new`` instead of ``factory()`` to instantiate the client.
-- The ``'version'`` option is required during instantiation.
+- The ``'version'`` and ``'region'`` options are required during instantiation.
 
 .. code-block:: php
 

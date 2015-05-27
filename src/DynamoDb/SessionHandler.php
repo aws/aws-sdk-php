@@ -60,8 +60,7 @@ class SessionHandler implements \SessionHandlerInterface
     public static function fromClient(DynamoDbClient $client, array $config = [])
     {
         $config += ['locking' => false];
-
-        if (isset($config['locking']) && $config['locking']) {
+        if ($config['locking']) {
             $connection = new LockingSessionConnection($client, $config);
         } else {
             $connection = new StandardSessionConnection($client, $config);
