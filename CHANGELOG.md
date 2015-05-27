@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next Release
+## 3.0.0 - 2015-05-27
 
 * Asynchronous requests.
     * Features like _waiters_ and _multipart uploaders_ can also be used

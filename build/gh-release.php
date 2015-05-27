@@ -37,7 +37,6 @@ $response = $client->post("repos/${owner}/${repo}/releases", [
         'tag_name'   => $tag,
         'name'       => "Version {$tag}",
         'body'       => $message,
-        'prerelease' => true
     ]
 ]);
 
