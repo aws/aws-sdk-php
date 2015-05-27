@@ -248,6 +248,28 @@ class StreamWrapper
      */
     public function stream_seek($offset, $whence = SEEK_SET)
     {
+        // We use CachingEntityBody for seekable streams, which can only seek on
+        // bytes that have been read. If we are seeking ahead in the stream, we
+        // need to read first.
+        if ($this->getOption('seekable')) {
+            switch ($whence) {
+                case SEEK_SET:
+                    $seek_position = $offset;
+                    break;
+
+                case SEEK_CUR:
+                    $seek_position = $this->body->ftell() + $offset;
+                    break;
+
+                default:
+                    throw new RuntimeException(__CLASS__ . ' supports only SEEK_SET and SEEK_CUR seek operations');
+            }
+
+            while ($this->body->ftell() < $seek_position && !$this->body->isConsumed()) {
+                $this->body->read(8192);
+            }
+        }
+
         return $this->body->seek($offset, $whence);
     }
 
