@@ -18,9 +18,7 @@ templates_path = ['_templates']
 source_suffix = '.rst'
 
 # Parse the version from the latest git tag
-version_command = 'git describe --abbrev=0 --tags'
-git_verson = subprocess.check_output(version_command, shell=True)
-version = os.getenv('VERSION', git_verson.strip())
+version = '3.x'
 
 exclude_patterns = ['_build', 'venv']
 html_static_path = ['_static']
