@@ -270,7 +270,7 @@ The ``mapCommand`` function accepts a callable that accepts an
     use Aws\Middleware;
     use Aws\CommandInterface;
 
-    // Here we've omitted the require Bucket paramater. We'll add it in the
+    // Here we've omitted the require Bucket parameter. We'll add it in the
     // custom middleware.
     $command = $s3Client->getCommand('HeadObject', ['Key' => 'test']);
 
@@ -404,7 +404,7 @@ a the history middleware.
         var_dump($entry['request']);
         // The result that was received (if successful).
         var_dump($entry['result']);
-        // The exception that was received (if a failured occurred).
+        // The exception that was received (if a failure occurred).
         var_dump($entry['exception']);
     }
 

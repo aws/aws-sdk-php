@@ -148,5 +148,5 @@ downstream promises.
             // call to deleteAsync or calls performed while iterating.
         });
 
-    // Forcing a synchronous wait will also wait on all of the deletAsync calls
+    // Forcing a synchronous wait will also wait on all of the deleteAsync calls
     $promise->wait();

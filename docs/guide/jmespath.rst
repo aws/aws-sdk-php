@@ -144,7 +144,7 @@ ignore whitespace in most cases).
 
     $expr = 'Volumes[*].{ID: VolumeId,
                          InstanceId: Attachments[0].InstanceId,
-                         AZ: AvailablilityZone,
+                         AZ: AvailabilityZone,
                          Size: Size}';
 
     $data = $result->search($expr);
@@ -183,7 +183,7 @@ ordered list per object, regardless of type.
 
 .. code-block:: php
 
-    $expr = 'Volumes[*].[VolumeId, Attachments[0].InstanceId, AvailablilityZone, Size]';
+    $expr = 'Volumes[*].[VolumeId, Attachments[0].InstanceId, AvailabilityZone, Size]';
     $data = $result->search($expr);
     var_dump($data);
 
