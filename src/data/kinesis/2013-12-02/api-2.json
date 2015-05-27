@@ -1,4 +1,5 @@
 {
+  "version":"2.0",
   "metadata":{
     "apiVersion":"2013-12-02",
     "endpointPrefix":"kinesis",
@@ -392,7 +393,8 @@
       "required":["Records"],
       "members":{
         "Records":{"shape":"RecordList"},
-        "NextShardIterator":{"shape":"ShardIterator"}
+        "NextShardIterator":{"shape":"ShardIterator"},
+        "MillisBehindLatest":{"shape":"MillisBehindLatest"}
       }
     },
     "GetShardIteratorInput":{
@@ -504,6 +506,10 @@
         "ShardToMerge":{"shape":"ShardId"},
         "AdjacentShardToMerge":{"shape":"ShardId"}
       }
+    },
+    "MillisBehindLatest":{
+      "type":"long",
+      "min":0
     },
     "PartitionKey":{
       "type":"string",

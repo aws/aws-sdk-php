@@ -37,6 +37,31 @@
           "expected": "TERMINATED_WITH_ERRORS"
         }
       ]
+    },
+    "StepComplete": {
+      "delay": 30,
+      "operation": "DescribeStep",
+      "maxAttempts": 60,
+      "acceptors": [
+        {
+          "state": "success",
+          "matcher": "path",
+          "argument": "Step.Status.State",
+          "expected": "COMPLETED"
+        },
+        {
+          "state": "failure",
+          "matcher": "path",
+          "argument": "Step.Status.State",
+          "expected": "FAILED"
+        },
+        {
+          "state": "failure",
+          "matcher": "path",
+          "argument": "Step.Status.State",
+          "expected": "CANCELLED"
+        }
+      ]
     }
   }
 }

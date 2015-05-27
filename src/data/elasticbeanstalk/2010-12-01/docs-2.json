@@ -32,7 +32,7 @@
     "UpdateEnvironment": "<p> Updates the environment description, deploys a new application version, updates the configuration settings to an entirely new configuration template, or updates select configuration option values in the running environment. </p> <p> Attempting to update both the release and configuration is not allowed and AWS Elastic Beanstalk returns an <code>InvalidParameterCombination</code> error. </p> <p> When updating the configuration settings to a new template or individual settings, a draft configuration is created and <a>DescribeConfigurationSettings</a> for this environment returns two setting descriptions with different <code>DeploymentStatus</code> values. </p>",
     "ValidateConfigurationSettings": "<p> Takes a set of configuration settings and either a configuration template or environment, and determines whether those values are valid. </p> <p> This action returns a list of messages indicating any errors or warnings associated with the selection of option values. </p>"
   },
-  "service": "<fullname>AWS Elastic Beanstalk</fullname> <p> This is the AWS Elastic Beanstalk API Reference. This guide provides detailed information about AWS Elastic Beanstalk actions, data types, parameters, and errors. </p> <p>AWS Elastic Beanstalk is a tool that makes it easy for you to create, deploy, and manage scalable, fault-tolerant applications running on Amazon Web Services cloud resources. </p> <p> For more information about this product, go to the <a href=\"http://aws.amazon.com/elasticbeanstalk/\">AWS Elastic Beanstalk</a> details page. The location of the latest AWS Elastic Beanstalk WSDL is <a href=\"http://elasticbeanstalk.s3.amazonaws.com/doc/2010-12-01/AWSElasticBeanstalk.wsdl\">http://elasticbeanstalk.s3.amazonaws.com/doc/2010-12-01/AWSElasticBeanstalk.wsdl</a>. </p> <p><b>Endpoints</b></p> <p>For a list of region-specific endpoints that AWS Elastic Beanstalk supports, go to <a href=\"http://docs.aws.amazon.com/general/latest/gr/rande.html#elasticbeanstalk_region\">Regions and Endpoints</a> in the <i>Amazon Web Services Glossary</i>.</p>",
+  "service": "<fullname>AWS Elastic Beanstalk</fullname> <p> This is the AWS Elastic Beanstalk API Reference. This guide provides detailed information about AWS Elastic Beanstalk actions, data types, parameters, and errors. </p> <p>AWS Elastic Beanstalk is a tool that makes it easy for you to create, deploy, and manage scalable, fault-tolerant applications running on Amazon Web Services cloud resources. </p> <p> For more information about this product, go to the <a href=\"http://aws.amazon.com/elasticbeanstalk/\">AWS Elastic Beanstalk</a> details page. The location of the latest AWS Elastic Beanstalk WSDL is <a href=\"http://elasticbeanstalk.s3.amazonaws.com/doc/2010-12-01/AWSElasticBeanstalk.wsdl\">http://elasticbeanstalk.s3.amazonaws.com/doc/2010-12-01/AWSElasticBeanstalk.wsdl</a>. To install the Software Development Kits (SDKs), Integrated Development Environment (IDE) Toolkits, and command line tools that enable you to access the API, go to <a href=\"https://aws.amazon.com/tools/\">Tools for Amazon Web Services</a>. </p> <p><b>Endpoints</b></p> <p>For a list of region-specific endpoints that AWS Elastic Beanstalk supports, go to <a href=\"http://docs.aws.amazon.com/general/latest/gr/rande.html#elasticbeanstalk_region\">Regions and Endpoints</a> in the <i>Amazon Web Services Glossary</i>.</p>",
   "shapes": {
     "AbortEnvironmentUpdateMessage": {
       "base": "<p></p>",
@@ -42,7 +42,7 @@
     "AbortableOperationInProgress": {
       "base": null,
       "refs": {
-        "EnvironmentDescription$AbortableOperationInProgress": "<p>Lists in-progress environment updates and application version deployments that you can cancel.</p>"
+        "EnvironmentDescription$AbortableOperationInProgress": "<p>Indicates if there is an in-progress environment configuration update or application version deployment that you can cancel.</p> <p> <code>true:</code> There is an update in progress. </p> <p> <code>false:</code> There are no updates currently in progress. </p>"
       }
     },
     "ApplicationDescription": {
@@ -570,7 +570,7 @@
       "refs": {
         "CreateEnvironmentMessage$Tier": "<p> This specifies the tier to use for creating this environment. </p>",
         "EnvironmentDescription$Tier": "<p>Describes the current tier of this environment.</p>",
-        "UpdateEnvironmentMessage$Tier": "<p> This specifies the tier to use to update the environment. </p> <p> Condition: You can only update the tier version for an environment. If you change the name of the type, AWS Elastic Beanstalk returns <code>InvalidParameterValue</code> error. </p>"
+        "UpdateEnvironmentMessage$Tier": "<p> This specifies the tier to use to update the environment. </p> <p> Condition: At this time, if you change the tier version, name, or type, AWS Elastic Beanstalk returns <code>InvalidParameterValue</code> error. </p>"
       }
     },
     "EventDate": {
@@ -811,6 +811,13 @@
         "LaunchConfiguration$Name": "<p>The name of the launch configuration.</p>",
         "LoadBalancer$Name": "<p>The name of the LoadBalancer.</p>",
         "Trigger$Name": "<p>The name of the trigger.</p>"
+      }
+    },
+    "ResourceName": {
+      "base": null,
+      "refs": {
+        "ConfigurationOptionSetting$ResourceName": "<p> A unique resource name for a time-based scaling configuration option. </p>",
+        "OptionSpecification$ResourceName": "<p> A unique resource name for a time-based scaling configuration option. </p>"
       }
     },
     "RestartAppServerMessage": {

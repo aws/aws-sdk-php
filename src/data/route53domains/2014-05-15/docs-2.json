@@ -158,7 +158,7 @@
     "DomainAvailability": {
       "base": null,
       "refs": {
-        "CheckDomainAvailabilityResponse$Availability": "<p>Whether the domain name is available for registering.</p> <note> <p>You can only register domains designated as <code>AVAILABLE</code>.</p> </note> <p>Type: String</p> <p>Valid values:</p> <ul> <li> <code>AVAILABLE</code> – The domain name is available.</li> <li> <code>AVAILABLE_RESERVED</code> – The domain name is reserved under specific conditions.</li> <li> <code>AVAILABLE_PREORDER</code> – The domain name is available and can be preordered.</li> <li> <code>UNAVAILABLE</code> – The domain name is not available.</li> <li> <code>UNAVAILABLE_PREMIUM</code> – The domain name is not available.</li> <li> <code>UNAVAILABLE_RESTRICTED</code> – The domain name is forbidden.</li> <li> <code>RESERVED</code> – The domain name has been reserved for another person or organization.</li> </ul>"
+        "CheckDomainAvailabilityResponse$Availability": "<p>Whether the domain name is available for registering.</p> <note> <p>You can only register domains designated as <code>AVAILABLE</code>.</p> </note> <p>Type: String</p> <p>Valid values:</p> <ul> <li> <code>AVAILABLE</code> – The domain name is available.</li> <li> <code>AVAILABLE_RESERVED</code> – The domain name is reserved under specific conditions.</li> <li> <code>AVAILABLE_PREORDER</code> – The domain name is available and can be preordered.</li> <li> <code>UNAVAILABLE</code> – The domain name is not available.</li> <li> <code>UNAVAILABLE_PREMIUM</code> – The domain name is not available.</li> <li> <code>UNAVAILABLE_RESTRICTED</code> – The domain name is forbidden.</li> <li> <code>RESERVED</code> – The domain name has been reserved for another person or organization.</li> <li> <code>DONT_KNOW</code> – The TLD registry didn't reply with a definitive answer about whether the domain name is available. Amazon Route 53 can return this response for a variety of reasons, for example, the registry is performing maintenance. Try again later.</li> </ul>"
       }
     },
     "DomainLimitExceeded": {
@@ -521,7 +521,7 @@
     "TagKey": {
       "base": null,
       "refs": {
-        "Tag$Key": "<p>The key (name) of a tag.</p> <p>Type: String</p> <p>Default: None</p> <p>Valid values: A-Z, a-z, 0-9, space, \".:/=+\\-%@\"</p> <p>Constraints: Each key can be 1-128 characters long.</p> <p>Required: Yes</p>",
+        "Tag$Key": "<p>The key (name) of a tag.</p> <p>Type: String</p> <p>Default: None</p> <p>Valid values: A-Z, a-z, 0-9, space, \".:/=+\\-@\"</p> <p>Constraints: Each key can be 1-128 characters long.</p> <p>Required: Yes</p>",
         "TagKeyList$member": null
       }
     },
@@ -535,13 +535,13 @@
       "base": null,
       "refs": {
         "ListTagsForDomainResponse$TagList": "<p>A list of the tags that are associated with the specified domain.</p> <p>Type: A complex type containing a list of tags</p> <p>Each tag includes the following elements.</p> <ul> <li> <p>Key</p> <p>The key (name) of a tag.</p> <p>Type: String</p> </li> <li> <p>Value</p> <p>The value of a tag.</p> <p>Type: String</p> </li> </ul>",
-        "UpdateTagsForDomainRequest$TagsToUpdate": "<p>A list of the tag keys and values that you want to add or update. If you specify a key that already exists, the corresponding value will be replaced.</p> <p>Type: A complex type containing a list of tags</p> <p>Default: None</p> <p>Required: No</p>'&gt; <p>Each tag includes the following elements:</p> <ul> <li> <p>Key</p> <p>The key (name) of a tag.</p> <p>Type: String</p> <p>Default: None</p> <p>Valid values: Unicode characters including alphanumeric, space, and \".:/=+\\-%@\"</p> <p>Constraints: Each key can be 1-128 characters long.</p> <p>Required: Yes</p> </li> <li> <p>Value</p> <p>The value of a tag.</p> <p>Type: String</p> <p>Default: None</p> <p>Valid values: Unicode characters including alphanumeric, space, and \".:/=+\\-%@\"</p> <p>Constraints: Each value can be 0-256 characters long.</p> <p>Required: Yes</p> </li> </ul>"
+        "UpdateTagsForDomainRequest$TagsToUpdate": "<p>A list of the tag keys and values that you want to add or update. If you specify a key that already exists, the corresponding value will be replaced.</p> <p>Type: A complex type containing a list of tags</p> <p>Default: None</p> <p>Required: No</p>'&gt; <p>Each tag includes the following elements:</p> <ul> <li> <p>Key</p> <p>The key (name) of a tag.</p> <p>Type: String</p> <p>Default: None</p> <p>Valid values: Unicode characters including alphanumeric, space, and \".:/=+\\-@\"</p> <p>Constraints: Each key can be 1-128 characters long.</p> <p>Required: Yes</p> </li> <li> <p>Value</p> <p>The value of a tag.</p> <p>Type: String</p> <p>Default: None</p> <p>Valid values: Unicode characters including alphanumeric, space, and \".:/=+\\-@\"</p> <p>Constraints: Each value can be 0-256 characters long.</p> <p>Required: Yes</p> </li> </ul>"
       }
     },
     "TagValue": {
       "base": null,
       "refs": {
-        "Tag$Value": "<p>The value of a tag.</p> <p>Type: String</p> <p>Default: None</p> <p>Valid values: A-Z, a-z, 0-9, space, \".:/=+\\-%@\"</p> <p>Constraints: Each value can be 0-256 characters long.</p> <p>Required: Yes</p>"
+        "Tag$Value": "<p>The value of a tag.</p> <p>Type: String</p> <p>Default: None</p> <p>Valid values: A-Z, a-z, 0-9, space, \".:/=+\\-@\"</p> <p>Constraints: Each value can be 0-256 characters long.</p> <p>Required: Yes</p>"
       }
     },
     "Timestamp": {

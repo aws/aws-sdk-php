@@ -10,6 +10,7 @@
     "DescribeLogGroups": "<p> Returns all the log groups that are associated with the AWS account making the request. The list returned in the response is ASCII-sorted by log group name. </p> <p> By default, this operation returns up to 50 log groups. If there are more log groups to list, the response would contain a <code class=\"code\">nextToken</code> value in the response body. You can also limit the number of log groups returned in the response by specifying the <code class=\"code\">limit</code> parameter in the request. </p>",
     "DescribeLogStreams": "<p> Returns all the log streams that are associated with the specified log group. The list returned in the response is ASCII-sorted by log stream name. </p> <p> By default, this operation returns up to 50 log streams. If there are more log streams to list, the response would contain a <code class=\"code\">nextToken</code> value in the response body. You can also limit the number of log streams returned in the response by specifying the <code class=\"code\">limit</code> parameter in the request. This operation has a limit of five transactions per second, after which transactions are throttled. </p>",
     "DescribeMetricFilters": "<p> Returns all the metrics filters associated with the specified log group. The list returned in the response is ASCII-sorted by filter name. </p> <p> By default, this operation returns up to 50 metric filters. If there are more metric filters to list, the response would contain a <code class=\"code\">nextToken</code> value in the response body. You can also limit the number of metric filters returned in the response by specifying the <code class=\"code\">limit</code> parameter in the request. </p>",
+    "FilterLogEvents": "<p> Retrieves log events, optionally filtered by a filter pattern from the specified log group. You can provide an optional time range to filter the results on the event <code class=\"code\">timestamp</code>. You can limit the streams searched to an explicit list of <code class=\"code\">logStreamNames</code>. </p> <p> By default, this operation returns as much matching log events as can fit in a response size of 1MB, up to 10,000 log events, or all the events found within a time-bounded scan window. If the response includes a <code class=\"code\">nextToken</code>, then there is more data to search, and the search can be resumed with a new request providing the nextToken. The response will contain a list of <code class=\"code\">searchedLogStreams</code> that contains information about which streams were searched in the request and whether they have been searched completely or require further pagination. The <code class=\"code\">limit</code> parameter in the request. can be used to specify the maximum number of events to return in a page. </p>",
     "GetLogEvents": "<p> Retrieves log events from the specified log stream. You can provide an optional time range to filter the results on the event <code class=\"code\">timestamp</code>. </p> <p> By default, this operation returns as much log events as can fit in a response size of 1MB, up to 10,000 log events. The response will always include a <code class=\"code\">nextForwardToken</code> and a <code class=\"code\">nextBackwardToken</code> in the response body. You can use any of these tokens in subsequent <code class=\"code\">GetLogEvents</code> requests to paginate through events in either forward or backward direction. You can also limit the number of log events returned in the response by specifying the <code class=\"code\">limit</code> parameter in the request. </p>",
     "PutLogEvents": "<p> Uploads a batch of log events to the specified log stream. </p> <p> Every PutLogEvents request must include the <code class=\"code\">sequenceToken</code> obtained from the response of the previous request. An upload in a newly created log stream does not require a <code class=\"code\">sequenceToken</code>. </p> <p> The batch of events must satisfy the following constraints: <ul> <li>The maximum batch size is 1,048,576 bytes, and this size is calculated as the sum of all event messages in UTF-8, plus 26 bytes for each log event.</li> <li>None of the log events in the batch can be more than 2 hours in the future.</li> <li>None of the log events in the batch can be older than 14 days or the retention period of the log group.</li> <li>The log events in the batch must be in chronological ordered by their <code class=\"code\">timestamp</code>.</li> <li>The maximum number of log events in a batch is 10,000.</li> </ul> </p>",
     "PutMetricFilter": "<p> Creates or updates a metric filter and associates it with the specified log group. Metric filters allow you to configure rules to extract metric data from log events ingested through <code class=\"code\">PutLogEvents</code> requests. </p>",
@@ -111,9 +112,16 @@
       "refs": {
       }
     },
+    "EventId": {
+      "base": null,
+      "refs": {
+        "FilteredLogEvent$eventId": "A unique identifier for this event."
+      }
+    },
     "EventMessage": {
       "base": null,
       "refs": {
+        "FilteredLogEvent$message": null,
         "InputLogEvent$message": null,
         "MetricFilterMatchRecord$eventMessage": null,
         "OutputLogEvent$message": null,
@@ -129,7 +137,8 @@
     "EventsLimit": {
       "base": "The maximum number of events to return.",
       "refs": {
-        "GetLogEventsRequest$limit": "<p> The maximum number of log events returned in the response. If you don't specify a value, the request would return as much log events as can fit in a response size of 1MB, up to 10,000 log events. </p>"
+        "FilterLogEventsRequest$limit": "<p> The maximum number of events to return in a page of results. Default is 10,000 events. </p>",
+        "GetLogEventsRequest$limit": "<p> The maximum number of log events returned in the response. If you don't specify a value, the request would return as many log events as can fit in a response size of 1MB, up to 10,000 log events. </p>"
       }
     },
     "ExtractedValues": {
@@ -144,6 +153,16 @@
         "LogGroup$metricFilterCount": null
       }
     },
+    "FilterLogEventsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "FilterLogEventsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "FilterName": {
       "base": "The name of the metric filter.",
       "refs": {
@@ -156,9 +175,22 @@
     "FilterPattern": {
       "base": "A symbolic description of how Amazon CloudWatch Logs should interpret the data in each log entry. For example, a log entry may contain timestamps, IP addresses, strings, and so on. You use the pattern to specify what to look for in the log stream.",
       "refs": {
+        "FilterLogEventsRequest$filterPattern": "<p> A valid CloudWatch Logs filter pattern to use for filtering the response. If not provided, all the events are matched. </p>",
         "MetricFilter$filterPattern": null,
         "PutMetricFilterRequest$filterPattern": null,
         "TestMetricFilterRequest$filterPattern": null
+      }
+    },
+    "FilteredLogEvent": {
+      "base": "Represents a matched event from a <code class=\"code\">FilterLogEvents</code> request.",
+      "refs": {
+        "FilteredLogEvents$member": null
+      }
+    },
+    "FilteredLogEvents": {
+      "base": "A list of matched <code class=\"code\">FilteredLogEvent</code> objects returned from a <code class=\"code\">FilterLogEvents</code> request.",
+      "refs": {
+        "FilterLogEventsResponse$events": "<p> A list of <code class=\"code\">FilteredLogEvent</code> objects representing the matched events from the request. </p>"
       }
     },
     "GetLogEventsRequest": {
@@ -181,6 +213,18 @@
       "base": "A list of events belonging to a log stream.",
       "refs": {
         "PutLogEventsRequest$logEvents": null
+      }
+    },
+    "InputLogStreamNames": {
+      "base": "A list of log stream names.",
+      "refs": {
+        "FilterLogEventsRequest$logStreamNames": "<p> Optional list of log stream names within the specified log group to search. Defaults to all the log streams in the log group. </p>"
+      }
+    },
+    "Interleaved": {
+      "base": null,
+      "refs": {
+        "FilterLogEventsRequest$interleaved": "<p> If provided, the API will make a best effort to provide responses that contain events from multiple log streams within the log group interleaved in a single response. If not provided, all the matched log events in the first log stream will be searched first, then those in the next log stream, etc. </p>"
       }
     },
     "InvalidParameterException": {
@@ -224,6 +268,7 @@
         "DescribeLogGroupsRequest$logGroupNamePrefix": null,
         "DescribeLogStreamsRequest$logGroupName": null,
         "DescribeMetricFiltersRequest$logGroupName": null,
+        "FilterLogEventsRequest$logGroupName": "<p> The name of the log group to query </p>",
         "GetLogEventsRequest$logGroupName": null,
         "LogGroup$logGroupName": null,
         "PutLogEventsRequest$logGroupName": null,
@@ -249,9 +294,18 @@
         "CreateLogStreamRequest$logStreamName": null,
         "DeleteLogStreamRequest$logStreamName": null,
         "DescribeLogStreamsRequest$logStreamNamePrefix": "<p> Will only return log streams that match the provided logStreamNamePrefix. If you don't specify a value, no prefix filter is applied. </p>",
+        "FilteredLogEvent$logStreamName": "The name of the log stream this event belongs to.",
         "GetLogEventsRequest$logStreamName": null,
+        "InputLogStreamNames$member": null,
         "LogStream$logStreamName": null,
-        "PutLogEventsRequest$logStreamName": null
+        "PutLogEventsRequest$logStreamName": null,
+        "SearchedLogStream$logStreamName": "The name of the log stream."
+      }
+    },
+    "LogStreamSearchedCompletely": {
+      "base": null,
+      "refs": {
+        "SearchedLogStream$searchedCompletely": "Indicates whether all the events in this log stream were searched or more data exists to search by paginating further."
       }
     },
     "LogStreams": {
@@ -324,6 +378,8 @@
         "DescribeLogStreamsResponse$nextToken": null,
         "DescribeMetricFiltersRequest$nextToken": "<p> A string token used for pagination that points to the next page of results. It must be a value obtained from the response of the previous <code class=\"code\">DescribeMetricFilters</code> request. </p>",
         "DescribeMetricFiltersResponse$nextToken": null,
+        "FilterLogEventsRequest$nextToken": "<p> A pagination token obtained from a <code class=\"code\">FilterLogEvents</code> response to continue paginating the FilterLogEvents results. </p>",
+        "FilterLogEventsResponse$nextToken": "<p> A pagination token obtained from a <code class=\"code\">FilterLogEvents</code> response to continue paginating the FilterLogEvents results. </p>",
         "GetLogEventsRequest$nextToken": "<p> A string token used for pagination that points to the next page of results. It must be a value obtained from the <code class=\"code\">nextForwardToken</code> or <code class=\"code\">nextBackwardToken</code> fields in the response of the previous <code class=\"code\">GetLogEvents</code> request. </p>",
         "GetLogEventsResponse$nextForwardToken": null,
         "GetLogEventsResponse$nextBackwardToken": null
@@ -388,6 +444,18 @@
       "refs": {
       }
     },
+    "SearchedLogStream": {
+      "base": "An object indicating the search status of a log stream in a <code class=\"code\">FilterLogEvents</code> request.",
+      "refs": {
+        "SearchedLogStreams$member": null
+      }
+    },
+    "SearchedLogStreams": {
+      "base": "A list of <code class=\"code\">SearchedLogStream</code> objects indicating the search status for log streams in a <code class=\"code\">FilterLogEvents</code> request.",
+      "refs": {
+        "FilterLogEventsResponse$searchedLogStreams": "<p> A list of <code class=\"code\">SearchedLogStream</code> objects indicating which log streams have been searched in this request and whether each has been searched completely or still has more to be paginated. </p>"
+      }
+    },
     "SequenceToken": {
       "base": "A string token used for making PutLogEvents requests. A <code class=\"code\">sequenceToken</code> can only be used once, and PutLogEvents requests must include the <code class=\"code\">sequenceToken</code> obtained from the response of the previous request.",
       "refs": {
@@ -435,6 +503,10 @@
     "Timestamp": {
       "base": "A point in time expressed as the number milliseconds since Jan 1, 1970 00:00:00 UTC.",
       "refs": {
+        "FilterLogEventsRequest$startTime": "<p> A unix timestamp indicating the start time of the range for the request. If provided, events with a timestamp prior to this time will not be returned. </p>",
+        "FilterLogEventsRequest$endTime": "<p> A unix timestamp indicating the end time of the range for the request. If provided, events with a timestamp later than this time will not be returned. </p>",
+        "FilteredLogEvent$timestamp": null,
+        "FilteredLogEvent$ingestionTime": null,
         "GetLogEventsRequest$startTime": null,
         "GetLogEventsRequest$endTime": null,
         "InputLogEvent$timestamp": null,

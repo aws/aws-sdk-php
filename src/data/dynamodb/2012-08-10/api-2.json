@@ -1,4 +1,5 @@
 {
+  "version":"2.0",
   "metadata":{
     "apiVersion":"2012-08-10",
     "endpointPrefix":"dynamodb",
@@ -819,6 +820,7 @@
       "key":{"shape":"AttributeName"},
       "value":{"shape":"Condition"}
     },
+    "KeyExpression":{"type":"string"},
     "KeyList":{
       "type":"list",
       "member":{"shape":"Key"},
@@ -1042,10 +1044,7 @@
     },
     "QueryInput":{
       "type":"structure",
-      "required":[
-        "TableName",
-        "KeyConditions"
-      ],
+      "required":["TableName"],
       "members":{
         "TableName":{"shape":"TableName"},
         "IndexName":{"shape":"IndexName"},
@@ -1061,6 +1060,7 @@
         "ReturnConsumedCapacity":{"shape":"ReturnConsumedCapacity"},
         "ProjectionExpression":{"shape":"ProjectionExpression"},
         "FilterExpression":{"shape":"ConditionExpression"},
+        "KeyConditionExpression":{"shape":"KeyExpression"},
         "ExpressionAttributeNames":{"shape":"ExpressionAttributeNameMap"},
         "ExpressionAttributeValues":{"shape":"ExpressionAttributeValueMap"}
       }

@@ -244,6 +244,30 @@
         }
       ]
     },
+    "FilterLogEvents":{
+      "name":"FilterLogEvents",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"FilterLogEventsRequest"},
+      "output":{"shape":"FilterLogEventsResponse"},
+      "errors":[
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
+        },
+        {
+          "shape":"ResourceNotFoundException",
+          "exception":true
+        },
+        {
+          "shape":"ServiceUnavailableException",
+          "exception":true,
+          "fault":true
+        }
+      ]
+    },
     "GetLogEvents":{
       "name":"GetLogEvents",
       "http":{
@@ -504,6 +528,7 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "EventId":{"type":"string"},
     "EventMessage":{
       "type":"string",
       "min":1
@@ -520,6 +545,28 @@
       "value":{"shape":"Value"}
     },
     "FilterCount":{"type":"integer"},
+    "FilterLogEventsRequest":{
+      "type":"structure",
+      "required":["logGroupName"],
+      "members":{
+        "logGroupName":{"shape":"LogGroupName"},
+        "logStreamNames":{"shape":"InputLogStreamNames"},
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "filterPattern":{"shape":"FilterPattern"},
+        "nextToken":{"shape":"NextToken"},
+        "limit":{"shape":"EventsLimit"},
+        "interleaved":{"shape":"Interleaved"}
+      }
+    },
+    "FilterLogEventsResponse":{
+      "type":"structure",
+      "members":{
+        "events":{"shape":"FilteredLogEvents"},
+        "searchedLogStreams":{"shape":"SearchedLogStreams"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "FilterName":{
       "type":"string",
       "min":1,
@@ -530,6 +577,20 @@
       "type":"string",
       "min":0,
       "max":512
+    },
+    "FilteredLogEvent":{
+      "type":"structure",
+      "members":{
+        "logStreamName":{"shape":"LogStreamName"},
+        "timestamp":{"shape":"Timestamp"},
+        "message":{"shape":"EventMessage"},
+        "ingestionTime":{"shape":"Timestamp"},
+        "eventId":{"shape":"EventId"}
+      }
+    },
+    "FilteredLogEvents":{
+      "type":"list",
+      "member":{"shape":"FilteredLogEvent"}
     },
     "GetLogEventsRequest":{
       "type":"structure",
@@ -572,6 +633,13 @@
       "min":1,
       "max":10000
     },
+    "InputLogStreamNames":{
+      "type":"list",
+      "member":{"shape":"LogStreamName"},
+      "min":1,
+      "max":100
+    },
+    "Interleaved":{"type":"boolean"},
     "InvalidParameterException":{
       "type":"structure",
       "members":{
@@ -632,6 +700,7 @@
       "max":512,
       "pattern":"[^:*]*"
     },
+    "LogStreamSearchedCompletely":{"type":"boolean"},
     "LogStreams":{
       "type":"list",
       "member":{"shape":"LogStream"}
@@ -789,6 +858,17 @@
       "members":{
       },
       "exception":true
+    },
+    "SearchedLogStream":{
+      "type":"structure",
+      "members":{
+        "logStreamName":{"shape":"LogStreamName"},
+        "searchedCompletely":{"shape":"LogStreamSearchedCompletely"}
+      }
+    },
+    "SearchedLogStreams":{
+      "type":"list",
+      "member":{"shape":"SearchedLogStream"}
     },
     "SequenceToken":{
       "type":"string",

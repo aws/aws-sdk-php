@@ -1,12 +1,12 @@
 {
   "version":"2.0",
   "metadata":{
-    "apiVersion":"2015-03-01",
+    "apiVersion":"2015-04-15",
     "endpointPrefix":"ec2",
     "serviceAbbreviation":"Amazon EC2",
     "serviceFullName":"Amazon Elastic Compute Cloud",
     "signatureVersion":"v4",
-    "xmlNamespace":"http://ec2.amazonaws.com/doc/2015-03-01",
+    "xmlNamespace":"http://ec2.amazonaws.com/doc/2015-04-15",
     "protocol":"ec2"
   },
   "operations":{
@@ -177,6 +177,15 @@
       "input":{"shape":"CancelReservedInstancesListingRequest"},
       "output":{"shape":"CancelReservedInstancesListingResult"}
     },
+    "CancelSpotFleetRequests":{
+      "name":"CancelSpotFleetRequests",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CancelSpotFleetRequestsRequest"},
+      "output":{"shape":"CancelSpotFleetRequestsResponse"}
+    },
     "CancelSpotInstanceRequests":{
       "name":"CancelSpotInstanceRequests",
       "http":{
@@ -319,7 +328,8 @@
         "method":"POST",
         "requestUri":"/"
       },
-      "input":{"shape":"CreateRouteRequest"}
+      "input":{"shape":"CreateRouteRequest"},
+      "output":{"shape":"CreateRouteResult"}
     },
     "CreateRouteTable":{
       "name":"CreateRouteTable",
@@ -397,6 +407,15 @@
       },
       "input":{"shape":"CreateVpcRequest"},
       "output":{"shape":"CreateVpcResult"}
+    },
+    "CreateVpcEndpoint":{
+      "name":"CreateVpcEndpoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateVpcEndpointRequest"},
+      "output":{"shape":"CreateVpcEndpointResult"}
     },
     "CreateVpcPeeringConnection":{
       "name":"CreateVpcPeeringConnection",
@@ -568,6 +587,15 @@
         "requestUri":"/"
       },
       "input":{"shape":"DeleteVpcRequest"}
+    },
+    "DeleteVpcEndpoints":{
+      "name":"DeleteVpcEndpoints",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteVpcEndpointsRequest"},
+      "output":{"shape":"DeleteVpcEndpointsResult"}
     },
     "DeleteVpcPeeringConnection":{
       "name":"DeleteVpcPeeringConnection",
@@ -775,6 +803,15 @@
       "input":{"shape":"DescribeKeyPairsRequest"},
       "output":{"shape":"DescribeKeyPairsResult"}
     },
+    "DescribeMovingAddresses":{
+      "name":"DescribeMovingAddresses",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeMovingAddressesRequest"},
+      "output":{"shape":"DescribeMovingAddressesResult"}
+    },
     "DescribeNetworkAcls":{
       "name":"DescribeNetworkAcls",
       "http":{
@@ -810,6 +847,15 @@
       },
       "input":{"shape":"DescribePlacementGroupsRequest"},
       "output":{"shape":"DescribePlacementGroupsResult"}
+    },
+    "DescribePrefixLists":{
+      "name":"DescribePrefixLists",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribePrefixListsRequest"},
+      "output":{"shape":"DescribePrefixListsResult"}
     },
     "DescribeRegions":{
       "name":"DescribeRegions",
@@ -901,6 +947,33 @@
       "input":{"shape":"DescribeSpotDatafeedSubscriptionRequest"},
       "output":{"shape":"DescribeSpotDatafeedSubscriptionResult"}
     },
+    "DescribeSpotFleetInstances":{
+      "name":"DescribeSpotFleetInstances",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeSpotFleetInstancesRequest"},
+      "output":{"shape":"DescribeSpotFleetInstancesResponse"}
+    },
+    "DescribeSpotFleetRequestHistory":{
+      "name":"DescribeSpotFleetRequestHistory",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeSpotFleetRequestHistoryRequest"},
+      "output":{"shape":"DescribeSpotFleetRequestHistoryResponse"}
+    },
+    "DescribeSpotFleetRequests":{
+      "name":"DescribeSpotFleetRequests",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeSpotFleetRequestsRequest"},
+      "output":{"shape":"DescribeSpotFleetRequestsResponse"}
+    },
     "DescribeSpotInstanceRequests":{
       "name":"DescribeSpotInstanceRequests",
       "http":{
@@ -981,6 +1054,24 @@
       },
       "input":{"shape":"DescribeVpcClassicLinkRequest"},
       "output":{"shape":"DescribeVpcClassicLinkResult"}
+    },
+    "DescribeVpcEndpointServices":{
+      "name":"DescribeVpcEndpointServices",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeVpcEndpointServicesRequest"},
+      "output":{"shape":"DescribeVpcEndpointServicesResult"}
+    },
+    "DescribeVpcEndpoints":{
+      "name":"DescribeVpcEndpoints",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeVpcEndpointsRequest"},
+      "output":{"shape":"DescribeVpcEndpointsResult"}
     },
     "DescribeVpcPeeringConnections":{
       "name":"DescribeVpcPeeringConnections",
@@ -1249,6 +1340,15 @@
       },
       "input":{"shape":"ModifyVpcAttributeRequest"}
     },
+    "ModifyVpcEndpoint":{
+      "name":"ModifyVpcEndpoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyVpcEndpointRequest"},
+      "output":{"shape":"ModifyVpcEndpointResult"}
+    },
     "MonitorInstances":{
       "name":"MonitorInstances",
       "http":{
@@ -1257,6 +1357,15 @@
       },
       "input":{"shape":"MonitorInstancesRequest"},
       "output":{"shape":"MonitorInstancesResult"}
+    },
+    "MoveAddressToVpc":{
+      "name":"MoveAddressToVpc",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"MoveAddressToVpcRequest"},
+      "output":{"shape":"MoveAddressToVpcResult"}
     },
     "PurchaseReservedInstancesOffering":{
       "name":"PurchaseReservedInstancesOffering",
@@ -1343,6 +1452,15 @@
       },
       "input":{"shape":"ReportInstanceStatusRequest"}
     },
+    "RequestSpotFleet":{
+      "name":"RequestSpotFleet",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RequestSpotFleetRequest"},
+      "output":{"shape":"RequestSpotFleetResponse"}
+    },
     "RequestSpotInstances":{
       "name":"RequestSpotInstances",
       "http":{
@@ -1383,6 +1501,15 @@
         "requestUri":"/"
       },
       "input":{"shape":"ResetSnapshotAttributeRequest"}
+    },
+    "RestoreAddressToClassic":{
+      "name":"RestoreAddressToClassic",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RestoreAddressToClassicRequest"},
+      "output":{"shape":"RestoreAddressToClassicResult"}
     },
     "RevokeSecurityGroupEgress":{
       "name":"RevokeSecurityGroupEgress",
@@ -1527,6 +1654,30 @@
       "type":"list",
       "member":{
         "shape":"AccountAttributeValue",
+        "locationName":"item"
+      }
+    },
+    "ActiveInstance":{
+      "type":"structure",
+      "members":{
+        "InstanceType":{
+          "shape":"String",
+          "locationName":"instanceType"
+        },
+        "InstanceId":{
+          "shape":"String",
+          "locationName":"instanceId"
+        },
+        "SpotInstanceRequestId":{
+          "shape":"String",
+          "locationName":"spotInstanceRequestId"
+        }
+      }
+    },
+    "ActiveInstanceSet":{
+      "type":"list",
+      "member":{
+        "shape":"ActiveInstance",
         "locationName":"item"
       }
     },
@@ -1982,6 +2133,17 @@
       "type":"string",
       "enum":["available"]
     },
+    "BatchState":{
+      "type":"string",
+      "enum":[
+        "submitted",
+        "active",
+        "cancelled",
+        "failed",
+        "cancelled_running",
+        "cancelled_terminating"
+      ]
+    },
     "BlockDeviceMapping":{
       "type":"structure",
       "members":{
@@ -2118,6 +2280,15 @@
         "failed"
       ]
     },
+    "CancelBatchErrorCode":{
+      "type":"string",
+      "enum":[
+        "fleetRequestIdDoesNotExist",
+        "fleetRequestIdMalformed",
+        "fleetRequestNotInCancellableState",
+        "unexpectedError"
+      ]
+    },
     "CancelBundleTaskRequest":{
       "type":"structure",
       "required":["BundleId"],
@@ -2208,6 +2379,110 @@
           "shape":"ReservedInstancesListingList",
           "locationName":"reservedInstancesListingsSet"
         }
+      }
+    },
+    "CancelSpotFleetRequestsError":{
+      "type":"structure",
+      "required":[
+        "Code",
+        "Message"
+      ],
+      "members":{
+        "Code":{
+          "shape":"CancelBatchErrorCode",
+          "locationName":"code"
+        },
+        "Message":{
+          "shape":"String",
+          "locationName":"message"
+        }
+      }
+    },
+    "CancelSpotFleetRequestsErrorItem":{
+      "type":"structure",
+      "required":[
+        "SpotFleetRequestId",
+        "Error"
+      ],
+      "members":{
+        "SpotFleetRequestId":{
+          "shape":"String",
+          "locationName":"spotFleetRequestId"
+        },
+        "Error":{
+          "shape":"CancelSpotFleetRequestsError",
+          "locationName":"error"
+        }
+      }
+    },
+    "CancelSpotFleetRequestsErrorSet":{
+      "type":"list",
+      "member":{
+        "shape":"CancelSpotFleetRequestsErrorItem",
+        "locationName":"item"
+      }
+    },
+    "CancelSpotFleetRequestsRequest":{
+      "type":"structure",
+      "required":[
+        "SpotFleetRequestIds",
+        "TerminateInstances"
+      ],
+      "members":{
+        "DryRun":{
+          "shape":"Boolean",
+          "locationName":"dryRun"
+        },
+        "SpotFleetRequestIds":{
+          "shape":"ValueStringList",
+          "locationName":"spotFleetRequestId"
+        },
+        "TerminateInstances":{
+          "shape":"Boolean",
+          "locationName":"terminateInstances"
+        }
+      }
+    },
+    "CancelSpotFleetRequestsResponse":{
+      "type":"structure",
+      "members":{
+        "UnsuccessfulFleetRequests":{
+          "shape":"CancelSpotFleetRequestsErrorSet",
+          "locationName":"unsuccessfulFleetRequestSet"
+        },
+        "SuccessfulFleetRequests":{
+          "shape":"CancelSpotFleetRequestsSuccessSet",
+          "locationName":"successfulFleetRequestSet"
+        }
+      }
+    },
+    "CancelSpotFleetRequestsSuccessItem":{
+      "type":"structure",
+      "required":[
+        "SpotFleetRequestId",
+        "CurrentSpotFleetRequestState",
+        "PreviousSpotFleetRequestState"
+      ],
+      "members":{
+        "SpotFleetRequestId":{
+          "shape":"String",
+          "locationName":"spotFleetRequestId"
+        },
+        "CurrentSpotFleetRequestState":{
+          "shape":"BatchState",
+          "locationName":"currentSpotFleetRequestState"
+        },
+        "PreviousSpotFleetRequestState":{
+          "shape":"BatchState",
+          "locationName":"previousSpotFleetRequestState"
+        }
+      }
+    },
+    "CancelSpotFleetRequestsSuccessSet":{
+      "type":"list",
+      "member":{
+        "shape":"CancelSpotFleetRequestsSuccessItem",
+        "locationName":"item"
       }
     },
     "CancelSpotInstanceRequestState":{
@@ -2802,6 +3077,23 @@
         "VpcPeeringConnectionId":{
           "shape":"String",
           "locationName":"vpcPeeringConnectionId"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "locationName":"clientToken"
+        }
+      }
+    },
+    "CreateRouteResult":{
+      "type":"structure",
+      "members":{
+        "Return":{
+          "shape":"Boolean",
+          "locationName":"return"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "locationName":"clientToken"
         }
       }
     },
@@ -2986,6 +3278,37 @@
           "locationName":"encrypted"
         },
         "KmsKeyId":{"shape":"String"}
+      }
+    },
+    "CreateVpcEndpointRequest":{
+      "type":"structure",
+      "required":[
+        "VpcId",
+        "ServiceName"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "VpcId":{"shape":"String"},
+        "ServiceName":{"shape":"String"},
+        "PolicyDocument":{"shape":"String"},
+        "RouteTableIds":{
+          "shape":"ValueStringList",
+          "locationName":"RouteTableId"
+        },
+        "ClientToken":{"shape":"String"}
+      }
+    },
+    "CreateVpcEndpointResult":{
+      "type":"structure",
+      "members":{
+        "VpcEndpoint":{
+          "shape":"VpcEndpoint",
+          "locationName":"vpcEndpoint"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "locationName":"clientToken"
+        }
       }
     },
     "CreateVpcPeeringConnectionRequest":{
@@ -3378,6 +3701,26 @@
           "locationName":"dryRun"
         },
         "VolumeId":{"shape":"String"}
+      }
+    },
+    "DeleteVpcEndpointsRequest":{
+      "type":"structure",
+      "required":["VpcEndpointIds"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "VpcEndpointIds":{
+          "shape":"ValueStringList",
+          "locationName":"VpcEndpointId"
+        }
+      }
+    },
+    "DeleteVpcEndpointsResult":{
+      "type":"structure",
+      "members":{
+        "Unsuccessful":{
+          "shape":"UnsuccessfulItemSet",
+          "locationName":"unsuccessful"
+        }
       }
     },
     "DeleteVpcPeeringConnectionRequest":{
@@ -3951,6 +4294,44 @@
         }
       }
     },
+    "DescribeMovingAddressesRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{
+          "shape":"Boolean",
+          "locationName":"dryRun"
+        },
+        "PublicIps":{
+          "shape":"ValueStringList",
+          "locationName":"publicIp"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        },
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"filter"
+        },
+        "MaxResults":{
+          "shape":"Integer",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "DescribeMovingAddressesResult":{
+      "type":"structure",
+      "members":{
+        "MovingAddressStatuses":{
+          "shape":"MovingAddressStatusSet",
+          "locationName":"movingAddressStatusSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
     "DescribeNetworkAclsRequest":{
       "type":"structure",
       "members":{
@@ -4069,6 +4450,35 @@
         "PlacementGroups":{
           "shape":"PlacementGroupList",
           "locationName":"placementGroupSet"
+        }
+      }
+    },
+    "DescribePrefixListsRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "PrefixListIds":{
+          "shape":"ValueStringList",
+          "locationName":"PrefixListId"
+        },
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"Integer"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "DescribePrefixListsResult":{
+      "type":"structure",
+      "members":{
+        "PrefixLists":{
+          "shape":"PrefixListSet",
+          "locationName":"prefixListSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
         }
       }
     },
@@ -4383,6 +4793,148 @@
         }
       }
     },
+    "DescribeSpotFleetInstancesRequest":{
+      "type":"structure",
+      "required":["SpotFleetRequestId"],
+      "members":{
+        "DryRun":{
+          "shape":"Boolean",
+          "locationName":"dryRun"
+        },
+        "SpotFleetRequestId":{
+          "shape":"String",
+          "locationName":"spotFleetRequestId"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"Integer",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "DescribeSpotFleetInstancesResponse":{
+      "type":"structure",
+      "required":[
+        "SpotFleetRequestId",
+        "ActiveInstances"
+      ],
+      "members":{
+        "SpotFleetRequestId":{
+          "shape":"String",
+          "locationName":"spotFleetRequestId"
+        },
+        "ActiveInstances":{
+          "shape":"ActiveInstanceSet",
+          "locationName":"activeInstanceSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "DescribeSpotFleetRequestHistoryRequest":{
+      "type":"structure",
+      "required":[
+        "SpotFleetRequestId",
+        "StartTime"
+      ],
+      "members":{
+        "DryRun":{
+          "shape":"Boolean",
+          "locationName":"dryRun"
+        },
+        "SpotFleetRequestId":{
+          "shape":"String",
+          "locationName":"spotFleetRequestId"
+        },
+        "EventType":{
+          "shape":"EventType",
+          "locationName":"eventType"
+        },
+        "StartTime":{
+          "shape":"DateTime",
+          "locationName":"startTime"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"Integer",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "DescribeSpotFleetRequestHistoryResponse":{
+      "type":"structure",
+      "required":[
+        "SpotFleetRequestId",
+        "StartTime",
+        "LastEvaluatedTime",
+        "HistoryRecords"
+      ],
+      "members":{
+        "SpotFleetRequestId":{
+          "shape":"String",
+          "locationName":"spotFleetRequestId"
+        },
+        "StartTime":{
+          "shape":"DateTime",
+          "locationName":"startTime"
+        },
+        "LastEvaluatedTime":{
+          "shape":"DateTime",
+          "locationName":"lastEvaluatedTime"
+        },
+        "HistoryRecords":{
+          "shape":"HistoryRecords",
+          "locationName":"historyRecordSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "DescribeSpotFleetRequestsRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{
+          "shape":"Boolean",
+          "locationName":"dryRun"
+        },
+        "SpotFleetRequestIds":{
+          "shape":"ValueStringList",
+          "locationName":"spotFleetRequestId"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"Integer",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "DescribeSpotFleetRequestsResponse":{
+      "type":"structure",
+      "required":["SpotFleetRequestConfigs"],
+      "members":{
+        "SpotFleetRequestConfigs":{
+          "shape":"SpotFleetRequestConfigSet",
+          "locationName":"spotFleetRequestConfigSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
     "DescribeSpotInstanceRequestsRequest":{
       "type":"structure",
       "members":{
@@ -4674,6 +5226,56 @@
         "Vpcs":{
           "shape":"VpcClassicLinkList",
           "locationName":"vpcSet"
+        }
+      }
+    },
+    "DescribeVpcEndpointServicesRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "MaxResults":{"shape":"Integer"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "DescribeVpcEndpointServicesResult":{
+      "type":"structure",
+      "members":{
+        "ServiceNames":{
+          "shape":"ValueStringList",
+          "locationName":"serviceNameSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "DescribeVpcEndpointsRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "VpcEndpointIds":{
+          "shape":"ValueStringList",
+          "locationName":"VpcEndpointId"
+        },
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"Integer"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "DescribeVpcEndpointsResult":{
+      "type":"structure",
+      "members":{
+        "VpcEndpoints":{
+          "shape":"VpcEndpointSet",
+          "locationName":"vpcEndpointSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
         }
       }
     },
@@ -5207,6 +5809,31 @@
         "instance-stop"
       ]
     },
+    "EventInformation":{
+      "type":"structure",
+      "members":{
+        "InstanceId":{
+          "shape":"String",
+          "locationName":"instanceId"
+        },
+        "EventSubType":{
+          "shape":"String",
+          "locationName":"eventSubType"
+        },
+        "EventDescription":{
+          "shape":"String",
+          "locationName":"eventDescription"
+        }
+      }
+    },
+    "EventType":{
+      "type":"string",
+      "enum":[
+        "instanceChange",
+        "fleetRequestChange",
+        "error"
+      ]
+    },
     "ExecutableByStringList":{
       "type":"list",
       "member":{
@@ -5426,6 +6053,35 @@
       "member":{
         "shape":"String",
         "locationName":"GroupName"
+      }
+    },
+    "HistoryRecord":{
+      "type":"structure",
+      "required":[
+        "Timestamp",
+        "EventType",
+        "EventInformation"
+      ],
+      "members":{
+        "Timestamp":{
+          "shape":"DateTime",
+          "locationName":"timestamp"
+        },
+        "EventType":{
+          "shape":"EventType",
+          "locationName":"eventType"
+        },
+        "EventInformation":{
+          "shape":"EventInformation",
+          "locationName":"eventInformation"
+        }
+      }
+    },
+    "HistoryRecords":{
+      "type":"list",
+      "member":{
+        "shape":"HistoryRecord",
+        "locationName":"item"
       }
     },
     "HypervisorType":{
@@ -5655,8 +6311,13 @@
     "ImageState":{
       "type":"string",
       "enum":[
+        "pending",
         "available",
-        "deregistered"
+        "invalid",
+        "deregistered",
+        "transient",
+        "failed",
+        "error"
       ]
     },
     "ImageTypeValues":{
@@ -6920,6 +7581,10 @@
         "IpRanges":{
           "shape":"IpRangeList",
           "locationName":"ipRanges"
+        },
+        "PrefixListIds":{
+          "shape":"PrefixListIdList",
+          "locationName":"prefixListIds"
         }
       }
     },
@@ -7081,6 +7746,14 @@
           "locationName":"monitoring"
         }
       }
+    },
+    "LaunchSpecsList":{
+      "type":"list",
+      "member":{
+        "shape":"LaunchSpecification",
+        "locationName":"item"
+      },
+      "min":1
     },
     "ListingState":{
       "type":"string",
@@ -7309,6 +7982,33 @@
         "EnableDnsHostnames":{"shape":"AttributeBooleanValue"}
       }
     },
+    "ModifyVpcEndpointRequest":{
+      "type":"structure",
+      "required":["VpcEndpointId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "VpcEndpointId":{"shape":"String"},
+        "ResetPolicy":{"shape":"Boolean"},
+        "PolicyDocument":{"shape":"String"},
+        "AddRouteTableIds":{
+          "shape":"ValueStringList",
+          "locationName":"AddRouteTableId"
+        },
+        "RemoveRouteTableIds":{
+          "shape":"ValueStringList",
+          "locationName":"RemoveRouteTableId"
+        }
+      }
+    },
+    "ModifyVpcEndpointResult":{
+      "type":"structure",
+      "members":{
+        "Return":{
+          "shape":"Boolean",
+          "locationName":"return"
+        }
+      }
+    },
     "MonitorInstancesRequest":{
       "type":"structure",
       "required":["InstanceIds"],
@@ -7349,6 +8049,60 @@
         "enabled",
         "pending"
       ]
+    },
+    "MoveAddressToVpcRequest":{
+      "type":"structure",
+      "required":["PublicIp"],
+      "members":{
+        "DryRun":{
+          "shape":"Boolean",
+          "locationName":"dryRun"
+        },
+        "PublicIp":{
+          "shape":"String",
+          "locationName":"publicIp"
+        }
+      }
+    },
+    "MoveAddressToVpcResult":{
+      "type":"structure",
+      "members":{
+        "AllocationId":{
+          "shape":"String",
+          "locationName":"allocationId"
+        },
+        "Status":{
+          "shape":"Status",
+          "locationName":"status"
+        }
+      }
+    },
+    "MoveStatus":{
+      "type":"string",
+      "enum":[
+        "movingToVpc",
+        "restoringToClassic"
+      ]
+    },
+    "MovingAddressStatus":{
+      "type":"structure",
+      "members":{
+        "PublicIp":{
+          "shape":"String",
+          "locationName":"publicIp"
+        },
+        "MoveStatus":{
+          "shape":"MoveStatus",
+          "locationName":"moveStatus"
+        }
+      }
+    },
+    "MovingAddressStatusSet":{
+      "type":"list",
+      "member":{
+        "shape":"MovingAddressStatus",
+        "locationName":"item"
+      }
     },
     "NetworkAcl":{
       "type":"structure",
@@ -7753,6 +8507,46 @@
           "shape":"Integer",
           "locationName":"to"
         }
+      }
+    },
+    "PrefixList":{
+      "type":"structure",
+      "members":{
+        "PrefixListId":{
+          "shape":"String",
+          "locationName":"prefixListId"
+        },
+        "PrefixListName":{
+          "shape":"String",
+          "locationName":"prefixListName"
+        },
+        "Cidrs":{
+          "shape":"ValueStringList",
+          "locationName":"cidrSet"
+        }
+      }
+    },
+    "PrefixListId":{
+      "type":"structure",
+      "members":{
+        "PrefixListId":{
+          "shape":"String",
+          "locationName":"prefixListId"
+        }
+      }
+    },
+    "PrefixListIdList":{
+      "type":"list",
+      "member":{
+        "shape":"PrefixListId",
+        "locationName":"item"
+      }
+    },
+    "PrefixListSet":{
+      "type":"list",
+      "member":{
+        "shape":"PrefixList",
+        "locationName":"item"
       }
     },
     "PriceSchedule":{
@@ -8320,6 +9114,30 @@
         "impaired"
       ]
     },
+    "RequestSpotFleetRequest":{
+      "type":"structure",
+      "required":["SpotFleetRequestConfig"],
+      "members":{
+        "DryRun":{
+          "shape":"Boolean",
+          "locationName":"dryRun"
+        },
+        "SpotFleetRequestConfig":{
+          "shape":"SpotFleetRequestConfigData",
+          "locationName":"spotFleetRequestConfig"
+        }
+      }
+    },
+    "RequestSpotFleetResponse":{
+      "type":"structure",
+      "required":["SpotFleetRequestId"],
+      "members":{
+        "SpotFleetRequestId":{
+          "shape":"String",
+          "locationName":"spotFleetRequestId"
+        }
+      }
+    },
     "RequestSpotInstancesRequest":{
       "type":"structure",
       "required":["SpotPrice"],
@@ -8331,6 +9149,10 @@
         "SpotPrice":{
           "shape":"String",
           "locationName":"spotPrice"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "locationName":"clientToken"
         },
         "InstanceCount":{
           "shape":"Integer",
@@ -8847,6 +9669,33 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "RestoreAddressToClassicRequest":{
+      "type":"structure",
+      "required":["PublicIp"],
+      "members":{
+        "DryRun":{
+          "shape":"Boolean",
+          "locationName":"dryRun"
+        },
+        "PublicIp":{
+          "shape":"String",
+          "locationName":"publicIp"
+        }
+      }
+    },
+    "RestoreAddressToClassicResult":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"Status",
+          "locationName":"status"
+        },
+        "PublicIp":{
+          "shape":"String",
+          "locationName":"publicIp"
+        }
+      }
+    },
     "RevokeSecurityGroupEgressRequest":{
       "type":"structure",
       "required":["GroupId"],
@@ -8913,6 +9762,10 @@
         "DestinationCidrBlock":{
           "shape":"String",
           "locationName":"destinationCidrBlock"
+        },
+        "DestinationPrefixListId":{
+          "shape":"String",
+          "locationName":"destinationPrefixListId"
         },
         "GatewayId":{
           "shape":"String",
@@ -9412,6 +10265,78 @@
         }
       }
     },
+    "SpotFleetRequestConfig":{
+      "type":"structure",
+      "required":[
+        "SpotFleetRequestId",
+        "SpotFleetRequestState",
+        "SpotFleetRequestConfig"
+      ],
+      "members":{
+        "SpotFleetRequestId":{
+          "shape":"String",
+          "locationName":"spotFleetRequestId"
+        },
+        "SpotFleetRequestState":{
+          "shape":"BatchState",
+          "locationName":"spotFleetRequestState"
+        },
+        "SpotFleetRequestConfig":{
+          "shape":"SpotFleetRequestConfigData",
+          "locationName":"spotFleetRequestConfig"
+        }
+      }
+    },
+    "SpotFleetRequestConfigData":{
+      "type":"structure",
+      "required":[
+        "SpotPrice",
+        "TargetCapacity",
+        "IamFleetRole",
+        "LaunchSpecifications"
+      ],
+      "members":{
+        "ClientToken":{
+          "shape":"String",
+          "locationName":"clientToken"
+        },
+        "SpotPrice":{
+          "shape":"String",
+          "locationName":"spotPrice"
+        },
+        "TargetCapacity":{
+          "shape":"Integer",
+          "locationName":"targetCapacity"
+        },
+        "ValidFrom":{
+          "shape":"DateTime",
+          "locationName":"validFrom"
+        },
+        "ValidUntil":{
+          "shape":"DateTime",
+          "locationName":"validUntil"
+        },
+        "TerminateInstancesWithExpiration":{
+          "shape":"Boolean",
+          "locationName":"terminateInstancesWithExpiration"
+        },
+        "IamFleetRole":{
+          "shape":"String",
+          "locationName":"iamFleetRole"
+        },
+        "LaunchSpecifications":{
+          "shape":"LaunchSpecsList",
+          "locationName":"launchSpecifications"
+        }
+      }
+    },
+    "SpotFleetRequestConfigSet":{
+      "type":"list",
+      "member":{
+        "shape":"SpotFleetRequestConfig",
+        "locationName":"item"
+      }
+    },
     "SpotInstanceRequest":{
       "type":"structure",
       "members":{
@@ -9614,6 +10539,15 @@
         }
       }
     },
+    "State":{
+      "type":"string",
+      "enum":[
+        "Pending",
+        "Available",
+        "Deleting",
+        "Deleted"
+      ]
+    },
     "StateReason":{
       "type":"structure",
       "members":{
@@ -9626,6 +10560,14 @@
           "locationName":"message"
         }
       }
+    },
+    "Status":{
+      "type":"string",
+      "enum":[
+        "MoveInProgress",
+        "InVpc",
+        "InClassic"
+      ]
     },
     "StatusName":{
       "type":"string",
@@ -9867,6 +10809,44 @@
           "shape":"InstanceMonitoringList",
           "locationName":"instancesSet"
         }
+      }
+    },
+    "UnsuccessfulItem":{
+      "type":"structure",
+      "required":["Error"],
+      "members":{
+        "ResourceId":{
+          "shape":"String",
+          "locationName":"resourceId"
+        },
+        "Error":{
+          "shape":"UnsuccessfulItemError",
+          "locationName":"error"
+        }
+      }
+    },
+    "UnsuccessfulItemError":{
+      "type":"structure",
+      "required":[
+        "Code",
+        "Message"
+      ],
+      "members":{
+        "Code":{
+          "shape":"String",
+          "locationName":"code"
+        },
+        "Message":{
+          "shape":"String",
+          "locationName":"message"
+        }
+      }
+    },
+    "UnsuccessfulItemSet":{
+      "type":"list",
+      "member":{
+        "shape":"UnsuccessfulItem",
+        "locationName":"item"
       }
     },
     "UserBucket":{
@@ -10358,6 +11338,46 @@
       "type":"list",
       "member":{
         "shape":"VpcClassicLink",
+        "locationName":"item"
+      }
+    },
+    "VpcEndpoint":{
+      "type":"structure",
+      "members":{
+        "VpcEndpointId":{
+          "shape":"String",
+          "locationName":"vpcEndpointId"
+        },
+        "VpcId":{
+          "shape":"String",
+          "locationName":"vpcId"
+        },
+        "ServiceName":{
+          "shape":"String",
+          "locationName":"serviceName"
+        },
+        "State":{
+          "shape":"State",
+          "locationName":"state"
+        },
+        "PolicyDocument":{
+          "shape":"String",
+          "locationName":"policyDocument"
+        },
+        "RouteTableIds":{
+          "shape":"ValueStringList",
+          "locationName":"routeTableIdSet"
+        },
+        "CreationTimestamp":{
+          "shape":"DateTime",
+          "locationName":"creationTimestamp"
+        }
+      }
+    },
+    "VpcEndpointSet":{
+      "type":"list",
+      "member":{
+        "shape":"VpcEndpoint",
         "locationName":"item"
       }
     },

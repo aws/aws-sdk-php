@@ -727,6 +727,7 @@
     "ConfigurationOptionSetting":{
       "type":"structure",
       "members":{
+        "ResourceName":{"shape":"ResourceName"},
         "Namespace":{"shape":"OptionNamespace"},
         "OptionName":{"shape":"ConfigurationOptionName"},
         "Value":{"shape":"ConfigurationOptionValue"}
@@ -1240,6 +1241,7 @@
     "OptionSpecification":{
       "type":"structure",
       "members":{
+        "ResourceName":{"shape":"ResourceName"},
         "Namespace":{"shape":"OptionNamespace"},
         "OptionName":{"shape":"ConfigurationOptionName"}
       }
@@ -1279,6 +1281,11 @@
     },
     "RequestId":{"type":"string"},
     "ResourceId":{"type":"string"},
+    "ResourceName":{
+      "type":"string",
+      "min":1,
+      "max":256
+    },
     "RestartAppServerMessage":{
       "type":"structure",
       "members":{

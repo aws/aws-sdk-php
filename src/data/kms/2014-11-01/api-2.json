@@ -1,4 +1,5 @@
 {
+  "version":"2.0",
   "metadata":{
     "apiVersion":"2014-11-01",
     "endpointPrefix":"kms",
@@ -428,6 +429,15 @@
           "exception":true
         },
         {
+          "shape":"DisabledException",
+          "error":{
+            "code":"Disabled",
+            "httpStatusCode":409,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
           "shape":"InvalidArnException",
           "error":{
             "code":"InvalidArn",
@@ -522,6 +532,15 @@
           "error":{
             "code":"NotFound",
             "httpStatusCode":404,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"DisabledException",
+          "error":{
+            "code":"Disabled",
+            "httpStatusCode":409,
             "senderFault":true
           },
           "exception":true
@@ -912,6 +931,15 @@
           "fault":true
         },
         {
+          "shape":"InvalidMarkerException",
+          "error":{
+            "code":"InvalidMarker",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
           "shape":"KMSInternalException",
           "error":{
             "code":"KMSInternal",
@@ -943,6 +971,15 @@
           "shape":"InvalidMarkerException",
           "error":{
             "code":"InvalidMarker",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"InvalidArnException",
+          "error":{
+            "code":"InvalidArn",
             "httpStatusCode":400,
             "senderFault":true
           },
@@ -1213,6 +1250,15 @@
           "exception":true
         },
         {
+          "shape":"NotFoundException",
+          "error":{
+            "code":"NotFound",
+            "httpStatusCode":404,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
           "shape":"DependencyTimeoutException",
           "error":{
             "code":"DependencyTimeout",
@@ -1256,6 +1302,51 @@
           },
           "exception":true,
           "fault":true
+        },
+        {
+          "shape":"InvalidArnException",
+          "error":{
+            "code":"InvalidArn",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"KMSInternalException",
+          "error":{
+            "code":"KMSInternal",
+            "httpStatusCode":500
+          },
+          "exception":true
+        }
+      ]
+    },
+    "UpdateAlias":{
+      "name":"UpdateAlias",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateAliasRequest"},
+      "errors":[
+        {
+          "shape":"DependencyTimeoutException",
+          "error":{
+            "code":"DependencyTimeout",
+            "httpStatusCode":503
+          },
+          "exception":true,
+          "fault":true
+        },
+        {
+          "shape":"NotFoundException",
+          "error":{
+            "code":"NotFound",
+            "httpStatusCode":404,
+            "senderFault":true
+          },
+          "exception":true
         },
         {
           "shape":"KMSInternalException",
@@ -1974,9 +2065,10 @@
     },
     "RetireGrantRequest":{
       "type":"structure",
-      "required":["GrantToken"],
       "members":{
-        "GrantToken":{"shape":"GrantTokenType"}
+        "GrantToken":{"shape":"GrantTokenType"},
+        "KeyId":{"shape":"KeyIdType"},
+        "GrantId":{"shape":"GrantIdType"}
       }
     },
     "RevokeGrantRequest":{
@@ -2001,6 +2093,17 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "UpdateAliasRequest":{
+      "type":"structure",
+      "required":[
+        "AliasName",
+        "TargetKeyId"
+      ],
+      "members":{
+        "AliasName":{"shape":"AliasNameType"},
+        "TargetKeyId":{"shape":"KeyIdType"}
+      }
     },
     "UpdateKeyDescriptionRequest":{
       "type":"structure",

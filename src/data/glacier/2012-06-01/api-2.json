@@ -1,4 +1,5 @@
 {
+  "version":"2.0",
   "metadata":{
     "apiVersion":"2012-06-01",
     "checksumFormat":"sha256",
@@ -165,6 +166,37 @@
         }
       ]
     },
+    "DeleteVaultAccessPolicy":{
+      "name":"DeleteVaultAccessPolicy",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/{accountId}/vaults/{vaultName}/access-policy",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteVaultAccessPolicyInput"},
+      "errors":[
+        {
+          "shape":"ResourceNotFoundException",
+          "error":{"httpStatusCode":404},
+          "exception":true
+        },
+        {
+          "shape":"InvalidParameterValueException",
+          "error":{"httpStatusCode":400},
+          "exception":true
+        },
+        {
+          "shape":"MissingParameterValueException",
+          "error":{"httpStatusCode":400},
+          "exception":true
+        },
+        {
+          "shape":"ServiceUnavailableException",
+          "error":{"httpStatusCode":500},
+          "exception":true
+        }
+      ]
+    },
     "DeleteVaultNotifications":{
       "name":"DeleteVaultNotifications",
       "http":{
@@ -292,6 +324,37 @@
       },
       "input":{"shape":"GetJobOutputInput"},
       "output":{"shape":"GetJobOutputOutput"},
+      "errors":[
+        {
+          "shape":"ResourceNotFoundException",
+          "error":{"httpStatusCode":404},
+          "exception":true
+        },
+        {
+          "shape":"InvalidParameterValueException",
+          "error":{"httpStatusCode":400},
+          "exception":true
+        },
+        {
+          "shape":"MissingParameterValueException",
+          "error":{"httpStatusCode":400},
+          "exception":true
+        },
+        {
+          "shape":"ServiceUnavailableException",
+          "error":{"httpStatusCode":500},
+          "exception":true
+        }
+      ]
+    },
+    "GetVaultAccessPolicy":{
+      "name":"GetVaultAccessPolicy",
+      "http":{
+        "method":"GET",
+        "requestUri":"/{accountId}/vaults/{vaultName}/access-policy"
+      },
+      "input":{"shape":"GetVaultAccessPolicyInput"},
+      "output":{"shape":"GetVaultAccessPolicyOutput"},
       "errors":[
         {
           "shape":"ResourceNotFoundException",
@@ -548,6 +611,37 @@
       },
       "input":{"shape":"SetDataRetrievalPolicyInput"},
       "errors":[
+        {
+          "shape":"InvalidParameterValueException",
+          "error":{"httpStatusCode":400},
+          "exception":true
+        },
+        {
+          "shape":"MissingParameterValueException",
+          "error":{"httpStatusCode":400},
+          "exception":true
+        },
+        {
+          "shape":"ServiceUnavailableException",
+          "error":{"httpStatusCode":500},
+          "exception":true
+        }
+      ]
+    },
+    "SetVaultAccessPolicy":{
+      "name":"SetVaultAccessPolicy",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/{accountId}/vaults/{vaultName}/access-policy",
+        "responseCode":204
+      },
+      "input":{"shape":"SetVaultAccessPolicyInput"},
+      "errors":[
+        {
+          "shape":"ResourceNotFoundException",
+          "error":{"httpStatusCode":404},
+          "exception":true
+        },
         {
           "shape":"InvalidParameterValueException",
           "error":{"httpStatusCode":400},
@@ -831,6 +925,25 @@
         "archiveId"
       ]
     },
+    "DeleteVaultAccessPolicyInput":{
+      "type":"structure",
+      "members":{
+        "accountId":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"accountId"
+        },
+        "vaultName":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"vaultName"
+        }
+      },
+      "required":[
+        "accountId",
+        "vaultName"
+      ]
+    },
     "DeleteVaultInput":{
       "type":"structure",
       "members":{
@@ -1006,6 +1119,32 @@
         }
       },
       "payload":"body"
+    },
+    "GetVaultAccessPolicyInput":{
+      "type":"structure",
+      "members":{
+        "accountId":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"accountId"
+        },
+        "vaultName":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"vaultName"
+        }
+      },
+      "required":[
+        "accountId",
+        "vaultName"
+      ]
+    },
+    "GetVaultAccessPolicyOutput":{
+      "type":"structure",
+      "members":{
+        "policy":{"shape":"VaultAccessPolicy"}
+      },
+      "payload":"policy"
     },
     "GetVaultNotificationsInput":{
       "type":"structure",
@@ -1425,6 +1564,27 @@
       },
       "required":["accountId"]
     },
+    "SetVaultAccessPolicyInput":{
+      "type":"structure",
+      "members":{
+        "accountId":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"accountId"
+        },
+        "vaultName":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"vaultName"
+        },
+        "policy":{"shape":"VaultAccessPolicy"}
+      },
+      "required":[
+        "accountId",
+        "vaultName"
+      ],
+      "payload":"policy"
+    },
     "SetVaultNotificationsInput":{
       "type":"structure",
       "members":{
@@ -1550,6 +1710,12 @@
     "UploadsList":{
       "type":"list",
       "member":{"shape":"UploadListElement"}
+    },
+    "VaultAccessPolicy":{
+      "type":"structure",
+      "members":{
+        "Policy":{"shape":"string"}
+      }
     },
     "VaultList":{
       "type":"list",

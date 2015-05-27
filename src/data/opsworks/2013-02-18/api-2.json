@@ -770,6 +770,25 @@
         }
       ]
     },
+    "GrantAccess":{
+      "name":"GrantAccess",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GrantAccessRequest"},
+      "output":{"shape":"GrantAccessResult"},
+      "errors":[
+        {
+          "shape":"ValidationException",
+          "exception":true
+        },
+        {
+          "shape":"ResourceNotFoundException",
+          "exception":true
+        }
+      ]
+    },
     "RebootInstance":{
       "name":"RebootInstance",
       "http":{
@@ -1285,7 +1304,8 @@
         "IgnoreMetricsTime":{"shape":"Minute"},
         "CpuThreshold":{"shape":"Double"},
         "MemoryThreshold":{"shape":"Double"},
-        "LoadThreshold":{"shape":"Double"}
+        "LoadThreshold":{"shape":"Double"},
+        "Alarms":{"shape":"Strings"}
       }
     },
     "AutoScalingType":{
@@ -2013,6 +2033,20 @@
         "Hostname":{"shape":"String"}
       }
     },
+    "GrantAccessRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{"shape":"String"},
+        "ValidForInMinutes":{"shape":"ValidForInMinutes"}
+      }
+    },
+    "GrantAccessResult":{
+      "type":"structure",
+      "members":{
+        "TemporaryCredential":{"shape":"TemporaryCredential"}
+      }
+    },
     "Hour":{"type":"string"},
     "Instance":{
       "type":"structure",
@@ -2545,6 +2579,15 @@
       "member":{"shape":"String"}
     },
     "Switch":{"type":"string"},
+    "TemporaryCredential":{
+      "type":"structure",
+      "members":{
+        "Username":{"shape":"String"},
+        "Password":{"shape":"String"},
+        "ValidForInMinutes":{"shape":"Integer"},
+        "InstanceId":{"shape":"String"}
+      }
+    },
     "TimeBasedAutoScalingConfiguration":{
       "type":"structure",
       "members":{
@@ -2703,6 +2746,11 @@
     "UserProfiles":{
       "type":"list",
       "member":{"shape":"UserProfile"}
+    },
+    "ValidForInMinutes":{
+      "type":"integer",
+      "min":60,
+      "max":1440
     },
     "ValidationException":{
       "type":"structure",

@@ -1,4 +1,5 @@
 {
+  "version":"2.0",
   "metadata":{
     "apiVersion":"2010-05-15",
     "endpointPrefix":"cloudformation",
@@ -238,6 +239,11 @@
     }
   },
   "shapes":{
+    "AllowedValue":{"type":"string"},
+    "AllowedValues":{
+      "type":"list",
+      "member":{"shape":"AllowedValue"}
+    },
     "AlreadyExistsException":{
       "type":"structure",
       "members":{
@@ -415,7 +421,8 @@
         "Description":{"shape":"Description"},
         "Capabilities":{"shape":"Capabilities"},
         "CapabilitiesReason":{"shape":"CapabilitiesReason"},
-        "Version":{"shape":"Version"}
+        "Version":{"shape":"Version"},
+        "Metadata":{"shape":"Metadata"}
       }
     },
     "InsufficientCapabilitiesException":{
@@ -514,6 +521,12 @@
         "UsePreviousValue":{"shape":"UsePreviousValue"}
       }
     },
+    "ParameterConstraints":{
+      "type":"structure",
+      "members":{
+        "AllowedValues":{"shape":"AllowedValues"}
+      }
+    },
     "ParameterDeclaration":{
       "type":"structure",
       "members":{
@@ -521,7 +534,8 @@
         "DefaultValue":{"shape":"ParameterValue"},
         "ParameterType":{"shape":"ParameterType"},
         "NoEcho":{"shape":"NoEcho"},
-        "Description":{"shape":"Description"}
+        "Description":{"shape":"Description"},
+        "ParameterConstraints":{"shape":"ParameterConstraints"}
       }
     },
     "ParameterDeclarations":{
