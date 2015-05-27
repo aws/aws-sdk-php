@@ -1,5 +1,6 @@
 <?php
-require __DIR__ . '/artifacts/Burgomaster.php';
+require __DIR__ . '/Burgomaster.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 $stageDirectory = __DIR__ . '/artifacts/staging';
 $projectRoot = __DIR__ . '/../';
@@ -11,18 +12,24 @@ foreach ($metaFiles as $file) {
     $burgomaster->deepCopy($file, $file);
 }
 
-// Copy each dependency to the staging directory. Copy *.php and *.pem files.
-$burgomaster->recursiveCopy('src/Aws', 'Aws', ['php', 'json']);
-$burgomaster->recursiveCopy('vendor/guzzle/guzzle/src/Guzzle', 'Guzzle', ['php', 'pem']);
-$burgomaster->recursiveCopy('vendor/doctrine/cache/lib/Doctrine', 'Doctrine');
-$burgomaster->recursiveCopy('vendor/psr/log/Psr', 'Psr');
-$burgomaster->recursiveCopy('vendor/monolog/monolog/src/Monolog', 'Monolog');
-$burgomaster->recursiveCopy('vendor/symfony/event-dispatcher/Symfony', 'Symfony');
+$burgomaster->recursiveCopy('src', 'Aws', ['php', 'json']);
+$burgomaster->recursiveCopy('vendor/mtdowling/jmespath.php/src', 'JmesPath');
+$burgomaster->recursiveCopy('vendor/guzzlehttp/guzzle/src', 'GuzzleHttp');
+$burgomaster->recursiveCopy('vendor/guzzlehttp/psr7/src', 'GuzzleHttp/Psr7');
+$burgomaster->recursiveCopy('vendor/guzzlehttp/promises/src', 'GuzzleHttp/Promise');
+$burgomaster->recursiveCopy('vendor/psr/http-message/src', 'Psr/Http/Message');
 
-$burgomaster->createAutoloader(array(), $autoloaderFilename);
-$burgomaster->createZip(__DIR__ . '/artifacts/aws.zip');
-$burgomaster->createPhar(__DIR__ . '/artifacts/aws.phar', null, $autoloaderFilename);
-$burgomaster->startSection('test_phar');
-$burgomaster->debug('Phar output: '
-    . $burgomaster->exec('php ' . __DIR__ . '/test_phar.php'));
+$burgomaster->createAutoloader([
+    'Aws/functions.php',
+    'GuzzleHttp/functions.php',
+    'GuzzleHttp/Psr7/functions.php',
+    'GuzzleHttp/Promise/functions.php',
+    'JmesPath/JmesPath.php',
+], $autoloaderFilename);
+
+$burgomaster->createZip(__DIR__ . "/artifacts/aws.zip");
+$burgomaster->createPhar(__DIR__ . "/artifacts/aws.phar", null, $autoloaderFilename);
+
+$burgomaster->startSection('test-phar');
+$burgomaster->exec('php ' . __DIR__ . '/test-phar.php');
 $burgomaster->endSection();

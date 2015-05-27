@@ -1,8 +1,33 @@
 # CHANGELOG
 
+## Next Release
+
+* Asynchronous requests.
+    * Features like _waiters_ and _multipart uploaders_ can also be used
+      asynchronously.
+    * Asynchronous workflows can be created using _promises_ and _coroutines_.
+    * Improved performance of concurrent/batched requests via _command pools_.
+* Decoupled HTTP layer.
+    * [Guzzle 6](http://guzzlephp.org) is used by default to send requests,
+      but Guzzle 5 is also supported out of the box.
+    * The SDK can now work in environments where cURL is not available.
+    * Custom HTTP handlers are also supported.
+* Follows the [PSR-4 and PSR-7 standards](http://php-fig.org).
+* Middleware system for customizing service client behavior.
+* Flexible _paginators_ for iterating through paginated results.
+* Ability to query data from _result_ and _paginator_ objects with
+  [JMESPath](http://jmespath.org/).
+* Easy debugging via the `'debug'` client configuration option.
+* Customizable retries via the `'retries'` client configuration option.
+* More flexibility in credential loading via _credential providers_.
+* Strictly follows the [SemVer](http://semver.org/) standard going forward.
+* **For more details about what has changed, see the
+  [Migration Guide](http://docs.aws.amazon.com/aws-sdk-php/v3/guide/guide/migration.html)**.
+
 ## 2.8.7 - 2015-05-26
 
-* `Aws\Efs` - [Amazon Elastic File System (Amazon EFS)](http://aws.amazon.com/efs/)
+* `Aws\Efs` - Added support for the [Amazon Elastic File System (Amazon
+  EFS)](http://aws.amazon.com/efs/)
 * Failing to parse an XML error response will now fail gracefully as a
   `PhpInternalXmlParseError` AWS error code.
 
@@ -261,6 +286,16 @@ for details about any changes you may need to make to your code for this upgrade
 * Updated the CloudFront model.
 * Added support for configuring push synchronization to the Cognito Sync client.
 * Updated docblocks in a few S3 and Glacier classes to improve IDE experience.
+
+## 3.0.0-beta.1 - 2014-10-14
+
+* New requirements on Guzzle 5 and PHP 5.5.
+* Event system now uses Guzzle 5 events and no longer utilizes Symfony2.
+* `version` and `region` are noww required parameter for each client
+  constructor. You can op-into using the latest version of a service by
+  setting `version` to `latest`.
+* Removed `Aws\S3\ResumableDownload`.
+* More information to follow.
 
 ## 2.7.2 - 2014-10-23
 

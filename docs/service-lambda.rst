@@ -1,3 +1,0 @@
-.. service:: Lambda
-
-.. apiref:: Lambda

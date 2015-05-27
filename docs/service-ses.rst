@@ -1,3 +1,0 @@
-.. service:: Ses
-
-.. apiref:: Ses

@@ -1,6 +1,21 @@
 Upgrading Guide
 ===============
 
+Upgrade from 2.x to 3.x
+-----------------------
+
+Version 3 is a new major version of the SDK that represents a significant effort
+to improve the capabilities of the SDK, incorporate two years of customer
+feedback, upgrade our dependencies, improve performance, and adopt the latest
+PHP standards.
+
+The basic usage pattern of the SDK (i.e., `$result = $client->operation($params);`)
+has not changed from Version 2 to Version 3, which should result in a fairly
+smooth migration.
+
+For details on how to migrate your code from Version 2 to Version 3, read the
+[Version 3 Migration Guide](http://docs.aws.amazon.com/aws-sdk-php/v3/guide/guide/migration.html).
+
 Upgrade from 2.7 to 2.8
 -----------------------
 

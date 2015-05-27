@@ -1,3 +1,0 @@
-.. service:: CloudHsm
-
-.. apiref:: CloudHsm

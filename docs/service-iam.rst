@@ -1,3 +1,0 @@
-.. service:: Iam
-
-.. apiref:: Iam

@@ -1,3 +1,0 @@
-.. service:: ElastiCache
-
-.. apiref:: ElastiCache

@@ -1,3 +1,0 @@
-.. service:: AutoScaling
-
-.. apiref:: AutoScaling

@@ -1,0 +1,37 @@
+<?php
+namespace Aws\Api\Parser;
+
+use Aws\Api\Service;
+use Aws\Result;
+use Aws\CommandInterface;
+use Psr\Http\Message\ResponseInterface;
+
+/**
+ * @internal Implements JSON-RPC parsing (e.g., DynamoDB)
+ */
+class JsonRpcParser extends AbstractParser
+{
+    private $parser;
+
+    /**
+     * @param Service    $api    Service description
+     * @param JsonParser $parser JSON body builder
+     */
+    public function __construct(Service $api, JsonParser $parser = null)
+    {
+        parent::__construct($api);
+        $this->parser = $parser ?: new JsonParser();
+    }
+
+    public function __invoke(
+        CommandInterface $command,
+        ResponseInterface $response
+    ) {
+        $operation = $this->api->getOperation($command->getName());
+
+        return new Result($this->parser->parse(
+            $operation->getOutput(),
+            json_decode($response->getBody(), true)
+        ));
+    }
+}

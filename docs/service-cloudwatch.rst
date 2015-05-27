@@ -1,3 +1,0 @@
-.. service:: CloudWatch
-
-.. apiref:: CloudWatch

@@ -1,3 +1,0 @@
-.. service:: DirectConnect
-
-.. apiref:: DirectConnect
