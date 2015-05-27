@@ -43,8 +43,8 @@ class Burgomaster
         }
 
         $this->debug("Creating staging directory: $this->stageDir");
-
-        if (!mkdir($this->stageDir)) {
+        
+        if (!mkdir($this->stageDir, 0777, true)) {
             throw new \RuntimeException("Could not create {$this->stageDir}");
         }
 
