@@ -215,7 +215,7 @@ specific API operation can be done using magic methods (e.g.,
 <code>$\client->getCommand</code> method of the client.</p>
 EOT;
 
-            $html .= '<div class="element-summary"><ul>';
+            $html .= '<div class="api-version-list element-summary"><ul>';
             $latest = count($versions) > 1 ? ' (latest)' : '';
             foreach ($versions as $sv) {
                 $html .= "<li><a href=\"{$sv->serviceLink}\">{$sv->version} {$latest}</a></li>";
