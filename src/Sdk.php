@@ -52,13 +52,15 @@ class Sdk
 
     /** @var array Map of custom lowercase names to service endpoint names. */
     private static $aliases = [
-        'configservice'   => 'config',
-        'cloudwatch'      => 'monitoring',
-        'cloudwatchlogs'  => 'logs',
-        'cognitoidentity' => 'cognito-identity',
-        'cognitosync'     => 'cognito-sync',
-        'emr'             => 'elasticmapreduce',
-        'ses'             => 'email',
+        'configservice'     => 'config',
+        'cloudwatch'        => 'monitoring',
+        'cloudwatchlogs'    => 'logs',
+        'cognitoidentity'   => 'cognito-identity',
+        'cognitosync'       => 'cognito-sync',
+        'directoryservice'  => 'ds',
+        'efs'               => 'elasticfilesystem',
+        'emr'               => 'elasticmapreduce',
+        'ses'               => 'email',
     ];
 
     /** @var array Arguments for creating clients */
