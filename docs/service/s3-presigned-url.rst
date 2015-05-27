@@ -16,7 +16,7 @@ Creating a presigned request
 
 You can get the pre-signed URL to an Amazon S3 object using the
 ``Aws\S3\S3Client::createPresignedRequest()`` method. This method accepts an
-``Aws\CommandInteface`` object and expires timestamp and returns a pre-signed
+``Aws\CommandInterface`` object and expires timestamp and returns a pre-signed
 ``Psr\Http\Message\RequestInterface`` object. You can retrieve the pre-signed
 URL of the object using the ``getUri()`` method of the request.
 

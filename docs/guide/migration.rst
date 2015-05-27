@@ -157,7 +157,7 @@ Version 3 of the SDK introduces the ``Aws\Sdk`` object as a replacement to
 ``Aws\Common\Aws``. The ``Sdk`` object acts as a client factory and is used
 to manage shared configuration options across multiple clients.
 
-While Version 2's ``Aws`` class worked like a service locater (i.e., it always
+While Version 2's ``Aws`` class worked like a service locator (i.e., it always
 returned the same instance of a client), the ``Sdk`` class returns a new
 instance of a client every time it is used.
 

@@ -318,7 +318,7 @@ easily compose credential providers and pass them around as values.
 .. code-block:: php
 
     use GuzzleHttp\Promise;
-    use GuzzleHttp\Promise\RejectecPromise;
+    use GuzzleHttp\Promise\RejectedPromise;
 
     // This function CREATES a credential provider.
     public static function env()
