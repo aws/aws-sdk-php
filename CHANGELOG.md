@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next Release
+## 3.0.2 - 2015-05-29
 
 * `Aws` - Fixed an issue preventing some clients from being instantiated via
   their constructors due to a mismatch between class name and endpoint prefix.
