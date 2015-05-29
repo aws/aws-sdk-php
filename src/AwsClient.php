@@ -125,7 +125,7 @@ class AwsClient implements AwsClientInterface
     {
         list($service, $exceptionClass) = $this->parseClass();
         if (!isset($args['service'])) {
-            $args['service'] = $service;
+            $args['service'] = Sdk::getEndpointPrefix($service);
         }
         if (!isset($args['exception_class'])) {
             $args['exception_class'] = $exceptionClass;

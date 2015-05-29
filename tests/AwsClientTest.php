@@ -5,6 +5,7 @@ use Aws\Api\ErrorParser\JsonRpcErrorParser;
 use Aws\AwsClient;
 use Aws\Credentials\Credentials;
 use Aws\Ec2\Ec2Client;
+use Aws\Ses\SesClient;
 use Aws\MockHandler;
 use Aws\Result;
 use Aws\S3\S3Client;
@@ -252,6 +253,14 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
     public function testAllowsFactoryMethodForBc()
     {
         Ec2Client::factory([
+            'region'  => 'us-west-2',
+            'version' => 'latest'
+        ]);
+    }
+
+    public function testCanInstantiateAliasedClients()
+    {
+        new SesClient([
             'region'  => 'us-west-2',
             'version' => 'latest'
         ]);
