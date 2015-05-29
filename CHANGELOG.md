@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Next Release
+
+* `Aws` - Fixed an issue preventing some clients from being instantiated via
+  their constructors due to a mismatch between class name and endpoint prefix.
+
 ## 3.0.1 - 2015-05-28
 
 * `Aws\Lambda` - Added Amazon S3 upload support.
