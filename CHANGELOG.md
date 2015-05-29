@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.8.8 - 2015-05-28
+
+* `Aws\Lambda` - Added Amazon S3 upload support.
+
 ## 2.8.7 - 2015-05-26
 
 * `Aws\Efs` - [Amazon Elastic File System (Amazon EFS)](http://aws.amazon.com/efs/)
