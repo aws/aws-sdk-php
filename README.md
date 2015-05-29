@@ -22,6 +22,9 @@ or by downloading a single zip or phar file from our [latest release][latest-rel
 * [Issues][sdk-issues] – Report issues, submit pull requests, and get involved
   (see [Apache 2.0 License][sdk-license])
 * [@awsforphp][sdk-twitter] – Follow us on Twitter
+* For Version 2 of the SDK:
+  * [User Guide][docs-guide-v2]
+  * [API Docs][docs-api-v2]
 
 ## Features
 
@@ -118,6 +121,8 @@ try {
 
 [docs-api]: http://docs.aws.amazon.com/aws-sdk-php/v3/api/index.html
 [docs-guide]: http://docs.aws.amazon.com/aws-sdk-php/v3/guide/index.html
+[docs-api-v2]: http://docs.aws.amazon.com/aws-sdk-php/v2/api/index.html
+[docs-guide-v2]: http://docs.aws.amazon.com/aws-sdk-php/v2/guide/index.html
 [docs-contribution]: https://github.com/aws/aws-sdk-php/blob/master/CONTRIBUTING.md
 [docs-migration]: http://docs.aws.amazon.com/aws-sdk-php/v3/guide/guide/migration.html
 [docs-signup]: http://aws.amazon.com/developers/access-keys/
