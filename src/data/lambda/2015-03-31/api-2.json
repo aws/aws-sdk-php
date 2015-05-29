@@ -116,6 +116,11 @@
           "shape":"TooManyRequestsException",
           "error":{"httpStatusCode":429},
           "exception":true
+        },
+        {
+          "shape":"CodeStorageExceededException",
+          "error":{"httpStatusCode":400},
+          "exception":true
         }
       ]
     },
@@ -506,6 +511,11 @@
           "shape":"TooManyRequestsException",
           "error":{"httpStatusCode":429},
           "exception":true
+        },
+        {
+          "shape":"CodeStorageExceededException",
+          "error":{"httpStatusCode":400},
+          "exception":true
         }
       ]
     },
@@ -587,6 +597,15 @@
     "BlobStream":{
       "type":"blob",
       "streaming":true
+    },
+    "CodeStorageExceededException":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"String"},
+        "message":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
     },
     "CreateEventSourceMappingRequest":{
       "type":"structure",
@@ -683,7 +702,10 @@
     "FunctionCode":{
       "type":"structure",
       "members":{
-        "ZipFile":{"shape":"Blob"}
+        "ZipFile":{"shape":"Blob"},
+        "S3Bucket":{"shape":"S3Bucket"},
+        "S3Key":{"shape":"S3Key"},
+        "S3ObjectVersion":{"shape":"S3ObjectVersion"}
       }
     },
     "FunctionCodeLocation":{
@@ -778,7 +800,7 @@
     "Handler":{
       "type":"string",
       "max":128,
-      "pattern":"[a-zA-Z0-9./\\-_]+"
+      "pattern":"[^\\s]+"
     },
     "HttpStatus":{"type":"integer"},
     "Integer":{"type":"integer"},
@@ -954,7 +976,7 @@
     "MemorySize":{
       "type":"integer",
       "min":128,
-      "max":1024
+      "max":1536
     },
     "PolicyLengthExceededException":{
       "type":"structure",
@@ -1021,11 +1043,23 @@
     },
     "Runtime":{
       "type":"string",
-      "enum":[
-        "nodejs",
-        "jvm",
-        "python"
-      ]
+      "enum":["nodejs"]
+    },
+    "S3Bucket":{
+      "type":"string",
+      "min":3,
+      "max":63,
+      "pattern":"^[0-9A-Za-z\\.\\-_]*(?<!\\.)$"
+    },
+    "S3Key":{
+      "type":"string",
+      "min":1,
+      "max":1024
+    },
+    "S3ObjectVersion":{
+      "type":"string",
+      "min":1,
+      "max":1024
     },
     "ServiceException":{
       "type":"structure",
@@ -1092,17 +1126,17 @@
     },
     "UpdateFunctionCodeRequest":{
       "type":"structure",
-      "required":[
-        "FunctionName",
-        "ZipFile"
-      ],
+      "required":["FunctionName"],
       "members":{
         "FunctionName":{
           "shape":"FunctionName",
           "location":"uri",
           "locationName":"FunctionName"
         },
-        "ZipFile":{"shape":"Blob"}
+        "ZipFile":{"shape":"Blob"},
+        "S3Bucket":{"shape":"S3Bucket"},
+        "S3Key":{"shape":"S3Key"},
+        "S3ObjectVersion":{"shape":"S3ObjectVersion"}
       }
     },
     "UpdateFunctionConfigurationRequest":{

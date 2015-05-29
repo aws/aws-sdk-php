@@ -19,7 +19,7 @@
     "UpdateFunctionCode": "<p> Updates the code for the specified Lambda function. This operation must only be used on an existing Lambda function and cannot be used to update the function configuration. </p> <p>This operation requires permission for the <code>lambda:UpdateFunctionCode</code> action.</p>",
     "UpdateFunctionConfiguration": "<p>Updates the configuration parameters for the specified Lambda function by using the values provided in the request. You provide only the parameters you want to change. This operation must only be used on an existing Lambda function and cannot be used to update the function's code. </p> <p>This operation requires permission for the <code>lambda:UpdateFunctionConfiguration</code> action.</p>"
   },
-  "service": "<fullname>AWS Lambda</fullname>S <p><b>Overview</b></p> <p>This is the <i>AWS Lambda API Reference</i>. The AWS Lambda Developer Guide provides additional information. For the service overview, go to <a href=\"http://docs.aws.amazon.com/lambda/latest/dg/welcome.html\">What is AWS Lambda</a>, and for information about how the service works, go to <a href=\"http://docs.aws.amazon.com/lambda/latest/dg/lambda-introduction.html\">AWS LambdaL How it Works</a> in the <i>AWS Lambda Developer Guide</i>.</p>",
+  "service": "<fullname>AWS Lambda</fullname> <p><b>Overview</b></p> <p>This is the <i>AWS Lambda API Reference</i>. The AWS Lambda Developer Guide provides additional information. For the service overview, go to <a href=\"http://docs.aws.amazon.com/lambda/latest/dg/welcome.html\">What is AWS Lambda</a>, and for information about how the service works, go to <a href=\"http://docs.aws.amazon.com/lambda/latest/dg/lambda-introduction.html\">AWS Lambda: How it Works</a> in the <i>AWS Lambda Developer Guide</i>.</p>",
   "shapes": {
     "Action": {
       "base": null,
@@ -41,7 +41,7 @@
       "base": null,
       "refs": {
         "AddPermissionRequest$SourceArn": "<p>This is optional; however, when granting Amazon S3 permission to invoke your function, you should specify this field with the bucket Amazon Resource Name (ARN) as its value. This ensures that only events generated from the specified bucket can invoke the function. </p> <important>If you add a permission for the Amazon S3 principal without providing the source ARN, any AWS account that creates a mapping to your function ARN can send events to invoke your Lambda function from Amazon S3.</important>",
-        "CreateEventSourceMappingRequest$EventSourceArn": "<p>The Amazon Resource Name (ARN) of the Amazon Kinesis stream that is the event source. Any record added to this stream could cause AWS Lambda to invoke your Lambda function, it depends on the <code>BatchSize</code>. AWS Lambda POSTs the Amazon Kinesis event, containing records, to your Lambda function as JSON.</p>",
+        "CreateEventSourceMappingRequest$EventSourceArn": "<p>The Amazon Resource Name (ARN) of the Amazon Kinesis or the Amazon DynamoDB stream that is the event source. Any record added to this stream could cause AWS Lambda to invoke your Lambda function, it depends on the <code>BatchSize</code>. AWS Lambda POSTs the Amazon Kinesis event, containing records, to your Lambda function as JSON.</p>",
         "EventSourceMappingConfiguration$EventSourceArn": "<p>The Amazon Resource Name (ARN) of the Amazon Kinesis stream that is the source of events.</p>",
         "ListEventSourceMappingsRequest$EventSourceArn": "<p>The Amazon Resource Name (ARN) of the Amazon Kinesis stream.</p>"
       }
@@ -57,7 +57,7 @@
     "Blob": {
       "base": null,
       "refs": {
-        "FunctionCode$ZipFile": "<p>A base64-encoded .zip file containing your packaged source code. For more information about creating a .zip file, go to <a href=\"http://docs.aws.amazon.com/lambda/latest/dg/intro-permission-model.html#lambda-intro-execution-role.html\">Execution Permissions</a> in the <i>AWS Lambda Developer Guide</i>. </p>",
+        "FunctionCode$ZipFile": "<p>A base64-encoded .zip file containing your deployment package. For more information about creating a .zip file, go to <a href=\"http://docs.aws.amazon.com/lambda/latest/dg/intro-permission-model.html#lambda-intro-execution-role.html\">Execution Permissions</a> in the <i>AWS Lambda Developer Guide</i>. </p>",
         "InvocationRequest$Payload": "<p>JSON that you want to provide to your Lambda function as input.</p>",
         "InvocationResponse$Payload": "<p> It is the JSON representation of the object returned by the Lambda function. In This is present only if the invocation type is \"RequestResponse\". </p> <p>In the event of a function error this field contains a message describing the error. For the <code>Handled</code> errors the Lambda function will report this message. For <code>Unhandled</code> errors AWS Lambda reports the message. </p>",
         "UpdateFunctionCodeRequest$ZipFile": "<p>Based64-encoded .zip file containing your packaged source code.</p>"
@@ -67,6 +67,11 @@
       "base": null,
       "refs": {
         "InvokeAsyncRequest$InvokeArgs": "<p>JSON that you want to provide to your Lambda function as input.</p>"
+      }
+    },
+    "CodeStorageExceededException": {
+      "base": null,
+      "refs": {
       }
     },
     "CreateEventSourceMappingRequest": {
@@ -138,7 +143,7 @@
     "FunctionCode": {
       "base": "<p>The code for the Lambda function.</p>",
       "refs": {
-        "CreateFunctionRequest$Code": "<p>A structure that includes ZipFile. </p>"
+        "CreateFunctionRequest$Code": "<p>The code for the Lambda function. </p>"
       }
     },
     "FunctionCodeLocation": {
@@ -359,6 +364,27 @@
         "FunctionConfiguration$Runtime": "<p>The runtime environment for the Lambda function.</p>"
       }
     },
+    "S3Bucket": {
+      "base": null,
+      "refs": {
+        "FunctionCode$S3Bucket": "<p>Amazon S3 bucket name where the .zip file containing your deployment package is stored. This bucket must reside in the same AWS region where you are creating the Lambda function. </p>",
+        "UpdateFunctionCodeRequest$S3Bucket": "<p>Amazon S3 bucket name where the .zip file containing your deployment package is stored. This bucket must reside in the same AWS region where you are creating the Lambda function.</p>"
+      }
+    },
+    "S3Key": {
+      "base": null,
+      "refs": {
+        "FunctionCode$S3Key": "<p>The Amazon S3 object (the deployment package) key name you want to upload. </p>",
+        "UpdateFunctionCodeRequest$S3Key": "<p>The Amazon S3 object (the deployment package) key name you want to upload. </p>"
+      }
+    },
+    "S3ObjectVersion": {
+      "base": null,
+      "refs": {
+        "FunctionCode$S3ObjectVersion": "<p>The Amazon S3 object (the deployment package) version you want to upload.</p>",
+        "UpdateFunctionCodeRequest$S3ObjectVersion": "<p>The Amazon S3 object (the deployment package) version you want to upload.</p>"
+      }
+    },
     "ServiceException": {
       "base": "<p>The AWS Lambda service encountered an internal error.</p>",
       "refs": {
@@ -381,6 +407,8 @@
       "base": null,
       "refs": {
         "AddPermissionResponse$Statement": "<p>The permission statement you specified in the request. The response returns the same as a string using \"\\\" as an escape character in the JSON. </p>",
+        "CodeStorageExceededException$Type": null,
+        "CodeStorageExceededException$message": null,
         "DeleteEventSourceMappingRequest$UUID": "<p>The event source mapping ID.</p>",
         "EventSourceMappingConfiguration$UUID": "<p>The AWS Lambda assigned opaque identifier for the mapping.</p>",
         "EventSourceMappingConfiguration$LastProcessingResult": "<p>The result of the last AWS Lambda invocation of your Lambda function.</p>",
