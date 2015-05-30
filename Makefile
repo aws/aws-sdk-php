@@ -102,7 +102,7 @@ tag: check-tag
 # OAUTH_TOKEN environment variable is available and the token has permission
 # to push to the repository.
 release: check-tag package
-	git push origin v3
+	git push origin master
 	git push origin $(TAG)
 	php build/gh-release.php $(TAG)
 
