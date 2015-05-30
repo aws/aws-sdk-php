@@ -168,7 +168,7 @@ object.
     $manager = new \Aws\S3\Transfer($client, $source, $dest);
 
     // Initiate the transfer and get a promise.
-    $promise = $transfer->promise();
+    $promise = $manager->promise();
 
     // Do something when the transfer is complete using the then() method.
     $promise->then(function () {
