@@ -53,7 +53,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.0.2';
+    const VERSION = '3.0.3';
 
     /** @var array Map of custom lowercase names to service endpoint names. */
     private static $aliases = [

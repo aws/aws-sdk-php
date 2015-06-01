@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 3.0.3 - 2015-06-01
+
+* `Aws\MachineLearning` - Fixed the `Predict` operation to use the provided
+  `PredictEndpoint` as the host.
+
 ## 3.0.2 - 2015-05-29
 
 * `Aws` - Fixed an issue preventing some clients from being instantiated via
