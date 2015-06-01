@@ -25,7 +25,7 @@ $message = `chag contents -t "$tag"` or die('Chag could not find or parse the ta
 
 // Create a GitHub client.
 $client = new GuzzleHttp\Client([
-    'base_url' => 'https://api.github.com/',
+    'base_uri' => 'https://api.github.com/',
     'defaults' => [
         'headers' => ['Authorization' => "token $token"]
     ]
