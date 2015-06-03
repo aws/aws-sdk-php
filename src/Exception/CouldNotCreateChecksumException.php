@@ -3,7 +3,7 @@ namespace Aws\Exception;
 
 class CouldNotCreateChecksumException extends \RuntimeException
 {
-    public function __construct($algorithm)
+    public function __construct($algorithm, \Exception $previous = null)
     {
         $prefix = $algorithm === 'md5' ? "An" : "A";
         parent::__construct("{$prefix} {$algorithm} checksum could not be "
@@ -14,6 +14,6 @@ class CouldNotCreateChecksumException extends \RuntimeException
             . "stream in a GuzzleHttp\\Stream\\CachingStream object. You "
             . "should be careful though and remember that the CachingStream "
             . "utilizes PHP temp streams. This means that the stream will be "
-            . "temporarily stored on the local disk.");
+            . "temporarily stored on the local disk.", 0, $previous);
     }
 }

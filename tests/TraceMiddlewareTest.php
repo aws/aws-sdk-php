@@ -72,6 +72,38 @@ class TraceMiddlewareTest extends \PHPUnit_Framework_TestCase
         });
         $list->appendValidate(function ($handler) {
             return function ($cmd, $req = null) use ($handler) {
+                return new RejectedPromise(new \Exception('Oh no!'));
+            };
+        });
+        $list->interpose(new TraceMiddleware(['logfn' => $logfn]));
+        $handler = $list->resolve();
+        $command = new Command('foo');
+        $request = new Request('GET', 'http://foo.com');
+        $handler($command, $request);
+        Promise\queue()->run();
+        $this->assertContains('error was set to array', $str);
+        $this->assertContains('trace', $str);
+        $this->assertContains('class', $str);
+        $this->assertContains('message', $str);
+        $this->assertContains('string(6) "Oh no!"', $str);
+    }
+
+    public function testTracksAwsSpecificExceptions()
+    {
+        $str = '';
+        $logfn = function ($value) use (&$str) { $str .= $value; };
+        $list = new HandlerList();
+        $list->setHandler(function ($cmd, $req) {
+            return \GuzzleHttp\Promise\promise_for(new Result());
+        });
+        $list->appendInit(function ($handler) {
+            return function ($cmd, $req = null) use ($handler) {
+                $req = $req->withHeader('foo', 'bar');
+                return $handler($cmd, $req);
+            };
+        });
+        $list->appendValidate(function ($handler) {
+            return function ($cmd, $req = null) use ($handler) {
                 return new RejectedPromise(new AwsException('error', $cmd, [
                     'request'  => $req,
                     'response' => new Response(200)
@@ -85,6 +117,10 @@ class TraceMiddlewareTest extends \PHPUnit_Framework_TestCase
         $handler($command, $request);
         Promise\queue()->run();
         $this->assertContains('error was set to array', $str);
+        $this->assertContains('trace', $str);
+        $this->assertContains('class', $str);
+        $this->assertContains('message', $str);
+        $this->assertContains('string(5) "error"', $str);
     }
 
     public function testScrubsAuthStrings()

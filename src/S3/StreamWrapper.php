@@ -156,7 +156,7 @@ class StreamWrapper
         if ($this->body->isSeekable()) {
             $this->body->seek(0);
         }
-        $params = $this->getOptions();
+        $params = $this->getOptions(true);
         $params['Body'] = $this->body;
 
         // Attempt to guess the ContentType of the upload based on the
@@ -502,7 +502,7 @@ class StreamWrapper
         return $this->boolCall(function () use ($partsFrom, $partsTo) {
             // Copy the object and allow overriding default parameters if
             // desired, but by default copy metadata
-            $this->getClient()->copyObject($this->getOptions() + [
+            $this->getClient()->copyObject($this->getOptions(true) + [
                 'Bucket'            => $partsTo['Bucket'],
                 'Key'               => $partsTo['Key'],
                 'MetadataDirective' => 'COPY',
@@ -513,7 +513,7 @@ class StreamWrapper
             $this->getClient()->deleteObject([
                 'Bucket' => $partsFrom['Bucket'],
                 'Key'    => $partsFrom['Key']
-            ] + $this->getOptions());
+            ] + $this->getOptions(true));
             return true;
         });
     }
@@ -547,7 +547,7 @@ class StreamWrapper
             $this->getClient()->doesObjectExist(
                 $this->getOption('Bucket'),
                 $this->getOption('Key'),
-                $this->getOptions()
+                $this->getOptions(true)
             )
         ) {
             $errors[] = "{$path} already exists on Amazon S3";
@@ -559,9 +559,12 @@ class StreamWrapper
     /**
      * Get the stream context options available to the current stream
      *
+     * @param bool $removeContextData Set to true to remove contextual kvp's
+     *                                like 'client' from the result.
+     *
      * @return array
      */
-    private function getOptions()
+    private function getOptions($removeContextData = false)
     {
         // Context is not set when doing things like stat
         if ($this->context === null) {
@@ -573,8 +576,13 @@ class StreamWrapper
 
         $default = stream_context_get_options(stream_context_get_default());
         $default = isset($default['s3']) ? $default['s3'] : [];
+        $result = $this->params + $options + $default;
 
-        return $this->params + $options + $default;
+        if ($removeContextData) {
+            unset($result['client'], $result['seekable'], $result['cache']);
+        }
+
+        return $result;
     }
 
     /**
@@ -628,8 +636,7 @@ class StreamWrapper
      */
     private function withPath($path)
     {
-        $params = $this->getOptions();
-        unset($params['seekable'], $params['client']);
+        $params = $this->getOptions(true);
 
         return $this->getBucketKey($path) + $params;
     }
@@ -637,7 +644,7 @@ class StreamWrapper
     private function openReadStream()
     {
         $client = $this->getClient();
-        $command = $client->getCommand('GetObject', $this->getOptions());
+        $command = $client->getCommand('GetObject', $this->getOptions(true));
         $command['@http']['stream'] = true;
         $result = $client->execute($command);
         $this->body = $result['Body'];
@@ -661,7 +668,7 @@ class StreamWrapper
         try {
             // Get the body of the object and seek to the end of the stream
             $client = $this->getClient();
-            $this->body = $client->getObject($this->getOptions())['Body'];
+            $this->body = $client->getObject($this->getOptions(true))['Body'];
             $this->body->seek(0, SEEK_END);
             return true;
         } catch (S3Exception $e) {
