@@ -142,7 +142,11 @@ class SignatureV4 implements SignatureInterface
             throw new CouldNotCreateChecksumException('sha256');
         }
 
-        return Psr7\hash($request->getBody(), 'sha256');
+        try {
+            return Psr7\hash($request->getBody(), 'sha256');
+        } catch (\Exception $e) {
+            throw new CouldNotCreateChecksumException('sha256', $e);
+        }
     }
 
     protected function getPresignedPayload(RequestInterface $request)

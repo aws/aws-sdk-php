@@ -188,6 +188,21 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         $signature->signRequest($request, $credentials);
     }
 
+    /**
+     * @expectedException \Aws\Exception\CouldNotCreateChecksumException
+     */
+    public function testEnsuresContentSha256CanBeCalculatedWhenSeekFails()
+    {
+        list($request, $credentials, $signature) = $this->getFixtures();
+        $stream = Psr7\FnStream::decorate(Psr7\stream_for('foo'), [
+            'seek' => function () {
+                throw new \Exception('Could not seek');
+            }
+        ]);
+        $request = $request->withBody($stream);
+        $signature->signRequest($request, $credentials);
+    }
+
     public function testProvider()
     {
         return [

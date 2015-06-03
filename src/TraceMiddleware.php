@@ -160,22 +160,32 @@ class TraceMiddleware
 
     private function exceptionArray($e)
     {
-        if (!($e instanceof AwsException)) {
+        if (!($e instanceof \Exception)) {
             return $e;
         }
 
-        return [
+        $result = [
             'instance'   => spl_object_hash($e),
             'class'      => get_class($e),
             'message'    => $e->getMessage(),
-            'type'       => $e->getAwsErrorType(),
-            'code'       => $e->getAwsErrorCode(),
-            'requestId'  => $e->getAwsRequestId(),
-            'statusCode' => $e->getStatusCode(),
-            'result'     => $this->resultArray($e->getResult()),
-            'request'    => $this->requestArray($e->getRequest()),
-            'response'   => $this->responseArray($e->getResponse())
+            'file'       => $e->getFile(),
+            'line'       => $e->getLine(),
+            'trace'      => $e->getTraceAsString(),
         ];
+
+        if ($e instanceof AwsException) {
+            $result += [
+                'type'       => $e->getAwsErrorType(),
+                'code'       => $e->getAwsErrorCode(),
+                'requestId'  => $e->getAwsRequestId(),
+                'statusCode' => $e->getStatusCode(),
+                'result'     => $this->resultArray($e->getResult()),
+                'request'    => $this->requestArray($e->getRequest()),
+                'response'   => $this->responseArray($e->getResponse()),
+            ];
+        }
+
+        return $result;
     }
 
     private function compareArray($a, $b, $path, array &$diff)
@@ -207,11 +217,13 @@ class TraceMiddleware
     {
         if (is_scalar($value)) {
             return (string) $value;
-        } else {
-            ob_start();
-            var_dump($value);
-            return ob_get_clean();
+        } elseif ($value instanceof \Exception) {
+            $value = $this->exceptionArray($value);
         }
+
+        ob_start();
+        var_dump($value);
+        return ob_get_clean();
     }
 
     private function streamStr(StreamInterface $body)
