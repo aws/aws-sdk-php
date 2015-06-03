@@ -100,10 +100,6 @@ class MarshalerTest extends \Guzzle\Tests\GuzzleTestCase
                     'baz' => array('S' => 'baz'),
                 ))
             ),
-            array( // Empty
-                new \stdClass,
-                array('M' => array())
-            ),
             array( // Traversable
                 new \ArrayObject(array('foo' => 'foo', 'bar' => 3, 'baz' => null)),
                 array('M' => array(
@@ -210,6 +206,19 @@ JSON;
         $m = new Marshaler;
         $this->setExpectedException('InvalidArgumentException');
         $m->marshalJson('foo');
+    }
+
+    public function testMarshalEmptyMap()
+    {
+        $m = new Marshaler;
+
+        $data = $m->marshalJson('{"map":{}}');
+        $this->assertInstanceOf('stdClass', $data['map']['M']);
+        $this->assertEquals(array(), (array)$data['map']['M']);
+
+        $data = $m->marshalItem(array('map' => new \stdClass));
+        $this->assertInstanceOf('stdClass', $data['map']['M']);
+        $this->assertEquals(array(), (array)$data['map']['M']);
     }
 
     public function testUnmarshalingHandlesAllDynamoDbTypes()
