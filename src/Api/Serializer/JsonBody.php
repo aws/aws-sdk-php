@@ -69,11 +69,13 @@ class JsonBody
                 return $value;
 
             case 'map':
+                if (empty($value)) {
+                    return new \stdClass;
+                }
                 $values = $shape->getValue();
                 foreach ($value as &$v) {
                     $v = $this->format($values, $v);
                 }
-
                 return $value;
 
             case 'blob':
