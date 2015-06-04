@@ -17,6 +17,7 @@ use Symfony\Component\EventDispatcher\Event;
  * Client to interact with Amazon Cognito Identity
  *
  * @method Model createIdentityPool(array $args = array()) {@command CognitoIdentity CreateIdentityPool}
+ * @method Model deleteIdentities(array $args = array()) {@command CognitoIdentity DeleteIdentities}
  * @method Model deleteIdentityPool(array $args = array()) {@command CognitoIdentity DeleteIdentityPool}
  * @method Model describeIdentity(array $args = array()) {@command CognitoIdentity DescribeIdentity}
  * @method Model describeIdentityPool(array $args = array()) {@command CognitoIdentity DescribeIdentityPool}

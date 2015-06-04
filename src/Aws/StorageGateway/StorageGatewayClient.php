@@ -62,6 +62,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model disableGateway(array $args = array()) {@command StorageGateway DisableGateway}
  * @method Model listGateways(array $args = array()) {@command StorageGateway ListGateways}
  * @method Model listLocalDisks(array $args = array()) {@command StorageGateway ListLocalDisks}
+ * @method Model listVolumeInitiators(array $args = array()) {@command StorageGateway ListVolumeInitiators}
  * @method Model listVolumeRecoveryPoints(array $args = array()) {@command StorageGateway ListVolumeRecoveryPoints}
  * @method Model listVolumes(array $args = array()) {@command StorageGateway ListVolumes}
  * @method Model resetCache(array $args = array()) {@command StorageGateway ResetCache}

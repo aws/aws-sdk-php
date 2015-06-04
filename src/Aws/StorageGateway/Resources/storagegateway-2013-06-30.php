@@ -1754,6 +1754,46 @@ return array (
                 ),
             ),
         ),
+        'ListVolumeInitiators' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'ListVolumeInitiatorsOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'StorageGateway_20130630.ListVolumeInitiators',
+                ),
+                'VolumeARN' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 50,
+                    'maxLength' => 500,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'class' => 'InvalidGatewayRequestException',
+                ),
+                array(
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
+                    'class' => 'InternalServerErrorException',
+                ),
+            ),
+        ),
         'ListVolumeRecoveryPoints' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -2141,8 +2181,8 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'minLength' => 12,
-                    'maxLength' => 16,
+                    'minLength' => 1,
+                    'maxLength' => 100,
                 ),
                 'InitiatorName' => array(
                     'required' => true,
@@ -2154,8 +2194,8 @@ return array (
                 'SecretToAuthenticateTarget' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'minLength' => 12,
-                    'maxLength' => 16,
+                    'minLength' => 1,
+                    'maxLength' => 100,
                 ),
             ),
             'errorResponses' => array(
@@ -2827,6 +2867,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'LastSoftwareUpdate' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
             ),
         ),
         'DescribeMaintenanceStartTimeOutput' => array(
@@ -3241,6 +3285,20 @@ return array (
                 ),
             ),
         ),
+        'ListVolumeInitiatorsOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Initiators' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'Initiator',
+                        'type' => 'string',
+                    ),
+                ),
+            ),
+        ),
         'ListVolumeRecoveryPointsOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -3309,6 +3367,7 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
+                    'location' => 'json',
                 ),
             ),
         ),
@@ -3422,6 +3481,7 @@ return array (
             'properties' => array(
                 'VTLDeviceARN' => array(
                     'type' => 'string',
+                    'location' => 'json',
                 ),
             ),
         ),

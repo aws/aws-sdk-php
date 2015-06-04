@@ -76,6 +76,12 @@ code, and build robust applications and software using services like Amazon S3, 
 You can get started in minutes by installing the SDK through Composer — by requiring the ``aws/aws-sdk-php`` package —
 or by downloading the standalone zip or phar package from https://github.com/aws/aws-sdk-php/releases.
 
+.. important::
+
+    **This documentation is for Version 2 of the AWS SDK for PHP.** For documentation related to Version 3 of the AWS
+    SDK for PHP, see the `Version 3 User Guide <http://docs.aws.amazon.com/aws-sdk-php/v3/guide/>`_ and
+    `Version 3 API Reference <http://docs.aws.amazon.com/aws-sdk-php/v3/api/>`_.
+
 Getting Started
 ---------------
 

@@ -18,14 +18,17 @@ use Guzzle\Service\Resource\Model;
  * @method Model deleteLogStream(array $args = array()) {@command CloudWatchLogs DeleteLogStream}
  * @method Model deleteMetricFilter(array $args = array()) {@command CloudWatchLogs DeleteMetricFilter}
  * @method Model deleteRetentionPolicy(array $args = array()) {@command CloudWatchLogs DeleteRetentionPolicy}
+ * @method Model deleteSubscriptionFilter(array $args = array()) {@command CloudWatchLogs DeleteSubscriptionFilter}
  * @method Model describeLogGroups(array $args = array()) {@command CloudWatchLogs DescribeLogGroups}
  * @method Model describeLogStreams(array $args = array()) {@command CloudWatchLogs DescribeLogStreams}
  * @method Model describeMetricFilters(array $args = array()) {@command CloudWatchLogs DescribeMetricFilters}
+ * @method Model describeSubscriptionFilters(array $args = array()) {@command CloudWatchLogs DescribeSubscriptionFilters}
  * @method Model filterLogEvents(array $args = array()) {@command CloudWatchLogs FilterLogEvents}
  * @method Model getLogEvents(array $args = array()) {@command CloudWatchLogs GetLogEvents}
  * @method Model putLogEvents(array $args = array()) {@command CloudWatchLogs PutLogEvents}
  * @method Model putMetricFilter(array $args = array()) {@command CloudWatchLogs PutMetricFilter}
  * @method Model putRetentionPolicy(array $args = array()) {@command CloudWatchLogs PutRetentionPolicy}
+ * @method Model putSubscriptionFilter(array $args = array()) {@command CloudWatchLogs PutSubscriptionFilter}
  * @method Model testMetricFilter(array $args = array()) {@command CloudWatchLogs TestMetricFilter}
  * @method ResourceIteratorInterface getDescribeLogGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeLogGroups operation
  * @method ResourceIteratorInterface getDescribeLogStreamsIterator(array $args = array()) The input array uses the parameters of the DescribeLogStreams operation

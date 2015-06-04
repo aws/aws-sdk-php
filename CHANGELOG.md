@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## Next Release
+
+* `Aws\CloudWatchLogs` - Added support for the PutSubscriptionFilter,
+  DescribeSubscriptionFilters, and DeleteSubscriptionFilter operations.
+* `Aws\DynamoDb` - Fixed the DynamoDB `Marshaler` to better handler empty maps.
+* `Aws\CognitoIdentity` - Added support for the DeleteIdentities operation,
+  and hiding disabled identities with the ListIdentities operation.
+* `Aws\StorageGateway` - Added support for the ListVolumeInitiators operation.
+
 ## 2.8.8 - 2015-05-28
 
 * `Aws\Lambda` - Added Amazon S3 upload support.
