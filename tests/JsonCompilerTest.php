@@ -69,6 +69,7 @@ class JsonCompilerTest extends \PHPUnit_Framework_TestCase
         $c->load($this->models . '/endpoints.json');
         $entries = array_diff(scandir($c->getCacheDir()), ['.', '..']);
         $this->assertNotEmpty($entries);
+        $this->assertEquals(['data_endpoints.json.php'], array_values($entries));
         $c->purge();
         $entries = array_diff(scandir($c->getCacheDir()), ['.', '..']);
         $this->assertEmpty($entries);
@@ -87,6 +88,10 @@ class JsonCompilerTest extends \PHPUnit_Framework_TestCase
             // Relative with no leading slash
             ['foo/baz/../bar.qux', 'foo/bar.qux'],
             ['\\foo\\baz\\..\\.\\bar.qux', '/foo/bar.qux'],
+            // Phar path
+            ['phar://foo.phar/foo/bar/../baz.qux', 'phar://foo.phar/foo/baz.qux'],
+            // Phar path with windows mixed in
+            ['phar://foo.phar\\foo\\bar\\..\\baz.qux', 'phar://foo.phar/foo/baz.qux'],
         ];
     }
 

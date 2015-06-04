@@ -21,7 +21,11 @@ class JsonCompiler
      */
     public function __construct($useCache = true)
     {
-        $this->stripPath = __DIR__ . DIRECTORY_SEPARATOR;
+        // Because the cache path is normalized to convert windows backslashes
+        // to unix style /, we must do that here as well to ensure that the
+        // relative SDK directory is trimmed from the generated cache file
+        // names.
+        $this->stripPath = str_replace('\\', '/', __DIR__ . DIRECTORY_SEPARATOR);
         $this->useCache = $useCache && extension_loaded('Zend OPcache');
         $this->hasOpcacheCheck = $this->useCache
             && function_exists('opcache_is_script_cached');
@@ -75,10 +79,9 @@ class JsonCompiler
             return $this->loadJsonFromFile($path, $real);
         }
 
-        $real = $this->normalize($path);
         $cache = str_replace($this->stripPath, '', $real);
         $cache = str_replace(['\\', '/'], '_', $cache);
-        $cache = $this->cacheDir . DIRECTORY_SEPARATOR . $cache . '.php';
+        $cache = "{$this->cacheDir}/{$cache}.php";
 
         if (($this->hasOpcacheCheck && opcache_is_script_cached($cache))
             || file_exists($cache)
@@ -94,7 +97,7 @@ class JsonCompiler
 
     /**
      * Resolve relative paths without using realpath (which causes an
-     * unnecessary fstat).
+     * unnecessary fstat). And realpath does not work with phar files!
      *
      * @param $path
      *
@@ -102,20 +105,15 @@ class JsonCompiler
      */
     private function normalize($path)
     {
-        static $replace = ['/', '\\'];
         static $skip = ['' => true, '.' => true];
-
         $isPhar = substr($path, 0, 7) === 'phar://';
 
         if ($isPhar) {
             $path = substr($path, 7);
         }
 
-        $parts = explode(
-            DIRECTORY_SEPARATOR,
-            // Normalize path separators
-            str_replace($replace, DIRECTORY_SEPARATOR, $path)
-        );
+        // Normalize path separators
+        $parts = explode('/', str_replace('\\', '/', $path));
 
         $segments = [];
         foreach ($parts as $part) {
@@ -128,11 +126,11 @@ class JsonCompiler
             }
         }
 
-        $resolved = implode(DIRECTORY_SEPARATOR, $segments);
+        $resolved = implode('/', $segments);
 
         // Add a leading slash if necessary.
         if (isset($parts[0]) && $parts[0] === '') {
-            $resolved = DIRECTORY_SEPARATOR . $resolved;
+            $resolved = '/' . $resolved;
         }
 
         return $isPhar ? 'phar://' . $resolved : $resolved;

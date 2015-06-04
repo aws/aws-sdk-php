@@ -7,7 +7,11 @@ $conf = [
     'version'     => 'latest'
 ];
 
-new Aws\S3\S3Client($conf);
+// Ensure that a client can be created.
+$s3 = new Aws\S3\S3Client($conf);
+// Ensure that waiters can be found.
+$s3->getPaginator('ListObjects');
+
 // Legacy factory instantiation.
 Aws\DynamoDb\DynamoDbClient::factory($conf);
 
