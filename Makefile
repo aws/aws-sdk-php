@@ -41,7 +41,7 @@ integ:
 
 # Packages the phar and zip
 package:
-	time php build/packager.php $(SERVICE)
+	php build/packager.php $(SERVICE)
 
 guide:
 	cd docs && make html

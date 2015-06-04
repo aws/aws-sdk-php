@@ -23,4 +23,6 @@ install:
   - export AWS_SECRET_ACCESS_KEY=bar
   - travis_retry composer update $COMPOSER_OPTS --no-interaction --prefer-source
 
-script: make test
+script:
+  - make test
+  - [ -z "$COMPOSER_OPTS" ] && make package
