@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next Release
+## 2.8.9 - 2015-06-04
 
 * `Aws\CloudWatchLogs` - Added support for the PutSubscriptionFilter,
   DescribeSubscriptionFilters, and DeleteSubscriptionFilter operations.
