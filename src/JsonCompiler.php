@@ -128,10 +128,16 @@ class JsonCompiler
 
         $resolved = implode('/', $segments);
 
-        // Add a leading slash if necessary.
+        // Add leading slashes if necessary.
+        $leadingSlashesToAdd = 0;
         if (isset($parts[0]) && $parts[0] === '') {
-            $resolved = '/' . $resolved;
+            $leadingSlashesToAdd++;
         }
+        if (isset($parts[1]) && $parts[1] === '') {
+            $leadingSlashesToAdd++;
+        }
+
+        $resolved = str_repeat("/", $leadingSlashesToAdd) . $resolved;
 
         return $isPhar ? 'phar://' . $resolved : $resolved;
     }
