@@ -1,4 +1,5 @@
 {
+  "version":"2.0",
   "metadata":{
     "apiVersion":"2014-06-30",
     "endpointPrefix":"cognito-identity",
@@ -47,6 +48,32 @@
           "shape":"LimitExceededException",
           "error":{"httpStatusCode":400},
           "exception":true
+        }
+      ]
+    },
+    "DeleteIdentities":{
+      "name":"DeleteIdentities",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteIdentitiesInput"},
+      "output":{"shape":"DeleteIdentitiesResponse"},
+      "errors":[
+        {
+          "shape":"InvalidParameterException",
+          "error":{"httpStatusCode":400},
+          "exception":true
+        },
+        {
+          "shape":"TooManyRequestsException",
+          "error":{"httpStatusCode":429},
+          "exception":true
+        },
+        {
+          "shape":"InternalErrorException",
+          "exception":true,
+          "fault":true
         }
       ]
     },
@@ -200,6 +227,11 @@
           "shape":"InternalErrorException",
           "exception":true,
           "fault":true
+        },
+        {
+          "shape":"ExternalServiceException",
+          "error":{"httpStatusCode":400},
+          "exception":true
         }
       ]
     },
@@ -244,6 +276,11 @@
         },
         {
           "shape":"LimitExceededException",
+          "error":{"httpStatusCode":400},
+          "exception":true
+        },
+        {
+          "shape":"ExternalServiceException",
           "error":{"httpStatusCode":400},
           "exception":true
         }
@@ -328,6 +365,11 @@
           "shape":"InternalErrorException",
           "exception":true,
           "fault":true
+        },
+        {
+          "shape":"ExternalServiceException",
+          "error":{"httpStatusCode":400},
+          "exception":true
         }
       ]
     },
@@ -643,6 +685,11 @@
           "shape":"InternalErrorException",
           "exception":true,
           "fault":true
+        },
+        {
+          "shape":"ExternalServiceException",
+          "error":{"httpStatusCode":400},
+          "exception":true
         }
       ]
     },
@@ -725,6 +772,19 @@
       }
     },
     "DateType":{"type":"timestamp"},
+    "DeleteIdentitiesInput":{
+      "type":"structure",
+      "required":["IdentityIdsToDelete"],
+      "members":{
+        "IdentityIdsToDelete":{"shape":"IdentityIdList"}
+      }
+    },
+    "DeleteIdentitiesResponse":{
+      "type":"structure",
+      "members":{
+        "UnprocessedIdentityIds":{"shape":"UnprocessedIdentityIdList"}
+      }
+    },
     "DeleteIdentityPoolInput":{
       "type":"structure",
       "required":["IdentityPoolId"],
@@ -770,6 +830,21 @@
       "type":"list",
       "member":{"shape":"DeveloperUserIdentifier"}
     },
+    "ErrorCode":{
+      "type":"string",
+      "enum":[
+        "AccessDenied",
+        "InternalServerError"
+      ]
+    },
+    "ExternalServiceException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
     "GetCredentialsForIdentityInput":{
       "type":"structure",
       "required":["IdentityId"],
@@ -802,6 +877,7 @@
     },
     "GetIdentityPoolRolesInput":{
       "type":"structure",
+      "required":["IdentityPoolId"],
       "members":{
         "IdentityPoolId":{"shape":"IdentityPoolId"}
       }
@@ -848,6 +924,7 @@
         "Token":{"shape":"OIDCToken"}
       }
     },
+    "HideDisabled":{"type":"boolean"},
     "IdentitiesList":{
       "type":"list",
       "member":{"shape":"IdentityDescription"}
@@ -866,6 +943,12 @@
       "min":1,
       "max":50,
       "pattern":"[\\w-]+:[0-9a-f-]+"
+    },
+    "IdentityIdList":{
+      "type":"list",
+      "member":{"shape":"IdentityId"},
+      "min":1,
+      "max":60
     },
     "IdentityPool":{
       "type":"structure",
@@ -911,13 +994,13 @@
       "type":"string",
       "min":1,
       "max":128,
-      "pattern":"[\\w._-]+"
+      "pattern":"[\\w.;_-]+"
     },
     "IdentityProviderName":{
       "type":"string",
       "min":1,
       "max":128,
-      "pattern":"[\\w._-]+"
+      "pattern":"[\\w._/-]+"
     },
     "IdentityProviderToken":{
       "type":"string",
@@ -972,7 +1055,8 @@
       "members":{
         "IdentityPoolId":{"shape":"IdentityPoolId"},
         "MaxResults":{"shape":"QueryLimit"},
-        "NextToken":{"shape":"PaginationKey"}
+        "NextToken":{"shape":"PaginationKey"},
+        "HideDisabled":{"shape":"HideDisabled"}
       }
     },
     "ListIdentitiesResponse":{
@@ -1151,6 +1235,18 @@
         "Logins":{"shape":"LoginsMap"},
         "LoginsToRemove":{"shape":"LoginsList"}
       }
+    },
+    "UnprocessedIdentityId":{
+      "type":"structure",
+      "members":{
+        "IdentityId":{"shape":"IdentityId"},
+        "ErrorCode":{"shape":"ErrorCode"}
+      }
+    },
+    "UnprocessedIdentityIdList":{
+      "type":"list",
+      "member":{"shape":"UnprocessedIdentityId"},
+      "max":60
     }
   }
 }

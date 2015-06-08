@@ -176,6 +176,33 @@
         }
       ]
     },
+    "DeleteSubscriptionFilter":{
+      "name":"DeleteSubscriptionFilter",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteSubscriptionFilterRequest"},
+      "errors":[
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
+        },
+        {
+          "shape":"ResourceNotFoundException",
+          "exception":true
+        },
+        {
+          "shape":"OperationAbortedException",
+          "exception":true
+        },
+        {
+          "shape":"ServiceUnavailableException",
+          "exception":true,
+          "fault":true
+        }
+      ]
+    },
     "DescribeLogGroups":{
       "name":"DescribeLogGroups",
       "http":{
@@ -228,6 +255,30 @@
       },
       "input":{"shape":"DescribeMetricFiltersRequest"},
       "output":{"shape":"DescribeMetricFiltersResponse"},
+      "errors":[
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
+        },
+        {
+          "shape":"ResourceNotFoundException",
+          "exception":true
+        },
+        {
+          "shape":"ServiceUnavailableException",
+          "exception":true,
+          "fault":true
+        }
+      ]
+    },
+    "DescribeSubscriptionFilters":{
+      "name":"DescribeSubscriptionFilters",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeSubscriptionFiltersRequest"},
+      "output":{"shape":"DescribeSubscriptionFiltersResponse"},
       "errors":[
         {
           "shape":"InvalidParameterException",
@@ -386,6 +437,37 @@
         }
       ]
     },
+    "PutSubscriptionFilter":{
+      "name":"PutSubscriptionFilter",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutSubscriptionFilterRequest"},
+      "errors":[
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
+        },
+        {
+          "shape":"ResourceNotFoundException",
+          "exception":true
+        },
+        {
+          "shape":"OperationAbortedException",
+          "exception":true
+        },
+        {
+          "shape":"LimitExceededException",
+          "exception":true
+        },
+        {
+          "shape":"ServiceUnavailableException",
+          "exception":true,
+          "fault":true
+        }
+      ]
+    },
     "TestMetricFilter":{
       "name":"TestMetricFilter",
       "http":{
@@ -471,6 +553,17 @@
         "logGroupName":{"shape":"LogGroupName"}
       }
     },
+    "DeleteSubscriptionFilterRequest":{
+      "type":"structure",
+      "required":[
+        "logGroupName",
+        "filterName"
+      ],
+      "members":{
+        "logGroupName":{"shape":"LogGroupName"},
+        "filterName":{"shape":"FilterName"}
+      }
+    },
     "Descending":{"type":"boolean"},
     "DescribeLimit":{
       "type":"integer",
@@ -527,6 +620,27 @@
         "metricFilters":{"shape":"MetricFilters"},
         "nextToken":{"shape":"NextToken"}
       }
+    },
+    "DescribeSubscriptionFiltersRequest":{
+      "type":"structure",
+      "required":["logGroupName"],
+      "members":{
+        "logGroupName":{"shape":"LogGroupName"},
+        "filterNamePrefix":{"shape":"FilterName"},
+        "nextToken":{"shape":"NextToken"},
+        "limit":{"shape":"DescribeLimit"}
+      }
+    },
+    "DescribeSubscriptionFiltersResponse":{
+      "type":"structure",
+      "members":{
+        "subscriptionFilters":{"shape":"SubscriptionFilters"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "DestinationArn":{
+      "type":"string",
+      "min":1
     },
     "EventId":{"type":"string"},
     "EventMessage":{
@@ -839,6 +953,23 @@
         "retentionInDays":{"shape":"Days"}
       }
     },
+    "PutSubscriptionFilterRequest":{
+      "type":"structure",
+      "required":[
+        "logGroupName",
+        "filterName",
+        "filterPattern",
+        "destinationArn",
+        "roleArn"
+      ],
+      "members":{
+        "logGroupName":{"shape":"LogGroupName"},
+        "filterName":{"shape":"FilterName"},
+        "filterPattern":{"shape":"FilterPattern"},
+        "destinationArn":{"shape":"DestinationArn"},
+        "roleArn":{"shape":"RoleArn"}
+      }
+    },
     "RejectedLogEventsInfo":{
       "type":"structure",
       "members":{
@@ -858,6 +989,10 @@
       "members":{
       },
       "exception":true
+    },
+    "RoleArn":{
+      "type":"string",
+      "min":1
     },
     "SearchedLogStream":{
       "type":"structure",
@@ -885,6 +1020,21 @@
     "StoredBytes":{
       "type":"long",
       "min":0
+    },
+    "SubscriptionFilter":{
+      "type":"structure",
+      "members":{
+        "filterName":{"shape":"FilterName"},
+        "logGroupName":{"shape":"LogGroupName"},
+        "filterPattern":{"shape":"FilterPattern"},
+        "destinationArn":{"shape":"DestinationArn"},
+        "roleArn":{"shape":"RoleArn"},
+        "creationTime":{"shape":"Timestamp"}
+      }
+    },
+    "SubscriptionFilters":{
+      "type":"list",
+      "member":{"shape":"SubscriptionFilter"}
     },
     "TestEventMessages":{
       "type":"list",

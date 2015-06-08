@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## Next Release
+
+* `Aws\CloudWatchLogs` - Added support for the PutSubscriptionFilter,
+  DescribeSubscriptionFilters, and DeleteSubscriptionFilter operations.
+* `Aws\CognitoIdentity` - Added support for the DeleteIdentities operation,
+  and hiding disabled identities with the ListIdentities operation.
+* `Aws\S3` - Improvements to how errors are handled in the `StreamWrapper`.
+* `Aws\StorageGateway` - Added support for the ListVolumeInitiators operation.
+* `Aws` - Fixes a bug such that empty maps are handled correctly in JSON
+  requests.
+
 ## 3.0.3 - 2015-06-01
 
 * `Aws\MachineLearning` - Fixed the `Predict` operation to use the provided

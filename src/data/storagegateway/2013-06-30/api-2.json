@@ -1,4 +1,5 @@
 {
+  "version":"2.0",
   "metadata":{
     "apiVersion":"2013-06-30",
     "endpointPrefix":"storagegateway",
@@ -744,6 +745,27 @@
         }
       ]
     },
+    "ListVolumeInitiators":{
+      "name":"ListVolumeInitiators",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListVolumeInitiatorsInput"},
+      "output":{"shape":"ListVolumeInitiatorsOutput"},
+      "errors":[
+        {
+          "shape":"InvalidGatewayRequestException",
+          "error":{"httpStatusCode":400},
+          "exception":true
+        },
+        {
+          "shape":"InternalServerError",
+          "error":{"httpStatusCode":500},
+          "exception":true
+        }
+      ]
+    },
     "ListVolumeRecoveryPoints":{
       "name":"ListVolumeRecoveryPoints",
       "http":{
@@ -1199,8 +1221,8 @@
     },
     "ChapSecret":{
       "type":"string",
-      "min":12,
-      "max":16
+      "min":1,
+      "max":100
     },
     "ClientToken":{
       "type":"string",
@@ -1503,7 +1525,8 @@
         "GatewayState":{"shape":"GatewayState"},
         "GatewayNetworkInterfaces":{"shape":"GatewayNetworkInterfaces"},
         "GatewayType":{"shape":"GatewayType"},
-        "NextUpdateAvailabilityDate":{"shape":"NextUpdateAvailabilityDate"}
+        "NextUpdateAvailabilityDate":{"shape":"NextUpdateAvailabilityDate"},
+        "LastSoftwareUpdate":{"shape":"LastSoftwareUpdate"}
       }
     },
     "DescribeMaintenanceStartTimeInput":{
@@ -1838,6 +1861,15 @@
       "min":0,
       "max":23
     },
+    "Initiator":{
+      "type":"string",
+      "min":1,
+      "max":50
+    },
+    "Initiators":{
+      "type":"list",
+      "member":{"shape":"Initiator"}
+    },
     "InternalServerError":{
       "type":"structure",
       "members":{
@@ -1861,6 +1893,11 @@
       "min":1,
       "max":255,
       "pattern":"[0-9a-z:.-]+"
+    },
+    "LastSoftwareUpdate":{
+      "type":"string",
+      "min":1,
+      "max":25
     },
     "ListGatewaysInput":{
       "type":"structure",
@@ -1888,6 +1925,19 @@
       "members":{
         "GatewayARN":{"shape":"GatewayARN"},
         "Disks":{"shape":"Disks"}
+      }
+    },
+    "ListVolumeInitiatorsInput":{
+      "type":"structure",
+      "required":["VolumeARN"],
+      "members":{
+        "VolumeARN":{"shape":"VolumeARN"}
+      }
+    },
+    "ListVolumeInitiatorsOutput":{
+      "type":"structure",
+      "members":{
+        "Initiators":{"shape":"Initiators"}
       }
     },
     "ListVolumeRecoveryPointsInput":{
@@ -2118,7 +2168,7 @@
     },
     "TapeBarcode":{
       "type":"string",
-      "min":8,
+      "min":7,
       "max":16,
       "pattern":"^[A-Z0-9]*$"
     },
