@@ -142,7 +142,7 @@ call the ``Aws\S3\S3Client::putObject()`` method.
 .. code-block:: php
 
     // Use an Aws\Sdk class to create the S3Client object.
-    $s3 = $sdk->createS3();
+    $s3Client = $sdk->createS3();
 
     // Send a PutObject request and get the result object.
     $result = $s3Client->putObject([
