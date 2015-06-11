@@ -17,7 +17,7 @@ $burgomaster->recursiveCopy('vendor/guzzle/guzzle/src/Guzzle', 'Guzzle', ['php',
 $burgomaster->recursiveCopy('vendor/doctrine/cache/lib/Doctrine', 'Doctrine');
 $burgomaster->recursiveCopy('vendor/psr/log/Psr', 'Psr');
 $burgomaster->recursiveCopy('vendor/monolog/monolog/src/Monolog', 'Monolog');
-$burgomaster->recursiveCopy('vendor/symfony/event-dispatcher/Symfony', 'Symfony');
+$burgomaster->recursiveCopy('vendor/symfony/event-dispatcher', 'Symfony/Component/EventDispatcher');
 
 $burgomaster->createAutoloader(array(), $autoloaderFilename);
 $burgomaster->createZip(__DIR__ . '/artifacts/aws.zip');

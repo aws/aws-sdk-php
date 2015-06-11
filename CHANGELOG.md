@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## Next Release
+
+* `Aws\AutoScaling` - Added support for attaching and detaching load balancers.
+* `Aws\Ec2` - Added support for VPC flow logs and the M4 instance types.
+* `Aws\Ecs` - Added support for the UpdateContainerAgent operation.
+* `Aws\CloudHsm` - Fixed a configuration issue that was affecting some operations.
+
 ## 2.8.9 - 2015-06-04
 
 * `Aws\CloudWatchLogs` - Added support for the PutSubscriptionFilter,

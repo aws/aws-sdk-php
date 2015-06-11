@@ -111,6 +111,54 @@ return array (
                     'maxLength' => 1600,
                 ),
             ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
+                ),
+            ),
+        ),
+        'AttachLoadBalancers' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'AttachLoadBalancers',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2011-01-01',
+                ),
+                'AutoScalingGroupName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 1600,
+                ),
+                'LoadBalancerNames' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'LoadBalancerNames.member',
+                    'items' => array(
+                        'name' => 'XmlStringMaxLen255',
+                        'type' => 'string',
+                        'minLength' => 1,
+                        'maxLength' => 255,
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
+                ),
+            ),
         ),
         'CompleteLifecycleAction' => array(
             'httpMethod' => 'POST',
@@ -154,6 +202,12 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -305,8 +359,12 @@ return array (
                     'class' => 'AlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'The limit for the number of Auto Scaling groups or launch configurations has already been reached.',
+                    'reason' => 'You have already reached a limit for your Auto Scaling resources (for example, groups, launch configurations, or lifecycle hooks). For more information, see DescribeAccountLimits.',
                     'class' => 'LimitExceededException',
+                ),
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -445,7 +503,7 @@ return array (
                                     'Iops' => array(
                                         'type' => 'numeric',
                                         'minimum' => 100,
-                                        'maximum' => 30000,
+                                        'maximum' => 20000,
                                     ),
                                 ),
                             ),
@@ -501,8 +559,12 @@ return array (
                     'class' => 'AlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'The limit for the number of Auto Scaling groups or launch configurations has already been reached.',
+                    'reason' => 'You have already reached a limit for your Auto Scaling resources (for example, groups, launch configurations, or lifecycle hooks). For more information, see DescribeAccountLimits.',
                     'class' => 'LimitExceededException',
+                ),
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -558,12 +620,16 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The limit for the number of Auto Scaling groups or launch configurations has already been reached.',
+                    'reason' => 'You have already reached a limit for your Auto Scaling resources (for example, groups, launch configurations, or lifecycle hooks). For more information, see DescribeAccountLimits.',
                     'class' => 'LimitExceededException',
                 ),
                 array(
                     'reason' => 'You already have an Auto Scaling group or launch configuration with this name.',
                     'class' => 'AlreadyExistsException',
+                ),
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -606,6 +672,10 @@ return array (
                     'reason' => 'The Auto Scaling group or launch configuration can\'t be deleted because it is in use.',
                     'class' => 'ResourceInUseException',
                 ),
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
+                ),
             ),
         ),
         'DeleteLaunchConfiguration' => array(
@@ -637,6 +707,10 @@ return array (
                 array(
                     'reason' => 'The Auto Scaling group or launch configuration can\'t be deleted because it is in use.',
                     'class' => 'ResourceInUseException',
+                ),
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -672,6 +746,12 @@ return array (
                     'maxLength' => 1600,
                 ),
             ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
+                ),
+            ),
         ),
         'DeleteNotificationConfiguration' => array(
             'httpMethod' => 'POST',
@@ -703,6 +783,12 @@ return array (
                     'location' => 'aws.query',
                     'minLength' => 1,
                     'maxLength' => 1600,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -737,6 +823,12 @@ return array (
                     'maxLength' => 1600,
                 ),
             ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
+                ),
+            ),
         ),
         'DeleteScheduledAction' => array(
             'httpMethod' => 'POST',
@@ -767,6 +859,12 @@ return array (
                     'location' => 'aws.query',
                     'minLength' => 1,
                     'maxLength' => 1600,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -820,6 +918,12 @@ return array (
                     ),
                 ),
             ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
+                ),
+            ),
         ),
         'DescribeAccountLimits' => array(
             'httpMethod' => 'POST',
@@ -839,6 +943,12 @@ return array (
                     'default' => '2011-01-01',
                 ),
             ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
+                ),
+            ),
         ),
         'DescribeAdjustmentTypes' => array(
             'httpMethod' => 'POST',
@@ -856,6 +966,12 @@ return array (
                     'static' => true,
                     'location' => 'aws.query',
                     'default' => '2011-01-01',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -901,6 +1017,10 @@ return array (
                     'reason' => 'The NextToken value is not valid.',
                     'class' => 'InvalidNextTokenException',
                 ),
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
+                ),
             ),
         ),
         'DescribeAutoScalingInstances' => array(
@@ -945,6 +1065,10 @@ return array (
                     'reason' => 'The NextToken value is not valid.',
                     'class' => 'InvalidNextTokenException',
                 ),
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
+                ),
             ),
         ),
         'DescribeAutoScalingNotificationTypes' => array(
@@ -963,6 +1087,12 @@ return array (
                     'static' => true,
                     'location' => 'aws.query',
                     'default' => '2011-01-01',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -1008,6 +1138,10 @@ return array (
                     'reason' => 'The NextToken value is not valid.',
                     'class' => 'InvalidNextTokenException',
                 ),
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
+                ),
             ),
         ),
         'DescribeLifecycleHookTypes' => array(
@@ -1026,6 +1160,12 @@ return array (
                     'static' => true,
                     'location' => 'aws.query',
                     'default' => '2011-01-01',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -1065,6 +1205,52 @@ return array (
                     ),
                 ),
             ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
+                ),
+            ),
+        ),
+        'DescribeLoadBalancers' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DescribeLoadBalancersResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeLoadBalancers',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2011-01-01',
+                ),
+                'AutoScalingGroupName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 1600,
+                ),
+                'NextToken' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'MaxRecords' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
+                ),
+            ),
         ),
         'DescribeMetricCollectionTypes' => array(
             'httpMethod' => 'POST',
@@ -1082,6 +1268,12 @@ return array (
                     'static' => true,
                     'location' => 'aws.query',
                     'default' => '2011-01-01',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -1126,6 +1318,10 @@ return array (
                 array(
                     'reason' => 'The NextToken value is not valid.',
                     'class' => 'InvalidNextTokenException',
+                ),
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -1177,6 +1373,10 @@ return array (
                     'reason' => 'The NextToken value is not valid.',
                     'class' => 'InvalidNextTokenException',
                 ),
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
+                ),
             ),
         ),
         'DescribeScalingActivities' => array(
@@ -1225,6 +1425,10 @@ return array (
                     'reason' => 'The NextToken value is not valid.',
                     'class' => 'InvalidNextTokenException',
                 ),
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
+                ),
             ),
         ),
         'DescribeScalingProcessTypes' => array(
@@ -1243,6 +1447,12 @@ return array (
                     'static' => true,
                     'location' => 'aws.query',
                     'default' => '2011-01-01',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -1312,6 +1522,10 @@ return array (
                     'reason' => 'The NextToken value is not valid.',
                     'class' => 'InvalidNextTokenException',
                 ),
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
+                ),
             ),
         ),
         'DescribeTags' => array(
@@ -1367,6 +1581,10 @@ return array (
                     'reason' => 'The NextToken value is not valid.',
                     'class' => 'InvalidNextTokenException',
                 ),
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
+                ),
             ),
         ),
         'DescribeTerminationPolicyTypes' => array(
@@ -1385,6 +1603,12 @@ return array (
                     'static' => true,
                     'location' => 'aws.query',
                     'default' => '2011-01-01',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -1430,6 +1654,54 @@ return array (
                     'location' => 'aws.query',
                 ),
             ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
+                ),
+            ),
+        ),
+        'DetachLoadBalancers' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DetachLoadBalancers',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2011-01-01',
+                ),
+                'AutoScalingGroupName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 1600,
+                ),
+                'LoadBalancerNames' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'LoadBalancerNames.member',
+                    'items' => array(
+                        'name' => 'XmlStringMaxLen255',
+                        'type' => 'string',
+                        'minLength' => 1,
+                        'maxLength' => 255,
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
+                ),
+            ),
         ),
         'DisableMetricsCollection' => array(
             'httpMethod' => 'POST',
@@ -1465,6 +1737,12 @@ return array (
                         'minLength' => 1,
                         'maxLength' => 255,
                     ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -1511,6 +1789,12 @@ return array (
                     'maxLength' => 255,
                 ),
             ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
+                ),
+            ),
         ),
         'EnterStandby' => array(
             'httpMethod' => 'POST',
@@ -1552,6 +1836,12 @@ return array (
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -1596,6 +1886,10 @@ return array (
                     'reason' => 'The Auto Scaling group can\'t be deleted because there are scaling activities in progress.',
                     'class' => 'ScalingActivityInProgressException',
                 ),
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
+                ),
             ),
         ),
         'ExitStandby' => array(
@@ -1632,6 +1926,12 @@ return array (
                     'location' => 'aws.query',
                     'minLength' => 1,
                     'maxLength' => 1600,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -1699,8 +1999,12 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The limit for the number of Auto Scaling groups or launch configurations has already been reached.',
+                    'reason' => 'You have already reached a limit for your Auto Scaling resources (for example, groups, launch configurations, or lifecycle hooks). For more information, see DescribeAccountLimits.',
                     'class' => 'LimitExceededException',
+                ),
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -1750,8 +2054,12 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The limit for the number of Auto Scaling groups or launch configurations has already been reached.',
+                    'reason' => 'You have already reached a limit for your Auto Scaling resources (for example, groups, launch configurations, or lifecycle hooks). For more information, see DescribeAccountLimits.',
                     'class' => 'LimitExceededException',
+                ),
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -1786,11 +2094,6 @@ return array (
                     'minLength' => 1,
                     'maxLength' => 255,
                 ),
-                'ScalingAdjustment' => array(
-                    'required' => true,
-                    'type' => 'numeric',
-                    'location' => 'aws.query',
-                ),
                 'AdjustmentType' => array(
                     'required' => true,
                     'type' => 'string',
@@ -1798,19 +2101,27 @@ return array (
                     'minLength' => 1,
                     'maxLength' => 255,
                 ),
-                'Cooldown' => array(
+                'MinAdjustmentStep' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
-                'MinAdjustmentStep' => array(
+                'ScalingAdjustment' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'Cooldown' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The limit for the number of Auto Scaling groups or launch configurations has already been reached.',
+                    'reason' => 'You have already reached a limit for your Auto Scaling resources (for example, groups, launch configurations, or lifecycle hooks). For more information, see DescribeAccountLimits.',
                     'class' => 'LimitExceededException',
+                ),
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -1897,8 +2208,12 @@ return array (
                     'class' => 'AlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'The limit for the number of Auto Scaling groups or launch configurations has already been reached.',
+                    'reason' => 'You have already reached a limit for your Auto Scaling resources (for example, groups, launch configurations, or lifecycle hooks). For more information, see DescribeAccountLimits.',
                     'class' => 'LimitExceededException',
+                ),
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -1941,6 +2256,12 @@ return array (
                     'maxLength' => 36,
                 ),
             ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
+                ),
+            ),
         ),
         'ResumeProcesses' => array(
             'httpMethod' => 'POST',
@@ -1976,6 +2297,16 @@ return array (
                         'minLength' => 1,
                         'maxLength' => 255,
                     ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The Auto Scaling group or launch configuration can\'t be deleted because it is in use.',
+                    'class' => 'ResourceInUseException',
+                ),
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -2019,6 +2350,10 @@ return array (
                     'reason' => 'The Auto Scaling group can\'t be deleted because there are scaling activities in progress.',
                     'class' => 'ScalingActivityInProgressException',
                 ),
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
+                ),
             ),
         ),
         'SetInstanceHealth' => array(
@@ -2058,6 +2393,12 @@ return array (
                     'location' => 'aws.query',
                 ),
             ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
+                ),
+            ),
         ),
         'SuspendProcesses' => array(
             'httpMethod' => 'POST',
@@ -2093,6 +2434,16 @@ return array (
                         'minLength' => 1,
                         'maxLength' => 255,
                     ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The Auto Scaling group or launch configuration can\'t be deleted because it is in use.',
+                    'class' => 'ResourceInUseException',
+                ),
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -2131,6 +2482,10 @@ return array (
                 array(
                     'reason' => 'The Auto Scaling group can\'t be deleted because there are scaling activities in progress.',
                     'class' => 'ScalingActivityInProgressException',
+                ),
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -2230,6 +2585,10 @@ return array (
                 array(
                     'reason' => 'The Auto Scaling group can\'t be deleted because there are scaling activities in progress.',
                     'class' => 'ScalingActivityInProgressException',
+                ),
+                array(
+                    'reason' => 'You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).',
+                    'class' => 'ResourceContentionException',
                 ),
             ),
         ),
@@ -2681,6 +3040,33 @@ return array (
                 ),
             ),
         ),
+        'DescribeLoadBalancersResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'LoadBalancers' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'LoadBalancerState',
+                        'type' => 'object',
+                        'sentAs' => 'member',
+                        'properties' => array(
+                            'LoadBalancerName' => array(
+                                'type' => 'string',
+                            ),
+                            'State' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+                'NextToken' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+            ),
+        ),
         'DescribeMetricCollectionTypesAnswer' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -2763,17 +3149,20 @@ return array (
                             'PolicyName' => array(
                                 'type' => 'string',
                             ),
-                            'ScalingAdjustment' => array(
+                            'PolicyARN' => array(
+                                'type' => 'string',
+                            ),
+                            'MinAdjustmentStep' => array(
                                 'type' => 'numeric',
                             ),
                             'AdjustmentType' => array(
                                 'type' => 'string',
                             ),
-                            'Cooldown' => array(
+                            'ScalingAdjustment' => array(
                                 'type' => 'numeric',
                             ),
-                            'PolicyARN' => array(
-                                'type' => 'string',
+                            'Cooldown' => array(
+                                'type' => 'numeric',
                             ),
                             'Alarms' => array(
                                 'type' => 'array',
@@ -2790,9 +3179,6 @@ return array (
                                         ),
                                     ),
                                 ),
-                            ),
-                            'MinAdjustmentStep' => array(
-                                'type' => 'numeric',
                             ),
                         ),
                     ),

@@ -19,6 +19,7 @@ namespace Aws\CloudHsm;
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
+use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
 
@@ -68,6 +69,7 @@ class CloudHsmClient extends AbstractClient
                 Options::VERSION             => self::LATEST_API_VERSION,
                 Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/cloudhsm-%s.php'
             ))
+            ->setExceptionParser(new JsonQueryExceptionParser)
             ->build();
     }
 }

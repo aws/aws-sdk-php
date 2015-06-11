@@ -51,7 +51,14 @@ use Guzzle\Service\Resource\Model;
  * @method Model stopTask(array $args = array()) {@command Ecs StopTask}
  * @method Model submitContainerStateChange(array $args = array()) {@command Ecs SubmitContainerStateChange}
  * @method Model submitTaskStateChange(array $args = array()) {@command Ecs SubmitTaskStateChange}
+ * @method Model updateContainerAgent(array $args = array()) {@command Ecs UpdateContainerAgent}
  * @method Model updateService(array $args = array()) {@command Ecs UpdateService}
+ * @method ResourceIteratorInterface getListClustersIterator(array $args = array()) The input array uses the parameters of the ListClusters operation
+ * @method ResourceIteratorInterface getListContainerInstancesIterator(array $args = array()) The input array uses the parameters of the ListContainerInstances operation
+ * @method ResourceIteratorInterface getListTaskDefinitionsIterator(array $args = array()) The input array uses the parameters of the ListTaskDefinitions operation
+ * @method ResourceIteratorInterface getListTaskDefinitionFamiliesIterator(array $args = array()) The input array uses the parameters of the ListTaskDefinitionFamilies operation
+ * @method ResourceIteratorInterface getListTasksIterator(array $args = array()) The input array uses the parameters of the ListTasks operation
+ * @method ResourceIteratorInterface getListServicesIterator(array $args = array()) The input array uses the parameters of the ListServices operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-ecs.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.Ecs.EcsClient.html API docs

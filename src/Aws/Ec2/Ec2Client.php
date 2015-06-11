@@ -52,6 +52,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model copySnapshot(array $args = array()) {@command Ec2 CopySnapshot}
  * @method Model createCustomerGateway(array $args = array()) {@command Ec2 CreateCustomerGateway}
  * @method Model createDhcpOptions(array $args = array()) {@command Ec2 CreateDhcpOptions}
+ * @method Model createFlowLogs(array $args = array()) {@command Ec2 CreateFlowLogs}
  * @method Model createImage(array $args = array()) {@command Ec2 CreateImage}
  * @method Model createInstanceExportTask(array $args = array()) {@command Ec2 CreateInstanceExportTask}
  * @method Model createInternetGateway(array $args = array()) {@command Ec2 CreateInternetGateway}
@@ -77,6 +78,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model createVpnGateway(array $args = array()) {@command Ec2 CreateVpnGateway}
  * @method Model deleteCustomerGateway(array $args = array()) {@command Ec2 DeleteCustomerGateway}
  * @method Model deleteDhcpOptions(array $args = array()) {@command Ec2 DeleteDhcpOptions}
+ * @method Model deleteFlowLogs(array $args = array()) {@command Ec2 DeleteFlowLogs}
  * @method Model deleteInternetGateway(array $args = array()) {@command Ec2 DeleteInternetGateway}
  * @method Model deleteKeyPair(array $args = array()) {@command Ec2 DeleteKeyPair}
  * @method Model deleteNetworkAcl(array $args = array()) {@command Ec2 DeleteNetworkAcl}
@@ -107,6 +109,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model describeCustomerGateways(array $args = array()) {@command Ec2 DescribeCustomerGateways}
  * @method Model describeDhcpOptions(array $args = array()) {@command Ec2 DescribeDhcpOptions}
  * @method Model describeExportTasks(array $args = array()) {@command Ec2 DescribeExportTasks}
+ * @method Model describeFlowLogs(array $args = array()) {@command Ec2 DescribeFlowLogs}
  * @method Model describeImageAttribute(array $args = array()) {@command Ec2 DescribeImageAttribute}
  * @method Model describeImages(array $args = array()) {@command Ec2 DescribeImages}
  * @method Model describeImportImageTasks(array $args = array()) {@command Ec2 DescribeImportImageTasks}
