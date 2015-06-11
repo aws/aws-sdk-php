@@ -28,6 +28,10 @@
         {
           "shape":"ClientException",
           "exception":true
+        },
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
         }
       ]
     },
@@ -47,6 +51,14 @@
         },
         {
           "shape":"ClientException",
+          "exception":true
+        },
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
+        },
+        {
+          "shape":"ClusterNotFoundException",
           "exception":true
         }
       ]
@@ -68,6 +80,22 @@
         {
           "shape":"ClientException",
           "exception":true
+        },
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
+        },
+        {
+          "shape":"ClusterNotFoundException",
+          "exception":true
+        },
+        {
+          "shape":"ClusterContainsContainerInstancesException",
+          "exception":true
+        },
+        {
+          "shape":"ClusterContainsServicesException",
+          "exception":true
         }
       ]
     },
@@ -87,6 +115,18 @@
         },
         {
           "shape":"ClientException",
+          "exception":true
+        },
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
+        },
+        {
+          "shape":"ClusterNotFoundException",
+          "exception":true
+        },
+        {
+          "shape":"ServiceNotFoundException",
           "exception":true
         }
       ]
@@ -108,6 +148,14 @@
         {
           "shape":"ClientException",
           "exception":true
+        },
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
+        },
+        {
+          "shape":"ClusterNotFoundException",
+          "exception":true
         }
       ]
     },
@@ -127,6 +175,10 @@
         },
         {
           "shape":"ClientException",
+          "exception":true
+        },
+        {
+          "shape":"InvalidParameterException",
           "exception":true
         }
       ]
@@ -148,6 +200,10 @@
         {
           "shape":"ClientException",
           "exception":true
+        },
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
         }
       ]
     },
@@ -167,6 +223,14 @@
         },
         {
           "shape":"ClientException",
+          "exception":true
+        },
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
+        },
+        {
+          "shape":"ClusterNotFoundException",
           "exception":true
         }
       ]
@@ -188,6 +252,14 @@
         {
           "shape":"ClientException",
           "exception":true
+        },
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
+        },
+        {
+          "shape":"ClusterNotFoundException",
+          "exception":true
         }
       ]
     },
@@ -208,6 +280,10 @@
         {
           "shape":"ClientException",
           "exception":true
+        },
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
         }
       ]
     },
@@ -227,6 +303,14 @@
         },
         {
           "shape":"ClientException",
+          "exception":true
+        },
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
+        },
+        {
+          "shape":"ClusterNotFoundException",
           "exception":true
         }
       ]
@@ -268,6 +352,10 @@
         {
           "shape":"ClientException",
           "exception":true
+        },
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
         }
       ]
     },
@@ -287,6 +375,14 @@
         },
         {
           "shape":"ClientException",
+          "exception":true
+        },
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
+        },
+        {
+          "shape":"ClusterNotFoundException",
           "exception":true
         }
       ]
@@ -308,6 +404,14 @@
         {
           "shape":"ClientException",
           "exception":true
+        },
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
+        },
+        {
+          "shape":"ClusterNotFoundException",
+          "exception":true
         }
       ]
     },
@@ -327,6 +431,10 @@
         },
         {
           "shape":"ClientException",
+          "exception":true
+        },
+        {
+          "shape":"InvalidParameterException",
           "exception":true
         }
       ]
@@ -348,6 +456,10 @@
         {
           "shape":"ClientException",
           "exception":true
+        },
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
         }
       ]
     },
@@ -367,6 +479,14 @@
         },
         {
           "shape":"ClientException",
+          "exception":true
+        },
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
+        },
+        {
+          "shape":"ClusterNotFoundException",
           "exception":true
         }
       ]
@@ -408,6 +528,10 @@
         {
           "shape":"ClientException",
           "exception":true
+        },
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
         }
       ]
     },
@@ -427,6 +551,14 @@
         },
         {
           "shape":"ClientException",
+          "exception":true
+        },
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
+        },
+        {
+          "shape":"ClusterNotFoundException",
           "exception":true
         }
       ]
@@ -448,6 +580,14 @@
         {
           "shape":"ClientException",
           "exception":true
+        },
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
+        },
+        {
+          "shape":"ClusterNotFoundException",
+          "exception":true
         }
       ]
     },
@@ -467,6 +607,14 @@
         },
         {
           "shape":"ClientException",
+          "exception":true
+        },
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
+        },
+        {
+          "shape":"ClusterNotFoundException",
           "exception":true
         }
       ]
@@ -511,6 +659,46 @@
         }
       ]
     },
+    "UpdateContainerAgent":{
+      "name":"UpdateContainerAgent",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateContainerAgentRequest"},
+      "output":{"shape":"UpdateContainerAgentResponse"},
+      "errors":[
+        {
+          "shape":"ServerException",
+          "exception":true,
+          "fault":true
+        },
+        {
+          "shape":"ClientException",
+          "exception":true
+        },
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
+        },
+        {
+          "shape":"ClusterNotFoundException",
+          "exception":true
+        },
+        {
+          "shape":"UpdateInProgressException",
+          "exception":true
+        },
+        {
+          "shape":"NoUpdateAvailableException",
+          "exception":true
+        },
+        {
+          "shape":"MissingVersionException",
+          "exception":true
+        }
+      ]
+    },
     "UpdateService":{
       "name":"UpdateService",
       "http":{
@@ -528,11 +716,38 @@
         {
           "shape":"ClientException",
           "exception":true
+        },
+        {
+          "shape":"InvalidParameterException",
+          "exception":true
+        },
+        {
+          "shape":"ClusterNotFoundException",
+          "exception":true
+        },
+        {
+          "shape":"ServiceNotFoundException",
+          "exception":true
+        },
+        {
+          "shape":"ServiceNotActiveException",
+          "exception":true
         }
       ]
     }
   },
   "shapes":{
+    "AgentUpdateStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "STAGING",
+        "STAGED",
+        "UPDATING",
+        "UPDATED",
+        "FAILED"
+      ]
+    },
     "Boolean":{"type":"boolean"},
     "BoxedBoolean":{
       "type":"boolean",
@@ -557,8 +772,27 @@
         "status":{"shape":"String"},
         "registeredContainerInstancesCount":{"shape":"Integer"},
         "runningTasksCount":{"shape":"Integer"},
-        "pendingTasksCount":{"shape":"Integer"}
+        "pendingTasksCount":{"shape":"Integer"},
+        "activeServicesCount":{"shape":"Integer"}
       }
+    },
+    "ClusterContainsContainerInstancesException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "ClusterContainsServicesException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "ClusterNotFoundException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
     },
     "Clusters":{
       "type":"list",
@@ -602,12 +836,14 @@
       "members":{
         "containerInstanceArn":{"shape":"String"},
         "ec2InstanceId":{"shape":"String"},
+        "versionInfo":{"shape":"VersionInfo"},
         "remainingResources":{"shape":"Resources"},
         "registeredResources":{"shape":"Resources"},
         "status":{"shape":"String"},
         "agentConnected":{"shape":"Boolean"},
         "runningTasksCount":{"shape":"Integer"},
-        "pendingTasksCount":{"shape":"Integer"}
+        "pendingTasksCount":{"shape":"Integer"},
+        "agentUpdateStatus":{"shape":"AgentUpdateStatus"}
       }
     },
     "ContainerInstances":{
@@ -643,7 +879,11 @@
     },
     "CreateServiceRequest":{
       "type":"structure",
-      "required":["serviceName"],
+      "required":[
+        "serviceName",
+        "taskDefinition",
+        "desiredCount"
+      ],
       "members":{
         "cluster":{"shape":"String"},
         "serviceName":{"shape":"String"},
@@ -803,6 +1043,14 @@
         "failures":{"shape":"Failures"}
       }
     },
+    "DesiredStatus":{
+      "type":"string",
+      "enum":[
+        "RUNNING",
+        "PENDING",
+        "STOPPED"
+      ]
+    },
     "DiscoverPollEndpointRequest":{
       "type":"structure",
       "members":{
@@ -813,7 +1061,8 @@
     "DiscoverPollEndpointResponse":{
       "type":"structure",
       "members":{
-        "endpoint":{"shape":"String"}
+        "endpoint":{"shape":"String"},
+        "telemetryEndpoint":{"shape":"String"}
       }
     },
     "Double":{"type":"double"},
@@ -839,6 +1088,12 @@
       }
     },
     "Integer":{"type":"integer"},
+    "InvalidParameterException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
     "KeyValuePair":{
       "type":"structure",
       "members":{
@@ -929,7 +1184,8 @@
         "nextToken":{"shape":"String"},
         "maxResults":{"shape":"BoxedInteger"},
         "startedBy":{"shape":"String"},
-        "serviceName":{"shape":"String"}
+        "serviceName":{"shape":"String"},
+        "desiredStatus":{"shape":"DesiredStatus"}
       }
     },
     "ListTasksResponse":{
@@ -952,6 +1208,12 @@
       "member":{"shape":"LoadBalancer"}
     },
     "Long":{"type":"long"},
+    "MissingVersionException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
     "MountPoint":{
       "type":"structure",
       "members":{
@@ -969,18 +1231,26 @@
       "members":{
         "bindIP":{"shape":"String"},
         "containerPort":{"shape":"BoxedInteger"},
-        "hostPort":{"shape":"BoxedInteger"}
+        "hostPort":{"shape":"BoxedInteger"},
+        "protocol":{"shape":"TransportProtocol"}
       }
     },
     "NetworkBindings":{
       "type":"list",
       "member":{"shape":"NetworkBinding"}
     },
+    "NoUpdateAvailableException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
     "PortMapping":{
       "type":"structure",
       "members":{
         "containerPort":{"shape":"Integer"},
-        "hostPort":{"shape":"Integer"}
+        "hostPort":{"shape":"Integer"},
+        "protocol":{"shape":"TransportProtocol"}
       }
     },
     "PortMappingList":{
@@ -1090,6 +1360,18 @@
     "ServiceEvents":{
       "type":"list",
       "member":{"shape":"ServiceEvent"}
+    },
+    "ServiceNotActiveException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "ServiceNotFoundException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
     },
     "Services":{
       "type":"list",
@@ -1203,6 +1485,33 @@
       "member":{"shape":"Task"}
     },
     "Timestamp":{"type":"timestamp"},
+    "TransportProtocol":{
+      "type":"string",
+      "enum":[
+        "tcp",
+        "udp"
+      ]
+    },
+    "UpdateContainerAgentRequest":{
+      "type":"structure",
+      "required":["containerInstance"],
+      "members":{
+        "cluster":{"shape":"String"},
+        "containerInstance":{"shape":"String"}
+      }
+    },
+    "UpdateContainerAgentResponse":{
+      "type":"structure",
+      "members":{
+        "containerInstance":{"shape":"ContainerInstance"}
+      }
+    },
+    "UpdateInProgressException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
     "UpdateServiceRequest":{
       "type":"structure",
       "required":["service"],

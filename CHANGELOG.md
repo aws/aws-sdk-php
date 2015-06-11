@@ -2,10 +2,13 @@
 
 ## Next Release
 
+* `Aws\AutoScaling` - Added support for attaching and detaching load balancers.
 * `Aws\CloudWatchLogs` - Added support for the PutSubscriptionFilter,
   DescribeSubscriptionFilters, and DeleteSubscriptionFilter operations.
 * `Aws\CognitoIdentity` - Added support for the DeleteIdentities operation,
   and hiding disabled identities with the ListIdentities operation.
+* `Aws\Ec2` - Added support for VPC flow logs and the M4 instance types.
+* `Aws\Ecs` - Added support for the UpdateContainerAgent operation.
 * `Aws\S3` - Improvements to how errors are handled in the `StreamWrapper`.
 * `Aws\StorageGateway` - Added support for the ListVolumeInitiators operation.
 * `Aws` - Fixes a bug such that empty maps are handled correctly in JSON

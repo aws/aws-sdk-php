@@ -581,7 +581,7 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
                 'TerminateWorkspaces',
                 ['TerminateWorkspaceRequests' => [['WorkspaceId'=> 'foo']]],
                 false,
-                'ThrottlingException'
+                'ValidationException'
             ],
         ];
     }

@@ -240,6 +240,15 @@
       "input":{"shape":"CreateDhcpOptionsRequest"},
       "output":{"shape":"CreateDhcpOptionsResult"}
     },
+    "CreateFlowLogs":{
+      "name":"CreateFlowLogs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateFlowLogsRequest"},
+      "output":{"shape":"CreateFlowLogsResult"}
+    },
     "CreateImage":{
       "name":"CreateImage",
       "http":{
@@ -467,6 +476,15 @@
         "requestUri":"/"
       },
       "input":{"shape":"DeleteDhcpOptionsRequest"}
+    },
+    "DeleteFlowLogs":{
+      "name":"DeleteFlowLogs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteFlowLogsRequest"},
+      "output":{"shape":"DeleteFlowLogsResult"}
     },
     "DeleteInternetGateway":{
       "name":"DeleteInternetGateway",
@@ -718,6 +736,15 @@
       },
       "input":{"shape":"DescribeExportTasksRequest"},
       "output":{"shape":"DescribeExportTasksResult"}
+    },
+    "DescribeFlowLogs":{
+      "name":"DescribeFlowLogs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeFlowLogsRequest"},
+      "output":{"shape":"DescribeFlowLogsResult"}
     },
     "DescribeImageAttribute":{
       "name":"DescribeImageAttribute",
@@ -2769,6 +2796,44 @@
         }
       }
     },
+    "CreateFlowLogsRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceIds",
+        "ResourceType",
+        "TrafficType",
+        "LogGroupName",
+        "DeliverLogsPermissionArn"
+      ],
+      "members":{
+        "ResourceIds":{
+          "shape":"ValueStringList",
+          "locationName":"ResourceId"
+        },
+        "ResourceType":{"shape":"FlowLogsResourceType"},
+        "TrafficType":{"shape":"TrafficType"},
+        "LogGroupName":{"shape":"String"},
+        "DeliverLogsPermissionArn":{"shape":"String"},
+        "ClientToken":{"shape":"String"}
+      }
+    },
+    "CreateFlowLogsResult":{
+      "type":"structure",
+      "members":{
+        "FlowLogIds":{
+          "shape":"ValueStringList",
+          "locationName":"flowLogIdSet"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "locationName":"clientToken"
+        },
+        "Unsuccessful":{
+          "shape":"UnsuccessfulItemSet",
+          "locationName":"unsuccessful"
+        }
+      }
+    },
     "CreateImageRequest":{
       "type":"structure",
       "required":[
@@ -3504,6 +3569,25 @@
         "DhcpOptionsId":{"shape":"String"}
       }
     },
+    "DeleteFlowLogsRequest":{
+      "type":"structure",
+      "required":["FlowLogIds"],
+      "members":{
+        "FlowLogIds":{
+          "shape":"ValueStringList",
+          "locationName":"FlowLogId"
+        }
+      }
+    },
+    "DeleteFlowLogsResult":{
+      "type":"structure",
+      "members":{
+        "Unsuccessful":{
+          "shape":"UnsuccessfulItemSet",
+          "locationName":"unsuccessful"
+        }
+      }
+    },
     "DeleteInternetGatewayRequest":{
       "type":"structure",
       "required":["InternetGatewayId"],
@@ -4043,6 +4127,31 @@
         "ExportTasks":{
           "shape":"ExportTaskList",
           "locationName":"exportTaskSet"
+        }
+      }
+    },
+    "DescribeFlowLogsRequest":{
+      "type":"structure",
+      "members":{
+        "FlowLogIds":{
+          "shape":"ValueStringList",
+          "locationName":"FlowLogId"
+        },
+        "Filter":{"shape":"FilterList"},
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"Integer"}
+      }
+    },
+    "DescribeFlowLogsResult":{
+      "type":"structure",
+      "members":{
+        "FlowLogs":{
+          "shape":"FlowLogSet",
+          "locationName":"flowLogSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
         }
       }
     },
@@ -5961,6 +6070,62 @@
       }
     },
     "Float":{"type":"float"},
+    "FlowLog":{
+      "type":"structure",
+      "members":{
+        "CreationTime":{
+          "shape":"DateTime",
+          "locationName":"creationTime"
+        },
+        "FlowLogId":{
+          "shape":"String",
+          "locationName":"flowLogId"
+        },
+        "FlowLogStatus":{
+          "shape":"String",
+          "locationName":"flowLogStatus"
+        },
+        "ResourceId":{
+          "shape":"String",
+          "locationName":"resourceId"
+        },
+        "TrafficType":{
+          "shape":"TrafficType",
+          "locationName":"trafficType"
+        },
+        "LogGroupName":{
+          "shape":"String",
+          "locationName":"logGroupName"
+        },
+        "DeliverLogsStatus":{
+          "shape":"String",
+          "locationName":"deliverLogsStatus"
+        },
+        "DeliverLogsErrorMessage":{
+          "shape":"String",
+          "locationName":"deliverLogsErrorMessage"
+        },
+        "DeliverLogsPermissionArn":{
+          "shape":"String",
+          "locationName":"deliverLogsPermissionArn"
+        }
+      }
+    },
+    "FlowLogSet":{
+      "type":"list",
+      "member":{
+        "shape":"FlowLog",
+        "locationName":"item"
+      }
+    },
+    "FlowLogsResourceType":{
+      "type":"string",
+      "enum":[
+        "VPC",
+        "Subnet",
+        "NetworkInterface"
+      ]
+    },
     "GatewayType":{
       "type":"string",
       "enum":["ipsec.1"]
@@ -7470,6 +7635,11 @@
         "m3.large",
         "m3.xlarge",
         "m3.2xlarge",
+        "m4.large",
+        "m4.xlarge",
+        "m4.2xlarge",
+        "m4.4xlarge",
+        "m4.10xlarge",
         "t2.micro",
         "t2.small",
         "t2.medium",
@@ -10578,7 +10748,8 @@
       "enum":[
         "passed",
         "failed",
-        "insufficient-data"
+        "insufficient-data",
+        "initializing"
       ]
     },
     "StopInstancesRequest":{
@@ -10683,7 +10854,8 @@
         "ok",
         "impaired",
         "insufficient-data",
-        "not-applicable"
+        "not-applicable",
+        "initializing"
       ]
     },
     "Tag":{
@@ -10770,6 +10942,14 @@
           "locationName":"instancesSet"
         }
       }
+    },
+    "TrafficType":{
+      "type":"string",
+      "enum":[
+        "ACCEPT",
+        "REJECT",
+        "ALL"
+      ]
     },
     "UnassignPrivateIpAddressesRequest":{
       "type":"structure",
