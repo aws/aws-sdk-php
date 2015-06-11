@@ -55,7 +55,7 @@ client's constructor.
 
     $s3 = new Aws\S3\S3Client([
         'version' => 'latest',
-        'region'  => 'us-standard'
+        'region'  => 'us-east-1'
     ]);
 
 Notice that we did **not** explicitly provide credentials to the client. That's
