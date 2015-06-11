@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next Release
+## 2.8.10 - 2015-06-11
 
 * `Aws\AutoScaling` - Added support for attaching and detaching load balancers.
 * `Aws\Ec2` - Added support for VPC flow logs and the M4 instance types.
