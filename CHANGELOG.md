@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next Release
+## 3.0.4 - 2015-06-11
 
 * `Aws\AutoScaling` - Added support for attaching and detaching load balancers.
 * `Aws\CloudWatchLogs` - Added support for the PutSubscriptionFilter,
