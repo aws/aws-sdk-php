@@ -66,7 +66,7 @@ api-models:
 	php build/docs.php
 
 api-show:
-	open build/artifacts/docs/build/index.html
+	open build/artifacts/docs/index.html
 
 api-package:
 	zip -r build/artifacts/aws-docs-api.zip build/artifacts/docs/build
