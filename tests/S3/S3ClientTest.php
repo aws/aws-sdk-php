@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Test\S3;
 
-use Aws\MockHandler;
 use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
@@ -331,5 +330,25 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
             ['us-east-1', 'CreateBucket', false],
             ['us-west-2', 'HeadBucket',   false],
         ];
+    }
+
+    public function testSaveAsParamAddsSink()
+    {
+        $client = $this->getTestClient('S3', [
+            'http_handler' => function ($request, array $options) {
+                $this->assertArrayHasKey('sink', $options);
+                return Promise\promise_for(
+                    new Psr7\Response(200, [], 'sink=' . $options['sink'])
+                );
+            }
+        ]);
+
+        $result = $client->getObject([
+            'Bucket' => 'foo',
+            'Key'    => 'bar',
+            'SaveAs' => 'baz',
+        ]);
+
+        $this->assertEquals('sink=baz', (string) $result['Body']);
     }
 }
