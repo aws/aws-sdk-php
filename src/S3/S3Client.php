@@ -6,6 +6,7 @@ use Aws\Api\DocModel;
 use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\ClientResolver;
+use Aws\Command;
 use Aws\Exception\AwsException;
 use Aws\HandlerList;
 use Aws\Middleware;
@@ -75,6 +76,7 @@ class S3Client extends AwsClient
         $stack->appendSign(PutObjectUrlMiddleware::wrap(), 's3.put_object_url');
         $stack->appendSign(PermanentRedirectMiddleware::wrap(), 's3.permanent_redirect');
         $stack->appendInit(Middleware::sourceFile($this->getApi()), 's3.source_file');
+        $stack->appendInit($this->getSaveAsParameter(), 's3.save_as');
         $stack->appendInit($this->getLocationConstraintMiddleware(), 's3.location');
     }
 
@@ -429,7 +431,7 @@ class S3Client extends AwsClient
     private function getLocationConstraintMiddleware()
     {
         return function (callable $handler) {
-            return function ($command, $request = null) use ($handler) {
+            return function (Command $command, $request = null) use ($handler) {
                 if ($command->getName() === 'CreateBucket') {
                     $region = $this->getRegion();
                     if ($region === 'us-east-1') {
@@ -437,6 +439,25 @@ class S3Client extends AwsClient
                     } else {
                         $command['CreateBucketConfiguration'] = ['LocationConstraint' => $region];
                     }
+                }
+
+                return $handler($command, $request);
+            };
+        };
+    }
+
+    /**
+     * Provides a middleware that supports the `SaveAs` parameter.
+     *
+     * @return \Closure
+     */
+    private function getSaveAsParameter()
+    {
+        return function (callable $handler) {
+            return function (Command $command, $request = null) use ($handler) {
+                if ($command->getName() === 'GetObject' && isset($command['SaveAs'])) {
+                    $command['@http']['sink'] = $command['SaveAs'];
+                    unset($command['SaveAs']);
                 }
 
                 return $handler($command, $request);
@@ -491,6 +512,11 @@ class S3Client extends AwsClient
         $api['shapes']['PutObjectRequest']['members']['SourceFile'] = ['shape' => 'SourceFile'];
         $api['shapes']['UploadPartRequest']['members']['SourceFile'] = ['shape' => 'SourceFile'];
 
+        // Add the SaveAs parameter.
+        $docs['shapes']['SaveAs']['base'] = 'The path to a file on disk to save the object data.';
+        $api['shapes']['SaveAs'] = ['type' => 'string'];
+        $api['shapes']['GetObjectRequest']['members']['SaveAs'] = ['shape' => 'SaveAs'];
+
         // Several SSECustomerKey documentation updates.
         $docs['shapes']['SSECustomerKey']['append'] = $b64;
         $docs['shapes']['CopySourceSSECustomerKey']['append'] = $b64;
@@ -498,12 +524,11 @@ class S3Client extends AwsClient
             . 'your behalf if it is not supplied.</div>';
 
         // Add the ObjectURL to various output shapes and documentation.
-        $objectUrl = 'The URI of the created object.';
+        $docs['shapes']['ObjectURL']['base'] = 'The URI of the created object.';
         $api['shapes']['ObjectURL'] = ['type' => 'string'];
         $api['shapes']['PutObjectOutput']['members']['ObjectURL'] = ['shape' => 'ObjectURL'];
         $api['shapes']['CopyObjectOutput']['members']['ObjectURL'] = ['shape' => 'ObjectURL'];
         $api['shapes']['CompleteMultipartUploadOutput']['members']['ObjectURL'] = ['shape' => 'ObjectURL'];
-        $docs['shapes']['ObjectURL']['base'] = $objectUrl;
 
         // Fix references to Location Constraint.
         unset($api['shapes']['CreateBucketRequest']['payload']);
