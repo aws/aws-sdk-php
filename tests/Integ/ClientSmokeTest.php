@@ -214,6 +214,16 @@ class ClientSmokeTest extends \PHPUnit_Framework_TestCase
                 'IdentityPoolUsages'
             ],
             [
+                'configservice',
+                'Aws\\ConfigService\\ConfigServiceClient',
+                [],
+                'config.us-east-1.amazonaws.com',
+                'DeliverConfigSnapshot',
+                ['deliveryChannelName' => 'foo'],
+                false,
+                'NoAvailableConfigurationRecorderException'
+            ],
+            [
                 'datapipeline',
                 'Aws\\DataPipeline\\DataPipelineClient',
                 [],
