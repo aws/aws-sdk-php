@@ -25,4 +25,4 @@ install:
 
 script:
   - make test
-  - [ -z "$COMPOSER_OPTS" ] && make package
+  - if [ -z "$COMPOSER_OPTS" ]; then make package
