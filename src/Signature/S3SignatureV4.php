@@ -34,4 +34,12 @@ class S3SignatureV4 extends SignatureV4
     {
         return 'UNSIGNED-PAYLOAD';
     }
+
+    /**
+     * Amazon S3 does not double-encode the path component in the canonical request
+     */
+    protected function createCanonicalizedPath($path)
+    {
+        return '/' . ltrim($path, '/');
+    }
 }

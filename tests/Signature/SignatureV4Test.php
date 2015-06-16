@@ -227,8 +227,8 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
             // Request with space.
             [
                 "GET /%20/foo HTTP/1.1\r\nHost: host.foo.com\r\n\r\n",
-                "GET /%20/foo HTTP/1.1\r\nHost: host.foo.com\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date, Signature=21c06f2350d850ddc3bb8a463336cb6677214463f29c5354f6678e9efe195712\r\n\r\n",
-                "GET\n/%20/foo\n\nhost:host.foo.com\n\nhost\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                "GET /%20/foo HTTP/1.1\r\nHost: host.foo.com\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date, Signature=948b2292a8bcb4510013741d64c5667f75d46dd6c4896ead5d669eb8264ebe1f\r\n\r\n",
+                "GET\n/%2520/foo\n\nhost:host.foo.com\n\nhost\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
             ],
             // Query order key case.
             [

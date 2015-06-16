@@ -154,6 +154,13 @@ class SignatureV4 implements SignatureInterface
         return $this->getPayload($request);
     }
 
+    protected function createCanonicalizedPath($path)
+    {
+        $doubleEncoded = rawurlencode(ltrim($path, '/'));
+
+        return '/' . str_replace('%2F', '/', $doubleEncoded);
+    }
+
     private function createStringToSign($longDate, $credentialScope, $creq)
     {
         $hash = hash('sha256', $creq);
@@ -209,7 +216,7 @@ class SignatureV4 implements SignatureInterface
 
         // Normalize the path as required by SigV4
         $canon = $parsedRequest['method'] . "\n"
-            . ($parsedRequest['path'] ?: '/') . "\n"
+            . $this->createCanonicalizedPath($parsedRequest['path']) . "\n"
             . $this->getCanonicalizedQuery($parsedRequest['query']) . "\n";
 
         // Case-insensitively aggregate all of the headers.
