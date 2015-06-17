@@ -29,7 +29,8 @@
         "ext-json": "*",
         "ext-dom": "*",
         "ext-simplexml": "*",
-        "phpunit/phpunit": "~4.0"
+        "phpunit/phpunit": "~4.0",
+        "behat/behat": "~3.0"
     },
     "suggest": {
         "ext-openssl": "Allows working with CloudFront private distributions and verifying received SNS messages",
@@ -40,6 +41,11 @@
             "Aws\\": "src/"
         },
         "files": ["src/functions.php"]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Aws\\Test\\": "tests/"
+        }
     },
     "extra": {
         "branch-alias": {
