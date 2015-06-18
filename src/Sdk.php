@@ -138,6 +138,8 @@ class Sdk
             $args['service'] = self::getEndpointPrefix($name);
         }
 
+        // Make sure class is found if the environment is case sensitive
+        $name = ucfirst($name);
         $client = "Aws\\{$name}\\{$name}Client";
 
         if (!class_exists($client)) {
