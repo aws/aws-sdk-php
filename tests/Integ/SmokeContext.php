@@ -19,147 +19,41 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
     Context,
     SnippetAcceptingContext
 {
-    protected static $configDefaults = [
-        'version' => 'latest',
-        'region' => 'us-east-1',
-        'profile' => 'integ',
-    ];
+    use IntegUtils;
 
     protected static $services = [
-        'autoscaling' => [
-            'namespace' => 'AutoScaling',
-        ],
-        'cloudformation' => [
-            'namespace' => 'CloudFormation',
-        ],
-        'cloudfront' => [
-            'namespace' => 'CloudFront',
-        ],
-        'cloudhsm' => [
-            'namespace' => 'CloudHsm',
-        ],
-        'cloudsearch' => [
-            'namespace' => 'CloudSearch',
-        ],
-        'cloudtrail' => [
-            'namespace' => 'CloudTrail',
-        ],
         'cloudwatch' => [
-            'namespace' => 'CloudWatch',
+            'manifestName' => 'monitoring',
         ],
         'cloudwatchlogs' => [
-            'namespace' => 'CloudWatchLogs',
-        ],
-        'codedeploy' => [
-            'namespace' => 'CodeDeploy',
+            'manifestName' => 'logs',
         ],
         'cognitoidentity' => [
-            'namespace' => 'CognitoIdentity',
+            'manifestName' => 'cognito-identity',
         ],
         'cognitosync' => [
-            'namespace' => 'CognitoSync',
+            'manifestName' => 'cognito-sync',
         ],
         'configservice' => [
-            'namespace' => 'ConfigService',
-        ],
-        'datapipeline' => [
-            'namespace' => 'DataPipeline',
-        ],
-        'directconnect' => [
-            'namespace' => 'DirectConnect',
+            'manifestName' => 'config',
         ],
         'directoryservice' => [
-            'namespace' => 'DirectoryService',
-        ],
-        'dynamodb' => [
-            'namespace' => 'DynamoDb',
-        ],
-        'ec2' => [
-            'namespace' => 'Ec2',
-        ],
-        'ecs' => [
-            'namespace' => 'Ecs',
+            'manifestName' => 'ds',
         ],
         'efs' => [
-            'namespace' => 'Efs',
+            'manifestName' => 'elasticfilesystem',
             'configOverrides' => [
                 'region' => 'us-west-2',
             ],
         ],
-        'elasticache' => [
-            'namespace' => 'ElastiCache',
-        ],
-        'elasticbeanstalk' => [
-            'namespace' => 'ElasticBeanstalk',
-        ],
-        'elastictranscoder' => [
-            'namespace' => 'ElasticTranscoder',
-        ],
         'elb' => [
-            'namespace' => 'ElasticLoadBalancing',
+            'manifestName' => 'elasticloadbalancing',
         ],
         'emr' => [
-            'namespace' => 'Emr',
-        ],
-        'glacier' => [
-            'namespace' => 'Glacier',
-        ],
-        'iam' => [
-            'namespace' => 'Iam',
-        ],
-        'kinesis' => [
-            'namespace' => 'Kinesis',
-        ],
-        'kms' => [
-            'namespace' => 'Kms',
-        ],
-        'lambda' => [
-            'namespace' => 'Lambda',
-        ],
-        'machinelearning' => [
-            'namespace' => 'MachineLearning',
-        ],
-        'opsworks' => [
-            'namespace' => 'OpsWorks',
-        ],
-        'rds' => [
-            'namespace' => 'Rds',
-        ],
-        'redshift' => [
-            'namespace' => 'Redshift',
-        ],
-        'route53' => [
-            'namespace' => 'Route53',
-        ],
-        'route53domains' => [
-            'namespace' => 'Route53Domains',
+            'manifestName' => 'elasticmapreduce',
         ],
         'ses' => [
-            'namespace' => 'Ses',
-        ],
-        'sns' => [
-            'namespace' => 'Sns',
-        ],
-        'sqs' => [
-            'namespace' => 'Sqs',
-        ],
-        'ssm' => [
-            'namespace' => 'Ssm',
-        ],
-        'storagegateway' => [
-            'namespace' => 'StorageGateway',
-        ],
-        'sts' => [
-            'namespace' => 'Sts',
-        ],
-        'support' => [
-            'namespace' => 'Support',
-        ],
-        'swf' => [
-            'namespace' => 'Swf',
-        ],
-        'workspaces' => [
-            'namespace' => 'Workspaces',
+            'manifestName' => 'email',
         ],
     ];
 
@@ -211,11 +105,16 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
      */
     public function setUp(BeforeScenarioScope $scope)
     {
-        $configuration = self::$configDefaults;
+        $configuration = [];
 
         foreach ($scope->getFeature()->getTags() as $tag) {
-            if (isset(self::$services[$tag])) {
-                $this->serviceName = self::$services[$tag]['namespace'];
+            $manifestName = isset(self::$services[$tag]['manifestName']) ?
+                self::$services[$tag]['manifestName']
+                : $tag;
+
+            if (isset($this->getServicesManifest()[$manifestName])) {
+                $this->serviceName
+                    = $this->getServicesManifest()[$manifestName]['namespace'];
 
                 if (isset(self::$services[$tag]['configOverrides'])) {
                     $configuration[$this->serviceName]
@@ -231,7 +130,7 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
             );
         }
 
-        $this->sdk = new Sdk($configuration);
+        $this->sdk = self::getSdk($configuration);
 
         $this->client = $this->sdk->createClient($this->serviceName);
     }
@@ -359,5 +258,25 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
         }, $payload->getRowsHash());
 
         return $this->client->{$command}($payload);
+    }
+
+    protected function getServicesManifest()
+    {
+        static $manifest = [];
+
+        if (empty($manifest)) {
+            $sdkRoot = dirname((new \ReflectionClass(Sdk::class))->getFileName());
+
+            $manifest = json_decode(
+                file_get_contents(implode(DIRECTORY_SEPARATOR, [
+                    $sdkRoot,
+                    'data',
+                    'manifest.json',
+                ])),
+                true
+            );
+        }
+
+        return $manifest;
     }
 }
