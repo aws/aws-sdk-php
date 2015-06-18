@@ -16,7 +16,15 @@ class QueryParamBuilder
 
     protected function queryName(Shape $shape, $default = null)
     {
-        return $shape['queryName'] ?: $default;
+        if (null !== $shape['queryName']) {
+            return $shape['queryName'];
+        }
+
+        if ($this->isFlat($shape) && !empty($shape['member']['locationName'])) {
+            return $shape['member']['locationName'];
+        }
+
+        return $default;
     }
 
     protected function isFlat(Shape $shape)
