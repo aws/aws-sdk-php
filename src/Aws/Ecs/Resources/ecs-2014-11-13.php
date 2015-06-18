@@ -873,6 +873,14 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'status' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'sort' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
                 'nextToken' => array(
                     'type' => 'string',
                     'location' => 'json',
@@ -1271,6 +1279,21 @@ return array (
                                             'type' => 'string',
                                         ),
                                     ),
+                                    'environment' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'KeyValuePair',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'name' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'value' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
                                 ),
                             ),
                         ),
@@ -1352,6 +1375,21 @@ return array (
                                         'items' => array(
                                             'name' => 'String',
                                             'type' => 'string',
+                                        ),
+                                    ),
+                                    'environment' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'KeyValuePair',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'name' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'value' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
                                         ),
                                     ),
                                 ),
@@ -2199,6 +2237,9 @@ return array (
                                 ),
                             ),
                         ),
+                        'status' => array(
+                            'type' => 'string',
+                        ),
                     ),
                 ),
             ),
@@ -2621,6 +2662,9 @@ return array (
                                 ),
                             ),
                         ),
+                        'status' => array(
+                            'type' => 'string',
+                        ),
                     ),
                 ),
             ),
@@ -2665,6 +2709,21 @@ return array (
                                                     'items' => array(
                                                         'name' => 'String',
                                                         'type' => 'string',
+                                                    ),
+                                                ),
+                                                'environment' => array(
+                                                    'type' => 'array',
+                                                    'items' => array(
+                                                        'name' => 'KeyValuePair',
+                                                        'type' => 'object',
+                                                        'properties' => array(
+                                                            'name' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                            'value' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                        ),
                                                     ),
                                                 ),
                                             ),
@@ -3089,6 +3148,9 @@ return array (
                                 ),
                             ),
                         ),
+                        'status' => array(
+                            'type' => 'string',
+                        ),
                     ),
                 ),
             ),
@@ -3133,6 +3195,21 @@ return array (
                                                     'items' => array(
                                                         'name' => 'String',
                                                         'type' => 'string',
+                                                    ),
+                                                ),
+                                                'environment' => array(
+                                                    'type' => 'array',
+                                                    'items' => array(
+                                                        'name' => 'KeyValuePair',
+                                                        'type' => 'object',
+                                                        'properties' => array(
+                                                            'name' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                            'value' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                        ),
                                                     ),
                                                 ),
                                             ),
@@ -3260,6 +3337,21 @@ return array (
                                                         'type' => 'string',
                                                     ),
                                                 ),
+                                                'environment' => array(
+                                                    'type' => 'array',
+                                                    'items' => array(
+                                                        'name' => 'KeyValuePair',
+                                                        'type' => 'object',
+                                                        'properties' => array(
+                                                            'name' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                            'value' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                        ),
+                                                    ),
+                                                ),
                                             ),
                                         ),
                                     ),
@@ -3380,6 +3472,21 @@ return array (
                                                 'items' => array(
                                                     'name' => 'String',
                                                     'type' => 'string',
+                                                ),
+                                            ),
+                                            'environment' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'KeyValuePair',
+                                                    'type' => 'object',
+                                                    'properties' => array(
+                                                        'name' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'value' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                    ),
                                                 ),
                                             ),
                                         ),

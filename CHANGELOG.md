@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Next Release
+
+* `Aws\Ecs` - Added support for sorting, deregistering, and overriding environment
+  variables for task definitions.
+
 ## 2.8.10 - 2015-06-11
 
 * `Aws\AutoScaling` - Added support for attaching and detaching load balancers.
