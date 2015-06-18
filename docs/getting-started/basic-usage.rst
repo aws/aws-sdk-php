@@ -288,7 +288,7 @@ about the failure, including the request-id, error code, and error type.
         // from the exception using methods of the exception object.
         echo $e->getAwsRequestId() . "\n";
         echo $e->getAwsErrorType() . "\n";
-        echo $e->getAwsErrorCode() . "\n"
+        echo $e->getAwsErrorCode() . "\n";
     }
 
 
