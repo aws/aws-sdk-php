@@ -91,9 +91,7 @@ class ApiProvider
      */
     public static function defaultProvider()
     {
-        $dir = __DIR__ . '/../data';
-
-        return new self($dir, \Aws\load_compiled_json("$dir/manifest.json"));
+        return new self(__DIR__ . '/../data', \Aws\manifest());
     }
 
     /**
