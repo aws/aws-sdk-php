@@ -2,6 +2,7 @@
 
 namespace Aws\Test\Integ;
 
+use Aws;
 use Aws\Exception\AwsException;
 use Aws\JsonCompiler;
 use Aws\Result;
@@ -21,39 +22,9 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
 {
     use IntegUtils;
 
-    protected static $services = [
-        'cloudwatch' => [
-            'manifestName' => 'monitoring',
-        ],
-        'cloudwatchlogs' => [
-            'manifestName' => 'logs',
-        ],
-        'cognitoidentity' => [
-            'manifestName' => 'cognito-identity',
-        ],
-        'cognitosync' => [
-            'manifestName' => 'cognito-sync',
-        ],
-        'configservice' => [
-            'manifestName' => 'config',
-        ],
-        'directoryservice' => [
-            'manifestName' => 'ds',
-        ],
-        'efs' => [
-            'manifestName' => 'elasticfilesystem',
-            'configOverrides' => [
-                'region' => 'us-west-2',
-            ],
-        ],
-        'elb' => [
-            'manifestName' => 'elasticloadbalancing',
-        ],
-        'emr' => [
-            'manifestName' => 'elasticmapreduce',
-        ],
-        'ses' => [
-            'manifestName' => 'email',
+    protected static $configOverrides = [
+        'ElasticFileSystem' => [
+            'region' => 'us-west-2',
         ],
     ];
 
@@ -105,21 +76,12 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
      */
     public function setUp(BeforeScenarioScope $scope)
     {
-        $configuration = [];
-
         foreach ($scope->getFeature()->getTags() as $tag) {
-            $manifestName = isset(self::$services[$tag]['manifestName']) ?
-                self::$services[$tag]['manifestName']
-                : $tag;
-
-            if (isset($this->getServicesManifest()[$manifestName])) {
-                $this->serviceName
-                    = $this->getServicesManifest()[$manifestName]['namespace'];
-
-                if (isset(self::$services[$tag]['configOverrides'])) {
-                    $configuration[$this->serviceName]
-                        = self::$services[$tag]['configOverrides'];
-                }
+            try{
+                $this->serviceName = Aws\manifest($tag)['namespace'];
+                break;
+            } catch (\Exception $e) {
+                // just in case an additional tag managed to sneak into the smoke tests
             }
         }
 
@@ -130,7 +92,7 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
             );
         }
 
-        $this->sdk = self::getSdk($configuration);
+        $this->sdk = self::getSdk(self::$configOverrides);
 
         $this->client = $this->sdk->createClient($this->serviceName);
     }
