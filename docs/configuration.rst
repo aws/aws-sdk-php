@@ -169,8 +169,8 @@ Options                   Description
 
                           .. note::
 
-                              ``key`` is deprecated in v3 of the AWS SDK for PHP in favor of using the ``credentials``
-                               option.
+                              ``key`` is deprecated, and is not supported in v3 of the AWS SDK for PHP. Please consider
+                              using the ``credentials``option.
 
 ``secret``                An AWS secret access key. Unless you are setting temporary credentials provided by AWS STS, it
                           is recommended that you avoid hard-coding credentials with this parameter. Please see
@@ -178,8 +178,8 @@ Options                   Description
 
                           .. note::
 
-                              ``secret`` is deprecated in v3 of the AWS SDK for PHP in favor of using the
-                              ``credentials`` option.
+                              ``secret`` is deprecated, and is not supported in v3 of the AWS SDK for PHP. Please consider
+                              using the ``credentials``option.
 
 ``token``                 An AWS security token to use with request authentication. These are typically provided by the
                           AWS STS service. Please note that not all services accept temporary credentials.
@@ -187,8 +187,8 @@ Options                   Description
 
                           .. note::
 
-                              ``token`` is deprecated in v3 of the AWS SDK for PHP in favor of using the
-                              ``credentials`` option.
+                              ``token`` is deprecated, and is not supported in v3 of the AWS SDK for PHP . Please consider
+                              using the ``credentials``option.
 
 ========================= ==============================================================================================
 
