@@ -53,20 +53,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.0.4';
-
-    /** @var array Map of custom lowercase names to service endpoint names. */
-    private static $aliases = [
-        'configservice'     => 'config',
-        'cloudwatch'        => 'monitoring',
-        'cloudwatchlogs'    => 'logs',
-        'cognitoidentity'   => 'cognito-identity',
-        'cognitosync'       => 'cognito-sync',
-        'directoryservice'  => 'ds',
-        'efs'               => 'elasticfilesystem',
-        'emr'               => 'elasticmapreduce',
-        'ses'               => 'email',
-    ];
+    const VERSION = '3.0.5';
 
     /** @var array Arguments for creating clients */
     private $args;
@@ -102,48 +89,48 @@ class Sdk
     }
 
     /**
-     * Create an endpoint prefix name from a namespace.
+     * Get a client by name using an array of constructor options.
+     *
+     * @param string $name Service name or namespace (e.g., DynamoDb, s3).
+     * @param array  $args Arguments to configure the client.
+     *
+     * @return AwsClientInterface
+     * @throws \InvalidArgumentException if any required options are missing or
+     *                                   the service is not supported.
+     * @see Aws\AwsClient::__construct for a list of available options for args.
+     */
+    public function createClient($name, array $args = [])
+    {
+        // Get information about the service from the manifest file.
+        $service = manifest($name);
+        $namespace = $service['namespace'];
+
+        // Merge provided args with stored, service-specific args.
+        if (isset($this->args[$namespace])) {
+            $args += $this->args[$namespace];
+        }
+
+        // Provide the endpoint prefix in the args.
+        if (!isset($args['service'])) {
+            $args['service'] = $service['endpoint'];
+        }
+
+        // Instantiate the client class.
+        $client = "Aws\\{$namespace}\\{$namespace}Client";
+        return new $client($args + $this->args);
+    }
+
+    /**
+     * Determine the endpoint prefix from a client namespace.
      *
      * @param string $name Namespace name
      *
      * @return string
+     * @internal
+     * @deprecated Use the `\Aws\manifest()` function instead.
      */
     public static function getEndpointPrefix($name)
     {
-        $name = strtolower($name);
-
-        return isset(self::$aliases[$name]) ? self::$aliases[$name] : $name;
-    }
-
-    /**
-     * Get a client by name using an array of constructor options.
-     *
-     * @param string $name Client namespace name (e.g., DynamoDb).
-     * @param array  $args Custom arguments to provide to the client.
-     *
-     * @return AwsClientInterface
-     * @throws \InvalidArgumentException
-     * @see Aws\AwsClient::__construct for a list of available options.
-     */
-    public function createClient($name, array $args = [])
-    {
-        // Merge provided args with stored args
-        if (isset($this->args[$name])) {
-            $args += $this->args[$name];
-        }
-
-        $args += $this->args;
-
-        if (!isset($args['service'])) {
-            $args['service'] = self::getEndpointPrefix($name);
-        }
-
-        $client = "Aws\\{$name}\\{$name}Client";
-
-        if (!class_exists($client)) {
-            $client = 'Aws\\AwsClient';
-        }
-
-        return new $client($args);
+        return manifest($name)['endpoint'];
     }
 }

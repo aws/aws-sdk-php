@@ -119,13 +119,14 @@ class AwsClient implements AwsClientInterface
      *
      * @param array $args Client configuration arguments.
      *
-     * @throws \InvalidArgumentException if any required options are missing
+     * @throws \InvalidArgumentException if any required options are missing or
+     *                                   the service is not supported.
      */
     public function __construct(array $args)
     {
         list($service, $exceptionClass) = $this->parseClass();
         if (!isset($args['service'])) {
-            $args['service'] = Sdk::getEndpointPrefix($service);
+            $args['service'] = manifest($service)['endpoint'];
         }
         if (!isset($args['exception_class'])) {
             $args['exception_class'] = $exceptionClass;

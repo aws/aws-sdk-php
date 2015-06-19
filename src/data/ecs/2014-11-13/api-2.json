@@ -854,7 +854,8 @@
       "type":"structure",
       "members":{
         "name":{"shape":"String"},
-        "command":{"shape":"StringList"}
+        "command":{"shape":"StringList"},
+        "environment":{"shape":"EnvironmentVariables"}
       }
     },
     "ContainerOverrides":{
@@ -1164,6 +1165,8 @@
       "type":"structure",
       "members":{
         "familyPrefix":{"shape":"String"},
+        "status":{"shape":"TaskDefinitionStatus"},
+        "sort":{"shape":"SortOrder"},
         "nextToken":{"shape":"String"},
         "maxResults":{"shape":"BoxedInteger"}
       }
@@ -1377,6 +1380,13 @@
       "type":"list",
       "member":{"shape":"Service"}
     },
+    "SortOrder":{
+      "type":"string",
+      "enum":[
+        "ASC",
+        "DESC"
+      ]
+    },
     "StartTaskRequest":{
       "type":"structure",
       "required":[
@@ -1471,8 +1481,16 @@
         "containerDefinitions":{"shape":"ContainerDefinitions"},
         "family":{"shape":"String"},
         "revision":{"shape":"Integer"},
-        "volumes":{"shape":"VolumeList"}
+        "volumes":{"shape":"VolumeList"},
+        "status":{"shape":"TaskDefinitionStatus"}
       }
+    },
+    "TaskDefinitionStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "INACTIVE"
+      ]
     },
     "TaskOverride":{
       "type":"structure",

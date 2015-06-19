@@ -187,6 +187,59 @@
     ]
   },
   {
+    "description": "Flattened list with LocationName",
+    "metadata": {
+      "protocol": "query",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "ScalarArg": {
+            "shape": "StringType"
+          },
+          "ListArg": {
+            "shape": "ListType"
+          }
+        }
+      },
+      "ListType": {
+        "type": "list",
+        "member": {
+          "shape": "StringType",
+          "locationName": "ListArgLocation"
+        },
+        "flattened": true
+      },
+      "StringType": {
+        "type": "string"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "input": {
+            "shape": "InputShape"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "ScalarArg": "foo",
+          "ListArg": [
+            "a",
+            "b",
+            "c"
+          ]
+        },
+        "serialized": {
+          "uri": "/",
+          "body": "Action=OperationName&Version=2014-01-01&ScalarArg=foo&ListArgLocation.1=a&ListArgLocation.2=b&ListArgLocation.3=c"
+        }
+      }
+    ]
+  },
+  {
     "description": "Serialize map type",
     "metadata": {
       "protocol": "query",

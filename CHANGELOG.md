@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## 3.0.5 - 2015-06-18
+
+* `Aws\CognitoSync` - Fixed an issue in the Signature Version 4 implementation
+  that was causing issues when signing requests to the Cognito Sync service.
+* `Aws\ConfigService` - Fixed an issue that was preventing the
+  `ConfigServiceClient` from working properly.
+* `Aws\Ecs` - Added support for sorting, deregistering, and overriding
+  environment variables for task definitions.
+* `Aws\Iam` - Added new paginator and waiter configurations.
+* `Aws\S3` - Added support for the `SaveAs` parameter that was in V2.
+* `Aws\Sqs` - Fixed an issue that was preventing batch message deletion from
+  working properly.
+* `Aws` - The `Aws\Sdk::createClient()` method is no longer case-sensitive with
+  service names.
+
 ## 3.0.4 - 2015-06-11
 
 * `Aws\AutoScaling` - Added support for attaching and detaching load balancers.
