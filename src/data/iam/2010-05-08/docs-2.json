@@ -1481,7 +1481,7 @@
       "base": null,
       "refs": {
         "AccessKey$CreateDate": "<p>The date when the access key was created.</p>",
-        "AccessKeyLastUsed$LastUsedDate": "<p>The date and time, in <a href=\"http://www.iso.org/iso/iso8601\">ISO 8601 date-time format</a>, when the access key was most recently used.</p>",
+        "AccessKeyLastUsed$LastUsedDate": "<p>The date and time, in <a href=\"http://www.iso.org/iso/iso8601\">ISO 8601 date-time format</a>, when the access key was most recently used. This field is null when:</p> <ul> <li> <p>The user does not have an access key.</p> </li> <li> <p>An access key exists but has never been used, at least not since IAM started tracking this information on April 22nd, 2015.</p> </li> <li> <p>There is no sign-in data associated with the user</p> </li> </ul>",
         "AccessKeyMetadata$CreateDate": "<p>The date when the access key was created.</p>",
         "GetCredentialReportResponse$GeneratedTime": "<p> The date and time when the credential report was created, in <a href=\"http://www.iso.org/iso/iso8601\">ISO 8601 date-time format</a>. </p>",
         "GetOpenIDConnectProviderResponse$CreateDate": "<p>The date and time when the IAM OpenID Connect provider entity was created in the AWS account. </p>",
@@ -1505,7 +1505,7 @@
         "ServerCertificateMetadata$Expiration": "<p>The date on which the certificate is set to expire.</p>",
         "SigningCertificate$UploadDate": "<p>The date when the signing certificate was uploaded.</p>",
         "User$CreateDate": "<p>The date and time, in <a href=\"http://www.iso.org/iso/iso8601\">ISO 8601 date-time format</a>, when the user was created.</p>",
-        "User$PasswordLastUsed": "<p>The date and time, in <a href=\"http://www.iso.org/iso/iso8601\">ISO 8601 date-time format</a>, when the user's password was last used to sign in to an AWS website. For a list of AWS websites that capture a user's last sign-in time, see the <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/credential-reports.html\">Credential Reports</a> topic in the <i>Using IAM</i> guide. If a password is used more than once in a five-minute span, only the first use is returned in this field. When the user does not have a password, this field is null (not present). When a user's password exists but has never been used, or when there is no sign-in data associated with the user, this field is null (not present). </p> <p>This value is returned only in the <a>GetUser</a> and <a>ListUsers</a> actions. </p>",
+        "User$PasswordLastUsed": "<p>The date and time, in <a href=\"http://www.iso.org/iso/iso8601\">ISO 8601 date-time format</a>, when the user's password was last used to sign in to an AWS website. For a list of AWS websites that capture a user's last sign-in time, see the <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/credential-reports.html\">Credential Reports</a> topic in the <i>Using IAM</i> guide. If a password is used more than once in a five-minute span, only the first use is returned in this field. This field is null (not present) when:</p> <ul> <li> <p>The user does not have a password</p> </li> <li> <p>The password exists but has never been used (at least not since IAM started tracking this information on October 20th, 2014</p> </li> <li> <p>there is no sign-in data associated with the user</p> </li> </ul> <p>This value is returned only in the <a>GetUser</a> and <a>ListUsers</a> actions. </p>",
         "UserDetail$CreateDate": "<p>The date and time, in <a href=\"http://www.iso.org/iso/iso8601\">ISO 8601 date-time format</a>, when the user was created.</p>",
         "VirtualMFADevice$EnableDate": "<p>The date and time on which the virtual MFA device was enabled.</p>"
       }
@@ -2028,8 +2028,8 @@
         "GetServerCertificateRequest$ServerCertificateName": "<p>The name of the server certificate you want to retrieve information about.</p>",
         "ServerCertificateMetadata$ServerCertificateName": "<p>The name that identifies the server certificate.</p>",
         "UpdateServerCertificateRequest$ServerCertificateName": "<p>The name of the server certificate that you want to update.</p>",
-        "UpdateServerCertificateRequest$NewServerCertificateName": "<p> The new name for the server certificate. Include this only if you are updating the server certificate's name. </p>",
-        "UploadServerCertificateRequest$ServerCertificateName": "<p>The name for the server certificate. Do not include the path in this value.</p>"
+        "UpdateServerCertificateRequest$NewServerCertificateName": "<p> The new name for the server certificate. Include this only if you are updating the server certificate's name. The name of the certificate cannot contain any spaces.</p>",
+        "UploadServerCertificateRequest$ServerCertificateName": "<p>The name for the server certificate. Do not include the path in this value. The name of the certificate cannot contain any spaces.</p>"
       }
     },
     "serviceFailureExceptionMessage": {
@@ -2051,8 +2051,8 @@
     "stringType": {
       "base": null,
       "refs": {
-        "AccessKeyLastUsed$ServiceName": "<p>The name of the AWS service with which this access key was most recently used.</p>",
-        "AccessKeyLastUsed$Region": "<p>The AWS region where this access key was most recently used.</p> <p>For more information about AWS regions, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/rande.html\">Regions and Endpoints</a> in the Amazon Web Services General Reference.</p>"
+        "AccessKeyLastUsed$ServiceName": "<p>The name of the AWS service with which this access key was most recently used. This field is null when:</p> <ul> <li> <p>The user does not have an access key.</p> </li> <li> <p>An access key exists but has never been used, at least not since IAM started tracking this information on April 22nd, 2015.</p> </li> <li> <p>There is no sign-in data associated with the user</p> </li> </ul>",
+        "AccessKeyLastUsed$Region": "<p>The AWS region where this access key was most recently used. This field is null when:</p> <ul> <li> <p>The user does not have an access key.</p> </li> <li> <p>An access key exists but has never been used, at least not since IAM started tracking this information on April 22nd, 2015.</p> </li> <li> <p>There is no sign-in data associated with the user</p> </li> </ul> <p>For more information about AWS regions, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/rande.html\">Regions and Endpoints</a> in the Amazon Web Services General Reference.</p>"
       }
     },
     "summaryKeyType": {
