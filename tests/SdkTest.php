@@ -13,7 +13,7 @@ class SdkTest extends \PHPUnit_Framework_TestCase
      */
     public function testEnsuresMissingMethodThrowsException()
     {
-        (new Sdk())->foo();
+        (new Sdk)->foo();
     }
 
     public function testHasMagicMethods()
@@ -31,7 +31,7 @@ class SdkTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(
             'Aws\AwsClientInterface',
-            (new Sdk())->createDynamoDb([
+            (new Sdk)->createDynamoDb([
                 'region'  => 'us-east-1',
                 'version' => 'latest'
             ])
@@ -42,25 +42,10 @@ class SdkTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(
             'Aws\AwsClientInterface',
-            (new Sdk())->createCloudWatch([
+            (new Sdk)->createCloudWatch([
                 'region'  => 'us-east-1',
                 'version' => 'latest'
             ])
         );
-    }
-
-    /**
-     * @expectedException \Aws\Exception\UnresolvedApiException
-     */
-    public function testCreatesGenericClient()
-    {
-        // Use a config that contains a service-specific config.
-        $sdk = new Sdk([
-            'version' => 'latest',
-            'foo' => ['region' => 'us-east-1']
-        ]);
-
-        // Create a client with an unknown name.
-        $client = $sdk->createClient('foo');
     }
 }
