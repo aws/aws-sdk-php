@@ -15,7 +15,7 @@
 * `Aws` - The `Aws\Sdk::createClient()` method is no longer case-sensitive with
   service names.
 
-## 3.0.4 - 2015-06-11
+## 3.0.5 - 2015-06-18
 
 * `Aws\AutoScaling` - Added support for attaching and detaching load balancers.
 * `Aws\CloudWatchLogs` - Added support for the PutSubscriptionFilter,
