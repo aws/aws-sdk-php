@@ -90,7 +90,7 @@ class XmlBody
     ) {
         $this->startElement($shape, $name, $xml);
 
-        foreach ($value as $k => $v) {
+        foreach ($this->sortMembers($shape, $value) as $k => $v) {
             if ($v !== null && $shape->hasMember($k)) {
                 $member = $shape->getMember($k);
                 $elementName = $member['locationName'] ?: $k;
@@ -99,6 +99,25 @@ class XmlBody
         }
 
         $xml->endElement();
+    }
+
+    private function sortMembers(StructureShape $shape, array $value)
+    {
+        $sortedValue = [];
+
+        // uksort is not appropriate here, as the order of children must be
+        // maintained for compliance testing. The only thing we want to do is
+        // bubble attributes to the top of the list so that XMLWriter will
+        // actually write them.
+        foreach ($value as $k => $v) {
+            if ($shape->getMember($k)['xmlAttribute']) {
+                $sortedValue = [$k => $v] + $sortedValue;
+            } else {
+                $sortedValue[$k] = $v;
+            }
+        }
+
+        return $sortedValue;
     }
 
     private function add_list(
