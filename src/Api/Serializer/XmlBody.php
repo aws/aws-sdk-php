@@ -90,34 +90,39 @@ class XmlBody
     ) {
         $this->startElement($shape, $name, $xml);
 
-        foreach ($this->sortMembers($shape, $value) as $k => $v) {
-            if ($v !== null && $shape->hasMember($k)) {
-                $member = $shape->getMember($k);
-                $elementName = $member['locationName'] ?: $k;
-                $this->format($member, $elementName, $v, $xml);
-            }
+        foreach ($this->getStructureMembers($shape, $value) as $k => $definition) {
+            $this->format(
+                $definition['member'],
+                $definition['member']['locationName'] ?: $k,
+                $definition['value'],
+                $xml
+            );
         }
 
         $xml->endElement();
     }
 
-    private function sortMembers(StructureShape $shape, array $value)
+    private function getStructureMembers(StructureShape $shape, array $value)
     {
-        $sortedValue = [];
+        $members = [];
 
-        // uksort is not appropriate here, as the order of children must be
-        // maintained for compliance testing. The only thing we want to do is
-        // bubble attributes to the top of the list so that XMLWriter will
-        // actually write them.
         foreach ($value as $k => $v) {
-            if ($shape->getMember($k)['xmlAttribute']) {
-                $sortedValue = [$k => $v] + $sortedValue;
-            } else {
-                $sortedValue[$k] = $v;
+            if ($v !== null && $shape->hasMember($k)) {
+                $definition = [
+                    'member' => $shape->getMember($k),
+                    'value'  => $v,
+                ];
+
+                if ($definition['member']['xmlAttribute']) {
+                    // array_unshift_associative
+                    $members = [$k => $definition] + $members;
+                } else {
+                    $members[$k] = $definition;
+                }
             }
         }
 
-        return $sortedValue;
+        return $members;
     }
 
     private function add_list(
