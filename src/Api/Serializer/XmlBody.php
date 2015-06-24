@@ -90,15 +90,39 @@ class XmlBody
     ) {
         $this->startElement($shape, $name, $xml);
 
-        foreach ($value as $k => $v) {
-            if ($v !== null && $shape->hasMember($k)) {
-                $member = $shape->getMember($k);
-                $elementName = $member['locationName'] ?: $k;
-                $this->format($member, $elementName, $v, $xml);
-            }
+        foreach ($this->getStructureMembers($shape, $value) as $k => $definition) {
+            $this->format(
+                $definition['member'],
+                $definition['member']['locationName'] ?: $k,
+                $definition['value'],
+                $xml
+            );
         }
 
         $xml->endElement();
+    }
+
+    private function getStructureMembers(StructureShape $shape, array $value)
+    {
+        $members = [];
+
+        foreach ($value as $k => $v) {
+            if ($v !== null && $shape->hasMember($k)) {
+                $definition = [
+                    'member' => $shape->getMember($k),
+                    'value'  => $v,
+                ];
+
+                if ($definition['member']['xmlAttribute']) {
+                    // array_unshift_associative
+                    $members = [$k => $definition] + $members;
+                } else {
+                    $members[$k] = $definition;
+                }
+            }
+        }
+
+        return $members;
     }
 
     private function add_list(
