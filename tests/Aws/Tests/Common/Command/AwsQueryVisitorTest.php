@@ -259,7 +259,15 @@ class AwsQueryVisitorTest extends \Guzzle\Tests\GuzzleTestCase
             'type' => 'object',
             'location' => 'aws.query',
             'properties' => array(
-                'test' => array(
+                'test1' => array(
+                    'type' => 'array',
+                    'sentAs' => 'test1.member'
+                ),
+                'test2' => array(
+                    'type' => 'array',
+                    'sentAs' => 'blah'
+                ),
+                'test3' => array(
                     'type' => 'array'
                 ),
                 'bar' => array(
@@ -275,13 +283,15 @@ class AwsQueryVisitorTest extends \Guzzle\Tests\GuzzleTestCase
                 )
             )
         )), array(
-            'test' => array(),
+            'test1' => array(),
+            'test2' => array(),
+            'test3' => array(),
             'bar' => array(
                 'bam' => array(),
                 'boo' => 'hi'
             )
         ));
         $fields = $request->getPostFields();
-        $this->assertEquals('foo.test=&foo.bar.bam=&foo.bar.boo=hi', (string) $fields);
+        $this->assertEquals('foo.test1=&foo.blah=&foo.test3=&foo.bar.bam=&foo.bar.boo=hi', (string) $fields);
     }
 }
