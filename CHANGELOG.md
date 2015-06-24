@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next Release
+## 2.8.11 - 2015-06-24
 
 * `Aws\CloudFront` - Added support for configurable `MaxTTL` and `DefaultTTL`.
 * `Aws\ConfigService` - Added support for recording changes for specific 
