@@ -1,4 +1,5 @@
 {
+  "version":"2.0",
   "metadata":{
     "apiVersion":"2012-12-01",
     "endpointPrefix":"redshift",
@@ -313,6 +314,15 @@
           "shape":"InvalidTagFault",
           "error":{
             "code":"InvalidTagFault",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"LimitExceededFault",
+          "error":{
+            "code":"LimitExceededFault",
             "httpStatusCode":400,
             "senderFault":true
           },
@@ -785,6 +795,66 @@
         }
       ]
     },
+    "CreateSnapshotCopyGrant":{
+      "name":"CreateSnapshotCopyGrant",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateSnapshotCopyGrantMessage"},
+      "output":{
+        "shape":"CreateSnapshotCopyGrantResult",
+        "wrapper":true,
+        "resultWrapper":"CreateSnapshotCopyGrantResult"
+      },
+      "errors":[
+        {
+          "shape":"SnapshotCopyGrantAlreadyExistsFault",
+          "error":{
+            "code":"SnapshotCopyGrantAlreadyExistsFault",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"SnapshotCopyGrantQuotaExceededFault",
+          "error":{
+            "code":"SnapshotCopyGrantQuotaExceededFault",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"LimitExceededFault",
+          "error":{
+            "code":"LimitExceededFault",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"TagLimitExceededFault",
+          "error":{
+            "code":"TagLimitExceededFault",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"InvalidTagFault",
+          "error":{
+            "code":"InvalidTagFault",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
+        }
+      ]
+    },
     "CreateTags":{
       "name":"CreateTags",
       "http":{
@@ -1083,6 +1153,34 @@
         }
       ]
     },
+    "DeleteSnapshotCopyGrant":{
+      "name":"DeleteSnapshotCopyGrant",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteSnapshotCopyGrantMessage"},
+      "errors":[
+        {
+          "shape":"InvalidSnapshotCopyGrantStateFault",
+          "error":{
+            "code":"InvalidSnapshotCopyGrantStateFault",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"SnapshotCopyGrantNotFoundFault",
+          "error":{
+            "code":"SnapshotCopyGrantNotFoundFault",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
+        }
+      ]
+    },
     "DeleteTags":{
       "name":"DeleteTags",
       "http":{
@@ -1096,6 +1194,15 @@
           "error":{
             "code":"ResourceNotFoundFault",
             "httpStatusCode":404,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"InvalidTagFault",
+          "error":{
+            "code":"InvalidTagFault",
+            "httpStatusCode":400,
             "senderFault":true
           },
           "exception":true
@@ -1119,6 +1226,15 @@
           "error":{
             "code":"ClusterParameterGroupNotFound",
             "httpStatusCode":404,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"InvalidTagFault",
+          "error":{
+            "code":"InvalidTagFault",
+            "httpStatusCode":400,
             "senderFault":true
           },
           "exception":true
@@ -1168,6 +1284,15 @@
             "senderFault":true
           },
           "exception":true
+        },
+        {
+          "shape":"InvalidTagFault",
+          "error":{
+            "code":"InvalidTagFault",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
         }
       ]
     },
@@ -1191,6 +1316,15 @@
             "senderFault":true
           },
           "exception":true
+        },
+        {
+          "shape":"InvalidTagFault",
+          "error":{
+            "code":"InvalidTagFault",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
         }
       ]
     },
@@ -1210,6 +1344,15 @@
           "shape":"ClusterSubnetGroupNotFoundFault",
           "error":{
             "code":"ClusterSubnetGroupNotFoundFault",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"InvalidTagFault",
+          "error":{
+            "code":"InvalidTagFault",
             "httpStatusCode":400,
             "senderFault":true
           },
@@ -1246,6 +1389,15 @@
           "error":{
             "code":"ClusterNotFound",
             "httpStatusCode":404,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"InvalidTagFault",
+          "error":{
+            "code":"InvalidTagFault",
+            "httpStatusCode":400,
             "senderFault":true
           },
           "exception":true
@@ -1332,6 +1484,15 @@
             "senderFault":true
           },
           "exception":true
+        },
+        {
+          "shape":"InvalidTagFault",
+          "error":{
+            "code":"InvalidTagFault",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
         }
       ]
     },
@@ -1351,6 +1512,15 @@
           "shape":"HsmConfigurationNotFoundFault",
           "error":{
             "code":"HsmConfigurationNotFoundFault",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"InvalidTagFault",
+          "error":{
+            "code":"InvalidTagFault",
             "httpStatusCode":400,
             "senderFault":true
           },
@@ -1413,6 +1583,15 @@
             "senderFault":true
           },
           "exception":true
+        },
+        {
+          "shape":"UnsupportedOperationFault",
+          "error":{
+            "code":"UnsupportedOperation",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
         }
       ]
     },
@@ -1471,6 +1650,38 @@
         }
       ]
     },
+    "DescribeSnapshotCopyGrants":{
+      "name":"DescribeSnapshotCopyGrants",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeSnapshotCopyGrantsMessage"},
+      "output":{
+        "shape":"SnapshotCopyGrantMessage",
+        "resultWrapper":"DescribeSnapshotCopyGrantsResult"
+      },
+      "errors":[
+        {
+          "shape":"SnapshotCopyGrantNotFoundFault",
+          "error":{
+            "code":"SnapshotCopyGrantNotFoundFault",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"InvalidTagFault",
+          "error":{
+            "code":"InvalidTagFault",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
+        }
+      ]
+    },
     "DescribeTags":{
       "name":"DescribeTags",
       "http":{
@@ -1488,6 +1699,15 @@
           "error":{
             "code":"ResourceNotFoundFault",
             "httpStatusCode":404,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"InvalidTagFault",
+          "error":{
+            "code":"InvalidTagFault",
+            "httpStatusCode":400,
             "senderFault":true
           },
           "exception":true
@@ -1702,6 +1922,24 @@
             "senderFault":true
           },
           "exception":true
+        },
+        {
+          "shape":"SnapshotCopyGrantNotFoundFault",
+          "error":{
+            "code":"SnapshotCopyGrantNotFoundFault",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"LimitExceededFault",
+          "error":{
+            "code":"LimitExceededFault",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
         }
       ]
     },
@@ -1821,6 +2059,15 @@
           "shape":"ClusterAlreadyExistsFault",
           "error":{
             "code":"ClusterAlreadyExists",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"LimitExceededFault",
+          "error":{
+            "code":"LimitExceededFault",
             "httpStatusCode":400,
             "senderFault":true
           },
@@ -2106,6 +2353,15 @@
             "senderFault":true
           },
           "exception":true
+        },
+        {
+          "shape":"UnsupportedOperationFault",
+          "error":{
+            "code":"UnsupportedOperation",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
         }
       ]
     },
@@ -2354,6 +2610,15 @@
           "error":{
             "code":"ClusterSecurityGroupNotFound",
             "httpStatusCode":404,
+            "senderFault":true
+          },
+          "exception":true
+        },
+        {
+          "shape":"LimitExceededFault",
+          "error":{
+            "code":"LimitExceededFault",
+            "httpStatusCode":400,
             "senderFault":true
           },
           "exception":true
@@ -2724,7 +2989,8 @@
       "type":"structure",
       "members":{
         "ParameterGroupName":{"shape":"String"},
-        "ParameterApplyStatus":{"shape":"String"}
+        "ParameterApplyStatus":{"shape":"String"},
+        "ClusterParameterStatusList":{"shape":"ClusterParameterStatusList"}
       }
     },
     "ClusterParameterGroupStatusList":{
@@ -2740,6 +3006,18 @@
         "Marker":{"shape":"String"},
         "ParameterGroups":{"shape":"ParameterGroupList"}
       }
+    },
+    "ClusterParameterStatus":{
+      "type":"structure",
+      "members":{
+        "ParameterName":{"shape":"String"},
+        "ParameterApplyStatus":{"shape":"String"},
+        "ParameterApplyErrorDescription":{"shape":"String"}
+      }
+    },
+    "ClusterParameterStatusList":{
+      "type":"list",
+      "member":{"shape":"ClusterParameterStatus"}
     },
     "ClusterQuotaExceededFault":{
       "type":"structure",
@@ -2846,7 +3124,8 @@
       "type":"structure",
       "members":{
         "DestinationRegion":{"shape":"String"},
-        "RetentionPeriod":{"shape":"Long"}
+        "RetentionPeriod":{"shape":"Long"},
+        "SnapshotCopyGrantName":{"shape":"String"}
       }
     },
     "ClusterSnapshotNotFoundFault":{
@@ -3125,6 +3404,15 @@
         "Tags":{"shape":"TagList"}
       }
     },
+    "CreateSnapshotCopyGrantMessage":{
+      "type":"structure",
+      "required":["SnapshotCopyGrantName"],
+      "members":{
+        "SnapshotCopyGrantName":{"shape":"String"},
+        "KmsKeyId":{"shape":"String"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
     "CreateTagsMessage":{
       "type":"structure",
       "required":[
@@ -3202,6 +3490,13 @@
       "required":["HsmConfigurationIdentifier"],
       "members":{
         "HsmConfigurationIdentifier":{"shape":"String"}
+      }
+    },
+    "DeleteSnapshotCopyGrantMessage":{
+      "type":"structure",
+      "required":["SnapshotCopyGrantName"],
+      "members":{
+        "SnapshotCopyGrantName":{"shape":"String"}
       }
     },
     "DeleteTagsMessage":{
@@ -3383,6 +3678,16 @@
         "ClusterIdentifier":{"shape":"String"}
       }
     },
+    "DescribeSnapshotCopyGrantsMessage":{
+      "type":"structure",
+      "members":{
+        "SnapshotCopyGrantName":{"shape":"String"},
+        "MaxRecords":{"shape":"IntegerOptional"},
+        "Marker":{"shape":"String"},
+        "TagKeys":{"shape":"TagKeyList"},
+        "TagValues":{"shape":"TagValueList"}
+      }
+    },
     "DescribeTagsMessage":{
       "type":"structure",
       "members":{
@@ -3454,7 +3759,8 @@
       "members":{
         "ClusterIdentifier":{"shape":"String"},
         "DestinationRegion":{"shape":"String"},
-        "RetentionPeriod":{"shape":"IntegerOptional"}
+        "RetentionPeriod":{"shape":"IntegerOptional"},
+        "SnapshotCopyGrantName":{"shape":"String"}
       }
     },
     "Endpoint":{
@@ -3893,6 +4199,17 @@
       },
       "exception":true
     },
+    "InvalidSnapshotCopyGrantStateFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"InvalidSnapshotCopyGrantStateFault",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "InvalidSubnet":{
       "type":"structure",
       "members":{
@@ -3932,6 +4249,17 @@
       },
       "error":{
         "code":"InvalidVPCNetworkStateFault",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "LimitExceededFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"LimitExceededFault",
         "httpStatusCode":400,
         "senderFault":true
       },
@@ -4073,9 +4401,17 @@
         "Source":{"shape":"String"},
         "DataType":{"shape":"String"},
         "AllowedValues":{"shape":"String"},
+        "ApplyType":{"shape":"ParameterApplyType"},
         "IsModifiable":{"shape":"Boolean"},
         "MinimumEngineVersion":{"shape":"String"}
       }
+    },
+    "ParameterApplyType":{
+      "type":"string",
+      "enum":[
+        "static",
+        "dynamic"
+      ]
     },
     "ParameterGroupList":{
       "type":"list",
@@ -4285,6 +4621,13 @@
       },
       "exception":true
     },
+    "RestorableNodeTypeList":{
+      "type":"list",
+      "member":{
+        "shape":"String",
+        "locationName":"NodeType"
+      }
+    },
     "RestoreFromClusterSnapshotMessage":{
       "type":"structure",
       "required":[
@@ -4309,7 +4652,8 @@
         "VpcSecurityGroupIds":{"shape":"VpcSecurityGroupIdList"},
         "PreferredMaintenanceWindow":{"shape":"String"},
         "AutomatedSnapshotRetentionPeriod":{"shape":"IntegerOptional"},
-        "KmsKeyId":{"shape":"String"}
+        "KmsKeyId":{"shape":"String"},
+        "NodeType":{"shape":"String"}
       }
     },
     "RestoreStatus":{
@@ -4414,7 +4758,8 @@
         "EstimatedSecondsToCompletion":{"shape":"Long"},
         "ElapsedTimeInSeconds":{"shape":"Long"},
         "SourceRegion":{"shape":"String"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "RestorableNodeTypes":{"shape":"RestorableNodeTypeList"}
       },
       "wrapper":true
     },
@@ -4446,6 +4791,62 @@
       },
       "error":{
         "code":"SnapshotCopyDisabledFault",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "SnapshotCopyGrant":{
+      "type":"structure",
+      "members":{
+        "SnapshotCopyGrantName":{"shape":"String"},
+        "KmsKeyId":{"shape":"String"},
+        "Tags":{"shape":"TagList"}
+      },
+      "wrapper":true
+    },
+    "SnapshotCopyGrantAlreadyExistsFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"SnapshotCopyGrantAlreadyExistsFault",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "SnapshotCopyGrantList":{
+      "type":"list",
+      "member":{
+        "shape":"SnapshotCopyGrant",
+        "locationName":"SnapshotCopyGrant"
+      }
+    },
+    "SnapshotCopyGrantMessage":{
+      "type":"structure",
+      "members":{
+        "Marker":{"shape":"String"},
+        "SnapshotCopyGrants":{"shape":"SnapshotCopyGrantList"}
+      }
+    },
+    "SnapshotCopyGrantNotFoundFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"SnapshotCopyGrantNotFoundFault",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "SnapshotCopyGrantQuotaExceededFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"SnapshotCopyGrantQuotaExceededFault",
         "httpStatusCode":400,
         "senderFault":true
       },
@@ -4665,6 +5066,17 @@
       },
       "exception":true
     },
+    "UnsupportedOperationFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"UnsupportedOperation",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "UnsupportedOptionFault":{
       "type":"structure",
       "members":{
@@ -4761,6 +5173,12 @@
       "type":"structure",
       "members":{
         "HsmConfiguration":{"shape":"HsmConfiguration"}
+      }
+    },
+    "CreateSnapshotCopyGrantResult":{
+      "type":"structure",
+      "members":{
+        "SnapshotCopyGrant":{"shape":"SnapshotCopyGrant"}
       }
     },
     "DeleteClusterResult":{

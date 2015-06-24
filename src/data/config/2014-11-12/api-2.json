@@ -166,6 +166,10 @@
         {
           "shape":"InvalidRoleException",
           "exception":true
+        },
+        {
+          "shape":"InvalidRecordingGroupException",
+          "exception":true
         }
       ]
     },
@@ -243,6 +247,7 @@
   "shapes":{
     "ARN":{"type":"string"},
     "AccountId":{"type":"string"},
+    "AllSupported":{"type":"boolean"},
     "AvailabilityZone":{"type":"string"},
     "Boolean":{"type":"boolean"},
     "ChannelName":{
@@ -316,7 +321,8 @@
       "type":"structure",
       "members":{
         "name":{"shape":"RecorderName"},
-        "roleARN":{"shape":"String"}
+        "roleARN":{"shape":"String"},
+        "recordingGroup":{"shape":"RecordingGroup"}
       }
     },
     "ConfigurationRecorderList":{
@@ -506,6 +512,12 @@
       },
       "exception":true
     },
+    "InvalidRecordingGroupException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
     "InvalidRoleException":{
       "type":"structure",
       "members":{
@@ -619,6 +631,13 @@
         "Failure"
       ]
     },
+    "RecordingGroup":{
+      "type":"structure",
+      "members":{
+        "allSupported":{"shape":"AllSupported"},
+        "resourceTypes":{"shape":"ResourceTypeList"}
+      }
+    },
     "RelatedEvent":{"type":"string"},
     "RelatedEventList":{
       "type":"list",
@@ -663,6 +682,10 @@
         "AWS::EC2::VPNConnection",
         "AWS::EC2::VPNGateway"
       ]
+    },
+    "ResourceTypeList":{
+      "type":"list",
+      "member":{"shape":"ResourceType"}
     },
     "StartConfigurationRecorderRequest":{
       "type":"structure",

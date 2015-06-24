@@ -446,6 +446,11 @@
       "refs": {
       }
     },
+    "InvalidMinimumProtocolVersion": {
+      "base": null,
+      "refs": {
+      }
+    },
     "InvalidOrigin": {
       "base": "The Amazon S3 origin server specified does not refer to a valid Amazon S3 bucket.",
       "refs": {
@@ -472,6 +477,11 @@
       }
     },
     "InvalidResponseCode": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "InvalidTTLOrder": {
       "base": null,
       "refs": {
       }
@@ -946,8 +956,12 @@
       "base": null,
       "refs": {
         "CacheBehavior$MinTTL": "The minimum amount of time that you want objects to stay in CloudFront caches before CloudFront queries your origin to see whether the object has been updated.You can specify a value from 0 to 3,153,600,000 seconds (100 years).",
+        "CacheBehavior$DefaultTTL": "If you don't configure your origin to add a Cache-Control max-age directive or an Expires header, DefaultTTL is the default amount of time (in seconds) that an object is in a CloudFront cache before CloudFront forwards another request to your origin to determine whether the object has been updated. The value that you specify applies only when your origin does not add HTTP headers such as Cache-Control max-age, Cache-Control s-maxage, and Expires to objects. You can specify a value from 0 to 3,153,600,000 seconds (100 years).",
+        "CacheBehavior$MaxTTL": "The maximum amount of time (in seconds) that an object is in a CloudFront cache before CloudFront forwards another request to your origin to determine whether the object has been updated. The value that you specify applies only when your origin adds HTTP headers such as Cache-Control max-age, Cache-Control s-maxage, and Expires to objects. You can specify a value from 0 to 3,153,600,000 seconds (100 years).",
         "CustomErrorResponse$ErrorCachingMinTTL": "The minimum amount of time you want HTTP error codes to stay in CloudFront caches before CloudFront queries your origin to see whether the object has been updated. You can specify a value from 0 to 31,536,000.",
-        "DefaultCacheBehavior$MinTTL": "The minimum amount of time that you want objects to stay in CloudFront caches before CloudFront queries your origin to see whether the object has been updated.You can specify a value from 0 to 3,153,600,000 seconds (100 years)."
+        "DefaultCacheBehavior$MinTTL": "The minimum amount of time that you want objects to stay in CloudFront caches before CloudFront queries your origin to see whether the object has been updated.You can specify a value from 0 to 3,153,600,000 seconds (100 years).",
+        "DefaultCacheBehavior$DefaultTTL": "If you don't configure your origin to add a Cache-Control max-age directive or an Expires header, DefaultTTL is the default amount of time (in seconds) that an object is in a CloudFront cache before CloudFront forwards another request to your origin to determine whether the object has been updated. The value that you specify applies only when your origin does not add HTTP headers such as Cache-Control max-age, Cache-Control s-maxage, and Expires to objects. You can specify a value from 0 to 3,153,600,000 seconds (100 years).",
+        "DefaultCacheBehavior$MaxTTL": "The maximum amount of time (in seconds) that an object is in a CloudFront cache before CloudFront forwards another request to your origin to determine whether the object has been updated. The value that you specify applies only when your origin adds HTTP headers such as Cache-Control max-age, Cache-Control s-maxage, and Expires to objects. You can specify a value from 0 to 3,153,600,000 seconds (100 years)."
       }
     },
     "string": {
@@ -1028,12 +1042,14 @@
         "InvalidHeadersForS3Origin$Message": null,
         "InvalidIfMatchVersion$Message": null,
         "InvalidLocationCode$Message": null,
+        "InvalidMinimumProtocolVersion$Message": null,
         "InvalidOrigin$Message": null,
         "InvalidOriginAccessIdentity$Message": null,
         "InvalidProtocolSettings$Message": null,
         "InvalidRelativePath$Message": null,
         "InvalidRequiredProtocol$Message": null,
         "InvalidResponseCode$Message": null,
+        "InvalidTTLOrder$Message": null,
         "InvalidViewerCertificate$Message": null,
         "Invalidation$Id": "The identifier for the invalidation request. For example: IDFDVBD632BHDS5.",
         "Invalidation$Status": "The status of the invalidation request. When the invalidation batch is finished, the status is Completed.",
