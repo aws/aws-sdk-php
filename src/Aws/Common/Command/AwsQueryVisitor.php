@@ -99,6 +99,9 @@ class AwsQueryVisitor extends AbstractRequestVisitor
         // For BC, serialize empty lists for specific operations
         if (!$value) {
             if (isset($serializeEmpty[$this->fqname])) {
+                if (substr($prefix, -7) === '.member') {
+                    $prefix = substr($prefix, 0, -7);
+                }
                 $query[$prefix] = '';
             }
             return;
