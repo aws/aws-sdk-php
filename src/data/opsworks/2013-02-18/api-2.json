@@ -369,6 +369,25 @@
         }
       ]
     },
+    "DescribeAgentVersions":{
+      "name":"DescribeAgentVersions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeAgentVersionsRequest"},
+      "output":{"shape":"DescribeAgentVersionsResult"},
+      "errors":[
+        {
+          "shape":"ValidationException",
+          "exception":true
+        },
+        {
+          "shape":"ResourceNotFoundException",
+          "exception":true
+        }
+      ]
+    },
     "DescribeApps":{
       "name":"DescribeApps",
       "http":{
@@ -1204,6 +1223,17 @@
     }
   },
   "shapes":{
+    "AgentVersion":{
+      "type":"structure",
+      "members":{
+        "Version":{"shape":"String"},
+        "ConfigurationManager":{"shape":"StackConfigurationManager"}
+      }
+    },
+    "AgentVersions":{
+      "type":"list",
+      "member":{"shape":"AgentVersion"}
+    },
     "App":{
       "type":"structure",
       "members":{
@@ -1366,7 +1396,8 @@
         "DefaultSshKeyName":{"shape":"String"},
         "ClonePermissions":{"shape":"Boolean"},
         "CloneAppIds":{"shape":"Strings"},
-        "DefaultRootDeviceType":{"shape":"RootDeviceType"}
+        "DefaultRootDeviceType":{"shape":"RootDeviceType"},
+        "AgentVersion":{"shape":"String"}
       }
     },
     "CloneStackResult":{
@@ -1466,7 +1497,8 @@
         "RootDeviceType":{"shape":"RootDeviceType"},
         "BlockDeviceMappings":{"shape":"BlockDeviceMappings"},
         "InstallUpdatesOnBoot":{"shape":"Boolean"},
-        "EbsOptimized":{"shape":"Boolean"}
+        "EbsOptimized":{"shape":"Boolean"},
+        "AgentVersion":{"shape":"String"}
       }
     },
     "CreateInstanceResult":{
@@ -1534,7 +1566,8 @@
         "UseOpsworksSecurityGroups":{"shape":"Boolean"},
         "CustomCookbooksSource":{"shape":"Source"},
         "DefaultSshKeyName":{"shape":"String"},
-        "DefaultRootDeviceType":{"shape":"RootDeviceType"}
+        "DefaultRootDeviceType":{"shape":"RootDeviceType"},
+        "AgentVersion":{"shape":"String"}
       }
     },
     "CreateStackResult":{
@@ -1651,6 +1684,8 @@
         "update_dependencies",
         "update_custom_cookbooks",
         "execute_recipes",
+        "configure",
+        "setup",
         "deploy",
         "rollback",
         "start",
@@ -1689,6 +1724,19 @@
       "required":["VolumeId"],
       "members":{
         "VolumeId":{"shape":"String"}
+      }
+    },
+    "DescribeAgentVersionsRequest":{
+      "type":"structure",
+      "members":{
+        "StackId":{"shape":"String"},
+        "ConfigurationManager":{"shape":"StackConfigurationManager"}
+      }
+    },
+    "DescribeAgentVersionsResult":{
+      "type":"structure",
+      "members":{
+        "AgentVersions":{"shape":"AgentVersions"}
       }
     },
     "DescribeAppsRequest":{
@@ -2051,41 +2099,43 @@
     "Instance":{
       "type":"structure",
       "members":{
-        "InstanceId":{"shape":"String"},
-        "Ec2InstanceId":{"shape":"String"},
-        "VirtualizationType":{"shape":"VirtualizationType"},
-        "Hostname":{"shape":"String"},
-        "StackId":{"shape":"String"},
-        "LayerIds":{"shape":"Strings"},
-        "SecurityGroupIds":{"shape":"Strings"},
-        "InstanceType":{"shape":"String"},
-        "InstanceProfileArn":{"shape":"String"},
-        "Status":{"shape":"String"},
-        "Os":{"shape":"String"},
+        "AgentVersion":{"shape":"String"},
         "AmiId":{"shape":"String"},
-        "AvailabilityZone":{"shape":"String"},
-        "SubnetId":{"shape":"String"},
-        "PublicDns":{"shape":"String"},
-        "PrivateDns":{"shape":"String"},
-        "PublicIp":{"shape":"String"},
-        "PrivateIp":{"shape":"String"},
-        "ElasticIp":{"shape":"String"},
-        "AutoScalingType":{"shape":"AutoScalingType"},
-        "SshKeyName":{"shape":"String"},
-        "SshHostRsaKeyFingerprint":{"shape":"String"},
-        "SshHostDsaKeyFingerprint":{"shape":"String"},
-        "CreatedAt":{"shape":"DateTime"},
-        "LastServiceErrorId":{"shape":"String"},
         "Architecture":{"shape":"Architecture"},
-        "RootDeviceType":{"shape":"RootDeviceType"},
-        "RootDeviceVolumeId":{"shape":"String"},
+        "AutoScalingType":{"shape":"AutoScalingType"},
+        "AvailabilityZone":{"shape":"String"},
         "BlockDeviceMappings":{"shape":"BlockDeviceMappings"},
-        "InstallUpdatesOnBoot":{"shape":"Boolean"},
+        "CreatedAt":{"shape":"DateTime"},
         "EbsOptimized":{"shape":"Boolean"},
+        "Ec2InstanceId":{"shape":"String"},
+        "ElasticIp":{"shape":"String"},
+        "Hostname":{"shape":"String"},
+        "InfrastructureClass":{"shape":"String"},
+        "InstallUpdatesOnBoot":{"shape":"Boolean"},
+        "InstanceId":{"shape":"String"},
+        "InstanceProfileArn":{"shape":"String"},
+        "InstanceType":{"shape":"String"},
+        "LastServiceErrorId":{"shape":"String"},
+        "LayerIds":{"shape":"Strings"},
+        "Os":{"shape":"String"},
+        "Platform":{"shape":"String"},
+        "PrivateDns":{"shape":"String"},
+        "PrivateIp":{"shape":"String"},
+        "PublicDns":{"shape":"String"},
+        "PublicIp":{"shape":"String"},
+        "RegisteredBy":{"shape":"String"},
         "ReportedAgentVersion":{"shape":"String"},
         "ReportedOs":{"shape":"ReportedOs"},
-        "InfrastructureClass":{"shape":"String"},
-        "RegisteredBy":{"shape":"String"}
+        "RootDeviceType":{"shape":"RootDeviceType"},
+        "RootDeviceVolumeId":{"shape":"String"},
+        "SecurityGroupIds":{"shape":"Strings"},
+        "SshHostDsaKeyFingerprint":{"shape":"String"},
+        "SshHostRsaKeyFingerprint":{"shape":"String"},
+        "SshKeyName":{"shape":"String"},
+        "StackId":{"shape":"String"},
+        "Status":{"shape":"String"},
+        "SubnetId":{"shape":"String"},
+        "VirtualizationType":{"shape":"VirtualizationType"}
       }
     },
     "InstanceIdentity":{
@@ -2511,7 +2561,8 @@
         "CustomCookbooksSource":{"shape":"Source"},
         "DefaultSshKeyName":{"shape":"String"},
         "CreatedAt":{"shape":"DateTime"},
-        "DefaultRootDeviceType":{"shape":"RootDeviceType"}
+        "DefaultRootDeviceType":{"shape":"RootDeviceType"},
+        "AgentVersion":{"shape":"String"}
       }
     },
     "StackAttributes":{
@@ -2652,7 +2703,8 @@
         "SshKeyName":{"shape":"String"},
         "Architecture":{"shape":"Architecture"},
         "InstallUpdatesOnBoot":{"shape":"Boolean"},
-        "EbsOptimized":{"shape":"Boolean"}
+        "EbsOptimized":{"shape":"Boolean"},
+        "AgentVersion":{"shape":"String"}
       }
     },
     "UpdateLayerRequest":{
@@ -2711,7 +2763,8 @@
         "CustomCookbooksSource":{"shape":"Source"},
         "DefaultSshKeyName":{"shape":"String"},
         "DefaultRootDeviceType":{"shape":"RootDeviceType"},
-        "UseOpsworksSecurityGroups":{"shape":"Boolean"}
+        "UseOpsworksSecurityGroups":{"shape":"Boolean"},
+        "AgentVersion":{"shape":"String"}
       }
     },
     "UpdateUserProfileRequest":{
@@ -2750,7 +2803,8 @@
     "ValidForInMinutes":{
       "type":"integer",
       "min":60,
-      "max":1440
+      "max":1440,
+      "box":true
     },
     "ValidationException":{
       "type":"structure",

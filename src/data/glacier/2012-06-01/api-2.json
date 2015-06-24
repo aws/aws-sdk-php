@@ -40,6 +40,42 @@
         }
       ]
     },
+    "AddTagsToVault":{
+      "name":"AddTagsToVault",
+      "http":{
+        "method":"POST",
+        "requestUri":"/{accountId}/vaults/{vaultName}/tags?operation=add",
+        "responseCode":204
+      },
+      "input":{"shape":"AddTagsToVaultInput"},
+      "errors":[
+        {
+          "shape":"InvalidParameterValueException",
+          "error":{"httpStatusCode":400},
+          "exception":true
+        },
+        {
+          "shape":"MissingParameterValueException",
+          "error":{"httpStatusCode":400},
+          "exception":true
+        },
+        {
+          "shape":"ResourceNotFoundException",
+          "error":{"httpStatusCode":404},
+          "exception":true
+        },
+        {
+          "shape":"LimitExceededException",
+          "error":{"httpStatusCode":400},
+          "exception":true
+        },
+        {
+          "shape":"ServiceUnavailableException",
+          "error":{"httpStatusCode":500},
+          "exception":true
+        }
+      ]
+    },
     "CompleteMultipartUpload":{
       "name":"CompleteMultipartUpload",
       "http":{
@@ -571,6 +607,37 @@
         }
       ]
     },
+    "ListTagsForVault":{
+      "name":"ListTagsForVault",
+      "http":{
+        "method":"GET",
+        "requestUri":"/{accountId}/vaults/{vaultName}/tags"
+      },
+      "input":{"shape":"ListTagsForVaultInput"},
+      "output":{"shape":"ListTagsForVaultOutput"},
+      "errors":[
+        {
+          "shape":"InvalidParameterValueException",
+          "error":{"httpStatusCode":400},
+          "exception":true
+        },
+        {
+          "shape":"MissingParameterValueException",
+          "error":{"httpStatusCode":400},
+          "exception":true
+        },
+        {
+          "shape":"ResourceNotFoundException",
+          "error":{"httpStatusCode":404},
+          "exception":true
+        },
+        {
+          "shape":"ServiceUnavailableException",
+          "error":{"httpStatusCode":500},
+          "exception":true
+        }
+      ]
+    },
     "ListVaults":{
       "name":"ListVaults",
       "http":{
@@ -593,6 +660,37 @@
         {
           "shape":"MissingParameterValueException",
           "error":{"httpStatusCode":400},
+          "exception":true
+        },
+        {
+          "shape":"ServiceUnavailableException",
+          "error":{"httpStatusCode":500},
+          "exception":true
+        }
+      ]
+    },
+    "RemoveTagsFromVault":{
+      "name":"RemoveTagsFromVault",
+      "http":{
+        "method":"POST",
+        "requestUri":"/{accountId}/vaults/{vaultName}/tags?operation=remove",
+        "responseCode":204
+      },
+      "input":{"shape":"RemoveTagsFromVaultInput"},
+      "errors":[
+        {
+          "shape":"InvalidParameterValueException",
+          "error":{"httpStatusCode":400},
+          "exception":true
+        },
+        {
+          "shape":"MissingParameterValueException",
+          "error":{"httpStatusCode":400},
+          "exception":true
+        },
+        {
+          "shape":"ResourceNotFoundException",
+          "error":{"httpStatusCode":404},
           "exception":true
         },
         {
@@ -796,6 +894,26 @@
       "enum":[
         "ArchiveRetrieval",
         "InventoryRetrieval"
+      ]
+    },
+    "AddTagsToVaultInput":{
+      "type":"structure",
+      "members":{
+        "accountId":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"accountId"
+        },
+        "vaultName":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"vaultName"
+        },
+        "Tags":{"shape":"TagMap"}
+      },
+      "required":[
+        "accountId",
+        "vaultName"
       ]
     },
     "ArchiveCreationOutput":{
@@ -1458,6 +1576,31 @@
         "Marker":{"shape":"string"}
       }
     },
+    "ListTagsForVaultInput":{
+      "type":"structure",
+      "members":{
+        "accountId":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"accountId"
+        },
+        "vaultName":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"vaultName"
+        }
+      },
+      "required":[
+        "accountId",
+        "vaultName"
+      ]
+    },
+    "ListTagsForVaultOutput":{
+      "type":"structure",
+      "members":{
+        "Tags":{"shape":"TagMap"}
+      }
+    },
     "ListVaultsInput":{
       "type":"structure",
       "members":{
@@ -1521,6 +1664,26 @@
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "RemoveTagsFromVaultInput":{
+      "type":"structure",
+      "members":{
+        "accountId":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"accountId"
+        },
+        "vaultName":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"vaultName"
+        },
+        "TagKeys":{"shape":"TagKeyList"}
+      },
+      "required":[
+        "accountId",
+        "vaultName"
+      ]
     },
     "RequestTimeoutException":{
       "type":"structure",
@@ -1619,6 +1782,17 @@
       "type":"blob",
       "streaming":true
     },
+    "TagKey":{"type":"string"},
+    "TagKeyList":{
+      "type":"list",
+      "member":{"shape":"string"}
+    },
+    "TagMap":{
+      "type":"map",
+      "key":{"shape":"TagKey"},
+      "value":{"shape":"TagValue"}
+    },
+    "TagValue":{"type":"string"},
     "UploadArchiveInput":{
       "type":"structure",
       "members":{

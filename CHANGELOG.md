@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## 3.0.6 - 2015-06-24
+
+* `Aws\CloudFront` - Added support for configurable `MaxTTL` and `DefaultTTL`.
+* `Aws\ConfigService` - Added support for recording changes for specific 
+  resource types.
+* `Aws\Ecs` - Added support for sorting, deregistering, and overriding 
+  environment variables for task definitions.
+* `Aws\Glacier` - Added support for the `AddTagsToVault`, `ListTagsForVault`, 
+  and `RemoveTagsFromVault` API operations.
+* `Aws\OpwWorks` - Added support for specifying agent versions to be used on 
+  instances.
+* `Aws\Redshift` - Added support for the `CreateSnapshotCopyGrant`, 
+  `DescribeSnapshotCopyGrants`, and `DeleteSnapshotCopyGrant` API operations.
+* Fixed XML attribute serialization.
+
 ## 3.0.5 - 2015-06-18
 
 * `Aws\CognitoSync` - Fixed an issue in the Signature Version 4 implementation
