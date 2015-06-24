@@ -2,8 +2,19 @@
 
 ## Next Release
 
-* `Aws\Ecs` - Added support for sorting, deregistering, and overriding environment
-  variables for task definitions.
+* `Aws\CloudFront` - Added support for configurable `MaxTTL` and `DefaultTTL`.
+* `Aws\ConfigService` - Added support for recording changes for specific 
+  resource types.
+* `Aws\Ecs` - Added support for sorting, deregistering, and overriding 
+  environment variables for task definitions.
+* `Aws\Glacier` - Added support for the `AddTagsToVault`, `ListTagsForVault`, 
+  and `RemoveTagsFromVault` API operations.
+* `Aws\OpwWorks` - Added support for specifying agent versions to be used on 
+  instances.
+* `Aws\Redshift` - Added support for the `CreateSnapshotCopyGrant`, 
+  `DescribeSnapshotCopyGrants`, and `DeleteSnapshotCopyGrant` API operations.
+* Fixed empty list serialization for Elastic Load Balancing and CloudFormation
+  operations.
 
 ## 2.8.10 - 2015-06-11
 

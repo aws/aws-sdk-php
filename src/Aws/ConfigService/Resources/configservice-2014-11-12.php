@@ -389,6 +389,22 @@ return array (
                         'roleARN' => array(
                             'type' => 'string',
                         ),
+                        'recordingGroup' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'allSupported' => array(
+                                    'type' => 'boolean',
+                                    'format' => 'boolean-string',
+                                ),
+                                'resourceTypes' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'ResourceType',
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -404,6 +420,10 @@ return array (
                 array(
                     'reason' => 'You have provided a null or empty role ARN.',
                     'class' => 'InvalidRoleException',
+                ),
+                array(
+                    'reason' => 'AWS Config throws an exception if the recording group does not contain a valid list of resource types. Invalid values could also be incorrectly formatted.',
+                    'class' => 'InvalidRecordingGroupException',
                 ),
             ),
         ),
@@ -629,6 +649,21 @@ return array (
                             ),
                             'roleARN' => array(
                                 'type' => 'string',
+                            ),
+                            'recordingGroup' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'allSupported' => array(
+                                        'type' => 'boolean',
+                                    ),
+                                    'resourceTypes' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'ResourceType',
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                     ),

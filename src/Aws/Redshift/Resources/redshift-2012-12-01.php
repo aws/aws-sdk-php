@@ -420,6 +420,10 @@ return array (
                     'reason' => 'The tag is invalid.',
                     'class' => 'InvalidTagException',
                 ),
+                array(
+                    'reason' => 'The encryption key has exceeded its grant limit in AWS KMS.',
+                    'class' => 'LimitExceededException',
+                ),
             ),
         ),
         'CreateClusterParameterGroup' => array(
@@ -979,6 +983,73 @@ return array (
                 ),
             ),
         ),
+        'CreateSnapshotCopyGrant' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'SnapshotCopyGrantWrapper',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'CreateSnapshotCopyGrant',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2012-12-01',
+                ),
+                'SnapshotCopyGrantName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'KmsKeyId' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The snapshot copy grant can\'t be created because a grant with the same name already exists.',
+                    'class' => 'SnapshotCopyGrantAlreadyExistsException',
+                ),
+                array(
+                    'reason' => 'The AWS account has exceeded the maximum number of snapshot copy grants in this region.',
+                    'class' => 'SnapshotCopyGrantQuotaExceededException',
+                ),
+                array(
+                    'reason' => 'The encryption key has exceeded its grant limit in AWS KMS.',
+                    'class' => 'LimitExceededException',
+                ),
+                array(
+                    'reason' => 'The request exceeds the limit of 10 tags for the resource.',
+                    'class' => 'TagLimitExceededException',
+                ),
+                array(
+                    'reason' => 'The tag is invalid.',
+                    'class' => 'InvalidTagException',
+                ),
+            ),
+        ),
         'CreateTags' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -1332,6 +1403,40 @@ return array (
                 ),
             ),
         ),
+        'DeleteSnapshotCopyGrant' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DeleteSnapshotCopyGrant',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2012-12-01',
+                ),
+                'SnapshotCopyGrantName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The snapshot copy grant can\'t be deleted because it is used by one or more clusters.',
+                    'class' => 'InvalidSnapshotCopyGrantStateException',
+                ),
+                array(
+                    'reason' => 'The specified snapshot copy grant can\'t be found. Make sure that the name is typed correctly and that the grant exists in the destination region.',
+                    'class' => 'SnapshotCopyGrantNotFoundException',
+                ),
+            ),
+        ),
         'DeleteTags' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -1369,6 +1474,10 @@ return array (
                 array(
                     'reason' => 'The resource could not be found.',
                     'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'The tag is invalid.',
+                    'class' => 'InvalidTagException',
                 ),
             ),
         ),
@@ -1424,6 +1533,10 @@ return array (
                 array(
                     'reason' => 'The parameter group name does not refer to an existing parameter group.',
                     'class' => 'ClusterParameterGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'The tag is invalid.',
+                    'class' => 'InvalidTagException',
                 ),
             ),
         ),
@@ -1522,6 +1635,10 @@ return array (
                     'reason' => 'The cluster security group name does not refer to an existing cluster security group.',
                     'class' => 'ClusterSecurityGroupNotFoundException',
                 ),
+                array(
+                    'reason' => 'The tag is invalid.',
+                    'class' => 'InvalidTagException',
+                ),
             ),
         ),
         'DescribeClusterSnapshots' => array(
@@ -1607,6 +1724,10 @@ return array (
                     'reason' => 'The snapshot identifier does not refer to an existing cluster snapshot.',
                     'class' => 'ClusterSnapshotNotFoundException',
                 ),
+                array(
+                    'reason' => 'The tag is invalid.',
+                    'class' => 'InvalidTagException',
+                ),
             ),
         ),
         'DescribeClusterSubnetGroups' => array(
@@ -1661,6 +1782,10 @@ return array (
                 array(
                     'reason' => 'The cluster subnet group name does not refer to an existing cluster subnet group.',
                     'class' => 'ClusterSubnetGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'The tag is invalid.',
+                    'class' => 'InvalidTagException',
                 ),
             ),
         ),
@@ -1751,6 +1876,10 @@ return array (
                 array(
                     'reason' => 'The ClusterIdentifier parameter does not refer to an existing cluster.',
                     'class' => 'ClusterNotFoundException',
+                ),
+                array(
+                    'reason' => 'The tag is invalid.',
+                    'class' => 'InvalidTagException',
                 ),
             ),
         ),
@@ -1956,6 +2085,10 @@ return array (
                     'reason' => 'There is no Amazon Redshift HSM client certificate with the specified identifier.',
                     'class' => 'HsmClientCertificateNotFoundException',
                 ),
+                array(
+                    'reason' => 'The tag is invalid.',
+                    'class' => 'InvalidTagException',
+                ),
             ),
         ),
         'DescribeHsmConfigurations' => array(
@@ -2010,6 +2143,10 @@ return array (
                 array(
                     'reason' => 'There is no Amazon Redshift HSM configuration with the specified identifier.',
                     'class' => 'HsmConfigurationNotFoundException',
+                ),
+                array(
+                    'reason' => 'The tag is invalid.',
+                    'class' => 'InvalidTagException',
                 ),
             ),
         ),
@@ -2113,6 +2250,10 @@ return array (
                     'reason' => 'Specified offering does not exist.',
                     'class' => 'ReservedNodeOfferingNotFoundException',
                 ),
+                array(
+                    'reason' => 'The requested operation isn\'t supported.',
+                    'class' => 'UnsupportedOperationException',
+                ),
             ),
         ),
         'DescribeReservedNodes' => array(
@@ -2186,6 +2327,65 @@ return array (
                 ),
             ),
         ),
+        'DescribeSnapshotCopyGrants' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'SnapshotCopyGrantMessage',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeSnapshotCopyGrants',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2012-12-01',
+                ),
+                'SnapshotCopyGrantName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'MaxRecords' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'TagKeys' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'TagKeys.member',
+                    'items' => array(
+                        'name' => 'TagKey',
+                        'type' => 'string',
+                    ),
+                ),
+                'TagValues' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'TagValues.member',
+                    'items' => array(
+                        'name' => 'TagValue',
+                        'type' => 'string',
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The specified snapshot copy grant can\'t be found. Make sure that the name is typed correctly and that the grant exists in the destination region.',
+                    'class' => 'SnapshotCopyGrantNotFoundException',
+                ),
+                array(
+                    'reason' => 'The tag is invalid.',
+                    'class' => 'InvalidTagException',
+                ),
+            ),
+        ),
         'DescribeTags' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -2242,6 +2442,10 @@ return array (
                 array(
                     'reason' => 'The resource could not be found.',
                     'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'The tag is invalid.',
+                    'class' => 'InvalidTagException',
                 ),
             ),
         ),
@@ -2403,6 +2607,10 @@ return array (
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
+                'SnapshotCopyGrantName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -2432,6 +2640,14 @@ return array (
                 array(
                     'reason' => 'Your account is not authorized to perform the requested operation.',
                     'class' => 'UnauthorizedOperationException',
+                ),
+                array(
+                    'reason' => 'The specified snapshot copy grant can\'t be found. Make sure that the name is typed correctly and that the grant exists in the destination region.',
+                    'class' => 'SnapshotCopyGrantNotFoundException',
+                ),
+                array(
+                    'reason' => 'The encryption key has exceeded its grant limit in AWS KMS.',
+                    'class' => 'LimitExceededException',
                 ),
             ),
         ),
@@ -2574,6 +2790,10 @@ return array (
                     'reason' => 'The account already has a cluster with the given identifier.',
                     'class' => 'ClusterAlreadyExistsException',
                 ),
+                array(
+                    'reason' => 'The encryption key has exceeded its grant limit in AWS KMS.',
+                    'class' => 'LimitExceededException',
+                ),
             ),
         ),
         'ModifyClusterParameterGroup' => array(
@@ -2623,6 +2843,9 @@ return array (
                                 'type' => 'string',
                             ),
                             'AllowedValues' => array(
+                                'type' => 'string',
+                            ),
+                            'ApplyType' => array(
                                 'type' => 'string',
                             ),
                             'IsModifiable' => array(
@@ -2891,6 +3114,10 @@ return array (
                     'reason' => 'Request would exceed the user\'s compute node quota. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Cluster Management Guide.',
                     'class' => 'ReservedNodeQuotaExceededException',
                 ),
+                array(
+                    'reason' => 'The requested operation isn\'t supported.',
+                    'class' => 'UnsupportedOperationException',
+                ),
             ),
         ),
         'RebootCluster' => array(
@@ -2978,6 +3205,9 @@ return array (
                                 'type' => 'string',
                             ),
                             'AllowedValues' => array(
+                                'type' => 'string',
+                            ),
+                            'ApplyType' => array(
                                 'type' => 'string',
                             ),
                             'IsModifiable' => array(
@@ -3105,6 +3335,10 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'NodeType' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -3182,6 +3416,10 @@ return array (
                 array(
                     'reason' => 'The cluster security group name does not refer to an existing cluster security group.',
                     'class' => 'ClusterSecurityGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'The encryption key has exceeded its grant limit in AWS KMS.',
+                    'class' => 'LimitExceededException',
                 ),
             ),
         ),
@@ -3537,6 +3775,14 @@ return array (
                                 ),
                             ),
                         ),
+                        'RestorableNodeTypes' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'NodeType',
+                                'type' => 'string',
+                                'sentAs' => 'NodeType',
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -3631,6 +3877,25 @@ return array (
                                     ),
                                     'ParameterApplyStatus' => array(
                                         'type' => 'string',
+                                    ),
+                                    'ClusterParameterStatusList' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'ClusterParameterStatus',
+                                            'type' => 'object',
+                                            'sentAs' => 'member',
+                                            'properties' => array(
+                                                'ParameterName' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'ParameterApplyStatus' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'ParameterApplyErrorDescription' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
                                     ),
                                 ),
                             ),
@@ -3733,6 +3998,9 @@ return array (
                                 ),
                                 'RetentionPeriod' => array(
                                     'type' => 'numeric',
+                                ),
+                                'SnapshotCopyGrantName' => array(
+                                    'type' => 'string',
                                 ),
                             ),
                         ),
@@ -4053,6 +4321,43 @@ return array (
                 ),
             ),
         ),
+        'SnapshotCopyGrantWrapper' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'SnapshotCopyGrant' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'data' => array(
+                        'wrapper' => true,
+                    ),
+                    'properties' => array(
+                        'SnapshotCopyGrantName' => array(
+                            'type' => 'string',
+                        ),
+                        'KmsKeyId' => array(
+                            'type' => 'string',
+                        ),
+                        'Tags' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Tag',
+                                'type' => 'object',
+                                'sentAs' => 'Tag',
+                                'properties' => array(
+                                    'Key' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Value' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
         'EmptyOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -4131,6 +4436,9 @@ return array (
                                 'type' => 'string',
                             ),
                             'AllowedValues' => array(
+                                'type' => 'string',
+                            ),
+                            'ApplyType' => array(
                                 'type' => 'string',
                             ),
                             'IsModifiable' => array(
@@ -4378,6 +4686,14 @@ return array (
                                     ),
                                 ),
                             ),
+                            'RestorableNodeTypes' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'NodeType',
+                                    'type' => 'string',
+                                    'sentAs' => 'NodeType',
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -4582,6 +4898,25 @@ return array (
                                         'ParameterApplyStatus' => array(
                                             'type' => 'string',
                                         ),
+                                        'ClusterParameterStatusList' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'ClusterParameterStatus',
+                                                'type' => 'object',
+                                                'sentAs' => 'member',
+                                                'properties' => array(
+                                                    'ParameterName' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'ParameterApplyStatus' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'ParameterApplyErrorDescription' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
                                     ),
                                 ),
                             ),
@@ -4683,6 +5018,9 @@ return array (
                                     ),
                                     'RetentionPeriod' => array(
                                         'type' => 'numeric',
+                                    ),
+                                    'SnapshotCopyGrantName' => array(
+                                        'type' => 'string',
                                     ),
                                 ),
                             ),
@@ -4786,6 +5124,9 @@ return array (
                                         'type' => 'string',
                                     ),
                                     'AllowedValues' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'ApplyType' => array(
                                         'type' => 'string',
                                     ),
                                     'IsModifiable' => array(
@@ -5331,6 +5672,49 @@ return array (
                 'EstimatedTimeToCompletionInSeconds' => array(
                     'type' => 'numeric',
                     'location' => 'xml',
+                ),
+            ),
+        ),
+        'SnapshotCopyGrantMessage' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'SnapshotCopyGrants' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'SnapshotCopyGrant',
+                        'type' => 'object',
+                        'sentAs' => 'SnapshotCopyGrant',
+                        'properties' => array(
+                            'SnapshotCopyGrantName' => array(
+                                'type' => 'string',
+                            ),
+                            'KmsKeyId' => array(
+                                'type' => 'string',
+                            ),
+                            'Tags' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'Tag',
+                                    'type' => 'object',
+                                    'sentAs' => 'Tag',
+                                    'properties' => array(
+                                        'Key' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Value' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
                 ),
             ),
         ),

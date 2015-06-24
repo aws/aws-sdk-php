@@ -15,7 +15,7 @@
  */
 
 return array (
-    'apiVersion' => '2014-11-06',
+    'apiVersion' => '2015-04-17',
     'endpointPrefix' => 'cloudfront',
     'serviceFullName' => 'Amazon CloudFront',
     'serviceAbbreviation' => 'CloudFront',
@@ -68,7 +68,7 @@ return array (
     'operations' => array(
         'CreateCloudFrontOriginAccessIdentity' => array(
             'httpMethod' => 'POST',
-            'uri' => '/2014-11-06/origin-access-identity/cloudfront',
+            'uri' => '/2015-04-17/origin-access-identity/cloudfront',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'CreateCloudFrontOriginAccessIdentityResult',
             'responseType' => 'model',
@@ -76,7 +76,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'CloudFrontOriginAccessIdentityConfig',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2014-11-06/',
+                        'http://cloudfront.amazonaws.com/doc/2015-04-17/',
                     ),
                 ),
             ),
@@ -121,7 +121,7 @@ return array (
         ),
         'CreateDistribution' => array(
             'httpMethod' => 'POST',
-            'uri' => '/2014-11-06/distribution',
+            'uri' => '/2015-04-17/distribution',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'CreateDistributionResult',
             'responseType' => 'model',
@@ -129,7 +129,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'DistributionConfig',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2014-11-06/',
+                        'http://cloudfront.amazonaws.com/doc/2015-04-17/',
                     ),
                 ),
             ),
@@ -348,6 +348,12 @@ return array (
                             'type' => 'boolean',
                             'format' => 'boolean-string',
                         ),
+                        'DefaultTTL' => array(
+                            'type' => 'numeric',
+                        ),
+                        'MaxTTL' => array(
+                            'type' => 'numeric',
+                        ),
                     ),
                 ),
                 'CacheBehaviors' => array(
@@ -492,6 +498,12 @@ return array (
                                     'SmoothStreaming' => array(
                                         'type' => 'boolean',
                                         'format' => 'boolean-string',
+                                    ),
+                                    'DefaultTTL' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'MaxTTL' => array(
+                                        'type' => 'numeric',
                                     ),
                                 ),
                             ),
@@ -652,6 +664,9 @@ return array (
                     'class' => 'InvalidViewerCertificateException',
                 ),
                 array(
+                    'class' => 'InvalidMinimumProtocolVersionException',
+                ),
+                array(
                     'reason' => 'This operation requires a body. Ensure that the body is present and the Content-Type header is set.',
                     'class' => 'MissingBodyException',
                 ),
@@ -729,11 +744,14 @@ return array (
                     'reason' => 'You cannot specify SSLv3 as the minimum protocol version if you only want to support only clients that Support Server Name Indication (SNI).',
                     'class' => 'InvalidProtocolSettingsException',
                 ),
+                array(
+                    'class' => 'InvalidTTLOrderException',
+                ),
             ),
         ),
         'CreateInvalidation' => array(
             'httpMethod' => 'POST',
-            'uri' => '/2014-11-06/distribution/{DistributionId}/invalidation',
+            'uri' => '/2015-04-17/distribution/{DistributionId}/invalidation',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'CreateInvalidationResult',
             'responseType' => 'model',
@@ -741,7 +759,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'InvalidationBatch',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2014-11-06/',
+                        'http://cloudfront.amazonaws.com/doc/2015-04-17/',
                     ),
                 ),
             ),
@@ -811,7 +829,7 @@ return array (
         ),
         'CreateStreamingDistribution' => array(
             'httpMethod' => 'POST',
-            'uri' => '/2014-11-06/streaming-distribution',
+            'uri' => '/2015-04-17/streaming-distribution',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'CreateStreamingDistributionResult',
             'responseType' => 'model',
@@ -819,7 +837,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'StreamingDistributionConfig',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2014-11-06/',
+                        'http://cloudfront.amazonaws.com/doc/2015-04-17/',
                     ),
                 ),
             ),
@@ -973,9 +991,9 @@ return array (
         ),
         'DeleteCloudFrontOriginAccessIdentity' => array(
             'httpMethod' => 'DELETE',
-            'uri' => '/2014-11-06/origin-access-identity/cloudfront/{Id}',
+            'uri' => '/2015-04-17/origin-access-identity/cloudfront/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'DeleteCloudFrontOriginAccessIdentity2014_11_06Output',
+            'responseClass' => 'DeleteCloudFrontOriginAccessIdentity2015_04_17Output',
             'responseType' => 'model',
             'parameters' => array(
                 'Id' => array(
@@ -1013,9 +1031,9 @@ return array (
         ),
         'DeleteDistribution' => array(
             'httpMethod' => 'DELETE',
-            'uri' => '/2014-11-06/distribution/{Id}',
+            'uri' => '/2015-04-17/distribution/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'DeleteDistribution2014_11_06Output',
+            'responseClass' => 'DeleteDistribution2015_04_17Output',
             'responseType' => 'model',
             'parameters' => array(
                 'Id' => array(
@@ -1053,9 +1071,9 @@ return array (
         ),
         'DeleteStreamingDistribution' => array(
             'httpMethod' => 'DELETE',
-            'uri' => '/2014-11-06/streaming-distribution/{Id}',
+            'uri' => '/2015-04-17/streaming-distribution/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'DeleteStreamingDistribution2014_11_06Output',
+            'responseClass' => 'DeleteStreamingDistribution2015_04_17Output',
             'responseType' => 'model',
             'parameters' => array(
                 'Id' => array(
@@ -1093,7 +1111,7 @@ return array (
         ),
         'GetCloudFrontOriginAccessIdentity' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2014-11-06/origin-access-identity/cloudfront/{Id}',
+            'uri' => '/2015-04-17/origin-access-identity/cloudfront/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetCloudFrontOriginAccessIdentityResult',
             'responseType' => 'model',
@@ -1121,7 +1139,7 @@ return array (
         ),
         'GetCloudFrontOriginAccessIdentityConfig' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2014-11-06/origin-access-identity/cloudfront/{Id}/config',
+            'uri' => '/2015-04-17/origin-access-identity/cloudfront/{Id}/config',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetCloudFrontOriginAccessIdentityConfigResult',
             'responseType' => 'model',
@@ -1149,7 +1167,7 @@ return array (
         ),
         'GetDistribution' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2014-11-06/distribution/{Id}',
+            'uri' => '/2015-04-17/distribution/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetDistributionResult',
             'responseType' => 'model',
@@ -1177,7 +1195,7 @@ return array (
         ),
         'GetDistributionConfig' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2014-11-06/distribution/{Id}/config',
+            'uri' => '/2015-04-17/distribution/{Id}/config',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetDistributionConfigResult',
             'responseType' => 'model',
@@ -1205,7 +1223,7 @@ return array (
         ),
         'GetInvalidation' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2014-11-06/distribution/{DistributionId}/invalidation/{Id}',
+            'uri' => '/2015-04-17/distribution/{DistributionId}/invalidation/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetInvalidationResult',
             'responseType' => 'model',
@@ -1242,7 +1260,7 @@ return array (
         ),
         'GetStreamingDistribution' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2014-11-06/streaming-distribution/{Id}',
+            'uri' => '/2015-04-17/streaming-distribution/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetStreamingDistributionResult',
             'responseType' => 'model',
@@ -1270,7 +1288,7 @@ return array (
         ),
         'GetStreamingDistributionConfig' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2014-11-06/streaming-distribution/{Id}/config',
+            'uri' => '/2015-04-17/streaming-distribution/{Id}/config',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetStreamingDistributionConfigResult',
             'responseType' => 'model',
@@ -1298,7 +1316,7 @@ return array (
         ),
         'ListCloudFrontOriginAccessIdentities' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2014-11-06/origin-access-identity/cloudfront',
+            'uri' => '/2015-04-17/origin-access-identity/cloudfront',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ListCloudFrontOriginAccessIdentitiesResult',
             'responseType' => 'model',
@@ -1325,7 +1343,7 @@ return array (
         ),
         'ListDistributions' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2014-11-06/distribution',
+            'uri' => '/2015-04-17/distribution',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ListDistributionsResult',
             'responseType' => 'model',
@@ -1352,7 +1370,7 @@ return array (
         ),
         'ListInvalidations' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2014-11-06/distribution/{DistributionId}/invalidation',
+            'uri' => '/2015-04-17/distribution/{DistributionId}/invalidation',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ListInvalidationsResult',
             'responseType' => 'model',
@@ -1392,7 +1410,7 @@ return array (
         ),
         'ListStreamingDistributions' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2014-11-06/streaming-distribution',
+            'uri' => '/2015-04-17/streaming-distribution',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ListStreamingDistributionsResult',
             'responseType' => 'model',
@@ -1419,7 +1437,7 @@ return array (
         ),
         'UpdateCloudFrontOriginAccessIdentity' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/2014-11-06/origin-access-identity/cloudfront/{Id}/config',
+            'uri' => '/2015-04-17/origin-access-identity/cloudfront/{Id}/config',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'UpdateCloudFrontOriginAccessIdentityResult',
             'responseType' => 'model',
@@ -1427,7 +1445,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'CloudFrontOriginAccessIdentityConfig',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2014-11-06/',
+                        'http://cloudfront.amazonaws.com/doc/2015-04-17/',
                     ),
                 ),
             ),
@@ -1494,7 +1512,7 @@ return array (
         ),
         'UpdateDistribution' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/2014-11-06/distribution/{Id}/config',
+            'uri' => '/2015-04-17/distribution/{Id}/config',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'UpdateDistributionResult',
             'responseType' => 'model',
@@ -1502,7 +1520,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'DistributionConfig',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2014-11-06/',
+                        'http://cloudfront.amazonaws.com/doc/2015-04-17/',
                     ),
                 ),
             ),
@@ -1721,6 +1739,12 @@ return array (
                             'type' => 'boolean',
                             'format' => 'boolean-string',
                         ),
+                        'DefaultTTL' => array(
+                            'type' => 'numeric',
+                        ),
+                        'MaxTTL' => array(
+                            'type' => 'numeric',
+                        ),
                     ),
                 ),
                 'CacheBehaviors' => array(
@@ -1865,6 +1889,12 @@ return array (
                                     'SmoothStreaming' => array(
                                         'type' => 'boolean',
                                         'format' => 'boolean-string',
+                                    ),
+                                    'DefaultTTL' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'MaxTTL' => array(
+                                        'type' => 'numeric',
                                     ),
                                 ),
                             ),
@@ -2069,6 +2099,9 @@ return array (
                     'class' => 'InvalidViewerCertificateException',
                 ),
                 array(
+                    'class' => 'InvalidMinimumProtocolVersionException',
+                ),
+                array(
                     'reason' => 'This operation requires the HTTPS protocol. Ensure that you specify the HTTPS protocol in your request, or omit the RequiredProtocols element from your distribution configuration.',
                     'class' => 'InvalidRequiredProtocolException',
                 ),
@@ -2112,11 +2145,14 @@ return array (
                 array(
                     'class' => 'InvalidGeoRestrictionParameterException',
                 ),
+                array(
+                    'class' => 'InvalidTTLOrderException',
+                ),
             ),
         ),
         'UpdateStreamingDistribution' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/2014-11-06/streaming-distribution/{Id}/config',
+            'uri' => '/2015-04-17/streaming-distribution/{Id}/config',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'UpdateStreamingDistributionResult',
             'responseType' => 'model',
@@ -2124,7 +2160,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'StreamingDistributionConfig',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2014-11-06/',
+                        'http://cloudfront.amazonaws.com/doc/2015-04-17/',
                     ),
                 ),
             ),
@@ -2585,6 +2621,12 @@ return array (
                                 'SmoothStreaming' => array(
                                     'type' => 'boolean',
                                 ),
+                                'DefaultTTL' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'MaxTTL' => array(
+                                    'type' => 'numeric',
+                                ),
                             ),
                         ),
                         'CacheBehaviors' => array(
@@ -2713,6 +2755,12 @@ return array (
                                             ),
                                             'SmoothStreaming' => array(
                                                 'type' => 'boolean',
+                                            ),
+                                            'DefaultTTL' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                            'MaxTTL' => array(
+                                                'type' => 'numeric',
                                             ),
                                         ),
                                     ),
@@ -3036,7 +3084,7 @@ return array (
                 ),
             ),
         ),
-        'DeleteCloudFrontOriginAccessIdentity2014_11_06Output' => array(
+        'DeleteCloudFrontOriginAccessIdentity2015_04_17Output' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
@@ -3046,7 +3094,7 @@ return array (
                 ),
             ),
         ),
-        'DeleteDistribution2014_11_06Output' => array(
+        'DeleteDistribution2015_04_17Output' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
@@ -3056,7 +3104,7 @@ return array (
                 ),
             ),
         ),
-        'DeleteStreamingDistribution2014_11_06Output' => array(
+        'DeleteStreamingDistribution2015_04_17Output' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
@@ -3376,6 +3424,12 @@ return array (
                                 'SmoothStreaming' => array(
                                     'type' => 'boolean',
                                 ),
+                                'DefaultTTL' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'MaxTTL' => array(
+                                    'type' => 'numeric',
+                                ),
                             ),
                         ),
                         'CacheBehaviors' => array(
@@ -3504,6 +3558,12 @@ return array (
                                             ),
                                             'SmoothStreaming' => array(
                                                 'type' => 'boolean',
+                                            ),
+                                            'DefaultTTL' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                            'MaxTTL' => array(
+                                                'type' => 'numeric',
                                             ),
                                         ),
                                     ),
@@ -3813,6 +3873,12 @@ return array (
                         'SmoothStreaming' => array(
                             'type' => 'boolean',
                         ),
+                        'DefaultTTL' => array(
+                            'type' => 'numeric',
+                        ),
+                        'MaxTTL' => array(
+                            'type' => 'numeric',
+                        ),
                     ),
                 ),
                 'CacheBehaviors' => array(
@@ -3942,6 +4008,12 @@ return array (
                                     ),
                                     'SmoothStreaming' => array(
                                         'type' => 'boolean',
+                                    ),
+                                    'DefaultTTL' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'MaxTTL' => array(
+                                        'type' => 'numeric',
                                     ),
                                 ),
                             ),
@@ -4625,6 +4697,12 @@ return array (
                                     'SmoothStreaming' => array(
                                         'type' => 'boolean',
                                     ),
+                                    'DefaultTTL' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'MaxTTL' => array(
+                                        'type' => 'numeric',
+                                    ),
                                 ),
                             ),
                             'CacheBehaviors' => array(
@@ -4753,6 +4831,12 @@ return array (
                                                 ),
                                                 'SmoothStreaming' => array(
                                                     'type' => 'boolean',
+                                                ),
+                                                'DefaultTTL' => array(
+                                                    'type' => 'numeric',
+                                                ),
+                                                'MaxTTL' => array(
+                                                    'type' => 'numeric',
                                                 ),
                                             ),
                                         ),
@@ -5294,6 +5378,12 @@ return array (
                                 'SmoothStreaming' => array(
                                     'type' => 'boolean',
                                 ),
+                                'DefaultTTL' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'MaxTTL' => array(
+                                    'type' => 'numeric',
+                                ),
                             ),
                         ),
                         'CacheBehaviors' => array(
@@ -5422,6 +5512,12 @@ return array (
                                             ),
                                             'SmoothStreaming' => array(
                                                 'type' => 'boolean',
+                                            ),
+                                            'DefaultTTL' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                            'MaxTTL' => array(
+                                                'type' => 'numeric',
                                             ),
                                         ),
                                     ),

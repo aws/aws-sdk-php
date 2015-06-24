@@ -702,6 +702,10 @@ return array (
                     'reason' => 'Thrown if the request is throttled.',
                     'class' => 'TooManyRequestsException',
                 ),
+                array(
+                    'reason' => 'Thrown if there are parallel requests to modify a resource.',
+                    'class' => 'ConcurrentModificationException',
+                ),
             ),
         ),
         'SubscribeToDataset' => array(

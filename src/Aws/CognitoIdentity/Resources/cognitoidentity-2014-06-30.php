@@ -1042,6 +1042,10 @@ return array (
                     'reason' => 'Thrown when the service encounters an error during processing the request.',
                     'class' => 'InternalErrorException',
                 ),
+                array(
+                    'reason' => 'Thrown if there are parallel requests to modify a resource.',
+                    'class' => 'ConcurrentModificationException',
+                ),
             ),
         ),
         'UnlinkDeveloperIdentity' => array(
@@ -1301,6 +1305,10 @@ return array (
                 array(
                     'reason' => 'Thrown when the service encounters an error during processing the request.',
                     'class' => 'InternalErrorException',
+                ),
+                array(
+                    'reason' => 'Thrown if there are parallel requests to modify a resource.',
+                    'class' => 'ConcurrentModificationException',
                 ),
             ),
         ),

@@ -47,6 +47,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model deregisterInstance(array $args = array()) {@command OpsWorks DeregisterInstance}
  * @method Model deregisterRdsDbInstance(array $args = array()) {@command OpsWorks DeregisterRdsDbInstance}
  * @method Model deregisterVolume(array $args = array()) {@command OpsWorks DeregisterVolume}
+ * @method Model describeAgentVersions(array $args = array()) {@command OpsWorks DescribeAgentVersions}
  * @method Model describeApps(array $args = array()) {@command OpsWorks DescribeApps}
  * @method Model describeCommands(array $args = array()) {@command OpsWorks DescribeCommands}
  * @method Model describeDeployments(array $args = array()) {@command OpsWorks DescribeDeployments}

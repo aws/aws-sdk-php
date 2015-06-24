@@ -37,6 +37,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model createEventSubscription(array $args = array()) {@command Redshift CreateEventSubscription}
  * @method Model createHsmClientCertificate(array $args = array()) {@command Redshift CreateHsmClientCertificate}
  * @method Model createHsmConfiguration(array $args = array()) {@command Redshift CreateHsmConfiguration}
+ * @method Model createSnapshotCopyGrant(array $args = array()) {@command Redshift CreateSnapshotCopyGrant}
  * @method Model createTags(array $args = array()) {@command Redshift CreateTags}
  * @method Model deleteCluster(array $args = array()) {@command Redshift DeleteCluster}
  * @method Model deleteClusterParameterGroup(array $args = array()) {@command Redshift DeleteClusterParameterGroup}
@@ -46,6 +47,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model deleteEventSubscription(array $args = array()) {@command Redshift DeleteEventSubscription}
  * @method Model deleteHsmClientCertificate(array $args = array()) {@command Redshift DeleteHsmClientCertificate}
  * @method Model deleteHsmConfiguration(array $args = array()) {@command Redshift DeleteHsmConfiguration}
+ * @method Model deleteSnapshotCopyGrant(array $args = array()) {@command Redshift DeleteSnapshotCopyGrant}
  * @method Model deleteTags(array $args = array()) {@command Redshift DeleteTags}
  * @method Model describeClusterParameterGroups(array $args = array()) {@command Redshift DescribeClusterParameterGroups}
  * @method Model describeClusterParameters(array $args = array()) {@command Redshift DescribeClusterParameters}
@@ -65,6 +67,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model describeReservedNodeOfferings(array $args = array()) {@command Redshift DescribeReservedNodeOfferings}
  * @method Model describeReservedNodes(array $args = array()) {@command Redshift DescribeReservedNodes}
  * @method Model describeResize(array $args = array()) {@command Redshift DescribeResize}
+ * @method Model describeSnapshotCopyGrants(array $args = array()) {@command Redshift DescribeSnapshotCopyGrants}
  * @method Model describeTags(array $args = array()) {@command Redshift DescribeTags}
  * @method Model disableLogging(array $args = array()) {@command Redshift DisableLogging}
  * @method Model disableSnapshotCopy(array $args = array()) {@command Redshift DisableSnapshotCopy}
