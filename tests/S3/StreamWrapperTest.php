@@ -818,4 +818,19 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, filesize('s3://bucket/key/' . $file2));
         closedir($r);
     }
+
+    public function testReturnsStreamSizeFromHeaders()
+    {
+        $stream = Psr7\stream_for('12345');
+        $stream = Psr7\FnStream::decorate($stream, [
+            'getSize' => function () { return null; }
+        ]);
+        $result = [
+            'Body' => $stream,
+            'ContentLength' => 5
+        ];
+        $this->addMockResults($this->client, [$result]);
+        $resource = fopen('s3://foo/bar', 'r');
+        $this->assertEquals(5, fstat($resource)['size']);
+    }
 }

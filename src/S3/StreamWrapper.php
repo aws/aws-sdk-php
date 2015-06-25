@@ -67,6 +67,9 @@ class StreamWrapper
     /** @var StreamInterface Underlying stream resource */
     private $body;
 
+    /** @var int Size of the body that is opened */
+    private $size;
+
     /** @var array Hash of opened stream parameters */
     private $params = [];
 
@@ -209,7 +212,7 @@ class StreamWrapper
     public function stream_stat()
     {
         $stat = $this->getStatTemplate();
-        $stat[7] = $stat['size'] = (int) $this->body->getSize();
+        $stat[7] = $stat['size'] = $this->getSize();
         $stat[2] = $stat['mode'] = $this->mode;
 
         return $stat;
@@ -647,6 +650,7 @@ class StreamWrapper
         $command = $client->getCommand('GetObject', $this->getOptions(true));
         $command['@http']['stream'] = true;
         $result = $client->execute($command);
+        $this->size = $result['ContentLength'];
         $this->body = $result['Body'];
 
         // Wrap the body in a caching entity body if seeking is allowed
@@ -897,5 +901,17 @@ class StreamWrapper
     {
         clearstatcache(true, $key);
         $this->getCacheStorage()->remove($key);
+    }
+
+    /**
+     * Returns the size of the opened object body.
+     *
+     * @return int|null
+     */
+    private function getSize()
+    {
+        $size = $this->body->getSize();
+
+        return $size !== null ? $size : $this->size;
     }
 }
