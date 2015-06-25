@@ -91,6 +91,9 @@ class StreamWrapper
     /** @var CacheInterface Cache for object and dir lookups */
     private $cache;
 
+    /** @var string The opened protocol (e.g., "s3") */
+    private $protocol = 's3';
+
     /**
      * Register the 's3://' stream wrapper
      *
@@ -129,6 +132,7 @@ class StreamWrapper
 
     public function stream_open($path, $mode, $options, &$opened_path)
     {
+        $this->initProtocol($path);
         $this->params = $this->getBucketKey($path);
         $this->mode = rtrim($mode, 'bt');
 
@@ -202,6 +206,8 @@ class StreamWrapper
 
     public function unlink($path)
     {
+        $this->initProtocol($path);
+
         return $this->boolCall(function () use ($path) {
             $this->clearCacheKey($path);
             $this->getClient()->deleteObject($this->withPath($path));
@@ -225,6 +231,8 @@ class StreamWrapper
      */
     public function url_stat($path, $flags)
     {
+        $this->initProtocol($path);
+
         // Some paths come through as S3:// for some reason.
         $split = explode('://', $path);
         $path = strtolower($split[0]) . '://' . $split[1];
@@ -243,8 +251,20 @@ class StreamWrapper
         return $stat;
     }
 
+    /**
+     * Parse the protocol out of the given path.
+     *
+     * @param $path
+     */
+    private function initProtocol($path)
+    {
+        $parts = explode('://', $path, 2);
+        $this->protocol = $parts[0] ?: 's3';
+    }
+
     private function createStat($path, $flags)
     {
+        $this->initProtocol($path);
         $parts = $this->withPath($path);
 
         if (!$parts['Key']) {
@@ -308,6 +328,7 @@ class StreamWrapper
      */
     public function mkdir($path, $mode, $options)
     {
+        $this->initProtocol($path);
         $params = $this->withPath($path);
         $this->clearCacheKey($path);
         if (!$params['Bucket']) {
@@ -325,6 +346,7 @@ class StreamWrapper
 
     public function rmdir($path, $options)
     {
+        $this->initProtocol($path);
         $this->clearCacheKey($path);
         $params = $this->withPath($path);
         $client = $this->getClient();
@@ -359,6 +381,7 @@ class StreamWrapper
      */
     public function dir_opendir($path, $options)
     {
+        $this->initProtocol($path);
         $this->openedPath = $path;
         $params = $this->withPath($path);
         $delimiter = $this->getOption('delimiter');
@@ -574,11 +597,15 @@ class StreamWrapper
             $options = [];
         } else {
             $options = stream_context_get_options($this->context);
-            $options = isset($options['s3']) ? $options['s3'] : [];
+            $options = isset($options[$this->protocol])
+                ? $options[$this->protocol]
+                : [];
         }
 
         $default = stream_context_get_options(stream_context_get_default());
-        $default = isset($default['s3']) ? $default['s3'] : [];
+        $default = isset($default[$this->protocol])
+            ? $default[$this->protocol]
+            : [];
         $result = $this->params + $options + $default;
 
         if ($removeContextData) {

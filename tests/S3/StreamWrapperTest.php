@@ -833,4 +833,21 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         $resource = fopen('s3://foo/bar', 'r');
         $this->assertEquals(5, fstat($resource)['size']);
     }
+
+    public function testCanUseCustomProtocol()
+    {
+        StreamWrapper::register($this->client, 'foo');
+        $stream = fopen('php://temp', 'r+');
+        fwrite($stream, 'bar');
+        fseek($stream, 0);
+
+        $this->addMockResults($this->client, [
+            new Result([
+                'Body' => new Psr7\NoSeekStream(new Psr7\Stream($stream))
+            ])
+        ]);
+
+        $s = fopen('foo://bucket/key', 'r');
+        $this->assertEquals('bar', fread($s, 4));
+    }
 }
