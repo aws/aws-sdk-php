@@ -45,6 +45,82 @@
     ]
   },
   {
+    "description": "Lists",
+    "metadata": {
+      "protocol": "json",
+      "jsonVersion": 1.1,
+      "targetPrefix": "com.amazonaws.foo"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "Structures": {
+            "shape": "StructureList"
+          }
+        }
+      },
+      "StructureList": {
+        "type": "list",
+        "member": {
+          "shape": "StructureType"
+        }
+      },
+      "StructureType": {
+        "type": "structure",
+        "members": {
+          "a": {
+            "type": "string"
+          },
+          "b": {
+            "type": "integer"
+          },
+          "c": {
+            "type": "double"
+          },
+          "d": {
+            "type": "timestamp"
+          },
+          "e": {
+            "type": "blob"
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "input": {
+            "shape": "InputShape"
+          },
+          "name": "OperationName",
+          "http": {
+            "method": "POST"
+          }
+        },
+        "params": {
+          "Structures": [
+            {
+              "a": "a",
+              "b": 1,
+              "c": 2.5,
+              "d": 1397259637,
+              "e": "string"
+            }
+          ]
+        },
+        "serialized": {
+          "uri": "/",
+          "body": "{\"Structures\": [{\"a\": \"a\", \"b\": 1, \"c\": 2.5, \"d\": 1397259637, \"e\": \"c3RyaW5n\"}]}",
+          "headers": {
+            "X-Amz-Target": "com.amazonaws.foo.OperationName",
+            "Content-Type": "application/x-amz-json-1.1"
+          }
+        }
+      }
+    ]
+  },
+  {
     "description": "Timestamp values",
     "metadata": {
       "protocol": "json",
