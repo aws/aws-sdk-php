@@ -111,6 +111,18 @@ class StreamWrapperTest extends \Aws\Tests\IntegrationTestCase
         unlink($path);
         sleep(1);
         $this->assertFalse(file_exists($path));
+
+        return $path;
+    }
+
+    /**
+     * @depends testDeletesFile
+     * @expectedException \Exception
+     * @expectedExceptionMessage Cannot open file
+     */
+    public function testEnsuresFileExists($path)
+    {
+        file_get_contents($path);
     }
 
     /**
