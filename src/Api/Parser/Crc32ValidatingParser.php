@@ -28,7 +28,7 @@ class Crc32ValidatingParser extends AbstractParser
     ) {
         if ($expected = $response->getHeaderLine('x-amz-crc32')) {
             $hash = hexdec(Psr7\hash($response->getBody(), 'crc32b'));
-            if ((int) $expected !== $hash) {
+            if ($expected != $hash) {
                 throw new AwsException(
                     "crc32 mismatch. Expected {$expected}, found {$hash}.",
                     $command,
