@@ -64,7 +64,7 @@ class JsonBody
             case 'list':
                 $items = $shape->getMember();
                 foreach ($value as &$v) {
-                    $data[] = $this->format($items, $v);
+                    $v = $this->format($items, $v);
                 }
                 return $value;
 

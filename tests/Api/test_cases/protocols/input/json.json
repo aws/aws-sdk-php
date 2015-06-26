@@ -45,6 +45,97 @@
     ]
   },
   {
+    "description": "Complex members",
+    "metadata": {
+      "protocol": "json",
+      "jsonVersion": 1.1,
+      "targetPrefix": "com.amazonaws.foo"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "Structures": {
+            "shape": "StructureList"
+          }
+        }
+      },
+      "StructureList": {
+        "type": "list",
+        "member": {
+          "shape": "StructureType"
+        }
+      },
+      "StructureType": {
+        "type": "structure",
+        "members": {
+          "a": {
+            "shape": "StringType"
+          },
+          "b": {
+            "shape": "IntegerType"
+          },
+          "c": {
+            "shape": "DoubleType"
+          },
+          "d": {
+            "shape": "TimestampType"
+          },
+          "e": {
+            "shape": "BlobType"
+          }
+        }
+      },
+      "StringType": {
+        "type": "string"
+      },
+      "IntegerType": {
+        "type": "integer"
+      },
+      "DoubleType": {
+        "type": "double"
+      },
+      "TimestampType": {
+        "type": "timestamp"
+      },
+      "BlobType": {
+        "type": "blob"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "input": {
+            "shape": "InputShape"
+          },
+          "name": "OperationName",
+          "http": {
+            "method": "POST"
+          }
+        },
+        "params": {
+          "Structures": [
+            {
+              "a": "a",
+              "b": 1,
+              "c": 2.5,
+              "d": 1397259637,
+              "e": "string"
+            }
+          ]
+        },
+        "serialized": {
+          "uri": "/",
+          "body": "{\"Structures\": [{\"a\": \"a\", \"b\": 1, \"c\": 2.5, \"d\": 1397259637, \"e\": \"c3RyaW5n\"}]}",
+          "headers": {
+            "X-Amz-Target": "com.amazonaws.foo.OperationName",
+            "Content-Type": "application/x-amz-json-1.1"
+          }
+        }
+      }
+    ]
+  },
+  {
     "description": "Timestamp values",
     "metadata": {
       "protocol": "json",
