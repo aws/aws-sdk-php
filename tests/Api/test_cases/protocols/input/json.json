@@ -45,7 +45,7 @@
     ]
   },
   {
-    "description": "Lists",
+    "description": "Complex members",
     "metadata": {
       "protocol": "json",
       "jsonVersion": 1.1,
@@ -70,21 +70,36 @@
         "type": "structure",
         "members": {
           "a": {
-            "type": "string"
+            "shape": "StringType"
           },
           "b": {
-            "type": "integer"
+            "shape": "IntegerType"
           },
           "c": {
-            "type": "double"
+            "shape": "DoubleType"
           },
           "d": {
-            "type": "timestamp"
+            "shape": "TimestampType"
           },
           "e": {
-            "type": "blob"
+            "shape": "BlobType"
           }
         }
+      },
+      "StringType": {
+        "type": "string"
+      },
+      "IntegerType": {
+        "type": "integer"
+      },
+      "DoubleType": {
+        "type": "double"
+      },
+      "TimestampType": {
+        "type": "timestamp"
+      },
+      "BlobType": {
+        "type": "blob"
       }
     },
     "cases": [
