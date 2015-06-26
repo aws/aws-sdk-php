@@ -3,8 +3,10 @@
 Feature: Amazon Cognito Idenity
 
   Scenario: Making a request
-    When I call the "ListIdentityPools" API with:
-    | MaxResults | 10 |
+    When I call the "ListIdentityPools" API with JSON:
+    """
+    {"MaxResults": 10}
+    """
     Then the value at "IdentityPools" should be a list
 
   Scenario: Handling errors

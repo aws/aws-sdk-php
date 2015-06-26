@@ -101,45 +101,74 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
      * @When I call the :commandName API
      *
      * @param string $commandName
+     * @param array $payload
      */
-    public function iCallTheApi($commandName)
+    public function iCallTheApi($commandName, array $payload = [])
     {
-        $this->response = $this->client->{$commandName}();
+        $this->response = $this->client->{$commandName}($payload);
     }
 
     /**
      * @When I call the :commandName API with:
      *
-     * @param string $commandName
-     * @param TableNode $table
+     * @param string $command
+     * @param TableNode $payload
      */
-    public function iCallTheApiWith($commandName, TableNode $table)
+    public function iCallTheApiWith($command, TableNode $payload)
     {
-        $this->response = $this->callCommandWithPayload($commandName, $table);
+        $this->iCallTheApi($command, $payload->getRowsHash());
     }
 
     /**
-     * @Then the value at :key should be a list
+     * @When I call the :command API with JSON:
+     *
+     * @param string $command
+     * @param PyStringNode $payload
      */
-    public function theValueAtShouldBeAList($key)
+    public function iCallTheApiWithJson($command, PyStringNode $payload)
     {
-        $this->assertInstanceOf(Result::class, $this->response);
-        $this->assertInternalType('array', $this->response->search($key));
+        $this->iCallTheApi($command, json_decode($payload->getRaw(), true));
     }
 
     /**
      * @When I attempt to call the :commandName API with:
      *
-     * @param string $commandName
-     * @param TableNode $table
+     * @param string $command
+     * @param TableNode $payload
      */
-    public function iAttemptToCallTheApiWith($commandName, TableNode $table)
+    public function iAttemptToCallTheApiWith($command, TableNode $payload)
     {
         try {
-            $this->response = $this->callCommandWithPayload($commandName, $table);
+            $this->iCallTheApiWith($command, $payload);
         } catch (AwsException $e) {
             $this->error= $e;
         }
+    }
+
+    /**
+     * @When I attempt to call the :command API with JSON:
+     *
+     * @param string $command
+     * @param PyStringNode $payload
+     */
+    public function iAttemptToCallTheApiWithJson($command, PyStringNode $payload)
+    {
+        try {
+            $this->iCallTheApiWithJson($command, $payload);
+        } catch (AwsException $e) {
+            $this->error= $e;
+        }
+    }
+
+    /**
+     * @Then the value at :key should be a list
+     *
+     * @param string $key
+     */
+    public function theValueAtShouldBeAList($key)
+    {
+        $this->assertInstanceOf(Result::class, $this->response);
+        $this->assertInternalType('array', $this->response->search($key));
     }
 
     /**
@@ -204,41 +233,5 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
     public function theErrorMessageShouldContain(PyStringNode $string)
     {
         $this->assertContains($string->getRaw(), $this->error->getMessage());
-    }
-
-
-    protected function callCommandWithPayload($command, TableNode $payload)
-    {
-        $payload = array_map(function ($value) {
-            if (empty($value)) {
-                return $value;
-            }
-
-            $jsonValue = json_decode($value, true);
-
-            return JSON_ERROR_NONE === json_last_error() ? $jsonValue : $value;
-        }, $payload->getRowsHash());
-
-        return $this->client->{$command}($payload);
-    }
-
-    protected function getServicesManifest()
-    {
-        static $manifest = [];
-
-        if (empty($manifest)) {
-            $sdkRoot = dirname((new \ReflectionClass(Sdk::class))->getFileName());
-
-            $manifest = json_decode(
-                file_get_contents(implode(DIRECTORY_SEPARATOR, [
-                    $sdkRoot,
-                    'data',
-                    'manifest.json',
-                ])),
-                true
-            );
-        }
-
-        return $manifest;
     }
 }

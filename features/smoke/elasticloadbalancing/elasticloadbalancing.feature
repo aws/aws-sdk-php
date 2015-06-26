@@ -7,8 +7,10 @@ Feature: Elastic Load Balancing
     Then the value at "LoadBalancerDescriptions" should be a list
 
   Scenario: Handling errors
-    When I attempt to call the "DescribeLoadBalancers" API with:
-    | LoadBalancerNames | ["fake_load_balancer"] |
+    When I attempt to call the "DescribeLoadBalancers" API with JSON:
+    """
+    {"LoadBalancerNames": ["fake_load_balancer"]}
+    """
     Then I expect the response error code to be "ValidationError"
     And I expect the response error message to include:
     """

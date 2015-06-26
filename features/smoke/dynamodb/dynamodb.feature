@@ -3,8 +3,10 @@
 Feature: Amazon DynamoDB
 
   Scenario: Making a request
-    When I call the "ListTables" API with:
-    | Limit | 1 |
+    When I call the "ListTables" API with JSON:
+    """
+    {"Limit": 1}
+    """
     Then the value at "TableNames" should be a list
 
   Scenario: Handling errors

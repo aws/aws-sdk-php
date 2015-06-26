@@ -7,8 +7,10 @@ Feature: Amazon EMR
     Then the value at "JobFlows" should be a list
 
   Scenario: Handling errors
-    When I attempt to call the "DescribeJobFlows" API with:
-    | JobFlowIds | ["fake_job_flow"] |
+    When I attempt to call the "DescribeJobFlows" API with JSON:
+    """
+    {"JobFlowIds": ["fake_job_flow"]}
+    """
     Then I expect the response error code to be "ValidationException"
     And I expect the response error message to include:
     """
