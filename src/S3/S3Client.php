@@ -62,7 +62,7 @@ class S3Client extends AwsClient
         parent::__construct($args);
         $stack = $this->getHandlerList();
         $stack->appendInit(SSECMiddleware::wrap($this->getEndpoint()->getScheme()), 's3.ssec');
-        $stack->appendBuild(ApplyMd5Middleware::wrap(), 's3.md5');
+        $stack->appendBuild(ApplyChecksumMiddleware::wrap(), 's3.checksum');
         $stack->appendBuild(
             Middleware::contentType(['PutObject', 'UploadPart']),
             's3.content_type'
@@ -503,14 +503,23 @@ class S3Client extends AwsClient
      */
     public static function applyDocFilters(array $api, array $docs)
     {
-        $b64 = '<div class="alert alert-info">This value will be base64 '
-            . 'encoded on your behalf.</div>';
+        $b64 = '<div class="alert alert-info">This value will be base64 encoded on your behalf.</div>';
+        $opt = '<div class="alert alert-info">This value will be computed for you it is not supplied.</div>';
 
         // Add the SourceFile parameter.
         $docs['shapes']['SourceFile']['base'] = 'The path to a file on disk to use instead of the Body parameter.';
         $api['shapes']['SourceFile'] = ['type' => 'string'];
         $api['shapes']['PutObjectRequest']['members']['SourceFile'] = ['shape' => 'SourceFile'];
         $api['shapes']['UploadPartRequest']['members']['SourceFile'] = ['shape' => 'SourceFile'];
+
+        // Add the ContentSHA256 parameter.
+        $docs['shapes']['ContentSHA256']['base'] = 'A SHA256 hash of the body content of the request.';
+        $api['shapes']['ContentSHA256'] = ['type' => 'string'];
+        $api['shapes']['PutObjectRequest']['members']['ContentSHA256'] = ['shape' => 'ContentSHA256'];
+        $api['shapes']['UploadPartRequest']['members']['ContentSHA256'] = ['shape' => 'ContentSHA256'];
+        unset($api['shapes']['PutObjectRequest']['members']['ContentMD5']);
+        unset($api['shapes']['UploadPartRequest']['members']['ContentMD5']);
+        $docs['shapes']['ContentSHA256']['append'] = $opt;
 
         // Add the SaveAs parameter.
         $docs['shapes']['SaveAs']['base'] = 'The path to a file on disk to save the object data.';
@@ -520,8 +529,7 @@ class S3Client extends AwsClient
         // Several SSECustomerKey documentation updates.
         $docs['shapes']['SSECustomerKey']['append'] = $b64;
         $docs['shapes']['CopySourceSSECustomerKey']['append'] = $b64;
-        $docs['shapes']['SSECustomerKeyMd5']['append'] = '<div class="alert alert-info">The value will be computed on '
-            . 'your behalf if it is not supplied.</div>';
+        $docs['shapes']['SSECustomerKeyMd5']['append'] = $opt;
 
         // Add the ObjectURL to various output shapes and documentation.
         $docs['shapes']['ObjectURL']['base'] = 'The URI of the created object.';
