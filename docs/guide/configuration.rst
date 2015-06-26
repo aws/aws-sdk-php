@@ -451,13 +451,13 @@ downloaded to.
 
 .. _http_sync:
 
-sync
-^^^^
+synchronous
+^^^^^^^^^^^
 
 :Type: ``bool``
 
-The ``sync`` option informs the underlying HTTP handler that you intend on
-blocking on the result.
+The ``synchronous`` option informs the underlying HTTP handler that you intend
+on blocking on the result.
 
 
 .. _http_stream:
