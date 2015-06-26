@@ -22,13 +22,13 @@ class GuzzleV5HandlerTest extends \PHPUnit_Framework_TestCase
         $request = new Request(
             'PUT',
             "http://httpbin.org/put?a=1&b=2",
-            ['c' => '3', 'd' => '4', 'user-agent' => 'AWS/3'],
+            ['c' => '3', 'd' => '4'],
             Psr7\stream_for('{"f":6,"g":7}')
         );
         $sink = Psr7\stream_for();
 
         /** @var \GuzzleHttp\Promise\Promise $responsePromise */
-        $responsePromise = $handler($request, ['sink' => $sink]);
+        $responsePromise = $handler($request, ['sink' => $sink, 'foo' => 'bar']);
         $responsePromise = $responsePromise->then(
             function (Response $resp) {
                 return $resp->withHeader('e', '5');
@@ -46,7 +46,6 @@ class GuzzleV5HandlerTest extends \PHPUnit_Framework_TestCase
         // Check response data.
         $this->assertArrayHasKey('C', $data['headers']);
         $this->assertArrayHasKey('D', $data['headers']);
-        $this->assertStringStartsWith('AWS/3 Guzzle/5', $data['headers']['User-Agent']);
         $this->assertArrayHasKey('a', $data['args']);
         $this->assertArrayHasKey('b', $data['args']);
         $this->assertArrayHasKey('f', $data['json']);

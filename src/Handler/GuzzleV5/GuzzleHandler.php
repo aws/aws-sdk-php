@@ -91,8 +91,8 @@ class GuzzleHandler
 
         // Remove unsupported options.
         foreach (array_keys($options) as $key) {
-            if (isset(self::$validOptions[$key])) {
-                unset($options['key']);
+            if (!isset(self::$validOptions[$key])) {
+                unset($options[$key]);
             }
         }
 

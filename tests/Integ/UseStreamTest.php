@@ -7,6 +7,13 @@ class UseStreamTest extends \PHPUnit_Framework_TestCase
 {
     use IntegUtils;
 
+    public function setUp()
+    {
+        if (!class_exists('GuzzleHttp\Handler\StreamHandler')) {
+            $this->markTestSkipped();
+        }
+    }
+
     public function testCanUseStreamForBasicRequests()
     {
         $handler = new StreamHandler();
