@@ -59,9 +59,15 @@ class GlacierClient extends AwsClient
                 CommandInterface $command,
                 RequestInterface $request = null
             ) use ($handler) {
+                // Accept "ContentSHA256" with a lowercase "c" to match other Glacier params.
+                if (!$command['ContentSHA256'] && $command['contentSHA256']) {
+                    $command['ContentSHA256'] = $command['contentSHA256'];
+                    unset($command['contentSHA256']);
+                }
+
                 // If uploading, then make sure checksums are added.
                 $name = $command->getName();
-                if (($name === 'UploadArchive' || $name === 'UploadPart')
+                if (($name === 'UploadArchive' || $name === 'UploadMultipartPart')
                     && (!$command['checksum'] || !$command['ContentSHA256'])
                 ) {
                     $body = $request->getBody();
@@ -141,17 +147,29 @@ class GlacierClient extends AwsClient
         // Add the SourceFile parameter.
         $docs['shapes']['SourceFile']['base'] = 'The path to a file on disk to use instead of the body parameter.';
         $api['shapes']['SourceFile'] = ['type' => 'string'];
-        $api['shapes']['UploadArchiveInput']['members']['SourceFile'] = ['shape' => 'SourceFile'];
-        $api['shapes']['UploadMultipartPartInput']['members']['SourceFile'] = ['shape' => 'SourceFile'];
+        $api['shapes']['UploadArchiveInput']['members']['sourceFile'] = ['shape' => 'SourceFile'];
+        $api['shapes']['UploadMultipartPartInput']['members']['sourceFile'] = ['shape' => 'SourceFile'];
 
-        // Add information about "checksum" being optional.
-        $docs['shapes']['checksum']['append'] =
-            '<div class="alert alert-info">The SDK will compute this value '
+        // Add the ContentSHA256 parameter.
+        $docs['shapes']['ContentSHA256']['base'] = 'A SHA256 hash of the content of the request body';
+        $api['shapes']['ContentSHA256'] = ['type' => 'string'];
+        $api['shapes']['UploadArchiveInput']['members']['contentSHA256'] = ['shape' => 'ContentSHA256'];
+        $api['shapes']['UploadMultipartPartInput']['members']['contentSHA256'] = ['shape' => 'ContentSHA256'];
+
+        // Add information about "checksum" and "ContentSHA256" being optional.
+        $optional = '<div class="alert alert-info">The SDK will compute this value '
             . 'for you on your behalf if it is not supplied.</div>';
+        $docs['shapes']['checksum']['append'] = $optional;
+        $docs['shapes']['ContentSHA256']['append'] = $optional;
 
-        // Add information about "accountId" being optional.
-        $optional = '<div class="alert alert-info">The SDK will set this value '
-            . 'to "-" by default.</div>';
+        // Make "accountId" optional for all operations.
+        foreach ($api['operations'] as $operation) {
+            $inputShape =& $api['shapes'][$operation['input']['shape']];
+            $accountIdIndex = array_search('accountId', $inputShape['required']);
+            unset($inputShape['required'][$accountIdIndex]);
+        }
+        // Add information about the default value for "accountId".
+        $optional = '<div class="alert alert-info">The SDK will set this value to "-" by default.</div>';
         foreach ($docs['shapes']['string']['refs'] as $name => &$ref) {
             if (strpos($name, 'accountId')) {
                 $ref .= $optional;

@@ -7,9 +7,9 @@ use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * @covers Aws\S3\ApplyMd5Middleware
+ * @covers Aws\S3\ApplyChecksumMiddleware
  */
-class ApplyMd5MiddlewareTest extends \PHPUnit_Framework_TestCase
+class ApplyChecksumMiddlewareTest extends \PHPUnit_Framework_TestCase
 {
     use UsesServiceTrait;
 
@@ -58,6 +58,52 @@ class ApplyMd5MiddlewareTest extends \PHPUnit_Framework_TestCase
                 ['Bucket' => 'foo', 'Key' => 'bar'],
                 false,
                 null,
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider getContentSha256UseCases
+     */
+    public function testAddsContentSHA256AsAppropriate($operation, $args, $hashAdded, $hashValue)
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand($operation, $args);
+        $command->getHandlerList()->appendBuild(
+            Middleware::tap(function ($cmd, RequestInterface $request) use ($hashAdded, $hashValue) {
+                $this->assertSame($hashAdded, $request->hasHeader('x-amz-content-sha256'));
+                $this->assertEquals($hashValue, $request->getHeaderLine('x-amz-content-sha256'));
+            })
+        );
+        $s3->execute($command);
+    }
+
+    public function getContentSha256UseCases()
+    {
+        $hash = 'SHA256HASH';
+
+        return [
+            // Do nothing if ContentSHA256 was not provided.
+            [
+                'PutObject',
+                ['Bucket' => 'foo', 'Key' => 'bar', 'Body' => 'baz'],
+                false,
+                ''
+            ],
+            // Gets added for operations that allow it.
+            [
+                'PutObject',
+                ['Bucket' => 'foo', 'Key' => 'bar', 'Body' => 'baz', 'ContentSHA256' => $hash],
+                true,
+                $hash
+            ],
+            // Not added for operations that do not allow it.
+            [
+                'GetObject',
+                ['Bucket' => 'foo', 'Key' => 'bar', 'ContentSHA256' => $hash],
+                false,
+                '',
             ],
         ];
     }
