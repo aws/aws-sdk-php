@@ -6,7 +6,10 @@ namespace Aws\Api;
  */
 class StructureShape extends Shape
 {
-    protected $members;
+    /**
+     * @var Shape[]
+     */
+    private $members;
 
     public function __construct(array $definition, ShapeMap $shapeMap)
     {
@@ -65,7 +68,7 @@ class StructureShape extends Shape
     }
 
 
-    protected function generateMembersHash()
+    private function generateMembersHash()
     {
         $this->members = [];
 
