@@ -82,7 +82,7 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
         $command = new Command('foo');
         $e = new AwsException('Foo', $command);
 
-        $exceptionString = version_compare(PHP_VERSION, '7.0.0') >= 0 ?
+        $exceptionString = version_compare(PHP_VERSION, '7', '>=') ?
             'Aws\\Exception\\AwsException: Foo'
             : "exception 'Aws\\Exception\\AwsException' with message 'Foo' in ";
 
