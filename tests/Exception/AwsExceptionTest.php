@@ -81,10 +81,12 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
     {
         $command = new Command('foo');
         $e = new AwsException('Foo', $command);
-        $this->assertStringStartsWith(
-            "exception 'Aws\\Exception\\AwsException' with message 'Foo' in ",
-            $e->__toString()
-        );
+
+        $exceptionString = version_compare(PHP_VERSION, '7', '>=') ?
+            'Aws\\Exception\\AwsException: Foo'
+            : "exception 'Aws\\Exception\\AwsException' with message 'Foo' in ";
+
+        $this->assertStringStartsWith($exceptionString, $e->__toString());
     }
 
     public function testProvidesExceptionToStringWithPreviousLast()
