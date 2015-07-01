@@ -6,6 +6,11 @@ namespace Aws\Api;
  */
 class StructureShape extends Shape
 {
+    /**
+     * @var Shape[]
+     */
+    private $members;
+
     public function __construct(array $definition, ShapeMap $shapeMap)
     {
         $definition['type'] = 'structure';
@@ -24,12 +29,11 @@ class StructureShape extends Shape
      */
     public function getMembers()
     {
-        $result = [];
-        foreach ($this->definition['members'] as $name => $definition) {
-            $result[$name] = $this->shapeFor($definition);
+        if (empty($this->members)) {
+            $this->generateMembersHash();
         }
 
-        return $result;
+        return $this->members;
     }
 
     /**
@@ -54,10 +58,22 @@ class StructureShape extends Shape
      */
     public function getMember($name)
     {
-        if (!isset($this->definition['members'][$name])) {
+        $members = $this->getMembers();
+
+        if (!isset($members[$name])) {
             throw new \InvalidArgumentException('Unknown member ' . $name);
         }
 
-        return $this->shapeFor($this->definition['members'][$name]);
+        return $members[$name];
+    }
+
+
+    private function generateMembersHash()
+    {
+        $this->members = [];
+
+        foreach ($this->definition['members'] as $name => $definition) {
+            $this->members[$name] = $this->shapeFor($definition);
+        }
     }
 }
