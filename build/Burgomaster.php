@@ -43,7 +43,7 @@ class Burgomaster
         }
 
         $this->debug("Creating staging directory: $this->stageDir");
-        
+
         if (!mkdir($this->stageDir, 0777, true)) {
             throw new \RuntimeException("Could not create {$this->stageDir}");
         }
@@ -343,6 +343,8 @@ EOT
         $this->debug("Creating phar file at $dest");
         $this->createDirIfNeeded(dirname($dest));
         $phar = new \Phar($dest, 0, basename($dest));
+        $alias = basename($dest);
+        $phar->setAlias($alias);
         $phar->buildFromDirectory($this->stageDir);
 
         if ($stub !== false) {
