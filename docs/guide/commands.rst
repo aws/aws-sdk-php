@@ -47,7 +47,7 @@ The following examples are functionally equivalent:
     $result = $s3Client->execute($command);
 
 
-Command Parameters
+Command parameters
 ------------------
 
 When you create a command using a client's ``getCommand()`` method, it does not
@@ -69,6 +69,23 @@ opportunity to modify the command object before executing the command.
     ]);
     $command['MaxKeys'] = 100;
     $result = $s3Client->execute($command);
+
+
+HTTP handler options
+--------------------
+
+All commands support the special ``@http`` parameter. Using this parameter,
+it's possible to fine tune how the underlying HTTP handler executes the
+request. The options you can include in the ``@http`` parameter are the same as
+the ones you can set when you instantiate the client with the
+:ref:`"http" client option <config_http>`.
+
+.. code-block:: php
+
+    // Configures the command to be delayed by 500 milliseconds.
+    $command['@http'] = [
+        'delay' => 500,
+    ];
 
 
 Command HandlerList
@@ -264,8 +281,8 @@ objects, so we will need to map over the ``SplFileInfo`` objects to return
     $promise->then(function() { echo "Done\n"; });
 
 
-CommandPool Config
-~~~~~~~~~~~~~~~~~~
+CommandPool configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``Aws\CommandPool`` constructor accepts various configuration options.
 

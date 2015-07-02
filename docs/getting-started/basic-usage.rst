@@ -117,17 +117,17 @@ same as the namespace of a service (e.g., "S3", "DynamoDb", etc.).
     $client = $sdk->createDynamoDb();
 
 Service-specific configuration values are a union of the service-specific
-values and the root-level values (i.e., service-specific values are shallow
-merged onto root level values).
+values and the root-level values (i.e., service-specific values are
+shallow-merged onto root level values).
 
 .. tip::
 
     It is highly recommended that you use the ``Sdk`` class to create clients
-    if you are utilizing multiple SDK clients in your application. The ``Sdk``
-    class will automatically utilize the same HTTP client for each SDK client,
-    allowing SDK clients for different services to perform non-blocking HTTP
-    requests. If the SDK clients do not use the same HTTP client, then HTTP
-    requests sent by the SDK client may cause inter-service promise
+    if you are utilizing multiple client instances in your application. The
+    ``Sdk`` class will automatically utilize the same HTTP client for each SDK
+    client, allowing SDK clients for different services to perform non-blocking
+    HTTP requests. If the SDK clients do not use the same HTTP client, then
+    HTTP requests sent by the SDK client may cause inter-service promise
     orchestration to block.
 
 
@@ -170,6 +170,27 @@ associative array representing the parameters of the operation. The structure
 of this array (and the structure of the result object) is defined for each
 operation in the SDK's API Documentation (e.g., see the API docs for
 `putObject operation <http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-s3-2006-03-01.html#putobject>`__).
+
+
+HTTP Handler Options
+~~~~~~~~~~~~~~~~~~~~
+
+It's also possible to fine tune how the underlying HTTP handler executes the
+request by using the special ``@http`` parameter. The options you can include
+in the ``@http`` parameter are the same as the ones you can set when you
+instantiate the client with the :ref:`"http" client option <config_http>`.
+
+.. code-block:: php
+
+    // Send the request through a proxy.
+    $result = $s3Client->putObject([
+        'Bucket' => 'my-bucket',
+        'Key'    => 'my-key',
+        'Body'   => 'this is the body!',
+        '@http'  => [
+            'proxy' => 'http://192.168.16.1:10'
+        ]
+    ]);
 
 
 Asynchronous Requests

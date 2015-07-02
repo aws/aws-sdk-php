@@ -275,6 +275,8 @@ them in FIFO order.
     $client->listTables();
 
 
+.. _config_http:
+
 http
 ~~~~
 
