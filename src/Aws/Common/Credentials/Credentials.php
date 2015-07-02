@@ -87,14 +87,22 @@ class Credentials implements CredentialsInterface, FromConfigInterface
             }
         }
 
-        // Start tracking the cache key
-        $cacheKey = $config[Options::CREDENTIALS_CACHE_KEY];
+        // Set up the cache
+        $cache = $config[Options::CREDENTIALS_CACHE];
+        $cacheKey = $config[Options::CREDENTIALS_CACHE_KEY] ?:
+            'credentials_' . ($config[Options::KEY] ?: crc32(gethostname()));
+
+        if (
+            $cacheKey &&
+            $cache instanceof CacheAdapterInterface &&
+            $cached = self::createFromCache($cache, $cacheKey)
+        ) {
+            return $cached;
+        }
 
         // Create the credentials object
         if (!$config[Options::KEY] || !$config[Options::SECRET]) {
             $credentials = self::createFromEnvironment($config);
-            // If no cache key was set, use the crc32 hostname of the server
-            $cacheKey = $cacheKey ?: 'credentials_' . crc32(gethostname());
         } else {
             // Instantiate using short or long term credentials
             $credentials = new static(
@@ -103,8 +111,6 @@ class Credentials implements CredentialsInterface, FromConfigInterface
                 $config[Options::TOKEN],
                 $config[Options::TOKEN_TTD]
             );
-            // If no cache key was set, use the access key ID
-            $cacheKey = $cacheKey ?: 'credentials_' . $config[Options::KEY];
         }
 
         // Check if the credentials are refreshable, and if so, configure caching
@@ -281,6 +287,16 @@ class Credentials implements CredentialsInterface, FromConfigInterface
                 $config[Options::CREDENTIALS_CLIENT]
             );
         }
+    }
+
+    private static function createFromCache(CacheAdapterInterface $cache, $cacheKey)
+    {
+        $cached = $cache->fetch($cacheKey);
+        if ($cached instanceof CredentialsInterface && !$cached->isExpired()) {
+            return new CacheableCredentials($cached, $cache, $cacheKey);
+        }
+
+        return null;
     }
 
     private static function createCache(CredentialsInterface $credentials, $cache, $cacheKey)
