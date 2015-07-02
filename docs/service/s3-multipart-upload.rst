@@ -32,19 +32,26 @@ process as easy as possible.
     ]);
 
     try {
-        $uploader->upload();
-        echo "Upload complete.\n";
+        $result = $uploader->upload();
+        echo "Upload complete: {$result['ObjectURL'}\n";
     } catch (MultipartUploadException $e) {
         echo $e->getMessage() . "\n";
     }
 
+The uploader creates a generator of part data based on the provided source and
+configuration, and attempts to upload all parts. If some part uploads fail, the
+uploader keeps track of it and continues to upload later parts until the entire
+source data has been read. It then either completes the upload or throws an
+exception that contains information about the parts that failed to be uploaded.
+
 Recovering from errors
 ----------------------
 
-When an error occurs during the multipart upload process, a ``MultipartUploadException``
-is thrown. This exception provides access to the ``UploadState`` object, which contains
-information about the multipart upload's progress. The ``UploadState`` can be used to
-resume an upload that failed to complete.
+When an error occurs during the multipart upload process, a
+``MultipartUploadException`` is thrown. This exception provides access to the
+``UploadState`` object, which contains information about the multipart upload's
+progress. The ``UploadState`` can be used to resume an upload that failed to
+complete.
 
 .. code-block:: php
 
@@ -64,15 +71,22 @@ resume an upload that failed to complete.
         }
     } while (!isset($result));
 
-``UploadState`` objects are also serializable, so it is possible to resume an
-upload in a different process.
+Resuming an upload from an ``UploadState`` will only attempt to upload parts
+that are not already uploaded. The state object keeps track of missing parts,
+even if they are not consecutive. The uploader will read/seek through the
+provided source file to the byte ranges belonging to the parts that still need
+to be uploaded.
+
+``UploadState`` objects are serializable, so it's also possible to resume an
+upload in a different process. You can also get the ``UploadState`` object even
+when you are not handling an exception by calling ``$uploader->getState()``.
 
 Aborting a multipart upload
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Sometimes, you may not want to resume, though, and would rather just abort the
-upload when an error occurs. This is also easy using the data contained in the
-``UploadState`` object.
+Sometimes, you may not want to resume an upload though, and would rather just
+abort the the whole thing when an error occurs. This is also easy using the
+data contained in the ``UploadState`` object.
 
 .. code-block:: php
 
