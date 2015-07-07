@@ -22,11 +22,12 @@ class StandardSessionConnection implements SessionConnectionInterface
     {
         $this->client = $client;
         $this->config = $config + [
-            'table_name'       => 'sessions',
-            'hash_key'         => 'id',
-            'session_lifetime' => (int) ini_get('session.gc_maxlifetime'),
-            'consistent_read'  => true,
-            'batch_config'     => [],
+            'table_name'            => 'sessions',
+            'hash_key'              => 'id',
+            'session_lifetime'      => (int) ini_get('session.gc_maxlifetime'),
+            'consistent_read'       => true,
+            'batch_config'          => [],
+            'data_attribute_type'   => 'S',
         ];
     }
 
@@ -63,7 +64,7 @@ class StandardSessionConnection implements SessionConnectionInterface
         ];
         if ($isChanged) {
             if ($data != '') {
-                $attributes['data'] = ['Value' => ['S' => $data]];
+                $attributes['data'] = ['Value' => [$this->config['data_attribute_type'] => $data]];
             } else {
                 $attributes['data'] = ['Action' => 'DELETE'];
             }
