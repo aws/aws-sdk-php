@@ -3,6 +3,7 @@ namespace Aws\Test\Credentials;
 
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
+use Doctrine\Common\Cache\ArrayCache;
 
 /**
  * @covers \Aws\Credentials\CredentialProvider
@@ -44,6 +45,25 @@ class CredentialProviderTest extends \PHPUnit_Framework_TestCase
         putenv(CredentialProvider::ENV_KEY . '=' . $this->key);
         putenv(CredentialProvider::ENV_SECRET . '=' . $this->secret);
         putenv(CredentialProvider::ENV_PROFILE . '=' . $this->profile);
+    }
+
+    public function testCreatesFromCache()
+    {
+        $cache = new ArrayCache;
+        $key = __CLASS__ . 'credentialsCache';
+        $saved = new Credentials('foo', 'bar', 'baz', PHP_INT_MAX);
+        $cache->save($key, $saved, $saved->getExpiration() - time());
+
+        $found = call_user_func(CredentialProvider::cache([
+            'credentials.cache' => $cache,
+            'credentials.cache.key' => $key,
+        ]))
+            ->wait();
+
+        $this->assertEquals($saved->getAccessKeyId(), $found->getAccessKeyId());
+        $this->assertEquals($saved->getSecretKey(), $found->getSecretKey());
+        $this->assertEquals($saved->getSecurityToken(), $found->getSecurityToken());
+        $this->assertEquals($saved->getExpiration(), $found->getExpiration());
     }
 
     public function testCreatesFromEnvironmentVariables()

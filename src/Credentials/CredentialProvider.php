@@ -3,6 +3,9 @@ namespace Aws\Credentials;
 
 use Aws;
 use Aws\Exception\CredentialsException;
+use Doctrine\Common\Cache\Cache;
+use Doctrine\Common\Cache\FilesystemCache;
+use Doctrine\Common\Cache\PhpFileCache;
 use GuzzleHttp\Promise;
 
 /**
@@ -41,6 +44,8 @@ use GuzzleHttp\Promise;
  */
 class CredentialProvider
 {
+    use CachingProviderTrait;
+
     const ENV_KEY = 'AWS_ACCESS_KEY_ID';
     const ENV_SECRET = 'AWS_SECRET_ACCESS_KEY';
     const ENV_SESSION = 'AWS_SESSION_TOKEN';
@@ -63,8 +68,9 @@ class CredentialProvider
     {
         return self::memoize(
             self::chain(
-                self::env(),
-                self::ini(),
+                self::cache($config),
+                self::env($config),
+                self::ini(null, null, $config),
                 self::instanceProfile($config)
             )
         );
@@ -160,16 +166,21 @@ class CredentialProvider
      *
      * @return callable
      */
-    public static function env()
+    public static function env(array $config = [])
     {
-        return function () {
+        return function () use ($config) {
             // Use credentials from environment variables, if available
             $key = getenv(self::ENV_KEY);
             $secret = getenv(self::ENV_SECRET);
             if ($key && $secret) {
-                return Promise\promise_for(
-                    new Credentials($key, $secret, getenv(self::ENV_SESSION))
+                $credentials = new Credentials(
+                    $key,
+                    $secret,
+                    getenv(self::ENV_SESSION)
                 );
+
+                self::tryToCache($credentials, $config);
+                return Promise\promise_for($credentials);
             }
 
             return self::reject('Could not find environment variable '
@@ -202,12 +213,12 @@ class CredentialProvider
      *
      * @return callable
      */
-    public static function ini($profile = null, $filename = null)
+    public static function ini($profile = null, $filename = null, array $config = [])
     {
         $filename = $filename ?: (self::getHomeDir() . '/.aws/credentials');
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');
 
-        return function () use ($profile, $filename) {
+        return function () use ($profile, $filename, $config) {
             if (!is_readable($filename)) {
                 return self::reject("Cannot read credentials from $filename");
             }
@@ -225,15 +236,40 @@ class CredentialProvider
                     . "'$profile' ($filename)");
             }
 
-            return Promise\promise_for(
-                new Credentials(
-                    $data[$profile]['aws_access_key_id'],
-                    $data[$profile]['aws_secret_access_key'],
-                    isset($data[$profile]['aws_security_token'])
-                        ? $data[$profile]['aws_security_token']
-                        : null
-                )
+            $credentials = new Credentials(
+                $data[$profile]['aws_access_key_id'],
+                $data[$profile]['aws_secret_access_key'],
+                isset($data[$profile]['aws_security_token'])
+                    ? $data[$profile]['aws_security_token']
+                    : null
             );
+
+            self::tryToCache($credentials, $config);
+
+            return Promise\promise_for($credentials);
+        };
+    }
+
+    public static function cache(array $config = [])
+    {
+        $cache = self::getCredentialsCache($config);
+        $cacheKey = self::getCacheKey($config);
+
+        return function () use ($cache, $cacheKey) {
+            if (!$cache) {
+                return self::reject('No credentials cache provided');
+            }
+
+            $cachedCredentials = $cache->fetch($cacheKey);
+
+            if ($cachedCredentials &&
+                $cachedCredentials instanceof CredentialsInterface &&
+                !$cachedCredentials->isExpired()
+            ) {
+                return Promise\promise_for($cachedCredentials);
+            }
+
+            return self::reject('No credentials found in cache');
         };
     }
 

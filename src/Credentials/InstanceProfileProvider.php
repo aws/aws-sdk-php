@@ -2,6 +2,7 @@
 namespace Aws\Credentials;
 
 use Aws\Exception\CredentialsException;
+use Doctrine\Common\Cache\Cache;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -12,6 +13,8 @@ use Psr\Http\Message\ResponseInterface;
  */
 class InstanceProfileProvider
 {
+    use CachingProviderTrait;
+
     const SERVER_URI = 'http://169.254.169.254/latest/';
     const CRED_PATH = 'meta-data/iam/security-credentials/';
 
@@ -20,6 +23,12 @@ class InstanceProfileProvider
 
     /** @var callable */
     private $client;
+
+    /** @var Cache|null */
+    private $cache;
+
+    /** @var string */
+    private $cacheKey;
 
     /**
      * The constructor accepts the following options:
@@ -36,6 +45,8 @@ class InstanceProfileProvider
         $this->client = isset($config['client'])
             ? $config['client'] // internal use only
             : \Aws\default_http_handler();
+        $this->cache = self::getCredentialsCache($config);
+        $this->cacheKey = self::getCacheKey($config);
     }
 
     /**
@@ -51,12 +62,19 @@ class InstanceProfileProvider
             }
             $json = (yield $this->request(self::CRED_PATH . $this->profile));
             $result = $this->decodeResult($json);
-            yield new Credentials(
+            $credentials = new Credentials(
                 $result['AccessKeyId'],
                 $result['SecretAccessKey'],
                 $result['Token'],
                 strtotime($result['Expiration'])
             );
+
+            self::tryToCache($credentials, [
+                self::$configCredentialsCache => $this->cache,
+                self::$configCredentialsCacheKey => $this->cacheKey,
+            ]);
+
+            yield $credentials;
         });
     }
 
