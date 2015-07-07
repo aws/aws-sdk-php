@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AutoScaling` - Added support for step policies.
+* `Aws\CloudHsm` - Fixed a naming collision with the `GetConfig` operation. This
+  operation is now available through the `GetConfigFiles` method.
+* `Aws\DynamoDb` - Improved performance when unmarshalling complex documents.
+* `Aws\DynamoDb` - Fixed checksum comparison of uncompressed responses.
+* `Aws\Ec2` - Added support for encrypted snapshots.
+* `Aws\S3` - Added support for user-provided SHA256 checksums for S3 uploads.
+* `Aws\S3` - Added support for custom protocols in `Aws\S3\StreamWrapper`.
+* Added cucumber integration tests.
+* Updated the test suite to be compatible with PHP 7-alpha 2.
+
 ## 3.0.6 - 2015-06-24
 
 * `Aws\CloudFront` - Added support for configurable `MaxTTL` and `DefaultTTL`.
