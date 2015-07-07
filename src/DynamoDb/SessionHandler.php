@@ -66,7 +66,7 @@ class SessionHandler implements \SessionHandlerInterface
             $connection = new StandardSessionConnection($client, $config);
         }
 
-        return new self($connection);
+        return new static($connection);
     }
 
     /**
