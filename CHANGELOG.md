@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.0.7 - 2015-07-07
 
 * `Aws\AutoScaling` - Added support for step policies.
 * `Aws\CloudHsm` - Fixed a naming collision with the `GetConfig` operation. This
