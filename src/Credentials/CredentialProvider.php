@@ -183,27 +183,19 @@ class CredentialProvider
                 return Promise\promise_for($found);
             }
 
-            $result = $provider();
-
-            return $result
+            return $provider()
                 ->then(function (CredentialsInterface $creds) use (
                     $cache,
-                    $cacheKey,
-                    $provider,
-                    &$result
+                    $cacheKey
                 ) {
-                    if (!$creds->isExpired()) {
-                        $cache->set(
-                            $cacheKey,
-                            $creds,
-                            null === $creds->getExpiration() ?
-                                0 : $creds->getExpiration() - time()
-                        );
+                    $cache->set(
+                        $cacheKey,
+                        $creds,
+                        null === $creds->getExpiration() ?
+                            0 : $creds->getExpiration() - time()
+                    );
 
-                        return $creds;
-                    }
-
-                    return $result = $provider();
+                    return $creds;
                 });
         };
     }
