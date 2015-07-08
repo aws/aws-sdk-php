@@ -20,17 +20,8 @@ class FileCacheTest extends \PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        $rmrf = function ($path) use (&$rmrf) {
-            foreach(glob($path . DIRECTORY_SEPARATOR . '*') as $file) {
-                if (is_dir($file)) {
-                    $rmrf($file);
-                    rmdir($file);
-                } else {
-                    unlink($file);
-                }
-            }
-        };
-        $rmrf($this->getCacheTestDir());
+        $this->rmrf($this->getCacheTestDir());
+
         putenv(JsonCompiler::CACHE_ENV . "={$this->cacheDir}");
     }
 
@@ -55,5 +46,17 @@ class FileCacheTest extends \PHPUnit_Framework_TestCase
     private function getCacheTestDir()
     {
         return sys_get_temp_dir() . '/aws_file_cache_test_dir';
+    }
+
+    private function rmrf($path)
+    {
+        if (is_dir($path)) {
+            foreach(glob($path . DIRECTORY_SEPARATOR . '*') as $file) {
+                $this->rmrf($file);
+            }
+            rmdir($path);
+        } else {
+            unlink($path);
+        }
     }
 }
