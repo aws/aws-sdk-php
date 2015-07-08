@@ -42,8 +42,6 @@ class FileCache implements CacheInterface
 
             $this->remove($key);
         }
-
-        return null;
     }
 
 

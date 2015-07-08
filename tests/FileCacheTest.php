@@ -1,11 +1,9 @@
 <?php
 namespace Aws\Test;
 
-use Aws\Command;
 use Aws\Credentials\Credentials;
 use Aws\FileCache;
 use Aws\JsonCompiler;
-use Aws\S3\Exception\S3Exception;
 
 /**
  * @covers Aws\FileCache
