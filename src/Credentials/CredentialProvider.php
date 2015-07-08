@@ -192,9 +192,9 @@ class CredentialProvider
      *
      * @return callable
      */
-    public static function env(array $config = [])
+    public static function env()
     {
-        return function () use ($config) {
+        return function () {
             // Use credentials from environment variables, if available
             $key = getenv(self::ENV_KEY);
             $secret = getenv(self::ENV_SECRET);

@@ -2,7 +2,6 @@
 namespace Aws\Credentials;
 
 use Aws\Exception\CredentialsException;
-use Doctrine\Common\Cache\Cache;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise\PromiseInterface;
