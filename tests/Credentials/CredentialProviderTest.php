@@ -3,7 +3,7 @@ namespace Aws\Test\Credentials;
 
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
-use Doctrine\Common\Cache\ArrayCache;
+use Aws\LruArrayCache;
 
 /**
  * @covers \Aws\Credentials\CredentialProvider
@@ -49,15 +49,18 @@ class CredentialProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatesFromCache()
     {
-        $cache = new ArrayCache;
+        $cache = new LruArrayCache;
         $key = __CLASS__ . 'credentialsCache';
         $saved = new Credentials('foo', 'bar', 'baz', PHP_INT_MAX);
-        $cache->save($key, $saved, $saved->getExpiration() - time());
+        $cache->set($key, $saved, $saved->getExpiration() - time());
 
-        $found = call_user_func(CredentialProvider::cache([
-            'credentials.cache' => $cache,
-            'credentials.cache.key' => $key,
-        ]))
+        $explodingProvider = function () {
+            throw new \BadFunctionCallException('This should never be called');
+        };
+
+        $found = call_user_func(
+            CredentialProvider::cache($explodingProvider, $cache, $key)
+        )
             ->wait();
 
         $this->assertEquals($saved->getAccessKeyId(), $found->getAccessKeyId());
