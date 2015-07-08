@@ -67,7 +67,7 @@ class CredentialProvider
             self::chain(
                 self::env(),
                 self::ini(),
-                self::instanceProfile($config)
+                self::cache(self::instanceProfile($config))
             )
         );
     }
