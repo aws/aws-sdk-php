@@ -1,7 +1,11 @@
 <?php
 namespace Aws\Test;
+
+use Aws\Command;
+use Aws\Credentials\Credentials;
 use Aws\FileCache;
 use Aws\JsonCompiler;
+use Aws\S3\Exception\S3Exception;
 
 /**
  * @covers Aws\FileCache
@@ -18,10 +22,17 @@ class FileCacheTest extends \PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        array_map('unlink', glob($this->getCacheTestDir() . '/**/*.*'));
-        array_map('rmdir', glob($this->getCacheTestDir() . '/**/*'));
-        array_map('rmdir', glob($this->getCacheTestDir() . '/*'));
-        rmdir($this->getCacheTestDir());
+        $rmrf = function ($path) use (&$rmrf) {
+            foreach(glob($path . DIRECTORY_SEPARATOR . '*') as $file) {
+                if (is_dir($file)) {
+                    $rmrf($file);
+                    rmdir($file);
+                } else {
+                    unlink($file);
+                }
+            }
+        };
+        $rmrf($this->getCacheTestDir());
         putenv(JsonCompiler::CACHE_ENV . "={$this->cacheDir}");
     }
 
@@ -33,6 +44,13 @@ class FileCacheTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('baz', $c->get('foo'));
         $c->remove('foo');
         $this->assertNull($c->get('foo'));
+    }
+
+    public function testSetAndGetShouldPersistObjects()
+    {
+        $c = new FileCache;
+        $c->set('creds', new Credentials('foo', 'bar', 'baz', PHP_INT_MAX));
+        $this->assertInstanceOf(Credentials::class, $c->get('creds'));
     }
 
 

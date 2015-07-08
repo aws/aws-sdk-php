@@ -156,6 +156,19 @@ class CredentialProvider
         };
     }
 
+    /**
+     * Wraps a credential provider and saves provided credentials in an
+     * instance of Aws\CacheInterface. Forwards calls when no credentials found
+     * in cache and updates cache with the results.
+     *
+     * Defaults to using a simple file-based cache when none provided.
+     *
+     * @param callable $provider Credentials provider function to wrap
+     * @param CacheInterface|null $cache (optional) Cache to store credentials
+     * @param string|null $cacheKey (optional) Cache key to use
+     *
+     * @return callable
+     */
     public static function cache(
         callable $provider,
         CacheInterface $cache = null,
@@ -164,25 +177,34 @@ class CredentialProvider
         $cache = $cache ?: new FileCache;
         $cacheKey = $cacheKey ?: 'aws_cached_credentials';
 
-        if (!$cache) {
-            return $provider;
-        }
-
         return function () use ($provider, $cache, $cacheKey) {
             $found = $cache->get($cacheKey);
             if ($found instanceof CredentialsInterface && !$found->isExpired()) {
                 return Promise\promise_for($found);
             }
 
-            $cacheable = $provider()->wait();
-            $cache->set(
-                $cacheKey,
-                $cacheable,
-                null === $cacheable->getExpiration() ?
-                    0 : $cacheable->getExpiration() - time()
-            );
+            $result = $provider();
 
-            return Promise\promise_for($cacheable);
+            return $result
+                ->then(function (CredentialsInterface $creds) use (
+                    $cache,
+                    $cacheKey,
+                    $provider,
+                    &$result
+                ) {
+                    if (!$creds->isExpired()) {
+                        $cache->set(
+                            $cacheKey,
+                            $creds,
+                            null === $creds->getExpiration() ?
+                                0 : $creds->getExpiration() - time()
+                        );
+
+                        return $creds;
+                    }
+
+                    return $result = $provider();
+                });
         };
     }
 

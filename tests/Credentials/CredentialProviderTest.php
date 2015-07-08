@@ -4,6 +4,7 @@ namespace Aws\Test\Credentials;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\LruArrayCache;
+use GuzzleHttp\Promise;
 
 /**
  * @covers \Aws\Credentials\CredentialProvider
@@ -67,6 +68,59 @@ class CredentialProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($saved->getSecretKey(), $found->getSecretKey());
         $this->assertEquals($saved->getSecurityToken(), $found->getSecurityToken());
         $this->assertEquals($saved->getExpiration(), $found->getExpiration());
+    }
+
+    public function testRefreshesCacheWhenCredsExpired()
+    {
+        $cache = new LruArrayCache;
+        $key = __CLASS__ . 'credentialsCache';
+        $saved = new Credentials('foo', 'bar', 'baz', time() - 1);
+        $cache->set($key, $saved);
+
+        $timesCalled = 0;
+        $recordKeepingProvider = function () use (&$timesCalled) {
+            ++$timesCalled;
+            return Promise\promise_for(new Credentials('foo', 'bar', 'baz', PHP_INT_MAX));
+        };
+
+        call_user_func(
+            CredentialProvider::cache($recordKeepingProvider, $cache, $key)
+        )
+            ->wait();
+
+        $this->assertEquals(1, $timesCalled);
+    }
+
+    public function testPersistsToCache()
+    {
+        $cache = new LruArrayCache;
+        $key = __CLASS__ . 'credentialsCache';
+        $creds = new Credentials('foo', 'bar', 'baz', PHP_INT_MAX);
+
+        $timesCalled = 0;
+        $volatileProvider = function () use ($creds, &$timesCalled) {
+            if (0 === $timesCalled) {
+                ++$timesCalled;
+
+                return Promise\promise_for($creds);
+            }
+
+            throw new \BadFunctionCallException('I was called too many times!');
+        };
+
+        for ($i = 0; $i < 10; $i++) {
+            $found = call_user_func(
+                CredentialProvider::cache($volatileProvider, $cache, $key)
+            )
+                ->wait();
+        }
+
+        $this->assertEquals(1, $timesCalled);
+        $this->assertEquals(1, count($cache));
+        $this->assertEquals($creds->getAccessKeyId(), $found->getAccessKeyId());
+        $this->assertEquals($creds->getSecretKey(), $found->getSecretKey());
+        $this->assertEquals($creds->getSecurityToken(), $found->getSecurityToken());
+        $this->assertEquals($creds->getExpiration(), $found->getExpiration());
     }
 
     public function testCreatesFromEnvironmentVariables()

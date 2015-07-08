@@ -1,5 +1,4 @@
 <?php
-
 namespace Aws;
 
 class FileCache implements CacheInterface
@@ -11,9 +10,6 @@ class FileCache implements CacheInterface
         $this->cacheDir = (new JsonCompiler)->getCacheDir();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function set($key, $data, $ttl = 0)
     {
         $toSave = ['data' => $data];
@@ -27,22 +23,20 @@ class FileCache implements CacheInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function remove($key)
     {
         unlink($this->getCachePath($key));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function get($key)
     {
-        if ($retrieved = @file_get_contents($this->getCachePath($key))) {
+        $path = $this->getCachePath($key);
+
+        if (file_exists($path) && $retrieved = @file_get_contents($path)) {
             $cached = \unserialize($retrieved);
-            if (empty($cached['expiration']) || $cached['expiration'] > time()) {
+            if (isset($cached['data']) &&
+                (empty($cached['expiration']) || $cached['expiration'] > time())
+            ) {
                 return $cached['data'];
             }
 
