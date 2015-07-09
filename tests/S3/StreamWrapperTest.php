@@ -409,6 +409,16 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedExceptionMessage rename(): Cannot rename a file across wrapper types
+     */
+    public function testRenameEnsuresProtocolsMatch()
+    {
+        StreamWrapper::register($this->client, 'baz');
+        rename('s3://foo/bar', 'baz://qux/quux');
+    }
+
+    /**
+     * @expectedException \PHPUnit_Framework_Error_Warning
      * @expectedExceptionMessage The Amazon S3 stream wrapper only supports copying objects
      */
     public function testRenameEnsuresKeyIsSet()

@@ -515,6 +515,7 @@ class StreamWrapper
      */
     public function rename($path_from, $path_to)
     {
+        $this->initProtocol($path_from);
         $partsFrom = $this->withPath($path_from);
         $partsTo = $this->withPath($path_to);
         $this->clearCacheKey($path_from);
