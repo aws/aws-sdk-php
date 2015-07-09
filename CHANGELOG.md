@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next release
+## 3.1.0 - 2015-07-09
 
 * `Aws\CodeCommit` - Added support for AWS CodeCommit, a secure, highly 
   scalable, managed source control service that hosts private Git repositories.
