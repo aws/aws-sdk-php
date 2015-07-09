@@ -106,10 +106,22 @@ return array(
 
         'cognitosync' => array('extends' => 'cognito-sync'),
 
+        'codecommit' => array(
+            'alias'   => 'CodeCommit',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\CodeCommit\CodeCommitClient'
+        ),
+
         'codedeploy' => array(
             'alias'   => 'CodeDeploy',
             'extends' => 'default_settings',
             'class'   => 'Aws\CodeDeploy\CodeDeployClient'
+        ),
+
+        'codepipeline' => array(
+            'alias'   => 'CodePipeline',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\CodePipeline\CodePipelineClient'
         ),
 
         'config' => array(

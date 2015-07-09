@@ -1110,6 +1110,15 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'Encrypted' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
+                'KmsKeyId' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
             ),
         ),
         'CreateCustomerGateway' => array(
@@ -9941,6 +9950,11 @@ return array (
                     'type' => 'string',
                     'location' => 'xml',
                     'sentAs' => 'ownerId',
+                ),
+                'Return' => array(
+                    'type' => 'boolean',
+                    'location' => 'xml',
+                    'sentAs' => 'return',
                 ),
             ),
         ),

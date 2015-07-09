@@ -1359,6 +1359,17 @@ return array (
                         'maxLength' => 1600,
                     ),
                 ),
+                'PolicyTypes' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'PolicyTypes.member',
+                    'items' => array(
+                        'name' => 'XmlStringMaxLen64',
+                        'type' => 'string',
+                        'minLength' => 1,
+                        'maxLength' => 64,
+                    ),
+                ),
                 'NextToken' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -1880,6 +1891,14 @@ return array (
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
+                'MetricValue' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'BreachThreshold' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -2094,6 +2113,12 @@ return array (
                     'minLength' => 1,
                     'maxLength' => 255,
                 ),
+                'PolicyType' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 64,
+                ),
                 'AdjustmentType' => array(
                     'required' => true,
                     'type' => 'string',
@@ -2105,11 +2130,46 @@ return array (
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
+                'MinAdjustmentMagnitude' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
                 'ScalingAdjustment' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
                 'Cooldown' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'MetricAggregationType' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 32,
+                ),
+                'StepAdjustments' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'StepAdjustments.member',
+                    'items' => array(
+                        'name' => 'StepAdjustment',
+                        'type' => 'object',
+                        'properties' => array(
+                            'MetricIntervalLowerBound' => array(
+                                'type' => 'numeric',
+                            ),
+                            'MetricIntervalUpperBound' => array(
+                                'type' => 'numeric',
+                            ),
+                            'ScalingAdjustment' => array(
+                                'required' => true,
+                                'type' => 'numeric',
+                            ),
+                        ),
+                    ),
+                ),
+                'EstimatedInstanceWarmup' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
@@ -3152,16 +3212,47 @@ return array (
                             'PolicyARN' => array(
                                 'type' => 'string',
                             ),
-                            'MinAdjustmentStep' => array(
-                                'type' => 'numeric',
+                            'PolicyType' => array(
+                                'type' => 'string',
                             ),
                             'AdjustmentType' => array(
                                 'type' => 'string',
+                            ),
+                            'MinAdjustmentStep' => array(
+                                'type' => 'numeric',
+                            ),
+                            'MinAdjustmentMagnitude' => array(
+                                'type' => 'numeric',
                             ),
                             'ScalingAdjustment' => array(
                                 'type' => 'numeric',
                             ),
                             'Cooldown' => array(
+                                'type' => 'numeric',
+                            ),
+                            'StepAdjustments' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'StepAdjustment',
+                                    'type' => 'object',
+                                    'sentAs' => 'member',
+                                    'properties' => array(
+                                        'MetricIntervalLowerBound' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                        'MetricIntervalUpperBound' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                        'ScalingAdjustment' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'MetricAggregationType' => array(
+                                'type' => 'string',
+                            ),
+                            'EstimatedInstanceWarmup' => array(
                                 'type' => 'numeric',
                             ),
                             'Alarms' => array(

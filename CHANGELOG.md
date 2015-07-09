@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## Next Release
+
+* `Aws\AutoScaling` - Added support for step policies.
+* `Aws\CodeCommit` - Added support for AWS CodeCommit, a secure, highly 
+  scalable, managed source control service that hosts private Git repositories.
+* `Aws\CodePipeline` - Added support for AWS CodePipeline, a continuous delivery
+  service that enables you to model, visualize, and automate the steps required
+  to release your software.
+* `Aws\Ec2` - Added support for encrypted snapshots.
+* `Aws\Iam` - Added support for uploading SSH public keys for authentication
+  with AWS CodeCommit.
+* `Aws\S3` - Fixed #609 to handle non-200 responses in the Stream Wrapper.
+* `Aws\Ses` - Added support for cross-account sending through the sending
+  authorization feature.
+* Fixed the way that cached credentials work via #670.
+
 ## 2.8.11 - 2015-06-24
 
 * `Aws\CloudFront` - Added support for configurable `MaxTTL` and `DefaultTTL`.

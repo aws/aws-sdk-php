@@ -59,6 +59,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model deleteRole(array $args = array()) {@command Iam DeleteRole}
  * @method Model deleteRolePolicy(array $args = array()) {@command Iam DeleteRolePolicy}
  * @method Model deleteSAMLProvider(array $args = array()) {@command Iam DeleteSAMLProvider}
+ * @method Model deleteSSHPublicKey(array $args = array()) {@command Iam DeleteSSHPublicKey}
  * @method Model deleteServerCertificate(array $args = array()) {@command Iam DeleteServerCertificate}
  * @method Model deleteSigningCertificate(array $args = array()) {@command Iam DeleteSigningCertificate}
  * @method Model deleteUser(array $args = array()) {@command Iam DeleteUser}
@@ -84,6 +85,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model getRole(array $args = array()) {@command Iam GetRole}
  * @method Model getRolePolicy(array $args = array()) {@command Iam GetRolePolicy}
  * @method Model getSAMLProvider(array $args = array()) {@command Iam GetSAMLProvider}
+ * @method Model getSSHPublicKey(array $args = array()) {@command Iam GetSSHPublicKey}
  * @method Model getServerCertificate(array $args = array()) {@command Iam GetServerCertificate}
  * @method Model getUser(array $args = array()) {@command Iam GetUser}
  * @method Model getUserPolicy(array $args = array()) {@command Iam GetUserPolicy}
@@ -105,6 +107,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model listRolePolicies(array $args = array()) {@command Iam ListRolePolicies}
  * @method Model listRoles(array $args = array()) {@command Iam ListRoles}
  * @method Model listSAMLProviders(array $args = array()) {@command Iam ListSAMLProviders}
+ * @method Model listSSHPublicKeys(array $args = array()) {@command Iam ListSSHPublicKeys}
  * @method Model listServerCertificates(array $args = array()) {@command Iam ListServerCertificates}
  * @method Model listSigningCertificates(array $args = array()) {@command Iam ListSigningCertificates}
  * @method Model listUserPolicies(array $args = array()) {@command Iam ListUserPolicies}
@@ -125,21 +128,27 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model updateLoginProfile(array $args = array()) {@command Iam UpdateLoginProfile}
  * @method Model updateOpenIDConnectProviderThumbprint(array $args = array()) {@command Iam UpdateOpenIDConnectProviderThumbprint}
  * @method Model updateSAMLProvider(array $args = array()) {@command Iam UpdateSAMLProvider}
+ * @method Model updateSSHPublicKey(array $args = array()) {@command Iam UpdateSSHPublicKey}
  * @method Model updateServerCertificate(array $args = array()) {@command Iam UpdateServerCertificate}
  * @method Model updateSigningCertificate(array $args = array()) {@command Iam UpdateSigningCertificate}
  * @method Model updateUser(array $args = array()) {@command Iam UpdateUser}
+ * @method Model uploadSSHPublicKey(array $args = array()) {@command Iam UploadSSHPublicKey}
  * @method Model uploadServerCertificate(array $args = array()) {@command Iam UploadServerCertificate}
  * @method Model uploadSigningCertificate(array $args = array()) {@command Iam UploadSigningCertificate}
- * @method ResourceIteratorInterface getGetAccountAuthorizationDetailsIterator(array $args = array()) The input array uses the parameters of the GetAccountAuthorizationDetails operation
  * @method ResourceIteratorInterface getGetGroupIterator(array $args = array()) The input array uses the parameters of the GetGroup operation
  * @method ResourceIteratorInterface getListAccessKeysIterator(array $args = array()) The input array uses the parameters of the ListAccessKeys operation
  * @method ResourceIteratorInterface getListAccountAliasesIterator(array $args = array()) The input array uses the parameters of the ListAccountAliases operation
+ * @method ResourceIteratorInterface getListAttachedGroupPoliciesIterator(array $args = array()) The input array uses the parameters of the ListAttachedGroupPolicies operation
+ * @method ResourceIteratorInterface getListAttachedRolePoliciesIterator(array $args = array()) The input array uses the parameters of the ListAttachedRolePolicies operation
+ * @method ResourceIteratorInterface getListAttachedUserPoliciesIterator(array $args = array()) The input array uses the parameters of the ListAttachedUserPolicies operation
+ * @method ResourceIteratorInterface getListEntitiesForPolicyIterator(array $args = array()) The input array uses the parameters of the ListEntitiesForPolicy operation
  * @method ResourceIteratorInterface getListGroupPoliciesIterator(array $args = array()) The input array uses the parameters of the ListGroupPolicies operation
  * @method ResourceIteratorInterface getListGroupsIterator(array $args = array()) The input array uses the parameters of the ListGroups operation
  * @method ResourceIteratorInterface getListGroupsForUserIterator(array $args = array()) The input array uses the parameters of the ListGroupsForUser operation
  * @method ResourceIteratorInterface getListInstanceProfilesIterator(array $args = array()) The input array uses the parameters of the ListInstanceProfiles operation
  * @method ResourceIteratorInterface getListInstanceProfilesForRoleIterator(array $args = array()) The input array uses the parameters of the ListInstanceProfilesForRole operation
  * @method ResourceIteratorInterface getListMFADevicesIterator(array $args = array()) The input array uses the parameters of the ListMFADevices operation
+ * @method ResourceIteratorInterface getListPoliciesIterator(array $args = array()) The input array uses the parameters of the ListPolicies operation
  * @method ResourceIteratorInterface getListRolePoliciesIterator(array $args = array()) The input array uses the parameters of the ListRolePolicies operation
  * @method ResourceIteratorInterface getListRolesIterator(array $args = array()) The input array uses the parameters of the ListRoles operation
  * @method ResourceIteratorInterface getListSAMLProvidersIterator(array $args = array()) The input array uses the parameters of the ListSAMLProviders operation
@@ -148,6 +157,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getListUserPoliciesIterator(array $args = array()) The input array uses the parameters of the ListUserPolicies operation
  * @method ResourceIteratorInterface getListUsersIterator(array $args = array()) The input array uses the parameters of the ListUsers operation
  * @method ResourceIteratorInterface getListVirtualMFADevicesIterator(array $args = array()) The input array uses the parameters of the ListVirtualMFADevices operation
+ * @method ResourceIteratorInterface getGetAccountAuthorizationDetailsIterator(array $args = array()) The input array uses the parameters of the GetAccountAuthorizationDetails operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-iam.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.Iam.IamClient.html API docs

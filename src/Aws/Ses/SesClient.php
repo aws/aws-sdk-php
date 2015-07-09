@@ -27,14 +27,18 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * Client to interact with Amazon Simple Email Service
  *
  * @method Model deleteIdentity(array $args = array()) {@command Ses DeleteIdentity}
+ * @method Model deleteIdentityPolicy(array $args = array()) {@command Ses DeleteIdentityPolicy}
  * @method Model deleteVerifiedEmailAddress(array $args = array()) {@command Ses DeleteVerifiedEmailAddress}
  * @method Model getIdentityDkimAttributes(array $args = array()) {@command Ses GetIdentityDkimAttributes}
  * @method Model getIdentityNotificationAttributes(array $args = array()) {@command Ses GetIdentityNotificationAttributes}
+ * @method Model getIdentityPolicies(array $args = array()) {@command Ses GetIdentityPolicies}
  * @method Model getIdentityVerificationAttributes(array $args = array()) {@command Ses GetIdentityVerificationAttributes}
  * @method Model getSendQuota(array $args = array()) {@command Ses GetSendQuota}
  * @method Model getSendStatistics(array $args = array()) {@command Ses GetSendStatistics}
  * @method Model listIdentities(array $args = array()) {@command Ses ListIdentities}
+ * @method Model listIdentityPolicies(array $args = array()) {@command Ses ListIdentityPolicies}
  * @method Model listVerifiedEmailAddresses(array $args = array()) {@command Ses ListVerifiedEmailAddresses}
+ * @method Model putIdentityPolicy(array $args = array()) {@command Ses PutIdentityPolicy}
  * @method Model sendEmail(array $args = array()) {@command Ses SendEmail}
  * @method Model sendRawEmail(array $args = array()) {@command Ses SendRawEmail}
  * @method Model setIdentityDkimEnabled(array $args = array()) {@command Ses SetIdentityDkimEnabled}

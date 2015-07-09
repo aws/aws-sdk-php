@@ -1038,6 +1038,10 @@ return array (
                         ),
                     ),
                 ),
+                'containerInstanceArn' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
             ),
             'errorResponses' => array(
                 array(

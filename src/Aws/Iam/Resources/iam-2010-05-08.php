@@ -1692,6 +1692,45 @@ return array (
                 ),
             ),
         ),
+        'DeleteSSHPublicKey' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DeleteSSHPublicKey',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-05-08',
+                ),
+                'UserName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 64,
+                ),
+                'SSHPublicKeyId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 20,
+                    'maxLength' => 128,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The request was rejected because it referenced an entity that does not exist. The error message describes the entity.',
+                    'class' => 'NoSuchEntityException',
+                ),
+            ),
+        ),
         'DeleteServerCertificate' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -2748,6 +2787,54 @@ return array (
                 ),
             ),
         ),
+        'GetSSHPublicKey' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'GetSSHPublicKeyResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'GetSSHPublicKey',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-05-08',
+                ),
+                'UserName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 64,
+                ),
+                'SSHPublicKeyId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 20,
+                    'maxLength' => 128,
+                ),
+                'Encoding' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The request was rejected because it referenced an entity that does not exist. The error message describes the entity.',
+                    'class' => 'NoSuchEntityException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the public key encoding format is unsupported or unrecognized.',
+                    'class' => 'UnrecognizedPublicKeyEncodingException',
+                ),
+            ),
+        ),
         'GetServerCertificate' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -3693,6 +3780,49 @@ return array (
                 array(
                     'reason' => 'The request processing has failed because of an unknown error, exception or failure.',
                     'class' => 'ServiceFailureException',
+                ),
+            ),
+        ),
+        'ListSSHPublicKeys' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'ListSSHPublicKeysResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'ListSSHPublicKeys',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-05-08',
+                ),
+                'UserName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 64,
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 320,
+                ),
+                'MaxItems' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                    'minimum' => 1,
+                    'maximum' => 1000,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The request was rejected because it referenced an entity that does not exist. The error message describes the entity.',
+                    'class' => 'NoSuchEntityException',
                 ),
             ),
         ),
@@ -4746,6 +4876,50 @@ return array (
                 ),
             ),
         ),
+        'UpdateSSHPublicKey' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'UpdateSSHPublicKey',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-05-08',
+                ),
+                'UserName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 64,
+                ),
+                'SSHPublicKeyId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 20,
+                    'maxLength' => 128,
+                ),
+                'Status' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The request was rejected because it referenced an entity that does not exist. The error message describes the entity.',
+                    'class' => 'NoSuchEntityException',
+                ),
+            ),
+        ),
         'UpdateServerCertificate' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -4913,6 +5087,61 @@ return array (
                 ),
             ),
         ),
+        'UploadSSHPublicKey' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'UploadSSHPublicKeyResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'UploadSSHPublicKey',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-05-08',
+                ),
+                'UserName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 64,
+                ),
+                'SSHPublicKeyBody' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 16384,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The request was rejected because it attempted to create resources beyond the current AWS account limits. The error message describes the limit exceeded.',
+                    'class' => 'LimitExceededException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because it referenced an entity that does not exist. The error message describes the entity.',
+                    'class' => 'NoSuchEntityException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the public key is malformed or otherwise invalid.',
+                    'class' => 'InvalidPublicKeyException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the SSH public key is already associated with the specified IAM user.',
+                    'class' => 'DuplicateSSHPublicKeyException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the public key encoding format is unsupported or unrecognized.',
+                    'class' => 'UnrecognizedPublicKeyEncodingException',
+                ),
+            ),
+        ),
         'UploadServerCertificate' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -5036,7 +5265,7 @@ return array (
                     'class' => 'InvalidCertificateException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because the same certificate is associated to another user under the account.',
+                    'reason' => 'The request was rejected because the same certificate is associated with an IAM user in the account.',
                     'class' => 'DuplicateCertificateException',
                 ),
                 array(
@@ -6179,6 +6408,36 @@ return array (
                 ),
             ),
         ),
+        'GetSSHPublicKeyResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'SSHPublicKey' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'UserName' => array(
+                            'type' => 'string',
+                        ),
+                        'SSHPublicKeyId' => array(
+                            'type' => 'string',
+                        ),
+                        'Fingerprint' => array(
+                            'type' => 'string',
+                        ),
+                        'SSHPublicKeyBody' => array(
+                            'type' => 'string',
+                        ),
+                        'Status' => array(
+                            'type' => 'string',
+                        ),
+                        'UploadDate' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+            ),
+        ),
         'GetServerCertificateResponse' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -6954,6 +7213,43 @@ return array (
                 ),
             ),
         ),
+        'ListSSHPublicKeysResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'SSHPublicKeys' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'SSHPublicKeyMetadata',
+                        'type' => 'object',
+                        'sentAs' => 'member',
+                        'properties' => array(
+                            'UserName' => array(
+                                'type' => 'string',
+                            ),
+                            'SSHPublicKeyId' => array(
+                                'type' => 'string',
+                            ),
+                            'Status' => array(
+                                'type' => 'string',
+                            ),
+                            'UploadDate' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+                'IsTruncated' => array(
+                    'type' => 'boolean',
+                    'location' => 'xml',
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+            ),
+        ),
         'ListServerCertificatesResponse' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -7173,6 +7469,36 @@ return array (
                 ),
             ),
         ),
+        'UploadSSHPublicKeyResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'SSHPublicKey' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'UserName' => array(
+                            'type' => 'string',
+                        ),
+                        'SSHPublicKeyId' => array(
+                            'type' => 'string',
+                        ),
+                        'Fingerprint' => array(
+                            'type' => 'string',
+                        ),
+                        'SSHPublicKeyBody' => array(
+                            'type' => 'string',
+                        ),
+                        'Status' => array(
+                            'type' => 'string',
+                        ),
+                        'UploadDate' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+            ),
+        ),
         'UploadServerCertificateResponse' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -7253,6 +7579,38 @@ return array (
             'limit_key' => 'MaxItems',
             'result_key' => 'AccountAliases',
         ),
+        'ListAttachedGroupPolicies' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'Marker',
+            'more_results' => 'IsTruncated',
+            'limit_key' => 'MaxItems',
+            'result_key' => 'AttachedPolicies',
+        ),
+        'ListAttachedRolePolicies' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'Marker',
+            'more_results' => 'IsTruncated',
+            'limit_key' => 'MaxItems',
+            'result_key' => 'AttachedPolicies',
+        ),
+        'ListAttachedUserPolicies' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'Marker',
+            'more_results' => 'IsTruncated',
+            'limit_key' => 'MaxItems',
+            'result_key' => 'AttachedPolicies',
+        ),
+        'ListEntitiesForPolicy' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'Marker',
+            'more_results' => 'IsTruncated',
+            'limit_key' => 'MaxItems',
+            'result_key' => array(
+                'PolicyGroups',
+                'PolicyUsers',
+                'PolicyRoles',
+            ),
+        ),
         'ListGroupPolicies' => array(
             'input_token' => 'Marker',
             'output_token' => 'Marker',
@@ -7294,6 +7652,13 @@ return array (
             'more_results' => 'IsTruncated',
             'limit_key' => 'MaxItems',
             'result_key' => 'MFADevices',
+        ),
+        'ListPolicies' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'Marker',
+            'more_results' => 'IsTruncated',
+            'limit_key' => 'MaxItems',
+            'result_key' => 'Policies',
         ),
         'ListRolePolicies' => array(
             'input_token' => 'Marker',
