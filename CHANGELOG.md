@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next Release
+## 2.8.13 - 2015-07-09
 
 * `Aws\AutoScaling` - Added support for step policies.
 * `Aws\CodeCommit` - Added support for AWS CodeCommit, a secure, highly 
