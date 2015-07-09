@@ -515,6 +515,9 @@ class StreamWrapper
      */
     public function rename($path_from, $path_to)
     {
+        // PHP will not allow rename across wrapper types, so we can safely
+        // assume $path_from and $path_to have the same protocol
+        $this->initProtocol($path_from);
         $partsFrom = $this->withPath($path_from);
         $partsTo = $this->withPath($path_to);
         $this->clearCacheKey($path_from);
