@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## Next release
+
+* `Aws\CodeCommit` - Added support for AWS CodeCommit, a secure, highly 
+  scalable, managed source control service that hosts private Git repositories.
+* `Aws\CodePipeline` - Added support for AWS CodePipeline, a continuous delivery
+  service that enables you to model, visualize, and automate the steps required
+  to release your software.
+* `Aws\Iam` - Added support for uploading SSH public keys for authentication
+  with AWS CodeCommit.
+* `Aws\Ses` - Added support for cross-account sending through the sending
+  authorization feature.
+
 ## 3.0.7 - 2015-07-07
 
 * `Aws\AutoScaling` - Added support for step policies.
