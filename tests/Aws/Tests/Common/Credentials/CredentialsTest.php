@@ -17,6 +17,7 @@
 namespace Aws\Tests\Common\Credentials;
 
 use Aws\Common\Credentials\Credentials;
+use Aws\Common\Enum\ClientOptions;
 use Guzzle\Cache\DoctrineCacheAdapter;
 use Doctrine\Common\Cache\ArrayCache;
 
@@ -208,6 +209,29 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
         ));
         $this->assertInstanceOf('Aws\Common\Credentials\CacheableCredentials', $credentials);
         $this->assertInstanceOf('Guzzle\Cache\DoctrineCacheAdapter', $this->readAttribute($credentials, 'cache'));
+    }
+
+    /**
+     * @covers Aws\Common\Credentials\Credentials::factory
+     * @covers Aws\Common\Credentials\Credentials::createFromCache
+     */
+    public function testFactoryChecksCacheBeforeBuildingCredentials()
+    {
+        $credentials = new Credentials('oompa loompa', 'woozzle wazzle', 'super secret', PHP_INT_MAX);
+        $baseCache = new ArrayCache;
+        $cacheKey = 'cached_credentials';
+        $baseCache->save($cacheKey, $credentials);
+
+        $guzzleCache = new DoctrineCacheAdapter($baseCache);
+        $credentialsReturned = Credentials::factory(array(
+            ClientOptions::CREDENTIALS_CACHE => $guzzleCache,
+            ClientOptions::CREDENTIALS_CACHE_KEY => $cacheKey,
+        ));
+
+        $this->assertSame($credentialsReturned->getAccessKeyId(), $credentials->getAccessKeyId());
+        $this->assertSame($credentialsReturned->getSecretKey(), $credentials->getSecretKey());
+        $this->assertSame($credentialsReturned->getSecurityToken(), $credentials->getSecurityToken());
+        $this->assertSame($credentialsReturned->getExpiration(), $credentials->getExpiration());
     }
 
     /**
