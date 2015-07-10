@@ -323,7 +323,7 @@ class Transfer implements PromisorInterface
         );
         
         if (isset($this->s3Args['Key'])) {
-            return rtrim($this->s3Args['Key']), '/').'/'.$relative_file_path;
+            return rtrim($this->s3Args['Key'], '/').'/'.$relative_file_path;
         } else {
             return $relative_file_path;
         }
