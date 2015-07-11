@@ -4,7 +4,6 @@ namespace Aws\Test\Integ;
 use Aws\Exception\MultipartUploadException;
 use Aws\S3\BatchDelete;
 use Aws\S3\MultipartUploader;
-use Aws\Test\Integ\IntegUtils;
 use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7;
 
@@ -18,25 +17,26 @@ class S3Multipart extends \PHPUnit_Framework_TestCase
     public static function setUpBeforeClass()
     {
         $client = self::getSdk()->createS3();
-        if (!$client->doesBucketExist(self::BUCKET)) {
-            $client->createBucket(['Bucket' => self::BUCKET]);
-            $client->waitUntil('BucketExists', ['Bucket' => self::BUCKET]);
+        if (!$client->doesBucketExist(self::getBucketName())) {
+            $client->createBucket(['Bucket' => self::getBucketName()]);
+            $client->waitUntil('BucketExists', ['Bucket' => self::getBucketName()]);
         }
     }
 
     public static function tearDownAfterClass()
     {
         $client = self::getSdk()->createS3();
-        BatchDelete::fromListObjects($client, ['Bucket' => self::BUCKET])->delete();
-        $client->deleteBucket(['Bucket' => self::BUCKET]);
+        BatchDelete::fromListObjects($client, ['Bucket' => self::getBucketName()])->delete();
+        $client->deleteBucket(['Bucket' => self::getBucketName()]);
+        $client->waitUntil('BucketNotExists', ['Bucket' => self::getBucketName()]);
     }
 
     public function useCasesProvider()
     {
         return [
             ['SeekableSerialUpload', true, 1],
-            ['NonSeekableSerialUpload', false, 3],
-            ['SeekableConcurrentUpload', true, 1],
+            ['NonSeekableSerialUpload', false, 1],
+            ['SeekableConcurrentUpload', true, 3],
             ['NonSeekableConcurrentUpload', false, 3],
         ];
     }
@@ -62,7 +62,7 @@ class S3Multipart extends \PHPUnit_Framework_TestCase
 
         // Create the uploader
         $uploader = new MultipartUploader($client, $stream, [
-            'bucket'      => self::BUCKET,
+            'bucket'      => self::getBucketName(),
             'key'         => $key,
             'concurrency' => $concurrency
         ]);
@@ -83,5 +83,17 @@ class S3Multipart extends \PHPUnit_Framework_TestCase
         }
 
         @unlink($tmpFile);
+    }
+
+
+    private static function getBucketName()
+    {
+        static $bucketName;
+
+        if (empty($bucketName)) {
+            $bucketName = self::getResourcePrefix() . self::BUCKET;
+        }
+
+        return $bucketName;
     }
 }
