@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## Next Release
+
+* `Aws\DeviceFarm` - Added support for AWS DeviceFarm, an app testing service 
+  that enables you to test your Android and Fire OS apps on real, physical 
+  phones and tablets that are hosted by AWS.
+* `Aws\DynamoDb` - Added support for consistent scans and update streams.
+* `Aws\DynamoDbStreams` - Added support for Amazon DynamoDB Streams, giving you
+  the ability to subscribe to the transactional log of all changes transpiring
+  in your DynamoDB table.
+
 ## 2.8.13 - 2015-07-09
 
 * `Aws\AutoScaling` - Added support for step policies.
