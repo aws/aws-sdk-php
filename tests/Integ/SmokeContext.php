@@ -26,6 +26,9 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
         'ElasticFileSystem' => [
             'region' => 'us-west-2',
         ],
+        'DeviceFarm' => [
+            'region' => 'us-west-2',
+        ],
     ];
 
     /**

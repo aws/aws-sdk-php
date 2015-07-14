@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DeviceFarm` - Added support for AWS DeviceFarm, an app testing service 
+  that enables you to test your Android and Fire OS apps on real, physical 
+  phones and tablets that are hosted by AWS.
+* `Aws\DynamoDb` - Added support for consistent scans and update streams.
+* `Aws\DynamoDbStreams` - Added support for Amazon DynamoDB Streams, giving you
+  the ability to subscribe to the transactional log of all changes transpiring
+  in your DynamoDB table.
+* `Aws\S3` - Fixed checksum encoding on multipart upload of non-seekable 
+  streams.
+* `Aws\S3\StreamWrapper` - Added guard on rename functionality to ensure wrapper
+  initialized.
+  
+
 ## 3.1.0 - 2015-07-09
 
 * `Aws\CodeCommit` - Added support for AWS CodeCommit, a secure, highly 
