@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.2.0 - 2015-07-14
 
 * `Aws\DeviceFarm` - Added support for AWS DeviceFarm, an app testing service 
   that enables you to test your Android and Fire OS apps on real, physical 
