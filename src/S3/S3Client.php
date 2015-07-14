@@ -430,10 +430,10 @@ class S3Client extends AwsClient
      */
     private function getLocationConstraintMiddleware()
     {
-        return function (callable $handler) {
-            return function (Command $command, $request = null) use ($handler) {
+        $region = $this->getRegion();
+        return static function (callable $handler) use ($region) {
+            return function (Command $command, $request = null) use ($handler, $region) {
                 if ($command->getName() === 'CreateBucket') {
-                    $region = $this->getRegion();
                     if ($region === 'us-east-1') {
                         unset($command['CreateBucketConfiguration']);
                     } else {
@@ -453,7 +453,7 @@ class S3Client extends AwsClient
      */
     private function getSaveAsParameter()
     {
-        return function (callable $handler) {
+        return static function (callable $handler) {
             return function (Command $command, $request = null) use ($handler) {
                 if ($command->getName() === 'GetObject' && isset($command['SaveAs'])) {
                     $command['@http']['sink'] = $command['SaveAs'];
