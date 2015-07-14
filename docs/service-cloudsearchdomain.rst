@@ -60,43 +60,23 @@ CloudSearch Domain service. If it is not, you can provide it manually when calli
 
 For more information about configuration files, see :doc:`configuration`.
 
-Helper method
-~~~~~~~~~~~~~
-
-An easier way to instantiate the ``CloudSearchDomainClient`` is to use the ``CloudSearchClient::getDomainClient()``
-helper method. This method uses the CloudSearch configuration API to retrieve the domain endpoint and instantiate the
-``CloudSearchDomainClient`` for you. To use this method, you must specify the domain ID in the first argument, and an
-array of options (the same as you would use in the ``CloudSearchDomainClient::factory()`` method) in the second
-argument.
-
-.. code-block:: php
-
-    use Aws\CloudSearch\CloudSearchClient;
-
-    $configClient = CloudSearchClient::factory(array(
-        'profile' => '<profile in your aws credentials file>',
-        'region'  => '<region name>',
-    ));
-
-    $domainClient = $configClient->getDomainClient('<domain name>', array(
-        'profile' => '<profile in your aws credentials file>',
-    ));
-
-If you are planning to use the same credentials with your ``CloudSearchClient`` and ``CloudSearchDomainClient``, you
-can make a small optimization by doing the following, which will skip the typical credential resolving process.
-
-.. code-block:: php
-
-    $domainClient = $configClient->getDomainClient('<domain name>', array(
-        'credentials' => $configClient->getCredentials(),
-    ));
+Unauthenticated requests
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``CloudSearchDomainClient`` can also be used without credentials if you have configured your domain's policy to
 allow anonymous access. To make the ``CloudSearchDomainClient`` anonymous, set ``'credentials'`` to ``false``.
 
 .. code-block:: php
 
-    $domainClient = $configClient->getDomainClient('<domain name>', array(
+    // Using the client factory
+    $domainClient = $client = CloudSearchDomainClient::factory(array(
+        'endpoint'    => '<your cloudsearch domain endpoint>'
+        'credentials' => false,
+    ));
+
+    // Using the service builder
+    $domainClient = $aws->get('cloudsearchdomain', array(
+        'endpoint'    => '<your cloudsearch domain endpoint>'
         'credentials' => false,
     ));
 

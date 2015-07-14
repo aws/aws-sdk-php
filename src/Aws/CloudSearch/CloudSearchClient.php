@@ -92,6 +92,7 @@ class CloudSearchClient extends AbstractClient
      *
      * @return CloudSearchDomainClient
      * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
+     * @deprecated Use CloudSearchDomainClient::factory directly
      */
     public function getDomainClient($domainName, array $config = array())
     {
