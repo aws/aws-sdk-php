@@ -32,16 +32,16 @@ class JsonCompiler
         $this->cacheDir = getenv(self::CACHE_ENV)
             ?: sys_get_temp_dir() . '/aws-cache';
 
-        if (!is_dir($this->cacheDir)) {
-            if (!mkdir($this->cacheDir, 0777, true)) {
-                $message = 'Unable to create cache directory: %s. Please make '
-                    . 'this directory writable or provide the path to a '
-                    . 'writable directory using the AWS_PHP_CACHE_DIR '
-                    . 'environment variable. Note that this cache dir may need '
-                    . 'to be cleared when updating the SDK in order to see '
-                    . 'updates.';
-                throw new \RuntimeException(sprintf($message, $this->cacheDir));
-            }
+        if (!is_dir($this->cacheDir)
+            && !@mkdir($this->cacheDir, 0777, true)
+            && !is_dir($this->cacheDir)) {
+            $message = 'Unable to create cache directory: %s. Please make '
+                . 'this directory writable or provide the path to a '
+                . 'writable directory using the AWS_PHP_CACHE_DIR '
+                . 'environment variable. Note that this cache dir may need '
+                . 'to be cleared when updating the SDK in order to see '
+                . 'updates.';
+            throw new \RuntimeException(sprintf($message, $this->cacheDir));
         }
     }
 
