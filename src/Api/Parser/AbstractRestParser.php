@@ -93,10 +93,10 @@ abstract class AbstractRestParser extends AbstractParser
         switch ($shape->getType()) {
             case 'float':
             case 'double':
-                $value = doubleval($value);
+                $value = (float) $value;
                 break;
             case 'long':
-                $value = intval($value);
+                $value = (int) $value;
                 break;
             case 'boolean':
                 $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
