@@ -122,12 +122,16 @@ class CredentialProvider
      */
     public static function memoize(callable $provider)
     {
-        // Create the initial promise that will be used as the cached value
-        // until it expires.
-        $result = $provider();
-        $isConstant = false;
+        return function () use ($provider) {
+            static $result;
+            static $isConstant;
 
-        return function () use (&$result, &$isConstant, $provider) {
+            // Create the initial promise that will be used as the cached value
+            // until it expires.
+            if (null === $result) {
+                $result = $provider();
+            }
+
             // Constant credentials will be returned constantly.
             if ($isConstant) {
                 return $result;
