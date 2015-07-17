@@ -35,6 +35,15 @@ class FileCacheTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($c->get('foo'));
     }
 
+    public function testReset()
+    {
+        $c = new FileCache;
+        $c->set('foo', 'bar');
+        $this->assertSame('bar', $c->get('foo'));
+        $c->set('foo', 'baz');
+        $this->assertSame('baz', $c->get('foo'));
+    }
+
     public function testSetAndGetShouldPersistObjects()
     {
         $c = new FileCache;

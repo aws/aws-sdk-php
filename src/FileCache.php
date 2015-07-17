@@ -5,22 +5,30 @@ class FileCache implements CacheInterface
 {
     private $cacheDir;
 
-    public function __construct()
+    /**
+     * @param string $directory
+     */
+    public function __construct($directory = '')
     {
-        $this->cacheDir = (new JsonCompiler)->getCacheDir();
+        $this->cacheDir = $directory ?: (new JsonCompiler)->getCacheDir();
     }
 
     public function set($key, $data, $ttl = 0)
     {
         $toSave = ['data' => $data];
         $path = $this->getCachePath($key);
+        $dir = dirname($path);
         if ($ttl) {
             $toSave['expiration'] = time() + $ttl;
         }
 
-        if (@mkdir(dirname($path), 0777, true)) {
-            file_put_contents($path, \serialize($toSave), LOCK_EX);
+        if (!is_dir($dir)) {
+            if (false === @mkdir($dir, 0777, true) && !is_dir($dir)) {
+                return;
+            }
         }
+
+        file_put_contents($path, \serialize($toSave), LOCK_EX);
     }
 
     public function remove($key)
