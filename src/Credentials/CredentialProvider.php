@@ -122,28 +122,30 @@ class CredentialProvider
      */
     public static function memoize(callable $provider)
     {
-        // Create the initial promise that will be used as the cached value
-        // until it expires.
-        $result = $provider();
-        $isConstant = false;
+        return function () use ($provider) {
+            static $result;
+            static $isConstant;
 
-        return function () use (&$result, &$isConstant, $provider) {
             // Constant credentials will be returned constantly.
             if ($isConstant) {
                 return $result;
             }
 
-            // Determine if these are constant credentials.
-            if ($result->getState() === Promise\PromiseInterface::FULFILLED
-                && !$result->wait()->getExpiration()
-            ) {
-                $isConstant = true;
-                return $result;
+            // Create the initial promise that will be used as the cached value
+            // until it expires.
+            if (null === $result) {
+                $result = $provider();
             }
 
             // Return credentials that could expire and refresh when needed.
             return $result
-                ->then(function (CredentialsInterface $creds) use ($provider, &$result) {
+                ->then(function (CredentialsInterface $creds) use ($provider, &$isConstant, &$result) {
+                    // Determine if these are constant credentials.
+                    if (!$creds->getExpiration()) {
+                        $isConstant = true;
+                        return $creds;
+                    }
+
                     // Refresh expired credentials.
                     if (!$creds->isExpired()) {
                         return $creds;
