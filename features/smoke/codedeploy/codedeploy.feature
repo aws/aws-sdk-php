@@ -8,9 +8,9 @@ Feature: Amazon CodeDeploy
 
   Scenario: Handling errors
     When I attempt to call the "GetDeployment" API with:
-    | deploymentId | bogus-deployment |
-    Then I expect the response error code to be "InvalidDeploymentIdException"
+    | deploymentId | d-USUAELQEX |
+    Then I expect the response error code to be "DeploymentDoesNotExistException"
     And I expect the response error message to include:
     """
-    Specified DeploymentId is not in the valid format: bogus-deployment
+    The deployment d-USUAELQEX could not be found
     """

@@ -93,8 +93,8 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
         } catch (\Exception $e) {
             // If the test failed because the account has no access to EFS,
             // throw the exception to cause the feature to be skipped.
-            if ($e instanceof AwsException &&
-                'AccessDeniedException' === $e->getAwsErrorCode()
+            if ($e instanceof AwsException
+                && 'AccessDeniedException' === $e->getAwsErrorCode()
             ) {
                 throw $e;
             }
@@ -149,8 +149,8 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
         } catch (\Exception $e) {
             // If the test failed because the account has no support subscription,
             // throw the exception to cause the feature to be skipped.
-            if ($e instanceof AwsException &&
-                'SubscriptionRequiredException' === $e->getAwsErrorCode()
+            if ($e instanceof AwsException
+                && 'SubscriptionRequiredException' === $e->getAwsErrorCode()
             ) {
                 throw $e;
             }
