@@ -319,14 +319,14 @@ class Transfer implements PromisorInterface
     {
         $relative_file_path = ltrim(
             preg_replace('#^' . preg_quote($this->source['path']) . '#', '', $filename),
-            '/'
+            '/\\'
         );
         
         if (isset($this->s3Args['Key'])) {
             return rtrim($this->s3Args['Key'], '/').'/'.$relative_file_path;
-        } else {
-            return $relative_file_path;
         }
+
+        return $relative_file_path;
     }
 
     private function addDebugToBefore($debug)
