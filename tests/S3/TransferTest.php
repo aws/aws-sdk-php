@@ -187,6 +187,33 @@ class TransferTest extends \PHPUnit_Framework_TestCase
         `rm -rf $dir`;
     }
 
+    public function testCanUploadToBareBucket()
+    {
+        $s3 = $this->getMockBuilder('Aws\S3\S3Client')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $filesInDirectory = array_filter(
+            iterator_to_array(\Aws\recursive_dir_iterator(__DIR__)),
+            function ($path) { return !is_dir($path); }
+        );
+
+        $s3->expects($this->exactly(count($filesInDirectory)))
+            ->method('getCommand')
+            ->with(
+                'PutObject',
+                new \PHPUnit_Framework_Constraint_Callback(function (array $args) use ($filesInDirectory) {
+                    return 'bare-bucket' === $args['Bucket']
+                        && in_array($args['SourceFile'], $filesInDirectory)
+                        && __DIR__ . '/' . $args['Key'] === $args['SourceFile'];
+                })
+            )
+            ->willReturn($this->getMock('Aws\CommandInterface'));
+
+        (new Transfer($s3, __DIR__, 's3://bare-bucket'))
+            ->transfer();
+    }
+
     private function mockResult(callable $fn)
     {
         return function (callable $handler) use ($fn) {
