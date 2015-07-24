@@ -9,7 +9,7 @@ installed with PHP 5.3 by default in most environments.
 Minimum requirements
 --------------------
 
-* PHP 5.3.3+ compiled with the cURL extension
+* PHP 5.3.3+ compiled with the cURL, JSON, and XML extensions
 * A recent version of cURL 7.16.2+ compiled with OpenSSL and zlib
 
 .. note::

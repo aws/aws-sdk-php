@@ -29,8 +29,10 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * Client to interact with Amazon Glacier
  *
  * @method Model abortMultipartUpload(array $args = array()) {@command Glacier AbortMultipartUpload}
+ * @method Model abortVaultLock(array $args = array()) {@command Glacier AbortVaultLock}
  * @method Model addTagsToVault(array $args = array()) {@command Glacier AddTagsToVault}
  * @method Model completeMultipartUpload(array $args = array()) {@command Glacier CompleteMultipartUpload}
+ * @method Model completeVaultLock(array $args = array()) {@command Glacier CompleteVaultLock}
  * @method Model createVault(array $args = array()) {@command Glacier CreateVault}
  * @method Model deleteArchive(array $args = array()) {@command Glacier DeleteArchive}
  * @method Model deleteVault(array $args = array()) {@command Glacier DeleteVault}
@@ -41,9 +43,11 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model getDataRetrievalPolicy(array $args = array()) {@command Glacier GetDataRetrievalPolicy}
  * @method Model getJobOutput(array $args = array()) {@command Glacier GetJobOutput}
  * @method Model getVaultAccessPolicy(array $args = array()) {@command Glacier GetVaultAccessPolicy}
+ * @method Model getVaultLock(array $args = array()) {@command Glacier GetVaultLock}
  * @method Model getVaultNotifications(array $args = array()) {@command Glacier GetVaultNotifications}
  * @method Model initiateJob(array $args = array()) {@command Glacier InitiateJob}
  * @method Model initiateMultipartUpload(array $args = array()) {@command Glacier InitiateMultipartUpload}
+ * @method Model initiateVaultLock(array $args = array()) {@command Glacier InitiateVaultLock}
  * @method Model listJobs(array $args = array()) {@command Glacier ListJobs}
  * @method Model listMultipartUploads(array $args = array()) {@command Glacier ListMultipartUploads}
  * @method Model listParts(array $args = array()) {@command Glacier ListParts}

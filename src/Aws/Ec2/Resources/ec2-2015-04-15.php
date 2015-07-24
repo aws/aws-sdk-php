@@ -1766,10 +1766,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'ClientToken' => array(
-                    'type' => 'string',
-                    'location' => 'aws.query',
-                ),
             ),
         ),
         'CreateRouteTable' => array(
@@ -8076,7 +8072,7 @@ return array (
                             'type' => 'array',
                             'minItems' => 1,
                             'items' => array(
-                                'name' => 'LaunchSpecification',
+                                'name' => 'SpotFleetLaunchSpecification',
                                 'type' => 'object',
                                 'properties' => array(
                                     'ImageId' => array(
@@ -8171,9 +8167,14 @@ return array (
                                             ),
                                         ),
                                     ),
-                                    'MonitoringEnabled' => array(
-                                        'type' => 'boolean',
-                                        'format' => 'boolean-string',
+                                    'Monitoring' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'Enabled' => array(
+                                                'type' => 'boolean',
+                                                'format' => 'boolean-string',
+                                            ),
+                                        ),
                                     ),
                                     'SubnetId' => array(
                                         'type' => 'string',
@@ -10752,11 +10753,6 @@ return array (
                     'type' => 'boolean',
                     'location' => 'xml',
                     'sentAs' => 'return',
-                ),
-                'ClientToken' => array(
-                    'type' => 'string',
-                    'location' => 'xml',
-                    'sentAs' => 'clientToken',
                 ),
             ),
         ),
@@ -15643,9 +15639,15 @@ return array (
                                                         ),
                                                     ),
                                                 ),
-                                                'MonitoringEnabled' => array(
-                                                    'type' => 'boolean',
-                                                    'sentAs' => 'monitoringEnabled',
+                                                'Monitoring' => array(
+                                                    'type' => 'object',
+                                                    'sentAs' => 'monitoring',
+                                                    'properties' => array(
+                                                        'Enabled' => array(
+                                                            'type' => 'boolean',
+                                                            'sentAs' => 'enabled',
+                                                        ),
+                                                    ),
                                                 ),
                                                 'SubnetId' => array(
                                                     'type' => 'string',

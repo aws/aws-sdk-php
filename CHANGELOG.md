@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudSearch` - Marked CloudSearchClient::getDomainClient as deprecated.
+  This method has been removed in v3 of the SDK.
+* `Aws\Ec2` - Added support for SpotFleetLaunchSpecification.
+* `Aws\Glacier` - Added support for the InitiateVaultLock, GetVaultLock,
+  AbortVaultLock, and CompleteVaultLock API operations.
+
 ## 2.8.14 - 2015-07-14
 
 * `Aws\DeviceFarm` - Added support for AWS DeviceFarm, an app testing service 

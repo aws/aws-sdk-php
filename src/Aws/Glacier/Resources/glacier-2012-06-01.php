@@ -101,6 +101,43 @@ return array (
                 ),
             ),
         ),
+        'AbortVaultLock' => array(
+            'httpMethod' => 'DELETE',
+            'uri' => '/{accountId}/vaults/{vaultName}/lock-policy',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'accountId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+                'vaultName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Returned if the specified resource, such as a vault, upload ID, or job ID, does not exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'Returned if a parameter of the request is incorrectly specified.',
+                    'class' => 'InvalidParameterValueException',
+                ),
+                array(
+                    'reason' => 'Returned if a required header or parameter is missing from the request.',
+                    'class' => 'MissingParameterValueException',
+                ),
+                array(
+                    'reason' => 'Returned if the service cannot complete the request.',
+                    'class' => 'ServiceUnavailableException',
+                ),
+            ),
+        ),
         'AddTagsToVault' => array(
             'httpMethod' => 'POST',
             'uri' => '/{accountId}/vaults/{vaultName}/tags?operation=add',
@@ -183,6 +220,48 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-sha256-tree-hash',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Returned if the specified resource, such as a vault, upload ID, or job ID, does not exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'Returned if a parameter of the request is incorrectly specified.',
+                    'class' => 'InvalidParameterValueException',
+                ),
+                array(
+                    'reason' => 'Returned if a required header or parameter is missing from the request.',
+                    'class' => 'MissingParameterValueException',
+                ),
+                array(
+                    'reason' => 'Returned if the service cannot complete the request.',
+                    'class' => 'ServiceUnavailableException',
+                ),
+            ),
+        ),
+        'CompleteVaultLock' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/{accountId}/vaults/{vaultName}/lock-policy/{lockId}',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'accountId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+                'vaultName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+                'lockId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
                 ),
             ),
             'errorResponses' => array(
@@ -588,6 +667,43 @@ return array (
                 ),
             ),
         ),
+        'GetVaultLock' => array(
+            'httpMethod' => 'GET',
+            'uri' => '/{accountId}/vaults/{vaultName}/lock-policy',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'GetVaultLockOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'accountId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+                'vaultName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Returned if the specified resource, such as a vault, upload ID, or job ID, does not exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'Returned if a parameter of the request is incorrectly specified.',
+                    'class' => 'InvalidParameterValueException',
+                ),
+                array(
+                    'reason' => 'Returned if a required header or parameter is missing from the request.',
+                    'class' => 'MissingParameterValueException',
+                ),
+                array(
+                    'reason' => 'Returned if the service cannot complete the request.',
+                    'class' => 'ServiceUnavailableException',
+                ),
+            ),
+        ),
         'GetVaultNotifications' => array(
             'httpMethod' => 'GET',
             'uri' => '/{accountId}/vaults/{vaultName}/notification-configuration',
@@ -734,6 +850,47 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-part-size',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Returned if the specified resource, such as a vault, upload ID, or job ID, does not exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'Returned if a parameter of the request is incorrectly specified.',
+                    'class' => 'InvalidParameterValueException',
+                ),
+                array(
+                    'reason' => 'Returned if a required header or parameter is missing from the request.',
+                    'class' => 'MissingParameterValueException',
+                ),
+                array(
+                    'reason' => 'Returned if the service cannot complete the request.',
+                    'class' => 'ServiceUnavailableException',
+                ),
+            ),
+        ),
+        'InitiateVaultLock' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/{accountId}/vaults/{vaultName}/lock-policy',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'InitiateVaultLockOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'accountId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+                'vaultName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+                'Policy' => array(
+                    'type' => 'string',
+                    'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
@@ -1527,6 +1684,28 @@ return array (
                 ),
             ),
         ),
+        'GetVaultLockOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Policy' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'State' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'ExpirationDate' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'CreationDate' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
         'GetVaultNotificationsOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -1574,6 +1753,17 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-multipart-upload-id',
+                ),
+            ),
+        ),
+        'InitiateVaultLockOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'lockId' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-lock-id',
                 ),
             ),
         ),
