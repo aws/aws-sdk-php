@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 2.8.15 - 2015-07-23
 
 * `Aws\CloudSearch` - Marked CloudSearchClient::getDomainClient as deprecated.
   This method has been removed in v3 of the SDK.
