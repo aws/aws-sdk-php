@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Ec2` - Added support for SpotFleetLaunchSpecification.
+* `Aws\Emr` - Added support for Amazon EMR release 4.0.0, which includes a new
+  application installation and configuration experience, upgraded versions of
+  Hadoop, Hive, and Spark, and now uses open source standards for ports and
+  paths. To specify an Amazon EMR release, use the release label parameter (AMI
+  versions 3.x and 2.x can still be specified with the AMI version parameter).
+* `Aws\Glacier` - Added support for the InitiateVaultLock, GetVaultLock,
+  AbortVaultLock, and CompleteVaultLock API operations.
+* Fixed a memory leak that occurred when client were created and never used.
+* Updated JsonCompiler by addressing a potential race condition and ensuring
+  that caches are invalidated when upgrading to a new version of the SDK.
+* Updated protocol and acceptance tests.
+
 ## 3.2.0 - 2015-07-14
 
 * `Aws\DeviceFarm` - Added support for AWS DeviceFarm, an app testing service 

@@ -29,11 +29,11 @@ class JsonCompiler
         $this->useCache = $useCache && extension_loaded('Zend OPcache');
         $this->hasOpcacheCheck = $this->useCache
             && function_exists('opcache_is_script_cached');
-        $this->cacheDir = getenv(self::CACHE_ENV)
-            ?: sys_get_temp_dir() . '/aws-cache';
+        $this->cacheDir = getenv(self::CACHE_ENV) ?: sys_get_temp_dir();
+        $this->cacheDir .= '/aws-cache-' . str_replace('.', '-', Sdk::VERSION);
 
         if (!is_dir($this->cacheDir)
-            && !@mkdir($this->cacheDir, 0777, true)
+            && !@mkdir($this->cacheDir, 0755, true)
             && !is_dir($this->cacheDir)) {
             $message = 'Unable to create cache directory: %s. Please make '
                 . 'this directory writable or provide the path to a '
@@ -91,6 +91,7 @@ class JsonCompiler
 
         $data = $this->loadJsonFromFile($path, $real);
         file_put_contents($cache, "<?php return " . var_export($data, true) . ';');
+        chmod($cache, 0644);
 
         return $data;
     }
