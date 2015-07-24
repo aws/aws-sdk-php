@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.2.1 - 2015-07-23
 
 * `Aws\Ec2` - Added support for SpotFleetLaunchSpecification.
 * `Aws\Emr` - Added support for Amazon EMR release 4.0.0, which includes a new
