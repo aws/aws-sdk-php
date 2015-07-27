@@ -214,9 +214,9 @@ class MultipartUploader extends AbstractUploader
     private function decorateWithHashes(Stream $stream, array &$data)
     {
         // Decorate source with a hashing stream
-        $hash = new PhpHash('sha256', ['base64' => true]);
+        $hash = new PhpHash('sha256');
         return new HashingStream($stream, $hash, function ($result) use (&$data) {
-            $data['ContentSHA256'] = $result;
+            $data['ContentSHA256'] = bin2hex($result);
         });
     }
 }

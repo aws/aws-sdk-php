@@ -58,11 +58,15 @@ class XmlParser
 
     private function memberKey(Shape $shape, $name)
     {
+        if (null !== $shape['locationName']) {
+            return $shape['locationName'];
+        }
+
         if ($shape instanceof ListShape && $shape['flattened']) {
             return $shape->getMember()['locationName'] ?: $name;
         }
 
-        return $shape['locationName'] ?: $name;
+        return $name;
     }
 
     private function parse_list(ListShape $shape, \SimpleXMLElement  $value)

@@ -1,5 +1,4 @@
 <?php
-
 namespace Aws\Test\Integ;
 
 use Aws;
@@ -9,6 +8,8 @@ use Aws\Result;
 use Aws\Sdk;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Behat\Hook\Scope\AfterFeatureScope;
+use Behat\Behat\Hook\Scope\BeforeFeatureScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
@@ -23,8 +24,14 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
     use IntegUtils;
 
     protected static $configOverrides = [
+        'DeviceFarm' => [
+            'region' => 'us-west-2',
+        ],
         'ElasticFileSystem' => [
             'region' => 'us-west-2',
+        ],
+        'Support' => [
+            'profile' => 'shared-integ',
         ],
     ];
 
@@ -67,6 +74,87 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
 
         // Clear out any previously compiled JMESPath files.
         Env::cleanCompileDir();
+    }
+
+    /**
+     * @BeforeFeature @efs
+     *
+     * Ensure that the testing credentials have access to the EFS preview;
+     * skip entire feature otherwise.
+     *
+     * @param BeforeFeatureScope $scope
+     */
+    public static function setUpEfs(BeforeFeatureScope $scope)
+    {
+        try {
+            self::getSdk(self::$configOverrides)
+                ->createEfs()
+                ->describeFileSystems();
+        } catch (\Exception $e) {
+            // If the test failed because the account has no access to EFS,
+            // throw the exception to cause the feature to be skipped.
+            if ($e instanceof AwsException
+                && 'AccessDeniedException' === $e->getAwsErrorCode()
+            ) {
+                throw $e;
+            }
+        }
+    }
+
+    /**
+     * @BeforeFeature @sqs
+     *
+     * @param BeforeFeatureScope $scope
+     */
+    public static function setUpSqs(BeforeFeatureScope $scope)
+    {
+        self::getSdk(self::$configOverrides)
+            ->createSqs()
+            ->createQueue([
+                'QueueName' => self::getResourcePrefix() . 'testing-queue',
+            ]);
+    }
+
+    /**
+     * @AfterFeature @sqs
+     *
+     * @param AfterFeatureScope $scope
+     */
+    public static function tearDownSqs(AfterFeatureScope $scope)
+    {
+        $sqs = self::getSdk(self::$configOverrides)
+            ->createSqs();
+
+        $sqs->deleteQueue([
+            'QueueUrl' => $sqs->getQueueUrl([
+                'QueueName' => self::getResourcePrefix() . 'testing-queue',
+            ])['QueueUrl']
+        ]);
+    }
+
+    /**
+     * @BeforeFeature @support
+     *
+     * Ensure that the testing credentials have a support subscription;
+     * skip entire feature otherwise.
+     *
+     * @param BeforeFeatureScope $scope
+     */
+    public static function setUpSupport(BeforeFeatureScope $scope)
+    {
+        try {
+            self::getSdk(self::$configOverrides)
+                ->createSupport()
+                ->describeServices();
+        } catch (\Exception $e) {
+            // If the test failed because the account has no support subscription,
+            // throw the exception to cause the feature to be skipped.
+            if ($e instanceof AwsException
+                && 'SubscriptionRequiredException' === $e->getAwsErrorCode()
+            ) {
+                throw $e;
+            }
+        }
     }
 
     /**

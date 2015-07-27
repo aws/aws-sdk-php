@@ -1,5 +1,60 @@
 # CHANGELOG
 
+## 3.2.1 - 2015-07-23
+
+* `Aws\Ec2` - Added support for SpotFleetLaunchSpecification.
+* `Aws\Emr` - Added support for Amazon EMR release 4.0.0, which includes a new
+  application installation and configuration experience, upgraded versions of
+  Hadoop, Hive, and Spark, and now uses open source standards for ports and
+  paths. To specify an Amazon EMR release, use the release label parameter (AMI
+  versions 3.x and 2.x can still be specified with the AMI version parameter).
+* `Aws\Glacier` - Added support for the InitiateVaultLock, GetVaultLock,
+  AbortVaultLock, and CompleteVaultLock API operations.
+* Fixed a memory leak that occurred when client were created and never used.
+* Updated JsonCompiler by addressing a potential race condition and ensuring
+  that caches are invalidated when upgrading to a new version of the SDK.
+* Updated protocol and acceptance tests.
+
+## 3.2.0 - 2015-07-14
+
+* `Aws\DeviceFarm` - Added support for AWS DeviceFarm, an app testing service 
+  that enables you to test your Android and Fire OS apps on real, physical 
+  phones and tablets that are hosted by AWS.
+* `Aws\DynamoDb` - Added support for consistent scans and update streams.
+* `Aws\DynamoDbStreams` - Added support for Amazon DynamoDB Streams, giving you
+  the ability to subscribe to the transactional log of all changes transpiring
+  in your DynamoDB table.
+* `Aws\S3` - Fixed checksum encoding on multipart upload of non-seekable 
+  streams.
+* `Aws\S3\StreamWrapper` - Added guard on rename functionality to ensure wrapper
+  initialized.
+  
+
+## 3.1.0 - 2015-07-09
+
+* `Aws\CodeCommit` - Added support for AWS CodeCommit, a secure, highly 
+  scalable, managed source control service that hosts private Git repositories.
+* `Aws\CodePipeline` - Added support for AWS CodePipeline, a continuous delivery
+  service that enables you to model, visualize, and automate the steps required
+  to release your software.
+* `Aws\Iam` - Added support for uploading SSH public keys for authentication
+  with AWS CodeCommit.
+* `Aws\Ses` - Added support for cross-account sending through the sending
+  authorization feature.
+
+## 3.0.7 - 2015-07-07
+
+* `Aws\AutoScaling` - Added support for step policies.
+* `Aws\CloudHsm` - Fixed a naming collision with the `GetConfig` operation. This
+  operation is now available through the `GetConfigFiles` method.
+* `Aws\DynamoDb` - Improved performance when unmarshalling complex documents.
+* `Aws\DynamoDb` - Fixed checksum comparison of uncompressed responses.
+* `Aws\Ec2` - Added support for encrypted snapshots.
+* `Aws\S3` - Added support for user-provided SHA256 checksums for S3 uploads.
+* `Aws\S3` - Added support for custom protocols in `Aws\S3\StreamWrapper`.
+* Added cucumber integration tests.
+* Updated the test suite to be compatible with PHP 7-alpha 2.
+
 ## 3.0.6 - 2015-06-24
 
 * `Aws\CloudFront` - Added support for configurable `MaxTTL` and `DefaultTTL`.

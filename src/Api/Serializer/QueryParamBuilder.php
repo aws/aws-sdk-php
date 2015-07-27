@@ -20,6 +20,10 @@ class QueryParamBuilder
             return $shape['queryName'];
         }
 
+        if (null !== $shape['locationName']) {
+            return $shape['locationName'];
+        }
+
         if ($this->isFlat($shape) && !empty($shape['member']['locationName'])) {
             return $shape['member']['locationName'];
         }

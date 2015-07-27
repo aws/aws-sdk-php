@@ -39,6 +39,9 @@ coverage-show:
 integ:
 	vendor/bin/phpunit --debug --testsuite=integ $(TEST)
 
+smoke:
+	vendor/bin/behat --format=progress
+
 # Packages the phar and zip
 package:
 	php build/packager.php $(SERVICE)

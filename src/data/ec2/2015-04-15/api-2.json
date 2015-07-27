@@ -2623,6 +2623,10 @@
         "OwnerId":{
           "shape":"String",
           "locationName":"ownerId"
+        },
+        "Return":{
+          "shape":"Boolean",
+          "locationName":"return"
         }
       }
     },
@@ -2732,6 +2736,14 @@
         "PresignedUrl":{
           "shape":"String",
           "locationName":"presignedUrl"
+        },
+        "Encrypted":{
+          "shape":"Boolean",
+          "locationName":"encrypted"
+        },
+        "KmsKeyId":{
+          "shape":"String",
+          "locationName":"kmsKeyId"
         }
       }
     },
@@ -3142,10 +3154,6 @@
         "VpcPeeringConnectionId":{
           "shape":"String",
           "locationName":"vpcPeeringConnectionId"
-        },
-        "ClientToken":{
-          "shape":"String",
-          "locationName":"clientToken"
         }
       }
     },
@@ -3155,10 +3163,6 @@
         "Return":{
           "shape":"Boolean",
           "locationName":"return"
-        },
-        "ClientToken":{
-          "shape":"String",
-          "locationName":"clientToken"
         }
       }
     },
@@ -7643,6 +7647,7 @@
         "t2.micro",
         "t2.small",
         "t2.medium",
+        "t2.large",
         "m2.xlarge",
         "m2.2xlarge",
         "m2.4xlarge",
@@ -7920,7 +7925,7 @@
     "LaunchSpecsList":{
       "type":"list",
       "member":{
-        "shape":"LaunchSpecification",
+        "shape":"SpotFleetLaunchSpecification",
         "locationName":"item"
       },
       "min":1
@@ -10435,6 +10440,80 @@
         }
       }
     },
+    "SpotFleetLaunchSpecification":{
+      "type":"structure",
+      "members":{
+        "ImageId":{
+          "shape":"String",
+          "locationName":"imageId"
+        },
+        "KeyName":{
+          "shape":"String",
+          "locationName":"keyName"
+        },
+        "SecurityGroups":{
+          "shape":"GroupIdentifierList",
+          "locationName":"groupSet"
+        },
+        "UserData":{
+          "shape":"String",
+          "locationName":"userData"
+        },
+        "AddressingType":{
+          "shape":"String",
+          "locationName":"addressingType"
+        },
+        "InstanceType":{
+          "shape":"InstanceType",
+          "locationName":"instanceType"
+        },
+        "Placement":{
+          "shape":"SpotPlacement",
+          "locationName":"placement"
+        },
+        "KernelId":{
+          "shape":"String",
+          "locationName":"kernelId"
+        },
+        "RamdiskId":{
+          "shape":"String",
+          "locationName":"ramdiskId"
+        },
+        "BlockDeviceMappings":{
+          "shape":"BlockDeviceMappingList",
+          "locationName":"blockDeviceMapping"
+        },
+        "Monitoring":{
+          "shape":"SpotFleetMonitoring",
+          "locationName":"monitoring"
+        },
+        "SubnetId":{
+          "shape":"String",
+          "locationName":"subnetId"
+        },
+        "NetworkInterfaces":{
+          "shape":"InstanceNetworkInterfaceSpecificationList",
+          "locationName":"networkInterfaceSet"
+        },
+        "IamInstanceProfile":{
+          "shape":"IamInstanceProfileSpecification",
+          "locationName":"iamInstanceProfile"
+        },
+        "EbsOptimized":{
+          "shape":"Boolean",
+          "locationName":"ebsOptimized"
+        }
+      }
+    },
+    "SpotFleetMonitoring":{
+      "type":"structure",
+      "members":{
+        "Enabled":{
+          "shape":"Boolean",
+          "locationName":"enabled"
+        }
+      }
+    },
     "SpotFleetRequestConfig":{
       "type":"structure",
       "required":[
@@ -11615,7 +11694,7 @@
       "type":"structure",
       "members":{
         "Code":{
-          "shape":"String",
+          "shape":"VpcPeeringConnectionStateReasonCode",
           "locationName":"code"
         },
         "Message":{
@@ -11623,6 +11702,20 @@
           "locationName":"message"
         }
       }
+    },
+    "VpcPeeringConnectionStateReasonCode":{
+      "type":"string",
+      "enum":[
+        "initiating-request",
+        "pending-acceptance",
+        "active",
+        "deleted",
+        "rejected",
+        "failed",
+        "expired",
+        "provisioning",
+        "deleting"
+      ]
     },
     "VpcPeeringConnectionVpcInfo":{
       "type":"structure",

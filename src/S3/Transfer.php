@@ -198,7 +198,7 @@ class Transfer implements PromisorInterface
     }
 
     /**
-     * Normalize a path so that it has a trailing slash.
+     * Normalize a path so that it has UNIX-style directory separators and no trailing /
      *
      * @param string $path
      *
@@ -317,15 +317,16 @@ class Transfer implements PromisorInterface
 
     private function createS3Key($filename)
     {
-        if (!isset($this->s3Args['Key'])) {
-            return '';
+        $relative_file_path = ltrim(
+            preg_replace('#^' . preg_quote($this->source['path']) . '#', '', $filename),
+            '/\\'
+        );
+        
+        if (isset($this->s3Args['Key'])) {
+            return rtrim($this->s3Args['Key'], '/').'/'.$relative_file_path;
         }
 
-        $args = $this->s3Args;
-        $args['Key'] = rtrim($args['Key'], '/');
-        $args['Key'] .= preg_replace('#^' . preg_quote($this->source['path']) . '#', '', $filename);
-
-        return $args['Key'];
+        return $relative_file_path;
     }
 
     private function addDebugToBefore($debug)

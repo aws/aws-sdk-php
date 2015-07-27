@@ -7,10 +7,10 @@ Feature: Amazon CodeDeploy
     Then the value at "applications" should be a list
 
   Scenario: Handling errors
-    When I attempt to call the "GetApplication" API with:
-    | applicationName | bogus-app |
-    Then I expect the response error code to be "ApplicationDoesNotExistException"
+    When I attempt to call the "GetDeployment" API with:
+    | deploymentId | d-USUAELQEX |
+    Then I expect the response error code to be "DeploymentDoesNotExistException"
     And I expect the response error message to include:
     """
-    No application found for name: bogus-app
+    The deployment d-USUAELQEX could not be found
     """
