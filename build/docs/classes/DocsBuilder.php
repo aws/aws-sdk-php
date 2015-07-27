@@ -54,7 +54,8 @@ class DocsBuilder
                     ApiProvider::resolve($this->apiProvider, 'docs', $name, $version)
                 );
                 $service = new Service($api, $docModel);
-                $this->renderService($service);
+                $examples = $this->loadExamples($name, $version);
+                $this->renderService($service, $examples);
                 $services[$service->title][$version] = $service;
             }
         }
@@ -87,7 +88,7 @@ class DocsBuilder
         $this->replaceInner('index', $servicesTable, ':services:');
     }
 
-    private function renderService(Service $service)
+    private function renderService(Service $service, $examples)
     {
         $html = new HtmlDocument;
         $html->open('div', 'page-header');
@@ -128,7 +129,7 @@ EOT;
 
         $html->section(2, 'Operations');
         foreach ($service->api->getOperations() as $opName => $operation) {
-            $html->append($this->createHtmlForOperation($service, $opName, $operation));
+            $html->append($this->createHtmlForOperation($service, $opName, $operation, $examples[$opName]));
         }
 
         $html->section(2, 'Shapes');
@@ -195,6 +196,13 @@ EOT;
         $manifest = __DIR__ . '/../../../src/data/manifest.json';
 
         return json_decode(file_get_contents($manifest), true);
+    }
+
+    private function loadExamples($name, $version)
+    {
+        $path = __DIR__ . "/../../../src/data/{$name}/{$version}/examples-1.json";
+
+        return file_exists($path) ? json_decode(file_get_contents($path), true)['examples'] : [];
     }
 
     private function updateClients(array $services)
@@ -303,7 +311,7 @@ EOT;
         $html->close();
     }
 
-    private function createHtmlForOperation(Service $service, $name, Operation $operation)
+    private function createHtmlForOperation(Service $service, $name, Operation $operation, $examples)
     {
         $html = new HtmlDocument;
         $html->open('div', 'operation-container');
@@ -376,6 +384,28 @@ EOT;
                     ->close();
             }
             $html->close();
+        }
+
+        // Examples
+        if (!empty($examples)) {
+            $html->elem('h4', null, 'Examples');
+            foreach ($examples as $number => $example) {
+                $exampleNumber = $number + 1;
+                $exampleId = $this->exampleSlug($name, $exampleNumber);
+                $html->open('h5', ['id' => $exampleId]);
+                $html->elem('span', null, 'Example ' . $exampleNumber . ': ' . $example['title']);
+                $html->elem('a', ['href' => '#' . $exampleId], $html->glyph('link'));
+                $html->close();
+                $html->elem('p', null, $example['description']);
+                $comments = $example['comments'];
+                $input = new SharedExampleBuilder($example['input'], $name, $comments['input']);
+                $html->elem('pre', null, $input->getCode());
+                if (isset($example['output'])) {
+                    $html->elem('p', null, 'Result syntax:');
+                    $output = new SharedExampleBuilder($example['output'], $name, $comments['output'], false);
+                    $html->elem('pre', null, $output->getCode());
+                }
+            }
         }
 
         $html->close(); // operation-container
@@ -485,6 +515,11 @@ EOT;
             case 'timestamp': return 'timesamp (string|DateTime or anything parsable by strtotime)';
             default: return $type;
         }
+    }
+
+    private function exampleSlug($name, $number)
+    {
+        return strtolower($name) . '-example-' . $number;
     }
 
     private function memberSlug($name)
