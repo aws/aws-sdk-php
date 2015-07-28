@@ -178,15 +178,15 @@ class StreamWrapper
 
         if (!$errors) {
             if ($mode == 'r') {
-                $this->openReadStream($params, $errors);
+                return $this->openReadStream($params, $errors);
             } elseif ($mode == 'a') {
-                $this->openAppendStream($params, $errors);
+                return $this->openAppendStream($params, $errors);
             } else {
-                $this->openWriteStream($params, $errors);
+                return $this->openWriteStream($params, $errors);
             }
         }
 
-        return $errors ? $this->triggerError($errors) : true;
+        return $this->triggerError($errors);
     }
 
     /**
@@ -723,6 +723,8 @@ class StreamWrapper
     protected function openWriteStream(array $params, array &$errors)
     {
         $this->body = new EntityBody(fopen('php://temp', 'r+'));
+
+        return true;
     }
 
     /**

@@ -213,6 +213,34 @@ class StreamWrapperTest extends \Guzzle\Tests\GuzzleTestCase
         fclose($s);
     }
 
+    public function testReturnsFalseWhenReadFails()
+    {
+        $mock = $this->getMockBuilder('Guzzle\Http\EntityBody')
+            ->disableOriginalConstructor()
+            ->setMethods(array('getMetaData'))
+            ->getMock();
+
+        $mock->expects($this->any())
+            ->method('getMetaData')
+            ->with('wrapper_data')
+            ->will($this->returnValue(array('HTTP/1.1 404 Not Found')));
+
+        $f = $this->getMockBuilder('Guzzle\Stream\PhpStreamRequestFactory')
+            ->setMethods(array('fromRequest'))
+            ->getMock();
+
+        $f->expects($this->exactly(2))
+            ->method('fromRequest')
+            ->will($this->returnValue($mock));
+
+        $context = stream_context_create(array(
+            's3' => array('stream_factory' => $f)
+        ));
+
+        $this->assertFalse(@fopen('s3://bucket/ket', 'r', false, $context));
+        $this->assertFalse(@file_get_contents('s3://bucket/ket', null, $context));
+    }
+
     public function testCanOpenAppendStreamsWithOriginalFile()
     {
         // Queue the 200 response that will load the original, and queue the 204 flush response
