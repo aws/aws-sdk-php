@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next Release
+## 2.8.16 - 2015-07-28
 
 * `Aws\CloudWatchLogs` - Added support for 4 new operations: `PutDestination`,
   `PutDestinationPolicy`, `DescribeDestinations`, and `DeleteDestination`.
