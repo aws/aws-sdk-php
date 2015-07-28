@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## Next Release
+
+* `Aws\CloudWatchLogs` - Added support for 4 new operations: `PutDestination`,
+  `PutDestinationPolicy`, `DescribeDestinations`, and `DeleteDestination`.
+* `Aws\S3` - Added support for receiving the storage class in the responses
+  for `GetObject` and `HeadObject` operations.
+
 ## 2.8.15 - 2015-07-23
 
 * `Aws\CloudSearch` - Marked CloudSearchClient::getDomainClient as deprecated.

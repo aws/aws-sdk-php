@@ -4134,6 +4134,11 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'Content-Language',
                 ),
+                'ContentRange' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Range',
+                ),
                 'ContentType' => array(
                     'type' => 'string',
                     'location' => 'header',
@@ -4175,6 +4180,11 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id',
+                ),
+                'StorageClass' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-storage-class',
                 ),
                 'RequestCharged' => array(
                     'type' => 'string',
@@ -4398,6 +4408,11 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id',
+                ),
+                'StorageClass' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-storage-class',
                 ),
                 'RequestCharged' => array(
                     'type' => 'string',
