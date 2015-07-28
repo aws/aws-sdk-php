@@ -63,4 +63,14 @@ class Credentials implements CredentialsInterface
             'expires' => $this->expires
         ];
     }
+
+    public static function __set_state(array $state)
+    {
+        return new self(
+            $state['key'],
+            $state['secret'],
+            $state['token'],
+            $state['expires']
+        );
+    }
 }

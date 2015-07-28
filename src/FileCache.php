@@ -1,54 +1,80 @@
 <?php
 namespace Aws;
 
-class FileCache implements CacheInterface
+class FileCache implements ClearableCacheInterface
 {
+    const CACHE_ENV = 'AWS_PHP_CACHE_DIR';
+
+    /** @var string */
     private $cacheDir;
+    /** @var bool */
+    private $hasOpcache;
 
     /**
      * @param string $directory
      */
     public function __construct($directory = '')
     {
-        $this->cacheDir = $directory ?: (new JsonCompiler)->getCacheDir();
+        $this->cacheDir = $directory
+            ?: (getenv(self::CACHE_ENV)
+                ?: sys_get_temp_dir() . '/aws-sdk-cache-' . getmyuid()
+            );
+        $this->hasOpcache = extension_loaded('Zend OPcache')
+            && function_exists('opcache_is_script_cached');
+
+        if (empty($this->cacheDir)
+            || !$this->initializeDirectory($this->cacheDir)
+        ) {
+            $message = 'Unable to create cache directory: %s. Please make '
+                . 'this directory writable or provide the path to a '
+                . 'writable directory using the AWS_PHP_CACHE_DIR '
+                . 'environment variable.';
+            throw new \RuntimeException(sprintf($message, $directory));
+        }
     }
 
     public function set($key, $data, $ttl = 0)
     {
         $toSave = ['data' => $data];
         $path = $this->getCachePath($key);
-        $dir = dirname($path);
         if ($ttl) {
             $toSave['expiration'] = time() + $ttl;
         }
+        $toSave = '<?php return ' . var_export($toSave, true) . ';';
 
-        if (!is_dir($dir)) {
-            if (false === @mkdir($dir, 0777, true) && !is_dir($dir)) {
-                return;
-            }
-        }
-
-        file_put_contents($path, \serialize($toSave), LOCK_EX);
+        return $this->initializeDirectory(dirname($path))
+            && file_put_contents($path, $toSave, LOCK_EX) > 0;
     }
 
     public function remove($key)
     {
-        unlink($this->getCachePath($key));
+        $path = $this->getCachePath($key);
+        unlink($path);
+
+        if ($this->hasOpcache) {
+            opcache_invalidate($path);
+        }
     }
 
     public function get($key)
     {
         $path = $this->getCachePath($key);
 
-        if (file_exists($path) && $retrieved = @file_get_contents($path)) {
-            $cached = \unserialize($retrieved);
-            if (isset($cached['data']) &&
-                (empty($cached['expiration']) || $cached['expiration'] > time())
+        if ($retrieved = @include $path) {
+            if (isset($retrieved['data']) &&
+                (empty($retrieved['expiration']) || $retrieved['expiration'] > time())
             ) {
-                return $cached['data'];
+                return $retrieved['data'];
             }
 
             $this->remove($key);
+        }
+    }
+
+    public function purge()
+    {
+        foreach (glob($this->cacheDir . '/**/**/*.cache.php') as $file) {
+            unlink($file);
         }
     }
 
@@ -61,7 +87,16 @@ class FileCache implements CacheInterface
             $this->cacheDir,
             substr($key, 0, 2),
             substr($key, 2, 2),
-            "$key.cache",
+            "$key.cache.php",
         ]);
+    }
+
+    private function initializeDirectory($dir)
+    {
+        if (is_dir($dir) || (@mkdir($dir, 0755, true) || is_dir($dir))) {
+            return true;
+        }
+
+        return false;
     }
 }

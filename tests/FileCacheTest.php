@@ -14,20 +14,20 @@ class FileCacheTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->cacheDir = getenv(JsonCompiler::CACHE_ENV);
-        putenv(JsonCompiler::CACHE_ENV . '=' . $this->getCacheTestDir());
+        $this->cacheDir = getenv(FileCache::CACHE_ENV);
+        putenv(FileCache::CACHE_ENV . '=' . $this->getCacheTestDir());
     }
 
     public function tearDown()
     {
         $this->rmrf($this->getCacheTestDir());
 
-        putenv(JsonCompiler::CACHE_ENV . "={$this->cacheDir}");
+        putenv(FileCache::CACHE_ENV . "={$this->cacheDir}");
     }
 
     public function testSetRemoveAndRetrieve()
     {
-        $c = new FileCache;
+        $c = new FileCache($this->getCacheTestDir());
         $c->set('foo', 'baz');
         $this->assertSame('baz', $c->get('foo'));
         $this->assertSame('baz', $c->get('foo'));
@@ -37,7 +37,7 @@ class FileCacheTest extends \PHPUnit_Framework_TestCase
 
     public function testReset()
     {
-        $c = new FileCache;
+        $c = new FileCache($this->getCacheTestDir());
         $c->set('foo', 'bar');
         $this->assertSame('bar', $c->get('foo'));
         $c->set('foo', 'baz');
@@ -46,7 +46,7 @@ class FileCacheTest extends \PHPUnit_Framework_TestCase
 
     public function testSetAndGetShouldPersistObjects()
     {
-        $c = new FileCache;
+        $c = new FileCache($this->getCacheTestDir());
         $c->set('creds', new Credentials('foo', 'bar', 'baz', PHP_INT_MAX));
         $this->assertInstanceOf(Credentials::class, $c->get('creds'));
     }

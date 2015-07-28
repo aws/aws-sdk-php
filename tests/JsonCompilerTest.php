@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test;
 
+use Aws\FileCache;
 use Aws\JsonCompiler;
 
 /**
@@ -16,15 +17,15 @@ class JsonCompilerTest extends \PHPUnit_Framework_TestCase
         $this->models = realpath(__DIR__ . '/../src/data');
         $js = new JsonCompiler();
         $js->purge();
-        $this->env = getenv(JsonCompiler::CACHE_ENV);
-        putenv(JsonCompiler::CACHE_ENV . '=');
+        $this->env = getenv(FileCache::CACHE_ENV);
+        putenv(FileCache::CACHE_ENV . '=');
     }
 
     public function tearDown()
     {
         $js = new JsonCompiler();
         $js->purge();
-        putenv(JsonCompiler::CACHE_ENV . '=' . $this->env);
+        putenv(FileCache::CACHE_ENV . '=' . $this->env);
     }
 
     private function ensureOpcache()
@@ -34,22 +35,29 @@ class JsonCompilerTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     */
     public function testCanDisableCache()
     {
+        $jsonPath = tempnam(sys_get_temp_dir(), 'JsonCompiler');
+        file_put_contents($jsonPath, json_encode(['foo' => 'bar']));
+
         $c = new JsonCompiler(false);
-        $this->assertInternalType('array', $c->load(__DIR__ . '/../composer.json'));
-        $this->assertEmpty(array_diff(scandir($c->getCacheDir()), ['.', '..']));
+        $this->assertInternalType('array', $c->load($jsonPath));
+        unlink($jsonPath);
+        $c->load($jsonPath);
     }
 
     public function testCanCacheFiles()
     {
-        $this->ensureOpcache();
-        $c = new JsonCompiler();
-        $data = $c->load($this->models . '/endpoints.json');
-        $this->assertInternalType('array', $data);
-        $entries = array_diff(scandir($c->getCacheDir()), ['.', '..']);
-        $this->assertContains('data_endpoints.json.php', $entries);
-        $this->assertSame($data, $c->load($this->models . '/endpoints.json'));
+        $jsonPath = tempnam(sys_get_temp_dir(), 'JsonCompiler');
+        file_put_contents($jsonPath, json_encode(['foo' => 'bar']));
+
+        $c = new JsonCompiler;
+        $this->assertInternalType('array', $c->load($jsonPath));
+        unlink($jsonPath);
+        $c->load($jsonPath);
     }
 
     /**
@@ -66,13 +74,13 @@ class JsonCompilerTest extends \PHPUnit_Framework_TestCase
     {
         $this->ensureOpcache();
         $c = new JsonCompiler();
+        $cacheProp = (new \ReflectionClass($c))->getProperty('cache');
+        $cacheProp->setAccessible(true);
+        $cache = $cacheProp->getValue($c);
         $c->load($this->models . '/endpoints.json');
-        $entries = array_diff(scandir($c->getCacheDir()), ['.', '..']);
-        $this->assertNotEmpty($entries);
-        $this->assertEquals(['data_endpoints.json.php'], array_values($entries));
+        $this->assertNotNull($cache->get(realpath($this->models . '/endpoints.json')));
         $c->purge();
-        $entries = array_diff(scandir($c->getCacheDir()), ['.', '..']);
-        $this->assertEmpty($entries);
+        $this->assertNull($cache->get(realpath($this->models . '/endpoints.json')));
     }
 
     public function pathProvider()
