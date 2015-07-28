@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.2.2 - 2015-07-28
 
 * `Aws\S3` - Added support for receiving the storage class in the responses for
   `GetObject` and `HeadObject` operations.
