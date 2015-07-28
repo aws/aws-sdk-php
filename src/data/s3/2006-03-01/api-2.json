@@ -904,6 +904,7 @@
     "ContentLanguage":{"type":"string"},
     "ContentLength":{"type":"integer"},
     "ContentMD5":{"type":"string"},
+    "ContentRange":{"type":"string"},
     "ContentType":{"type":"string"},
     "CopyObjectOutput":{
       "type":"structure",
@@ -1624,10 +1625,14 @@
       "type":"string",
       "enum":[
         "s3:ReducedRedundancyLostObject",
+        "s3:ObjectCreated:*",
         "s3:ObjectCreated:Put",
         "s3:ObjectCreated:Post",
         "s3:ObjectCreated:Copy",
-        "s3:ObjectCreated:CompleteMultipartUpload"
+        "s3:ObjectCreated:CompleteMultipartUpload",
+        "s3:ObjectRemoved:*",
+        "s3:ObjectRemoved:Delete",
+        "s3:ObjectRemoved:DeleteMarkerCreated"
       ]
     },
     "EventList":{
@@ -1984,6 +1989,11 @@
           "location":"header",
           "locationName":"Content-Language"
         },
+        "ContentRange":{
+          "shape":"ContentRange",
+          "location":"header",
+          "locationName":"Content-Range"
+        },
         "ContentType":{
           "shape":"ContentType",
           "location":"header",
@@ -2023,6 +2033,11 @@
           "shape":"SSEKMSKeyId",
           "location":"header",
           "locationName":"x-amz-server-side-encryption-aws-kms-key-id"
+        },
+        "StorageClass":{
+          "shape":"StorageClass",
+          "location":"header",
+          "locationName":"x-amz-storage-class"
         },
         "RequestCharged":{
           "shape":"RequestCharged",
@@ -2331,6 +2346,11 @@
           "shape":"SSEKMSKeyId",
           "location":"header",
           "locationName":"x-amz-server-side-encryption-aws-kms-key-id"
+        },
+        "StorageClass":{
+          "shape":"StorageClass",
+          "location":"header",
+          "locationName":"x-amz-storage-class"
         },
         "RequestCharged":{
           "shape":"RequestCharged",
@@ -3791,14 +3811,18 @@
     },
     "ServerSideEncryption":{
       "type":"string",
-      "enum":["AES256"]
+      "enum":[
+        "AES256",
+        "aws:kms"
+      ]
     },
     "Size":{"type":"integer"},
     "StorageClass":{
       "type":"string",
       "enum":[
         "STANDARD",
-        "REDUCED_REDUNDANCY"
+        "REDUCED_REDUNDANCY",
+        "LT"
       ]
     },
     "Suffix":{"type":"string"},

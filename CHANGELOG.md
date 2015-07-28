@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Added support for receiving the storage class in the responses for
+  `GetObject` and `HeadObject` operations.
+* `Aws\CloudWatchLogs` - Added support for 4 new operations: `PutDestination`,
+  `PutDestinationPolicy`, `DescribeDestinations`, and `DeleteDestination`.
+
 ## 3.2.1 - 2015-07-23
 
 * `Aws\Ec2` - Added support for SpotFleetLaunchSpecification.
