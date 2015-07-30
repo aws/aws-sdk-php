@@ -148,7 +148,7 @@ class ClientResolver
             'fn'       => [__CLASS__, '_apply_handler'],
             'default'  => [__CLASS__, '_default_handler']
         ],
-        'user-agent' => [
+        'ua_append' => [
             'type'     => 'value',
             'valid'    => ['string', 'array'],
             'doc'      => 'Provide a string or array of strings to send in the User-Agent header.',
@@ -460,8 +460,8 @@ class ClientResolver
             $value
         );
 
-        $value []= 'aws-sdk-php/' . Sdk::VERSION;
-        $args['user-agent'] = $value;
+        array_unshift($value, 'aws-sdk-php/' . Sdk::VERSION);
+        $args['ua_append'] = $value;
 
         $list->appendBuild(static function (callable $handler) use ($value) {
             return function (
@@ -471,8 +471,8 @@ class ClientResolver
                 return $handler($command, $request->withHeader(
                     'User-Agent',
                     implode(' ', array_merge(
-                        $request->getHeader('User-Agent'),
-                        $value
+                        $value,
+                        $request->getHeader('User-Agent')
                     ))
                 ));
             };

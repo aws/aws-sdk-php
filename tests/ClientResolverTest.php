@@ -395,15 +395,15 @@ EOT;
             'region'      => 'x',
             'credentials' => ['key' => 'a', 'secret' => 'b'],
             'version'     => 'latest',
-            'user-agent' => 'PHPUnit/Unit',
+            'ua_append' => 'PHPUnit/Unit',
         ], $list);
-        $this->assertArrayHasKey('user-agent', $conf);
-        $this->assertInternalType('array', $conf['user-agent']);
-        $this->assertContains('PHPUnit/Unit', $conf['user-agent']);
-        $this->assertContains('aws-sdk-php/' . Sdk::VERSION, $conf['user-agent']);
+        $this->assertArrayHasKey('ua_append', $conf);
+        $this->assertInternalType('array', $conf['ua_append']);
+        $this->assertContains('PHPUnit/Unit', $conf['ua_append']);
+        $this->assertContains('aws-sdk-php/' . Sdk::VERSION, $conf['ua_append']);
     }
 
-    public function testRetainsOriginalUserAgent()
+    public function testUserAgentAlwaysStartsWithSdkAgentString()
     {
         $command = $this->getMockBuilder(CommandInterface::class)
             ->disableOriginalConstructor()
@@ -419,7 +419,7 @@ EOT;
 
         $request->expects($this->once())
             ->method('withHeader')
-            ->with('User-Agent', 'MockBuilder aws-sdk-php/' . Sdk::VERSION);
+            ->with('User-Agent', 'aws-sdk-php/' . Sdk::VERSION . ' MockBuilder');
 
         $args = [];
         $list = new HandlerList(function () {});
