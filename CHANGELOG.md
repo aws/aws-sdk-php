@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\OpsWorks` - Added support for operations on ECS clusters.
+* `Aws\Rds` - Added support for cluster operations for Amazon Aurora.
+
 ## 3.2.2 - 2015-07-28
 
 * `Aws\S3` - Added support for receiving the storage class in the responses for
