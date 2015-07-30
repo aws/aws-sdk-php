@@ -455,10 +455,7 @@ class ClientResolver
             $value = [$value];
         }
 
-        $value = array_map(
-            function ($ua) { return (string) $ua; },
-            $value
-        );
+        $value = array_map('strval', $value);
 
         array_unshift($value, 'aws-sdk-php/' . Sdk::VERSION);
         $args['ua_append'] = $value;
