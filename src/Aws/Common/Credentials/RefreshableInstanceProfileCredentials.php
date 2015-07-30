@@ -42,6 +42,21 @@ class RefreshableInstanceProfileCredentials extends AbstractRefreshableCredentia
         $this->client = $client ?: InstanceMetadataClient::factory();
     }
 
+    public function serialize()
+    {
+        return json_encode(array(
+            'credentials' => parent::serialize(),
+            'client' => serialize($this->client),
+        ));
+    }
+
+    public function unserialize($value)
+    {
+        $serialized = json_decode($value, true);
+        parent::unserialize($serialized['credentials']);
+        $this->client = unserialize($serialized['client']);
+    }
+
     /**
      * Attempt to get new credentials from the instance profile
      *
