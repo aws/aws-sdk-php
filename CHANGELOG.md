@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.2.3 - 2015-07-30
 
 * `Aws\OpsWorks` - Added support for operations on ECS clusters.
 * `Aws\Rds` - Added support for cluster operations for Amazon Aurora.
