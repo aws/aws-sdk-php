@@ -11,6 +11,7 @@ use Aws\Endpoint\EndpointProvider;
 use Aws\Credentials\CredentialProvider;
 use GuzzleHttp\Promise;
 use InvalidArgumentException as IAE;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @internal Resolves a hash of client arguments to construct a client.
@@ -146,7 +147,14 @@ class ClientResolver
             'doc'      => 'A handler that accepts a command object, request object and returns a promise that is fulfilled with an Aws\ResultInterface object or rejected with an Aws\Exception\AwsException. A handler does not accept a next handler as it is terminal and expected to fulfill a command. If no handler is provided, a default Guzzle handler will be utilized.',
             'fn'       => [__CLASS__, '_apply_handler'],
             'default'  => [__CLASS__, '_default_handler']
-        ]
+        ],
+        'user-agent' => [
+            'type'     => 'value',
+            'valid'    => ['string', 'array'],
+            'doc'      => 'Provide a string or array of strings to send in the User-Agent header.',
+            'fn'       => [__CLASS__, '_apply_user_agent'],
+            'default'  => [],
+        ],
     ];
 
     /**
@@ -439,6 +447,36 @@ class ClientResolver
             $args['error_parser'],
             $args['exception_class']
         );
+    }
+
+    public static function _apply_user_agent($value, array &$args, HandlerList $list)
+    {
+        if (!is_array($value)) {
+            $value = [$value];
+        }
+
+        $value = array_map(
+            function ($ua) { return (string) $ua; },
+            $value
+        );
+
+        $value []= 'aws-sdk-php/' . Sdk::VERSION;
+        $args['user-agent'] = $value;
+
+        $list->appendBuild(static function (callable $handler) use ($value) {
+            return function (
+                CommandInterface $command,
+                RequestInterface $request
+            ) use ($handler, $value) {
+                return $handler($command, $request->withHeader(
+                    'User-Agent',
+                    implode(' ', array_merge(
+                        $request->getHeader('User-Agent'),
+                        $value
+                    ))
+                ));
+            };
+        });
     }
 
     public static function _default_endpoint_provider()

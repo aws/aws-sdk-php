@@ -9,6 +9,7 @@ trait IntegUtils
             'region'  => 'us-east-1',
             'profile' => 'integ',
             'version' => 'latest',
+            'user-agent' => 'PHPUnit/Integration'
         ]);
     }
 

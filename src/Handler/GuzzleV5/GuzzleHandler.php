@@ -129,9 +129,11 @@ class GuzzleHandler
         }
 
         $request->setHeaders($psrRequest->getHeaders());
+
         $request->setHeader(
             'User-Agent',
-            'aws-sdk-php/' . Sdk::VERSION . ' ' . Client::getDefaultUserAgent()
+            $request->getHeader('User-Agent')
+                . ' ' . Client::getDefaultUserAgent()
         );
 
         // Make sure the delay is configured, if provided.
