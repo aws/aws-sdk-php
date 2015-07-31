@@ -26,7 +26,7 @@ use Guzzle\Http\Message\RequestFactory;
 /**
  * Client used for interacting with the Amazon EC2 instance metadata server
  */
-class InstanceMetadataClient extends AbstractClient
+class InstanceMetadataClient extends AbstractClient implements \Serializable
 {
     /**
      * Factory method to create a new InstanceMetadataClient using an array
@@ -63,6 +63,16 @@ class InstanceMetadataClient extends AbstractClient
         $this->setBaseUrl($config->get(Options::BASE_URL));
         $this->defaultHeaders = new Collection();
         $this->setRequestFactory(RequestFactory::getInstance());
+    }
+
+    public function serialize()
+    {
+        return json_encode($this->getConfig()->toArray());
+    }
+
+    public function unserialize($value)
+    {
+        $this->__construct(Collection::fromConfig(json_decode($value, true)));
     }
 
     /**
