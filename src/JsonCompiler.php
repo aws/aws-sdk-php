@@ -2,8 +2,7 @@
 namespace Aws;
 
 /**
- * Loads JSON files and compiles them into PHP files so that they are loaded
- * from PHP's opcode cache.
+ * Loads JSON files and caches them.
  *
  * @internal Please use Aws\load_compiled_json() instead.
  */
@@ -13,11 +12,14 @@ class JsonCompiler
     private $cache;
 
     /**
-     * @param bool $useCache Set to false to force the cache to be disabled.
+     * @param ClearableCacheInterface|bool  $cache  The cache to use to store
+     *  compiled JSON (or true to use the default file cache).
      */
-    public function __construct($useCache = true)
+    public function __construct($cache = true)
     {
-        if ($useCache) {
+        if ($cache instanceof ClearableCacheInterface) {
+            $this->cache = $cache;
+        } elseif (true === $cache) {
             $dir = getenv(FileCache::CACHE_ENV) ?: sys_get_temp_dir();
             $dir .= '/aws-cache-' . str_replace('.', '-', Sdk::VERSION);
             $this->cache = new FileCache($dir);
@@ -43,79 +45,36 @@ class JsonCompiler
      */
     public function load($path)
     {
-        $real = $this->normalize($path);
         if (empty($this->cache)) {
-            return $this->loadJsonFromFile($path, $real);
+            return $this->loadJsonFromFile($path);
         }
 
-        if ($cached = $this->cache->get($real)) {
+        if ($cached = $this->cache->get($path)) {
             return $cached;
         }
 
-        $data = $this->loadJsonFromFile($path, $real);
-        $this->cache->set($real, $data);
+        $data = $this->loadJsonFromFile($path);
+        $this->cache->set($path, $data);
 
         return $data;
-    }
-
-    /**
-     * Resolve relative paths without using realpath (which causes an
-     * unnecessary fstat). And realpath does not work with phar files!
-     *
-     * @param $path
-     *
-     * @return string
-     */
-    private function normalize($path)
-    {
-        static $skip = ['' => true, '.' => true];
-        $isPhar = substr($path, 0, 7) === 'phar://';
-
-        if ($isPhar) {
-            $path = substr($path, 7);
-        }
-
-        // Normalize path separators
-        $parts = explode('/', str_replace('\\', '/', $path));
-
-        $segments = [];
-        foreach ($parts as $part) {
-            if (isset($skip[$part])) {
-                continue;
-            } elseif ($part === '..') {
-                array_pop($segments);
-            } else {
-                $segments[] = $part;
-            }
-        }
-
-        $resolved = implode('/', $segments);
-
-        // Add a leading slash if necessary.
-        if (isset($parts[0]) && $parts[0] === '') {
-            $resolved = '/' . $resolved;
-        }
-
-        return $isPhar ? 'phar://' . $resolved : $resolved;
     }
 
     /**
      * Loads a JSON file.
      *
      * @param string $path Provided path.
-     * @param string $real Normalized path.
      *
      * @return array
      * @throw \InvalidArgumentException if file does not exist.
      */
-    private function loadJsonFromFile($path, $real)
+    private function loadJsonFromFile($path)
     {
-        if (!file_exists($real)) {
+        if (!file_exists($path)) {
             throw new \InvalidArgumentException(
-                sprintf("File not found: %s, realpath: %s", $path, $real)
+                sprintf("File not found: %s, realpath: %s", $path, realpath($path))
             );
         }
 
-        return json_decode(file_get_contents($real), true);
+        return json_decode(file_get_contents($path), true);
     }
 }
