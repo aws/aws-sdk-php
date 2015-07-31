@@ -82,35 +82,4 @@ class JsonCompilerTest extends \PHPUnit_Framework_TestCase
         $c->purge();
         $this->assertNull($cache->get(realpath($this->models . '/endpoints.json')));
     }
-
-    public function pathProvider()
-    {
-        return [
-            ['/foo/baz/bar.qux', '/foo/baz/bar.qux'],
-            ['/foo/baz/../bar.qux', '/foo/bar.qux'],
-            ['/foo/baz/./bar.qux', '/foo/baz/bar.qux'],
-            ['/foo/baz/../../bar.qux', '/bar.qux'],
-            ['/../../bar.qux', '/bar.qux'],
-            // Extra slashes
-            ['/foo//baz///bar.qux', '/foo/baz/bar.qux'],
-            // Relative with no leading slash
-            ['foo/baz/../bar.qux', 'foo/bar.qux'],
-            ['\\foo\\baz\\..\\.\\bar.qux', '/foo/bar.qux'],
-            // Phar path
-            ['phar://foo.phar/foo/bar/../baz.qux', 'phar://foo.phar/foo/baz.qux'],
-            // Phar path with windows mixed in
-            ['phar://foo.phar\\foo\\bar\\..\\baz.qux', 'phar://foo.phar/foo/baz.qux'],
-        ];
-    }
-
-    /**
-     * @dataProvider pathProvider
-     */
-    public function testResolvesRelativePaths($path, $resolved)
-    {
-        $j = new JsonCompiler();
-        $meth = new \ReflectionMethod('Aws\JsonCompiler', 'normalize');
-        $meth->setAccessible(true);
-        $this->assertEquals($resolved, $meth->invoke($j, $path));
-    }
 }
