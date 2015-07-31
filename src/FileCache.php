@@ -91,7 +91,7 @@ class FileCache implements ClearableCacheInterface
             throw new \RuntimeException(sprintf($message, $cacheDir));
         }
 
-        if (!function_exists('posix_geteuid')) {
+        if (function_exists('posix_geteuid')) {
             $userName = posix_getpwuid(posix_geteuid())['name'];
             $this->cacheDir = "$cacheDir/$userName";
 

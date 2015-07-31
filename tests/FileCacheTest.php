@@ -51,6 +51,23 @@ class FileCacheTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Credentials::class, $c->get('creds'));
     }
 
+    public function testCreatesDirectoryBeloningToUser()
+    {
+        if ('WIN' === strtoupper(substr(PHP_OS, 0, 3))) {
+            $this->markTestSkipped('Behavior not necessary on Windows');
+        }
+
+        $myUserName = posix_getpwuid(posix_geteuid())['name'];
+        $expectedCacheDir = $this->getCacheTestDir() . "/$myUserName";
+        $c = new FileCache($this->getCacheTestDir());
+        $c->set('foo', 'bar');
+
+        $this->assertFileExists($expectedCacheDir);
+        $this->assertTrue(is_dir($expectedCacheDir));
+        $this->assertEquals(posix_geteuid(), fileowner($expectedCacheDir));
+        $this->assertEquals(0700, fileperms($expectedCacheDir) & 0777);
+    }
+
 
     private function getCacheTestDir()
     {
