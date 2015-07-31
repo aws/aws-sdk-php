@@ -722,6 +722,16 @@ The following examples show how to configure an Amazon S3 client to use
     signature versions.
 
 
+ua_append
+~~~~~~~~~
+
+:Type: ``string|string[]``
+:Default: ``[]``
+
+A string or array of strings that will be added to the user-agent string passed
+to the HTTP handler.
+
+
 validate
 ~~~~~~~~
 

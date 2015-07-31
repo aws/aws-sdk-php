@@ -36,7 +36,8 @@ class GuzzleHandler
     {
         $request = $request->withHeader(
             'User-Agent',
-            'aws-sdk-php/' . Sdk::VERSION . ' ' . \GuzzleHttp\default_user_agent()
+            $request->getHeaderLine('User-Agent')
+                . ' ' . \GuzzleHttp\default_user_agent()
         );
 
         return $this->client->sendAsync($request, $options)->otherwise(

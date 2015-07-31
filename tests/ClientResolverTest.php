@@ -2,13 +2,16 @@
 namespace Aws\Test;
 
 use Aws\ClientResolver;
+use Aws\CommandInterface;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\S3\S3Client;
 use Aws\HandlerList;
+use Aws\Sdk;
 use Aws\WrappedHttpHandler;
 use GuzzleHttp\Promise\RejectedPromise;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @covers Aws\ClientResolver
@@ -381,5 +384,46 @@ EOT;
         ], $list);
         $value = $this->readAttribute($list, 'interposeFn');
         $this->assertTrue(is_callable($value));
+    }
+
+    public function testAppliesUserAgent()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $list = new HandlerList();
+        $conf = $r->resolve([
+            'service'     => 'sqs',
+            'region'      => 'x',
+            'credentials' => ['key' => 'a', 'secret' => 'b'],
+            'version'     => 'latest',
+            'ua_append' => 'PHPUnit/Unit',
+        ], $list);
+        $this->assertArrayHasKey('ua_append', $conf);
+        $this->assertInternalType('array', $conf['ua_append']);
+        $this->assertContains('PHPUnit/Unit', $conf['ua_append']);
+        $this->assertContains('aws-sdk-php/' . Sdk::VERSION, $conf['ua_append']);
+    }
+
+    public function testUserAgentAlwaysStartsWithSdkAgentString()
+    {
+        $command = $this->getMockBuilder(CommandInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $request = $this->getMockBuilder(RequestInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $request->expects($this->once())
+            ->method('getHeader')
+            ->with('User-Agent')
+            ->willReturn(['MockBuilder']);
+
+        $request->expects($this->once())
+            ->method('withHeader')
+            ->with('User-Agent', 'aws-sdk-php/' . Sdk::VERSION . ' MockBuilder');
+
+        $args = [];
+        $list = new HandlerList(function () {});
+        ClientResolver::_apply_user_agent([], $args, $list);
+        call_user_func($list->resolve(), $command, $request);
     }
 }
