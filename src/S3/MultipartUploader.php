@@ -187,6 +187,11 @@ class MultipartUploader extends AbstractUploader
             $params['ACL'] = $this->config['acl'];
         }
 
+	// Set our Metadata
+	if(isset($this->config['Metadata'])) {
+            $params['Metadata'] = $this->config['Metadata'];
+        }
+
         // Set the content type
         if ($uri = $this->source->getMetadata('uri')) {
             $params['ContentType'] = Psr7\mimetype_from_filename($uri)
