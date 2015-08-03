@@ -29,6 +29,8 @@ class RefreshableInstanceProfileCredentials extends AbstractRefreshableCredentia
      * @var InstanceMetadataClient
      */
     protected $client;
+    /** @var bool */
+    private $customClient;
 
     /**
      * Constructs a new instance profile credentials decorator
@@ -39,22 +41,32 @@ class RefreshableInstanceProfileCredentials extends AbstractRefreshableCredentia
     public function __construct(CredentialsInterface $credentials, InstanceMetadataClient $client = null)
     {
         $this->credentials = $credentials;
+        $this->customClient = null !== $client;
         $this->client = $client ?: InstanceMetadataClient::factory();
     }
 
     public function serialize()
     {
-        return json_encode(array(
+        $serializable = array(
             'credentials' => parent::serialize(),
-            'client' => serialize($this->client),
-        ));
+            'customClient' => $this->customClient,
+        );
+
+        if ($this->customClient) {
+            $serializable['client'] = serialize($this->client);
+        }
+
+        return json_encode($serializable);
     }
 
     public function unserialize($value)
     {
         $serialized = json_decode($value, true);
         parent::unserialize($serialized['credentials']);
-        $this->client = unserialize($serialized['client']);
+        $this->customClient = $serialized['customClient'];
+        $this->client = $this->customClient ?
+            unserialize($serialized['client'])
+            : InstanceMetadataClient::factory();
     }
 
     /**
