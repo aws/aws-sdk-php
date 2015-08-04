@@ -16,6 +16,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model createDevicePool(array $args = array()) {@command DeviceFarm CreateDevicePool}
  * @method Model createProject(array $args = array()) {@command DeviceFarm CreateProject}
  * @method Model createUpload(array $args = array()) {@command DeviceFarm CreateUpload}
+ * @method Model getAccountSettings(array $args = array()) {@command DeviceFarm GetAccountSettings}
  * @method Model getDevice(array $args = array()) {@command DeviceFarm GetDevice}
  * @method Model getDevicePool(array $args = array()) {@command DeviceFarm GetDevicePool}
  * @method Model getDevicePoolCompatibility(array $args = array()) {@command DeviceFarm GetDevicePoolCompatibility}

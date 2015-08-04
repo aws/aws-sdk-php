@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Next Release
+
+* `Aws\Common` - Fixed an issue with `RefreshableInstanceProfileCredentials`
+  serilaization.
+* `Aws\DeviceFarm` - Added support for the `GetAccountSettings` operation.
+
 ## 2.8.16 - 2015-07-28
 
 * `Aws\CloudWatchLogs` - Added support for 4 new operations: `PutDestination`,

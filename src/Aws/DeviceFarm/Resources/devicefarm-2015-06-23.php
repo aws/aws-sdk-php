@@ -180,6 +180,47 @@ return array (
                 ),
             ),
         ),
+        'GetAccountSettings' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'GetAccountSettingsResult',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'DeviceFarm_20150623.GetAccountSettings',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'An invalid argument was specified.',
+                    'class' => 'ArgumentException',
+                ),
+                array(
+                    'reason' => 'The specified entity was not found.',
+                    'class' => 'NotFoundException',
+                ),
+                array(
+                    'reason' => 'A limit was exceeded.',
+                    'class' => 'LimitExceededException',
+                ),
+                array(
+                    'reason' => 'There was a problem with the service account.',
+                    'class' => 'ServiceAccountException',
+                ),
+            ),
+        ),
         'GetDevice' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -1289,6 +1330,9 @@ return array (
                                 'minLength' => 32,
                             ),
                         ),
+                        'billingMethod' => array(
+                            'type' => 'string',
+                        ),
                     ),
                 ),
             ),
@@ -1363,6 +1407,27 @@ return array (
                     'properties' => array(
                         '' => array(
                             'type' => 'object',
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'GetAccountSettingsResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'accountSettings' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'awsAccountNumber' => array(
+                            'type' => 'string',
+                        ),
+                        'unmeteredDevices' => array(
+                            'type' => 'object',
+                            'additionalProperties' => array(
+                                'type' => 'numeric',
+                            ),
                         ),
                     ),
                 ),
