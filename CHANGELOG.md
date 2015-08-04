@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.2.4 - 2015-08-04
 
 * `Aws\DeviceFarm` - Added support for the `GetAccountSettings` operation and
   update documentation to reflect new iOS support.
