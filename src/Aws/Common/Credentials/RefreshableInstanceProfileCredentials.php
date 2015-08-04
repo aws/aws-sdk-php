@@ -41,6 +41,11 @@ class RefreshableInstanceProfileCredentials extends AbstractRefreshableCredentia
     public function __construct(CredentialsInterface $credentials, InstanceMetadataClient $client = null)
     {
         $this->credentials = $credentials;
+        $this->setClient($client);
+    }
+
+    public function setClient(InstanceMetadataClient $client = null)
+    {
         $this->customClient = null !== $client;
         $this->client = $client ?: InstanceMetadataClient::factory();
     }
