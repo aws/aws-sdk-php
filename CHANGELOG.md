@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next Release
+## 2.8.17 - 2015-08-04
 
 * `Aws\Common` - Fixed an issue with `RefreshableInstanceProfileCredentials`
   serilaization.
