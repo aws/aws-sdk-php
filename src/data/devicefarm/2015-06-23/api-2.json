@@ -91,6 +91,33 @@
         }
       ]
     },
+    "GetAccountSettings":{
+      "name":"GetAccountSettings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAccountSettingsRequest"},
+      "output":{"shape":"GetAccountSettingsResult"},
+      "errors":[
+        {
+          "shape":"ArgumentException",
+          "exception":true
+        },
+        {
+          "shape":"NotFoundException",
+          "exception":true
+        },
+        {
+          "shape":"LimitExceededException",
+          "exception":true
+        },
+        {
+          "shape":"ServiceAccountException",
+          "exception":true
+        }
+      ]
+    },
     "GetDevice":{
       "name":"GetDevice",
       "http":{
@@ -664,6 +691,18 @@
     }
   },
   "shapes":{
+    "AWSAccountNumber":{
+      "type":"string",
+      "min":2,
+      "max":16
+    },
+    "AccountSettings":{
+      "type":"structure",
+      "members":{
+        "awsAccountNumber":{"shape":"AWSAccountNumber"},
+        "unmeteredDevices":{"shape":"PurchasedDevicesMap"}
+      }
+    },
     "AmazonResourceName":{
       "type":"string",
       "min":32
@@ -721,6 +760,13 @@
     "Artifacts":{
       "type":"list",
       "member":{"shape":"Artifact"}
+    },
+    "BillingMethod":{
+      "type":"string",
+      "enum":[
+        "METERED",
+        "UNMETERED"
+      ]
     },
     "Boolean":{"type":"boolean"},
     "CPU":{
@@ -839,7 +885,10 @@
     },
     "DevicePlatform":{
       "type":"string",
-      "enum":["ANDROID"]
+      "enum":[
+        "ANDROID",
+        "IOS"
+      ]
     },
     "DevicePool":{
       "type":"structure",
@@ -905,6 +954,17 @@
       "type":"string",
       "min":0,
       "max":1024
+    },
+    "GetAccountSettingsRequest":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "GetAccountSettingsResult":{
+      "type":"structure",
+      "members":{
+        "accountSettings":{"shape":"AccountSettings"}
+      }
     },
     "GetDevicePoolCompatibilityRequest":{
       "type":"structure",
@@ -1317,6 +1377,11 @@
       "type":"list",
       "member":{"shape":"Project"}
     },
+    "PurchasedDevicesMap":{
+      "type":"map",
+      "key":{"shape":"DevicePlatform"},
+      "value":{"shape":"Integer"}
+    },
     "Radios":{
       "type":"structure",
       "members":{
@@ -1370,7 +1435,8 @@
         "counters":{"shape":"Counters"},
         "message":{"shape":"Message"},
         "totalJobs":{"shape":"Integer"},
-        "completedJobs":{"shape":"Integer"}
+        "completedJobs":{"shape":"Integer"},
+        "billingMethod":{"shape":"BillingMethod"}
       }
     },
     "Runs":{
@@ -1419,7 +1485,8 @@
         "locale":{"shape":"String"},
         "location":{"shape":"Location"},
         "radios":{"shape":"Radios"},
-        "auxiliaryApps":{"shape":"AmazonResourceNames"}
+        "auxiliaryApps":{"shape":"AmazonResourceNames"},
+        "billingMethod":{"shape":"BillingMethod"}
       }
     },
     "ScheduleRunRequest":{
@@ -1511,7 +1578,9 @@
         "APPIUM_JAVA_TESTNG",
         "CALABASH",
         "INSTRUMENTATION",
-        "UIAUTOMATOR"
+        "UIAUTOMATION",
+        "UIAUTOMATOR",
+        "XCTEST"
       ]
     },
     "Tests":{
@@ -1566,12 +1635,15 @@
       "type":"string",
       "enum":[
         "ANDROID_APP",
+        "IOS_APP",
         "EXTERNAL_DATA",
         "APPIUM_JAVA_JUNIT_TEST_PACKAGE",
         "APPIUM_JAVA_TESTNG_TEST_PACKAGE",
         "CALABASH_TEST_PACKAGE",
         "INSTRUMENTATION_TEST_PACKAGE",
-        "UIAUTOMATOR_TEST_PACKAGE"
+        "UIAUTOMATION_TEST_PACKAGE",
+        "UIAUTOMATOR_TEST_PACKAGE",
+        "XCTEST_TEST_PACKAGE"
       ]
     },
     "Uploads":{

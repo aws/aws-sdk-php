@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DeviceFarm` - Added support for the `GetAccountSettings` operation and
+  update documentation to reflect new iOS support.
+* Made PHP7 test failures fail the build.
+* Added support for custom user-agent additions.
+
 ## 3.2.3 - 2015-07-30
 
 * `Aws\OpsWorks` - Added support for operations on ECS clusters.
