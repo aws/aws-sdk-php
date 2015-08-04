@@ -84,4 +84,38 @@ class RefreshableInstanceProfileCredentialsTest extends \Guzzle\Tests\GuzzleTest
         $client->getEventDispatcher()->addSubscriber($mock);
         $credentials->getSecurityToken();
     }
+
+    public function testCredentialsCanWokenUpFromSerialization()
+    {
+        list($client, $credentials) = $this->getMetadataCredentials();
+        $credentialResponse = array(
+            'Code' => 'Success',
+            'Type' => 'AWS-HMAC',
+            'AccessKeyId' => 'foo',
+            'SecretAccessKey' => 'bar',
+            'Token' => 'baz',
+        );
+        $originalExpiration = new \DateTime('+1 hour');
+        $updatedExpiration = new \DateTime('+2 hour');
+        $mock = new MockPlugin(array(
+            new Response(200, null, 'profile'),
+            new Response(200, null, json_encode($credentialResponse + array('Expiration' => $originalExpiration->format(\DateTime::ISO8601)))),
+            new Response(200, null, 'profile'),
+            new Response(200, null, json_encode($credentialResponse + array('Expiration' => $updatedExpiration->format(\DateTime::ISO8601)))),
+        ));
+        $client->getEventDispatcher()->addSubscriber($mock);
+
+        $credentials = unserialize(serialize($credentials));
+        $reflCreds = new \ReflectionClass($credentials);
+        $wrappedCredentials = $reflCreds->getProperty('credentials');
+        $wrappedCredentials->setAccessible(true);
+        $reflWrappedCredentials = new \ReflectionClass($wrappedCredentials->getValue($credentials));
+        $expirationProp = $reflWrappedCredentials->getProperty('ttd');
+        $expirationProp->setAccessible(true);
+        $expirationProp->setValue($wrappedCredentials->getValue($credentials), 1);
+
+        $this->assertSame('foo', $credentials->getAccessKeyId());
+        $this->assertSame('bar', $credentials->getSecretKey());
+        $this->assertSame('baz', $credentials->getSecurityToken());
+    }
 }
