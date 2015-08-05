@@ -76,7 +76,7 @@ class Sdk
         }
     }
 
-    public function __call($name, array $args = [])
+    public function __call($name, array $args)
     {
         if (strpos($name, 'create') === 0) {
             return $this->createClient(
