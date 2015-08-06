@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.2.5 - 2015-08-06
 
 * `Aws\Swf` - Added support for invoking AWS Lambda tasks from an Amazon SWF 
   workflow. 
