@@ -237,7 +237,7 @@ class UploadPartGenerator implements \Serializable, \IteratorAggregate, \Countab
         $uploadContext = new UploadPartContext($this->partSize, $body->ftell());
 
         // Read the data from the streamed body in 1MB chunks
-        while ($data = $body->read(min($this->partSize, Size::MB))) {
+        while (strlen($data = $body->read(min($this->partSize, Size::MB))) > 0) {
             // Add data to the hashes and size calculations
             $uploadContext->addData($data);
 
@@ -275,5 +275,10 @@ class UploadPartGenerator implements \Serializable, \IteratorAggregate, \Countab
 
         $this->uploadParts[] = $part;
         $this->archiveSize += $part->getSize();
+    }
+
+    private function readPart(EntityBodyInterface $body)
+    {
+        return $body->read(min($this->partSize, Size::MB));
     }
 }
