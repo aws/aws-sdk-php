@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Swf` - Added support for invoking AWS Lambda tasks from an Amazon SWF 
+  workflow. 
+
 ## 3.2.4 - 2015-08-04
 
 * `Aws\DeviceFarm` - Added support for the `GetAccountSettings` operation and
