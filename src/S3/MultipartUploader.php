@@ -95,7 +95,7 @@ class MultipartUploader extends AbstractUploader
      */
     public function __construct(S3Client $client, $source, array $config = [])
     {
-        parent::__construct($client, $source, $config + [
+        parent::__construct($client, $source, array_change_key_case($config) + [
             'bucket' => null,
             'key'    => null,
         ]);
