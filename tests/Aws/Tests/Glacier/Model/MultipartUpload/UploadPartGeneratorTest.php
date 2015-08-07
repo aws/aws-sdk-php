@@ -34,6 +34,12 @@ class UploadPartGeneratorTest extends \Guzzle\Tests\GuzzleTestCase
         $this->bodyContent = str_repeat('x', $this->bodySize);
     }
 
+    public function testCanUploadBodiesThatEvaluateToFalse()
+    {
+        $generator = UploadPartGenerator::factory('0', Size::MB);
+        $this->assertNotEmpty($generator->getAllParts());
+    }
+
     public function testCanGenerateUploadPartData()
     {
         $generator = UploadPartGenerator::factory($this->bodyContent, Size::MB);
