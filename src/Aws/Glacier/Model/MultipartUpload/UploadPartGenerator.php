@@ -276,9 +276,4 @@ class UploadPartGenerator implements \Serializable, \IteratorAggregate, \Countab
         $this->uploadParts[] = $part;
         $this->archiveSize += $part->getSize();
     }
-
-    private function readPart(EntityBodyInterface $body)
-    {
-        return $body->read(min($this->partSize, Size::MB));
-    }
 }
