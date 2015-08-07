@@ -1,0 +1,1 @@
+<?php return [ 'pagination' => [ 'ListBranches' => [ 'input_token' => 'nextToken', 'output_token' => 'nextToken', 'result_key' => 'branches', ], 'ListRepositories' => [ 'input_token' => 'nextToken', 'output_token' => 'nextToken', 'result_key' => 'repositories', ], ],];

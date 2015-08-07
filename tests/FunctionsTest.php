@@ -58,6 +58,20 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
         Aws\load_compiled_json('/path/to/not/here.json');
     }
 
+    public function testUsesPhpCompilationOfJsonIfPossible()
+    {
+        $soughtData = ['foo' => 'bar'];
+        $jsonPath = sys_get_temp_dir() . '/some-file-name-' . time() . '.json';
+        file_put_contents($jsonPath, 'INVALID JSON', LOCK_EX);
+        file_put_contents(
+            "$jsonPath.php",
+            '<?php return ' . var_export($soughtData, true) . ';',
+            LOCK_EX
+        );
+
+        $this->assertSame($soughtData, Aws\load_compiled_json($jsonPath));
+    }
+
     public function filterTest()
     {
         $data = [0, 1, 2, 3, 4];

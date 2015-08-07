@@ -1,0 +1,1 @@
+<?php return [ 'pagination' => [ 'ListEventSourceMappings' => [ 'input_token' => 'Marker', 'output_token' => 'NextMarker', 'limit_key' => 'MaxItems', 'result_key' => 'EventSourceMappings', ], 'ListFunctions' => [ 'input_token' => 'Marker', 'output_token' => 'NextMarker', 'limit_key' => 'MaxItems', 'result_key' => 'Functions', ], ],];

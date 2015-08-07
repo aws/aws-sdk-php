@@ -1,0 +1,1 @@
+<?php return [ 'version' => 2, 'waiters' => [ 'UserExists' => [ 'delay' => 1, 'operation' => 'GetUser', 'maxAttempts' => 20, 'acceptors' => [ [ 'state' => 'success', 'matcher' => 'status', 'expected' => 200, ], [ 'state' => 'retry', 'matcher' => 'error', 'expected' => 'NoSuchEntity', ], ], ], ],];

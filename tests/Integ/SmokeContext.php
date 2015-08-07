@@ -68,10 +68,6 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
         error_reporting(-1);
         date_default_timezone_set('UTC');
 
-        // Clear out any previously compiled json files
-        $compiler = new JsonCompiler();
-        $compiler->purge();
-
         // Clear out any previously compiled JMESPath files.
         Env::cleanCompileDir();
     }
