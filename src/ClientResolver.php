@@ -57,6 +57,7 @@ class ClientResolver
             'type'  => 'value',
             'valid' => ['string'],
             'doc'   => 'The full URI of the webservice. This is only required when connecting to a custom endpoint (e.g., a local version of S3).',
+            'fn'    => [__CLASS__, '_apply_endpoint'],
         ],
         'region' => [
             'type'     => 'value',
@@ -301,7 +302,7 @@ class ClientResolver
             . "provided for \"{$name}\". Expected {$expected}, but got "
             . describe_type($provided) . "\n\n"
             . $this->getArgMessage($name);
-        throw new \InvalidArgumentException($msg);
+        throw new IAE($msg);
     }
 
     /**
@@ -474,6 +475,18 @@ class ClientResolver
                 ));
             };
         });
+    }
+
+    public static function _apply_endpoint($value, array &$args, HandlerList $list)
+    {
+        $parts = parse_url($value);
+        if (empty($parts['scheme']) || empty($parts['host'])) {
+            throw new IAE(
+                'Endpoints must be full URIs and include a scheme and host'
+            );
+        }
+
+        $args['endpoint'] = $value;
     }
 
     public static function _default_endpoint_provider()

@@ -23,7 +23,7 @@ class CloudSearchDomainTest extends \PHPUnit_Framework_TestCase
     {
         $client = new CloudSearchDomainClient([
             'service'   => 'cloudsearchdomain',
-            'endpoint'  => 'search-foo.us-west-2.cloudsearch.amazon.com',
+            'endpoint'  => 'https://search-foo.us-west-2.cloudsearch.amazon.com',
             'signature' => 'v4',
             'version'   => 'latest'
         ]);
