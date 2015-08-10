@@ -44,6 +44,33 @@ uploader keeps track of it and continues to upload later parts until the entire
 source data has been read. It then either completes the upload or throws an
 exception that contains information about the parts that failed to be uploaded.
 
+Customizing a multipart upload
+------------------------------
+
+Custom options can be set on the ``CreateMultipartUpload``, ``UploadPart``, and
+``CompleteMultipartUpload`` operations executed by the multipart uploader via
+callbacks passed to its constructor.
+
+.. code-block:: php
+
+    $source = '/path/to/large/file.zip';
+    $uploader = new MultipartUploader($s3Client, $source, [
+        'bucket' => 'your-bucket',
+        'key'    => 'my-file.zip',
+        'before_initiate' => function (\Aws\Command $command) {
+            // $command is a CreateMultipartUpload operation
+            $command['CacheControl'] = 'max-age=3600';
+        },
+        'before_upload' => function (\Aws\Command $command) {
+           // $command is an UploadPart operation
+           $command['RequestPayer'] = 'requester';
+        },
+        'before_complete' => function (\Aws\Command $command) {
+           // $command is a CompleteMultipartUpload operation
+           $command['RequestPayer'] = 'requester';
+        },
+    ]);
+
 Recovering from errors
 ----------------------
 

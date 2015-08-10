@@ -109,4 +109,22 @@ class MultipartUploaderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(4 * self::MB, $uploader->getState()->getPartSize());
         $this->assertEquals($url, $result['ObjectURL']);
     }
+
+    public function testCanUseCaseInsensitiveConfigKeys()
+    {
+        $client = $this->getTestClient('s3');
+        $putObjectMup = new MultipartUploader($client, Psr7\stream_for('x'), [
+            'Bucket' => 'bucket',
+            'Key' => 'key',
+        ]);
+        $classicMup = new MultipartUploader($client, Psr7\stream_for('x'), [
+            'bucket' => 'bucket',
+            'key' => 'key',
+        ]);
+        $configProp = (new \ReflectionClass(MultipartUploader::class))
+            ->getProperty('config');
+        $configProp->setAccessible(true);
+
+        $this->assertSame($configProp->getValue($classicMup), $configProp->getValue($putObjectMup));
+    }
 }
