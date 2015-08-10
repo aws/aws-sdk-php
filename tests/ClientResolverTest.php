@@ -426,4 +426,26 @@ EOT;
         ClientResolver::_apply_user_agent([], $args, $list);
         call_user_func($list->resolve(), $command, $request);
     }
+
+    public function malformedEndpointProvider()
+    {
+        return [
+            ['www.amazon.com'], // missing protocol
+            ['https://'], // missing host
+        ];
+    }
+
+    /**
+     * @dataProvider malformedEndpointProvider
+     * @param $endpoint
+     *
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Endpoints must be full URIs and include a scheme and host
+     */
+    public function testRejectsMalformedEndpoints($endpoint)
+    {
+        $list = new HandlerList();
+        $args = [];
+        ClientResolver::_apply_endpoint($endpoint, $args, $list);
+    }
 }
