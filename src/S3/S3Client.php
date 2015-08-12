@@ -473,8 +473,8 @@ class S3Client extends AwsClient
         }
 
         $decider = RetryMiddleware::createDefaultDecider($value);
-        $decider = function ($retries, $request, $result, $error) use ($decider) {
-            if ($decider($retries, $request, $result, $error)) {
+        $decider = function ($retries, $command, $request, $result, $error) use ($decider) {
+            if ($decider($retries, $command, $request, $result, $error)) {
                 return true;
             } elseif ($error instanceof AwsException) {
                 return $error->getResponse()
