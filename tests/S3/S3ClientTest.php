@@ -4,9 +4,14 @@ namespace Aws\Test\S3;
 use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
+use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Promise;
+use GuzzleHttp\Promise\FulfilledPromise;
+use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\FnStream;
+use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 
 /**
@@ -350,5 +355,37 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $this->assertEquals('sink=baz', (string) $result['Body']);
+    }
+
+    public function testRetriesConnectionErrors()
+    {
+        $retries = 2;
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'http_handler' => function (
+                RequestInterface $request,
+                array $options
+            ) use (&$retries) {
+                if (0 === --$retries) {
+                    return new FulfilledPromise(new Response);
+                }
+
+                return new RejectedPromise([
+                    'connection_error' => true,
+                    'exception' => $this->getMockBuilder(ConnectException::class)
+                        ->disableOriginalConstructor()
+                        ->getMock(),
+                    'response' => null,
+                ]);
+            },
+        ]);
+
+        $client->headBucket([
+            'Bucket' => 'bucket',
+            '@http' => [
+                'retries' => $retries,
+            ],
+        ]);
     }
 }
