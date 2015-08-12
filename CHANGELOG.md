@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.2.6 - 2015-08-12
 * `Aws\ElasticBeanstalk` - Added support for enhanced health reporting.
 * `Aws\S3` - Fixed retry middleware to ensure that S3 requests are retried
   following errors raised by the HTTP handler.
