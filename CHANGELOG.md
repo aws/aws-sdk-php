@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+* `Aws\ElasticBeanstalk` - Added support for enhanced health reporting.
+* `Aws\S3` - Fixed retry middleware to ensure that S3 requests are retried
+  following errors raised by the HTTP handler.
+* `Aws\S3` - Made the keys of the configuration array passed to the constructor
+  of `MultipartUploader` case-insensitive so that its configuration would not
+  rely on differently-cased keys from that of the `S3Client::putObject`
+  operation.
+* Added an endpoint validation step to the `Aws\AwsClient` constructor so that
+  invalid endpoint would be reported immediately.
+
 ## 3.2.5 - 2015-08-06
 
 * `Aws\Swf` - Added support for invoking AWS Lambda tasks from an Amazon SWF 
