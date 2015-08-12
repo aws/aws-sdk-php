@@ -41,9 +41,11 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model describeApplications(array $args = array()) {@command ElasticBeanstalk DescribeApplications}
  * @method Model describeConfigurationOptions(array $args = array()) {@command ElasticBeanstalk DescribeConfigurationOptions}
  * @method Model describeConfigurationSettings(array $args = array()) {@command ElasticBeanstalk DescribeConfigurationSettings}
+ * @method Model describeEnvironmentHealth(array $args = array()) {@command ElasticBeanstalk DescribeEnvironmentHealth}
  * @method Model describeEnvironmentResources(array $args = array()) {@command ElasticBeanstalk DescribeEnvironmentResources}
  * @method Model describeEnvironments(array $args = array()) {@command ElasticBeanstalk DescribeEnvironments}
  * @method Model describeEvents(array $args = array()) {@command ElasticBeanstalk DescribeEvents}
+ * @method Model describeInstancesHealth(array $args = array()) {@command ElasticBeanstalk DescribeInstancesHealth}
  * @method Model listAvailableSolutionStacks(array $args = array()) {@command ElasticBeanstalk ListAvailableSolutionStacks}
  * @method Model rebuildEnvironment(array $args = array()) {@command ElasticBeanstalk RebuildEnvironment}
  * @method Model requestEnvironmentInfo(array $args = array()) {@command ElasticBeanstalk RequestEnvironmentInfo}

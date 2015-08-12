@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+* `Aws\ElasticBeanstalk` - Added support for enhanced health reporting.
+* `Aws\Glacier` - Fixed an issue where content bodies that equaled false (e.g.,
+  '0') would not be uploaded.
+
 ## 2.8.17 - 2015-08-04
 
 * `Aws\Common` - Fixed an issue with `RefreshableInstanceProfileCredentials`
