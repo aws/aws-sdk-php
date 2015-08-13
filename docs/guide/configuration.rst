@@ -159,16 +159,32 @@ http (bool)
     Set to ``false`` to disable the "debug" feature of lower level HTTP
     handlers (e.g., verbose curl output).
 
+auth_headers (array)
+    Set to a key-value mapping of headers you would like to replace mapped to
+    the value you would like to replace them with. These values are not used
+    unless ``scrub_auth`` is set to ``true``.
+
+auth_strings (array)
+    Set to a key-value mapping of regular expressions to mapped to their
+    replacements. These values will be used by the authentication data scrubber
+    if ``scrub_auth`` is set to ``true``.
+
 .. code-block:: php
 
     $s3 = new Aws\S3\S3Client([
         'version' => 'latest',
         'region'  => 'us-west-2',
         'debug'   => [
-            'logfn'       => function ($msg) { echo $msg . "\n"; },
-            'stream_size' => 0,
-            'scrub_auth'  => true,
-            'http'        => true,
+            'logfn'        => function ($msg) { echo $msg . "\n"; },
+            'stream_size'  => 0,
+            'scrub_auth'   => true,
+            'http'         => true,
+            'auth_headers' => [
+                'X-My-Secret-Header' => '[REDACTED]',
+            ],
+            'auth_strings' => [
+                '/SuperSecret=[A-Za-z0-9]{20}/i' => 'SuperSecret=[REDACTED]',
+            ],
         ]
     ]);
 
