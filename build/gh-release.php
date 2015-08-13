@@ -10,8 +10,9 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use GuzzleHttp\Url;
-use GuzzleHttp\Stream\Utils;
+use GuzzleHttp\Middleware;
+use GuzzleHttp\Psr7\Uri;
+use GuzzleHttp\Psr7;
 
 $owner = 'aws';
 $repo = 'aws-sdk-php';
@@ -26,9 +27,7 @@ $message = `chag contents -t "$tag"` or die('Chag could not find or parse the ta
 // Create a GitHub client.
 $client = new GuzzleHttp\Client([
     'base_uri' => 'https://api.github.com/',
-    'defaults' => [
-        'headers' => ['Authorization' => "token $token"]
-    ]
+    'headers' => ['Authorization' => "token $token"],
 ]);
 
 // Create the release
@@ -41,23 +40,23 @@ $response = $client->post("repos/${owner}/${repo}/releases", [
 ]);
 
 // Grab the location of the new release
-$url = $response->getHeader('Location');
+$url = $response->getHeaderLine('Location');
 echo "Release successfully published to: $url\n";
 
 // Uploads go to uploads.github.com
-$uploadUrl = Url::fromString($url);
-$uploadUrl->setHost('uploads.github.com');
+$uploadUrl = new Uri($url);
+$uploadUrl = $uploadUrl->withHost('uploads.github.com');
 
 // Upload aws.zip
 $response = $client->post($uploadUrl . '/assets?name=aws.zip', [
     'headers' => ['Content-Type' => 'application/zip'],
-    'body'    => Utils::open(__DIR__ . '/artifacts/aws.zip', 'r')
+    'body'    => Psr7\try_fopen(__DIR__ . '/artifacts/aws.zip', 'r')
 ]);
-echo "aws.zip uploaded to: " . $response->json()['browser_download_url'] . "\n";
+echo "aws.zip uploaded to: " . json_decode($response->getBody(), true)['browser_download_url'] . "\n";
 
 // Upload aws.phar
 $response = $client->post($uploadUrl . '/assets?name=aws.phar', [
     'headers' => ['Content-Type' => 'application/phar'],
-    'body'    => Utils::open(__DIR__ . '/artifacts/aws.phar', 'r')
+    'body'    => Psr7\try_fopen(__DIR__ . '/artifacts/aws.phar', 'r')
 ]);
-echo "aws.phar uploaded to: " . $response->json()['browser_download_url'] . "\n";
+echo "aws.phar uploaded to: " . json_decode($response->getBody(), true)['browser_download_url'] . "\n";
