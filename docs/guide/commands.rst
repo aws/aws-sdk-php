@@ -50,10 +50,47 @@ The following examples are functionally equivalent:
 Command parameters
 ------------------
 
-When you create a command using a client's ``getCommand()`` method, it does not
-immediately execute or transfer an HTTP request. The command is only executed
-when it is passed to the ``execute()`` method of the client. This gives you the
-opportunity to modify the command object before executing the command.
+All commands support a few special parameters that are not part of a service's
+API but instead control the SDK's behavior.
+
+``@http``
+~~~~~~~~~
+
+Using this parameter, it's possible to fine tune how the underlying HTTP handler
+executes the request. The options you can include in the ``@http`` parameter are
+the same as the ones you can set when you instantiate the client with the
+:ref:`"http" client option <config_http>`.
+
+.. code-block:: php
+
+    // Configures the command to be delayed by 500 milliseconds.
+    $command['@http'] = [
+        'delay' => 500,
+    ];
+
+``@retries``
+~~~~~~~~~~~~
+
+Like the :ref:`"retries" client option <config_retries>`, ``@retries`` controls
+how many times a command may be retried before it is considered to have failed.
+Set to ``0`` to disable retries.
+
+.. code-block:: php
+
+    // Disable retries
+    $command['@retries'] = 0;
+
+NB: If you have disabled retries on a client, you cannot selectively enable them
+on individual commands passed to that client.
+
+
+Creating command objects
+------------------------
+
+You can create a command using a client's ``getCommand()`` method. It does not
+immediately execute or transfer an HTTP request, but is only executed when it is
+passed to the ``execute()`` method of the client. This gives you the opportunity
+to modify the command object before executing the command.
 
 .. code-block:: php
 
@@ -69,23 +106,6 @@ opportunity to modify the command object before executing the command.
     ]);
     $command['MaxKeys'] = 100;
     $result = $s3Client->execute($command);
-
-
-HTTP handler options
---------------------
-
-All commands support the special ``@http`` parameter. Using this parameter,
-it's possible to fine tune how the underlying HTTP handler executes the
-request. The options you can include in the ``@http`` parameter are the same as
-the ones you can set when you instantiate the client with the
-:ref:`"http" client option <config_http>`.
-
-.. code-block:: php
-
-    // Configures the command to be delayed by 500 milliseconds.
-    $command['@http'] = [
-        'delay' => 500,
-    ];
 
 
 Command HandlerList

@@ -6,10 +6,15 @@ use Aws\CommandInterface;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Exception\AwsException;
 use Aws\Result;
+use Aws\S3\S3Client;
+use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Promise;
+use GuzzleHttp\Promise\FulfilledPromise;
+use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @covers Aws\Waiter
@@ -52,6 +57,38 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
                 '@waiter' => ['before' => '%']
             ]
         );
+    }
+
+    public function testContinueWaitingOnHandlerError()
+    {
+        $retries = 10;
+        $client = new DynamoDbClient([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'retries' => 0,
+            'http_handler' => function (
+                RequestInterface $request,
+                array $options
+            ) use (&$retries) {
+                if (0 === --$retries) {
+                    return new FulfilledPromise(new Response(200, [],
+                        Psr7\stream_for('{"Table":{"TableStatus":"ACTIVE"}}')
+                    ));
+                }
+
+                return new RejectedPromise([
+                    'connection_error' => true,
+                    'exception' => $this->getMockBuilder(ConnectException::class)
+                        ->disableOriginalConstructor()
+                        ->getMock(),
+                    'response' => null,
+                ]);
+            },
+        ]);
+
+        $client->waitUntil('TableExists', [
+            'TableName' => 'table',
+        ]);
     }
 
     public function testCanCancel()
