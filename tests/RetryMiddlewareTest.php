@@ -210,7 +210,7 @@ class RetryMiddlewareTest extends \PHPUnit_Framework_TestCase
     public function testRetriesCanBeDisabledOnACommand()
     {
         $decider = RetryMiddleware::createDefaultDecider($retries = 3);
-        $command = new Command('foo', ['retries' => 0]);
+        $command = new Command('foo', ['@retries' => 0]);
         $request = new Request('GET', 'http://www.example.com');
         $err = new AwsException('e', $command, ['connection_error' => true]);
         $this->assertFalse($decider(0, $command, $request, null, $err));

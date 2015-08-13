@@ -65,6 +65,7 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
         $client = new DynamoDbClient([
             'version' => 'latest',
             'region' => 'us-west-2',
+            'retries' => 0,
             'http_handler' => function (
                 RequestInterface $request,
                 array $options
@@ -87,7 +88,6 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
 
         $client->waitUntil('TableExists', [
             'TableName' => 'table',
-            'retries' => 0,
         ]);
     }
 

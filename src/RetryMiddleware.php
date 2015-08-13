@@ -55,8 +55,8 @@ class RetryMiddleware
             $error = null
         ) use ($maxRetries) {
             // Allow command-level options to override this value
-            $maxRetries = null !== $command['retries'] ?
-                $command['retries']
+            $maxRetries = null !== $command['@retries'] ?
+                $command['@retries']
                 : $maxRetries;
 
             if ($retries >= $maxRetries) {

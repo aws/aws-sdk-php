@@ -363,6 +363,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
         $client = new S3Client([
             'version' => 'latest',
             'region' => 'us-west-2',
+            'retries' => $retries,
             'http_handler' => function (
                 RequestInterface $request,
                 array $options
@@ -383,7 +384,6 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
 
         $client->headBucket([
             'Bucket' => 'bucket',
-            'retries' => $retries,
         ]);
     }
 }

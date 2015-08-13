@@ -621,6 +621,7 @@ for a list of available regions.
         'version' => '2006-03-01'
     ]);
 
+.. _config_retries:
 
 retries
 ~~~~~~~
