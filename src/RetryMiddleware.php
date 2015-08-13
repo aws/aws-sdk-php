@@ -54,6 +54,11 @@ class RetryMiddleware
             ResultInterface $result = null,
             $error = null
         ) use ($maxRetries) {
+            // Allow command-level options to override this value
+            $maxRetries = null !== $command['retries'] ?
+                $command['retries']
+                : $maxRetries;
+
             if ($retries >= $maxRetries) {
                 return false;
             } elseif (!$error) {
@@ -99,7 +104,7 @@ class RetryMiddleware
         $decider = $this->decider;
         $delay = $this->delay;
 
-        $g = function ($value) use ($handler, $decider, $delay, $command, $request, &$retries) {
+        $g = function ($value) use ($handler, $decider, $delay, $command, $request, &$retries, &$g) {
             if ($value instanceof \Exception) {
                 if (!$decider($retries, $command, $request, null, $value)) {
                     return \GuzzleHttp\Promise\rejection_for($value);
@@ -112,7 +117,7 @@ class RetryMiddleware
 
             // Delay fn is called with 0, 1, ... so increment after the call.
             $command['@http']['delay'] = $delay($retries++);
-            return $handler($command, $request);
+            return $handler($command, $request)->then($g, $g);
         };
 
         return $handler($command, $request)->then($g, $g);
