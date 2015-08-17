@@ -16,6 +16,23 @@ class TraceMiddleware
     private $prevInput;
     private $config;
 
+    private static $authHeaders = [
+        'X-Amz-Security-Token' => '[TOKEN]',
+    ];
+
+    private static $authStrings = [
+        // S3Signature
+        '/AWSAccessKeyId=[A-Z0-9]{20}&/i' => 'AWSAccessKeyId=[KEY]&',
+        // SignatureV4 Signature and S3Signature
+        '/Signature=.+/i' => 'Signature=[SIGNATURE]',
+        // SignatureV4 access key ID
+        '/Credential=[A-Z0-9]{20}\//i' => 'Credential=[KEY]/',
+        // S3 signatures
+        '/AWS [A-Z0-9]{20}:.+/' => 'AWS AKI[KEY]:[SIGNATURE]',
+        // STS Presigned URLs
+        '/X-Amz-Security-Token=[^&]+/i' => 'X-Amz-Security-Token=[TOKEN]',
+    ];
+
     /**
      * Configuration array can contain the following key value pairs.
      *
@@ -28,15 +45,28 @@ class TraceMiddleware
      *   from the logged messages.
      * - http: (bool) Set to false to disable the "debug" feature of lower
      *   level HTTP adapters (e.g., verbose curl output).
+     * - auth_strings: (array) A mapping of authentication string regular
+     *   expressions to scrubbed strings. These mappings are passed directly to
+     *   preg_replace (e.g., preg_replace($key, $value, $debugOutput) if
+     *   "scrub_auth" is set to true.
+     * - auth_headers: (array) A mapping of header names known to contain
+     *   sensitive data to what the scrubbed value should be. The value of any
+     *   headers contained in this array will be replaced with the if
+     *   "scrub_auth" is set to true.
      */
     public function __construct(array $config = [])
     {
         $this->config = $config + [
-            'logfn'       => function ($value) { echo $value; },
-            'stream_size' => 524288,
-            'scrub_auth'  => true,
-            'http'        => true
+            'logfn'        => function ($value) { echo $value; },
+            'stream_size'  => 524288,
+            'scrub_auth'   => true,
+            'http'         => true,
+            'auth_strings' => [],
+            'auth_headers' => [],
         ];
+
+        $this->config['auth_strings'] += self::$authStrings;
+        $this->config['auth_headers'] += self::$authHeaders;
     }
 
     public function __invoke($step, $name)
@@ -130,7 +160,7 @@ class TraceMiddleware
         return !$request ? [] : array_filter([
             'instance' => spl_object_hash($request),
             'method'   => $request->getMethod(),
-            'headers'  => $request->getHeaders(),
+            'headers'  => $this->redactHeaders($request->getHeaders()),
             'body'     => $this->streamStr($request->getBody()),
             'scheme'   => $request->getUri()->getScheme(),
             'port'     => $request->getUri()->getPort(),
@@ -144,7 +174,7 @@ class TraceMiddleware
         return !$response ? [] : [
             'instance'   => spl_object_hash($response),
             'statusCode' => $response->getStatusCode(),
-            'headers'    => $response->getHeaders(),
+            'headers'    => $this->redactHeaders($response->getHeaders()),
             'body'       => $this->streamStr($response->getBody())
         ];
     }
@@ -253,16 +283,20 @@ class TraceMiddleware
     private function write($value)
     {
         if ($this->config['scrub_auth']) {
-            // S3Signature
-            $value = preg_replace('/AWSAccessKeyId=AKI.+&/i', 'AWSAccessKeyId=AKI[KEY]&', $value);
-            // SignatureV4 Signature and S3Signature
-            $value = preg_replace('/Signature=.+/i', 'Signature=[SIGNATURE]', $value);
-            // SignatureV4 access key ID
-            $value = preg_replace('/Credential=AKI.+\//i', 'Credential=AKI[KEY]/', $value);
-            // S3 signatures
-            $value = preg_replace('/AWS AKI.+:.+/', 'AWS AKI[KEY]:[SIGNATURE]', $value);
+            foreach ($this->config['auth_strings'] as $pattern => $replacement) {
+                $value = preg_replace($pattern, $replacement, $value);
+            }
         }
 
         call_user_func($this->config['logfn'], $value);
+    }
+
+    private function redactHeaders(array $headers)
+    {
+        if ($this->config['scrub_auth']) {
+            $headers = $this->config['auth_headers'] + $headers;
+        }
+
+        return $headers;
     }
 }

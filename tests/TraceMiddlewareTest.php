@@ -123,15 +123,22 @@ class TraceMiddlewareTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('string(5) "error"', $str);
     }
 
-    public function testScrubsAuthStrings()
+    /**
+     * @dataProvider authStringProvider
+     *
+     * @param string $key
+     * @param string $signature
+     * @param array $headers
+     */
+    public function testScrubsAuthStrings($key, $signature, array $headers)
     {
         $str = '';
         $logfn = function ($value) use (&$str) { $str .= $value; };
         $list = new HandlerList();
 
-        $list->setHandler(function ($cmd, $req) {
+        $list->setHandler(function ($cmd, $req) use ($key) {
             // ensure that http level debug information is filtered as well.
-            fwrite($cmd['@http']['debug'], "Credential=AKI123/...\n");
+            fwrite($cmd['@http']['debug'], "Credential=$key/...\n");
             return \GuzzleHttp\Promise\promise_for(new Result());
         });
 
@@ -143,12 +150,81 @@ class TraceMiddlewareTest extends \PHPUnit_Framework_TestCase
         $list->interpose(new TraceMiddleware(['logfn' => $logfn]));
         $handler = $list->resolve();
         $command = new Command('foo');
-        $request = new Request('GET', 'http://foo.com?Signature=abc&AWSAccessKeyId=AKI123', [
-            'Authorization' => 'Credential=AKI123/..., Signature=abcdef'
-        ]);
+        $request = new Request(
+            'GET',
+            "http://foo.com?Signature=$signature&AWSAccessKeyId=$key",
+            array_map(function (array $h) { return $h['raw']; }, $headers)
+        );
         $handler($command, $request);
-        $this->assertContains("Credential=AKI[KEY]/..., Signature=[SIGNATURE]", $str);
-        $this->assertNotContains('AKI123', $str);
-        $this->assertNotContains('abcdef', $str);
+
+        $this->assertNotContains($key, $str);
+        $this->assertNotContains($signature, $str);
+        foreach ($headers as $header) {
+            $this->assertNotContains($header['raw'], $str);
+            $this->assertContains($header['scrubbed'], $str);
+        }
+    }
+
+    public function authStringProvider()
+    {
+        return [
+            // v4 signature example from http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-auth-using-authorization-header.html
+            [
+                'AKIAIOSFODNN7EXAMPLE', // key
+                'fe5f80f77d5fa3beca038a248ff027d0445342fe2855ddc963176630326f1024', // signature
+                [ // headers
+                    'Authorization' => [
+                        'raw' => 'AWS4-HMAC-SHA256 Credential=AKIAIOSFODNN7EXAMPLE/20130524/us-east-1/s3/aws4_request, SignedHeaders=host;range;x-amz-date, Signature=fe5f80f77d5fa3beca038a248ff027d0445342fe2855ddc963176630326f1024',
+                        'scrubbed' => 'AWS4-HMAC-SHA256 Credential=[KEY]/20130524/us-east-1/s3/aws4_request, SignedHeaders=host;range;x-amz-date, Signature=[SIGNATURE]',
+                    ],
+                    'X-Amz-Security-Token' => [ // STS token example from http://docs.aws.amazon.com/STS/latest/APIReference/API_GetSessionToken.html
+                        'raw' => 'AQoEXAMPLEH4aoAH0gNCAPyJxz4BlCFFxWNE1OPTgk5TthT+FvwqnKwRcOIfrRh3c/LTo6UDdyJwOOvEVPvLXCrrrUtdnniCEXAMPLE/IvU1dYUg2RVAJBanLiHb4IgRmpRV3zrkuWJOgQs8IZZaIv2BXIa2R4OlgkBN9bkUDNCJiBeb/AXlzBBko7b15fjrBs2+cTQtpZ3CYWFXG8C5zqx37wnOE49mRl/+OtkIKGO7fAE',
+                        'scrubbed' => '[TOKEN]',
+                    ],
+                    'Query-String' => [
+                        'raw' => 'X-Amz-Security-Token=AQoEXAMPLEH4aoAH0gNCAPyJxz4BlCFFxWNE1OPTgk5TthT+FvwqnKwRcOIfrRh3c/LTo6UDdyJwOOvEVPvLXCrrrUtdnniCEXAMPLE/IvU1dYUg2RVAJBanLiHb4IgRmpRV3zrkuWJOgQs8IZZaIv2BXIa2R4OlgkBN9bkUDNCJiBeb/AXlzBBko7b15fjrBs2+cTQtpZ3CYWFXG8C5zqx37wnOE49mRl/+OtkIKGO7fAE&foo=bar',
+                        'scrubbed' => 'X-Amz-Security-Token=[TOKEN]&foo=bar'
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    public function testCanScrubOnArbitraryPatterns()
+    {
+        $scrubPatterns = [
+            '/SuperSecret=[^&]+/i' => 'SuperSecret=[FOR_OFFICIAL_EYES_ONLY]'
+        ];
+        $toScrub = 'OhNoIShouldBeHidden';
+        $str = '';
+        $logfn = function ($value) use (&$str) { $str .= $value; };
+        $list = new HandlerList();
+
+        $list->setHandler(function ($cmd, $req) {
+            return \GuzzleHttp\Promise\promise_for(new Result());
+        });
+
+        $list->appendInit(function ($handler) {
+            return function ($cmd, $req) use ($handler) {
+                return $handler($cmd, $req);
+            };
+        });
+        $list->interpose(new TraceMiddleware([
+            'logfn' => $logfn,
+            'auth_strings' => $scrubPatterns,
+        ]));
+
+        $handler = $list->resolve();
+        $command = new Command('foo');
+        $request = new Request(
+            'GET',
+            "http://foo.com?SuperSecret=$toScrub"
+        );
+        $handler($command, $request);
+
+        $this->assertNotContains($toScrub, $str);
+        foreach (array_values($scrubPatterns) as $scrubbed) {
+            $this->assertContains($scrubbed, $str);
+        }
     }
 }
