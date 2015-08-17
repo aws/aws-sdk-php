@@ -308,7 +308,7 @@ argument and returns a ``Psr\Http\Message\RequestInterface`` object.
     ]);
 
     // Apply a custom middleware named "add-header" to the "build" lifecycle step
-    $command->getHandlerList()->prependBuild(
+    $command->getHandlerList()->appendBuild(
         Middleware::mapRequest(function (RequestInterface $request) {
             // Return a new request with the added header
             return $request->withHeader('X-Foo-Baz', 'Bar');
@@ -320,9 +320,9 @@ Now when the command is executed, it will be sent with the custom header.
 
 .. important::
 
-    Notice that the middleware was prepended to the handler list at the
-    ``init`` step. This is to ensure that the command parameters are not
-    validated before adding the default parameter.
+    Notice that the middleware was appended to the handler list at the
+    end of ``build`` step. This is to ensure that a request has been been
+    built before this middleware is invoked.
 
 
 mapResult
