@@ -57,7 +57,14 @@ class JsonCompiler
         // Minify the PHP file
         $code = preg_replace('/\s+/', ' ', str_replace("\n", '', $code));
 
-        return "<?php return $code;\n";
+        $originalPath = preg_replace('/^.+?(?=\/src\/data\/)/', '', $this->path);
+
+        return <<<EOPHP
+<?php
+// This file was auto-generated from sdk-root$originalPath
+return $code;
+
+EOPHP;
     }
 
     private function getDecodedData()
