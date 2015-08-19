@@ -12,6 +12,7 @@ help:
 	@echo "  api-show       to view the API documentation"
 	@echo "  api-package    to build the API documentation as a ZIP"
 	@echo "  api-manifest   to build an API manifest JSON file for the SDK"
+	@echo "  compile-json   to compile the JSON data files in src/data into PHP files"
 	@echo "  package        to package a phar and zip file for a release"
 	@echo "  check-tag      to ensure that the TAG argument was passed"
 	@echo "  tag            to chag tag a release based on the changelog. Must provide a TAG"
@@ -29,6 +30,13 @@ test:
 	@AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar \
 	vendor/bin/phpunit --testsuite=unit $(TEST)
 
+test-phar: package
+	[ -f build/artifacts/behat.phar ] || (cd build/artifacts && \
+	wget https://github.com/Behat/Behat/releases/download/v3.0.15/behat.phar)
+	[ -f build/artifacts/phpunit.phar ] || (cd build/artifacts && \
+	wget https://phar.phpunit.de/phpunit.phar)
+	./build/phar-test-runner.php --format=progress
+
 coverage:
 	@AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar \
 	vendor/bin/phpunit --testsuite=unit --coverage-html=build/artifacts/coverage $(TEST)
@@ -43,7 +51,7 @@ smoke:
 	vendor/bin/behat --format=progress
 
 # Packages the phar and zip
-package:
+package: compile-json
 	php build/packager.php $(SERVICE)
 
 guide:
@@ -77,6 +85,12 @@ api-package:
 api-manifest:
 	php build/build-manifest.php
 	make clear-cache
+
+# Compiles JSON data files and prints the names of PHP data files created or
+# updated.
+compile-json:
+	php -dopcache.enable_cli=1 build/compile-json.php
+	git diff --name-only | grep ^src/data/.*\.json\.php$ || true
 
 # Ensures that the TAG variable was passed to the make command
 check-tag:
@@ -112,6 +126,6 @@ release: check-tag package
 # Tags the repo and publishes a release.
 full_release: tag release
 
-.PHONY: help clean test coverage coverage-show integ package \
+.PHONY: help clean test coverage coverage-show integ package compile-json \
 guide guide-show api-get-apigen api api-show api-package api-manifest \
 check-tag tag release full-release clear-cache

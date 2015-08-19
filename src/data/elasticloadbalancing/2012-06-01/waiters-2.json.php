@@ -1,0 +1,3 @@
+<?php
+// This file was auto-generated from sdk-root/src/data/elasticloadbalancing/2012-06-01/waiters-2.json
+return [ 'version' => 2, 'waiters' => [ 'InstanceInService' => [ 'delay' => 15, 'operation' => 'DescribeInstanceHealth', 'maxAttempts' => 40, 'acceptors' => [ [ 'expected' => 'InService', 'matcher' => 'pathAll', 'state' => 'success', 'argument' => 'InstanceStates[].State', ], ], ], 'AnyInstanceInService' => [ 'delay' => 15, 'operation' => 'DescribeInstanceHealth', 'maxAttempts' => 40, 'acceptors' => [ [ 'expected' => 'InService', 'matcher' => 'pathAny', 'state' => 'success', 'argument' => 'InstanceStates[].State', ], ], ], ],];

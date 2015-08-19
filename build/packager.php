@@ -12,7 +12,7 @@ foreach ($metaFiles as $file) {
     $burgomaster->deepCopy($file, $file);
 }
 
-$burgomaster->recursiveCopy('src', 'Aws', ['php', 'json']);
+$burgomaster->recursiveCopy('src', 'Aws');
 $burgomaster->recursiveCopy('vendor/mtdowling/jmespath.php/src', 'JmesPath');
 $burgomaster->recursiveCopy('vendor/guzzlehttp/guzzle/src', 'GuzzleHttp');
 $burgomaster->recursiveCopy('vendor/guzzlehttp/psr7/src', 'GuzzleHttp/Psr7');
