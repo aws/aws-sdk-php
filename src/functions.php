@@ -141,17 +141,17 @@ function or_chain()
  */
 function load_compiled_json($path)
 {
-    static $loader;
-
     if ($compiled = @include("$path.php")) {
         return $compiled;
     }
 
-    if (!$loader) {
-        $loader = new JsonCompiler();
+    if (!file_exists($path)) {
+        throw new \InvalidArgumentException(
+            sprintf("File not found: %s", $path)
+        );
     }
 
-    return $loader->load($path);
+    return json_decode(file_get_contents($path), true);
 }
 
 /**

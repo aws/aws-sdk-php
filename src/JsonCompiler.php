@@ -5,6 +5,7 @@ namespace Aws;
  * Loads JSON files and compiles them into PHP arrays.
  *
  * @internal Please use json_decode instead.
+ * @deprecated
  */
 class JsonCompiler
 {
@@ -19,12 +20,6 @@ class JsonCompiler
      */
     public function load($path)
     {
-        if (!file_exists($path)) {
-            throw new \InvalidArgumentException(
-                sprintf("File not found: %s", $path)
-            );
-        }
-
-        return json_decode(file_get_contents($path), true);
+        return load_compiled_json($path);
     }
 }
