@@ -23,13 +23,13 @@ view-docs:
 	open docs/_build/html/index.html
 
 # Packages the phar and zip
-package: burgomaster
+package: clean burgomaster
 	time php build/packager.php
 
 # Downloads a copy of Burgomaster
-burgomaster:
+burgomaster: clean
 	mkdir -p build/artifacts
-	curl -s https://raw.githubusercontent.com/mtdowling/Burgomaster/0.0.2/src/Burgomaster.php > build/artifacts/Burgomaster.php
+	curl -s https://raw.githubusercontent.com/mtdowling/Burgomaster/master/src/Burgomaster.php > build/artifacts/Burgomaster.php
 
 # Ensures that the TAG variable was passed to the make command
 check_tag:
