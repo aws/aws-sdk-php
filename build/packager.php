@@ -28,7 +28,12 @@ $burgomaster->createAutoloader([
 ], $autoloaderFilename);
 
 $burgomaster->createZip(__DIR__ . "/artifacts/aws.zip");
-$burgomaster->createPhar(__DIR__ . "/artifacts/aws.phar", null, $autoloaderFilename);
+$burgomaster->createPhar(
+    __DIR__ . "/artifacts/aws.phar",
+    null,
+    $autoloaderFilename,
+    'aws-' . \Aws\Sdk::VERSION . '.phar'
+);
 
 $burgomaster->startSection('test-phar');
 $burgomaster->exec('php ' . __DIR__ . '/test-phar.php');

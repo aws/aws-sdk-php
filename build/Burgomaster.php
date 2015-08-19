@@ -302,18 +302,20 @@ EOT
      *
      * @param $dest
      * @param string $autoloaderFilename Name of the autoloader file.
+     * @param string $alias The phar alias to use
      *
      * @return string
      */
-    private function createStub($dest, $autoloaderFilename = 'autoloader.php')
+    private function createStub($dest, $autoloaderFilename = 'autoloader.php', $alias = null)
     {
         $this->startSection('stub');
         $this->debug("Creating phar stub at $dest");
 
-        $alias = basename($dest);
+        $alias = $alias ?: basename($dest);
         $constName = str_replace('.phar', '', strtoupper($alias)) . '_PHAR';
         $stub  = "<?php\n";
         $stub .= "define('$constName', true);\n";
+        $stub .= "Phar::mapPhar('$alias');\n";
         $stub .= "require 'phar://$alias/{$autoloaderFilename}';\n";
         $stub .= "__HALT_COMPILER();\n";
         $this->endSection();
@@ -337,19 +339,18 @@ EOT
     public function createPhar(
         $dest,
         $stub = null,
-        $autoloaderFilename = 'autoloader.php'
+        $autoloaderFilename = 'autoloader.php',
+        $alias = null
     ) {
         $this->startSection('phar');
         $this->debug("Creating phar file at $dest");
         $this->createDirIfNeeded(dirname($dest));
-        $phar = new \Phar($dest, 0, basename($dest));
-        $alias = basename($dest);
-        $phar->setAlias($alias);
+        $phar = new \Phar($dest, 0, $alias ?: basename($dest));
         $phar->buildFromDirectory($this->stageDir);
 
         if ($stub !== false) {
             if (!$stub) {
-                $stub = $this->createStub($dest, $autoloaderFilename);
+                $stub = $this->createStub($dest, $autoloaderFilename, $alias);
             }
             $phar->setStub($stub);
         }
