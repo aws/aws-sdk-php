@@ -46,7 +46,7 @@ that loads API files from the ``src/data`` folder of the SDK.
 credentials
 ~~~~~~~~~~~
 
-:Type: ``array|Aws\Credentials\CredentialsInterface|bool|callable|Aws\CacheInterface``
+:Type: ``array|Aws\CacheInterface|Aws\Credentials\CredentialsInterface|bool|callable``
 
 If you do not provide a ``credentials`` option, the SDK will attempt to load
 credentials from your environment in the following order:

@@ -62,16 +62,21 @@ class CredentialProvider
      */
     public static function defaultProvider(array $config = [])
     {
-        $cache = isset($config['credentials'])
-            && $config['credentials'] instanceof CacheInterface ?
-            $config['credentials']
-            : null;
+        $instanceProfileProvider = self::instanceProfile($config);
+        if (isset($config['credentials'])
+            && $config['credentials'] instanceof CacheInterface
+        ) {
+            $instanceProfileProvider = self::cache(
+                $instanceProfileProvider,
+                $config['credentials']
+            );
+        }
+
         return self::memoize(
             self::chain(
                 self::env(),
                 self::ini(),
-                $cache ? self::cache(self::instanceProfile($config), $cache)
-                    : self::instanceProfile($config)
+                $instanceProfileProvider
             )
         );
     }

@@ -105,7 +105,7 @@ class ClientResolver
         ],
         'credentials' => [
             'type'    => 'value',
-            'valid'   => ['Aws\Credentials\CredentialsInterface', 'array', 'bool', 'callable'],
+            'valid'   => [CredentialsInterface::class, CacheInterface::class, 'array', 'bool', 'callable'],
             'doc'     => 'Specifies the credentials used to sign requests. Provide an Aws\Credentials\CredentialsInterface object, an associative array of "key", "secret", and an optional "token" key, `false` to use null credentials, or a callable credentials provider used to create credentials or return null. See Aws\\Credentials\\CredentialProvider for a list of built-in credentials providers. If no credentials are provided, the SDK will attempt to load them from the environment.',
             'fn'      => [__CLASS__, '_apply_credentials'],
             'default' => [CredentialProvider::class, 'defaultProvider'],
@@ -338,7 +338,7 @@ class ClientResolver
 
     public static function _apply_credentials($value, array &$args)
     {
-        if (is_callable($value) || $value instanceof CacheInterface) {
+        if (is_callable($value)) {
             return;
         } elseif ($value instanceof CredentialsInterface) {
             $args['credentials'] = CredentialProvider::fromCredentials($value);
@@ -359,6 +359,8 @@ class ClientResolver
                 new Credentials('', '')
             );
             $args['config']['signature_version'] = 'anonymous';
+        } elseif ($value instanceof CacheInterface) {
+            $args['credentials'] = CredentialProvider::defaultProvider($args);
         } else {
             throw new IAE('Credentials must be an instance of '
                 . 'Aws\Credentials\CredentialsInterface, an associative '
