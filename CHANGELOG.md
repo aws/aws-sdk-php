@@ -1,6 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Added support for event notification filters.
+* Fixed waiter logic to always retry connection errors.
+* Added support for per-command retry count overrides.
+* Added support for defining custom patterns for the client debug log to use
+  to scrub sensitive data from the output logged.
+* Moved the work being done by `Aws\JsonCompiler` from run time to build time.
+* Fixed bug causing the phar autoloader not to be found when the phar was loaded
+  from opcache instead of from the filesystem.
+
 ## 3.2.6 - 2015-08-12
+
 * `Aws\ElasticBeanstalk` - Added support for enhanced health reporting.
 * `Aws\S3` - Fixed retry middleware to ensure that S3 requests are retried
   following errors raised by the HTTP handler.
