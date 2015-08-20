@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 2.8.19 - 2015-08-20
 
 * `Aws\S3` - Added support for event notification filters.
 
