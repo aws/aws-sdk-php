@@ -1,6 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Added support for event notification filters.
+
 ## 2.8.18 - 2015-08-12
+
 * `Aws\ElasticBeanstalk` - Added support for enhanced health reporting.
 * `Aws\Glacier` - Fixed an issue where content bodies that equaled false (e.g.,
   '0') would not be uploaded.
