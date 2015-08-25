@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodePipeline` - Added support for using encryption keys with artifact
+  stores.
+
 ## 3.3.0 - 2015-08-20
 
 * `Aws\S3` - Added support for event notification filters.
