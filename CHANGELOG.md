@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.3.1 - 2015-08-25
 
 * `Aws\CodePipeline` - Added support for using encryption keys with artifact
   stores.
