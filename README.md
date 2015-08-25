@@ -105,6 +105,7 @@ try {
 * [AWS Service Provider for Laravel][mod-laravel]
 * [AWS SDK ZF2 Module][mod-zf2]
 * [AWS Service Provider for Silex][mod-silex]
+* [AWS SDK Bundle for Symfony][mod-symfony]
 * [Guzzle Version 6][guzzle-docs] – PHP HTTP client and framework
 * Other [AWS SDKs & Tools][aws-tools] (e.g., js, cli, ruby, python, java, etc.)
 
@@ -154,3 +155,4 @@ try {
 [mod-laravel]: https://github.com/aws/aws-sdk-php-laravel
 [mod-zf2]: https://github.com/aws/aws-sdk-php-zf2
 [mod-silex]: https://github.com/aws/aws-sdk-php-silex
+[mod-symfony]: https://github.com/aws/aws-sdk-php-symfony

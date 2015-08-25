@@ -4,6 +4,6 @@ namespace Aws\CodeCommit;
 use Aws\AwsClient;
 
 /**
- * This client is used to interact with the **Amazon CodeCommit** service.
+ * This client is used to interact with the **AWS CodeCommit** service.
  */
 class CodeCommitClient extends AwsClient {}
