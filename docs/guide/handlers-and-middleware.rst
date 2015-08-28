@@ -68,7 +68,7 @@ them in FIFO order.
     $mock = new MockHandler();
 
     // Return a mocked result.
-    $mock->append(new Result(['foo' => 'bar']);
+    $mock->append(new Result(['foo' => 'bar']));
 
     // You can provide a function to invoke. Here we throw a mock exception.
     $mock->append(function (CommandInterface $cmd, RequestInterface $req) {
