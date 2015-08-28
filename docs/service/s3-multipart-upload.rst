@@ -108,6 +108,32 @@ to be uploaded.
 upload in a different process. You can also get the ``UploadState`` object even
 when you are not handling an exception by calling ``$uploader->getState()``.
 
+.. important::
+
+    Streams passed in as a source to a ``MultipartUploader`` will not be
+    automatically rewound before uploading. If you are using a stream instead of a
+    file path in a loop similar to the above example, you will need to reset the
+    ``$source`` variable inside of the ``catch`` block.
+
+    .. code-block:: php
+
+        $source = fopen('/path/to/large/file.zip', 'rb');
+        $uploader = new MultipartUploader($s3Client, $source, [
+            'bucket' => 'your-bucket',
+            'key'    => 'my-file.zip',
+        ]);
+
+        do {
+            try {
+                $result = $uploader->upload();
+            } catch (MultipartUploadException $e) {
+                rewind($source);
+                $uploader = new MultipartUploader($s3Client, $source, [
+                    'state' => $e->getState(),
+                ]);
+            }
+        } while (!isset($result));
+
 Aborting a multipart upload
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
