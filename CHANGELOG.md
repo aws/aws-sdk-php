@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.3.2 - 2015-08-27
 
 * `Aws\ConfigService` - Added support for the `ListDiscoveredResources` 
   operation and new resource types.
