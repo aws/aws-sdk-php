@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Ec2` - Added support for using instance weights with the 
+  `RequestSpotFleet` API.
+
 ## 3.3.2 - 2015-08-27
 
 * `Aws\ConfigService` - Added support for the `ListDiscoveredResources` 
