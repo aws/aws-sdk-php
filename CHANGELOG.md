@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.3.3 - 2015-08-31
 
 * `Aws\Ec2` - Added support for using instance weights with the 
   `RequestSpotFleet` API.
