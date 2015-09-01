@@ -6,6 +6,7 @@ use Aws\CommandInterface;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\DynamoDb\DynamoDbClient;
+use Aws\LruArrayCache;
 use Aws\S3\S3Client;
 use Aws\HandlerList;
 use Aws\Sdk;
@@ -258,6 +259,41 @@ EOT;
             'version'     => 'latest'
         ], new HandlerList());
         $this->assertSame($c, call_user_func($conf['credentials'])->wait());
+    }
+
+    public function testCanUseCredentialsCache()
+    {
+        $credentialsEnvironment = [
+            'home' => 'HOME',
+            'key' => CredentialProvider::ENV_KEY,
+            'secret' => CredentialProvider::ENV_SECRET,
+            'session' => CredentialProvider::ENV_SESSION,
+            'profile' => CredentialProvider::ENV_PROFILE,
+        ];
+        $envState = [];
+        foreach ($credentialsEnvironment as $key => $envVariable) {
+            $envState[$key] = getenv($envVariable);
+            putenv("$envVariable=");
+        }
+
+        $c = new Credentials('foo', 'bar');
+        $cache = new LruArrayCache;
+        $cache->set('aws_cached_credentials', $c);
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service'     => 'sqs',
+            'region'      => 'x',
+            'credentials' => $cache,
+            'version'     => 'latest'
+        ], new HandlerList());
+
+        $cached = call_user_func($conf['credentials'])->wait();
+
+        foreach ($credentialsEnvironment as $key => $envVariable) {
+            putenv("$envVariable={$envState[$key]}");
+        }
+
+        $this->assertSame($c, $cached);
     }
 
     public function testCanUseCustomEndpointProviderWithExtraData()

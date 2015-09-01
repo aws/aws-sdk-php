@@ -46,7 +46,7 @@ that loads API files from the ``src/data`` folder of the SDK.
 credentials
 ~~~~~~~~~~~
 
-:Type: ``array|Aws\Credentials\CredentialsInterface|bool|callable``
+:Type: ``array|Aws\CacheInterface|Aws\Credentials\CredentialsInterface|bool|callable``
 
 If you do not provide a ``credentials`` option, the SDK will attempt to load
 credentials from your environment in the following order:
@@ -107,6 +107,21 @@ create credentials using a function.
         'version'     => 'latest',
         'region'      => 'us-west-2',
         'credentials' => $provider
+    ]);
+
+Pass an instance of ``Aws\CacheInterface`` to cache the values returned by the
+default provider chain across multiple processes.
+
+.. code-block:: php
+
+    use Aws\DoctrineCacheAdapter;
+    use Aws\S3\S3Client;
+    use Doctrine\Common\Cache\ApcCache;
+
+    $s3 = new S3Client([
+        'version'     => 'latest',
+        'region'      => 'us-west-2',
+        'credentials' => new DoctrineCacheAdapter(new ApcCache),
     ]);
 
 You can find more information about providing credentials to a client in the

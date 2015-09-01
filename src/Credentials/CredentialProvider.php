@@ -2,6 +2,7 @@
 namespace Aws\Credentials;
 
 use Aws;
+use Aws\CacheInterface;
 use Aws\Exception\CredentialsException;
 use GuzzleHttp\Promise;
 
@@ -61,11 +62,21 @@ class CredentialProvider
      */
     public static function defaultProvider(array $config = [])
     {
+        $instanceProfileProvider = self::instanceProfile($config);
+        if (isset($config['credentials'])
+            && $config['credentials'] instanceof CacheInterface
+        ) {
+            $instanceProfileProvider = self::cache(
+                $instanceProfileProvider,
+                $config['credentials']
+            );
+        }
+
         return self::memoize(
             self::chain(
                 self::env(),
                 self::ini(),
-                self::instanceProfile($config)
+                $instanceProfileProvider
             )
         );
     }
@@ -152,6 +163,49 @@ class CredentialProvider
                     }
                     // Refresh the result and forward the promise.
                     return $result = $provider();
+                });
+        };
+    }
+
+    /**
+     * Wraps a credential provider and saves provided credentials in an
+     * instance of Aws\CacheInterface. Forwards calls when no credentials found
+     * in cache and updates cache with the results.
+     *
+     * Defaults to using a simple file-based cache when none provided.
+     *
+     * @param callable $provider Credentials provider function to wrap
+     * @param CacheInterface $cache (optional) Cache to store credentials
+     * @param string|null $cacheKey (optional) Cache key to use
+     *
+     * @return callable
+     */
+    public static function cache(
+        callable $provider,
+        CacheInterface $cache,
+        $cacheKey = null
+    ) {
+        $cacheKey = $cacheKey ?: 'aws_cached_credentials';
+
+        return function () use ($provider, $cache, $cacheKey) {
+            $found = $cache->get($cacheKey);
+            if ($found instanceof CredentialsInterface && !$found->isExpired()) {
+                return Promise\promise_for($found);
+            }
+
+            return $provider()
+                ->then(function (CredentialsInterface $creds) use (
+                    $cache,
+                    $cacheKey
+                ) {
+                    $cache->set(
+                        $cacheKey,
+                        $creds,
+                        null === $creds->getExpiration() ?
+                            0 : $creds->getExpiration() - time()
+                    );
+
+                    return $creds;
                 });
         };
     }
