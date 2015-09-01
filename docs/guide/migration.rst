@@ -98,6 +98,14 @@ changes until you are ready to explicitly update your configuration.
     recommended that you set the API version numbers explicitly for production
     code.
 
+    Not all services are available in all regions. You can find a list of
+    available regions using the `Regions and Endpoints
+    <http://docs.aws.amazon.com/general/latest/gr/rande.html>`_ reference.
+
+    For services only available via a single, global endpoint, e.g., Route53,
+    IAM, and CloudFront, clients should be instantiated with their configured
+    region set to ``us-east-1``.
+
 .. important::
 
     When using Amazon S3, and unlike in previous versions of the SDK, you must
