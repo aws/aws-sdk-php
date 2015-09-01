@@ -338,7 +338,7 @@ class ClientResolver
 
     public static function _apply_credentials($value, array &$args)
     {
-        if (is_callable($value)) {
+        if (is_callable($value) || $value instanceof CacheInterface) {
             return;
         } elseif ($value instanceof CredentialsInterface) {
             $args['credentials'] = CredentialProvider::fromCredentials($value);
