@@ -10,5 +10,5 @@ Feature: Amazon Elastic File System
 
   Scenario: Handling errors
     When I attempt to call the "DeleteFileSystem" API with:
-    | FileSystemId | fake-id |
-    Then the error code should be "ValidationException"
+    | FileSystemId | fs-c5a1446c |
+    Then the error code should be "FileSystemNotFound"
