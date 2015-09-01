@@ -27,7 +27,8 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
         'DeviceFarm' => [
             'region' => 'us-west-2',
         ],
-        'ElasticFileSystem' => [
+        'Efs' => [
+            'profile' => 'shared-integ',
             'region' => 'us-west-2',
         ],
         'Support' => [
