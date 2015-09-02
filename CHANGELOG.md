@@ -64,6 +64,9 @@
 
 ## 3.2.1 - 2015-07-23
 
+* **SECURITY FIX**: This release addresses a security issue associated with 
+  CVE-2015-5723, specifically, fixes improper default directory umask behavior 
+  that could potentially allow unauthorized modifications of PHP code.
 * `Aws\Ec2` - Added support for SpotFleetLaunchSpecification.
 * `Aws\Emr` - Added support for Amazon EMR release 4.0.0, which includes a new
   application installation and configuration experience, upgraded versions of
