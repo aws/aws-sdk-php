@@ -97,14 +97,16 @@ class Validator
             return;
         }
 
-        if ($shape['min'] && count($value) < $shape['min']) {
-            $this->addError('must have at least ' . $shape['min'] . ' members.'
-                . ' Value provided has '. count($value) . '.');
+        list($min, $max, $count) = [$shape['min'], $shape['max'], count($value)];
+
+        if ($min && $count < $min) {
+            $this->addError("must have at least $min members."
+                . " Value provided has $count.");
         }
 
-        if ($shape['max'] && count($value) > $shape['max']) {
-            $this->addError('must have no more than ' . $shape['max']
-                . ' members. Value provided has '. count($value) . '.');
+        if ($max && $count > $max) {
+            $this->addError("must have no more than $max members."
+                . " Value provided has $count.");
         }
 
         $items = $shape->getMember();
@@ -157,14 +159,15 @@ class Validator
             return;
         }
 
-        if ($shape['min'] && $value < $shape['min']) {
-            $this->addError('must be at least ' . $shape['min'] . '. Value'
-                . ' provided is '. $value . '.');
+        list($min, $max) = [$shape['min'], $shape['max']];
+
+        if ($min && $value < $min) {
+            $this->addError("must be at least $min. Value provided is $value.");
         }
 
-        if ($shape['max'] && $value > $shape['max']) {
-            $this->addError('must be no more than ' . $shape['max']
-                . '. Value provided is '. $value . '.');
+        if ($max && $value > $max) {
+            $this->addError("must be no more than $max."
+                . " Value provided is $value.");
         }
     }
 
@@ -184,16 +187,16 @@ class Validator
             return;
         }
 
-        if ($shape['min'] && strlen($value) < $shape['min']) {
-            $this->addError('must be at least ' . $shape['min'] . ' characters'
-                . ' long. Value provided is '. strlen($value) . ' characters'
-                . ' long.');
+        list($min, $max, $len) = [$shape['min'], $shape['max'], strlen($value)];
+
+        if ($min && $len < $min) {
+            $this->addError("must be at least $min characters long."
+                . " Value provided is $len characters long.");
         }
 
-        if ($shape['max'] && strlen($value) > $shape['max']) {
-            $this->addError('must be no more than ' . $shape['max']
-                . ' characters long. Value provided is '. strlen($value)
-                . ' characters long.');
+        if ($max && $len > $max) {
+            $this->addError("must be no more than $max characters long."
+                . " Value provided is $len characters long.");
         }
     }
 
