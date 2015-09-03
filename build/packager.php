@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . '/artifacts/Burgomaster.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 $stageDirectory = __DIR__ . '/artifacts/staging';
 $projectRoot = __DIR__ . '/../';
@@ -21,7 +22,12 @@ $burgomaster->recursiveCopy('vendor/symfony/event-dispatcher', 'Symfony/Componen
 
 $burgomaster->createAutoloader(array(), $autoloaderFilename);
 $burgomaster->createZip(__DIR__ . '/artifacts/aws.zip');
-$burgomaster->createPhar(__DIR__ . '/artifacts/aws.phar', null, $autoloaderFilename);
+$burgomaster->createPhar(
+    __DIR__ . "/artifacts/aws.phar",
+    null,
+    $autoloaderFilename,
+    'aws-' . \Aws\Common\Aws::VERSION . '.phar'
+);
 $burgomaster->startSection('test_phar');
 $burgomaster->debug('Phar output: '
     . $burgomaster->exec('php ' . __DIR__ . '/test_phar.php'));
