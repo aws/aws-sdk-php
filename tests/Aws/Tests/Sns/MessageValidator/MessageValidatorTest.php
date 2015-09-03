@@ -84,6 +84,28 @@ class MessageValidatorTest extends \Guzzle\Tests\GuzzleTestCase
         }
     }
 
+    public function testValidateWillAllowContructorOverridesOfAwsPattern()
+    {
+        $validator = new MessageValidator(null, '/(foo|bar).baz.com/');
+        $m = new \ReflectionMethod($validator, 'validateUrl');
+        $m->setAccessible(true);
+
+        $m->invoke($validator, Url::factory('https://foo.baz.com/bar.pem'));
+        $m->invoke($validator, Url::factory('https://bar.baz.com/foo.pem'));
+
+        try {
+            $m->invoke(
+                $validator,
+                Url::factory('https://sns.us-west-2.amazon.com/key.pem')
+            );
+
+            $this->assertTrue(false, 'The host pattern override should not have'
+                . ' permitted certificates on sns.us-west-2.amazon.com');
+        } catch (CertificateFromUnrecognizedSourceException $e) {
+            // all is well
+        }
+    }
+
     public function testValidateFailsWhenCannotDeterminePublicKey()
     {
         $this->setExpectedException('Aws\Sns\MessageValidator\Exception\CannotGetPublicKeyFromCertificateException');
