@@ -100,7 +100,7 @@ return array (
                     'class' => 'NoSuchDeliveryChannelException',
                 ),
                 array(
-                    'reason' => 'There are no configuration recorders available to provide the role needed to describe your resources.',
+                    'reason' => 'There are no configuration recorders available to provide the role needed to describe your resources. Create a configuration recorder.',
                     'class' => 'NoAvailableConfigurationRecorderException',
                 ),
                 array(
@@ -338,20 +338,92 @@ return array (
                     'class' => 'InvalidTimeRangeException',
                 ),
                 array(
-                    'reason' => 'You have reached the limit on the pagination.',
+                    'reason' => 'The specified limit is outside the allowable range.',
                     'class' => 'InvalidLimitException',
                 ),
                 array(
-                    'reason' => 'The specified nextToken for pagination is not valid.',
+                    'reason' => 'The specified next token is invalid. Specify the nextToken string that was returned in the previous response to get the next page of results.',
                     'class' => 'InvalidNextTokenException',
                 ),
                 array(
-                    'reason' => 'There are no configuration recorders available to provide the role needed to describe your resources.',
+                    'reason' => 'There are no configuration recorders available to provide the role needed to describe your resources. Create a configuration recorder.',
                     'class' => 'NoAvailableConfigurationRecorderException',
                 ),
                 array(
                     'reason' => 'You have specified a resource that is either unknown or has not been discovered.',
                     'class' => 'ResourceNotDiscoveredException',
+                ),
+            ),
+        ),
+        'ListDiscoveredResources' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'ListDiscoveredResourcesResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'StarlingDoveService.ListDiscoveredResources',
+                ),
+                'resourceType' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'resourceIds' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'ResourceId',
+                        'type' => 'string',
+                    ),
+                ),
+                'resourceName' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'limit' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'maximum' => 100,
+                ),
+                'includeDeletedResources' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'json',
+                ),
+                'nextToken' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The requested action is not valid.',
+                    'class' => 'ValidationException',
+                ),
+                array(
+                    'reason' => 'The specified limit is outside the allowable range.',
+                    'class' => 'InvalidLimitException',
+                ),
+                array(
+                    'reason' => 'The specified next token is invalid. Specify the nextToken string that was returned in the previous response to get the next page of results.',
+                    'class' => 'InvalidNextTokenException',
+                ),
+                array(
+                    'reason' => 'There are no configuration recorders available to provide the role needed to describe your resources. Create a configuration recorder.',
+                    'class' => 'NoAvailableConfigurationRecorderException',
                 ),
             ),
         ),
@@ -476,7 +548,7 @@ return array (
                     'class' => 'MaxNumberOfDeliveryChannelsExceededException',
                 ),
                 array(
-                    'reason' => 'There are no configuration recorders available to provide the role needed to describe your resources.',
+                    'reason' => 'There are no configuration recorders available to provide the role needed to describe your resources. Create a configuration recorder.',
                     'class' => 'NoAvailableConfigurationRecorderException',
                 ),
                 array(
@@ -812,6 +884,12 @@ return array (
                             'resourceId' => array(
                                 'type' => 'string',
                             ),
+                            'resourceName' => array(
+                                'type' => 'string',
+                            ),
+                            'awsRegion' => array(
+                                'type' => 'string',
+                            ),
                             'availabilityZone' => array(
                                 'type' => 'string',
                             ),
@@ -843,6 +921,9 @@ return array (
                                         'resourceId' => array(
                                             'type' => 'string',
                                         ),
+                                        'resourceName' => array(
+                                            'type' => 'string',
+                                        ),
                                         'relationshipName' => array(
                                             'type' => 'string',
                                         ),
@@ -850,6 +931,38 @@ return array (
                                 ),
                             ),
                             'configuration' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+                'nextToken' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'ListDiscoveredResourcesResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'resourceIdentifiers' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'ResourceIdentifier',
+                        'type' => 'object',
+                        'properties' => array(
+                            'resourceType' => array(
+                                'type' => 'string',
+                            ),
+                            'resourceId' => array(
+                                'type' => 'string',
+                            ),
+                            'resourceName' => array(
+                                'type' => 'string',
+                            ),
+                            'resourceDeletionTime' => array(
                                 'type' => 'string',
                             ),
                         ),

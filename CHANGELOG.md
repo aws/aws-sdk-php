@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodePipeline` - Added support for using encryption keys with artifact
+  stores.
+* `Aws\ConfigService` - Added support for the `ListDiscoveredResources`
+  operation and new resource types.
+* `Aws\Ec2` - Added support for using instance weights with the
+  `RequestSpotFleet` API.
+* `Aws\Sns` - Added support for configurable SigningCertURL host patterns.
+* `Aws\StorageGateway` - Added support for tagging and untagging resources.
+* Fixed issue with loading the phar from opcache.
+
 ## 2.8.19 - 2015-08-20
 
 * `Aws\S3` - Added support for event notification filters.

@@ -201,6 +201,68 @@ return array (
                 ),
             ),
         ),
+        'AddTagsToResource' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'AddTagsToResourceOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'StorageGateway_20130630.AddTagsToResource',
+                ),
+                'ResourceARN' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 50,
+                    'maxLength' => 500,
+                ),
+                'Tags' => array(
+                    'required' => true,
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'required' => true,
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 128,
+                            ),
+                            'Value' => array(
+                                'required' => true,
+                                'type' => 'string',
+                                'maxLength' => 256,
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'class' => 'InvalidGatewayRequestException',
+                ),
+                array(
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
+                    'class' => 'InternalServerErrorException',
+                ),
+            ),
+        ),
         'AddUploadBuffer' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -1754,6 +1816,56 @@ return array (
                 ),
             ),
         ),
+        'ListTagsForResource' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'ListTagsForResourceOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'StorageGateway_20130630.ListTagsForResource',
+                ),
+                'ResourceARN' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 50,
+                    'maxLength' => 500,
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 1000,
+                ),
+                'Limit' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'minimum' => 1,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'class' => 'InvalidGatewayRequestException',
+                ),
+                array(
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
+                    'class' => 'InternalServerErrorException',
+                ),
+            ),
+        ),
         'ListVolumeInitiators' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -1872,6 +1984,55 @@ return array (
                     'type' => 'numeric',
                     'location' => 'json',
                     'minimum' => 1,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'class' => 'InvalidGatewayRequestException',
+                ),
+                array(
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
+                    'class' => 'InternalServerErrorException',
+                ),
+            ),
+        ),
+        'RemoveTagsFromResource' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'RemoveTagsFromResourceOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'StorageGateway_20130630.RemoveTagsFromResource',
+                ),
+                'ResourceARN' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 50,
+                    'maxLength' => 500,
+                ),
+                'TagKeys' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'TagKey',
+                        'type' => 'string',
+                        'minLength' => 1,
+                        'maxLength' => 128,
+                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -2487,6 +2648,15 @@ return array (
                 ),
             ),
         ),
+        'AddTagsToResourceOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'ResourceARN' => array(
+                    'type' => 'string',
+                ),
+            ),
+        ),
         'AddUploadBufferOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -2831,6 +3001,9 @@ return array (
                 'GatewayId' => array(
                     'type' => 'string',
                     'location' => 'json',
+                ),
+                'GatewayName' => array(
+                    'type' => 'string',
                 ),
                 'GatewayTimezone' => array(
                     'type' => 'string',
@@ -3235,6 +3408,9 @@ return array (
                             'GatewayOperationalState' => array(
                                 'type' => 'string',
                             ),
+                            'GatewayName' => array(
+                                'type' => 'string',
+                            ),
                         ),
                     ),
                 ),
@@ -3278,6 +3454,33 @@ return array (
                                 'type' => 'string',
                             ),
                             'DiskAllocationResource' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'ListTagsForResourceOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'ResourceARN' => array(
+                    'type' => 'string',
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
                                 'type' => 'string',
                             ),
                         ),
@@ -3358,6 +3561,15 @@ return array (
                             ),
                         ),
                     ),
+                ),
+            ),
+        ),
+        'RemoveTagsFromResourceOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'ResourceARN' => array(
+                    'type' => 'string',
                 ),
             ),
         ),
@@ -3442,6 +3654,9 @@ return array (
                 'GatewayARN' => array(
                     'type' => 'string',
                     'location' => 'json',
+                ),
+                'GatewayName' => array(
+                    'type' => 'string',
                 ),
             ),
         ),

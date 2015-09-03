@@ -8256,6 +8256,12 @@ return array (
                                         'type' => 'boolean',
                                         'format' => 'boolean-string',
                                     ),
+                                    'WeightedCapacity' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'SpotPrice' => array(
+                                        'type' => 'string',
+                                    ),
                                 ),
                             ),
                         ),
@@ -15741,6 +15747,14 @@ return array (
                                                 'EbsOptimized' => array(
                                                     'type' => 'boolean',
                                                     'sentAs' => 'ebsOptimized',
+                                                ),
+                                                'WeightedCapacity' => array(
+                                                    'type' => 'numeric',
+                                                    'sentAs' => 'weightedCapacity',
+                                                ),
+                                                'SpotPrice' => array(
+                                                    'type' => 'string',
+                                                    'sentAs' => 'spotPrice',
                                                 ),
                                             ),
                                         ),

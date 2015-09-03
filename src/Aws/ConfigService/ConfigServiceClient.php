@@ -34,6 +34,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model describeDeliveryChannelStatus(array $args = array()) {@command ConfigService DescribeDeliveryChannelStatus}
  * @method Model describeDeliveryChannels(array $args = array()) {@command ConfigService DescribeDeliveryChannels}
  * @method Model getResourceConfigHistory(array $args = array()) {@command ConfigService GetResourceConfigHistory}
+ * @method Model listDiscoveredResources(array $args = array()) {@command ConfigService ListDiscoveredResources}
  * @method Model putConfigurationRecorder(array $args = array()) {@command ConfigService PutConfigurationRecorder}
  * @method Model putDeliveryChannel(array $args = array()) {@command ConfigService PutDeliveryChannel}
  * @method Model startConfigurationRecorder(array $args = array()) {@command ConfigService StartConfigurationRecorder}

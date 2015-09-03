@@ -1997,6 +1997,14 @@ return array (
                                 'continuationToken' => array(
                                     'type' => 'string',
                                 ),
+                                'encryptionKey' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        '' => array(
+                                            'type' => 'object',
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                         'accountId' => array(
@@ -2382,6 +2390,14 @@ return array (
                                 'continuationToken' => array(
                                     'type' => 'string',
                                 ),
+                                'encryptionKey' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        '' => array(
+                                            'type' => 'object',
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                         'nonce' => array(
@@ -2642,6 +2658,14 @@ return array (
                                     ),
                                     'continuationToken' => array(
                                         'type' => 'string',
+                                    ),
+                                    'encryptionKey' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            '' => array(
+                                                'type' => 'object',
+                                            ),
+                                        ),
                                     ),
                                 ),
                             ),

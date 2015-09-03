@@ -29,6 +29,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  *
  * @method Model activateGateway(array $args = array()) {@command StorageGateway ActivateGateway}
  * @method Model addCache(array $args = array()) {@command StorageGateway AddCache}
+ * @method Model addTagsToResource(array $args = array()) {@command StorageGateway AddTagsToResource}
  * @method Model addUploadBuffer(array $args = array()) {@command StorageGateway AddUploadBuffer}
  * @method Model addWorkingStorage(array $args = array()) {@command StorageGateway AddWorkingStorage}
  * @method Model cancelArchival(array $args = array()) {@command StorageGateway CancelArchival}
@@ -62,9 +63,11 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model disableGateway(array $args = array()) {@command StorageGateway DisableGateway}
  * @method Model listGateways(array $args = array()) {@command StorageGateway ListGateways}
  * @method Model listLocalDisks(array $args = array()) {@command StorageGateway ListLocalDisks}
+ * @method Model listTagsForResource(array $args = array()) {@command StorageGateway ListTagsForResource}
  * @method Model listVolumeInitiators(array $args = array()) {@command StorageGateway ListVolumeInitiators}
  * @method Model listVolumeRecoveryPoints(array $args = array()) {@command StorageGateway ListVolumeRecoveryPoints}
  * @method Model listVolumes(array $args = array()) {@command StorageGateway ListVolumes}
+ * @method Model removeTagsFromResource(array $args = array()) {@command StorageGateway RemoveTagsFromResource}
  * @method Model resetCache(array $args = array()) {@command StorageGateway ResetCache}
  * @method Model retrieveTapeArchive(array $args = array()) {@command StorageGateway RetrieveTapeArchive}
  * @method Model retrieveTapeRecoveryPoint(array $args = array()) {@command StorageGateway RetrieveTapeRecoveryPoint}
