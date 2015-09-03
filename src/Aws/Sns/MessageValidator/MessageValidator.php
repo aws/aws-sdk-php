@@ -36,6 +36,13 @@ class MessageValidator
 
     /** @var string */
     private $hostPattern;
+
+    /**
+     * @var string  A pattern that will match all regional SNS endpoints, e.g.:
+     *                  - sns.<region>.amazonaws.com        (AWS)
+     *                  - sns.us-gov-west-1.amazonaws.com   (AWS GovCloud)
+     *                  - sns.cn-north-1.amazonaws.com.cn   (AWS China)
+     */
     private static $defaultHostPattern
         = '/^sns\.[a-zA-Z0-9\-]{3,}\.amazonaws\.com(\.cn)?$/';
 

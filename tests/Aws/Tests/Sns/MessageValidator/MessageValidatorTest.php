@@ -99,8 +99,8 @@ class MessageValidatorTest extends \Guzzle\Tests\GuzzleTestCase
                 Url::factory('https://sns.us-west-2.amazon.com/key.pem')
             );
 
-            $this->assertTrue(false, 'The host pattern override should not have'
-                . ' permitted certificates on sns.us-west-2.amazon.com');
+            $this->fail('The host pattern override should not have permitted'
+                . ' certificates residing on sns.us-west-2.amazon.com');
         } catch (CertificateFromUnrecognizedSourceException $e) {
             // all is well
         }
