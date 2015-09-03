@@ -298,6 +298,49 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                 ['foo' => Psr7\stream_for('test')],
                 true
             ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => ['foo' => [
+                        'type' => 'string',
+                        'min'  => 10,
+                        'max'  => 1,
+                    ]]
+                ],
+                ['foo' => 'bar'],
+                "Found 2 errors while validating the input provided for the Foo operation:\n"
+                . "[foo] must be at least 10 characters long. Value provided is 3 characters long.\n"
+                . "[foo] must be no more than 1 characters long. Value provided is 3 characters long."
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => ['foo' => [
+                        'type' => 'integer',
+                        'min'  => 10,
+                        'max'  => 1,
+                    ]]
+                ],
+                ['foo' => 3],
+                "Found 2 errors while validating the input provided for the Foo operation:\n"
+                . "[foo] must be at least 10. Value provided is 3.\n"
+                . "[foo] must be no more than 1. Value provided is 3."
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => ['foo' => [
+                        'type' => 'list',
+                        'member' => ['type' => 'string'],
+                        'min'  => 10,
+                        'max'  => 1,
+                    ]]
+                ],
+                ['foo' => ['bar', 'baz']],
+                "Found 2 errors while validating the input provided for the Foo operation:\n"
+                . "[foo] must have at least 10 members. Value provided has 2.\n"
+                . "[foo] must have no more than 1 members. Value provided has 2."
+            ],
         ];
     }
 
