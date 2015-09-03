@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\StorageGateway` - Added support for tagging and untagging resources.
+
 ## 3.3.3 - 2015-08-31
 
 * `Aws\Ec2` - Added support for using instance weights with the 
