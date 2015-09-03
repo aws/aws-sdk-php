@@ -34,12 +34,27 @@ class MessageValidator
      */
     protected $client;
 
+    /** @var string */
+    private $hostPattern;
+
+    /**
+     * @var string  A pattern that will match all regional SNS endpoints, e.g.:
+     *                  - sns.<region>.amazonaws.com        (AWS)
+     *                  - sns.us-gov-west-1.amazonaws.com   (AWS GovCloud)
+     *                  - sns.cn-north-1.amazonaws.com.cn   (AWS China)
+     */
+    private static $defaultHostPattern
+        = '/^sns\.[a-zA-Z0-9\-]{3,}\.amazonaws\.com(\.cn)?$/';
+
     /**
      * Constructs the Message Validator object and ensures that openssl is installed
      *
+     * @param Client|null $client
+     * @param string|null $hostPattern The host must match this regex pattern
+     *
      * @throws RequiredExtensionNotLoadedException If openssl is not installed
      */
-    public function __construct(Client $client = null)
+    public function __construct(Client $client = null, $hostPattern = null)
     {
         if (!extension_loaded('openssl')) {
             //@codeCoverageIgnoreStart
@@ -49,6 +64,7 @@ class MessageValidator
         }
 
         $this->client = $client ?: new Client();
+        $this->hostPattern = $hostPattern ?: self::$defaultHostPattern;
     }
 
     /**
@@ -83,12 +99,9 @@ class MessageValidator
 
     private function validateUrl(Url $url)
     {
-        // The host must match the following pattern
-        $hostPattern = '/^sns\.[a-zA-Z0-9\-]{3,}\.amazonaws\.com(\.cn)?$/';
-
         if ($url->getScheme() !== 'https' ||
             substr($url, -4) !== '.pem' ||
-            !preg_match($hostPattern, $url->getHost())
+            !preg_match($this->hostPattern, $url->getHost())
         ) {
             throw new CertificateFromUnrecognizedSourceException();
         }
