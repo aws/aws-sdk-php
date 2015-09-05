@@ -385,5 +385,60 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
         $client->headBucket([
             'Bucket' => 'bucket',
         ]);
+
+        $this->assertEquals(0, $retries);
+    }
+
+    /**
+     * @dataProvider successErrorResponseProvider
+     *
+     * @param Response $failingSuccess
+     */
+    public function testRetries200Errors(Response $failingSuccess)
+    {
+        $retries = 11;
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'retries' => $retries,
+            'http_handler' => function (
+                RequestInterface $request,
+                array $options
+            ) use (&$retries, $failingSuccess) {
+                if (0 === --$retries) {
+                    return new FulfilledPromise(new Response(
+                        200,
+                        [],
+                        '<?xml version="1.0" encoding="UTF-8"?><node></node>'
+                    ));
+                }
+
+                return new FulfilledPromise($failingSuccess);
+            },
+        ]);
+
+        $client->copyObject([
+            'Bucket' => 'foo',
+            'Key' => 'bar',
+            'CopySource' => 'baz',
+        ]);
+
+        $this->assertEquals(0, $retries);
+    }
+
+    public function successErrorResponseProvider()
+    {
+        return [
+            [new Response(200, [], <<<EOXML
+<?xml version="1.0" encoding="UTF-8"?>
+<Error>
+  <Code>InternalError</Code>
+  <Message>We encountered an internal error. Please try again.</Message>
+  <RequestId>656c76696e6727732072657175657374</RequestId>
+  <HostId>Uuag1LuByRx9e6j5Onimru9pO4ZVKnJ2Qz7/C1NPcfTWAtRPfTaOFg==</HostId>
+</Error>
+EOXML
+            )],
+        ];
     }
 }

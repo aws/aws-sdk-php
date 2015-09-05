@@ -95,9 +95,21 @@ class WrappedHttpHandler
     ) {
         $parser = $this->parser;
         $status = $response->getStatusCode();
-        $result = $status < 300
-            ? $parser($command, $response)
-            : new Result();
+        try {
+            $result = $status < 300
+                ? $parser($command, $response)
+                : new Result();
+        } catch (\Exception $e) {
+            return new Promise\RejectedPromise($this->parseError(
+                [
+                    'exception' => $e,
+                    'response' => $response,
+                    'connection_error' => true,
+                ],
+                $request,
+                $command
+            ));
+        }
 
         $metadata = [
             'statusCode'   => $status,
