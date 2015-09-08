@@ -1,5 +1,5 @@
 # language: en
-@cloudwatch
+@cloudwatch @monitoring
 Feature: Amazon CloudWatch
 
   Scenario: Making a request

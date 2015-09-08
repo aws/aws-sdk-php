@@ -8,11 +8,11 @@ Feature: Auto Scaling
 
   Scenario: Handing errors
     When I attempt to call the "CreateLaunchConfiguration" API with:
-    | LaunchConfigurationName |              |
+    | LaunchConfigurationName | hello, world |
     | ImageId                 | ami-12345678 |
     | InstanceType            | m1.small     |
     Then I expect the response error code to be "ValidationError"
     And I expect the response error message to include:
     """
-    Member must have length greater than or equal to 1
+    AMI ami-12345678 is invalid: The image id '[ami-12345678]' does not exist
     """

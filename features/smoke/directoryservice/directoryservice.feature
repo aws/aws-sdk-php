@@ -1,5 +1,6 @@
 # language: en
 @directoryservice
+@ds
 Feature: AWS Directory Service
 
   I want to use AWS Directory Service

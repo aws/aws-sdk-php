@@ -8,8 +8,8 @@ Feature: Amazon Key Management Service
 
   Scenario: Handling errors
     When I attempt to call the "GetKeyPolicy" API with:
-    | KeyId      | fake-key    |
-    | PolicyName | fake-policy |
+    | KeyId      | 12345678-1234-1234-1234-123456789012 |
+    | PolicyName | fake-policy                          |
     Then I expect the response error code to be "NotFoundException"
     And I expect the response error message to include:
     """

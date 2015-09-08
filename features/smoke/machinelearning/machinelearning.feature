@@ -12,6 +12,7 @@ Feature: Amazon Machine Learning
     When I attempt to call the "GetBatchPrediction" API with:
     | BatchPredictionId | fake-id |
     Then the error code should be "ResourceNotFoundException"
+    And I expect the response error message to include:
     """
     No BatchPrediction with id fake-id exists
     """

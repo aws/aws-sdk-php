@@ -1,5 +1,6 @@
 # language: en
 @configservice
+@config
 Feature: AWS Config
 
   Scenario: Making a request

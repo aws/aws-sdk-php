@@ -1,5 +1,6 @@
 # language: en
 @efs
+@elasticfilesystem
 Feature: Amazon Elastic File System
 
   I want to use Amazon Elastic File System
