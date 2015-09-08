@@ -100,7 +100,7 @@ class WrappedHttpHandler
                 ? $parser($command, $response)
                 : new Result();
         } catch (\Exception $e) {
-            return new Promise\RejectedPromise($this->parseError(
+            return new Promise\RejectedPromise($this->parseDeserializationError(
                 [
                     'exception' => $e,
                     'response' => $response,
@@ -172,5 +172,24 @@ class WrappedHttpHandler
             $parts,
             $err['exception']
         );
+    }
+
+    private function parseDeserializationError(
+        array $err,
+        RequestInterface $request,
+        CommandInterface $command
+    ) {
+        // If the error parser is also unable to parse the response, strip it
+        // from the $err array
+        if (isset($err['response'])) {
+            try {
+                $errorParser = $this->errorParser;
+                $errorParser($err['response']);
+            } catch (\Exception $e) {
+                unset($err['response']);
+            }
+        }
+
+        return $this->parseError($err, $request, $command);
     }
 }

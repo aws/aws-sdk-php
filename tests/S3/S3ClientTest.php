@@ -439,6 +439,22 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
 </Error>
 EOXML
             )],
+            [new Response(200, [], <<<EOXML
+<?xml version="1.0" encoding="UTF-8"?>
+<ListBucketResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+    <Name>jmtestbucket2</Name>
+    <Prefix></Prefix>
+    <Marker></Marker>
+    <MaxKeys>1000</MaxKeys>
+    <Delimiter>/</Delimiter>
+    <IsTruncated>false</IsTruncated>
+    <Contents>
+        <Key>&lt;</Key>
+        <LastModified>2015-09-03T23:51:29.000Z</LastModified>
+        <ETag>&quot;af1ed9909386b6116bda14403ff5f72e&quot;</ETag>
+        <Size>10</Size>
+EOXML
+            )],
         ];
     }
 }
