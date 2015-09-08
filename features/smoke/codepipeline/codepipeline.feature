@@ -8,7 +8,7 @@ Feature: Amazon CodePipeline
 
   Scenario: Handling errors
     When I attempt to call the "GetPipeline" API with:
-      | name | fake-pipeline |
+    | name | fake-pipeline |
     Then I expect the response error code to be "PipelineNotFoundException"
     And I expect the response error message to include:
     """

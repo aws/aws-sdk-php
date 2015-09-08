@@ -8,10 +8,10 @@ Feature: AWS STS
 
   Scenario: Handling errors
     When I attempt to call the "GetFederationToken" API with:
-    | Name   | temp |
-    | Policy |      |
-    Then I expect the response error code to be "ValidationError"
+    | Name   | temp            |
+    | Policy | {\"temp\":true} |
+    Then I expect the response error code to be "MalformedPolicyDocument"
     And I expect the response error message to include:
     """
-    Value '' at 'policy' failed to satisfy constraint
+    Syntax errors in policy.
     """

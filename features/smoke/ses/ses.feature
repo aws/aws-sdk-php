@@ -1,5 +1,5 @@
 # language: en
-@ses
+@ses @email
 Feature: Amazon Simple Email Service
 
   Scenario: Making a request

@@ -1,5 +1,5 @@
 # language: en
-@cloudwatchlogs
+@cloudwatchlogs @logs
 Feature: Amazon CloudWatch Logs
 
   Scenario: Making a request

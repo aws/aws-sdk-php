@@ -8,7 +8,7 @@ Feature: Amazon CodeDeploy
 
   Scenario: Handling errors
     When I attempt to call the "GetDeployment" API with:
-    | deploymentId | d-USUAELQEX |
+      | deploymentId | d-USUAELQEX |
     Then I expect the response error code to be "DeploymentDoesNotExistException"
     And I expect the response error message to include:
     """

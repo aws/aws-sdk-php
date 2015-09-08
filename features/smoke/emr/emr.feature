@@ -1,5 +1,5 @@
 # language: en
-@emr @client
+@emr @client @elasticmapreduce
 Feature: Amazon EMR
 
   Scenario: Making a request

@@ -1,6 +1,6 @@
 # language: en
 @dynamodbstreams
-Feature: Amazon DynamoDB
+Feature: Amazon DynamoDB Streams
 
   Scenario: Making a request
     When I call the "ListStreams" API
@@ -8,9 +8,9 @@ Feature: Amazon DynamoDB
 
   Scenario: Handling errors
     When I attempt to call the "DescribeStream" API with:
-    | StreamArn | fake-stream |
-    Then I expect the response error code to be "ValidationException"
+    | StreamArn | arn:aws:dynamodb:us-west-2:111122223333:table/Forum/stream/2015-05-20T20:51:10.252 |
+    Then I expect the response error code to be "ResourceNotFoundException"
     And I expect the response error message to include:
     """
-    Invalid StreamArn
+    Stream: arn:aws:dynamodb:us-west-2:111122223333:table/Forum/stream/2015-05-20T20:51:10.252 not found
     """
