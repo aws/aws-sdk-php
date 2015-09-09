@@ -95,21 +95,9 @@ class WrappedHttpHandler
     ) {
         $parser = $this->parser;
         $status = $response->getStatusCode();
-        try {
-            $result = $status < 300
-                ? $parser($command, $response)
-                : new Result();
-        } catch (\Exception $e) {
-            return new Promise\RejectedPromise($this->parseDeserializationError(
-                [
-                    'exception' => $e,
-                    'response' => $response,
-                    'connection_error' => true,
-                ],
-                $request,
-                $command
-            ));
-        }
+        $result = $status < 300
+            ? $parser($command, $response)
+            : new Result();
 
         $metadata = [
             'statusCode'   => $status,
@@ -172,24 +160,5 @@ class WrappedHttpHandler
             $parts,
             $err['exception']
         );
-    }
-
-    private function parseDeserializationError(
-        array $err,
-        RequestInterface $request,
-        CommandInterface $command
-    ) {
-        // If the error parser is also unable to parse the response, strip it
-        // from the $err array
-        if (isset($err['response'])) {
-            try {
-                $errorParser = $this->errorParser;
-                $errorParser($err['response']);
-            } catch (\Exception $e) {
-                unset($err['response']);
-            }
-        }
-
-        return $this->parseError($err, $request, $command);
     }
 }
