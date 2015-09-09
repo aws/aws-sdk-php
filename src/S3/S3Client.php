@@ -496,7 +496,7 @@ class S3Client extends AwsClient
         ClientResolver::_apply_api_provider($value, $args, $list);
         $args['parser'] = new GetBucketLocationParser(
             new AmbiguousSuccessParser(
-                $args['parser'],
+                new MalformedResponseParser($args['parser'], $args['exception_class']),
                 $args['error_parser'],
                 $args['exception_class']
             )

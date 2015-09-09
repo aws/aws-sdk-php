@@ -4,7 +4,6 @@ namespace Aws\S3;
 use Aws\Api\Parser\AbstractParser;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
-use Exception;
 use Psr\Http\Message\ResponseInterface;
 
 class AmbiguousSuccessParser extends AbstractParser
@@ -42,36 +41,15 @@ class AmbiguousSuccessParser extends AbstractParser
             $errorParser = $this->errorParser;
             $parsed = $errorParser($response);
             if (isset($parsed['code']) && isset($parsed['message'])) {
-                throw $this->parseError($parsed['message'], $command);
+                throw new $this->exceptionClass(
+                    $parsed['message'],
+                    $command,
+                    ['connection_error' => true]
+                );
             }
         }
 
-        try {
-            $fn = $this->parser;
-            return $fn($command, $response);
-        } catch (Exception $e) {
-            throw $this->parseError(
-                "Error parsing response for {$command->getName()}:"
-                    . " AWS parsing error: {$e->getMessage()}",
-                $command,
-                $e
-            );
-        }
-    }
-
-    private function parseError($message, CommandInterface $command, Exception $previous = null)
-    {
-        $context = [];
-        $context['connection_error'] = true;
-        if (isset($previous)) {
-            $context['exception'] = $previous;
-        }
-
-        return new $this->exceptionClass(
-            $message,
-            $command,
-            $context,
-            $previous
-        );
+        $fn = $this->parser;
+        return $fn($command, $response);
     }
 }
