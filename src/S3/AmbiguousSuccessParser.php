@@ -6,7 +6,6 @@ use Aws\CommandInterface;
 use Aws\Exception\AwsException;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
-use SimpleXMLElement;
 
 class AmbiguousSuccessParser extends AbstractParser
 {
@@ -18,12 +17,18 @@ class AmbiguousSuccessParser extends AbstractParser
 
     /** @var callable */
     private $parser;
+    /** @var callable */
+    private $errorParser;
     /** @var string */
     private $exceptionClass;
 
-    public function __construct(callable $parser, $exceptionClass = AwsException::class)
-    {
+    public function __construct(
+        callable $parser,
+        callable $errorParser,
+        $exceptionClass = AwsException::class
+    ) {
         $this->parser = $parser;
+        $this->errorParser = $errorParser;
         $this->exceptionClass = $exceptionClass;
     }
 
@@ -34,12 +39,10 @@ class AmbiguousSuccessParser extends AbstractParser
         if (200 === $response->getStatusCode()
             && isset(self::$ambiguousSuccesses[$command->getName()])
         ) {
-            $xml = new SimpleXMLElement($response->getBody());
-            if ('Error' === $xml->getName()) {
-                throw $this->parseError(
-                    $xml->xpath('/Error/Message')[0],
-                    $command
-                );
+            $errorParser = $this->errorParser;
+            $parsed = $errorParser($response);
+            if (isset($parsed['code']) && isset($parsed['message'])) {
+                throw $this->parseError($parsed['message'], $command);
             }
         }
 

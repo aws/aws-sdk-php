@@ -414,7 +414,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
                     return new FulfilledPromise(new Response(
                         200,
                         [],
-                        '<?xml version="1.0" encoding="UTF-8"?><node></node>'
+                        $this->getWellFormedXml()
                     ));
                 }
 
@@ -499,5 +499,10 @@ EOXML;
         <ETag>&quot;af1ed9909386b6116bda14403ff5f72e&quot;</ETag>
         <Size>10</Size>
 EOXML;
+    }
+
+    private function getWellFormedXml()
+    {
+        return '<?xml version="1.0" encoding="UTF-8"?><node></node>';
     }
 }
