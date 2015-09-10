@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.3.5 - 2015-09-10
 
 * `Aws\Iam` - Added support for new policy simulation APIs.
 * `Aws\Kinesis` - Added support for timestamped GetRecords call.
