@@ -7,7 +7,12 @@ use Aws\CommandInterface;
 use Aws\Exception\AwsException;
 use Psr\Http\Message\ResponseInterface;
 
-class MalformedResponseParser extends AbstractParser
+/**
+ * Converts malformed responses to a retryable error type.
+ *
+ * @internal
+ */
+class RetryableMalformedResponseParser extends AbstractParser
 {
     /** @var callable */
     private $parser;

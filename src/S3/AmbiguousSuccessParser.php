@@ -6,6 +6,11 @@ use Aws\CommandInterface;
 use Aws\Exception\AwsException;
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * Converts errors returned with a status code of 200 to a retryable error type.
+ *
+ * @internal
+ */
 class AmbiguousSuccessParser extends AbstractParser
 {
     private static $ambiguousSuccesses = [
