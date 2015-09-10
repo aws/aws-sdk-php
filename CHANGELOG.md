@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Iam` - Added support for new policy simulation APIs.
+* `Aws\Kinesis` - Added support for timestamped GetRecords call.
+* `Aws\MachineLearning` - Fixed invalid validation constraint on `Predict`
+  operation.
+* `Aws\S3` - Added support for retrying special error cases with the
+  `ListObjects`, `CompleteMultipartUpload`, `CopyObject`, and `UploadPartCopy`.
+
 ## 3.3.4 - 2015-09-03
 
 * `Aws\StorageGateway` - Added support for tagging and untagging resources.
