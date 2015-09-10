@@ -11,6 +11,8 @@ use Psr\Http\Message\ResponseInterface;
  */
 class QueryParser extends AbstractParser
 {
+    use PayloadParserTrait;
+
     /** @var XmlParser */
     private $xmlParser;
 
@@ -39,7 +41,7 @@ class QueryParser extends AbstractParser
         ResponseInterface $response
     ) {
         $output = $this->api->getOperation($command->getName())->getOutput();
-        $xml = new \SimpleXMLElement($response->getBody());
+        $xml = $this->parseXml($response->getBody());
 
         if ($this->honorResultWrapper && $output['resultWrapper']) {
             $xml = $xml->{$output['resultWrapper']};

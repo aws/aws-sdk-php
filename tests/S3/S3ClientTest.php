@@ -385,5 +385,124 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
         $client->headBucket([
             'Bucket' => 'bucket',
         ]);
+
+        $this->assertEquals(0, $retries);
+    }
+
+    /**
+     * @dataProvider successErrorResponseProvider
+     *
+     * @param Response $failingSuccess
+     * @param string   $operation
+     * @param array    $payload
+     */
+    public function testRetries200Errors(
+        Response $failingSuccess,
+        $operation,
+        array $payload
+    ) {
+        $retries = 11;
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'retries' => $retries,
+            'http_handler' => function (
+                RequestInterface $request,
+                array $options
+            ) use (&$retries, $failingSuccess) {
+                if (0 === --$retries) {
+                    return new FulfilledPromise(new Response(
+                        200,
+                        [],
+                        $this->getWellFormedXml()
+                    ));
+                }
+
+                return new FulfilledPromise($failingSuccess);
+            },
+        ]);
+
+        $client->{$operation}($payload);
+
+        $this->assertEquals(0, $retries);
+    }
+
+    public function successErrorResponseProvider()
+    {
+        return [
+            [
+                new Response(200, [], $this->getErrorXml()),
+                'copyObject',
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'CopySource' => 'baz',
+                ],
+            ],
+            [
+                new Response(200, [], $this->getErrorXml()),
+                'uploadPartCopy',
+                [
+                    'PartNumber' => 1,
+                    'UploadId' => PHP_INT_SIZE,
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'CopySource' => 'baz',
+                ],
+            ],
+            [
+                new Response(200, [], $this->getErrorXml()),
+                'completeMultipartUpload',
+                [
+                    'UploadId' => PHP_INT_SIZE,
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                ],
+            ],
+            [
+                new Response(200, [], $this->getMalformedXml()),
+                'listObjects',
+                [
+                    'Bucket' => 'foo',
+                ],
+            ],
+        ];
+    }
+
+    private function getErrorXml()
+    {
+        return <<<EOXML
+<?xml version="1.0" encoding="UTF-8"?>
+<Error>
+  <Code>InternalError</Code>
+  <Message>We encountered an internal error. Please try again.</Message>
+  <RequestId>656c76696e6727732072657175657374</RequestId>
+  <HostId>Uuag1LuByRx9e6j5Onimru9pO4ZVKnJ2Qz7/C1NPcfTWAtRPfTaOFg==</HostId>
+</Error>
+EOXML;
+    }
+
+    private function getMalformedXml()
+    {
+        return <<<EOXML
+<?xml version="1.0" encoding="UTF-8"?>
+<ListBucketResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+    <Name>jmtestbucket2</Name>
+    <Prefix></Prefix>
+    <Marker></Marker>
+    <MaxKeys>1000</MaxKeys>
+    <Delimiter>/</Delimiter>
+    <IsTruncated>false</IsTruncated>
+    <Contents>
+        <Key>&lt;</Key>
+        <LastModified>2015-09-03T23:51:29.000Z</LastModified>
+        <ETag>&quot;af1ed9909386b6116bda14403ff5f72e&quot;</ETag>
+        <Size>10</Size>
+EOXML;
+    }
+
+    private function getWellFormedXml()
+    {
+        return '<?xml version="1.0" encoding="UTF-8"?><node></node>';
     }
 }

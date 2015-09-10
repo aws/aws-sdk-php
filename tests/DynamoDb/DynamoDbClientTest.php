@@ -79,8 +79,8 @@ class DynamoDbClientTest extends \PHPUnit_Framework_TestCase
     public function testValidatesAndRetriesCrc32()
     {
         $queue = [
-            new Response(200, ['x-amz-crc32' => '123'], 'foo'),
-            new Response(200, ['x-amz-crc32' => '2356372769'], 'foo')
+            new Response(200, ['x-amz-crc32' => '123'], '"foo"'),
+            new Response(200, ['x-amz-crc32' => '400595255'], '"foo"')
         ];
 
         $handler = function ($request, $options) use (&$queue) {
