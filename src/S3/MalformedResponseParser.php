@@ -2,9 +2,9 @@
 namespace Aws\S3;
 
 use Aws\Api\Parser\AbstractParser;
+use Aws\Api\Parser\Exception\ParserException;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
-use Exception;
 use Psr\Http\Message\ResponseInterface;
 
 class MalformedResponseParser extends AbstractParser
@@ -30,10 +30,10 @@ class MalformedResponseParser extends AbstractParser
 
         try {
             return $fn($command, $response);
-        } catch (Exception $e) {
+        } catch (ParserException $e) {
             throw new $this->exceptionClass(
                 "Error parsing response for {$command->getName()}:"
-                . " AWS parsing error: {$e->getMessage()}",
+                    . " AWS parsing error: {$e->getMessage()}",
                 $command,
                 ['connection_error' => true, 'exception' => $e],
                 $e

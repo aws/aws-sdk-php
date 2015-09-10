@@ -10,6 +10,8 @@ use Psr\Http\Message\ResponseInterface;
  */
 class RestJsonParser extends AbstractRestParser
 {
+    use PayloadParserTrait;
+
     /** @var JsonParser */
     private $parser;
 
@@ -28,7 +30,7 @@ class RestJsonParser extends AbstractRestParser
         StructureShape $member,
         array &$result
     ) {
-        $jsonBody = json_decode($response->getBody(), true);
+        $jsonBody = $this->parseJson($response->getBody());
 
         if ($jsonBody) {
             $result += $this->parser->parse($member, $jsonBody);
