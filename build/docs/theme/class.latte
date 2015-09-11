@@ -275,7 +275,7 @@
         </div>
         {/if}
 
-        {if $ownMagicMethods}
+        {if $ownMagicMethods && (!$class->parentClass || $class->parentClass->name !== 'Aws\AwsClient')}
         <h3>Magic methods summary</h3>
         <div class="element-list" id="magicMethods" n:if="$ownMagicMethods">
             {foreach $ownMagicMethods as $method}

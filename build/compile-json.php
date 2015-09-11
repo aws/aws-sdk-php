@@ -1,5 +1,4 @@
 <?php
-require __DIR__ . '/JsonCompiler.php';
 require __DIR__ . '/../vendor/autoload.php';
 
 /**

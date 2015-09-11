@@ -314,7 +314,7 @@ function serialize(CommandInterface $command)
  * @param string $service Case-insensitive namespace or endpoint prefix of the
  *                        service for which you are retrieving manifest data.
  *
- * @return RequestInterface
+ * @return array
  * @throws \InvalidArgumentException if the service is not supported.
  */
 function manifest($service = null)

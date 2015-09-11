@@ -1,5 +1,4 @@
 <?php
-require __DIR__ . '/Burgomaster.php';
 require __DIR__ . '/../vendor/autoload.php';
 
 $stageDirectory = __DIR__ . '/artifacts/staging';

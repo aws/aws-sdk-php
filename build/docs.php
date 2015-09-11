@@ -3,7 +3,6 @@ use Aws\Build\Docs\DocsBuilder;
 
 // Setup autoloading for SDK and build classes.
 $loader = require __DIR__ . '/../vendor/autoload.php';
-$loader->addPsr4('Aws\\Build\\Docs\\', __DIR__ . '/docs/classes');
 
 // Setup directories.
 $outputDir = __DIR__ . '/artifacts/docs';
