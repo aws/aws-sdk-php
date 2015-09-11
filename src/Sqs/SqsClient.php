@@ -9,6 +9,24 @@ use Psr\Http\Message\RequestInterface;
 
 /**
  * Client used to interact Amazon Simple Queue Service (Amazon SQS)
+ *
+ * @method \Aws\Result addPermission(array $args = [])
+ * @method \Aws\Result changeMessageVisibility(array $args = [])
+ * @method \Aws\Result changeMessageVisibilityBatch(array $args = [])
+ * @method \Aws\Result createQueue(array $args = [])
+ * @method \Aws\Result deleteMessage(array $args = [])
+ * @method \Aws\Result deleteMessageBatch(array $args = [])
+ * @method \Aws\Result deleteQueue(array $args = [])
+ * @method \Aws\Result getQueueAttributes(array $args = [])
+ * @method \Aws\Result getQueueUrl(array $args = [])
+ * @method \Aws\Result listDeadLetterSourceQueues(array $args = [])
+ * @method \Aws\Result listQueues(array $args = [])
+ * @method \Aws\Result purgeQueue(array $args = [])
+ * @method \Aws\Result receiveMessage(array $args = [])
+ * @method \Aws\Result removePermission(array $args = [])
+ * @method \Aws\Result sendMessage(array $args = [])
+ * @method \Aws\Result sendMessageBatch(array $args = [])
+ * @method \Aws\Result setQueueAttributes(array $args = [])
  */
 class SqsClient extends AwsClient
 {

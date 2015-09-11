@@ -10,6 +10,20 @@ use Aws\RetryMiddleware;
 
 /**
  * This client is used to interact with the **Amazon DynamoDB** service.
+ *
+ * @method \Aws\Result batchGetItem(array $args = [])
+ * @method \Aws\Result batchWriteItem(array $args = [])
+ * @method \Aws\Result createTable(array $args = [])
+ * @method \Aws\Result deleteItem(array $args = [])
+ * @method \Aws\Result deleteTable(array $args = [])
+ * @method \Aws\Result describeTable(array $args = [])
+ * @method \Aws\Result getItem(array $args = [])
+ * @method \Aws\Result listTables(array $args = [])
+ * @method \Aws\Result putItem(array $args = [])
+ * @method \Aws\Result query(array $args = [])
+ * @method \Aws\Result scan(array $args = [])
+ * @method \Aws\Result updateItem(array $args = [])
+ * @method \Aws\Result updateTable(array $args = [])
  */
 class DynamoDbClient extends AwsClient
 {

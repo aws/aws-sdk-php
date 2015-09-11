@@ -14,6 +14,38 @@ use Psr\Http\Message\RequestInterface;
 
 /**
  * This client is used to interact with the **Amazon Glacier** service.
+ *
+ * @method \Aws\Result abortMultipartUpload(array $args = [])
+ * @method \Aws\Result abortVaultLock(array $args = [])
+ * @method \Aws\Result addTagsToVault(array $args = [])
+ * @method \Aws\Result completeMultipartUpload(array $args = [])
+ * @method \Aws\Result completeVaultLock(array $args = [])
+ * @method \Aws\Result createVault(array $args = [])
+ * @method \Aws\Result deleteArchive(array $args = [])
+ * @method \Aws\Result deleteVault(array $args = [])
+ * @method \Aws\Result deleteVaultAccessPolicy(array $args = [])
+ * @method \Aws\Result deleteVaultNotifications(array $args = [])
+ * @method \Aws\Result describeJob(array $args = [])
+ * @method \Aws\Result describeVault(array $args = [])
+ * @method \Aws\Result getDataRetrievalPolicy(array $args = [])
+ * @method \Aws\Result getJobOutput(array $args = [])
+ * @method \Aws\Result getVaultAccessPolicy(array $args = [])
+ * @method \Aws\Result getVaultLock(array $args = [])
+ * @method \Aws\Result getVaultNotifications(array $args = [])
+ * @method \Aws\Result initiateJob(array $args = [])
+ * @method \Aws\Result initiateMultipartUpload(array $args = [])
+ * @method \Aws\Result initiateVaultLock(array $args = [])
+ * @method \Aws\Result listJobs(array $args = [])
+ * @method \Aws\Result listMultipartUploads(array $args = [])
+ * @method \Aws\Result listParts(array $args = [])
+ * @method \Aws\Result listTagsForVault(array $args = [])
+ * @method \Aws\Result listVaults(array $args = [])
+ * @method \Aws\Result removeTagsFromVault(array $args = [])
+ * @method \Aws\Result setDataRetrievalPolicy(array $args = [])
+ * @method \Aws\Result setVaultAccessPolicy(array $args = [])
+ * @method \Aws\Result setVaultNotifications(array $args = [])
+ * @method \Aws\Result uploadArchive(array $args = [])
+ * @method \Aws\Result uploadMultipartPart(array $args = [])
  */
 class GlacierClient extends AwsClient
 {

@@ -8,6 +8,24 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with **AWS CloudHSM**.
+ *
+ * @method \Aws\Result createHapg(array $args = [])
+ * @method \Aws\Result createHsm(array $args = [])
+ * @method \Aws\Result createLunaClient(array $args = [])
+ * @method \Aws\Result deleteHapg(array $args = [])
+ * @method \Aws\Result deleteHsm(array $args = [])
+ * @method \Aws\Result deleteLunaClient(array $args = [])
+ * @method \Aws\Result describeHapg(array $args = [])
+ * @method \Aws\Result describeHsm(array $args = [])
+ * @method \Aws\Result describeLunaClient(array $args = [])
+ * @method \Aws\Result getConfig(array $args = [])
+ * @method \Aws\Result listAvailableZones(array $args = [])
+ * @method \Aws\Result listHapgs(array $args = [])
+ * @method \Aws\Result listHsms(array $args = [])
+ * @method \Aws\Result listLunaClients(array $args = [])
+ * @method \Aws\Result modifyHapg(array $args = [])
+ * @method \Aws\Result modifyHsm(array $args = [])
+ * @method \Aws\Result modifyLunaClient(array $args = [])
  */
 class CloudHsmClient extends AwsClient
 {

@@ -7,6 +7,13 @@ use Aws\Credentials\Credentials;
 
 /**
  * This client is used to interact with the **AWS Security Token Service (AWS STS)**.
+ *
+ * @method \Aws\Result assumeRole(array $args = [])
+ * @method \Aws\Result assumeRoleWithSAML(array $args = [])
+ * @method \Aws\Result assumeRoleWithWebIdentity(array $args = [])
+ * @method \Aws\Result decodeAuthorizationMessage(array $args = [])
+ * @method \Aws\Result getFederationToken(array $args = [])
+ * @method \Aws\Result getSessionToken(array $args = [])
  */
 class StsClient extends AwsClient
 {

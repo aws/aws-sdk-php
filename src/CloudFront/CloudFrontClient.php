@@ -5,6 +5,28 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon CloudFront** service.
+ *
+ * @method \Aws\Result createCloudFrontOriginAccessIdentity(array $args = [])
+ * @method \Aws\Result createDistribution(array $args = [])
+ * @method \Aws\Result createInvalidation(array $args = [])
+ * @method \Aws\Result createStreamingDistribution(array $args = [])
+ * @method \Aws\Result deleteCloudFrontOriginAccessIdentity(array $args = [])
+ * @method \Aws\Result deleteDistribution(array $args = [])
+ * @method \Aws\Result deleteStreamingDistribution(array $args = [])
+ * @method \Aws\Result getCloudFrontOriginAccessIdentity(array $args = [])
+ * @method \Aws\Result getCloudFrontOriginAccessIdentityConfig(array $args = [])
+ * @method \Aws\Result getDistribution(array $args = [])
+ * @method \Aws\Result getDistributionConfig(array $args = [])
+ * @method \Aws\Result getInvalidation(array $args = [])
+ * @method \Aws\Result getStreamingDistribution(array $args = [])
+ * @method \Aws\Result getStreamingDistributionConfig(array $args = [])
+ * @method \Aws\Result listCloudFrontOriginAccessIdentities(array $args = [])
+ * @method \Aws\Result listDistributions(array $args = [])
+ * @method \Aws\Result listInvalidations(array $args = [])
+ * @method \Aws\Result listStreamingDistributions(array $args = [])
+ * @method \Aws\Result updateCloudFrontOriginAccessIdentity(array $args = [])
+ * @method \Aws\Result updateDistribution(array $args = [])
+ * @method \Aws\Result updateStreamingDistribution(array $args = [])
  */
 class CloudFrontClient extends AwsClient
 {
