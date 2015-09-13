@@ -189,4 +189,24 @@ class BatchDeleteTest extends \PHPUnit_Framework_TestCase
         $keys = \JmesPath\search('[].Delete.Objects[].Key', $cmds);
         $this->assertEquals(range(0, 9), $keys);
     }
+    
+    public function testWithNoMatchingObjects()
+    {
+        $client = $this->getTestClient('s3');
+        $mock = new MockHandler([
+            new Result([
+                'IsTruncated' => false,
+                'Contents'    => null
+            ]),
+            new Result([])
+        ]);
+        $client->getHandlerList()->setHandler($mock);
+        $params = ['Bucket' => 'foo'];
+        $batch = BatchDelete::fromListObjects($client, $params);
+        $batch->delete();
+        $last = $mock->getLastCommand();
+        $this->assertEquals('ListObjects', $last->getName());
+        $this->assertEquals(0, count($last['Delete']['Objects']));
+        $this->assertEquals('foo', $last['Bucket']);
+    }
 }
