@@ -4,10 +4,15 @@ use Aws\Api\ApiProvider;
 
 class ClientAnnotator
 {
-    use PhpFileLinterTrait;
-
     /** @var ReflectionClass */
     private $reflection;
+    /** @var string */
+    private $endpoint;
+    /** @var string[] */
+    private $versions;
+    /** @var array */
+    private $methods;
+
 
     public function __construct($clientClassName)
     {
@@ -46,76 +51,63 @@ class ClientAnnotator
 
     private function getMethods()
     {
-        static $methods;
-
-        if (empty($methods)) {
-            $methods = [];
-            $provider = ApiProvider::defaultProvider();
+        if (empty($this->methods)) {
+            $this->methods = [];
 
             foreach ($this->getVersions() as $version) {
                 $methodsInVersion = array_keys(
-                    $provider('api', $this->getEndpoint(), $version)['operations']
+                    $this->getApiDefinition($version)['operations']
                 );
                 foreach ($methodsInVersion as $method) {
-                    if (empty($methods[$method])) {
-                        $methods[$method] = [];
+                    if (empty($this->methods[$method])) {
+                        $this->methods[$method] = [];
                     }
 
-                    $methods[$method] []= $version;
+                    $this->methods[$method] []= $version;
                 }
             }
         }
 
-        return $methods;
+        return $this->methods;
     }
 
     private function getVersions()
     {
-        static $versions;
-
-        if (empty($versions)) {
-            $versions = ApiProvider::defaultProvider()
+        if (empty($this->versions)) {
+            $this->versions = ApiProvider::defaultProvider()
                 ->getVersions($this->getEndpoint());
 
             // ensure that versions are always iterated from oldest to newest
-            sort($versions);
+            sort($this->versions);
         }
 
-        return $versions;
+        return $this->versions;
     }
 
-    private function getApiDefinition()
+    private function getApiDefinition($version = 'latest')
     {
-        static $api;
-
-        if (empty($api)) {
-            $provider = ApiProvider::defaultProvider();
-            $api = $provider('api', $this->getEndpoint(), 'latest');
-        }
-
-        return $api;
+        $provider = ApiProvider::defaultProvider();
+        return $provider('api', $this->getEndpoint(), $version);
     }
 
     private function getEndpoint()
     {
-        static $endpoint;
-
-        if (empty($endpoint)) {
+        if (empty($this->endpoint)) {
             $service = strtolower(
                 preg_replace('/Client$/', '', $this->reflection->getShortName())
             );
 
-            $endpoint = Aws\manifest($service)['endpoint'];
+            $this->endpoint = Aws\manifest($service)['endpoint'];
         }
 
-        return $endpoint;
+        return $this->endpoint;
     }
 
     private function getDefaultDocComment()
     {
         return <<<EODC
 /**
- * This client is used to interact with the **{$this->getApiDefinition()['metadata']['serviceFullName']}** service.
+ * **{$this->getApiDefinition()['metadata']['serviceFullName']}** client.
  */
 EODC;
     }

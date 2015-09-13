@@ -40,7 +40,7 @@ class ClassAnnotationUpdater
         $preamble .= $this->buildUpdatedDocBlock();
 
         if ($this->writeClassFile(implode(PHP_EOL, [$preamble, $class]))
-            && $this->lintFile($this->reflection->getFileName())
+            && $this->commandLineLint($this->reflection->getFileName())
         ) {
             return true;
         }

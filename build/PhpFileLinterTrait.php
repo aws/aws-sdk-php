@@ -9,7 +9,6 @@
  */
 trait PhpFileLinterTrait
 {
-
     /**
      * @param string $path
      *
@@ -42,6 +41,11 @@ trait PhpFileLinterTrait
     }
 
     /**
+     * Uses the Zend OPCache control functions to perform an in-process
+     * validation of a file. This function will fail on code that declares new
+     * symbols (e.g., classes or functions) if they have already been loaded
+     * into the current process.
+     *
      * @param string $path
      *
      * @return bool
