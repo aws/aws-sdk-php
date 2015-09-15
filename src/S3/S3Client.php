@@ -317,6 +317,78 @@ class S3Client extends AwsClient
     }
 
     /**
+     * Copy an object of any size to a different location.
+     *
+     * If the upload size exceeds the maximum allowable size for direct S3
+     * copying, a multipart copy will be used.
+     *
+     * The options array accepts the following options:
+     *
+     * - before_upload: (callable) Callback to invoke before any upload
+     *   operations during the upload process. The callback should have a
+     *   function signature like `function (Aws\Command $command) {...}`.
+     * - concurrency: (int, default=int(5)) Maximum number of concurrent
+     *   `UploadPart` operations allowed during a multipart upload.
+     * - params: (array, default=array([])) Custom parameters to use with the
+     *   upload. For single uploads, they must correspond to those used for the
+     *   `CopyObject` operation. For multipart uploads, they correspond to the
+     *   parameters of the `CreateMultipartUpload` operation.
+     * - part_size: (int) Part size to use when doing a multipart upload.
+     *
+     * @param string $fromBucket    Bucket where the copy source resides.
+     * @param string $fromKey       Key of the copy source.
+     * @param string $bucket        Bucket to which to copy the object.
+     * @param string $key           Key to which to copy the object.
+     * @param string $acl           ACL to apply to the copy (default: private).
+     * @param array  $options       Options used to configure the upload process.
+     *
+     * @see Aws\S3\MultipartCopy for more info about multipart uploads.
+     * @return ResultInterface Returns the result of the upload.
+     */
+    public function copy(
+        $fromBucket,
+        $fromKey,
+        $bucket,
+        $key,
+        $acl = 'private',
+        array $options = []
+    ) {
+        // Prepare the options.
+        static $defaults = [
+            'before_upload' => null,
+            'concurrency'   => 5,
+            'params'        => [],
+            'part_size'     => null,
+        ];
+        $options += $defaults;
+        $maxCopyableSize = MultipartUploader::PART_MAX_SIZE;
+        $copySource = sprintf('/%s/%s', $fromBucket, rawurlencode($fromKey));
+
+        $objectStats = $this->headObject([
+            'Bucket' => $fromBucket,
+            'Key' => $fromKey,
+        ]);
+
+        if ($maxCopyableSize < $objectStats['ContentLength']) {
+            return (new MultipartCopy($this, $copySource, [
+                'bucket' => $bucket,
+                'key' => $key,
+                'source_metadata' => $objectStats,
+                'acl' => $acl,
+            ] + $options))
+                ->upload();
+        }
+
+        return $this->copyObject($options + [
+            'Bucket'            => $bucket,
+            'Key'               => $key,
+            'ACL'               => $acl,
+            'MetadataDirective' => 'COPY',
+            'CopySource'        => $copySource,
+        ] + $options['params']);
+    }
+
+    /**
      * Recursively uploads all files in a given directory to a given bucket.
      *
      * @param string $directory Full path to a directory to upload

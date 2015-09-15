@@ -444,25 +444,28 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         $this->client->getHandlerList()->appendSign(Middleware::history($history));
         $this->addMockResults($this->client, [
             new Result(),
-            new Result()
+            new Result(),
+            new Result(),
         ]);
         $this->assertTrue(rename('s3://bucket/key', 's3://other/new_key'));
         $entries = $history->toArray();
-        $this->assertEquals(2, count($entries));
-        $this->assertEquals('PUT', $entries[0]['request']->getMethod());
-        $this->assertEquals('/other/new_key', $entries[0]['request']->getUri()->getPath());
-        $this->assertEquals('s3.amazonaws.com', $entries[0]['request']->getUri()->getHost());
+        $this->assertEquals(3, count($entries));
+        $this->assertEquals('HEAD', $entries[0]['request']->getMethod());
+        $this->assertEquals('/bucket/key', $entries[0]['request']->getUri()->getPath());
+        $this->assertEquals('PUT', $entries[1]['request']->getMethod());
+        $this->assertEquals('/other/new_key', $entries[1]['request']->getUri()->getPath());
+        $this->assertEquals('s3.amazonaws.com', $entries[1]['request']->getUri()->getHost());
         $this->assertEquals(
             '/bucket/key',
-            $entries[0]['request']->getHeaderLine('x-amz-copy-source')
+            $entries[1]['request']->getHeaderLine('x-amz-copy-source')
         );
         $this->assertEquals(
             'COPY',
-            $entries[0]['request']->getHeaderLine('x-amz-metadata-directive')
+            $entries[1]['request']->getHeaderLine('x-amz-metadata-directive')
         );
-        $this->assertEquals('DELETE', $entries[1]['request']->getMethod());
-        $this->assertEquals('/bucket/key', $entries[1]['request']->getUri()->getPath());
-        $this->assertEquals('s3.amazonaws.com', $entries[1]['request']->getUri()->getHost());
+        $this->assertEquals('DELETE', $entries[2]['request']->getMethod());
+        $this->assertEquals('/bucket/key', $entries[2]['request']->getUri()->getPath());
+        $this->assertEquals('s3.amazonaws.com', $entries[2]['request']->getUri()->getHost());
     }
 
     public function testCanRenameObjectsWithCustomSettings()
@@ -471,7 +474,8 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         $this->client->getHandlerList()->appendSign(Middleware::history($history));
         $this->addMockResults($this->client, [
             new Result(), // 204
-            new Result()  // 204
+            new Result(), // 204
+            new Result(), // 204
         ]);
         $this->assertTrue(rename(
             's3://bucket/key',
@@ -479,17 +483,17 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
             stream_context_create(['s3' => ['MetadataDirective' => 'REPLACE']])
         ));
         $entries = $history->toArray();
-        $this->assertEquals(2, count($entries));
-        $this->assertEquals('PUT', $entries[0]['request']->getMethod());
-        $this->assertEquals('/other/new_key', $entries[0]['request']->getUri()->getPath());
-        $this->assertEquals('s3.amazonaws.com', $entries[0]['request']->getUri()->getHost());
+        $this->assertEquals(3, count($entries));
+        $this->assertEquals('PUT', $entries[1]['request']->getMethod());
+        $this->assertEquals('/other/new_key', $entries[1]['request']->getUri()->getPath());
+        $this->assertEquals('s3.amazonaws.com', $entries[1]['request']->getUri()->getHost());
         $this->assertEquals(
             '/bucket/key',
-            $entries[0]['request']->getHeaderLine('x-amz-copy-source')
+            $entries[1]['request']->getHeaderLine('x-amz-copy-source')
         );
         $this->assertEquals(
             'REPLACE',
-            $entries[0]['request']->getHeaderLine('x-amz-metadata-directive')
+            $entries[1]['request']->getHeaderLine('x-amz-metadata-directive')
         );
     }
 

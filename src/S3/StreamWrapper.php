@@ -529,20 +529,22 @@ class StreamWrapper
         }
 
         return $this->boolCall(function () use ($partsFrom, $partsTo) {
+            $options = $this->getOptions(true);
             // Copy the object and allow overriding default parameters if
             // desired, but by default copy metadata
-            $this->getClient()->copyObject($this->getOptions(true) + [
-                'Bucket'            => $partsTo['Bucket'],
-                'Key'               => $partsTo['Key'],
-                'MetadataDirective' => 'COPY',
-                'CopySource'        => '/' . $partsFrom['Bucket'] . '/'
-                                           . rawurlencode($partsFrom['Key']),
-            ]);
+            $this->getClient()->copy(
+                $partsFrom['Bucket'],
+                $partsFrom['Key'],
+                $partsTo['Bucket'],
+                $partsTo['Key'],
+                isset($options['acl']) ? $options['acl'] : 'private',
+                $options
+            );
             // Delete the original object
             $this->getClient()->deleteObject([
                 'Bucket' => $partsFrom['Bucket'],
                 'Key'    => $partsFrom['Key']
-            ] + $this->getOptions(true));
+            ] + $options);
             return true;
         });
     }
