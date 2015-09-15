@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Ec2` - Added support for the "diversified" SpotFleet allocation strategy.
+* `Aws\Ec2` - Added support for reading `StateMessage` and `DataEncryptionKeyId`
+  from a `DescribeSnapshots` response.
+* `Aws\Efs` - Added support for using a `MountTargetId` parameter instead of a
+  `FileSystemId` parameter with the `DescribeMountTargets` command.
+* `Aws\Route53` - Added support for calculated and latency health checks.
+* `Aws\S3` - Fixed warning emitted by `BatchDelete` when no matching objects
+  were found to delete.
+
 ## 3.3.5 - 2015-09-10
 
 * `Aws\Iam` - Added support for new policy simulation APIs.
