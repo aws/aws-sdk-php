@@ -69,9 +69,11 @@ class BatchDelete implements PromisorInterface
         $fn = function (BatchDelete $that) use ($iter) {
             return $iter->each(function ($result) use ($that) {
                 $promises = [];
-                foreach ($result['Contents'] as $object) {
-                    if ($promise = $that->enqueue($object)) {
-                        $promises[] = $promise;
+                if (is_array($result['Contents'])) {
+                    foreach ($result['Contents'] as $object) {
+                        if ($promise = $that->enqueue($object)) {
+                            $promises[] = $promise;
+                        }
                     }
                 }
                 return $promises ? Promise\all($promises) : null;
