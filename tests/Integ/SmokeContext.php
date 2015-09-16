@@ -105,11 +105,12 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
      */
     public static function setUpSqs(BeforeFeatureScope $scope)
     {
-        self::getSdk(self::$configOverrides)
-            ->createSqs()
-            ->createQueue([
-                'QueueName' => self::getResourcePrefix() . 'testing-queue',
-            ]);
+        $sqs = self::getSdk(self::$configOverrides)
+            ->createSqs();
+        $queueName = self::getResourcePrefix() . 'testing-queue';
+
+        $sqs->createQueue(['QueueName' => $queueName]);
+        $sqs->waitUntil('QueueExists', ['QueueName' => $queueName]);
     }
 
     /**

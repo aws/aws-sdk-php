@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Added support for new `STANDARD_IA` storage class.
+* `Aws\S3` - Added support for specifying storage class in cross-region
+  replication configuration.
+* `Aws\Sqs` - Added a 'QueueExists' waiter to create a queue and wait until it
+  has been fully provisioned.
+
 ## 3.3.6 - 2015-09-15
 
 * `Aws\Ec2` - Added support for the "diversified" SpotFleet allocation strategy.

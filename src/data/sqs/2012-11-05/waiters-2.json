@@ -1,0 +1,22 @@
+{
+    "version": 2,
+    "waiters": {
+        "QueueExists": {
+            "delay": 5,
+            "maxAttempts": 40,
+            "operation": "GetQueueUrl",
+            "acceptors": [
+                {
+                    "matcher": "status",
+                    "expected": 200,
+                    "state": "success"
+                },
+                {
+                    "matcher": "error",
+                    "expected": "QueueDoesNotExist",
+                    "state": "retry"
+                }
+            ]
+        }
+    }
+}

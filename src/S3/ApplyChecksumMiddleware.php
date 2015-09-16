@@ -18,6 +18,7 @@ class ApplyChecksumMiddleware
         'DeleteObjects',
         'PutBucketCors',
         'PutBucketLifecycle',
+        'PutBucketLifecycleConfiguration',
         'PutBucketPolicy',
         'PutBucketTagging',
     ];
