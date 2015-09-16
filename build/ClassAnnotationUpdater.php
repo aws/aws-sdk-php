@@ -30,6 +30,12 @@ class ClassAnnotationUpdater
         $this->removeMatching = $removeMatching;
     }
 
+    /**
+     * Performs update on class file and lints the output. If the output fails
+     * linting, the change is reverted.
+     *
+     * @return bool TRUE on success, FALSE on failure
+     */
     public function update()
     {
         // copy the code into memory

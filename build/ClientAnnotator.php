@@ -19,34 +19,47 @@ class ClientAnnotator
         $this->reflection = new ReflectionClass($clientClassName);
     }
 
+    /**
+     * Adds @method annotations to a client class.
+     *
+     * @return bool TRUE on success, FALSE on failure
+     */
     public function updateApiMethodAnnotations()
     {
-        return (new ClassAnnotationUpdater(
+        $updater = new ClassAnnotationUpdater(
             $this->reflection,
             $this->getMethodAnnotations(),
             $this->getDefaultDocComment(),
             '/^\* @method \\\\Aws\\\\Result /'
-        ))
-            ->update();
+        );
+
+        return $updater->update();
     }
 
     private function getMethodAnnotations()
     {
         $annotations = [];
 
-        foreach ($this->getMethods() as $method => $apiVersions) {
-            $signature = lcfirst($method) . '(array $args = [])';
-            $annotation = " * @method \\Aws\\Result $signature";
-
-            if ($apiVersions !== $this->getVersions()) {
-                $supportedIn = implode(', ', $apiVersions);
-                $annotation .= " (supported in versions $supportedIn)";
+        foreach ($this->getMethods() as $command => $apiVersions) {
+            foreach ([$command, "{$command}Async"] as $method) {
+                $annotations []= $this->getAnnotationLine($method, $apiVersions);
             }
-
-            $annotations []= $annotation;
         }
 
         return $annotations;
+    }
+
+    private function getAnnotationLine($method, array $versionsWithSupport)
+    {
+        $signature = lcfirst($method) . '(array $args = [])';
+        $annotation = " * @method \\Aws\\Result $signature";
+
+        if ($versionsWithSupport !== $this->getVersions()) {
+            $supportedIn = implode(', ', $versionsWithSupport);
+            $annotation .= " (supported in versions $supportedIn)";
+        }
+
+        return $annotation;
     }
 
     private function getMethods()

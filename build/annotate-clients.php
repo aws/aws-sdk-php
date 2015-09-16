@@ -55,10 +55,12 @@ foreach ($options['tag'] as $tag) {
 
 foreach (array_unique($options['class']) as $classToUpdate) {
     // Update the @method annotations on a client.
-    (new ClientAnnotator($classToUpdate))
-        ->updateApiMethodAnnotations()
-        || trigger_error(
+    $annotator = new ClientAnnotator($classToUpdate);
+
+    if (!$annotator->updateApiMethodAnnotations()) {
+        trigger_error(
             "Unable to update annotations on $classToUpdate",
             E_USER_WARNING
         );
+    }
 }

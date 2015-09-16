@@ -19,10 +19,10 @@ $previousAnnotationPattern = '/^\* @method'
     . ' \\\\Aws\\\\(?:[a-zA-Z0-9]+)\\\\(?:[a-zA-Z0-9]+)Client'
     . ' create(?:[a-zA-Z0-9]+)\\(array \$args = \\[\\]\\)/';
 
-(new ClassAnnotationUpdater(
+$updater = new ClassAnnotationUpdater(
     new ReflectionClass(\Aws\Sdk::class),
     $annotations,
     '',
     $previousAnnotationPattern
-))
-    ->update();
+);
+$updater->update();
