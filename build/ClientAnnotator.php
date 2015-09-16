@@ -30,7 +30,7 @@ class ClientAnnotator
             $this->reflection,
             $this->getMethodAnnotations(),
             $this->getDefaultDocComment(),
-            '/^\* @method \\\\Aws\\\\Result /'
+            '/^\* @method (\\\\Aws\\\\Result|\\\\GuzzleHttp\\\\Promise\\\\Promise) /'
         );
 
         return $updater->update();
@@ -41,18 +41,26 @@ class ClientAnnotator
         $annotations = [];
 
         foreach ($this->getMethods() as $command => $apiVersions) {
-            foreach ([$command, "{$command}Async"] as $method) {
-                $annotations []= $this->getAnnotationLine($method, $apiVersions);
+            $commandMethods = [
+                $command => '\\Aws\\Result',
+                "{$command}Async" => '\\GuzzleHttp\\Promise\\Promise',
+            ];
+            foreach ($commandMethods as $method => $returnType) {
+                $annotations []= $this->getAnnotationLine(
+                    $method,
+                    $returnType,
+                    $apiVersions
+                );
             }
         }
 
         return $annotations;
     }
 
-    private function getAnnotationLine($method, array $versionsWithSupport)
+    private function getAnnotationLine($method, $return, array $versionsWithSupport)
     {
         $signature = lcfirst($method) . '(array $args = [])';
-        $annotation = " * @method \\Aws\\Result $signature";
+        $annotation = " * @method $return $signature";
 
         if ($versionsWithSupport !== $this->getVersions()) {
             $supportedIn = implode(', ', $versionsWithSupport);
