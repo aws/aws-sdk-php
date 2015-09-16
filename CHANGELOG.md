@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.3.7 - 2015-09-16
 
 * `Aws\S3` - Added support for new `STANDARD_IA` storage class.
 * `Aws\S3` - Added support for specifying storage class in cross-region
