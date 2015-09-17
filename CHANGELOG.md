@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.3.8 - 2015-09-17
 
 * `Aws\CloudWatchLogs` - Added support for export task operations.
 
