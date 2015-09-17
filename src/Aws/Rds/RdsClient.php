@@ -30,9 +30,13 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model addTagsToResource(array $args = array()) {@command Rds AddTagsToResource}
  * @method Model applyPendingMaintenanceAction(array $args = array()) {@command Rds ApplyPendingMaintenanceAction}
  * @method Model authorizeDBSecurityGroupIngress(array $args = array()) {@command Rds AuthorizeDBSecurityGroupIngress}
+ * @method Model copyDBClusterSnapshot(array $args = array()) {@command Rds CopyDBClusterSnapshot}
  * @method Model copyDBParameterGroup(array $args = array()) {@command Rds CopyDBParameterGroup}
  * @method Model copyDBSnapshot(array $args = array()) {@command Rds CopyDBSnapshot}
  * @method Model copyOptionGroup(array $args = array()) {@command Rds CopyOptionGroup}
+ * @method Model createDBCluster(array $args = array()) {@command Rds CreateDBCluster}
+ * @method Model createDBClusterParameterGroup(array $args = array()) {@command Rds CreateDBClusterParameterGroup}
+ * @method Model createDBClusterSnapshot(array $args = array()) {@command Rds CreateDBClusterSnapshot}
  * @method Model createDBInstance(array $args = array()) {@command Rds CreateDBInstance}
  * @method Model createDBInstanceReadReplica(array $args = array()) {@command Rds CreateDBInstanceReadReplica}
  * @method Model createDBParameterGroup(array $args = array()) {@command Rds CreateDBParameterGroup}
@@ -41,6 +45,9 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model createDBSubnetGroup(array $args = array()) {@command Rds CreateDBSubnetGroup}
  * @method Model createEventSubscription(array $args = array()) {@command Rds CreateEventSubscription}
  * @method Model createOptionGroup(array $args = array()) {@command Rds CreateOptionGroup}
+ * @method Model deleteDBCluster(array $args = array()) {@command Rds DeleteDBCluster}
+ * @method Model deleteDBClusterParameterGroup(array $args = array()) {@command Rds DeleteDBClusterParameterGroup}
+ * @method Model deleteDBClusterSnapshot(array $args = array()) {@command Rds DeleteDBClusterSnapshot}
  * @method Model deleteDBInstance(array $args = array()) {@command Rds DeleteDBInstance}
  * @method Model deleteDBParameterGroup(array $args = array()) {@command Rds DeleteDBParameterGroup}
  * @method Model deleteDBSecurityGroup(array $args = array()) {@command Rds DeleteDBSecurityGroup}
@@ -50,6 +57,10 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model deleteOptionGroup(array $args = array()) {@command Rds DeleteOptionGroup}
  * @method Model describeAccountAttributes(array $args = array()) {@command Rds DescribeAccountAttributes}
  * @method Model describeCertificates(array $args = array()) {@command Rds DescribeCertificates}
+ * @method Model describeDBClusterParameterGroups(array $args = array()) {@command Rds DescribeDBClusterParameterGroups}
+ * @method Model describeDBClusterParameters(array $args = array()) {@command Rds DescribeDBClusterParameters}
+ * @method Model describeDBClusterSnapshots(array $args = array()) {@command Rds DescribeDBClusterSnapshots}
+ * @method Model describeDBClusters(array $args = array()) {@command Rds DescribeDBClusters}
  * @method Model describeDBEngineVersions(array $args = array()) {@command Rds DescribeDBEngineVersions}
  * @method Model describeDBInstances(array $args = array()) {@command Rds DescribeDBInstances}
  * @method Model describeDBLogFiles(array $args = array()) {@command Rds DescribeDBLogFiles}
@@ -58,6 +69,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model describeDBSecurityGroups(array $args = array()) {@command Rds DescribeDBSecurityGroups}
  * @method Model describeDBSnapshots(array $args = array()) {@command Rds DescribeDBSnapshots}
  * @method Model describeDBSubnetGroups(array $args = array()) {@command Rds DescribeDBSubnetGroups}
+ * @method Model describeEngineDefaultClusterParameters(array $args = array()) {@command Rds DescribeEngineDefaultClusterParameters}
  * @method Model describeEngineDefaultParameters(array $args = array()) {@command Rds DescribeEngineDefaultParameters}
  * @method Model describeEventCategories(array $args = array()) {@command Rds DescribeEventCategories}
  * @method Model describeEventSubscriptions(array $args = array()) {@command Rds DescribeEventSubscriptions}
@@ -69,7 +81,10 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model describeReservedDBInstances(array $args = array()) {@command Rds DescribeReservedDBInstances}
  * @method Model describeReservedDBInstancesOfferings(array $args = array()) {@command Rds DescribeReservedDBInstancesOfferings}
  * @method Model downloadDBLogFilePortion(array $args = array()) {@command Rds DownloadDBLogFilePortion}
+ * @method Model failoverDBCluster(array $args = array()) {@command Rds FailoverDBCluster}
  * @method Model listTagsForResource(array $args = array()) {@command Rds ListTagsForResource}
+ * @method Model modifyDBCluster(array $args = array()) {@command Rds ModifyDBCluster}
+ * @method Model modifyDBClusterParameterGroup(array $args = array()) {@command Rds ModifyDBClusterParameterGroup}
  * @method Model modifyDBInstance(array $args = array()) {@command Rds ModifyDBInstance}
  * @method Model modifyDBParameterGroup(array $args = array()) {@command Rds ModifyDBParameterGroup}
  * @method Model modifyDBSubnetGroup(array $args = array()) {@command Rds ModifyDBSubnetGroup}
@@ -80,29 +95,16 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model rebootDBInstance(array $args = array()) {@command Rds RebootDBInstance}
  * @method Model removeSourceIdentifierFromSubscription(array $args = array()) {@command Rds RemoveSourceIdentifierFromSubscription}
  * @method Model removeTagsFromResource(array $args = array()) {@command Rds RemoveTagsFromResource}
+ * @method Model resetDBClusterParameterGroup(array $args = array()) {@command Rds ResetDBClusterParameterGroup}
  * @method Model resetDBParameterGroup(array $args = array()) {@command Rds ResetDBParameterGroup}
+ * @method Model restoreDBClusterFromSnapshot(array $args = array()) {@command Rds RestoreDBClusterFromSnapshot}
+ * @method Model restoreDBClusterToPointInTime(array $args = array()) {@command Rds RestoreDBClusterToPointInTime}
  * @method Model restoreDBInstanceFromDBSnapshot(array $args = array()) {@command Rds RestoreDBInstanceFromDBSnapshot}
  * @method Model restoreDBInstanceToPointInTime(array $args = array()) {@command Rds RestoreDBInstanceToPointInTime}
  * @method Model revokeDBSecurityGroupIngress(array $args = array()) {@command Rds RevokeDBSecurityGroupIngress}
  * @method waitUntilDBInstanceAvailable(array $input) The input array uses the parameters of the DescribeDBInstances operation and waiter specific settings
  * @method waitUntilDBInstanceDeleted(array $input) The input array uses the parameters of the DescribeDBInstances operation and waiter specific settings
- * @method ResourceIteratorInterface getDescribeDBEngineVersionsIterator(array $args = array()) The input array uses the parameters of the DescribeDBEngineVersions operation
- * @method ResourceIteratorInterface getDescribeDBInstancesIterator(array $args = array()) The input array uses the parameters of the DescribeDBInstances operation
- * @method ResourceIteratorInterface getDescribeDBLogFilesIterator(array $args = array()) The input array uses the parameters of the DescribeDBLogFiles operation
- * @method ResourceIteratorInterface getDescribeDBParameterGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeDBParameterGroups operation
- * @method ResourceIteratorInterface getDescribeDBParametersIterator(array $args = array()) The input array uses the parameters of the DescribeDBParameters operation
- * @method ResourceIteratorInterface getDescribeDBSecurityGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeDBSecurityGroups operation
- * @method ResourceIteratorInterface getDescribeDBSnapshotsIterator(array $args = array()) The input array uses the parameters of the DescribeDBSnapshots operation
- * @method ResourceIteratorInterface getDescribeDBSubnetGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeDBSubnetGroups operation
  * @method ResourceIteratorInterface getDescribeEngineDefaultParametersIterator(array $args = array()) The input array uses the parameters of the DescribeEngineDefaultParameters operation
- * @method ResourceIteratorInterface getDescribeEventSubscriptionsIterator(array $args = array()) The input array uses the parameters of the DescribeEventSubscriptions operation
- * @method ResourceIteratorInterface getDescribeEventsIterator(array $args = array()) The input array uses the parameters of the DescribeEvents operation
- * @method ResourceIteratorInterface getDescribeOptionGroupOptionsIterator(array $args = array()) The input array uses the parameters of the DescribeOptionGroupOptions operation
- * @method ResourceIteratorInterface getDescribeOptionGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeOptionGroups operation
- * @method ResourceIteratorInterface getDescribeOrderableDBInstanceOptionsIterator(array $args = array()) The input array uses the parameters of the DescribeOrderableDBInstanceOptions operation
- * @method ResourceIteratorInterface getDescribeReservedDBInstancesIterator(array $args = array()) The input array uses the parameters of the DescribeReservedDBInstances operation
- * @method ResourceIteratorInterface getDescribeReservedDBInstancesOfferingsIterator(array $args = array()) The input array uses the parameters of the DescribeReservedDBInstancesOfferings operation
- * @method ResourceIteratorInterface getListTagsForResourceIterator(array $args = array()) The input array uses the parameters of the ListTagsForResource operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-rds.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.Rds.RdsClient.html API docs

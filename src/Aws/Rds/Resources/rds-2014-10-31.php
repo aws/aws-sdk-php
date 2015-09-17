@@ -265,6 +265,66 @@ return array (
                 ),
             ),
         ),
+        'CopyDBClusterSnapshot' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DBClusterSnapshotWrapper',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'CopyDBClusterSnapshot',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-31',
+                ),
+                'SourceDBClusterSnapshotIdentifier' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'TargetDBClusterSnapshotIdentifier' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'User already has a DB cluster snapshot with the given identifier.',
+                    'class' => 'DBClusterSnapshotAlreadyExistsException',
+                ),
+                array(
+                    'reason' => 'DBClusterSnapshotIdentifier does not refer to an existing DB cluster snapshot.',
+                    'class' => 'DBClusterSnapshotNotFoundException',
+                ),
+                array(
+                    'reason' => 'The supplied value is not a valid DB cluster state.',
+                    'class' => 'InvalidDBClusterStateException',
+                ),
+            ),
+        ),
         'CopyDBParameterGroup' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -374,6 +434,11 @@ return array (
                         ),
                     ),
                 ),
+                'CopyTags' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -459,6 +524,287 @@ return array (
                 ),
             ),
         ),
+        'CreateDBCluster' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DBClusterWrapper',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'CreateDBCluster',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-31',
+                ),
+                'AvailabilityZones' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'AvailabilityZones.member',
+                    'items' => array(
+                        'name' => 'AvailabilityZone',
+                        'type' => 'string',
+                    ),
+                ),
+                'BackupRetentionPeriod' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'CharacterSetName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'DatabaseName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'DBClusterIdentifier' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'DBClusterParameterGroupName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'VpcSecurityGroupIds' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'VpcSecurityGroupIds.member',
+                    'items' => array(
+                        'name' => 'VpcSecurityGroupId',
+                        'type' => 'string',
+                    ),
+                ),
+                'DBSubnetGroupName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Engine' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'EngineVersion' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Port' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'MasterUsername' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'MasterUserPassword' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'OptionGroupName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'PreferredBackupWindow' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'PreferredMaintenanceWindow' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'User already has a DB cluster with the given identifier.',
+                    'class' => 'DBClusterAlreadyExistsException',
+                ),
+                array(
+                    'reason' => 'There is insufficient storage available for the current action. You may be able to resolve this error by updating your subnet group to use different Availability Zones that have more storage available.',
+                    'class' => 'InsufficientStorageClusterCapacityException',
+                ),
+                array(
+                    'reason' => 'User attempted to create a new DB cluster and the user has already reached the maximum allowed DB cluster quota.',
+                    'class' => 'DBClusterQuotaExceededException',
+                ),
+                array(
+                    'reason' => 'Request would result in user exceeding the allowed amount of storage available across all DB instances.',
+                    'class' => 'StorageQuotaExceededException',
+                ),
+                array(
+                    'reason' => 'DBSubnetGroupName does not refer to an existing DB subnet group.',
+                    'class' => 'DBSubnetGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'DB subnet group does not cover all Availability Zones after it is created because users\' change.',
+                    'class' => 'InvalidVPCNetworkStateException',
+                ),
+                array(
+                    'reason' => 'The supplied value is not a valid DB cluster state.',
+                    'class' => 'InvalidDBClusterStateException',
+                ),
+                array(
+                    'reason' => 'The DB subnet group cannot be deleted because it is in use.',
+                    'class' => 'InvalidDBSubnetGroupStateException',
+                ),
+                array(
+                    'reason' => 'The requested subnet is invalid, or multiple subnets were requested that are not all in a common VPC.',
+                    'class' => 'InvalidSubnetException',
+                ),
+                array(
+                    'reason' => 'DBClusterParameterGroupName does not refer to an existing DB Cluster parameter group.',
+                    'class' => 'DBClusterParameterGroupNotFoundException',
+                ),
+            ),
+        ),
+        'CreateDBClusterParameterGroup' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DBClusterParameterGroupWrapper',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'CreateDBClusterParameterGroup',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-31',
+                ),
+                'DBClusterParameterGroupName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'DBParameterGroupFamily' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Description' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Request would result in user exceeding the allowed number of DB parameter groups.',
+                    'class' => 'DBParameterGroupQuotaExceededException',
+                ),
+                array(
+                    'reason' => 'A DB parameter group with the same name exists.',
+                    'class' => 'DBParameterGroupAlreadyExistsException',
+                ),
+            ),
+        ),
+        'CreateDBClusterSnapshot' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DBClusterSnapshotWrapper',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'CreateDBClusterSnapshot',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-31',
+                ),
+                'DBClusterSnapshotIdentifier' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'DBClusterIdentifier' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'User already has a DB cluster snapshot with the given identifier.',
+                    'class' => 'DBClusterSnapshotAlreadyExistsException',
+                ),
+                array(
+                    'reason' => 'The supplied value is not a valid DB cluster state.',
+                    'class' => 'InvalidDBClusterStateException',
+                ),
+                array(
+                    'reason' => 'DBClusterIdentifier does not refer to an existing DB cluster.',
+                    'class' => 'DBClusterNotFoundException',
+                ),
+                array(
+                    'reason' => 'Request would result in user exceeding the allowed number of DB snapshots.',
+                    'class' => 'SnapshotQuotaExceededException',
+                ),
+            ),
+        ),
         'CreateDBInstance' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -486,7 +832,6 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'AllocatedStorage' => array(
-                    'required' => true,
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
@@ -501,12 +846,10 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'MasterUsername' => array(
-                    'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
                 'MasterUserPassword' => array(
-                    'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -608,6 +951,10 @@ return array (
                         ),
                     ),
                 ),
+                'DBClusterIdentifier' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
                 'StorageType' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -627,6 +974,11 @@ return array (
                 ),
                 'KmsKeyId' => array(
                     'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'CopyTagsToSnapshot' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
             ),
@@ -664,6 +1016,10 @@ return array (
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
+                    'reason' => 'The supplied value is not a valid DB cluster state.',
+                    'class' => 'InvalidDBClusterStateException',
+                ),
+                array(
                     'reason' => 'The requested subnet is invalid, or multiple subnets were requested that are not all in a common VPC.',
                     'class' => 'InvalidSubnetException',
                 ),
@@ -678,6 +1034,10 @@ return array (
                 array(
                     'reason' => 'The specified option group could not be found.',
                     'class' => 'OptionGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'DBClusterIdentifier does not refer to an existing DB cluster.',
+                    'class' => 'DBClusterNotFoundException',
                 ),
                 array(
                     'reason' => 'StorageType specified cannot be associated with the DB Instance.',
@@ -773,6 +1133,11 @@ return array (
                 ),
                 'StorageType' => array(
                     'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'CopyTagsToSnapshot' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
             ),
@@ -1283,6 +1648,117 @@ return array (
                 ),
             ),
         ),
+        'DeleteDBCluster' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DBClusterWrapper',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DeleteDBCluster',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-31',
+                ),
+                'DBClusterIdentifier' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'SkipFinalSnapshot' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
+                'FinalDBSnapshotIdentifier' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'DBClusterIdentifier does not refer to an existing DB cluster.',
+                    'class' => 'DBClusterNotFoundException',
+                ),
+                array(
+                    'reason' => 'The supplied value is not a valid DB cluster state.',
+                    'class' => 'InvalidDBClusterStateException',
+                ),
+            ),
+        ),
+        'DeleteDBClusterParameterGroup' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DeleteDBClusterParameterGroup',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-31',
+                ),
+                'DBClusterParameterGroupName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The DB parameter group cannot be deleted because it is in use.',
+                    'class' => 'InvalidDBParameterGroupStateException',
+                ),
+                array(
+                    'reason' => 'DBParameterGroupName does not refer to an existing DB parameter group.',
+                    'class' => 'DBParameterGroupNotFoundException',
+                ),
+            ),
+        ),
+        'DeleteDBClusterSnapshot' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DBClusterSnapshotWrapper',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DeleteDBClusterSnapshot',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-31',
+                ),
+                'DBClusterSnapshotIdentifier' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The supplied value is not a valid DB cluster snapshot state.',
+                    'class' => 'InvalidDBClusterSnapshotStateException',
+                ),
+                array(
+                    'reason' => 'DBClusterSnapshotIdentifier does not refer to an existing DB cluster snapshot.',
+                    'class' => 'DBClusterSnapshotNotFoundException',
+                ),
+            ),
+        ),
         'DeleteDBInstance' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -1619,6 +2095,263 @@ return array (
                 array(
                     'reason' => 'CertificateIdentifier does not refer to an existing certificate.',
                     'class' => 'CertificateNotFoundException',
+                ),
+            ),
+        ),
+        'DescribeDBClusterParameterGroups' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DBClusterParameterGroupsMessage',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeDBClusterParameterGroups',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-31',
+                ),
+                'DBClusterParameterGroupName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Name' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'Values' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'Values.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'MaxRecords' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'DBParameterGroupName does not refer to an existing DB parameter group.',
+                    'class' => 'DBParameterGroupNotFoundException',
+                ),
+            ),
+        ),
+        'DescribeDBClusterParameters' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DBClusterParameterGroupDetails',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeDBClusterParameters',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-31',
+                ),
+                'DBClusterParameterGroupName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Source' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Name' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'Values' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'Values.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'MaxRecords' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'DBParameterGroupName does not refer to an existing DB parameter group.',
+                    'class' => 'DBParameterGroupNotFoundException',
+                ),
+            ),
+        ),
+        'DescribeDBClusterSnapshots' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DBClusterSnapshotMessage',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeDBClusterSnapshots',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-31',
+                ),
+                'DBClusterIdentifier' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'DBClusterSnapshotIdentifier' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'SnapshotType' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Name' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'Values' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'Values.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'MaxRecords' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'DBClusterSnapshotIdentifier does not refer to an existing DB cluster snapshot.',
+                    'class' => 'DBClusterSnapshotNotFoundException',
+                ),
+            ),
+        ),
+        'DescribeDBClusters' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DBClusterMessage',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeDBClusters',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-31',
+                ),
+                'DBClusterIdentifier' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Name' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'Values' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'Values.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'MaxRecords' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'DBClusterIdentifier does not refer to an existing DB cluster.',
+                    'class' => 'DBClusterNotFoundException',
                 ),
             ),
         ),
@@ -2145,6 +2878,62 @@ return array (
                 array(
                     'reason' => 'DBSubnetGroupName does not refer to an existing DB subnet group.',
                     'class' => 'DBSubnetGroupNotFoundException',
+                ),
+            ),
+        ),
+        'DescribeEngineDefaultClusterParameters' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EngineDefaultsWrapper',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeEngineDefaultClusterParameters',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-31',
+                ),
+                'DBParameterGroupFamily' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Name' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'Values' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'Values.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'MaxRecords' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
                 ),
             ),
         ),
@@ -2874,6 +3663,43 @@ return array (
                     'reason' => 'DBInstanceIdentifier does not refer to an existing DB instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
+                array(
+                    'reason' => 'LogFileName does not refer to an existing DB log file.',
+                    'class' => 'DBLogFileNotFoundException',
+                ),
+            ),
+        ),
+        'FailoverDBCluster' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DBClusterWrapper',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'FailoverDBCluster',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-31',
+                ),
+                'DBClusterIdentifier' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'DBClusterIdentifier does not refer to an existing DB cluster.',
+                    'class' => 'DBClusterNotFoundException',
+                ),
+                array(
+                    'reason' => 'The supplied value is not a valid DB cluster state.',
+                    'class' => 'InvalidDBClusterStateException',
+                ),
             ),
         ),
         'ListTagsForResource' => array(
@@ -2931,6 +3757,195 @@ return array (
                 array(
                     'reason' => 'DBSnapshotIdentifier does not refer to an existing DB snapshot.',
                     'class' => 'DBSnapshotNotFoundException',
+                ),
+            ),
+        ),
+        'ModifyDBCluster' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DBClusterWrapper',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'ModifyDBCluster',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-31',
+                ),
+                'DBClusterIdentifier' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'NewDBClusterIdentifier' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'ApplyImmediately' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
+                'BackupRetentionPeriod' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'DBClusterParameterGroupName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'VpcSecurityGroupIds' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'VpcSecurityGroupIds.member',
+                    'items' => array(
+                        'name' => 'VpcSecurityGroupId',
+                        'type' => 'string',
+                    ),
+                ),
+                'Port' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'MasterUserPassword' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'OptionGroupName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'PreferredBackupWindow' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'PreferredMaintenanceWindow' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'DBClusterIdentifier does not refer to an existing DB cluster.',
+                    'class' => 'DBClusterNotFoundException',
+                ),
+                array(
+                    'reason' => 'The supplied value is not a valid DB cluster state.',
+                    'class' => 'InvalidDBClusterStateException',
+                ),
+                array(
+                    'reason' => 'Request would result in user exceeding the allowed amount of storage available across all DB instances.',
+                    'class' => 'StorageQuotaExceededException',
+                ),
+                array(
+                    'reason' => 'DBSubnetGroupName does not refer to an existing DB subnet group.',
+                    'class' => 'DBSubnetGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'DB subnet group does not cover all Availability Zones after it is created because users\' change.',
+                    'class' => 'InvalidVPCNetworkStateException',
+                ),
+                array(
+                    'reason' => 'The DB subnet group cannot be deleted because it is in use.',
+                    'class' => 'InvalidDBSubnetGroupStateException',
+                ),
+                array(
+                    'reason' => 'The requested subnet is invalid, or multiple subnets were requested that are not all in a common VPC.',
+                    'class' => 'InvalidSubnetException',
+                ),
+                array(
+                    'reason' => 'DBClusterParameterGroupName does not refer to an existing DB Cluster parameter group.',
+                    'class' => 'DBClusterParameterGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'The state of the DB security group does not allow deletion.',
+                    'class' => 'InvalidDBSecurityGroupStateException',
+                ),
+                array(
+                    'reason' => 'The specified DB instance is not in the available state.',
+                    'class' => 'InvalidDBInstanceStateException',
+                ),
+            ),
+        ),
+        'ModifyDBClusterParameterGroup' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DBClusterParameterGroupNameMessage',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'ModifyDBClusterParameterGroup',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-31',
+                ),
+                'DBClusterParameterGroupName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Parameters' => array(
+                    'required' => true,
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Parameters.member',
+                    'items' => array(
+                        'name' => 'Parameter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'ParameterName' => array(
+                                'type' => 'string',
+                            ),
+                            'ParameterValue' => array(
+                                'type' => 'string',
+                            ),
+                            'Description' => array(
+                                'type' => 'string',
+                            ),
+                            'Source' => array(
+                                'type' => 'string',
+                            ),
+                            'ApplyType' => array(
+                                'type' => 'string',
+                            ),
+                            'DataType' => array(
+                                'type' => 'string',
+                            ),
+                            'AllowedValues' => array(
+                                'type' => 'string',
+                            ),
+                            'IsModifiable' => array(
+                                'type' => 'boolean',
+                                'format' => 'boolean-string',
+                            ),
+                            'MinimumEngineVersion' => array(
+                                'type' => 'string',
+                            ),
+                            'ApplyMethod' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'DBParameterGroupName does not refer to an existing DB parameter group.',
+                    'class' => 'DBParameterGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'The DB parameter group cannot be deleted because it is in use.',
+                    'class' => 'InvalidDBParameterGroupStateException',
                 ),
             ),
         ),
@@ -3052,6 +4067,11 @@ return array (
                 ),
                 'CACertificateIdentifier' => array(
                     'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'CopyTagsToSnapshot' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
             ),
@@ -3675,6 +4695,87 @@ return array (
                 ),
             ),
         ),
+        'ResetDBClusterParameterGroup' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DBClusterParameterGroupNameMessage',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'ResetDBClusterParameterGroup',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-31',
+                ),
+                'DBClusterParameterGroupName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'ResetAllParameters' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
+                'Parameters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Parameters.member',
+                    'items' => array(
+                        'name' => 'Parameter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'ParameterName' => array(
+                                'type' => 'string',
+                            ),
+                            'ParameterValue' => array(
+                                'type' => 'string',
+                            ),
+                            'Description' => array(
+                                'type' => 'string',
+                            ),
+                            'Source' => array(
+                                'type' => 'string',
+                            ),
+                            'ApplyType' => array(
+                                'type' => 'string',
+                            ),
+                            'DataType' => array(
+                                'type' => 'string',
+                            ),
+                            'AllowedValues' => array(
+                                'type' => 'string',
+                            ),
+                            'IsModifiable' => array(
+                                'type' => 'boolean',
+                                'format' => 'boolean-string',
+                            ),
+                            'MinimumEngineVersion' => array(
+                                'type' => 'string',
+                            ),
+                            'ApplyMethod' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The DB parameter group cannot be deleted because it is in use.',
+                    'class' => 'InvalidDBParameterGroupStateException',
+                ),
+                array(
+                    'reason' => 'DBParameterGroupName does not refer to an existing DB parameter group.',
+                    'class' => 'DBParameterGroupNotFoundException',
+                ),
+            ),
+        ),
         'ResetDBParameterGroup' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -3753,6 +4854,304 @@ return array (
                 array(
                     'reason' => 'DBParameterGroupName does not refer to an existing DB parameter group.',
                     'class' => 'DBParameterGroupNotFoundException',
+                ),
+            ),
+        ),
+        'RestoreDBClusterFromSnapshot' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DBClusterWrapper',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'RestoreDBClusterFromSnapshot',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-31',
+                ),
+                'AvailabilityZones' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'AvailabilityZones.member',
+                    'items' => array(
+                        'name' => 'AvailabilityZone',
+                        'type' => 'string',
+                    ),
+                ),
+                'DBClusterIdentifier' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'SnapshotIdentifier' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Engine' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'EngineVersion' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Port' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'DBSubnetGroupName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'DatabaseName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'OptionGroupName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'VpcSecurityGroupIds' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'VpcSecurityGroupIds.member',
+                    'items' => array(
+                        'name' => 'VpcSecurityGroupId',
+                        'type' => 'string',
+                    ),
+                ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'User already has a DB cluster with the given identifier.',
+                    'class' => 'DBClusterAlreadyExistsException',
+                ),
+                array(
+                    'reason' => 'User attempted to create a new DB cluster and the user has already reached the maximum allowed DB cluster quota.',
+                    'class' => 'DBClusterQuotaExceededException',
+                ),
+                array(
+                    'reason' => 'Request would result in user exceeding the allowed amount of storage available across all DB instances.',
+                    'class' => 'StorageQuotaExceededException',
+                ),
+                array(
+                    'reason' => 'DBSubnetGroupName does not refer to an existing DB subnet group.',
+                    'class' => 'DBSubnetGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'DBSnapshotIdentifier does not refer to an existing DB snapshot.',
+                    'class' => 'DBSnapshotNotFoundException',
+                ),
+                array(
+                    'reason' => 'DBClusterSnapshotIdentifier does not refer to an existing DB cluster snapshot.',
+                    'class' => 'DBClusterSnapshotNotFoundException',
+                ),
+                array(
+                    'reason' => 'The DB cluster does not have enough capacity for the current operation.',
+                    'class' => 'InsufficientDBClusterCapacityException',
+                ),
+                array(
+                    'reason' => 'There is insufficient storage available for the current action. You may be able to resolve this error by updating your subnet group to use different Availability Zones that have more storage available.',
+                    'class' => 'InsufficientStorageClusterCapacityException',
+                ),
+                array(
+                    'reason' => 'The state of the DB snapshot does not allow deletion.',
+                    'class' => 'InvalidDBSnapshotStateException',
+                ),
+                array(
+                    'reason' => 'The supplied value is not a valid DB cluster snapshot state.',
+                    'class' => 'InvalidDBClusterSnapshotStateException',
+                ),
+                array(
+                    'reason' => 'Request would result in user exceeding the allowed amount of storage available across all DB instances.',
+                    'class' => 'StorageQuotaExceededException',
+                ),
+                array(
+                    'reason' => 'DB subnet group does not cover all Availability Zones after it is created because users\' change.',
+                    'class' => 'InvalidVPCNetworkStateException',
+                ),
+                array(
+                    'reason' => 'Cannot restore from vpc backup to non-vpc DB instance.',
+                    'class' => 'InvalidRestoreException',
+                ),
+                array(
+                    'reason' => 'DBSubnetGroupName does not refer to an existing DB subnet group.',
+                    'class' => 'DBSubnetGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'The requested subnet is invalid, or multiple subnets were requested that are not all in a common VPC.',
+                    'class' => 'InvalidSubnetException',
+                ),
+                array(
+                    'reason' => 'The specified option group could not be found.',
+                    'class' => 'OptionGroupNotFoundException',
+                ),
+            ),
+        ),
+        'RestoreDBClusterToPointInTime' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DBClusterWrapper',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'RestoreDBClusterToPointInTime',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2014-10-31',
+                ),
+                'DBClusterIdentifier' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'SourceDBClusterIdentifier' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'RestoreToTime' => array(
+                    'type' => array(
+                        'object',
+                        'string',
+                        'integer',
+                    ),
+                    'format' => 'date-time',
+                    'location' => 'aws.query',
+                ),
+                'UseLatestRestorableTime' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
+                'Port' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'DBSubnetGroupName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'OptionGroupName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'VpcSecurityGroupIds' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'VpcSecurityGroupIds.member',
+                    'items' => array(
+                        'name' => 'VpcSecurityGroupId',
+                        'type' => 'string',
+                    ),
+                ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'User already has a DB cluster with the given identifier.',
+                    'class' => 'DBClusterAlreadyExistsException',
+                ),
+                array(
+                    'reason' => 'User attempted to create a new DB cluster and the user has already reached the maximum allowed DB cluster quota.',
+                    'class' => 'DBClusterQuotaExceededException',
+                ),
+                array(
+                    'reason' => 'Request would result in user exceeding the allowed amount of storage available across all DB instances.',
+                    'class' => 'StorageQuotaExceededException',
+                ),
+                array(
+                    'reason' => 'DBSubnetGroupName does not refer to an existing DB subnet group.',
+                    'class' => 'DBSubnetGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'DBClusterIdentifier does not refer to an existing DB cluster.',
+                    'class' => 'DBClusterNotFoundException',
+                ),
+                array(
+                    'reason' => 'DBClusterSnapshotIdentifier does not refer to an existing DB cluster snapshot.',
+                    'class' => 'DBClusterSnapshotNotFoundException',
+                ),
+                array(
+                    'reason' => 'The DB cluster does not have enough capacity for the current operation.',
+                    'class' => 'InsufficientDBClusterCapacityException',
+                ),
+                array(
+                    'reason' => 'The state of the DB snapshot does not allow deletion.',
+                    'class' => 'InvalidDBSnapshotStateException',
+                ),
+                array(
+                    'reason' => 'The supplied value is not a valid DB cluster snapshot state.',
+                    'class' => 'InvalidDBClusterSnapshotStateException',
+                ),
+                array(
+                    'reason' => 'Request would result in user exceeding the allowed amount of storage available across all DB instances.',
+                    'class' => 'StorageQuotaExceededException',
+                ),
+                array(
+                    'reason' => 'DB subnet group does not cover all Availability Zones after it is created because users\' change.',
+                    'class' => 'InvalidVPCNetworkStateException',
+                ),
+                array(
+                    'reason' => 'Cannot restore from vpc backup to non-vpc DB instance.',
+                    'class' => 'InvalidRestoreException',
+                ),
+                array(
+                    'reason' => 'DBSubnetGroupName does not refer to an existing DB subnet group.',
+                    'class' => 'DBSubnetGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'The requested subnet is invalid, or multiple subnets were requested that are not all in a common VPC.',
+                    'class' => 'InvalidSubnetException',
+                ),
+                array(
+                    'reason' => 'The specified option group could not be found.',
+                    'class' => 'OptionGroupNotFoundException',
                 ),
             ),
         ),
@@ -3863,6 +5262,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'CopyTagsToSnapshot' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -3928,6 +5332,10 @@ return array (
                 array(
                     'reason' => 'Error accessing KMS key.',
                     'class' => 'KMSKeyNotAccessibleException',
+                ),
+                array(
+                    'reason' => 'DBSecurityGroupName does not refer to an existing DB security group.',
+                    'class' => 'DBSecurityGroupNotFoundException',
                 ),
             ),
         ),
@@ -4021,6 +5429,11 @@ return array (
                 ),
                 'OptionGroupName' => array(
                     'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'CopyTagsToSnapshot' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
                 'Tags' => array(
@@ -4121,6 +5534,10 @@ return array (
                 array(
                     'reason' => 'Error accessing KMS key.',
                     'class' => 'KMSKeyNotAccessibleException',
+                ),
+                array(
+                    'reason' => 'DBSecurityGroupName does not refer to an existing DB security group.',
+                    'class' => 'DBSecurityGroupNotFoundException',
                 ),
             ),
         ),
@@ -4347,6 +5764,71 @@ return array (
                 ),
             ),
         ),
+        'DBClusterSnapshotWrapper' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'DBClusterSnapshot' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'data' => array(
+                        'wrapper' => true,
+                    ),
+                    'properties' => array(
+                        'AvailabilityZones' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'AvailabilityZone',
+                                'type' => 'string',
+                                'sentAs' => 'AvailabilityZone',
+                            ),
+                        ),
+                        'DBClusterSnapshotIdentifier' => array(
+                            'type' => 'string',
+                        ),
+                        'DBClusterIdentifier' => array(
+                            'type' => 'string',
+                        ),
+                        'SnapshotCreateTime' => array(
+                            'type' => 'string',
+                        ),
+                        'Engine' => array(
+                            'type' => 'string',
+                        ),
+                        'AllocatedStorage' => array(
+                            'type' => 'numeric',
+                        ),
+                        'Status' => array(
+                            'type' => 'string',
+                        ),
+                        'Port' => array(
+                            'type' => 'numeric',
+                        ),
+                        'VpcId' => array(
+                            'type' => 'string',
+                        ),
+                        'ClusterCreateTime' => array(
+                            'type' => 'string',
+                        ),
+                        'MasterUsername' => array(
+                            'type' => 'string',
+                        ),
+                        'EngineVersion' => array(
+                            'type' => 'string',
+                        ),
+                        'LicenseModel' => array(
+                            'type' => 'string',
+                        ),
+                        'SnapshotType' => array(
+                            'type' => 'string',
+                        ),
+                        'PercentProgress' => array(
+                            'type' => 'numeric',
+                        ),
+                    ),
+                ),
+            ),
+        ),
         'DBParameterGroupWrapper' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -4434,6 +5916,9 @@ return array (
                             'type' => 'numeric',
                         ),
                         'SourceRegion' => array(
+                            'type' => 'string',
+                        ),
+                        'SourceDBSnapshotIdentifier' => array(
                             'type' => 'string',
                         ),
                         'StorageType' => array(
@@ -4579,6 +6064,161 @@ return array (
                 ),
             ),
         ),
+        'DBClusterWrapper' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'DBCluster' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'data' => array(
+                        'wrapper' => true,
+                    ),
+                    'properties' => array(
+                        'AllocatedStorage' => array(
+                            'type' => 'numeric',
+                        ),
+                        'AvailabilityZones' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'AvailabilityZone',
+                                'type' => 'string',
+                                'sentAs' => 'AvailabilityZone',
+                            ),
+                        ),
+                        'BackupRetentionPeriod' => array(
+                            'type' => 'numeric',
+                        ),
+                        'CharacterSetName' => array(
+                            'type' => 'string',
+                        ),
+                        'DatabaseName' => array(
+                            'type' => 'string',
+                        ),
+                        'DBClusterIdentifier' => array(
+                            'type' => 'string',
+                        ),
+                        'DBClusterParameterGroup' => array(
+                            'type' => 'string',
+                        ),
+                        'DBSubnetGroup' => array(
+                            'type' => 'string',
+                        ),
+                        'Status' => array(
+                            'type' => 'string',
+                        ),
+                        'PercentProgress' => array(
+                            'type' => 'string',
+                        ),
+                        'EarliestRestorableTime' => array(
+                            'type' => 'string',
+                        ),
+                        'Endpoint' => array(
+                            'type' => 'string',
+                        ),
+                        'Engine' => array(
+                            'type' => 'string',
+                        ),
+                        'EngineVersion' => array(
+                            'type' => 'string',
+                        ),
+                        'LatestRestorableTime' => array(
+                            'type' => 'string',
+                        ),
+                        'Port' => array(
+                            'type' => 'numeric',
+                        ),
+                        'MasterUsername' => array(
+                            'type' => 'string',
+                        ),
+                        'DBClusterOptionGroupMemberships' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'DBClusterOptionGroup',
+                                'type' => 'object',
+                                'sentAs' => 'DBClusterOptionGroup',
+                                'properties' => array(
+                                    'DBClusterOptionGroupName' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Status' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'PreferredBackupWindow' => array(
+                            'type' => 'string',
+                        ),
+                        'PreferredMaintenanceWindow' => array(
+                            'type' => 'string',
+                        ),
+                        'DBClusterMembers' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'DBClusterMember',
+                                'type' => 'object',
+                                'sentAs' => 'DBClusterMember',
+                                'properties' => array(
+                                    'DBInstanceIdentifier' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'IsClusterWriter' => array(
+                                        'type' => 'boolean',
+                                    ),
+                                    'DBClusterParameterGroupStatus' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'VpcSecurityGroups' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'VpcSecurityGroupMembership',
+                                'type' => 'object',
+                                'sentAs' => 'VpcSecurityGroupMembership',
+                                'properties' => array(
+                                    'VpcSecurityGroupId' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Status' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'HostedZoneId' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'DBClusterParameterGroupWrapper' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'DBClusterParameterGroup' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'data' => array(
+                        'wrapper' => true,
+                    ),
+                    'properties' => array(
+                        'DBClusterParameterGroupName' => array(
+                            'type' => 'string',
+                        ),
+                        'DBParameterGroupFamily' => array(
+                            'type' => 'string',
+                        ),
+                        'Description' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+            ),
+        ),
         'DBInstanceWrapper' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -4616,6 +6256,9 @@ return array (
                                 ),
                                 'Port' => array(
                                     'type' => 'numeric',
+                                ),
+                                'HostedZoneId' => array(
+                                    'type' => 'string',
                                 ),
                             ),
                         ),
@@ -4846,6 +6489,12 @@ return array (
                         'TdeCredentialArn' => array(
                             'type' => 'string',
                         ),
+                        'DbInstancePort' => array(
+                            'type' => 'numeric',
+                        ),
+                        'DBClusterIdentifier' => array(
+                            'type' => 'string',
+                        ),
                         'StorageEncrypted' => array(
                             'type' => 'boolean',
                         ),
@@ -4857,6 +6506,9 @@ return array (
                         ),
                         'CACertificateIdentifier' => array(
                             'type' => 'string',
+                        ),
+                        'CopyTagsToSnapshot' => array(
+                            'type' => 'boolean',
                         ),
                     ),
                 ),
@@ -4975,6 +6627,295 @@ return array (
                 ),
             ),
         ),
+        'DBClusterParameterGroupsMessage' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'DBClusterParameterGroups' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'DBClusterParameterGroup',
+                        'type' => 'object',
+                        'sentAs' => 'DBClusterParameterGroup',
+                        'properties' => array(
+                            'DBClusterParameterGroupName' => array(
+                                'type' => 'string',
+                            ),
+                            'DBParameterGroupFamily' => array(
+                                'type' => 'string',
+                            ),
+                            'Description' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'DBClusterParameterGroupDetails' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Parameters' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'Parameter',
+                        'type' => 'object',
+                        'sentAs' => 'Parameter',
+                        'properties' => array(
+                            'ParameterName' => array(
+                                'type' => 'string',
+                            ),
+                            'ParameterValue' => array(
+                                'type' => 'string',
+                            ),
+                            'Description' => array(
+                                'type' => 'string',
+                            ),
+                            'Source' => array(
+                                'type' => 'string',
+                            ),
+                            'ApplyType' => array(
+                                'type' => 'string',
+                            ),
+                            'DataType' => array(
+                                'type' => 'string',
+                            ),
+                            'AllowedValues' => array(
+                                'type' => 'string',
+                            ),
+                            'IsModifiable' => array(
+                                'type' => 'boolean',
+                            ),
+                            'MinimumEngineVersion' => array(
+                                'type' => 'string',
+                            ),
+                            'ApplyMethod' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+            ),
+        ),
+        'DBClusterSnapshotMessage' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'DBClusterSnapshots' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'DBClusterSnapshot',
+                        'type' => 'object',
+                        'sentAs' => 'DBClusterSnapshot',
+                        'properties' => array(
+                            'AvailabilityZones' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'AvailabilityZone',
+                                    'type' => 'string',
+                                    'sentAs' => 'AvailabilityZone',
+                                ),
+                            ),
+                            'DBClusterSnapshotIdentifier' => array(
+                                'type' => 'string',
+                            ),
+                            'DBClusterIdentifier' => array(
+                                'type' => 'string',
+                            ),
+                            'SnapshotCreateTime' => array(
+                                'type' => 'string',
+                            ),
+                            'Engine' => array(
+                                'type' => 'string',
+                            ),
+                            'AllocatedStorage' => array(
+                                'type' => 'numeric',
+                            ),
+                            'Status' => array(
+                                'type' => 'string',
+                            ),
+                            'Port' => array(
+                                'type' => 'numeric',
+                            ),
+                            'VpcId' => array(
+                                'type' => 'string',
+                            ),
+                            'ClusterCreateTime' => array(
+                                'type' => 'string',
+                            ),
+                            'MasterUsername' => array(
+                                'type' => 'string',
+                            ),
+                            'EngineVersion' => array(
+                                'type' => 'string',
+                            ),
+                            'LicenseModel' => array(
+                                'type' => 'string',
+                            ),
+                            'SnapshotType' => array(
+                                'type' => 'string',
+                            ),
+                            'PercentProgress' => array(
+                                'type' => 'numeric',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'DBClusterMessage' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'DBClusters' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'DBCluster',
+                        'type' => 'object',
+                        'sentAs' => 'DBCluster',
+                        'properties' => array(
+                            'AllocatedStorage' => array(
+                                'type' => 'numeric',
+                            ),
+                            'AvailabilityZones' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'AvailabilityZone',
+                                    'type' => 'string',
+                                    'sentAs' => 'AvailabilityZone',
+                                ),
+                            ),
+                            'BackupRetentionPeriod' => array(
+                                'type' => 'numeric',
+                            ),
+                            'CharacterSetName' => array(
+                                'type' => 'string',
+                            ),
+                            'DatabaseName' => array(
+                                'type' => 'string',
+                            ),
+                            'DBClusterIdentifier' => array(
+                                'type' => 'string',
+                            ),
+                            'DBClusterParameterGroup' => array(
+                                'type' => 'string',
+                            ),
+                            'DBSubnetGroup' => array(
+                                'type' => 'string',
+                            ),
+                            'Status' => array(
+                                'type' => 'string',
+                            ),
+                            'PercentProgress' => array(
+                                'type' => 'string',
+                            ),
+                            'EarliestRestorableTime' => array(
+                                'type' => 'string',
+                            ),
+                            'Endpoint' => array(
+                                'type' => 'string',
+                            ),
+                            'Engine' => array(
+                                'type' => 'string',
+                            ),
+                            'EngineVersion' => array(
+                                'type' => 'string',
+                            ),
+                            'LatestRestorableTime' => array(
+                                'type' => 'string',
+                            ),
+                            'Port' => array(
+                                'type' => 'numeric',
+                            ),
+                            'MasterUsername' => array(
+                                'type' => 'string',
+                            ),
+                            'DBClusterOptionGroupMemberships' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'DBClusterOptionGroup',
+                                    'type' => 'object',
+                                    'sentAs' => 'DBClusterOptionGroup',
+                                    'properties' => array(
+                                        'DBClusterOptionGroupName' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Status' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'PreferredBackupWindow' => array(
+                                'type' => 'string',
+                            ),
+                            'PreferredMaintenanceWindow' => array(
+                                'type' => 'string',
+                            ),
+                            'DBClusterMembers' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'DBClusterMember',
+                                    'type' => 'object',
+                                    'sentAs' => 'DBClusterMember',
+                                    'properties' => array(
+                                        'DBInstanceIdentifier' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'IsClusterWriter' => array(
+                                            'type' => 'boolean',
+                                        ),
+                                        'DBClusterParameterGroupStatus' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'VpcSecurityGroups' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'VpcSecurityGroupMembership',
+                                    'type' => 'object',
+                                    'sentAs' => 'VpcSecurityGroupMembership',
+                                    'properties' => array(
+                                        'VpcSecurityGroupId' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Status' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'HostedZoneId' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
         'DBEngineVersionMessage' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -5033,6 +6974,31 @@ return array (
                                     ),
                                 ),
                             ),
+                            'ValidUpgradeTarget' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'UpgradeTarget',
+                                    'type' => 'object',
+                                    'sentAs' => 'UpgradeTarget',
+                                    'properties' => array(
+                                        'Engine' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'EngineVersion' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Description' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'AutoUpgrade' => array(
+                                            'type' => 'boolean',
+                                        ),
+                                        'IsMajorVersionUpgrade' => array(
+                                            'type' => 'boolean',
+                                        ),
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -5080,6 +7046,9 @@ return array (
                                     ),
                                     'Port' => array(
                                         'type' => 'numeric',
+                                    ),
+                                    'HostedZoneId' => array(
+                                        'type' => 'string',
                                     ),
                                 ),
                             ),
@@ -5310,6 +7279,12 @@ return array (
                             'TdeCredentialArn' => array(
                                 'type' => 'string',
                             ),
+                            'DbInstancePort' => array(
+                                'type' => 'numeric',
+                            ),
+                            'DBClusterIdentifier' => array(
+                                'type' => 'string',
+                            ),
                             'StorageEncrypted' => array(
                                 'type' => 'boolean',
                             ),
@@ -5321,6 +7296,9 @@ return array (
                             ),
                             'CACertificateIdentifier' => array(
                                 'type' => 'string',
+                            ),
+                            'CopyTagsToSnapshot' => array(
+                                'type' => 'boolean',
                             ),
                         ),
                     ),
@@ -5577,6 +7555,9 @@ return array (
                                 'type' => 'numeric',
                             ),
                             'SourceRegion' => array(
+                                'type' => 'string',
+                            ),
+                            'SourceDBSnapshotIdentifier' => array(
                                 'type' => 'string',
                             ),
                             'StorageType' => array(
@@ -6352,6 +8333,16 @@ return array (
                             ),
                         ),
                     ),
+                ),
+            ),
+        ),
+        'DBClusterParameterGroupNameMessage' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'DBClusterParameterGroupName' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
                 ),
             ),
         ),

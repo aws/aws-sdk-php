@@ -2634,7 +2634,6 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -2644,7 +2643,6 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -2663,7 +2661,6 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -2673,7 +2670,6 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -2683,7 +2679,6 @@ return array (
             'properties' => array(
                 'TapeARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -2693,7 +2688,6 @@ return array (
             'properties' => array(
                 'TapeARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -2703,11 +2697,9 @@ return array (
             'properties' => array(
                 'VolumeARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'TargetARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -2717,11 +2709,9 @@ return array (
             'properties' => array(
                 'VolumeARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'SnapshotId' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -2731,15 +2721,12 @@ return array (
             'properties' => array(
                 'SnapshotId' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'VolumeARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'VolumeRecoveryPointTime' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -2749,15 +2736,12 @@ return array (
             'properties' => array(
                 'VolumeARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'VolumeSizeInBytes' => array(
                     'type' => 'numeric',
-                    'location' => 'json',
                 ),
                 'TargetARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -2767,7 +2751,6 @@ return array (
             'properties' => array(
                 'TapeARNs' => array(
                     'type' => 'array',
-                    'location' => 'json',
                     'items' => array(
                         'name' => 'TapeARN',
                         'type' => 'string',
@@ -2781,7 +2764,6 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -2791,11 +2773,9 @@ return array (
             'properties' => array(
                 'TargetARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'InitiatorName' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -2805,7 +2785,6 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -2815,7 +2794,6 @@ return array (
             'properties' => array(
                 'VolumeARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -2825,7 +2803,6 @@ return array (
             'properties' => array(
                 'TapeARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -2835,7 +2812,6 @@ return array (
             'properties' => array(
                 'TapeARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -2845,7 +2821,6 @@ return array (
             'properties' => array(
                 'VolumeARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -2855,15 +2830,12 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'AverageUploadRateLimitInBitsPerSec' => array(
                     'type' => 'numeric',
-                    'location' => 'json',
                 ),
                 'AverageDownloadRateLimitInBitsPerSec' => array(
                     'type' => 'numeric',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -2873,11 +2845,9 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'DiskIds' => array(
                     'type' => 'array',
-                    'location' => 'json',
                     'items' => array(
                         'name' => 'DiskId',
                         'type' => 'string',
@@ -2885,23 +2855,18 @@ return array (
                 ),
                 'CacheAllocatedInBytes' => array(
                     'type' => 'numeric',
-                    'location' => 'json',
                 ),
                 'CacheUsedPercentage' => array(
                     'type' => 'numeric',
-                    'location' => 'json',
                 ),
                 'CacheDirtyPercentage' => array(
                     'type' => 'numeric',
-                    'location' => 'json',
                 ),
                 'CacheHitPercentage' => array(
                     'type' => 'numeric',
-                    'location' => 'json',
                 ),
                 'CacheMissPercentage' => array(
                     'type' => 'numeric',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -2911,7 +2876,6 @@ return array (
             'properties' => array(
                 'CachediSCSIVolumes' => array(
                     'type' => 'array',
-                    'location' => 'json',
                     'items' => array(
                         'name' => 'CachediSCSIVolume',
                         'type' => 'object',
@@ -2968,7 +2932,6 @@ return array (
             'properties' => array(
                 'ChapCredentials' => array(
                     'type' => 'array',
-                    'location' => 'json',
                     'items' => array(
                         'name' => 'ChapInfo',
                         'type' => 'object',
@@ -2996,26 +2959,21 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'GatewayId' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'GatewayName' => array(
                     'type' => 'string',
                 ),
                 'GatewayTimezone' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'GatewayState' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'GatewayNetworkInterfaces' => array(
                     'type' => 'array',
-                    'location' => 'json',
                     'items' => array(
                         'name' => 'NetworkInterface',
                         'type' => 'object',
@@ -3034,15 +2992,12 @@ return array (
                 ),
                 'GatewayType' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'NextUpdateAvailabilityDate' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'LastSoftwareUpdate' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -3052,23 +3007,18 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'HourOfDay' => array(
                     'type' => 'numeric',
-                    'location' => 'json',
                 ),
                 'MinuteOfHour' => array(
                     'type' => 'numeric',
-                    'location' => 'json',
                 ),
                 'DayOfWeek' => array(
                     'type' => 'numeric',
-                    'location' => 'json',
                 ),
                 'Timezone' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -3078,23 +3028,18 @@ return array (
             'properties' => array(
                 'VolumeARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'StartAt' => array(
                     'type' => 'numeric',
-                    'location' => 'json',
                 ),
                 'RecurrenceInHours' => array(
                     'type' => 'numeric',
-                    'location' => 'json',
                 ),
                 'Description' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'Timezone' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -3104,7 +3049,6 @@ return array (
             'properties' => array(
                 'StorediSCSIVolumes' => array(
                     'type' => 'array',
-                    'location' => 'json',
                     'items' => array(
                         'name' => 'StorediSCSIVolume',
                         'type' => 'object',
@@ -3167,7 +3111,6 @@ return array (
             'properties' => array(
                 'TapeArchives' => array(
                     'type' => 'array',
-                    'location' => 'json',
                     'items' => array(
                         'name' => 'TapeArchive',
                         'type' => 'object',
@@ -3195,7 +3138,6 @@ return array (
                 ),
                 'Marker' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -3205,11 +3147,9 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'TapeRecoveryPointInfos' => array(
                     'type' => 'array',
-                    'location' => 'json',
                     'items' => array(
                         'name' => 'TapeRecoveryPointInfo',
                         'type' => 'object',
@@ -3231,7 +3171,6 @@ return array (
                 ),
                 'Marker' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -3241,7 +3180,6 @@ return array (
             'properties' => array(
                 'Tapes' => array(
                     'type' => 'array',
-                    'location' => 'json',
                     'items' => array(
                         'name' => 'Tape',
                         'type' => 'object',
@@ -3269,7 +3207,6 @@ return array (
                 ),
                 'Marker' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -3279,11 +3216,9 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'DiskIds' => array(
                     'type' => 'array',
-                    'location' => 'json',
                     'items' => array(
                         'name' => 'DiskId',
                         'type' => 'string',
@@ -3291,11 +3226,9 @@ return array (
                 ),
                 'UploadBufferUsedInBytes' => array(
                     'type' => 'numeric',
-                    'location' => 'json',
                 ),
                 'UploadBufferAllocatedInBytes' => array(
                     'type' => 'numeric',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -3305,11 +3238,9 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'VTLDevices' => array(
                     'type' => 'array',
-                    'location' => 'json',
                     'items' => array(
                         'name' => 'VTLDevice',
                         'type' => 'object',
@@ -3348,7 +3279,6 @@ return array (
                 ),
                 'Marker' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -3358,11 +3288,9 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'DiskIds' => array(
                     'type' => 'array',
-                    'location' => 'json',
                     'items' => array(
                         'name' => 'DiskId',
                         'type' => 'string',
@@ -3370,11 +3298,9 @@ return array (
                 ),
                 'WorkingStorageUsedInBytes' => array(
                     'type' => 'numeric',
-                    'location' => 'json',
                 ),
                 'WorkingStorageAllocatedInBytes' => array(
                     'type' => 'numeric',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -3384,7 +3310,6 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -3394,7 +3319,6 @@ return array (
             'properties' => array(
                 'Gateways' => array(
                     'type' => 'array',
-                    'location' => 'json',
                     'items' => array(
                         'name' => 'GatewayInfo',
                         'type' => 'object',
@@ -3416,7 +3340,6 @@ return array (
                 ),
                 'Marker' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -3426,11 +3349,9 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'Disks' => array(
                     'type' => 'array',
-                    'location' => 'json',
                     'items' => array(
                         'name' => 'Disk',
                         'type' => 'object',
@@ -3494,7 +3415,6 @@ return array (
             'properties' => array(
                 'Initiators' => array(
                     'type' => 'array',
-                    'location' => 'json',
                     'items' => array(
                         'name' => 'Initiator',
                         'type' => 'string',
@@ -3508,11 +3428,9 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'VolumeRecoveryPointInfos' => array(
                     'type' => 'array',
-                    'location' => 'json',
                     'items' => array(
                         'name' => 'VolumeRecoveryPointInfo',
                         'type' => 'object',
@@ -3540,15 +3458,12 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'Marker' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'VolumeInfos' => array(
                     'type' => 'array',
-                    'location' => 'json',
                     'items' => array(
                         'name' => 'VolumeInfo',
                         'type' => 'object',
@@ -3579,7 +3494,6 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -3589,7 +3503,6 @@ return array (
             'properties' => array(
                 'TapeARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -3599,7 +3512,6 @@ return array (
             'properties' => array(
                 'TapeARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -3609,7 +3521,6 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -3619,7 +3530,6 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -3629,7 +3539,6 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -3639,11 +3548,9 @@ return array (
             'properties' => array(
                 'TargetARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'InitiatorName' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -3653,7 +3560,6 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
                 'GatewayName' => array(
                     'type' => 'string',
@@ -3666,7 +3572,6 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -3676,7 +3581,6 @@ return array (
             'properties' => array(
                 'GatewayARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -3686,7 +3590,6 @@ return array (
             'properties' => array(
                 'VolumeARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),
@@ -3696,7 +3599,6 @@ return array (
             'properties' => array(
                 'VTLDeviceARN' => array(
                     'type' => 'string',
-                    'location' => 'json',
                 ),
             ),
         ),

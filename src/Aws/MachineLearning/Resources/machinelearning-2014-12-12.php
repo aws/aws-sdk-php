@@ -1408,7 +1408,6 @@ return array (
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'string',
-                        'maxLength' => 1024,
                         'data' => array(
                             'shape_name' => 'VariableName',
                         ),

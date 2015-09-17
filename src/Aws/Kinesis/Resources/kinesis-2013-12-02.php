@@ -150,6 +150,7 @@ return array (
                     'type' => 'numeric',
                     'location' => 'json',
                     'minimum' => 1,
+                    'maximum' => 100000,
                 ),
             ),
             'errorResponses' => array(
@@ -875,6 +876,9 @@ return array (
                         'type' => 'object',
                         'properties' => array(
                             'SequenceNumber' => array(
+                                'type' => 'string',
+                            ),
+                            'ApproximateArrivalTimestamp' => array(
                                 'type' => 'string',
                             ),
                             'Data' => array(

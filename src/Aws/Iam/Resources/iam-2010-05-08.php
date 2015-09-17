@@ -2343,6 +2343,90 @@ return array (
                 ),
             ),
         ),
+        'GetContextKeysForCustomPolicy' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'GetContextKeysForPolicyResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'GetContextKeysForCustomPolicy',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-05-08',
+                ),
+                'PolicyInputList' => array(
+                    'required' => true,
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'PolicyInputList.member',
+                    'items' => array(
+                        'name' => 'policyDocumentType',
+                        'type' => 'string',
+                        'minLength' => 1,
+                        'maxLength' => 131072,
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The request was rejected because an invalid or out-of-range value was supplied for an input parameter.',
+                    'class' => 'InvalidInputException',
+                ),
+            ),
+        ),
+        'GetContextKeysForPrincipalPolicy' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'GetContextKeysForPolicyResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'GetContextKeysForPrincipalPolicy',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-05-08',
+                ),
+                'PolicySourceArn' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 20,
+                    'maxLength' => 2048,
+                ),
+                'PolicyInputList' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'PolicyInputList.member',
+                    'items' => array(
+                        'name' => 'policyDocumentType',
+                        'type' => 'string',
+                        'minLength' => 1,
+                        'maxLength' => 131072,
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The request was rejected because it referenced an entity that does not exist. The error message describes the entity.',
+                    'class' => 'NoSuchEntityException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because an invalid or out-of-range value was supplied for an input parameter.',
+                    'class' => 'InvalidInputException',
+                ),
+            ),
+        ),
         'GetCredentialReport' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -2367,7 +2451,7 @@ return array (
                     'class' => 'CredentialReportNotPresentException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because the most recent credential report has expired. To generate a new credential report, use GenerateCredentialReport. For more information about credential report expiration, see Getting Credential Reports in the Using IAM guide.',
+                    'reason' => 'The request was rejected because the most recent credential report has expired. To generate a new credential report, use GenerateCredentialReport. For more information about credential report expiration, see Getting Credential Reports in the IAM User Guide.',
                     'class' => 'CredentialReportExpiredException',
                 ),
                 array(
@@ -4471,6 +4555,222 @@ return array (
                 ),
             ),
         ),
+        'SimulateCustomPolicy' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'SimulatePolicyResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'SimulateCustomPolicy',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-05-08',
+                ),
+                'PolicyInputList' => array(
+                    'required' => true,
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'PolicyInputList.member',
+                    'items' => array(
+                        'name' => 'policyDocumentType',
+                        'type' => 'string',
+                        'minLength' => 1,
+                        'maxLength' => 131072,
+                    ),
+                ),
+                'ActionNames' => array(
+                    'required' => true,
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'ActionNames.member',
+                    'items' => array(
+                        'name' => 'ActionNameType',
+                        'type' => 'string',
+                        'minLength' => 3,
+                        'maxLength' => 128,
+                    ),
+                ),
+                'ResourceArns' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'ResourceArns.member',
+                    'items' => array(
+                        'name' => 'ResourceNameType',
+                        'type' => 'string',
+                        'minLength' => 1,
+                        'maxLength' => 2048,
+                    ),
+                ),
+                'ContextEntries' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'ContextEntries.member',
+                    'items' => array(
+                        'name' => 'ContextEntry',
+                        'type' => 'object',
+                        'properties' => array(
+                            'ContextKeyName' => array(
+                                'type' => 'string',
+                                'minLength' => 5,
+                                'maxLength' => 256,
+                            ),
+                            'ContextKeyValues' => array(
+                                'type' => 'array',
+                                'sentAs' => 'ContextKeyValues.member',
+                                'items' => array(
+                                    'name' => 'ContextKeyValueType',
+                                    'type' => 'string',
+                                ),
+                            ),
+                            'ContextKeyType' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+                'MaxItems' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                    'minimum' => 1,
+                    'maximum' => 1000,
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 320,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The request was rejected because an invalid or out-of-range value was supplied for an input parameter.',
+                    'class' => 'InvalidInputException',
+                ),
+                array(
+                    'reason' => 'The request failed because a provided policy could not be successfully evaluated. An additional detail message indicates the source of the failure.',
+                    'class' => 'PolicyEvaluationException',
+                ),
+            ),
+        ),
+        'SimulatePrincipalPolicy' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'SimulatePolicyResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'SimulatePrincipalPolicy',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-05-08',
+                ),
+                'PolicySourceArn' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 20,
+                    'maxLength' => 2048,
+                ),
+                'PolicyInputList' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'PolicyInputList.member',
+                    'items' => array(
+                        'name' => 'policyDocumentType',
+                        'type' => 'string',
+                        'minLength' => 1,
+                        'maxLength' => 131072,
+                    ),
+                ),
+                'ActionNames' => array(
+                    'required' => true,
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'ActionNames.member',
+                    'items' => array(
+                        'name' => 'ActionNameType',
+                        'type' => 'string',
+                        'minLength' => 3,
+                        'maxLength' => 128,
+                    ),
+                ),
+                'ResourceArns' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'ResourceArns.member',
+                    'items' => array(
+                        'name' => 'ResourceNameType',
+                        'type' => 'string',
+                        'minLength' => 1,
+                        'maxLength' => 2048,
+                    ),
+                ),
+                'ContextEntries' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'ContextEntries.member',
+                    'items' => array(
+                        'name' => 'ContextEntry',
+                        'type' => 'object',
+                        'properties' => array(
+                            'ContextKeyName' => array(
+                                'type' => 'string',
+                                'minLength' => 5,
+                                'maxLength' => 256,
+                            ),
+                            'ContextKeyValues' => array(
+                                'type' => 'array',
+                                'sentAs' => 'ContextKeyValues.member',
+                                'items' => array(
+                                    'name' => 'ContextKeyValueType',
+                                    'type' => 'string',
+                                ),
+                            ),
+                            'ContextKeyType' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+                'MaxItems' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                    'minimum' => 1,
+                    'maximum' => 1000,
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 320,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The request was rejected because it referenced an entity that does not exist. The error message describes the entity.',
+                    'class' => 'NoSuchEntityException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because an invalid or out-of-range value was supplied for an input parameter.',
+                    'class' => 'InvalidInputException',
+                ),
+                array(
+                    'reason' => 'The request failed because a provided policy could not be successfully evaluated. An additional detail message indicates the source of the failure.',
+                    'class' => 'PolicyEvaluationException',
+                ),
+            ),
+        ),
         'UpdateAccessKey' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -6068,6 +6368,21 @@ return array (
                 ),
             ),
         ),
+        'GetContextKeysForPolicyResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'ContextKeyNames' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'ContextKeyNameType',
+                        'type' => 'string',
+                        'sentAs' => 'member',
+                    ),
+                ),
+            ),
+        ),
         'GetCredentialReportResponse' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -7445,6 +7760,86 @@ return array (
                             ),
                             'EnableDate' => array(
                                 'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+                'IsTruncated' => array(
+                    'type' => 'boolean',
+                    'location' => 'xml',
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+            ),
+        ),
+        'SimulatePolicyResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'EvaluationResults' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'EvaluationResult',
+                        'type' => 'object',
+                        'sentAs' => 'member',
+                        'properties' => array(
+                            'EvalActionName' => array(
+                                'type' => 'string',
+                            ),
+                            'EvalResourceName' => array(
+                                'type' => 'string',
+                            ),
+                            'EvalDecision' => array(
+                                'type' => 'string',
+                            ),
+                            'MatchedStatements' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'Statement',
+                                    'type' => 'object',
+                                    'sentAs' => 'member',
+                                    'properties' => array(
+                                        'SourcePolicyId' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'SourcePolicyType' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'StartPosition' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'Line' => array(
+                                                    'type' => 'numeric',
+                                                ),
+                                                'Column' => array(
+                                                    'type' => 'numeric',
+                                                ),
+                                            ),
+                                        ),
+                                        'EndPosition' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'Line' => array(
+                                                    'type' => 'numeric',
+                                                ),
+                                                'Column' => array(
+                                                    'type' => 'numeric',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'MissingContextValues' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'ContextKeyNameType',
+                                    'type' => 'string',
+                                    'sentAs' => 'member',
+                                ),
                             ),
                         ),
                     ),

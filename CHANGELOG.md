@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Ec2` - Added support for the "diversified" SpotFleet allocation strategy.
+* `Aws\Ec2` - Added support for reading `StateMessage` and `DataEncryptionKeyId`
+  from a `DescribeSnapshots` response.
+* `Aws\Iam` - Added support for new policy simulation APIs.
+* `Aws\Kinesis` - Added support for timestamped GetRecords call.
+* `Aws\MachineLearning` - Fixed invalid validation constraint on `Predict`
+  operation.
+* `Aws\OpsWorks` - Added support for operations on ECS clusters.
+* `Aws\Route53` - Added support for calculated and latency health checks.
+* `Aws\S3` - Added support for new `STANDARD_IA` storage class.
+* `Aws\S3` - Added support for specifying storage class in cross-region
+  replication configuration.
+* `Aws\StorageGateway` - Added support for tagging and untagging resources.
+
 ## 2.8.20 - 2015-09-03
 
 * `Aws\CodePipeline` - Added support for using encryption keys with artifact

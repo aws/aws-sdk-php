@@ -69,6 +69,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model getBucketAcl(array $args = array()) {@command S3 GetBucketAcl}
  * @method Model getBucketCors(array $args = array()) {@command S3 GetBucketCors}
  * @method Model getBucketLifecycle(array $args = array()) {@command S3 GetBucketLifecycle}
+ * @method Model getBucketLifecycleConfiguration(array $args = array()) {@command S3 GetBucketLifecycleConfiguration}
  * @method Model getBucketLocation(array $args = array()) {@command S3 GetBucketLocation}
  * @method Model getBucketLogging(array $args = array()) {@command S3 GetBucketLogging}
  * @method Model getBucketNotification(array $args = array()) {@command S3 GetBucketNotification}
@@ -92,6 +93,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model putBucketAcl(array $args = array()) {@command S3 PutBucketAcl}
  * @method Model putBucketCors(array $args = array()) {@command S3 PutBucketCors}
  * @method Model putBucketLifecycle(array $args = array()) {@command S3 PutBucketLifecycle}
+ * @method Model putBucketLifecycleConfiguration(array $args = array()) {@command S3 PutBucketLifecycleConfiguration}
  * @method Model putBucketLogging(array $args = array()) {@command S3 PutBucketLogging}
  * @method Model putBucketNotification(array $args = array()) {@command S3 PutBucketNotification}
  * @method Model putBucketNotificationConfiguration(array $args = array()) {@command S3 PutBucketNotificationConfiguration}

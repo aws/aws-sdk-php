@@ -822,6 +822,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'CustomJson' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
                 'CustomSecurityGroupIds' => array(
                     'type' => 'array',
                     'location' => 'json',
@@ -1366,6 +1370,44 @@ return array (
                 ),
             ),
         ),
+        'DeregisterEcsCluster' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'OpsWorks_20130218.DeregisterEcsCluster',
+                ),
+                'EcsClusterArn' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that a request was invalid.',
+                    'class' => 'ValidationException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+            ),
+        ),
         'DeregisterElasticIp' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -1697,6 +1739,59 @@ return array (
                         'name' => 'String',
                         'type' => 'string',
                     ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that a request was invalid.',
+                    'class' => 'ValidationException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+            ),
+        ),
+        'DescribeEcsClusters' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'DescribeEcsClustersResult',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'OpsWorks_20130218.DescribeEcsClusters',
+                ),
+                'EcsClusterArns' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'String',
+                        'type' => 'string',
+                    ),
+                ),
+                'StackId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'NextToken' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'MaxResults' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
@@ -2582,6 +2677,49 @@ return array (
                     'default' => 'OpsWorks_20130218.RebootInstance',
                 ),
                 'InstanceId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that a request was invalid.',
+                    'class' => 'ValidationException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+            ),
+        ),
+        'RegisterEcsCluster' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'RegisterEcsClusterResult',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'OpsWorks_20130218.RegisterEcsCluster',
+                ),
+                'EcsClusterArn' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'StackId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
@@ -3644,6 +3782,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'CustomJson' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
                 'CustomSecurityGroupIds' => array(
                     'type' => 'array',
                     'location' => 'json',
@@ -4463,6 +4605,38 @@ return array (
                 ),
             ),
         ),
+        'DescribeEcsClustersResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'EcsClusters' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'EcsCluster',
+                        'type' => 'object',
+                        'properties' => array(
+                            'EcsClusterArn' => array(
+                                'type' => 'string',
+                            ),
+                            'EcsClusterName' => array(
+                                'type' => 'string',
+                            ),
+                            'StackId' => array(
+                                'type' => 'string',
+                            ),
+                            'RegisteredAt' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+                'NextToken' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
         'DescribeElasticIpsResult' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -4622,6 +4796,12 @@ return array (
                             'Ec2InstanceId' => array(
                                 'type' => 'string',
                             ),
+                            'EcsClusterArn' => array(
+                                'type' => 'string',
+                            ),
+                            'EcsContainerInstanceArn' => array(
+                                'type' => 'string',
+                            ),
                             'ElasticIp' => array(
                                 'type' => 'string',
                             ),
@@ -4763,6 +4943,9 @@ return array (
                                 ),
                             ),
                             'CustomInstanceProfileArn' => array(
+                                'type' => 'string',
+                            ),
+                            'CustomJson' => array(
                                 'type' => 'string',
                             ),
                             'CustomSecurityGroupIds' => array(
@@ -5618,6 +5801,16 @@ return array (
                 ),
             ),
         ),
+        'RegisterEcsClusterResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'EcsClusterArn' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
         'RegisterElasticIpResult' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -5658,6 +5851,12 @@ return array (
         ),
         'DescribeDeployments' => array(
             'result_key' => 'Deployments',
+        ),
+        'DescribeEcsClusters' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'limit_key' => 'MaxResults',
+            'result_key' => 'EcsClusters',
         ),
         'DescribeElasticIps' => array(
             'result_key' => 'ElasticIps',

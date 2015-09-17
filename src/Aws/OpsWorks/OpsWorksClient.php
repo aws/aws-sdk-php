@@ -43,6 +43,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model deleteLayer(array $args = array()) {@command OpsWorks DeleteLayer}
  * @method Model deleteStack(array $args = array()) {@command OpsWorks DeleteStack}
  * @method Model deleteUserProfile(array $args = array()) {@command OpsWorks DeleteUserProfile}
+ * @method Model deregisterEcsCluster(array $args = array()) {@command OpsWorks DeregisterEcsCluster}
  * @method Model deregisterElasticIp(array $args = array()) {@command OpsWorks DeregisterElasticIp}
  * @method Model deregisterInstance(array $args = array()) {@command OpsWorks DeregisterInstance}
  * @method Model deregisterRdsDbInstance(array $args = array()) {@command OpsWorks DeregisterRdsDbInstance}
@@ -51,6 +52,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model describeApps(array $args = array()) {@command OpsWorks DescribeApps}
  * @method Model describeCommands(array $args = array()) {@command OpsWorks DescribeCommands}
  * @method Model describeDeployments(array $args = array()) {@command OpsWorks DescribeDeployments}
+ * @method Model describeEcsClusters(array $args = array()) {@command OpsWorks DescribeEcsClusters}
  * @method Model describeElasticIps(array $args = array()) {@command OpsWorks DescribeElasticIps}
  * @method Model describeElasticLoadBalancers(array $args = array()) {@command OpsWorks DescribeElasticLoadBalancers}
  * @method Model describeInstances(array $args = array()) {@command OpsWorks DescribeInstances}
@@ -72,6 +74,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model getHostnameSuggestion(array $args = array()) {@command OpsWorks GetHostnameSuggestion}
  * @method Model grantAccess(array $args = array()) {@command OpsWorks GrantAccess}
  * @method Model rebootInstance(array $args = array()) {@command OpsWorks RebootInstance}
+ * @method Model registerEcsCluster(array $args = array()) {@command OpsWorks RegisterEcsCluster}
  * @method Model registerElasticIp(array $args = array()) {@command OpsWorks RegisterElasticIp}
  * @method Model registerInstance(array $args = array()) {@command OpsWorks RegisterInstance}
  * @method Model registerRdsDbInstance(array $args = array()) {@command OpsWorks RegisterRdsDbInstance}
@@ -97,6 +100,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getDescribeAppsIterator(array $args = array()) The input array uses the parameters of the DescribeApps operation
  * @method ResourceIteratorInterface getDescribeCommandsIterator(array $args = array()) The input array uses the parameters of the DescribeCommands operation
  * @method ResourceIteratorInterface getDescribeDeploymentsIterator(array $args = array()) The input array uses the parameters of the DescribeDeployments operation
+ * @method ResourceIteratorInterface getDescribeEcsClustersIterator(array $args = array()) The input array uses the parameters of the DescribeEcsClusters operation
  * @method ResourceIteratorInterface getDescribeElasticIpsIterator(array $args = array()) The input array uses the parameters of the DescribeElasticIps operation
  * @method ResourceIteratorInterface getDescribeElasticLoadBalancersIterator(array $args = array()) The input array uses the parameters of the DescribeElasticLoadBalancers operation
  * @method ResourceIteratorInterface getDescribeInstancesIterator(array $args = array()) The input array uses the parameters of the DescribeInstances operation

@@ -74,6 +74,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model getAccountAuthorizationDetails(array $args = array()) {@command Iam GetAccountAuthorizationDetails}
  * @method Model getAccountPasswordPolicy(array $args = array()) {@command Iam GetAccountPasswordPolicy}
  * @method Model getAccountSummary(array $args = array()) {@command Iam GetAccountSummary}
+ * @method Model getContextKeysForCustomPolicy(array $args = array()) {@command Iam GetContextKeysForCustomPolicy}
+ * @method Model getContextKeysForPrincipalPolicy(array $args = array()) {@command Iam GetContextKeysForPrincipalPolicy}
  * @method Model getCredentialReport(array $args = array()) {@command Iam GetCredentialReport}
  * @method Model getGroup(array $args = array()) {@command Iam GetGroup}
  * @method Model getGroupPolicy(array $args = array()) {@command Iam GetGroupPolicy}
@@ -121,6 +123,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model removeUserFromGroup(array $args = array()) {@command Iam RemoveUserFromGroup}
  * @method Model resyncMFADevice(array $args = array()) {@command Iam ResyncMFADevice}
  * @method Model setDefaultPolicyVersion(array $args = array()) {@command Iam SetDefaultPolicyVersion}
+ * @method Model simulateCustomPolicy(array $args = array()) {@command Iam SimulateCustomPolicy}
+ * @method Model simulatePrincipalPolicy(array $args = array()) {@command Iam SimulatePrincipalPolicy}
  * @method Model updateAccessKey(array $args = array()) {@command Iam UpdateAccessKey}
  * @method Model updateAccountPasswordPolicy(array $args = array()) {@command Iam UpdateAccountPasswordPolicy}
  * @method Model updateAssumeRolePolicy(array $args = array()) {@command Iam UpdateAssumeRolePolicy}
