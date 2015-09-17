@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 2.8.21 - 2015-09-16
 
 * `Aws\Ec2` - Added support for the "diversified" SpotFleet allocation strategy.
 * `Aws\Ec2` - Added support for reading `StateMessage` and `DataEncryptionKeyId`
