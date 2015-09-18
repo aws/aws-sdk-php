@@ -141,6 +141,20 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testCanGetIteratorWithoutDefinedPaginator()
+    {
+        $client = $this->getTestClient('ec2');
+        $data = ['foo', 'bar', 'baz'];
+        $this->addMockResults($client, [new Result([
+            'Subnets' => [$data],
+        ])]);
+        $iterator = $client->getIterator('DescribeSubnets');
+        $this->assertInstanceOf('Traversable', $iterator);
+        foreach ($iterator as $iterated) {
+            $this->assertSame($data, $iterated);
+        }
+    }
+
     /**
      * @expectedException \UnexpectedValueException
      */

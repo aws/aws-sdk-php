@@ -245,7 +245,7 @@ class AwsClient implements AwsClientInterface
             return $this->getPaginator($name, $args)->search($key);
         }
 
-        $result = $this->getCommand($name, $args)->search($key);
+        $result = $this->execute($this->getCommand($name, $args))->search($key);
 
         return new \ArrayIterator((array) $result);
     }
