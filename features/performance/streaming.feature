@@ -9,11 +9,11 @@ Feature: Streaming transfers consume a fixed amount of memory
     Then I should not have leaked any resources
 
     Examples:
-    | bytes       |
-    | 2048        |
-    | 2097152     |
-    | 20971520    |
-    | 2147483648  |
+    | bytes     |
+    | 2048      |
+    | 2097152   |
+    | 20971520  |
+    | 209715200 |
 
   Scenario Outline: Streaming download are O(1) in memory usage
     Given I have a <bytes> byte file
@@ -23,8 +23,8 @@ Feature: Streaming transfers consume a fixed amount of memory
     Then I should not have leaked any resources
 
     Examples:
-      | bytes       |
-      | 2048        |
-      | 2097152     |
-      | 20971520    |
-      | 2147483648  |
+      | bytes     |
+      | 2048      |
+      | 2097152   |
+      | 20971520  |
+      | 209715200 |
