@@ -2,7 +2,6 @@
 namespace Aws\Test\S3;
 
 use Aws\Result;
-use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Exception\ConnectException;
@@ -13,7 +12,6 @@ use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\FnStream;
 use GuzzleHttp\Psr7\Response;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 
 /**
@@ -366,10 +364,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
             'version' => 'latest',
             'region' => 'us-west-2',
             'retries' => $retries,
-            'http_handler' => function (
-                RequestInterface $request,
-                array $options
-            ) use (&$retries) {
+            'http_handler' => function () use (&$retries) {
                 if (0 === --$retries) {
                     return new FulfilledPromise(new Response);
                 }
@@ -408,10 +403,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
             'version' => 'latest',
             'region' => 'us-west-2',
             'retries' => $retries,
-            'http_handler' => function (
-                RequestInterface $request,
-                array $options
-            ) use (&$retries, $failingSuccess) {
+            'http_handler' => function () use (&$retries, $failingSuccess) {
                 if (0 === --$retries) {
                     return new FulfilledPromise(new Response(
                         200,
@@ -519,10 +511,7 @@ EOXML;
             'version' => 'latest',
             'region' => 'us-west-2',
             'retries' => $retries,
-            'http_handler' => function (
-                RequestInterface $request,
-                array $options
-            ) {
+            'http_handler' => function () {
                 return new RejectedPromise([
                     'connection_error' => false,
                     'exception' => $this->getMockBuilder(RequestException::class)
@@ -538,8 +527,6 @@ EOXML;
             'Key' => 'key',
             'Body' => Psr7\stream_for('x'),
         ]);
-
-        $this->assertEquals(0, $retries);
     }
 
     private function getSocketTimeoutResponse()
@@ -553,5 +540,42 @@ EOXML;
     <HostId>HOST_ID</HostId>
 </Error>
 EOXML;
+    }
+
+    public function testConnectionResetErrorsAreRetried()
+    {
+        $resetError = $this->getMockBuilder(RequestException::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getHandlerContext'])
+            ->getMock();
+        $resetError->expects($this->any())
+            ->method('getHandlerContext')
+            ->willReturn(['errno' => CURLE_RECV_ERROR]);
+
+        $retries = 11;
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'retries' => $retries,
+            'http_handler' => function () use (&$retries, $resetError) {
+                if (0 === --$retries) {
+                    return new FulfilledPromise(new Response);
+                }
+
+                return new RejectedPromise([
+                    'connection_error' => false,
+                    'exception' => $resetError,
+                    'response' => null,
+                ]);
+            },
+        ]);
+
+        $client->putObject([
+            'Bucket' => 'bucket',
+            'Key' => 'key',
+            'Body' => Psr7\stream_for('x'),
+        ]);
+
+        $this->assertEquals(0, $retries);
     }
 }

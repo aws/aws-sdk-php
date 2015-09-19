@@ -484,11 +484,21 @@ class S3Client extends AwsClient
             } elseif ($error instanceof AwsException
                 && $retries < $maxRetries
             ) {
-                return $error->getResponse()
-                    && strpos(
+                if ($error->getResponse()) {
+                    return strpos(
                         $error->getResponse()->getBody(),
                         'Your socket connection to the server'
                     ) !== false;
+                } elseif ($error->getPrevious() instanceof RequestException
+                    && defined('CURLE_RECV_ERROR')
+                ) {
+                    $context = $error->getPrevious()->getHandlerContext();
+                    if (isset($context['errno'])
+                        && $context['errno'] === CURLE_RECV_ERROR
+                    ) {
+                        return true;
+                    }
+                }
             }
             return false;
         };
