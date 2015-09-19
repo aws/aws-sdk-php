@@ -2,9 +2,11 @@
 namespace Aws\Test\S3;
 
 use Aws\Result;
+use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Promise\RejectedPromise;
@@ -504,5 +506,52 @@ EOXML;
     private function getWellFormedXml()
     {
         return '<?xml version="1.0" encoding="UTF-8"?><node></node>';
+    }
+
+    /**
+     * @expectedException \Aws\S3\Exception\S3Exception
+     * @expectedExceptionMessageRegExp /Your socket connection to the server/
+     */
+    public function testClientSocketTimeoutErrorsAreNotRetriedIndefinitely()
+    {
+        $retries = 11;
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'retries' => $retries,
+            'http_handler' => function (
+                RequestInterface $request,
+                array $options
+            ) {
+                return new RejectedPromise([
+                    'connection_error' => false,
+                    'exception' => $this->getMockBuilder(RequestException::class)
+                        ->disableOriginalConstructor()
+                        ->getMock(),
+                    'response' => new Response(400, [], $this->getSocketTimeoutResponse()),
+                ]);
+            },
+        ]);
+
+        $client->putObject([
+            'Bucket' => 'bucket',
+            'Key' => 'key',
+            'Body' => Psr7\stream_for('x'),
+        ]);
+
+        $this->assertEquals(0, $retries);
+    }
+
+    private function getSocketTimeoutResponse()
+    {
+        return <<<EOXML
+<?xml version="1.0" encoding="UTF-8"?>
+<Error>
+    <Code>RequestTimeout</Code>
+    <Message>Your socket connection to the server was not read from or written to within the timeout period. Idle connections will be closed.</Message>
+    <RequestId>REQUEST_ID</RequestId>
+    <HostId>HOST_ID</HostId>
+</Error>
+EOXML;
     }
 }

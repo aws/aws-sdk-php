@@ -14,6 +14,7 @@ use Aws\RetryMiddleware;
 use Aws\S3\Exception\S3Exception;
 use Aws\ResultInterface;
 use Aws\CommandInterface;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
@@ -473,10 +474,16 @@ class S3Client extends AwsClient
         }
 
         $decider = RetryMiddleware::createDefaultDecider($value);
-        $decider = function ($retries, $command, $request, $result, $error) use ($decider) {
+        $decider = function ($retries, $command, $request, $result, $error) use ($decider, $value) {
+            $maxRetries = null !== $command['@retries']
+                ? $command['@retries']
+                : $value;
+
             if ($decider($retries, $command, $request, $result, $error)) {
                 return true;
-            } elseif ($error instanceof AwsException) {
+            } elseif ($error instanceof AwsException
+                && $retries < $maxRetries
+            ) {
                 return $error->getResponse()
                     && strpos(
                         $error->getResponse()->getBody(),
