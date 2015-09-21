@@ -359,10 +359,14 @@ class S3Client extends AwsClient
             'concurrency'   => 5,
             'params'        => [],
             'part_size'     => null,
+            'version_id'    => null,
         ];
         $options += $defaults;
         $maxCopyableSize = MultipartUploader::PART_MAX_SIZE;
         $copySource = sprintf('/%s/%s', $fromBucket, rawurlencode($fromKey));
+        if ($options['version_id']) {
+            $copySource .= "?versionId={$options['version_id']}";
+        }
 
         $objectStats = $this->headObject([
             'Bucket' => $fromBucket,

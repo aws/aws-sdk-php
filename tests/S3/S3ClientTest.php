@@ -270,6 +270,29 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
+    public function testCopyHelperCanCopyVersions()
+    {
+        $client = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['copyObject', 'headObject'])
+            ->getMock();
+
+        $client->expects($this->any())
+            ->method('headObject')
+            ->willReturn(new Result(['ContentLength' => 1024 * 1024 * 6]));
+
+        $client->expects($this->once())
+            ->method('copyObject')
+            ->with($this->callback(function (array $config) {
+                return isset($config['CopySource'])
+                    && '/bucket/key?versionId=V+ID' === $config['CopySource'];
+            }));
+
+        $client->copy('bucket', 'key', 'newBucket', 'newKey', 'private', [
+            'version_id' => 'V+ID',
+        ]);
+    }
+
     /**
      * @expectedException \RuntimeException
      */
