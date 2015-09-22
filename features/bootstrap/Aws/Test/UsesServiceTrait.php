@@ -1,0 +1,1 @@
+../../../../tests/UsesServiceTrait.php

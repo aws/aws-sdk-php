@@ -10,9 +10,7 @@ Feature: Streaming transfers consume a fixed amount of memory
 
     Examples:
     | bytes     |
-    | 2048      |
     | 2097152   |
-    | 20971520  |
     | 209715200 |
 
   Scenario Outline: Streaming download are O(1) in memory usage
@@ -24,7 +22,5 @@ Feature: Streaming transfers consume a fixed amount of memory
 
     Examples:
       | bytes     |
-      | 2048      |
       | 2097152   |
-      | 20971520  |
       | 209715200 |

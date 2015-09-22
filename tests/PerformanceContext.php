@@ -56,6 +56,14 @@ class PerformanceContext implements Context, SnippetAcceptingContext
     }
 
     /**
+     * @Given I have loaded my SDK and its dependencies
+     */
+    public function iHaveLoadedMySdkAndItsDependencies()
+    {
+        $this->iCreateAndDiscardClientSForEachService(1);
+    }
+
+    /**
      * @Given I take a snapshot of my resources
      */
     public function iTakeASnapshotOfMyResources()

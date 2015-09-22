@@ -35,7 +35,7 @@ test-phar: package
 	wget https://github.com/Behat/Behat/releases/download/v3.0.15/behat.phar)
 	[ -f build/artifacts/phpunit.phar ] || (cd build/artifacts && \
 	wget https://phar.phpunit.de/phpunit.phar)
-	./build/phar-test-runner.php --format=progress
+	php -dopcache.enable_cli=1 build/phar-test-runner.php --format=progress
 
 coverage:
 	@AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar \
