@@ -41,7 +41,7 @@ other best-practices for defining dependencies at
 Installing via Phar
 -------------------
 
-You can `download the packaged phar <https://github.com/aws/aws-sdk-php/releases>`_
+You can `download the packaged phar <http://docs.aws.amazon.com/aws-sdk-php/v3/download/aws.phar>`_
 and simply include it in your scripts to get started:
 
 .. code-block:: php
@@ -72,7 +72,7 @@ Each release of the AWS SDK for PHP ships with a zip file containing all of the
 classes and dependencies you need to run the SDK. Additionally, the zip file
 includes a class autoloader for the AWS SDK for PHP and all of its dependencies.
 
-To get started, you must `download the zip file <https://github.com/aws/aws-sdk-php/releases>`_,
+To get started, you must `download the zip file <http://docs.aws.amazon.com/aws-sdk-php/v3/download/aws.zip>`_,
 unzip it into your project to a location of your choosing, and include the
 autoloader::
 
