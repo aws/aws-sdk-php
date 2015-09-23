@@ -275,7 +275,14 @@
         </div>
         {/if}
 
-        {if $ownMagicMethods}
+        {var $isAwsClient = false}
+        {foreach $class->parentClasses as $parent}
+            {if $parent->name === 'Aws\AwsClient'}
+                {var $isAwsClient = true}
+            {/if}
+        {/foreach}
+
+        {if $ownMagicMethods && !$isAwsClient}
         <h3>Magic methods summary</h3>
         <div class="element-list" id="magicMethods" n:if="$ownMagicMethods">
             {foreach $ownMagicMethods as $method}

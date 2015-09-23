@@ -6,6 +6,13 @@ use GuzzleHttp\Psr7\Uri;
 
 /**
  * This client is used to search and upload documents to an **Amazon CloudSearch** Domain.
+ *
+ * @method \Aws\Result search(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise searchAsync(array $args = [])
+ * @method \Aws\Result suggest(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise suggestAsync(array $args = [])
+ * @method \Aws\Result uploadDocuments(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise uploadDocumentsAsync(array $args = [])
  */
 class CloudSearchDomainClient extends AwsClient
 {

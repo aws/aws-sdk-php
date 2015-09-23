@@ -10,6 +10,33 @@ use Aws\RetryMiddleware;
 
 /**
  * This client is used to interact with the **Amazon DynamoDB** service.
+ *
+ * @method \Aws\Result batchGetItem(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchGetItemAsync(array $args = [])
+ * @method \Aws\Result batchWriteItem(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchWriteItemAsync(array $args = [])
+ * @method \Aws\Result createTable(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createTableAsync(array $args = [])
+ * @method \Aws\Result deleteItem(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteItemAsync(array $args = [])
+ * @method \Aws\Result deleteTable(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteTableAsync(array $args = [])
+ * @method \Aws\Result describeTable(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeTableAsync(array $args = [])
+ * @method \Aws\Result getItem(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getItemAsync(array $args = [])
+ * @method \Aws\Result listTables(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTablesAsync(array $args = [])
+ * @method \Aws\Result putItem(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putItemAsync(array $args = [])
+ * @method \Aws\Result query(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise queryAsync(array $args = [])
+ * @method \Aws\Result scan(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise scanAsync(array $args = [])
+ * @method \Aws\Result updateItem(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateItemAsync(array $args = [])
+ * @method \Aws\Result updateTable(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateTableAsync(array $args = [])
  */
 class DynamoDbClient extends AwsClient
 {

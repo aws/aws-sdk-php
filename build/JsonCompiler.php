@@ -2,10 +2,10 @@
 
 class JsonCompiler
 {
+    use PhpFileLinterTrait;
+
     /** @var string */
     private $path;
-    /** @var callable */
-    private $linter;
 
     public function __construct($path)
     {
@@ -14,9 +14,6 @@ class JsonCompiler
         }
 
         $this->path = realpath($path);
-        $this->linter = !empty(opcache_get_status(false)['opcache_enabled']) ?
-            [$this, 'opcacheLint']
-            : [$this, 'commandLineLint'];
     }
 
     public function compile($outputPath)
@@ -24,7 +21,7 @@ class JsonCompiler
         $backup = $this->readPhpFile($outputPath);
 
         $this->writeFile($outputPath, $this->getTranspiledPhp());
-        if (!call_user_func($this->linter, $outputPath)) {
+        if (!$this->lintFile($outputPath)) {
             $this->writeFile($outputPath, $backup);
             trigger_error(
                 "Unable to compile {$this->path} to valid PHP",
@@ -82,20 +79,5 @@ EOPHP;
     private function writeFile($path, $contents)
     {
         return file_put_contents($path, $contents, LOCK_EX);
-    }
-
-    private function commandLineLint($path)
-    {
-        list($output, $exitCode) = [[], 1];
-        exec("php -l $path", $output, $exitCode);
-
-        return 0 === $exitCode;
-    }
-
-    private function opcacheLint($path)
-    {
-        opcache_invalidate($path, true);
-
-        return @opcache_compile_file($path);
     }
 }

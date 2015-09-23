@@ -92,6 +92,14 @@ compile-json:
 	php -dopcache.enable_cli=1 build/compile-json.php
 	git diff --name-only | grep ^src/data/.*\.json\.php$ || true
 
+annotate-clients: clean
+	php build/annotate-clients.php --tag=latest
+
+annotate-client-locator: clean
+	php build/annotate-client-locator.php
+
+build: compile-json annotate-clients annotate-client-locator package
+
 # Ensures that the TAG variable was passed to the make command
 check-tag:
 	$(if $(TAG),,$(error TAG is not defined. Pass via "make tag TAG=4.2.1"))
