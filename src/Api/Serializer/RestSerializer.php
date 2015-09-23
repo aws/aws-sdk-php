@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Api\Serializer;
 
+use Aws\Api\MapShape;
 use Aws\Api\Service;
 use Aws\Api\Operation;
 use Aws\Api\Shape;
@@ -140,7 +141,11 @@ abstract class RestSerializer
 
     private function applyQuery($name, Shape $member, $value, array &$opts)
     {
-        if ($value !== null) {
+        if ($member instanceof MapShape) {
+            $opts['query'] = isset($opts['query']) && is_array($opts['query'])
+                ? $opts['query'] + $value
+                : $value;
+        } elseif ($value !== null) {
             $opts['query'][$member['locationName'] ?: $name] = $value;
         }
     }

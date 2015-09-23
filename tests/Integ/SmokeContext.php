@@ -345,7 +345,7 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
      */
     public function theRequestShouldBeSuccessful()
     {
-        throw new PendingException();
+        $this->assertEmpty($this->error);
     }
 
     /**
