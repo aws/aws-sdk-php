@@ -542,29 +542,26 @@ EOXML;
 EOXML;
     }
 
-    public function testConnectionResetErrorsAreRetried()
+    public function testNetworkingErrorsAreRetriedOnIdempotentCommands()
     {
-        $resetError = $this->getMockBuilder(RequestException::class)
+        $networkingError = $this->getMockBuilder(RequestException::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getHandlerContext'])
+            ->setMethods([])
             ->getMock();
-        $resetError->expects($this->any())
-            ->method('getHandlerContext')
-            ->willReturn(['errno' => CURLE_RECV_ERROR]);
 
         $retries = 11;
         $client = new S3Client([
             'version' => 'latest',
             'region' => 'us-west-2',
             'retries' => $retries,
-            'http_handler' => function () use (&$retries, $resetError) {
+            'http_handler' => function () use (&$retries, $networkingError) {
                 if (0 === --$retries) {
                     return new FulfilledPromise(new Response);
                 }
 
                 return new RejectedPromise([
                     'connection_error' => false,
-                    'exception' => $resetError,
+                    'exception' => $networkingError,
                     'response' => null,
                 ]);
             },
@@ -573,7 +570,44 @@ EOXML;
         $client->putObject([
             'Bucket' => 'bucket',
             'Key' => 'key',
-            'Body' => Psr7\stream_for('x'),
+        ]);
+
+        $this->assertEquals(0, $retries);
+    }
+
+    /**
+     * @expectedException \Aws\S3\Exception\S3Exception
+     * @expectedExceptionMessageRegExp /CompleteMultipartUpload/
+     */
+    public function testNetworkingErrorsAreNotRetriedOnNonIdempotentCommands()
+    {
+        $networkingError = $this->getMockBuilder(RequestException::class)
+            ->disableOriginalConstructor()
+            ->setMethods([])
+            ->getMock();
+
+        $retries = 11;
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'retries' => $retries,
+            'http_handler' => function () use (&$retries, $networkingError) {
+                if (0 === --$retries) {
+                    return new FulfilledPromise(new Response);
+                }
+
+                return new RejectedPromise([
+                    'connection_error' => false,
+                    'exception' => $networkingError,
+                    'response' => null,
+                ]);
+            },
+        ]);
+
+        $client->completeMultipartUpload([
+            'Bucket' => 'bucket',
+            'Key' => 'key',
+            'UploadId' => 1,
         ]);
 
         $this->assertEquals(0, $retries);

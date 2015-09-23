@@ -489,15 +489,11 @@ class S3Client extends AwsClient
                         $error->getResponse()->getBody(),
                         'Your socket connection to the server'
                     ) !== false;
-                } elseif ($error->getPrevious() instanceof RequestException
-                    && defined('CURLE_RECV_ERROR')
-                ) {
-                    $context = $error->getPrevious()->getHandlerContext();
-                    if (isset($context['errno'])
-                        && $context['errno'] === CURLE_RECV_ERROR
-                    ) {
-                        return true;
-                    }
+                } elseif ($error->getPrevious() instanceof RequestException) {
+                    // All commands except CompleteMultipartUpload are
+                    // idempotent and may be retried without worry if a
+                    // networking error has occurred.
+                    return $command->getName() !== 'CompleteMultipartUpload';
                 }
             }
             return false;
