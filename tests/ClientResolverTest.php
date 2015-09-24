@@ -228,7 +228,7 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
 [foo]
 aws_access_key_id = foo
 aws_secret_access_key = baz
-aws_security_token = tok
+aws_session_token = tok
 EOT;
         file_put_contents($dir . '/credentials', $ini);
         $home = getenv('HOME');

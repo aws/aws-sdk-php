@@ -140,7 +140,7 @@ class CredentialProviderTest extends \PHPUnit_Framework_TestCase
 [default]
 aws_access_key_id = foo
 aws_secret_access_key = baz
-aws_security_token = tok
+aws_session_token = tok
 EOT;
         file_put_contents($dir . '/credentials', $ini);
         putenv('HOME=' . dirname($dir));
@@ -150,6 +150,24 @@ EOT;
         $this->assertEquals('tok', $creds->getSecurityToken());
         unlink($dir . '/credentials');
     }
+
+	public function testCreatesFromOldIniFile()
+	{
+		$dir = $this->clearEnv();
+		$ini = <<<EOT
+[default]
+aws_access_key_id = foo
+aws_secret_access_key = baz
+aws_security_token = tok
+EOT;
+		file_put_contents($dir . '/credentials', $ini);
+		putenv('HOME=' . dirname($dir));
+		$creds = call_user_func(CredentialProvider::ini())->wait();
+		$this->assertEquals('foo', $creds->getAccessKeyId());
+		$this->assertEquals('baz', $creds->getSecretKey());
+		$this->assertEquals('tok', $creds->getSecurityToken());
+		unlink($dir . '/credentials');
+	}
 
     /**
      * @expectedException \Aws\Exception\CredentialsException
