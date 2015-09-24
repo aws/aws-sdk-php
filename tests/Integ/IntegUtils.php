@@ -7,7 +7,6 @@ trait IntegUtils
     {
         return new \Aws\Sdk($args + [
             'region'  => 'us-east-1',
-            'profile' => 'integ',
             'version' => 'latest',
             'ua_append' => 'PHPUnit/Integration'
         ]);

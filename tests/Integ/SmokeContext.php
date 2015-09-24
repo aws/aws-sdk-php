@@ -23,19 +23,6 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
 {
     use IntegUtils;
 
-    protected static $configOverrides = [
-        'DeviceFarm' => [
-            'region' => 'us-west-2',
-        ],
-        'Efs' => [
-            'profile' => 'shared-integ',
-            'region' => 'us-west-2',
-        ],
-        'Support' => [
-            'profile' => 'shared-integ',
-        ],
-    ];
-
     /**
      * @var Sdk
      */
@@ -61,6 +48,19 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
      */
     protected $error;
 
+    private static $cloudFrontOriginAccessId;
+
+    private static $cloudFrontETag;
+
+    private static $configOverrides = [
+        'DeviceFarm' => [
+            'region' => 'us-west-2',
+        ],
+        'Efs' => [
+            'region' => 'us-west-2',
+        ],
+    ];
+
     /**
      * @BeforeSuite
      */
@@ -71,6 +71,43 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
 
         // Clear out any previously compiled JMESPath files.
         Env::cleanCompileDir();
+    }
+
+    /**
+     * @BeforeFeature @cloudfront
+     *
+     * @param BeforeFeatureScope $scope
+     */
+    public static function setUpCloudFront(BeforeFeatureScope $scope)
+    {
+        /** @var \Aws\Result $result */
+        $result = self::getSdk(self::$configOverrides)
+            ->createCloudFront()
+            ->createCloudFrontOriginAccessIdentity([
+                'CloudFrontOriginAccessIdentityConfig' => [
+                    'CallerReference' => rand(0, PHP_INT_MAX),
+                    'Comment' => 'Foo Bar, Baz!',
+                ],
+            ]);
+
+        self::$cloudFrontOriginAccessId = $result
+            ->search('CloudFrontOriginAccessIdentity.Id');
+        self::$cloudFrontETag = $result['ETag'];
+    }
+
+    /**
+     * @AfterFeature @cloudfront
+     *
+     * @param AfterFeatureScope $scope
+     */
+    public static function tearDownCloudFront(AfterFeatureScope $scope)
+    {
+        self::getSdk(self::$configOverrides)
+            ->createCloudFront()
+            ->deleteCloudFrontOriginAccessIdentity([
+                'Id' => self::$cloudFrontOriginAccessId,
+                'IfMatch' => self::$cloudFrontETag,
+            ]);
     }
 
     /**
