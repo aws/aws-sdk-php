@@ -133,41 +133,52 @@ class CredentialProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('abc', $creds->getAccessKeyId());
     }
 
-    public function testCreatesFromIniFile()
+    /**
+     * @dataProvider iniFileProvider
+     *
+     * @param string $iniFile
+     * @param Credentials $expectedCreds
+     */
+    public function testCreatesFromIniFile($iniFile, Credentials $expectedCreds)
     {
         $dir = $this->clearEnv();
-        $ini = <<<EOT
-[default]
-aws_access_key_id = foo
-aws_secret_access_key = baz
-aws_session_token = tok
-EOT;
-        file_put_contents($dir . '/credentials', $ini);
+        file_put_contents($dir . '/credentials', $iniFile);
         putenv('HOME=' . dirname($dir));
-        $creds = call_user_func(CredentialProvider::ini())->wait();
-        $this->assertEquals('foo', $creds->getAccessKeyId());
-        $this->assertEquals('baz', $creds->getSecretKey());
-        $this->assertEquals('tok', $creds->getSecurityToken());
+        $creds = call_user_func(CredentialProvider::ini('default'))
+            ->wait();
+        $this->assertEquals($expectedCreds->toArray(), $creds->toArray());
         unlink($dir . '/credentials');
     }
 
-	public function testCreatesFromOldIniFile()
-	{
-		$dir = $this->clearEnv();
-		$ini = <<<EOT
+    public function iniFileProvider()
+    {
+        $credentials = new Credentials('foo', 'bar', 'baz');
+        $standardIni = <<<EOT
 [default]
 aws_access_key_id = foo
-aws_secret_access_key = baz
-aws_security_token = tok
+aws_secret_access_key = bar
+aws_session_token = baz
 EOT;
-		file_put_contents($dir . '/credentials', $ini);
-		putenv('HOME=' . dirname($dir));
-		$creds = call_user_func(CredentialProvider::ini())->wait();
-		$this->assertEquals('foo', $creds->getAccessKeyId());
-		$this->assertEquals('baz', $creds->getSecretKey());
-		$this->assertEquals('tok', $creds->getSecurityToken());
-		unlink($dir . '/credentials');
-	}
+        $oldIni = <<<EOT
+[default]
+aws_access_key_id = foo
+aws_secret_access_key = bar
+aws_security_token = baz
+EOT;
+        $mixedIni = <<<EOT
+[default]
+aws_access_key_id = foo
+aws_secret_access_key = bar
+aws_session_token = baz
+aws_security_token = fizz
+EOT;
+
+        return [
+            [$standardIni, $credentials],
+            [$oldIni, $credentials],
+            [$mixedIni, $credentials],
+        ];
+    }
 
     /**
      * @expectedException \Aws\Exception\CredentialsException

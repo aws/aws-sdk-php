@@ -280,14 +280,12 @@ class CredentialProvider
                 return self::reject("No credentials present in INI profile "
                     . "'$profile' ($filename)");
             }
-            if (!isset($data[$profile]['aws_session_token'])
-            ) {
-                $data[$profile]['aws_session_token'] = null;
-                if (isset($data[$profile]['aws_security_token'])
-                ) {
-                    $data[$profile]['aws_session_token'] = $data[$profile]['aws_security_token'];
-                    unset($data[$profile]['aws_security_token']);
-                }
+
+            if (empty($data[$profile]['aws_session_token'])) {
+                $data[$profile]['aws_session_token']
+                    = isset($data[$profile]['aws_security_token'])
+                        ? $data[$profile]['aws_security_token']
+                        : null;
             }
 
             return Promise\promise_for(
