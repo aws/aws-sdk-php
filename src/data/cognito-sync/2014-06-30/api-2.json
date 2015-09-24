@@ -794,6 +794,15 @@
             "senderFault":true
           },
           "exception":true
+        },
+        {
+          "shape":"ConcurrentModificationException",
+          "error":{
+            "code":"ConcurrentModification",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
         }
       ]
     },
@@ -1088,6 +1097,19 @@
         "StreamingStatus":{"shape":"StreamingStatus"}
       }
     },
+    "ConcurrentModificationException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{
+        "code":"ConcurrentModification",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "Dataset":{
       "type":"structure",
       "members":{
@@ -1300,13 +1322,13 @@
     "IdentityId":{
       "type":"string",
       "min":1,
-      "max":50,
+      "max":55,
       "pattern":"[\\w-]+:[0-9a-f-]+"
     },
     "IdentityPoolId":{
       "type":"string",
       "min":1,
-      "max":50,
+      "max":55,
       "pattern":"[\\w-]+:[0-9a-f-]+"
     },
     "IdentityPoolUsage":{

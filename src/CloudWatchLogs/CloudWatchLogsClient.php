@@ -6,6 +6,10 @@ use Aws\AwsClient;
 /**
  * This client is used to interact with the **Amazon CloudWatch Logs** service.
  *
+ * @method \Aws\Result cancelExportTask(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise cancelExportTaskAsync(array $args = [])
+ * @method \Aws\Result createExportTask(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createExportTaskAsync(array $args = [])
  * @method \Aws\Result createLogGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createLogGroupAsync(array $args = [])
  * @method \Aws\Result createLogStream(array $args = [])
@@ -24,6 +28,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteSubscriptionFilterAsync(array $args = [])
  * @method \Aws\Result describeDestinations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeDestinationsAsync(array $args = [])
+ * @method \Aws\Result describeExportTasks(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeExportTasksAsync(array $args = [])
  * @method \Aws\Result describeLogGroups(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeLogGroupsAsync(array $args = [])
  * @method \Aws\Result describeLogStreams(array $args = [])

@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Fixed retry handling of networking errors and client socket timeout
+  errors to ensure the client `retries` option is respected.
+* Added `@method` annotations on all clients to support autocomplete and static
+  analysis.
+* Added performance tests to the acceptance test suite.
+* Fixed error when `getIterator` was called on a paginator with no specified
+  `output_token`.
+* Added support for reading the `aws_session_token` parameter from credentials
+  files.
+
 ## 3.3.8 - 2015-09-17
 
 * `Aws\CloudWatchLogs` - Added support for export task operations.
