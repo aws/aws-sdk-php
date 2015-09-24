@@ -281,13 +281,18 @@ class CredentialProvider
                     . "'$profile' ($filename)");
             }
 
+            if (empty($data[$profile]['aws_session_token'])) {
+                $data[$profile]['aws_session_token']
+                    = isset($data[$profile]['aws_security_token'])
+                        ? $data[$profile]['aws_security_token']
+                        : null;
+            }
+
             return Promise\promise_for(
                 new Credentials(
                     $data[$profile]['aws_access_key_id'],
                     $data[$profile]['aws_secret_access_key'],
-                    isset($data[$profile]['aws_security_token'])
-                        ? $data[$profile]['aws_security_token']
-                        : null
+                    $data[$profile]['aws_session_token']
                 )
             );
         };
