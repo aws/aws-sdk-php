@@ -312,6 +312,39 @@ class StreamWrapper
         return $this->triggerError("File or directory not found: $path", $flags);
     }
 
+    /** 
+     * Support for chmod()
+     *
+     * @param string $path    Directory which should be created.
+     * @param int    $option  Currently only STREAM_META_ACCESS has been
+     *                        implemented, which is used for chmod.
+     *                        For other permissions altering functions
+     *                        other values are used
+     * @param int    $mode    Permissions. 700-range permissions map to
+     *                        ACL_PUBLIC. 600-range permissions map to
+     *                        ACL_AUTH_READ. All other permissions map to
+     *                        ACL_PRIVATE. Expects octal form.
+     */
+    public function stream_metadata( $path , $option, $mode ) {
+        $this->initProtocol($path);
+        $params = $this->withPath($path);
+        $this->clearCacheKey($path);
+
+        if( $option == STREAM_META_ACCESS ) {
+            if (!isset($params['ACL'])) {
+                $params['ACL'] = $this->determineAcl($mode);
+            }
+            return $this->boolCall(function () use ($params, $path) {
+                $this->getClient()->putObjectAcl($params);
+                $this->clearCacheKey($path);
+                return true;
+            });
+        }
+        // from PHP manual: If option is not implemented, FALSE should be returned.
+        return false; 
+    }
+    
+
     /**
      * Support for mkdir().
      *
