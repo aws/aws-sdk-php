@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.4.0 - 2015-09-24
 
 * `Aws\S3` - Fixed retry handling of networking errors and client socket timeout
   errors to ensure the client `retries` option is respected.
