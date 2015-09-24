@@ -14,6 +14,7 @@ use Aws\RetryMiddleware;
 use Aws\S3\Exception\S3Exception;
 use Aws\ResultInterface;
 use Aws\CommandInterface;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
@@ -582,15 +583,27 @@ class S3Client extends AwsClient
         }
 
         $decider = RetryMiddleware::createDefaultDecider($value);
-        $decider = function ($retries, $command, $request, $result, $error) use ($decider) {
+        $decider = function ($retries, $command, $request, $result, $error) use ($decider, $value) {
+            $maxRetries = null !== $command['@retries']
+                ? $command['@retries']
+                : $value;
+
             if ($decider($retries, $command, $request, $result, $error)) {
                 return true;
-            } elseif ($error instanceof AwsException) {
-                return $error->getResponse()
-                    && strpos(
+            } elseif ($error instanceof AwsException
+                && $retries < $maxRetries
+            ) {
+                if ($error->getResponse()) {
+                    return strpos(
                         $error->getResponse()->getBody(),
                         'Your socket connection to the server'
                     ) !== false;
+                } elseif ($error->getPrevious() instanceof RequestException) {
+                    // All commands except CompleteMultipartUpload are
+                    // idempotent and may be retried without worry if a
+                    // networking error has occurred.
+                    return $command->getName() !== 'CompleteMultipartUpload';
+                }
             }
             return false;
         };

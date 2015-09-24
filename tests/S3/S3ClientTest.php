@@ -5,13 +5,13 @@ use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\FnStream;
 use GuzzleHttp\Psr7\Response;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 
 /**
@@ -364,10 +364,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
             'version' => 'latest',
             'region' => 'us-west-2',
             'retries' => $retries,
-            'http_handler' => function (
-                RequestInterface $request,
-                array $options
-            ) use (&$retries) {
+            'http_handler' => function () use (&$retries) {
                 if (0 === --$retries) {
                     return new FulfilledPromise(new Response);
                 }
@@ -406,10 +403,7 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
             'version' => 'latest',
             'region' => 'us-west-2',
             'retries' => $retries,
-            'http_handler' => function (
-                RequestInterface $request,
-                array $options
-            ) use (&$retries, $failingSuccess) {
+            'http_handler' => function () use (&$retries, $failingSuccess) {
                 if (0 === --$retries) {
                     return new FulfilledPromise(new Response(
                         200,
@@ -504,5 +498,118 @@ EOXML;
     private function getWellFormedXml()
     {
         return '<?xml version="1.0" encoding="UTF-8"?><node></node>';
+    }
+
+    /**
+     * @expectedException \Aws\S3\Exception\S3Exception
+     * @expectedExceptionMessageRegExp /Your socket connection to the server/
+     */
+    public function testClientSocketTimeoutErrorsAreNotRetriedIndefinitely()
+    {
+        $retries = 11;
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'retries' => $retries,
+            'http_handler' => function () {
+                return new RejectedPromise([
+                    'connection_error' => false,
+                    'exception' => $this->getMockBuilder(RequestException::class)
+                        ->disableOriginalConstructor()
+                        ->getMock(),
+                    'response' => new Response(400, [], $this->getSocketTimeoutResponse()),
+                ]);
+            },
+        ]);
+
+        $client->putObject([
+            'Bucket' => 'bucket',
+            'Key' => 'key',
+            'Body' => Psr7\stream_for('x'),
+        ]);
+    }
+
+    private function getSocketTimeoutResponse()
+    {
+        return <<<EOXML
+<?xml version="1.0" encoding="UTF-8"?>
+<Error>
+    <Code>RequestTimeout</Code>
+    <Message>Your socket connection to the server was not read from or written to within the timeout period. Idle connections will be closed.</Message>
+    <RequestId>REQUEST_ID</RequestId>
+    <HostId>HOST_ID</HostId>
+</Error>
+EOXML;
+    }
+
+    public function testNetworkingErrorsAreRetriedOnIdempotentCommands()
+    {
+        $networkingError = $this->getMockBuilder(RequestException::class)
+            ->disableOriginalConstructor()
+            ->setMethods([])
+            ->getMock();
+
+        $retries = 11;
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'retries' => $retries,
+            'http_handler' => function () use (&$retries, $networkingError) {
+                if (0 === --$retries) {
+                    return new FulfilledPromise(new Response);
+                }
+
+                return new RejectedPromise([
+                    'connection_error' => false,
+                    'exception' => $networkingError,
+                    'response' => null,
+                ]);
+            },
+        ]);
+
+        $client->putObject([
+            'Bucket' => 'bucket',
+            'Key' => 'key',
+        ]);
+
+        $this->assertEquals(0, $retries);
+    }
+
+    /**
+     * @expectedException \Aws\S3\Exception\S3Exception
+     * @expectedExceptionMessageRegExp /CompleteMultipartUpload/
+     */
+    public function testNetworkingErrorsAreNotRetriedOnNonIdempotentCommands()
+    {
+        $networkingError = $this->getMockBuilder(RequestException::class)
+            ->disableOriginalConstructor()
+            ->setMethods([])
+            ->getMock();
+
+        $retries = 11;
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'retries' => $retries,
+            'http_handler' => function () use (&$retries, $networkingError) {
+                if (0 === --$retries) {
+                    return new FulfilledPromise(new Response);
+                }
+
+                return new RejectedPromise([
+                    'connection_error' => false,
+                    'exception' => $networkingError,
+                    'response' => null,
+                ]);
+            },
+        ]);
+
+        $client->completeMultipartUpload([
+            'Bucket' => 'bucket',
+            'Key' => 'key',
+            'UploadId' => 1,
+        ]);
+
+        $this->assertEquals(0, $retries);
     }
 }
