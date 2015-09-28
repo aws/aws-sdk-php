@@ -861,10 +861,14 @@ class StreamWrapper
      */
     private function determineAcl($mode)
     {
-        switch (substr(decoct($mode), 0, 1)) {
-            case '7': return 'public-read';
-            case '6': return 'authenticated-read';
-            default: return 'private';
+        switch (substr(decoct($mode), 2, 1)) {
+        case '7': 
+        case '6':
+            return 'public-read-write';
+        case '5': 
+        case '4': 
+            return 'public-read';
+        default: return 'private';
         }
     }
 
