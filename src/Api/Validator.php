@@ -212,7 +212,7 @@ class Validator
         $type = gettype($value);
 
         return isset($valid[$type]) ||
-            ($type == 'object' && method_exists($valid, '__toString'));
+            ($type == 'object' && method_exists($value, '__toString'));
     }
 
     private function checkAssociativeArray($value)
