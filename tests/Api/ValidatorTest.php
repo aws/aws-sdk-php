@@ -341,6 +341,14 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                 . "[foo] must have at least 10 members. Value provided has 2.\n"
                 . "[foo] must have no more than 1 members. Value provided has 2."
             ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => ['foo' => ['type' => 'string']]
+                ],
+                ['foo' => new Stringable()],
+                true
+            ],
         ];
     }
 
