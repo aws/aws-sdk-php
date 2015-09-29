@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFormation` - Added support for specifying affected resource types
+  in `CreateStack` and `UpdateStack` operations.
+* `Aws\CloudFormation` - Added support for the `DescribeAccountLimits` API.
+* `Aws\Ec2` - Added support modifying previously created spot fleet requests.
+* `Aws\Ses` - Added support for inbound email APIs.
+* Fixed validation to allow using objects implementing `__toString` for string
+  fields in serialized output.
+
 ## 3.4.0 - 2015-09-24
 
 * `Aws\S3` - Fixed retry handling of networking errors and client socket timeout

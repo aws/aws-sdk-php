@@ -1,12 +1,12 @@
 {
   "version":"2.0",
   "metadata":{
-    "apiVersion":"2015-04-15",
+    "apiVersion":"2015-10-01",
     "endpointPrefix":"ec2",
     "serviceAbbreviation":"Amazon EC2",
     "serviceFullName":"Amazon Elastic Compute Cloud",
     "signatureVersion":"v4",
-    "xmlNamespace":"http://ec2.amazonaws.com/doc/2015-04-15",
+    "xmlNamespace":"http://ec2.amazonaws.com/doc/2015-10-01",
     "protocol":"ec2"
   },
   "operations":{
@@ -1343,6 +1343,15 @@
       },
       "input":{"shape":"ModifySnapshotAttributeRequest"}
     },
+    "ModifySpotFleetRequest":{
+      "name":"ModifySpotFleetRequest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifySpotFleetRequestRequest"},
+      "output":{"shape":"ModifySpotFleetRequestResponse"}
+    },
     "ModifySubnetAttribute":{
       "name":"ModifySubnetAttribute",
       "http":{
@@ -2165,7 +2174,12 @@
     },
     "AvailabilityZoneState":{
       "type":"string",
-      "enum":["available"]
+      "enum":[
+        "available",
+        "information",
+        "impaired",
+        "unavailable"
+      ]
     },
     "BatchState":{
       "type":"string",
@@ -2175,7 +2189,8 @@
         "cancelled",
         "failed",
         "cancelled_running",
-        "cancelled_terminating"
+        "cancelled_terminating",
+        "modifying"
       ]
     },
     "BlockDeviceMapping":{
@@ -5954,6 +5969,13 @@
         "error"
       ]
     },
+    "ExcessCapacityTerminationPolicy":{
+      "type":"string",
+      "enum":[
+        "noTermination",
+        "default"
+      ]
+    },
     "ExecutableByStringList":{
       "type":"list",
       "member":{
@@ -8127,6 +8149,33 @@
           "locationName":"UserGroup"
         },
         "CreateVolumePermission":{"shape":"CreateVolumePermissionModifications"}
+      }
+    },
+    "ModifySpotFleetRequestRequest":{
+      "type":"structure",
+      "required":["SpotFleetRequestId"],
+      "members":{
+        "SpotFleetRequestId":{
+          "shape":"String",
+          "locationName":"spotFleetRequestId"
+        },
+        "TargetCapacity":{
+          "shape":"Integer",
+          "locationName":"targetCapacity"
+        },
+        "ExcessCapacityTerminationPolicy":{
+          "shape":"ExcessCapacityTerminationPolicy",
+          "locationName":"excessCapacityTerminationPolicy"
+        }
+      }
+    },
+    "ModifySpotFleetRequestResponse":{
+      "type":"structure",
+      "members":{
+        "Return":{
+          "shape":"Boolean",
+          "locationName":"return"
+        }
       }
     },
     "ModifySubnetAttributeRequest":{
@@ -10549,7 +10598,8 @@
       "required":[
         "SpotFleetRequestId",
         "SpotFleetRequestState",
-        "SpotFleetRequestConfig"
+        "SpotFleetRequestConfig",
+        "CreateTime"
       ],
       "members":{
         "SpotFleetRequestId":{
@@ -10563,6 +10613,10 @@
         "SpotFleetRequestConfig":{
           "shape":"SpotFleetRequestConfigData",
           "locationName":"spotFleetRequestConfig"
+        },
+        "CreateTime":{
+          "shape":"DateTime",
+          "locationName":"createTime"
         }
       }
     },
@@ -10606,6 +10660,10 @@
         "LaunchSpecifications":{
           "shape":"LaunchSpecsList",
           "locationName":"launchSpecifications"
+        },
+        "ExcessCapacityTerminationPolicy":{
+          "shape":"ExcessCapacityTerminationPolicy",
+          "locationName":"excessCapacityTerminationPolicy"
         },
         "AllocationStrategy":{
           "shape":"AllocationStrategy",
