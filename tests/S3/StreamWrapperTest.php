@@ -340,7 +340,7 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $this->assertTrue(chmod('s3://bucket/object1', 0777));
-        $this->assertTrue(chmod('s3://bucket/object2', 0601));
+        $this->assertTrue(chmod('s3://bucket/object2', 0555));
         $this->assertTrue(chmod('s3://bucket/object3', 0500));
 
         $this->assertEquals(3, count($history));
@@ -348,8 +348,8 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('PUT', $entries[0]['request']->getMethod());
         $this->assertEquals('/bucket/object1', $entries[0]['request']->getUri()->getPath());
         $this->assertEquals('s3.amazonaws.com', $entries[0]['request']->getUri()->getHost());
-        $this->assertEquals('public-read', (string) $entries[0]['request']->getHeaderLine('x-amz-acl'));
-        $this->assertEquals('authenticated-read', (string) $entries[1]['request']->getHeaderLine('x-amz-acl'));
+        $this->assertEquals('public-read-write', (string) $entries[0]['request']->getHeaderLine('x-amz-acl'));
+        $this->assertEquals('public-read', (string) $entries[1]['request']->getHeaderLine('x-amz-acl'));
         $this->assertEquals('private', (string) $entries[2]['request']->getHeaderLine('x-amz-acl'));
     }
 

@@ -320,10 +320,9 @@ class StreamWrapper
      *                        implemented, which is used for chmod.
      *                        For other permissions altering functions
      *                        other values are used
-     * @param int    $mode    Permissions. 700-range permissions map to
-     *                        ACL_PUBLIC. 600-range permissions map to
-     *                        ACL_AUTH_READ. All other permissions map to
-     *                        ACL_PRIVATE. Expects octal form.
+     * @param int    $mode    unix-style filesystem permissions in octal mode
+     *                        last digit maps to public-read or public-read-write
+     *                        all other modes map to private
      */
     public function stream_metadata( $path , $option, $mode ) {
         $this->initProtocol($path);
@@ -332,7 +331,7 @@ class StreamWrapper
 
         if( $option == STREAM_META_ACCESS ) {
             if (!isset($params['ACL'])) {
-                $params['ACL'] = $this->determineAcl($mode);
+                $params['ACL'] = $this->unixMode2Acl($mode);
             }
             return $this->boolCall(function () use ($params, $path) {
                 $this->getClient()->putObjectAcl($params);
@@ -898,6 +897,29 @@ class StreamWrapper
             case '7': return 'public-read';
             case '6': return 'authenticated-read';
             default: return 'private';
+        }
+    }
+
+    /**
+     * method to map unix filesystem permissions to ACL.
+     *
+     * @param int $mode     unix-style filesystem permissions in octal mode
+     *                      last digit determines if it is public-read or 
+     *                      public-read-write; all other modes are mapped to
+     *                      private
+     *
+     * @return string
+     */
+    private function unixMode2Acl($mode)
+    {
+        switch (substr(decoct($mode), 2, 1)) {
+        case '7': 
+        case '6':
+            return 'public-read-write';
+        case '5': 
+        case '4': 
+            return 'public-read';
+        default: return 'private';
         }
     }
 
