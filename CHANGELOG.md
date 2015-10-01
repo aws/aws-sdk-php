@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.5.0 - 2015-10-01
 
 * `Aws\Cloudtrail` - Added support for log file integrity validation, log
   encryption with AWS KMS–Managed Keys (SSE-KMS), and trail tagging.
