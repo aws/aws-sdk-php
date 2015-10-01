@@ -16,6 +16,8 @@ use Psr\Http\Message\RequestInterface;
 
 /**
  * Encapsulates the execution of a multipart upload to S3 or Glacier.
+ *
+ * @internal
  */
 abstract class AbstractUploadManager implements Promise\PromisorInterface
 {
