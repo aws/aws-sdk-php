@@ -2,6 +2,7 @@
 namespace Aws\Test\S3;
 
 use Aws\Result;
+use Aws\S3\MultipartUploader;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Exception\ConnectException;
@@ -190,48 +191,6 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('https://s3.amazonaws.com/bucket/key', $result['ObjectURL']);
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
-    public function testEnsuresPrefixOrRegexSuppliedForDeleteMatchingObjects()
-    {
-        /** @var S3Client $client */
-        $client = $this->getTestClient('S3');
-        $client->deleteMatchingObjects('foo');
-    }
-
-    public function testDeletesMatchingObjectsByPrefixAndRegex()
-    {
-        /** @var S3Client $client */
-        $client = $this->getTestClient('S3');
-        $client->getHandlerList()->setHandler(function ($c, $r) {
-            $this->assertEquals('bucket', $c['Bucket']);
-            return Promise\promise_for(new Result([
-                'IsTruncated' => false,
-                'Marker' => '',
-                'Contents' => [
-                    ['Key' => 'foo/bar'],
-                    ['Key' => 'foo/bar/baz'],
-                    ['Key' => 'foo/test'],
-                    ['Key' => 'foo/bar/bam'],
-                    ['Key' => 'foo/bar/001'],
-                    ['Key' => 'foo/other']
-                ]
-            ]));
-        });
-
-        $agg = [];
-        $client->deleteMatchingObjects('bucket', 'foo/bar/', '/^foo\/bar\/[a-z]+$/', [
-            'before' => function ($cmd) use (&$agg) {
-                foreach ($cmd['Delete']['Objects'] as $k) {
-                    $agg[] = $k['Key'];
-                }
-            }
-        ]);
-
-        $this->assertEquals(['foo/bar/baz', 'foo/bar/bam'], $agg);
-    }
-
     public function getUploadTestCases()
     {
         $putObject = new Result();
@@ -277,6 +236,103 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
                 []
             ]
         ];
+    }
+
+    /**
+     * @dataProvider getCopyTestCases
+     */
+    public function testCopyHelperDoesCorrectOperation(array $mockedResults)
+    {
+        /** @var \Aws\S3\S3Client $client */
+        $client = $this->getTestClient('S3');
+        $this->addMockResults($client, $mockedResults);
+        $result = $client->copy('sourceBucket', 'sourceKey', 'bucket', 'key');
+        $this->assertEquals('https://s3.amazonaws.com/bucket/key', $result['ObjectURL']);
+    }
+
+    public function getCopyTestCases()
+    {
+        $smallHeadObject = new Result(['ContentLength' => 1024 * 1024 * 6]);
+        $putObject = new Result();
+        $bigHeadObject = new Result(['ContentLength' => 1024 * 1024 * 1024 * 5 + 1]);
+        $partCount = ceil($bigHeadObject['ContentLength'] / MultipartUploader::PART_MIN_SIZE);
+        $initiate = new Result(['UploadId' => 'foo']);
+        $putPart = new Result(['ETag' => 'bar']);
+        $complete = new Result(['Location' => 'https://s3.amazonaws.com/bucket/key']);
+
+        return [
+            [[$smallHeadObject, $putObject]],
+            [array_merge(
+                [$bigHeadObject, $initiate],
+                array_fill(0, $partCount, $putPart),
+                [$complete]
+            )],
+        ];
+    }
+
+    public function testCopyHelperCanCopyVersions()
+    {
+        $client = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['copyObject', 'headObject'])
+            ->getMock();
+
+        $client->expects($this->any())
+            ->method('headObject')
+            ->willReturn(new Result(['ContentLength' => 1024 * 1024 * 6]));
+
+        $client->expects($this->once())
+            ->method('copyObject')
+            ->with($this->callback(function (array $config) {
+                return isset($config['CopySource'])
+                    && '/bucket/key?versionId=V+ID' === $config['CopySource'];
+            }));
+
+        $client->copy('bucket', 'key', 'newBucket', 'newKey', 'private', [
+            'version_id' => 'V+ID',
+        ]);
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testEnsuresPrefixOrRegexSuppliedForDeleteMatchingObjects()
+    {
+        /** @var S3Client $client */
+        $client = $this->getTestClient('S3');
+        $client->deleteMatchingObjects('foo');
+    }
+
+    public function testDeletesMatchingObjectsByPrefixAndRegex()
+    {
+        /** @var S3Client $client */
+        $client = $this->getTestClient('S3');
+        $client->getHandlerList()->setHandler(function ($c, $r) {
+            $this->assertEquals('bucket', $c['Bucket']);
+            return Promise\promise_for(new Result([
+                'IsTruncated' => false,
+                'Marker' => '',
+                'Contents' => [
+                    ['Key' => 'foo/bar'],
+                    ['Key' => 'foo/bar/baz'],
+                    ['Key' => 'foo/test'],
+                    ['Key' => 'foo/bar/bam'],
+                    ['Key' => 'foo/bar/001'],
+                    ['Key' => 'foo/other']
+                ]
+            ]));
+        });
+
+        $agg = [];
+        $client->deleteMatchingObjects('bucket', 'foo/bar/', '/^foo\/bar\/[a-z]+$/', [
+            'before' => function ($cmd) use (&$agg) {
+                foreach ($cmd['Delete']['Objects'] as $k) {
+                    $agg[] = $k['Key'];
+                }
+            }
+        ]);
+
+        $this->assertEquals(['foo/bar/baz', 'foo/bar/bam'], $agg);
     }
 
     private function generateStream($size, $sizeKnown = true, $seekable = true)

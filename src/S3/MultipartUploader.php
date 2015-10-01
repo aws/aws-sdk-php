@@ -1,10 +1,8 @@
 <?php
 namespace Aws\S3;
 
-use Aws\CommandInterface;
 use Aws\HashingStream;
 use Aws\Multipart\AbstractUploader;
-use Aws\Multipart\UploadState;
 use Aws\PhpHash;
 use Aws\ResultInterface;
 use GuzzleHttp\Psr7;
@@ -15,51 +13,11 @@ use Psr\Http\Message\StreamInterface as Stream;
  */
 class MultipartUploader extends AbstractUploader
 {
+    use MultipartUploadingTrait;
+
     const PART_MIN_SIZE = 5242880;
     const PART_MAX_SIZE = 5368709120;
     const PART_MAX_NUM = 10000;
-
-    /**
-     * Creates an UploadState object for a multipart upload by querying the
-     * service for the specified upload's information.
-     *
-     * @param S3Client $client   S3Client used for the upload.
-     * @param string   $bucket   Bucket for the multipart upload.
-     * @param string   $key      Object key for the multipart upload.
-     * @param string   $uploadId Upload ID for the multipart upload.
-     *
-     * @return UploadState
-     */
-    public static function getStateFromService(
-        S3Client $client,
-        $bucket,
-        $key,
-        $uploadId
-    ) {
-        $state = new UploadState([
-            'Bucket'   => $bucket,
-            'Key'      => $key,
-            'UploadId' => $uploadId,
-        ]);
-
-        foreach ($client->getPaginator('ListParts', $state->getId()) as $result) {
-            // Get the part size from the first part in the first result.
-                if (!$state->getPartSize()) {
-                $state->setPartSize($result->search('Parts[0].Size'));
-            }
-            // Mark all the parts returned by ListParts as uploaded.
-            foreach ($result['Parts'] as $part) {
-                $state->markPartAsUploaded($part['PartNumber'], [
-                    'PartNumber' => $part['PartNumber'],
-                    'ETag'       => $part['ETag']
-                ]);
-            }
-        }
-
-        $state->setStatus(UploadState::INITIATED);
-
-        return $state;
-    }
 
     /**
      * Creates a multipart upload for an S3 object.
@@ -118,28 +76,6 @@ class MultipartUploader extends AbstractUploader
         ];
     }
 
-    protected function determinePartSize()
-    {
-        // Make sure the part size is set.
-        $partSize = $this->config['part_size'] ?: self::PART_MIN_SIZE;
-
-        // Adjust the part size to be larger for known, x-large uploads.
-        if ($sourceSize = $this->source->getSize()) {
-            $partSize = (int) max(
-                $partSize,
-                ceil($sourceSize / self::PART_MAX_NUM)
-            );
-        }
-
-        // Ensure that the part size follows the rules: 5 MB <= size <= 5 GB.
-        if ($partSize < self::PART_MIN_SIZE || $partSize > self::PART_MAX_SIZE) {
-            throw new \InvalidArgumentException('The part size must be no less '
-                . 'than 5 MB and no greater than 5 GB.');
-        }
-
-        return $partSize;
-    }
-
     protected function createPart($seekable, $number)
     {
         // Initialize the array of part data that will be returned.
@@ -171,36 +107,22 @@ class MultipartUploader extends AbstractUploader
         return $data;
     }
 
-    protected function handleResult(CommandInterface $command, ResultInterface $result)
+    protected function extractETag(ResultInterface $result)
     {
-        $this->state->markPartAsUploaded($command['PartNumber'], [
-            'PartNumber' => $command['PartNumber'],
-            'ETag'       => $result['ETag']
-        ]);
+        return $result['ETag'];
     }
 
-    protected function getInitiateParams()
+    protected function getSourceMimeType()
     {
-        $params = [];
-
-        if (isset($this->config['acl'])) {
-            $params['ACL'] = $this->config['acl'];
-        }
-
-        // Set the content type
         if ($uri = $this->source->getMetadata('uri')) {
-            $params['ContentType'] = Psr7\mimetype_from_filename($uri)
+            return Psr7\mimetype_from_filename($uri)
                 ?: 'application/octet-stream';
         }
-
-        return $params;
     }
 
-    protected function getCompleteParams()
+    protected function getSourceSize()
     {
-        return ['MultipartUpload' => [
-            'Parts' => $this->state->getUploadedParts()
-        ]];
+        return $this->source->getSize();
     }
 
     /**
