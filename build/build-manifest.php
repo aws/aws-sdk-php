@@ -47,6 +47,6 @@ foreach (glob(__DIR__ . '/../src/data/**/**/api-2.json') as $file) {
 
 $data = json_encode($manifest, JSON_PRETTY_PRINT);
 $file = __DIR__ . '/../src/data/manifest.json';
-file_put_contents($file, $data);
+file_put_contents($file, "$data\n");
 
 echo "Wrote the following data to {$file}:\n>>>>>\n{$data}<<<<<\n";

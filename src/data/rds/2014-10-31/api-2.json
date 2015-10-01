@@ -2174,6 +2174,15 @@
             "senderFault":true
           },
           "exception":true
+        },
+        {
+          "shape":"DBClusterAlreadyExistsFault",
+          "error":{
+            "code":"DBClusterAlreadyExistsFault",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
+          "exception":true
         }
       ]
     },
@@ -3693,7 +3702,8 @@
       "members":{
         "SourceDBSnapshotIdentifier":{"shape":"String"},
         "TargetDBSnapshotIdentifier":{"shape":"String"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "CopyTags":{"shape":"BooleanOptional"}
       }
     },
     "CopyOptionGroupMessage":{
@@ -3712,6 +3722,12 @@
     },
     "CreateDBClusterMessage":{
       "type":"structure",
+      "required":[
+        "DBClusterIdentifier",
+        "Engine",
+        "MasterUsername",
+        "MasterUserPassword"
+      ],
       "members":{
         "AvailabilityZones":{"shape":"AvailabilityZones"},
         "BackupRetentionPeriod":{"shape":"IntegerOptional"},
@@ -3796,7 +3812,8 @@
         "TdeCredentialArn":{"shape":"String"},
         "TdeCredentialPassword":{"shape":"String"},
         "StorageEncrypted":{"shape":"BooleanOptional"},
-        "KmsKeyId":{"shape":"String"}
+        "KmsKeyId":{"shape":"String"},
+        "CopyTagsToSnapshot":{"shape":"BooleanOptional"}
       }
     },
     "CreateDBInstanceReadReplicaMessage":{
@@ -3817,7 +3834,8 @@
         "PubliclyAccessible":{"shape":"BooleanOptional"},
         "Tags":{"shape":"TagList"},
         "DBSubnetGroupName":{"shape":"String"},
-        "StorageType":{"shape":"String"}
+        "StorageType":{"shape":"String"},
+        "CopyTagsToSnapshot":{"shape":"BooleanOptional"}
       }
     },
     "CreateDBParameterGroupMessage":{
@@ -4122,7 +4140,8 @@
         "DBEngineDescription":{"shape":"String"},
         "DBEngineVersionDescription":{"shape":"String"},
         "DefaultCharacterSet":{"shape":"CharacterSet"},
-        "SupportedCharacterSets":{"shape":"SupportedCharacterSetsList"}
+        "SupportedCharacterSets":{"shape":"SupportedCharacterSetsList"},
+        "ValidUpgradeTarget":{"shape":"ValidUpgradeTargetList"}
       }
     },
     "DBEngineVersionList":{
@@ -4180,7 +4199,8 @@
         "StorageEncrypted":{"shape":"Boolean"},
         "KmsKeyId":{"shape":"String"},
         "DbiResourceId":{"shape":"String"},
-        "CACertificateIdentifier":{"shape":"String"}
+        "CACertificateIdentifier":{"shape":"String"},
+        "CopyTagsToSnapshot":{"shape":"Boolean"}
       },
       "wrapper":true
     },
@@ -4590,6 +4610,7 @@
     },
     "DeleteDBClusterMessage":{
       "type":"structure",
+      "required":["DBClusterIdentifier"],
       "members":{
         "DBClusterIdentifier":{"shape":"String"},
         "SkipFinalSnapshot":{"shape":"Boolean"},
@@ -5362,6 +5383,7 @@
     "Long":{"type":"long"},
     "ModifyDBClusterMessage":{
       "type":"structure",
+      "required":["DBClusterIdentifier"],
       "members":{
         "DBClusterIdentifier":{"shape":"String"},
         "NewDBClusterIdentifier":{"shape":"String"},
@@ -5412,7 +5434,8 @@
         "StorageType":{"shape":"String"},
         "TdeCredentialArn":{"shape":"String"},
         "TdeCredentialPassword":{"shape":"String"},
-        "CACertificateIdentifier":{"shape":"String"}
+        "CACertificateIdentifier":{"shape":"String"},
+        "CopyTagsToSnapshot":{"shape":"BooleanOptional"}
       }
     },
     "ModifyDBParameterGroupMessage":{
@@ -6060,7 +6083,8 @@
         "Tags":{"shape":"TagList"},
         "StorageType":{"shape":"String"},
         "TdeCredentialArn":{"shape":"String"},
-        "TdeCredentialPassword":{"shape":"String"}
+        "TdeCredentialPassword":{"shape":"String"},
+        "CopyTagsToSnapshot":{"shape":"BooleanOptional"}
       }
     },
     "RestoreDBInstanceToPointInTimeMessage":{
@@ -6086,6 +6110,7 @@
         "Engine":{"shape":"String"},
         "Iops":{"shape":"IntegerOptional"},
         "OptionGroupName":{"shape":"String"},
+        "CopyTagsToSnapshot":{"shape":"BooleanOptional"},
         "Tags":{"shape":"TagList"},
         "StorageType":{"shape":"String"},
         "TdeCredentialArn":{"shape":"String"},
@@ -6171,7 +6196,8 @@
         "db-instance",
         "db-parameter-group",
         "db-security-group",
-        "db-snapshot"
+        "db-cluster",
+        "db-cluster-snapshot"
       ]
     },
     "StorageQuotaExceededFault":{
@@ -6289,6 +6315,23 @@
       "type":"structure",
       "members":{
         "TagList":{"shape":"TagList"}
+      }
+    },
+    "UpgradeTarget":{
+      "type":"structure",
+      "members":{
+        "Engine":{"shape":"String"},
+        "EngineVersion":{"shape":"String"},
+        "Description":{"shape":"String"},
+        "AutoUpgrade":{"shape":"Boolean"},
+        "IsMajorVersionUpgrade":{"shape":"Boolean"}
+      }
+    },
+    "ValidUpgradeTargetList":{
+      "type":"list",
+      "member":{
+        "shape":"UpgradeTarget",
+        "locationName":"UpgradeTarget"
       }
     },
     "VpcSecurityGroupIdList":{

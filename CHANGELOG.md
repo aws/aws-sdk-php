@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Cloudtrail` - Added support for log file integrity validation, log
+  encryption with AWS KMS–Managed Keys (SSE-KMS), and trail tagging.
+* `Aws\ElasticsearchService` - Added support for the Amazon Elasticsearch
+  Service.
+* `Aws\Rds` - Added support for resource tags.
+* `Aws\S3` - Added support for copying objects of any size.
+* `Aws\Workspaces` - Added support for storage volume encryption with AWS KMS.
+
 ## 3.4.1 - 2015-09-29
 
 * `Aws\CloudFormation` - Added support for specifying affected resource types
