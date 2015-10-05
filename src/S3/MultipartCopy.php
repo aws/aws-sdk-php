@@ -98,8 +98,8 @@ class MultipartCopy extends AbstractUploadManager
         $startByte = $defaultPartSize * ($partNumber - 1);
         $partSize = $partNumber < $partsCount
             ? $defaultPartSize
-            : $this->getSourceSize() % $defaultPartSize;
-        $endByte = $startByte + $partSize;
+            : $this->getSourceSize() - ($defaultPartSize * ($partsCount - 1));
+        $endByte = $startByte + $partSize - 1;
 
         return [
             'ContentLength' => $partSize,
