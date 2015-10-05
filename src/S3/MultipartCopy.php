@@ -57,6 +57,11 @@ class MultipartCopy extends AbstractUploadManager
         ]);
     }
 
+    public function copy()
+    {
+        return $this->upload();
+    }
+
     protected function loadUploadWorkflowInfo()
     {
         return [
@@ -140,9 +145,18 @@ class MultipartCopy extends AbstractUploadManager
         }
 
         list($bucket, $key) = explode('/', ltrim($this->source, '/'), 2);
-        return $this->client->headObject([
+        $headParams = [
             'Bucket' => $bucket,
             'Key' => $key,
-        ]);
+        ];
+        if (strpos($key, '?')) {
+            list($key, $query) = explode('?', $key, 2);
+            $headParams['Key'] = $key;
+            $query = Psr7\parse_query($query, false);
+            if (isset($query['versionId'])) {
+                $headParams['VersionId'] = $query['versionId'];
+            }
+        }
+        return $this->client->headObject($headParams);
     }
 }
