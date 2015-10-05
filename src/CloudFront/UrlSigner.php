@@ -1,6 +1,7 @@
 <?php
 namespace Aws\CloudFront;
 
+use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\UriInterface;
 
@@ -69,17 +70,17 @@ class UrlSigner
 
         // Get the real scheme by removing wildcards from the scheme
         $scheme = str_replace('*', '', $urlSections[0]);
+        $uri = new Uri($scheme . '://' . $urlSections[1]);
 
         if ($policy) {
             $isCustom = true;
         } else {
             $isCustom = false;
-            $policy = $this->createCannedPolicy($scheme, $url, $expires);
+            $policy = $this->createCannedPolicy($scheme, (string) $uri, $expires);
         }
 
         $policy = str_replace(' ', '', $policy);
-        $uri = new Uri($scheme . '://' . $urlSections[1]);
-        parse_str($uri->getQuery(), $query);
+        $query = Psr7\parse_query($uri->getQuery(), PHP_QUERY_RFC3986);
         $query = $this->prepareQuery($isCustom, $policy, $query, $expires);
         $uri = $uri->withQuery(http_build_query($query, null, '&', PHP_QUERY_RFC3986));
 

@@ -53,6 +53,36 @@ class UrlSignerTest extends \PHPUnit_Framework_TestCase
         $this->assertNotContains('+', $signature);
     }
 
+    public function testCreatesUrlSignersWithSpecialCharacters()
+    {
+        /** @var $client \Aws\CloudFront\CloudFrontClient */
+        $client = CloudFrontClient::factory([
+            'region'  => 'us-west-2',
+            'version' => 'latest'
+        ]);
+        $ts = time() + 1000;
+        $key = $_SERVER['CF_PRIVATE_KEY'];
+        $kp = $_SERVER['CF_KEY_PAIR_ID'];
+
+        $invalidUri = 'http://abc.cloudfront.net/images/éüàçµñåœŒ.jpg?query key=query value';
+        $uri = new Uri($invalidUri);
+        $this->assertNotEquals($invalidUri, (string) $uri);
+
+        $url = $client->getSignedUrl([
+            'url'         => $invalidUri,
+            'expires'     => $ts,
+            'private_key' => $key,
+            'key_pair_id' => $kp
+        ]);
+
+        $this->assertContains("Key-Pair-Id={$kp}", $url);
+        $this->assertContains((string) $uri, $url);
+        $this->assertStringStartsWith(
+            "{$uri}&Expires={$ts}&Signature=",
+            $url
+        );
+    }
+
     public function testCreatesUrlSignersWithCustomPolicy()
     {
         /** @var $client \Aws\CloudFront\CloudFrontClient */
