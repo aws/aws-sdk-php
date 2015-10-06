@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.6.0 - 2015-10-06
 
 * `Aws\CloudFront` - Added support for WebACL identifiers and related
   operations.
