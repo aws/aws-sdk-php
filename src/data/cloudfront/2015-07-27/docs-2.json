@@ -17,6 +17,7 @@
     "GetStreamingDistributionConfig": "Get the configuration information about a streaming distribution.",
     "ListCloudFrontOriginAccessIdentities": "List origin access identities.",
     "ListDistributions": "List distributions.",
+    "ListDistributionsByWebACLId": "List the distributions that are associated with a specified AWS WAF web ACL.",
     "ListInvalidations": "List invalidation batches.",
     "ListStreamingDistributions": "List streaming distributions.",
     "UpdateCloudFrontOriginAccessIdentity": "Update an origin access identity.",
@@ -275,6 +276,7 @@
     "DistributionList": {
       "base": "A distribution list.",
       "refs": {
+        "ListDistributionsByWebACLIdResult$DistributionList": "The DistributionList type.",
         "ListDistributionsResult$DistributionList": "The DistributionList type."
       }
     },
@@ -491,6 +493,11 @@
       "refs": {
       }
     },
+    "InvalidWebACLId": {
+      "base": null,
+      "refs": {
+      }
+    },
     "Invalidation": {
       "base": "An invalidation.",
       "refs": {
@@ -548,6 +555,16 @@
     },
     "ListCloudFrontOriginAccessIdentitiesResult": {
       "base": "The returned result of the corresponding request.",
+      "refs": {
+      }
+    },
+    "ListDistributionsByWebACLIdRequest": {
+      "base": "The request to list distributions that are associated with a specified AWS WAF web ACL.",
+      "refs": {
+      }
+    },
+    "ListDistributionsByWebACLIdResult": {
+      "base": "The response to a request to list the distributions that are associated with a specified AWS WAF web ACL.",
       "refs": {
       }
     },
@@ -1010,6 +1027,7 @@
         "DistributionConfig$CallerReference": "A unique number that ensures the request can't be replayed. If the CallerReference is new (no matter the content of the DistributionConfig object), a new distribution is created. If the CallerReference is a value you already sent in a previous request to create a distribution, and the content of the DistributionConfig is identical to the original request (ignoring white space), the response includes the same information returned to the original request. If the CallerReference is a value you already sent in a previous request to create a distribution but the content of the DistributionConfig is different from the original request, CloudFront returns a DistributionAlreadyExists error.",
         "DistributionConfig$DefaultRootObject": "The object that you want CloudFront to return (for example, index.html) when an end user requests the root URL for your distribution (http://www.example.com) instead of an object in your distribution (http://www.example.com/index.html). Specifying a default root object avoids exposing the contents of your distribution. If you don't want to specify a default root object when you create a distribution, include an empty DefaultRootObject element. To delete the default root object from an existing distribution, update the distribution configuration and include an empty DefaultRootObject element. To replace the default root object, update the distribution configuration and specify the new object.",
         "DistributionConfig$Comment": "Any comments you want to include about the distribution.",
+        "DistributionConfig$WebACLId": "(Optional) If you're using AWS WAF to filter CloudFront requests, the Id of the AWS WAF web ACL that is associated with the distribution.",
         "DistributionList$Marker": "The value you provided for the Marker request parameter.",
         "DistributionList$NextMarker": "If IsTruncated is true, this element is present and contains the value you can use for the Marker request parameter to continue listing your distributions where they left off.",
         "DistributionNotDisabled$Message": null,
@@ -1017,6 +1035,7 @@
         "DistributionSummary$Status": "This response element indicates the current status of the distribution. When the status is Deployed, the distribution's information is fully propagated throughout the Amazon CloudFront system.",
         "DistributionSummary$DomainName": "The domain name corresponding to the distribution. For example: d604721fxaaqy9.cloudfront.net.",
         "DistributionSummary$Comment": "The comment originally specified when this distribution was created.",
+        "DistributionSummary$WebACLId": "The Web ACL Id (if any) associated with the distribution.",
         "GetCloudFrontOriginAccessIdentityConfigRequest$Id": "The identity's id.",
         "GetCloudFrontOriginAccessIdentityConfigResult$ETag": "The current version of the configuration. For example: E2QWRUHAPOMQZL.",
         "GetCloudFrontOriginAccessIdentityRequest$Id": "The identity's id.",
@@ -1051,6 +1070,7 @@
         "InvalidResponseCode$Message": null,
         "InvalidTTLOrder$Message": null,
         "InvalidViewerCertificate$Message": null,
+        "InvalidWebACLId$Message": null,
         "Invalidation$Id": "The identifier for the invalidation request. For example: IDFDVBD632BHDS5.",
         "Invalidation$Status": "The status of the invalidation request. When the invalidation batch is finished, the status is Completed.",
         "InvalidationBatch$CallerReference": "A unique name that ensures the request can't be replayed. If the CallerReference is new (no matter the content of the Path object), a new distribution is created. If the CallerReference is a value you already sent in a previous request to create an invalidation batch, and the content of each Path element is identical to the original request, the response includes the same information returned to the original request. If the CallerReference is a value you already sent in a previous request to create a distribution but the content of any Path is different from the original request, CloudFront returns an InvalidationBatchAlreadyExists error.",
@@ -1061,8 +1081,11 @@
         "KeyPairIdList$member": null,
         "ListCloudFrontOriginAccessIdentitiesRequest$Marker": "Use this when paginating results to indicate where to begin in your list of origin access identities. The results include identities in the list that occur after the marker. To get the next page of results, set the Marker to the value of the NextMarker from the current page's response (which is also the ID of the last identity on that page).",
         "ListCloudFrontOriginAccessIdentitiesRequest$MaxItems": "The maximum number of origin access identities you want in the response body.",
-        "ListDistributionsRequest$Marker": "Use this when paginating results to indicate where to begin in your list of distributions. The results include distributions in the list that occur after the marker. To get the next page of results, set the Marker to the value of the NextMarker from the current page's response (which is also the ID of the last distribution on that page).",
-        "ListDistributionsRequest$MaxItems": "The maximum number of distributions you want in the response body.",
+        "ListDistributionsByWebACLIdRequest$Marker": "Use Marker and MaxItems to control pagination of results. If you have more than MaxItems distributions that satisfy the request, the response includes a NextMarker element. To get the next page of results, submit another request. For the value of Marker, specify the value of NextMarker from the last response. (For the first request, omit Marker.)",
+        "ListDistributionsByWebACLIdRequest$MaxItems": "The maximum number of distributions that you want CloudFront to return in the response body. The maximum and default values are both 100.",
+        "ListDistributionsByWebACLIdRequest$WebACLId": "The Id of the AWS WAF web ACL for which you want to list the associated distributions. If you specify \"null\" for the Id, the request returns a list of the distributions that aren't associated with a web ACL.",
+        "ListDistributionsRequest$Marker": "Use Marker and MaxItems to control pagination of results. If you have more than MaxItems distributions that satisfy the request, the response includes a NextMarker element. To get the next page of results, submit another request. For the value of Marker, specify the value of NextMarker from the last response. (For the first request, omit Marker.)",
+        "ListDistributionsRequest$MaxItems": "The maximum number of distributions that you want CloudFront to return in the response body. The maximum and default values are both 100.",
         "ListInvalidationsRequest$DistributionId": "The distribution's id.",
         "ListInvalidationsRequest$Marker": "Use this parameter when paginating results to indicate where to begin in your list of invalidation batches. Because the results are returned in decreasing order from most recent to oldest, the most recent results are on the first page, the second page will contain earlier results, and so on. To get the next page of results, set the Marker to the value of the NextMarker from the current page's response. This value is the same as the ID of the last invalidation batch on that page.",
         "ListInvalidationsRequest$MaxItems": "The maximum number of invalidation batches you want in the response body.",

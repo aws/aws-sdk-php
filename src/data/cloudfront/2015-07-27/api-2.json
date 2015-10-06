@@ -1,7 +1,7 @@
 {
   "version":"2.0",
   "metadata":{
-    "apiVersion":"2015-04-17",
+    "apiVersion":"2015-07-27",
     "endpointPrefix":"cloudfront",
     "globalEndpoint":"cloudfront.amazonaws.com",
     "serviceAbbreviation":"CloudFront",
@@ -11,10 +11,10 @@
   },
   "operations":{
     "CreateCloudFrontOriginAccessIdentity":{
-      "name":"CreateCloudFrontOriginAccessIdentity2015_04_17",
+      "name":"CreateCloudFrontOriginAccessIdentity2015_07_27",
       "http":{
         "method":"POST",
-        "requestUri":"/2015-04-17/origin-access-identity/cloudfront",
+        "requestUri":"/2015-07-27/origin-access-identity/cloudfront",
         "responseCode":201
       },
       "input":{"shape":"CreateCloudFrontOriginAccessIdentityRequest"},
@@ -48,10 +48,10 @@
       ]
     },
     "CreateDistribution":{
-      "name":"CreateDistribution2015_04_17",
+      "name":"CreateDistribution2015_07_27",
       "http":{
         "method":"POST",
-        "requestUri":"/2015-04-17/distribution",
+        "requestUri":"/2015-07-27/distribution",
         "responseCode":201
       },
       "input":{"shape":"CreateDistributionRequest"},
@@ -211,14 +211,19 @@
           "shape":"InvalidTTLOrder",
           "error":{"httpStatusCode":400},
           "exception":true
+        },
+        {
+          "shape":"InvalidWebACLId",
+          "error":{"httpStatusCode":400},
+          "exception":true
         }
       ]
     },
     "CreateInvalidation":{
-      "name":"CreateInvalidation2015_04_17",
+      "name":"CreateInvalidation2015_07_27",
       "http":{
         "method":"POST",
-        "requestUri":"/2015-04-17/distribution/{DistributionId}/invalidation",
+        "requestUri":"/2015-07-27/distribution/{DistributionId}/invalidation",
         "responseCode":201
       },
       "input":{"shape":"CreateInvalidationRequest"},
@@ -262,10 +267,10 @@
       ]
     },
     "CreateStreamingDistribution":{
-      "name":"CreateStreamingDistribution2015_04_17",
+      "name":"CreateStreamingDistribution2015_07_27",
       "http":{
         "method":"POST",
-        "requestUri":"/2015-04-17/streaming-distribution",
+        "requestUri":"/2015-07-27/streaming-distribution",
         "responseCode":201
       },
       "input":{"shape":"CreateStreamingDistributionRequest"},
@@ -334,10 +339,10 @@
       ]
     },
     "DeleteCloudFrontOriginAccessIdentity":{
-      "name":"DeleteCloudFrontOriginAccessIdentity2015_04_17",
+      "name":"DeleteCloudFrontOriginAccessIdentity2015_07_27",
       "http":{
         "method":"DELETE",
-        "requestUri":"/2015-04-17/origin-access-identity/cloudfront/{Id}",
+        "requestUri":"/2015-07-27/origin-access-identity/cloudfront/{Id}",
         "responseCode":204
       },
       "input":{"shape":"DeleteCloudFrontOriginAccessIdentityRequest"},
@@ -370,10 +375,10 @@
       ]
     },
     "DeleteDistribution":{
-      "name":"DeleteDistribution2015_04_17",
+      "name":"DeleteDistribution2015_07_27",
       "http":{
         "method":"DELETE",
-        "requestUri":"/2015-04-17/distribution/{Id}",
+        "requestUri":"/2015-07-27/distribution/{Id}",
         "responseCode":204
       },
       "input":{"shape":"DeleteDistributionRequest"},
@@ -406,10 +411,10 @@
       ]
     },
     "DeleteStreamingDistribution":{
-      "name":"DeleteStreamingDistribution2015_04_17",
+      "name":"DeleteStreamingDistribution2015_07_27",
       "http":{
         "method":"DELETE",
-        "requestUri":"/2015-04-17/streaming-distribution/{Id}",
+        "requestUri":"/2015-07-27/streaming-distribution/{Id}",
         "responseCode":204
       },
       "input":{"shape":"DeleteStreamingDistributionRequest"},
@@ -442,10 +447,10 @@
       ]
     },
     "GetCloudFrontOriginAccessIdentity":{
-      "name":"GetCloudFrontOriginAccessIdentity2015_04_17",
+      "name":"GetCloudFrontOriginAccessIdentity2015_07_27",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-04-17/origin-access-identity/cloudfront/{Id}"
+        "requestUri":"/2015-07-27/origin-access-identity/cloudfront/{Id}"
       },
       "input":{"shape":"GetCloudFrontOriginAccessIdentityRequest"},
       "output":{"shape":"GetCloudFrontOriginAccessIdentityResult"},
@@ -463,10 +468,10 @@
       ]
     },
     "GetCloudFrontOriginAccessIdentityConfig":{
-      "name":"GetCloudFrontOriginAccessIdentityConfig2015_04_17",
+      "name":"GetCloudFrontOriginAccessIdentityConfig2015_07_27",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-04-17/origin-access-identity/cloudfront/{Id}/config"
+        "requestUri":"/2015-07-27/origin-access-identity/cloudfront/{Id}/config"
       },
       "input":{"shape":"GetCloudFrontOriginAccessIdentityConfigRequest"},
       "output":{"shape":"GetCloudFrontOriginAccessIdentityConfigResult"},
@@ -484,10 +489,10 @@
       ]
     },
     "GetDistribution":{
-      "name":"GetDistribution2015_04_17",
+      "name":"GetDistribution2015_07_27",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-04-17/distribution/{Id}"
+        "requestUri":"/2015-07-27/distribution/{Id}"
       },
       "input":{"shape":"GetDistributionRequest"},
       "output":{"shape":"GetDistributionResult"},
@@ -505,10 +510,10 @@
       ]
     },
     "GetDistributionConfig":{
-      "name":"GetDistributionConfig2015_04_17",
+      "name":"GetDistributionConfig2015_07_27",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-04-17/distribution/{Id}/config"
+        "requestUri":"/2015-07-27/distribution/{Id}/config"
       },
       "input":{"shape":"GetDistributionConfigRequest"},
       "output":{"shape":"GetDistributionConfigResult"},
@@ -526,10 +531,10 @@
       ]
     },
     "GetInvalidation":{
-      "name":"GetInvalidation2015_04_17",
+      "name":"GetInvalidation2015_07_27",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-04-17/distribution/{DistributionId}/invalidation/{Id}"
+        "requestUri":"/2015-07-27/distribution/{DistributionId}/invalidation/{Id}"
       },
       "input":{"shape":"GetInvalidationRequest"},
       "output":{"shape":"GetInvalidationResult"},
@@ -552,10 +557,10 @@
       ]
     },
     "GetStreamingDistribution":{
-      "name":"GetStreamingDistribution2015_04_17",
+      "name":"GetStreamingDistribution2015_07_27",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-04-17/streaming-distribution/{Id}"
+        "requestUri":"/2015-07-27/streaming-distribution/{Id}"
       },
       "input":{"shape":"GetStreamingDistributionRequest"},
       "output":{"shape":"GetStreamingDistributionResult"},
@@ -573,10 +578,10 @@
       ]
     },
     "GetStreamingDistributionConfig":{
-      "name":"GetStreamingDistributionConfig2015_04_17",
+      "name":"GetStreamingDistributionConfig2015_07_27",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-04-17/streaming-distribution/{Id}/config"
+        "requestUri":"/2015-07-27/streaming-distribution/{Id}/config"
       },
       "input":{"shape":"GetStreamingDistributionConfigRequest"},
       "output":{"shape":"GetStreamingDistributionConfigResult"},
@@ -594,10 +599,10 @@
       ]
     },
     "ListCloudFrontOriginAccessIdentities":{
-      "name":"ListCloudFrontOriginAccessIdentities2015_04_17",
+      "name":"ListCloudFrontOriginAccessIdentities2015_07_27",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-04-17/origin-access-identity/cloudfront"
+        "requestUri":"/2015-07-27/origin-access-identity/cloudfront"
       },
       "input":{"shape":"ListCloudFrontOriginAccessIdentitiesRequest"},
       "output":{"shape":"ListCloudFrontOriginAccessIdentitiesResult"},
@@ -610,10 +615,10 @@
       ]
     },
     "ListDistributions":{
-      "name":"ListDistributions2015_04_17",
+      "name":"ListDistributions2015_07_27",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-04-17/distribution"
+        "requestUri":"/2015-07-27/distribution"
       },
       "input":{"shape":"ListDistributionsRequest"},
       "output":{"shape":"ListDistributionsResult"},
@@ -625,11 +630,32 @@
         }
       ]
     },
-    "ListInvalidations":{
-      "name":"ListInvalidations2015_04_17",
+    "ListDistributionsByWebACLId":{
+      "name":"ListDistributionsByWebACLId2015_07_27",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-04-17/distribution/{DistributionId}/invalidation"
+        "requestUri":"/2015-07-27/distributionsByWebACLId/{WebACLId}"
+      },
+      "input":{"shape":"ListDistributionsByWebACLIdRequest"},
+      "output":{"shape":"ListDistributionsByWebACLIdResult"},
+      "errors":[
+        {
+          "shape":"InvalidArgument",
+          "error":{"httpStatusCode":400},
+          "exception":true
+        },
+        {
+          "shape":"InvalidWebACLId",
+          "error":{"httpStatusCode":400},
+          "exception":true
+        }
+      ]
+    },
+    "ListInvalidations":{
+      "name":"ListInvalidations2015_07_27",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2015-07-27/distribution/{DistributionId}/invalidation"
       },
       "input":{"shape":"ListInvalidationsRequest"},
       "output":{"shape":"ListInvalidationsResult"},
@@ -652,10 +678,10 @@
       ]
     },
     "ListStreamingDistributions":{
-      "name":"ListStreamingDistributions2015_04_17",
+      "name":"ListStreamingDistributions2015_07_27",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-04-17/streaming-distribution"
+        "requestUri":"/2015-07-27/streaming-distribution"
       },
       "input":{"shape":"ListStreamingDistributionsRequest"},
       "output":{"shape":"ListStreamingDistributionsResult"},
@@ -668,10 +694,10 @@
       ]
     },
     "UpdateCloudFrontOriginAccessIdentity":{
-      "name":"UpdateCloudFrontOriginAccessIdentity2015_04_17",
+      "name":"UpdateCloudFrontOriginAccessIdentity2015_07_27",
       "http":{
         "method":"PUT",
-        "requestUri":"/2015-04-17/origin-access-identity/cloudfront/{Id}/config"
+        "requestUri":"/2015-07-27/origin-access-identity/cloudfront/{Id}/config"
       },
       "input":{"shape":"UpdateCloudFrontOriginAccessIdentityRequest"},
       "output":{"shape":"UpdateCloudFrontOriginAccessIdentityResult"},
@@ -719,10 +745,10 @@
       ]
     },
     "UpdateDistribution":{
-      "name":"UpdateDistribution2015_04_17",
+      "name":"UpdateDistribution2015_07_27",
       "http":{
         "method":"PUT",
-        "requestUri":"/2015-04-17/distribution/{Id}/config"
+        "requestUri":"/2015-07-27/distribution/{Id}/config"
       },
       "input":{"shape":"UpdateDistributionRequest"},
       "output":{"shape":"UpdateDistributionResult"},
@@ -881,14 +907,19 @@
           "shape":"InvalidTTLOrder",
           "error":{"httpStatusCode":400},
           "exception":true
+        },
+        {
+          "shape":"InvalidWebACLId",
+          "error":{"httpStatusCode":400},
+          "exception":true
         }
       ]
     },
     "UpdateStreamingDistribution":{
-      "name":"UpdateStreamingDistribution2015_04_17",
+      "name":"UpdateStreamingDistribution2015_07_27",
       "http":{
         "method":"PUT",
-        "requestUri":"/2015-04-17/streaming-distribution/{Id}/config"
+        "requestUri":"/2015-07-27/streaming-distribution/{Id}/config"
       },
       "input":{"shape":"UpdateStreamingDistributionRequest"},
       "output":{"shape":"UpdateStreamingDistributionResult"},
@@ -1186,7 +1217,7 @@
       "members":{
         "CloudFrontOriginAccessIdentityConfig":{
           "shape":"CloudFrontOriginAccessIdentityConfig",
-          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-04-17/"},
+          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-07-27/"},
           "locationName":"CloudFrontOriginAccessIdentityConfig"
         }
       },
@@ -1215,7 +1246,7 @@
       "members":{
         "DistributionConfig":{
           "shape":"DistributionConfig",
-          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-04-17/"},
+          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-07-27/"},
           "locationName":"DistributionConfig"
         }
       },
@@ -1252,7 +1283,7 @@
         },
         "InvalidationBatch":{
           "shape":"InvalidationBatch",
-          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-04-17/"},
+          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-07-27/"},
           "locationName":"InvalidationBatch"
         }
       },
@@ -1276,7 +1307,7 @@
       "members":{
         "StreamingDistributionConfig":{
           "shape":"StreamingDistributionConfig",
-          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-04-17/"},
+          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-07-27/"},
           "locationName":"StreamingDistributionConfig"
         }
       },
@@ -1457,7 +1488,8 @@
         "PriceClass":{"shape":"PriceClass"},
         "Enabled":{"shape":"boolean"},
         "ViewerCertificate":{"shape":"ViewerCertificate"},
-        "Restrictions":{"shape":"Restrictions"}
+        "Restrictions":{"shape":"Restrictions"},
+        "WebACLId":{"shape":"string"}
       }
     },
     "DistributionList":{
@@ -1501,7 +1533,8 @@
         "PriceClass",
         "Enabled",
         "ViewerCertificate",
-        "Restrictions"
+        "Restrictions",
+        "WebACLId"
       ],
       "members":{
         "Id":{"shape":"string"},
@@ -1517,7 +1550,8 @@
         "PriceClass":{"shape":"PriceClass"},
         "Enabled":{"shape":"boolean"},
         "ViewerCertificate":{"shape":"ViewerCertificate"},
-        "Restrictions":{"shape":"Restrictions"}
+        "Restrictions":{"shape":"Restrictions"},
+        "WebACLId":{"shape":"string"}
       }
     },
     "DistributionSummaryList":{
@@ -1890,6 +1924,14 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "InvalidWebACLId":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"string"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
     "Invalidation":{
       "type":"structure",
       "required":[
@@ -1997,6 +2039,34 @@
         "CloudFrontOriginAccessIdentityList":{"shape":"CloudFrontOriginAccessIdentityList"}
       },
       "payload":"CloudFrontOriginAccessIdentityList"
+    },
+    "ListDistributionsByWebACLIdRequest":{
+      "type":"structure",
+      "required":["WebACLId"],
+      "members":{
+        "Marker":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"Marker"
+        },
+        "MaxItems":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"MaxItems"
+        },
+        "WebACLId":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"WebACLId"
+        }
+      }
+    },
+    "ListDistributionsByWebACLIdResult":{
+      "type":"structure",
+      "members":{
+        "DistributionList":{"shape":"DistributionList"}
+      },
+      "payload":"DistributionList"
     },
     "ListDistributionsRequest":{
       "type":"structure",
@@ -2523,7 +2593,7 @@
       "members":{
         "CloudFrontOriginAccessIdentityConfig":{
           "shape":"CloudFrontOriginAccessIdentityConfig",
-          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-04-17/"},
+          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-07-27/"},
           "locationName":"CloudFrontOriginAccessIdentityConfig"
         },
         "Id":{
@@ -2560,7 +2630,7 @@
       "members":{
         "DistributionConfig":{
           "shape":"DistributionConfig",
-          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-04-17/"},
+          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-07-27/"},
           "locationName":"DistributionConfig"
         },
         "Id":{
@@ -2597,7 +2667,7 @@
       "members":{
         "StreamingDistributionConfig":{
           "shape":"StreamingDistributionConfig",
-          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-04-17/"},
+          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-07-27/"},
           "locationName":"StreamingDistributionConfig"
         },
         "Id":{

@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFront` - Added support for WebACL identifiers and related
+  operations.
+* `Aws\CloudFront` - Fixed URL presigner to always sign URL-encoded URLs.
+* `Aws\Ec2` - Added support for spot blocks.
+* `Aws\S3` - Fixed byte range specified on multipart copies.
+* `Aws\Waf` - Added support for AWS WAF.
+
 ## 3.5.0 - 2015-10-01
 
 * `Aws\Cloudtrail` - Added support for log file integrity validation, log
