@@ -129,7 +129,7 @@ try {
 [docs-signup]: http://aws.amazon.com/developers/access-keys/
 [docs-requirements]: http://docs.aws.amazon.com/aws-sdk-php/v3/guide/getting-started/requirements.html
 [docs-installation]: http://docs.aws.amazon.com/aws-sdk-php/v3/guide/getting-started/installation.html
-[docs-quickstart]: http://docs.aws.amazon.com/aws-sdk-php/v3/guide/quick-start.html
+[docs-quickstart]: http://docs.aws.amazon.com/aws-sdk-php/v3/guide/#getting-started
 [docs-paginators]: http://docs.aws.amazon.com/aws-sdk-php/v3/guide/guide/paginators.html
 [docs-waiters]: http://docs.aws.amazon.com/aws-sdk-php/v3/guide/guide/waiters.html
 [docs-results]: http://docs.aws.amazon.com/aws-sdk-php/v3/guide/getting-started/basic-usage.html#result-objects
