@@ -311,6 +311,8 @@ use Aws\Api\ApiProvider;
  * @method \GuzzleHttp\Promise\Promise modifyReservedInstancesAsync(array $args = [])
  * @method \Aws\Result modifySnapshotAttribute(array $args = [])
  * @method \GuzzleHttp\Promise\Promise modifySnapshotAttributeAsync(array $args = [])
+ * @method \Aws\Result modifySpotFleetRequest(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise modifySpotFleetRequestAsync(array $args = [])
  * @method \Aws\Result modifySubnetAttribute(array $args = [])
  * @method \GuzzleHttp\Promise\Promise modifySubnetAttributeAsync(array $args = [])
  * @method \Aws\Result modifyVolumeAttribute(array $args = [])

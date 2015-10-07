@@ -59,6 +59,9 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
         'Efs' => [
             'region' => 'us-west-2',
         ],
+        'Inspector' => [
+            'region' => 'us-west-2',
+        ],
     ];
 
     /**
@@ -129,6 +132,62 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
             // throw the exception to cause the feature to be skipped.
             if ($e instanceof AwsException
                 && 'AccessDeniedException' === $e->getAwsErrorCode()
+            ) {
+                throw $e;
+            }
+        }
+    }
+
+    /**
+     * @BeforeFeature @inspector
+     *
+     * Ensure that the testing credentials have access to the Inspector preview;
+     * skip entire feature otherwise.
+     *
+     * @param BeforeFeatureScope $scope
+     */
+    public static function setUpInspector(BeforeFeatureScope $scope)
+    {
+        try {
+            self::getSdk(self::$configOverrides)
+                ->createInspector()
+                ->listApplications();
+        } catch (\Exception $e) {
+            // If the test failed because the account has no access to EFS,
+            // throw the exception to cause the feature to be skipped.
+            if ($e instanceof AwsException
+                && 'AccessDeniedException' === $e->getAwsErrorCode()
+            ) {
+                throw $e;
+            }
+        }
+    }
+
+    /**
+     * @BeforeFeature @marketplacecommerceanalytics
+     *
+     * Ensure that the testing credentials have a Marketplace Commerce Analytics
+     * subscription; skip entire feature otherwise.
+     *
+     * @param BeforeFeatureScope $scope
+     */
+    public static function setUpMarketplaceCommerceAnalytics(BeforeFeatureScope $scope)
+    {
+        try {
+            self::getSdk(self::$configOverrides)
+                ->createMarketplaceCommerceAnalytics()
+                ->generateDataSet([
+                    'dataSetType' => 'fake-type',
+                    'dataSetPublicationDate' => 'fake-date',
+                    'roleNameArn' => 'fake-arn',
+                    'destinationS3BucketName' => 'fake-bucket',
+                    'snsTopicArn' => 'fake-arn',
+                ]);
+        } catch (\Exception $e) {
+            // If the test failed because the account has no support subscription,
+            // throw the exception to cause the feature to be skipped.
+            if ($e instanceof AwsException
+                && 'SubscriptionRequiredException' === $e->getAwsErrorCode()
             ) {
                 throw $e;
             }

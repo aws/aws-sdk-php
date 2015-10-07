@@ -12,6 +12,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createStackAsync(array $args = [])
  * @method \Aws\Result deleteStack(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteStackAsync(array $args = [])
+ * @method \Aws\Result describeAccountLimits(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeAccountLimitsAsync(array $args = [])
  * @method \Aws\Result describeStackEvents(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeStackEventsAsync(array $args = [])
  * @method \Aws\Result describeStackResource(array $args = [])

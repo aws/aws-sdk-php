@@ -38,6 +38,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listCloudFrontOriginAccessIdentitiesAsync(array $args = [])
  * @method \Aws\Result listDistributions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listDistributionsAsync(array $args = [])
+ * @method \Aws\Result listDistributionsByWebACLId(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listDistributionsByWebACLIdAsync(array $args = [])
  * @method \Aws\Result listInvalidations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listInvalidationsAsync(array $args = [])
  * @method \Aws\Result listStreamingDistributions(array $args = [])

@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ConfigService` - Added support for config rules, evaluation strategies,
+  and compliance querying.
+* `Aws\Firehose` - Added support for the **Amazon Kinesis Firehose** service.
+* `Aws\Inspector` - Added support for the **Amazon Inspector** service.
+* `Aws\Kinesis` - Added support for increasing and decreasing stream retention
+  periods.
+* `Aws\MarketplaceCommerceAnalytics` - Added support for the **AWS Marketplace
+  Commerce Analytics** service.
+
 ## 3.6.0 - 2015-10-06
 
 * `Aws\CloudFront` - Added support for WebACL identifiers and related
