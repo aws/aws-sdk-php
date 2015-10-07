@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.7.0 - 2015-10-07
 
 * `Aws\ConfigService` - Added support for config rules, evaluation strategies,
   and compliance querying.
