@@ -38,6 +38,8 @@ namespace Aws;
  * @method \Aws\Glacier\GlacierClient createGlacier(array $args = [])
  * @method \Aws\Iam\IamClient createIam(array $args = [])
  * @method \Aws\Inspector\InspectorClient createInspector(array $args = [])
+ * @method \Aws\Iot\IotClient createIot(array $args = [])
+ * @method \Aws\IotDataPlane\IotDataPlaneClient createIotDataPlane(array $args = [])
  * @method \Aws\Kinesis\KinesisClient createKinesis(array $args = [])
  * @method \Aws\Kms\KmsClient createKms(array $args = [])
  * @method \Aws\Lambda\LambdaClient createLambda(array $args = [])

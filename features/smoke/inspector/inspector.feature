@@ -9,4 +9,4 @@ Feature: Amazon Inspector
   Scenario: Handling errors
     When I attempt to call the "DescribeApplication" API with:
     | applicationArn | fake-arn |
-    Then I expect the response error code to be "NoSuchEntityException"
+    Then I expect the response error code to be "InvalidInputException"

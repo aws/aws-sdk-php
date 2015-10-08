@@ -9,4 +9,4 @@ Feature: AWS Marketplace Commerce Analytics
     | roleNameArn             | fake-arn    |
     | destinationS3BucketName | fake-bucket |
     | snsTopicArn             | fake-arn    |
-    Then I expect the response error code to be "MarketplaceCommerceAnalyticsException"
+    Then I expect the response error code to be "SerializationException"

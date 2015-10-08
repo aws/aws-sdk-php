@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Ecs` - Added support for more Docker options hostname, Docker labels,
+  working directory, networking disabled, privileged execution, read-only root
+  filesystem, DNS servers, DNS search domains, ulimits, log configuration, extra
+  hosts (hosts to add to /etc/hosts), and security options (for MLS systems like
+  SELinux).
+* `Aws\Iot` - Added support for the **AWS IoT** service.
+* `Aws\IotDataPlane` - Added support for the **AWS IoT Data Plane** service.
+* `Aws\Lambda` - Added support for function versioning.
+
 ## 3.7.0 - 2015-10-07
 
 * `Aws\ConfigService` - Added support for config rules, evaluation strategies,
