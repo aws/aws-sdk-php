@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.8.0 - 2015-10-08
 
 * `Aws\Ecs` - Added support for more Docker options hostname, Docker labels,
   working directory, networking disabled, privileged execution, read-only root
