@@ -15,6 +15,7 @@ use Aws\S3\Exception\S3Exception;
 use Aws\ResultInterface;
 use Aws\CommandInterface;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
@@ -536,40 +537,45 @@ class S3Client extends AwsClient
             'part_size'     => null,
             'version_id'    => null,
         ];
-        $options += $defaults;
-        $copySource = sprintf('/%s/%s', $fromBucket, rawurlencode($fromKey));
-        $headParams = ['Bucket' => $fromBucket, 'Key' => $fromKey];
-        if ($options['version_id']) {
-            $copySource .= "?versionId={$options['version_id']}";
-            $headParams['VersionId'] = $options['version_id'];
-        }
 
-        return $this->headObjectAsync($headParams)
-            ->then(function (ResultInterface $headResult) use (
-                $bucket,
-                $key,
-                $copySource,
-                $acl,
-                $options
-            ) {
-                if ($headResult['ContentLength'] > $options['mup_threshold']) {
-                    return (new MultipartCopy($this, $copySource, [
-                        'bucket' => $bucket,
-                        'key' => $key,
-                        'source_metadata' => $headResult,
-                        'acl' => $acl,
-                    ] + $options))
-                        ->promise();
-                }
+        return Promise\coroutine($this->doCopyAsync(
+            ['Bucket' => $fromBucket, 'Key' => $fromKey],
+            ['Bucket' => $bucket, 'Key' => $key],
+            $acl,
+            $options + $defaults
+        ));
+    }
 
-                return $this->copyObjectAsync($options + [
-                    'Bucket'            => $bucket,
-                    'Key'               => $key,
+    private function doCopyAsync(
+        array $source,
+        array $destination,
+        $acl,
+        array $options
+    ) {
+        return function () use ($source, $destination, $acl, $options) {
+            $sourcePath = '/' . $source['Bucket'] . '/' . rawurlencode($source['Key']);
+            if ($options['version_id']) {
+                $sourcePath .= "?versionId={$options['version_id']}";
+                $source['VersionId'] = $options['version_id'];
+            }
+
+            $objectStats = (yield $this->headObjectAsync($source));
+
+            if ($objectStats['ContentLength'] > $options['mup_threshold']) {
+                $mup = new MultipartCopy($this, $sourcePath, $destination + [
+                    'source_metadata' => $objectStats,
+                    'acl' => $acl,
+                ] + $options);
+
+                yield $mup->promise();
+            } else {
+                yield $this->copyObjectAsync($options + $destination + [
                     'ACL'               => $acl,
                     'MetadataDirective' => 'COPY',
-                    'CopySource'        => $copySource,
+                    'CopySource'        => $sourcePath,
                 ] + $options['params']);
-            });
+            }
+        };
     }
 
     /**
