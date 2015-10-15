@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 2.8.22 - 2015-10-15
 
 * `Aws\CloudFormation` - Added support for specifying affected resource types
   in `CreateStack` and `UpdateStack` operations.
