@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.8.1 - 2015-10-15
 
 * `Aws\Kms` - Added support for scheduling and cancelling key deletions and
   listing retirable grants.
