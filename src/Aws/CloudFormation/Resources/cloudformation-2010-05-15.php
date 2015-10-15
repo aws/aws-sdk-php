@@ -182,6 +182,15 @@ return array (
                         'type' => 'string',
                     ),
                 ),
+                'ResourceTypes' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'ResourceTypes.member',
+                    'items' => array(
+                        'name' => 'ResourceType',
+                        'type' => 'string',
+                    ),
+                ),
                 'OnFailure' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -252,6 +261,31 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
+                ),
+            ),
+        ),
+        'DescribeAccountLimits' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DescribeAccountLimitsOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeAccountLimits',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-05-15',
+                ),
+                'NextToken' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 1024,
                 ),
             ),
         ),
@@ -729,6 +763,15 @@ return array (
                         'type' => 'string',
                     ),
                 ),
+                'ResourceTypes' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'ResourceTypes.member',
+                    'items' => array(
+                        'name' => 'ResourceType',
+                        'type' => 'string',
+                    ),
+                ),
                 'StackPolicyBody' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -800,6 +843,33 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'StackId' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+            ),
+        ),
+        'DescribeAccountLimitsOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'AccountLimits' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'AccountLimit',
+                        'type' => 'object',
+                        'sentAs' => 'member',
+                        'properties' => array(
+                            'Name' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'numeric',
+                            ),
+                        ),
+                    ),
+                ),
+                'NextToken' => array(
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -1149,6 +1219,15 @@ return array (
                 'CapabilitiesReason' => array(
                     'type' => 'string',
                     'location' => 'xml',
+                ),
+                'ResourceTypes' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'ResourceType',
+                        'type' => 'string',
+                        'sentAs' => 'member',
+                    ),
                 ),
                 'Version' => array(
                     'type' => 'string',

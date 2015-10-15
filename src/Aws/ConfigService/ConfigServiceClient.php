@@ -27,16 +27,27 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
 /**
  * Client to interact with AWS Config
  *
+ * @method Model deleteConfigRule(array $args = array()) {@command ConfigService DeleteConfigRule}
  * @method Model deleteDeliveryChannel(array $args = array()) {@command ConfigService DeleteDeliveryChannel}
  * @method Model deliverConfigSnapshot(array $args = array()) {@command ConfigService DeliverConfigSnapshot}
+ * @method Model describeComplianceByConfigRule(array $args = array()) {@command ConfigService DescribeComplianceByConfigRule}
+ * @method Model describeComplianceByResource(array $args = array()) {@command ConfigService DescribeComplianceByResource}
+ * @method Model describeConfigRuleEvaluationStatus(array $args = array()) {@command ConfigService DescribeConfigRuleEvaluationStatus}
+ * @method Model describeConfigRules(array $args = array()) {@command ConfigService DescribeConfigRules}
  * @method Model describeConfigurationRecorderStatus(array $args = array()) {@command ConfigService DescribeConfigurationRecorderStatus}
  * @method Model describeConfigurationRecorders(array $args = array()) {@command ConfigService DescribeConfigurationRecorders}
  * @method Model describeDeliveryChannelStatus(array $args = array()) {@command ConfigService DescribeDeliveryChannelStatus}
  * @method Model describeDeliveryChannels(array $args = array()) {@command ConfigService DescribeDeliveryChannels}
+ * @method Model getComplianceDetailsByConfigRule(array $args = array()) {@command ConfigService GetComplianceDetailsByConfigRule}
+ * @method Model getComplianceDetailsByResource(array $args = array()) {@command ConfigService GetComplianceDetailsByResource}
+ * @method Model getComplianceSummaryByConfigRule(array $args = array()) {@command ConfigService GetComplianceSummaryByConfigRule}
+ * @method Model getComplianceSummaryByResourceType(array $args = array()) {@command ConfigService GetComplianceSummaryByResourceType}
  * @method Model getResourceConfigHistory(array $args = array()) {@command ConfigService GetResourceConfigHistory}
  * @method Model listDiscoveredResources(array $args = array()) {@command ConfigService ListDiscoveredResources}
+ * @method Model putConfigRule(array $args = array()) {@command ConfigService PutConfigRule}
  * @method Model putConfigurationRecorder(array $args = array()) {@command ConfigService PutConfigurationRecorder}
  * @method Model putDeliveryChannel(array $args = array()) {@command ConfigService PutDeliveryChannel}
+ * @method Model putEvaluations(array $args = array()) {@command ConfigService PutEvaluations}
  * @method Model startConfigurationRecorder(array $args = array()) {@command ConfigService StartConfigurationRecorder}
  * @method Model stopConfigurationRecorder(array $args = array()) {@command ConfigService StopConfigurationRecorder}
  * @method ResourceIteratorInterface getGetResourceConfigHistoryIterator(array $args = array()) The input array uses the parameters of the GetResourceConfigHistory operation

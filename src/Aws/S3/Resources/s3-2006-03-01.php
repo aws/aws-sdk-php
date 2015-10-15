@@ -3120,6 +3120,11 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'uploadId',
                 ),
+                'ServerSideEncryption' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption',
+                ),
                 'SSECustomerAlgorithm' => array(
                     'type' => 'string',
                     'location' => 'header',
@@ -3355,6 +3360,11 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-copy-source-version-id',
+                ),
+                'VersionId' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-version-id',
                 ),
                 'ServerSideEncryption' => array(
                     'type' => 'string',

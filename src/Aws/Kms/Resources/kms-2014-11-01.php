@@ -25,6 +25,58 @@ return array (
     'signatureVersion' => 'v4',
     'namespace' => 'Kms',
     'operations' => array(
+        'CancelKeyDeletion' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'CancelKeyDeletionResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'TrentService.CancelKeyDeletion',
+                ),
+                'KeyId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 256,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The request was rejected because the specified entity or resource could not be found.',
+                    'class' => 'NotFoundException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because a specified ARN was not valid.',
+                    'class' => 'InvalidArnException',
+                ),
+                array(
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
+                    'class' => 'DependencyTimeoutException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
+                    'class' => 'KMSInternalException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the state of the specified resource is not valid for this request. For more information about how key state affects the use of a customer master key (CMK), go to How Key State Affects the Use of a Customer Master Key in the AWS Key Management Service Developer Guide.',
+                    'class' => 'KMSInvalidStateException',
+                ),
+            ),
+        ),
         'CreateAlias' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -63,7 +115,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
@@ -79,12 +131,16 @@ return array (
                     'class' => 'InvalidAliasNameException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because a quota was exceeded.',
+                    'reason' => 'The request was rejected because a limit was exceeded. For more information, see Limits in the AWS Key Management Service Developer Guide.',
                     'class' => 'LimitExceededException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the state of the specified resource is not valid for this request. For more information about how key state affects the use of a customer master key (CMK), go to How Key State Affects the Use of a Customer Master Key in the AWS Key Management Service Developer Guide.',
+                    'class' => 'KMSInvalidStateException',
                 ),
             ),
         ),
@@ -172,6 +228,12 @@ return array (
                         'maxLength' => 8192,
                     ),
                 ),
+                'Name' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 256,
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -179,11 +241,11 @@ return array (
                     'class' => 'NotFoundException',
                 ),
                 array(
-                    'reason' => 'A request was rejected because the specified key was marked as disabled.',
+                    'reason' => 'The request was rejected because the specified key was marked as disabled.',
                     'class' => 'DisabledException',
                 ),
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
@@ -191,16 +253,20 @@ return array (
                     'class' => 'InvalidArnException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
                 ),
                 array(
-                    'reason' => 'A grant token provided as part of the request is invalid.',
+                    'reason' => 'The request was rejected because a grant token provided as part of the request is invalid.',
                     'class' => 'InvalidGrantTokenException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because a quota was exceeded.',
+                    'reason' => 'The request was rejected because a limit was exceeded. For more information, see Limits in the AWS Key Management Service Developer Guide.',
                     'class' => 'LimitExceededException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the state of the specified resource is not valid for this request. For more information about how key state affects the use of a customer master key (CMK), go to How Key State Affects the Use of a Customer Master Key in the AWS Key Management Service Developer Guide.',
+                    'class' => 'KMSInvalidStateException',
                 ),
             ),
         ),
@@ -247,7 +313,7 @@ return array (
                     'class' => 'MalformedPolicyDocumentException',
                 ),
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
@@ -259,11 +325,11 @@ return array (
                     'class' => 'UnsupportedOperationException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because a quota was exceeded.',
+                    'reason' => 'The request was rejected because a limit was exceeded. For more information, see Limits in the AWS Key Management Service Developer Guide.',
                     'class' => 'LimitExceededException',
                 ),
             ),
@@ -325,7 +391,7 @@ return array (
                     'class' => 'NotFoundException',
                 ),
                 array(
-                    'reason' => 'A request was rejected because the specified key was marked as disabled.',
+                    'reason' => 'The request was rejected because the specified key was marked as disabled.',
                     'class' => 'DisabledException',
                 ),
                 array(
@@ -333,20 +399,24 @@ return array (
                     'class' => 'InvalidCiphertextException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because the key was disabled, not found, or otherwise not available.',
+                    'reason' => 'The request was rejected because the key was not available. The request can be retried.',
                     'class' => 'KeyUnavailableException',
                 ),
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
-                    'reason' => 'A grant token provided as part of the request is invalid.',
+                    'reason' => 'The request was rejected because a grant token provided as part of the request is invalid.',
                     'class' => 'InvalidGrantTokenException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the state of the specified resource is not valid for this request. For more information about how key state affects the use of a customer master key (CMK), go to How Key State Affects the Use of a Customer Master Key in the AWS Key Management Service Developer Guide.',
+                    'class' => 'KMSInvalidStateException',
                 ),
             ),
         ),
@@ -381,7 +451,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
@@ -389,8 +459,12 @@ return array (
                     'class' => 'NotFoundException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the state of the specified resource is not valid for this request. For more information about how key state affects the use of a customer master key (CMK), go to How Key State Affects the Use of a Customer Master Key in the AWS Key Management Service Developer Guide.',
+                    'class' => 'KMSInvalidStateException',
                 ),
             ),
         ),
@@ -422,6 +496,17 @@ return array (
                     'minLength' => 1,
                     'maxLength' => 256,
                 ),
+                'GrantTokens' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'maxItems' => 10,
+                    'items' => array(
+                        'name' => 'GrantTokenType',
+                        'type' => 'string',
+                        'minLength' => 1,
+                        'maxLength' => 8192,
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -433,11 +518,11 @@ return array (
                     'class' => 'InvalidArnException',
                 ),
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
                 ),
             ),
@@ -481,12 +566,16 @@ return array (
                     'class' => 'InvalidArnException',
                 ),
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the state of the specified resource is not valid for this request. For more information about how key state affects the use of a customer master key (CMK), go to How Key State Affects the Use of a Customer Master Key in the AWS Key Management Service Developer Guide.',
+                    'class' => 'KMSInvalidStateException',
                 ),
             ),
         ),
@@ -525,7 +614,7 @@ return array (
                     'class' => 'NotFoundException',
                 ),
                 array(
-                    'reason' => 'A request was rejected because the specified key was marked as disabled.',
+                    'reason' => 'The request was rejected because the specified key was marked as disabled.',
                     'class' => 'DisabledException',
                 ),
                 array(
@@ -533,12 +622,16 @@ return array (
                     'class' => 'InvalidArnException',
                 ),
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the state of the specified resource is not valid for this request. For more information about how key state affects the use of a customer master key (CMK), go to How Key State Affects the Use of a Customer Master Key in the AWS Key Management Service Developer Guide.',
+                    'class' => 'KMSInvalidStateException',
                 ),
             ),
         ),
@@ -581,16 +674,20 @@ return array (
                     'class' => 'InvalidArnException',
                 ),
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because a quota was exceeded.',
+                    'reason' => 'The request was rejected because a limit was exceeded. For more information, see Limits in the AWS Key Management Service Developer Guide.',
                     'class' => 'LimitExceededException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the state of the specified resource is not valid for this request. For more information about how key state affects the use of a customer master key (CMK), go to How Key State Affects the Use of a Customer Master Key in the AWS Key Management Service Developer Guide.',
+                    'class' => 'KMSInvalidStateException',
                 ),
             ),
         ),
@@ -629,7 +726,7 @@ return array (
                     'class' => 'NotFoundException',
                 ),
                 array(
-                    'reason' => 'A request was rejected because the specified key was marked as disabled.',
+                    'reason' => 'The request was rejected because the specified key was marked as disabled.',
                     'class' => 'DisabledException',
                 ),
                 array(
@@ -637,12 +734,16 @@ return array (
                     'class' => 'InvalidArnException',
                 ),
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the state of the specified resource is not valid for this request. For more information about how key state affects the use of a customer master key (CMK), go to How Key State Affects the Use of a Customer Master Key in the AWS Key Management Service Developer Guide.',
+                    'class' => 'KMSInvalidStateException',
                 ),
             ),
         ),
@@ -710,15 +811,15 @@ return array (
                     'class' => 'NotFoundException',
                 ),
                 array(
-                    'reason' => 'A request was rejected because the specified key was marked as disabled.',
+                    'reason' => 'The request was rejected because the specified key was marked as disabled.',
                     'class' => 'DisabledException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because the key was disabled, not found, or otherwise not available.',
+                    'reason' => 'The request was rejected because the key was not available. The request can be retried.',
                     'class' => 'KeyUnavailableException',
                 ),
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
@@ -726,12 +827,16 @@ return array (
                     'class' => 'InvalidKeyUsageException',
                 ),
                 array(
-                    'reason' => 'A grant token provided as part of the request is invalid.',
+                    'reason' => 'The request was rejected because a grant token provided as part of the request is invalid.',
                     'class' => 'InvalidGrantTokenException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the state of the specified resource is not valid for this request. For more information about how key state affects the use of a customer master key (CMK), go to How Key State Affects the Use of a Customer Master Key in the AWS Key Management Service Developer Guide.',
+                    'class' => 'KMSInvalidStateException',
                 ),
             ),
         ),
@@ -801,15 +906,15 @@ return array (
                     'class' => 'NotFoundException',
                 ),
                 array(
-                    'reason' => 'A request was rejected because the specified key was marked as disabled.',
+                    'reason' => 'The request was rejected because the specified key was marked as disabled.',
                     'class' => 'DisabledException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because the key was disabled, not found, or otherwise not available.',
+                    'reason' => 'The request was rejected because the key was not available. The request can be retried.',
                     'class' => 'KeyUnavailableException',
                 ),
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
@@ -817,12 +922,16 @@ return array (
                     'class' => 'InvalidKeyUsageException',
                 ),
                 array(
-                    'reason' => 'A grant token provided as part of the request is invalid.',
+                    'reason' => 'The request was rejected because a grant token provided as part of the request is invalid.',
                     'class' => 'InvalidGrantTokenException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the state of the specified resource is not valid for this request. For more information about how key state affects the use of a customer master key (CMK), go to How Key State Affects the Use of a Customer Master Key in the AWS Key Management Service Developer Guide.',
+                    'class' => 'KMSInvalidStateException',
                 ),
             ),
         ),
@@ -892,15 +1001,15 @@ return array (
                     'class' => 'NotFoundException',
                 ),
                 array(
-                    'reason' => 'A request was rejected because the specified key was marked as disabled.',
+                    'reason' => 'The request was rejected because the specified key was marked as disabled.',
                     'class' => 'DisabledException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because the key was disabled, not found, or otherwise not available.',
+                    'reason' => 'The request was rejected because the key was not available. The request can be retried.',
                     'class' => 'KeyUnavailableException',
                 ),
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
@@ -908,12 +1017,16 @@ return array (
                     'class' => 'InvalidKeyUsageException',
                 ),
                 array(
-                    'reason' => 'A grant token provided as part of the request is invalid.',
+                    'reason' => 'The request was rejected because a grant token provided as part of the request is invalid.',
                     'class' => 'InvalidGrantTokenException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the state of the specified resource is not valid for this request. For more information about how key state affects the use of a customer master key (CMK), go to How Key State Affects the Use of a Customer Master Key in the AWS Key Management Service Developer Guide.',
+                    'class' => 'KMSInvalidStateException',
                 ),
             ),
         ),
@@ -947,11 +1060,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
                 ),
             ),
@@ -1002,12 +1115,16 @@ return array (
                     'class' => 'InvalidArnException',
                 ),
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the state of the specified resource is not valid for this request. For more information about how key state affects the use of a customer master key (CMK), go to How Key State Affects the Use of a Customer Master Key in the AWS Key Management Service Developer Guide.',
+                    'class' => 'KMSInvalidStateException',
                 ),
             ),
         ),
@@ -1050,12 +1167,16 @@ return array (
                     'class' => 'InvalidArnException',
                 ),
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the state of the specified resource is not valid for this request. For more information about how key state affects the use of a customer master key (CMK), go to How Key State Affects the Use of a Customer Master Key in the AWS Key Management Service Developer Guide.',
+                    'class' => 'KMSInvalidStateException',
                 ),
             ),
         ),
@@ -1095,7 +1216,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
@@ -1103,7 +1224,7 @@ return array (
                     'class' => 'InvalidMarkerException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
                 ),
             ),
@@ -1129,13 +1250,6 @@ return array (
                     'location' => 'header',
                     'default' => 'TrentService.ListGrants',
                 ),
-                'KeyId' => array(
-                    'required' => true,
-                    'type' => 'string',
-                    'location' => 'json',
-                    'minLength' => 1,
-                    'maxLength' => 256,
-                ),
                 'Limit' => array(
                     'type' => 'numeric',
                     'location' => 'json',
@@ -1148,10 +1262,21 @@ return array (
                     'minLength' => 1,
                     'maxLength' => 320,
                 ),
+                'KeyId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 256,
+                ),
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The request was rejected because the specified entity or resource could not be found.',
+                    'class' => 'NotFoundException',
+                ),
+                array(
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
@@ -1163,8 +1288,12 @@ return array (
                     'class' => 'InvalidArnException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the state of the specified resource is not valid for this request. For more information about how key state affects the use of a customer master key (CMK), go to How Key State Affects the Use of a Customer Master Key in the AWS Key Management Service Developer Guide.',
+                    'class' => 'KMSInvalidStateException',
                 ),
             ),
         ),
@@ -1219,12 +1348,16 @@ return array (
                     'class' => 'InvalidArnException',
                 ),
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the state of the specified resource is not valid for this request. For more information about how key state affects the use of a customer master key (CMK), go to How Key State Affects the Use of a Customer Master Key in the AWS Key Management Service Developer Guide.',
+                    'class' => 'KMSInvalidStateException',
                 ),
             ),
         ),
@@ -1264,11 +1397,75 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
+                    'class' => 'KMSInternalException',
+                ),
+            ),
+        ),
+        'ListRetirableGrants' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'ListGrantsResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'TrentService.ListRetirableGrants',
+                ),
+                'Limit' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'minimum' => 1,
+                    'maximum' => 1000,
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 320,
+                ),
+                'RetiringPrincipal' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 256,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
+                    'class' => 'DependencyTimeoutException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the marker that specifies where pagination should next begin is not valid.',
+                    'class' => 'InvalidMarkerException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because a specified ARN was not valid.',
+                    'class' => 'InvalidArnException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the specified entity or resource could not be found.',
+                    'class' => 'NotFoundException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
                 ),
             ),
@@ -1330,7 +1527,7 @@ return array (
                     'class' => 'MalformedPolicyDocumentException',
                 ),
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
@@ -1342,12 +1539,16 @@ return array (
                     'class' => 'UnsupportedOperationException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because a quota was exceeded.',
+                    'reason' => 'The request was rejected because a limit was exceeded. For more information, see Limits in the AWS Key Management Service Developer Guide.',
                     'class' => 'LimitExceededException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the state of the specified resource is not valid for this request. For more information about how key state affects the use of a customer master key (CMK), go to How Key State Affects the Use of a Customer Master Key in the AWS Key Management Service Developer Guide.',
+                    'class' => 'KMSInvalidStateException',
                 ),
             ),
         ),
@@ -1425,7 +1626,7 @@ return array (
                     'class' => 'NotFoundException',
                 ),
                 array(
-                    'reason' => 'A request was rejected because the specified key was marked as disabled.',
+                    'reason' => 'The request was rejected because the specified key was marked as disabled.',
                     'class' => 'DisabledException',
                 ),
                 array(
@@ -1433,11 +1634,11 @@ return array (
                     'class' => 'InvalidCiphertextException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because the key was disabled, not found, or otherwise not available.',
+                    'reason' => 'The request was rejected because the key was not available. The request can be retried.',
                     'class' => 'KeyUnavailableException',
                 ),
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
@@ -1445,12 +1646,16 @@ return array (
                     'class' => 'InvalidKeyUsageException',
                 ),
                 array(
-                    'reason' => 'A grant token provided as part of the request is invalid.',
+                    'reason' => 'The request was rejected because a grant token provided as part of the request is invalid.',
                     'class' => 'InvalidGrantTokenException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the state of the specified resource is not valid for this request. For more information about how key state affects the use of a customer master key (CMK), go to How Key State Affects the Use of a Customer Master Key in the AWS Key Management Service Developer Guide.',
+                    'class' => 'KMSInvalidStateException',
                 ),
             ),
         ),
@@ -1496,20 +1701,28 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'A grant token provided as part of the request is invalid.',
+                    'reason' => 'The request was rejected because a grant token provided as part of the request is invalid.',
                     'class' => 'InvalidGrantTokenException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the specified GrantId is not valid.',
+                    'class' => 'InvalidGrantIdException',
                 ),
                 array(
                     'reason' => 'The request was rejected because the specified entity or resource could not be found.',
                     'class' => 'NotFoundException',
                 ),
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the state of the specified resource is not valid for this request. For more information about how key state affects the use of a customer master key (CMK), go to How Key State Affects the Use of a Customer Master Key in the AWS Key Management Service Developer Guide.',
+                    'class' => 'KMSInvalidStateException',
                 ),
             ),
         ),
@@ -1555,7 +1768,7 @@ return array (
                     'class' => 'NotFoundException',
                 ),
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
@@ -1563,8 +1776,74 @@ return array (
                     'class' => 'InvalidArnException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because the specified GrantId is not valid.',
+                    'class' => 'InvalidGrantIdException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the state of the specified resource is not valid for this request. For more information about how key state affects the use of a customer master key (CMK), go to How Key State Affects the Use of a Customer Master Key in the AWS Key Management Service Developer Guide.',
+                    'class' => 'KMSInvalidStateException',
+                ),
+            ),
+        ),
+        'ScheduleKeyDeletion' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'ScheduleKeyDeletionResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'TrentService.ScheduleKeyDeletion',
+                ),
+                'KeyId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 256,
+                ),
+                'PendingWindowInDays' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'minimum' => 1,
+                    'maximum' => 365,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The request was rejected because the specified entity or resource could not be found.',
+                    'class' => 'NotFoundException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because a specified ARN was not valid.',
+                    'class' => 'InvalidArnException',
+                ),
+                array(
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
+                    'class' => 'DependencyTimeoutException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
+                    'class' => 'KMSInternalException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the state of the specified resource is not valid for this request. For more information about how key state affects the use of a customer master key (CMK), go to How Key State Affects the Use of a Customer Master Key in the AWS Key Management Service Developer Guide.',
+                    'class' => 'KMSInvalidStateException',
                 ),
             ),
         ),
@@ -1606,7 +1885,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
@@ -1614,8 +1893,12 @@ return array (
                     'class' => 'NotFoundException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the state of the specified resource is not valid for this request. For more information about how key state affects the use of a customer master key (CMK), go to How Key State Affects the Use of a Customer Master Key in the AWS Key Management Service Developer Guide.',
+                    'class' => 'KMSInvalidStateException',
                 ),
             ),
         ),
@@ -1664,17 +1947,31 @@ return array (
                     'class' => 'InvalidArnException',
                 ),
                 array(
-                    'reason' => 'The system timed out while trying to fulfill the request.',
+                    'reason' => 'The system timed out while trying to fulfill the request. The request can be retried.',
                     'class' => 'DependencyTimeoutException',
                 ),
                 array(
-                    'reason' => 'The request was rejected because an internal exception occurred. This error can be retried.',
+                    'reason' => 'The request was rejected because an internal exception occurred. The request can be retried.',
                     'class' => 'KMSInternalException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the state of the specified resource is not valid for this request. For more information about how key state affects the use of a customer master key (CMK), go to How Key State Affects the Use of a Customer Master Key in the AWS Key Management Service Developer Guide.',
+                    'class' => 'KMSInvalidStateException',
                 ),
             ),
         ),
     ),
     'models' => array(
+        'CancelKeyDeletionResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'KeyId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
         'EmptyOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -1720,6 +2017,12 @@ return array (
                             'type' => 'string',
                         ),
                         'KeyUsage' => array(
+                            'type' => 'string',
+                        ),
+                        'KeyState' => array(
+                            'type' => 'string',
+                        ),
+                        'DeletionDate' => array(
                             'type' => 'string',
                         ),
                     ),
@@ -1770,6 +2073,12 @@ return array (
                             'type' => 'string',
                         ),
                         'KeyUsage' => array(
+                            'type' => 'string',
+                        ),
+                        'KeyState' => array(
+                            'type' => 'string',
+                        ),
+                        'DeletionDate' => array(
                             'type' => 'string',
                         ),
                     ),
@@ -1911,7 +2220,16 @@ return array (
                         'name' => 'GrantListEntry',
                         'type' => 'object',
                         'properties' => array(
+                            'KeyId' => array(
+                                'type' => 'string',
+                            ),
                             'GrantId' => array(
+                                'type' => 'string',
+                            ),
+                            'Name' => array(
+                                'type' => 'string',
+                            ),
+                            'CreationDate' => array(
                                 'type' => 'string',
                             ),
                             'GranteePrincipal' => array(
@@ -2032,6 +2350,50 @@ return array (
                     'location' => 'json',
                 ),
             ),
+        ),
+        'ScheduleKeyDeletionResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'KeyId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'DeletionDate' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+    ),
+    'iterators' => array(
+        'ListAliases' => array(
+            'limit_key' => 'Limit',
+            'input_token' => 'Marker',
+            'output_token' => 'NextMarker',
+            'more_results' => 'Truncated',
+            'result_key' => 'Aliases',
+        ),
+        'ListGrants' => array(
+            'limit_key' => 'Limit',
+            'input_token' => 'Marker',
+            'output_token' => 'NextMarker',
+            'more_results' => 'Truncated',
+            'result_key' => 'Grants',
+        ),
+        'ListKeyPolicies' => array(
+            'limit_key' => 'Limit',
+            'input_token' => 'Marker',
+            'output_token' => 'NextMarker',
+            'more_results' => 'Truncated',
+            'result_key' => 'PolicyNames',
+        ),
+        'ListKeys' => array(
+            'limit_key' => 'Limit',
+            'input_token' => 'Marker',
+            'output_token' => 'NextMarker',
+            'more_results' => 'Truncated',
+            'result_key' => 'Keys',
         ),
     ),
 );

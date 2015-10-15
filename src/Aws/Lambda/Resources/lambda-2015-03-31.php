@@ -24,7 +24,7 @@ return array (
     'operations' => array(
         'AddPermission' => array(
             'httpMethod' => 'POST',
-            'uri' => '/2015-03-31/functions/{FunctionName}/versions/HEAD/policy',
+            'uri' => '/2015-03-31/functions/{FunctionName}/policy',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'AddPermissionResponse',
             'responseType' => 'model',
@@ -34,7 +34,7 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 111,
+                    'maxLength' => 140,
                 ),
                 'StatementId' => array(
                     'required' => true,
@@ -60,6 +60,12 @@ return array (
                 'SourceAccount' => array(
                     'type' => 'string',
                     'location' => 'json',
+                ),
+                'Qualifier' => array(
+                    'type' => 'string',
+                    'location' => 'query',
+                    'minLength' => 1,
+                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -88,6 +94,62 @@ return array (
                 ),
             ),
         ),
+        'CreateAlias' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/2015-03-31/functions/{FunctionName}/aliases',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'AliasConfiguration',
+            'responseType' => 'model',
+            'parameters' => array(
+                'FunctionName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 140,
+                ),
+                'Name' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 128,
+                ),
+                'FunctionVersion' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 1024,
+                ),
+                'Description' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'maxLength' => 256,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The AWS Lambda service encountered an internal error.',
+                    'class' => 'ServiceException',
+                ),
+                array(
+                    'reason' => 'The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'The resource already exists.',
+                    'class' => 'ResourceConflictException',
+                ),
+                array(
+                    'reason' => 'One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the CreateFunction or the UpdateFunctionConfiguration API, that AWS Lambda is unable to assume you will get this exception.',
+                    'class' => 'InvalidParameterValueException',
+                ),
+                array(
+                    'class' => 'TooManyRequestsException',
+                ),
+            ),
+        ),
         'CreateEventSourceMapping' => array(
             'httpMethod' => 'POST',
             'uri' => '/2015-03-31/event-source-mappings/',
@@ -105,7 +167,7 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 111,
+                    'maxLength' => 140,
                 ),
                 'Enabled' => array(
                     'type' => 'boolean',
@@ -154,7 +216,7 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 111,
+                    'maxLength' => 140,
                 ),
                 'Runtime' => array(
                     'required' => true,
@@ -171,23 +233,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'maxLength' => 128,
-                ),
-                'Description' => array(
-                    'type' => 'string',
-                    'location' => 'json',
-                    'maxLength' => 256,
-                ),
-                'Timeout' => array(
-                    'type' => 'numeric',
-                    'location' => 'json',
-                    'minimum' => 1,
-                    'maximum' => 60,
-                ),
-                'MemorySize' => array(
-                    'type' => 'numeric',
-                    'location' => 'json',
-                    'minimum' => 128,
-                    'maximum' => 1536,
                 ),
                 'Code' => array(
                     'required' => true,
@@ -217,6 +262,27 @@ return array (
                         ),
                     ),
                 ),
+                'Description' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'maxLength' => 256,
+                ),
+                'Timeout' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'minimum' => 1,
+                ),
+                'MemorySize' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'minimum' => 128,
+                    'maximum' => 1536,
+                ),
+                'Publish' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'json',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -239,7 +305,44 @@ return array (
                     'class' => 'TooManyRequestsException',
                 ),
                 array(
+                    'reason' => 'You have exceeded your maximum total code size per account. Limits',
                     'class' => 'CodeStorageExceededException',
+                ),
+            ),
+        ),
+        'DeleteAlias' => array(
+            'httpMethod' => 'DELETE',
+            'uri' => '/2015-03-31/functions/{FunctionName}/aliases/{Name}',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'FunctionName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 140,
+                ),
+                'Name' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 128,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The AWS Lambda service encountered an internal error.',
+                    'class' => 'ServiceException',
+                ),
+                array(
+                    'reason' => 'One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the CreateFunction or the UpdateFunctionConfiguration API, that AWS Lambda is unable to assume you will get this exception.',
+                    'class' => 'InvalidParameterValueException',
+                ),
+                array(
+                    'class' => 'TooManyRequestsException',
                 ),
             ),
         ),
@@ -286,7 +389,13 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 111,
+                    'maxLength' => 140,
+                ),
+                'Qualifier' => array(
+                    'type' => 'string',
+                    'location' => 'query',
+                    'minLength' => 1,
+                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -297,6 +406,54 @@ return array (
                 array(
                     'reason' => 'The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.',
                     'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'class' => 'TooManyRequestsException',
+                ),
+                array(
+                    'reason' => 'One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the CreateFunction or the UpdateFunctionConfiguration API, that AWS Lambda is unable to assume you will get this exception.',
+                    'class' => 'InvalidParameterValueException',
+                ),
+                array(
+                    'reason' => 'The resource already exists.',
+                    'class' => 'ResourceConflictException',
+                ),
+            ),
+        ),
+        'GetAlias' => array(
+            'httpMethod' => 'GET',
+            'uri' => '/2015-03-31/functions/{FunctionName}/aliases/{Name}',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'AliasConfiguration',
+            'responseType' => 'model',
+            'parameters' => array(
+                'FunctionName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 140,
+                ),
+                'Name' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 128,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The AWS Lambda service encountered an internal error.',
+                    'class' => 'ServiceException',
+                ),
+                array(
+                    'reason' => 'The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the CreateFunction or the UpdateFunctionConfiguration API, that AWS Lambda is unable to assume you will get this exception.',
+                    'class' => 'InvalidParameterValueException',
                 ),
                 array(
                     'class' => 'TooManyRequestsException',
@@ -336,7 +493,7 @@ return array (
         ),
         'GetFunction' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2015-03-31/functions/{FunctionName}/versions/HEAD',
+            'uri' => '/2015-03-31/functions/{FunctionName}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetFunctionResponse',
             'responseType' => 'model',
@@ -346,7 +503,13 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 111,
+                    'maxLength' => 140,
+                ),
+                'Qualifier' => array(
+                    'type' => 'string',
+                    'location' => 'query',
+                    'minLength' => 1,
+                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -361,11 +524,15 @@ return array (
                 array(
                     'class' => 'TooManyRequestsException',
                 ),
+                array(
+                    'reason' => 'One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the CreateFunction or the UpdateFunctionConfiguration API, that AWS Lambda is unable to assume you will get this exception.',
+                    'class' => 'InvalidParameterValueException',
+                ),
             ),
         ),
         'GetFunctionConfiguration' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2015-03-31/functions/{FunctionName}/versions/HEAD/configuration',
+            'uri' => '/2015-03-31/functions/{FunctionName}/configuration',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'FunctionConfiguration',
             'responseType' => 'model',
@@ -375,7 +542,13 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 111,
+                    'maxLength' => 140,
+                ),
+                'Qualifier' => array(
+                    'type' => 'string',
+                    'location' => 'query',
+                    'minLength' => 1,
+                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -390,11 +563,15 @@ return array (
                 array(
                     'class' => 'TooManyRequestsException',
                 ),
+                array(
+                    'reason' => 'One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the CreateFunction or the UpdateFunctionConfiguration API, that AWS Lambda is unable to assume you will get this exception.',
+                    'class' => 'InvalidParameterValueException',
+                ),
             ),
         ),
         'GetPolicy' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2015-03-31/functions/{FunctionName}/versions/HEAD/policy',
+            'uri' => '/2015-03-31/functions/{FunctionName}/policy',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetPolicyResponse',
             'responseType' => 'model',
@@ -404,7 +581,13 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 111,
+                    'maxLength' => 140,
+                ),
+                'Qualifier' => array(
+                    'type' => 'string',
+                    'location' => 'query',
+                    'minLength' => 1,
+                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -418,6 +601,10 @@ return array (
                 ),
                 array(
                     'class' => 'TooManyRequestsException',
+                ),
+                array(
+                    'reason' => 'One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the CreateFunction or the UpdateFunctionConfiguration API, that AWS Lambda is unable to assume you will get this exception.',
+                    'class' => 'InvalidParameterValueException',
                 ),
             ),
         ),
@@ -433,7 +620,7 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 111,
+                    'maxLength' => 140,
                 ),
                 'InvocationType' => array(
                     'type' => 'string',
@@ -455,7 +642,12 @@ return array (
                         'string',
                         'object',
                     ),
-                    'location' => 'body',
+                ),
+                'Qualifier' => array(
+                    'type' => 'string',
+                    'location' => 'query',
+                    'minLength' => 1,
+                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -472,13 +664,19 @@ return array (
                     'class' => 'InvalidRequestContentException',
                 ),
                 array(
+                    'reason' => 'The request payload exceeded the Invoke request body JSON input limit. For more information, see Limits',
                     'class' => 'RequestTooLargeException',
                 ),
                 array(
+                    'reason' => 'The content type of the Invoke request body is not JSON.',
                     'class' => 'UnsupportedMediaTypeException',
                 ),
                 array(
                     'class' => 'TooManyRequestsException',
+                ),
+                array(
+                    'reason' => 'One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the CreateFunction or the UpdateFunctionConfiguration API, that AWS Lambda is unable to assume you will get this exception.',
+                    'class' => 'InvalidParameterValueException',
                 ),
             ),
         ),
@@ -494,7 +692,7 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 111,
+                    'maxLength' => 140,
                 ),
                 'InvokeArgs' => array(
                     'required' => true,
@@ -520,6 +718,55 @@ return array (
                 ),
             ),
         ),
+        'ListAliases' => array(
+            'httpMethod' => 'GET',
+            'uri' => '/2015-03-31/functions/{FunctionName}/aliases',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'ListAliasesResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'FunctionName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 140,
+                ),
+                'FunctionVersion' => array(
+                    'type' => 'string',
+                    'location' => 'query',
+                    'minLength' => 1,
+                    'maxLength' => 1024,
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'query',
+                ),
+                'MaxItems' => array(
+                    'type' => 'numeric',
+                    'location' => 'query',
+                    'minimum' => 1,
+                    'maximum' => 10000,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The AWS Lambda service encountered an internal error.',
+                    'class' => 'ServiceException',
+                ),
+                array(
+                    'reason' => 'The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the CreateFunction or the UpdateFunctionConfiguration API, that AWS Lambda is unable to assume you will get this exception.',
+                    'class' => 'InvalidParameterValueException',
+                ),
+                array(
+                    'class' => 'TooManyRequestsException',
+                ),
+            ),
+        ),
         'ListEventSourceMappings' => array(
             'httpMethod' => 'GET',
             'uri' => '/2015-03-31/event-source-mappings/',
@@ -535,7 +782,7 @@ return array (
                     'type' => 'string',
                     'location' => 'query',
                     'minLength' => 1,
-                    'maxLength' => 111,
+                    'maxLength' => 140,
                 ),
                 'Marker' => array(
                     'type' => 'string',
@@ -594,11 +841,11 @@ return array (
                 ),
             ),
         ),
-        'RemovePermission' => array(
-            'httpMethod' => 'DELETE',
-            'uri' => '/2015-03-31/functions/{FunctionName}/versions/HEAD/policy/{StatementId}',
+        'ListVersionsByFunction' => array(
+            'httpMethod' => 'GET',
+            'uri' => '/2015-03-31/functions/{FunctionName}/versions',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'ListVersionsByFunctionResponse',
             'responseType' => 'model',
             'parameters' => array(
                 'FunctionName' => array(
@@ -606,14 +853,17 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 111,
+                    'maxLength' => 140,
                 ),
-                'StatementId' => array(
-                    'required' => true,
+                'Marker' => array(
                     'type' => 'string',
-                    'location' => 'uri',
-                    'minLength' => 1,
-                    'maxLength' => 100,
+                    'location' => 'query',
+                ),
+                'MaxItems' => array(
+                    'type' => 'numeric',
+                    'location' => 'query',
+                    'minimum' => 1,
+                    'maximum' => 10000,
                 ),
             ),
             'errorResponses' => array(
@@ -624,6 +874,153 @@ return array (
                 array(
                     'reason' => 'The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.',
                     'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the CreateFunction or the UpdateFunctionConfiguration API, that AWS Lambda is unable to assume you will get this exception.',
+                    'class' => 'InvalidParameterValueException',
+                ),
+                array(
+                    'class' => 'TooManyRequestsException',
+                ),
+            ),
+        ),
+        'PublishVersion' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/2015-03-31/functions/{FunctionName}/versions',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'FunctionConfiguration',
+            'responseType' => 'model',
+            'parameters' => array(
+                'FunctionName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 140,
+                ),
+                'CodeSha256' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'Description' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'maxLength' => 256,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The AWS Lambda service encountered an internal error.',
+                    'class' => 'ServiceException',
+                ),
+                array(
+                    'reason' => 'The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the CreateFunction or the UpdateFunctionConfiguration API, that AWS Lambda is unable to assume you will get this exception.',
+                    'class' => 'InvalidParameterValueException',
+                ),
+                array(
+                    'class' => 'TooManyRequestsException',
+                ),
+                array(
+                    'reason' => 'You have exceeded your maximum total code size per account. Limits',
+                    'class' => 'CodeStorageExceededException',
+                ),
+            ),
+        ),
+        'RemovePermission' => array(
+            'httpMethod' => 'DELETE',
+            'uri' => '/2015-03-31/functions/{FunctionName}/policy/{StatementId}',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'FunctionName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 140,
+                ),
+                'StatementId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 100,
+                ),
+                'Qualifier' => array(
+                    'type' => 'string',
+                    'location' => 'query',
+                    'minLength' => 1,
+                    'maxLength' => 128,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The AWS Lambda service encountered an internal error.',
+                    'class' => 'ServiceException',
+                ),
+                array(
+                    'reason' => 'The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the CreateFunction or the UpdateFunctionConfiguration API, that AWS Lambda is unable to assume you will get this exception.',
+                    'class' => 'InvalidParameterValueException',
+                ),
+                array(
+                    'class' => 'TooManyRequestsException',
+                ),
+            ),
+        ),
+        'UpdateAlias' => array(
+            'httpMethod' => 'PUT',
+            'uri' => '/2015-03-31/functions/{FunctionName}/aliases/{Name}',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'AliasConfiguration',
+            'responseType' => 'model',
+            'parameters' => array(
+                'FunctionName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 140,
+                ),
+                'Name' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'minLength' => 1,
+                    'maxLength' => 128,
+                ),
+                'FunctionVersion' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 1024,
+                ),
+                'Description' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'maxLength' => 256,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The AWS Lambda service encountered an internal error.',
+                    'class' => 'ServiceException',
+                ),
+                array(
+                    'reason' => 'The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the CreateFunction or the UpdateFunctionConfiguration API, that AWS Lambda is unable to assume you will get this exception.',
+                    'class' => 'InvalidParameterValueException',
                 ),
                 array(
                     'class' => 'TooManyRequestsException',
@@ -646,7 +1043,7 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 111,
+                    'maxLength' => 140,
                 ),
                 'Enabled' => array(
                     'type' => 'boolean',
@@ -676,11 +1073,15 @@ return array (
                 array(
                     'class' => 'TooManyRequestsException',
                 ),
+                array(
+                    'reason' => 'The resource already exists.',
+                    'class' => 'ResourceConflictException',
+                ),
             ),
         ),
         'UpdateFunctionCode' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/2015-03-31/functions/{FunctionName}/versions/HEAD/code',
+            'uri' => '/2015-03-31/functions/{FunctionName}/code',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'FunctionConfiguration',
             'responseType' => 'model',
@@ -690,14 +1091,13 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 111,
+                    'maxLength' => 140,
                 ),
                 'ZipFile' => array(
                     'type' => array(
                         'string',
                         'object',
                     ),
-                    'location' => 'body'
                 ),
                 'S3Bucket' => array(
                     'type' => 'string',
@@ -717,6 +1117,11 @@ return array (
                     'minLength' => 1,
                     'maxLength' => 1024,
                 ),
+                'Publish' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'json',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -735,13 +1140,14 @@ return array (
                     'class' => 'TooManyRequestsException',
                 ),
                 array(
+                    'reason' => 'You have exceeded your maximum total code size per account. Limits',
                     'class' => 'CodeStorageExceededException',
                 ),
             ),
         ),
         'UpdateFunctionConfiguration' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/2015-03-31/functions/{FunctionName}/versions/HEAD/configuration',
+            'uri' => '/2015-03-31/functions/{FunctionName}/configuration',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'FunctionConfiguration',
             'responseType' => 'model',
@@ -751,7 +1157,7 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 111,
+                    'maxLength' => 140,
                 ),
                 'Role' => array(
                     'type' => 'string',
@@ -771,7 +1177,6 @@ return array (
                     'type' => 'numeric',
                     'location' => 'json',
                     'minimum' => 1,
-                    'maximum' => 60,
                 ),
                 'MemorySize' => array(
                     'type' => 'numeric',
@@ -805,6 +1210,28 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Statement' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'AliasConfiguration' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'AliasArn' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'Name' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'FunctionVersion' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'Description' => array(
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -892,6 +1319,14 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'CodeSha256' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'Version' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
             ),
         ),
         'EmptyOutput' => array(
@@ -934,6 +1369,12 @@ return array (
                             'type' => 'numeric',
                         ),
                         'LastModified' => array(
+                            'type' => 'string',
+                        ),
+                        'CodeSha256' => array(
+                            'type' => 'string',
+                        ),
+                        'Version' => array(
                             'type' => 'string',
                         ),
                     ),
@@ -996,6 +1437,38 @@ return array (
                 'Status' => array(
                     'type' => 'numeric',
                     'location' => 'statusCode',
+                ),
+            ),
+        ),
+        'ListAliasesResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'NextMarker' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'Aliases' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'AliasConfiguration',
+                        'type' => 'object',
+                        'properties' => array(
+                            'AliasArn' => array(
+                                'type' => 'string',
+                            ),
+                            'Name' => array(
+                                'type' => 'string',
+                            ),
+                            'FunctionVersion' => array(
+                                'type' => 'string',
+                            ),
+                            'Description' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
                 ),
             ),
         ),
@@ -1086,6 +1559,68 @@ return array (
                                 'type' => 'numeric',
                             ),
                             'LastModified' => array(
+                                'type' => 'string',
+                            ),
+                            'CodeSha256' => array(
+                                'type' => 'string',
+                            ),
+                            'Version' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'ListVersionsByFunctionResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'NextMarker' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'Versions' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'FunctionConfiguration',
+                        'type' => 'object',
+                        'properties' => array(
+                            'FunctionName' => array(
+                                'type' => 'string',
+                            ),
+                            'FunctionArn' => array(
+                                'type' => 'string',
+                            ),
+                            'Runtime' => array(
+                                'type' => 'string',
+                            ),
+                            'Role' => array(
+                                'type' => 'string',
+                            ),
+                            'Handler' => array(
+                                'type' => 'string',
+                            ),
+                            'CodeSize' => array(
+                                'type' => 'numeric',
+                            ),
+                            'Description' => array(
+                                'type' => 'string',
+                            ),
+                            'Timeout' => array(
+                                'type' => 'numeric',
+                            ),
+                            'MemorySize' => array(
+                                'type' => 'numeric',
+                            ),
+                            'LastModified' => array(
+                                'type' => 'string',
+                            ),
+                            'CodeSha256' => array(
+                                'type' => 'string',
+                            ),
+                            'Version' => array(
                                 'type' => 'string',
                             ),
                         ),

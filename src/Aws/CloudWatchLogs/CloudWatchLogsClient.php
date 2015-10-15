@@ -12,6 +12,8 @@ use Guzzle\Service\Resource\Model;
 /**
  * Client to interact with Amazon CloudWatch Logs
  *
+ * @method Model cancelExportTask(array $args = array()) {@command CloudWatchLogs CancelExportTask}
+ * @method Model createExportTask(array $args = array()) {@command CloudWatchLogs CreateExportTask}
  * @method Model createLogGroup(array $args = array()) {@command CloudWatchLogs CreateLogGroup}
  * @method Model createLogStream(array $args = array()) {@command CloudWatchLogs CreateLogStream}
  * @method Model deleteDestination(array $args = array()) {@command CloudWatchLogs DeleteDestination}
@@ -21,6 +23,7 @@ use Guzzle\Service\Resource\Model;
  * @method Model deleteRetentionPolicy(array $args = array()) {@command CloudWatchLogs DeleteRetentionPolicy}
  * @method Model deleteSubscriptionFilter(array $args = array()) {@command CloudWatchLogs DeleteSubscriptionFilter}
  * @method Model describeDestinations(array $args = array()) {@command CloudWatchLogs DescribeDestinations}
+ * @method Model describeExportTasks(array $args = array()) {@command CloudWatchLogs DescribeExportTasks}
  * @method Model describeLogGroups(array $args = array()) {@command CloudWatchLogs DescribeLogGroups}
  * @method Model describeLogStreams(array $args = array()) {@command CloudWatchLogs DescribeLogStreams}
  * @method Model describeMetricFilters(array $args = array()) {@command CloudWatchLogs DescribeMetricFilters}
@@ -38,6 +41,8 @@ use Guzzle\Service\Resource\Model;
  * @method ResourceIteratorInterface getDescribeLogGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeLogGroups operation
  * @method ResourceIteratorInterface getDescribeLogStreamsIterator(array $args = array()) The input array uses the parameters of the DescribeLogStreams operation
  * @method ResourceIteratorInterface getDescribeMetricFiltersIterator(array $args = array()) The input array uses the parameters of the DescribeMetricFilters operation
+ * @method ResourceIteratorInterface getDescribeSubscriptionFiltersIterator(array $args = array()) The input array uses the parameters of the DescribeSubscriptionFilters operation
+ * @method ResourceIteratorInterface getFilterLogEventsIterator(array $args = array()) The input array uses the parameters of the FilterLogEvents operation
  * @method ResourceIteratorInterface getGetLogEventsIterator(array $args = array()) The input array uses the parameters of the GetLogEvents operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-cloudwatchlogs.html User guide

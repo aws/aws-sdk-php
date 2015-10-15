@@ -19,6 +19,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model rebootWorkspaces(array $args = array()) {@command WorkSpaces RebootWorkspaces}
  * @method Model rebuildWorkspaces(array $args = array()) {@command WorkSpaces RebuildWorkspaces}
  * @method Model terminateWorkspaces(array $args = array()) {@command WorkSpaces TerminateWorkspaces}
+ * @method ResourceIteratorInterface getDescribeWorkspaceBundlesIterator(array $args = array()) The input array uses the parameters of the DescribeWorkspaceBundles operation
+ * @method ResourceIteratorInterface getDescribeWorkspaceDirectoriesIterator(array $args = array()) The input array uses the parameters of the DescribeWorkspaceDirectories operation
+ * @method ResourceIteratorInterface getDescribeWorkspacesIterator(array $args = array()) The input array uses the parameters of the DescribeWorkspaces operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-workspaces.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.WorkSpaces.WorkSpacesClient.html API docs

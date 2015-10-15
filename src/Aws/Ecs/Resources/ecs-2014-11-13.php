@@ -53,11 +53,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
                 array(
@@ -136,11 +136,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
                 array(
@@ -182,11 +182,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
                 array(
@@ -240,11 +240,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
                 array(
@@ -299,11 +299,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
                 array(
@@ -345,11 +345,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
                 array(
@@ -390,11 +390,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
                 array(
@@ -440,11 +440,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
                 array(
@@ -494,11 +494,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
                 array(
@@ -540,11 +540,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
                 array(
@@ -590,11 +590,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
                 array(
@@ -639,11 +639,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
             ),
@@ -680,11 +680,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
                 array(
@@ -729,11 +729,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
                 array(
@@ -782,11 +782,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
                 array(
@@ -835,11 +835,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
                 array(
@@ -892,11 +892,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
                 array(
@@ -961,11 +961,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
                 array(
@@ -975,6 +975,10 @@ return array (
                 array(
                     'reason' => 'The specified cluster could not be found. You can view your available clusters with ListClusters. Amazon ECS clusters are region-specific.',
                     'class' => 'ClusterNotFoundException',
+                ),
+                array(
+                    'reason' => 'The specified service could not be found. You can view your available services with ListServices. Amazon ECS services are cluster-specific and region-specific.',
+                    'class' => 'ServiceNotFoundException',
                 ),
             ),
         ),
@@ -1019,6 +1023,7 @@ return array (
                         'type' => 'object',
                         'properties' => array(
                             '' => array(
+                                'type' => 'object',
                             ),
                         ),
                     ),
@@ -1042,14 +1047,31 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'attributes' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'Attribute',
+                        'type' => 'object',
+                        'properties' => array(
+                            'name' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
             ),
@@ -1193,6 +1215,113 @@ return array (
                                     ),
                                 ),
                             ),
+                            'hostname' => array(
+                                'type' => 'string',
+                            ),
+                            'user' => array(
+                                'type' => 'string',
+                            ),
+                            'workingDirectory' => array(
+                                'type' => 'string',
+                            ),
+                            'disableNetworking' => array(
+                                'type' => 'boolean',
+                                'format' => 'boolean-string',
+                            ),
+                            'privileged' => array(
+                                'type' => 'boolean',
+                                'format' => 'boolean-string',
+                            ),
+                            'readonlyRootFilesystem' => array(
+                                'type' => 'boolean',
+                                'format' => 'boolean-string',
+                            ),
+                            'dnsServers' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'String',
+                                    'type' => 'string',
+                                ),
+                            ),
+                            'dnsSearchDomains' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'String',
+                                    'type' => 'string',
+                                ),
+                            ),
+                            'extraHosts' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'HostEntry',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'hostname' => array(
+                                            'required' => true,
+                                            'type' => 'string',
+                                        ),
+                                        'ipAddress' => array(
+                                            'required' => true,
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'dockerSecurityOptions' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'String',
+                                    'type' => 'string',
+                                ),
+                            ),
+                            'dockerLabels' => array(
+                                'type' => 'object',
+                                'additionalProperties' => array(
+                                    'type' => 'string',
+                                    'data' => array(
+                                        'shape_name' => 'String',
+                                    ),
+                                ),
+                            ),
+                            'ulimits' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'Ulimit',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'name' => array(
+                                            'required' => true,
+                                            'type' => 'string',
+                                        ),
+                                        'softLimit' => array(
+                                            'required' => true,
+                                            'type' => 'numeric',
+                                        ),
+                                        'hardLimit' => array(
+                                            'required' => true,
+                                            'type' => 'numeric',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'logConfiguration' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'logDriver' => array(
+                                        'required' => true,
+                                        'type' => 'string',
+                                    ),
+                                    'options' => array(
+                                        'type' => 'object',
+                                        'additionalProperties' => array(
+                                            'type' => 'string',
+                                            'data' => array(
+                                                'shape_name' => 'String',
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -1220,11 +1349,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
                 array(
@@ -1314,11 +1443,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
                 array(
@@ -1417,11 +1546,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
                 array(
@@ -1467,11 +1596,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
                 array(
@@ -1554,11 +1683,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
             ),
@@ -1603,11 +1732,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
             ),
@@ -1645,11 +1774,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
                 array(
@@ -1661,7 +1790,7 @@ return array (
                     'class' => 'ClusterNotFoundException',
                 ),
                 array(
-                    'reason' => 'There is already a current Amazon ECS container agent update in progress on the specified container instance. If the container agent becomes disconnected while it is in a transitional stage, such as PENDING or STAGING, the update process can get stuck in that state. However, when the agent reconnects, it will resume where it stopped previously.',
+                    'reason' => 'There is already a current Amazon ECS container agent update in progress on the specified container instance. If the container agent becomes disconnected while it is in a transitional stage, such as PENDING or STAGING, the update process can get stuck in that state. However, when the agent reconnects, it resumes where it stopped previously.',
                     'class' => 'UpdateInProgressException',
                 ),
                 array(
@@ -1715,11 +1844,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'These errors are usually caused by a server-side issue.',
+                    'reason' => 'These errors are usually caused by a server issue.',
                     'class' => 'ServerException',
                 ),
                 array(
-                    'reason' => 'These errors are usually caused by something the client did, such as use an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specify an identifier that is not valid.',
+                    'reason' => 'These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn\'t have permission to use the action or resource, or specifying an identifier that is not valid.',
                     'class' => 'ClientException',
                 ),
                 array(
@@ -1735,7 +1864,7 @@ return array (
                     'class' => 'ServiceNotFoundException',
                 ),
                 array(
-                    'reason' => 'The specified service is not active. You cannot update a service that is not active. If you have previously deleted a service, you can recreate it with CreateService.',
+                    'reason' => 'The specified service is not active. You cannot update a service that is not active. If you have previously deleted a service, you can re-create it with CreateService.',
                     'class' => 'ServiceNotActiveException',
                 ),
             ),
@@ -2059,6 +2188,7 @@ return array (
                                 'type' => 'object',
                                 'properties' => array(
                                     '' => array(
+                                        'type' => 'object',
                                     ),
                                 ),
                             ),
@@ -2070,6 +2200,7 @@ return array (
                                 'type' => 'object',
                                 'properties' => array(
                                     '' => array(
+                                        'type' => 'object',
                                     ),
                                 ),
                             ),
@@ -2088,6 +2219,21 @@ return array (
                         ),
                         'agentUpdateStatus' => array(
                             'type' => 'string',
+                        ),
+                        'attributes' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Attribute',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'name' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'value' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -2212,6 +2358,98 @@ return array (
                                             ),
                                         ),
                                     ),
+                                    'hostname' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'user' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'workingDirectory' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'disableNetworking' => array(
+                                        'type' => 'boolean',
+                                    ),
+                                    'privileged' => array(
+                                        'type' => 'boolean',
+                                    ),
+                                    'readonlyRootFilesystem' => array(
+                                        'type' => 'boolean',
+                                    ),
+                                    'dnsServers' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'String',
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                    'dnsSearchDomains' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'String',
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                    'extraHosts' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'HostEntry',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'hostname' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'ipAddress' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'dockerSecurityOptions' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'String',
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                    'dockerLabels' => array(
+                                        'type' => 'object',
+                                        'additionalProperties' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                    'ulimits' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'Ulimit',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'name' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'softLimit' => array(
+                                                    'type' => 'numeric',
+                                                ),
+                                                'hardLimit' => array(
+                                                    'type' => 'numeric',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'logConfiguration' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'logDriver' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'options' => array(
+                                                'type' => 'object',
+                                                'additionalProperties' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
                                 ),
                             ),
                         ),
@@ -2243,6 +2481,21 @@ return array (
                         ),
                         'status' => array(
                             'type' => 'string',
+                        ),
+                        'requiresAttributes' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Attribute',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'name' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'value' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -2339,6 +2592,7 @@ return array (
                                     'type' => 'object',
                                     'properties' => array(
                                         '' => array(
+                                            'type' => 'object',
                                         ),
                                     ),
                                 ),
@@ -2350,6 +2604,7 @@ return array (
                                     'type' => 'object',
                                     'properties' => array(
                                         '' => array(
+                                            'type' => 'object',
                                         ),
                                     ),
                                 ),
@@ -2368,6 +2623,21 @@ return array (
                             ),
                             'agentUpdateStatus' => array(
                                 'type' => 'string',
+                            ),
+                            'attributes' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'Attribute',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'name' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'value' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                     ),
@@ -2637,6 +2907,98 @@ return array (
                                             ),
                                         ),
                                     ),
+                                    'hostname' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'user' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'workingDirectory' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'disableNetworking' => array(
+                                        'type' => 'boolean',
+                                    ),
+                                    'privileged' => array(
+                                        'type' => 'boolean',
+                                    ),
+                                    'readonlyRootFilesystem' => array(
+                                        'type' => 'boolean',
+                                    ),
+                                    'dnsServers' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'String',
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                    'dnsSearchDomains' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'String',
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                    'extraHosts' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'HostEntry',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'hostname' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'ipAddress' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'dockerSecurityOptions' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'String',
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                    'dockerLabels' => array(
+                                        'type' => 'object',
+                                        'additionalProperties' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                    'ulimits' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'Ulimit',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'name' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'softLimit' => array(
+                                                    'type' => 'numeric',
+                                                ),
+                                                'hardLimit' => array(
+                                                    'type' => 'numeric',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'logConfiguration' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'logDriver' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'options' => array(
+                                                'type' => 'object',
+                                                'additionalProperties' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
                                 ),
                             ),
                         ),
@@ -2668,6 +3030,21 @@ return array (
                         ),
                         'status' => array(
                             'type' => 'string',
+                        ),
+                        'requiresAttributes' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Attribute',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'name' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'value' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -2970,6 +3347,7 @@ return array (
                                 'type' => 'object',
                                 'properties' => array(
                                     '' => array(
+                                        'type' => 'object',
                                     ),
                                 ),
                             ),
@@ -2981,6 +3359,7 @@ return array (
                                 'type' => 'object',
                                 'properties' => array(
                                     '' => array(
+                                        'type' => 'object',
                                     ),
                                 ),
                             ),
@@ -2999,6 +3378,21 @@ return array (
                         ),
                         'agentUpdateStatus' => array(
                             'type' => 'string',
+                        ),
+                        'attributes' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Attribute',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'name' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'value' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -3123,6 +3517,98 @@ return array (
                                             ),
                                         ),
                                     ),
+                                    'hostname' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'user' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'workingDirectory' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'disableNetworking' => array(
+                                        'type' => 'boolean',
+                                    ),
+                                    'privileged' => array(
+                                        'type' => 'boolean',
+                                    ),
+                                    'readonlyRootFilesystem' => array(
+                                        'type' => 'boolean',
+                                    ),
+                                    'dnsServers' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'String',
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                    'dnsSearchDomains' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'String',
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                    'extraHosts' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'HostEntry',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'hostname' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'ipAddress' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'dockerSecurityOptions' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'String',
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                    'dockerLabels' => array(
+                                        'type' => 'object',
+                                        'additionalProperties' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                    'ulimits' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'Ulimit',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'name' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'softLimit' => array(
+                                                    'type' => 'numeric',
+                                                ),
+                                                'hardLimit' => array(
+                                                    'type' => 'numeric',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'logConfiguration' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'logDriver' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'options' => array(
+                                                'type' => 'object',
+                                                'additionalProperties' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
                                 ),
                             ),
                         ),
@@ -3154,6 +3640,21 @@ return array (
                         ),
                         'status' => array(
                             'type' => 'string',
+                        ),
+                        'requiresAttributes' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Attribute',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'name' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'value' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -3614,6 +4115,7 @@ return array (
                                 'type' => 'object',
                                 'properties' => array(
                                     '' => array(
+                                        'type' => 'object',
                                     ),
                                 ),
                             ),
@@ -3625,6 +4127,7 @@ return array (
                                 'type' => 'object',
                                 'properties' => array(
                                     '' => array(
+                                        'type' => 'object',
                                     ),
                                 ),
                             ),
@@ -3643,6 +4146,21 @@ return array (
                         ),
                         'agentUpdateStatus' => array(
                             'type' => 'string',
+                        ),
+                        'attributes' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Attribute',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'name' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'value' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),

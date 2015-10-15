@@ -29,10 +29,12 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  *
  * @method Model addTagsToStream(array $args = array()) {@command Kinesis AddTagsToStream}
  * @method Model createStream(array $args = array()) {@command Kinesis CreateStream}
+ * @method Model decreaseStreamRetentionPeriod(array $args = array()) {@command Kinesis DecreaseStreamRetentionPeriod}
  * @method Model deleteStream(array $args = array()) {@command Kinesis DeleteStream}
  * @method Model describeStream(array $args = array()) {@command Kinesis DescribeStream}
  * @method Model getRecords(array $args = array()) {@command Kinesis GetRecords}
  * @method Model getShardIterator(array $args = array()) {@command Kinesis GetShardIterator}
+ * @method Model increaseStreamRetentionPeriod(array $args = array()) {@command Kinesis IncreaseStreamRetentionPeriod}
  * @method Model listStreams(array $args = array()) {@command Kinesis ListStreams}
  * @method Model listTagsForStream(array $args = array()) {@command Kinesis ListTagsForStream}
  * @method Model mergeShards(array $args = array()) {@command Kinesis MergeShards}

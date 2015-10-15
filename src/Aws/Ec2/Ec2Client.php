@@ -177,6 +177,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model modifyNetworkInterfaceAttribute(array $args = array()) {@command Ec2 ModifyNetworkInterfaceAttribute}
  * @method Model modifyReservedInstances(array $args = array()) {@command Ec2 ModifyReservedInstances}
  * @method Model modifySnapshotAttribute(array $args = array()) {@command Ec2 ModifySnapshotAttribute}
+ * @method Model modifySpotFleetRequest(array $args = array()) {@command Ec2 ModifySpotFleetRequest}
  * @method Model modifySubnetAttribute(array $args = array()) {@command Ec2 ModifySubnetAttribute}
  * @method Model modifyVolumeAttribute(array $args = array()) {@command Ec2 ModifyVolumeAttribute}
  * @method Model modifyVpcAttribute(array $args = array()) {@command Ec2 ModifyVpcAttribute}
@@ -265,7 +266,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  */
 class Ec2Client extends AbstractClient
 {
-    const LATEST_API_VERSION = '2015-04-15';
+    const LATEST_API_VERSION = '2015-10-01';
 
     /**
      * Factory method to create a new AWS Elastic Compute Cloud client using an array of configuration options.

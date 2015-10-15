@@ -46,6 +46,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model getStreamingDistributionConfig(array $args = array()) {@command CloudFront GetStreamingDistributionConfig}
  * @method Model listCloudFrontOriginAccessIdentities(array $args = array()) {@command CloudFront ListCloudFrontOriginAccessIdentities}
  * @method Model listDistributions(array $args = array()) {@command CloudFront ListDistributions}
+ * @method Model listDistributionsByWebACLId(array $args = array()) {@command CloudFront ListDistributionsByWebACLId}
  * @method Model listInvalidations(array $args = array()) {@command CloudFront ListInvalidations}
  * @method Model listStreamingDistributions(array $args = array()) {@command CloudFront ListStreamingDistributions}
  * @method Model updateCloudFrontOriginAccessIdentity(array $args = array()) {@command CloudFront UpdateCloudFrontOriginAccessIdentity}
@@ -64,7 +65,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  */
 class CloudFrontClient extends AbstractClient
 {
-    const LATEST_API_VERSION = '2015-04-17';
+    const LATEST_API_VERSION = '2015-07-27';
 
     /**
      * Factory method to create a new Amazon CloudFront client using an array of configuration options.

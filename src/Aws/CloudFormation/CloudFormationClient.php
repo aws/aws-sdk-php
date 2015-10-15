@@ -29,6 +29,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model cancelUpdateStack(array $args = array()) {@command CloudFormation CancelUpdateStack}
  * @method Model createStack(array $args = array()) {@command CloudFormation CreateStack}
  * @method Model deleteStack(array $args = array()) {@command CloudFormation DeleteStack}
+ * @method Model describeAccountLimits(array $args = array()) {@command CloudFormation DescribeAccountLimits}
  * @method Model describeStackEvents(array $args = array()) {@command CloudFormation DescribeStackEvents}
  * @method Model describeStackResource(array $args = array()) {@command CloudFormation DescribeStackResource}
  * @method Model describeStackResources(array $args = array()) {@command CloudFormation DescribeStackResources}

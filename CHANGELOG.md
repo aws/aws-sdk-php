@@ -1,5 +1,33 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFormation` - Added support for specifying affected resource types
+  in `CreateStack` and `UpdateStack` operations.
+* `Aws\CloudFormation` - Added support for the `DescribeAccountLimits` API.
+* `Aws\CloudFront` - Added support for WebACL identifiers and related
+  operations.
+* `Aws\Cloudtrail` - Added support for log file integrity validation, log
+  encryption with AWS KMS–Managed Keys (SSE-KMS), and trail tagging.
+* `Aws\CloudWatchLogs` - Added support for export task operations.
+* `Aws\ConfigService` - Added support for config rules, evaluation strategies,
+  and compliance querying.
+* `Aws\Ec2` - Added support for spot blocks.
+* `Aws\Ecs` - Added support for more Docker options hostname, Docker labels,
+  working directory, networking disabled, privileged execution, read-only root
+  filesystem, DNS servers, DNS search domains, ulimits, log configuration, extra
+  hosts (hosts to add to /etc/hosts), and security options (for MLS systems like
+  SELinux).
+* `Aws\Lambda` - Added support for function versioning.
+* `Aws\Kinesis` - Added support for increasing and decreasing stream retention
+  periods.
+* `Aws\Kms` - Added support for scheduling and cancelling key deletions and
+  listing retirable grants.
+* `Aws\S3` - Added support for specifying server side encryption on an when
+  uploading a part of a multipart upload.
+* `Aws\Ses` - Added support for inbound email APIs.
+* `Aws\Workspaces` - Added support for storage volume encryption with AWS KMS.
+
 ## 2.8.21 - 2015-09-16
 
 * `Aws\Ec2` - Added support for the "diversified" SpotFleet allocation strategy.

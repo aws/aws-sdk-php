@@ -27,11 +27,15 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
 /**
  * Client to interact with AWS CloudTrail
  *
+ * @method Model addTags(array $args = array()) {@command CloudTrail AddTags}
  * @method Model createTrail(array $args = array()) {@command CloudTrail CreateTrail}
  * @method Model deleteTrail(array $args = array()) {@command CloudTrail DeleteTrail}
  * @method Model describeTrails(array $args = array()) {@command CloudTrail DescribeTrails}
  * @method Model getTrailStatus(array $args = array()) {@command CloudTrail GetTrailStatus}
+ * @method Model listPublicKeys(array $args = array()) {@command CloudTrail ListPublicKeys}
+ * @method Model listTags(array $args = array()) {@command CloudTrail ListTags}
  * @method Model lookupEvents(array $args = array()) {@command CloudTrail LookupEvents}
+ * @method Model removeTags(array $args = array()) {@command CloudTrail RemoveTags}
  * @method Model startLogging(array $args = array()) {@command CloudTrail StartLogging}
  * @method Model stopLogging(array $args = array()) {@command CloudTrail StopLogging}
  * @method Model updateTrail(array $args = array()) {@command CloudTrail UpdateTrail}

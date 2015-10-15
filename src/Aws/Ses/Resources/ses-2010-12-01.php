@@ -41,6 +41,337 @@ return array (
         ),
     ),
     'operations' => array(
+        'CloneReceiptRuleSet' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'CloneReceiptRuleSet',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-12-01',
+                ),
+                'RuleSetName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'OriginalRuleSetName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that the provided receipt rule set does not exist.',
+                    'class' => 'RuleSetDoesNotExistException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource could not be created due to a naming conflict.',
+                    'class' => 'AlreadyExistsException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource could not be created due to service limits. For a list of Amazon SES limits, see the Amazon SES Developer Guide.',
+                    'class' => 'LimitExceededException',
+                ),
+            ),
+        ),
+        'CreateReceiptFilter' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'CreateReceiptFilter',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-12-01',
+                ),
+                'Filter' => array(
+                    'required' => true,
+                    'type' => 'object',
+                    'location' => 'aws.query',
+                    'properties' => array(
+                        'Name' => array(
+                            'required' => true,
+                            'type' => 'string',
+                        ),
+                        'IpFilter' => array(
+                            'required' => true,
+                            'type' => 'object',
+                            'properties' => array(
+                                'Policy' => array(
+                                    'required' => true,
+                                    'type' => 'string',
+                                ),
+                                'Cidr' => array(
+                                    'required' => true,
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that a resource could not be created due to service limits. For a list of Amazon SES limits, see the Amazon SES Developer Guide.',
+                    'class' => 'LimitExceededException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource could not be created due to a naming conflict.',
+                    'class' => 'AlreadyExistsException',
+                ),
+            ),
+        ),
+        'CreateReceiptRule' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'CreateReceiptRule',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-12-01',
+                ),
+                'RuleSetName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'After' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Rule' => array(
+                    'required' => true,
+                    'type' => 'object',
+                    'location' => 'aws.query',
+                    'properties' => array(
+                        'Name' => array(
+                            'required' => true,
+                            'type' => 'string',
+                        ),
+                        'Enabled' => array(
+                            'type' => 'boolean',
+                            'format' => 'boolean-string',
+                        ),
+                        'TlsPolicy' => array(
+                            'type' => 'string',
+                        ),
+                        'Recipients' => array(
+                            'type' => 'array',
+                            'sentAs' => 'Recipients.member',
+                            'items' => array(
+                                'name' => 'Recipient',
+                                'type' => 'string',
+                            ),
+                        ),
+                        'Actions' => array(
+                            'type' => 'array',
+                            'sentAs' => 'Actions.member',
+                            'items' => array(
+                                'name' => 'ReceiptAction',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'S3Action' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'TopicArn' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'BucketName' => array(
+                                                'required' => true,
+                                                'type' => 'string',
+                                            ),
+                                            'ObjectKeyPrefix' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'KmsKeyArn' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                    'BounceAction' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'TopicArn' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'SmtpReplyCode' => array(
+                                                'required' => true,
+                                                'type' => 'string',
+                                            ),
+                                            'StatusCode' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Message' => array(
+                                                'required' => true,
+                                                'type' => 'string',
+                                            ),
+                                            'Sender' => array(
+                                                'required' => true,
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                    'WorkmailAction' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'TopicArn' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'OrganizationArn' => array(
+                                                'required' => true,
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                    'LambdaAction' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'TopicArn' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'FunctionArn' => array(
+                                                'required' => true,
+                                                'type' => 'string',
+                                            ),
+                                            'InvocationType' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                    'StopAction' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'Scope' => array(
+                                                'required' => true,
+                                                'type' => 'string',
+                                            ),
+                                            'TopicArn' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                    'AddHeaderAction' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'HeaderName' => array(
+                                                'required' => true,
+                                                'type' => 'string',
+                                            ),
+                                            'HeaderValue' => array(
+                                                'required' => true,
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                    'SNSAction' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'TopicArn' => array(
+                                                'required' => true,
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'ScanEnabled' => array(
+                            'type' => 'boolean',
+                            'format' => 'boolean-string',
+                        ),
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that the provided Amazon SNS topic is invalid, or that Amazon SES could not publish to the topic, possibly due to permissions issues. For information about giving permissions, see the Amazon SES Developer Guide.',
+                    'class' => 'InvalidSnsTopicException',
+                ),
+                array(
+                    'reason' => 'Indicates that the provided Amazon S3 bucket or AWS KMS encryption key is invalid, or that Amazon SES could not publish to the bucket, possibly due to permissions issues. For information about giving permissions, see the Amazon SES Developer Guide.',
+                    'class' => 'InvalidS3ConfigurationException',
+                ),
+                array(
+                    'reason' => 'Indicates that the provided AWS Lambda function is invalid, or that Amazon SES could not execute the provided function, possibly due to permissions issues. For information about giving permissions, see the Amazon SES Developer Guide.',
+                    'class' => 'InvalidLambdaFunctionException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource could not be created due to a naming conflict.',
+                    'class' => 'AlreadyExistsException',
+                ),
+                array(
+                    'reason' => 'Indicates that the provided receipt rule does not exist.',
+                    'class' => 'RuleDoesNotExistException',
+                ),
+                array(
+                    'reason' => 'Indicates that the provided receipt rule set does not exist.',
+                    'class' => 'RuleSetDoesNotExistException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource could not be created due to service limits. For a list of Amazon SES limits, see the Amazon SES Developer Guide.',
+                    'class' => 'LimitExceededException',
+                ),
+            ),
+        ),
+        'CreateReceiptRuleSet' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'CreateReceiptRuleSet',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-12-01',
+                ),
+                'RuleSetName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that a resource could not be created due to a naming conflict.',
+                    'class' => 'AlreadyExistsException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource could not be created due to service limits. For a list of Amazon SES limits, see the Amazon SES Developer Guide.',
+                    'class' => 'LimitExceededException',
+                ),
+            ),
+        ),
         'DeleteIdentity' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -96,6 +427,95 @@ return array (
                 ),
             ),
         ),
+        'DeleteReceiptFilter' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DeleteReceiptFilter',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-12-01',
+                ),
+                'FilterName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+        ),
+        'DeleteReceiptRule' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DeleteReceiptRule',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-12-01',
+                ),
+                'RuleSetName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'RuleName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that the provided receipt rule set does not exist.',
+                    'class' => 'RuleSetDoesNotExistException',
+                ),
+            ),
+        ),
+        'DeleteReceiptRuleSet' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DeleteReceiptRuleSet',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-12-01',
+                ),
+                'RuleSetName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that the delete operation could not be completed.',
+                    'class' => 'CannotDeleteException',
+                ),
+            ),
+        ),
         'DeleteVerifiedEmailAddress' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -118,6 +538,94 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
+                ),
+            ),
+        ),
+        'DescribeActiveReceiptRuleSet' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DescribeActiveReceiptRuleSetResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeActiveReceiptRuleSet',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-12-01',
+                ),
+            ),
+        ),
+        'DescribeReceiptRule' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DescribeReceiptRuleResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeReceiptRule',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-12-01',
+                ),
+                'RuleSetName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'RuleName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that the provided receipt rule does not exist.',
+                    'class' => 'RuleDoesNotExistException',
+                ),
+                array(
+                    'reason' => 'Indicates that the provided receipt rule set does not exist.',
+                    'class' => 'RuleSetDoesNotExistException',
+                ),
+            ),
+        ),
+        'DescribeReceiptRuleSet' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DescribeReceiptRuleSetResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeReceiptRuleSet',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-12-01',
+                ),
+                'RuleSetName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that the provided receipt rule set does not exist.',
+                    'class' => 'RuleSetDoesNotExistException',
                 ),
             ),
         ),
@@ -337,6 +845,48 @@ return array (
                 ),
             ),
         ),
+        'ListReceiptFilters' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'ListReceiptFiltersResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'ListReceiptFilters',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-12-01',
+                ),
+            ),
+        ),
+        'ListReceiptRuleSets' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'ListReceiptRuleSetsResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'ListReceiptRuleSets',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-12-01',
+                ),
+                'NextToken' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+        ),
         'ListVerifiedEmailAddresses' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -397,6 +947,199 @@ return array (
                 array(
                     'reason' => 'Indicates that the provided policy is invalid. Check the error stack for more information about what caused the error.',
                     'class' => 'InvalidPolicyException',
+                ),
+            ),
+        ),
+        'ReorderReceiptRuleSet' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'ReorderReceiptRuleSet',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-12-01',
+                ),
+                'RuleSetName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'RuleNames' => array(
+                    'required' => true,
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'RuleNames.member',
+                    'items' => array(
+                        'name' => 'ReceiptRuleName',
+                        'type' => 'string',
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that the provided receipt rule set does not exist.',
+                    'class' => 'RuleSetDoesNotExistException',
+                ),
+                array(
+                    'reason' => 'Indicates that the provided receipt rule does not exist.',
+                    'class' => 'RuleDoesNotExistException',
+                ),
+            ),
+        ),
+        'SendBounce' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'SendBounceResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'SendBounce',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-12-01',
+                ),
+                'OriginalMessageId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'BounceSender' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Explanation' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'MessageDsn' => array(
+                    'type' => 'object',
+                    'location' => 'aws.query',
+                    'properties' => array(
+                        'ReportingMta' => array(
+                            'required' => true,
+                            'type' => 'string',
+                        ),
+                        'ArrivalDate' => array(
+                            'type' => array(
+                                'object',
+                                'string',
+                                'integer',
+                            ),
+                            'format' => 'date-time',
+                        ),
+                        'ExtensionFields' => array(
+                            'type' => 'array',
+                            'sentAs' => 'ExtensionFields.member',
+                            'items' => array(
+                                'name' => 'ExtensionField',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'Name' => array(
+                                        'required' => true,
+                                        'type' => 'string',
+                                    ),
+                                    'Value' => array(
+                                        'required' => true,
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'BouncedRecipientInfoList' => array(
+                    'required' => true,
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'BouncedRecipientInfoList.member',
+                    'items' => array(
+                        'name' => 'BouncedRecipientInfo',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Recipient' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'RecipientArn' => array(
+                                'type' => 'string',
+                            ),
+                            'BounceType' => array(
+                                'type' => 'string',
+                            ),
+                            'RecipientDsnFields' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'FinalRecipient' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Action' => array(
+                                        'required' => true,
+                                        'type' => 'string',
+                                    ),
+                                    'RemoteMta' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Status' => array(
+                                        'required' => true,
+                                        'type' => 'string',
+                                    ),
+                                    'DiagnosticCode' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'LastAttemptDate' => array(
+                                        'type' => array(
+                                            'object',
+                                            'string',
+                                            'integer',
+                                        ),
+                                        'format' => 'date-time',
+                                    ),
+                                    'ExtensionFields' => array(
+                                        'type' => 'array',
+                                        'sentAs' => 'ExtensionFields.member',
+                                        'items' => array(
+                                            'name' => 'ExtensionField',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'Name' => array(
+                                                    'required' => true,
+                                                    'type' => 'string',
+                                                ),
+                                                'Value' => array(
+                                                    'required' => true,
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'BounceSenderArn' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that the action failed, and the message could not be sent. Check the error stack for more information about what caused the error.',
+                    'class' => 'MessageRejectedException',
                 ),
             ),
         ),
@@ -593,6 +1336,35 @@ return array (
                 ),
             ),
         ),
+        'SetActiveReceiptRuleSet' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'SetActiveReceiptRuleSet',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-12-01',
+                ),
+                'RuleSetName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that the provided receipt rule set does not exist.',
+                    'class' => 'RuleSetDoesNotExistException',
+                ),
+            ),
+        ),
         'SetIdentityDkimEnabled' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -683,6 +1455,241 @@ return array (
                 'SnsTopic' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
+                ),
+            ),
+        ),
+        'SetReceiptRulePosition' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'SetReceiptRulePosition',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-12-01',
+                ),
+                'RuleSetName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'RuleName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'After' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that the provided receipt rule set does not exist.',
+                    'class' => 'RuleSetDoesNotExistException',
+                ),
+                array(
+                    'reason' => 'Indicates that the provided receipt rule does not exist.',
+                    'class' => 'RuleDoesNotExistException',
+                ),
+            ),
+        ),
+        'UpdateReceiptRule' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'UpdateReceiptRule',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-12-01',
+                ),
+                'RuleSetName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Rule' => array(
+                    'required' => true,
+                    'type' => 'object',
+                    'location' => 'aws.query',
+                    'properties' => array(
+                        'Name' => array(
+                            'required' => true,
+                            'type' => 'string',
+                        ),
+                        'Enabled' => array(
+                            'type' => 'boolean',
+                            'format' => 'boolean-string',
+                        ),
+                        'TlsPolicy' => array(
+                            'type' => 'string',
+                        ),
+                        'Recipients' => array(
+                            'type' => 'array',
+                            'sentAs' => 'Recipients.member',
+                            'items' => array(
+                                'name' => 'Recipient',
+                                'type' => 'string',
+                            ),
+                        ),
+                        'Actions' => array(
+                            'type' => 'array',
+                            'sentAs' => 'Actions.member',
+                            'items' => array(
+                                'name' => 'ReceiptAction',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'S3Action' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'TopicArn' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'BucketName' => array(
+                                                'required' => true,
+                                                'type' => 'string',
+                                            ),
+                                            'ObjectKeyPrefix' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'KmsKeyArn' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                    'BounceAction' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'TopicArn' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'SmtpReplyCode' => array(
+                                                'required' => true,
+                                                'type' => 'string',
+                                            ),
+                                            'StatusCode' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Message' => array(
+                                                'required' => true,
+                                                'type' => 'string',
+                                            ),
+                                            'Sender' => array(
+                                                'required' => true,
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                    'WorkmailAction' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'TopicArn' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'OrganizationArn' => array(
+                                                'required' => true,
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                    'LambdaAction' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'TopicArn' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'FunctionArn' => array(
+                                                'required' => true,
+                                                'type' => 'string',
+                                            ),
+                                            'InvocationType' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                    'StopAction' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'Scope' => array(
+                                                'required' => true,
+                                                'type' => 'string',
+                                            ),
+                                            'TopicArn' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                    'AddHeaderAction' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'HeaderName' => array(
+                                                'required' => true,
+                                                'type' => 'string',
+                                            ),
+                                            'HeaderValue' => array(
+                                                'required' => true,
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                    'SNSAction' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'TopicArn' => array(
+                                                'required' => true,
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'ScanEnabled' => array(
+                            'type' => 'boolean',
+                            'format' => 'boolean-string',
+                        ),
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that the provided Amazon SNS topic is invalid, or that Amazon SES could not publish to the topic, possibly due to permissions issues. For information about giving permissions, see the Amazon SES Developer Guide.',
+                    'class' => 'InvalidSnsTopicException',
+                ),
+                array(
+                    'reason' => 'Indicates that the provided Amazon S3 bucket or AWS KMS encryption key is invalid, or that Amazon SES could not publish to the bucket, possibly due to permissions issues. For information about giving permissions, see the Amazon SES Developer Guide.',
+                    'class' => 'InvalidS3ConfigurationException',
+                ),
+                array(
+                    'reason' => 'Indicates that the provided AWS Lambda function is invalid, or that Amazon SES could not execute the provided function, possibly due to permissions issues. For information about giving permissions, see the Amazon SES Developer Guide.',
+                    'class' => 'InvalidLambdaFunctionException',
+                ),
+                array(
+                    'reason' => 'Indicates that the provided receipt rule set does not exist.',
+                    'class' => 'RuleSetDoesNotExistException',
+                ),
+                array(
+                    'reason' => 'Indicates that the provided receipt rule does not exist.',
+                    'class' => 'RuleDoesNotExistException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource could not be created due to service limits. For a list of Amazon SES limits, see the Amazon SES Developer Guide.',
+                    'class' => 'LimitExceededException',
                 ),
             ),
         ),
@@ -788,6 +1795,442 @@ return array (
         'EmptyOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
+        ),
+        'DescribeActiveReceiptRuleSetResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Metadata' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'Name' => array(
+                            'type' => 'string',
+                        ),
+                        'CreatedTimestamp' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+                'Rules' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'ReceiptRule',
+                        'type' => 'object',
+                        'sentAs' => 'member',
+                        'properties' => array(
+                            'Name' => array(
+                                'type' => 'string',
+                            ),
+                            'Enabled' => array(
+                                'type' => 'boolean',
+                            ),
+                            'TlsPolicy' => array(
+                                'type' => 'string',
+                            ),
+                            'Recipients' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'Recipient',
+                                    'type' => 'string',
+                                    'sentAs' => 'member',
+                                ),
+                            ),
+                            'Actions' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'ReceiptAction',
+                                    'type' => 'object',
+                                    'sentAs' => 'member',
+                                    'properties' => array(
+                                        'S3Action' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'TopicArn' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'BucketName' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'ObjectKeyPrefix' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'KmsKeyArn' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                        'BounceAction' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'TopicArn' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'SmtpReplyCode' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'StatusCode' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Message' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Sender' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                        'WorkmailAction' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'TopicArn' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'OrganizationArn' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                        'LambdaAction' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'TopicArn' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'FunctionArn' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'InvocationType' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                        'StopAction' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'Scope' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'TopicArn' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                        'AddHeaderAction' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'HeaderName' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'HeaderValue' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                        'SNSAction' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'TopicArn' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'ScanEnabled' => array(
+                                'type' => 'boolean',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'DescribeReceiptRuleResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Rule' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'Name' => array(
+                            'type' => 'string',
+                        ),
+                        'Enabled' => array(
+                            'type' => 'boolean',
+                        ),
+                        'TlsPolicy' => array(
+                            'type' => 'string',
+                        ),
+                        'Recipients' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Recipient',
+                                'type' => 'string',
+                                'sentAs' => 'member',
+                            ),
+                        ),
+                        'Actions' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'ReceiptAction',
+                                'type' => 'object',
+                                'sentAs' => 'member',
+                                'properties' => array(
+                                    'S3Action' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'TopicArn' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'BucketName' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'ObjectKeyPrefix' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'KmsKeyArn' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                    'BounceAction' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'TopicArn' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'SmtpReplyCode' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'StatusCode' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Message' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Sender' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                    'WorkmailAction' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'TopicArn' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'OrganizationArn' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                    'LambdaAction' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'TopicArn' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'FunctionArn' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'InvocationType' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                    'StopAction' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'Scope' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'TopicArn' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                    'AddHeaderAction' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'HeaderName' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'HeaderValue' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                    'SNSAction' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'TopicArn' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'ScanEnabled' => array(
+                            'type' => 'boolean',
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'DescribeReceiptRuleSetResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Metadata' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'Name' => array(
+                            'type' => 'string',
+                        ),
+                        'CreatedTimestamp' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+                'Rules' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'ReceiptRule',
+                        'type' => 'object',
+                        'sentAs' => 'member',
+                        'properties' => array(
+                            'Name' => array(
+                                'type' => 'string',
+                            ),
+                            'Enabled' => array(
+                                'type' => 'boolean',
+                            ),
+                            'TlsPolicy' => array(
+                                'type' => 'string',
+                            ),
+                            'Recipients' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'Recipient',
+                                    'type' => 'string',
+                                    'sentAs' => 'member',
+                                ),
+                            ),
+                            'Actions' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'ReceiptAction',
+                                    'type' => 'object',
+                                    'sentAs' => 'member',
+                                    'properties' => array(
+                                        'S3Action' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'TopicArn' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'BucketName' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'ObjectKeyPrefix' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'KmsKeyArn' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                        'BounceAction' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'TopicArn' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'SmtpReplyCode' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'StatusCode' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Message' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Sender' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                        'WorkmailAction' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'TopicArn' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'OrganizationArn' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                        'LambdaAction' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'TopicArn' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'FunctionArn' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'InvocationType' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                        'StopAction' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'Scope' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'TopicArn' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                        'AddHeaderAction' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'HeaderName' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'HeaderValue' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                        'SNSAction' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'TopicArn' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'ScanEnabled' => array(
+                                'type' => 'boolean',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
         ),
         'GetIdentityDkimAttributesResponse' => array(
             'type' => 'object',
@@ -1055,6 +2498,64 @@ return array (
                 ),
             ),
         ),
+        'ListReceiptFiltersResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'ReceiptFilter',
+                        'type' => 'object',
+                        'sentAs' => 'member',
+                        'properties' => array(
+                            'Name' => array(
+                                'type' => 'string',
+                            ),
+                            'IpFilter' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'Policy' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Cidr' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'ListReceiptRuleSetsResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RuleSets' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'ReceiptRuleSetMetadata',
+                        'type' => 'object',
+                        'sentAs' => 'member',
+                        'properties' => array(
+                            'Name' => array(
+                                'type' => 'string',
+                            ),
+                            'CreatedTimestamp' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+                'NextToken' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+            ),
+        ),
         'ListVerifiedEmailAddressesResponse' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -1067,6 +2568,16 @@ return array (
                         'type' => 'string',
                         'sentAs' => 'member',
                     ),
+                ),
+            ),
+        ),
+        'SendBounceResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'MessageId' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
                 ),
             ),
         ),
