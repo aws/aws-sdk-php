@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Kms` - Added support for scheduling and cancelling key deletions and
+  listing retirable grants.
+* `Aws\S3` - Added support for specifying server side encryption on an when
+  uploading a part of a multipart upload.
+
 ## 3.8.0 - 2015-10-08
 
 * `Aws\Ecs` - Added support for more Docker options hostname, Docker labels,
