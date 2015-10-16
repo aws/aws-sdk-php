@@ -218,7 +218,16 @@ EOT;
             $html .= '<div class="api-version-list element-summary"><ul>';
             $latest = count($versions) > 1 ? ' (latest)' : '';
             foreach ($versions as $sv) {
-                $html .= "<li><a href=\"{$sv->serviceLink}\">{$sv->version} {$latest}</a></li>";
+                $html .= "<li>";
+                $html .= "<p><a href=\"{$sv->serviceLink}\">{$sv->version} {$latest}</a></p>";
+                $html .= "<ul class=\"container-fluid\">";
+                foreach (array_keys($sv->api->getOperations()) as $operation) {
+                    $html .= "<div class=\"col-xs-12 col-md-6 col-lg-4\">";
+                    $html .= "<a href=\"{$sv->serviceLink}#" . strtolower($operation) ."\">$operation</a>";
+                    $html .= "</div>";
+                }
+                $html .= "</ul>";
+                $html .= "</li>";
                 $latest = '';
             }
             $html .= '</ul></div>';
