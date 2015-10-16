@@ -42,6 +42,7 @@ class DocsBuilder
         fwrite(STDOUT, "Parsing available service API versions...\n");
         // Collect versions
         $services = [];
+        $aliases = [];
 
         foreach ($this->gatherServiceVersions() as $name => $data) {
             // Skip "latest"
@@ -54,6 +55,13 @@ class DocsBuilder
                     ApiProvider::resolve($this->apiProvider, 'docs', $name, $version)
                 );
                 $service = new Service($api, $docModel);
+                if (isset($services[$service->title][$version])) {
+                    if (empty($aliases[$service->title][$version])) {
+                        $aliases[$service->title][$version] = [];
+                    }
+                    $aliases[$service->title][$version] []= $alias;
+                    continue;
+                }
                 $this->renderService($service);
                 $services[$service->title][$version] = $service;
             }
@@ -62,6 +70,7 @@ class DocsBuilder
         ksort($services, SORT_NATURAL | SORT_FLAG_CASE);
         $this->updateHomepage($services);
         $this->updateClients($services);
+        $this->updateAliases($services, $aliases);
     }
 
     private function updateHomepage(array $services)
@@ -232,6 +241,31 @@ EOT;
             }
             $html .= '</ul></div>';
             $this->replaceInner($service->clientLink, $html, '<!-- api -->');
+        }
+    }
+
+    private function updateAliases(array $services, array $compatibleVersions)
+    {
+        fwrite(STDOUT, "Updating redirects for forward-compatible service versions\n");
+
+        foreach ($compatibleVersions as $service => $aliasedVersions) {
+            foreach ($aliasedVersions as $version => $aliases) {
+                $redirectPage = <<<EOHTML
+<!DOCTYPE html>
+<html>
+<head>
+   <!-- HTML meta refresh URL redirection -->
+   <meta
+       http-equiv="refresh"
+       content="0; url={$services[$service][$version]->serviceLink}">
+</head>
+</html>
+EOHTML;
+                foreach ($aliases as $alias) {
+                    $redirectFrom = str_replace($version, $alias, $services[$service][$version]->serviceLink);
+                    file_put_contents("{$this->outputDir}/$redirectFrom", $redirectPage);
+                }
+            }
         }
     }
 
