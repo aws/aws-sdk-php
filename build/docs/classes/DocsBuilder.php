@@ -29,11 +29,15 @@ class DocsBuilder
     /** @var \SplObjectStorage Hash of members to skip when generating shape docs. */
     private $skipMembers;
 
-    public function __construct(ApiProvider $provider, $outputDir, $template)
+    /** @var string */
+    private $baseUrl;
+
+    public function __construct(ApiProvider $provider, $outputDir, $template, $baseUrl)
     {
         $this->apiProvider = $provider;
         $this->outputDir = $outputDir;
         $this->template = $template;
+        $this->baseUrl = $baseUrl;
     }
 
     public function build()
@@ -71,6 +75,7 @@ class DocsBuilder
         $this->updateHomepage($services);
         $this->updateClients($services);
         $this->updateAliases($services, $aliases);
+        $this->updateSitemap();
     }
 
     private function updateHomepage(array $services)
@@ -538,5 +543,19 @@ EOT;
     private function memberLink($name)
     {
         return '<a href="#' . $this->memberSlug($name) . '">' . $name . '</a>';
+    }
+
+    private function updateSitemap()
+    {
+        $writer = new \SimpleXMLElement("<urlset></urlset>");
+        $writer->addAttribute('xmlns', "http://www.sitemaps.org/schemas/sitemap/0.9");
+
+        $linksToIndex = new \GlobIterator("{$this->outputDir}/*.html", \FilesystemIterator::CURRENT_AS_FILEINFO);
+        foreach ($linksToIndex as $link) {
+            $url = $writer->addChild('url');
+            $url->addChild('loc', "{$this->baseUrl}{$link->getBasename()}");
+        }
+
+        $writer->asXML("{$this->outputDir}/sitemap.xml");
     }
 }
