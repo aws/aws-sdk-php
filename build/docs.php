@@ -16,6 +16,14 @@ $ele = $xml->getElementById('content');
 $ele->nodeValue = '{{ contents }}';
 $template = str_replace('class="homepage"', 'class="generated-page"', $xml->saveHTML());
 
+$quickLinkServices = ['s3', 'dynamodb', 'glacier', 'ec2'];
+
 // Generate API docs
-$builder = new DocsBuilder($apiProvider, $outputDir, $template, $config['baseUrl']);
+$builder = new DocsBuilder(
+    $apiProvider,
+    $outputDir,
+    $template,
+    $config['baseUrl'],
+    $quickLinkServices
+);
 $builder->build();
