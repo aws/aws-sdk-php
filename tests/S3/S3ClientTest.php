@@ -370,12 +370,16 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getTestCasesForLocationConstraints
      */
-    public function testAddsLocationConstraintAutomatically($region, $command, $contains)
+    public function testAddsLocationConstraintAutomatically($region, $target, $command, $contains)
     {
         $client = $this->getTestClient('S3', ['region' => $region]);
-        $command = $client->getCommand($command, ['Bucket' => 'foo']);
+        $params = ['Bucket' => 'foo'];
+        if ($region !== $target) {
+            $params['CreateBucketConfiguration'] = ['LocationConstraint' => $target];
+        }
+        $command = $client->getCommand($command, $params);
 
-        $text = "<LocationConstraint>{$region}</LocationConstraint>";
+        $text = "<LocationConstraint>{$target}</LocationConstraint>";
         $body = (string) \Aws\serialize($command)->getBody();
         if ($contains) {
             $this->assertContains($text, $body);
@@ -387,9 +391,11 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
     public function getTestCasesForLocationConstraints()
     {
         return [
-            ['us-west-2', 'CreateBucket', true],
-            ['us-east-1', 'CreateBucket', false],
-            ['us-west-2', 'HeadBucket',   false],
+            ['us-west-2', 'us-west-2', 'CreateBucket', true],
+            ['us-east-1', 'us-east-1', 'CreateBucket', false],
+            ['us-west-2', 'us-west-2', 'HeadBucket',   false],
+            ['us-west-2', 'eu-west-1', 'CreateBucket', true],
+            ['us-west-2', 'us-east-1', 'CreateBucket', false],
         ];
     }
 
