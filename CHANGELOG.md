@@ -181,7 +181,7 @@
   versions 3.x and 2.x can still be specified with the AMI version parameter).
 * `Aws\Glacier` - Added support for the InitiateVaultLock, GetVaultLock,
   AbortVaultLock, and CompleteVaultLock API operations.
-* Fixed a memory leak that occurred when client were created and never used.
+* Fixed a memory leak that occurred when clients were created and never used.
 * Updated JsonCompiler by addressing a potential race condition and ensuring
   that caches are invalidated when upgrading to a new version of the SDK.
 * Updated protocol and acceptance tests.
