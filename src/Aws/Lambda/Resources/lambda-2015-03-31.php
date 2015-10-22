@@ -642,6 +642,7 @@ return array (
                         'string',
                         'object',
                     ),
+                    'location' => 'body',
                 ),
                 'Qualifier' => array(
                     'type' => 'string',
