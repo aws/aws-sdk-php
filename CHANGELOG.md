@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AutoScaling` - Added support for EBS encryption.
+* `Aws\Iam` - Added support for resource-based policy simulations.
+
 ## 3.8.1 - 2015-10-15
 
 * `Aws\Kms` - Added support for scheduling and cancelling key deletions and
