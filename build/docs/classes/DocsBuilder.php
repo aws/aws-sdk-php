@@ -29,11 +29,24 @@ class DocsBuilder
     /** @var \SplObjectStorage Hash of members to skip when generating shape docs. */
     private $skipMembers;
 
-    public function __construct(ApiProvider $provider, $outputDir, $template)
-    {
+    /** @var string */
+    private $baseUrl;
+
+    /** @var string[] */
+    private $quickLinks;
+
+    public function __construct(
+        ApiProvider $provider,
+        $outputDir,
+        $template,
+        $baseUrl,
+        array $quickLinks
+    ) {
         $this->apiProvider = $provider;
         $this->outputDir = $outputDir;
         $this->template = $template;
+        $this->baseUrl = $baseUrl;
+        $this->quickLinks = $quickLinks;
     }
 
     public function build()
@@ -42,6 +55,7 @@ class DocsBuilder
         fwrite(STDOUT, "Parsing available service API versions...\n");
         // Collect versions
         $services = [];
+        $aliases = [];
 
         foreach ($this->gatherServiceVersions() as $name => $data) {
             // Skip "latest"
@@ -54,6 +68,13 @@ class DocsBuilder
                     ApiProvider::resolve($this->apiProvider, 'docs', $name, $version)
                 );
                 $service = new Service($api, $docModel);
+                if (isset($services[$service->title][$version])) {
+                    if (empty($aliases[$service->title][$version])) {
+                        $aliases[$service->title][$version] = [];
+                    }
+                    $aliases[$service->title][$version] []= $alias;
+                    continue;
+                }
                 $this->renderService($service);
                 $services[$service->title][$version] = $service;
             }
@@ -62,9 +83,17 @@ class DocsBuilder
         ksort($services, SORT_NATURAL | SORT_FLAG_CASE);
         $this->updateHomepage($services);
         $this->updateClients($services);
+        $this->updateAliases($services, $aliases);
+        $this->updateSitemap();
     }
 
     private function updateHomepage(array $services)
+    {
+        $this->updateServiceTable($services);
+        $this->updateQuickLinks($services);
+    }
+
+    private function updateServiceTable(array $services)
     {
         fwrite(STDOUT, "Building homepage service table\n");
         // Build up the list of services for the homepage.
@@ -85,6 +114,45 @@ class DocsBuilder
         }
 
         $this->replaceInner('index', $servicesTable, ':services:');
+    }
+
+    private function updateQuickLinks(array $services)
+    {
+        fwrite(STDOUT, "Updating homepage quick links\n");
+
+        // Determine which services in the provided array should have a quick link
+        $services = array_filter($services, function (array $versions) {
+            return 0 < count(array_filter($versions, function (Service $service) {
+                return in_array($service->name, $this->quickLinks);
+            }));
+        });
+
+        // Drop all but the latest version of each service from the array
+        $services = array_map(function (array $versions) {
+            return array_shift($versions);
+        }, $services);
+
+        // Sort the services in the order provided in the config
+        usort($services, function (Service $a, Service $b) {
+            return array_search($a->name, $this->quickLinks)
+                - array_search($b->name, $this->quickLinks);
+        });
+
+        // Build up the quick links for the home page
+        $quickLinks = '';
+        foreach ($services as $service) {
+            $title = $service->shortTitle ?: $service->title;
+            $quickLinks .= <<<EOT
+<div class="col-md-3">
+    <a class="btn btn-default btn-lg btn-block lead" href="{$service->serviceLink}" role="button">
+        <span class="awsicon awsicon-{$service->name}"></span> {$title}
+    </a>
+</div>
+
+EOT;
+        }
+
+        $this->replaceInner('index', $quickLinks, ':quickLinks:');
     }
 
     private function renderService(Service $service)
@@ -218,11 +286,45 @@ EOT;
             $html .= '<div class="api-version-list element-summary"><ul>';
             $latest = count($versions) > 1 ? ' (latest)' : '';
             foreach ($versions as $sv) {
-                $html .= "<li><a href=\"{$sv->serviceLink}\">{$sv->version} {$latest}</a></li>";
+                $html .= "<li>";
+                $html .= "<p><a href=\"{$sv->serviceLink}\">{$sv->version} {$latest}</a></p>";
+                $html .= "<ul class=\"container-fluid\">";
+                foreach (array_keys($sv->api->getOperations()) as $operation) {
+                    $html .= "<div class=\"col-xs-12 col-md-6 col-lg-4\">";
+                    $html .= "<a href=\"{$sv->serviceLink}#" . strtolower($operation) ."\">$operation</a>";
+                    $html .= "</div>";
+                }
+                $html .= "</ul>";
+                $html .= "</li>";
                 $latest = '';
             }
             $html .= '</ul></div>';
             $this->replaceInner($service->clientLink, $html, '<!-- api -->');
+        }
+    }
+
+    private function updateAliases(array $services, array $compatibleVersions)
+    {
+        fwrite(STDOUT, "Updating redirects for forward-compatible service versions\n");
+
+        foreach ($compatibleVersions as $service => $aliasedVersions) {
+            foreach ($aliasedVersions as $version => $aliases) {
+                $redirectPage = <<<EOHTML
+<!DOCTYPE html>
+<html>
+<head>
+   <!-- HTML meta refresh URL redirection -->
+   <meta
+       http-equiv="refresh"
+       content="0; url={$services[$service][$version]->serviceLink}">
+</head>
+</html>
+EOHTML;
+                foreach ($aliases as $alias) {
+                    $redirectFrom = str_replace($version, $alias, $services[$service][$version]->serviceLink);
+                    file_put_contents("{$this->outputDir}/$redirectFrom", $redirectPage);
+                }
+            }
         }
     }
 
@@ -495,5 +597,19 @@ EOT;
     private function memberLink($name)
     {
         return '<a href="#' . $this->memberSlug($name) . '">' . $name . '</a>';
+    }
+
+    private function updateSitemap()
+    {
+        $writer = new \SimpleXMLElement("<urlset></urlset>");
+        $writer->addAttribute('xmlns', "http://www.sitemaps.org/schemas/sitemap/0.9");
+
+        $linksToIndex = new \GlobIterator("{$this->outputDir}/*.html", \FilesystemIterator::CURRENT_AS_FILEINFO);
+        foreach ($linksToIndex as $link) {
+            $url = $writer->addChild('url');
+            $url->addChild('loc', "{$this->baseUrl}{$link->getBasename()}");
+        }
+
+        $writer->asXML("{$this->outputDir}/sitemap.xml");
     }
 }
