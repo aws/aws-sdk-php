@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApiGateway` - Added support for the **AWS API Gateway** service.
+* `Aws\Ssm` - Added support for EC2 Run Command, a new EC2 feature that enables
+  you to securely and remotely manage the configuration of your Amazon EC2
+  Windows instances. 
+
 ## 3.8.2 - 2015-10-22
 
 * `Aws\AutoScaling` - Added support for EBS encryption.
