@@ -18,12 +18,29 @@ $template = str_replace('class="homepage"', 'class="generated-page"', $xml->save
 
 $quickLinkServices = ['s3', 'dynamodb', 'glacier', 'ec2'];
 
+$sourceDirs = array_map(function ($dirRelativeToProjectRoot) {
+    return __DIR__ . '/../' . $dirRelativeToProjectRoot;
+}, is_array($config['source']) ? $config['source'] : [$config['source']]);
+$sourceFiles = [];
+foreach ($sourceDirs as $dir) {
+    $sourceFiles = array_merge(
+        $sourceFiles,
+        array_filter(
+            array_map('realpath', iterator_to_array(\Aws\recursive_dir_iterator($dir))),
+            function ($path) {
+                return preg_match('/(?<!\.json)\.php/', $path);
+            }
+        )
+    );
+}
+
 // Generate API docs
 $builder = new DocsBuilder(
     $apiProvider,
     $outputDir,
     $template,
     $config['baseUrl'],
-    $quickLinkServices
+    $quickLinkServices,
+    $sourceFiles
 );
 $builder->build();

@@ -44,7 +44,7 @@ $(window).load(function() {
 	var autocompleteFiles = {'c': 'class', 'co': 'constant', 'f': 'function', 'm': 'class', 'mm': 'class', 'p': 'class', 'mp': 'class', 'cc': 'class'};
 	var $search = $('#search input[name=q]');
 	$search
-		.autocomplete(ApiGen.elements, {
+		.autocomplete(AWS.searchIndex, {
 			matchContains: true,
 			scrollHeight: 200,
 			max: 20,
@@ -57,13 +57,15 @@ $(window).load(function() {
 				return value.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + term + ")(?![^<>]*>)(?![^&;]+;)"), "<strong>$1</strong>");
 			},
 			formatItem: function(data) {
-				return data.length > 1 ? data[1].replace(/^(.+\\)(.+)$/, '<span><small>$1</small>$2</span>') : data[0];
+				return data.hasOwnProperty('name') && data.hasOwnProperty('description') ?
+					'<span>' + data.name + '<br/><small><em>' + data.description + '</em></small></span>'
+					: data.match;
 			},
 			formatMatch: function(data) {
-				return data[1];
+				return data.match;
 			},
 			formatResult: function(data) {
-				return data[1];
+				return data.name;
 			},
 			show: function($list) {
 				var $items = $('li span', $list);
@@ -77,12 +79,7 @@ $(window).load(function() {
 			autocompleteFound = true;
 			var location = window.location.href.split('/');
 			location.pop();
-			var parts = data[1].split(/::|$/);
-			var file = $.sprintf(ApiGen.config.templates[autocompleteFiles[data[0]]].filename, parts[0].replace(/\(\)/, '').replace(/[^\w]/g, '.'));
-			if (parts[1]) {
-				file += '#' + ('mm' === data[0] || 'mp' === data[0] ? 'm' : '') + parts[1].replace(/([\w]+)\(\)/, '_$1');
-			}
-			location.push(file);
+			location.push(data.link);
 			window.location = location.join('/');
 
 			// Workaround for Opera bug
