@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.9.1 - 2015-10-26
 
 * `Aws\ApiGateway` - Fixed erroneous version number. Previous version number
   support kept for backwards compatibility, but "2015-06-01" should be
