@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApiGateway` - Fixed erroneous version number. Previous version number
+  support kept for backwards compatibility, but "2015-06-01" should be
+  considered deprecated.
+
 ## 3.9.0 - 2015-10-26
 
 * `Aws\ApiGateway` - Added support for the **AWS API Gateway** service.
