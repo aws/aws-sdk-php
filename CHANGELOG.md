@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.9.0 - 2015-10-26
 
 * `Aws\ApiGateway` - Added support for the **AWS API Gateway** service.
 * `Aws\Ssm` - Added support for EC2 Run Command, a new EC2 feature that enables
