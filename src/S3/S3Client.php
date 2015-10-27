@@ -624,9 +624,13 @@ class S3Client extends AwsClient
         return static function (callable $handler) use ($region) {
             return function (Command $command, $request = null) use ($handler, $region) {
                 if ($command->getName() === 'CreateBucket') {
-                    if ($region === 'us-east-1') {
+                    $locationConstraint = isset($command['CreateBucketConfiguration']['LocationConstraint'])
+                        ? $command['CreateBucketConfiguration']['LocationConstraint']
+                        : null;
+
+                    if ($locationConstraint === 'us-east-1') {
                         unset($command['CreateBucketConfiguration']);
-                    } else {
+                    } elseif ('us-east-1' !== $region && empty($locationConstraint)) {
                         $command['CreateBucketConfiguration'] = ['LocationConstraint' => $region];
                     }
                 }
