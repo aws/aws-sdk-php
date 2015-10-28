@@ -217,3 +217,27 @@ The following configuration options are valid:
     multipart upload and that is used to resume a previous upload. When this
     option is provided, the ``bucket``, ``key``, and ``part_size`` options
     are ignored.
+
+Multipart Copies
+----------------
+
+The SDK also includes a ``MultipartCopy`` object that is used in a similar manner
+to the ``MultipartUploader`` but is designed for copying objects between 5GB and
+5TB in size within S3.
+
+.. code-block:: php
+
+    use Aws\S3\MultipartCopy;
+    use Aws\Exception\MultipartUploadException;
+
+    $copier = new MultipartCopy($s3Client, '/bucket/key?versionId=foo', [
+        'bucket' => 'your-bucket',
+        'key'    => 'my-file.zip',
+    ]);
+
+    try {
+        $result = $copier->copy();
+        echo "Copy complete: {$result['ObjectURL'}\n";
+    } catch (MultipartUploadException $e) {
+        echo $e->getMessage() . "\n";
+    }

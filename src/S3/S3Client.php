@@ -15,6 +15,8 @@ use Aws\S3\Exception\S3Exception;
 use Aws\ResultInterface;
 use Aws\CommandInterface;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Promise;
+use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
@@ -389,8 +391,40 @@ class S3Client extends AwsClient
      * @see Aws\S3\MultipartUploader for more info about multipart uploads.
      * @return ResultInterface Returns the result of the upload.
      */
-    public function upload($bucket, $key, $body, $acl = 'private', array $options = [])
-    {
+    public function upload(
+        $bucket,
+        $key,
+        $body,
+        $acl = 'private',
+        array $options = []
+    ) {
+        return $this
+            ->uploadAsync($bucket, $key, $body, $acl, $options)
+            ->wait();
+    }
+
+    /**
+     * Upload a file, stream, or string to a bucket asynchronously.
+     *
+     * @param string $bucket  Bucket to upload the object.
+     * @param string $key     Key of the object.
+     * @param mixed  $body    Object data to upload. Can be a
+     *                        StreamInterface, PHP stream resource, or a
+     *                        string of data to upload.
+     * @param string $acl     ACL to apply to the object (default: private).
+     * @param array  $options Options used to configure the upload process.
+     *
+     * @see self::upload
+     * @return PromiseInterface     Returns a promise that will be fulfilled
+     *                              with the result of the upload.
+     */
+    public function uploadAsync(
+        $bucket,
+        $key,
+        $body,
+        $acl = 'private',
+        array $options = []
+    ) {
         // Prepare the options.
         static $defaults = [
             'before_upload' => null,
@@ -414,7 +448,7 @@ class S3Client extends AwsClient
                 'bucket' => $bucket,
                 'key'    => $key,
                 'acl'    => $acl
-            ] + $options))->upload();
+            ] + $options))->promise();
         } else {
             // Perform a regular PutObject operation.
             $command = $this->getCommand('PutObject', [
@@ -426,7 +460,7 @@ class S3Client extends AwsClient
             if (is_callable($options['before_upload'])) {
                 $options['before_upload']($command);
             }
-            return $this->execute($command);
+            return $this->executeAsync($command);
         }
     }
 
@@ -451,19 +485,46 @@ class S3Client extends AwsClient
      *
      * @param string $fromBucket    Bucket where the copy source resides.
      * @param string $fromKey       Key of the copy source.
-     * @param string $bucket        Bucket to which to copy the object.
-     * @param string $key           Key to which to copy the object.
+     * @param string $destBucket    Bucket to which to copy the object.
+     * @param string $destKey       Key to which to copy the object.
      * @param string $acl           ACL to apply to the copy (default: private).
      * @param array  $options       Options used to configure the upload process.
      *
      * @see Aws\S3\MultipartCopy for more info about multipart uploads.
-     * @return ResultInterface Returns the result of the upload.
+     * @return ResultInterface Returns the result of the copy.
      */
     public function copy(
         $fromBucket,
         $fromKey,
-        $bucket,
-        $key,
+        $destBucket,
+        $destKey,
+        $acl = 'private',
+        array $options = []
+    ) {
+        return $this
+            ->copyAsync($fromBucket, $fromKey, $destBucket, $destKey, $acl, $options)
+            ->wait();
+    }
+
+    /**
+     * Copy an object of any size to a different location asynchronously.
+     *
+     * @param string $fromBucket    Bucket where the copy source resides.
+     * @param string $fromKey       Key of the copy source.
+     * @param string $destBucket    Bucket to which to copy the object.
+     * @param string $destKey       Key to which to copy the object.
+     * @param string $acl           ACL to apply to the copy (default: private).
+     * @param array  $options       Options used to configure the upload process.
+     *
+     * @see self::copy for more info about the parameters above.
+     * @return PromiseInterface     Returns a promise that will be fulfilled
+     *                              with the result of the copy.
+     */
+    public function copyAsync(
+        $fromBucket,
+        $fromKey,
+        $destBucket,
+        $destKey,
         $acl = 'private',
         array $options = []
     ) {
@@ -471,39 +532,50 @@ class S3Client extends AwsClient
         static $defaults = [
             'before_upload' => null,
             'concurrency'   => 5,
+            'mup_threshold' => MultipartUploader::PART_MAX_SIZE,
             'params'        => [],
             'part_size'     => null,
             'version_id'    => null,
         ];
-        $options += $defaults;
-        $maxCopyableSize = MultipartUploader::PART_MAX_SIZE;
-        $copySource = sprintf('/%s/%s', $fromBucket, rawurlencode($fromKey));
-        if ($options['version_id']) {
-            $copySource .= "?versionId={$options['version_id']}";
-        }
 
-        $objectStats = $this->headObject([
-            'Bucket' => $fromBucket,
-            'Key' => $fromKey,
-        ]);
+        return Promise\coroutine($this->doCopyAsync(
+            ['Bucket' => $fromBucket, 'Key' => $fromKey],
+            ['Bucket' => $destBucket, 'Key' => $destKey],
+            $acl,
+            $options + $defaults
+        ));
+    }
 
-        if ($maxCopyableSize < $objectStats['ContentLength']) {
-            return (new MultipartCopy($this, $copySource, [
-                'bucket' => $bucket,
-                'key' => $key,
-                'source_metadata' => $objectStats,
-                'acl' => $acl,
-            ] + $options))
-                ->upload();
-        }
+    private function doCopyAsync(
+        array $source,
+        array $destination,
+        $acl,
+        array $options
+    ) {
+        return function () use ($source, $destination, $acl, $options) {
+            $sourcePath = '/' . $source['Bucket'] . '/' . rawurlencode($source['Key']);
+            if ($options['version_id']) {
+                $sourcePath .= "?versionId={$options['version_id']}";
+                $source['VersionId'] = $options['version_id'];
+            }
 
-        return $this->copyObject($options + [
-            'Bucket'            => $bucket,
-            'Key'               => $key,
-            'ACL'               => $acl,
-            'MetadataDirective' => 'COPY',
-            'CopySource'        => $copySource,
-        ] + $options['params']);
+            $objectStats = (yield $this->headObjectAsync($source));
+
+            if ($objectStats['ContentLength'] > $options['mup_threshold']) {
+                $mup = new MultipartCopy($this, $sourcePath, $destination + [
+                    'source_metadata' => $objectStats,
+                    'acl' => $acl,
+                ] + $options);
+
+                yield $mup->promise();
+            } else {
+                yield $this->copyObjectAsync($options + $destination + [
+                    'ACL'               => $acl,
+                    'MetadataDirective' => 'COPY',
+                    'CopySource'        => $sourcePath,
+                ] + $options['params']);
+            }
+        };
     }
 
     /**

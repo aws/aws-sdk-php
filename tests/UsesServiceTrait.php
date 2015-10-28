@@ -13,6 +13,8 @@ use Aws\Api\Service;
  */
 trait UsesServiceTrait
 {
+    private $_mock_handler;
+
     /**
      * Creates an instance of the AWS SDK for a test
      *
@@ -45,7 +47,7 @@ trait UsesServiceTrait
             && !isset($args['handler'])
             && !isset($args['http_handler'])
         ) {
-            $args['handler'] = new MockHandler([]);
+            $this->_mock_handler = $args['handler'] = new MockHandler([]);
         }
 
         return $this->getTestSdk($args)->createClient($service);
@@ -73,10 +75,15 @@ trait UsesServiceTrait
             }
         }
 
-        $mock = new MockHandler($results, $onFulfilled, $onRejected);
-        $client->getHandlerList()->setHandler($mock);
+        $this->_mock_handler = new MockHandler($results, $onFulfilled, $onRejected);
+        $client->getHandlerList()->setHandler($this->_mock_handler);
 
         return $client;
+    }
+
+    private function mockQueueEmpty()
+    {
+        return 0 === count($this->_mock_handler);
     }
 
     /**
