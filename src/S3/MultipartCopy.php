@@ -57,6 +57,11 @@ class MultipartCopy extends AbstractUploadManager
         ]);
     }
 
+    /**
+     * An alias of the self::upload method.
+     *
+     * @see self::upload
+     */
     public function copy()
     {
         return $this->upload();

@@ -485,8 +485,8 @@ class S3Client extends AwsClient
      *
      * @param string $fromBucket    Bucket where the copy source resides.
      * @param string $fromKey       Key of the copy source.
-     * @param string $bucket        Bucket to which to copy the object.
-     * @param string $key           Key to which to copy the object.
+     * @param string $destBucket    Bucket to which to copy the object.
+     * @param string $destKey       Key to which to copy the object.
      * @param string $acl           ACL to apply to the copy (default: private).
      * @param array  $options       Options used to configure the upload process.
      *
@@ -496,13 +496,13 @@ class S3Client extends AwsClient
     public function copy(
         $fromBucket,
         $fromKey,
-        $bucket,
-        $key,
+        $destBucket,
+        $destKey,
         $acl = 'private',
         array $options = []
     ) {
         return $this
-            ->copyAsync($fromBucket, $fromKey, $bucket, $key, $acl, $options)
+            ->copyAsync($fromBucket, $fromKey, $destBucket, $destKey, $acl, $options)
             ->wait();
     }
 
@@ -511,8 +511,8 @@ class S3Client extends AwsClient
      *
      * @param string $fromBucket    Bucket where the copy source resides.
      * @param string $fromKey       Key of the copy source.
-     * @param string $bucket        Bucket to which to copy the object.
-     * @param string $key           Key to which to copy the object.
+     * @param string $destBucket    Bucket to which to copy the object.
+     * @param string $destKey       Key to which to copy the object.
      * @param string $acl           ACL to apply to the copy (default: private).
      * @param array  $options       Options used to configure the upload process.
      *
@@ -523,8 +523,8 @@ class S3Client extends AwsClient
     public function copyAsync(
         $fromBucket,
         $fromKey,
-        $bucket,
-        $key,
+        $destBucket,
+        $destKey,
         $acl = 'private',
         array $options = []
     ) {
@@ -540,7 +540,7 @@ class S3Client extends AwsClient
 
         return Promise\coroutine($this->doCopyAsync(
             ['Bucket' => $fromBucket, 'Key' => $fromKey],
-            ['Bucket' => $bucket, 'Key' => $key],
+            ['Bucket' => $destBucket, 'Key' => $destKey],
             $acl,
             $options + $defaults
         ));
