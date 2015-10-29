@@ -82,9 +82,11 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
     {
         switch (get_class($shape)) {
             case 'Aws\Api\StructureShape':
-                foreach ($data as $key => &$value) {
-                    if ($shape->hasMember($key)) {
-                        $this->fixTimestamps($value, $shape->getMember($key));
+                if ($data) {
+                    foreach ($data as $key => &$value) {
+                        if ($shape->hasMember($key)) {
+                            $this->fixTimestamps($value, $shape->getMember($key));
+                        }
                     }
                 }
                 break;
