@@ -6,6 +6,8 @@ use Aws\AwsClient;
 /**
  * This client is used to interact with the **AWS Key Management Service**.
  *
+ * @method \Aws\Result cancelKeyDeletion(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise cancelKeyDeletionAsync(array $args = [])
  * @method \Aws\Result createAlias(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createAliasAsync(array $args = [])
  * @method \Aws\Result createGrant(array $args = [])
@@ -46,6 +48,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listKeyPoliciesAsync(array $args = [])
  * @method \Aws\Result listKeys(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listKeysAsync(array $args = [])
+ * @method \Aws\Result listRetirableGrants(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listRetirableGrantsAsync(array $args = [])
  * @method \Aws\Result putKeyPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putKeyPolicyAsync(array $args = [])
  * @method \Aws\Result reEncrypt(array $args = [])
@@ -54,6 +58,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise retireGrantAsync(array $args = [])
  * @method \Aws\Result revokeGrant(array $args = [])
  * @method \GuzzleHttp\Promise\Promise revokeGrantAsync(array $args = [])
+ * @method \Aws\Result scheduleKeyDeletion(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise scheduleKeyDeletionAsync(array $args = [])
  * @method \Aws\Result updateAlias(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateAliasAsync(array $args = [])
  * @method \Aws\Result updateKeyDescription(array $args = [])

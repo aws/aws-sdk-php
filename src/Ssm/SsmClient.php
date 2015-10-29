@@ -6,6 +6,8 @@ use Aws\AwsClient;
 /**
  * Amazon EC2 Simple Systems Manager client.
  *
+ * @method \Aws\Result cancelCommand(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise cancelCommandAsync(array $args = [])
  * @method \Aws\Result createAssociation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createAssociationAsync(array $args = [])
  * @method \Aws\Result createAssociationBatch(array $args = [])
@@ -20,12 +22,20 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeAssociationAsync(array $args = [])
  * @method \Aws\Result describeDocument(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeDocumentAsync(array $args = [])
+ * @method \Aws\Result describeInstanceInformation(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeInstanceInformationAsync(array $args = [])
  * @method \Aws\Result getDocument(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getDocumentAsync(array $args = [])
  * @method \Aws\Result listAssociations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAssociationsAsync(array $args = [])
+ * @method \Aws\Result listCommandInvocations(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listCommandInvocationsAsync(array $args = [])
+ * @method \Aws\Result listCommands(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listCommandsAsync(array $args = [])
  * @method \Aws\Result listDocuments(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listDocumentsAsync(array $args = [])
+ * @method \Aws\Result sendCommand(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise sendCommandAsync(array $args = [])
  * @method \Aws\Result updateAssociationStatus(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateAssociationStatusAsync(array $args = [])
  */
