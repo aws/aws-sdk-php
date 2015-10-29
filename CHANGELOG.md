@@ -4,6 +4,9 @@
 
 * `Aws\ApiGateway` - Fixed parameter name collision that occurred when calling
   `PutIntegration`.
+* `Aws\S3` - Added support for asynchronous copy and upload.
+* `Aws\S3` - Added support for setting a location constraint other than the
+  region of the S3 client.
 
 ## 3.9.1 - 2015-10-26
 
