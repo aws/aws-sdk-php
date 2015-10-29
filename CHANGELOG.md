@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.9.2 - 2015-10-29
 
 * `Aws\ApiGateway` - Fixed parameter name collision that occurred when calling
   `PutIntegration`.
