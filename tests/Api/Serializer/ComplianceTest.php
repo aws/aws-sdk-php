@@ -45,7 +45,7 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
                         $file . ': ' . $suite['description'],
                         $description,
                         $case['given']['name'],
-                        $case['params'],
+                        isset($case['params']) ? $case['params'] : [],
                         $case['serialized']
                     ];
                 }
@@ -77,7 +77,8 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
             'endpoint'     => $ep,
             'error_parser' => Service::createErrorParser($service->getProtocol()),
             'serializer'   => Service::createSerializer($service, $ep),
-            'version'      => 'latest'
+            'version'      => 'latest',
+            'validate'     => false,
         ]);
 
         $command = $client->getCommand($name, $args);
@@ -94,7 +95,7 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
                 break;
             case 'rest-xml':
                 // Normalize XML data.
-                if ($serialized['body'] && strpos($serialized['body'], '</')) {
+                if ($serialized['body'] && preg_match('/(\<\/|\/\>)/', $serialized['body'])) {
                     $serialized['body'] = str_replace(
                         ' />',
                         '/>',
