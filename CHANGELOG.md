@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.9.3 - 2015-11-02
 
 * `Aws\Iam` - Added support for service-aware policy simulation.
 
