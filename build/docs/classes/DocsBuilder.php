@@ -9,6 +9,11 @@ use Aws\Api\Operation;
 use Aws\Api\Service as Api;
 use Aws\Api\StructureShape;
 use Aws\Api\DocModel;
+use TokenReflection\Broker;
+use TokenReflection\ReflectionBase;
+use TokenReflection\ReflectionClass;
+use TokenReflection\ReflectionFunction;
+use TokenReflection\ReflectionMethod;
 
 /**
  * Builds documentation for a given service.
@@ -35,18 +40,23 @@ class DocsBuilder
     /** @var string[] */
     private $quickLinks;
 
+    /** @var string[] */
+    private $sources;
+
     public function __construct(
         ApiProvider $provider,
         $outputDir,
         $template,
         $baseUrl,
-        array $quickLinks
+        array $quickLinks,
+        array $sources
     ) {
         $this->apiProvider = $provider;
         $this->outputDir = $outputDir;
         $this->template = $template;
         $this->baseUrl = $baseUrl;
         $this->quickLinks = $quickLinks;
+        $this->sources = $sources;
     }
 
     public function build()
@@ -85,6 +95,7 @@ class DocsBuilder
         $this->updateClients($services);
         $this->updateAliases($services, $aliases);
         $this->updateSitemap();
+        $this->updateSearch($services);
     }
 
     private function updateHomepage(array $services)
@@ -326,6 +337,171 @@ EOHTML;
                 }
             }
         }
+    }
+
+    private function updateSearch(array $services)
+    {
+        fwrite(STDOUT, "Updating search index\n");
+
+        $broker = new Broker(new Broker\Backend\Memory());
+        foreach ($this->sources as $sourceFile) {
+            $broker->processFile($sourceFile);
+        }
+        $index = array_merge(
+            $this->getServiceAutocompleteIndex($services),
+            $this->getClassAutocompleteIndex($broker),
+            $this->getFunctionAutocompleteIndex($broker)
+        );
+        $jsonIndex = json_encode($this->utf8Encode($index));
+        $js = <<<EOJS
+var AWS = AWS || {};
+AWS.searchIndex = $jsonIndex;
+EOJS;
+
+        file_put_contents("{$this->outputDir}/searchIndex.js", $js);
+    }
+
+    private function utf8Encode($mixed)
+    {
+        if (is_array($mixed)) {
+            return array_map([$this, 'utf8Encode'], $mixed);
+        } elseif (is_string($mixed)) {
+            return utf8_encode($mixed);
+        } elseif (empty($mixed)) {
+            return '';
+        }
+
+        throw new \InvalidArgumentException('Expecting string or array, got ' . gettype($mixed));
+    }
+
+    private function getServiceAutocompleteIndex(array $services)
+    {
+        $autoComplete = [];
+
+        // Drop all but the latest version of each service from the array
+        $services = array_map(function (array $versions) {
+            return array_shift($versions);
+        }, $services);
+        // Add operations from latest version of each service to autocomplete index
+        foreach ($services as $service) {
+            foreach ($service->api->getOperations() as $operation => $def) {
+                $autoComplete []= [
+                    'name' => $service->namespace . '::' . lcfirst($operation),
+                    'match' => $operation,
+                    'link' => $service->serviceLink . '#' . strtolower($operation),
+                    'description' => strip_tags($service->docs->getOperationDocs($operation)),
+                ];
+            }
+        }
+
+        return $autoComplete;
+    }
+
+    private function getClassAutocompleteIndex(Broker $broker)
+    {
+        $methodsToSkip = $this->getMethodsToSkip();
+
+        $autoComplete = [];
+        $classes = array_filter(
+            array_values($broker->getClasses()),
+            [$this, 'filterVisible']
+        );
+        foreach ($classes as $class) {
+            // Add class to autocomplete index
+            $autoComplete []= [
+                'name' => $class->getName(),
+                'match' => $class->getShortName(),
+                'link' => 'class-' . str_replace('\\', '.', $class->getName()) . '.html',
+                'description' => $this->shiftDocCommentLine($class->getDocComment()),
+            ];
+
+            $methods = array_filter(
+                $class->getOwnMethods(\ReflectionMethod::IS_PUBLIC|\ReflectionMethod::IS_PROTECTED),
+                [$this, 'filterVisible']
+            );
+
+            // Skip over methods implementing base interfaces or that start with
+            // an underscore
+            $methods = array_filter($methods, function (ReflectionMethod $method) use ($methodsToSkip) {
+                $name = $method->getName();
+                return !in_array($name, $methodsToSkip)
+                    && $name{0} !== '_';
+            });
+
+            foreach ($methods as $method) {
+                $autoComplete []= [
+                    'name' => $class->getName() . '::' . $method->getName(),
+                    'match' => $method->getName(),
+                    'link' => 'class-' . str_replace('\\', '.', $class->getName()) . '.html'
+                        . '#_' . $method->getName(),
+                    'description' => '',
+                ];
+            }
+        }
+
+        return $autoComplete;
+    }
+
+    private function getMethodsToSkip()
+    {
+        $interfacesToSkip = [
+            '\\ArrayAccess',
+            '\\Countable',
+            '\\Iterator',
+            '\\IteratorAggregate',
+            '\\JsonSerializable',
+            '\\Serializable',
+        ];
+
+
+        $methodsToSkip = [];
+        foreach ($interfacesToSkip as $interfaceToSkip) {
+            $methodsToSkip = array_merge(
+                $methodsToSkip,
+                array_map(function (\ReflectionMethod $method) {
+                    return $method->getName();
+                }, (new \ReflectionClass($interfaceToSkip))->getMethods())
+            );
+        }
+
+        return $methodsToSkip;
+    }
+
+    private function getFunctionAutocompleteIndex(Broker $broker)
+    {
+        $functions = array_filter(
+            array_values($broker->getFunctions()),
+            [$this, 'filterVisible']
+        );
+
+        return array_map(function (ReflectionFunction $function) {
+            return [
+                'name' => $function->getName(),
+                'match' => $function->getShortName(),
+                'link' => 'function-' . str_replace('\\', '.', $function->getName()) . '.html',
+                'description' => $this->shiftDocCommentLine($function->getDocComment()),
+            ];
+        }, $functions);
+    }
+
+    private function filterVisible(ReflectionBase $reflected)
+    {
+        $annotations = $reflected->getAnnotations();
+
+        return empty($annotations['internal'])
+            && empty($annotations['deprecated']);
+    }
+
+    private function shiftDocCommentLine($comment)
+    {
+        $comment = array_map(function ($line) {
+            return ltrim($line, '/* ');
+        }, explode("\n", $comment));
+        $comment = array_filter($comment, function ($line) {
+            return !empty($line);
+        });
+
+        return array_shift($comment);
     }
 
     private function createHtmlForWaiters(HtmlDocument $html, Api $service)
@@ -601,6 +777,8 @@ EOT;
 
     private function updateSitemap()
     {
+        fwrite(STDOUT, "Updating sitemap\n");
+
         $writer = new \SimpleXMLElement("<urlset></urlset>");
         $writer->addAttribute('xmlns', "http://www.sitemaps.org/schemas/sitemap/0.9");
 
