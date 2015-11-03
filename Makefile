@@ -93,7 +93,7 @@ compile-json:
 	git diff --name-only | grep ^src/data/.*\.json\.php$ || true
 
 annotate-clients: clean
-	php build/annotate-clients.php --tag=latest
+	php build/annotate-clients.php --all
 
 annotate-client-locator: clean
 	php build/annotate-client-locator.php

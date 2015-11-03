@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DeviceFarm` - Added support for managing projects, device pools, runs,
+  and uploads.
+* `Aws\Sts` - Added support for 64-character role session names.
+
 ## 3.9.3 - 2015-11-02
 
 * `Aws\Iam` - Added support for service-aware policy simulation.
