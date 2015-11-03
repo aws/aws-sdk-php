@@ -25,6 +25,61 @@ return array (
     'signatureVersion' => 'v4',
     'namespace' => 'Ssm',
     'operations' => array(
+        'CancelCommand' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonSSM.CancelCommand',
+                ),
+                'CommandId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 36,
+                    'maxLength' => 36,
+                ),
+                'InstanceIds' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'minItems' => 1,
+                    'maxItems' => 50,
+                    'items' => array(
+                        'name' => 'InstanceId',
+                        'type' => 'string',
+                        'minLength' => 10,
+                        'maxLength' => 10,
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'class' => 'InvalidCommandIdException',
+                ),
+                array(
+                    'reason' => 'The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.',
+                    'class' => 'InvalidInstanceIdException',
+                ),
+                array(
+                    'reason' => 'You cannot specify an instance ID in more than one association.',
+                    'class' => 'DuplicateInstanceIdException',
+                ),
+            ),
+        ),
         'CreateAssociation' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -50,8 +105,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'minLength' => 3,
-                    'maxLength' => 64,
                 ),
                 'InstanceId' => array(
                     'required' => true,
@@ -59,6 +112,20 @@ return array (
                     'location' => 'json',
                     'minLength' => 10,
                     'maxLength' => 10,
+                ),
+                'Parameters' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'additionalProperties' => array(
+                        'type' => 'array',
+                        'data' => array(
+                            'shape_name' => 'ParameterName',
+                        ),
+                        'items' => array(
+                            'name' => 'ParameterValue',
+                            'type' => 'string',
+                        ),
+                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -75,12 +142,20 @@ return array (
                     'class' => 'InternalServerErrorException',
                 ),
                 array(
-                    'reason' => 'The configuration document is not valid.',
+                    'reason' => 'The specified document does not exist.',
                     'class' => 'InvalidDocumentException',
                 ),
                 array(
-                    'reason' => 'You must specify the ID of a running instance.',
+                    'reason' => 'The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.',
                     'class' => 'InvalidInstanceIdException',
+                ),
+                array(
+                    'reason' => 'The document does not support the platform type of the given instance ID(s).',
+                    'class' => 'UnsupportedPlatformTypeException',
+                ),
+                array(
+                    'reason' => 'You must specify values for all required parameters in the SSM document. You can only supply values to parameters defined in the SSM document.',
+                    'class' => 'InvalidParametersException',
                 ),
             ),
         ),
@@ -115,13 +190,24 @@ return array (
                         'properties' => array(
                             'Name' => array(
                                 'type' => 'string',
-                                'minLength' => 3,
-                                'maxLength' => 64,
                             ),
                             'InstanceId' => array(
                                 'type' => 'string',
                                 'minLength' => 10,
                                 'maxLength' => 10,
+                            ),
+                            'Parameters' => array(
+                                'type' => 'object',
+                                'additionalProperties' => array(
+                                    'type' => 'array',
+                                    'data' => array(
+                                        'shape_name' => 'ParameterName',
+                                    ),
+                                    'items' => array(
+                                        'name' => 'ParameterValue',
+                                        'type' => 'string',
+                                    ),
+                                ),
                             ),
                         ),
                     ),
@@ -133,12 +219,16 @@ return array (
                     'class' => 'InternalServerErrorException',
                 ),
                 array(
-                    'reason' => 'The configuration document is not valid.',
+                    'reason' => 'The specified document does not exist.',
                     'class' => 'InvalidDocumentException',
                 ),
                 array(
-                    'reason' => 'You must specify the ID of a running instance.',
+                    'reason' => 'The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.',
                     'class' => 'InvalidInstanceIdException',
+                ),
+                array(
+                    'reason' => 'You must specify values for all required parameters in the SSM document. You can only supply values to parameters defined in the SSM document.',
+                    'class' => 'InvalidParametersException',
                 ),
                 array(
                     'reason' => 'You cannot specify an instance ID in more than one association.',
@@ -147,6 +237,10 @@ return array (
                 array(
                     'reason' => 'You can have at most 2,000 active associations.',
                     'class' => 'AssociationLimitExceededException',
+                ),
+                array(
+                    'reason' => 'The document does not support the platform type of the given instance ID(s).',
+                    'class' => 'UnsupportedPlatformTypeException',
                 ),
             ),
         ),
@@ -181,17 +275,15 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'minLength' => 3,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified configuration document already exists.',
+                    'reason' => 'The specified SSM document already exists.',
                     'class' => 'DocumentAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'The size limit of a configuration document is 64 KB.',
+                    'reason' => 'The size limit of an SSM document is 64 KB.',
                     'class' => 'MaxDocumentSizeExceededException',
                 ),
                 array(
@@ -199,11 +291,11 @@ return array (
                     'class' => 'InternalServerErrorException',
                 ),
                 array(
-                    'reason' => 'The content for the configuration document is not valid.',
+                    'reason' => 'The content for the SSM document is not valid.',
                     'class' => 'InvalidDocumentContentException',
                 ),
                 array(
-                    'reason' => 'You can have at most 100 active configuration documents.',
+                    'reason' => 'You can have at most 100 active SSM documents.',
                     'class' => 'DocumentLimitExceededException',
                 ),
             ),
@@ -233,8 +325,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'minLength' => 3,
-                    'maxLength' => 64,
                 ),
                 'InstanceId' => array(
                     'required' => true,
@@ -254,11 +344,11 @@ return array (
                     'class' => 'InternalServerErrorException',
                 ),
                 array(
-                    'reason' => 'The configuration document is not valid.',
+                    'reason' => 'The specified document does not exist.',
                     'class' => 'InvalidDocumentException',
                 ),
                 array(
-                    'reason' => 'You must specify the ID of a running instance.',
+                    'reason' => 'The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.',
                     'class' => 'InvalidInstanceIdException',
                 ),
                 array(
@@ -292,8 +382,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'minLength' => 3,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -302,11 +390,11 @@ return array (
                     'class' => 'InternalServerErrorException',
                 ),
                 array(
-                    'reason' => 'The configuration document is not valid.',
+                    'reason' => 'The specified document does not exist.',
                     'class' => 'InvalidDocumentException',
                 ),
                 array(
-                    'reason' => 'You must disassociate a configuration document from all instances before you can delete it.',
+                    'reason' => 'You must disassociate an SSM document from all instances before you can delete it.',
                     'class' => 'AssociatedInstancesException',
                 ),
             ),
@@ -336,8 +424,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'minLength' => 3,
-                    'maxLength' => 64,
                 ),
                 'InstanceId' => array(
                     'required' => true,
@@ -357,11 +443,11 @@ return array (
                     'class' => 'InternalServerErrorException',
                 ),
                 array(
-                    'reason' => 'The configuration document is not valid.',
+                    'reason' => 'The specified document does not exist.',
                     'class' => 'InvalidDocumentException',
                 ),
                 array(
-                    'reason' => 'You must specify the ID of a running instance.',
+                    'reason' => 'The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.',
                     'class' => 'InvalidInstanceIdException',
                 ),
             ),
@@ -391,8 +477,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'minLength' => 3,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -401,8 +485,89 @@ return array (
                     'class' => 'InternalServerErrorException',
                 ),
                 array(
-                    'reason' => 'The configuration document is not valid.',
+                    'reason' => 'The specified document does not exist.',
                     'class' => 'InvalidDocumentException',
+                ),
+            ),
+        ),
+        'DescribeInstanceInformation' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'DescribeInstanceInformationResult',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonSSM.DescribeInstanceInformation',
+                ),
+                'InstanceInformationFilterList' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'minItems' => 1,
+                    'items' => array(
+                        'name' => 'InstanceInformationFilter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'key' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'valueSet' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'minItems' => 1,
+                                'maxItems' => 100,
+                                'items' => array(
+                                    'name' => 'InstanceInformationFilterValue',
+                                    'type' => 'string',
+                                    'minLength' => 1,
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'MaxResults' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'minimum' => 5,
+                    'maximum' => 50,
+                ),
+                'NextToken' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'An error occurred on the server side.',
+                    'class' => 'InternalServerErrorException',
+                ),
+                array(
+                    'reason' => 'The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.',
+                    'class' => 'InvalidInstanceIdException',
+                ),
+                array(
+                    'reason' => 'The specified token is not valid.',
+                    'class' => 'InvalidNextTokenException',
+                ),
+                array(
+                    'reason' => 'The specified filter value is not valid.',
+                    'class' => 'InvalidInstanceInformationFilterValueException',
+                ),
+                array(
+                    'reason' => 'The specified key is not valid.',
+                    'class' => 'InvalidFilterKeyException',
                 ),
             ),
         ),
@@ -431,8 +596,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'minLength' => 3,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -441,7 +604,7 @@ return array (
                     'class' => 'InternalServerErrorException',
                 ),
                 array(
-                    'reason' => 'The configuration document is not valid.',
+                    'reason' => 'The specified document does not exist.',
                     'class' => 'InvalidDocumentException',
                 ),
             ),
@@ -510,6 +673,177 @@ return array (
                 ),
             ),
         ),
+        'ListCommandInvocations' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'ListCommandInvocationsResult',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonSSM.ListCommandInvocations',
+                ),
+                'CommandId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 36,
+                    'maxLength' => 36,
+                ),
+                'InstanceId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 10,
+                    'maxLength' => 10,
+                ),
+                'MaxResults' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'minimum' => 1,
+                    'maximum' => 50,
+                ),
+                'NextToken' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'minItems' => 1,
+                    'maxItems' => 3,
+                    'items' => array(
+                        'name' => 'CommandFilter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'key' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'value' => array(
+                                'required' => true,
+                                'type' => 'string',
+                                'minLength' => 1,
+                            ),
+                        ),
+                    ),
+                ),
+                'Details' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'class' => 'InvalidCommandIdException',
+                ),
+                array(
+                    'reason' => 'The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.',
+                    'class' => 'InvalidInstanceIdException',
+                ),
+                array(
+                    'reason' => 'The specified key is not valid.',
+                    'class' => 'InvalidFilterKeyException',
+                ),
+                array(
+                    'reason' => 'The specified token is not valid.',
+                    'class' => 'InvalidNextTokenException',
+                ),
+            ),
+        ),
+        'ListCommands' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'ListCommandsResult',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonSSM.ListCommands',
+                ),
+                'CommandId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 36,
+                    'maxLength' => 36,
+                ),
+                'InstanceId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 10,
+                    'maxLength' => 10,
+                ),
+                'MaxResults' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'minimum' => 1,
+                    'maximum' => 50,
+                ),
+                'NextToken' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'minItems' => 1,
+                    'maxItems' => 3,
+                    'items' => array(
+                        'name' => 'CommandFilter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'key' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'value' => array(
+                                'required' => true,
+                                'type' => 'string',
+                                'minLength' => 1,
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'class' => 'InvalidCommandIdException',
+                ),
+                array(
+                    'reason' => 'The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.',
+                    'class' => 'InvalidInstanceIdException',
+                ),
+                array(
+                    'reason' => 'The specified key is not valid.',
+                    'class' => 'InvalidFilterKeyException',
+                ),
+                array(
+                    'reason' => 'The specified token is not valid.',
+                    'class' => 'InvalidNextTokenException',
+                ),
+            ),
+        ),
         'ListDocuments' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -571,6 +905,113 @@ return array (
                     'reason' => 'The specified token is not valid.',
                     'class' => 'InvalidNextTokenException',
                 ),
+                array(
+                    'reason' => 'The specified key is not valid.',
+                    'class' => 'InvalidFilterKeyException',
+                ),
+            ),
+        ),
+        'SendCommand' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'SendCommandResult',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AmazonSSM.SendCommand',
+                ),
+                'InstanceIds' => array(
+                    'required' => true,
+                    'type' => 'array',
+                    'location' => 'json',
+                    'minItems' => 1,
+                    'maxItems' => 50,
+                    'items' => array(
+                        'name' => 'InstanceId',
+                        'type' => 'string',
+                        'minLength' => 10,
+                        'maxLength' => 10,
+                    ),
+                ),
+                'DocumentName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'TimeoutSeconds' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'minimum' => 30,
+                    'maximum' => 2592000,
+                ),
+                'Comment' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'maxLength' => 100,
+                ),
+                'Parameters' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'additionalProperties' => array(
+                        'type' => 'array',
+                        'data' => array(
+                            'shape_name' => 'ParameterName',
+                        ),
+                        'items' => array(
+                            'name' => 'ParameterValue',
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+                'OutputS3BucketName' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 3,
+                    'maxLength' => 63,
+                ),
+                'OutputS3KeyPrefix' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'maxLength' => 500,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'You cannot specify an instance ID in more than one association.',
+                    'class' => 'DuplicateInstanceIdException',
+                ),
+                array(
+                    'reason' => 'The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.',
+                    'class' => 'InvalidInstanceIdException',
+                ),
+                array(
+                    'reason' => 'The specified document does not exist.',
+                    'class' => 'InvalidDocumentException',
+                ),
+                array(
+                    'reason' => 'The S3 bucket does not exist.',
+                    'class' => 'InvalidOutputFolderException',
+                ),
+                array(
+                    'reason' => 'You must specify values for all required parameters in the SSM document. You can only supply values to parameters defined in the SSM document.',
+                    'class' => 'InvalidParametersException',
+                ),
+                array(
+                    'reason' => 'The document does not support the platform type of the given instance ID(s).',
+                    'class' => 'UnsupportedPlatformTypeException',
+                ),
             ),
         ),
         'UpdateAssociationStatus' => array(
@@ -598,8 +1039,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'minLength' => 3,
-                    'maxLength' => 64,
                 ),
                 'InstanceId' => array(
                     'required' => true,
@@ -644,11 +1083,11 @@ return array (
                     'class' => 'InternalServerErrorException',
                 ),
                 array(
-                    'reason' => 'You must specify the ID of a running instance.',
+                    'reason' => 'The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.',
                     'class' => 'InvalidInstanceIdException',
                 ),
                 array(
-                    'reason' => 'The configuration document is not valid.',
+                    'reason' => 'The specified document does not exist.',
                     'class' => 'InvalidDocumentException',
                 ),
                 array(
@@ -667,6 +1106,10 @@ return array (
         ),
     ),
     'models' => array(
+        'EmptyOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+        ),
         'CreateAssociationResult' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -697,6 +1140,16 @@ return array (
                                     'type' => 'string',
                                 ),
                                 'AdditionalInfo' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                        'Parameters' => array(
+                            'type' => 'object',
+                            'additionalProperties' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'ParameterValue',
                                     'type' => 'string',
                                 ),
                             ),
@@ -743,6 +1196,16 @@ return array (
                                     ),
                                 ),
                             ),
+                            'Parameters' => array(
+                                'type' => 'object',
+                                'additionalProperties' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'ParameterValue',
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -762,6 +1225,16 @@ return array (
                                     ),
                                     'InstanceId' => array(
                                         'type' => 'string',
+                                    ),
+                                    'Parameters' => array(
+                                        'type' => 'object',
+                                        'additionalProperties' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'ParameterValue',
+                                                'type' => 'string',
+                                            ),
+                                        ),
                                     ),
                                 ),
                             ),
@@ -796,13 +1269,42 @@ return array (
                         'Status' => array(
                             'type' => 'string',
                         ),
+                        'Description' => array(
+                            'type' => 'string',
+                        ),
+                        'Parameters' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'DocumentParameter',
+                                'type' => 'object',
+                                'sentAs' => 'DocumentParameter',
+                                'properties' => array(
+                                    'Name' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Type' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Description' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'DefaultValue' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'PlatformTypes' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'PlatformType',
+                                'type' => 'string',
+                                'sentAs' => 'PlatformType',
+                            ),
+                        ),
                     ),
                 ),
             ),
-        ),
-        'EmptyOutput' => array(
-            'type' => 'object',
-            'additionalProperties' => true,
         ),
         'DescribeAssociationResult' => array(
             'type' => 'object',
@@ -838,6 +1340,16 @@ return array (
                                 ),
                             ),
                         ),
+                        'Parameters' => array(
+                            'type' => 'object',
+                            'additionalProperties' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'ParameterValue',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -862,7 +1374,85 @@ return array (
                         'Status' => array(
                             'type' => 'string',
                         ),
+                        'Description' => array(
+                            'type' => 'string',
+                        ),
+                        'Parameters' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'DocumentParameter',
+                                'type' => 'object',
+                                'sentAs' => 'DocumentParameter',
+                                'properties' => array(
+                                    'Name' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Type' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Description' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'DefaultValue' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'PlatformTypes' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'PlatformType',
+                                'type' => 'string',
+                                'sentAs' => 'PlatformType',
+                            ),
+                        ),
                     ),
+                ),
+            ),
+        ),
+        'DescribeInstanceInformationResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'InstanceInformationList' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'InstanceInformation',
+                        'type' => 'object',
+                        'sentAs' => 'InstanceInformation',
+                        'properties' => array(
+                            'InstanceId' => array(
+                                'type' => 'string',
+                            ),
+                            'PingStatus' => array(
+                                'type' => 'string',
+                            ),
+                            'LastPingDateTime' => array(
+                                'type' => 'string',
+                            ),
+                            'AgentVersion' => array(
+                                'type' => 'string',
+                            ),
+                            'IsLatestVersion' => array(
+                                'type' => 'boolean',
+                            ),
+                            'PlatformType' => array(
+                                'type' => 'string',
+                            ),
+                            'PlatformName' => array(
+                                'type' => 'string',
+                            ),
+                            'PlatformVersion' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+                'NextToken' => array(
+                    'type' => 'string',
+                    'location' => 'json',
                 ),
             ),
         ),
@@ -907,6 +1497,141 @@ return array (
                 ),
             ),
         ),
+        'ListCommandInvocationsResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'CommandInvocations' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'CommandInvocation',
+                        'type' => 'object',
+                        'properties' => array(
+                            'CommandId' => array(
+                                'type' => 'string',
+                            ),
+                            'InstanceId' => array(
+                                'type' => 'string',
+                            ),
+                            'Comment' => array(
+                                'type' => 'string',
+                            ),
+                            'DocumentName' => array(
+                                'type' => 'string',
+                            ),
+                            'RequestedDateTime' => array(
+                                'type' => 'string',
+                            ),
+                            'Status' => array(
+                                'type' => 'string',
+                            ),
+                            'TraceOutput' => array(
+                                'type' => 'string',
+                            ),
+                            'CommandPlugins' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'CommandPlugin',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'Name' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Status' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'ResponseCode' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                        'ResponseStartDateTime' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'ResponseFinishDateTime' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Output' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'OutputS3BucketName' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'OutputS3KeyPrefix' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'NextToken' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'ListCommandsResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Commands' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'Command',
+                        'type' => 'object',
+                        'properties' => array(
+                            'CommandId' => array(
+                                'type' => 'string',
+                            ),
+                            'DocumentName' => array(
+                                'type' => 'string',
+                            ),
+                            'Comment' => array(
+                                'type' => 'string',
+                            ),
+                            'ExpiresAfter' => array(
+                                'type' => 'string',
+                            ),
+                            'Parameters' => array(
+                                'type' => 'object',
+                                'additionalProperties' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'ParameterValue',
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                            'InstanceIds' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'InstanceId',
+                                    'type' => 'string',
+                                ),
+                            ),
+                            'RequestedDateTime' => array(
+                                'type' => 'string',
+                            ),
+                            'Status' => array(
+                                'type' => 'string',
+                            ),
+                            'OutputS3BucketName' => array(
+                                'type' => 'string',
+                            ),
+                            'OutputS3KeyPrefix' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+                'NextToken' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
         'ListDocumentsResult' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -922,12 +1647,73 @@ return array (
                             'Name' => array(
                                 'type' => 'string',
                             ),
+                            'PlatformTypes' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'PlatformType',
+                                    'type' => 'string',
+                                    'sentAs' => 'PlatformType',
+                                ),
+                            ),
                         ),
                     ),
                 ),
                 'NextToken' => array(
                     'type' => 'string',
                     'location' => 'json',
+                ),
+            ),
+        ),
+        'SendCommandResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Command' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'CommandId' => array(
+                            'type' => 'string',
+                        ),
+                        'DocumentName' => array(
+                            'type' => 'string',
+                        ),
+                        'Comment' => array(
+                            'type' => 'string',
+                        ),
+                        'ExpiresAfter' => array(
+                            'type' => 'string',
+                        ),
+                        'Parameters' => array(
+                            'type' => 'object',
+                            'additionalProperties' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'ParameterValue',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                        'InstanceIds' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'InstanceId',
+                                'type' => 'string',
+                            ),
+                        ),
+                        'RequestedDateTime' => array(
+                            'type' => 'string',
+                        ),
+                        'Status' => array(
+                            'type' => 'string',
+                        ),
+                        'OutputS3BucketName' => array(
+                            'type' => 'string',
+                        ),
+                        'OutputS3KeyPrefix' => array(
+                            'type' => 'string',
+                        ),
+                    ),
                 ),
             ),
         ),
@@ -961,6 +1747,16 @@ return array (
                                     'type' => 'string',
                                 ),
                                 'AdditionalInfo' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                        'Parameters' => array(
+                            'type' => 'object',
+                            'additionalProperties' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'ParameterValue',
                                     'type' => 'string',
                                 ),
                             ),

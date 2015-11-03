@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AutoScaling` - Added support for EBS encryption.
+* `Aws\Iam` - Added support for resource-based policy simulations.
+* `Aws\Iam` - Added support for service-aware policy simulation.
+* `Aws\Ssm` - Added support for EC2 Run Command, a new EC2 feature that enables
+  you to securely and remotely manage the configuration of your Amazon EC2
+  Windows instances.
+
 ## 2.8.22 - 2015-10-15
 
 * `Aws\CloudFormation` - Added support for specifying affected resource types

@@ -4607,6 +4607,24 @@ return array (
                         'maxLength' => 2048,
                     ),
                 ),
+                'ResourcePolicy' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 131072,
+                ),
+                'ResourceOwner' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 2048,
+                ),
+                'CallerArn' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 2048,
+                ),
                 'ContextEntries' => array(
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -4633,6 +4651,12 @@ return array (
                             ),
                         ),
                     ),
+                ),
+                'ResourceHandlingOption' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 64,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -4716,6 +4740,24 @@ return array (
                         'maxLength' => 2048,
                     ),
                 ),
+                'ResourcePolicy' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 131072,
+                ),
+                'ResourceOwner' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 2048,
+                ),
+                'CallerArn' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 2048,
+                ),
                 'ContextEntries' => array(
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -4742,6 +4784,12 @@ return array (
                             ),
                         ),
                     ),
+                ),
+                'ResourceHandlingOption' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 64,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -7839,6 +7887,126 @@ return array (
                                     'name' => 'ContextKeyNameType',
                                     'type' => 'string',
                                     'sentAs' => 'member',
+                                ),
+                            ),
+                            'EvalDecisionDetails' => array(
+                                'type' => 'array',
+                                'filters' => array(
+                                    array(
+                                        'method' => 'Aws\\Common\\Command\\XmlResponseLocationVisitor::xmlMap',
+                                        'args' => array(
+                                            '@value',
+                                            'entry',
+                                            'key',
+                                            'value',
+                                        ),
+                                    ),
+                                ),
+                                'items' => array(
+                                    'name' => 'entry',
+                                    'type' => 'object',
+                                    'sentAs' => 'entry',
+                                    'additionalProperties' => true,
+                                    'properties' => array(
+                                        'key' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'value' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                                'additionalProperties' => false,
+                            ),
+                            'ResourceSpecificResults' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'ResourceSpecificResult',
+                                    'type' => 'object',
+                                    'sentAs' => 'member',
+                                    'properties' => array(
+                                        'EvalResourceName' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'EvalResourceDecision' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'MatchedStatements' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'Statement',
+                                                'type' => 'object',
+                                                'sentAs' => 'member',
+                                                'properties' => array(
+                                                    'SourcePolicyId' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'SourcePolicyType' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'StartPosition' => array(
+                                                        'type' => 'object',
+                                                        'properties' => array(
+                                                            'Line' => array(
+                                                                'type' => 'numeric',
+                                                            ),
+                                                            'Column' => array(
+                                                                'type' => 'numeric',
+                                                            ),
+                                                        ),
+                                                    ),
+                                                    'EndPosition' => array(
+                                                        'type' => 'object',
+                                                        'properties' => array(
+                                                            'Line' => array(
+                                                                'type' => 'numeric',
+                                                            ),
+                                                            'Column' => array(
+                                                                'type' => 'numeric',
+                                                            ),
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                        'MissingContextValues' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'ContextKeyNameType',
+                                                'type' => 'string',
+                                                'sentAs' => 'member',
+                                            ),
+                                        ),
+                                        'EvalDecisionDetails' => array(
+                                            'type' => 'array',
+                                            'filters' => array(
+                                                array(
+                                                    'method' => 'Aws\\Common\\Command\\XmlResponseLocationVisitor::xmlMap',
+                                                    'args' => array(
+                                                        '@value',
+                                                        'entry',
+                                                        'key',
+                                                        'value',
+                                                    ),
+                                                ),
+                                            ),
+                                            'items' => array(
+                                                'name' => 'entry',
+                                                'type' => 'object',
+                                                'sentAs' => 'entry',
+                                                'additionalProperties' => true,
+                                                'properties' => array(
+                                                    'key' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'value' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
+                                            'additionalProperties' => false,
+                                        ),
+                                    ),
                                 ),
                             ),
                         ),

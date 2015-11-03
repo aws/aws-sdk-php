@@ -505,6 +505,10 @@ return array (
                                         'minimum' => 100,
                                         'maximum' => 20000,
                                     ),
+                                    'Encrypted' => array(
+                                        'type' => 'boolean',
+                                        'format' => 'boolean-string',
+                                    ),
                                 ),
                             ),
                             'NoDevice' => array(
@@ -2997,6 +3001,9 @@ return array (
                                                 ),
                                                 'Iops' => array(
                                                     'type' => 'numeric',
+                                                ),
+                                                'Encrypted' => array(
+                                                    'type' => 'boolean',
                                                 ),
                                             ),
                                         ),

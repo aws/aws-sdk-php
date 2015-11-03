@@ -26,6 +26,7 @@ use Guzzle\Service\Resource\Model;
 /**
  * Client to interact with Amazon Simple Systems Management Service
  *
+ * @method Model cancelCommand(array $args = array()) {@command Ssm CancelCommand}
  * @method Model createAssociation(array $args = array()) {@command Ssm CreateAssociation}
  * @method Model createAssociationBatch(array $args = array()) {@command Ssm CreateAssociationBatch}
  * @method Model createDocument(array $args = array()) {@command Ssm CreateDocument}
@@ -33,9 +34,13 @@ use Guzzle\Service\Resource\Model;
  * @method Model deleteDocument(array $args = array()) {@command Ssm DeleteDocument}
  * @method Model describeAssociation(array $args = array()) {@command Ssm DescribeAssociation}
  * @method Model describeDocument(array $args = array()) {@command Ssm DescribeDocument}
+ * @method Model describeInstanceInformation(array $args = array()) {@command Ssm DescribeInstanceInformation}
  * @method Model getDocument(array $args = array()) {@command Ssm GetDocument}
  * @method Model listAssociations(array $args = array()) {@command Ssm ListAssociations}
+ * @method Model listCommandInvocations(array $args = array()) {@command Ssm ListCommandInvocations}
+ * @method Model listCommands(array $args = array()) {@command Ssm ListCommands}
  * @method Model listDocuments(array $args = array()) {@command Ssm ListDocuments}
+ * @method Model sendCommand(array $args = array()) {@command Ssm SendCommand}
  * @method Model updateAssociationStatus(array $args = array()) {@command Ssm UpdateAssociationStatus}
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-ssm.html User guide
