@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 2.8.23 - 2015-11-02
 
 * `Aws\AutoScaling` - Added support for EBS encryption.
 * `Aws\Iam` - Added support for resource-based policy simulations.
