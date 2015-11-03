@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.9.4 - 2015-11-03
 
 * `Aws\DeviceFarm` - Added support for managing projects, device pools, runs,
   and uploads.
