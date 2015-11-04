@@ -32,9 +32,6 @@ class SessionHandler implements \SessionHandlerInterface
     /** @var string Stores serialized data for tracking changes. */
     private $dataRead;
 
-    /** @var string Keeps track of the open session's ID. */
-    private $openSessionId;
-
     /** @var bool Keeps track of whether the session has been written. */
     private $sessionWritten;
 
@@ -100,9 +97,8 @@ class SessionHandler implements \SessionHandlerInterface
     {
         $this->savePath = $savePath;
         $this->sessionName = $sessionName;
-        $this->openSessionId = session_id();
 
-        return (bool) $this->openSessionId;
+        return true;
     }
 
     /**
@@ -115,12 +111,10 @@ class SessionHandler implements \SessionHandlerInterface
         // Make sure the session is unlocked and the expiration time is updated,
         // even if the write did not occur
         if (!$this->sessionWritten) {
-            $id = $this->formatId($this->openSessionId);
+            $id = $this->formatId(session_id());
             $result = $this->connection->write($id, '', false);
             $this->sessionWritten = (bool) $result;
         }
-
-        $this->openSessionId = null;
 
         return $this->sessionWritten;
     }
