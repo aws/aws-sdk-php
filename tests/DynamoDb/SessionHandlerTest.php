@@ -53,4 +53,20 @@ class SessionHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($sh->write('test', serialize($data)));
         $this->assertTrue($sh->close());
     }
+
+    public function testHandlerWhenNothingWritten()
+    {
+        $connection = $this->getMockForAbstractClass(
+            'Aws\DynamoDb\SessionConnectionInterface'
+        );
+        $connection->expects($this->once())
+            ->method('write')
+            ->with('name_test', '', false)
+            ->willReturn(true);
+
+        $sh = new SessionHandler($connection);
+        session_id('test');
+        $sh->open('', 'name');
+        $this->assertTrue($sh->close());
+    }
 }
