@@ -43,7 +43,9 @@ class StsClient extends AwsClient
             $c['AccessKeyId'],
             $c['SecretAccessKey'],
             isset($c['SessionToken']) ? $c['SessionToken'] : null,
-            isset($c['Expiration']) ? $c['Expiration'] : null
+            isset($c['Expiration']) && $c['Expiration'] instanceof \DateTimeInterface
+                ? (int) $c['Expiration']->format('U')
+                : null
         );
     }
 }
