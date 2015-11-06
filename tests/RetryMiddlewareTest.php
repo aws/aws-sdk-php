@@ -82,10 +82,24 @@ class RetryMiddlewareTest extends \PHPUnit_Framework_TestCase
     public function testDelaysExponentially()
     {
         $this->assertEquals(0, RetryMiddleware::exponentialDelay(0));
-        $this->assertEquals(1, RetryMiddleware::exponentialDelay(1));
-        $this->assertEquals(2, RetryMiddleware::exponentialDelay(2));
-        $this->assertEquals(4, RetryMiddleware::exponentialDelay(3));
-        $this->assertEquals(8, RetryMiddleware::exponentialDelay(4));
+        $this->assertLessThanOrEqual(100, RetryMiddleware::exponentialDelay(1));
+        $this->assertLessThanOrEqual(200, RetryMiddleware::exponentialDelay(2));
+        $this->assertLessThanOrEqual(400, RetryMiddleware::exponentialDelay(3));
+        $this->assertLessThanOrEqual(800, RetryMiddleware::exponentialDelay(4));
+    }
+
+    public function testDelaysWithSomeRandomness()
+    {
+        $maxDelay = 100 * pow(2, 4);
+        $values = array_map(function () {
+            return RetryMiddleware::exponentialDelay(5);
+        }, range(1, 200));
+
+        $this->assertGreaterThan(1, count(array_unique($values)));
+        foreach ($values as $value) {
+            $this->assertGreaterThanOrEqual(0, $value);
+            $this->assertLessThanOrEqual($maxDelay, $value);
+        }
     }
 
     public function testRetriesWhenResultMatches()
