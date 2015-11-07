@@ -78,7 +78,7 @@ class DynamoDbClient extends AwsClient
                 RetryMiddleware::createDefaultDecider($value),
                 function ($retries) {
                     return $retries
-                        ? (50 * (int) pow(2, $retries - 1)) / 1000
+                        ? RetryMiddleware::exponentialDelay($retries) / 2
                         : 0;
                 }
             ),
