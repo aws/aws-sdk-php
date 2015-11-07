@@ -47,7 +47,9 @@ class BatchingContext extends \PHPUnit_Framework_Assert implements
      */
     public static function setUpDynamoTable(BeforeFeatureScope $scope)
     {
-        self::$resource = self::getResourcePrefix() . '-wrb-test';
+        self::$resource = self::getResourcePrefix()
+            . str_replace(' ', '-', strtolower($scope->getName()));
+
         $client = self::getSdk()->createDynamoDb();
         $client->createTable([
             'TableName' => self::$resource,
@@ -88,7 +90,8 @@ class BatchingContext extends \PHPUnit_Framework_Assert implements
     public static function setUpQueue(BeforeFeatureScope $scope)
     {
         $sqs = self::getSdk()->createSqs();
-        self::$resource = self::getResourcePrefix() . '-batch-test';
+        self::$resource = self::getResourcePrefix()
+            . str_replace(' ', '-', strtolower($scope->getName()));
 
         $sqs->createQueue(['QueueName' => self::$resource]);
         $sqs->waitUntil('QueueExists', ['QueueName' => self::$resource]);
@@ -109,6 +112,8 @@ class BatchingContext extends \PHPUnit_Framework_Assert implements
                 'QueueName' => self::$resource,
             ])['QueueUrl']
         ]);
+
+        self::$resource = null;
     }
 
     /**
