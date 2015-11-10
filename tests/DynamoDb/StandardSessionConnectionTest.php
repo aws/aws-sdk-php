@@ -80,9 +80,28 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
             );
         }));
         $connection = new StandardSessionConnection($client);
-        $return = $connection->write('s1', '', true);
+        $return = @$connection->write('s1', '', true);
 
         $this->assertFalse($return);
+    }
+
+    /**
+     * @expectedException \PHPUnit_Framework_Error_Warning
+     */
+    public function testWriteTriggersWarningOnFailure()
+    {
+        $client = $this->getTestSdk()->createDynamoDb();
+        $this->addMockResults($client, [
+            $this->createMockAwsException('ERROR', 'Aws\DynamoDb\Exception\DynamoDbException')
+        ]);
+        $client->getHandlerList()->appendBuild(Middleware::tap(function ($command) {
+            $this->assertEquals(
+                ['Action' => 'DELETE'],
+                $command['AttributeUpdates']['data']
+            );
+        }));
+        $connection = new StandardSessionConnection($client);
+        $connection->write('s1', '', true);
     }
 
     public function testDeleteReturnsBoolBasedOnSuccess()
@@ -98,8 +117,27 @@ class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
         $return = $connection->delete('s1');
         $this->assertTrue($return);
 
-        $return = $connection->delete('s1');
+        $return = @$connection->delete('s1');
         $this->assertFalse($return);
+    }
+
+    /**
+     * @expectedException \PHPUnit_Framework_Error_Warning
+     */
+    public function testDeleteTriggersWarningOnFailure()
+    {
+        $client = $this->getTestSdk()->createDynamoDb();
+        $this->addMockResults($client, [
+            new Result([]),
+            $this->createMockAwsException('ERROR', 'Aws\DynamoDb\Exception\DynamoDbException')
+        ]);
+
+        $connection = new StandardSessionConnection($client);
+
+        $return = $connection->delete('s1');
+        $this->assertTrue($return);
+
+        $connection->delete('s1');
     }
 
     public function testDeleteExpiredReturnsBoolBasedOnSuccess()
