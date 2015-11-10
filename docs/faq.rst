@@ -180,22 +180,12 @@ for a list of regions, endpoints, and the supported schemes.
     the network.
 
 
-How do I fix an error related to "aws-cache"?
----------------------------------------------
+What do I do about a "Parse error"?
+-----------------------------------
 
-We received a few reports from users who run into an error like the following::
+The PHP engine will throw parsing errors when it encounters syntax it does not
+understand. This is almost always encountered when attempting to run code that
+was written for a different version of PHP.
 
-    ErrorException: {...}/vendor/aws/aws-sdk-php/src/JsonCompiler.php line 93
-    file_put_contents(/tmp/aws-cache/data_manifest.json.php): failed to open stream: Permission denied
-
-The SDK uses caching to improve the performance of loading the service
-descriptions. To aid in that process, it writes out data to a directory called
-"aws-cache" within your system's tmp directory. If that is not accessible, then
-you will get an error like the one shown above.
-
-There are two ways to avoid this problem.
-
-1. Change the permissions of the directory to allow your application to write
-   the cache files.
-2. Configure the SDK to use a different directory by setting the
-   ``AWS_PHP_CACHE_DIR`` environment variable.
+If you encounter a parsing error, please check your system and make sure it
+fulfills the SDK's :doc:`/getting-started/requirements`.
