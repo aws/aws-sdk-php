@@ -140,12 +140,6 @@ $c->addRequire('Ensuring that file_get_contents works', function () {
 
 $c->title('System recommendations');
 
-$c->addRecommend(
-    'Checking if PHP version is >= 5.4.1',
-    function () { return version_compare(phpversion(), '5.4.1', '>='); },
-    'You are using an older version of PHP (' . phpversion() . '). Consider updating to PHP 5.4.1 or newer to improve the performance and stability of the SDK.'
-);
-
 $c->addRecommend('Checking if you are running on a 64-bit platform', function () {
     return PHP_INT_MAX === 9223372036854775807;
 }, 'You are not running on a 64-bit installation of PHP. You may run into issues uploading or downloading files larger than 2GB.');
@@ -163,7 +157,6 @@ if (extension_loaded('xdebug')) {
 
 $c->extCheck('openssl', false);
 $c->extCheck('zlib', false);
-$c->extCheck('uri_template', false, 'Installing the uri_template extension will make the SDK faster. Install using pecl install uri_template-alpha');
 $c->iniCheck('Checking if OPCache is enabled', 'opcache.enable', 1, false);
 
 $c->title('PHP information');
