@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApiGateway` - Added support for stage variables.
+* `Aws\DynamoDb` - Updated the session handler to emit warnings on write and
+  delete failures.
+* `Aws\DynamoDb` - Fixed session ID assignment timing bug encountered in PHP 7.
+* `Aws\S3` - Removed ServerSideEncryption parameter from UploadPart operation.
+* Added jitter to the default retry delay algorithm.
+* Updated the compatibility test script.
+
 ## 3.9.4 - 2015-11-03
 
 * `Aws\DeviceFarm` - Added support for managing projects, device pools, runs,
