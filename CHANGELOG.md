@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.10.0 - 2015-11-10
 
 * `Aws\ApiGateway` - Added support for stage variables.
 * `Aws\DynamoDb` - Updated the session handler to emit warnings on write and
