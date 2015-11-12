@@ -332,7 +332,7 @@ class SessionHandler implements SessionHandlerInterface
         $this->sessionWritten = $this->lockingStrategy->doWrite(
             $this->formatId($id),
             $data,
-            ($data !== $this->dataRead)
+            ($id !== $this->openSessionId) || ($data !== $this->dataRead)
         );
 
         return $this->isSessionWritten();
