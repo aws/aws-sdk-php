@@ -122,6 +122,70 @@ class SessionHandlerTest extends AbstractSessionTestCase
         $this->assertTrue($this->handler->write('test', 'ANYTHING'));
     }
 
+    public function testSessionWritesDataOnChangedSessionID()
+    {
+        //set up our test session store and data
+        $store = array();
+        $mockSessionData = serialize(array(
+            'fizz' => 'buzz',
+        ));
+
+        //construct our mock client/strategy/handler
+        $client = $this->getMockedClient();
+        $strategy = $this->getMock('Aws\DynamoDb\Session\LockingStrategy\LockingStrategyInterface');
+        $handler = SessionHandler::factory(array(
+            'dynamodb_client' => $client,
+            'locking_strategy' => $strategy,
+        ));
+
+        $command = $this->getMockedCommand($client);
+        $command->expects($this->any())
+            ->method('execute')
+            ->will($this->returnValue(array('foo' => 'bar')));
+
+        $client->expects($this->any())
+            ->method('getIterator')
+            ->will($this->returnValue(array()));
+
+        //doRead function to fetch session data by ID
+        $strategy->expects($this->any())
+            ->method('doRead')
+            ->will($this->returnCallback(function ($id) use (&$store) {
+                if (isset($store[$id])) {
+                    return array(
+                        'expires' => time() + 10000,
+                        'data' => $store[$id],
+                    );
+                }
+
+                return array();
+            }));
+
+        //doWrite to mock our ID - Only change data if $isChanged is true
+        $strategy->expects($this->any())
+            ->method('doWrite')
+            ->will($this->returnCallback(function ($id, $data, $isChanged) use (&$store) {
+                if ($isChanged) {
+                    $store[$id] = $data;
+                }
+
+                return true;
+            }));
+
+        //doDestroy - remove data by id
+        $strategy->expects($this->any())
+            ->method('doDestroy')
+            ->will($this->returnCallback(function ($id) use (&$store) {
+            unset($store[$id]);
+            return true;
+        }));
+
+        $this->assertTrue($handler->write('test', $mockSessionData));
+        $this->assertEquals($mockSessionData, $handler->read('test'));
+        $this->assertTrue($handler->write('newsessionid', $mockSessionData));
+        $this->assertEquals($mockSessionData, $handler->read('newsessionid'));
+    }
+
     public function testSessionGarbageCollection()
     {
         $this->assertTrue($this->handler->gc('ANYTHING'));
