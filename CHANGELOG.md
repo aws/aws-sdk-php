@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Config` - Fixed parsing of null responses.
+* `Aws\Rds` - Added support for snapshot attributes.
+
 ## 3.10.0 - 2015-11-10
 
 * `Aws\ApiGateway` - Added support for stage variables.
