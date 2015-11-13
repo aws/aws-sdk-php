@@ -24,7 +24,7 @@ class QueryParser extends AbstractParser
      * @param XmlParser $xmlParser          Optional XML parser
      * @param bool      $honorResultWrapper Set to false to disable the peeling
      *                                      back of result wrappers from the
-     *                                      output strucutre.
+     *                                      output structure.
      */
     public function __construct(
         Service $api,
