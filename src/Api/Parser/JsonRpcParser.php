@@ -30,10 +30,11 @@ class JsonRpcParser extends AbstractParser
         ResponseInterface $response
     ) {
         $operation = $this->api->getOperation($command->getName());
-
-        return new Result($this->parser->parse(
+        $result = $this->parser->parse(
             $operation->getOutput(),
             $this->parseJson($response->getBody())
-        ));
+        );
+
+        return new Result($result ?: []);
     }
 }
