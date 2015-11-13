@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.10.1 - 2015-11-12
 
 * `Aws\Config` - Fixed parsing of null responses.
 * `Aws\Rds` - Added support for snapshot attributes.
