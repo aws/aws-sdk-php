@@ -145,6 +145,8 @@ class WrappedHttpHandler
                     . "{$parts['message']} - " . $err['response']->getBody();
             } catch (ParserException $e) {
                 $parts = [];
+                $serviceError .= ' Unable to parse error information from '
+                    . "response - {$e->getMessage()}";
             }
 
             $parts['response'] = $err['response'];
