@@ -1,6 +1,7 @@
 <?php
 namespace Aws;
 
+use Aws\Api\Parser\Exception\ParserException;
 use GuzzleHttp\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -138,11 +139,17 @@ class WrappedHttpHandler
         if (!isset($err['response'])) {
             $parts = ['response' => null];
         } else {
-            $errorParser = $this->errorParser;
-            $parts = $errorParser($err['response']);
+            try {
+                $parts = call_user_func($this->errorParser, $err['response']);
+                $serviceError .= " {$parts['code']} ({$parts['type']}): "
+                    . "{$parts['message']} - " . $err['response']->getBody();
+            } catch (ParserException $e) {
+                $parts = [];
+                $serviceError .= ' Unable to parse error information from '
+                    . "response - {$e->getMessage()}";
+            }
+
             $parts['response'] = $err['response'];
-            $serviceError .= " {$parts['code']} ({$parts['type']}): "
-                . "{$parts['message']} - " . $err['response']->getBody();
         }
 
         $parts['exception'] = $err['exception'];
