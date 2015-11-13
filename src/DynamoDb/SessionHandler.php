@@ -29,11 +29,14 @@ class SessionHandler implements \SessionHandlerInterface
     /** @var string Session name. */
     private $sessionName;
 
-    /** @var array Stores serialized data for tracking changes. */
-    private $dataRead;
+    /** @var string The last known session ID */
+    private $openSessionId = '';
 
-    /** @var array Keeps track of whether the session has been written. */
-    private $sessionWritten;
+    /** @var string Stores serialized data for tracking changes. */
+    private $dataRead = '';
+
+    /** @var bool Keeps track of whether the session has been written. */
+    private $sessionWritten = false;
 
     /**
      * Creates a new DynamoDB Session Handler.
@@ -108,15 +111,15 @@ class SessionHandler implements \SessionHandlerInterface
      */
     public function close()
     {
-        $id = $this->formatId(session_id());
+        $id = session_id();
         // Make sure the session is unlocked and the expiration time is updated,
         // even if the write did not occur
-        if (!$this->sessionWritten[$id]) {
-            $result = $this->connection->write($id, '', false);
-            $this->sessionWritten[$id] = (bool) $result;
+        if ($this->openSessionId !== $id || !$this->sessionWritten) {
+            $result = $this->connection->write($this->formatId($id), '', false);
+            $this->sessionWritten = (bool) $result;
         }
 
-        return $this->sessionWritten[$id];
+        return $this->sessionWritten;
     }
 
     /**
@@ -128,24 +131,24 @@ class SessionHandler implements \SessionHandlerInterface
      */
     public function read($id)
     {
-        $formattedId = $this->formatId($id);
+        $this->openSessionId = $id;
         // PHP expects an empty string to be returned from this method if no
         // data is retrieved
-        $this->dataRead[$formattedId] = '';
+        $this->dataRead = '';
 
         // Get session data using the selected locking strategy
-        $item = $this->connection->read($formattedId);
+        $item = $this->connection->read($this->formatId($id));
 
         // Return the data if it is not expired. If it is expired, remove it
         if (isset($item['expires']) && isset($item['data'])) {
-            $this->dataRead[$formattedId] = $item['data'];
+            $this->dataRead = $item['data'];
             if ($item['expires'] <= time()) {
-                $this->dataRead[$formattedId] = '';
+                $this->dataRead = '';
                 $this->destroy($id);
             }
         }
 
-        return $this->dataRead[$formattedId];
+        return $this->dataRead;
     }
 
     /**
@@ -158,15 +161,15 @@ class SessionHandler implements \SessionHandlerInterface
      */
     public function write($id, $data)
     {
-        $formattedId = $this->formatId($id);
-        $changed = empty($this->dataRead[$formattedId])
-            || ($data !== $this->dataRead[$formattedId]);
+        $changed = $id !== $this->openSessionId
+            || $data !== $this->dataRead;
+        $this->openSessionId = $id;
 
         // Write the session data using the selected locking strategy
-        $this->sessionWritten[$formattedId] = $this->connection
-            ->write($formattedId, $data, $changed);
+        $this->sessionWritten = $this->connection
+            ->write($this->formatId($id), $data, $changed);
 
-        return $this->sessionWritten[$formattedId];
+        return $this->sessionWritten;
     }
 
     /**
@@ -178,12 +181,12 @@ class SessionHandler implements \SessionHandlerInterface
      */
     public function destroy($id)
     {
-        $formattedId = $this->formatId($id);
+        $this->openSessionId = $id;
         // Delete the session data using the selected locking strategy
-        $this->sessionWritten[$formattedId]
-            = $this->connection->delete($formattedId);
+        $this->sessionWritten
+            = $this->connection->delete($this->formatId($id));
 
-        return $this->sessionWritten[$formattedId];
+        return $this->sessionWritten;
     }
 
     /**
