@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\Sts;
 
+use Aws\Api\DateTimeResult;
 use Aws\Result;
 use Aws\Sts\StsClient;
 
@@ -16,7 +17,7 @@ class StsClientTest extends \PHPUnit_Framework_TestCase
                 'AccessKeyId' => 'foo',
                 'SecretAccessKey' => 'bar',
                 'SessionToken' => 'baz',
-                'Expiration' => 30,
+                'Expiration' => DateTimeResult::fromEpoch(time() + 10),
             ]
         ]);
 
@@ -29,7 +30,8 @@ class StsClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('foo', $credentials->getAccessKeyId());
         $this->assertEquals('bar', $credentials->getSecretKey());
         $this->assertEquals('baz', $credentials->getSecurityToken());
-        $this->assertEquals(30, $credentials->getExpiration());
+        $this->assertInternalType('int', $credentials->getExpiration());
+        $this->assertFalse($credentials->isExpired());
     }
 
     /**
