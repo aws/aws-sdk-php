@@ -29,10 +29,10 @@ class SessionHandler implements \SessionHandlerInterface
     /** @var string Session name. */
     private $sessionName;
 
-    /** @var string Stores serialized data for tracking changes. */
+    /** @var array Stores serialized data for tracking changes. */
     private $dataRead;
 
-    /** @var bool Keeps track of whether the session has been written. */
+    /** @var array Keeps track of whether the session has been written. */
     private $sessionWritten;
 
     /**
@@ -108,15 +108,15 @@ class SessionHandler implements \SessionHandlerInterface
      */
     public function close()
     {
+        $id = $this->formatId(session_id());
         // Make sure the session is unlocked and the expiration time is updated,
         // even if the write did not occur
-        if (!$this->sessionWritten) {
-            $id = $this->formatId(session_id());
+        if (!$this->sessionWritten[$id]) {
             $result = $this->connection->write($id, '', false);
-            $this->sessionWritten = (bool) $result;
+            $this->sessionWritten[$id] = (bool) $result;
         }
 
-        return $this->sessionWritten;
+        return $this->sessionWritten[$id];
     }
 
     /**
@@ -128,23 +128,24 @@ class SessionHandler implements \SessionHandlerInterface
      */
     public function read($id)
     {
+        $formattedId = $this->formatId($id);
         // PHP expects an empty string to be returned from this method if no
         // data is retrieved
-        $this->dataRead = '';
+        $this->dataRead[$formattedId] = '';
 
         // Get session data using the selected locking strategy
-        $item = $this->connection->read($this->formatId($id));
+        $item = $this->connection->read($formattedId);
 
         // Return the data if it is not expired. If it is expired, remove it
         if (isset($item['expires']) && isset($item['data'])) {
-            $this->dataRead = $item['data'];
+            $this->dataRead[$formattedId] = $item['data'];
             if ($item['expires'] <= time()) {
-                $this->dataRead = '';
+                $this->dataRead[$formattedId] = '';
                 $this->destroy($id);
             }
         }
 
-        return $this->dataRead;
+        return $this->dataRead[$formattedId];
     }
 
     /**
@@ -157,14 +158,15 @@ class SessionHandler implements \SessionHandlerInterface
      */
     public function write($id, $data)
     {
-        // Write the session data using the selected locking strategy
-        $this->sessionWritten = $this->connection->write(
-            $this->formatId($id),
-            $data,
-            ($data !== $this->dataRead)
-        );
+        $formattedId = $this->formatId($id);
+        $changed = empty($this->dataRead[$formattedId])
+            || ($data !== $this->dataRead[$formattedId]);
 
-        return $this->sessionWritten;
+        // Write the session data using the selected locking strategy
+        $this->sessionWritten[$formattedId] = $this->connection
+            ->write($formattedId, $data, $changed);
+
+        return $this->sessionWritten[$formattedId];
     }
 
     /**
@@ -176,10 +178,12 @@ class SessionHandler implements \SessionHandlerInterface
      */
     public function destroy($id)
     {
+        $formattedId = $this->formatId($id);
         // Delete the session data using the selected locking strategy
-        $this->sessionWritten = $this->connection->delete($this->formatId($id));
+        $this->sessionWritten[$formattedId]
+            = $this->connection->delete($formattedId);
 
-        return $this->sessionWritten;
+        return $this->sessionWritten[$formattedId];
     }
 
     /**
