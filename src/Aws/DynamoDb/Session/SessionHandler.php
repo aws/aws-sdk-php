@@ -190,7 +190,7 @@ class SessionHandler implements SessionHandlerInterface
      */
     public function isSessionWritten()
     {
-        return $this->sessionWritten;
+        return $this->sessionWritten && $this->openSessionId === session_id();
     }
 
     /**
@@ -260,9 +260,8 @@ class SessionHandler implements SessionHandlerInterface
     {
         $this->savePath      = $savePath;
         $this->sessionName   = $sessionName;
-        $this->openSessionId = session_id();
 
-        return $this->isSessionOpen();
+        return true;
     }
 
     /**
@@ -276,12 +275,10 @@ class SessionHandler implements SessionHandlerInterface
     {
         // Make sure the session is unlocked and the expiration time is updated, even if the write did not occur
         if (!$this->isSessionWritten()) {
-            $id     = $this->formatId($this->openSessionId);
+            $id     = $this->formatId(session_id());
             $result = $this->lockingStrategy->doWrite($id, '', false);
             $this->sessionWritten = (bool) $result;
         }
-
-        $this->openSessionId = null;
 
         return $this->isSessionWritten();
     }
@@ -297,6 +294,7 @@ class SessionHandler implements SessionHandlerInterface
      */
     public function read($id)
     {
+        $this->openSessionId = $id;
         // PHP expects an empty string to be returned from this method if no
         // data is retrieved
         $this->dataRead = '';
@@ -328,14 +326,14 @@ class SessionHandler implements SessionHandlerInterface
      */
     public function write($id, $data)
     {
+        $changed = $id !== $this->openSessionId
+            || $data !== $this->dataRead;
+        $this->openSessionId = $id;
         // Write the session data using the selected locking strategy
-        $this->sessionWritten = $this->lockingStrategy->doWrite(
-            $this->formatId($id),
-            $data,
-            ($data !== $this->dataRead)
-        );
+        $this->sessionWritten = $this->lockingStrategy
+            ->doWrite($this->formatId($id), $data, $changed);
 
-        return $this->isSessionWritten();
+        return $this->sessionWritten;
     }
 
     /**
@@ -349,10 +347,12 @@ class SessionHandler implements SessionHandlerInterface
      */
     public function destroy($id)
     {
+        $this->openSessionId = $id;
         // Delete the session data using the selected locking strategy
-        $this->sessionWritten = $this->lockingStrategy->doDestroy($this->formatId($id));
+        $this->sessionWritten
+            = $this->lockingStrategy->doDestroy($this->formatId($id));
 
-        return $this->isSessionWritten();
+        return $this->sessionWritten;
     }
 
     /**
