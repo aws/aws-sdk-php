@@ -16,6 +16,10 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model createDevicePool(array $args = array()) {@command DeviceFarm CreateDevicePool}
  * @method Model createProject(array $args = array()) {@command DeviceFarm CreateProject}
  * @method Model createUpload(array $args = array()) {@command DeviceFarm CreateUpload}
+ * @method Model deleteDevicePool(array $args = array()) {@command DeviceFarm DeleteDevicePool}
+ * @method Model deleteProject(array $args = array()) {@command DeviceFarm DeleteProject}
+ * @method Model deleteRun(array $args = array()) {@command DeviceFarm DeleteRun}
+ * @method Model deleteUpload(array $args = array()) {@command DeviceFarm DeleteUpload}
  * @method Model getAccountSettings(array $args = array()) {@command DeviceFarm GetAccountSettings}
  * @method Model getDevice(array $args = array()) {@command DeviceFarm GetDevice}
  * @method Model getDevicePool(array $args = array()) {@command DeviceFarm GetDevicePool}
@@ -38,6 +42,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model listUniqueProblems(array $args = array()) {@command DeviceFarm ListUniqueProblems}
  * @method Model listUploads(array $args = array()) {@command DeviceFarm ListUploads}
  * @method Model scheduleRun(array $args = array()) {@command DeviceFarm ScheduleRun}
+ * @method Model updateDevicePool(array $args = array()) {@command DeviceFarm UpdateDevicePool}
+ * @method Model updateProject(array $args = array()) {@command DeviceFarm UpdateProject}
  * @method ResourceIteratorInterface getListArtifactsIterator(array $args = array()) The input array uses the parameters of the ListArtifacts operation
  * @method ResourceIteratorInterface getListDevicePoolsIterator(array $args = array()) The input array uses the parameters of the ListDevicePools operation
  * @method ResourceIteratorInterface getListDevicesIterator(array $args = array()) The input array uses the parameters of the ListDevices operation

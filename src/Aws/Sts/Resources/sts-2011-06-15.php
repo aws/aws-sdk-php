@@ -106,7 +106,7 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 2,
-                    'maxLength' => 32,
+                    'maxLength' => 64,
                 ),
                 'Policy' => array(
                     'type' => 'string',
@@ -124,7 +124,7 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 2,
-                    'maxLength' => 96,
+                    'maxLength' => 1224,
                 ),
                 'SerialNumber' => array(
                     'type' => 'string',
@@ -198,7 +198,7 @@ return array (
                     'type' => 'numeric',
                     'location' => 'aws.query',
                     'minimum' => 900,
-                    'maximum' => 129600,
+                    'maximum' => 3600,
                 ),
             ),
             'errorResponses' => array(
@@ -253,7 +253,7 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 2,
-                    'maxLength' => 32,
+                    'maxLength' => 64,
                 ),
                 'WebIdentityToken' => array(
                     'required' => true,
@@ -278,7 +278,7 @@ return array (
                     'type' => 'numeric',
                     'location' => 'aws.query',
                     'minimum' => 900,
-                    'maximum' => 129600,
+                    'maximum' => 3600,
                 ),
             ),
             'errorResponses' => array(

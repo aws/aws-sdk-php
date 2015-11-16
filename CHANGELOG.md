@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DeviceFarm` - Added support for managing projects, device pools, runs,
+  and uploads.
+* `Aws\DynamoDb` - Fixed bug where properly opening sessions might return false
+  on HHVM.
+* `Aws\DynamoDb` - Fixed bug where calling `session_regenerate_id` without
+  changing session data would prevent data from being carried over from the
+  previous session ID.
+* `Aws\Sts` - Added support for 64-character role session names.
+
 ## 2.8.23 - 2015-11-02
 
 * `Aws\AutoScaling` - Added support for EBS encryption.
