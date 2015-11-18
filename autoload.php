@@ -7,11 +7,11 @@
  */
 
 spl_autoload_register(function($class_name){
-    echo $class_name . PHP_EOL;
-    if(strpos($class_name, 'Aws') !== 0){
+    $prefix = 'Aws\\';
+    if(strpos($class_name, $prefix) !== 0){
         return;
     }
-    $class_name = substr($class_name, 4);
+    $class_name = substr($class_name, strlen($prefix));
 
     $class_name = str_replace('\\', '/', $class_name);
     $filename = __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR .
@@ -20,5 +20,3 @@ spl_autoload_register(function($class_name){
     require $filename;
 });
 
-
-var_dump(class_exists("\\Aws\\Api\\AbstractModel"));
