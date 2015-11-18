@@ -20,3 +20,4 @@ spl_autoload_register(function($class_name){
     require $filename;
 });
 
+var_dump(class_exists("\\Aws\\Api\\ListShape"));
