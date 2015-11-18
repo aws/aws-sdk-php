@@ -11,11 +11,12 @@ spl_autoload_register(function($class_name){
     if(strpos($class_name, 'Aws') !== 0){
         return;
     }
+    $class_name = substr($class_name, 4);
 
     $class_name = str_replace('\\', '/', $class_name);
     $filename = __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR .
         $class_name . '.php';
-    echo $filename . PHP_EOL;
+
     require $filename;
 });
 
