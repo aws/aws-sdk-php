@@ -8,7 +8,7 @@
 
 spl_autoload_register(function($class_name){
     echo $class_name . PHP_EOL;
-    if(!strpos($class_name, 'Aws') !== 0){
+    if(strpos($class_name, 'Aws') !== 0){
         return;
     }
 
@@ -16,6 +16,7 @@ spl_autoload_register(function($class_name){
     $filename = __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR .
         $class_name . '.php';
     echo $filename . PHP_EOL;
+    require $filename;
 });
 
 
