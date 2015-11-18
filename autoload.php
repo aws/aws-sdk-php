@@ -7,6 +7,7 @@
  */
 
 spl_autoload_register(function($class_name){
+    echo $class_name . PHP_EOL;
     if(!strpos($class_name, 'Aws') !== 0){
         return;
     }
