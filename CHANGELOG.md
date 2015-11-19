@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## 3.11.0 - 2015-11-19
+
+* `Aws\CognitoIdentity` - Added a CognitoIdentity credentials provider.
+* `Aws\DeviceFarm` - Marked app ARN as optional on `ScheduleRun` and 
+  `GetDevicePoolCompatibility` operations.
+* `Aws\DynamoDb` - Fixed bug where properly opening sessions might return false
+  on PHP 7.
+* `Aws\DynamoDb` - Fixed bug where calling `session_regenerate_id` without
+  changing session data would prevent data from being carried over from the
+  previous session ID.
+* `Aws\Inspector` - Added support for client-side validation of required
+  parameters throughout service.
+
 ## 3.10.1 - 2015-11-12
 
 * `Aws\Config` - Fixed parsing of null responses.
