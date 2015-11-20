@@ -5,6 +5,7 @@ php:
   - 5.6
   - 7.0
   - hhvm
+  - hhvm-nightly
 
 sudo: false
 
@@ -14,7 +15,9 @@ env:
 
 matrix:
   allow_failures:
-    - php: hhvm
+    - php:
+        - hhvm
+        - hhvm-nightly
   fast_finish: true
 
 install:
