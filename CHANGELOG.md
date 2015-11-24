@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.11.2 - 2015-11-23
+
+* `Aws\Config` - Reverted doc model change.
+
 ## 3.11.1 - 2015-11-23
 
 * `Aws\Ec2` - Added support for EC2 dedicated hosts.
