@@ -3,6 +3,8 @@
 ## next release
 
 * `Aws\Ec2` - Added support for EC2 dedicated hosts.
+* `Aws\Ecs` - Added support for task stopped reasons and task start and stop
+  times.
 * `Aws\ElasticBeanstalk` - Added support for composable web applications.
 * `Aws\S3` - Added support for the `aws-exec-read` canned ACL on objects.
 
