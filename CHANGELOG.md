@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.11.1 - 2015-11-23
 
 * `Aws\Ec2` - Added support for EC2 dedicated hosts.
 * `Aws\Ecs` - Added support for task stopped reasons and task start and stop
