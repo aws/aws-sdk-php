@@ -2,6 +2,7 @@
 
 ## next release
 
+* `Aws\Ec2` - Added support for EC2 dedicated hosts.
 * `Aws\ElasticBeanstalk` - Added support for composable web applications.
 * `Aws\S3` - Added support for the `aws-exec-read` canned ACL on objects.
 
