@@ -10,6 +10,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise abortEnvironmentUpdateAsync(array $args = [])
  * @method \Aws\Result checkDNSAvailability(array $args = [])
  * @method \GuzzleHttp\Promise\Promise checkDNSAvailabilityAsync(array $args = [])
+ * @method \Aws\Result composeEnvironments(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise composeEnvironmentsAsync(array $args = [])
  * @method \Aws\Result createApplication(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createApplicationAsync(array $args = [])
  * @method \Aws\Result createApplicationVersion(array $args = [])

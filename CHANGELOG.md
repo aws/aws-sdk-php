@@ -2,6 +2,7 @@
 
 ## next release
 
+* `Aws\ElasticBeanstalk` - Added support for composable web applications.
 * `Aws\S3` - Added support for the `aws-exec-read` canned ACL on objects.
 
 ## 3.11.0 - 2015-11-19
