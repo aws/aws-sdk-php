@@ -3,10 +3,10 @@
   "metadata":{
     "apiVersion":"2015-05-28",
     "endpointPrefix":"iot",
+    "protocol":"rest-json",
     "serviceFullName":"AWS IoT",
     "signatureVersion":"v4",
-    "signingName":"execute-api",
-    "protocol":"rest-json"
+    "signingName":"execute-api"
   },
   "operations":{
     "AcceptCertificateTransfer":{
@@ -1618,8 +1618,8 @@
     "ActionList":{
       "type":"list",
       "member":{"shape":"Action"},
-      "min":0,
-      "max":10
+      "max":10,
+      "min":0
     },
     "AscendingOrder":{"type":"boolean"},
     "AttachPrincipalPolicyRequest":{
@@ -1727,8 +1727,8 @@
     },
     "CertificateId":{
       "type":"string",
-      "min":64,
       "max":64,
+      "min":64,
       "pattern":"(0x)?[a-fA-F0-9]+"
     },
     "CertificatePem":{"type":"string"},
@@ -1954,14 +1954,14 @@
     },
     "DeleteTopicRuleRequest":{
       "type":"structure",
+      "required":["ruleName"],
       "members":{
         "ruleName":{
           "shape":"RuleName",
           "location":"uri",
           "locationName":"ruleName"
         }
-      },
-      "required":["ruleName"]
+      }
     },
     "DeliveryStreamName":{"type":"string"},
     "DescribeCertificateRequest":{
@@ -2473,14 +2473,14 @@
     "Marker":{"type":"string"},
     "MaxResults":{
       "type":"integer",
-      "min":1,
-      "max":10000
+      "max":10000,
+      "min":1
     },
     "NextToken":{"type":"string"},
     "PageSize":{
       "type":"integer",
-      "min":1,
-      "max":250
+      "max":250,
+      "min":1
     },
     "PartitionKey":{"type":"string"},
     "PayloadField":{"type":"string"},
@@ -2499,8 +2499,8 @@
     "PolicyDocument":{"type":"string"},
     "PolicyName":{
       "type":"string",
-      "min":1,
       "max":128,
+      "min":1,
       "pattern":"[\\w+=,.@-]+"
     },
     "PolicyVersion":{
@@ -2592,8 +2592,8 @@
     },
     "RuleName":{
       "type":"string",
-      "min":1,
       "max":128,
+      "min":1,
       "pattern":"^[a-zA-Z0-9_]+$"
     },
     "S3Action":{
@@ -2694,8 +2694,8 @@
     },
     "ThingName":{
       "type":"string",
-      "min":1,
       "max":128,
+      "min":1,
       "pattern":"[a-zA-Z0-9_-]+"
     },
     "ThingNameList":{

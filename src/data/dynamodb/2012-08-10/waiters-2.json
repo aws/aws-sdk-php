@@ -1,35 +1,35 @@
 {
-  "version": 2,
-  "waiters": {
-    "TableExists": {
-      "delay": 20,
-      "operation": "DescribeTable",
-      "maxAttempts": 25,
-      "acceptors": [
+  "version":2,
+  "waiters":{
+    "TableExists":{
+      "acceptors":[
         {
-          "expected": "ACTIVE",
-          "matcher": "path",
-          "state": "success",
-          "argument": "Table.TableStatus"
+          "argument":"Table.TableStatus",
+          "expected":"ACTIVE",
+          "matcher":"path",
+          "state":"success"
         },
         {
-          "expected": "ResourceNotFoundException",
-          "matcher": "error",
-          "state": "retry"
+          "expected":"ResourceNotFoundException",
+          "matcher":"error",
+          "state":"retry"
         }
-      ]
+      ],
+      "delay":20,
+      "maxAttempts":25,
+      "operation":"DescribeTable"
     },
-    "TableNotExists": {
-      "delay": 20,
-      "operation": "DescribeTable",
-      "maxAttempts": 25,
-      "acceptors": [
+    "TableNotExists":{
+      "acceptors":[
         {
-          "expected": "ResourceNotFoundException",
-          "matcher": "error",
-          "state": "success"
+          "expected":"ResourceNotFoundException",
+          "matcher":"error",
+          "state":"success"
         }
-      ]
+      ],
+      "delay":20,
+      "maxAttempts":25,
+      "operation":"DescribeTable"
     }
   }
 }

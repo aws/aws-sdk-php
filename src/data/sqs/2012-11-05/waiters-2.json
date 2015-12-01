@@ -1,22 +1,22 @@
 {
-    "version": 2,
-    "waiters": {
-        "QueueExists": {
-            "delay": 5,
-            "maxAttempts": 40,
-            "operation": "GetQueueUrl",
-            "acceptors": [
-                {
-                    "matcher": "status",
-                    "expected": 200,
-                    "state": "success"
-                },
-                {
-                    "matcher": "error",
-                    "expected": "QueueDoesNotExist",
-                    "state": "retry"
-                }
-            ]
+  "version":2,
+  "waiters":{
+    "QueueExists":{
+      "acceptors":[
+        {
+          "expected":200,
+          "matcher":"status",
+          "state":"success"
+        },
+        {
+          "expected":"QueueDoesNotExist",
+          "matcher":"error",
+          "state":"retry"
         }
+      ],
+      "delay":5,
+      "maxAttempts":40,
+      "operation":"GetQueueUrl"
     }
+  }
 }

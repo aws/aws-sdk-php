@@ -4,11 +4,11 @@
     "apiVersion":"2012-08-10",
     "endpointPrefix":"dynamodb",
     "jsonVersion":"1.0",
+    "protocol":"json",
     "serviceAbbreviation":"DynamoDB",
     "serviceFullName":"Amazon DynamoDB",
     "signatureVersion":"v4",
-    "targetPrefix":"DynamoDB_20120810",
-    "protocol":"json"
+    "targetPrefix":"DynamoDB_20120810"
   },
   "operations":{
     "BatchGetItem":{
@@ -438,8 +438,8 @@
       "type":"map",
       "key":{"shape":"TableName"},
       "value":{"shape":"KeysAndAttributes"},
-      "min":1,
-      "max":100
+      "max":100,
+      "min":1
     },
     "BatchGetResponseMap":{
       "type":"map",
@@ -467,8 +467,8 @@
       "type":"map",
       "key":{"shape":"TableName"},
       "value":{"shape":"WriteRequests"},
-      "min":1,
-      "max":25
+      "max":25,
+      "min":1
     },
     "BinaryAttributeValue":{"type":"blob"},
     "BinarySetAttributeValue":{
@@ -753,8 +753,8 @@
     },
     "IndexName":{
       "type":"string",
-      "min":3,
       "max":255,
+      "min":3,
       "pattern":"[a-zA-Z0-9_.-]+"
     },
     "IndexStatus":{
@@ -826,19 +826,19 @@
     "KeyList":{
       "type":"list",
       "member":{"shape":"Key"},
-      "min":1,
-      "max":100
+      "max":100,
+      "min":1
     },
     "KeySchema":{
       "type":"list",
       "member":{"shape":"KeySchemaElement"},
-      "min":1,
-      "max":2
+      "max":2,
+      "min":1
     },
     "KeySchemaAttributeName":{
       "type":"string",
-      "min":1,
-      "max":255
+      "max":255,
+      "min":1
     },
     "KeySchemaElement":{
       "type":"structure",
@@ -889,8 +889,8 @@
     },
     "ListTablesInputLimit":{
       "type":"integer",
-      "min":1,
-      "max":100
+      "max":100,
+      "min":1
     },
     "ListTablesOutput":{
       "type":"structure",
@@ -939,14 +939,14 @@
     },
     "NonKeyAttributeName":{
       "type":"string",
-      "min":1,
-      "max":255
+      "max":255,
+      "min":1
     },
     "NonKeyAttributeNameList":{
       "type":"list",
       "member":{"shape":"NonKeyAttributeName"},
-      "min":1,
-      "max":20
+      "max":20,
+      "min":1
     },
     "NullAttributeValue":{"type":"boolean"},
     "NumberAttributeValue":{"type":"string"},
@@ -1159,13 +1159,13 @@
     },
     "ScanSegment":{
       "type":"integer",
-      "min":0,
-      "max":999999
+      "max":999999,
+      "min":0
     },
     "ScanTotalSegments":{
       "type":"integer",
-      "min":1,
-      "max":1000000
+      "max":1000000,
+      "min":1
     },
     "SecondaryIndexesCapacityMap":{
       "type":"map",
@@ -1183,8 +1183,8 @@
     },
     "StreamArn":{
       "type":"string",
-      "min":37,
-      "max":1024
+      "max":1024,
+      "min":37
     },
     "StreamEnabled":{"type":"boolean"},
     "StreamSpecification":{
@@ -1230,8 +1230,8 @@
     },
     "TableName":{
       "type":"string",
-      "min":3,
       "max":255,
+      "min":3,
       "pattern":"[a-zA-Z0-9_.-]+"
     },
     "TableNameList":{
@@ -1315,8 +1315,8 @@
     "WriteRequests":{
       "type":"list",
       "member":{"shape":"WriteRequest"},
-      "min":1,
-      "max":25
+      "max":25,
+      "min":1
     }
   }
 }

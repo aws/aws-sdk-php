@@ -2,11 +2,11 @@
   "metadata":{
     "apiVersion":"2010-08-01",
     "endpointPrefix":"monitoring",
+    "protocol":"query",
     "serviceAbbreviation":"CloudWatch",
     "serviceFullName":"Amazon CloudWatch",
     "signatureVersion":"v4",
-    "xmlNamespace":"http://monitoring.amazonaws.com/doc/2010-08-01/",
-    "protocol":"query"
+    "xmlNamespace":"http://monitoring.amazonaws.com/doc/2010-08-01/"
   },
   "operations":{
     "DeleteAlarms":{
@@ -161,11 +161,11 @@
       "input":{"shape":"ListMetricsInput"},
       "output":{
         "shape":"ListMetricsOutput",
+        "resultWrapper":"ListMetricsResult",
         "xmlOrder":[
           "Metrics",
           "NextToken"
-        ],
-        "resultWrapper":"ListMetricsResult"
+        ]
       },
       "errors":[
         {
@@ -285,19 +285,19 @@
   "shapes":{
     "ActionPrefix":{
       "type":"string",
-      "min":1,
-      "max":1024
+      "max":1024,
+      "min":1
     },
     "ActionsEnabled":{"type":"boolean"},
     "AlarmArn":{
       "type":"string",
-      "min":1,
-      "max":1600
+      "max":1600,
+      "min":1
     },
     "AlarmDescription":{
       "type":"string",
-      "min":0,
-      "max":255
+      "max":255,
+      "min":0
     },
     "AlarmHistoryItem":{
       "type":"structure",
@@ -315,13 +315,13 @@
     },
     "AlarmName":{
       "type":"string",
-      "min":1,
-      "max":255
+      "max":255,
+      "min":1
     },
     "AlarmNamePrefix":{
       "type":"string",
-      "min":1,
-      "max":255
+      "max":255,
+      "min":1
     },
     "AlarmNames":{
       "type":"list",
@@ -458,13 +458,13 @@
     },
     "DimensionName":{
       "type":"string",
-      "min":1,
-      "max":255
+      "max":255,
+      "min":1
     },
     "DimensionValue":{
       "type":"string",
-      "min":1,
-      "max":255
+      "max":255,
+      "min":1
     },
     "Dimensions":{
       "type":"list",
@@ -487,8 +487,8 @@
     },
     "ErrorMessage":{
       "type":"string",
-      "min":1,
-      "max":255
+      "max":255,
+      "min":1
     },
     "EvaluationPeriods":{
       "type":"integer",
@@ -525,8 +525,8 @@
     },
     "HistoryData":{
       "type":"string",
-      "min":1,
-      "max":4095
+      "max":4095,
+      "min":1
     },
     "HistoryItemType":{
       "type":"string",
@@ -538,8 +538,8 @@
     },
     "HistorySummary":{
       "type":"string",
-      "min":1,
-      "max":255
+      "max":255,
+      "min":1
     },
     "InternalServiceFault":{
       "type":"structure",
@@ -635,8 +635,8 @@
     },
     "MaxRecords":{
       "type":"integer",
-      "min":1,
-      "max":100
+      "max":100,
+      "min":1
     },
     "Metric":{
       "type":"structure",
@@ -723,8 +723,8 @@
     "MetricLabel":{"type":"string"},
     "MetricName":{
       "type":"string",
-      "min":1,
-      "max":255
+      "max":255,
+      "min":1
     },
     "Metrics":{
       "type":"list",
@@ -744,8 +744,8 @@
     },
     "Namespace":{
       "type":"string",
-      "min":1,
       "max":255,
+      "min":1,
       "pattern":"[^:].*"
     },
     "NextToken":{"type":"string"},
@@ -801,8 +801,8 @@
     },
     "ResourceName":{
       "type":"string",
-      "min":1,
-      "max":1024
+      "max":1024,
+      "min":1
     },
     "ResourceNotFound":{
       "type":"structure",
@@ -864,13 +864,13 @@
     },
     "StateReason":{
       "type":"string",
-      "min":0,
-      "max":1023
+      "max":1023,
+      "min":0
     },
     "StateReasonData":{
       "type":"string",
-      "min":0,
-      "max":4000
+      "max":4000,
+      "min":0
     },
     "StateValue":{
       "type":"string",
@@ -908,8 +908,8 @@
     "Statistics":{
       "type":"list",
       "member":{"shape":"Statistic"},
-      "min":1,
-      "max":5
+      "max":5,
+      "min":1
     },
     "Threshold":{"type":"double"},
     "Timestamp":{"type":"timestamp"}

@@ -3,10 +3,10 @@
   "metadata":{
     "apiVersion":"2013-01-01",
     "endpointPrefix":"cloudsearch",
+    "protocol":"query",
     "serviceFullName":"Amazon CloudSearch",
     "signatureVersion":"v4",
-    "xmlNamespace":"http://cloudsearch.amazonaws.com/doc/2013-01-01/",
-    "protocol":"query"
+    "xmlNamespace":"http://cloudsearch.amazonaws.com/doc/2013-01-01/"
   },
   "operations":{
     "BuildSuggesters":{
@@ -1478,13 +1478,13 @@
     },
     "DomainId":{
       "type":"string",
-      "min":1,
-      "max":64
+      "max":64,
+      "min":1
     },
     "DomainName":{
       "type":"string",
-      "min":3,
       "max":28,
+      "min":3,
       "pattern":"[a-z][a-z0-9\\-]+"
     },
     "DomainNameList":{
@@ -1547,8 +1547,8 @@
     },
     "DynamicFieldName":{
       "type":"string",
-      "min":1,
       "max":64,
+      "min":1,
       "pattern":"([a-z][a-z0-9_]*\\*?|\\*[a-z0-9_]*)"
     },
     "DynamicFieldNameList":{
@@ -1585,13 +1585,13 @@
     },
     "ExpressionValue":{
       "type":"string",
-      "min":1,
-      "max":10240
+      "max":10240,
+      "min":1
     },
     "FieldName":{
       "type":"string",
-      "min":1,
       "max":64,
+      "min":1,
       "pattern":"[a-z][a-z0-9_]*"
     },
     "FieldNameCommaList":{
@@ -1604,8 +1604,8 @@
     },
     "FieldValue":{
       "type":"string",
-      "min":0,
-      "max":1024
+      "max":1024,
+      "min":0
     },
     "IndexDocumentsRequest":{
       "type":"structure",
@@ -1871,8 +1871,8 @@
     "ServiceUrl":{"type":"string"},
     "StandardName":{
       "type":"string",
-      "min":1,
       "max":64,
+      "min":1,
       "pattern":"[a-z][a-z0-9_]*"
     },
     "StandardNameList":{

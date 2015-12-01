@@ -3,12 +3,12 @@
     "apiVersion":"2009-03-31",
     "endpointPrefix":"elasticmapreduce",
     "jsonVersion":"1.1",
+    "protocol":"json",
     "serviceAbbreviation":"Amazon EMR",
     "serviceFullName":"Amazon Elastic MapReduce",
     "signatureVersion":"v4",
     "targetPrefix":"ElasticMapReduce",
-    "timestampFormat":"unixTimestamp",
-    "protocol":"json"
+    "timestampFormat":"unixTimestamp"
   },
   "operations":{
     "AddInstanceGroups":{
@@ -603,8 +603,8 @@
     },
     "ErrorCode":{
       "type":"string",
-      "min":1,
-      "max":256
+      "max":256,
+      "min":1
     },
     "ErrorMessage":{"type":"string"},
     "HadoopJarStepConfig":{
@@ -843,8 +843,8 @@
     },
     "InstanceType":{
       "type":"string",
-      "min":1,
       "max":256,
+      "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },
     "Integer":{"type":"integer"},
@@ -1339,8 +1339,8 @@
     },
     "XmlString":{
       "type":"string",
-      "min":0,
       "max":10280,
+      "min":0,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },
     "XmlStringList":{
@@ -1349,8 +1349,8 @@
     },
     "XmlStringMaxLen256":{
       "type":"string",
-      "min":0,
       "max":256,
+      "min":0,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     }
   }

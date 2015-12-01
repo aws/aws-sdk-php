@@ -4,10 +4,10 @@
     "apiVersion":"2013-02-18",
     "endpointPrefix":"opsworks",
     "jsonVersion":"1.1",
+    "protocol":"json",
     "serviceFullName":"AWS OpsWorks",
     "signatureVersion":"v4",
-    "targetPrefix":"OpsWorks_20130218",
-    "protocol":"json"
+    "targetPrefix":"OpsWorks_20130218"
   },
   "operations":{
     "AssignInstance":{
@@ -2377,9 +2377,9 @@
     },
     "Minute":{
       "type":"integer",
-      "min":1,
+      "box":true,
       "max":100,
-      "box":true
+      "min":1
     },
     "Parameters":{
       "type":"map",
@@ -2921,9 +2921,9 @@
     },
     "ValidForInMinutes":{
       "type":"integer",
-      "min":60,
+      "box":true,
       "max":1440,
-      "box":true
+      "min":60
     },
     "ValidationException":{
       "type":"structure",

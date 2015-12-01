@@ -1,207 +1,207 @@
 {
-  "version": 2,
-  "waiters": {
-    "AppExists": {
-      "delay": 1,
-      "operation": "DescribeApps",
-      "maxAttempts": 40,
-      "acceptors": [
+  "version":2,
+  "waiters":{
+    "AppExists":{
+      "acceptors":[
         {
-          "expected": 200,
-          "matcher": "status",
-          "state": "success"
+          "expected":200,
+          "matcher":"status",
+          "state":"success"
         },
         {
-          "matcher": "status",
-          "expected": 400,
-          "state": "failure"
+          "expected":400,
+          "matcher":"status",
+          "state":"failure"
         }
-      ]
+      ],
+      "delay":1,
+      "maxAttempts":40,
+      "operation":"DescribeApps"
     },
-    "InstanceOnline": {
-      "delay": 15,
-      "operation": "DescribeInstances",
-      "maxAttempts": 40,
-      "description": "Wait until OpsWorks instance is online.",
-      "acceptors": [
+    "InstanceOnline":{
+      "acceptors":[
         {
-          "expected": "online",
-          "matcher": "pathAll",
-          "state": "success",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"online",
+          "matcher":"pathAll",
+          "state":"success"
         },
         {
-          "expected": "setup_failed",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"setup_failed",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "shutting_down",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"shutting_down",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "start_failed",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"start_failed",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "stopped",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"stopped",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "stopping",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"stopping",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "terminating",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"terminating",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "terminated",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"terminated",
+          "matcher":"pathAny",
+          "state":"failure"
         }
-      ]
+      ],
+      "delay":15,
+      "description":"Wait until OpsWorks instance is online.",
+      "maxAttempts":40,
+      "operation":"DescribeInstances"
     },
-    "InstanceStopped": {
-      "delay": 15,
-      "operation": "DescribeInstances",
-      "maxAttempts": 40,
-      "description": "Wait until OpsWorks instance is stopped.",
-      "acceptors": [
+    "InstanceStopped":{
+      "acceptors":[
         {
-          "expected": "stopped",
-          "matcher": "pathAll",
-          "state": "success",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"stopped",
+          "matcher":"pathAll",
+          "state":"success"
         },
         {
-          "expected": "booting",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"booting",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "online",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"online",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "pending",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"pending",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "rebooting",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"rebooting",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "requested",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"requested",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "running_setup",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"running_setup",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "setup_failed",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"setup_failed",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "start_failed",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"start_failed",
+          "matcher":"pathAny",
+          "state":"failure"
         }
-      ]
+      ],
+      "delay":15,
+      "description":"Wait until OpsWorks instance is stopped.",
+      "maxAttempts":40,
+      "operation":"DescribeInstances"
     },
-    "InstanceTerminated": {
-      "delay": 15,
-      "operation": "DescribeInstances",
-      "maxAttempts": 40,
-      "description": "Wait until OpsWorks instance is terminated.",
-      "acceptors": [
+    "InstanceTerminated":{
+      "acceptors":[
         {
-          "expected": "terminated",
-          "matcher": "pathAll",
-          "state": "success",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"terminated",
+          "matcher":"pathAll",
+          "state":"success"
         },
         {
-          "expected": "ResourceNotFoundException",
-          "matcher": "error",
-          "state": "success"
+          "expected":"ResourceNotFoundException",
+          "matcher":"error",
+          "state":"success"
         },
         {
-          "expected": "booting",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"booting",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "online",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"online",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "pending",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"pending",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "rebooting",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"rebooting",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "requested",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"requested",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "running_setup",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"running_setup",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "setup_failed",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"setup_failed",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "start_failed",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Instances[].Status"
+          "argument":"Instances[].Status",
+          "expected":"start_failed",
+          "matcher":"pathAny",
+          "state":"failure"
         }
-      ]
+      ],
+      "delay":15,
+      "description":"Wait until OpsWorks instance is terminated.",
+      "maxAttempts":40,
+      "operation":"DescribeInstances"
     }
   }
 }

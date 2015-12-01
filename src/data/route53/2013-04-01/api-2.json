@@ -4,10 +4,10 @@
     "apiVersion":"2013-04-01",
     "endpointPrefix":"route53",
     "globalEndpoint":"route53.amazonaws.com",
+    "protocol":"rest-xml",
     "serviceAbbreviation":"Route 53",
     "serviceFullName":"Amazon Route 53",
-    "signatureVersion":"v4",
-    "protocol":"rest-xml"
+    "signatureVersion":"v4"
   },
   "operations":{
     "AssociateVPCWithHostedZone":{
@@ -18,8 +18,8 @@
       },
       "input":{
         "shape":"AssociateVPCWithHostedZoneRequest",
-        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"},
-        "locationName":"AssociateVPCWithHostedZoneRequest"
+        "locationName":"AssociateVPCWithHostedZoneRequest",
+        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"}
       },
       "output":{"shape":"AssociateVPCWithHostedZoneResponse"},
       "errors":[
@@ -57,8 +57,8 @@
       },
       "input":{
         "shape":"ChangeResourceRecordSetsRequest",
-        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"},
-        "locationName":"ChangeResourceRecordSetsRequest"
+        "locationName":"ChangeResourceRecordSetsRequest",
+        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"}
       },
       "output":{"shape":"ChangeResourceRecordSetsResponse"},
       "errors":[
@@ -96,8 +96,8 @@
       },
       "input":{
         "shape":"ChangeTagsForResourceRequest",
-        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"},
-        "locationName":"ChangeTagsForResourceRequest"
+        "locationName":"ChangeTagsForResourceRequest",
+        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"}
       },
       "output":{"shape":"ChangeTagsForResourceResponse"},
       "errors":[
@@ -137,8 +137,8 @@
       },
       "input":{
         "shape":"CreateHealthCheckRequest",
-        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"},
-        "locationName":"CreateHealthCheckRequest"
+        "locationName":"CreateHealthCheckRequest",
+        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"}
       },
       "output":{"shape":"CreateHealthCheckResponse"},
       "errors":[
@@ -167,8 +167,8 @@
       },
       "input":{
         "shape":"CreateHostedZoneRequest",
-        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"},
-        "locationName":"CreateHostedZoneRequest"
+        "locationName":"CreateHostedZoneRequest",
+        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"}
       },
       "output":{"shape":"CreateHostedZoneResponse"},
       "errors":[
@@ -224,8 +224,8 @@
       },
       "input":{
         "shape":"CreateReusableDelegationSetRequest",
-        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"},
-        "locationName":"CreateReusableDelegationSetRequest"
+        "locationName":"CreateReusableDelegationSetRequest",
+        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"}
       },
       "output":{"shape":"CreateReusableDelegationSetResponse"},
       "errors":[
@@ -353,8 +353,8 @@
       },
       "input":{
         "shape":"DisassociateVPCFromHostedZoneRequest",
-        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"},
-        "locationName":"DisassociateVPCFromHostedZoneRequest"
+        "locationName":"DisassociateVPCFromHostedZoneRequest",
+        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"}
       },
       "output":{"shape":"DisassociateVPCFromHostedZoneResponse"},
       "errors":[
@@ -727,8 +727,8 @@
       },
       "input":{
         "shape":"ListTagsForResourcesRequest",
-        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"},
-        "locationName":"ListTagsForResourcesRequest"
+        "locationName":"ListTagsForResourcesRequest",
+        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"}
       },
       "output":{"shape":"ListTagsForResourcesResponse"},
       "errors":[
@@ -767,8 +767,8 @@
       },
       "input":{
         "shape":"UpdateHealthCheckRequest",
-        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"},
-        "locationName":"UpdateHealthCheckRequest"
+        "locationName":"UpdateHealthCheckRequest",
+        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"}
       },
       "output":{"shape":"UpdateHealthCheckResponse"},
       "errors":[
@@ -797,8 +797,8 @@
       },
       "input":{
         "shape":"UpdateHostedZoneCommentRequest",
-        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"},
-        "locationName":"UpdateHostedZoneCommentRequest"
+        "locationName":"UpdateHostedZoneCommentRequest",
+        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"}
       },
       "output":{"shape":"UpdateHostedZoneCommentResponse"},
       "errors":[
@@ -1207,8 +1207,8 @@
     },
     "FailureThreshold":{
       "type":"integer",
-      "min":1,
-      "max":10
+      "max":10,
+      "min":1
     },
     "FullyQualifiedDomainName":{
       "type":"string",
@@ -1224,23 +1224,23 @@
     },
     "GeoLocationContinentCode":{
       "type":"string",
-      "min":2,
-      "max":2
+      "max":2,
+      "min":2
     },
     "GeoLocationContinentName":{
       "type":"string",
-      "min":1,
-      "max":32
+      "max":32,
+      "min":1
     },
     "GeoLocationCountryCode":{
       "type":"string",
-      "min":1,
-      "max":2
+      "max":2,
+      "min":1
     },
     "GeoLocationCountryName":{
       "type":"string",
-      "min":1,
-      "max":64
+      "max":64,
+      "min":1
     },
     "GeoLocationDetails":{
       "type":"structure",
@@ -1262,13 +1262,13 @@
     },
     "GeoLocationSubdivisionCode":{
       "type":"string",
-      "min":1,
-      "max":3
+      "max":3,
+      "min":1
     },
     "GeoLocationSubdivisionName":{
       "type":"string",
-      "min":1,
-      "max":64
+      "max":64,
+      "min":1
     },
     "GetChangeRequest":{
       "type":"structure",
@@ -1499,8 +1499,8 @@
     },
     "HealthCheckNonce":{
       "type":"string",
-      "min":1,
-      "max":64
+      "max":64,
+      "min":1
     },
     "HealthCheckObservation":{
       "type":"structure",
@@ -1548,8 +1548,8 @@
     },
     "HealthThreshold":{
       "type":"integer",
-      "min":0,
-      "max":256
+      "max":256,
+      "min":0
     },
     "HostedZone":{
       "type":"structure",
@@ -1987,8 +1987,8 @@
     },
     "Nonce":{
       "type":"string",
-      "min":1,
-      "max":128
+      "max":128,
+      "min":1
     },
     "PageMarker":{
       "type":"string",
@@ -1998,8 +1998,8 @@
     "PageTruncated":{"type":"boolean"},
     "Port":{
       "type":"integer",
-      "min":1,
-      "max":65535
+      "max":65535,
+      "min":1
     },
     "PriorRequestNotComplete":{
       "type":"structure",
@@ -2038,8 +2038,8 @@
     },
     "RequestInterval":{
       "type":"integer",
-      "min":10,
-      "max":30
+      "max":30,
+      "min":10
     },
     "ResourceDescription":{
       "type":"string",
@@ -2089,8 +2089,8 @@
     },
     "ResourceRecordSetIdentifier":{
       "type":"string",
-      "min":1,
-      "max":128
+      "max":128,
+      "min":1
     },
     "ResourceRecordSetRegion":{
       "type":"string",
@@ -2106,13 +2106,13 @@
         "sa-east-1",
         "cn-north-1"
       ],
-      "min":1,
-      "max":64
+      "max":64,
+      "min":1
     },
     "ResourceRecordSetWeight":{
       "type":"long",
-      "min":0,
-      "max":255
+      "max":255,
+      "min":0
     },
     "ResourceRecordSets":{
       "type":"list",
@@ -2162,8 +2162,8 @@
     },
     "TTL":{
       "type":"long",
-      "min":0,
-      "max":2147483647
+      "max":2147483647,
+      "min":0
     },
     "Tag":{
       "type":"structure",
@@ -2182,8 +2182,8 @@
         "shape":"TagKey",
         "locationName":"Key"
       },
-      "min":1,
-      "max":10
+      "max":10,
+      "min":1
     },
     "TagList":{
       "type":"list",
@@ -2191,8 +2191,8 @@
         "shape":"Tag",
         "locationName":"Tag"
       },
-      "min":1,
-      "max":10
+      "max":10,
+      "min":1
     },
     "TagResourceId":{
       "type":"string",
@@ -2204,8 +2204,8 @@
         "shape":"TagResourceId",
         "locationName":"ResourceId"
       },
-      "min":1,
-      "max":10
+      "max":10,
+      "min":1
     },
     "TagResourceType":{
       "type":"string",
@@ -2322,8 +2322,8 @@
         "sa-east-1",
         "cn-north-1"
       ],
-      "min":1,
-      "max":64
+      "max":64,
+      "min":1
     },
     "VPCs":{
       "type":"list",

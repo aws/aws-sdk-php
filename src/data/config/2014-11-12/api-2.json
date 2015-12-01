@@ -4,11 +4,11 @@
     "apiVersion":"2014-11-12",
     "endpointPrefix":"config",
     "jsonVersion":"1.1",
+    "protocol":"json",
     "serviceAbbreviation":"Config Service",
     "serviceFullName":"AWS Config",
     "signatureVersion":"v4",
-    "targetPrefix":"StarlingDoveService",
-    "protocol":"json"
+    "targetPrefix":"StarlingDoveService"
   },
   "operations":{
     "DeleteConfigRule":{
@@ -468,8 +468,8 @@
     "Boolean":{"type":"boolean"},
     "ChannelName":{
       "type":"string",
-      "min":1,
-      "max":256
+      "max":256,
+      "min":1
     },
     "ChronologicalOrder":{
       "type":"string",
@@ -518,8 +518,8 @@
     "ComplianceResourceTypes":{
       "type":"list",
       "member":{"shape":"StringWithCharLimit256"},
-      "min":0,
-      "max":100
+      "max":100,
+      "min":0
     },
     "ComplianceSummariesByResourceType":{
       "type":"list",
@@ -552,8 +552,8 @@
     "ComplianceTypes":{
       "type":"list",
       "member":{"shape":"ComplianceType"},
-      "min":0,
-      "max":3
+      "max":3,
+      "min":0
     },
     "ConfigExportDeliveryInfo":{
       "type":"structure",
@@ -601,8 +601,8 @@
     "ConfigRuleNames":{
       "type":"list",
       "member":{"shape":"StringWithCharLimit64"},
-      "min":0,
-      "max":25
+      "max":25,
+      "min":0
     },
     "ConfigRuleState":{
       "type":"string",
@@ -878,8 +878,8 @@
     "EarlierTime":{"type":"timestamp"},
     "EmptiableStringWithCharLimit256":{
       "type":"string",
-      "min":0,
-      "max":256
+      "max":256,
+      "min":0
     },
     "Evaluation":{
       "type":"structure",
@@ -930,8 +930,8 @@
     "Evaluations":{
       "type":"list",
       "member":{"shape":"Evaluation"},
-      "min":0,
-      "max":100
+      "max":100,
+      "min":0
     },
     "EventSource":{
       "type":"string",
@@ -1097,8 +1097,8 @@
     "LaterTime":{"type":"timestamp"},
     "Limit":{
       "type":"integer",
-      "min":0,
-      "max":100
+      "max":100,
+      "min":0
     },
     "ListDiscoveredResourcesRequest":{
       "type":"structure",
@@ -1243,8 +1243,8 @@
     },
     "RecorderName":{
       "type":"string",
-      "min":1,
-      "max":256
+      "max":256,
+      "min":1
     },
     "RecorderStatus":{
       "type":"string",
@@ -1339,8 +1339,8 @@
     "ResourceTypes":{
       "type":"list",
       "member":{"shape":"StringWithCharLimit256"},
-      "min":0,
-      "max":100
+      "max":100,
+      "min":0
     },
     "Scope":{
       "type":"structure",
@@ -1369,8 +1369,8 @@
     "SourceDetails":{
       "type":"list",
       "member":{"shape":"SourceDetail"},
-      "min":0,
-      "max":25
+      "max":25,
+      "min":0
     },
     "StartConfigurationRecorderRequest":{
       "type":"structure",
@@ -1389,18 +1389,18 @@
     "String":{"type":"string"},
     "StringWithCharLimit128":{
       "type":"string",
-      "min":1,
-      "max":128
+      "max":128,
+      "min":1
     },
     "StringWithCharLimit256":{
       "type":"string",
-      "min":1,
-      "max":256
+      "max":256,
+      "min":1
     },
     "StringWithCharLimit64":{
       "type":"string",
-      "min":1,
-      "max":64
+      "max":64,
+      "min":1
     },
     "Tags":{
       "type":"map",

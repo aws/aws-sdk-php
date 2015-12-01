@@ -4,11 +4,11 @@
     "apiVersion":"2014-11-06",
     "endpointPrefix":"ssm",
     "jsonVersion":"1.1",
+    "protocol":"json",
     "serviceAbbreviation":"Amazon SSM",
     "serviceFullName":"Amazon Simple Systems Management Service",
     "signatureVersion":"v4",
-    "targetPrefix":"AmazonSSM",
-    "protocol":"json"
+    "targetPrefix":"AmazonSSM"
   },
   "operations":{
     "CancelCommand":{
@@ -968,8 +968,8 @@
     "CommandFilterList":{
       "type":"list",
       "member":{"shape":"CommandFilter"},
-      "min":1,
-      "max":3
+      "max":3,
+      "min":1
     },
     "CommandFilterValue":{
       "type":"string",
@@ -977,8 +977,8 @@
     },
     "CommandId":{
       "type":"string",
-      "min":36,
-      "max":36
+      "max":36,
+      "min":36
     },
     "CommandInvocation":{
       "type":"structure",
@@ -1015,8 +1015,8 @@
     },
     "CommandMaxResults":{
       "type":"integer",
-      "min":1,
-      "max":50
+      "max":50,
+      "min":1
     },
     "CommandPlugin":{
       "type":"structure",
@@ -1384,15 +1384,15 @@
     },
     "InstanceId":{
       "type":"string",
-      "min":10,
       "max":10,
+      "min":10,
       "pattern":"^(?=.{10}$)(i-(\\w){8})"
     },
     "InstanceIdList":{
       "type":"list",
       "member":{"shape":"InstanceId"},
-      "min":1,
-      "max":50
+      "max":50,
+      "min":1
     },
     "InstanceInformation":{
       "type":"structure",
@@ -1451,8 +1451,8 @@
         "shape":"InstanceInformationFilterValue",
         "locationName":"InstanceInformationFilterValue"
       },
-      "min":1,
-      "max":100
+      "max":100,
+      "min":1
     },
     "InstanceInformationList":{
       "type":"list",
@@ -1670,13 +1670,13 @@
     },
     "MaxResults":{
       "type":"integer",
-      "min":1,
-      "max":25
+      "max":25,
+      "min":1
     },
     "MaxResultsEC2Compatible":{
       "type":"integer",
-      "min":5,
-      "max":50
+      "max":50,
+      "min":5
     },
     "NextToken":{"type":"string"},
     "ParameterName":{"type":"string"},
@@ -1715,8 +1715,8 @@
     "ResponseCode":{"type":"integer"},
     "S3BucketName":{
       "type":"string",
-      "min":3,
-      "max":63
+      "max":63,
+      "min":3
     },
     "S3KeyPrefix":{
       "type":"string",
@@ -1769,8 +1769,8 @@
     "String":{"type":"string"},
     "TimeoutSeconds":{
       "type":"integer",
-      "min":30,
-      "max":2592000
+      "max":2592000,
+      "min":30
     },
     "TooManyUpdates":{
       "type":"structure",

@@ -1,70 +1,70 @@
 {
-  "version": 2,
-  "waiters": {
-    "StackCreateComplete": {
-      "delay": 30,
-      "operation": "DescribeStacks",
-      "maxAttempts": 50,
-      "description": "Wait until stack status is CREATE_COMPLETE.",
-      "acceptors": [
+  "version":2,
+  "waiters":{
+    "StackCreateComplete":{
+      "acceptors":[
         {
-          "expected": "CREATE_COMPLETE",
-          "matcher": "pathAll",
-          "state": "success",
-          "argument": "Stacks[].StackStatus"
+          "argument":"Stacks[].StackStatus",
+          "expected":"CREATE_COMPLETE",
+          "matcher":"pathAll",
+          "state":"success"
         },
         {
-          "expected": "CREATE_FAILED",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Stacks[].StackStatus"
+          "argument":"Stacks[].StackStatus",
+          "expected":"CREATE_FAILED",
+          "matcher":"pathAny",
+          "state":"failure"
         }
-      ]
+      ],
+      "delay":30,
+      "description":"Wait until stack status is CREATE_COMPLETE.",
+      "maxAttempts":50,
+      "operation":"DescribeStacks"
     },
-    "StackDeleteComplete": {
-      "delay": 30,
-      "operation": "DescribeStacks",
-      "maxAttempts": 25,
-      "description": "Wait until stack status is DELETE_COMPLETE.",
-      "acceptors": [
+    "StackDeleteComplete":{
+      "acceptors":[
         {
-          "expected": "DELETE_COMPLETE",
-          "matcher": "pathAll",
-          "state": "success",
-          "argument": "Stacks[].StackStatus"
+          "argument":"Stacks[].StackStatus",
+          "expected":"DELETE_COMPLETE",
+          "matcher":"pathAll",
+          "state":"success"
         },
         {
-          "expected": "ValidationError",
-          "matcher": "error",
-          "state": "success"
+          "expected":"ValidationError",
+          "matcher":"error",
+          "state":"success"
         },
         {
-          "expected": "DELETE_FAILED",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Stacks[].StackStatus"
+          "argument":"Stacks[].StackStatus",
+          "expected":"DELETE_FAILED",
+          "matcher":"pathAny",
+          "state":"failure"
         }
-      ]
+      ],
+      "delay":30,
+      "description":"Wait until stack status is DELETE_COMPLETE.",
+      "maxAttempts":25,
+      "operation":"DescribeStacks"
     },
-    "StackUpdateComplete": {
-      "delay": 30,
-      "operation": "DescribeStacks",
-      "maxAttempts": 5,
-      "description": "Wait until stack status is UPDATE_COMPLETE.",
-      "acceptors": [
+    "StackUpdateComplete":{
+      "acceptors":[
         {
-          "expected": "UPDATE_COMPLETE",
-          "matcher": "pathAll",
-          "state": "success",
-          "argument": "Stacks[].StackStatus"
+          "argument":"Stacks[].StackStatus",
+          "expected":"UPDATE_COMPLETE",
+          "matcher":"pathAll",
+          "state":"success"
         },
         {
-          "expected": "UPDATE_FAILED",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "Stacks[].StackStatus"
+          "argument":"Stacks[].StackStatus",
+          "expected":"UPDATE_FAILED",
+          "matcher":"pathAny",
+          "state":"failure"
         }
-      ]
+      ],
+      "delay":30,
+      "description":"Wait until stack status is UPDATE_COMPLETE.",
+      "maxAttempts":5,
+      "operation":"DescribeStacks"
     }
   }
 }

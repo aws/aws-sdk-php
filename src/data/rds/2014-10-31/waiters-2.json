@@ -1,96 +1,96 @@
 {
-  "version": 2,
-  "waiters": {
-    "DBInstanceAvailable": {
-      "delay": 30,
-      "operation": "DescribeDBInstances",
-      "maxAttempts": 60,
-      "acceptors": [
+  "version":2,
+  "waiters":{
+    "DBInstanceAvailable":{
+      "acceptors":[
         {
-          "expected": "available",
-          "matcher": "pathAll",
-          "state": "success",
-          "argument": "DBInstances[].DBInstanceStatus"
+          "argument":"DBInstances[].DBInstanceStatus",
+          "expected":"available",
+          "matcher":"pathAll",
+          "state":"success"
         },
         {
-          "expected": "deleted",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "DBInstances[].DBInstanceStatus"
+          "argument":"DBInstances[].DBInstanceStatus",
+          "expected":"deleted",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "deleting",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "DBInstances[].DBInstanceStatus"
+          "argument":"DBInstances[].DBInstanceStatus",
+          "expected":"deleting",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "failed",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "DBInstances[].DBInstanceStatus"
+          "argument":"DBInstances[].DBInstanceStatus",
+          "expected":"failed",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "incompatible-restore",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "DBInstances[].DBInstanceStatus"
+          "argument":"DBInstances[].DBInstanceStatus",
+          "expected":"incompatible-restore",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "incompatible-parameters",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "DBInstances[].DBInstanceStatus"
+          "argument":"DBInstances[].DBInstanceStatus",
+          "expected":"incompatible-parameters",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "incompatible-restore",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "DBInstances[].DBInstanceStatus"
+          "argument":"DBInstances[].DBInstanceStatus",
+          "expected":"incompatible-restore",
+          "matcher":"pathAny",
+          "state":"failure"
         }
-      ]
+      ],
+      "delay":30,
+      "maxAttempts":60,
+      "operation":"DescribeDBInstances"
     },
-    "DBInstanceDeleted": {
-      "delay": 30,
-      "operation": "DescribeDBInstances",
-      "maxAttempts": 60,
-      "acceptors": [
+    "DBInstanceDeleted":{
+      "acceptors":[
         {
-          "expected": "deleted",
-          "matcher": "pathAll",
-          "state": "success",
-          "argument": "DBInstances[].DBInstanceStatus"
+          "argument":"DBInstances[].DBInstanceStatus",
+          "expected":"deleted",
+          "matcher":"pathAll",
+          "state":"success"
         },
         {
-          "expected": "DBInstanceNotFound",
-          "matcher": "error",
-          "state": "success"
+          "expected":"DBInstanceNotFound",
+          "matcher":"error",
+          "state":"success"
         },
         {
-          "expected": "creating",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "DBInstances[].DBInstanceStatus"
+          "argument":"DBInstances[].DBInstanceStatus",
+          "expected":"creating",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "modifying",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "DBInstances[].DBInstanceStatus"
+          "argument":"DBInstances[].DBInstanceStatus",
+          "expected":"modifying",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "rebooting",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "DBInstances[].DBInstanceStatus"
+          "argument":"DBInstances[].DBInstanceStatus",
+          "expected":"rebooting",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "resetting-master-credentials",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "DBInstances[].DBInstanceStatus"
+          "argument":"DBInstances[].DBInstanceStatus",
+          "expected":"resetting-master-credentials",
+          "matcher":"pathAny",
+          "state":"failure"
         }
-      ]
+      ],
+      "delay":30,
+      "maxAttempts":60,
+      "operation":"DescribeDBInstances"
     }
   }
 }

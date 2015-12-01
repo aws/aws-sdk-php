@@ -1,93 +1,93 @@
 {
-  "version": 2,
-  "waiters": {
-    "TasksRunning": {
-      "delay": 6,
-      "operation": "DescribeTasks",
-      "maxAttempts": 100,
-      "acceptors": [
+  "version":2,
+  "waiters":{
+    "ServicesInactive":{
+      "acceptors":[
         {
-          "expected": "STOPPED",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "tasks[].lastStatus"
+          "argument":"failures[].reason",
+          "expected":"MISSING",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "MISSING",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "failures[].reason"
-        },
-        {
-          "expected": "RUNNING",
-          "matcher": "pathAll",
-          "state": "success",
-          "argument": "tasks[].lastStatus"
+          "argument":"services[].status",
+          "expected":"INACTIVE",
+          "matcher":"pathAny",
+          "state":"success"
         }
-      ]
+      ],
+      "delay":15,
+      "maxAttempts":40,
+      "operation":"DescribeServices"
     },
-    "TasksStopped": {
-      "delay": 6,
-      "operation": "DescribeTasks",
-      "maxAttempts": 100,
-      "acceptors": [
+    "ServicesStable":{
+      "acceptors":[
         {
-          "expected": "STOPPED",
-          "matcher": "pathAll",
-          "state": "success",
-          "argument": "tasks[].lastStatus"
+          "argument":"failures[].reason",
+          "expected":"MISSING",
+          "matcher":"pathAny",
+          "state":"failure"
+        },
+        {
+          "argument":"services[].status",
+          "expected":"DRAINING",
+          "matcher":"pathAny",
+          "state":"failure"
+        },
+        {
+          "argument":"services[].status",
+          "expected":"INACTIVE",
+          "matcher":"pathAny",
+          "state":"failure"
+        },
+        {
+          "argument":"services | [@[?length(deployments)!=`1`], @[?desiredCount!=runningCount]][] | length(@) == `0`",
+          "expected":true,
+          "matcher":"path",
+          "state":"success"
         }
-      ]
+      ],
+      "delay":15,
+      "maxAttempts":40,
+      "operation":"DescribeServices"
     },
-    "ServicesStable": {
-      "delay": 15,
-      "operation": "DescribeServices",
-      "maxAttempts": 40,
-      "acceptors": [
+    "TasksRunning":{
+      "acceptors":[
         {
-          "expected": "MISSING",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "failures[].reason"
+          "argument":"tasks[].lastStatus",
+          "expected":"STOPPED",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "DRAINING",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "services[].status"
+          "argument":"failures[].reason",
+          "expected":"MISSING",
+          "matcher":"pathAny",
+          "state":"failure"
         },
         {
-          "expected": "INACTIVE",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "services[].status"
-        },
-        {
-          "expected": true,
-          "matcher": "path",
-          "state": "success",
-          "argument": "services | [@[?length(deployments)!=`1`], @[?desiredCount!=runningCount]][] | length(@) == `0`"
+          "argument":"tasks[].lastStatus",
+          "expected":"RUNNING",
+          "matcher":"pathAll",
+          "state":"success"
         }
-      ]
+      ],
+      "delay":6,
+      "maxAttempts":100,
+      "operation":"DescribeTasks"
     },
-    "ServicesInactive": {
-      "delay": 15,
-      "operation": "DescribeServices",
-      "maxAttempts": 40,
-      "acceptors": [
+    "TasksStopped":{
+      "acceptors":[
         {
-          "expected": "MISSING",
-          "matcher": "pathAny",
-          "state": "failure",
-          "argument": "failures[].reason"
-        },
-        {
-          "expected": "INACTIVE",
-          "matcher": "pathAny",
-          "state": "success",
-          "argument": "services[].status"
+          "argument":"tasks[].lastStatus",
+          "expected":"STOPPED",
+          "matcher":"pathAll",
+          "state":"success"
         }
-      ]
+      ],
+      "delay":6,
+      "maxAttempts":100,
+      "operation":"DescribeTasks"
     }
   }
 }

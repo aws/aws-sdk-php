@@ -3,10 +3,10 @@
   "metadata":{
     "apiVersion":"2011-01-01",
     "endpointPrefix":"autoscaling",
+    "protocol":"query",
     "serviceFullName":"Auto Scaling",
     "signatureVersion":"v4",
-    "xmlNamespace":"http://autoscaling.amazonaws.com/doc/2011-01-01/",
-    "protocol":"query"
+    "xmlNamespace":"http://autoscaling.amazonaws.com/doc/2011-01-01/"
   },
   "operations":{
     "AttachInstances":{
@@ -1359,8 +1359,8 @@
     },
     "AsciiStringMaxLen255":{
       "type":"string",
-      "min":1,
       "max":255,
+      "min":1,
       "pattern":"[A-Za-z0-9\\-_\\/]+"
     },
     "AssociatePublicIpAddress":{"type":"boolean"},
@@ -1490,18 +1490,18 @@
     "BlockDeviceEbsEncrypted":{"type":"boolean"},
     "BlockDeviceEbsIops":{
       "type":"integer",
-      "min":100,
-      "max":20000
+      "max":20000,
+      "min":100
     },
     "BlockDeviceEbsVolumeSize":{
       "type":"integer",
-      "min":1,
-      "max":16384
+      "max":16384,
+      "min":1
     },
     "BlockDeviceEbsVolumeType":{
       "type":"string",
-      "min":1,
-      "max":255
+      "max":255,
+      "min":1
     },
     "BlockDeviceMapping":{
       "type":"structure",
@@ -2026,8 +2026,8 @@
     "LifecycleActionResult":{"type":"string"},
     "LifecycleActionToken":{
       "type":"string",
-      "min":36,
-      "max":36
+      "max":36,
+      "min":36
     },
     "LifecycleHook":{
       "type":"structure",
@@ -2307,8 +2307,8 @@
     },
     "ResourceName":{
       "type":"string",
-      "min":1,
       "max":1600,
+      "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },
     "ScalingActivityInProgressFault":{
@@ -2431,8 +2431,8 @@
     "ShouldRespectGracePeriod":{"type":"boolean"},
     "SpotPrice":{
       "type":"string",
-      "min":1,
-      "max":255
+      "max":255,
+      "min":1
     },
     "StepAdjustment":{
       "type":"structure",
@@ -2485,14 +2485,14 @@
     },
     "TagKey":{
       "type":"string",
-      "min":1,
       "max":128,
+      "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },
     "TagValue":{
       "type":"string",
-      "min":0,
       "max":256,
+      "min":0,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },
     "Tags":{
@@ -2550,38 +2550,38 @@
     },
     "XmlStringMaxLen1023":{
       "type":"string",
-      "min":1,
       "max":1023,
+      "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },
     "XmlStringMaxLen16":{
       "type":"string",
-      "min":1,
       "max":16,
+      "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },
     "XmlStringMaxLen1600":{
       "type":"string",
-      "min":1,
       "max":1600,
+      "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },
     "XmlStringMaxLen255":{
       "type":"string",
-      "min":1,
       "max":255,
+      "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },
     "XmlStringMaxLen32":{
       "type":"string",
-      "min":1,
       "max":32,
+      "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },
     "XmlStringMaxLen64":{
       "type":"string",
-      "min":1,
       "max":64,
+      "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },
     "XmlStringUserData":{

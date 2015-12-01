@@ -3,10 +3,10 @@
   "metadata":{
     "apiVersion":"2015-01-01",
     "endpointPrefix":"es",
+    "protocol":"query",
     "serviceFullName":"Amazon Elasticsearch Service",
     "signatureVersion":"v4",
-    "xmlNamespace":"http://es.amazonaws.com/doc/2015-01-01/",
-    "protocol":"query"
+    "xmlNamespace":"http://es.amazonaws.com/doc/2015-01-01/"
   },
   "operations":{
     "AddTags":{
@@ -478,8 +478,8 @@
     },
     "DomainId":{
       "type":"string",
-      "min":1,
-      "max":64
+      "max":64,
+      "min":1
     },
     "DomainInfo":{
       "type":"structure",
@@ -493,8 +493,8 @@
     },
     "DomainName":{
       "type":"string",
-      "min":3,
       "max":28,
+      "min":3,
       "pattern":"[a-z][a-z0-9\\-]+"
     },
     "DomainNameList":{
@@ -730,8 +730,8 @@
     },
     "TagKey":{
       "type":"string",
-      "min":1,
-      "max":128
+      "max":128,
+      "min":1
     },
     "TagList":{
       "type":"list",
@@ -739,8 +739,8 @@
     },
     "TagValue":{
       "type":"string",
-      "min":0,
-      "max":256
+      "max":256,
+      "min":0
     },
     "UIntValue":{
       "type":"integer",

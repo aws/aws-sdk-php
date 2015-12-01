@@ -4,11 +4,11 @@
     "apiVersion":"2015-04-16",
     "endpointPrefix":"ds",
     "jsonVersion":"1.1",
+    "protocol":"json",
     "serviceAbbreviation":"Directory Service",
     "serviceFullName":"AWS Directory Service",
     "signatureVersion":"v4",
-    "targetPrefix":"DirectoryService_20150416",
-    "protocol":"json"
+    "targetPrefix":"DirectoryService_20150416"
   },
   "operations":{
     "ConnectDirectory":{
@@ -519,13 +519,13 @@
   "shapes":{
     "AccessUrl":{
       "type":"string",
-      "min":1,
-      "max":128
+      "max":128,
+      "min":1
     },
     "AliasName":{
       "type":"string",
-      "min":1,
       "max":62,
+      "min":1,
       "pattern":"^(?!d-)([\\da-zA-Z]+)([-]*[\\da-zA-Z])*"
     },
     "Attribute":{
@@ -576,13 +576,13 @@
     },
     "ComputerName":{
       "type":"string",
-      "min":1,
-      "max":15
+      "max":15,
+      "min":1
     },
     "ComputerPassword":{
       "type":"string",
-      "min":8,
       "max":64,
+      "min":8,
       "pattern":"[\\u0020-\\u00FF]+",
       "sensitive":true
     },
@@ -611,8 +611,8 @@
     },
     "ConnectPassword":{
       "type":"string",
-      "min":1,
       "max":128,
+      "min":1,
       "sensitive":true
     },
     "ConnectedDirectoriesLimitReached":{"type":"boolean"},
@@ -750,8 +750,8 @@
     },
     "Description":{
       "type":"string",
-      "min":0,
       "max":128,
+      "min":0,
       "pattern":"^([a-zA-Z0-9_])[\\\\a-zA-Z0-9_@#%*+=:?./!\\s-]*$"
     },
     "DirectoryConnectSettings":{
@@ -1043,8 +1043,8 @@
     "NextToken":{"type":"string"},
     "OrganizationalUnitDN":{
       "type":"string",
-      "min":1,
-      "max":2000
+      "max":2000,
+      "min":1
     },
     "Password":{
       "type":"string",
@@ -1053,8 +1053,8 @@
     },
     "PortNumber":{
       "type":"integer",
-      "min":1025,
-      "max":65535
+      "max":65535,
+      "min":1025
     },
     "RadiusAuthenticationProtocol":{
       "type":"string",
@@ -1067,13 +1067,13 @@
     },
     "RadiusDisplayLabel":{
       "type":"string",
-      "min":1,
-      "max":64
+      "max":64,
+      "min":1
     },
     "RadiusRetries":{
       "type":"integer",
-      "min":0,
-      "max":10
+      "max":10,
+      "min":0
     },
     "RadiusSettings":{
       "type":"structure",
@@ -1090,8 +1090,8 @@
     },
     "RadiusSharedSecret":{
       "type":"string",
-      "min":8,
       "max":512,
+      "min":8,
       "sensitive":true
     },
     "RadiusStatus":{
@@ -1104,8 +1104,8 @@
     },
     "RadiusTimeout":{
       "type":"integer",
-      "min":1,
-      "max":20
+      "max":20,
+      "min":1
     },
     "RequestId":{
       "type":"string",
@@ -1125,8 +1125,8 @@
     },
     "SID":{
       "type":"string",
-      "min":1,
       "max":256,
+      "min":1,
       "pattern":"[&\\w+-.@]+"
     },
     "SecurityGroupId":{
@@ -1135,8 +1135,8 @@
     },
     "Server":{
       "type":"string",
-      "min":1,
-      "max":256
+      "max":256,
+      "min":1
     },
     "Servers":{
       "type":"list",
@@ -1188,8 +1188,8 @@
     },
     "SnapshotName":{
       "type":"string",
-      "min":0,
       "max":128,
+      "min":0,
       "pattern":"^([a-zA-Z0-9_])[\\\\a-zA-Z0-9_@#%*+=:?./!\\s-]*$"
     },
     "SnapshotStatus":{

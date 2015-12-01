@@ -4,11 +4,11 @@
     "apiVersion":"2015-04-13",
     "endpointPrefix":"codecommit",
     "jsonVersion":"1.1",
+    "protocol":"json",
     "serviceAbbreviation":"CodeCommit",
     "serviceFullName":"AWS CodeCommit",
     "signatureVersion":"v4",
-    "targetPrefix":"CodeCommit_20150413",
-    "protocol":"json"
+    "targetPrefix":"CodeCommit_20150413"
   },
   "operations":{
     "BatchGetRepositories":{
@@ -546,8 +546,8 @@
     },
     "BranchName":{
       "type":"string",
-      "min":1,
-      "max":100
+      "max":100,
+      "min":1
     },
     "BranchNameExistsException":{
       "type":"structure",
@@ -803,8 +803,8 @@
     },
     "RepositoryName":{
       "type":"string",
-      "min":1,
       "max":100,
+      "min":1,
       "pattern":"[\\\\w\\\\.-]+"
     },
     "RepositoryNameExistsException":{

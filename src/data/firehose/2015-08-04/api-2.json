@@ -4,11 +4,11 @@
     "apiVersion":"2015-08-04",
     "endpointPrefix":"firehose",
     "jsonVersion":"1.1",
+    "protocol":"json",
     "serviceAbbreviation":"Firehose",
     "serviceFullName":"Amazon Kinesis Firehose",
     "signatureVersion":"v4",
-    "targetPrefix":"Firehose_20150804",
-    "protocol":"json"
+    "targetPrefix":"Firehose_20150804"
   },
   "operations":{
     "CreateDeliveryStream":{
@@ -158,15 +158,15 @@
   "shapes":{
     "AWSKMSKeyARN":{
       "type":"string",
-      "min":1,
       "max":512,
+      "min":1,
       "pattern":"arn:.*"
     },
     "BooleanObject":{"type":"boolean"},
     "BucketARN":{
       "type":"string",
-      "min":1,
       "max":2048,
+      "min":1,
       "pattern":"arn:.*"
     },
     "BufferingHints":{
@@ -224,8 +224,8 @@
     },
     "Data":{
       "type":"blob",
-      "min":0,
-      "max":1024000
+      "max":1024000,
+      "min":0
     },
     "DataTableColumns":{"type":"string"},
     "DataTableName":{
@@ -268,8 +268,8 @@
     },
     "DeliveryStreamName":{
       "type":"string",
-      "min":1,
       "max":64,
+      "min":1,
       "pattern":"[a-zA-Z0-9_.-]+"
     },
     "DeliveryStreamNameList":{
@@ -286,8 +286,8 @@
     },
     "DeliveryStreamVersionId":{
       "type":"string",
-      "min":1,
       "max":50,
+      "min":1,
       "pattern":"[0-9]+"
     },
     "DescribeDeliveryStreamInput":{
@@ -301,8 +301,8 @@
     },
     "DescribeDeliveryStreamInputLimit":{
       "type":"integer",
-      "min":1,
-      "max":10000
+      "max":10000,
+      "min":1
     },
     "DescribeDeliveryStreamOutput":{
       "type":"structure",
@@ -326,8 +326,8 @@
     },
     "DestinationId":{
       "type":"string",
-      "min":1,
-      "max":100
+      "max":100,
+      "min":1
     },
     "EncryptionConfiguration":{
       "type":"structure",
@@ -340,8 +340,8 @@
     "ErrorMessage":{"type":"string"},
     "IntervalInSeconds":{
       "type":"integer",
-      "min":60,
-      "max":900
+      "max":900,
+      "min":60
     },
     "InvalidArgumentException":{
       "type":"structure",
@@ -373,8 +373,8 @@
     },
     "ListDeliveryStreamsInputLimit":{
       "type":"integer",
-      "min":1,
-      "max":10000
+      "max":10000,
+      "min":1
     },
     "ListDeliveryStreamsOutput":{
       "type":"structure",
@@ -426,8 +426,8 @@
     "PutRecordBatchRequestEntryList":{
       "type":"list",
       "member":{"shape":"Record"},
-      "min":1,
-      "max":500
+      "max":500,
+      "min":1
     },
     "PutRecordBatchResponseEntry":{
       "type":"structure",
@@ -440,8 +440,8 @@
     "PutRecordBatchResponseEntryList":{
       "type":"list",
       "member":{"shape":"PutRecordBatchResponseEntry"},
-      "min":1,
-      "max":500
+      "max":500,
+      "min":1
     },
     "PutRecordInput":{
       "type":"structure",
@@ -535,8 +535,8 @@
     },
     "RoleARN":{
       "type":"string",
-      "min":1,
       "max":512,
+      "min":1,
       "pattern":"arn:.*"
     },
     "S3DestinationConfiguration":{
@@ -594,8 +594,8 @@
     },
     "SizeInMBs":{
       "type":"integer",
-      "min":1,
-      "max":128
+      "max":128,
+      "min":1
     },
     "Timestamp":{"type":"timestamp"},
     "UpdateDestinationInput":{

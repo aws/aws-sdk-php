@@ -4,9 +4,9 @@
     "apiVersion":"2012-06-01",
     "checksumFormat":"sha256",
     "endpointPrefix":"glacier",
+    "protocol":"rest-json",
     "serviceFullName":"Amazon Glacier",
-    "signatureVersion":"v4",
-    "protocol":"rest-json"
+    "signatureVersion":"v4"
   },
   "operations":{
     "AbortMultipartUpload":{
@@ -991,6 +991,11 @@
   "shapes":{
     "AbortMultipartUploadInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName",
+        "uploadId"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1007,15 +1012,14 @@
           "location":"uri",
           "locationName":"uploadId"
         }
-      },
-      "required":[
-        "accountId",
-        "vaultName",
-        "uploadId"
-      ]
+      }
     },
     "AbortVaultLockInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1027,11 +1031,7 @@
           "location":"uri",
           "locationName":"vaultName"
         }
-      },
-      "required":[
-        "accountId",
-        "vaultName"
-      ]
+      }
     },
     "ActionCode":{
       "type":"string",
@@ -1042,6 +1042,10 @@
     },
     "AddTagsToVaultInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1054,11 +1058,7 @@
           "locationName":"vaultName"
         },
         "Tags":{"shape":"TagMap"}
-      },
-      "required":[
-        "accountId",
-        "vaultName"
-      ]
+      }
     },
     "ArchiveCreationOutput":{
       "type":"structure",
@@ -1082,6 +1082,11 @@
     },
     "CompleteMultipartUploadInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName",
+        "uploadId"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1108,15 +1113,15 @@
           "location":"header",
           "locationName":"x-amz-sha256-tree-hash"
         }
-      },
-      "required":[
-        "accountId",
-        "vaultName",
-        "uploadId"
-      ]
+      }
     },
     "CompleteVaultLockInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName",
+        "lockId"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1133,15 +1138,14 @@
           "location":"uri",
           "locationName":"lockId"
         }
-      },
-      "required":[
-        "accountId",
-        "vaultName",
-        "lockId"
-      ]
+      }
     },
     "CreateVaultInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1153,11 +1157,7 @@
           "location":"uri",
           "locationName":"vaultName"
         }
-      },
-      "required":[
-        "accountId",
-        "vaultName"
-      ]
+      }
     },
     "CreateVaultOutput":{
       "type":"structure",
@@ -1189,6 +1189,11 @@
     "DateTime":{"type":"string"},
     "DeleteArchiveInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName",
+        "archiveId"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1205,15 +1210,14 @@
           "location":"uri",
           "locationName":"archiveId"
         }
-      },
-      "required":[
-        "accountId",
-        "vaultName",
-        "archiveId"
-      ]
+      }
     },
     "DeleteVaultAccessPolicyInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1225,14 +1229,14 @@
           "location":"uri",
           "locationName":"vaultName"
         }
-      },
-      "required":[
-        "accountId",
-        "vaultName"
-      ]
+      }
     },
     "DeleteVaultInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1244,14 +1248,14 @@
           "location":"uri",
           "locationName":"vaultName"
         }
-      },
-      "required":[
-        "accountId",
-        "vaultName"
-      ]
+      }
     },
     "DeleteVaultNotificationsInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1263,14 +1267,15 @@
           "location":"uri",
           "locationName":"vaultName"
         }
-      },
-      "required":[
-        "accountId",
-        "vaultName"
-      ]
+      }
     },
     "DescribeJobInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName",
+        "jobId"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1287,15 +1292,14 @@
           "location":"uri",
           "locationName":"jobId"
         }
-      },
-      "required":[
-        "accountId",
-        "vaultName",
-        "jobId"
-      ]
+      }
     },
     "DescribeVaultInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1307,11 +1311,7 @@
           "location":"uri",
           "locationName":"vaultName"
         }
-      },
-      "required":[
-        "accountId",
-        "vaultName"
-      ]
+      }
     },
     "DescribeVaultOutput":{
       "type":"structure",
@@ -1326,14 +1326,14 @@
     },
     "GetDataRetrievalPolicyInput":{
       "type":"structure",
+      "required":["accountId"],
       "members":{
         "accountId":{
           "shape":"string",
           "location":"uri",
           "locationName":"accountId"
         }
-      },
-      "required":["accountId"]
+      }
     },
     "GetDataRetrievalPolicyOutput":{
       "type":"structure",
@@ -1343,6 +1343,11 @@
     },
     "GetJobOutputInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName",
+        "jobId"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1364,12 +1369,7 @@
           "location":"header",
           "locationName":"Range"
         }
-      },
-      "required":[
-        "accountId",
-        "vaultName",
-        "jobId"
-      ]
+      }
     },
     "GetJobOutputOutput":{
       "type":"structure",
@@ -1409,6 +1409,10 @@
     },
     "GetVaultAccessPolicyInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1420,11 +1424,7 @@
           "location":"uri",
           "locationName":"vaultName"
         }
-      },
-      "required":[
-        "accountId",
-        "vaultName"
-      ]
+      }
     },
     "GetVaultAccessPolicyOutput":{
       "type":"structure",
@@ -1435,6 +1435,10 @@
     },
     "GetVaultLockInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1446,11 +1450,7 @@
           "location":"uri",
           "locationName":"vaultName"
         }
-      },
-      "required":[
-        "accountId",
-        "vaultName"
-      ]
+      }
     },
     "GetVaultLockOutput":{
       "type":"structure",
@@ -1463,6 +1463,10 @@
     },
     "GetVaultNotificationsInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1474,11 +1478,7 @@
           "location":"uri",
           "locationName":"vaultName"
         }
-      },
-      "required":[
-        "accountId",
-        "vaultName"
-      ]
+      }
     },
     "GetVaultNotificationsOutput":{
       "type":"structure",
@@ -1511,6 +1511,10 @@
     },
     "InitiateJobInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1524,10 +1528,6 @@
         },
         "jobParameters":{"shape":"JobParameters"}
       },
-      "required":[
-        "accountId",
-        "vaultName"
-      ],
       "payload":"jobParameters"
     },
     "InitiateJobOutput":{
@@ -1547,6 +1547,10 @@
     },
     "InitiateMultipartUploadInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1568,11 +1572,7 @@
           "location":"header",
           "locationName":"x-amz-part-size"
         }
-      },
-      "required":[
-        "accountId",
-        "vaultName"
-      ]
+      }
     },
     "InitiateMultipartUploadOutput":{
       "type":"structure",
@@ -1591,6 +1591,10 @@
     },
     "InitiateVaultLockInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1604,10 +1608,6 @@
         },
         "policy":{"shape":"VaultLockPolicy"}
       },
-      "required":[
-        "accountId",
-        "vaultName"
-      ],
       "payload":"policy"
     },
     "InitiateVaultLockOutput":{
@@ -1677,6 +1677,10 @@
     },
     "ListJobsInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1708,11 +1712,7 @@
           "location":"querystring",
           "locationName":"completed"
         }
-      },
-      "required":[
-        "accountId",
-        "vaultName"
-      ]
+      }
     },
     "ListJobsOutput":{
       "type":"structure",
@@ -1723,6 +1723,10 @@
     },
     "ListMultipartUploadsInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1744,11 +1748,7 @@
           "location":"querystring",
           "locationName":"limit"
         }
-      },
-      "required":[
-        "accountId",
-        "vaultName"
-      ]
+      }
     },
     "ListMultipartUploadsOutput":{
       "type":"structure",
@@ -1759,6 +1759,11 @@
     },
     "ListPartsInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName",
+        "uploadId"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1785,12 +1790,7 @@
           "location":"querystring",
           "locationName":"limit"
         }
-      },
-      "required":[
-        "accountId",
-        "vaultName",
-        "uploadId"
-      ]
+      }
     },
     "ListPartsOutput":{
       "type":"structure",
@@ -1806,6 +1806,10 @@
     },
     "ListTagsForVaultInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1817,11 +1821,7 @@
           "location":"uri",
           "locationName":"vaultName"
         }
-      },
-      "required":[
-        "accountId",
-        "vaultName"
-      ]
+      }
     },
     "ListTagsForVaultOutput":{
       "type":"structure",
@@ -1831,6 +1831,7 @@
     },
     "ListVaultsInput":{
       "type":"structure",
+      "required":["accountId"],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1847,8 +1848,7 @@
           "location":"querystring",
           "locationName":"limit"
         }
-      },
-      "required":["accountId"]
+      }
     },
     "ListVaultsOutput":{
       "type":"structure",
@@ -1895,6 +1895,10 @@
     },
     "RemoveTagsFromVaultInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1907,11 +1911,7 @@
           "locationName":"vaultName"
         },
         "TagKeys":{"shape":"TagKeyList"}
-      },
-      "required":[
-        "accountId",
-        "vaultName"
-      ]
+      }
     },
     "RequestTimeoutException":{
       "type":"structure",
@@ -1945,6 +1945,7 @@
     },
     "SetDataRetrievalPolicyInput":{
       "type":"structure",
+      "required":["accountId"],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1952,11 +1953,14 @@
           "locationName":"accountId"
         },
         "Policy":{"shape":"DataRetrievalPolicy"}
-      },
-      "required":["accountId"]
+      }
     },
     "SetVaultAccessPolicyInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1970,14 +1974,14 @@
         },
         "policy":{"shape":"VaultAccessPolicy"}
       },
-      "required":[
-        "accountId",
-        "vaultName"
-      ],
       "payload":"policy"
     },
     "SetVaultNotificationsInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -1991,10 +1995,6 @@
         },
         "vaultNotificationConfig":{"shape":"VaultNotificationConfig"}
       },
-      "required":[
-        "accountId",
-        "vaultName"
-      ],
       "payload":"vaultNotificationConfig"
     },
     "Size":{"type":"long"},
@@ -2023,6 +2023,10 @@
     "TagValue":{"type":"string"},
     "UploadArchiveInput":{
       "type":"structure",
+      "required":[
+        "vaultName",
+        "accountId"
+      ],
       "members":{
         "vaultName":{
           "shape":"string",
@@ -2046,10 +2050,6 @@
         },
         "body":{"shape":"Stream"}
       },
-      "required":[
-        "vaultName",
-        "accountId"
-      ],
       "payload":"body"
     },
     "UploadListElement":{
@@ -2064,6 +2064,11 @@
     },
     "UploadMultipartPartInput":{
       "type":"structure",
+      "required":[
+        "accountId",
+        "vaultName",
+        "uploadId"
+      ],
       "members":{
         "accountId":{
           "shape":"string",
@@ -2092,11 +2097,6 @@
         },
         "body":{"shape":"Stream"}
       },
-      "required":[
-        "accountId",
-        "vaultName",
-        "uploadId"
-      ],
       "payload":"body"
     },
     "UploadMultipartPartOutput":{

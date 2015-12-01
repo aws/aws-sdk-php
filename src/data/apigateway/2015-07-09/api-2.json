@@ -3,9 +3,9 @@
   "metadata":{
     "apiVersion":"2015-07-09",
     "endpointPrefix":"apigateway",
+    "protocol":"rest-json",
     "serviceFullName":"Amazon API Gateway",
-    "signatureVersion":"v4",
-    "protocol":"rest-json"
+    "signatureVersion":"v4"
   },
   "operations":{
     "CreateApiKey":{
@@ -2203,20 +2203,20 @@
     },
     "CreateDomainNameRequest":{
       "type":"structure",
-      "members":{
-        "domainName":{"shape":"String"},
-        "certificateName":{"shape":"String"},
-        "certificateBody":{"shape":"String"},
-        "certificatePrivateKey":{"shape":"String"},
-        "certificateChain":{"shape":"String"}
-      },
       "required":[
         "domainName",
         "certificateName",
         "certificateBody",
         "certificatePrivateKey",
         "certificateChain"
-      ]
+      ],
+      "members":{
+        "domainName":{"shape":"String"},
+        "certificateName":{"shape":"String"},
+        "certificateBody":{"shape":"String"},
+        "certificatePrivateKey":{"shape":"String"},
+        "certificateChain":{"shape":"String"}
+      }
     },
     "CreateModelRequest":{
       "type":"structure",
@@ -2580,6 +2580,10 @@
     "Double":{"type":"double"},
     "FlushStageCacheRequest":{
       "type":"structure",
+      "required":[
+        "restApiId",
+        "stageName"
+      ],
       "members":{
         "restApiId":{
           "shape":"String",
@@ -2591,11 +2595,7 @@
           "location":"uri",
           "locationName":"stage_name"
         }
-      },
-      "required":[
-        "restApiId",
-        "stageName"
-      ]
+      }
     },
     "GenerateClientCertificateRequest":{
       "type":"structure",

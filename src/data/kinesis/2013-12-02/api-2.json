@@ -4,11 +4,11 @@
     "apiVersion":"2013-12-02",
     "endpointPrefix":"kinesis",
     "jsonVersion":"1.1",
+    "protocol":"json",
     "serviceAbbreviation":"Kinesis",
     "serviceFullName":"Amazon Kinesis",
     "signatureVersion":"v4",
-    "targetPrefix":"Kinesis_20131202",
-    "protocol":"json"
+    "targetPrefix":"Kinesis_20131202"
   },
   "operations":{
     "AddTagsToStream":{
@@ -388,8 +388,8 @@
     },
     "Data":{
       "type":"blob",
-      "min":0,
-      "max":1048576
+      "max":1048576,
+      "min":0
     },
     "DecreaseStreamRetentionPeriodInput":{
       "type":"structure",
@@ -420,8 +420,8 @@
     },
     "DescribeStreamInputLimit":{
       "type":"integer",
-      "min":1,
-      "max":10000
+      "max":10000,
+      "min":1
     },
     "DescribeStreamOutput":{
       "type":"structure",
@@ -449,8 +449,8 @@
     },
     "GetRecordsInputLimit":{
       "type":"integer",
-      "min":1,
-      "max":10000
+      "max":10000,
+      "min":1
     },
     "GetRecordsOutput":{
       "type":"structure",
@@ -530,8 +530,8 @@
     },
     "ListStreamsInputLimit":{
       "type":"integer",
-      "min":1,
-      "max":10000
+      "max":10000,
+      "min":1
     },
     "ListStreamsOutput":{
       "type":"structure",
@@ -555,8 +555,8 @@
     },
     "ListTagsForStreamInputLimit":{
       "type":"integer",
-      "min":1,
-      "max":10
+      "max":10,
+      "min":1
     },
     "ListTagsForStreamOutput":{
       "type":"structure",
@@ -588,13 +588,13 @@
     },
     "PartitionKey":{
       "type":"string",
-      "min":1,
-      "max":256
+      "max":256,
+      "min":1
     },
     "PositiveIntegerObject":{
       "type":"integer",
-      "min":1,
-      "max":100000
+      "max":100000,
+      "min":1
     },
     "ProvisionedThroughputExceededException":{
       "type":"structure",
@@ -663,8 +663,8 @@
     "PutRecordsRequestEntryList":{
       "type":"list",
       "member":{"shape":"PutRecordsRequestEntry"},
-      "min":1,
-      "max":500
+      "max":500,
+      "min":1
     },
     "PutRecordsResultEntry":{
       "type":"structure",
@@ -678,8 +678,8 @@
     "PutRecordsResultEntryList":{
       "type":"list",
       "member":{"shape":"PutRecordsResultEntry"},
-      "min":1,
-      "max":500
+      "max":500,
+      "min":1
     },
     "Record":{
       "type":"structure",
@@ -726,8 +726,8 @@
     },
     "RetentionPeriodHours":{
       "type":"integer",
-      "min":24,
-      "max":168
+      "max":168,
+      "min":24
     },
     "SequenceNumber":{
       "type":"string",
@@ -758,14 +758,14 @@
     },
     "ShardId":{
       "type":"string",
-      "min":1,
       "max":128,
+      "min":1,
       "pattern":"[a-zA-Z0-9_.-]+"
     },
     "ShardIterator":{
       "type":"string",
-      "min":1,
-      "max":512
+      "max":512,
+      "min":1
     },
     "ShardIteratorType":{
       "type":"string",
@@ -815,8 +815,8 @@
     },
     "StreamName":{
       "type":"string",
-      "min":1,
       "max":128,
+      "min":1,
       "pattern":"[a-zA-Z0-9_.-]+"
     },
     "StreamNameList":{
@@ -842,14 +842,14 @@
     },
     "TagKey":{
       "type":"string",
-      "min":1,
-      "max":128
+      "max":128,
+      "min":1
     },
     "TagKeyList":{
       "type":"list",
       "member":{"shape":"TagKey"},
-      "min":1,
-      "max":10
+      "max":10,
+      "min":1
     },
     "TagList":{
       "type":"list",
@@ -860,13 +860,13 @@
       "type":"map",
       "key":{"shape":"TagKey"},
       "value":{"shape":"TagValue"},
-      "min":1,
-      "max":10
+      "max":10,
+      "min":1
     },
     "TagValue":{
       "type":"string",
-      "min":0,
-      "max":256
+      "max":256,
+      "min":0
     }
   }
 }

@@ -3,10 +3,10 @@
     "apiVersion":"2013-04-15",
     "endpointPrefix":"support",
     "jsonVersion":"1.1",
+    "protocol":"json",
     "serviceFullName":"AWS Support",
     "signatureVersion":"v4",
-    "targetPrefix":"AWSSupport_20130415",
-    "protocol":"json"
+    "targetPrefix":"AWSSupport_20130415"
   },
   "operations":{
     "AddAttachmentsToSet":{
@@ -416,8 +416,8 @@
     "CaseIdList":{
       "type":"list",
       "member":{"shape":"CaseId"},
-      "min":0,
-      "max":100
+      "max":100,
+      "min":0
     },
     "CaseIdNotFound":{
       "type":"structure",
@@ -649,8 +649,8 @@
     "Long":{"type":"long"},
     "MaxResults":{
       "type":"integer",
-      "min":10,
-      "max":100
+      "max":100,
+      "min":10
     },
     "NextToken":{"type":"string"},
     "RecentCaseCommunications":{
@@ -703,8 +703,8 @@
     "ServiceCodeList":{
       "type":"list",
       "member":{"shape":"ServiceCode"},
-      "min":0,
-      "max":100
+      "max":100,
+      "min":0
     },
     "ServiceList":{
       "type":"list",

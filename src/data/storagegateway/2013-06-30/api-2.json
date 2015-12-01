@@ -4,10 +4,10 @@
     "apiVersion":"2013-06-30",
     "endpointPrefix":"storagegateway",
     "jsonVersion":"1.1",
+    "protocol":"json",
     "serviceFullName":"AWS Storage Gateway",
     "signatureVersion":"v4",
-    "targetPrefix":"StorageGateway_20130630",
-    "protocol":"json"
+    "targetPrefix":"StorageGateway_20130630"
   },
   "operations":{
     "ActivateGateway":{
@@ -1151,8 +1151,8 @@
     },
     "ActivationKey":{
       "type":"string",
-      "min":1,
-      "max":50
+      "max":50,
+      "min":1
     },
     "AddCacheInput":{
       "type":"structure",
@@ -1228,8 +1228,8 @@
     },
     "BandwidthType":{
       "type":"string",
-      "min":3,
-      "max":25
+      "max":25,
+      "min":3
     },
     "BandwidthUploadRateLimit":{
       "type":"long",
@@ -1301,13 +1301,13 @@
     },
     "ChapSecret":{
       "type":"string",
-      "min":1,
-      "max":100
+      "max":100,
+      "min":1
     },
     "ClientToken":{
       "type":"string",
-      "min":5,
-      "max":100
+      "max":100,
+      "min":5
     },
     "CreateCachediSCSIVolumeInput":{
       "type":"structure",
@@ -1422,8 +1422,8 @@
     },
     "DayOfWeek":{
       "type":"integer",
-      "min":0,
-      "max":6
+      "max":6,
+      "min":0
     },
     "DeleteBandwidthRateLimitInput":{
       "type":"structure",
@@ -1758,13 +1758,13 @@
     },
     "Description":{
       "type":"string",
-      "min":1,
-      "max":255
+      "max":255,
+      "min":1
     },
     "DeviceType":{
       "type":"string",
-      "min":2,
-      "max":50
+      "max":50,
+      "min":2
     },
     "DeviceiSCSIAttributes":{
       "type":"structure",
@@ -1802,13 +1802,13 @@
     },
     "DiskAllocationType":{
       "type":"string",
-      "min":3,
-      "max":100
+      "max":100,
+      "min":3
     },
     "DiskId":{
       "type":"string",
-      "min":1,
-      "max":300
+      "max":300,
+      "min":1
     },
     "DiskIds":{
       "type":"list",
@@ -1887,13 +1887,13 @@
     },
     "GatewayARN":{
       "type":"string",
-      "min":50,
-      "max":500
+      "max":500,
+      "min":50
     },
     "GatewayId":{
       "type":"string",
-      "min":12,
-      "max":30
+      "max":30,
+      "min":12
     },
     "GatewayInfo":{
       "type":"structure",
@@ -1906,8 +1906,8 @@
     },
     "GatewayName":{
       "type":"string",
-      "min":2,
       "max":255,
+      "min":2,
       "pattern":"^[ -\\.0-\\[\\]-~]*[!-\\.0-\\[\\]-~][ -\\.0-\\[\\]-~]*$"
     },
     "GatewayNetworkInterfaces":{
@@ -1916,23 +1916,23 @@
     },
     "GatewayOperationalState":{
       "type":"string",
-      "min":2,
-      "max":25
+      "max":25,
+      "min":2
     },
     "GatewayState":{
       "type":"string",
-      "min":2,
-      "max":25
+      "max":25,
+      "min":2
     },
     "GatewayTimezone":{
       "type":"string",
-      "min":3,
-      "max":10
+      "max":10,
+      "min":3
     },
     "GatewayType":{
       "type":"string",
-      "min":2,
-      "max":20
+      "max":20,
+      "min":2
     },
     "Gateways":{
       "type":"list",
@@ -1940,13 +1940,13 @@
     },
     "HourOfDay":{
       "type":"integer",
-      "min":0,
-      "max":23
+      "max":23,
+      "min":0
     },
     "Initiator":{
       "type":"string",
-      "min":1,
-      "max":50
+      "max":50,
+      "min":1
     },
     "Initiators":{
       "type":"list",
@@ -1972,14 +1972,14 @@
     },
     "IqnName":{
       "type":"string",
-      "min":1,
       "max":255,
+      "min":1,
       "pattern":"[0-9a-z:.-]+"
     },
     "LastSoftwareUpdate":{
       "type":"string",
-      "min":1,
-      "max":25
+      "max":25,
+      "min":1
     },
     "ListGatewaysInput":{
       "type":"structure",
@@ -2071,18 +2071,18 @@
     },
     "Marker":{
       "type":"string",
-      "min":1,
-      "max":1000
+      "max":1000,
+      "min":1
     },
     "MediumChangerType":{
       "type":"string",
-      "min":2,
-      "max":50
+      "max":50,
+      "min":2
     },
     "MinuteOfHour":{
       "type":"integer",
-      "min":0,
-      "max":59
+      "max":59,
+      "min":0
     },
     "NetworkInterface":{
       "type":"structure",
@@ -2098,13 +2098,13 @@
     },
     "NextUpdateAvailabilityDate":{
       "type":"string",
-      "min":1,
-      "max":25
+      "max":25,
+      "min":1
     },
     "NumTapesToCreate":{
       "type":"integer",
-      "min":1,
-      "max":10
+      "max":10,
+      "min":1
     },
     "PositiveIntObject":{
       "type":"integer",
@@ -2112,13 +2112,13 @@
     },
     "RecurrenceInHours":{
       "type":"integer",
-      "min":1,
-      "max":24
+      "max":24,
+      "min":1
     },
     "RegionId":{
       "type":"string",
-      "min":1,
-      "max":25
+      "max":25,
+      "min":1
     },
     "RemoveTagsFromResourceInput":{
       "type":"structure",
@@ -2148,8 +2148,8 @@
     },
     "ResourceARN":{
       "type":"string",
-      "min":50,
-      "max":500
+      "max":500,
+      "min":50
     },
     "RetrieveTapeArchiveInput":{
       "type":"structure",
@@ -2200,8 +2200,8 @@
     },
     "SnapshotDescription":{
       "type":"string",
-      "min":1,
-      "max":255
+      "max":255,
+      "min":1
     },
     "SnapshotId":{
       "type":"string",
@@ -2259,8 +2259,8 @@
     },
     "TagKey":{
       "type":"string",
-      "min":1,
       "max":128,
+      "min":1,
       "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-%@]*)$"
     },
     "TagKeys":{
@@ -2288,8 +2288,8 @@
     },
     "TapeARN":{
       "type":"string",
-      "min":50,
-      "max":500
+      "max":500,
+      "min":50
     },
     "TapeARNs":{
       "type":"list",
@@ -2313,20 +2313,20 @@
     },
     "TapeBarcode":{
       "type":"string",
-      "min":7,
       "max":16,
+      "min":7,
       "pattern":"^[A-Z0-9]*$"
     },
     "TapeBarcodePrefix":{
       "type":"string",
-      "min":1,
       "max":4,
+      "min":1,
       "pattern":"^[A-Z]*$"
     },
     "TapeDriveType":{
       "type":"string",
-      "min":2,
-      "max":50
+      "max":50,
+      "min":2
     },
     "TapeRecoveryPointInfo":{
       "type":"structure",
@@ -2350,13 +2350,13 @@
     },
     "TargetARN":{
       "type":"string",
-      "min":50,
-      "max":800
+      "max":800,
+      "min":50
     },
     "TargetName":{
       "type":"string",
-      "min":1,
       "max":200,
+      "min":1,
       "pattern":"^[-\\.;a-z0-9]+$"
     },
     "Time":{"type":"timestamp"},
@@ -2495,8 +2495,8 @@
     },
     "VTLDeviceARN":{
       "type":"string",
-      "min":50,
-      "max":500
+      "max":500,
+      "min":50
     },
     "VTLDeviceARNs":{
       "type":"list",
@@ -2511,8 +2511,8 @@
     },
     "VolumeARN":{
       "type":"string",
-      "min":50,
-      "max":500
+      "max":500,
+      "min":50
     },
     "VolumeARNs":{
       "type":"list",
@@ -2520,8 +2520,8 @@
     },
     "VolumeId":{
       "type":"string",
-      "min":12,
-      "max":30
+      "max":30,
+      "min":12
     },
     "VolumeInfo":{
       "type":"structure",
@@ -2549,13 +2549,13 @@
     },
     "VolumeStatus":{
       "type":"string",
-      "min":3,
-      "max":50
+      "max":50,
+      "min":3
     },
     "VolumeType":{
       "type":"string",
-      "min":3,
-      "max":100
+      "max":100,
+      "min":3
     },
     "VolumeiSCSIAttributes":{
       "type":"structure",
