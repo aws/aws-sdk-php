@@ -19,9 +19,10 @@ trait PhpFileLinterTrait
         static $linter;
 
         if (empty($linter)) {
-            $linter = !empty(opcache_get_status(false)['opcache_enabled'])
-                ? [$this, 'opcacheLint']
-                : [$this, 'commandLineLint'];
+            $linter = function_exists('opcache_get_status')
+                && !empty(opcache_get_status(false)['opcache_enabled'])
+                    ? [$this, 'opcacheLint']
+                    : [$this, 'commandLineLint'];
         }
 
         return call_user_func($linter, $path);
