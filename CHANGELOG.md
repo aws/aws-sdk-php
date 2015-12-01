@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.11.3 - 2015-12-01
+
+* `Aws\Config` - Update documentation.
+
 ## 3.11.2 - 2015-11-23
 
 * `Aws\Config` - Reverted doc model change.
