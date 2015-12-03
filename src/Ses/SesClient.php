@@ -1,6 +1,8 @@
 <?php
 namespace Aws\Ses;
 
+use Aws\Credentials\CredentialsInterface;
+
 /**
  * This client is used to interact with the **Amazon Simple Email Service (Amazon SES)**.
  *
@@ -83,4 +85,15 @@ namespace Aws\Ses;
  * @method \Aws\Result verifyEmailIdentity(array $args = [])
  * @method \GuzzleHttp\Promise\Promise verifyEmailIdentityAsync(array $args = [])
  */
-class SesClient extends \Aws\AwsClient {}
+class SesClient extends \Aws\AwsClient
+{
+    public static function generateSmtpPassword(CredentialsInterface $creds)
+    {
+        static $version = "\x02";
+        static $algo = 'sha256';
+        static $message = 'SendRawEmail';
+        $signature = hash_hmac($algo, $message, $creds->getSecretKey(), true);
+
+        return base64_encode($version . $signature);
+    }
+}
