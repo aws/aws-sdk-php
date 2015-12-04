@@ -87,6 +87,17 @@ use Aws\Credentials\CredentialsInterface;
  */
 class SesClient extends \Aws\AwsClient
 {
+    /**
+     * Create an SMTP password for a given IAM user's credentials.
+     *
+     * The SMTP username is the Access Key ID for the provided credentials.
+     *
+     * @link http://docs.aws.amazon.com/ses/latest/DeveloperGuide/smtp-credentials.html#smtp-credentials-convert
+     *
+     * @param CredentialsInterface $creds
+     *
+     * @return string
+     */
     public static function generateSmtpPassword(CredentialsInterface $creds)
     {
         static $version = "\x02";
