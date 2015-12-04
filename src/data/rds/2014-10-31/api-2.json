@@ -19,28 +19,11 @@
       "input":{"shape":"AddSourceIdentifierToSubscriptionMessage"},
       "output":{
         "shape":"AddSourceIdentifierToSubscriptionResult",
-        "resultWrapper":"AddSourceIdentifierToSubscriptionResult",
-        "wrapper":true
+        "resultWrapper":"AddSourceIdentifierToSubscriptionResult"
       },
       "errors":[
-        {
-          "shape":"SubscriptionNotFoundFault",
-          "error":{
-            "code":"SubscriptionNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"SourceNotFoundFault",
-          "error":{
-            "code":"SourceNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"SubscriptionNotFoundFault"},
+        {"shape":"SourceNotFoundFault"}
       ]
     },
     "AddTagsToResource":{
@@ -51,24 +34,8 @@
       },
       "input":{"shape":"AddTagsToResourceMessage"},
       "errors":[
-        {
-          "shape":"DBInstanceNotFoundFault",
-          "error":{
-            "code":"DBInstanceNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSnapshotNotFoundFault",
-          "error":{
-            "code":"DBSnapshotNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBInstanceNotFoundFault"},
+        {"shape":"DBSnapshotNotFoundFault"}
       ]
     },
     "ApplyPendingMaintenanceAction":{
@@ -80,19 +47,10 @@
       "input":{"shape":"ApplyPendingMaintenanceActionMessage"},
       "output":{
         "shape":"ApplyPendingMaintenanceActionResult",
-        "resultWrapper":"ApplyPendingMaintenanceActionResult",
-        "wrapper":true
+        "resultWrapper":"ApplyPendingMaintenanceActionResult"
       },
       "errors":[
-        {
-          "shape":"ResourceNotFoundFault",
-          "error":{
-            "code":"ResourceNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"ResourceNotFoundFault"}
       ]
     },
     "AuthorizeDBSecurityGroupIngress":{
@@ -104,46 +62,13 @@
       "input":{"shape":"AuthorizeDBSecurityGroupIngressMessage"},
       "output":{
         "shape":"AuthorizeDBSecurityGroupIngressResult",
-        "resultWrapper":"AuthorizeDBSecurityGroupIngressResult",
-        "wrapper":true
+        "resultWrapper":"AuthorizeDBSecurityGroupIngressResult"
       },
       "errors":[
-        {
-          "shape":"DBSecurityGroupNotFoundFault",
-          "error":{
-            "code":"DBSecurityGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBSecurityGroupStateFault",
-          "error":{
-            "code":"InvalidDBSecurityGroupState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"AuthorizationAlreadyExistsFault",
-          "error":{
-            "code":"AuthorizationAlreadyExists",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"AuthorizationQuotaExceededFault",
-          "error":{
-            "code":"AuthorizationQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBSecurityGroupNotFoundFault"},
+        {"shape":"InvalidDBSecurityGroupStateFault"},
+        {"shape":"AuthorizationAlreadyExistsFault"},
+        {"shape":"AuthorizationQuotaExceededFault"}
       ]
     },
     "CopyDBClusterSnapshot":{
@@ -155,37 +80,12 @@
       "input":{"shape":"CopyDBClusterSnapshotMessage"},
       "output":{
         "shape":"CopyDBClusterSnapshotResult",
-        "resultWrapper":"CopyDBClusterSnapshotResult",
-        "wrapper":true
+        "resultWrapper":"CopyDBClusterSnapshotResult"
       },
       "errors":[
-        {
-          "shape":"DBClusterSnapshotAlreadyExistsFault",
-          "error":{
-            "code":"DBClusterSnapshotAlreadyExistsFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBClusterSnapshotNotFoundFault",
-          "error":{
-            "code":"DBClusterSnapshotNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBClusterStateFault",
-          "error":{
-            "code":"InvalidDBClusterStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBClusterSnapshotAlreadyExistsFault"},
+        {"shape":"DBClusterSnapshotNotFoundFault"},
+        {"shape":"InvalidDBClusterStateFault"}
       ]
     },
     "CopyDBParameterGroup":{
@@ -197,37 +97,12 @@
       "input":{"shape":"CopyDBParameterGroupMessage"},
       "output":{
         "shape":"CopyDBParameterGroupResult",
-        "resultWrapper":"CopyDBParameterGroupResult",
-        "wrapper":true
+        "resultWrapper":"CopyDBParameterGroupResult"
       },
       "errors":[
-        {
-          "shape":"DBParameterGroupNotFoundFault",
-          "error":{
-            "code":"DBParameterGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBParameterGroupAlreadyExistsFault",
-          "error":{
-            "code":"DBParameterGroupAlreadyExists",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBParameterGroupQuotaExceededFault",
-          "error":{
-            "code":"DBParameterGroupQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBParameterGroupNotFoundFault"},
+        {"shape":"DBParameterGroupAlreadyExistsFault"},
+        {"shape":"DBParameterGroupQuotaExceededFault"}
       ]
     },
     "CopyDBSnapshot":{
@@ -239,46 +114,13 @@
       "input":{"shape":"CopyDBSnapshotMessage"},
       "output":{
         "shape":"CopyDBSnapshotResult",
-        "resultWrapper":"CopyDBSnapshotResult",
-        "wrapper":true
+        "resultWrapper":"CopyDBSnapshotResult"
       },
       "errors":[
-        {
-          "shape":"DBSnapshotAlreadyExistsFault",
-          "error":{
-            "code":"DBSnapshotAlreadyExists",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSnapshotNotFoundFault",
-          "error":{
-            "code":"DBSnapshotNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBSnapshotStateFault",
-          "error":{
-            "code":"InvalidDBSnapshotState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"SnapshotQuotaExceededFault",
-          "error":{
-            "code":"SnapshotQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBSnapshotAlreadyExistsFault"},
+        {"shape":"DBSnapshotNotFoundFault"},
+        {"shape":"InvalidDBSnapshotStateFault"},
+        {"shape":"SnapshotQuotaExceededFault"}
       ]
     },
     "CopyOptionGroup":{
@@ -290,37 +132,12 @@
       "input":{"shape":"CopyOptionGroupMessage"},
       "output":{
         "shape":"CopyOptionGroupResult",
-        "resultWrapper":"CopyOptionGroupResult",
-        "wrapper":true
+        "resultWrapper":"CopyOptionGroupResult"
       },
       "errors":[
-        {
-          "shape":"OptionGroupAlreadyExistsFault",
-          "error":{
-            "code":"OptionGroupAlreadyExistsFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"OptionGroupNotFoundFault",
-          "error":{
-            "code":"OptionGroupNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"OptionGroupQuotaExceededFault",
-          "error":{
-            "code":"OptionGroupQuotaExceededFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"OptionGroupAlreadyExistsFault"},
+        {"shape":"OptionGroupNotFoundFault"},
+        {"shape":"OptionGroupQuotaExceededFault"}
       ]
     },
     "CreateDBCluster":{
@@ -332,109 +149,20 @@
       "input":{"shape":"CreateDBClusterMessage"},
       "output":{
         "shape":"CreateDBClusterResult",
-        "resultWrapper":"CreateDBClusterResult",
-        "wrapper":true
+        "resultWrapper":"CreateDBClusterResult"
       },
       "errors":[
-        {
-          "shape":"DBClusterAlreadyExistsFault",
-          "error":{
-            "code":"DBClusterAlreadyExistsFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InsufficientStorageClusterCapacityFault",
-          "error":{
-            "code":"InsufficientStorageClusterCapacity",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBClusterQuotaExceededFault",
-          "error":{
-            "code":"DBClusterQuotaExceededFault",
-            "httpStatusCode":403,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"StorageQuotaExceededFault",
-          "error":{
-            "code":"StorageQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSubnetGroupNotFoundFault",
-          "error":{
-            "code":"DBSubnetGroupNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidVPCNetworkStateFault",
-          "error":{
-            "code":"InvalidVPCNetworkStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBClusterStateFault",
-          "error":{
-            "code":"InvalidDBClusterStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBSubnetGroupStateFault",
-          "error":{
-            "code":"InvalidDBSubnetGroupStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidSubnet",
-          "error":{
-            "code":"InvalidSubnet",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBClusterParameterGroupNotFoundFault",
-          "error":{
-            "code":"DBClusterParameterGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"KMSKeyNotAccessibleFault",
-          "error":{
-            "code":"KMSKeyNotAccessibleFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBClusterAlreadyExistsFault"},
+        {"shape":"InsufficientStorageClusterCapacityFault"},
+        {"shape":"DBClusterQuotaExceededFault"},
+        {"shape":"StorageQuotaExceededFault"},
+        {"shape":"DBSubnetGroupNotFoundFault"},
+        {"shape":"InvalidVPCNetworkStateFault"},
+        {"shape":"InvalidDBClusterStateFault"},
+        {"shape":"InvalidDBSubnetGroupStateFault"},
+        {"shape":"InvalidSubnet"},
+        {"shape":"DBClusterParameterGroupNotFoundFault"},
+        {"shape":"KMSKeyNotAccessibleFault"}
       ]
     },
     "CreateDBClusterParameterGroup":{
@@ -446,28 +174,11 @@
       "input":{"shape":"CreateDBClusterParameterGroupMessage"},
       "output":{
         "shape":"CreateDBClusterParameterGroupResult",
-        "resultWrapper":"CreateDBClusterParameterGroupResult",
-        "wrapper":true
+        "resultWrapper":"CreateDBClusterParameterGroupResult"
       },
       "errors":[
-        {
-          "shape":"DBParameterGroupQuotaExceededFault",
-          "error":{
-            "code":"DBParameterGroupQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBParameterGroupAlreadyExistsFault",
-          "error":{
-            "code":"DBParameterGroupAlreadyExists",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBParameterGroupQuotaExceededFault"},
+        {"shape":"DBParameterGroupAlreadyExistsFault"}
       ]
     },
     "CreateDBClusterSnapshot":{
@@ -479,46 +190,13 @@
       "input":{"shape":"CreateDBClusterSnapshotMessage"},
       "output":{
         "shape":"CreateDBClusterSnapshotResult",
-        "resultWrapper":"CreateDBClusterSnapshotResult",
-        "wrapper":true
+        "resultWrapper":"CreateDBClusterSnapshotResult"
       },
       "errors":[
-        {
-          "shape":"DBClusterSnapshotAlreadyExistsFault",
-          "error":{
-            "code":"DBClusterSnapshotAlreadyExistsFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBClusterStateFault",
-          "error":{
-            "code":"InvalidDBClusterStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBClusterNotFoundFault",
-          "error":{
-            "code":"DBClusterNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"SnapshotQuotaExceededFault",
-          "error":{
-            "code":"SnapshotQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBClusterSnapshotAlreadyExistsFault"},
+        {"shape":"InvalidDBClusterStateFault"},
+        {"shape":"DBClusterNotFoundFault"},
+        {"shape":"SnapshotQuotaExceededFault"}
       ]
     },
     "CreateDBInstance":{
@@ -530,163 +208,26 @@
       "input":{"shape":"CreateDBInstanceMessage"},
       "output":{
         "shape":"CreateDBInstanceResult",
-        "resultWrapper":"CreateDBInstanceResult",
-        "wrapper":true
+        "resultWrapper":"CreateDBInstanceResult"
       },
       "errors":[
-        {
-          "shape":"DBInstanceAlreadyExistsFault",
-          "error":{
-            "code":"DBInstanceAlreadyExists",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InsufficientDBInstanceCapacityFault",
-          "error":{
-            "code":"InsufficientDBInstanceCapacity",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBParameterGroupNotFoundFault",
-          "error":{
-            "code":"DBParameterGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSecurityGroupNotFoundFault",
-          "error":{
-            "code":"DBSecurityGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InstanceQuotaExceededFault",
-          "error":{
-            "code":"InstanceQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"StorageQuotaExceededFault",
-          "error":{
-            "code":"StorageQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSubnetGroupNotFoundFault",
-          "error":{
-            "code":"DBSubnetGroupNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSubnetGroupDoesNotCoverEnoughAZs",
-          "error":{
-            "code":"DBSubnetGroupDoesNotCoverEnoughAZs",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBClusterStateFault",
-          "error":{
-            "code":"InvalidDBClusterStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidSubnet",
-          "error":{
-            "code":"InvalidSubnet",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidVPCNetworkStateFault",
-          "error":{
-            "code":"InvalidVPCNetworkStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"ProvisionedIopsNotAvailableInAZFault",
-          "error":{
-            "code":"ProvisionedIopsNotAvailableInAZFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"OptionGroupNotFoundFault",
-          "error":{
-            "code":"OptionGroupNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBClusterNotFoundFault",
-          "error":{
-            "code":"DBClusterNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"StorageTypeNotSupportedFault",
-          "error":{
-            "code":"StorageTypeNotSupported",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"AuthorizationNotFoundFault",
-          "error":{
-            "code":"AuthorizationNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"KMSKeyNotAccessibleFault",
-          "error":{
-            "code":"KMSKeyNotAccessibleFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBInstanceAlreadyExistsFault"},
+        {"shape":"InsufficientDBInstanceCapacityFault"},
+        {"shape":"DBParameterGroupNotFoundFault"},
+        {"shape":"DBSecurityGroupNotFoundFault"},
+        {"shape":"InstanceQuotaExceededFault"},
+        {"shape":"StorageQuotaExceededFault"},
+        {"shape":"DBSubnetGroupNotFoundFault"},
+        {"shape":"DBSubnetGroupDoesNotCoverEnoughAZs"},
+        {"shape":"InvalidDBClusterStateFault"},
+        {"shape":"InvalidSubnet"},
+        {"shape":"InvalidVPCNetworkStateFault"},
+        {"shape":"ProvisionedIopsNotAvailableInAZFault"},
+        {"shape":"OptionGroupNotFoundFault"},
+        {"shape":"DBClusterNotFoundFault"},
+        {"shape":"StorageTypeNotSupportedFault"},
+        {"shape":"AuthorizationNotFoundFault"},
+        {"shape":"KMSKeyNotAccessibleFault"}
       ]
     },
     "CreateDBInstanceReadReplica":{
@@ -698,172 +239,27 @@
       "input":{"shape":"CreateDBInstanceReadReplicaMessage"},
       "output":{
         "shape":"CreateDBInstanceReadReplicaResult",
-        "resultWrapper":"CreateDBInstanceReadReplicaResult",
-        "wrapper":true
+        "resultWrapper":"CreateDBInstanceReadReplicaResult"
       },
       "errors":[
-        {
-          "shape":"DBInstanceAlreadyExistsFault",
-          "error":{
-            "code":"DBInstanceAlreadyExists",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InsufficientDBInstanceCapacityFault",
-          "error":{
-            "code":"InsufficientDBInstanceCapacity",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBParameterGroupNotFoundFault",
-          "error":{
-            "code":"DBParameterGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSecurityGroupNotFoundFault",
-          "error":{
-            "code":"DBSecurityGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InstanceQuotaExceededFault",
-          "error":{
-            "code":"InstanceQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"StorageQuotaExceededFault",
-          "error":{
-            "code":"StorageQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBInstanceNotFoundFault",
-          "error":{
-            "code":"DBInstanceNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBInstanceStateFault",
-          "error":{
-            "code":"InvalidDBInstanceState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSubnetGroupNotFoundFault",
-          "error":{
-            "code":"DBSubnetGroupNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSubnetGroupDoesNotCoverEnoughAZs",
-          "error":{
-            "code":"DBSubnetGroupDoesNotCoverEnoughAZs",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidSubnet",
-          "error":{
-            "code":"InvalidSubnet",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidVPCNetworkStateFault",
-          "error":{
-            "code":"InvalidVPCNetworkStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"ProvisionedIopsNotAvailableInAZFault",
-          "error":{
-            "code":"ProvisionedIopsNotAvailableInAZFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"OptionGroupNotFoundFault",
-          "error":{
-            "code":"OptionGroupNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSubnetGroupNotAllowedFault",
-          "error":{
-            "code":"DBSubnetGroupNotAllowedFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBSubnetGroupFault",
-          "error":{
-            "code":"InvalidDBSubnetGroupFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"StorageTypeNotSupportedFault",
-          "error":{
-            "code":"StorageTypeNotSupported",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"KMSKeyNotAccessibleFault",
-          "error":{
-            "code":"KMSKeyNotAccessibleFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBInstanceAlreadyExistsFault"},
+        {"shape":"InsufficientDBInstanceCapacityFault"},
+        {"shape":"DBParameterGroupNotFoundFault"},
+        {"shape":"DBSecurityGroupNotFoundFault"},
+        {"shape":"InstanceQuotaExceededFault"},
+        {"shape":"StorageQuotaExceededFault"},
+        {"shape":"DBInstanceNotFoundFault"},
+        {"shape":"InvalidDBInstanceStateFault"},
+        {"shape":"DBSubnetGroupNotFoundFault"},
+        {"shape":"DBSubnetGroupDoesNotCoverEnoughAZs"},
+        {"shape":"InvalidSubnet"},
+        {"shape":"InvalidVPCNetworkStateFault"},
+        {"shape":"ProvisionedIopsNotAvailableInAZFault"},
+        {"shape":"OptionGroupNotFoundFault"},
+        {"shape":"DBSubnetGroupNotAllowedFault"},
+        {"shape":"InvalidDBSubnetGroupFault"},
+        {"shape":"StorageTypeNotSupportedFault"},
+        {"shape":"KMSKeyNotAccessibleFault"}
       ]
     },
     "CreateDBParameterGroup":{
@@ -875,28 +271,11 @@
       "input":{"shape":"CreateDBParameterGroupMessage"},
       "output":{
         "shape":"CreateDBParameterGroupResult",
-        "resultWrapper":"CreateDBParameterGroupResult",
-        "wrapper":true
+        "resultWrapper":"CreateDBParameterGroupResult"
       },
       "errors":[
-        {
-          "shape":"DBParameterGroupQuotaExceededFault",
-          "error":{
-            "code":"DBParameterGroupQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBParameterGroupAlreadyExistsFault",
-          "error":{
-            "code":"DBParameterGroupAlreadyExists",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBParameterGroupQuotaExceededFault"},
+        {"shape":"DBParameterGroupAlreadyExistsFault"}
       ]
     },
     "CreateDBSecurityGroup":{
@@ -908,37 +287,12 @@
       "input":{"shape":"CreateDBSecurityGroupMessage"},
       "output":{
         "shape":"CreateDBSecurityGroupResult",
-        "resultWrapper":"CreateDBSecurityGroupResult",
-        "wrapper":true
+        "resultWrapper":"CreateDBSecurityGroupResult"
       },
       "errors":[
-        {
-          "shape":"DBSecurityGroupAlreadyExistsFault",
-          "error":{
-            "code":"DBSecurityGroupAlreadyExists",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSecurityGroupQuotaExceededFault",
-          "error":{
-            "code":"QuotaExceeded.DBSecurityGroup",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSecurityGroupNotSupportedFault",
-          "error":{
-            "code":"DBSecurityGroupNotSupported",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBSecurityGroupAlreadyExistsFault"},
+        {"shape":"DBSecurityGroupQuotaExceededFault"},
+        {"shape":"DBSecurityGroupNotSupportedFault"}
       ]
     },
     "CreateDBSnapshot":{
@@ -950,46 +304,13 @@
       "input":{"shape":"CreateDBSnapshotMessage"},
       "output":{
         "shape":"CreateDBSnapshotResult",
-        "resultWrapper":"CreateDBSnapshotResult",
-        "wrapper":true
+        "resultWrapper":"CreateDBSnapshotResult"
       },
       "errors":[
-        {
-          "shape":"DBSnapshotAlreadyExistsFault",
-          "error":{
-            "code":"DBSnapshotAlreadyExists",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBInstanceStateFault",
-          "error":{
-            "code":"InvalidDBInstanceState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBInstanceNotFoundFault",
-          "error":{
-            "code":"DBInstanceNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"SnapshotQuotaExceededFault",
-          "error":{
-            "code":"SnapshotQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBSnapshotAlreadyExistsFault"},
+        {"shape":"InvalidDBInstanceStateFault"},
+        {"shape":"DBInstanceNotFoundFault"},
+        {"shape":"SnapshotQuotaExceededFault"}
       ]
     },
     "CreateDBSubnetGroup":{
@@ -1001,55 +322,14 @@
       "input":{"shape":"CreateDBSubnetGroupMessage"},
       "output":{
         "shape":"CreateDBSubnetGroupResult",
-        "resultWrapper":"CreateDBSubnetGroupResult",
-        "wrapper":true
+        "resultWrapper":"CreateDBSubnetGroupResult"
       },
       "errors":[
-        {
-          "shape":"DBSubnetGroupAlreadyExistsFault",
-          "error":{
-            "code":"DBSubnetGroupAlreadyExists",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSubnetGroupQuotaExceededFault",
-          "error":{
-            "code":"DBSubnetGroupQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSubnetQuotaExceededFault",
-          "error":{
-            "code":"DBSubnetQuotaExceededFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSubnetGroupDoesNotCoverEnoughAZs",
-          "error":{
-            "code":"DBSubnetGroupDoesNotCoverEnoughAZs",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidSubnet",
-          "error":{
-            "code":"InvalidSubnet",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBSubnetGroupAlreadyExistsFault"},
+        {"shape":"DBSubnetGroupQuotaExceededFault"},
+        {"shape":"DBSubnetQuotaExceededFault"},
+        {"shape":"DBSubnetGroupDoesNotCoverEnoughAZs"},
+        {"shape":"InvalidSubnet"}
       ]
     },
     "CreateEventSubscription":{
@@ -1061,73 +341,16 @@
       "input":{"shape":"CreateEventSubscriptionMessage"},
       "output":{
         "shape":"CreateEventSubscriptionResult",
-        "resultWrapper":"CreateEventSubscriptionResult",
-        "wrapper":true
+        "resultWrapper":"CreateEventSubscriptionResult"
       },
       "errors":[
-        {
-          "shape":"EventSubscriptionQuotaExceededFault",
-          "error":{
-            "code":"EventSubscriptionQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"SubscriptionAlreadyExistFault",
-          "error":{
-            "code":"SubscriptionAlreadyExist",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"SNSInvalidTopicFault",
-          "error":{
-            "code":"SNSInvalidTopic",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"SNSNoAuthorizationFault",
-          "error":{
-            "code":"SNSNoAuthorization",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"SNSTopicArnNotFoundFault",
-          "error":{
-            "code":"SNSTopicArnNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"SubscriptionCategoryNotFoundFault",
-          "error":{
-            "code":"SubscriptionCategoryNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"SourceNotFoundFault",
-          "error":{
-            "code":"SourceNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"EventSubscriptionQuotaExceededFault"},
+        {"shape":"SubscriptionAlreadyExistFault"},
+        {"shape":"SNSInvalidTopicFault"},
+        {"shape":"SNSNoAuthorizationFault"},
+        {"shape":"SNSTopicArnNotFoundFault"},
+        {"shape":"SubscriptionCategoryNotFoundFault"},
+        {"shape":"SourceNotFoundFault"}
       ]
     },
     "CreateOptionGroup":{
@@ -1139,28 +362,11 @@
       "input":{"shape":"CreateOptionGroupMessage"},
       "output":{
         "shape":"CreateOptionGroupResult",
-        "resultWrapper":"CreateOptionGroupResult",
-        "wrapper":true
+        "resultWrapper":"CreateOptionGroupResult"
       },
       "errors":[
-        {
-          "shape":"OptionGroupAlreadyExistsFault",
-          "error":{
-            "code":"OptionGroupAlreadyExistsFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"OptionGroupQuotaExceededFault",
-          "error":{
-            "code":"OptionGroupQuotaExceededFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"OptionGroupAlreadyExistsFault"},
+        {"shape":"OptionGroupQuotaExceededFault"}
       ]
     },
     "DeleteDBCluster":{
@@ -1172,28 +378,11 @@
       "input":{"shape":"DeleteDBClusterMessage"},
       "output":{
         "shape":"DeleteDBClusterResult",
-        "resultWrapper":"DeleteDBClusterResult",
-        "wrapper":true
+        "resultWrapper":"DeleteDBClusterResult"
       },
       "errors":[
-        {
-          "shape":"DBClusterNotFoundFault",
-          "error":{
-            "code":"DBClusterNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBClusterStateFault",
-          "error":{
-            "code":"InvalidDBClusterStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBClusterNotFoundFault"},
+        {"shape":"InvalidDBClusterStateFault"}
       ]
     },
     "DeleteDBClusterParameterGroup":{
@@ -1204,24 +393,8 @@
       },
       "input":{"shape":"DeleteDBClusterParameterGroupMessage"},
       "errors":[
-        {
-          "shape":"InvalidDBParameterGroupStateFault",
-          "error":{
-            "code":"InvalidDBParameterGroupState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBParameterGroupNotFoundFault",
-          "error":{
-            "code":"DBParameterGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"InvalidDBParameterGroupStateFault"},
+        {"shape":"DBParameterGroupNotFoundFault"}
       ]
     },
     "DeleteDBClusterSnapshot":{
@@ -1233,28 +406,11 @@
       "input":{"shape":"DeleteDBClusterSnapshotMessage"},
       "output":{
         "shape":"DeleteDBClusterSnapshotResult",
-        "resultWrapper":"DeleteDBClusterSnapshotResult",
-        "wrapper":true
+        "resultWrapper":"DeleteDBClusterSnapshotResult"
       },
       "errors":[
-        {
-          "shape":"InvalidDBClusterSnapshotStateFault",
-          "error":{
-            "code":"InvalidDBClusterSnapshotStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBClusterSnapshotNotFoundFault",
-          "error":{
-            "code":"DBClusterSnapshotNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"InvalidDBClusterSnapshotStateFault"},
+        {"shape":"DBClusterSnapshotNotFoundFault"}
       ]
     },
     "DeleteDBInstance":{
@@ -1266,46 +422,13 @@
       "input":{"shape":"DeleteDBInstanceMessage"},
       "output":{
         "shape":"DeleteDBInstanceResult",
-        "resultWrapper":"DeleteDBInstanceResult",
-        "wrapper":true
+        "resultWrapper":"DeleteDBInstanceResult"
       },
       "errors":[
-        {
-          "shape":"DBInstanceNotFoundFault",
-          "error":{
-            "code":"DBInstanceNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBInstanceStateFault",
-          "error":{
-            "code":"InvalidDBInstanceState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSnapshotAlreadyExistsFault",
-          "error":{
-            "code":"DBSnapshotAlreadyExists",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"SnapshotQuotaExceededFault",
-          "error":{
-            "code":"SnapshotQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBInstanceNotFoundFault"},
+        {"shape":"InvalidDBInstanceStateFault"},
+        {"shape":"DBSnapshotAlreadyExistsFault"},
+        {"shape":"SnapshotQuotaExceededFault"}
       ]
     },
     "DeleteDBParameterGroup":{
@@ -1316,24 +439,8 @@
       },
       "input":{"shape":"DeleteDBParameterGroupMessage"},
       "errors":[
-        {
-          "shape":"InvalidDBParameterGroupStateFault",
-          "error":{
-            "code":"InvalidDBParameterGroupState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBParameterGroupNotFoundFault",
-          "error":{
-            "code":"DBParameterGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"InvalidDBParameterGroupStateFault"},
+        {"shape":"DBParameterGroupNotFoundFault"}
       ]
     },
     "DeleteDBSecurityGroup":{
@@ -1344,24 +451,8 @@
       },
       "input":{"shape":"DeleteDBSecurityGroupMessage"},
       "errors":[
-        {
-          "shape":"InvalidDBSecurityGroupStateFault",
-          "error":{
-            "code":"InvalidDBSecurityGroupState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSecurityGroupNotFoundFault",
-          "error":{
-            "code":"DBSecurityGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"InvalidDBSecurityGroupStateFault"},
+        {"shape":"DBSecurityGroupNotFoundFault"}
       ]
     },
     "DeleteDBSnapshot":{
@@ -1373,28 +464,11 @@
       "input":{"shape":"DeleteDBSnapshotMessage"},
       "output":{
         "shape":"DeleteDBSnapshotResult",
-        "resultWrapper":"DeleteDBSnapshotResult",
-        "wrapper":true
+        "resultWrapper":"DeleteDBSnapshotResult"
       },
       "errors":[
-        {
-          "shape":"InvalidDBSnapshotStateFault",
-          "error":{
-            "code":"InvalidDBSnapshotState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSnapshotNotFoundFault",
-          "error":{
-            "code":"DBSnapshotNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"InvalidDBSnapshotStateFault"},
+        {"shape":"DBSnapshotNotFoundFault"}
       ]
     },
     "DeleteDBSubnetGroup":{
@@ -1405,33 +479,9 @@
       },
       "input":{"shape":"DeleteDBSubnetGroupMessage"},
       "errors":[
-        {
-          "shape":"InvalidDBSubnetGroupStateFault",
-          "error":{
-            "code":"InvalidDBSubnetGroupStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBSubnetStateFault",
-          "error":{
-            "code":"InvalidDBSubnetStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSubnetGroupNotFoundFault",
-          "error":{
-            "code":"DBSubnetGroupNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"InvalidDBSubnetGroupStateFault"},
+        {"shape":"InvalidDBSubnetStateFault"},
+        {"shape":"DBSubnetGroupNotFoundFault"}
       ]
     },
     "DeleteEventSubscription":{
@@ -1443,28 +493,11 @@
       "input":{"shape":"DeleteEventSubscriptionMessage"},
       "output":{
         "shape":"DeleteEventSubscriptionResult",
-        "resultWrapper":"DeleteEventSubscriptionResult",
-        "wrapper":true
+        "resultWrapper":"DeleteEventSubscriptionResult"
       },
       "errors":[
-        {
-          "shape":"SubscriptionNotFoundFault",
-          "error":{
-            "code":"SubscriptionNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidEventSubscriptionStateFault",
-          "error":{
-            "code":"InvalidEventSubscriptionState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"SubscriptionNotFoundFault"},
+        {"shape":"InvalidEventSubscriptionStateFault"}
       ]
     },
     "DeleteOptionGroup":{
@@ -1475,24 +508,8 @@
       },
       "input":{"shape":"DeleteOptionGroupMessage"},
       "errors":[
-        {
-          "shape":"OptionGroupNotFoundFault",
-          "error":{
-            "code":"OptionGroupNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidOptionGroupStateFault",
-          "error":{
-            "code":"InvalidOptionGroupStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"OptionGroupNotFoundFault"},
+        {"shape":"InvalidOptionGroupStateFault"}
       ]
     },
     "DescribeAccountAttributes":{
@@ -1519,15 +536,7 @@
         "resultWrapper":"DescribeCertificatesResult"
       },
       "errors":[
-        {
-          "shape":"CertificateNotFoundFault",
-          "error":{
-            "code":"CertificateNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"CertificateNotFoundFault"}
       ]
     },
     "DescribeDBClusterParameterGroups":{
@@ -1542,15 +551,7 @@
         "resultWrapper":"DescribeDBClusterParameterGroupsResult"
       },
       "errors":[
-        {
-          "shape":"DBParameterGroupNotFoundFault",
-          "error":{
-            "code":"DBParameterGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBParameterGroupNotFoundFault"}
       ]
     },
     "DescribeDBClusterParameters":{
@@ -1565,15 +566,7 @@
         "resultWrapper":"DescribeDBClusterParametersResult"
       },
       "errors":[
-        {
-          "shape":"DBParameterGroupNotFoundFault",
-          "error":{
-            "code":"DBParameterGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBParameterGroupNotFoundFault"}
       ]
     },
     "DescribeDBClusterSnapshots":{
@@ -1588,15 +581,7 @@
         "resultWrapper":"DescribeDBClusterSnapshotsResult"
       },
       "errors":[
-        {
-          "shape":"DBClusterSnapshotNotFoundFault",
-          "error":{
-            "code":"DBClusterSnapshotNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBClusterSnapshotNotFoundFault"}
       ]
     },
     "DescribeDBClusters":{
@@ -1611,15 +596,7 @@
         "resultWrapper":"DescribeDBClustersResult"
       },
       "errors":[
-        {
-          "shape":"DBClusterNotFoundFault",
-          "error":{
-            "code":"DBClusterNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBClusterNotFoundFault"}
       ]
     },
     "DescribeDBEngineVersions":{
@@ -1646,15 +623,7 @@
         "resultWrapper":"DescribeDBInstancesResult"
       },
       "errors":[
-        {
-          "shape":"DBInstanceNotFoundFault",
-          "error":{
-            "code":"DBInstanceNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBInstanceNotFoundFault"}
       ]
     },
     "DescribeDBLogFiles":{
@@ -1669,15 +638,7 @@
         "resultWrapper":"DescribeDBLogFilesResult"
       },
       "errors":[
-        {
-          "shape":"DBInstanceNotFoundFault",
-          "error":{
-            "code":"DBInstanceNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBInstanceNotFoundFault"}
       ]
     },
     "DescribeDBParameterGroups":{
@@ -1692,15 +653,7 @@
         "resultWrapper":"DescribeDBParameterGroupsResult"
       },
       "errors":[
-        {
-          "shape":"DBParameterGroupNotFoundFault",
-          "error":{
-            "code":"DBParameterGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBParameterGroupNotFoundFault"}
       ]
     },
     "DescribeDBParameters":{
@@ -1715,15 +668,7 @@
         "resultWrapper":"DescribeDBParametersResult"
       },
       "errors":[
-        {
-          "shape":"DBParameterGroupNotFoundFault",
-          "error":{
-            "code":"DBParameterGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBParameterGroupNotFoundFault"}
       ]
     },
     "DescribeDBSecurityGroups":{
@@ -1738,15 +683,7 @@
         "resultWrapper":"DescribeDBSecurityGroupsResult"
       },
       "errors":[
-        {
-          "shape":"DBSecurityGroupNotFoundFault",
-          "error":{
-            "code":"DBSecurityGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBSecurityGroupNotFoundFault"}
       ]
     },
     "DescribeDBSnapshotAttributes":{
@@ -1758,19 +695,10 @@
       "input":{"shape":"DescribeDBSnapshotAttributesMessage"},
       "output":{
         "shape":"DescribeDBSnapshotAttributesResult",
-        "resultWrapper":"DescribeDBSnapshotAttributesResult",
-        "wrapper":true
+        "resultWrapper":"DescribeDBSnapshotAttributesResult"
       },
       "errors":[
-        {
-          "shape":"DBSnapshotNotFoundFault",
-          "error":{
-            "code":"DBSnapshotNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBSnapshotNotFoundFault"}
       ]
     },
     "DescribeDBSnapshots":{
@@ -1785,15 +713,7 @@
         "resultWrapper":"DescribeDBSnapshotsResult"
       },
       "errors":[
-        {
-          "shape":"DBSnapshotNotFoundFault",
-          "error":{
-            "code":"DBSnapshotNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBSnapshotNotFoundFault"}
       ]
     },
     "DescribeDBSubnetGroups":{
@@ -1808,15 +728,7 @@
         "resultWrapper":"DescribeDBSubnetGroupsResult"
       },
       "errors":[
-        {
-          "shape":"DBSubnetGroupNotFoundFault",
-          "error":{
-            "code":"DBSubnetGroupNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBSubnetGroupNotFoundFault"}
       ]
     },
     "DescribeEngineDefaultClusterParameters":{
@@ -1828,8 +740,7 @@
       "input":{"shape":"DescribeEngineDefaultClusterParametersMessage"},
       "output":{
         "shape":"DescribeEngineDefaultClusterParametersResult",
-        "resultWrapper":"DescribeEngineDefaultClusterParametersResult",
-        "wrapper":true
+        "resultWrapper":"DescribeEngineDefaultClusterParametersResult"
       }
     },
     "DescribeEngineDefaultParameters":{
@@ -1841,8 +752,7 @@
       "input":{"shape":"DescribeEngineDefaultParametersMessage"},
       "output":{
         "shape":"DescribeEngineDefaultParametersResult",
-        "resultWrapper":"DescribeEngineDefaultParametersResult",
-        "wrapper":true
+        "resultWrapper":"DescribeEngineDefaultParametersResult"
       }
     },
     "DescribeEventCategories":{
@@ -1869,15 +779,7 @@
         "resultWrapper":"DescribeEventSubscriptionsResult"
       },
       "errors":[
-        {
-          "shape":"SubscriptionNotFoundFault",
-          "error":{
-            "code":"SubscriptionNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"SubscriptionNotFoundFault"}
       ]
     },
     "DescribeEvents":{
@@ -1916,15 +818,7 @@
         "resultWrapper":"DescribeOptionGroupsResult"
       },
       "errors":[
-        {
-          "shape":"OptionGroupNotFoundFault",
-          "error":{
-            "code":"OptionGroupNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"OptionGroupNotFoundFault"}
       ]
     },
     "DescribeOrderableDBInstanceOptions":{
@@ -1951,15 +845,7 @@
         "resultWrapper":"DescribePendingMaintenanceActionsResult"
       },
       "errors":[
-        {
-          "shape":"ResourceNotFoundFault",
-          "error":{
-            "code":"ResourceNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"ResourceNotFoundFault"}
       ]
     },
     "DescribeReservedDBInstances":{
@@ -1974,15 +860,7 @@
         "resultWrapper":"DescribeReservedDBInstancesResult"
       },
       "errors":[
-        {
-          "shape":"ReservedDBInstanceNotFoundFault",
-          "error":{
-            "code":"ReservedDBInstanceNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"ReservedDBInstanceNotFoundFault"}
       ]
     },
     "DescribeReservedDBInstancesOfferings":{
@@ -1997,15 +875,7 @@
         "resultWrapper":"DescribeReservedDBInstancesOfferingsResult"
       },
       "errors":[
-        {
-          "shape":"ReservedDBInstancesOfferingNotFoundFault",
-          "error":{
-            "code":"ReservedDBInstancesOfferingNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"ReservedDBInstancesOfferingNotFoundFault"}
       ]
     },
     "DownloadDBLogFilePortion":{
@@ -2020,24 +890,8 @@
         "resultWrapper":"DownloadDBLogFilePortionResult"
       },
       "errors":[
-        {
-          "shape":"DBInstanceNotFoundFault",
-          "error":{
-            "code":"DBInstanceNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBLogFileNotFoundFault",
-          "error":{
-            "code":"DBLogFileNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBInstanceNotFoundFault"},
+        {"shape":"DBLogFileNotFoundFault"}
       ]
     },
     "FailoverDBCluster":{
@@ -2049,28 +903,11 @@
       "input":{"shape":"FailoverDBClusterMessage"},
       "output":{
         "shape":"FailoverDBClusterResult",
-        "resultWrapper":"FailoverDBClusterResult",
-        "wrapper":true
+        "resultWrapper":"FailoverDBClusterResult"
       },
       "errors":[
-        {
-          "shape":"DBClusterNotFoundFault",
-          "error":{
-            "code":"DBClusterNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBClusterStateFault",
-          "error":{
-            "code":"InvalidDBClusterStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBClusterNotFoundFault"},
+        {"shape":"InvalidDBClusterStateFault"}
       ]
     },
     "ListTagsForResource":{
@@ -2085,24 +922,8 @@
         "resultWrapper":"ListTagsForResourceResult"
       },
       "errors":[
-        {
-          "shape":"DBInstanceNotFoundFault",
-          "error":{
-            "code":"DBInstanceNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSnapshotNotFoundFault",
-          "error":{
-            "code":"DBSnapshotNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBInstanceNotFoundFault"},
+        {"shape":"DBSnapshotNotFoundFault"}
       ]
     },
     "ModifyDBCluster":{
@@ -2114,109 +935,20 @@
       "input":{"shape":"ModifyDBClusterMessage"},
       "output":{
         "shape":"ModifyDBClusterResult",
-        "resultWrapper":"ModifyDBClusterResult",
-        "wrapper":true
+        "resultWrapper":"ModifyDBClusterResult"
       },
       "errors":[
-        {
-          "shape":"DBClusterNotFoundFault",
-          "error":{
-            "code":"DBClusterNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBClusterStateFault",
-          "error":{
-            "code":"InvalidDBClusterStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"StorageQuotaExceededFault",
-          "error":{
-            "code":"StorageQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSubnetGroupNotFoundFault",
-          "error":{
-            "code":"DBSubnetGroupNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidVPCNetworkStateFault",
-          "error":{
-            "code":"InvalidVPCNetworkStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBSubnetGroupStateFault",
-          "error":{
-            "code":"InvalidDBSubnetGroupStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidSubnet",
-          "error":{
-            "code":"InvalidSubnet",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBClusterParameterGroupNotFoundFault",
-          "error":{
-            "code":"DBClusterParameterGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBSecurityGroupStateFault",
-          "error":{
-            "code":"InvalidDBSecurityGroupState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBInstanceStateFault",
-          "error":{
-            "code":"InvalidDBInstanceState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBClusterAlreadyExistsFault",
-          "error":{
-            "code":"DBClusterAlreadyExistsFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBClusterNotFoundFault"},
+        {"shape":"InvalidDBClusterStateFault"},
+        {"shape":"StorageQuotaExceededFault"},
+        {"shape":"DBSubnetGroupNotFoundFault"},
+        {"shape":"InvalidVPCNetworkStateFault"},
+        {"shape":"InvalidDBSubnetGroupStateFault"},
+        {"shape":"InvalidSubnet"},
+        {"shape":"DBClusterParameterGroupNotFoundFault"},
+        {"shape":"InvalidDBSecurityGroupStateFault"},
+        {"shape":"InvalidDBInstanceStateFault"},
+        {"shape":"DBClusterAlreadyExistsFault"}
       ]
     },
     "ModifyDBClusterParameterGroup":{
@@ -2231,24 +963,8 @@
         "resultWrapper":"ModifyDBClusterParameterGroupResult"
       },
       "errors":[
-        {
-          "shape":"DBParameterGroupNotFoundFault",
-          "error":{
-            "code":"DBParameterGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBParameterGroupStateFault",
-          "error":{
-            "code":"InvalidDBParameterGroupState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBParameterGroupNotFoundFault"},
+        {"shape":"InvalidDBParameterGroupStateFault"}
       ]
     },
     "ModifyDBInstance":{
@@ -2260,145 +976,24 @@
       "input":{"shape":"ModifyDBInstanceMessage"},
       "output":{
         "shape":"ModifyDBInstanceResult",
-        "resultWrapper":"ModifyDBInstanceResult",
-        "wrapper":true
+        "resultWrapper":"ModifyDBInstanceResult"
       },
       "errors":[
-        {
-          "shape":"InvalidDBInstanceStateFault",
-          "error":{
-            "code":"InvalidDBInstanceState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBSecurityGroupStateFault",
-          "error":{
-            "code":"InvalidDBSecurityGroupState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBInstanceAlreadyExistsFault",
-          "error":{
-            "code":"DBInstanceAlreadyExists",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBInstanceNotFoundFault",
-          "error":{
-            "code":"DBInstanceNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSecurityGroupNotFoundFault",
-          "error":{
-            "code":"DBSecurityGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBParameterGroupNotFoundFault",
-          "error":{
-            "code":"DBParameterGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InsufficientDBInstanceCapacityFault",
-          "error":{
-            "code":"InsufficientDBInstanceCapacity",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"StorageQuotaExceededFault",
-          "error":{
-            "code":"StorageQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidVPCNetworkStateFault",
-          "error":{
-            "code":"InvalidVPCNetworkStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"ProvisionedIopsNotAvailableInAZFault",
-          "error":{
-            "code":"ProvisionedIopsNotAvailableInAZFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"OptionGroupNotFoundFault",
-          "error":{
-            "code":"OptionGroupNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBUpgradeDependencyFailureFault",
-          "error":{
-            "code":"DBUpgradeDependencyFailure",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"StorageTypeNotSupportedFault",
-          "error":{
-            "code":"StorageTypeNotSupported",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"AuthorizationNotFoundFault",
-          "error":{
-            "code":"AuthorizationNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"CertificateNotFoundFault",
-          "error":{
-            "code":"CertificateNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"InvalidDBInstanceStateFault"},
+        {"shape":"InvalidDBSecurityGroupStateFault"},
+        {"shape":"DBInstanceAlreadyExistsFault"},
+        {"shape":"DBInstanceNotFoundFault"},
+        {"shape":"DBSecurityGroupNotFoundFault"},
+        {"shape":"DBParameterGroupNotFoundFault"},
+        {"shape":"InsufficientDBInstanceCapacityFault"},
+        {"shape":"StorageQuotaExceededFault"},
+        {"shape":"InvalidVPCNetworkStateFault"},
+        {"shape":"ProvisionedIopsNotAvailableInAZFault"},
+        {"shape":"OptionGroupNotFoundFault"},
+        {"shape":"DBUpgradeDependencyFailureFault"},
+        {"shape":"StorageTypeNotSupportedFault"},
+        {"shape":"AuthorizationNotFoundFault"},
+        {"shape":"CertificateNotFoundFault"}
       ]
     },
     "ModifyDBParameterGroup":{
@@ -2413,24 +1008,8 @@
         "resultWrapper":"ModifyDBParameterGroupResult"
       },
       "errors":[
-        {
-          "shape":"DBParameterGroupNotFoundFault",
-          "error":{
-            "code":"DBParameterGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBParameterGroupStateFault",
-          "error":{
-            "code":"InvalidDBParameterGroupState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBParameterGroupNotFoundFault"},
+        {"shape":"InvalidDBParameterGroupStateFault"}
       ]
     },
     "ModifyDBSnapshotAttribute":{
@@ -2442,37 +1021,12 @@
       "input":{"shape":"ModifyDBSnapshotAttributeMessage"},
       "output":{
         "shape":"ModifyDBSnapshotAttributeResult",
-        "resultWrapper":"ModifyDBSnapshotAttributeResult",
-        "wrapper":true
+        "resultWrapper":"ModifyDBSnapshotAttributeResult"
       },
       "errors":[
-        {
-          "shape":"DBSnapshotNotFoundFault",
-          "error":{
-            "code":"DBSnapshotNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBSnapshotStateFault",
-          "error":{
-            "code":"InvalidDBSnapshotState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"SharedSnapshotQuotaExceededFault",
-          "error":{
-            "code":"SharedSnapshotQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBSnapshotNotFoundFault"},
+        {"shape":"InvalidDBSnapshotStateFault"},
+        {"shape":"SharedSnapshotQuotaExceededFault"}
       ]
     },
     "ModifyDBSubnetGroup":{
@@ -2484,55 +1038,14 @@
       "input":{"shape":"ModifyDBSubnetGroupMessage"},
       "output":{
         "shape":"ModifyDBSubnetGroupResult",
-        "resultWrapper":"ModifyDBSubnetGroupResult",
-        "wrapper":true
+        "resultWrapper":"ModifyDBSubnetGroupResult"
       },
       "errors":[
-        {
-          "shape":"DBSubnetGroupNotFoundFault",
-          "error":{
-            "code":"DBSubnetGroupNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSubnetQuotaExceededFault",
-          "error":{
-            "code":"DBSubnetQuotaExceededFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"SubnetAlreadyInUse",
-          "error":{
-            "code":"SubnetAlreadyInUse",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSubnetGroupDoesNotCoverEnoughAZs",
-          "error":{
-            "code":"DBSubnetGroupDoesNotCoverEnoughAZs",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidSubnet",
-          "error":{
-            "code":"InvalidSubnet",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBSubnetGroupNotFoundFault"},
+        {"shape":"DBSubnetQuotaExceededFault"},
+        {"shape":"SubnetAlreadyInUse"},
+        {"shape":"DBSubnetGroupDoesNotCoverEnoughAZs"},
+        {"shape":"InvalidSubnet"}
       ]
     },
     "ModifyEventSubscription":{
@@ -2544,64 +1057,15 @@
       "input":{"shape":"ModifyEventSubscriptionMessage"},
       "output":{
         "shape":"ModifyEventSubscriptionResult",
-        "resultWrapper":"ModifyEventSubscriptionResult",
-        "wrapper":true
+        "resultWrapper":"ModifyEventSubscriptionResult"
       },
       "errors":[
-        {
-          "shape":"EventSubscriptionQuotaExceededFault",
-          "error":{
-            "code":"EventSubscriptionQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"SubscriptionNotFoundFault",
-          "error":{
-            "code":"SubscriptionNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"SNSInvalidTopicFault",
-          "error":{
-            "code":"SNSInvalidTopic",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"SNSNoAuthorizationFault",
-          "error":{
-            "code":"SNSNoAuthorization",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"SNSTopicArnNotFoundFault",
-          "error":{
-            "code":"SNSTopicArnNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"SubscriptionCategoryNotFoundFault",
-          "error":{
-            "code":"SubscriptionCategoryNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"EventSubscriptionQuotaExceededFault"},
+        {"shape":"SubscriptionNotFoundFault"},
+        {"shape":"SNSInvalidTopicFault"},
+        {"shape":"SNSNoAuthorizationFault"},
+        {"shape":"SNSTopicArnNotFoundFault"},
+        {"shape":"SubscriptionCategoryNotFoundFault"}
       ]
     },
     "ModifyOptionGroup":{
@@ -2613,28 +1077,11 @@
       "input":{"shape":"ModifyOptionGroupMessage"},
       "output":{
         "shape":"ModifyOptionGroupResult",
-        "resultWrapper":"ModifyOptionGroupResult",
-        "wrapper":true
+        "resultWrapper":"ModifyOptionGroupResult"
       },
       "errors":[
-        {
-          "shape":"InvalidOptionGroupStateFault",
-          "error":{
-            "code":"InvalidOptionGroupStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"OptionGroupNotFoundFault",
-          "error":{
-            "code":"OptionGroupNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"InvalidOptionGroupStateFault"},
+        {"shape":"OptionGroupNotFoundFault"}
       ]
     },
     "PromoteReadReplica":{
@@ -2646,28 +1093,11 @@
       "input":{"shape":"PromoteReadReplicaMessage"},
       "output":{
         "shape":"PromoteReadReplicaResult",
-        "resultWrapper":"PromoteReadReplicaResult",
-        "wrapper":true
+        "resultWrapper":"PromoteReadReplicaResult"
       },
       "errors":[
-        {
-          "shape":"InvalidDBInstanceStateFault",
-          "error":{
-            "code":"InvalidDBInstanceState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBInstanceNotFoundFault",
-          "error":{
-            "code":"DBInstanceNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"InvalidDBInstanceStateFault"},
+        {"shape":"DBInstanceNotFoundFault"}
       ]
     },
     "PurchaseReservedDBInstancesOffering":{
@@ -2679,37 +1109,12 @@
       "input":{"shape":"PurchaseReservedDBInstancesOfferingMessage"},
       "output":{
         "shape":"PurchaseReservedDBInstancesOfferingResult",
-        "resultWrapper":"PurchaseReservedDBInstancesOfferingResult",
-        "wrapper":true
+        "resultWrapper":"PurchaseReservedDBInstancesOfferingResult"
       },
       "errors":[
-        {
-          "shape":"ReservedDBInstancesOfferingNotFoundFault",
-          "error":{
-            "code":"ReservedDBInstancesOfferingNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"ReservedDBInstanceAlreadyExistsFault",
-          "error":{
-            "code":"ReservedDBInstanceAlreadyExists",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"ReservedDBInstanceQuotaExceededFault",
-          "error":{
-            "code":"ReservedDBInstanceQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"ReservedDBInstancesOfferingNotFoundFault"},
+        {"shape":"ReservedDBInstanceAlreadyExistsFault"},
+        {"shape":"ReservedDBInstanceQuotaExceededFault"}
       ]
     },
     "RebootDBInstance":{
@@ -2721,28 +1126,11 @@
       "input":{"shape":"RebootDBInstanceMessage"},
       "output":{
         "shape":"RebootDBInstanceResult",
-        "resultWrapper":"RebootDBInstanceResult",
-        "wrapper":true
+        "resultWrapper":"RebootDBInstanceResult"
       },
       "errors":[
-        {
-          "shape":"InvalidDBInstanceStateFault",
-          "error":{
-            "code":"InvalidDBInstanceState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBInstanceNotFoundFault",
-          "error":{
-            "code":"DBInstanceNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"InvalidDBInstanceStateFault"},
+        {"shape":"DBInstanceNotFoundFault"}
       ]
     },
     "RemoveSourceIdentifierFromSubscription":{
@@ -2754,28 +1142,11 @@
       "input":{"shape":"RemoveSourceIdentifierFromSubscriptionMessage"},
       "output":{
         "shape":"RemoveSourceIdentifierFromSubscriptionResult",
-        "resultWrapper":"RemoveSourceIdentifierFromSubscriptionResult",
-        "wrapper":true
+        "resultWrapper":"RemoveSourceIdentifierFromSubscriptionResult"
       },
       "errors":[
-        {
-          "shape":"SubscriptionNotFoundFault",
-          "error":{
-            "code":"SubscriptionNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"SourceNotFoundFault",
-          "error":{
-            "code":"SourceNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"SubscriptionNotFoundFault"},
+        {"shape":"SourceNotFoundFault"}
       ]
     },
     "RemoveTagsFromResource":{
@@ -2786,24 +1157,8 @@
       },
       "input":{"shape":"RemoveTagsFromResourceMessage"},
       "errors":[
-        {
-          "shape":"DBInstanceNotFoundFault",
-          "error":{
-            "code":"DBInstanceNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSnapshotNotFoundFault",
-          "error":{
-            "code":"DBSnapshotNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBInstanceNotFoundFault"},
+        {"shape":"DBSnapshotNotFoundFault"}
       ]
     },
     "ResetDBClusterParameterGroup":{
@@ -2818,24 +1173,8 @@
         "resultWrapper":"ResetDBClusterParameterGroupResult"
       },
       "errors":[
-        {
-          "shape":"InvalidDBParameterGroupStateFault",
-          "error":{
-            "code":"InvalidDBParameterGroupState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBParameterGroupNotFoundFault",
-          "error":{
-            "code":"DBParameterGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"InvalidDBParameterGroupStateFault"},
+        {"shape":"DBParameterGroupNotFoundFault"}
       ]
     },
     "ResetDBParameterGroup":{
@@ -2850,24 +1189,8 @@
         "resultWrapper":"ResetDBParameterGroupResult"
       },
       "errors":[
-        {
-          "shape":"InvalidDBParameterGroupStateFault",
-          "error":{
-            "code":"InvalidDBParameterGroupState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBParameterGroupNotFoundFault",
-          "error":{
-            "code":"DBParameterGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"InvalidDBParameterGroupStateFault"},
+        {"shape":"DBParameterGroupNotFoundFault"}
       ]
     },
     "RestoreDBClusterFromSnapshot":{
@@ -2879,163 +1202,26 @@
       "input":{"shape":"RestoreDBClusterFromSnapshotMessage"},
       "output":{
         "shape":"RestoreDBClusterFromSnapshotResult",
-        "resultWrapper":"RestoreDBClusterFromSnapshotResult",
-        "wrapper":true
+        "resultWrapper":"RestoreDBClusterFromSnapshotResult"
       },
       "errors":[
-        {
-          "shape":"DBClusterAlreadyExistsFault",
-          "error":{
-            "code":"DBClusterAlreadyExistsFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBClusterQuotaExceededFault",
-          "error":{
-            "code":"DBClusterQuotaExceededFault",
-            "httpStatusCode":403,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"StorageQuotaExceededFault",
-          "error":{
-            "code":"StorageQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSubnetGroupNotFoundFault",
-          "error":{
-            "code":"DBSubnetGroupNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSnapshotNotFoundFault",
-          "error":{
-            "code":"DBSnapshotNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBClusterSnapshotNotFoundFault",
-          "error":{
-            "code":"DBClusterSnapshotNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InsufficientDBClusterCapacityFault",
-          "error":{
-            "code":"InsufficientDBClusterCapacityFault",
-            "httpStatusCode":403,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InsufficientStorageClusterCapacityFault",
-          "error":{
-            "code":"InsufficientStorageClusterCapacity",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBSnapshotStateFault",
-          "error":{
-            "code":"InvalidDBSnapshotState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBClusterSnapshotStateFault",
-          "error":{
-            "code":"InvalidDBClusterSnapshotStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"StorageQuotaExceededFault",
-          "error":{
-            "code":"StorageQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidVPCNetworkStateFault",
-          "error":{
-            "code":"InvalidVPCNetworkStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidRestoreFault",
-          "error":{
-            "code":"InvalidRestoreFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSubnetGroupNotFoundFault",
-          "error":{
-            "code":"DBSubnetGroupNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidSubnet",
-          "error":{
-            "code":"InvalidSubnet",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"OptionGroupNotFoundFault",
-          "error":{
-            "code":"OptionGroupNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"KMSKeyNotAccessibleFault",
-          "error":{
-            "code":"KMSKeyNotAccessibleFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBClusterAlreadyExistsFault"},
+        {"shape":"DBClusterQuotaExceededFault"},
+        {"shape":"StorageQuotaExceededFault"},
+        {"shape":"DBSubnetGroupNotFoundFault"},
+        {"shape":"DBSnapshotNotFoundFault"},
+        {"shape":"DBClusterSnapshotNotFoundFault"},
+        {"shape":"InsufficientDBClusterCapacityFault"},
+        {"shape":"InsufficientStorageClusterCapacityFault"},
+        {"shape":"InvalidDBSnapshotStateFault"},
+        {"shape":"InvalidDBClusterSnapshotStateFault"},
+        {"shape":"StorageQuotaExceededFault"},
+        {"shape":"InvalidVPCNetworkStateFault"},
+        {"shape":"InvalidRestoreFault"},
+        {"shape":"DBSubnetGroupNotFoundFault"},
+        {"shape":"InvalidSubnet"},
+        {"shape":"OptionGroupNotFoundFault"},
+        {"shape":"KMSKeyNotAccessibleFault"}
       ]
     },
     "RestoreDBClusterToPointInTime":{
@@ -3047,154 +1233,25 @@
       "input":{"shape":"RestoreDBClusterToPointInTimeMessage"},
       "output":{
         "shape":"RestoreDBClusterToPointInTimeResult",
-        "resultWrapper":"RestoreDBClusterToPointInTimeResult",
-        "wrapper":true
+        "resultWrapper":"RestoreDBClusterToPointInTimeResult"
       },
       "errors":[
-        {
-          "shape":"DBClusterAlreadyExistsFault",
-          "error":{
-            "code":"DBClusterAlreadyExistsFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBClusterQuotaExceededFault",
-          "error":{
-            "code":"DBClusterQuotaExceededFault",
-            "httpStatusCode":403,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"StorageQuotaExceededFault",
-          "error":{
-            "code":"StorageQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSubnetGroupNotFoundFault",
-          "error":{
-            "code":"DBSubnetGroupNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBClusterNotFoundFault",
-          "error":{
-            "code":"DBClusterNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBClusterSnapshotNotFoundFault",
-          "error":{
-            "code":"DBClusterSnapshotNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InsufficientDBClusterCapacityFault",
-          "error":{
-            "code":"InsufficientDBClusterCapacityFault",
-            "httpStatusCode":403,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBSnapshotStateFault",
-          "error":{
-            "code":"InvalidDBSnapshotState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBClusterSnapshotStateFault",
-          "error":{
-            "code":"InvalidDBClusterSnapshotStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"StorageQuotaExceededFault",
-          "error":{
-            "code":"StorageQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidVPCNetworkStateFault",
-          "error":{
-            "code":"InvalidVPCNetworkStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidRestoreFault",
-          "error":{
-            "code":"InvalidRestoreFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSubnetGroupNotFoundFault",
-          "error":{
-            "code":"DBSubnetGroupNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidSubnet",
-          "error":{
-            "code":"InvalidSubnet",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"OptionGroupNotFoundFault",
-          "error":{
-            "code":"OptionGroupNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"KMSKeyNotAccessibleFault",
-          "error":{
-            "code":"KMSKeyNotAccessibleFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBClusterAlreadyExistsFault"},
+        {"shape":"DBClusterQuotaExceededFault"},
+        {"shape":"StorageQuotaExceededFault"},
+        {"shape":"DBSubnetGroupNotFoundFault"},
+        {"shape":"DBClusterNotFoundFault"},
+        {"shape":"DBClusterSnapshotNotFoundFault"},
+        {"shape":"InsufficientDBClusterCapacityFault"},
+        {"shape":"InvalidDBSnapshotStateFault"},
+        {"shape":"InvalidDBClusterSnapshotStateFault"},
+        {"shape":"StorageQuotaExceededFault"},
+        {"shape":"InvalidVPCNetworkStateFault"},
+        {"shape":"InvalidRestoreFault"},
+        {"shape":"DBSubnetGroupNotFoundFault"},
+        {"shape":"InvalidSubnet"},
+        {"shape":"OptionGroupNotFoundFault"},
+        {"shape":"KMSKeyNotAccessibleFault"}
       ]
     },
     "RestoreDBInstanceFromDBSnapshot":{
@@ -3206,163 +1263,26 @@
       "input":{"shape":"RestoreDBInstanceFromDBSnapshotMessage"},
       "output":{
         "shape":"RestoreDBInstanceFromDBSnapshotResult",
-        "resultWrapper":"RestoreDBInstanceFromDBSnapshotResult",
-        "wrapper":true
+        "resultWrapper":"RestoreDBInstanceFromDBSnapshotResult"
       },
       "errors":[
-        {
-          "shape":"DBInstanceAlreadyExistsFault",
-          "error":{
-            "code":"DBInstanceAlreadyExists",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSnapshotNotFoundFault",
-          "error":{
-            "code":"DBSnapshotNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InstanceQuotaExceededFault",
-          "error":{
-            "code":"InstanceQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InsufficientDBInstanceCapacityFault",
-          "error":{
-            "code":"InsufficientDBInstanceCapacity",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBSnapshotStateFault",
-          "error":{
-            "code":"InvalidDBSnapshotState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"StorageQuotaExceededFault",
-          "error":{
-            "code":"StorageQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidVPCNetworkStateFault",
-          "error":{
-            "code":"InvalidVPCNetworkStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidRestoreFault",
-          "error":{
-            "code":"InvalidRestoreFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSubnetGroupNotFoundFault",
-          "error":{
-            "code":"DBSubnetGroupNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSubnetGroupDoesNotCoverEnoughAZs",
-          "error":{
-            "code":"DBSubnetGroupDoesNotCoverEnoughAZs",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidSubnet",
-          "error":{
-            "code":"InvalidSubnet",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"ProvisionedIopsNotAvailableInAZFault",
-          "error":{
-            "code":"ProvisionedIopsNotAvailableInAZFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"OptionGroupNotFoundFault",
-          "error":{
-            "code":"OptionGroupNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"StorageTypeNotSupportedFault",
-          "error":{
-            "code":"StorageTypeNotSupported",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"AuthorizationNotFoundFault",
-          "error":{
-            "code":"AuthorizationNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"KMSKeyNotAccessibleFault",
-          "error":{
-            "code":"KMSKeyNotAccessibleFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSecurityGroupNotFoundFault",
-          "error":{
-            "code":"DBSecurityGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBInstanceAlreadyExistsFault"},
+        {"shape":"DBSnapshotNotFoundFault"},
+        {"shape":"InstanceQuotaExceededFault"},
+        {"shape":"InsufficientDBInstanceCapacityFault"},
+        {"shape":"InvalidDBSnapshotStateFault"},
+        {"shape":"StorageQuotaExceededFault"},
+        {"shape":"InvalidVPCNetworkStateFault"},
+        {"shape":"InvalidRestoreFault"},
+        {"shape":"DBSubnetGroupNotFoundFault"},
+        {"shape":"DBSubnetGroupDoesNotCoverEnoughAZs"},
+        {"shape":"InvalidSubnet"},
+        {"shape":"ProvisionedIopsNotAvailableInAZFault"},
+        {"shape":"OptionGroupNotFoundFault"},
+        {"shape":"StorageTypeNotSupportedFault"},
+        {"shape":"AuthorizationNotFoundFault"},
+        {"shape":"KMSKeyNotAccessibleFault"},
+        {"shape":"DBSecurityGroupNotFoundFault"}
       ]
     },
     "RestoreDBInstanceToPointInTime":{
@@ -3374,172 +1294,27 @@
       "input":{"shape":"RestoreDBInstanceToPointInTimeMessage"},
       "output":{
         "shape":"RestoreDBInstanceToPointInTimeResult",
-        "resultWrapper":"RestoreDBInstanceToPointInTimeResult",
-        "wrapper":true
+        "resultWrapper":"RestoreDBInstanceToPointInTimeResult"
       },
       "errors":[
-        {
-          "shape":"DBInstanceAlreadyExistsFault",
-          "error":{
-            "code":"DBInstanceAlreadyExists",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBInstanceNotFoundFault",
-          "error":{
-            "code":"DBInstanceNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InstanceQuotaExceededFault",
-          "error":{
-            "code":"InstanceQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InsufficientDBInstanceCapacityFault",
-          "error":{
-            "code":"InsufficientDBInstanceCapacity",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBInstanceStateFault",
-          "error":{
-            "code":"InvalidDBInstanceState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"PointInTimeRestoreNotEnabledFault",
-          "error":{
-            "code":"PointInTimeRestoreNotEnabled",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"StorageQuotaExceededFault",
-          "error":{
-            "code":"StorageQuotaExceeded",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidVPCNetworkStateFault",
-          "error":{
-            "code":"InvalidVPCNetworkStateFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidRestoreFault",
-          "error":{
-            "code":"InvalidRestoreFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSubnetGroupNotFoundFault",
-          "error":{
-            "code":"DBSubnetGroupNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSubnetGroupDoesNotCoverEnoughAZs",
-          "error":{
-            "code":"DBSubnetGroupDoesNotCoverEnoughAZs",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidSubnet",
-          "error":{
-            "code":"InvalidSubnet",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"ProvisionedIopsNotAvailableInAZFault",
-          "error":{
-            "code":"ProvisionedIopsNotAvailableInAZFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"OptionGroupNotFoundFault",
-          "error":{
-            "code":"OptionGroupNotFoundFault",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"StorageTypeNotSupportedFault",
-          "error":{
-            "code":"StorageTypeNotSupported",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"AuthorizationNotFoundFault",
-          "error":{
-            "code":"AuthorizationNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"KMSKeyNotAccessibleFault",
-          "error":{
-            "code":"KMSKeyNotAccessibleFault",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"DBSecurityGroupNotFoundFault",
-          "error":{
-            "code":"DBSecurityGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBInstanceAlreadyExistsFault"},
+        {"shape":"DBInstanceNotFoundFault"},
+        {"shape":"InstanceQuotaExceededFault"},
+        {"shape":"InsufficientDBInstanceCapacityFault"},
+        {"shape":"InvalidDBInstanceStateFault"},
+        {"shape":"PointInTimeRestoreNotEnabledFault"},
+        {"shape":"StorageQuotaExceededFault"},
+        {"shape":"InvalidVPCNetworkStateFault"},
+        {"shape":"InvalidRestoreFault"},
+        {"shape":"DBSubnetGroupNotFoundFault"},
+        {"shape":"DBSubnetGroupDoesNotCoverEnoughAZs"},
+        {"shape":"InvalidSubnet"},
+        {"shape":"ProvisionedIopsNotAvailableInAZFault"},
+        {"shape":"OptionGroupNotFoundFault"},
+        {"shape":"StorageTypeNotSupportedFault"},
+        {"shape":"AuthorizationNotFoundFault"},
+        {"shape":"KMSKeyNotAccessibleFault"},
+        {"shape":"DBSecurityGroupNotFoundFault"}
       ]
     },
     "RevokeDBSecurityGroupIngress":{
@@ -3551,37 +1326,12 @@
       "input":{"shape":"RevokeDBSecurityGroupIngressMessage"},
       "output":{
         "shape":"RevokeDBSecurityGroupIngressResult",
-        "resultWrapper":"RevokeDBSecurityGroupIngressResult",
-        "wrapper":true
+        "resultWrapper":"RevokeDBSecurityGroupIngressResult"
       },
       "errors":[
-        {
-          "shape":"DBSecurityGroupNotFoundFault",
-          "error":{
-            "code":"DBSecurityGroupNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"AuthorizationNotFoundFault",
-          "error":{
-            "code":"AuthorizationNotFound",
-            "httpStatusCode":404,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InvalidDBSecurityGroupStateFault",
-          "error":{
-            "code":"InvalidDBSecurityGroupState",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"DBSecurityGroupNotFoundFault"},
+        {"shape":"AuthorizationNotFoundFault"},
+        {"shape":"InvalidDBSecurityGroupStateFault"}
       ]
     }
   },
@@ -5737,6 +3487,7 @@
         "TdeCredentialPassword":{"shape":"String"},
         "CACertificateIdentifier":{"shape":"String"},
         "CopyTagsToSnapshot":{"shape":"BooleanOptional"},
+        "DBPortNumber":{"shape":"IntegerOptional"},
         "PubliclyAccessible":{"shape":"BooleanOptional"}
       }
     },

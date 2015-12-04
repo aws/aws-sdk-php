@@ -1,39 +1,39 @@
 {
-  "version":2,
-  "waiters":{
-    "InstanceProfileExists":{
-      "acceptors":[
+  "version": 2,
+  "waiters": {
+    "InstanceProfileExists": {
+      "delay": 1,
+      "operation": "GetInstanceProfile",
+      "maxAttempts": 40,
+      "acceptors": [
         {
-          "expected":200,
-          "matcher":"status",
-          "state":"success"
+          "expected": 200,
+          "matcher": "status",
+          "state": "success"
         },
         {
-          "expected":404,
-          "matcher":"status",
-          "state":"retry"
+          "state": "retry",
+          "matcher": "status",
+          "expected": 404
         }
-      ],
-      "delay":1,
-      "maxAttempts":40,
-      "operation":"GetInstanceProfile"
+      ]
     },
-    "UserExists":{
-      "acceptors":[
+    "UserExists": {
+      "delay": 1,
+      "operation": "GetUser",
+      "maxAttempts": 20,
+      "acceptors": [
         {
-          "expected":200,
-          "matcher":"status",
-          "state":"success"
+          "state": "success",
+          "matcher": "status",
+          "expected": 200
         },
         {
-          "expected":"NoSuchEntity",
-          "matcher":"error",
-          "state":"retry"
+          "state": "retry",
+          "matcher": "error",
+          "expected": "NoSuchEntity"
         }
-      ],
-      "delay":1,
-      "maxAttempts":20,
-      "operation":"GetUser"
+      ]
     }
   }
 }

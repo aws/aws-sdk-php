@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DirectoryService` - Added support for launching a fully managed Microsoft
+  Active Directory.
+* `Aws\Rds` - Added support for specifying a port number when modifying database
+  instances.
+* `Aws\Route53` - Added support for Traffic Flow, a traffic management service.
+* `Aws\Ses` - Added support for generating SMTP passwords from credentials.
+
 ## 3.11.3 - 2015-12-01
 
 * `Aws\Config` - Update documentation.
