@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.11.4 - 2015-12-03
 
 * `Aws\DirectoryService` - Added support for launching a fully managed Microsoft
   Active Directory.
