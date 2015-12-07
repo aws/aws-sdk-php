@@ -208,7 +208,12 @@ EOT;
 
         $html->section(2, 'Operations');
         foreach ($service->api->getOperations() as $opName => $operation) {
-            $html->append($this->createHtmlForOperation($service, $opName, $operation, $examples[$opName]));
+            $html->append($this->createHtmlForOperation(
+                $service,
+                $opName,
+                $operation,
+                isset($examples[$opName]) ? $examples[$opName] : []
+            ));
         }
 
         $html->section(2, 'Shapes');
