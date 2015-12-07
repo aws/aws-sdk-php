@@ -1,4 +1,4 @@
-@s3
+@s3 @integ
 Feature: S3 Multipart Uploads
 
   Scenario Outline: Uploading a stream

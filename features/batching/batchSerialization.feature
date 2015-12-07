@@ -1,4 +1,4 @@
-@sqs
+@sqs @integ
 Feature: SQS Batch Serialization
 
   Scenario: Deleting Message Batches

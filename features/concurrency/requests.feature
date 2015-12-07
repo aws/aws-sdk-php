@@ -1,4 +1,4 @@
-@s3
+@s3 @integ
 Feature: Concurrent Requests
 
   Scenario: Sending a normal, synchronous request

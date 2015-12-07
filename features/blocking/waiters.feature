@@ -1,4 +1,4 @@
-@dynamodb
+@dynamodb @integ
 Feature: Waiters
 
   Scenario: Synchronous Waiters

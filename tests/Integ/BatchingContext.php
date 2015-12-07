@@ -91,7 +91,7 @@ class BatchingContext extends \PHPUnit_Framework_Assert implements
     {
         $sqs = self::getSdk()->createSqs();
         self::$resource = self::getResourcePrefix()
-            . str_replace(' ', '-', strtolower($scope->getName()));
+            . preg_replace('/\W/', '-', strtolower($scope->getName()));
 
         $sqs->createQueue(['QueueName' => self::$resource]);
         $sqs->waitUntil('QueueExists', ['QueueName' => self::$resource]);

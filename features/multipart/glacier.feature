@@ -1,4 +1,4 @@
-@glacier
+@glacier @integ
 Feature: Glacier Multipart Uploads
 
   Scenario Outline: Uploading a stream

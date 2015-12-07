@@ -1,5 +1,5 @@
 #language: en
-@s3
+@s3 @integ
 Feature: S3 Stream Wrapper
 
   Background:

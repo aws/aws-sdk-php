@@ -1,4 +1,4 @@
-@dynamodb
+@dynamodb @integ
 Feature: DynamoDB Write Request Batch
   Scenario: Batching
     Given I have a "dynamodb" client
