@@ -15,6 +15,9 @@ default:
         blocking:
             paths: [ %paths.base%/features/blocking ]
             contexts: [ Aws\Test\Integ\BlockingContext ]
+        concurrency:
+            paths: [ %paths.base%/features/concurrency ]
+            contexts: [ Aws\Test\Integ\ConcurrencyContext ]
         streams:
             paths: [ %paths.base%/features/streams ]
             contexts: [ Aws\Test\Integ\NativeStreamContext ]
