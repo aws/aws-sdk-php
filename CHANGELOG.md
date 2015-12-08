@@ -5,6 +5,7 @@
 * `Aws\AutoScaling` - Added support for setting and describing instance
   protection status.
 * `Aws\Emr` - Added support for using release labels instead of version numbers.
+* `Aws\Rds` - Added support for Aurora encryption at rest.
 
 ## 3.11.4 - 2015-12-03
 
