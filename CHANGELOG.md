@@ -2,6 +2,8 @@
 
 ## next release
 
+* `Aws\AutoScaling` - Added support for setting and describing instance
+  protection status.
 * `Aws\Emr` - Added support for using release labels instead of version numbers.
 
 ## 3.11.4 - 2015-12-03
