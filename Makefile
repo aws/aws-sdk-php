@@ -45,7 +45,7 @@ coverage-show:
 	open build/artifacts/coverage/index.html
 
 integ:
-	vendor/bin/phpunit --debug --testsuite=integ $(TEST)
+	vendor/bin/behat --format=progress --tags=integ
 
 smoke:
 	vendor/bin/behat --format=progress

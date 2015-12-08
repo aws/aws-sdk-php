@@ -6,3 +6,18 @@ default:
         performance:
             paths: [ %paths.base%/features/performance ]
             contexts: [ Aws\Test\PerformanceContext ]
+        multipart:
+            paths: [ %paths.base%/features/multipart ]
+            contexts: [ Aws\Test\Integ\MultipartContext ]
+        batching:
+            paths: [ %paths.base%/features/batching ]
+            contexts: [ Aws\Test\Integ\BatchingContext ]
+        blocking:
+            paths: [ %paths.base%/features/blocking ]
+            contexts: [ Aws\Test\Integ\BlockingContext ]
+        concurrency:
+            paths: [ %paths.base%/features/concurrency ]
+            contexts: [ Aws\Test\Integ\ConcurrencyContext ]
+        streams:
+            paths: [ %paths.base%/features/streams ]
+            contexts: [ Aws\Test\Integ\NativeStreamContext ]

@@ -13,6 +13,7 @@ use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\FnStream;
 use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 
 /**
@@ -477,6 +478,26 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $this->assertEquals('sink=baz', (string) $result['Body']);
+    }
+
+    public function testRequestSucceedsWithColon()
+    {
+        $key = 'aaa:bbb';
+        $s3 = $this->getTestClient('S3', [
+            'http_handler' => function (RequestInterface $request) use ($key) {
+                $this->assertContains(
+                    urlencode($key),
+                    (string) $request->getUri()
+                );
+
+                return Promise\promise_for(new Psr7\Response);
+            }
+        ]);
+
+        $s3->getObject([
+            'Bucket' => 'bucket',
+            'Key'    => $key,
+        ]);
     }
 
     public function testRetriesConnectionErrors()

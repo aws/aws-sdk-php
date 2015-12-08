@@ -3,7 +3,7 @@ namespace Aws\Test\Integ;
 
 use GuzzleHttp\Handler\StreamHandler;
 
-class UseStreamTest extends \PHPUnit_Framework_TestCase
+class GuzzleV6StreamHandlerTest extends \PHPUnit_Framework_TestCase
 {
     use IntegUtils;
 
