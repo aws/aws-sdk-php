@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Emr` - Added support for using release labels instead of version numbers.
+
 ## 3.11.4 - 2015-12-03
 
 * `Aws\DirectoryService` - Added support for launching a fully managed Microsoft

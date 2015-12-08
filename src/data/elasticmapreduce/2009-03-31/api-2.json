@@ -1,14 +1,15 @@
 {
+  "version":"2.0",
   "metadata":{
     "apiVersion":"2009-03-31",
     "endpointPrefix":"elasticmapreduce",
     "jsonVersion":"1.1",
-    "protocol":"json",
     "serviceAbbreviation":"Amazon EMR",
     "serviceFullName":"Amazon Elastic MapReduce",
     "signatureVersion":"v4",
     "targetPrefix":"ElasticMapReduce",
-    "timestampFormat":"unixTimestamp"
+    "timestampFormat":"unixTimestamp",
+    "protocol":"json"
   },
   "operations":{
     "AddInstanceGroups":{
@@ -451,6 +452,7 @@
         "LogUri":{"shape":"String"},
         "RequestedAmiVersion":{"shape":"String"},
         "RunningAmiVersion":{"shape":"String"},
+        "ReleaseLabel":{"shape":"String"},
         "AutoTerminate":{"shape":"Boolean"},
         "TerminationProtected":{"shape":"Boolean"},
         "VisibleToAllUsers":{"shape":"Boolean"},
@@ -458,7 +460,8 @@
         "Tags":{"shape":"TagList"},
         "ServiceRole":{"shape":"String"},
         "NormalizedInstanceHours":{"shape":"Integer"},
-        "MasterPublicDnsName":{"shape":"String"}
+        "MasterPublicDnsName":{"shape":"String"},
+        "Configurations":{"shape":"ConfigurationList"}
       }
     },
     "ClusterId":{"type":"string"},
@@ -538,6 +541,18 @@
       "type":"list",
       "member":{"shape":"Command"}
     },
+    "Configuration":{
+      "type":"structure",
+      "members":{
+        "Classification":{"shape":"String"},
+        "Configurations":{"shape":"ConfigurationList"},
+        "Properties":{"shape":"StringMap"}
+      }
+    },
+    "ConfigurationList":{
+      "type":"list",
+      "member":{"shape":"Configuration"}
+    },
     "Date":{"type":"timestamp"},
     "DescribeClusterInput":{
       "type":"structure",
@@ -603,8 +618,8 @@
     },
     "ErrorCode":{
       "type":"string",
-      "max":256,
-      "min":1
+      "min":1,
+      "max":256
     },
     "ErrorMessage":{"type":"string"},
     "HadoopJarStepConfig":{
@@ -649,7 +664,8 @@
         "InstanceType":{"shape":"InstanceType"},
         "RequestedInstanceCount":{"shape":"Integer"},
         "RunningInstanceCount":{"shape":"Integer"},
-        "Status":{"shape":"InstanceGroupStatus"}
+        "Status":{"shape":"InstanceGroupStatus"},
+        "Configurations":{"shape":"ConfigurationList"}
       }
     },
     "InstanceGroupConfig":{
@@ -665,7 +681,8 @@
         "InstanceRole":{"shape":"InstanceRoleType"},
         "BidPrice":{"shape":"XmlStringMaxLen256"},
         "InstanceType":{"shape":"InstanceType"},
-        "InstanceCount":{"shape":"Integer"}
+        "InstanceCount":{"shape":"Integer"},
+        "Configurations":{"shape":"ConfigurationList"}
       }
     },
     "InstanceGroupConfigList":{
@@ -843,8 +860,8 @@
     },
     "InstanceType":{
       "type":"string",
-      "max":256,
       "min":1,
+      "max":256,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },
     "Integer":{"type":"integer"},
@@ -1119,11 +1136,14 @@
         "LogUri":{"shape":"XmlString"},
         "AdditionalInfo":{"shape":"XmlString"},
         "AmiVersion":{"shape":"XmlStringMaxLen256"},
+        "ReleaseLabel":{"shape":"XmlStringMaxLen256"},
         "Instances":{"shape":"JobFlowInstancesConfig"},
         "Steps":{"shape":"StepConfigList"},
         "BootstrapActions":{"shape":"BootstrapActionConfigList"},
         "SupportedProducts":{"shape":"SupportedProductsList"},
         "NewSupportedProducts":{"shape":"NewSupportedProductsList"},
+        "Applications":{"shape":"ApplicationList"},
+        "Configurations":{"shape":"ConfigurationList"},
         "VisibleToAllUsers":{"shape":"Boolean"},
         "JobFlowRole":{"shape":"XmlString"},
         "ServiceRole":{"shape":"XmlString"},
@@ -1339,8 +1359,8 @@
     },
     "XmlString":{
       "type":"string",
-      "max":10280,
       "min":0,
+      "max":10280,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },
     "XmlStringList":{
@@ -1349,8 +1369,8 @@
     },
     "XmlStringMaxLen256":{
       "type":"string",
-      "max":256,
       "min":0,
+      "max":256,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     }
   }
