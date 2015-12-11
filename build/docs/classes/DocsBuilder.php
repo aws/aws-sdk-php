@@ -674,6 +674,7 @@ EOT;
 
         // Examples
         if (!empty($examples)) {
+            $generator = new CodeSnippetGenerator($service->api);
             $html->elem('h4', null, 'Examples');
             foreach ($examples as $number => $example) {
                 $exampleNumber = $number + 1;
@@ -684,12 +685,12 @@ EOT;
                 $html->close();
                 $html->elem('p', null, $example['description']);
                 $comments = $example['comments'];
-                $input = new SharedExampleBuilder($example['input'], $name, $comments['input']);
-                $html->elem('pre', null, $input->getCode());
+                $input = $generator($name, $example['input'], $comments['input']);
+                $html->elem('pre', null, $input->getCode($example['input'], $name, $comments['input']));
                 if (isset($example['output'])) {
                     $html->elem('p', null, 'Result syntax:');
-                    $output = new SharedExampleBuilder($example['output'], $name, $comments['output'], false);
-                    $html->elem('pre', null, $output->getCode());
+                    $output = $generator($name, $example['output'], $comments['output'], false);
+                    $html->elem('pre', null, $output->getCode($example['output'], $name, $comments['output'], false));
                 }
             }
         }

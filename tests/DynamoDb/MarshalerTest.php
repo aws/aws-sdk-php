@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Tests\DynamoDb;
+namespace Aws\Test\DynamoDb;
 
 use Aws\DynamoDb\Marshaler;
 use Aws\DynamoDb\BinaryValue;
