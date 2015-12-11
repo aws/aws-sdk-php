@@ -755,4 +755,37 @@ EOXML;
 
         $this->assertEquals(0, $retries);
     }
+
+    public function testErrorsWithUnparseableBodiesCanBeRetried()
+    {
+        $networkingError = $this->getMockBuilder(RequestException::class)
+            ->disableOriginalConstructor()
+            ->setMethods([])
+            ->getMock();
+
+        $retries = 11;
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'retries' => $retries,
+            'http_handler' => function () use (&$retries, $networkingError) {
+                if (0 === --$retries) {
+                    return new FulfilledPromise(new Response);
+                }
+
+                return new RejectedPromise([
+                    'connection_error' => false,
+                    'exception' => $networkingError,
+                    'response' => new Response(200, [], openssl_random_pseudo_bytes(2048)),
+                ]);
+            },
+        ]);
+
+        $client->getObject([
+            'Bucket' => 'bucket',
+            'Key' => 'key',
+        ]);
+
+        $this->assertEquals(0, $retries);
+    }
 }
