@@ -72,7 +72,7 @@ class UrlSigner
             : (string) $uri;
     }
 
-    public function createRtmpUrl(UriInterface $uri)
+    private function createRtmpUrl(UriInterface $uri)
     {
         // Use a relative URL when creating Flash player URLs
         $result = ltrim($uri->getPath(), '/');
@@ -90,7 +90,7 @@ class UrlSigner
      *
      * @return string
      */
-    public function createResource($scheme, $url)
+    private function createResource($scheme, $url)
     {
         switch ($scheme) {
             case 'http':
