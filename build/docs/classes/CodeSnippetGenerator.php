@@ -44,9 +44,9 @@ class CodeSnippetGenerator
             case 'string':
                 return "'{$value}'";
             case 'timestamp':
-                return "\\DateTime::createFromFormat('U', {$value})";
+                return "<DateTimeInterface>";
             case 'blob':
-                return "base64_decode('$value')";
+                return "<binary string>";
             default:
                 return $value;
         }

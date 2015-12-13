@@ -70,9 +70,9 @@ EOCS
                 ],
                 <<<'EOCS'
 $result = $client->describeScheduledActions([
-    'EndTime' => \DateTime::createFromFormat('U', 1449799223),
+    'EndTime' => <DateTimeInterface>,
     'MaxRecords' => 10,
-    'StartTime' => \DateTime::createFromFormat('U', 1449798223),
+    'StartTime' => <DateTimeInterface>,
 ]);
 EOCS
             ],
@@ -104,14 +104,14 @@ EOCS
         [
             'AutoScalingGroupName' => 'my-autoscaling-group',
             'DesiredCapacity' => 4,
-            'EndTime' => \DateTime::createFromFormat('U', 1449799223),
+            'EndTime' => <DateTimeInterface>,
             'MaxSize' => 5,
             'MinSize' => 3,
             'Recurrence' => 'daily',
             'ScheduledActionARN' => 'arn:aws:iam::123456789012:user/David',
             'ScheduledActionName' => 'David',
-            'StartTime' => \DateTime::createFromFormat('U', 1449798223),
-            'Time' => \DateTime::createFromFormat('U', 1449798223),
+            'StartTime' => <DateTimeInterface>,
+            'Time' => <DateTimeInterface>,
         ],
     ],
 ]
@@ -133,7 +133,7 @@ EOCS
 $result = $client->putItem([
     'Item' => [
         'Key' => [
-            'B' => base64_decode('3q2+7w=='),
+            'B' => <binary string>,
         ],
     ],
 ]);
