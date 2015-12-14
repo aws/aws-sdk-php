@@ -58,7 +58,7 @@ class CookieSignerTest extends \PHPUnit_Framework_TestCase
         $cookie = $s->getSignedCookie(
             'http*://bar.com/*',
             null,
-            (string) new Policy('http*://bar.com/*', strtotime('+10 minutes'))
+            '{"Statement":[{"Resource":"http*://bar.com/*","Condition":{"DateLessThan":{"AWS:EpochTime":'. strtotime('+10 minutes') . '}}}]}'
         );
 
         $this->assertNotEmpty($cookie);
@@ -81,7 +81,7 @@ class CookieSignerTest extends \PHPUnit_Framework_TestCase
         $cookie = $s->getSignedCookie(
             'http*://bar.com/*',
             null,
-            (string) new Policy('http*://bar.com/*', strtotime('+10 minutes'))
+            '{"Statement":[{"Resource":"http*://bar.com/*","Condition":{"DateLessThan":{"AWS:EpochTime":'. strtotime('+10 minutes') . '}}}]}'
         );
 
         $this->assertArrayHasKey('CloudFront-Signature', $cookie);

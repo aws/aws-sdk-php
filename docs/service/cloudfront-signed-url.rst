@@ -54,17 +54,24 @@ To use a custom policy, provide the ``policy`` key instead of ``expires``.
 
 .. code-block:: php
 
-    $customPolicy = new Aws\CloudFront\Policy(
-        $resourceKey,
-        $expires,
-        null,
-        "{$_SERVER['REMOTE_ADDR']}/32"
-    );
+    $customPolicy = <<<POLICY
+    {
+        "Statement": [
+            {
+                "Resource": "{$resourceKey}",
+                "Condition": {
+                    "IpAddress": {"AWS:SourceIp": "{$_SERVER['REMOTE_ADDR']}/32"},
+                    "DateLessThan": {"AWS:EpochTime": {$expires}}
+                }
+            }
+        ]
+    }
+    POLICY;
 
     // Create a signed URL for the resource using a custom policy
     $signedUrlCustomPolicy = $cloudFront->getSignedUrl([
         'url'    => $streamHostUrl . '/' . $resourceKey,
-        'policy' => (string) $customPolicy,
+        'policy' => $customPolicy,
         'private_key' => '/path/to/your/cloudfront-private-key.pem',
         'key_pair_id' => '<cloudfront key pair id>'
     ]);
@@ -147,16 +154,23 @@ to create a single signed cookie for multiple files.
 
 .. code-block:: php
 
-    $customPolicy = new \Aws\CloudFront\Policy(
-        "https://example-distribution.cloudfront.net/*.mp4",
-        $expires,
-        null,
-        "{$_SERVER['REMOTE_ADDR']}/32"
-    );
+    $customPolicy = <<<POLICY
+    {
+        "Statement": [
+            {
+                "Resource": "{$resourceKey}",
+                "Condition": {
+                    "IpAddress": {"AWS:SourceIp": "{$_SERVER['REMOTE_ADDR']}/32"},
+                    "DateLessThan": {"AWS:EpochTime": {$expires}}
+                }
+            }
+        ]
+    }
+    POLICY;
 
     // Create a signed cookie for the resource using a custom policy
     $signedCookieCustomPolicy = $cloudFront->getSignedCookie([
-        'policy' => (string) $customPolicy,
+        'policy' => $customPolicy,
         'private_key' => '/path/to/your/cloudfront-private-key.pem',
         'key_pair_id' => '<cloudfront key pair id>'
     ]);

@@ -65,7 +65,7 @@ class Signer
         if ($policy) {
             $signatureHash['Policy'] = $this->encode($policy);
         } elseif ($resource && $expires) {
-            $policy = new Policy($resource, $expires);
+            $policy = $this->createCannedPolicy($resource, $expires);
             $signatureHash['Expires'] = $expires;
         } else {
             throw new \InvalidArgumentException('Either a policy or a resource'
@@ -77,6 +77,20 @@ class Signer
         $signatureHash['Key-Pair-Id'] = $this->keyPairId;
 
         return $signatureHash;
+    }
+
+    private function createCannedPolicy($resource, $expiration)
+    {
+        return json_encode([
+            'Statement' => [
+                [
+                    'Resource' => $resource,
+                    'Condition' => [
+                        'DateLessThan' => ['AWS:EpochTime' => $expiration],
+                    ],
+                ],
+            ],
+        ], JSON_UNESCAPED_SLASHES);
     }
 
     private function sign($policy)

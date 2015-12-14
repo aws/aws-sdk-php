@@ -60,9 +60,8 @@ class SignerTest extends \PHPUnit_Framework_TestCase
 
     public function testReturnsPolicyForCustomPolicies()
     {
-        $customPolicy = new Policy('test.mp4', time() + 1000, time() + 100);
         $signature = $this->instance
-            ->getSignature(null, null, (string) $customPolicy);
+            ->getSignature(null, null, $this->getCustomPolicy());
 
         $this->assertArrayHasKey('Policy', $signature);
     }
@@ -76,10 +75,61 @@ class SignerTest extends \PHPUnit_Framework_TestCase
 
     public function testPolicyContainsNoForbiddenCharacters()
     {
-        $customPolicy = new Policy('test.mp4', time() + 1000, time() + 100);
         $signature = $this->instance
-            ->getSignature(null, null, (string) $customPolicy);
+            ->getSignature(null, null, $this->getCustomPolicy());
 
         $this->assertSame(0, preg_match('/[\+\=\/]/', $signature['Policy']));
+    }
+    /**
+     * @dataProvider cannedPolicyParameterProvider
+     *
+     * @param string $resource
+     * @param int $ts
+     */
+    public function testCreatesCannedPolicies($resource, $ts)
+    {
+        $m = new \ReflectionMethod(Signer::class, 'createCannedPolicy');
+        $m->setAccessible(true);
+        $result = $m->invoke($this->instance, $resource, $ts);
+        $this->assertEquals(
+            '{"Statement":[{"Resource":"' . $resource
+            . '","Condition":{"DateLessThan":{"AWS:EpochTime":'
+            . $ts . '}}}]}',
+            $result
+        );
+    }
+
+    public function cannedPolicyParameterProvider()
+    {
+        return [
+            [
+                'test.mp4',
+                time() + 1000,
+            ],
+            [
+                'videos/test.mp4',
+                time() + 1000,
+            ],
+            [
+                'https://aws.amazon.com/foo.bar?baz=quux',
+                time() + 1000,
+            ]
+        ];
+    }
+
+    private function getCustomPolicy()
+    {
+        return json_encode([
+            'Statement' => [
+                [
+                    'Resource' => 'videos/protected.mp4',
+                    'Condition' => [
+                        ['DateLessThan' => ['AWS:EpochTime' => time() + 1800]],
+                        ['DateGreaterThan' => ['AWS:EpochTime' => time()]],
+                        ['IpAddress' => ['AWS:SourceIp' => '127.0.0.1/32']],
+                    ]
+                ],
+            ],
+        ], JSON_UNESCAPED_SLASHES);
     }
 }
