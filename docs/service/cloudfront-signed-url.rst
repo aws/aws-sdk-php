@@ -69,12 +69,12 @@ To use a custom policy, provide the ``policy`` key instead of ``expires``.
     POLICY;
 
     // Create a signed URL for the resource using a custom policy
-    $signedUrlCustomPolicy = $cloudFront->getSignedUrl(array(
+    $signedUrlCustomPolicy = $cloudFront->getSignedUrl([
         'url'    => $streamHostUrl . '/' . $resourceKey,
         'policy' => $customPolicy,
         'private_key' => '/path/to/your/cloudfront-private-key.pem',
         'key_pair_id' => '<cloudfront key pair id>'
-    ));
+    ]);
 
 The form of the signed URL is actually different depending on if the URL you
 are signing is using the "http" or "rtmp" scheme. In the case of "http", the
@@ -105,3 +105,101 @@ but will require different client-side code.
         </script>
     </body>
     </html>
+
+
+Signing CloudFront Cookies for Private Distributions
+----------------------------------------------------
+
+As an alternative to signed URLs, you can also grant clients access to a private
+distribution via signed cookies. Signed cookies allow you to provide access to
+multiple restricted files, such all of the files for a video in HLS format or
+all of the files in the subscribers' area of a website. For more information on
+why you might want to use signed cookies instead of signed URLs (or vice versa),
+please read the `Choosing Between Signed URLs and Signed Cookies section <http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-choosing-signed-urls-cookies.html>`_
+of the CloudFront Developer Guide.
+
+.. note:
+
+    Signed cookies are not supported for RTMP distributions. Use signed URLs
+    instead.
+
+Creating a signed cookie is similar to creating a signed url, with the only
+difference being the method called (``getSignedCookie`` instead of ``getSignedUrl``).
+
+.. code-block:: php
+
+    <?php
+
+    $cloudFront = new Aws\CloudFront\CloudFrontClient([
+        'region'  => 'us-west-2',
+        'version' => '2014-11-06'
+    ]);
+
+    // Setup parameter values for the resource
+    $resourceKey = 'https://example-distribution.cloudfront.net/videos/example.mp4';
+    $expires = time() + 300;
+
+    // Create a signed cookie for the resource using the canned policy
+    $signedCookieCannedPolicy = $cloudFront->getSignedCookie([
+        'url'         => $resourceKey,
+        'expires'     => $expires,
+        'private_key' => '/path/to/your/cloudfront-private-key.pem',
+        'key_pair_id' => '<cloudfront key pair id>'
+    ]);
+
+As with ``getSignedUrl``, you can provide a ``'policy'`` parameter instead of an
+``expires`` parameter and a ``url`` parameter to sign a cookie with a custom
+policy. A custom policy may contain wildcards in the resource key, allowing you
+to create a single signed cookie for multiple files.
+
+.. code-block:: php
+
+    $customPolicy = <<<POLICY
+    {
+        "Statement": [
+            {
+                "Resource": "{$resourceKey}",
+                "Condition": {
+                    "IpAddress": {"AWS:SourceIp": "{$_SERVER['REMOTE_ADDR']}/32"},
+                    "DateLessThan": {"AWS:EpochTime": {$expires}}
+                }
+            }
+        ]
+    }
+    POLICY;
+
+    // Create a signed cookie for the resource using a custom policy
+    $signedCookieCustomPolicy = $cloudFront->getSignedCookie([
+        'policy' => $customPolicy,
+        'private_key' => '/path/to/your/cloudfront-private-key.pem',
+        'key_pair_id' => '<cloudfront key pair id>'
+    ]);
+
+``getSignedCookie`` will return an array of key-value pairs, all of which must
+be set as cookies to grant access to a private distribution.
+
+.. code-block:: php
+
+    foreach ($signedCookieCustomPolicy as $name => $value) {
+        setcookie($name, $value, 0, "", "example-distribution.cloudfront.net", true, true);
+    }
+
+You can also pass these cookies to a ``GuzzleHttp\Cookie\CookieJar`` for use
+with a Guzzle client.
+
+.. code-block:: php
+
+    use GuzzleHttp\Client;
+    use GuzzleHttp\Cookie\CookieJar;
+
+    $distribution = "example-distribution.cloudfront.net";
+    $client = new \GuzzleHttp\Client([
+        'base_uri' => "https://$distribution",
+        'cookies' => CookieJar::fromArray($signedCookieCustomPolicy, $distribution),
+    ]);
+
+    $client->get('video.mp4');
+
+For more information on using signed cookies, please read the `Using Signed
+Cookies section <http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-signed-cookies.html>`_
+of the CloudFront Developer Guide.
