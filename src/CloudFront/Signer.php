@@ -63,6 +63,7 @@ class Signer
     {
         $signatureHash = [];
         if ($policy) {
+            $policy = preg_replace('/\s/s', '', $policy);
             $signatureHash['Policy'] = $this->encode($policy);
         } elseif ($resource && $expires) {
             $policy = $this->createCannedPolicy($resource, $expires);
@@ -72,7 +73,6 @@ class Signer
                 . ' and an expiration time must be provided.');
         }
 
-        $policy = str_replace(' ', '', $policy);
         $signatureHash['Signature'] = $this->encode($this->sign($policy));
         $signatureHash['Key-Pair-Id'] = $this->keyPairId;
 
