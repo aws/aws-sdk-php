@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Ec2` - Added support for specifying encryption on CopyImage commands.
+
 ## 3.11.5 - 2015-12-08
 
 * `Aws\AutoScaling` - Added support for setting and describing instance
