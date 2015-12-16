@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.11.6 - 2015-12-15
 
 * `Aws\Ec2` - Added support for specifying encryption on CopyImage commands.
 
