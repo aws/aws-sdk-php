@@ -6,6 +6,7 @@
 * `Aws\CloudFront` - Added support for GZip compression.
 * `Aws\CloudTrail` - Added support for multi-region trails.
 * `Aws\Config` - Added for IAM resource types.
+* `Aws\Ec2` - Added support for managed NATs.
 * `Aws\Rds` - Added support for enhanced monitoring.
 
 ## 3.11.6 - 2015-12-15
