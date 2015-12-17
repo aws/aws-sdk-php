@@ -3,10 +3,10 @@
   "metadata":{
     "apiVersion":"2015-05-28",
     "endpointPrefix":"iot",
-    "protocol":"rest-json",
     "serviceFullName":"AWS IoT",
     "signatureVersion":"v4",
-    "signingName":"execute-api"
+    "signingName":"execute-api",
+    "protocol":"rest-json"
   },
   "operations":{
     "AcceptCertificateTransfer":{
@@ -705,6 +705,11 @@
         {
           "shape":"UnauthorizedException",
           "error":{"httpStatusCode":401},
+          "exception":true
+        },
+        {
+          "shape":"ThrottlingException",
+          "error":{"httpStatusCode":429},
           "exception":true
         }
       ]
@@ -1618,8 +1623,8 @@
     "ActionList":{
       "type":"list",
       "member":{"shape":"Action"},
-      "max":10,
-      "min":0
+      "min":0,
+      "max":10
     },
     "AscendingOrder":{"type":"boolean"},
     "AttachPrincipalPolicyRequest":{
@@ -1727,11 +1732,14 @@
     },
     "CertificateId":{
       "type":"string",
-      "max":64,
       "min":64,
+      "max":64,
       "pattern":"(0x)?[a-fA-F0-9]+"
     },
-    "CertificatePem":{"type":"string"},
+    "CertificatePem":{
+      "type":"string",
+      "min":1
+    },
     "CertificateSigningRequest":{
       "type":"string",
       "min":1
@@ -1954,14 +1962,14 @@
     },
     "DeleteTopicRuleRequest":{
       "type":"structure",
-      "required":["ruleName"],
       "members":{
         "ruleName":{
           "shape":"RuleName",
           "location":"uri",
           "locationName":"ruleName"
         }
-      }
+      },
+      "required":["ruleName"]
     },
     "DeliveryStreamName":{"type":"string"},
     "DescribeCertificateRequest":{
@@ -2473,14 +2481,14 @@
     "Marker":{"type":"string"},
     "MaxResults":{
       "type":"integer",
-      "max":10000,
-      "min":1
+      "min":1,
+      "max":10000
     },
     "NextToken":{"type":"string"},
     "PageSize":{
       "type":"integer",
-      "max":250,
-      "min":1
+      "min":1,
+      "max":250
     },
     "PartitionKey":{"type":"string"},
     "PayloadField":{"type":"string"},
@@ -2499,8 +2507,8 @@
     "PolicyDocument":{"type":"string"},
     "PolicyName":{
       "type":"string",
-      "max":128,
       "min":1,
+      "max":128,
       "pattern":"[\\w+=,.@-]+"
     },
     "PolicyVersion":{
@@ -2527,7 +2535,8 @@
     },
     "PrivateKey":{
       "type":"string",
-      "min":1
+      "min":1,
+      "sensitive":true
     },
     "PublicKey":{
       "type":"string",
@@ -2592,8 +2601,8 @@
     },
     "RuleName":{
       "type":"string",
-      "max":128,
       "min":1,
+      "max":128,
       "pattern":"^[a-zA-Z0-9_]+$"
     },
     "S3Action":{
@@ -2694,8 +2703,8 @@
     },
     "ThingName":{
       "type":"string",
-      "max":128,
       "min":1,
+      "max":128,
       "pattern":"[a-zA-Z0-9_-]+"
     },
     "ThingNameList":{
