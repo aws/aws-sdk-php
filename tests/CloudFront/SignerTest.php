@@ -66,6 +66,22 @@ class SignerTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('Policy', $signature);
     }
 
+    public function testNormalizesCustomPolicies()
+    {
+        $normalizedPolicy = $this->getCustomPolicy();
+        $policy = json_encode(json_decode($normalizedPolicy), JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT);
+        $signature = $this->instance->getSignature(null, null, $policy);
+
+        $policyAsSigned = base64_decode(strtr($signature['Policy'], [
+            '-' => '+',
+            '_' => '=',
+            '~' => '/',
+        ]));
+
+        $this->assertNotSame($policy, $policyAsSigned);
+        $this->assertSame($normalizedPolicy, $policyAsSigned);
+    }
+
     public function testSignatureContainsNoForbiddenCharacters()
     {
         $signature = $this->instance->getSignature('test.mp4', time() + 1000);
@@ -80,6 +96,7 @@ class SignerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(0, preg_match('/[\+\=\/]/', $signature['Policy']));
     }
+
     /**
      * @dataProvider cannedPolicyParameterProvider
      *
