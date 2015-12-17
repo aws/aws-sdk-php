@@ -3,6 +3,7 @@
 ## next release
 
 * `Aws\CloudFront` - Added support for generating signed cookies.
+* `Aws\Config` - Added for IAM resource types.
 * `Aws\Rds` - Added support for enhanced monitoring.
 
 ## 3.11.6 - 2015-12-15
