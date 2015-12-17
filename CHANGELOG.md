@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFront` - Added support for generating signed cookies.
+* `Aws\Rds` - Added support for enhanced monitoring.
+
 ## 3.11.6 - 2015-12-15
 
 * `Aws\Ec2` - Added support for specifying encryption on CopyImage commands.
