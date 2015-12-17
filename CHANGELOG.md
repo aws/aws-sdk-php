@@ -3,6 +3,7 @@
 ## next release
 
 * `Aws\CloudFront` - Added support for generating signed cookies.
+* `Aws\CloudTrail` - Added support for multi-region trails.
 * `Aws\Config` - Added for IAM resource types.
 * `Aws\Rds` - Added support for enhanced monitoring.
 
