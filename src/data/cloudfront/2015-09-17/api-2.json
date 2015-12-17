@@ -1,7 +1,7 @@
 {
   "version":"2.0",
   "metadata":{
-    "apiVersion":"2015-07-27",
+    "apiVersion":"2015-09-17",
     "endpointPrefix":"cloudfront",
     "globalEndpoint":"cloudfront.amazonaws.com",
     "protocol":"rest-xml",
@@ -11,984 +11,396 @@
   },
   "operations":{
     "CreateCloudFrontOriginAccessIdentity":{
-      "name":"CreateCloudFrontOriginAccessIdentity2015_07_27",
+      "name":"CreateCloudFrontOriginAccessIdentity2015_09_17",
       "http":{
         "method":"POST",
-        "requestUri":"/2015-07-27/origin-access-identity/cloudfront",
+        "requestUri":"/2015-09-17/origin-access-identity/cloudfront",
         "responseCode":201
       },
       "input":{"shape":"CreateCloudFrontOriginAccessIdentityRequest"},
       "output":{"shape":"CreateCloudFrontOriginAccessIdentityResult"},
       "errors":[
-        {
-          "shape":"CloudFrontOriginAccessIdentityAlreadyExists",
-          "error":{"httpStatusCode":409},
-          "exception":true
-        },
-        {
-          "shape":"MissingBody",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"TooManyCloudFrontOriginAccessIdentities",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidArgument",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InconsistentQuantities",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        }
+        {"shape":"CloudFrontOriginAccessIdentityAlreadyExists"},
+        {"shape":"MissingBody"},
+        {"shape":"TooManyCloudFrontOriginAccessIdentities"},
+        {"shape":"InvalidArgument"},
+        {"shape":"InconsistentQuantities"}
       ]
     },
     "CreateDistribution":{
-      "name":"CreateDistribution2015_07_27",
+      "name":"CreateDistribution2015_09_17",
       "http":{
         "method":"POST",
-        "requestUri":"/2015-07-27/distribution",
+        "requestUri":"/2015-09-17/distribution",
         "responseCode":201
       },
       "input":{"shape":"CreateDistributionRequest"},
       "output":{"shape":"CreateDistributionResult"},
       "errors":[
-        {
-          "shape":"CNAMEAlreadyExists",
-          "error":{"httpStatusCode":409},
-          "exception":true
-        },
-        {
-          "shape":"DistributionAlreadyExists",
-          "error":{"httpStatusCode":409},
-          "exception":true
-        },
-        {
-          "shape":"InvalidOrigin",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidOriginAccessIdentity",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"AccessDenied",
-          "error":{"httpStatusCode":403},
-          "exception":true
-        },
-        {
-          "shape":"TooManyTrustedSigners",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"TrustedSignerDoesNotExist",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidViewerCertificate",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidMinimumProtocolVersion",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"MissingBody",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"TooManyDistributionCNAMEs",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"TooManyDistributions",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidDefaultRootObject",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidRelativePath",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidErrorCode",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidResponseCode",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidArgument",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidRequiredProtocol",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"NoSuchOrigin",
-          "error":{"httpStatusCode":404},
-          "exception":true
-        },
-        {
-          "shape":"TooManyOrigins",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"TooManyCacheBehaviors",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"TooManyCookieNamesInWhiteList",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidForwardCookies",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"TooManyHeadersInForwardedValues",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidHeadersForS3Origin",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InconsistentQuantities",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"TooManyCertificates",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidLocationCode",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidGeoRestrictionParameter",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidProtocolSettings",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidTTLOrder",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidWebACLId",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        }
+        {"shape":"CNAMEAlreadyExists"},
+        {"shape":"DistributionAlreadyExists"},
+        {"shape":"InvalidOrigin"},
+        {"shape":"InvalidOriginAccessIdentity"},
+        {"shape":"AccessDenied"},
+        {"shape":"TooManyTrustedSigners"},
+        {"shape":"TrustedSignerDoesNotExist"},
+        {"shape":"InvalidViewerCertificate"},
+        {"shape":"InvalidMinimumProtocolVersion"},
+        {"shape":"MissingBody"},
+        {"shape":"TooManyDistributionCNAMEs"},
+        {"shape":"TooManyDistributions"},
+        {"shape":"InvalidDefaultRootObject"},
+        {"shape":"InvalidRelativePath"},
+        {"shape":"InvalidErrorCode"},
+        {"shape":"InvalidResponseCode"},
+        {"shape":"InvalidArgument"},
+        {"shape":"InvalidRequiredProtocol"},
+        {"shape":"NoSuchOrigin"},
+        {"shape":"TooManyOrigins"},
+        {"shape":"TooManyCacheBehaviors"},
+        {"shape":"TooManyCookieNamesInWhiteList"},
+        {"shape":"InvalidForwardCookies"},
+        {"shape":"TooManyHeadersInForwardedValues"},
+        {"shape":"InvalidHeadersForS3Origin"},
+        {"shape":"InconsistentQuantities"},
+        {"shape":"TooManyCertificates"},
+        {"shape":"InvalidLocationCode"},
+        {"shape":"InvalidGeoRestrictionParameter"},
+        {"shape":"InvalidProtocolSettings"},
+        {"shape":"InvalidTTLOrder"},
+        {"shape":"InvalidWebACLId"}
       ]
     },
     "CreateInvalidation":{
-      "name":"CreateInvalidation2015_07_27",
+      "name":"CreateInvalidation2015_09_17",
       "http":{
         "method":"POST",
-        "requestUri":"/2015-07-27/distribution/{DistributionId}/invalidation",
+        "requestUri":"/2015-09-17/distribution/{DistributionId}/invalidation",
         "responseCode":201
       },
       "input":{"shape":"CreateInvalidationRequest"},
       "output":{"shape":"CreateInvalidationResult"},
       "errors":[
-        {
-          "shape":"AccessDenied",
-          "error":{"httpStatusCode":403},
-          "exception":true
-        },
-        {
-          "shape":"MissingBody",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidArgument",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"NoSuchDistribution",
-          "error":{"httpStatusCode":404},
-          "exception":true
-        },
-        {
-          "shape":"BatchTooLarge",
-          "error":{"httpStatusCode":413},
-          "exception":true
-        },
-        {
-          "shape":"TooManyInvalidationsInProgress",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InconsistentQuantities",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        }
+        {"shape":"AccessDenied"},
+        {"shape":"MissingBody"},
+        {"shape":"InvalidArgument"},
+        {"shape":"NoSuchDistribution"},
+        {"shape":"BatchTooLarge"},
+        {"shape":"TooManyInvalidationsInProgress"},
+        {"shape":"InconsistentQuantities"}
       ]
     },
     "CreateStreamingDistribution":{
-      "name":"CreateStreamingDistribution2015_07_27",
+      "name":"CreateStreamingDistribution2015_09_17",
       "http":{
         "method":"POST",
-        "requestUri":"/2015-07-27/streaming-distribution",
+        "requestUri":"/2015-09-17/streaming-distribution",
         "responseCode":201
       },
       "input":{"shape":"CreateStreamingDistributionRequest"},
       "output":{"shape":"CreateStreamingDistributionResult"},
       "errors":[
-        {
-          "shape":"CNAMEAlreadyExists",
-          "error":{"httpStatusCode":409},
-          "exception":true
-        },
-        {
-          "shape":"StreamingDistributionAlreadyExists",
-          "error":{"httpStatusCode":409},
-          "exception":true
-        },
-        {
-          "shape":"InvalidOrigin",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidOriginAccessIdentity",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"AccessDenied",
-          "error":{"httpStatusCode":403},
-          "exception":true
-        },
-        {
-          "shape":"TooManyTrustedSigners",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"TrustedSignerDoesNotExist",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"MissingBody",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"TooManyStreamingDistributionCNAMEs",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"TooManyStreamingDistributions",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidArgument",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InconsistentQuantities",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        }
+        {"shape":"CNAMEAlreadyExists"},
+        {"shape":"StreamingDistributionAlreadyExists"},
+        {"shape":"InvalidOrigin"},
+        {"shape":"InvalidOriginAccessIdentity"},
+        {"shape":"AccessDenied"},
+        {"shape":"TooManyTrustedSigners"},
+        {"shape":"TrustedSignerDoesNotExist"},
+        {"shape":"MissingBody"},
+        {"shape":"TooManyStreamingDistributionCNAMEs"},
+        {"shape":"TooManyStreamingDistributions"},
+        {"shape":"InvalidArgument"},
+        {"shape":"InconsistentQuantities"}
       ]
     },
     "DeleteCloudFrontOriginAccessIdentity":{
-      "name":"DeleteCloudFrontOriginAccessIdentity2015_07_27",
+      "name":"DeleteCloudFrontOriginAccessIdentity2015_09_17",
       "http":{
         "method":"DELETE",
-        "requestUri":"/2015-07-27/origin-access-identity/cloudfront/{Id}",
+        "requestUri":"/2015-09-17/origin-access-identity/cloudfront/{Id}",
         "responseCode":204
       },
       "input":{"shape":"DeleteCloudFrontOriginAccessIdentityRequest"},
       "errors":[
-        {
-          "shape":"AccessDenied",
-          "error":{"httpStatusCode":403},
-          "exception":true
-        },
-        {
-          "shape":"InvalidIfMatchVersion",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"NoSuchCloudFrontOriginAccessIdentity",
-          "error":{"httpStatusCode":404},
-          "exception":true
-        },
-        {
-          "shape":"PreconditionFailed",
-          "error":{"httpStatusCode":412},
-          "exception":true
-        },
-        {
-          "shape":"CloudFrontOriginAccessIdentityInUse",
-          "error":{"httpStatusCode":409},
-          "exception":true
-        }
+        {"shape":"AccessDenied"},
+        {"shape":"InvalidIfMatchVersion"},
+        {"shape":"NoSuchCloudFrontOriginAccessIdentity"},
+        {"shape":"PreconditionFailed"},
+        {"shape":"CloudFrontOriginAccessIdentityInUse"}
       ]
     },
     "DeleteDistribution":{
-      "name":"DeleteDistribution2015_07_27",
+      "name":"DeleteDistribution2015_09_17",
       "http":{
         "method":"DELETE",
-        "requestUri":"/2015-07-27/distribution/{Id}",
+        "requestUri":"/2015-09-17/distribution/{Id}",
         "responseCode":204
       },
       "input":{"shape":"DeleteDistributionRequest"},
       "errors":[
-        {
-          "shape":"AccessDenied",
-          "error":{"httpStatusCode":403},
-          "exception":true
-        },
-        {
-          "shape":"DistributionNotDisabled",
-          "error":{"httpStatusCode":409},
-          "exception":true
-        },
-        {
-          "shape":"InvalidIfMatchVersion",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"NoSuchDistribution",
-          "error":{"httpStatusCode":404},
-          "exception":true
-        },
-        {
-          "shape":"PreconditionFailed",
-          "error":{"httpStatusCode":412},
-          "exception":true
-        }
+        {"shape":"AccessDenied"},
+        {"shape":"DistributionNotDisabled"},
+        {"shape":"InvalidIfMatchVersion"},
+        {"shape":"NoSuchDistribution"},
+        {"shape":"PreconditionFailed"}
       ]
     },
     "DeleteStreamingDistribution":{
-      "name":"DeleteStreamingDistribution2015_07_27",
+      "name":"DeleteStreamingDistribution2015_09_17",
       "http":{
         "method":"DELETE",
-        "requestUri":"/2015-07-27/streaming-distribution/{Id}",
+        "requestUri":"/2015-09-17/streaming-distribution/{Id}",
         "responseCode":204
       },
       "input":{"shape":"DeleteStreamingDistributionRequest"},
       "errors":[
-        {
-          "shape":"AccessDenied",
-          "error":{"httpStatusCode":403},
-          "exception":true
-        },
-        {
-          "shape":"StreamingDistributionNotDisabled",
-          "error":{"httpStatusCode":409},
-          "exception":true
-        },
-        {
-          "shape":"InvalidIfMatchVersion",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"NoSuchStreamingDistribution",
-          "error":{"httpStatusCode":404},
-          "exception":true
-        },
-        {
-          "shape":"PreconditionFailed",
-          "error":{"httpStatusCode":412},
-          "exception":true
-        }
+        {"shape":"AccessDenied"},
+        {"shape":"StreamingDistributionNotDisabled"},
+        {"shape":"InvalidIfMatchVersion"},
+        {"shape":"NoSuchStreamingDistribution"},
+        {"shape":"PreconditionFailed"}
       ]
     },
     "GetCloudFrontOriginAccessIdentity":{
-      "name":"GetCloudFrontOriginAccessIdentity2015_07_27",
+      "name":"GetCloudFrontOriginAccessIdentity2015_09_17",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-07-27/origin-access-identity/cloudfront/{Id}"
+        "requestUri":"/2015-09-17/origin-access-identity/cloudfront/{Id}"
       },
       "input":{"shape":"GetCloudFrontOriginAccessIdentityRequest"},
       "output":{"shape":"GetCloudFrontOriginAccessIdentityResult"},
       "errors":[
-        {
-          "shape":"NoSuchCloudFrontOriginAccessIdentity",
-          "error":{"httpStatusCode":404},
-          "exception":true
-        },
-        {
-          "shape":"AccessDenied",
-          "error":{"httpStatusCode":403},
-          "exception":true
-        }
+        {"shape":"NoSuchCloudFrontOriginAccessIdentity"},
+        {"shape":"AccessDenied"}
       ]
     },
     "GetCloudFrontOriginAccessIdentityConfig":{
-      "name":"GetCloudFrontOriginAccessIdentityConfig2015_07_27",
+      "name":"GetCloudFrontOriginAccessIdentityConfig2015_09_17",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-07-27/origin-access-identity/cloudfront/{Id}/config"
+        "requestUri":"/2015-09-17/origin-access-identity/cloudfront/{Id}/config"
       },
       "input":{"shape":"GetCloudFrontOriginAccessIdentityConfigRequest"},
       "output":{"shape":"GetCloudFrontOriginAccessIdentityConfigResult"},
       "errors":[
-        {
-          "shape":"NoSuchCloudFrontOriginAccessIdentity",
-          "error":{"httpStatusCode":404},
-          "exception":true
-        },
-        {
-          "shape":"AccessDenied",
-          "error":{"httpStatusCode":403},
-          "exception":true
-        }
+        {"shape":"NoSuchCloudFrontOriginAccessIdentity"},
+        {"shape":"AccessDenied"}
       ]
     },
     "GetDistribution":{
-      "name":"GetDistribution2015_07_27",
+      "name":"GetDistribution2015_09_17",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-07-27/distribution/{Id}"
+        "requestUri":"/2015-09-17/distribution/{Id}"
       },
       "input":{"shape":"GetDistributionRequest"},
       "output":{"shape":"GetDistributionResult"},
       "errors":[
-        {
-          "shape":"NoSuchDistribution",
-          "error":{"httpStatusCode":404},
-          "exception":true
-        },
-        {
-          "shape":"AccessDenied",
-          "error":{"httpStatusCode":403},
-          "exception":true
-        }
+        {"shape":"NoSuchDistribution"},
+        {"shape":"AccessDenied"}
       ]
     },
     "GetDistributionConfig":{
-      "name":"GetDistributionConfig2015_07_27",
+      "name":"GetDistributionConfig2015_09_17",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-07-27/distribution/{Id}/config"
+        "requestUri":"/2015-09-17/distribution/{Id}/config"
       },
       "input":{"shape":"GetDistributionConfigRequest"},
       "output":{"shape":"GetDistributionConfigResult"},
       "errors":[
-        {
-          "shape":"NoSuchDistribution",
-          "error":{"httpStatusCode":404},
-          "exception":true
-        },
-        {
-          "shape":"AccessDenied",
-          "error":{"httpStatusCode":403},
-          "exception":true
-        }
+        {"shape":"NoSuchDistribution"},
+        {"shape":"AccessDenied"}
       ]
     },
     "GetInvalidation":{
-      "name":"GetInvalidation2015_07_27",
+      "name":"GetInvalidation2015_09_17",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-07-27/distribution/{DistributionId}/invalidation/{Id}"
+        "requestUri":"/2015-09-17/distribution/{DistributionId}/invalidation/{Id}"
       },
       "input":{"shape":"GetInvalidationRequest"},
       "output":{"shape":"GetInvalidationResult"},
       "errors":[
-        {
-          "shape":"NoSuchInvalidation",
-          "error":{"httpStatusCode":404},
-          "exception":true
-        },
-        {
-          "shape":"NoSuchDistribution",
-          "error":{"httpStatusCode":404},
-          "exception":true
-        },
-        {
-          "shape":"AccessDenied",
-          "error":{"httpStatusCode":403},
-          "exception":true
-        }
+        {"shape":"NoSuchInvalidation"},
+        {"shape":"NoSuchDistribution"},
+        {"shape":"AccessDenied"}
       ]
     },
     "GetStreamingDistribution":{
-      "name":"GetStreamingDistribution2015_07_27",
+      "name":"GetStreamingDistribution2015_09_17",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-07-27/streaming-distribution/{Id}"
+        "requestUri":"/2015-09-17/streaming-distribution/{Id}"
       },
       "input":{"shape":"GetStreamingDistributionRequest"},
       "output":{"shape":"GetStreamingDistributionResult"},
       "errors":[
-        {
-          "shape":"NoSuchStreamingDistribution",
-          "error":{"httpStatusCode":404},
-          "exception":true
-        },
-        {
-          "shape":"AccessDenied",
-          "error":{"httpStatusCode":403},
-          "exception":true
-        }
+        {"shape":"NoSuchStreamingDistribution"},
+        {"shape":"AccessDenied"}
       ]
     },
     "GetStreamingDistributionConfig":{
-      "name":"GetStreamingDistributionConfig2015_07_27",
+      "name":"GetStreamingDistributionConfig2015_09_17",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-07-27/streaming-distribution/{Id}/config"
+        "requestUri":"/2015-09-17/streaming-distribution/{Id}/config"
       },
       "input":{"shape":"GetStreamingDistributionConfigRequest"},
       "output":{"shape":"GetStreamingDistributionConfigResult"},
       "errors":[
-        {
-          "shape":"NoSuchStreamingDistribution",
-          "error":{"httpStatusCode":404},
-          "exception":true
-        },
-        {
-          "shape":"AccessDenied",
-          "error":{"httpStatusCode":403},
-          "exception":true
-        }
+        {"shape":"NoSuchStreamingDistribution"},
+        {"shape":"AccessDenied"}
       ]
     },
     "ListCloudFrontOriginAccessIdentities":{
-      "name":"ListCloudFrontOriginAccessIdentities2015_07_27",
+      "name":"ListCloudFrontOriginAccessIdentities2015_09_17",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-07-27/origin-access-identity/cloudfront"
+        "requestUri":"/2015-09-17/origin-access-identity/cloudfront"
       },
       "input":{"shape":"ListCloudFrontOriginAccessIdentitiesRequest"},
       "output":{"shape":"ListCloudFrontOriginAccessIdentitiesResult"},
       "errors":[
-        {
-          "shape":"InvalidArgument",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        }
+        {"shape":"InvalidArgument"}
       ]
     },
     "ListDistributions":{
-      "name":"ListDistributions2015_07_27",
+      "name":"ListDistributions2015_09_17",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-07-27/distribution"
+        "requestUri":"/2015-09-17/distribution"
       },
       "input":{"shape":"ListDistributionsRequest"},
       "output":{"shape":"ListDistributionsResult"},
       "errors":[
-        {
-          "shape":"InvalidArgument",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        }
+        {"shape":"InvalidArgument"}
       ]
     },
     "ListDistributionsByWebACLId":{
-      "name":"ListDistributionsByWebACLId2015_07_27",
+      "name":"ListDistributionsByWebACLId2015_09_17",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-07-27/distributionsByWebACLId/{WebACLId}"
+        "requestUri":"/2015-09-17/distributionsByWebACLId/{WebACLId}"
       },
       "input":{"shape":"ListDistributionsByWebACLIdRequest"},
       "output":{"shape":"ListDistributionsByWebACLIdResult"},
       "errors":[
-        {
-          "shape":"InvalidArgument",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidWebACLId",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        }
+        {"shape":"InvalidArgument"},
+        {"shape":"InvalidWebACLId"}
       ]
     },
     "ListInvalidations":{
-      "name":"ListInvalidations2015_07_27",
+      "name":"ListInvalidations2015_09_17",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-07-27/distribution/{DistributionId}/invalidation"
+        "requestUri":"/2015-09-17/distribution/{DistributionId}/invalidation"
       },
       "input":{"shape":"ListInvalidationsRequest"},
       "output":{"shape":"ListInvalidationsResult"},
       "errors":[
-        {
-          "shape":"InvalidArgument",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"NoSuchDistribution",
-          "error":{"httpStatusCode":404},
-          "exception":true
-        },
-        {
-          "shape":"AccessDenied",
-          "error":{"httpStatusCode":403},
-          "exception":true
-        }
+        {"shape":"InvalidArgument"},
+        {"shape":"NoSuchDistribution"},
+        {"shape":"AccessDenied"}
       ]
     },
     "ListStreamingDistributions":{
-      "name":"ListStreamingDistributions2015_07_27",
+      "name":"ListStreamingDistributions2015_09_17",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-07-27/streaming-distribution"
+        "requestUri":"/2015-09-17/streaming-distribution"
       },
       "input":{"shape":"ListStreamingDistributionsRequest"},
       "output":{"shape":"ListStreamingDistributionsResult"},
       "errors":[
-        {
-          "shape":"InvalidArgument",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        }
+        {"shape":"InvalidArgument"}
       ]
     },
     "UpdateCloudFrontOriginAccessIdentity":{
-      "name":"UpdateCloudFrontOriginAccessIdentity2015_07_27",
+      "name":"UpdateCloudFrontOriginAccessIdentity2015_09_17",
       "http":{
         "method":"PUT",
-        "requestUri":"/2015-07-27/origin-access-identity/cloudfront/{Id}/config"
+        "requestUri":"/2015-09-17/origin-access-identity/cloudfront/{Id}/config"
       },
       "input":{"shape":"UpdateCloudFrontOriginAccessIdentityRequest"},
       "output":{"shape":"UpdateCloudFrontOriginAccessIdentityResult"},
       "errors":[
-        {
-          "shape":"AccessDenied",
-          "error":{"httpStatusCode":403},
-          "exception":true
-        },
-        {
-          "shape":"IllegalUpdate",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidIfMatchVersion",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"MissingBody",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"NoSuchCloudFrontOriginAccessIdentity",
-          "error":{"httpStatusCode":404},
-          "exception":true
-        },
-        {
-          "shape":"PreconditionFailed",
-          "error":{"httpStatusCode":412},
-          "exception":true
-        },
-        {
-          "shape":"InvalidArgument",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InconsistentQuantities",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        }
+        {"shape":"AccessDenied"},
+        {"shape":"IllegalUpdate"},
+        {"shape":"InvalidIfMatchVersion"},
+        {"shape":"MissingBody"},
+        {"shape":"NoSuchCloudFrontOriginAccessIdentity"},
+        {"shape":"PreconditionFailed"},
+        {"shape":"InvalidArgument"},
+        {"shape":"InconsistentQuantities"}
       ]
     },
     "UpdateDistribution":{
-      "name":"UpdateDistribution2015_07_27",
+      "name":"UpdateDistribution2015_09_17",
       "http":{
         "method":"PUT",
-        "requestUri":"/2015-07-27/distribution/{Id}/config"
+        "requestUri":"/2015-09-17/distribution/{Id}/config"
       },
       "input":{"shape":"UpdateDistributionRequest"},
       "output":{"shape":"UpdateDistributionResult"},
       "errors":[
-        {
-          "shape":"AccessDenied",
-          "error":{"httpStatusCode":403},
-          "exception":true
-        },
-        {
-          "shape":"CNAMEAlreadyExists",
-          "error":{"httpStatusCode":409},
-          "exception":true
-        },
-        {
-          "shape":"IllegalUpdate",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidIfMatchVersion",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"MissingBody",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"NoSuchDistribution",
-          "error":{"httpStatusCode":404},
-          "exception":true
-        },
-        {
-          "shape":"PreconditionFailed",
-          "error":{"httpStatusCode":412},
-          "exception":true
-        },
-        {
-          "shape":"TooManyDistributionCNAMEs",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidDefaultRootObject",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidRelativePath",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidErrorCode",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidResponseCode",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidArgument",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidOriginAccessIdentity",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"TooManyTrustedSigners",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"TrustedSignerDoesNotExist",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidViewerCertificate",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidMinimumProtocolVersion",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidRequiredProtocol",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"NoSuchOrigin",
-          "error":{"httpStatusCode":404},
-          "exception":true
-        },
-        {
-          "shape":"TooManyOrigins",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"TooManyCacheBehaviors",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"TooManyCookieNamesInWhiteList",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidForwardCookies",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"TooManyHeadersInForwardedValues",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidHeadersForS3Origin",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InconsistentQuantities",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"TooManyCertificates",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidLocationCode",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidGeoRestrictionParameter",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidTTLOrder",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidWebACLId",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        }
+        {"shape":"AccessDenied"},
+        {"shape":"CNAMEAlreadyExists"},
+        {"shape":"IllegalUpdate"},
+        {"shape":"InvalidIfMatchVersion"},
+        {"shape":"MissingBody"},
+        {"shape":"NoSuchDistribution"},
+        {"shape":"PreconditionFailed"},
+        {"shape":"TooManyDistributionCNAMEs"},
+        {"shape":"InvalidDefaultRootObject"},
+        {"shape":"InvalidRelativePath"},
+        {"shape":"InvalidErrorCode"},
+        {"shape":"InvalidResponseCode"},
+        {"shape":"InvalidArgument"},
+        {"shape":"InvalidOriginAccessIdentity"},
+        {"shape":"TooManyTrustedSigners"},
+        {"shape":"TrustedSignerDoesNotExist"},
+        {"shape":"InvalidViewerCertificate"},
+        {"shape":"InvalidMinimumProtocolVersion"},
+        {"shape":"InvalidRequiredProtocol"},
+        {"shape":"NoSuchOrigin"},
+        {"shape":"TooManyOrigins"},
+        {"shape":"TooManyCacheBehaviors"},
+        {"shape":"TooManyCookieNamesInWhiteList"},
+        {"shape":"InvalidForwardCookies"},
+        {"shape":"TooManyHeadersInForwardedValues"},
+        {"shape":"InvalidHeadersForS3Origin"},
+        {"shape":"InconsistentQuantities"},
+        {"shape":"TooManyCertificates"},
+        {"shape":"InvalidLocationCode"},
+        {"shape":"InvalidGeoRestrictionParameter"},
+        {"shape":"InvalidTTLOrder"},
+        {"shape":"InvalidWebACLId"}
       ]
     },
     "UpdateStreamingDistribution":{
-      "name":"UpdateStreamingDistribution2015_07_27",
+      "name":"UpdateStreamingDistribution2015_09_17",
       "http":{
         "method":"PUT",
-        "requestUri":"/2015-07-27/streaming-distribution/{Id}/config"
+        "requestUri":"/2015-09-17/streaming-distribution/{Id}/config"
       },
       "input":{"shape":"UpdateStreamingDistributionRequest"},
       "output":{"shape":"UpdateStreamingDistributionResult"},
       "errors":[
-        {
-          "shape":"AccessDenied",
-          "error":{"httpStatusCode":403},
-          "exception":true
-        },
-        {
-          "shape":"CNAMEAlreadyExists",
-          "error":{"httpStatusCode":409},
-          "exception":true
-        },
-        {
-          "shape":"IllegalUpdate",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidIfMatchVersion",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"MissingBody",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"NoSuchStreamingDistribution",
-          "error":{"httpStatusCode":404},
-          "exception":true
-        },
-        {
-          "shape":"PreconditionFailed",
-          "error":{"httpStatusCode":412},
-          "exception":true
-        },
-        {
-          "shape":"TooManyStreamingDistributionCNAMEs",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidArgument",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InvalidOriginAccessIdentity",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"TooManyTrustedSigners",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"TrustedSignerDoesNotExist",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"InconsistentQuantities",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        }
+        {"shape":"AccessDenied"},
+        {"shape":"CNAMEAlreadyExists"},
+        {"shape":"IllegalUpdate"},
+        {"shape":"InvalidIfMatchVersion"},
+        {"shape":"MissingBody"},
+        {"shape":"NoSuchStreamingDistribution"},
+        {"shape":"PreconditionFailed"},
+        {"shape":"TooManyStreamingDistributionCNAMEs"},
+        {"shape":"InvalidArgument"},
+        {"shape":"InvalidOriginAccessIdentity"},
+        {"shape":"TooManyTrustedSigners"},
+        {"shape":"TrustedSignerDoesNotExist"},
+        {"shape":"InconsistentQuantities"}
       ]
     }
   },
@@ -1083,7 +495,8 @@
         "AllowedMethods":{"shape":"AllowedMethods"},
         "SmoothStreaming":{"shape":"boolean"},
         "DefaultTTL":{"shape":"long"},
-        "MaxTTL":{"shape":"long"}
+        "MaxTTL":{"shape":"long"},
+        "Compress":{"shape":"boolean"}
       }
     },
     "CacheBehaviorList":{
@@ -1111,6 +524,13 @@
         "Quantity":{"shape":"integer"},
         "Items":{"shape":"MethodsList"}
       }
+    },
+    "CertificateSource":{
+      "type":"string",
+      "enum":[
+        "cloudfront",
+        "iam"
+      ]
     },
     "CloudFrontOriginAccessIdentity":{
       "type":"structure",
@@ -1218,7 +638,7 @@
         "CloudFrontOriginAccessIdentityConfig":{
           "shape":"CloudFrontOriginAccessIdentityConfig",
           "locationName":"CloudFrontOriginAccessIdentityConfig",
-          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-07-27/"}
+          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-09-17/"}
         }
       },
       "payload":"CloudFrontOriginAccessIdentityConfig"
@@ -1247,7 +667,7 @@
         "DistributionConfig":{
           "shape":"DistributionConfig",
           "locationName":"DistributionConfig",
-          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-07-27/"}
+          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-09-17/"}
         }
       },
       "payload":"DistributionConfig"
@@ -1284,7 +704,7 @@
         "InvalidationBatch":{
           "shape":"InvalidationBatch",
           "locationName":"InvalidationBatch",
-          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-07-27/"}
+          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-09-17/"}
         }
       },
       "payload":"InvalidationBatch"
@@ -1308,7 +728,7 @@
         "StreamingDistributionConfig":{
           "shape":"StreamingDistributionConfig",
           "locationName":"StreamingDistributionConfig",
-          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-07-27/"}
+          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-09-17/"}
         }
       },
       "payload":"StreamingDistributionConfig"
@@ -1386,7 +806,8 @@
         "AllowedMethods":{"shape":"AllowedMethods"},
         "SmoothStreaming":{"shape":"boolean"},
         "DefaultTTL":{"shape":"long"},
-        "MaxTTL":{"shape":"long"}
+        "MaxTTL":{"shape":"long"},
+        "Compress":{"shape":"boolean"}
       }
     },
     "DeleteCloudFrontOriginAccessIdentityRequest":{
@@ -2594,7 +2015,7 @@
         "CloudFrontOriginAccessIdentityConfig":{
           "shape":"CloudFrontOriginAccessIdentityConfig",
           "locationName":"CloudFrontOriginAccessIdentityConfig",
-          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-07-27/"}
+          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-09-17/"}
         },
         "Id":{
           "shape":"string",
@@ -2631,7 +2052,7 @@
         "DistributionConfig":{
           "shape":"DistributionConfig",
           "locationName":"DistributionConfig",
-          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-07-27/"}
+          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-09-17/"}
         },
         "Id":{
           "shape":"string",
@@ -2668,7 +2089,7 @@
         "StreamingDistributionConfig":{
           "shape":"StreamingDistributionConfig",
           "locationName":"StreamingDistributionConfig",
-          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-07-27/"}
+          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2015-09-17/"}
         },
         "Id":{
           "shape":"string",
@@ -2698,10 +2119,18 @@
     "ViewerCertificate":{
       "type":"structure",
       "members":{
-        "IAMCertificateId":{"shape":"string"},
-        "CloudFrontDefaultCertificate":{"shape":"boolean"},
+        "Certificate":{"shape":"string"},
+        "CertificateSource":{"shape":"CertificateSource"},
         "SSLSupportMethod":{"shape":"SSLSupportMethod"},
-        "MinimumProtocolVersion":{"shape":"MinimumProtocolVersion"}
+        "MinimumProtocolVersion":{"shape":"MinimumProtocolVersion"},
+        "IAMCertificateId":{
+          "shape":"string",
+          "deprecated":true
+        },
+        "CloudFrontDefaultCertificate":{
+          "shape":"boolean",
+          "deprecated":true
+        }
       }
     },
     "ViewerProtocolPolicy":{
