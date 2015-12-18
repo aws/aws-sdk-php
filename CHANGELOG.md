@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.11.7 - 2015-12-17
 
 * `Aws\CloudFront` - Added support for generating signed cookies.
 * `Aws\CloudFront` - Added support for GZip compression.
