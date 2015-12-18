@@ -103,13 +103,13 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
         $this->addMockResults($client, $results);
         $paginator = $client->getPaginator('ListTables', [], $config);
         $this->assertEquals(['test1', 'test2'], $paginator->current()['TableNames']);
-        $this->assertEquals('test2', $this->readAttribute($paginator, 'nextToken'), '[1]');
+        $this->assertEquals(['NextToken' => 'test2'], $this->readAttribute($paginator, 'nextToken'), '[1]');
         $paginator->next();
         $this->assertEquals([], $paginator->current()['TableNames']);
-        $this->assertEquals('test2', $this->readAttribute($paginator, 'nextToken'), '[2]');
+        $this->assertEquals(['NextToken' => 'test2'], $this->readAttribute($paginator, 'nextToken'), '[2]');
         $paginator->next();
         $this->assertEquals(['test3'], $paginator->current()['TableNames']);
-        $this->assertNull($this->readAttribute($paginator, 'nextToken'), '[3]');
+        $this->assertEmpty($this->readAttribute($paginator, 'nextToken'), '[3]');
     }
 
     /**
@@ -166,7 +166,21 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
                 1,
                 // Table names
                 ['test1'],
-            ]
+            ],
+            [
+                // Config
+                ['input_token' => ['NT1', 'NT2', 'NT3'], 'output_token' => ['LT1', 'LT2', 'NT3']],
+                // Results
+                [
+                    new Result(['LT1' => 'foo', 'LT2' => 'bar', 'TableNames' => ['test1', 'test2']]),
+                    new Result(['LT1' => 'foo', 'LT2' => 'bar', 'TableNames' => []]),
+                    new Result(['TableNames' => ['test3']]),
+                ],
+                // Request count
+                3,
+                // Table names
+                ['test1', 'test2', 'test3'],
+            ],
         ];
     }
 
@@ -266,5 +280,76 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('HeadObject', $cmds[3]->getName());
         $this->assertEquals('0.1', $cmds[1]['Key']);
         $this->assertEquals('2.3', $cmds[3]['Key']);
+    }
+
+    public function testDoesNotInsertMissingOutputTokensIntoNextRequest()
+    {
+        $client = $this->getTestClient('route53');
+        $pagingChatter = [
+            [
+                'request' => [],
+                'response' => [
+                    'IsTruncated' => true,
+                    "NextRecordName" => 'foo',
+                    "NextRecordType" => 'bar',
+                    'ResourceRecordSets' => [['ResourceId' => 'a']],
+                ],
+            ],
+            [
+                'request' => [
+                    'StartRecordName' => 'foo',
+                    'StartRecordType' => 'bar',
+                ],
+                'response' => [
+                    'IsTruncated' => true,
+                    "NextRecordName" => 'foo',
+                    "NextRecordType" => 'bar',
+                    "NextRecordIdentifier" => 'baz',
+                    'ResourceRecordSets' => [['ResourceId' => 'b']],
+                ],
+            ],
+            [
+                'request' => [
+                    'StartRecordName' => 'foo',
+                    'StartRecordType' => 'bar',
+                    'StartRecordIdentifier' => 'baz',
+                ],
+                'response' => [
+                    'IsTruncated' => true,
+                    "NextRecordName" => 'foo',
+                    "NextRecordType" => 'bar',
+                    'ResourceRecordSets' => [['ResourceId' => 'c']],
+                ],
+            ],
+            [
+                'request' => [
+                    'StartRecordName' => 'foo',
+                    'StartRecordType' => 'bar',
+                ],
+                'response' => [
+                    'IsTruncated' => false,
+                    'ResourceRecordSets' => [['ResourceId' => 'd']],
+                ],
+            ]
+        ];
+
+        $handler = function (CommandInterface $cmd, RequestInterface $request) use (&$pagingChatter) {
+            $currentWindow = array_shift($pagingChatter);
+            foreach ($currentWindow['request'] as $expectedKey => $expectedValue) {
+                $this->assertArrayHasKey($expectedKey, $cmd);
+                $this->assertSame($expectedValue, $cmd[$expectedKey]);
+            }
+            return \GuzzleHttp\Promise\promise_for(
+                new Result($currentWindow['response'])
+            );
+        };
+
+        $client->getHandlerList()->setHandler($handler);
+        $paginator = $client->getPaginator('ListResourceRecordSets', ['HostedZoneId' => 'id']);
+
+        $setIds = [];
+        foreach ($paginator->search('a') as $b) {
+
+        }
     }
 }
