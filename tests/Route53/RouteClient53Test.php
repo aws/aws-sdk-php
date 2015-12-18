@@ -32,10 +32,29 @@ class Route53ClientTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $request = \Aws\serialize($command);
+        $requestUri = (string) $request->getUri();
+        $this->assertContains('/hostedzone/foo/rrset/', $requestUri);
+        $this->assertNotContains('/hostedzone/hostedzone', $requestUri);
 
+        $command = $client->getCommand('GetReusableDelegationSet', [
+            'Id' => '/delegationset/foo',
+        ]);
+
+        $request = \Aws\serialize($command);
+        $requestUri = (string) $request->getUri();
+        $this->assertContains('/delegationset/foo', $requestUri);
+        $this->assertNotContains('/delegationset/delegationset', $requestUri);
+
+        $command = $client->getCommand('CreateHostedZone', [
+            'Name' => 'foo',
+            'CallerReference' => '123',
+            'DelegationSetId' => '/delegationset/bar',
+        ]);
+
+        $request = \Aws\serialize($command);
         $this->assertContains(
-            '/hostedzone/foo/rrset/',
-            (string) $request->getUri()
+            '<DelegationSetId>bar</DelegationSetId>',
+            $request->getBody()->getContents()
         );
     }
 }
