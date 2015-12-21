@@ -3,6 +3,8 @@
 ## next release
 
 * `Aws\Ecr` - Added support for the Amazon EC2 Container Registry.
+* `Aws\Emr` - Added support for specifying a service security group when calling
+  the RunJobFlow API.
 
 ## 3.11.7 - 2015-12-17
 
