@@ -131,23 +131,23 @@ Transfer Options
     the ``$source`` option is not an array, then this option is ignored.
 
 ``before``
-    (callable) A callback to invoke before each transfer. The callback accepts
-    the following positional arguments: ``string $source``, ``string $dest``,
-    ``Aws\CommandInterface $command``. The provided command will be either a
-    ``GetObject``, ``PutObject``, ``InitiateMultipartUpload``, or
-    ``UploadPart`` command.
+    (callable) A callback to invoke before each transfer. The callback should
+    have a function signature like ``function (Aws\Command $command) {...}``.
+    The provided command will be either a ``GetObject``, ``PutObject``,
+    ``CreateMultipartUpload``, ``UploadPart``, or ``CompleteMultipartUpload``
+    command.
 
 ``mup_threshold``
     (int) Size in bytes in which a multipart upload should be used instead of
-    ``PutObject``. Defaults to ``20971520`` (20 MB).
+    ``PutObject``. Defaults to ``16777216`` (16 MB).
 
-concurrency
+``concurrency``
     (int, default=5) Number of files to upload concurrently. The ideal
     concurrency value will vary based on the number of files being uploaded and
     the average size of each file. Generally speaking, smaller files benefit
     from a higher concurrency while larger files will not.
 
-debug
+``debug``
     (bool) Set to ``true`` to print out debug information for transfers. Set to
     an ``fopen()`` resource to write to a specific stream rather than writing
     to STDOUT.
@@ -191,3 +191,26 @@ typically be an instance of ``Aws\Exception\AwsException`` (though a value of
 
 Because the ``Transfer`` object returns a promise, these transfers can occur
 concurrently with other asynchronous promises.
+
+Customizing the Transfer Manager's commands
+-------------------------------------------
+
+Custom options can be set on the operations executed by the transfer manager via
+a callback passed to its constructor.
+
+.. code-block:: php
+
+    $uploader = new Transfer($s3Client, $source, $dest, [
+        'before' => function (\Aws\Command $command) {
+            // Commands can vary for multipart uploads, so check which command
+            // is being processed
+            if (in_array($command->getName(), ['PutObject', 'CreateMultipartUpload']) {
+                // Set custom cache-control metadata
+                $command['CacheControl'] = 'max-age=3600';
+                // Apply a canned ACL
+                $command['ACL'] = strpos($command['Key'], 'CONFIDENTIAL') === false
+                    ? 'public-read'
+                    : 'private';
+            }
+        },
+    ]);
