@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.12.0 - 2015-12-21
 
 * `Aws\Ecr` - Added support for the Amazon EC2 Container Registry.
 * `Aws\Emr` - Added support for specifying a service security group when calling
