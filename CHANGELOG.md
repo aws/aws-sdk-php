@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Ecr` - Added support for the Amazon EC2 Container Registry.
+
 ## 3.11.7 - 2015-12-17
 
 * `Aws\CloudFront` - Added support for generating signed cookies.
