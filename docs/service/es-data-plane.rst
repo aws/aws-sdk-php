@@ -133,6 +133,6 @@ it out before creating a PSR-7 request.
     will result in an invalid signature, and Amazon ES listens to HTTP on port
     80 and HTTPS on port 443.
 
-From there, you can use the `$client` object just as you would any other
+From there, you can use the ``$client`` object just as you would any other
 Elasticsearch-PHP client. For more information, see `the Elasticsearch website
 <https://www.elastic.co/guide/en/elasticsearch/client/php-api/2.0/index.html>`_.
