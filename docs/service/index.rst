@@ -9,6 +9,7 @@ higher level features per service.
 .. toctree::
     :maxdepth: 2
 
+    cloudsearch-custom-requests
     cloudfront-signed-url
     dynamodb-session-handler
     es-data-plane
