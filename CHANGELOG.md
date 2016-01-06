@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 3.12.1 - 2016-01-06
+
+* `Aws\Route53` - Fixed pagination bug on ListResourceRecordSets command.
+* `Aws\Sns` - Added the SNS inbound message validator package to the composer
+  suggestions list to aid discoverability.
+* Documentation improvements and additions.
+
 ## 3.12.0 - 2015-12-21
 
 * `Aws\Ecr` - Added support for the Amazon EC2 Container Registry.
