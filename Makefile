@@ -51,7 +51,7 @@ smoke:
 	vendor/bin/behat --format=progress
 
 # Packages the phar and zip
-package: compile-json
+package: compile-json clean
 	php build/packager.php $(SERVICE)
 
 guide:
