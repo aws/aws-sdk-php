@@ -58,8 +58,10 @@ SDK Guides
 Service-Specific Features
 -------------------------
 
+* :doc:`service/cloudsearch-custom-requests`
 * :doc:`service/cloudfront-signed-url`
 * :doc:`service/dynamodb-session-handler`
+* :doc:`service/es-data-plane`
 * :doc:`service/s3-multipart-upload`
 * :doc:`service/s3-presigned-url`
 * :doc:`service/s3-stream-wrapper`
