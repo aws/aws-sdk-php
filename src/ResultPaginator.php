@@ -141,21 +141,9 @@ class ResultPaginator implements \Iterator
         $this->result = null;
     }
 
-    private function createNextCommand(array $args, $nextToken)
+    private function createNextCommand(array $args, array $nextToken = null)
     {
-        // Prepare arguments
-        if ($nextToken) {
-            $inputArg = $this->config['input_token'];
-            if (is_array($nextToken) && is_array($inputArg)) {
-                foreach ($inputArg as $index => $key) {
-                    $args[$key] = $nextToken[$index];
-                }
-            } else {
-                $args[$inputArg] = $nextToken;
-            }
-        }
-
-        return $this->client->getCommand($this->operation, $args);
+        return $this->client->getCommand($this->operation, $args + ($nextToken ?: []));
     }
 
     private function determineNextToken(Result $result)
@@ -170,10 +158,12 @@ class ResultPaginator implements \Iterator
             return null;
         }
 
-        $nextToken = is_array($this->config['output_token'])
-            ? array_filter($result->search(json_encode($this->config['output_token'])))
-            : $result->search($this->config['output_token']);
+        $nextToken = is_scalar($this->config['output_token'])
+            ? [$this->config['input_token'] => $this->config['output_token']]
+            : array_combine($this->config['input_token'], $this->config['output_token']);
 
-        return $nextToken;
+        return array_filter(array_map(function ($outputToken) use ($result) {
+            return $result->search($outputToken);
+        }, $nextToken));
     }
 }
