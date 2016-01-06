@@ -411,8 +411,11 @@ even been removed.
 * Removed:
     * DynamoDB ``Item``, ``Attribute``, and ``ItemIterator`` classes - These
       were previously deprecated in `Version 2.7.0 <https://github.com/aws/aws-sdk-php/blob/v3/CHANGELOG.md#270---2014-10-08>`_.
-    * SNS Message Validator - This will exist in a separate, light-weight
-      project that will not require the SDK as a dependency.
+    * SNS Message Validator - This is now `a separate, light-weight project
+      <https://github.com/aws/aws-php-sns-message-validator>`_ that does not
+      require the SDK as a dependency. This project is, however, included in the
+      Phar and Zip distributions of the SDK. A getting started guide can be
+      found `on the AWS PHP Development blog <https://blogs.aws.amazon.com/php/post/Tx15276Q7B4NUO0/Receiving-Amazon-SNS-Messages-in-PHP>`_.
     * S3 ``AcpBuilder`` and related objects were removed.
 
 
