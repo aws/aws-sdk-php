@@ -13,6 +13,8 @@ class Marshaler
         'ignore_invalid'  => false,
         'nullify_invalid' => false,
         'wrap_numbers'    => false,
+        'wrap_booleans'   => true,
+        'wrap_sets'       => true
     ];
 
     /** @var array Marshaler options. */
@@ -280,21 +282,30 @@ class Marshaler
                     }
                     return $data;
                 }
-                // NOBREAK: Unmarshal M the same way as L, for arrays.
+            // NOBREAK: Unmarshal M the same way as L, for arrays.
             case 'L':
                 foreach ($value as &$v) {
                     $v = $this->unmarshalValue($v, $mapAsObject);
                 }
                 return $value;
             case 'B':
-                return new BinaryValue($value);
+                if ($this->options['wrap_booleans']) {
+                    return new BinaryValue($value);
+                }
+
+                return (bool) $value;
             case 'SS':
             case 'NS':
             case 'BS':
                 foreach ($value as &$v) {
                     $v = $this->unmarshalValue([$type[0] => $v]);
                 }
-                return new SetValue($value);
+
+                if ($this->options['wrap_sets']) {
+                    return new SetValue($value);
+                }
+
+                return $value;
         }
 
         throw new \UnexpectedValueException("Unexpected type: {$type}.");
