@@ -13,7 +13,6 @@ class Marshaler
         'ignore_invalid'  => false,
         'nullify_invalid' => false,
         'wrap_numbers'    => false,
-        'wrap_booleans'   => true,
         'wrap_sets'       => true
     ];
 
@@ -282,18 +281,14 @@ class Marshaler
                     }
                     return $data;
                 }
-            // NOBREAK: Unmarshal M the same way as L, for arrays.
+                // NOBREAK: Unmarshal M the same way as L, for arrays.
             case 'L':
                 foreach ($value as &$v) {
                     $v = $this->unmarshalValue($v, $mapAsObject);
                 }
                 return $value;
             case 'B':
-                if ($this->options['wrap_booleans']) {
-                    return new BinaryValue($value);
-                }
-
-                return (bool) $value;
+                return new BinaryValue($value);
             case 'SS':
             case 'NS':
             case 'BS':
