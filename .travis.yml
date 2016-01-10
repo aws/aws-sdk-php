@@ -13,14 +13,12 @@ env:
   - COMPOSER_OPTS="--prefer-lowest"
 
 matrix:
-  allow_failures:
-    - php: hhvm
   fast_finish: true
 
 install:
   - export AWS_ACCESS_KEY_ID=foo
   - export AWS_SECRET_ACCESS_KEY=bar
-  - echo "xdebug.overload_var_dump = 0" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - if [ $(phpenv version-name) != 'hhvm' ]; then echo "xdebug.overload_var_dump = 0" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi
   - travis_retry composer update $COMPOSER_OPTS --no-interaction --prefer-source
 
 script:
