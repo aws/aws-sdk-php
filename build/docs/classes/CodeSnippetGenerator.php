@@ -3,7 +3,7 @@ namespace Aws\Build\Docs;
 
 use Aws\Api\ListShape;
 use Aws\Api\MapShape;
-use Aws\Api\Service;
+use Aws\Api\Service as SdkService;
 use Aws\Api\Shape;
 use Aws\Api\StructureShape;
 
@@ -12,10 +12,10 @@ use Aws\Api\StructureShape;
  */
 class CodeSnippetGenerator
 {
-    /** @var Service */
+    /** @var SdkService */
     private $service;
 
-    public function __construct(Service $service)
+    public function __construct(SdkService $service)
     {
         $this->service = $service;
     }
