@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.12.2 - 2016-01-12
 
 * `Aws\Ec2` - Added support for DNS resolution of public hostnames to private IP
   addresses when queried over ClassicLink. Additionally, private hosted zones
