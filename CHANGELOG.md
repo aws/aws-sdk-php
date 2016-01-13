@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Ec2` - Added support for DNS resolution of public hostnames to private IP
+  addresses when queried over ClassicLink. Additionally, private hosted zones
+  associated with your VPC can now be accessed from a linked EC2-Classic
+  instance.
+
 ## 3.12.1 - 2016-01-06
 
 * `Aws\Route53` - Fixed pagination bug on ListResourceRecordSets command.
