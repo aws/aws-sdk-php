@@ -685,12 +685,10 @@ EOT;
                 $html->close();
                 $html->elem('p', null, $example['description']);
                 $comments = $example['comments'];
-                $input = $generator($name, $example['input'], $comments['input']);
-                $html->elem('pre', null, $input->getCode($example['input'], $name, $comments['input']));
+                $html->elem('pre', null, $generator($name, $example['input'], $comments['input']));
                 if (isset($example['output'])) {
                     $html->elem('p', null, 'Result syntax:');
-                    $output = $generator($name, $example['output'], $comments['output'], false);
-                    $html->elem('pre', null, $output->getCode($example['output'], $name, $comments['output'], false));
+                    $html->elem('pre', null, $generator($name, $example['output'], $comments['output'], false));
                 }
             }
         }
