@@ -98,7 +98,7 @@ annotate-clients: clean
 annotate-client-locator: clean
 	php build/annotate-client-locator.php
 
-build: compile-json annotate-clients annotate-client-locator package
+build: compile-json annotate-clients annotate-client-locator
 
 # Ensures that the TAG variable was passed to the make command
 check-tag:

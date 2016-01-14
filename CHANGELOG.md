@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Ec2` - Added support for scheduled instances.
+
 ## 3.12.2 - 2016-01-12
 
 * `Aws\Ec2` - Added support for DNS resolution of public hostnames to private IP
