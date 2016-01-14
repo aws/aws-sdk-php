@@ -219,29 +219,25 @@ class Transfer implements PromisorInterface
         $prefix = "s3://{$parts['Bucket']}/"
             . (isset($parts['Key']) ? $parts['Key'] . '/' : '');
 
-        $commands = [];
-        foreach ($this->getDownloadsIterator() as $object) {
+        $commands = Aws\map($this->getDownloadsIterator(), function (
+            $object
+        ) use ($prefix) {
             // Prepare the sink.
-            $localKey = $object;
-            if ($prefix && strpos($localKey, $prefix) === 0) {
-                $localKey = substr($localKey, strlen($prefix));
-            }
-            $sink = $this->destination['path'] . '/' . $localKey;
+            $sink = $this->destination['path'] . '/'
+                . preg_replace('/^' . preg_quote($prefix, '/') . '/', '', $object);
 
             // Create the directory if needed.
             $dir = dirname($sink);
             if (!is_dir($dir) && !mkdir($dir, 0777, true)) {
-                return Promise\rejection_for(
-                    new \RuntimeException("Could not create dir: {$dir}")
-                );
+                throw new \RuntimeException("Could not create dir: {$dir}");
             }
 
             // Create the command.
-            $commands[] = $this->client->getCommand(
+            return $this->client->getCommand(
                 'GetObject',
                 $this->getS3Args($object) + ['@http'  => ['sink'  => $sink]]
             );
-        }
+        });
 
         // Create a GetObject command pool and return the promise.
         return (new Aws\CommandPool($this->client, $commands, [
