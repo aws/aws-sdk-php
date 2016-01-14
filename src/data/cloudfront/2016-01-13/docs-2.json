@@ -104,7 +104,7 @@
     "CertificateSource": {
       "base": null,
       "refs": {
-        "ViewerCertificate$CertificateSource": "If you want viewers to use HTTPS to request your objects and you're using the CloudFront domain name of your distribution in your object URLs (for example, https://d111111abcdef8.cloudfront.net/logo.jpg), set to \"cloudfront\". If you want viewers to use HTTPS to request your objects and you're using an alternate domain name in your object URLs (for example, https://example.com/logo.jpg), set to \"iam\", and update the Certificate field with the IAM certificate identifier of the custom viewer certificate for this distribution."
+        "ViewerCertificate$CertificateSource": "If you want viewers to use HTTPS to request your objects and you're using the CloudFront domain name of your distribution in your object URLs (for example, https://d111111abcdef8.cloudfront.net/logo.jpg), set to \"cloudfront\". If you want viewers to use HTTPS to request your objects and you're using an alternate domain name in your object URLs (for example, https://example.com/logo.jpg), you can use your own IAM or ACM certificate. To use an ACM certificate, set to \"acm\" and update the Certificate to the ACM certificate ARN. To use an IAM certificate, set to \"iam\" and update the Certificate to the IAM certificate identifier."
       }
     },
     "CloudFrontOriginAccessIdentity": {
@@ -227,6 +227,12 @@
       "refs": {
         "DistributionConfig$CustomErrorResponses": "A complex type that contains zero or more CustomErrorResponse elements.",
         "DistributionSummary$CustomErrorResponses": "A complex type that contains zero or more CustomErrorResponses elements."
+      }
+    },
+    "CustomHeaders": {
+      "base": "A complex type that contains the list of Custom Headers for each origin.",
+      "refs": {
+        "Origin$CustomHeaders": "A complex type that contains information about the custom headers associated with this Origin."
       }
     },
     "CustomOriginConfig": {
@@ -671,6 +677,18 @@
         "OriginList$member": null
       }
     },
+    "OriginCustomHeader": {
+      "base": "A complex type that contains information related to a Header",
+      "refs": {
+        "OriginCustomHeadersList$member": null
+      }
+    },
+    "OriginCustomHeadersList": {
+      "base": null,
+      "refs": {
+        "CustomHeaders$Items": "A complex type that contains the custom headers for this Origin."
+      }
+    },
     "OriginList": {
       "base": null,
       "refs": {
@@ -681,6 +699,12 @@
       "base": null,
       "refs": {
         "CustomOriginConfig$OriginProtocolPolicy": "The origin protocol policy to apply to your origin."
+      }
+    },
+    "OriginSslProtocols": {
+      "base": "A complex type that contains the list of SSL/TLS protocols that you want CloudFront to use when communicating with your origin over HTTPS.",
+      "refs": {
+        "CustomOriginConfig$OriginSslProtocols": "The SSL/TLS protocols that you want CloudFront to use when communicating with your origin over HTTPS."
       }
     },
     "Origins": {
@@ -752,6 +776,18 @@
       "base": null,
       "refs": {
         "ActiveTrustedSigners$Items": "A complex type that contains one Signer complex type for each unique trusted signer that is specified in the TrustedSigners complex type, including trusted signers in the default cache behavior and in all of the other cache behaviors."
+      }
+    },
+    "SslProtocol": {
+      "base": null,
+      "refs": {
+        "SslProtocolsList$member": null
+      }
+    },
+    "SslProtocolsList": {
+      "base": null,
+      "refs": {
+        "OriginSslProtocols$Items": "A complex type that contains one SslProtocol element for each SSL/TLS protocol that you want to allow CloudFront to use when establishing an HTTPS connection with this origin."
       }
     },
     "StreamingDistribution": {
@@ -842,6 +878,11 @@
     },
     "TooManyInvalidationsInProgress": {
       "base": "You have exceeded the maximum number of allowable InProgress invalidation batch requests, or invalidation objects.",
+      "refs": {
+      }
+    },
+    "TooManyOriginCustomHeaders": {
+      "base": null,
       "refs": {
       }
     },
@@ -960,6 +1001,7 @@
         "CookieNames$Quantity": "The number of whitelisted cookies for this cache behavior.",
         "CustomErrorResponse$ErrorCode": "The 4xx or 5xx HTTP status code that you want to customize. For a list of HTTP status codes that you can customize, see CloudFront documentation.",
         "CustomErrorResponses$Quantity": "The number of custom error responses for this distribution.",
+        "CustomHeaders$Quantity": "The number of custom headers for this origin.",
         "CustomOriginConfig$HTTPPort": "The HTTP port the custom origin listens on.",
         "CustomOriginConfig$HTTPSPort": "The HTTPS port the custom origin listens on.",
         "Distribution$InProgressInvalidationBatches": "The number of invalidation batches currently in progress.",
@@ -970,6 +1012,7 @@
         "InvalidationList$MaxItems": "The value you provided for the MaxItems request parameter.",
         "InvalidationList$Quantity": "The number of invalidation batches that were created by the current AWS account.",
         "KeyPairIds$Quantity": "The number of active CloudFront key pairs for AwsAccountNumber.",
+        "OriginSslProtocols$Quantity": "The number of SSL/TLS protocols that you want to allow CloudFront to use when establishing an HTTPS connection with this origin.",
         "Origins$Quantity": "The number of origins for this distribution.",
         "Paths$Quantity": "The number of objects that you want to invalidate.",
         "StreamingDistributionList$MaxItems": "The value you provided for the MaxItems request parameter.",
@@ -1111,6 +1154,8 @@
         "Origin$Id": "A unique identifier for the origin. The value of Id must be unique within the distribution. You use the value of Id when you create a cache behavior. The Id identifies the origin that CloudFront routes a request to when the request matches the path pattern for that cache behavior.",
         "Origin$DomainName": "Amazon S3 origins: The DNS name of the Amazon S3 bucket from which you want CloudFront to get objects for this origin, for example, myawsbucket.s3.amazonaws.com. Custom origins: The DNS domain name for the HTTP server from which you want CloudFront to get objects for this origin, for example, www.example.com.",
         "Origin$OriginPath": "An optional element that causes CloudFront to request your content from a directory in your Amazon S3 bucket or your custom origin. When you include the OriginPath element, specify the directory name, beginning with a /. CloudFront appends the directory name to the value of DomainName.",
+        "OriginCustomHeader$HeaderName": "The header's name.",
+        "OriginCustomHeader$HeaderValue": "The header's value.",
         "PathList$member": null,
         "PreconditionFailed$Message": null,
         "S3Origin$DomainName": "The DNS name of the S3 origin.",
@@ -1140,6 +1185,7 @@
         "TooManyDistributions$Message": null,
         "TooManyHeadersInForwardedValues$Message": null,
         "TooManyInvalidationsInProgress$Message": null,
+        "TooManyOriginCustomHeaders$Message": null,
         "TooManyOrigins$Message": null,
         "TooManyStreamingDistributionCNAMEs$Message": null,
         "TooManyStreamingDistributions$Message": null,
@@ -1154,7 +1200,7 @@
         "UpdateStreamingDistributionRequest$Id": "The streaming distribution's id.",
         "UpdateStreamingDistributionRequest$IfMatch": "The value of the ETag header you received when retrieving the streaming distribution's configuration. For example: E2QWRUHAPOMQZL.",
         "UpdateStreamingDistributionResult$ETag": "The current version of the configuration. For example: E2QWRUHAPOMQZL.",
-        "ViewerCertificate$Certificate": "If you want viewers to use HTTPS to request your objects and you're using an alternate domain name in your object URLs (for example, https://example.com/logo.jpg), set to the IAM certificate identifier of the custom viewer certificate for this distribution.",
+        "ViewerCertificate$Certificate": "If you want viewers to use HTTPS to request your objects and you're using an alternate domain name in your object URLs (for example, https://example.com/logo.jpg), you can use your own IAM or ACM certificate. For ACM, set to the ACM certificate ARN. For IAM, set to the IAM certificate identifier.",
         "ViewerCertificate$IAMCertificateId": "Note: this field is deprecated. Please use \"iam\" as CertificateSource and specify the IAM certificate Id as the Certificate. If you want viewers to use HTTPS to request your objects and you're using an alternate domain name in your object URLs (for example, https://example.com/logo.jpg), specify the IAM certificate identifier of the custom viewer certificate for this distribution. Specify either this value or CloudFrontDefaultCertificate."
       }
     },

@@ -2,6 +2,7 @@
 
 ## next release
 
+* `Aws\CloudFront` - Added support for new origin security features.
 * `Aws\Ec2` - Added support for scheduled instances.
 
 ## 3.12.2 - 2016-01-12
