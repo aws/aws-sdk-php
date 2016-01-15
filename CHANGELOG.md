@@ -1,9 +1,13 @@
 # CHANGELOG
 
-## next release
+## 3.13.0 - 2016-01-14
 
 * `Aws\CloudFront` - Added support for new origin security features.
+* `Aws\CloudWatchEvents` - Added support for the **Amazon CloudWatch Events**
+  service.
 * `Aws\Ec2` - Added support for scheduled instances.
+* `Aws\S3` - Fixed support for using `Iterator`s as a source for `Transfer`
+  objects.
 
 ## 3.12.2 - 2016-01-12
 
