@@ -3,6 +3,7 @@ namespace Aws\Test\S3;
 
 use Aws\CommandInterface;
 use Aws\Result;
+use Aws\S3\S3Client;
 use Aws\S3\Transfer;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
@@ -189,10 +190,7 @@ class TransferTest extends \PHPUnit_Framework_TestCase
 
     public function testCanUploadToBareBucket()
     {
-        $s3 = $this->getMockBuilder('Aws\S3\S3Client')
-            ->disableOriginalConstructor()
-            ->getMock();
-
+        $s3 = $this->getMockS3Client();
         $filesInDirectory = array_filter(
             iterator_to_array(\Aws\recursive_dir_iterator(__DIR__)),
             function ($path) { return !is_dir($path); }
@@ -214,6 +212,56 @@ class TransferTest extends \PHPUnit_Framework_TestCase
             ->transfer();
     }
 
+    public function testCanUploadFilesYieldedBySourceIterator()
+    {
+        $s3 = $this->getMockS3Client();
+        $justThisFile = array_filter(
+            iterator_to_array(\Aws\recursive_dir_iterator(__DIR__)),
+            function ($path) { return $path === __FILE__; }
+        );
+
+        $s3->expects($this->once())
+            ->method('getCommand')
+            ->with(
+                'PutObject',
+                new \PHPUnit_Framework_Constraint_Callback(function (array $args) {
+                    return 'bucket' === $args['Bucket']
+                    && $args['SourceFile'] === __FILE__
+                    && __DIR__ . '/' . $args['Key'] === $args['SourceFile'];
+                })
+            )
+            ->willReturn($this->getMock('Aws\CommandInterface'));
+
+        $uploader = new Transfer($s3, new \ArrayIterator($justThisFile), 's3://bucket', [
+            'base_dir' => __DIR__,
+        ]);
+
+        $uploader->transfer();
+    }
+
+    public function testCanDownloadFilesYieldedBySourceIterator()
+    {
+        $s3 = $this->getMockS3Client();
+        $justOneFile = new \ArrayIterator(['s3://bucket/path/to/key']);
+
+        $s3->expects($this->once())
+            ->method('getCommand')
+            ->with(
+                'GetObject',
+                new \PHPUnit_Framework_Constraint_Callback(function (array $args) {
+                    return 'bucket' === $args['Bucket']
+                    && $args['Key'] === 'path/to/key';
+                })
+            )
+            ->willReturn($this->getMock('Aws\CommandInterface'));
+
+        $downloader = new Transfer($s3, $justOneFile, sys_get_temp_dir() . '/downloads', [
+            'base_dir' => 's3://bucket/path',
+        ]);
+
+        $downloader->transfer();
+    }
+
     private function mockResult(callable $fn)
     {
         return function (callable $handler) use ($fn) {
@@ -224,5 +272,13 @@ class TransferTest extends \PHPUnit_Framework_TestCase
                 return Promise\promise_for($fn($command, $request));
             };
         };
+    }
+
+    /** @return S3Client|\PHPUnit_Framework_MockObject_MockObject */
+    private function getMockS3Client()
+    {
+        return $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 }
