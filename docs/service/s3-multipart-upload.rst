@@ -33,7 +33,7 @@ process as easy as possible.
 
     try {
         $result = $uploader->upload();
-        echo "Upload complete: {$result['ObjectURL'}\n";
+        echo "Upload complete: {$result['ObjectURL']}\n";
     } catch (MultipartUploadException $e) {
         echo $e->getMessage() . "\n";
     }
@@ -237,7 +237,7 @@ to the ``MultipartUploader`` but is designed for copying objects between 5GB and
 
     try {
         $result = $copier->copy();
-        echo "Copy complete: {$result['ObjectURL'}\n";
+        echo "Copy complete: {$result['ObjectURL']}\n";
     } catch (MultipartUploadException $e) {
         echo $e->getMessage() . "\n";
     }
