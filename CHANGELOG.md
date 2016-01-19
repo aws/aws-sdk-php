@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IotDataPlane` - Fixed handling of invalid JSON returned by the `Publish`
+  command.
+
 ## 3.13.0 - 2016-01-14
 
 * `Aws\CloudFront` - Added support for new origin security features.
