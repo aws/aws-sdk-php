@@ -111,6 +111,56 @@
     ]
   },
   {
+    "description": "Querystring list of strings",
+    "metadata": {
+      "protocol": "rest-json",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "Items": {
+            "shape": "StringList",
+            "location": "querystring",
+            "locationName": "item"
+          }
+        }
+      },
+      "StringList": {
+        "type": "list",
+        "member": {
+          "shape": "String"
+        }
+      },
+      "String": {
+        "type": "string"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "http": {
+            "method": "GET",
+            "requestUri": "/path"
+          },
+          "input": {
+            "shape": "InputShape"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "Items": ["value1", "value2"]
+        },
+        "serialized": {
+          "body": "",
+          "uri": "/path?item=value1&item=value2",
+          "headers": {}
+        }
+      }
+    ]
+  },
+  {
     "description": "String to string maps in querystring",
     "metadata": {
       "protocol": "rest-json",
