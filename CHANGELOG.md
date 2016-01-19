@@ -6,6 +6,8 @@
   against your native, hybrid and browser-based apps on AWS Device Farm.
 * `Aws\IotDataPlane` - Fixed handling of invalid JSON returned by the `Publish`
   command.
+* `Aws\Sts` - Added support for the `RegionDisabledException` (now returned 
+  instead of an AccessDenied when an admin hasn't turned on an STS region).
 
 ## 3.13.0 - 2016-01-14
 
