@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.13.1 - 2016-01-19
 
 * `Aws\DeviceFarm` - Added support for running Appium tests written in Python
   against your native, hybrid and browser-based apps on AWS Device Farm.
