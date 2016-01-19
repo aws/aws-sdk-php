@@ -2,6 +2,8 @@
 
 ## next release
 
+* `Aws\DeviceFarm` - Added support for running Appium tests written in Python
+  against your native, hybrid and browser-based apps on AWS Device Farm.
 * `Aws\IotDataPlane` - Fixed handling of invalid JSON returned by the `Publish`
   command.
 
