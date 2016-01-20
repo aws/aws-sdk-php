@@ -20,7 +20,7 @@ matrix:
 install:
   - export AWS_ACCESS_KEY_ID=foo
   - export AWS_SECRET_ACCESS_KEY=bar
-  - echo "xdebug.overload_var_dump = 0" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - [ "$TRAVIS_PHP_VERSION" == "7.0" ] && echo "xdebug.overload_var_dump = 0" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - travis_retry composer update $COMPOSER_OPTS --no-interaction --prefer-source
 
 script:
