@@ -788,4 +788,83 @@ EOXML;
 
         $this->assertEquals(0, $retries);
     }
+
+    public function testListObjectsAppliesUrlEncodingWhenNoneSupplied()
+    {
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'http_handler' => function (RequestInterface $request) {
+                $query = Psr7\parse_query($request->getUri()->getQuery());
+                $this->assertArrayHasKey('encoding-type', $query);
+                $this->assertSame('url', $query['encoding-type']);
+
+                return new FulfilledPromise(new Response);
+            },
+        ]);
+
+        $client->listObjects(['Bucket' => 'bucket']);
+    }
+
+    public function testListObjectsUrlDecodesEncodedKeysWhenEncodingNotSupplied()
+    {
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'http_handler' => function () {
+                return new FulfilledPromise(new Response(200, [], $this->getUrlEncodedListObjectsResponse()));
+            },
+        ]);
+
+        $response = $client->listObjects(['Bucket' => 'bucket']);
+        $this->assertSame(',', $response['Delimiter']);
+        $this->assertSame('test/yearmonth=201601/file2', $response['Marker']);
+        $this->assertSame('test/yearmonth=201601/file2', $response['NextMarker']);
+        $this->assertSame('test/yearmonth=201601/', $response['Prefix']);
+        $this->assertSame('test/yearmonth=201601/file1', $response['Contents'][0]['Key']);
+        $this->assertSame('test/yearmonth=201601/', $response['CommonPrefixes'][0]['Prefix']);
+    }
+
+    public function testListObjectsDoesUrlDecodeEncodedKeysWhenEncodingSupplied()
+    {
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'http_handler' => function () {
+                return new FulfilledPromise(new Response(200, [], $this->getUrlEncodedListObjectsResponse()));
+            },
+        ]);
+
+        $response = $client->listObjects([
+            'Bucket' => 'bucket',
+            'EncodingType' => 'url',
+        ]);
+
+        $this->assertSame('%2C', $response['Delimiter']);
+        $this->assertSame('test/yearmonth%3D201601/file2', $response['Marker']);
+        $this->assertSame('test/yearmonth%3D201601/file2', $response['NextMarker']);
+        $this->assertSame('test/yearmonth%3D201601/', $response['Prefix']);
+        $this->assertSame('test/yearmonth%3D201601/file1', $response['Contents'][0]['Key']);
+        $this->assertSame('test/yearmonth%3D201601/', $response['CommonPrefixes'][0]['Prefix']);
+    }
+
+    private function getUrlEncodedListObjectsResponse()
+    {
+        return <<<EOXML
+<?xml version="1.0" encoding="UTF-8"?>
+<ListBucketResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+    <Prefix>test/yearmonth%3D201601/</Prefix>
+    <Marker>test/yearmonth%3D201601/file2</Marker>
+    <NextMarker>test/yearmonth%3D201601/file2</NextMarker>
+    <Delimiter>%2C</Delimiter>
+    <EncodingType>url</EncodingType>
+    <Contents>
+        <Key>test/yearmonth%3D201601/file1</Key>
+    </Contents>
+    <CommonPrefixes>
+        <Prefix>test/yearmonth%3D201601/</Prefix>
+    </CommonPrefixes>
+</ListBucketResult>
+EOXML;
+    }
 }
