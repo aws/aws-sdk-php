@@ -2,6 +2,8 @@
 
 ## next release
 
+* `Aws\CloudFront` - Added support using AWS ACM certificates with CloudFront
+  distributions.
 * `Aws\S3` - Added handler function to automatically request URL encoding and
   then decode affected fields when no specific encoding type was requested.
 
