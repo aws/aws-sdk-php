@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Added handler function to automatically request URL encoding and
+  then decode affected fields when no specific encoding type was requested.
+
 ## 3.13.1 - 2016-01-19
 
 * `Aws\DeviceFarm` - Added support for running Appium tests written in Python
