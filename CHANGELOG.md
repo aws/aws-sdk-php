@@ -2,6 +2,7 @@
 
 ## next release
 
+* `Aws\ACM` - Added support for the **AWS Certificate Manager** service.
 * `Aws\CloudFront` - Added support using AWS ACM certificates with CloudFront
   distributions.
 * `Aws\S3` - Added handler function to automatically request URL encoding and
