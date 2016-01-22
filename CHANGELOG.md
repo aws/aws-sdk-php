@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.14.1 - 2016-01-22
+
+* `Aws\Acm` - Reverted to standard class naming conventions.
+
 ## 3.14.0 - 2016-01-21
 
 * `Aws\ACM` - Added support for the **AWS Certificate Manager** service.
