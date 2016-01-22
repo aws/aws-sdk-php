@@ -17,6 +17,18 @@
       },
       "input":{"shape":"CancelUpdateStackInput"}
     },
+    "ContinueUpdateRollback":{
+      "name":"ContinueUpdateRollback",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ContinueUpdateRollbackInput"},
+      "output":{
+        "shape":"ContinueUpdateRollbackOutput",
+        "resultWrapper":"ContinueUpdateRollbackResult"
+      }
+    },
     "CreateStack":{
       "name":"CreateStack",
       "http":{
@@ -29,33 +41,9 @@
         "resultWrapper":"CreateStackResult"
       },
       "errors":[
-        {
-          "shape":"LimitExceededException",
-          "error":{
-            "code":"LimitExceededException",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"AlreadyExistsException",
-          "error":{
-            "code":"AlreadyExistsException",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        },
-        {
-          "shape":"InsufficientCapabilitiesException",
-          "error":{
-            "code":"InsufficientCapabilitiesException",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"LimitExceededException"},
+        {"shape":"AlreadyExistsException"},
+        {"shape":"InsufficientCapabilitiesException"}
       ]
     },
     "DeleteStack":{
@@ -226,15 +214,7 @@
         "resultWrapper":"UpdateStackResult"
       },
       "errors":[
-        {
-          "shape":"InsufficientCapabilitiesException",
-          "error":{
-            "code":"InsufficientCapabilitiesException",
-            "httpStatusCode":400,
-            "senderFault":true
-          },
-          "exception":true
-        }
+        {"shape":"InsufficientCapabilitiesException"}
       ]
     },
     "ValidateTemplate":{
@@ -293,6 +273,18 @@
     "Capability":{
       "type":"string",
       "enum":["CAPABILITY_IAM"]
+    },
+    "ContinueUpdateRollbackInput":{
+      "type":"structure",
+      "required":["StackName"],
+      "members":{
+        "StackName":{"shape":"StackNameOrId"}
+      }
+    },
+    "ContinueUpdateRollbackOutput":{
+      "type":"structure",
+      "members":{
+      }
     },
     "CreateStackInput":{
       "type":"structure",

@@ -3,6 +3,7 @@
 ## next release
 
 * `Aws\ACM` - Added support for the **AWS Certificate Manager** service.
+* `Aws\CloudFormation` - Added support for continuing update rollbacks.
 * `Aws\CloudFront` - Added support using AWS ACM certificates with CloudFront
   distributions.
 * `Aws\IoT` - Added support for topic rules.

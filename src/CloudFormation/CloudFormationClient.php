@@ -8,6 +8,8 @@ use Aws\AwsClient;
  *
  * @method \Aws\Result cancelUpdateStack(array $args = [])
  * @method \GuzzleHttp\Promise\Promise cancelUpdateStackAsync(array $args = [])
+ * @method \Aws\Result continueUpdateRollback(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise continueUpdateRollbackAsync(array $args = [])
  * @method \Aws\Result createStack(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createStackAsync(array $args = [])
  * @method \Aws\Result deleteStack(array $args = [])
