@@ -150,7 +150,7 @@
       }
     },
     "RegionDisabledException": {
-      "base": "<p>STS is not activated in the requested region for the account that is being asked to create temporary credentials. The account administrator must activate STS in that region using the IAM Console.</p>",
+      "base": "<p>STS is not activated in the requested region for the account that is being asked to create temporary credentials. The account administrator must activate STS in that region using the IAM Console. For more information, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_enable-regions.html\">Activating and Deactivating AWS STS in an AWS Region</a> in the <i>Using IAM</i>.</p>",
       "refs": {
       }
     },
@@ -312,7 +312,7 @@
     "roleSessionNameType": {
       "base": null,
       "refs": {
-        "AssumeRoleRequest$RoleSessionName": "<p>An identifier for the assumed role session. </p> <p>Use the role session name to uniquely identity a session when the same role is assumed by different principals or for different reasons. In cross-account scenarios, the role session name is visible to, and can be logged by the account that owns the role. The role session name is also used in the ARN of the assumed role principal. This means that subsequent cross-account API requests using the temporary security credentials will expose the role session name to the external account in their CloudTrail logs.</p>",
+        "AssumeRoleRequest$RoleSessionName": "<p>An identifier for the assumed role session. </p> <p>Use the role session name to uniquely identify a session when the same role is assumed by different principals or for different reasons. In cross-account scenarios, the role session name is visible to, and can be logged by the account that owns the role. The role session name is also used in the ARN of the assumed role principal. This means that subsequent cross-account API requests using the temporary security credentials will expose the role session name to the external account in their CloudTrail logs.</p>",
         "AssumeRoleWithWebIdentityRequest$RoleSessionName": "<p>An identifier for the assumed role session. Typically, you pass the name or identifier that is associated with the user who is using your application. That way, the temporary security credentials that your application will use are associated with that user. This session name is included as part of the ARN and assumed role ID in the <code>AssumedRoleUser</code> response element. </p>"
       }
     },
