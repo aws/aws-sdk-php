@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.14.0 - 2016-01-21
 
 * `Aws\ACM` - Added support for the **AWS Certificate Manager** service.
 * `Aws\CloudFormation` - Added support for continuing update rollbacks.
