@@ -4,7 +4,7 @@ namespace Aws;
 /**
  * Builds AWS clients based on configuration settings.
  *
- * @method \Aws\ACM\ACMClient createACM(array $args = [])
+ * @method \Aws\Acm\AcmClient createAcm(array $args = [])
  * @method \Aws\ApiGateway\ApiGatewayClient createApiGateway(array $args = [])
  * @method \Aws\AutoScaling\AutoScalingClient createAutoScaling(array $args = [])
  * @method \Aws\CloudFormation\CloudFormationClient createCloudFormation(array $args = [])

@@ -1,9 +1,9 @@
 <?php
-namespace Aws\ACM\Exception;
+namespace Aws\Acm\Exception;
 
 use Aws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **AWS Certificate Manager** service.
  */
-class ACMException extends AwsException {}
+class AcmException extends AwsException {}
