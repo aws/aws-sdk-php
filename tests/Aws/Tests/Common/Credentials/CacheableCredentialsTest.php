@@ -72,7 +72,7 @@ class CacheableCredentialsTest extends \Guzzle\Tests\GuzzleTestCase
         $cache = $this->getCache();
 
         $mock = $this->getMockBuilder('Aws\\Common\\Credentials\\Credentials')
-            ->setConstructorArgs(array('foo', 'baz', 'bar', 1))
+            ->setConstructorArgs(array('foo', 'baz', 'bar', 100 + time()))
             ->setMethods(array('isExpired'))
             ->getMock();
 
