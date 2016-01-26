@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AutoScaling` - Added support for setting and describing instance
+  protection status.
+* `Aws\CloudFront` - Added support using AWS ACM certificates with CloudFront
+  distributions.
+* `Aws\CloudFront` - Added support for new origin security features.
+* `Aws\CloudFront` - Added support for GZip compression.
+* `Aws\Ec2` - Added support for EC2 dedicated hosts.
+* `Aws\Ec2` - Added support for scheduled instances.
+* `Aws\Ec2` - Added support for DNS resolution of public hostnames to private IP
+  addresses when queried over ClassicLink. Additionally, private hosted zones
+  associated with your VPC can now be accessed from a linked EC2-Classic
+  instance.
+* `Aws\Ec2` - Added support for managed NATs.
+* `Aws\Ec2` - Added support for specifying encryption on CopyImage commands.
+
 ## 2.8.24 - 2015-11-16
 
 * `Aws\DeviceFarm` - Added support for managing projects, device pools, runs,
