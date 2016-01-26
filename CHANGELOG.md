@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 2.8.25 - 2016-01-25
 
 * `Aws\AutoScaling` - Added support for setting and describing instance
   protection status.
