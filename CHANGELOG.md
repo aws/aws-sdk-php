@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Waf` - Added support for size constraints.
+
 ## 3.14.1 - 2016-01-22
 
 * `Aws\Acm` - Reverted to standard class naming conventions.

@@ -99,7 +99,7 @@ annotate-client-locator: clean
 	php build/annotate-client-locator.php
 
 build-manifest:
-	php build/build-manifest.php
+	php build/build-manifest.php >/dev/null
 
 build: | build-manifest compile-json annotate-clients annotate-client-locator
 
