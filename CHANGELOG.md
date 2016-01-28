@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.14.2 - 2016-01-28
 
 * `Aws\Waf` - Added support for size constraints.
 * `Aws\Ssm` - Added paginators for `ListAssociations`, `ListCommandInvocations`,
