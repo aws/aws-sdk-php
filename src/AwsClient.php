@@ -12,6 +12,9 @@ use GuzzleHttp\Psr7\Uri;
  */
 class AwsClient implements AwsClientInterface
 {
+    /** @var array */
+    private $config;
+
     /** @var string */
     private $region;
 
