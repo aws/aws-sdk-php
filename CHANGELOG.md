@@ -3,6 +3,8 @@
 ## next release
 
 * `Aws\Waf` - Added support for size constraints.
+* `Aws\Ssm` - Added paginators for `ListAssociations`, `ListCommandInvocations`,
+  `ListCommands`, and `ListDocuments`.
 
 ## 3.14.1 - 2016-01-22
 
