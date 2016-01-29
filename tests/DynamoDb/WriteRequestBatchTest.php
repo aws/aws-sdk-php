@@ -114,6 +114,7 @@ class WriteRequestBatchTest extends \PHPUnit_Framework_TestCase
         $this->addMockResults($client, [
             new Result(['UnprocessedItems' => ['foo' => [
                 ['PutRequest' => ['Item' => ['id' => ['S' => 'b']]]],
+                ['DeleteRequest' => ['Key' => ['id' => ['S' => 'c']]]],
             ]]]),
             new Result([])
         ]);
@@ -122,8 +123,24 @@ class WriteRequestBatchTest extends \PHPUnit_Framework_TestCase
 
         $batch->put(['id' => ['S' => 'a']]);
         $batch->put(['id' => ['S' => 'b']]);
-        $batch->flush();
+        $batch->delete(['id' => ['S' => 'c']]);
 
+        $batch->flush(false);
+        $this->assertEquals(
+            [
+                [
+                    'table' => 'foo',
+                    'data'  => ['PutRequest' => ['Item' => ['id' => ['S' => 'b']]]],
+                ],
+                [
+                    'table' => 'foo',
+                    'data'  => ['DeleteRequest' => ['Key' => ['id' => ['S' => 'c']]]],
+                ]
+            ],
+            $this->readAttribute($batch, 'queue')
+        );
+
+        $batch->flush();
         $this->assertCount(0, $this->readAttribute($batch, 'queue'));
     }
 
