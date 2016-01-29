@@ -273,6 +273,12 @@ class AwsClient implements AwsClientInterface
         return new Waiter($this, $name, $args, $config);
     }
 
+    public function __sleep()
+    {
+        throw new \RuntimeException('Instances of ' . static::class
+            . ' cannot be serialized');
+    }
+
     /**
      * Get the signature_provider function of the client.
      *

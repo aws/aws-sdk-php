@@ -322,4 +322,14 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'version'      => 'latest'
         ]);
     }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Instances of Aws\AwsClient cannot be serialized
+     */
+    public function testDoesNotPermitSerialization()
+    {
+        $client = $this->createClient();
+        \serialize($client);
+    }
 }
