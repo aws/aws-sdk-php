@@ -10,6 +10,7 @@ use Aws\LruArrayCache;
 use Aws\S3\S3Client;
 use Aws\HandlerList;
 use Aws\Sdk;
+use Aws\Result;
 use Aws\WrappedHttpHandler;
 use GuzzleHttp\Promise\RejectedPromise;
 use Psr\Http\Message\RequestInterface;
@@ -45,10 +46,6 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
         } catch (\InvalidArgumentException $e) {}
     }
 
-    /**
-     * @expectedException \Aws\S3\Exception\S3Exception
-     * @expectedExceptionMessage Throwing!
-     */
     public function testCanDisableValidation()
     {
         $c = new DynamoDbClient([
@@ -57,11 +54,24 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
             'validate' => false
         ]);
         $command = $c->getCommand('CreateTable');
-        $handler = new WrappedHttpHandler(function () {
-            return new RejectedPromise([
-                'exception' => new \Exception('Throwing!')
-            ]);
-        }, function () {}, function () {}, 'Aws\S3\Exception\S3Exception');
+        $handler = \Aws\constantly(new Result([]));
+        $command->getHandlerList()->setHandler($handler);
+        $c->execute($command);
+    }
+
+    public function testCanDisableSpecificValidationConstraints()
+    {
+        $c = new DynamoDbClient([
+            'region'   => 'x',
+            'version'  => 'latest',
+            'validate' => [
+                'min' => true,
+                'max' => true,
+                'required' => false
+            ]
+        ]);
+        $command = $c->getCommand('CreateTable');
+        $handler = \Aws\constantly(new Result([]));
         $command->getHandlerList()->setHandler($handler);
         $c->execute($command);
     }

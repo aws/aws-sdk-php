@@ -119,9 +119,9 @@ class ClientResolver
         ],
         'validate' => [
             'type'    => 'value',
-            'valid'   => ['bool'],
+            'valid'   => ['bool', 'array'],
             'default' => true,
-            'doc'     => 'Set to false to disable client-side parameter validation.',
+            'doc'     => 'Set to false to disable client-side parameter validation. Set to true to utilize default validation constraints. Set to an associative array of validation options to enable specific validation constraints.',
             'fn'      => [__CLASS__, '_apply_validate'],
         ],
         'debug' => [
@@ -419,12 +419,17 @@ class ClientResolver
 
     public static function _apply_validate($value, array &$args, HandlerList $list)
     {
-        if ($value === true) {
-            $list->appendValidate(
-                Middleware::validation($args['api'], new Validator()),
-                'validation'
-            );
+        if ($value === false) {
+            return;
         }
+
+        $validator = $value === true
+            ? new Validator()
+            : new Validator($value);
+        $list->appendValidate(
+            Middleware::validation($args['api'], $validator),
+            'validation'
+        );
     }
 
     public static function _apply_handler($value, array &$args, HandlerList $list)
