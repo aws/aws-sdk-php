@@ -11,7 +11,17 @@ foreach ($metaFiles as $file) {
     $burgomaster->deepCopy($file, $file);
 }
 
-$burgomaster->recursiveCopy('src', 'Aws');
+$sdkFiles = new \RecursiveIteratorIterator(
+    new \RecursiveDirectoryIterator(realpath('src'))
+);
+$sdkFiles = new CallbackFilterIterator($sdkFiles, function (SplFileInfo $file) {
+    return !in_array($file->getBasename('.php'), [
+        'docs-2.json',
+        'examples-1.json',
+    ]);
+});
+
+$burgomaster->recursiveCopy('src', 'Aws', ['php'], $sdkFiles);
 $burgomaster->recursiveCopy('vendor/aws/aws-php-sns-message-validator/src', 'Aws/Sns');
 $burgomaster->recursiveCopy('vendor/mtdowling/jmespath.php/src', 'JmesPath');
 $burgomaster->recursiveCopy('vendor/guzzlehttp/guzzle/src', 'GuzzleHttp');
