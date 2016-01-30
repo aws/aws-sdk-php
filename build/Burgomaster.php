@@ -150,17 +150,21 @@ class Burgomaster
      *
      * Any LICENSE file is automatically copied.
      *
-     * @param string $sourceDir  Source directory to copy from
-     * @param string $destDir    Directory to copy the files to that is relative
-     *                           to the the stage base directory.
-     * @param array  $extensions File extensions to copy from the $sourceDir.
-     *                           Defaults to "php" files only (e.g., ['php']).
+     * @param string    $sourceDir  Source directory to copy from
+     * @param string    $destDir    Directory to copy the files to that is relative
+     *                              to the the stage base directory.
+     * @param array     $extensions File extensions to copy from the $sourceDir.
+     *                              Defaults to "php" files only (e.g., ['php']).
+     * @param Iterator|null  $files Files to copy from the source directory, each
+     *                              yielded out as an SplFileInfo object.
+     *                              Defaults to a recursive iterator of $sourceDir
      * @throws \InvalidArgumentException if the source directory is invalid.
      */
     function recursiveCopy(
         $sourceDir,
         $destDir,
-        $extensions = array('php')
+        $extensions = array('php'),
+        Iterator $files = null
     ) {
         if (!realpath($sourceDir)) {
             throw new \InvalidArgumentException("$sourceDir not found");
@@ -172,14 +176,17 @@ class Burgomaster
 
         $sourceDir = realpath($sourceDir);
         $exts = array_fill_keys($extensions, true);
-        $iter = new \RecursiveDirectoryIterator($sourceDir);
-        $iter = new \RecursiveIteratorIterator($iter);
+        if (empty($files)) {
+            $files = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($sourceDir)
+            );
+        }
         $total = 0;
 
         $this->startSection('copy');
         $this->debug("Starting to copy files from $sourceDir");
 
-        foreach ($iter as $file) {
+        foreach ($files as $file) {
             if (isset($exts[$file->getExtension()])
                 || $file->getBaseName() == 'LICENSE'
             ) {
