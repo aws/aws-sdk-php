@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 2.8.26 - 2016-01-29
 
 * `Aws\Ssm` - Added support for long EC2 instance IDs.
 
