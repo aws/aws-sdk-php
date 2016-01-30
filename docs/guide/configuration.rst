@@ -767,7 +767,7 @@ to the HTTP handler.
 validate
 ~~~~~~~~
 
-:Type: ``bool``
+:Type: ``bool|array``
 :Default: ``bool(true)``
 
 Set to false to disable client-side parameter validation. You may find that
@@ -781,6 +781,23 @@ difference is negligible.
         'version'  => '2006-03-01',
         'region'   => 'eu-west-1',
         'validate' => false
+    ]);
+
+Set to an associative array of validation options to enable specific validation
+constraints:
+
+- ``required`` - Validate that required parameters are present (on by default).
+- ``min`` - Validate the minimum length of a value (on by default).
+- ``max`` - Validate the maximum length of a value.
+- ``pattern`` - Validate that the value matches a regular expression.
+
+.. code-block:: php
+
+    // Validate only that required values are present.
+    $s3 = new Aws\S3\S3Client([
+        'version'  => '2006-03-01',
+        'region'   => 'eu-west-1',
+        'validate' => ['required' => true]
     ]);
 
 
