@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 2.8.27 - 2016-01-29
 
 * Remove all 'maxLength' constraints from models. This validation will be
   handled server-side.
