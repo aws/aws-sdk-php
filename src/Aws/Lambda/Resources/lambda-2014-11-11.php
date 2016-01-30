@@ -39,7 +39,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'Role' => array(
                     'required' => true,
@@ -84,7 +83,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -138,7 +136,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -164,7 +161,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -190,7 +186,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'InvokeArgs' => array(
                     'required' => true,
@@ -232,7 +227,6 @@ return array (
                     'type' => 'string',
                     'location' => 'query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'Marker' => array(
                     'type' => 'string',
@@ -325,7 +319,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'Role' => array(
                     'type' => 'string',
@@ -338,7 +331,6 @@ return array (
                 'Description' => array(
                     'type' => 'string',
                     'location' => 'query',
-                    'maxLength' => 256,
                 ),
                 'Timeout' => array(
                     'type' => 'numeric',
@@ -380,7 +372,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'FunctionZip' => array(
                     'required' => true,
@@ -413,7 +404,6 @@ return array (
                 'Description' => array(
                     'type' => 'string',
                     'location' => 'query',
-                    'maxLength' => 256,
                 ),
                 'Timeout' => array(
                     'type' => 'numeric',

@@ -116,11 +116,9 @@ return array (
                                 'required' => true,
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 128,
                             ),
                             'Value' => array(
                                 'type' => 'string',
-                                'maxLength' => 256,
                             ),
                         ),
                     ),
@@ -507,11 +505,9 @@ return array (
                                 'required' => true,
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 128,
                             ),
                             'Value' => array(
                                 'type' => 'string',
-                                'maxLength' => 256,
                             ),
                         ),
                     ),
@@ -1429,7 +1425,6 @@ return array (
                             'Key' => array(
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 128,
                             ),
                         ),
                     ),

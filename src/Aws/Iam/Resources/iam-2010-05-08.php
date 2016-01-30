@@ -99,14 +99,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 2048,
                 ),
                 'ClientID' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
             ),
             'errorResponses' => array(
@@ -150,14 +148,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'RoleName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -201,14 +197,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'UserName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -248,14 +242,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'PolicyArn' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 2048,
                 ),
             ),
             'errorResponses' => array(
@@ -299,14 +291,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'PolicyArn' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 2048,
                 ),
             ),
             'errorResponses' => array(
@@ -350,14 +340,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'PolicyArn' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 2048,
                 ),
             ),
             'errorResponses' => array(
@@ -401,14 +389,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'NewPassword' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -459,7 +445,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -499,7 +484,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
-                    'maxLength' => 63,
                 ),
             ),
             'errorResponses' => array(
@@ -538,14 +522,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'GroupName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -589,13 +571,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'Path' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
             ),
             'errorResponses' => array(
@@ -635,14 +615,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'Password' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'PasswordResetRequired' => array(
                     'type' => 'boolean',
@@ -695,7 +673,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'ClientIDList' => array(
                     'type' => 'array',
@@ -705,7 +682,6 @@ return array (
                         'name' => 'clientIDType',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 255,
                     ),
                 ),
                 'ThumbprintList' => array(
@@ -717,7 +693,6 @@ return array (
                         'name' => 'thumbprintType',
                         'type' => 'string',
                         'minLength' => 40,
-                        'maxLength' => 40,
                     ),
                 ),
             ),
@@ -762,7 +737,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'Path' => array(
                     'type' => 'string',
@@ -773,12 +747,10 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 131072,
                 ),
                 'Description' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'maxLength' => 1000,
                 ),
             ),
             'errorResponses' => array(
@@ -826,14 +798,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 2048,
                 ),
                 'PolicyDocument' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 131072,
                 ),
                 'SetAsDefault' => array(
                     'type' => 'boolean',
@@ -885,21 +855,18 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'RoleName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'AssumeRolePolicyDocument' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 131072,
                 ),
             ),
             'errorResponses' => array(
@@ -943,14 +910,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1000,
-                    'maxLength' => 10000000,
                 ),
                 'Name' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -993,14 +958,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'UserName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -1043,7 +1006,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'VirtualMFADeviceName' => array(
                     'required' => true,
@@ -1089,14 +1051,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'SerialNumber' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 9,
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(
@@ -1139,14 +1099,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'AccessKeyId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 16,
-                    'maxLength' => 32,
                 ),
             ),
             'errorResponses' => array(
@@ -1186,7 +1144,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
-                    'maxLength' => 63,
                 ),
             ),
             'errorResponses' => array(
@@ -1259,7 +1216,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -1303,14 +1259,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'PolicyName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -1350,7 +1304,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -1394,7 +1347,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -1438,7 +1390,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 2048,
                 ),
             ),
             'errorResponses' => array(
@@ -1478,7 +1429,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 2048,
                 ),
             ),
             'errorResponses' => array(
@@ -1526,7 +1476,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 2048,
                 ),
                 'VersionId' => array(
                     'required' => true,
@@ -1579,7 +1528,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -1623,14 +1571,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'PolicyName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -1670,7 +1616,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 2048,
                 ),
             ),
             'errorResponses' => array(
@@ -1714,14 +1659,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'SSHPublicKeyId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -1753,7 +1696,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -1796,14 +1738,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'CertificateId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 24,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -1843,7 +1783,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -1887,14 +1826,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'PolicyName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -1934,7 +1871,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 9,
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(
@@ -1978,14 +1914,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'PolicyArn' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 2048,
                 ),
             ),
             'errorResponses' => array(
@@ -2029,14 +1963,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'PolicyArn' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 2048,
                 ),
             ),
             'errorResponses' => array(
@@ -2080,14 +2012,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'PolicyArn' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 2048,
                 ),
             ),
             'errorResponses' => array(
@@ -2131,28 +2061,24 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'SerialNumber' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 9,
-                    'maxLength' => 256,
                 ),
                 'AuthenticationCode1' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 6,
-                    'maxLength' => 6,
                 ),
                 'AuthenticationCode2' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 6,
-                    'maxLength' => 6,
                 ),
             ),
             'errorResponses' => array(
@@ -2233,7 +2159,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 16,
-                    'maxLength' => 32,
                 ),
             ),
             'errorResponses' => array(
@@ -2279,7 +2204,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
             ),
             'errorResponses' => array(
@@ -2369,7 +2293,6 @@ return array (
                         'name' => 'policyDocumentType',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 131072,
                     ),
                 ),
             ),
@@ -2402,7 +2325,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 2048,
                 ),
                 'PolicyInputList' => array(
                     'type' => 'array',
@@ -2412,7 +2334,6 @@ return array (
                         'name' => 'policyDocumentType',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 131072,
                     ),
                 ),
             ),
@@ -2486,13 +2407,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -2534,14 +2453,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'PolicyName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -2577,7 +2494,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -2613,7 +2529,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -2649,7 +2564,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 2048,
                 ),
             ),
             'errorResponses' => array(
@@ -2689,7 +2603,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 2048,
                 ),
             ),
             'errorResponses' => array(
@@ -2729,7 +2642,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 2048,
                 ),
                 'VersionId' => array(
                     'required' => true,
@@ -2774,7 +2686,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -2810,14 +2721,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'PolicyName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -2853,7 +2762,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 2048,
                 ),
             ),
             'errorResponses' => array(
@@ -2893,14 +2801,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'SSHPublicKeyId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 128,
                 ),
                 'Encoding' => array(
                     'required' => true,
@@ -2941,7 +2847,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -2976,7 +2881,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -3012,14 +2916,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'PolicyName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -3054,13 +2956,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -3101,7 +3001,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -3139,7 +3038,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'PathPrefix' => array(
                     'type' => 'string',
@@ -3149,7 +3047,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -3195,7 +3092,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'PathPrefix' => array(
                     'type' => 'string',
@@ -3205,7 +3101,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -3251,7 +3146,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'PathPrefix' => array(
                     'type' => 'string',
@@ -3261,7 +3155,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -3307,7 +3200,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 2048,
                 ),
                 'EntityFilter' => array(
                     'type' => 'string',
@@ -3317,13 +3209,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -3369,13 +3259,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -3416,13 +3304,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -3460,13 +3346,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -3507,13 +3391,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -3551,13 +3433,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -3598,13 +3478,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -3683,7 +3561,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -3721,13 +3598,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 2048,
                 ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -3773,13 +3648,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -3820,13 +3693,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -3888,13 +3759,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -3931,13 +3800,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -3974,13 +3841,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -4022,13 +3887,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -4069,13 +3932,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -4116,7 +3977,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -4148,21 +4008,18 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'PolicyName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'PolicyDocument' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 131072,
                 ),
             ),
             'errorResponses' => array(
@@ -4206,21 +4063,18 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'PolicyName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'PolicyDocument' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 131072,
                 ),
             ),
             'errorResponses' => array(
@@ -4264,21 +4118,18 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'PolicyName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'PolicyDocument' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 131072,
                 ),
             ),
             'errorResponses' => array(
@@ -4322,14 +4173,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 2048,
                 ),
                 'ClientID' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
             ),
             'errorResponses' => array(
@@ -4369,14 +4218,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'RoleName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -4416,14 +4263,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'UserName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -4463,28 +4308,24 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'SerialNumber' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 9,
-                    'maxLength' => 256,
                 ),
                 'AuthenticationCode1' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 6,
-                    'maxLength' => 6,
                 ),
                 'AuthenticationCode2' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 6,
-                    'maxLength' => 6,
                 ),
             ),
             'errorResponses' => array(
@@ -4528,7 +4369,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 2048,
                 ),
                 'VersionId' => array(
                     'required' => true,
@@ -4581,7 +4421,6 @@ return array (
                         'name' => 'policyDocumentType',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 131072,
                     ),
                 ),
                 'ActionNames' => array(
@@ -4593,7 +4432,6 @@ return array (
                         'name' => 'ActionNameType',
                         'type' => 'string',
                         'minLength' => 3,
-                        'maxLength' => 128,
                     ),
                 ),
                 'ResourceArns' => array(
@@ -4604,26 +4442,22 @@ return array (
                         'name' => 'ResourceNameType',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 2048,
                     ),
                 ),
                 'ResourcePolicy' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 131072,
                 ),
                 'ResourceOwner' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 2048,
                 ),
                 'CallerArn' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 2048,
                 ),
                 'ContextEntries' => array(
                     'type' => 'array',
@@ -4636,7 +4470,6 @@ return array (
                             'ContextKeyName' => array(
                                 'type' => 'string',
                                 'minLength' => 5,
-                                'maxLength' => 256,
                             ),
                             'ContextKeyValues' => array(
                                 'type' => 'array',
@@ -4656,7 +4489,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -4668,7 +4500,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
             ),
             'errorResponses' => array(
@@ -4704,7 +4535,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 2048,
                 ),
                 'PolicyInputList' => array(
                     'type' => 'array',
@@ -4714,7 +4544,6 @@ return array (
                         'name' => 'policyDocumentType',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 131072,
                     ),
                 ),
                 'ActionNames' => array(
@@ -4726,7 +4555,6 @@ return array (
                         'name' => 'ActionNameType',
                         'type' => 'string',
                         'minLength' => 3,
-                        'maxLength' => 128,
                     ),
                 ),
                 'ResourceArns' => array(
@@ -4737,26 +4565,22 @@ return array (
                         'name' => 'ResourceNameType',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 2048,
                     ),
                 ),
                 'ResourcePolicy' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 131072,
                 ),
                 'ResourceOwner' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 2048,
                 ),
                 'CallerArn' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 2048,
                 ),
                 'ContextEntries' => array(
                     'type' => 'array',
@@ -4769,7 +4593,6 @@ return array (
                             'ContextKeyName' => array(
                                 'type' => 'string',
                                 'minLength' => 5,
-                                'maxLength' => 256,
                             ),
                             'ContextKeyValues' => array(
                                 'type' => 'array',
@@ -4789,7 +4612,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -4801,7 +4623,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
             ),
             'errorResponses' => array(
@@ -4840,14 +4661,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'AccessKeyId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 16,
-                    'maxLength' => 32,
                 ),
                 'Status' => array(
                     'required' => true,
@@ -4977,14 +4796,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'PolicyDocument' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 131072,
                 ),
             ),
             'errorResponses' => array(
@@ -5028,19 +4845,16 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'NewPath' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'NewGroupName' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -5084,13 +4898,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'Password' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'PasswordResetRequired' => array(
                     'type' => 'boolean',
@@ -5143,7 +4955,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 2048,
                 ),
                 'ThumbprintList' => array(
                     'required' => true,
@@ -5154,7 +4965,6 @@ return array (
                         'name' => 'thumbprintType',
                         'type' => 'string',
                         'minLength' => 40,
-                        'maxLength' => 40,
                     ),
                 ),
             ),
@@ -5195,14 +5005,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1000,
-                    'maxLength' => 10000000,
                 ),
                 'SAMLProviderArn' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 2048,
                 ),
             ),
             'errorResponses' => array(
@@ -5246,14 +5054,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'SSHPublicKeyId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 20,
-                    'maxLength' => 128,
                 ),
                 'Status' => array(
                     'required' => true,
@@ -5290,19 +5096,16 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'NewPath' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'NewServerCertificateName' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -5345,14 +5148,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'CertificateId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 24,
-                    'maxLength' => 128,
                 ),
                 'Status' => array(
                     'required' => true,
@@ -5397,19 +5198,16 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'NewPath' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'NewUserName' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -5457,14 +5255,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'SSHPublicKeyBody' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 16384,
                 ),
             ),
             'errorResponses' => array(
@@ -5511,34 +5307,29 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'ServerCertificateName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'CertificateBody' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 16384,
                 ),
                 'PrivateKey' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 16384,
                 ),
                 'CertificateChain' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 2097152,
                 ),
             ),
             'errorResponses' => array(
@@ -5585,14 +5376,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'CertificateBody' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 16384,
                 ),
             ),
             'errorResponses' => array(

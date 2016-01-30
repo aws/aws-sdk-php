@@ -56,12 +56,10 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 255,
                 ),
                 'IdnLangCode' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 3,
                 ),
             ),
             'errorResponses' => array(
@@ -100,7 +98,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 255,
                 ),
                 'TagsToDelete' => array(
                     'required' => true,
@@ -152,7 +149,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 255,
                 ),
             ),
             'errorResponses' => array(
@@ -191,7 +187,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 255,
                 ),
             ),
             'errorResponses' => array(
@@ -242,7 +237,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 255,
                 ),
             ),
             'errorResponses' => array(
@@ -281,7 +275,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 255,
                 ),
             ),
             'errorResponses' => array(
@@ -332,7 +325,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 255,
                 ),
             ),
             'errorResponses' => array(
@@ -371,7 +363,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 255,
                 ),
             ),
             'errorResponses' => array(
@@ -405,7 +396,6 @@ return array (
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 4096,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -444,7 +434,6 @@ return array (
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 4096,
                 ),
                 'MaxItems' => array(
                     'type' => 'numeric',
@@ -484,7 +473,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 255,
                 ),
             ),
             'errorResponses' => array(
@@ -527,12 +515,10 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 255,
                 ),
                 'IdnLangCode' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 3,
                 ),
                 'DurationInYears' => array(
                     'required' => true,
@@ -553,53 +539,42 @@ return array (
                     'properties' => array(
                         'FirstName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'LastName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'ContactType' => array(
                             'type' => 'string',
                         ),
                         'OrganizationName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'AddressLine1' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'AddressLine2' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'City' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'State' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'CountryCode' => array(
                             'type' => 'string',
                         ),
                         'ZipCode' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'PhoneNumber' => array(
                             'type' => 'string',
-                            'maxLength' => 30,
                         ),
                         'Email' => array(
                             'type' => 'string',
-                            'maxLength' => 254,
                         ),
                         'Fax' => array(
                             'type' => 'string',
-                            'maxLength' => 30,
                         ),
                         'ExtraParams' => array(
                             'type' => 'array',
@@ -614,7 +589,6 @@ return array (
                                     'Value' => array(
                                         'required' => true,
                                         'type' => 'string',
-                                        'maxLength' => 2048,
                                     ),
                                 ),
                             ),
@@ -628,53 +602,42 @@ return array (
                     'properties' => array(
                         'FirstName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'LastName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'ContactType' => array(
                             'type' => 'string',
                         ),
                         'OrganizationName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'AddressLine1' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'AddressLine2' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'City' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'State' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'CountryCode' => array(
                             'type' => 'string',
                         ),
                         'ZipCode' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'PhoneNumber' => array(
                             'type' => 'string',
-                            'maxLength' => 30,
                         ),
                         'Email' => array(
                             'type' => 'string',
-                            'maxLength' => 254,
                         ),
                         'Fax' => array(
                             'type' => 'string',
-                            'maxLength' => 30,
                         ),
                         'ExtraParams' => array(
                             'type' => 'array',
@@ -689,7 +652,6 @@ return array (
                                     'Value' => array(
                                         'required' => true,
                                         'type' => 'string',
-                                        'maxLength' => 2048,
                                     ),
                                 ),
                             ),
@@ -703,53 +665,42 @@ return array (
                     'properties' => array(
                         'FirstName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'LastName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'ContactType' => array(
                             'type' => 'string',
                         ),
                         'OrganizationName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'AddressLine1' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'AddressLine2' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'City' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'State' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'CountryCode' => array(
                             'type' => 'string',
                         ),
                         'ZipCode' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'PhoneNumber' => array(
                             'type' => 'string',
-                            'maxLength' => 30,
                         ),
                         'Email' => array(
                             'type' => 'string',
-                            'maxLength' => 254,
                         ),
                         'Fax' => array(
                             'type' => 'string',
-                            'maxLength' => 30,
                         ),
                         'ExtraParams' => array(
                             'type' => 'array',
@@ -764,7 +715,6 @@ return array (
                                     'Value' => array(
                                         'required' => true,
                                         'type' => 'string',
-                                        'maxLength' => 2048,
                                     ),
                                 ),
                             ),
@@ -839,7 +789,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 255,
                 ),
             ),
             'errorResponses' => array(
@@ -878,12 +827,10 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 255,
                 ),
                 'IdnLangCode' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 3,
                 ),
                 'DurationInYears' => array(
                     'required' => true,
@@ -902,14 +849,12 @@ return array (
                             'Name' => array(
                                 'required' => true,
                                 'type' => 'string',
-                                'maxLength' => 255,
                             ),
                             'GlueIps' => array(
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'GlueIp',
                                     'type' => 'string',
-                                    'maxLength' => 45,
                                 ),
                             ),
                         ),
@@ -918,7 +863,6 @@ return array (
                 'AuthCode' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'AutoRenew' => array(
                     'type' => 'boolean',
@@ -932,53 +876,42 @@ return array (
                     'properties' => array(
                         'FirstName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'LastName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'ContactType' => array(
                             'type' => 'string',
                         ),
                         'OrganizationName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'AddressLine1' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'AddressLine2' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'City' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'State' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'CountryCode' => array(
                             'type' => 'string',
                         ),
                         'ZipCode' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'PhoneNumber' => array(
                             'type' => 'string',
-                            'maxLength' => 30,
                         ),
                         'Email' => array(
                             'type' => 'string',
-                            'maxLength' => 254,
                         ),
                         'Fax' => array(
                             'type' => 'string',
-                            'maxLength' => 30,
                         ),
                         'ExtraParams' => array(
                             'type' => 'array',
@@ -993,7 +926,6 @@ return array (
                                     'Value' => array(
                                         'required' => true,
                                         'type' => 'string',
-                                        'maxLength' => 2048,
                                     ),
                                 ),
                             ),
@@ -1007,53 +939,42 @@ return array (
                     'properties' => array(
                         'FirstName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'LastName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'ContactType' => array(
                             'type' => 'string',
                         ),
                         'OrganizationName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'AddressLine1' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'AddressLine2' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'City' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'State' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'CountryCode' => array(
                             'type' => 'string',
                         ),
                         'ZipCode' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'PhoneNumber' => array(
                             'type' => 'string',
-                            'maxLength' => 30,
                         ),
                         'Email' => array(
                             'type' => 'string',
-                            'maxLength' => 254,
                         ),
                         'Fax' => array(
                             'type' => 'string',
-                            'maxLength' => 30,
                         ),
                         'ExtraParams' => array(
                             'type' => 'array',
@@ -1068,7 +989,6 @@ return array (
                                     'Value' => array(
                                         'required' => true,
                                         'type' => 'string',
-                                        'maxLength' => 2048,
                                     ),
                                 ),
                             ),
@@ -1082,53 +1002,42 @@ return array (
                     'properties' => array(
                         'FirstName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'LastName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'ContactType' => array(
                             'type' => 'string',
                         ),
                         'OrganizationName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'AddressLine1' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'AddressLine2' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'City' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'State' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'CountryCode' => array(
                             'type' => 'string',
                         ),
                         'ZipCode' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'PhoneNumber' => array(
                             'type' => 'string',
-                            'maxLength' => 30,
                         ),
                         'Email' => array(
                             'type' => 'string',
-                            'maxLength' => 254,
                         ),
                         'Fax' => array(
                             'type' => 'string',
-                            'maxLength' => 30,
                         ),
                         'ExtraParams' => array(
                             'type' => 'array',
@@ -1143,7 +1052,6 @@ return array (
                                     'Value' => array(
                                         'required' => true,
                                         'type' => 'string',
-                                        'maxLength' => 2048,
                                     ),
                                 ),
                             ),
@@ -1218,7 +1126,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 255,
                 ),
                 'AdminContact' => array(
                     'type' => 'object',
@@ -1226,53 +1133,42 @@ return array (
                     'properties' => array(
                         'FirstName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'LastName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'ContactType' => array(
                             'type' => 'string',
                         ),
                         'OrganizationName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'AddressLine1' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'AddressLine2' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'City' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'State' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'CountryCode' => array(
                             'type' => 'string',
                         ),
                         'ZipCode' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'PhoneNumber' => array(
                             'type' => 'string',
-                            'maxLength' => 30,
                         ),
                         'Email' => array(
                             'type' => 'string',
-                            'maxLength' => 254,
                         ),
                         'Fax' => array(
                             'type' => 'string',
-                            'maxLength' => 30,
                         ),
                         'ExtraParams' => array(
                             'type' => 'array',
@@ -1287,7 +1183,6 @@ return array (
                                     'Value' => array(
                                         'required' => true,
                                         'type' => 'string',
-                                        'maxLength' => 2048,
                                     ),
                                 ),
                             ),
@@ -1300,53 +1195,42 @@ return array (
                     'properties' => array(
                         'FirstName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'LastName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'ContactType' => array(
                             'type' => 'string',
                         ),
                         'OrganizationName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'AddressLine1' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'AddressLine2' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'City' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'State' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'CountryCode' => array(
                             'type' => 'string',
                         ),
                         'ZipCode' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'PhoneNumber' => array(
                             'type' => 'string',
-                            'maxLength' => 30,
                         ),
                         'Email' => array(
                             'type' => 'string',
-                            'maxLength' => 254,
                         ),
                         'Fax' => array(
                             'type' => 'string',
-                            'maxLength' => 30,
                         ),
                         'ExtraParams' => array(
                             'type' => 'array',
@@ -1361,7 +1245,6 @@ return array (
                                     'Value' => array(
                                         'required' => true,
                                         'type' => 'string',
-                                        'maxLength' => 2048,
                                     ),
                                 ),
                             ),
@@ -1374,53 +1257,42 @@ return array (
                     'properties' => array(
                         'FirstName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'LastName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'ContactType' => array(
                             'type' => 'string',
                         ),
                         'OrganizationName' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'AddressLine1' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'AddressLine2' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'City' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'State' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'CountryCode' => array(
                             'type' => 'string',
                         ),
                         'ZipCode' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'PhoneNumber' => array(
                             'type' => 'string',
-                            'maxLength' => 30,
                         ),
                         'Email' => array(
                             'type' => 'string',
-                            'maxLength' => 254,
                         ),
                         'Fax' => array(
                             'type' => 'string',
-                            'maxLength' => 30,
                         ),
                         'ExtraParams' => array(
                             'type' => 'array',
@@ -1435,7 +1307,6 @@ return array (
                                     'Value' => array(
                                         'required' => true,
                                         'type' => 'string',
-                                        'maxLength' => 2048,
                                     ),
                                 ),
                             ),
@@ -1491,7 +1362,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 255,
                 ),
                 'AdminPrivacy' => array(
                     'type' => 'boolean',
@@ -1557,7 +1427,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 255,
                 ),
                 'FIAuthKey' => array(
                     'type' => 'string',
@@ -1574,14 +1443,12 @@ return array (
                             'Name' => array(
                                 'required' => true,
                                 'type' => 'string',
-                                'maxLength' => 255,
                             ),
                             'GlueIps' => array(
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'GlueIp',
                                     'type' => 'string',
-                                    'maxLength' => 45,
                                 ),
                             ),
                         ),
@@ -1636,7 +1503,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 255,
                 ),
                 'TagsToUpdate' => array(
                     'type' => 'array',

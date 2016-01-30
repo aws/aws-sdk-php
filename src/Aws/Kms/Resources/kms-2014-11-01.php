@@ -51,7 +51,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(
@@ -103,14 +102,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'TargetKeyId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(
@@ -170,20 +167,17 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'GranteePrincipal' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'RetiringPrincipal' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'Operations' => array(
                     'type' => 'array',
@@ -225,14 +219,12 @@ return array (
                         'name' => 'GrantTokenType',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 8192,
                     ),
                 ),
                 'Name' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(
@@ -295,12 +287,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 131072,
                 ),
                 'Description' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 8192,
                 ),
                 'KeyUsage' => array(
                     'type' => 'string',
@@ -381,7 +371,6 @@ return array (
                         'name' => 'GrantTokenType',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 8192,
                     ),
                 ),
             ),
@@ -446,7 +435,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(
@@ -494,7 +482,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'GrantTokens' => array(
                     'type' => 'array',
@@ -504,7 +491,6 @@ return array (
                         'name' => 'GrantTokenType',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 8192,
                     ),
                 ),
             ),
@@ -553,7 +539,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(
@@ -605,7 +590,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(
@@ -661,7 +645,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(
@@ -717,7 +700,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(
@@ -773,7 +755,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'Plaintext' => array(
                     'required' => true,
@@ -801,7 +782,6 @@ return array (
                         'name' => 'GrantTokenType',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 8192,
                     ),
                 ),
             ),
@@ -866,7 +846,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'EncryptionContext' => array(
                     'type' => 'object',
@@ -896,7 +875,6 @@ return array (
                         'name' => 'GrantTokenType',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 8192,
                     ),
                 ),
             ),
@@ -961,7 +939,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'EncryptionContext' => array(
                     'type' => 'object',
@@ -991,7 +968,6 @@ return array (
                         'name' => 'GrantTokenType',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 8192,
                     ),
                 ),
             ),
@@ -1095,14 +1071,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'PolicyName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -1154,7 +1128,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(
@@ -1211,7 +1184,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
             ),
             'errorResponses' => array(
@@ -1260,14 +1232,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'KeyId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(
@@ -1323,7 +1293,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'Limit' => array(
                     'type' => 'numeric',
@@ -1335,7 +1304,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
             ),
             'errorResponses' => array(
@@ -1392,7 +1360,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
             ),
             'errorResponses' => array(
@@ -1437,14 +1404,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 320,
                 ),
                 'RetiringPrincipal' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(
@@ -1496,21 +1461,18 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'PolicyName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'Policy' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 131072,
                 ),
             ),
             'errorResponses' => array(
@@ -1596,7 +1558,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'DestinationEncryptionContext' => array(
                     'type' => 'object',
@@ -1616,7 +1577,6 @@ return array (
                         'name' => 'GrantTokenType',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 8192,
                     ),
                 ),
             ),
@@ -1684,19 +1644,16 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 8192,
                 ),
                 'KeyId' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'GrantId' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -1752,14 +1709,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'GrantId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -1815,7 +1770,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'PendingWindowInDays' => array(
                     'type' => 'numeric',
@@ -1873,14 +1827,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'TargetKeyId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(
@@ -1928,13 +1880,11 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'Description' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 8192,
                 ),
             ),
             'errorResponses' => array(

@@ -104,7 +104,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'startTimeFilter' => array(
                     'type' => 'object',
@@ -160,7 +159,6 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                     ),
                 ),
@@ -172,11 +170,9 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                         'version' => array(
                             'type' => 'string',
-                            'maxLength' => 64,
                         ),
                     ),
                 ),
@@ -188,7 +184,6 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                     ),
                 ),
@@ -240,7 +235,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'startTimeFilter' => array(
                     'required' => true,
@@ -274,11 +268,9 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                         'version' => array(
                             'type' => 'string',
-                            'maxLength' => 64,
                         ),
                     ),
                 ),
@@ -290,7 +282,6 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                     ),
                 ),
@@ -302,7 +293,6 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                     ),
                 ),
@@ -344,7 +334,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'taskList' => array(
                     'required' => true,
@@ -355,7 +344,6 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                     ),
                 ),
@@ -397,7 +385,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'taskList' => array(
                     'required' => true,
@@ -408,7 +395,6 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                     ),
                 ),
@@ -450,7 +436,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'activityType' => array(
                     'required' => true,
@@ -461,13 +446,11 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                         'version' => array(
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 64,
                         ),
                     ),
                 ),
@@ -513,7 +496,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(
@@ -557,7 +539,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'workflowType' => array(
                     'required' => true,
@@ -568,13 +549,11 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                         'version' => array(
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 64,
                         ),
                     ),
                 ),
@@ -620,7 +599,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'activityType' => array(
                     'required' => true,
@@ -631,13 +609,11 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                         'version' => array(
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 64,
                         ),
                     ),
                 ),
@@ -679,7 +655,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(
@@ -719,7 +694,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'execution' => array(
                     'required' => true,
@@ -730,13 +704,11 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                         'runId' => array(
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 64,
                         ),
                     ),
                 ),
@@ -778,7 +750,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'workflowType' => array(
                     'required' => true,
@@ -789,13 +760,11 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                         'version' => array(
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 64,
                         ),
                     ),
                 ),
@@ -837,7 +806,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'execution' => array(
                     'required' => true,
@@ -848,20 +816,17 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                         'runId' => array(
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 64,
                         ),
                     ),
                 ),
                 'nextPageToken' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 2048,
                 ),
                 'maximumPageSize' => array(
                     'type' => 'numeric',
@@ -911,13 +876,11 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'name' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'registrationStatus' => array(
                     'required' => true,
@@ -927,7 +890,6 @@ return array (
                 'nextPageToken' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 2048,
                 ),
                 'maximumPageSize' => array(
                     'type' => 'numeric',
@@ -977,7 +939,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'startTimeFilter' => array(
                     'type' => 'object',
@@ -1033,7 +994,6 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                     ),
                 ),
@@ -1055,11 +1015,9 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                         'version' => array(
                             'type' => 'string',
-                            'maxLength' => 64,
                         ),
                     ),
                 ),
@@ -1071,14 +1029,12 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                     ),
                 ),
                 'nextPageToken' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 2048,
                 ),
                 'maximumPageSize' => array(
                     'type' => 'numeric',
@@ -1126,7 +1082,6 @@ return array (
                 'nextPageToken' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 2048,
                 ),
                 'registrationStatus' => array(
                     'required' => true,
@@ -1177,7 +1132,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'startTimeFilter' => array(
                     'required' => true,
@@ -1211,11 +1165,9 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                         'version' => array(
                             'type' => 'string',
-                            'maxLength' => 64,
                         ),
                     ),
                 ),
@@ -1227,14 +1179,12 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                     ),
                 ),
                 'nextPageToken' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 2048,
                 ),
                 'maximumPageSize' => array(
                     'type' => 'numeric',
@@ -1254,7 +1204,6 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                     ),
                 ),
@@ -1296,13 +1245,11 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'name' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'registrationStatus' => array(
                     'required' => true,
@@ -1312,7 +1259,6 @@ return array (
                 'nextPageToken' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 2048,
                 ),
                 'maximumPageSize' => array(
                     'type' => 'numeric',
@@ -1362,7 +1308,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'taskList' => array(
                     'required' => true,
@@ -1373,14 +1318,12 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                     ),
                 ),
                 'identity' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(
@@ -1424,7 +1367,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'taskList' => array(
                     'required' => true,
@@ -1435,19 +1377,16 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                     ),
                 ),
                 'identity' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 256,
                 ),
                 'nextPageToken' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 2048,
                 ),
                 'maximumPageSize' => array(
                     'type' => 'numeric',
@@ -1501,12 +1440,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 1024,
                 ),
                 'details' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 2048,
                 ),
             ),
             'errorResponses' => array(
@@ -1546,36 +1483,30 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'name' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'version' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'description' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'defaultTaskStartToCloseTimeout' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 8,
                 ),
                 'defaultTaskHeartbeatTimeout' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 8,
                 ),
                 'defaultTaskList' => array(
                     'type' => 'object',
@@ -1585,24 +1516,20 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                     ),
                 ),
                 'defaultTaskPriority' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 11,
                 ),
                 'defaultTaskScheduleToStartTimeout' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 8,
                 ),
                 'defaultTaskScheduleToCloseTimeout' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 8,
                 ),
             ),
             'errorResponses' => array(
@@ -1650,19 +1577,16 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'description' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'workflowExecutionRetentionPeriodInDays' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 8,
                 ),
             ),
             'errorResponses' => array(
@@ -1706,36 +1630,30 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'name' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'version' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'description' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'defaultTaskStartToCloseTimeout' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 8,
                 ),
                 'defaultExecutionStartToCloseTimeout' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 8,
                 ),
                 'defaultTaskList' => array(
                     'type' => 'object',
@@ -1745,14 +1663,12 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                     ),
                 ),
                 'defaultTaskPriority' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 11,
                 ),
                 'defaultChildPolicy' => array(
                     'type' => 'string',
@@ -1804,19 +1720,16 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'workflowId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'runId' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -1856,12 +1769,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 1024,
                 ),
                 'details' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 32768,
                 ),
             ),
             'errorResponses' => array(
@@ -1901,12 +1812,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 1024,
                 ),
                 'result' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 32768,
                 ),
             ),
             'errorResponses' => array(
@@ -1946,17 +1855,14 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 1024,
                 ),
                 'reason' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 256,
                 ),
                 'details' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 32768,
                 ),
             ),
             'errorResponses' => array(
@@ -1996,7 +1902,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 1024,
                 ),
                 'decisions' => array(
                     'type' => 'array',
@@ -2020,13 +1925,11 @@ return array (
                                                 'required' => true,
                                                 'type' => 'string',
                                                 'minLength' => 1,
-                                                'maxLength' => 256,
                                             ),
                                             'version' => array(
                                                 'required' => true,
                                                 'type' => 'string',
                                                 'minLength' => 1,
-                                                'maxLength' => 64,
                                             ),
                                         ),
                                     ),
@@ -2034,19 +1937,15 @@ return array (
                                         'required' => true,
                                         'type' => 'string',
                                         'minLength' => 1,
-                                        'maxLength' => 256,
                                     ),
                                     'control' => array(
                                         'type' => 'string',
-                                        'maxLength' => 32768,
                                     ),
                                     'input' => array(
                                         'type' => 'string',
-                                        'maxLength' => 32768,
                                     ),
                                     'scheduleToCloseTimeout' => array(
                                         'type' => 'string',
-                                        'maxLength' => 8,
                                     ),
                                     'taskList' => array(
                                         'type' => 'object',
@@ -2055,25 +1954,20 @@ return array (
                                                 'required' => true,
                                                 'type' => 'string',
                                                 'minLength' => 1,
-                                                'maxLength' => 256,
                                             ),
                                         ),
                                     ),
                                     'taskPriority' => array(
                                         'type' => 'string',
-                                        'maxLength' => 11,
                                     ),
                                     'scheduleToStartTimeout' => array(
                                         'type' => 'string',
-                                        'maxLength' => 8,
                                     ),
                                     'startToCloseTimeout' => array(
                                         'type' => 'string',
-                                        'maxLength' => 8,
                                     ),
                                     'heartbeatTimeout' => array(
                                         'type' => 'string',
-                                        'maxLength' => 8,
                                     ),
                                 ),
                             ),
@@ -2084,7 +1978,6 @@ return array (
                                         'required' => true,
                                         'type' => 'string',
                                         'minLength' => 1,
-                                        'maxLength' => 256,
                                     ),
                                 ),
                             ),
@@ -2093,7 +1986,6 @@ return array (
                                 'properties' => array(
                                     'result' => array(
                                         'type' => 'string',
-                                        'maxLength' => 32768,
                                     ),
                                 ),
                             ),
@@ -2102,11 +1994,9 @@ return array (
                                 'properties' => array(
                                     'reason' => array(
                                         'type' => 'string',
-                                        'maxLength' => 256,
                                     ),
                                     'details' => array(
                                         'type' => 'string',
-                                        'maxLength' => 32768,
                                     ),
                                 ),
                             ),
@@ -2115,7 +2005,6 @@ return array (
                                 'properties' => array(
                                     'details' => array(
                                         'type' => 'string',
-                                        'maxLength' => 32768,
                                     ),
                                 ),
                             ),
@@ -2124,11 +2013,9 @@ return array (
                                 'properties' => array(
                                     'input' => array(
                                         'type' => 'string',
-                                        'maxLength' => 32768,
                                     ),
                                     'executionStartToCloseTimeout' => array(
                                         'type' => 'string',
-                                        'maxLength' => 8,
                                     ),
                                     'taskList' => array(
                                         'type' => 'object',
@@ -2137,17 +2024,14 @@ return array (
                                                 'required' => true,
                                                 'type' => 'string',
                                                 'minLength' => 1,
-                                                'maxLength' => 256,
                                             ),
                                         ),
                                     ),
                                     'taskPriority' => array(
                                         'type' => 'string',
-                                        'maxLength' => 11,
                                     ),
                                     'taskStartToCloseTimeout' => array(
                                         'type' => 'string',
-                                        'maxLength' => 8,
                                     ),
                                     'childPolicy' => array(
                                         'type' => 'string',
@@ -2159,13 +2043,11 @@ return array (
                                             'name' => 'Tag',
                                             'type' => 'string',
                                             'minLength' => 1,
-                                            'maxLength' => 256,
                                         ),
                                     ),
                                     'workflowTypeVersion' => array(
                                         'type' => 'string',
                                         'minLength' => 1,
-                                        'maxLength' => 64,
                                     ),
                                 ),
                             ),
@@ -2176,11 +2058,9 @@ return array (
                                         'required' => true,
                                         'type' => 'string',
                                         'minLength' => 1,
-                                        'maxLength' => 256,
                                     ),
                                     'details' => array(
                                         'type' => 'string',
-                                        'maxLength' => 32768,
                                     ),
                                 ),
                             ),
@@ -2191,17 +2071,14 @@ return array (
                                         'required' => true,
                                         'type' => 'string',
                                         'minLength' => 1,
-                                        'maxLength' => 256,
                                     ),
                                     'control' => array(
                                         'type' => 'string',
-                                        'maxLength' => 32768,
                                     ),
                                     'startToFireTimeout' => array(
                                         'required' => true,
                                         'type' => 'string',
                                         'minLength' => 1,
-                                        'maxLength' => 8,
                                     ),
                                 ),
                             ),
@@ -2212,7 +2089,6 @@ return array (
                                         'required' => true,
                                         'type' => 'string',
                                         'minLength' => 1,
-                                        'maxLength' => 256,
                                     ),
                                 ),
                             ),
@@ -2223,25 +2099,20 @@ return array (
                                         'required' => true,
                                         'type' => 'string',
                                         'minLength' => 1,
-                                        'maxLength' => 256,
                                     ),
                                     'runId' => array(
                                         'type' => 'string',
-                                        'maxLength' => 64,
                                     ),
                                     'signalName' => array(
                                         'required' => true,
                                         'type' => 'string',
                                         'minLength' => 1,
-                                        'maxLength' => 256,
                                     ),
                                     'input' => array(
                                         'type' => 'string',
-                                        'maxLength' => 32768,
                                     ),
                                     'control' => array(
                                         'type' => 'string',
-                                        'maxLength' => 32768,
                                     ),
                                 ),
                             ),
@@ -2252,15 +2123,12 @@ return array (
                                         'required' => true,
                                         'type' => 'string',
                                         'minLength' => 1,
-                                        'maxLength' => 256,
                                     ),
                                     'runId' => array(
                                         'type' => 'string',
-                                        'maxLength' => 64,
                                     ),
                                     'control' => array(
                                         'type' => 'string',
-                                        'maxLength' => 32768,
                                     ),
                                 ),
                             ),
@@ -2275,13 +2143,11 @@ return array (
                                                 'required' => true,
                                                 'type' => 'string',
                                                 'minLength' => 1,
-                                                'maxLength' => 256,
                                             ),
                                             'version' => array(
                                                 'required' => true,
                                                 'type' => 'string',
                                                 'minLength' => 1,
-                                                'maxLength' => 64,
                                             ),
                                         ),
                                     ),
@@ -2289,19 +2155,15 @@ return array (
                                         'required' => true,
                                         'type' => 'string',
                                         'minLength' => 1,
-                                        'maxLength' => 256,
                                     ),
                                     'control' => array(
                                         'type' => 'string',
-                                        'maxLength' => 32768,
                                     ),
                                     'input' => array(
                                         'type' => 'string',
-                                        'maxLength' => 32768,
                                     ),
                                     'executionStartToCloseTimeout' => array(
                                         'type' => 'string',
-                                        'maxLength' => 8,
                                     ),
                                     'taskList' => array(
                                         'type' => 'object',
@@ -2310,17 +2172,14 @@ return array (
                                                 'required' => true,
                                                 'type' => 'string',
                                                 'minLength' => 1,
-                                                'maxLength' => 256,
                                             ),
                                         ),
                                     ),
                                     'taskPriority' => array(
                                         'type' => 'string',
-                                        'maxLength' => 11,
                                     ),
                                     'taskStartToCloseTimeout' => array(
                                         'type' => 'string',
-                                        'maxLength' => 8,
                                     ),
                                     'childPolicy' => array(
                                         'type' => 'string',
@@ -2332,7 +2191,6 @@ return array (
                                             'name' => 'Tag',
                                             'type' => 'string',
                                             'minLength' => 1,
-                                            'maxLength' => 256,
                                         ),
                                     ),
                                 ),
@@ -2343,7 +2201,6 @@ return array (
                 'executionContext' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 32768,
                 ),
             ),
             'errorResponses' => array(
@@ -2383,31 +2240,26 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'workflowId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'runId' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 64,
                 ),
                 'signalName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'input' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 32768,
                 ),
             ),
             'errorResponses' => array(
@@ -2447,14 +2299,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'workflowId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'workflowType' => array(
                     'required' => true,
@@ -2465,13 +2315,11 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                         'version' => array(
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 64,
                         ),
                     ),
                 ),
@@ -2483,24 +2331,20 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                     ),
                 ),
                 'taskPriority' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 11,
                 ),
                 'input' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 32768,
                 ),
                 'executionStartToCloseTimeout' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 8,
                 ),
                 'tagList' => array(
                     'type' => 'array',
@@ -2510,13 +2354,11 @@ return array (
                         'name' => 'Tag',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 256,
                     ),
                 ),
                 'taskStartToCloseTimeout' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 8,
                 ),
                 'childPolicy' => array(
                     'type' => 'string',
@@ -2575,29 +2417,24 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'workflowId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'runId' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 64,
                 ),
                 'reason' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 256,
                 ),
                 'details' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 32768,
                 ),
                 'childPolicy' => array(
                     'type' => 'string',

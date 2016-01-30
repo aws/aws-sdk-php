@@ -50,7 +50,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'AllowUnauthenticatedIdentities' => array(
                     'required' => true,
@@ -64,7 +63,6 @@ return array (
                     'additionalProperties' => array(
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 128,
                         'data' => array(
                             'shape_name' => 'IdentityProviderName',
                             'key_pattern' => '/[\\w._/-]+/',
@@ -75,7 +73,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'OpenIdConnectProviderARNs' => array(
                     'type' => 'array',
@@ -84,7 +81,6 @@ return array (
                         'name' => 'ARNString',
                         'type' => 'string',
                         'minLength' => 20,
-                        'maxLength' => 2048,
                     ),
                 ),
             ),
@@ -146,7 +142,6 @@ return array (
                         'name' => 'IdentityId',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 55,
                     ),
                 ),
             ),
@@ -191,7 +186,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
             ),
             'errorResponses' => array(
@@ -243,7 +237,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
             ),
             'errorResponses' => array(
@@ -295,7 +288,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
             ),
             'errorResponses' => array(
@@ -347,7 +339,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'Logins' => array(
                     'type' => 'object',
@@ -355,7 +346,6 @@ return array (
                     'additionalProperties' => array(
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 2048,
                         'data' => array(
                             'shape_name' => 'IdentityProviderName',
                             'key_pattern' => '/[\\w._/-]+/',
@@ -423,14 +413,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 15,
                 ),
                 'IdentityPoolId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'Logins' => array(
                     'type' => 'object',
@@ -438,7 +426,6 @@ return array (
                     'additionalProperties' => array(
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 2048,
                         'data' => array(
                             'shape_name' => 'IdentityProviderName',
                             'key_pattern' => '/[\\w._/-]+/',
@@ -507,7 +494,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
             ),
             'errorResponses' => array(
@@ -563,7 +549,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'Logins' => array(
                     'type' => 'object',
@@ -571,7 +556,6 @@ return array (
                     'additionalProperties' => array(
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 2048,
                         'data' => array(
                             'shape_name' => 'IdentityProviderName',
                             'key_pattern' => '/[\\w._/-]+/',
@@ -636,13 +620,11 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'IdentityId' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'Logins' => array(
                     'required' => true,
@@ -651,7 +633,6 @@ return array (
                     'additionalProperties' => array(
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 2048,
                         'data' => array(
                             'shape_name' => 'IdentityProviderName',
                             'key_pattern' => '/[\\w._/-]+/',
@@ -722,7 +703,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'MaxResults' => array(
                     'required' => true,
@@ -844,19 +824,16 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'IdentityId' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'DeveloperUserIdentifier' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 1024,
                 ),
                 'MaxResults' => array(
                     'type' => 'numeric',
@@ -923,28 +900,24 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 1024,
                 ),
                 'DestinationUserIdentifier' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 1024,
                 ),
                 'DeveloperProviderName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'IdentityPoolId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
             ),
             'errorResponses' => array(
@@ -1000,7 +973,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'Roles' => array(
                     'required' => true,
@@ -1009,7 +981,6 @@ return array (
                     'additionalProperties' => array(
                         'type' => 'string',
                         'minLength' => 20,
-                        'maxLength' => 2048,
                         'data' => array(
                             'shape_name' => 'RoleType',
                             'key_pattern' => '/(un)?authenticated/',
@@ -1074,28 +1045,24 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'IdentityPoolId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'DeveloperProviderName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'DeveloperUserIdentifier' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 1024,
                 ),
             ),
             'errorResponses' => array(
@@ -1151,7 +1118,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'Logins' => array(
                     'required' => true,
@@ -1160,7 +1126,6 @@ return array (
                     'additionalProperties' => array(
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 2048,
                         'data' => array(
                             'shape_name' => 'IdentityProviderName',
                             'key_pattern' => '/[\\w._/-]+/',
@@ -1175,7 +1140,6 @@ return array (
                         'name' => 'IdentityProviderName',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 128,
                     ),
                 ),
             ),
@@ -1236,14 +1200,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'IdentityPoolName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'AllowUnauthenticatedIdentities' => array(
                     'required' => true,
@@ -1257,7 +1219,6 @@ return array (
                     'additionalProperties' => array(
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 128,
                         'data' => array(
                             'shape_name' => 'IdentityProviderName',
                             'key_pattern' => '/[\\w._/-]+/',
@@ -1268,7 +1229,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'OpenIdConnectProviderARNs' => array(
                     'type' => 'array',
@@ -1277,7 +1237,6 @@ return array (
                         'name' => 'ARNString',
                         'type' => 'string',
                         'minLength' => 20,
-                        'maxLength' => 2048,
                     ),
                 ),
             ),

@@ -8179,7 +8179,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1024,
                 ),
             ),
         ),

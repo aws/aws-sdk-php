@@ -35,7 +35,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
             ),
             'errorResponses' => array(
@@ -77,21 +76,18 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'IdentityId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'DatasetName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -133,21 +129,18 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'IdentityId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'DatasetName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -185,7 +178,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
             ),
             'errorResponses' => array(
@@ -223,14 +215,12 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'IdentityId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
             ),
             'errorResponses' => array(
@@ -268,7 +258,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
             ),
             'errorResponses' => array(
@@ -302,7 +291,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
             ),
             'errorResponses' => array(
@@ -340,7 +328,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
             ),
             'errorResponses' => array(
@@ -378,14 +365,12 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'IdentityId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'NextToken' => array(
                     'type' => 'string',
@@ -466,21 +451,18 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'IdentityId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'DatasetName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'LastSyncCount' => array(
                     'type' => 'numeric',
@@ -534,14 +516,12 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'IdentityId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'Platform' => array(
                     'required' => true,
@@ -592,7 +572,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'Events' => array(
                     'required' => true,
@@ -641,7 +620,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'PushSync' => array(
                     'type' => 'object',
@@ -657,7 +635,6 @@ return array (
                         'RoleArn' => array(
                             'type' => 'string',
                             'minLength' => 20,
-                            'maxLength' => 2048,
                         ),
                     ),
                 ),
@@ -668,12 +645,10 @@ return array (
                         'StreamName' => array(
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 128,
                         ),
                         'RoleArn' => array(
                             'type' => 'string',
                             'minLength' => 20,
-                            'maxLength' => 2048,
                         ),
                         'StreamingStatus' => array(
                             'type' => 'string',
@@ -720,28 +695,24 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'IdentityId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'DatasetName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'DeviceId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(
@@ -782,28 +753,24 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'IdentityId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'DatasetName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'DeviceId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(
@@ -844,27 +811,23 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'IdentityId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 55,
                 ),
                 'DatasetName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'DeviceId' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'RecordPatches' => array(
                     'type' => 'array',
@@ -881,11 +844,9 @@ return array (
                                 'required' => true,
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 1024,
                             ),
                             'Value' => array(
                                 'type' => 'string',
-                                'maxLength' => 1048575,
                             ),
                             'SyncCount' => array(
                                 'required' => true,

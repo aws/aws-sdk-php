@@ -91,7 +91,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 4,
-                    'maxLength' => 23,
                 ),
             ),
             'errorResponses' => array(
@@ -123,7 +122,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 4,
-                    'maxLength' => 63,
                 ),
             ),
         ),
@@ -149,12 +147,10 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'Description' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'maxLength' => 200,
                 ),
             ),
             'errorResponses' => array(
@@ -186,19 +182,16 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'VersionLabel' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'Description' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'maxLength' => 200,
                 ),
                 'SourceBundle' => array(
                     'type' => 'object',
@@ -206,11 +199,9 @@ return array (
                     'properties' => array(
                         'S3Bucket' => array(
                             'type' => 'string',
-                            'maxLength' => 255,
                         ),
                         'S3Key' => array(
                             'type' => 'string',
-                            'maxLength' => 1024,
                         ),
                     ),
                 ),
@@ -261,19 +252,16 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'TemplateName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'SolutionStackName' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'maxLength' => 100,
                 ),
                 'SourceConfiguration' => array(
                     'type' => 'object',
@@ -282,12 +270,10 @@ return array (
                         'ApplicationName' => array(
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 100,
                         ),
                         'TemplateName' => array(
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 100,
                         ),
                     ),
                 ),
@@ -298,7 +284,6 @@ return array (
                 'Description' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'maxLength' => 200,
                 ),
                 'OptionSettings' => array(
                     'type' => 'array',
@@ -311,7 +296,6 @@ return array (
                             'ResourceName' => array(
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 256,
                             ),
                             'Namespace' => array(
                                 'type' => 'string',
@@ -359,25 +343,21 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'EnvironmentName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 4,
-                    'maxLength' => 23,
                 ),
                 'Description' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'maxLength' => 200,
                 ),
                 'CNAMEPrefix' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 4,
-                    'maxLength' => 63,
                 ),
                 'Tier' => array(
                     'type' => 'object',
@@ -405,12 +385,10 @@ return array (
                             'Key' => array(
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 128,
                             ),
                             'Value' => array(
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 256,
                             ),
                         ),
                     ),
@@ -419,18 +397,15 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'TemplateName' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'SolutionStackName' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'maxLength' => 100,
                 ),
                 'OptionSettings' => array(
                     'type' => 'array',
@@ -443,7 +418,6 @@ return array (
                             'ResourceName' => array(
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 256,
                             ),
                             'Namespace' => array(
                                 'type' => 'string',
@@ -468,7 +442,6 @@ return array (
                             'ResourceName' => array(
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 256,
                             ),
                             'Namespace' => array(
                                 'type' => 'string',
@@ -546,7 +519,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'TerminateEnvByForce' => array(
                     'type' => 'boolean',
@@ -583,14 +555,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'VersionLabel' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'DeleteSourceBundle' => array(
                     'type' => 'boolean',
@@ -639,14 +609,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'TemplateName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
             ),
             'errorResponses' => array(
@@ -678,14 +646,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'EnvironmentName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 4,
-                    'maxLength' => 23,
                 ),
             ),
         ),
@@ -710,7 +676,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'VersionLabels' => array(
                     'type' => 'array',
@@ -720,7 +685,6 @@ return array (
                         'name' => 'VersionLabel',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 100,
                     ),
                 ),
             ),
@@ -750,7 +714,6 @@ return array (
                         'name' => 'ApplicationName',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 100,
                     ),
                 ),
             ),
@@ -776,24 +739,20 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'TemplateName' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'EnvironmentName' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 4,
-                    'maxLength' => 23,
                 ),
                 'SolutionStackName' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'maxLength' => 100,
                 ),
                 'Options' => array(
                     'type' => 'array',
@@ -806,7 +765,6 @@ return array (
                             'ResourceName' => array(
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 256,
                             ),
                             'Namespace' => array(
                                 'type' => 'string',
@@ -841,19 +799,16 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'TemplateName' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'EnvironmentName' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 4,
-                    'maxLength' => 23,
                 ),
             ),
         ),
@@ -878,7 +833,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 4,
-                    'maxLength' => 23,
                 ),
                 'EnvironmentId' => array(
                     'type' => 'string',
@@ -929,7 +883,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 4,
-                    'maxLength' => 23,
                 ),
             ),
             'errorResponses' => array(
@@ -960,13 +913,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'VersionLabel' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'EnvironmentIds' => array(
                     'type' => 'array',
@@ -985,7 +936,6 @@ return array (
                         'name' => 'EnvironmentName',
                         'type' => 'string',
                         'minLength' => 4,
-                        'maxLength' => 23,
                     ),
                 ),
                 'IncludeDeleted' => array(
@@ -1025,19 +975,16 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'VersionLabel' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'TemplateName' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'EnvironmentId' => array(
                     'type' => 'string',
@@ -1047,7 +994,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 4,
-                    'maxLength' => 23,
                 ),
                 'RequestId' => array(
                     'type' => 'string',
@@ -1108,7 +1054,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 4,
-                    'maxLength' => 23,
                 ),
                 'EnvironmentId' => array(
                     'type' => 'string',
@@ -1127,7 +1072,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
             ),
             'errorResponses' => array(
@@ -1184,7 +1128,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 4,
-                    'maxLength' => 23,
                 ),
             ),
             'errorResponses' => array(
@@ -1219,7 +1162,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 4,
-                    'maxLength' => 23,
                 ),
                 'InfoType' => array(
                     'required' => true,
@@ -1253,7 +1195,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 4,
-                    'maxLength' => 23,
                 ),
             ),
         ),
@@ -1282,7 +1223,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 4,
-                    'maxLength' => 23,
                 ),
                 'InfoType' => array(
                     'required' => true,
@@ -1316,7 +1256,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 4,
-                    'maxLength' => 23,
                 ),
                 'DestinationEnvironmentId' => array(
                     'type' => 'string',
@@ -1326,7 +1265,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 4,
-                    'maxLength' => 23,
                 ),
             ),
         ),
@@ -1355,7 +1293,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 4,
-                    'maxLength' => 23,
                 ),
                 'TerminateResources' => array(
                     'type' => 'boolean',
@@ -1392,12 +1329,10 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'Description' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'maxLength' => 200,
                 ),
             ),
         ),
@@ -1423,19 +1358,16 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'VersionLabel' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'Description' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'maxLength' => 200,
                 ),
             ),
         ),
@@ -1461,19 +1393,16 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'TemplateName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'Description' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'maxLength' => 200,
                 ),
                 'OptionSettings' => array(
                     'type' => 'array',
@@ -1486,7 +1415,6 @@ return array (
                             'ResourceName' => array(
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 256,
                             ),
                             'Namespace' => array(
                                 'type' => 'string',
@@ -1511,7 +1439,6 @@ return array (
                             'ResourceName' => array(
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 256,
                             ),
                             'Namespace' => array(
                                 'type' => 'string',
@@ -1555,12 +1482,10 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 4,
-                    'maxLength' => 23,
                 ),
                 'Description' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'maxLength' => 200,
                 ),
                 'Tier' => array(
                     'type' => 'object',
@@ -1581,18 +1506,15 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'TemplateName' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'SolutionStackName' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'maxLength' => 100,
                 ),
                 'OptionSettings' => array(
                     'type' => 'array',
@@ -1605,7 +1527,6 @@ return array (
                             'ResourceName' => array(
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 256,
                             ),
                             'Namespace' => array(
                                 'type' => 'string',
@@ -1630,7 +1551,6 @@ return array (
                             'ResourceName' => array(
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 256,
                             ),
                             'Namespace' => array(
                                 'type' => 'string',
@@ -1671,19 +1591,16 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'TemplateName' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'EnvironmentName' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 4,
-                    'maxLength' => 23,
                 ),
                 'OptionSettings' => array(
                     'required' => true,
@@ -1697,7 +1614,6 @@ return array (
                             'ResourceName' => array(
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 256,
                             ),
                             'Namespace' => array(
                                 'type' => 'string',

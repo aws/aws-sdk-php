@@ -46,12 +46,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'Description' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 128,
                 ),
                 'Size' => array(
                     'required' => true,
@@ -141,7 +139,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 62,
                 ),
             ),
             'errorResponses' => array(
@@ -198,20 +195,17 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 15,
                 ),
                 'Password' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 8,
-                    'maxLength' => 64,
                 ),
                 'OrganizationalUnitDistinguishedName' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 2000,
                 ),
                 'ComputerAttributes' => array(
                     'type' => 'array',
@@ -304,7 +298,6 @@ return array (
                 'Description' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 128,
                 ),
                 'Size' => array(
                     'required' => true,
@@ -378,7 +371,6 @@ return array (
                 'Name' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -695,7 +687,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -758,7 +749,6 @@ return array (
                                 'name' => 'Server',
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 256,
                             ),
                         ),
                         'RadiusPort' => array(
@@ -778,7 +768,6 @@ return array (
                         'SharedSecret' => array(
                             'type' => 'string',
                             'minLength' => 8,
-                            'maxLength' => 512,
                         ),
                         'AuthenticationProtocol' => array(
                             'type' => 'string',
@@ -786,7 +775,6 @@ return array (
                         'DisplayLabel' => array(
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 64,
                         ),
                         'UseSameUsername' => array(
                             'type' => 'boolean',
@@ -853,7 +841,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -1041,7 +1028,6 @@ return array (
                                 'name' => 'Server',
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 256,
                             ),
                         ),
                         'RadiusPort' => array(
@@ -1061,7 +1047,6 @@ return array (
                         'SharedSecret' => array(
                             'type' => 'string',
                             'minLength' => 8,
-                            'maxLength' => 512,
                         ),
                         'AuthenticationProtocol' => array(
                             'type' => 'string',
@@ -1069,7 +1054,6 @@ return array (
                         'DisplayLabel' => array(
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 64,
                         ),
                         'UseSameUsername' => array(
                             'type' => 'boolean',

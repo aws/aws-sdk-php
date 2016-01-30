@@ -130,7 +130,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1024,
                 ),
                 'Parameters' => array(
                     'type' => 'array',
@@ -199,13 +198,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 16384,
                 ),
                 'StackPolicyURL' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1350,
                 ),
                 'Tags' => array(
                     'type' => 'array',
@@ -285,7 +282,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1024,
                 ),
             ),
         ),
@@ -314,7 +310,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1024,
                 ),
             ),
         ),
@@ -403,7 +398,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1024,
                 ),
             ),
         ),
@@ -433,7 +427,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1024,
                 ),
                 'Parameters' => array(
                     'type' => 'array',
@@ -532,7 +525,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1024,
                 ),
                 'StackName' => array(
                     'type' => 'string',
@@ -567,7 +559,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1024,
                 ),
             ),
         ),
@@ -592,7 +583,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1024,
                 ),
                 'StackStatusFilter' => array(
                     'type' => 'array',
@@ -631,13 +621,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 16384,
                 ),
                 'StackPolicyURL' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1350,
                 ),
             ),
         ),
@@ -674,7 +662,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'Status' => array(
                     'required' => true,
@@ -714,7 +701,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1024,
                 ),
                 'UsePreviousTemplate' => array(
                     'type' => 'boolean',
@@ -725,13 +711,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 16384,
                 ),
                 'StackPolicyDuringUpdateURL' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1350,
                 ),
                 'Parameters' => array(
                     'type' => 'array',
@@ -776,13 +760,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 16384,
                 ),
                 'StackPolicyURL' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1350,
                 ),
                 'NotificationARNs' => array(
                     'type' => 'array',
@@ -828,7 +810,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1024,
                 ),
             ),
         ),

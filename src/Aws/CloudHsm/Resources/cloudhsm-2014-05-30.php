@@ -170,7 +170,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 600,
-                    'maxLength' => 2400,
                 ),
             ),
             'errorResponses' => array(
@@ -809,7 +808,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 600,
-                    'maxLength' => 2400,
                 ),
             ),
             'errorResponses' => array(

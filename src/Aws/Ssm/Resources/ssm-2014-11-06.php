@@ -51,7 +51,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 36,
-                    'maxLength' => 36,
                 ),
                 'InstanceIds' => array(
                     'type' => 'array',
@@ -688,7 +687,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 36,
-                    'maxLength' => 36,
                 ),
                 'InstanceId' => array(
                     'type' => 'string',
@@ -774,7 +772,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 36,
-                    'maxLength' => 36,
                 ),
                 'InstanceId' => array(
                     'type' => 'string',
@@ -943,7 +940,6 @@ return array (
                 'Comment' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 100,
                 ),
                 'Parameters' => array(
                     'type' => 'object',
@@ -963,12 +959,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
-                    'maxLength' => 63,
                 ),
                 'OutputS3KeyPrefix' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -1050,11 +1044,9 @@ return array (
                         'Message' => array(
                             'required' => true,
                             'type' => 'string',
-                            'maxLength' => 1024,
                         ),
                         'AdditionalInfo' => array(
                             'type' => 'string',
-                            'maxLength' => 1024,
                         ),
                     ),
                 ),

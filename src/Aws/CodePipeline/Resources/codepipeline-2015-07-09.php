@@ -84,7 +84,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'nonce' => array(
                     'required' => true,
@@ -147,14 +146,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 25,
                 ),
                 'version' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 9,
                 ),
                 'settings' => array(
                     'type' => 'object',
@@ -163,22 +160,18 @@ return array (
                         'thirdPartyConfigurationUrl' => array(
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 2048,
                         ),
                         'entityUrlTemplate' => array(
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 2048,
                         ),
                         'executionUrlTemplate' => array(
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 2048,
                         ),
                         'revisionUrlTemplate' => array(
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 2048,
                         ),
                     ),
                 ),
@@ -273,7 +266,6 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 100,
                         ),
                         'roleArn' => array(
                             'required' => true,
@@ -310,7 +302,6 @@ return array (
                                         'required' => true,
                                         'type' => 'string',
                                         'minLength' => 1,
-                                        'maxLength' => 100,
                                     ),
                                     'blockers' => array(
                                         'type' => 'array',
@@ -335,7 +326,6 @@ return array (
                                                     'required' => true,
                                                     'type' => 'string',
                                                     'minLength' => 1,
-                                                    'maxLength' => 100,
                                                 ),
                                                 'actionTypeId' => array(
                                                     'required' => true,
@@ -353,13 +343,11 @@ return array (
                                                             'required' => true,
                                                             'type' => 'string',
                                                             'minLength' => 1,
-                                                            'maxLength' => 25,
                                                         ),
                                                         'version' => array(
                                                             'required' => true,
                                                             'type' => 'string',
                                                             'minLength' => 1,
-                                                            'maxLength' => 9,
                                                         ),
                                                     ),
                                                 ),
@@ -373,7 +361,6 @@ return array (
                                                     'additionalProperties' => array(
                                                         'type' => 'string',
                                                         'minLength' => 1,
-                                                        'maxLength' => 250,
                                                         'data' => array(
                                                             'shape_name' => 'ActionConfigurationKey',
                                                         ),
@@ -389,7 +376,6 @@ return array (
                                                                 'required' => true,
                                                                 'type' => 'string',
                                                                 'minLength' => 1,
-                                                                'maxLength' => 100,
                                                             ),
                                                         ),
                                                     ),
@@ -472,14 +458,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 25,
                 ),
                 'version' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 9,
                 ),
             ),
             'errorResponses' => array(
@@ -515,7 +499,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
             ),
             'errorResponses' => array(
@@ -551,14 +534,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'stageName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'transitionType' => array(
                     'required' => true,
@@ -570,7 +551,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 300,
                 ),
             ),
             'errorResponses' => array(
@@ -614,14 +594,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'stageName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'transitionType' => array(
                     'required' => true,
@@ -708,7 +686,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'version' => array(
                     'type' => 'numeric',
@@ -757,7 +734,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
             ),
             'errorResponses' => array(
@@ -797,7 +773,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'clientToken' => array(
                     'required' => true,
@@ -936,13 +911,11 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 25,
                         ),
                         'version' => array(
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 9,
                         ),
                     ),
                 ),
@@ -957,7 +930,6 @@ return array (
                     'additionalProperties' => array(
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 20,
                         'data' => array(
                             'shape_name' => 'ActionConfigurationKey',
                         ),
@@ -1013,13 +985,11 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 25,
                         ),
                         'version' => array(
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 9,
                         ),
                     ),
                 ),
@@ -1066,21 +1036,18 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'stageName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'actionName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'actionRevision' => array(
                     'required' => true,
@@ -1279,7 +1246,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'clientToken' => array(
                     'required' => true,
@@ -1342,7 +1308,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'clientToken' => array(
                     'required' => true,
@@ -1429,7 +1394,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
             ),
             'errorResponses' => array(
@@ -1473,7 +1437,6 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 100,
                         ),
                         'roleArn' => array(
                             'required' => true,
@@ -1510,7 +1473,6 @@ return array (
                                         'required' => true,
                                         'type' => 'string',
                                         'minLength' => 1,
-                                        'maxLength' => 100,
                                     ),
                                     'blockers' => array(
                                         'type' => 'array',
@@ -1535,7 +1497,6 @@ return array (
                                                     'required' => true,
                                                     'type' => 'string',
                                                     'minLength' => 1,
-                                                    'maxLength' => 100,
                                                 ),
                                                 'actionTypeId' => array(
                                                     'required' => true,
@@ -1553,13 +1514,11 @@ return array (
                                                             'required' => true,
                                                             'type' => 'string',
                                                             'minLength' => 1,
-                                                            'maxLength' => 25,
                                                         ),
                                                         'version' => array(
                                                             'required' => true,
                                                             'type' => 'string',
                                                             'minLength' => 1,
-                                                            'maxLength' => 9,
                                                         ),
                                                     ),
                                                 ),
@@ -1573,7 +1532,6 @@ return array (
                                                     'additionalProperties' => array(
                                                         'type' => 'string',
                                                         'minLength' => 1,
-                                                        'maxLength' => 250,
                                                         'data' => array(
                                                             'shape_name' => 'ActionConfigurationKey',
                                                         ),
@@ -1589,7 +1547,6 @@ return array (
                                                                 'required' => true,
                                                                 'type' => 'string',
                                                                 'minLength' => 1,
-                                                                'maxLength' => 100,
                                                             ),
                                                         ),
                                                     ),

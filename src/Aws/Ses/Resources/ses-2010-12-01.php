@@ -423,7 +423,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
         ),
@@ -718,7 +717,6 @@ return array (
                         'name' => 'PolicyName',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 64,
                     ),
                 ),
             ),
@@ -934,7 +932,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'Policy' => array(
                     'required' => true,

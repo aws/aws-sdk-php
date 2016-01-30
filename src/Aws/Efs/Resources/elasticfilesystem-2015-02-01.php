@@ -35,7 +35,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -162,12 +161,10 @@ return array (
                                 'required' => true,
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 128,
                             ),
                             'Value' => array(
                                 'required' => true,
                                 'type' => 'string',
-                                'maxLength' => 256,
                             ),
                         ),
                     ),
@@ -272,7 +269,6 @@ return array (
                         'name' => 'TagKey',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 128,
                     ),
                 ),
             ),
@@ -311,7 +307,6 @@ return array (
                     'type' => 'string',
                     'location' => 'query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'FileSystemId' => array(
                     'type' => 'string',

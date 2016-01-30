@@ -507,7 +507,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
-                    'maxLength' => 255,
                 ),
                 'KeySchema' => array(
                     'required' => true,
@@ -524,7 +523,6 @@ return array (
                                     'description' => 'The AttributeName of the KeySchemaElement.',
                                     'type' => 'string',
                                     'minLength' => 1,
-                                    'maxLength' => 255,
                                 ),
                                 'AttributeType' => array(
                                     'required' => true,
@@ -547,7 +545,6 @@ return array (
                                     'description' => 'The AttributeName of the KeySchemaElement.',
                                     'type' => 'string',
                                     'minLength' => 1,
-                                    'maxLength' => 255,
                                 ),
                                 'AttributeType' => array(
                                     'required' => true,
@@ -627,7 +624,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
-                    'maxLength' => 255,
                 ),
                 'Key' => array(
                     'required' => true,
@@ -859,7 +855,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
-                    'maxLength' => 255,
                 ),
             ),
             'errorResponses' => array(
@@ -910,7 +905,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
-                    'maxLength' => 255,
                 ),
             ),
             'errorResponses' => array(
@@ -953,7 +947,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
-                    'maxLength' => 255,
                 ),
                 'Key' => array(
                     'required' => true,
@@ -1117,7 +1110,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
-                    'maxLength' => 255,
                 ),
                 'Limit' => array(
                     'type' => 'numeric',
@@ -1162,7 +1154,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
-                    'maxLength' => 255,
                 ),
                 'Item' => array(
                     'required' => true,
@@ -1346,7 +1337,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
-                    'maxLength' => 255,
                 ),
                 'AttributesToGet' => array(
                     'type' => 'array',
@@ -1657,7 +1647,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
-                    'maxLength' => 255,
                 ),
                 'AttributesToGet' => array(
                     'type' => 'array',
@@ -1913,7 +1902,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
-                    'maxLength' => 255,
                 ),
                 'Key' => array(
                     'required' => true,
@@ -2214,7 +2202,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
-                    'maxLength' => 255,
                 ),
                 'ProvisionedThroughput' => array(
                     'required' => true,

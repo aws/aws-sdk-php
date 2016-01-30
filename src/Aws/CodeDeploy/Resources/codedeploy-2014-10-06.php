@@ -129,7 +129,6 @@ return array (
                         'name' => 'ApplicationName',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 100,
                     ),
                 ),
             ),
@@ -256,7 +255,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
             ),
             'errorResponses' => array(
@@ -304,13 +302,11 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'deploymentGroupName' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'revision' => array(
                     'type' => 'object',
@@ -356,7 +352,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'description' => array(
                     'type' => 'string',
@@ -445,7 +440,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'minimumHealthyHosts' => array(
                     'type' => 'object',
@@ -505,20 +499,17 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'deploymentGroupName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'deploymentConfigName' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'ec2TagFilters' => array(
                     'type' => 'array',
@@ -657,7 +648,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
             ),
             'errorResponses' => array(
@@ -697,7 +687,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
             ),
             'errorResponses' => array(
@@ -745,14 +734,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'deploymentGroupName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
             ),
             'errorResponses' => array(
@@ -842,7 +829,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
             ),
             'errorResponses' => array(
@@ -886,7 +872,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'revision' => array(
                     'required' => true,
@@ -1025,7 +1010,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
             ),
             'errorResponses' => array(
@@ -1069,14 +1053,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'deploymentGroupName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
             ),
             'errorResponses' => array(
@@ -1229,7 +1211,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'sortBy' => array(
                     'type' => 'string',
@@ -1391,7 +1372,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'nextToken' => array(
                     'type' => 'string',
@@ -1508,13 +1488,11 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'deploymentGroupName' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'includeOnlyStatuses' => array(
                     'type' => 'array',
@@ -1680,7 +1658,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'description' => array(
                     'type' => 'string',
@@ -1960,13 +1937,11 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'newApplicationName' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
             ),
             'errorResponses' => array(
@@ -2014,26 +1989,22 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'currentDeploymentGroupName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'newDeploymentGroupName' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'deploymentConfigName' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'ec2TagFilters' => array(
                     'type' => 'array',

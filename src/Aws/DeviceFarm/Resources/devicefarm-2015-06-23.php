@@ -41,12 +41,10 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 256,
                 ),
                 'description' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 8192,
                 ),
                 'rules' => array(
                     'required' => true,
@@ -113,7 +111,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(
@@ -961,7 +958,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 4,
-                    'maxLength' => 1024,
                 ),
             ),
             'errorResponses' => array(
@@ -1014,7 +1010,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 4,
-                    'maxLength' => 1024,
                 ),
             ),
             'errorResponses' => array(
@@ -1066,7 +1061,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 4,
-                    'maxLength' => 1024,
                 ),
             ),
             'errorResponses' => array(
@@ -1119,7 +1113,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 4,
-                    'maxLength' => 1024,
                 ),
             ),
             'errorResponses' => array(
@@ -1172,7 +1165,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 4,
-                    'maxLength' => 1024,
                 ),
             ),
             'errorResponses' => array(
@@ -1225,7 +1217,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 4,
-                    'maxLength' => 1024,
                 ),
             ),
             'errorResponses' => array(
@@ -1278,7 +1269,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 4,
-                    'maxLength' => 1024,
                 ),
             ),
             'errorResponses' => array(
@@ -1331,7 +1321,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 4,
-                    'maxLength' => 1024,
                 ),
             ),
             'errorResponses' => array(
@@ -1384,7 +1373,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 4,
-                    'maxLength' => 1024,
                 ),
             ),
             'errorResponses' => array(
@@ -1447,7 +1435,6 @@ return array (
                 'name' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 256,
                 ),
                 'test' => array(
                     'required' => true,
@@ -1575,12 +1562,10 @@ return array (
                 'name' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 256,
                 ),
                 'description' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 8192,
                 ),
                 'rules' => array(
                     'type' => 'array',
@@ -1651,7 +1636,6 @@ return array (
                 'name' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(

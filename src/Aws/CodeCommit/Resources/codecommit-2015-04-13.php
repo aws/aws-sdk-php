@@ -40,7 +40,6 @@ return array (
                         'name' => 'RepositoryName',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 100,
                     ),
                 ),
             ),
@@ -105,14 +104,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'branchName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'commitId' => array(
                     'required' => true,
@@ -205,12 +202,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'repositoryDescription' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1000,
                 ),
             ),
             'errorResponses' => array(
@@ -282,7 +277,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
             ),
             'errorResponses' => array(
@@ -341,13 +335,11 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'branchName' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
             ),
             'errorResponses' => array(
@@ -423,7 +415,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
             ),
             'errorResponses' => array(
@@ -487,7 +478,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'nextToken' => array(
                     'type' => 'string',
@@ -608,14 +598,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'defaultBranchName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
             ),
             'errorResponses' => array(
@@ -691,12 +679,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'repositoryDescription' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1000,
                 ),
             ),
             'errorResponses' => array(
@@ -764,14 +750,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'newName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
             ),
             'errorResponses' => array(

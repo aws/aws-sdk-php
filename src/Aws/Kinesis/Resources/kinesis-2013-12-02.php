@@ -83,7 +83,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'Tags' => array(
                     'required' => true,
@@ -91,7 +90,6 @@ return array (
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'string',
-                        'maxLength' => 256,
                         'data' => array(
                             'shape_name' => 'TagKey',
                         ),
@@ -143,7 +141,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'ShardCount' => array(
                     'required' => true,
@@ -194,7 +191,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'RetentionPeriodHours' => array(
                     'required' => true,
@@ -249,7 +245,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -289,7 +284,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'Limit' => array(
                     'type' => 'numeric',
@@ -301,7 +295,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -341,7 +334,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'Limit' => array(
                     'type' => 'numeric',
@@ -395,14 +387,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'ShardId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'ShardIteratorType' => array(
                     'required' => true,
@@ -455,7 +445,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'RetentionPeriodHours' => array(
                     'required' => true,
@@ -515,7 +504,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -551,13 +539,11 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'ExclusiveStartTagKey' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'Limit' => array(
                     'type' => 'numeric',
@@ -607,21 +593,18 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'ShardToMerge' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'AdjacentShardToMerge' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -669,7 +652,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'Data' => array(
                     'required' => true,
@@ -684,7 +666,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'ExplicitHashKey' => array(
                     'type' => 'string',
@@ -755,7 +736,6 @@ return array (
                                 'required' => true,
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 256,
                             ),
                         ),
                     ),
@@ -765,7 +745,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
             ),
             'errorResponses' => array(
@@ -809,7 +788,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'TagKeys' => array(
                     'required' => true,
@@ -821,7 +799,6 @@ return array (
                         'name' => 'TagKey',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 128,
                     ),
                 ),
             ),
@@ -870,14 +847,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'ShardToSplit' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 128,
                 ),
                 'NewStartingHashKey' => array(
                     'required' => true,

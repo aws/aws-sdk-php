@@ -36,32 +36,27 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'BatchPredictionName' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'MLModelId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'BatchPredictionDataSourceId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'OutputUri' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 2048,
                 ),
             ),
             'errorResponses' => array(
@@ -105,12 +100,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'DataSourceName' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'RDSData' => array(
                     'required' => true,
@@ -125,13 +118,11 @@ return array (
                                     'required' => true,
                                     'type' => 'string',
                                     'minLength' => 1,
-                                    'maxLength' => 63,
                                 ),
                                 'DatabaseName' => array(
                                     'required' => true,
                                     'type' => 'string',
                                     'minLength' => 1,
-                                    'maxLength' => 64,
                                 ),
                             ),
                         ),
@@ -139,7 +130,6 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 16777216,
                         ),
                         'DatabaseCredentials' => array(
                             'required' => true,
@@ -149,49 +139,41 @@ return array (
                                     'required' => true,
                                     'type' => 'string',
                                     'minLength' => 1,
-                                    'maxLength' => 128,
                                 ),
                                 'Password' => array(
                                     'required' => true,
                                     'type' => 'string',
                                     'minLength' => 8,
-                                    'maxLength' => 128,
                                 ),
                             ),
                         ),
                         'S3StagingLocation' => array(
                             'required' => true,
                             'type' => 'string',
-                            'maxLength' => 2048,
                         ),
                         'DataRearrangement' => array(
                             'type' => 'string',
                         ),
                         'DataSchema' => array(
                             'type' => 'string',
-                            'maxLength' => 131071,
                         ),
                         'DataSchemaUri' => array(
                             'type' => 'string',
-                            'maxLength' => 2048,
                         ),
                         'ResourceRole' => array(
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 64,
                         ),
                         'ServiceRole' => array(
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 64,
                         ),
                         'SubnetId' => array(
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 255,
                         ),
                         'SecurityGroupIds' => array(
                             'required' => true,
@@ -200,7 +182,6 @@ return array (
                                 'name' => 'EDPSecurityGroupId',
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 255,
                             ),
                         ),
                     ),
@@ -210,7 +191,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'ComputeStatistics' => array(
                     'type' => 'boolean',
@@ -259,12 +239,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'DataSourceName' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'DataSpec' => array(
                     'required' => true,
@@ -279,13 +257,11 @@ return array (
                                     'required' => true,
                                     'type' => 'string',
                                     'minLength' => 1,
-                                    'maxLength' => 64,
                                 ),
                                 'ClusterIdentifier' => array(
                                     'required' => true,
                                     'type' => 'string',
                                     'minLength' => 1,
-                                    'maxLength' => 63,
                                 ),
                             ),
                         ),
@@ -293,7 +269,6 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 16777216,
                         ),
                         'DatabaseCredentials' => array(
                             'required' => true,
@@ -303,31 +278,26 @@ return array (
                                     'required' => true,
                                     'type' => 'string',
                                     'minLength' => 1,
-                                    'maxLength' => 128,
                                 ),
                                 'Password' => array(
                                     'required' => true,
                                     'type' => 'string',
                                     'minLength' => 8,
-                                    'maxLength' => 64,
                                 ),
                             ),
                         ),
                         'S3StagingLocation' => array(
                             'required' => true,
                             'type' => 'string',
-                            'maxLength' => 2048,
                         ),
                         'DataRearrangement' => array(
                             'type' => 'string',
                         ),
                         'DataSchema' => array(
                             'type' => 'string',
-                            'maxLength' => 131071,
                         ),
                         'DataSchemaUri' => array(
                             'type' => 'string',
-                            'maxLength' => 2048,
                         ),
                     ),
                 ),
@@ -336,7 +306,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'ComputeStatistics' => array(
                     'type' => 'boolean',
@@ -385,12 +354,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'DataSourceName' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'DataSpec' => array(
                     'required' => true,
@@ -400,18 +367,15 @@ return array (
                         'DataLocationS3' => array(
                             'required' => true,
                             'type' => 'string',
-                            'maxLength' => 2048,
                         ),
                         'DataRearrangement' => array(
                             'type' => 'string',
                         ),
                         'DataSchema' => array(
                             'type' => 'string',
-                            'maxLength' => 131071,
                         ),
                         'DataSchemaLocationS3' => array(
                             'type' => 'string',
-                            'maxLength' => 2048,
                         ),
                     ),
                 ),
@@ -462,26 +426,22 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'EvaluationName' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'MLModelId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'EvaluationDataSourceId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -525,12 +485,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'MLModelName' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'MLModelType' => array(
                     'required' => true,
@@ -552,17 +510,14 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'Recipe' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 131071,
                 ),
                 'RecipeUri' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 2048,
                 ),
             ),
             'errorResponses' => array(
@@ -606,7 +561,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -650,7 +604,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -694,7 +647,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -738,7 +690,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -782,7 +733,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -826,7 +776,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -872,37 +821,30 @@ return array (
                 'EQ' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'GT' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'LT' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'GE' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'LE' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'NE' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'Prefix' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'SortOrder' => array(
                     'type' => 'string',
@@ -958,37 +900,30 @@ return array (
                 'EQ' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'GT' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'LT' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'GE' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'LE' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'NE' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'Prefix' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'SortOrder' => array(
                     'type' => 'string',
@@ -1044,37 +979,30 @@ return array (
                 'EQ' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'GT' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'LT' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'GE' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'LE' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'NE' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'Prefix' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'SortOrder' => array(
                     'type' => 'string',
@@ -1130,37 +1058,30 @@ return array (
                 'EQ' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'GT' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'LT' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'GE' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'LE' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'NE' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'Prefix' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'SortOrder' => array(
                     'type' => 'string',
@@ -1214,7 +1135,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -1258,7 +1178,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'Verbose' => array(
                     'type' => 'boolean',
@@ -1307,7 +1226,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -1351,7 +1269,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'Verbose' => array(
                     'type' => 'boolean',
@@ -1400,7 +1317,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'Record' => array(
                     'required' => true,
@@ -1417,7 +1333,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 2048,
                 ),
             ),
             'errorResponses' => array(
@@ -1469,13 +1384,11 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'BatchPredictionName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
             ),
             'errorResponses' => array(
@@ -1519,13 +1432,11 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'DataSourceName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
             ),
             'errorResponses' => array(
@@ -1569,13 +1480,11 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'EvaluationName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
             ),
             'errorResponses' => array(
@@ -1619,12 +1528,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'MLModelName' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 1024,
                 ),
                 'ScoreThreshold' => array(
                     'type' => 'numeric',

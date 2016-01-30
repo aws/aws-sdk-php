@@ -51,7 +51,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -87,7 +86,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(
@@ -127,7 +125,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(
@@ -174,7 +171,6 @@ return array (
                         'name' => 'StringWithCharLimit64',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 64,
                     ),
                 ),
                 'ComplianceTypes' => array(
@@ -227,13 +223,11 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'ResourceId' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'ComplianceTypes' => array(
                     'type' => 'array',
@@ -294,7 +288,6 @@ return array (
                         'name' => 'StringWithCharLimit64',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 64,
                     ),
                 ),
             ),
@@ -334,7 +327,6 @@ return array (
                         'name' => 'StringWithCharLimit64',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 64,
                     ),
                 ),
                 'NextToken' => array(
@@ -377,7 +369,6 @@ return array (
                         'name' => 'RecorderName',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 256,
                     ),
                 ),
             ),
@@ -416,7 +407,6 @@ return array (
                         'name' => 'RecorderName',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 256,
                     ),
                 ),
             ),
@@ -455,7 +445,6 @@ return array (
                         'name' => 'ChannelName',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 256,
                     ),
                 ),
             ),
@@ -494,7 +483,6 @@ return array (
                         'name' => 'ChannelName',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 256,
                     ),
                 ),
             ),
@@ -531,7 +519,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'ComplianceTypes' => array(
                     'type' => 'array',
@@ -593,14 +580,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'ResourceId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
                 'ComplianceTypes' => array(
                     'type' => 'array',
@@ -675,7 +660,6 @@ return array (
                         'name' => 'StringWithCharLimit256',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 256,
                     ),
                 ),
             ),
@@ -877,7 +861,6 @@ return array (
                         'ConfigRuleName' => array(
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 64,
                         ),
                         'ConfigRuleArn' => array(
                             'type' => 'string',
@@ -887,7 +870,6 @@ return array (
                         ),
                         'Description' => array(
                             'type' => 'string',
-                            'maxLength' => 256,
                         ),
                         'Scope' => array(
                             'type' => 'object',
@@ -899,23 +881,19 @@ return array (
                                         'name' => 'StringWithCharLimit256',
                                         'type' => 'string',
                                         'minLength' => 1,
-                                        'maxLength' => 256,
                                     ),
                                 ),
                                 'TagKey' => array(
                                     'type' => 'string',
                                     'minLength' => 1,
-                                    'maxLength' => 128,
                                 ),
                                 'TagValue' => array(
                                     'type' => 'string',
                                     'minLength' => 1,
-                                    'maxLength' => 256,
                                 ),
                                 'ComplianceResourceId' => array(
                                     'type' => 'string',
                                     'minLength' => 1,
-                                    'maxLength' => 256,
                                 ),
                             ),
                         ),
@@ -929,7 +907,6 @@ return array (
                                 'SourceIdentifier' => array(
                                     'type' => 'string',
                                     'minLength' => 1,
-                                    'maxLength' => 256,
                                 ),
                                 'SourceDetails' => array(
                                     'type' => 'array',
@@ -952,7 +929,6 @@ return array (
                         'InputParameters' => array(
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                         'MaximumExecutionFrequency' => array(
                             'type' => 'string',
@@ -1007,7 +983,6 @@ return array (
                         'name' => array(
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                         'roleARN' => array(
                             'type' => 'string',
@@ -1079,7 +1054,6 @@ return array (
                         'name' => array(
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                         's3BucketName' => array(
                             'type' => 'string',
@@ -1165,13 +1139,11 @@ return array (
                                 'required' => true,
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 256,
                             ),
                             'ComplianceResourceId' => array(
                                 'required' => true,
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 256,
                             ),
                             'ComplianceType' => array(
                                 'required' => true,
@@ -1180,7 +1152,6 @@ return array (
                             'Annotation' => array(
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 256,
                             ),
                             'OrderingTimestamp' => array(
                                 'required' => true,
@@ -1241,7 +1212,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(
@@ -1281,7 +1251,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(

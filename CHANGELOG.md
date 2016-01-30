@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* Remove all 'maxLength' constraints from models. This validation will be
+  handled server-side.
+
 ## 2.8.26 - 2016-01-29
 
 * `Aws\Ssm` - Added support for long EC2 instance IDs.

@@ -72,7 +72,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
-                    'maxLength' => 28,
                 ),
             ),
             'errorResponses' => array(
@@ -112,7 +111,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
-                    'maxLength' => 28,
                 ),
                 'IndexField' => array(
                     'required' => true,
@@ -123,7 +121,6 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 64,
                         ),
                         'IndexFieldType' => array(
                             'required' => true,
@@ -142,7 +139,6 @@ return array (
                             'properties' => array(
                                 'DefaultValue' => array(
                                     'type' => 'string',
-                                    'maxLength' => 1024,
                                 ),
                                 'SearchEnabled' => array(
                                     'type' => 'boolean',
@@ -163,7 +159,6 @@ return array (
                             'properties' => array(
                                 'DefaultValue' => array(
                                     'type' => 'string',
-                                    'maxLength' => 1024,
                                 ),
                                 'FacetEnabled' => array(
                                     'type' => 'boolean',
@@ -176,7 +171,6 @@ return array (
                                 'TextProcessor' => array(
                                     'type' => 'string',
                                     'minLength' => 1,
-                                    'maxLength' => 64,
                                 ),
                             ),
                         ),
@@ -198,11 +192,9 @@ return array (
                                                 'required' => true,
                                                 'type' => 'string',
                                                 'minLength' => 1,
-                                                'maxLength' => 64,
                                             ),
                                             'DefaultValue' => array(
                                                 'type' => 'string',
-                                                'maxLength' => 1024,
                                             ),
                                         ),
                                     ),
@@ -213,11 +205,9 @@ return array (
                                                 'required' => true,
                                                 'type' => 'string',
                                                 'minLength' => 1,
-                                                'maxLength' => 64,
                                             ),
                                             'DefaultValue' => array(
                                                 'type' => 'string',
-                                                'maxLength' => 1024,
                                             ),
                                             'Separator' => array(
                                                 'type' => 'string',
@@ -234,18 +224,15 @@ return array (
                                                 'required' => true,
                                                 'type' => 'string',
                                                 'minLength' => 1,
-                                                'maxLength' => 64,
                                             ),
                                             'DefaultValue' => array(
                                                 'type' => 'string',
-                                                'maxLength' => 1024,
                                             ),
                                             'Cases' => array(
                                                 'type' => 'object',
                                                 'sentAs' => 'Cases.entry',
                                                 'additionalProperties' => array(
                                                     'type' => 'string',
-                                                    'maxLength' => 1024,
                                                     'data' => array(
                                                         'shape_name' => 'FieldValue',
                                                     ),
@@ -304,7 +291,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
-                    'maxLength' => 28,
                 ),
                 'RankExpression' => array(
                     'required' => true,
@@ -315,13 +301,11 @@ return array (
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 64,
                         ),
                         'RankExpression' => array(
                             'required' => true,
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 10240,
                         ),
                     ),
                 ),
@@ -371,7 +355,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
-                    'maxLength' => 28,
                 ),
             ),
             'errorResponses' => array(
@@ -407,14 +390,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
-                    'maxLength' => 28,
                 ),
                 'IndexFieldName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -458,14 +439,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
-                    'maxLength' => 28,
                 ),
                 'RankName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -509,7 +488,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
-                    'maxLength' => 28,
                 ),
             ),
             'errorResponses' => array(
@@ -552,7 +530,6 @@ return array (
                         'name' => 'DomainName',
                         'type' => 'string',
                         'minLength' => 3,
-                        'maxLength' => 28,
                     ),
                 ),
             ),
@@ -589,7 +566,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
-                    'maxLength' => 28,
                 ),
                 'FieldNames' => array(
                     'type' => 'array',
@@ -599,7 +575,6 @@ return array (
                         'name' => 'FieldName',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 64,
                     ),
                 ),
             ),
@@ -640,7 +615,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
-                    'maxLength' => 28,
                 ),
                 'RankNames' => array(
                     'type' => 'array',
@@ -650,7 +624,6 @@ return array (
                         'name' => 'FieldName',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 64,
                     ),
                 ),
             ),
@@ -691,7 +664,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
-                    'maxLength' => 28,
                 ),
             ),
             'errorResponses' => array(
@@ -731,7 +703,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
-                    'maxLength' => 28,
                 ),
             ),
             'errorResponses' => array(
@@ -771,7 +742,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
-                    'maxLength' => 28,
                 ),
             ),
             'errorResponses' => array(
@@ -811,7 +781,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
-                    'maxLength' => 28,
                 ),
             ),
             'errorResponses' => array(
@@ -851,7 +820,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
-                    'maxLength' => 28,
                 ),
             ),
             'errorResponses' => array(
@@ -891,7 +859,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
-                    'maxLength' => 28,
                 ),
                 'DefaultSearchField' => array(
                     'required' => true,
@@ -940,7 +907,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
-                    'maxLength' => 28,
                 ),
                 'AccessPolicies' => array(
                     'required' => true,
@@ -993,7 +959,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
-                    'maxLength' => 28,
                 ),
                 'Stems' => array(
                     'required' => true,
@@ -1046,7 +1011,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
-                    'maxLength' => 28,
                 ),
                 'Stopwords' => array(
                     'required' => true,
@@ -1099,7 +1063,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
-                    'maxLength' => 28,
                 ),
                 'Synonyms' => array(
                     'required' => true,

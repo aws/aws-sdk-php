@@ -63,7 +63,6 @@ return array (
                                 'required' => true,
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 63,
                             ),
                             'BundleId' => array(
                                 'required' => true,
@@ -130,7 +129,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 63,
                 ),
             ),
             'errorResponses' => array(
@@ -175,7 +173,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 63,
                 ),
             ),
             'errorResponses' => array(
@@ -224,7 +221,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 63,
                 ),
                 'BundleId' => array(
                     'type' => 'string',
@@ -240,7 +236,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 63,
                 ),
             ),
             'errorResponses' => array(

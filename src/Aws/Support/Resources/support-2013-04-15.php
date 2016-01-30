@@ -130,7 +130,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 8000,
                 ),
                 'ccEmailAddresses' => array(
                     'type' => 'array',
@@ -208,7 +207,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 8000,
                 ),
                 'ccEmailAddresses' => array(
                     'type' => 'array',

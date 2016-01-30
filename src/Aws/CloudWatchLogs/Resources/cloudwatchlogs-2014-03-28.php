@@ -43,7 +43,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
             ),
             'errorResponses' => array(
@@ -90,20 +89,17 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'logGroupName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'logStreamNamePrefix' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'from' => array(
                     'required' => true,
@@ -120,7 +116,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'destinationPrefix' => array(
                     'type' => 'string',
@@ -180,7 +175,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
             ),
             'errorResponses' => array(
@@ -232,14 +226,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'logStreamName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
             ),
             'errorResponses' => array(
@@ -287,7 +279,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
             ),
             'errorResponses' => array(
@@ -335,7 +326,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
             ),
             'errorResponses' => array(
@@ -383,14 +373,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'logStreamName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
             ),
             'errorResponses' => array(
@@ -438,14 +426,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'filterName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
             ),
             'errorResponses' => array(
@@ -493,7 +479,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
             ),
             'errorResponses' => array(
@@ -541,14 +526,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'filterName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
             ),
             'errorResponses' => array(
@@ -595,7 +578,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'nextToken' => array(
                     'type' => 'string',
@@ -645,7 +627,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'statusCode' => array(
                     'type' => 'string',
@@ -699,7 +680,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'nextToken' => array(
                     'type' => 'string',
@@ -750,13 +730,11 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'logStreamNamePrefix' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'orderBy' => array(
                     'type' => 'string',
@@ -820,13 +798,11 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'filterNamePrefix' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'nextToken' => array(
                     'type' => 'string',
@@ -881,13 +857,11 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'filterNamePrefix' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'nextToken' => array(
                     'type' => 'string',
@@ -942,7 +916,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'logStreamNames' => array(
                     'type' => 'array',
@@ -953,7 +926,6 @@ return array (
                         'name' => 'LogStreamName',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 512,
                     ),
                 ),
                 'startTime' => array(
@@ -967,7 +939,6 @@ return array (
                 'filterPattern' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 512,
                 ),
                 'nextToken' => array(
                     'type' => 'string',
@@ -1027,14 +998,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'logStreamName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'startTime' => array(
                     'type' => 'numeric',
@@ -1102,7 +1071,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'targetArn' => array(
                     'required' => true,
@@ -1158,7 +1126,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'accessPolicy' => array(
                     'required' => true,
@@ -1208,14 +1175,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'logStreamName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'logEvents' => array(
                     'required' => true,
@@ -1296,20 +1261,17 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'filterName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'filterPattern' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 512,
                 ),
                 'metricTransformations' => array(
                     'required' => true,
@@ -1324,17 +1286,14 @@ return array (
                             'metricName' => array(
                                 'required' => true,
                                 'type' => 'string',
-                                'maxLength' => 255,
                             ),
                             'metricNamespace' => array(
                                 'required' => true,
                                 'type' => 'string',
-                                'maxLength' => 255,
                             ),
                             'metricValue' => array(
                                 'required' => true,
                                 'type' => 'string',
-                                'maxLength' => 100,
                             ),
                         ),
                     ),
@@ -1389,7 +1348,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'retentionInDays' => array(
                     'required' => true,
@@ -1442,20 +1400,17 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'filterName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 512,
                 ),
                 'filterPattern' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 512,
                 ),
                 'destinationArn' => array(
                     'required' => true,
@@ -1517,7 +1472,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 512,
                 ),
                 'logEventMessages' => array(
                     'required' => true,

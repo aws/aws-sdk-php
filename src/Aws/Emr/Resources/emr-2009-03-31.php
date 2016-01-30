@@ -109,7 +109,6 @@ return array (
                         'properties' => array(
                             'Name' => array(
                                 'type' => 'string',
-                                'maxLength' => 256,
                             ),
                             'Market' => array(
                                 'type' => 'string',
@@ -120,13 +119,11 @@ return array (
                             ),
                             'BidPrice' => array(
                                 'type' => 'string',
-                                'maxLength' => 256,
                             ),
                             'InstanceType' => array(
                                 'required' => true,
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 256,
                             ),
                             'InstanceCount' => array(
                                 'required' => true,
@@ -139,7 +136,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 256,
                 ),
             ),
             'errorResponses' => array(
@@ -174,7 +170,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 256,
                 ),
                 'Steps' => array(
                     'required' => true,
@@ -187,7 +182,6 @@ return array (
                             'Name' => array(
                                 'required' => true,
                                 'type' => 'string',
-                                'maxLength' => 256,
                             ),
                             'ActionOnFailure' => array(
                                 'type' => 'string',
@@ -204,11 +198,9 @@ return array (
                                             'properties' => array(
                                                 'Key' => array(
                                                     'type' => 'string',
-                                                    'maxLength' => 10280,
                                                 ),
                                                 'Value' => array(
                                                     'type' => 'string',
-                                                    'maxLength' => 10280,
                                                 ),
                                             ),
                                         ),
@@ -216,18 +208,15 @@ return array (
                                     'Jar' => array(
                                         'required' => true,
                                         'type' => 'string',
-                                        'maxLength' => 10280,
                                     ),
                                     'MainClass' => array(
                                         'type' => 'string',
-                                        'maxLength' => 10280,
                                     ),
                                     'Args' => array(
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'XmlString',
                                             'type' => 'string',
-                                            'maxLength' => 10280,
                                         ),
                                     ),
                                 ),
@@ -381,7 +370,6 @@ return array (
                     'items' => array(
                         'name' => 'XmlString',
                         'type' => 'string',
-                        'maxLength' => 10280,
                     ),
                 ),
                 'JobFlowStates' => array(
@@ -684,7 +672,6 @@ return array (
                     'items' => array(
                         'name' => 'XmlString',
                         'type' => 'string',
-                        'maxLength' => 10280,
                     ),
                 ),
                 'Marker' => array(
@@ -734,7 +721,6 @@ return array (
                             'InstanceGroupId' => array(
                                 'required' => true,
                                 'type' => 'string',
-                                'maxLength' => 256,
                             ),
                             'InstanceCount' => array(
                                 'type' => 'numeric',
@@ -829,22 +815,18 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 256,
                 ),
                 'LogUri' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 10280,
                 ),
                 'AdditionalInfo' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 10280,
                 ),
                 'AmiVersion' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 256,
                 ),
                 'Instances' => array(
                     'required' => true,
@@ -854,12 +836,10 @@ return array (
                         'MasterInstanceType' => array(
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                         'SlaveInstanceType' => array(
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 256,
                         ),
                         'InstanceCount' => array(
                             'type' => 'numeric',
@@ -872,7 +852,6 @@ return array (
                                 'properties' => array(
                                     'Name' => array(
                                         'type' => 'string',
-                                        'maxLength' => 256,
                                     ),
                                     'Market' => array(
                                         'type' => 'string',
@@ -883,13 +862,11 @@ return array (
                                     ),
                                     'BidPrice' => array(
                                         'type' => 'string',
-                                        'maxLength' => 256,
                                     ),
                                     'InstanceType' => array(
                                         'required' => true,
                                         'type' => 'string',
                                         'minLength' => 1,
-                                        'maxLength' => 256,
                                     ),
                                     'InstanceCount' => array(
                                         'required' => true,
@@ -900,7 +877,6 @@ return array (
                         ),
                         'Ec2KeyName' => array(
                             'type' => 'string',
-                            'maxLength' => 256,
                         ),
                         'Placement' => array(
                             'type' => 'object',
@@ -908,7 +884,6 @@ return array (
                                 'AvailabilityZone' => array(
                                     'required' => true,
                                     'type' => 'string',
-                                    'maxLength' => 10280,
                                 ),
                             ),
                         ),
@@ -922,26 +897,21 @@ return array (
                         ),
                         'HadoopVersion' => array(
                             'type' => 'string',
-                            'maxLength' => 256,
                         ),
                         'Ec2SubnetId' => array(
                             'type' => 'string',
-                            'maxLength' => 256,
                         ),
                         'EmrManagedMasterSecurityGroup' => array(
                             'type' => 'string',
-                            'maxLength' => 256,
                         ),
                         'EmrManagedSlaveSecurityGroup' => array(
                             'type' => 'string',
-                            'maxLength' => 256,
                         ),
                         'AdditionalMasterSecurityGroups' => array(
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'XmlStringMaxLen256',
                                 'type' => 'string',
-                                'maxLength' => 256,
                             ),
                         ),
                         'AdditionalSlaveSecurityGroups' => array(
@@ -949,7 +919,6 @@ return array (
                             'items' => array(
                                 'name' => 'XmlStringMaxLen256',
                                 'type' => 'string',
-                                'maxLength' => 256,
                             ),
                         ),
                     ),
@@ -964,7 +933,6 @@ return array (
                             'Name' => array(
                                 'required' => true,
                                 'type' => 'string',
-                                'maxLength' => 256,
                             ),
                             'ActionOnFailure' => array(
                                 'type' => 'string',
@@ -981,11 +949,9 @@ return array (
                                             'properties' => array(
                                                 'Key' => array(
                                                     'type' => 'string',
-                                                    'maxLength' => 10280,
                                                 ),
                                                 'Value' => array(
                                                     'type' => 'string',
-                                                    'maxLength' => 10280,
                                                 ),
                                             ),
                                         ),
@@ -993,18 +959,15 @@ return array (
                                     'Jar' => array(
                                         'required' => true,
                                         'type' => 'string',
-                                        'maxLength' => 10280,
                                     ),
                                     'MainClass' => array(
                                         'type' => 'string',
-                                        'maxLength' => 10280,
                                     ),
                                     'Args' => array(
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'XmlString',
                                             'type' => 'string',
-                                            'maxLength' => 10280,
                                         ),
                                     ),
                                 ),
@@ -1022,7 +985,6 @@ return array (
                             'Name' => array(
                                 'required' => true,
                                 'type' => 'string',
-                                'maxLength' => 256,
                             ),
                             'ScriptBootstrapAction' => array(
                                 'required' => true,
@@ -1031,14 +993,12 @@ return array (
                                     'Path' => array(
                                         'required' => true,
                                         'type' => 'string',
-                                        'maxLength' => 10280,
                                     ),
                                     'Args' => array(
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'XmlString',
                                             'type' => 'string',
-                                            'maxLength' => 10280,
                                         ),
                                     ),
                                 ),
@@ -1052,7 +1012,6 @@ return array (
                     'items' => array(
                         'name' => 'XmlStringMaxLen256',
                         'type' => 'string',
-                        'maxLength' => 256,
                     ),
                 ),
                 'NewSupportedProducts' => array(
@@ -1064,14 +1023,12 @@ return array (
                         'properties' => array(
                             'Name' => array(
                                 'type' => 'string',
-                                'maxLength' => 256,
                             ),
                             'Args' => array(
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'XmlString',
                                     'type' => 'string',
-                                    'maxLength' => 10280,
                                 ),
                             ),
                         ),
@@ -1085,12 +1042,10 @@ return array (
                 'JobFlowRole' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 10280,
                 ),
                 'ServiceRole' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'maxLength' => 10280,
                 ),
                 'Tags' => array(
                     'type' => 'array',
@@ -1144,7 +1099,6 @@ return array (
                     'items' => array(
                         'name' => 'XmlString',
                         'type' => 'string',
-                        'maxLength' => 10280,
                     ),
                 ),
                 'TerminationProtected' => array(
@@ -1189,7 +1143,6 @@ return array (
                     'items' => array(
                         'name' => 'XmlString',
                         'type' => 'string',
-                        'maxLength' => 10280,
                     ),
                 ),
                 'VisibleToAllUsers' => array(
@@ -1234,7 +1187,6 @@ return array (
                     'items' => array(
                         'name' => 'XmlString',
                         'type' => 'string',
-                        'maxLength' => 10280,
                     ),
                 ),
             ),

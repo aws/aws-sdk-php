@@ -97,46 +97,39 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 50,
                 ),
                 'GatewayName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 2,
-                    'maxLength' => 255,
                 ),
                 'GatewayTimezone' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
-                    'maxLength' => 10,
                 ),
                 'GatewayRegion' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 25,
                 ),
                 'GatewayType' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 2,
-                    'maxLength' => 20,
                 ),
                 'TapeDriveType' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 2,
-                    'maxLength' => 50,
                 ),
                 'MediumChangerType' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 2,
-                    'maxLength' => 50,
                 ),
             ),
             'errorResponses' => array(
@@ -176,7 +169,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'DiskIds' => array(
                     'required' => true,
@@ -186,7 +178,6 @@ return array (
                         'name' => 'DiskId',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 300,
                     ),
                 ),
             ),
@@ -227,7 +218,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'Tags' => array(
                     'required' => true,
@@ -241,12 +231,10 @@ return array (
                                 'required' => true,
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 128,
                             ),
                             'Value' => array(
                                 'required' => true,
                                 'type' => 'string',
-                                'maxLength' => 256,
                             ),
                         ),
                     ),
@@ -289,7 +277,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'DiskIds' => array(
                     'required' => true,
@@ -299,7 +286,6 @@ return array (
                         'name' => 'DiskId',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 300,
                     ),
                 ),
             ),
@@ -340,7 +326,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'DiskIds' => array(
                     'required' => true,
@@ -350,7 +335,6 @@ return array (
                         'name' => 'DiskId',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 300,
                     ),
                 ),
             ),
@@ -391,14 +375,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'TapeARN' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -438,14 +420,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'TapeARN' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -485,7 +465,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'VolumeSizeInBytes' => array(
                     'required' => true,
@@ -501,7 +480,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 200,
                 ),
                 'NetworkInterfaceId' => array(
                     'required' => true,
@@ -513,7 +491,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 5,
-                    'maxLength' => 100,
                 ),
             ),
             'errorResponses' => array(
@@ -553,14 +530,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'SnapshotDescription' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
             ),
             'errorResponses' => array(
@@ -600,14 +575,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'SnapshotDescription' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
             ),
             'errorResponses' => array(
@@ -647,14 +620,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'DiskId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 300,
                 ),
                 'SnapshotId' => array(
                     'type' => 'string',
@@ -671,7 +642,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 200,
                 ),
                 'NetworkInterfaceId' => array(
                     'required' => true,
@@ -716,7 +686,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'TapeSizeInBytes' => array(
                     'required' => true,
@@ -728,7 +697,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 5,
-                    'maxLength' => 100,
                 ),
                 'NumTapesToCreate' => array(
                     'required' => true,
@@ -742,7 +710,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 4,
                 ),
             ),
             'errorResponses' => array(
@@ -782,14 +749,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'BandwidthType' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
-                    'maxLength' => 25,
                 ),
             ),
             'errorResponses' => array(
@@ -829,14 +794,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 800,
                 ),
                 'InitiatorName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
             ),
             'errorResponses' => array(
@@ -876,7 +839,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -916,7 +878,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -956,14 +917,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'TapeARN' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -1003,7 +962,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -1043,7 +1001,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -1083,7 +1040,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -1123,7 +1079,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -1166,7 +1121,6 @@ return array (
                         'name' => 'VolumeARN',
                         'type' => 'string',
                         'minLength' => 50,
-                        'maxLength' => 500,
                     ),
                 ),
             ),
@@ -1207,7 +1161,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 800,
                 ),
             ),
             'errorResponses' => array(
@@ -1247,7 +1200,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -1287,7 +1239,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -1327,7 +1278,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -1370,7 +1320,6 @@ return array (
                         'name' => 'VolumeARN',
                         'type' => 'string',
                         'minLength' => 50,
-                        'maxLength' => 500,
                     ),
                 ),
             ),
@@ -1413,14 +1362,12 @@ return array (
                         'name' => 'TapeARN',
                         'type' => 'string',
                         'minLength' => 50,
-                        'maxLength' => 500,
                     ),
                 ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 1000,
                 ),
                 'Limit' => array(
                     'type' => 'numeric',
@@ -1465,13 +1412,11 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 1000,
                 ),
                 'Limit' => array(
                     'type' => 'numeric',
@@ -1516,7 +1461,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'TapeARNs' => array(
                     'type' => 'array',
@@ -1525,14 +1469,12 @@ return array (
                         'name' => 'TapeARN',
                         'type' => 'string',
                         'minLength' => 50,
-                        'maxLength' => 500,
                     ),
                 ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 1000,
                 ),
                 'Limit' => array(
                     'type' => 'numeric',
@@ -1577,7 +1519,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -1617,7 +1558,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'VTLDeviceARNs' => array(
                     'type' => 'array',
@@ -1626,14 +1566,12 @@ return array (
                         'name' => 'VTLDeviceARN',
                         'type' => 'string',
                         'minLength' => 50,
-                        'maxLength' => 500,
                     ),
                 ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 1000,
                 ),
                 'Limit' => array(
                     'type' => 'numeric',
@@ -1678,7 +1616,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -1718,7 +1655,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -1757,7 +1693,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 1000,
                 ),
                 'Limit' => array(
                     'type' => 'numeric',
@@ -1802,7 +1737,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -1841,13 +1775,11 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 1000,
                 ),
                 'Limit' => array(
                     'type' => 'numeric',
@@ -1892,7 +1824,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -1932,7 +1863,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -1972,13 +1902,11 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 1000,
                 ),
                 'Limit' => array(
                     'type' => 'numeric',
@@ -2022,7 +1950,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'TagKeys' => array(
                     'type' => 'array',
@@ -2031,7 +1958,6 @@ return array (
                         'name' => 'TagKey',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 128,
                     ),
                 ),
             ),
@@ -2072,7 +1998,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -2112,14 +2037,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'GatewayARN' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -2159,14 +2082,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'GatewayARN' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -2206,7 +2127,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -2246,7 +2166,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -2286,7 +2205,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'AverageUploadRateLimitInBitsPerSec' => array(
                     'type' => 'numeric',
@@ -2336,27 +2254,23 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 800,
                 ),
                 'SecretToAuthenticateInitiator' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
                 'InitiatorName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'SecretToAuthenticateTarget' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 100,
                 ),
             ),
             'errorResponses' => array(
@@ -2396,19 +2310,16 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'GatewayName' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 2,
-                    'maxLength' => 255,
                 ),
                 'GatewayTimezone' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
-                    'maxLength' => 10,
                 ),
             ),
             'errorResponses' => array(
@@ -2448,7 +2359,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
             ),
             'errorResponses' => array(
@@ -2488,7 +2398,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'HourOfDay' => array(
                     'required' => true,
@@ -2546,7 +2455,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'StartAt' => array(
                     'required' => true,
@@ -2565,7 +2473,6 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
             ),
             'errorResponses' => array(
@@ -2605,14 +2512,12 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
-                    'maxLength' => 500,
                 ),
                 'DeviceType' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 2,
-                    'maxLength' => 50,
                 ),
             ),
             'errorResponses' => array(

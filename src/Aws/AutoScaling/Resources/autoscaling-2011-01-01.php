@@ -97,19 +97,16 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'LaunchConfigurationName' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'InstanceId' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 19,
                 ),
                 'MinSize' => array(
                     'required' => true,
@@ -138,7 +135,6 @@ return array (
                         'name' => 'XmlStringMaxLen255',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 255,
                     ),
                 ),
                 'LoadBalancerNames' => array(
@@ -149,14 +145,12 @@ return array (
                         'name' => 'XmlStringMaxLen255',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 255,
                     ),
                 ),
                 'HealthCheckType' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 32,
                 ),
                 'HealthCheckGracePeriod' => array(
                     'type' => 'numeric',
@@ -166,13 +160,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'VPCZoneIdentifier' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'TerminationPolicies' => array(
                     'type' => 'array',
@@ -182,7 +174,6 @@ return array (
                         'name' => 'XmlStringMaxLen1600',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 1600,
                     ),
                 ),
                 'NewInstancesProtectedFromScaleIn' => array(
@@ -208,11 +199,9 @@ return array (
                                 'required' => true,
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 128,
                             ),
                             'Value' => array(
                                 'type' => 'string',
-                                'maxLength' => 256,
                             ),
                             'PropagateAtLaunch' => array(
                                 'type' => 'boolean',
@@ -262,7 +251,6 @@ return array (
                         'name' => 'XmlStringMaxLen19',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 19,
                     ),
                 ),
                 'AutoScalingGroupName' => array(
@@ -270,7 +258,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
             ),
             'errorResponses' => array(
@@ -305,7 +292,6 @@ return array (
                         'name' => 'XmlStringMaxLen19',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 19,
                     ),
                 ),
                 'AutoScalingGroupName' => array(
@@ -313,7 +299,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'ShouldDecrementDesiredCapacity' => array(
                     'required' => true,
@@ -354,7 +339,6 @@ return array (
                         'name' => 'XmlStringMaxLen19',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 19,
                     ),
                 ),
                 'AutoScalingGroupName' => array(
@@ -362,7 +346,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'ShouldDecrementDesiredCapacity' => array(
                     'required' => true,
@@ -403,7 +386,6 @@ return array (
                         'name' => 'XmlStringMaxLen19',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 19,
                     ),
                 ),
                 'AutoScalingGroupName' => array(
@@ -411,7 +393,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
             ),
             'errorResponses' => array(
@@ -443,7 +424,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'ForceDelete' => array(
                     'type' => 'boolean',
@@ -491,7 +471,6 @@ return array (
                         'name' => 'ResourceName',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 1600,
                     ),
                 ),
                 'NextToken' => array(
@@ -536,13 +515,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'LaunchConfigurationName' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'MinSize' => array(
                     'type' => 'numeric',
@@ -569,14 +546,12 @@ return array (
                         'name' => 'XmlStringMaxLen255',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 255,
                     ),
                 ),
                 'HealthCheckType' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 32,
                 ),
                 'HealthCheckGracePeriod' => array(
                     'type' => 'numeric',
@@ -586,13 +561,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'VPCZoneIdentifier' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'TerminationPolicies' => array(
                     'type' => 'array',
@@ -602,7 +575,6 @@ return array (
                         'name' => 'XmlStringMaxLen1600',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 1600,
                     ),
                 ),
                 'NewInstancesProtectedFromScaleIn' => array(
@@ -647,7 +619,6 @@ return array (
                         'name' => 'XmlStringMaxLen19',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 19,
                     ),
                 ),
                 'MaxRecords' => array(
@@ -717,7 +688,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'ScalingProcesses' => array(
                     'type' => 'array',
@@ -727,7 +697,6 @@ return array (
                         'name' => 'XmlStringMaxLen255',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 255,
                     ),
                 ),
             ),
@@ -764,7 +733,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'ScalingProcesses' => array(
                     'type' => 'array',
@@ -774,7 +742,6 @@ return array (
                         'name' => 'XmlStringMaxLen255',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 255,
                     ),
                 ),
             ),
@@ -811,7 +778,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'DesiredCapacity' => array(
                     'required' => true,
@@ -857,14 +823,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 19,
                 ),
                 'HealthStatus' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 32,
                 ),
                 'ShouldRespectGracePeriod' => array(
                     'type' => 'boolean',
@@ -900,7 +864,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'LoadBalancerNames' => array(
                     'type' => 'array',
@@ -910,7 +873,6 @@ return array (
                         'name' => 'XmlStringMaxLen255',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 255,
                     ),
                 ),
             ),
@@ -942,7 +904,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'LoadBalancerNames' => array(
                     'type' => 'array',
@@ -952,7 +913,6 @@ return array (
                         'name' => 'XmlStringMaxLen255',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 255,
                     ),
                 ),
             ),
@@ -985,14 +945,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'ScheduledActionName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'Time' => array(
                     'type' => array(
@@ -1025,7 +983,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'MinSize' => array(
                     'type' => 'numeric',
@@ -1076,7 +1033,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'ScheduledActionNames' => array(
                     'type' => 'array',
@@ -1086,7 +1042,6 @@ return array (
                         'name' => 'ResourceName',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 1600,
                     ),
                 ),
                 'StartTime' => array(
@@ -1148,14 +1103,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'ScheduledActionName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
             ),
             'errorResponses' => array(
@@ -1212,27 +1165,23 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'PolicyName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'PolicyType' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
                 'AdjustmentType' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'MinAdjustmentStep' => array(
                     'type' => 'numeric',
@@ -1254,7 +1203,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 32,
                 ),
                 'StepAdjustments' => array(
                     'type' => 'array',
@@ -1314,7 +1262,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'PolicyNames' => array(
                     'type' => 'array',
@@ -1324,7 +1271,6 @@ return array (
                         'name' => 'ResourceName',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 1600,
                     ),
                 ),
                 'PolicyTypes' => array(
@@ -1335,7 +1281,6 @@ return array (
                         'name' => 'XmlStringMaxLen64',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 64,
                     ),
                 ),
                 'NextToken' => array(
@@ -1379,14 +1324,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'PolicyName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
             ),
             'errorResponses' => array(
@@ -1417,14 +1360,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'PolicyName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'HonorCooldown' => array(
                     'type' => 'boolean',
@@ -1498,7 +1439,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'Metrics' => array(
                     'type' => 'array',
@@ -1508,7 +1448,6 @@ return array (
                         'name' => 'XmlStringMaxLen255',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 255,
                     ),
                 ),
                 'Granularity' => array(
@@ -1516,7 +1455,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
             ),
             'errorResponses' => array(
@@ -1548,7 +1486,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'Metrics' => array(
                     'type' => 'array',
@@ -1558,7 +1495,6 @@ return array (
                         'name' => 'XmlStringMaxLen255',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 255,
                     ),
                 ),
             ),
@@ -1591,19 +1527,16 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'ImageId' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'KeyName' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'SecurityGroups' => array(
                     'type' => 'array',
@@ -1618,7 +1551,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'ClassicLinkVPCSecurityGroups' => array(
                     'type' => 'array',
@@ -1628,37 +1560,31 @@ return array (
                         'name' => 'XmlStringMaxLen255',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 255,
                     ),
                 ),
                 'UserData' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'maxLength' => 21847,
                 ),
                 'InstanceId' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 19,
                 ),
                 'InstanceType' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'KernelId' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'RamdiskId' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'BlockDeviceMappings' => array(
                     'type' => 'array',
@@ -1671,13 +1597,11 @@ return array (
                             'VirtualName' => array(
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 255,
                             ),
                             'DeviceName' => array(
                                 'required' => true,
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 255,
                             ),
                             'Ebs' => array(
                                 'type' => 'object',
@@ -1685,7 +1609,6 @@ return array (
                                     'SnapshotId' => array(
                                         'type' => 'string',
                                         'minLength' => 1,
-                                        'maxLength' => 255,
                                     ),
                                     'VolumeSize' => array(
                                         'type' => 'numeric',
@@ -1695,7 +1618,6 @@ return array (
                                     'VolumeType' => array(
                                         'type' => 'string',
                                         'minLength' => 1,
-                                        'maxLength' => 255,
                                     ),
                                     'DeleteOnTermination' => array(
                                         'type' => 'boolean',
@@ -1733,13 +1655,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'IamInstanceProfile' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'EbsOptimized' => array(
                     'type' => 'boolean',
@@ -1755,7 +1675,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 64,
                 ),
             ),
             'errorResponses' => array(
@@ -1798,7 +1717,6 @@ return array (
                         'name' => 'ResourceName',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 1600,
                     ),
                 ),
                 'NextToken' => array(
@@ -1843,7 +1761,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
             ),
             'errorResponses' => array(
@@ -1887,7 +1804,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'MaxRecords' => array(
                     'type' => 'numeric',
@@ -1931,7 +1847,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 19,
                 ),
                 'ShouldDecrementDesiredCapacity' => array(
                     'required' => true,
@@ -1977,7 +1892,6 @@ return array (
                         'name' => 'XmlStringMaxLen19',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 19,
                     ),
                 ),
                 'AutoScalingGroupName' => array(
@@ -1985,7 +1899,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'ProtectedFromScaleIn' => array(
                     'required' => true,
@@ -2027,14 +1940,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'TopicARN' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'NotificationTypes' => array(
                     'required' => true,
@@ -2045,7 +1956,6 @@ return array (
                         'name' => 'XmlStringMaxLen255',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 255,
                     ),
                 ),
             ),
@@ -2082,14 +1992,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'TopicARN' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
             ),
             'errorResponses' => array(
@@ -2124,7 +2032,6 @@ return array (
                         'name' => 'ResourceName',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 1600,
                     ),
                 ),
                 'NextToken' => array(
@@ -2208,11 +2115,9 @@ return array (
                                 'required' => true,
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 128,
                             ),
                             'Value' => array(
                                 'type' => 'string',
-                                'maxLength' => 256,
                             ),
                             'PropagateAtLaunch' => array(
                                 'type' => 'boolean',
@@ -2273,11 +2178,9 @@ return array (
                                 'required' => true,
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 128,
                             ),
                             'Value' => array(
                                 'type' => 'string',
-                                'maxLength' => 256,
                             ),
                             'PropagateAtLaunch' => array(
                                 'type' => 'boolean',
@@ -2425,14 +2328,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'AutoScalingGroupName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'LifecycleTransition' => array(
                     'type' => 'string',
@@ -2442,19 +2343,16 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'NotificationTargetARN' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'NotificationMetadata' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1023,
                 ),
                 'HeartbeatTimeout' => array(
                     'type' => 'numeric',
@@ -2498,14 +2396,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'AutoScalingGroupName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
             ),
             'errorResponses' => array(
@@ -2537,7 +2433,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'LifecycleHookNames' => array(
                     'type' => 'array',
@@ -2547,7 +2442,6 @@ return array (
                         'name' => 'AsciiStringMaxLen255',
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 255,
                     ),
                 ),
             ),
@@ -2605,20 +2499,17 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'AutoScalingGroupName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'LifecycleActionToken' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 36,
-                    'maxLength' => 36,
                 ),
                 'LifecycleActionResult' => array(
                     'required' => true,
@@ -2629,7 +2520,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 19,
                 ),
             ),
             'errorResponses' => array(
@@ -2661,26 +2551,22 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'AutoScalingGroupName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'LifecycleActionToken' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 36,
-                    'maxLength' => 36,
                 ),
                 'InstanceId' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 19,
                 ),
             ),
             'errorResponses' => array(
@@ -2712,7 +2598,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 1600,
                 ),
                 'NextToken' => array(
                     'type' => 'string',
