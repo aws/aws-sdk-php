@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Ssm` - Added support for long EC2 instance IDs.
+
 ## 2.8.25 - 2016-01-25
 
 * `Aws\AutoScaling` - Added support for setting and describing instance
