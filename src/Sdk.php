@@ -72,8 +72,8 @@ class Sdk
 {
     const VERSION = '3.16.0';
 
-    /** @var array Arguments for creating clients */
-    private $args;
+    /** @var Session */
+    private $session;
 
     /**
      * Constructs a new SDK object with an associative array of default
@@ -86,11 +86,7 @@ class Sdk
      */
     public function __construct(array $args = [])
     {
-        $this->args = $args;
-
-        if (!isset($args['handler']) && !isset($args['http_handler'])) {
-            $this->args['http_handler'] = default_http_handler();
-        }
+        $this->session = new Session($args);
     }
 
     public function __call($name, array $args)
@@ -122,10 +118,7 @@ class Sdk
         $service = manifest($name);
         $namespace = $service['namespace'];
 
-        // Merge provided args with stored, service-specific args.
-        if (isset($this->args[$namespace])) {
-            $args += $this->args[$namespace];
-        }
+        $args += $this->session->getArgs($namespace);
 
         // Provide the endpoint prefix in the args.
         if (!isset($args['service'])) {
@@ -134,7 +127,7 @@ class Sdk
 
         // Instantiate the client class.
         $client = "Aws\\{$namespace}\\{$namespace}Client";
-        return new $client($args + $this->args);
+        return new $client($args);
     }
 
     /**
