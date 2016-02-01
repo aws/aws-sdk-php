@@ -619,6 +619,40 @@ class S3Client extends AwsClient
     }
 
     /**
+     * Returns the region in which a given bucket is located.
+     *
+     * @param string $bucketName
+     *
+     * @return string
+     */
+    public function determineBucketRegion($bucketName)
+    {
+        return $this->determineBucketRegionAsync($bucketName)->wait();
+    }
+
+    /**
+     * Returns a promise fulfilled with the region in which a given bucket is
+     * located.
+     *
+     * @param string $bucketName
+     *
+     * @return PromiseInterface
+     */
+    public function determineBucketRegionAsync($bucketName)
+    {
+        $command = $this->getCommand('HeadBucket', ['Bucket' => $bucketName]);
+        $handlerList = clone $this->getHandlerList();
+        $handlerList->remove('s3.permanent_redirect');
+        $handlerList->remove('signer');
+        $handler = $handlerList->resolve();
+
+        return $handler($command)
+            ->then(static function (ResultInterface $result) {
+                return $result['@metadata']['headers']['x-amz-bucket-region'];
+            });
+    }
+
+    /**
      * Determines if the body should be uploaded using PutObject or the
      * Multipart Upload System. It also modifies the passed-in $body as needed
      * to support the upload.

@@ -883,4 +883,19 @@ EOXML;
 
         $client->headObject(['Bucket' => 'bucket', 'Key' => 'key']);
     }
+
+    public function testCanDetermineRegionOfBucket()
+    {
+        $client = new S3Client([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'http_handler' => function () {
+                return new FulfilledPromise(new Response(301, [
+                    'X-Amz-Bucket-Region' => 'alderaan-north-1',
+                ]));
+            },
+        ]);
+
+        $this->assertSame('alderaan-north-1', $client->determineBucketRegion('bucket'));
+    }
 }
