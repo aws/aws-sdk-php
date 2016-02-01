@@ -1,12 +1,15 @@
 <?php
 namespace Aws\Test;
 
+use Aws\Api\Service;
 use Aws\AwsClient;
-use Aws\AwsClientInterface;
+use Aws\Command;
 use Aws\CommandInterface;
 use Aws\MultiRegionClient;
-use Aws\Waiter;
+use Aws\Result;
 use GuzzleHttp\Promise\FulfilledPromise;
+use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\RequestInterface;
 
 class MultiRegionClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,6 +23,10 @@ class MultiRegionClientTest extends \PHPUnit_Framework_TestCase
         $this->mockRegionalClient = $this->getMockBuilder(AwsClient::class)
             ->disableOriginalConstructor()
             ->getMock();
+        $this->mockRegionalClient->expects($this->any())
+            ->method('getApi')
+            ->with()
+            ->willReturn($this->getMockApi());
         $this->instance = new MultiRegionClient('sns', [
             'region' => 'us-east-1',
             'version' => 'latest',
@@ -30,6 +37,19 @@ class MultiRegionClientTest extends \PHPUnit_Framework_TestCase
         $property->setValue($this->instance, [
             'us-east-1' => $this->mockRegionalClient,
         ]);
+    }
+
+    private function getMockApi()
+    {
+        $api = $this->getMockBuilder(Service::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $api->expects($this->any())
+            ->method('getWaiterConfig')
+            ->withAnyParameters()
+            ->willReturn([]);
+
+        return $api;
     }
 
     public function testGetRegionReturnsRegionFromSession()
@@ -47,24 +67,16 @@ class MultiRegionClientTest extends \PHPUnit_Framework_TestCase
 
     public function testRegionCanBeOverriddenPerOperation()
     {
-        $usWestClient = $this->getMockBuilder(AwsClient::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $property = (new \ReflectionClass(MultiRegionClient::class))
-            ->getProperty('clientPool');
-        $property->setAccessible(true);
-        $property->setValue($this->instance, [
-            'us-east-1' => $this->mockRegionalClient,
-            'us-west-2' => $usWestClient,
+        $instance = new MultiRegionClient('sns', [
+            'version' => 'latest',
+            'region' => 'us-east-1',
+            'http_handler' => function (RequestInterface $request) {
+                $this->assertSame('sns.us-west-2.amazonaws.com', $request->getUri()->getHost());
+                return new FulfilledPromise(new Response(200, [], '<node></node>'));
+            },
         ]);
 
-        $usWestClient->expects($this->once())
-            ->method('__call')
-            ->with('publish', [['Message' => 'Message for you, sir!']]);
-        $this->mockRegionalClient->expects($this->never())
-            ->method('__call');
-
-        $this->instance->publish([
+        $instance->publish([
             'Message' => 'Message for you, sir!',
             '@region' => 'us-west-2',
         ]);
@@ -73,26 +85,14 @@ class MultiRegionClientTest extends \PHPUnit_Framework_TestCase
     public function testProxiesArbitraryCallsToRegionalizedClient()
     {
         $this->mockRegionalClient->expects($this->once())
-            ->method('__call')
-            ->with('baz', [['foo' => 'bar']]);
+            ->method('getCommand')
+            ->with('baz', ['foo' => 'bar'])
+            ->willReturn(new Command('Baz'));
+        $this->mockRegionalClient->expects($this->once())
+            ->method('executeAsync')
+            ->willReturn(new FulfilledPromise(new Result));
 
         $this->instance->baz(['foo' => 'bar']);
-    }
-
-    public function testProxiesWaitUntilToRegionalizedGetWaiter()
-    {
-        $mockWaiter = $this->getMockBuilder(Waiter::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $mockWaiter->expects($this->any())
-            ->method('promise')
-            ->willReturn(new FulfilledPromise('Fulfilled'));
-        $this->mockRegionalClient->expects($this->once())
-            ->method('getWaiter')
-            ->with('waiter', ['foo' => 'bar'])
-            ->willReturn($mockWaiter);
-
-        $this->instance->waitUntil('waiter', ['foo' => 'bar']);
     }
 
     public function testProxiesExecuteToRegionalizedExecuteAsync()
@@ -126,43 +126,13 @@ class MultiRegionClientTest extends \PHPUnit_Framework_TestCase
 
     public function clientInterfaceMethodProvider()
     {
-        $excludedMethods = [
-            '__call',
-            'execute',
-            'waitUntil',
-            'getRegion',
+        return [
+            ['getConfig', ['someOption']],
+            ['getCredentials', []],
+            ['getHandlerList', []],
+            ['getApi', []],
+            ['getEndpoint', []],
+            ['executeAsync', [$this->getMock(CommandInterface::class)]],
         ];
-        $methods = [];
-        foreach ((new \ReflectionClass(AwsClientInterface::class))->getMethods() as $method) {
-            if (in_array($method->getName(), $excludedMethods)) {
-                continue;
-            }
-
-            $methods []= [
-                $method->getName(),
-                array_map(function (\ReflectionParameter $param) {
-                    if ($param->isDefaultValueAvailable()) {
-                        return $param->getDefaultValue();
-                    }
-                    if (!$param->allowsNull()) {
-                        if ($param->isArray()) {
-                            return [];
-                        }
-                        if ($param->isCallable()) {
-                            return 'strval';
-                        }
-                        if ($param->getClass()) {
-                            return $this
-                                ->getMockBuilder($param->getClass()->getName())
-                                ->disableOriginalConstructor()
-                                ->getMock();
-                        }
-                    }
-                    return null;
-                }, $method->getParameters()),
-            ];
-        }
-
-        return $methods;
     }
 }

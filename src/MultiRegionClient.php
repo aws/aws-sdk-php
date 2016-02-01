@@ -1,7 +1,7 @@
 <?php
 namespace Aws;
 
-class MultiRegionClient implements AwsClientInterface
+class MultiRegionClient extends AwsClient
 {
     use MultiRegionTrait;
     /** @var string */

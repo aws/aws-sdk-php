@@ -54,55 +54,14 @@ trait MultiRegionTrait
             : null;
     }
 
-    public function __call($name, array $args)
-    {
-        $params = isset($args[0]) ? $args[0] : [];
-        list($region, $params) = $this->getRegionAndArgs($params);
-
-        return $this->getClientFromPool($region)->{$name}($params);
-    }
-
-    private function getRegionAndArgs(array $args)
+    public function getCommand($name, array $args = [])
     {
         $region = isset($args['@region'])
             ? $args['@region']
             : $this->getRegion();
         unset($args['@region']);
 
-        return [$region, $args];
-    }
-
-    public function getCommand($name, array $args = [])
-    {
-        list($region, $args) = $this->getRegionAndArgs($args);
-
         return $this->getClientFromPool($region)->getCommand($name, $args);
-    }
-
-    public function getPaginator($name, array $args = [])
-    {
-        list($region, $args) = $this->getRegionAndArgs($args);
-
-        return $this->getClientFromPool($region)->getPaginator($name, $args);
-    }
-
-    public function getIterator($name, array $args = [])
-    {
-        list($region, $args) = $this->getRegionAndArgs($args);
-
-        return $this->getClientFromPool($region)->getIterator($name, $args);
-    }
-
-    public function getWaiter($name, array $args = [])
-    {
-        list($region, $args) = $this->getRegionAndArgs($args);
-
-        return $this->getClientFromPool($region)->getWaiter($name, $args);
-    }
-
-    public function waitUntil($name, array $args = [])
-    {
-        return $this->getWaiter($name, $args)->promise()->wait();
     }
 
     public function getConfig($option = null)
@@ -133,11 +92,6 @@ trait MultiRegionTrait
     {
         return $this->getClientFromPool($this->getRegion())
             ->getEndpoint();
-    }
-
-    public function execute(CommandInterface $command)
-    {
-        return $this->executeAsync($command)->wait();
     }
 
     public function executeAsync(CommandInterface $command)

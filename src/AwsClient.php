@@ -241,11 +241,11 @@ class AwsClient implements AwsClientInterface
 
     public function getIterator($name, array $args = [])
     {
-        $config = $this->api->getPaginatorConfig($name);
+        $config = $this->getApi()->getPaginatorConfig($name);
         if (!$config['result_key']) {
             throw new \UnexpectedValueException(sprintf(
                 'There are no resources to iterate for the %s operation of %s',
-                $name, $this->api['serviceFullName']
+                $name, $this->getApi()['serviceFullName']
             ));
         }
 
@@ -264,7 +264,7 @@ class AwsClient implements AwsClientInterface
 
     public function getPaginator($name, array $args = [])
     {
-        $config = $this->api->getPaginatorConfig($name);
+        $config = $this->getApi()->getPaginatorConfig($name);
 
         return new ResultPaginator($this, $name, $args, $config);
     }
@@ -277,7 +277,7 @@ class AwsClient implements AwsClientInterface
     public function getWaiter($name, array $args = [])
     {
         $config = isset($args['@waiter']) ? $args['@waiter'] : [];
-        $config += $this->api->getWaiterConfig($name);
+        $config += $this->getApi()->getWaiterConfig($name);
 
         return new Waiter($this, $name, $args, $config);
     }
