@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\S3;
 
+use Aws\Command;
 use Aws\Result;
 use Aws\S3\MultipartUploader;
 use Aws\S3\S3Client;
@@ -178,183 +179,6 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider getUploadTestCases
-     */
-    public function testUploadHelperDoesCorrectOperation(
-        StreamInterface $body,
-        array $mockedResults,
-        array $options
-    ) {
-        /** @var \Aws\S3\S3Client $client */
-        $client = $this->getTestClient('S3');
-        $this->addMockResults($client, $mockedResults);
-        $result = $client->upload('bucket', 'key', $body, 'private', $options);
-        $this->assertEquals('https://s3.amazonaws.com/bucket/key', $result['ObjectURL']);
-        $this->assertTrue($this->mockQueueEmpty());
-    }
-
-    /**
-     * @dataProvider getUploadTestCases
-     */
-    public function testAsyncUploadHelperDoesCorrectOperationAsynchronously(
-        StreamInterface $body,
-        array $mockedResults,
-        array $options
-    ) {
-        /** @var \Aws\S3\S3Client $client */
-        $client = $this->getTestClient('S3');
-        $this->addMockResults($client, $mockedResults);
-        $promise = $client->uploadAsync('bucket', 'key', $body, 'private', $options);
-        $this->assertFalse($this->mockQueueEmpty());
-        $result = $promise->wait();
-        $this->assertEquals('https://s3.amazonaws.com/bucket/key', $result['ObjectURL']);
-    }
-
-    public function getUploadTestCases()
-    {
-        $putObject = new Result();
-        $initiate = new Result(['UploadId' => 'foo']);
-        $putPart = new Result(['ETag' => 'bar']);
-        $complete = new Result(['Location' => 'https://s3.amazonaws.com/bucket/key']);
-
-        return [
-            [
-                // 3 MB, known-size stream (put)
-                $this->generateStream(1024 * 1024 * 3),
-                [$putObject],
-                ['before_upload' => function () {}]
-            ],
-            [
-                // 3 MB, unknown-size stream (put)
-                $this->generateStream(1024 * 1024 * 3, false),
-                [$putObject],
-                []
-            ],
-            [
-                // 6 MB, known-size stream (put)
-                $this->generateStream(1024 * 1024 * 6),
-                [$putObject],
-                []
-            ],
-            [
-                // 6 MB, known-size stream, above threshold (mup)
-                $this->generateStream(1024 * 1024 * 6),
-                [$initiate, $putPart, $putPart, $complete],
-                ['mup_threshold' => 1024 * 1024 * 4]
-            ],
-            [
-                // 6 MB, unknown-size stream (mup)
-                $this->generateStream(1024 * 1024 * 6, false),
-                [$initiate, $putPart, $putPart, $complete],
-                []
-            ],
-            [
-                // 6 MB, unknown-size, non-seekable stream (mup)
-                $this->generateStream(1024 * 1024 * 6, false, false),
-                [$initiate, $putPart, $putPart, $complete],
-                []
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider getCopyTestCases
-     */
-    public function testCopyHelperDoesCorrectOperation(
-        array $mockedResults,
-        array $options
-    ) {
-        /** @var \Aws\S3\S3Client $client */
-        $client = $this->getTestClient('S3');
-        $this->addMockResults($client, $mockedResults);
-        $result = $client->copy(
-            'sourceBucket',
-            'sourceKey',
-            'bucket',
-            'key',
-            'private',
-            $options
-        );
-        $this->assertEquals('https://s3.amazonaws.com/bucket/key', $result['ObjectURL']);
-        $this->assertTrue($this->mockQueueEmpty());
-    }
-
-    /**
-     * @dataProvider getCopyTestCases
-     */
-    public function testAsyncCopyHelperDoesCorrectOperationAsynchronously(
-        array $mockedResults,
-        array $options
-    ) {
-        /** @var \Aws\S3\S3Client $client */
-        $client = $this->getTestClient('S3');
-        $this->addMockResults($client, $mockedResults);
-        $promise = $client->copyAsync(
-            'sourceBucket',
-            'sourceKey',
-            'bucket',
-            'key',
-            'private',
-            $options
-        );
-        $this->assertFalse($this->mockQueueEmpty());
-        $result = $promise->wait();
-        $this->assertEquals('https://s3.amazonaws.com/bucket/key', $result['ObjectURL']);
-        $this->assertTrue($this->mockQueueEmpty());
-    }
-
-    public function getCopyTestCases()
-    {
-        $smallHeadObject = new Result(['ContentLength' => 1024 * 1024 * 6]);
-        $putObject = new Result();
-        $partCount = ceil($smallHeadObject['ContentLength'] / MultipartUploader::PART_MIN_SIZE);
-        $initiate = new Result(['UploadId' => 'foo']);
-        $putPart = new Result(['ETag' => 'bar']);
-        $complete = new Result(['Location' => 'https://s3.amazonaws.com/bucket/key']);
-
-        return [
-            [
-                [$smallHeadObject, $putObject],
-                []
-            ],
-            [
-                array_merge(
-                    [$smallHeadObject, $initiate],
-                    array_fill(0, $partCount, $putPart),
-                    [$complete]
-                ),
-                ['mup_threshold' => MultipartUploader::PART_MIN_SIZE]
-            ],
-        ];
-    }
-
-    public function testCopyHelperCanCopyVersions()
-    {
-        $client = $this->getMockBuilder(S3Client::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['copyObjectAsync', 'headObjectAsync'])
-            ->getMock();
-
-        $client->expects($this->any())
-            ->method('headObjectAsync')
-            ->willReturn(Promise\promise_for(new Result([
-                'ContentLength' => 1024 * 1024 * 6,
-            ])));
-
-        $client->expects($this->once())
-            ->method('copyObjectAsync')
-            ->with($this->callback(function (array $config) {
-                return isset($config['CopySource'])
-                    && '/bucket/key?versionId=V+ID' === $config['CopySource'];
-            }))
-            ->willReturn(Promise\promise_for(new Result));
-
-        $client->copy('bucket', 'key', 'newBucket', 'newKey', 'private', [
-            'version_id' => 'V+ID',
-        ]);
-    }
-
-    /**
      * @expectedException \RuntimeException
      */
     public function testEnsuresPrefixOrRegexSuppliedForDeleteMatchingObjects()
@@ -396,18 +220,6 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['foo/bar/baz', 'foo/bar/bam'], $agg);
     }
 
-    private function generateStream($size, $sizeKnown = true, $seekable = true)
-    {
-        return FnStream::decorate(Psr7\stream_for(str_repeat('.', $size)), [
-            'getSize' => function () use ($sizeKnown, $size) {
-                return $sizeKnown ? $size : null;
-            },
-            'isSeekable' => function () use ($seekable) {
-                return (bool) $seekable;
-            }
-        ]);
-    }
-
     /**
      * @expectedException \RuntimeException
      * @expectedExceptionMessage Mock queue is empty. Trying to send a PutObject
@@ -426,6 +238,26 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
     {
         $client = $this->getTestClient('S3');
         $client->downloadBucket(__DIR__, 'test');
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Mock queue is empty. Trying to send a PutObject
+     */
+    public function testProxiesToObjectUpload()
+    {
+        $client = $this->getTestClient('S3');
+        $client->upload('bucket', 'key', 'body');
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Mock queue is empty. Trying to send a HeadObject
+     */
+    public function testProxiesToObjectCopy()
+    {
+        $client = $this->getTestClient('S3');
+        $client->copy('fromBucket', 'fromKey', 'toBucket', 'toKey');
     }
 
     /**

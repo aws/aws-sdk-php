@@ -97,12 +97,12 @@ class StreamWrapper
     /**
      * Register the 's3://' stream wrapper
      *
-     * @param S3Client       $client   Client to use with the stream wrapper
-     * @param string         $protocol Protocol to register as.
-     * @param CacheInterface $cache    Default cache for the protocol.
+     * @param S3ClientInterface $client   Client to use with the stream wrapper
+     * @param string            $protocol Protocol to register as.
+     * @param CacheInterface    $cache    Default cache for the protocol.
      */
     public static function register(
-        S3Client $client,
+        S3ClientInterface $client,
         $protocol = 's3',
         CacheInterface $cache = null
     ) {
@@ -637,7 +637,7 @@ class StreamWrapper
     /**
      * Gets the client from the stream context
      *
-     * @return S3Client
+     * @return S3ClientInterface
      * @throws \RuntimeException if no client has been configured
      */
     private function getClient()

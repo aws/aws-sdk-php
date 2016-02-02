@@ -2,20 +2,17 @@
 namespace Aws\S3;
 
 use Aws\CommandInterface;
-use Aws\MultiRegionTrait;
+use Aws\MultiRegionClient as BaseClient;
 use Aws\S3\Exception\PermanentRedirectException;
-use Aws\Session;
 use GuzzleHttp\Promise;
 
-class MultiRegionClient extends S3Client
+class MultiRegionClient extends BaseClient implements S3ClientInterface
 {
-    use MultiRegionTrait;
-    /** @var Session */
-    private $session;
+    use S3ClientTrait;
 
     public function __construct(array $args)
     {
-        $this->session = new Session($args);
+        parent::__construct('s3', $args);
     }
 
     public function executeAsync(CommandInterface $c)
@@ -36,13 +33,27 @@ class MultiRegionClient extends S3Client
         });
     }
 
-    protected function getSession()
+    public function createPresignedRequest(CommandInterface $command, $expires)
     {
-        return $this->session;
+        if (empty($command['Bucket'])) {
+            throw new \InvalidArgumentException('The S3\\MultiRegionClient'
+                . ' cannot create presigned requests for commands without a'
+                . ' specified bucket.');
+        }
+
+        /** @var S3ClientInterface $client */
+        $client = $this->getClientFromPool(
+            $this->determineBucketRegion($command['Bucket'])
+        );
+        return $client->createPresignedRequest(
+            $client->getCommand($command->getName(), $command->toArray()),
+            $expires
+        );
     }
 
-    protected function getClientClass()
+    public function getObjectUrl($bucket, $key)
     {
-        return S3Client::class;
+        return $this->getClientFromPool($this->determineBucketRegion($bucket))
+            ->getObjectUrl($bucket, $key);
     }
 }
