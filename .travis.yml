@@ -6,7 +6,9 @@ php:
   - 7.0
   - hhvm
 
-sudo: false
+sudo: required
+dist: trusty
+group: edge
 
 env:
   - COMPOSER_OPTS=""
@@ -21,6 +23,7 @@ install:
   - export AWS_ACCESS_KEY_ID=foo
   - export AWS_SECRET_ACCESS_KEY=bar
   - 'if [ $(phpenv version-name) != "hhvm" ]; then echo "xdebug.overload_var_dump = 0" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi'
+  - 'if [ $(phpenv version-name) == "hhvm" ]; then sudo apt-get install --only-upgrade hhvm; fi'
   - travis_retry composer update $COMPOSER_OPTS --no-interaction --prefer-source
 
 script:
