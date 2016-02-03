@@ -244,8 +244,9 @@ EOT;
 
             if ($description = $service->docs->getOperationDocs($opName)) {
                 $shortened = strip_tags($description);
-                $firstPeriod = strpos($shortened, '.') + 1;
-                $shortened = substr($shortened, 0, $firstPeriod);
+                $shortened = strpos($shortened, '.') === false
+                    ? $shortened
+                    : substr($shortened, 0, strpos($shortened, '.') + 1);
                 $item .= '<div class="summary-info"><p>' . $shortened . '</p></div>';
             }
 
