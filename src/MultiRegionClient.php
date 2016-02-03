@@ -121,10 +121,4 @@ class MultiRegionClient implements AwsClientInterface
         return $this->getClientFromPool($this->getRegion())
             ->getEndpoint();
     }
-
-    public function executeAsync(CommandInterface $command)
-    {
-        return $this->getClientFromPool($this->getRegion())
-            ->executeAsync($command);
-    }
 }

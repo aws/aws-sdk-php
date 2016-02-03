@@ -198,12 +198,6 @@ class AwsClient implements AwsClientInterface
         return $this->api;
     }
 
-    public function executeAsync(CommandInterface $command)
-    {
-        $handler = $command->getHandlerList()->resolve();
-        return $handler($command);
-    }
-
     public function getCommand($name, array $args = [])
     {
         // Fail fast if the command cannot be found in the description.

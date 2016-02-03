@@ -59,6 +59,12 @@ trait AwsClientTrait
         return $this->executeAsync($command)->wait();
     }
 
+    public function executeAsync(CommandInterface $command)
+    {
+        $handler = $command->getHandlerList()->resolve();
+        return $handler($command);
+    }
+
     public function __call($name, array $args)
     {
         $params = isset($args[0]) ? $args[0] : [];
@@ -79,13 +85,6 @@ trait AwsClientTrait
      * @return CommandInterface
      */
     abstract public function getCommand($name, array $args = []);
-
-    /**
-     * @param CommandInterface $command
-     *
-     * @return Promise
-     */
-    abstract public function executeAsync(CommandInterface $command);
 
     /**
      * @return Service

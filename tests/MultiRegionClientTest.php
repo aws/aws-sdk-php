@@ -5,6 +5,7 @@ use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\Command;
 use Aws\CommandInterface;
+use Aws\HandlerList;
 use Aws\MultiRegionClient;
 use Aws\Result;
 use GuzzleHttp\Promise\FulfilledPromise;
@@ -84,29 +85,20 @@ class MultiRegionClientTest extends \PHPUnit_Framework_TestCase
 
     public function testProxiesArbitraryCallsToRegionalizedClient()
     {
+        $mockHandler = $this->getMockBuilder(HandlerList::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $mockHandler->expects($this->atLeastOnce())
+            ->method('resolve')
+            ->willReturn(function (CommandInterface $c) {
+                return new FulfilledPromise(new Result);
+            });
         $this->mockRegionalClient->expects($this->once())
             ->method('getCommand')
             ->with('baz', ['foo' => 'bar'])
-            ->willReturn(new Command('Baz'));
-        $this->mockRegionalClient->expects($this->once())
-            ->method('executeAsync')
-            ->willReturn(new FulfilledPromise(new Result));
+            ->willReturn(new Command('Baz', [], $mockHandler));
 
         $this->instance->baz(['foo' => 'bar']);
-    }
-
-    public function testProxiesExecuteToRegionalizedExecuteAsync()
-    {
-        /** @var CommandInterface $command */
-        $command = $this->getMock(CommandInterface::class);
-        $this->mockRegionalClient->expects($this->once())
-            ->method('executeAsync')
-            ->willReturn(new FulfilledPromise('Fulfilled!'));
-        $this->mockRegionalClient->expects($this->once())
-            ->method('executeAsync')
-            ->with($command);
-
-        $this->instance->execute($command);
     }
 
     /**
@@ -132,7 +124,6 @@ class MultiRegionClientTest extends \PHPUnit_Framework_TestCase
             ['getHandlerList', []],
             ['getApi', []],
             ['getEndpoint', []],
-            ['executeAsync', [$this->getMock(CommandInterface::class)]],
         ];
     }
 }
