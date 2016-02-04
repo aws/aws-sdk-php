@@ -220,7 +220,7 @@ class SessionHandler implements \SessionHandlerInterface
      *
      * @return string Prepared session ID.
      */
-    private function formatId($id)
+    protected function formatId($id)
     {
         return trim($this->sessionName . '_' . $id, '_');
     }
