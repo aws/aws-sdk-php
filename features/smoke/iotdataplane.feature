@@ -1,0 +1,8 @@
+# language: en
+@smoke @iotdataplane @data.iot
+Feature: AWS IoT Data Plane
+
+  Scenario: Handling errors
+    When I attempt to call the "GetThingShadow" API with:
+    | thingName | fake-thing |
+    Then I expect the response error code to be "ResourceNotFoundException"
