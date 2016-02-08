@@ -150,7 +150,7 @@ Does the SDK work on HHVM?
 --------------------------
 
 The SDK does not currently run on HHVM, and won't be able to until the
-`issue with the yield syntax in HHVM <https://github.com/facebook/hhvm/issues/1627>`_
+`issue with the yield semantics in HHVM <https://github.com/facebook/hhvm/issues/6807>`_
 is resolved.
 
 
