@@ -2,6 +2,7 @@
 
 ## next release
 
+* `Aws\GameLift` - Added support for the **Amazon GameLift** service.
 * `Aws\MarketplaceCommerceAnalytics` - Added support for customer defined values.
 * Updated JsonCompiler to preserve closing parens in strings in source JSON.
 
