@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MarketplaceCommerceAnalytics` - Added support for customer defined values.
+
 ## 3.14.2 - 2016-01-28
 
 * `Aws\Waf` - Added support for size constraints.

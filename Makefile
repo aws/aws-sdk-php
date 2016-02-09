@@ -48,7 +48,7 @@ integ:
 	vendor/bin/behat --format=progress --tags=integ
 
 smoke:
-	vendor/bin/behat --format=progress
+	vendor/bin/behat --format=progress --tags=smoke
 
 # Packages the phar and zip
 package: compile-json
