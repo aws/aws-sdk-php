@@ -4,6 +4,11 @@ class JsonCompiler
 {
     use PhpFileLinterTrait;
 
+    private static $tokensToReplace = [
+        '(' => '__OPEN_PARENTHESIS__',
+        ')' => '__CLOSE_PARENTHESIS__',
+    ];
+
     /** @var string */
     private $path;
 
@@ -66,7 +71,10 @@ EOPHP;
 
     private function getDecodedData()
     {
-        return json_decode(file_get_contents($this->path), true);
+        return json_decode(
+            strtr(file_get_contents($this->path), self::$tokensToReplace),
+            true
+        );
     }
 
     private function readPhpFile($path)
@@ -78,6 +86,10 @@ EOPHP;
 
     private function writeFile($path, $contents)
     {
-        return file_put_contents($path, $contents, LOCK_EX);
+        return file_put_contents(
+            $path,
+            strtr($contents, array_flip(self::$tokensToReplace)),
+            LOCK_EX
+        );
     }
 }

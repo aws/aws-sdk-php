@@ -3,6 +3,7 @@
 ## next release
 
 * `Aws\MarketplaceCommerceAnalytics` - Added support for customer defined values.
+* Updated JsonCompiler to preserve closing parens in strings in source JSON.
 
 ## 3.14.2 - 2016-01-28
 
