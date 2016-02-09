@@ -1,10 +1,17 @@
 # CHANGELOG
 
-## next release
+## 3.15.0 - 2016-02-09
 
+* `Aws\Api` - Added support for specifying what kinds of model constraints to
+  validate.
+* `Aws\DynamoDb` - Fixed requeueing mechanism in `WriteRequestBatch`.
 * `Aws\GameLift` - Added support for the **Amazon GameLift** service.
 * `Aws\MarketplaceCommerceAnalytics` - Added support for customer defined values.
+* Added an adapter for using an instance of  `Psr\Cache\CacheItemPoolInterface`
+  as an instance of `Aws\CacheInterface`.
 * Updated JsonCompiler to preserve closing parens in strings in source JSON.
+* Updated `Aws\AwsClient` to throw a `RuntimeException` on a serialization
+  attempt.
 
 ## 3.14.2 - 2016-01-28
 
