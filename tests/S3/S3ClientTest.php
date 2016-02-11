@@ -751,4 +751,34 @@ EOXML;
 
         $this->assertSame('alderaan-north-1', $client->determineBucketRegion('bucket'));
     }
+    
+    public function testAppliesAccelerateMiddleware()
+    {
+        $handler = function (RequestInterface $req) {
+            $this->assertContains('s3-accelerate', $req->getUri()->getHost());
+            return Promise\promise_for(new Response);
+        };
+
+        $accelerateClient = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'use_accelerate_endpoint' => true,
+            'http_handler' => $handler,
+        ]);
+        $accelerateClient->getObject([
+            'Bucket' => 'bucket',
+            'Key' => 'key'
+        ]);
+
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'http_handler' => $handler,
+        ]);
+        $client->getObject([
+            'Bucket' => 'bucket',
+            'Key' => 'key',
+            '@use_accelerate_endpoint' => true,
+        ]);
+    }
 }
