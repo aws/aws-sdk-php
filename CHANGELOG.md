@@ -2,6 +2,7 @@
 
 ## next release
 
+* `Aws\ApiGateway` - Added support for custom request authorizers.
 * `Aws\AutoScaling` - Added waiters for checking on a group's existence,
   deletion, and whether at least the minimum number of instance are in service.
 * `Aws\Lambda` - Added support for accessing resources in a VPC from a Lambda
