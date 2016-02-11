@@ -4,6 +4,8 @@
 
 * `Aws\AutoScaling` - Added waiters for checking on a group's existence,
   deletion, and whether at least the minimum number of instance are in service.
+* `Aws\Lambda` - Added support for accessing resources in a VPC from a Lambda
+  function.
 
 ## 3.15.0 - 2016-02-09
 
