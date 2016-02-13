@@ -8,7 +8,7 @@ use Aws\MultiRegionClient as BaseClient;
 use Aws\S3\Exception\PermanentRedirectException;
 use GuzzleHttp\Promise;
 
-class MultiRegionClient extends BaseClient implements S3ClientInterface
+class S3MultiRegionClient extends BaseClient implements S3ClientInterface
 {
     use S3ClientTrait {
         determineBucketRegionAsync as private lookupBucketRegion;
@@ -17,12 +17,20 @@ class MultiRegionClient extends BaseClient implements S3ClientInterface
     /** @var CacheInterface */
     private $cache;
 
-    public function __construct(array $args)
+    public static function getArguments()
     {
-        parent::__construct('s3', $args);
-        $this->cache = isset($args['cache']) && $args['cache'] instanceof CacheInterface
-            ? $args['cache']
-            : new LruArrayCache;
+        $args = parent::getArguments();
+        unset($args['region']['required']);
+        $args['region']['default'] = 'us-east-1';
+
+        return $args + [
+            's3.bucket_region_cache' => [
+                'type' => 'value',
+                'valid' => [CacheInterface::class],
+                'doc' => 'Cache of regions in which given buckets are located.',
+                'default' => function () { return new LruArrayCache; },
+            ],
+        ];
     }
 
     public function executeAsync(CommandInterface $c)
@@ -44,12 +52,6 @@ class MultiRegionClient extends BaseClient implements S3ClientInterface
                 yield parent::executeAsync($c);
             }
         });
-    }
-
-    private function getRegionalizedCommand(CommandInterface $command, $region)
-    {
-        return $this->getClientFromPool($region)
-            ->getCommand($command->getName(), $command->toArray());
     }
 
     public function createPresignedRequest(CommandInterface $command, $expires)
@@ -88,6 +90,20 @@ class MultiRegionClient extends BaseClient implements S3ClientInterface
 
                 return $region;
             });
+    }
+
+    protected function handleResolvedArgs(array $args)
+    {
+        $this->cache = $args['s3.bucket_region_cache'];
+        unset($args['s3.bucket_region_cache']);
+
+        parent::handleResolvedArgs($args);
+    }
+
+    private function getRegionalizedCommand(CommandInterface $command, $region)
+    {
+        return $this->getClientFromPool($region)
+            ->getCommand($command->getName(), $command->toArray());
     }
 
     private function getCacheKey($bucketName)

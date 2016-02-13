@@ -33,7 +33,7 @@ trait S3ClientTrait
         $acl = 'private',
         array $options = []
     ) {
-        return (new ObjectUpload($this, $bucket, $key, $body, $acl, $options))
+        return (new ObjectUploader($this, $bucket, $key, $body, $acl, $options))
             ->promise();
     }
 
@@ -57,7 +57,7 @@ trait S3ClientTrait
         $acl = 'private',
         array $opts = []
     ) {
-        return (new ObjectCopy($this, $fromB, $fromK, $destB, $destK, $acl, $opts))
+        return (new ObjectCopier($this, $fromB, $fromK, $destB, $destK, $acl, $opts))
             ->promise();
     }
 

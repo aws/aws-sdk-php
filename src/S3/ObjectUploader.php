@@ -5,7 +5,7 @@ use GuzzleHttp\Promise\PromisorInterface;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
 
-class ObjectUpload implements PromisorInterface
+class ObjectUploader implements PromisorInterface
 {
     private $client;
     private $bucket;

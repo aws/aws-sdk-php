@@ -28,7 +28,8 @@ class MultiRegionClientTest extends \PHPUnit_Framework_TestCase
             ->method('getApi')
             ->with()
             ->willReturn($this->getMockApi());
-        $this->instance = new MultiRegionClient('sns', [
+        $this->instance = new MultiRegionClient([
+            'service' => 'sns',
             'region' => 'us-east-1',
             'version' => 'latest',
         ]);
@@ -53,14 +54,12 @@ class MultiRegionClientTest extends \PHPUnit_Framework_TestCase
         return $api;
     }
 
-    public function testGetRegionReturnsRegionFromSession()
+    public function testGetRegionReturnsDefaultRegion()
     {
-        $instance = new MultiRegionClient('route53', [
-            'region' => 'us-west-2',
+        $instance = new MultiRegionClient([
+            'service' => 'route53',
+            'region' => 'us-east-1',
             'version' => 'latest',
-            'Route53' => [
-                'region' => 'us-east-1',
-            ],
         ]);
 
         $this->assertSame('us-east-1', $instance->getRegion());
@@ -68,7 +67,8 @@ class MultiRegionClientTest extends \PHPUnit_Framework_TestCase
 
     public function testRegionCanBeOverriddenPerOperation()
     {
-        $instance = new MultiRegionClient('sns', [
+        $instance = new MultiRegionClient([
+            'service' => 'sns',
             'version' => 'latest',
             'region' => 'us-east-1',
             'http_handler' => function (RequestInterface $request) {

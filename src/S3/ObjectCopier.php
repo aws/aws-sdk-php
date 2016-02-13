@@ -3,7 +3,7 @@ namespace Aws\S3;
 
 use GuzzleHttp\Promise\PromisorInterface;
 
-class ObjectCopy implements PromisorInterface
+class ObjectCopier implements PromisorInterface
 {
     private $client;
     private $sourceBucket;

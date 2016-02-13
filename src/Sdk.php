@@ -79,14 +79,22 @@ class Sdk
      * Constructs a new SDK object with an associative array of default
      * client settings.
      *
-     * @param array $args
+     * @param array|Session $args
      *
      * @throws \InvalidArgumentException
-     * @see Aws\Sdk::getClient for a list of available options.
+     * @see Aws\AwsClient::__construct for a list of available options.
      */
-    public function __construct(array $args = [])
+    public function __construct($args = [])
     {
-        $this->session = new Session($args);
+        if ($args instanceof Session) {
+            $this->session = $args;
+        } elseif (is_array($args)) {
+            $this->session = new Session($args);
+        } else {
+            throw new \InvalidArgumentException('The first parameter passed to'
+                . ' the Aws\Sdk constructor must be an array or an instance of'
+                . ' Aws\Session; ' . describe_type($args) . ' provided.');
+        }
     }
 
     public function __call($name, array $args)

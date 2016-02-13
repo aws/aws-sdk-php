@@ -2,13 +2,13 @@
 namespace Aws\Test\S3;
 
 use Aws\Result;
-use Aws\S3\ObjectUpload;
+use Aws\S3\ObjectUploader;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\FnStream;
 use Psr\Http\Message\StreamInterface;
 
-class ObjectUploadTest extends \PHPUnit_Framework_TestCase
+class ObjectUploaderTest extends \PHPUnit_Framework_TestCase
 {
     use UsesServiceTrait;
 
@@ -23,7 +23,7 @@ class ObjectUploadTest extends \PHPUnit_Framework_TestCase
         /** @var \Aws\S3\S3Client $client */
         $client = $this->getTestClient('S3');
         $this->addMockResults($client, $mockedResults);
-        $result = (new ObjectUpload($client, 'bucket', 'key', $body, 'private', $options))
+        $result = (new ObjectUploader($client, 'bucket', 'key', $body, 'private', $options))
             ->upload();
         $this->assertEquals('https://s3.amazonaws.com/bucket/key', $result['ObjectURL']);
         $this->assertTrue($this->mockQueueEmpty());
@@ -40,7 +40,7 @@ class ObjectUploadTest extends \PHPUnit_Framework_TestCase
         /** @var \Aws\S3\S3Client $client */
         $client = $this->getTestClient('S3');
         $this->addMockResults($client, $mockedResults);
-        $promise = (new ObjectUpload($client, 'bucket', 'key', $body, 'private', $options))
+        $promise = (new ObjectUploader($client, 'bucket', 'key', $body, 'private', $options))
             ->promise();
         $this->assertFalse($this->mockQueueEmpty());
         $result = $promise->wait();

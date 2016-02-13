@@ -3,20 +3,20 @@ namespace Aws\Test\S3;
 
 use Aws\CacheInterface;
 use Aws\LruArrayCache;
-use Aws\S3\MultiRegionClient;
+use Aws\S3\S3MultiRegionClient;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Promise;
 use Psr\Http\Message\RequestInterface;
 
-class MultiRegionClientTest extends \PHPUnit_Framework_TestCase
+class S3MultiRegionClientTest extends \PHPUnit_Framework_TestCase
 {
     use UsesServiceTrait;
 
     public function testWillRecoverFromPermanentRedirect()
     {
         $triedDefaultRegion = false;
-        $instance = new MultiRegionClient([
+        $instance = new S3MultiRegionClient([
             'version' => 'latest',
             'region' => 'eu-east-1',
             'http_handler' => function (RequestInterface $request) use (&$triedDefaultRegion) {
@@ -38,7 +38,7 @@ class MultiRegionClientTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatesPresignedRequestsForCorrectRegion()
     {
-        $client = new MultiRegionClient([
+        $client = new S3MultiRegionClient([
             'region' => 'us-east-1',
             'version' => 'latest',
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
@@ -61,7 +61,7 @@ class MultiRegionClientTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatesObjectUrlsForCorrectRegion()
     {
-        $client = new MultiRegionClient([
+        $client = new S3MultiRegionClient([
             'region' => 'us-east-1',
             'version' => 'latest',
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
@@ -80,7 +80,7 @@ class MultiRegionClientTest extends \PHPUnit_Framework_TestCase
 
     public function testCachesBucketLocation()
     {
-        $client = new MultiRegionClient([
+        $client = new S3MultiRegionClient([
             'region' => 'us-east-1',
             'version' => 'latest',
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
@@ -108,11 +108,11 @@ class MultiRegionClientTest extends \PHPUnit_Framework_TestCase
             ->with('aws:foo:location')
             ->willReturn('us-west-2');
 
-        $client = new MultiRegionClient([
+        $client = new S3MultiRegionClient([
             'region' => 'us-east-1',
             'version' => 'latest',
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
-            'cache' => $cache,
+            's3.bucket_region_cache' => $cache,
             'http_handler' => function (RequestInterface $request) {
                 if ($request->getUri()->getHost() === 's3.amazonaws.com') {
                     $this->fail('The us-east-1 endpoint should never have been called.');
@@ -131,11 +131,11 @@ class MultiRegionClientTest extends \PHPUnit_Framework_TestCase
         $cache = new LruArrayCache;
         $cache->set('aws:foo:location', 'us-east-1');
 
-        $client = new MultiRegionClient([
+        $client = new S3MultiRegionClient([
             'region' => 'eu-east-1',
             'version' => 'latest',
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
-            'cache' => $cache,
+            's3.bucket_region_cache' => $cache,
             'http_handler' => function (RequestInterface $request) {
                 if ($request->getMethod() === 'HEAD' && $request->getUri()->getPath() === '/foo') {
                     return Promise\promise_for(new Response(301, [

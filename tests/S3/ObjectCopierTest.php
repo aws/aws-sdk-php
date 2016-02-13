@@ -4,12 +4,12 @@ namespace Aws\Test\S3;
 use Aws\Command;
 use Aws\Result;
 use Aws\S3\MultipartUploader;
-use Aws\S3\ObjectCopy;
+use Aws\S3\ObjectCopier;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
 
-class ObjectCopyTest extends \PHPUnit_Framework_TestCase
+class ObjectCopierTest extends \PHPUnit_Framework_TestCase
 {
     use UsesServiceTrait;
 
@@ -23,7 +23,7 @@ class ObjectCopyTest extends \PHPUnit_Framework_TestCase
         /** @var \Aws\S3\S3Client $client */
         $client = $this->getTestClient('S3');
         $this->addMockResults($client, $mockedResults);
-        $result = (new ObjectCopy(
+        $result = (new ObjectCopier(
             $client,
             'sourceBucket',
             'sourceKey',
@@ -46,7 +46,7 @@ class ObjectCopyTest extends \PHPUnit_Framework_TestCase
         /** @var \Aws\S3\S3Client $client */
         $client = $this->getTestClient('S3');
         $this->addMockResults($client, $mockedResults);
-        $promise = (new ObjectCopy(
+        $promise = (new ObjectCopier(
             $client,
             'sourceBucket',
             'sourceKey',
@@ -125,7 +125,7 @@ class ObjectCopyTest extends \PHPUnit_Framework_TestCase
                 [$copyObjectCommand, Promise\promise_for(new Result)],
             ]));
 
-        (new ObjectCopy(
+        (new ObjectCopier(
             $client,
             'bucket',
             'key',
