@@ -2,6 +2,8 @@
 
 ## next release
 
+* `Aws\Rds` - Added support for cross-account sharing of encrypted DB snapshots.
+
 ## 3.15.1 - 2016-02-11
 
 * `Aws\ApiGateway` - Added support for custom request authorizers.
