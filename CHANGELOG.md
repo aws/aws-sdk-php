@@ -1,5 +1,7 @@
 # CHANGELOG
 
+## next release
+
 ## 3.15.1 - 2016-02-11
 
 * `Aws\ApiGateway` - Added support for custom request authorizers.
