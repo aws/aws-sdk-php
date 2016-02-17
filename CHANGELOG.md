@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.15.2 - 2016-02-16
 
 * `Aws\Emr` - Added support for adding EBS storage to an EMR instance.
 * `Aws\Rds` - Added support for cross-account sharing of encrypted DB snapshots.
