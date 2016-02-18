@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.15.3 - 2016-02-18
 
 * `Aws\StorageGateway` - Added support for creating tapes with barcodes.
 * `Aws\CodeDeploy` - Added support for setting up triggers for a deployment
