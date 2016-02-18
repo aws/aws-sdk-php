@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\StorageGateway` - Added support for creating tapes with barcodes.
+
 ## 3.15.2 - 2016-02-16
 
 * `Aws\Emr` - Added support for adding EBS storage to an EMR instance.

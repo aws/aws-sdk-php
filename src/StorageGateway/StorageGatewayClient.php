@@ -28,6 +28,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createSnapshotFromVolumeRecoveryPointAsync(array $args = [])
  * @method \Aws\Result createStorediSCSIVolume(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createStorediSCSIVolumeAsync(array $args = [])
+ * @method \Aws\Result createTapeWithBarcode(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createTapeWithBarcodeAsync(array $args = [])
  * @method \Aws\Result createTapes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createTapesAsync(array $args = [])
  * @method \Aws\Result deleteBandwidthRateLimit(array $args = [])
