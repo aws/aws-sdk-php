@@ -8,8 +8,12 @@ use Aws\AwsClient;
  *
  * @method \Aws\Result addTagsToOnPremisesInstances(array $args = [])
  * @method \GuzzleHttp\Promise\Promise addTagsToOnPremisesInstancesAsync(array $args = [])
+ * @method \Aws\Result batchGetApplicationRevisions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchGetApplicationRevisionsAsync(array $args = [])
  * @method \Aws\Result batchGetApplications(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGetApplicationsAsync(array $args = [])
+ * @method \Aws\Result batchGetDeploymentInstances(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchGetDeploymentInstancesAsync(array $args = [])
  * @method \Aws\Result batchGetDeployments(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGetDeploymentsAsync(array $args = [])
  * @method \Aws\Result batchGetOnPremisesInstances(array $args = [])
