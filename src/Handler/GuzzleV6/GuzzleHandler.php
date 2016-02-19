@@ -8,6 +8,7 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\TransferStats;
 use Psr\Http\Message\RequestInterface as Psr7Request;
 
 /**
@@ -40,20 +41,44 @@ class GuzzleHandler
                 . ' ' . \GuzzleHttp\default_user_agent()
         );
 
-        return $this->client->sendAsync($request, $options)->otherwise(
-            static function (\Exception $e) {
-                $error = [
-                    'exception'        => $e,
-                    'connection_error' => $e instanceof ConnectException,
-                    'response'         => null,
-                ];
+        return $this->client->sendAsync($request, $this->parseOptions($options))
+            ->otherwise(
+                static function (\Exception $e) {
+                    $error = [
+                        'exception'        => $e,
+                        'connection_error' => $e instanceof ConnectException,
+                        'response'         => null,
+                    ];
 
-                if ($e instanceof RequestException && $e->getResponse()) {
-                    $error['response'] = $e->getResponse();
+                    if ($e instanceof RequestException && $e->getResponse()) {
+                        $error['response'] = $e->getResponse();
+                    }
+
+                    return new Promise\RejectedPromise($error);
                 }
+            );
+    }
 
-                return new Promise\RejectedPromise($error);
-            }
-        );
+    private function parseOptions(array $options)
+    {
+        if (isset($options['__on_transfer_stats'])) {
+            $fn = $options['__on_transfer_stats'];
+            unset($options['__on_transfer_stats']);
+
+            $prev = isset($options['on_stats'])
+                ? $options['on_stats']
+                : function () {};
+
+            $options['on_stats'] = static function (
+                TransferStats $stats
+            ) use ($fn, $prev) {
+                $prev($stats);
+                $transferStats = ['transfer_time' => $stats->getTransferTime()];
+                $transferStats += $stats->getHandlerStats();
+                $fn($transferStats);
+            };
+        }
+
+        return $options;
     }
 }

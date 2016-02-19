@@ -80,7 +80,10 @@ class DynamoDbClient extends AwsClient
                     return $retries
                         ? RetryMiddleware::exponentialDelay($retries) / 2
                         : 0;
-                }
+                },
+                isset($args['stats']['retries'])
+                    ? (bool) $args['stats']['retries']
+                    : false
             ),
             'retry'
         );

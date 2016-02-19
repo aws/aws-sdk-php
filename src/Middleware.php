@@ -167,16 +167,21 @@ final class Middleware
      *                          returns true if the command is to be retried.
      * @param callable $delay   Function that accepts the number of retries and
      *                          returns the number of milliseconds to delay.
+     * @param bool $stats       Whether to collect statistics on retries and the
+     *                          associated delay.
      *
      * @return callable
      */
-    public static function retry(callable $decider = null, callable $delay = null)
-    {
+    public static function retry(
+        callable $decider = null,
+        callable $delay = null,
+        $stats = false
+    ) {
         $decider = $decider ?: RetryMiddleware::createDefaultDecider();
         $delay = $delay ?: [RetryMiddleware::class, 'exponentialDelay'];
 
-        return function (callable $handler) use ($decider, $delay) {
-            return new RetryMiddleware($decider, $delay, $handler);
+        return function (callable $handler) use ($decider, $delay, $stats) {
+            return new RetryMiddleware($decider, $delay, $handler, $stats);
         };
     }
 

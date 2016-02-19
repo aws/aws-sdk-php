@@ -110,6 +110,13 @@ class ClientResolver
             'fn'      => [__CLASS__, '_apply_credentials'],
             'default' => [CredentialProvider::class, 'defaultProvider'],
         ],
+        'stats' => [
+            'type'  => 'value',
+            'valid' => ['bool', 'array'],
+            'default' => ['retries' => true, 'http' => false],
+            'doc'   => 'Set to true to gather transfer statistics on requests sent. Alternatively, you can provide an associative array with the following keys: retries: (bool) Set to false to disable reporting on retries attempted; http: (bool) Set to false to disable collecting statistics from lower level HTTP adapters (e.g., values returned in GuzzleHttp\TransferStats).',
+            'fn'    => [__CLASS__, '_apply_stats'],
+        ],
         'retries' => [
             'type'    => 'value',
             'valid'   => ['int'],
@@ -332,7 +339,10 @@ class ClientResolver
     {
         if ($value) {
             $decider = RetryMiddleware::createDefaultDecider($value);
-            $list->appendSign(Middleware::retry($decider), 'retry');
+            $list->appendSign(
+                Middleware::retry($decider, null, $args['stats']['retries']),
+                'retry'
+            );
         }
     }
 
@@ -412,6 +422,18 @@ class ClientResolver
         }
     }
 
+    public static function _apply_stats($value, array &$args)
+    {
+        $defaults = [
+            'retries' => $value === true ? true : false,
+            'http' => $value === true ? true : false,
+        ];
+
+        $args['stats'] = is_array($value)
+            ? array_replace($defaults, $value)
+            : $defaults;
+    }
+
     public static function _apply_profile($_, array &$args)
     {
         $args['credentials'] = CredentialProvider::ini($args['profile']);
@@ -443,7 +465,8 @@ class ClientResolver
             default_http_handler(),
             $args['parser'],
             $args['error_parser'],
-            $args['exception_class']
+            $args['exception_class'],
+            $args['stats']['http']
         );
     }
 
@@ -453,7 +476,8 @@ class ClientResolver
             $value,
             $args['parser'],
             $args['error_parser'],
-            $args['exception_class']
+            $args['exception_class'],
+            $args['stats']['http']
         );
     }
 

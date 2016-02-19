@@ -2,12 +2,16 @@
 namespace Aws\Test;
 
 use Aws\Command;
+use Aws\CommandInterface;
 use Aws\Exception\AwsException;
 use Aws\MockHandler;
 use Aws\Result;
 use Aws\RetryMiddleware;
+use GuzzleHttp\Promise;
+use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @covers Aws\RetryMiddleware
@@ -228,5 +232,185 @@ class RetryMiddlewareTest extends \PHPUnit_Framework_TestCase
         $request = new Request('GET', 'http://www.example.com');
         $err = new AwsException('e', $command, ['connection_error' => true]);
         $this->assertFalse($decider(0, $command, $request, null, $err));
+    }
+
+    public function testResultReportsTheNumberOfRetries()
+    {
+        $handler = new MockHandler([
+            new Result(['@metadata' => ['statusCode' => '503']]),
+            new Result(['@metadata' => ['statusCode' => '503']]),
+            new Result(['@metadata' => ['statusCode' => '200']]),
+        ]);
+        $retryMW = new RetryMiddleware(
+            RetryMiddleware::createDefaultDecider($retries = 3),
+            [RetryMiddleware::class, 'exponentialDelay'],
+            $handler,
+            true
+        );
+
+        $result = $retryMW(new Command('SomeCommand'), new Request('GET', ''))
+            ->wait();
+        $this->assertTrue(isset($result['@metadata']['transferStats']['retries_attempted']));
+        $this->assertSame(2, $result['@metadata']['transferStats']['retries_attempted']);
+    }
+
+    public function testExceptionReportsTheNumberOfRetries()
+    {
+        $nextHandler = function (CommandInterface $command) {
+            return new RejectedPromise(
+                new AwsException('e', $command, ['connection_error' => true])
+            );
+        };
+        $retryMW = new RetryMiddleware(
+            RetryMiddleware::createDefaultDecider($retries = 3),
+            [RetryMiddleware::class, 'exponentialDelay'],
+            $nextHandler,
+            true
+        );
+
+        try {
+            $retryMW(new Command('SomeCommand'), new Request('GET', ''))->wait();
+            $this->fail();
+        } catch (AwsException $e) {
+            $this->assertSame(3, $e->getTransferInfo('retries_attempted'));
+        }
+    }
+
+    public function testResultReportsTotalRetryDelay()
+    {
+        $handler = new MockHandler([
+            new Result(['@metadata' => ['statusCode' => '503']]),
+            new Result(['@metadata' => ['statusCode' => '503']]),
+            new Result(['@metadata' => ['statusCode' => '200']]),
+        ]);
+        $retryMW = new RetryMiddleware(
+            RetryMiddleware::createDefaultDecider($retries = 3),
+            function () { return 100; },
+            $handler,
+            true
+        );
+
+        $result = $retryMW(new Command('SomeCommand'), new Request('GET', ''))
+            ->wait();
+        $this->assertTrue(isset($result['@metadata']['transferStats']['total_retry_delay']));
+        $this->assertSame(200, $result['@metadata']['transferStats']['total_retry_delay']);
+    }
+
+    public function testExceptionReportsTotalRetryDelay()
+    {
+        $nextHandler = function (CommandInterface $command) {
+            return new RejectedPromise(
+                new AwsException('e', $command, ['connection_error' => true])
+            );
+        };
+        $retryMW = new RetryMiddleware(
+            RetryMiddleware::createDefaultDecider($retries = 3),
+            function () { return 100; },
+            $nextHandler,
+            true
+        );
+
+        try {
+            $retryMW(new Command('SomeCommand'), new Request('GET', ''))->wait();
+            $this->fail();
+        } catch (AwsException $e) {
+            $this->assertSame(300, $e->getTransferInfo('total_retry_delay'));
+        }
+    }
+
+    public function testReportsHttpStatsForEachRequest()
+    {
+        $handler = new MockHandler([
+            new Result(['@metadata' => [
+                'statusCode' => '503',
+                'transferStats' => ['http' => [['foo' => 'bar']]]
+            ]]),
+            new Result(['@metadata' => [
+                'statusCode' => '503',
+                'transferStats' => ['http' => [['baz' => 'quux']]]
+            ]]),
+            new Result(['@metadata' => [
+                'statusCode' => '200',
+                'transferStats' => ['http' => [['fizz' => 'buzz']]]
+            ]]),
+        ]);
+        $retryMW = new RetryMiddleware(
+            RetryMiddleware::createDefaultDecider($retries = 3),
+            [RetryMiddleware::class, 'exponentialDelay'],
+            $handler,
+            true
+        );
+
+        $result = $retryMW(new Command('SomeCommand'), new Request('GET', ''))
+            ->wait();
+        $httpStats = $result['@metadata']['transferStats']['http'];
+        $this->assertCount(3, $httpStats);
+        $this->assertSame([
+            ['foo' => 'bar'],
+            ['baz' => 'quux'],
+            ['fizz' => 'buzz'],
+        ], $httpStats);
+    }
+
+    public function testReportsHttpStatsForEachRequestEvenIfRetryStatsDisabled()
+    {
+        $handler = new MockHandler([
+            new Result(['@metadata' => [
+                'statusCode' => '503',
+                'transferStats' => ['http' => [['foo' => 'bar']]]
+            ]]),
+            new Result(['@metadata' => [
+                'statusCode' => '503',
+                'transferStats' => ['http' => [['baz' => 'quux']]]
+            ]]),
+            new Result(['@metadata' => [
+                'statusCode' => '200',
+                'transferStats' => ['http' => [['fizz' => 'buzz']]]
+            ]]),
+        ]);
+        $retryMW = new RetryMiddleware(
+            RetryMiddleware::createDefaultDecider($retries = 3),
+            [RetryMiddleware::class, 'exponentialDelay'],
+            $handler,
+            false
+        );
+
+        $result = $retryMW(new Command('SomeCommand'), new Request('GET', ''))
+            ->wait();
+        $httpStats = $result['@metadata']['transferStats']['http'];
+        $this->assertCount(3, $httpStats);
+        $this->assertSame([
+            ['foo' => 'bar'],
+            ['baz' => 'quux'],
+            ['fizz' => 'buzz'],
+        ], $httpStats);
+    }
+
+    public function testDoesNotReportHttpStatsIfNoneProvidedUpstream()
+    {
+        $handler = new MockHandler([
+            new Result(['@metadata' => [
+                'statusCode' => '503',
+                'transferStats' => []
+            ]]),
+            new Result(['@metadata' => [
+                'statusCode' => '503',
+                'transferStats' => []
+            ]]),
+            new Result(['@metadata' => [
+                'statusCode' => '200',
+                'transferStats' => []
+            ]]),
+        ]);
+        $retryMW = new RetryMiddleware(
+            RetryMiddleware::createDefaultDecider($retries = 3),
+            [RetryMiddleware::class, 'exponentialDelay'],
+            $handler,
+            false
+        );
+
+        $result = $retryMW(new Command('SomeCommand'), new Request('GET', ''))
+            ->wait();
+        $this->assertArrayNotHasKey('http', $result['@metadata']['transferStats']);
     }
 }

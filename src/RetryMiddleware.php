@@ -2,7 +2,9 @@
 namespace Aws;
 
 use Aws\Exception\AwsException;
+use Exception;
 use Psr\Http\Message\RequestInterface;
+use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7;
 
@@ -27,15 +29,18 @@ class RetryMiddleware
     private $decider;
     private $delay;
     private $nextHandler;
+    private $collectStats;
 
     public function __construct(
         callable $decider,
         callable $delay,
-        callable $nextHandler
+        callable $nextHandler,
+        $collectStats = false
     ) {
         $this->decider = $decider;
         $this->delay = $delay;
         $this->nextHandler = $nextHandler;
+        $this->collectStats = (bool) $collectStats;
     }
 
     /**
@@ -100,26 +105,107 @@ class RetryMiddleware
         RequestInterface $request = null
     ) {
         $retries = 0;
+        $requestStats = [];
         $handler = $this->nextHandler;
         $decider = $this->decider;
         $delay = $this->delay;
 
-        $g = function ($value) use ($handler, $decider, $delay, $command, $request, &$retries, &$g) {
+        $g = function ($value) use (
+            $handler,
+            $decider,
+            $delay,
+            $command,
+            $request,
+            &$retries,
+            &$requestStats,
+            &$g
+        ) {
+            $this->updateHttpStats($value, $requestStats);
+
             if ($value instanceof \Exception) {
                 if (!$decider($retries, $command, $request, null, $value)) {
-                    return \GuzzleHttp\Promise\rejection_for($value);
+                    return \GuzzleHttp\Promise\rejection_for(
+                        $this->bindStatsToReturn($value, $requestStats)
+                    );
                 }
             } elseif ($value instanceof ResultInterface
                 && !$decider($retries, $command, $request, $value, null)
             ) {
-                return $value;
+                return $this->bindStatsToReturn($value, $requestStats);
             }
 
             // Delay fn is called with 0, 1, ... so increment after the call.
-            $command['@http']['delay'] = $delay($retries++);
+            $delayBy = $delay($retries++);
+            $command['@http']['delay'] = $delayBy;
+            if ($this->collectStats) {
+                $this->updateStats($retries, $delayBy, $requestStats);
+            }
+
             return $handler($command, $request)->then($g, $g);
         };
 
         return $handler($command, $request)->then($g, $g);
+    }
+
+    private function updateStats($retries, $delay, array &$stats)
+    {
+        if (!isset($stats['total_retry_delay'])) {
+            $stats['total_retry_delay'] = 0;
+        }
+
+        $stats['total_retry_delay'] += $delay;
+        $stats['retries_attempted'] = $retries;
+    }
+
+    private function updateHttpStats($value, array &$stats)
+    {
+        if (empty($stats['http'])) {
+            $stats['http'] = [];
+        }
+
+        if ($value instanceof AwsException) {
+            $resultStats = isset($value->getTransferInfo('http')[0])
+                ? $value->getTransferInfo('http')[0]
+                : [];
+            $stats['http'] []= $resultStats;
+        } elseif ($value instanceof ResultInterface) {
+            $resultStats = isset($value['@metadata']['transferStats']['http'][0])
+                ? $value['@metadata']['transferStats']['http'][0]
+                : [];
+            $stats['http'] []= $resultStats;
+        }
+    }
+
+    private function bindStatsToReturn($return, array $stats)
+    {
+        if (isset($stats['http']) && empty(array_filter($stats['http']))) {
+            unset($stats['http']);
+        }
+
+        if ($return instanceof ResultInterface) {
+            if (!isset($return['@metadata'])) {
+                $return['@metadata'] = [];
+            }
+
+            $return['@metadata']['transferStats'] = $stats;
+            return $return;
+        } elseif ($return instanceof AwsException) {
+            $klass = get_class($return);
+            return new $klass(
+                $return->getMessage(),
+                $return->getCommand(),
+                [
+                    'response' => $return->getResponse(),
+                    'request' => $return->getRequest(),
+                    'request_id' => $return->getAwsRequestId(),
+                    'type' => $return->getAwsErrorType(),
+                    'code' => $return->getAwsErrorCode(),
+                    'connection_error' => $return->isConnectionError(),
+                    'result' => $return->getResult(),
+                    'transfer_stats' => $stats,
+                ],
+                $return->getPrevious()
+            );
+        }
     }
 }
