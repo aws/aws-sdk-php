@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.15.4 - 2016-02-23
 
 * `Aws\Route53` - Added support for SNI health checks.
 
