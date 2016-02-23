@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Route53` - Added support for SNI health checks.
+
 ## 3.15.3 - 2016-02-18
 
 * `Aws\StorageGateway` - Added support for creating tapes with barcodes.
