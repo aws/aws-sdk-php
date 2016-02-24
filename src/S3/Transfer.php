@@ -219,9 +219,9 @@ class Transfer implements PromisorInterface
         $prefix = "s3://{$parts['Bucket']}/"
             . (isset($parts['Key']) ? $parts['Key'] . '/' : '');
 
-        $commands = Aws\map($this->getDownloadsIterator(), function (
-            $object
-        ) use ($prefix) {
+
+        $commands = [];
+        foreach ($this->getDownloadsIterator() as $object) {
             // Prepare the sink.
             $sink = $this->destination['path'] . '/'
                 . preg_replace('/^' . preg_quote($prefix, '/') . '/', '', $object);
@@ -233,11 +233,11 @@ class Transfer implements PromisorInterface
             }
 
             // Create the command.
-            return $this->client->getCommand(
+            $commands []= $this->client->getCommand(
                 'GetObject',
                 $this->getS3Args($object) + ['@http'  => ['sink'  => $sink]]
             );
-        });
+        }
 
         // Create a GetObject command pool and return the promise.
         return (new Aws\CommandPool($this->client, $commands, [
