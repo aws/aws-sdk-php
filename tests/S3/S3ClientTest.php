@@ -825,7 +825,7 @@ EOXML;
         $this->assertSame('test/yearmonth=201601/', $response['CommonPrefixes'][0]['Prefix']);
     }
 
-    public function testListObjectsDoesUrlDecodeEncodedKeysWhenEncodingSupplied()
+    public function testListObjectsDoesNotUrlDecodeEncodedKeysWhenEncodingSupplied()
     {
         $client = new S3Client([
             'version' => 'latest',
@@ -866,5 +866,21 @@ EOXML;
     </CommonPrefixes>
 </ListBucketResult>
 EOXML;
+    }
+
+    public function testHeadObjectDisablesContentDecodingByDefault()
+    {
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'http_handler' => function (RequestInterface $r, array $opts = []) {
+                $this->assertArrayHasKey('decode_content', $opts);
+                $this->assertSame(false, $opts['decode_content']);
+
+                return Promise\promise_for(new Response);
+            }
+        ]);
+
+        $client->headObject(['Bucket' => 'bucket', 'Key' => 'key']);
     }
 }
