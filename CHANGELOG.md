@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.15.5 - 2016-02-25
 
 * `Aws\AutoScaling` - Added support for specifying an instance ID instead of an
   action token when completing lifecycle actions or recording lifecycle action
