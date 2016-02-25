@@ -9,6 +9,7 @@
   returned when calling `HeadObject` on GZipped or deflated objects.
 * `Aws\S3` - Fixed iteration bug in `Transfer` encountered when downloading more
   than 1,000 objects.
+* `Aws\Sns` - Added support for specifying an encoding on an SNS action.
 
 ## 3.15.4 - 2016-02-23
 
