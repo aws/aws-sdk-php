@@ -2,6 +2,9 @@
 
 ## next release
 
+* `Aws\AutoScaling` - Added support for specifying an instance ID instead of an
+  action token when completing lifecycle actions or recording lifecycle action
+  heartbeats.
 * `Aws\CloudFormation` - Added support for retaining specific resources when
   deleting stacks.
 * `Aws\CloudFormation` - Added support for adding tags when updating stacks.
