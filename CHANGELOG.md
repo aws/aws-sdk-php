@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFormation` - Added support for retaining specific resources when
+  deleting stacks.
+* `Aws\CloudFormation` - Added support for adding tags when updating stacks.
+* `Aws\S3` - Fixed bug where `ContentEncoding` and `ContentLength` were not
+  returned when calling `HeadObject` on GZipped or deflated objects.
+* `Aws\S3` - Fixed iteration bug in `Transfer` encountered when downloading more
+  than 1,000 objects.
+
 ## 3.15.4 - 2016-02-23
 
 * `Aws\Route53` - Added support for SNI health checks.
