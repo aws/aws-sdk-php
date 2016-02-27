@@ -25,10 +25,8 @@ class ObjectCopierTest extends \PHPUnit_Framework_TestCase
         $this->addMockResults($client, $mockedResults);
         $result = (new ObjectCopier(
             $client,
-            'sourceBucket',
-            'sourceKey',
-            'bucket',
-            'key',
+            ['Bucket' => 'sourceBucket', 'Key' => 'sourceKey'],
+            ['Bucket' => 'bucket', 'Key' => 'key'],
             'private',
             $options
         ))->copy();
@@ -48,10 +46,8 @@ class ObjectCopierTest extends \PHPUnit_Framework_TestCase
         $this->addMockResults($client, $mockedResults);
         $promise = (new ObjectCopier(
             $client,
-            'sourceBucket',
-            'sourceKey',
-            'bucket',
-            'key',
+            ['Bucket' => 'sourceBucket', 'Key' => 'sourceKey'],
+            ['Bucket' => 'bucket', 'Key' => 'key'],
             'private',
             $options
         ))->promise();
@@ -127,12 +123,9 @@ class ObjectCopierTest extends \PHPUnit_Framework_TestCase
 
         (new ObjectCopier(
             $client,
-            'bucket',
-            'key',
-            'newBucket',
-            'newKey',
-            'private',
-            ['version_id' => 'V+ID',]
+            ['Bucket' => 'bucket', 'Key' => 'key', 'VersionId' => 'V+ID'],
+            ['Bucket' => 'newBucket', 'Key' => 'newKey'],
+            'private'
         ))->copy();
     }
 

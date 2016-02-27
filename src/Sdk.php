@@ -72,28 +72,24 @@ class Sdk
 {
     const VERSION = '3.16.0';
 
-    /** @var Session */
-    private $session;
+    /** @var array Arguments for creating clients */
+    private $args;
 
     /**
      * Constructs a new SDK object with an associative array of default
      * client settings.
      *
-     * @param array|Session $args
+     * @param array $args
      *
      * @throws \InvalidArgumentException
      * @see Aws\AwsClient::__construct for a list of available options.
      */
-    public function __construct($args = [])
+    public function __construct(array $args = [])
     {
-        if ($args instanceof Session) {
-            $this->session = $args;
-        } elseif (is_array($args)) {
-            $this->session = new Session($args);
-        } else {
-            throw new \InvalidArgumentException('The first parameter passed to'
-                . ' the Aws\Sdk constructor must be an array or an instance of'
-                . ' Aws\Session; ' . describe_type($args) . ' provided.');
+        $this->args = $args;
+
+        if (!isset($args['handler']) && !isset($args['http_handler'])) {
+            $this->args['http_handler'] = default_http_handler();
         }
     }
 
@@ -126,7 +122,10 @@ class Sdk
         $service = manifest($name);
         $namespace = $service['namespace'];
 
-        $args += $this->session->getArgs($namespace);
+        // Merge provided args with stored, service-specific args.
+        if (isset($this->args[$namespace])) {
+            $args += $this->args[$namespace];
+        }
 
         // Provide the endpoint prefix in the args.
         if (!isset($args['service'])) {
@@ -135,7 +134,7 @@ class Sdk
 
         // Instantiate the client class.
         $client = "Aws\\{$namespace}\\{$namespace}Client";
-        return new $client($args);
+        return new $client($args + $this->args);
     }
 
     /**

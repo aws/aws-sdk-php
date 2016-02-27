@@ -97,7 +97,7 @@ class S3MultiRegionClientTest extends \PHPUnit_Framework_TestCase
 
         $getObjectCommand = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
         $this->assertSame('object!', (string) $client->execute($getObjectCommand)['Body']);
-        $this->assertSame('us-west-2', $this->readAttribute($client, 'cache')->get('aws:foo:location'));
+        $this->assertSame('us-west-2', $this->readAttribute($client, 'cache')->get('aws:s3:foo:location'));
     }
 
     public function testReadsBucketLocationFromCache()
@@ -105,7 +105,7 @@ class S3MultiRegionClientTest extends \PHPUnit_Framework_TestCase
         $cache = $this->getMock(CacheInterface::class);
         $cache->expects($this->once())
             ->method('get')
-            ->with('aws:foo:location')
+            ->with('aws:s3:foo:location')
             ->willReturn('us-west-2');
 
         $client = new S3MultiRegionClient([
@@ -129,7 +129,7 @@ class S3MultiRegionClientTest extends \PHPUnit_Framework_TestCase
     public function testCorrectsErroneousEntriesInCache()
     {
         $cache = new LruArrayCache;
-        $cache->set('aws:foo:location', 'us-east-1');
+        $cache->set('aws:s3:foo:location', 'us-east-1');
 
         $client = new S3MultiRegionClient([
             'region' => 'eu-east-1',
@@ -151,6 +151,6 @@ class S3MultiRegionClientTest extends \PHPUnit_Framework_TestCase
 
         $getObjectCommand = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
         $this->assertSame('object!', (string) $client->execute($getObjectCommand)['Body']);
-        $this->assertSame('us-west-2', $cache->get('aws:foo:location'));
+        $this->assertSame('us-west-2', $cache->get('aws:s3:foo:location'));
     }
 }

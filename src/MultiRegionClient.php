@@ -5,12 +5,12 @@ class MultiRegionClient implements AwsClientInterface
 {
     use AwsClientTrait;
 
-    /** @var Session */
-    private $session;
     /** @var AwsClientInterface[] A pool of clients keyed by region. */
     private $clientPool = [];
     /** @var callable */
     private $factory;
+    /** @var array */
+    private $args;
 
     public static function getArguments()
     {
@@ -18,18 +18,6 @@ class MultiRegionClient implements AwsClientInterface
             ClientResolver::getDefaultArguments(),
             ['service' => true, 'region' => true]
         );
-        $args['service']['fn'] = function ($value, &$args) {
-            $ns = manifest($value)['namespace'];
-            if (!isset($args['namespace'])) {
-                $args['namespace'] = $ns;
-            }
-            if (!isset($args['client_factory'])) {
-                $klass = "Aws\\$ns\\{$ns}Client";
-                $args['client_factory'] = function (array $args) use ($klass) {
-                    return new $klass($args);
-                };
-            }
-        };
 
         return $args + [
             'client_factory' => [
@@ -40,6 +28,18 @@ class MultiRegionClient implements AwsClientInterface
                     . ' client.',
                 'required' => true,
                 'internal' => true,
+                'default' => function (array $args) {
+                    $ns = manifest($args['service'])['namespace'];
+                    $klass = "Aws\\$ns\\{$ns}Client";
+                    $defaultRegion = $args['region'];
+                    return function (array $args) use ($klass, $defaultRegion) {
+                        if (empty($args['region'])) {
+                            $args['region'] = $defaultRegion;
+                        }
+
+                        return new $klass($args);
+                    };
+                },
             ],
         ];
     }
@@ -63,10 +63,8 @@ class MultiRegionClient implements AwsClientInterface
 
     public function getRegion()
     {
-        $defaultArgs = $this->session->getArgs();
-        return isset($defaultArgs['region'])
-            ? $defaultArgs['region']
-            : null;
+        return $this->getClientFromPool('')
+            ->getRegion();
     }
 
     public function getCommand($name, array $args = [])
@@ -78,31 +76,31 @@ class MultiRegionClient implements AwsClientInterface
 
     public function getConfig($option = null)
     {
-        return $this->getClientFromPool($this->getRegion())
+        return $this->getClientFromPool('')
             ->getConfig($option);
     }
 
     public function getCredentials()
     {
-        return $this->getClientFromPool($this->getRegion())
+        return $this->getClientFromPool('')
             ->getCredentials();
     }
 
     public function getHandlerList()
     {
-        return $this->getClientFromPool($this->getRegion())
+        return $this->getClientFromPool('')
             ->getHandlerList();
     }
 
     public function getApi()
     {
-        return $this->getClientFromPool($this->getRegion())
+        return $this->getClientFromPool('')
             ->getApi();
     }
 
     public function getEndpoint()
     {
-        return $this->getClientFromPool($this->getRegion())
+        return $this->getClientFromPool('')
             ->getEndpoint();
     }
 
@@ -111,7 +109,7 @@ class MultiRegionClient implements AwsClientInterface
         $this->factory = $args['client_factory'];
         unset($args['client_factory']);
 
-        $this->session = new Session($args);
+        $this->args = $args;
     }
 
     /**
@@ -121,14 +119,11 @@ class MultiRegionClient implements AwsClientInterface
      */
     protected function getClientFromPool($region)
     {
-        if (empty($region) || !$this->isStringable($region)) {
-            throw new \InvalidArgumentException();
-        }
-
         if (empty($this->clientPool[$region])) {
-            $args = $this->session->getArgs();
-            $this->clientPool[$region]
-                = call_user_func($this->factory, ['region' => $region] + $args);
+            $factory = $this->factory;
+            $this->clientPool[$region] = $factory(
+                array_replace($this->args, array_filter(['region' => $region]))
+            );
         }
 
         return $this->clientPool[$region];
@@ -158,11 +153,5 @@ class MultiRegionClient implements AwsClientInterface
         unset($args['@region']);
 
         return [$region, $args];
-    }
-
-    private function isStringable($var)
-    {
-        return is_string($var)
-        || (is_object($var) && method_exists($var, '__toString'));
     }
 }

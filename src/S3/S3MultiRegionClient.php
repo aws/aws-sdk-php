@@ -108,6 +108,6 @@ class S3MultiRegionClient extends BaseClient implements S3ClientInterface
 
     private function getCacheKey($bucketName)
     {
-        return "aws:{$bucketName}:location";
+        return "aws:s3:{$bucketName}:location";
     }
 }

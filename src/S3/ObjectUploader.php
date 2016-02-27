@@ -5,8 +5,14 @@ use GuzzleHttp\Promise\PromisorInterface;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
 
+/**
+ * Uploads an object to S3, using a PutObject command or a multipart upload as
+ * appropriate.
+ */
 class ObjectUploader implements PromisorInterface
 {
+    const DEFAULT_MULTIPART_THRESHOLD = 16777216;
+
     private $client;
     private $bucket;
     private $key;
@@ -16,11 +22,25 @@ class ObjectUploader implements PromisorInterface
     private static $defaults = [
         'before_upload' => null,
         'concurrency'   => 3,
-        'mup_threshold' => 16777216,
+        'mup_threshold' => self::DEFAULT_MULTIPART_THRESHOLD,
         'params'        => [],
         'part_size'     => null,
     ];
 
+    /**
+     * @param S3ClientInterface $client         The S3 Client used to execute
+     *                                          the upload command(s).
+     * @param string            $bucket         Bucket to upload the object.
+     * @param string            $key            Key of the object.
+     * @param mixed             $body           Object data to upload. Can be a
+     *                                          StreamInterface, PHP stream
+     *                                          resource, or a string of data to
+     *                                          upload.
+     * @param string            $acl            ACL to apply to the copy
+     *                                          (default: private).
+     * @param array             $options        Options used to configure the
+     *                                          copy process.
+     */
     public function __construct(
         S3ClientInterface $client,
         $bucket,

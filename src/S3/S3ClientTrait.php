@@ -57,7 +57,19 @@ trait S3ClientTrait
         $acl = 'private',
         array $opts = []
     ) {
-        return (new ObjectCopier($this, $fromB, $fromK, $destB, $destK, $acl, $opts))
+        $source = [
+            'Bucket' => $fromB,
+            'Key' => $fromK,
+        ];
+        if (isset($opts['version_id'])) {
+            $source['VersionId'] = $opts['version_id'];
+        }
+        $destination = [
+            'Bucket' => $destB,
+            'Key' => $destK
+        ];
+
+        return (new ObjectCopier($this, $source, $destination, $acl, $opts))
             ->promise();
     }
 

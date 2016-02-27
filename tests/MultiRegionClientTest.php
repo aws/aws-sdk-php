@@ -37,7 +37,7 @@ class MultiRegionClientTest extends \PHPUnit_Framework_TestCase
             ->getProperty('clientPool');
         $property->setAccessible(true);
         $property->setValue($this->instance, [
-            'us-east-1' => $this->mockRegionalClient,
+            '' => $this->mockRegionalClient,
         ]);
     }
 
