@@ -10,13 +10,19 @@ $namespaces = array_map(function (array $manifest) {
 }, array_values(Aws\manifest()));
 
 sort($namespaces);
+$annotations = [];
+foreach ($namespaces as $namespace) {
+    $mrClient = "\\Aws\\{$namespace}\\{$namespace}MultiRegionClient";
+    $mrClient = class_exists($mrClient) ? $mrClient : "\\Aws\\MultiRegionClient";
 
-$annotations = array_map(function ($namespace) {
-    return " * @method \\Aws\\{$namespace}\\{$namespace}Client"
+    $annotations []= " * @method \\Aws\\{$namespace}\\{$namespace}Client"
         . " create{$namespace}(array \$args = [])";
-}, $namespaces);
+    $annotations []= " * @method $mrClient"
+        . " createMultiRegion{$namespace}(array \$args = [])";
+}
+
 $previousAnnotationPattern = '/^\* @method'
-    . ' \\\\Aws\\\\(?:[a-zA-Z0-9]+)\\\\(?:[a-zA-Z0-9]+)Client'
+    . ' \\\\Aws\\\\(?:[a-zA-Z0-9\\\\]+)Client'
     . ' create(?:[a-zA-Z0-9]+)\\(array \$args = \\[\\]\\)/';
 
 $updater = new ClassAnnotationUpdater(

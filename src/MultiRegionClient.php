@@ -18,6 +18,7 @@ class MultiRegionClient implements AwsClientInterface
             ClientResolver::getDefaultArguments(),
             ['service' => true, 'region' => true]
         );
+        $args['region']['required'] = false;
 
         return $args + [
             'client_factory' => [
@@ -29,12 +30,13 @@ class MultiRegionClient implements AwsClientInterface
                 'required' => true,
                 'internal' => true,
                 'default' => function (array $args) {
-                    $ns = manifest($args['service'])['namespace'];
-                    $klass = "Aws\\$ns\\{$ns}Client";
-                    $defaultRegion = $args['region'];
-                    return function (array $args) use ($klass, $defaultRegion) {
-                        if (empty($args['region'])) {
-                            $args['region'] = $defaultRegion;
+                    $namespace = manifest($args['service'])['namespace'];
+                    $klass = "Aws\\{$namespace}\\{$namespace}Client";
+                    $region = isset($args['region']) ? $args['region'] : null;
+
+                    return function (array $args) use ($klass, $region) {
+                        if ($region && empty($args['region'])) {
+                            $args['region'] = $region;
                         }
 
                         return new $klass($args);
@@ -63,8 +65,7 @@ class MultiRegionClient implements AwsClientInterface
 
     public function getRegion()
     {
-        return $this->getClientFromPool('')
-            ->getRegion();
+        return $this->getClientFromPool()->getRegion();
     }
 
     public function getCommand($name, array $args = [])
@@ -76,32 +77,27 @@ class MultiRegionClient implements AwsClientInterface
 
     public function getConfig($option = null)
     {
-        return $this->getClientFromPool('')
-            ->getConfig($option);
+        return $this->getClientFromPool()->getConfig($option);
     }
 
     public function getCredentials()
     {
-        return $this->getClientFromPool('')
-            ->getCredentials();
+        return $this->getClientFromPool()->getCredentials();
     }
 
     public function getHandlerList()
     {
-        return $this->getClientFromPool('')
-            ->getHandlerList();
+        return $this->getClientFromPool()->getHandlerList();
     }
 
     public function getApi()
     {
-        return $this->getClientFromPool('')
-            ->getApi();
+        return $this->getClientFromPool()->getApi();
     }
 
     public function getEndpoint()
     {
-        return $this->getClientFromPool('')
-            ->getEndpoint();
+        return $this->getClientFromPool()->getEndpoint();
     }
 
     protected function handleResolvedArgs(array $args)
@@ -113,11 +109,13 @@ class MultiRegionClient implements AwsClientInterface
     }
 
     /**
-     * @param string $region
+     * @param string $region    Omit this argument or pass in an empty string to
+     *                          allow the configured client factory to apply the
+     *                          region.
      *
      * @return AwsClientInterface
      */
-    protected function getClientFromPool($region)
+    protected function getClientFromPool($region = '')
     {
         if (empty($this->clientPool[$region])) {
             $factory = $this->factory;

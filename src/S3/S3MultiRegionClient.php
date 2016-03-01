@@ -20,7 +20,6 @@ class S3MultiRegionClient extends BaseClient implements S3ClientInterface
     public static function getArguments()
     {
         $args = parent::getArguments();
-        unset($args['region']['required']);
         $args['region']['default'] = 'us-east-1';
 
         return $args + [
@@ -74,8 +73,12 @@ class S3MultiRegionClient extends BaseClient implements S3ClientInterface
 
     public function getObjectUrl($bucket, $key)
     {
-        return $this->getClientFromPool($this->determineBucketRegion($bucket))
-            ->getObjectUrl($bucket, $key);
+        /** @var S3Client $regionalClient */
+        $regionalClient = $this->getClientFromPool(
+            $this->determineBucketRegion($bucket)
+        );
+
+        return $regionalClient->getObjectUrl($bucket, $key);
     }
 
     public function determineBucketRegionAsync($bucketName)
