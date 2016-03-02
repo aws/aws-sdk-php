@@ -4,6 +4,8 @@
 
 * `Aws\ApiGateway` - Added support for flushing all authorizer cache entries on
   a stage.
+* `Aws\CloudSearchDomain` - Added support for returning field statistics in the
+  response to a search operation.
 * `Aws\DynamoDb` - Added support for describing account limits.
 
 ## 3.15.5 - 2016-02-25
