@@ -2,6 +2,8 @@
 
 ## next release
 
+* `Aws\ApiGateway` - Added support for flushing all authorizer cache entries on
+  a stage.
 * `Aws\DynamoDb` - Added support for describing account limits.
 
 ## 3.15.5 - 2016-02-25
