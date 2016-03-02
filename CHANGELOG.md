@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.15.6 - 2016-03-01
 
 * `Aws\ApiGateway` - Added support for flushing all authorizer cache entries on
   a stage.
