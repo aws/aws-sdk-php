@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DynamoDb` - Added support for describing account limits.
+
 ## 3.15.5 - 2016-02-25
 
 * `Aws\AutoScaling` - Added support for specifying an instance ID instead of an
