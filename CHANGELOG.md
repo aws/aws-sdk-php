@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.15.7 - 2016-03-03
 
 * `Aws\DirectoryService` - Added support for SNS notifications.
 * `Aws\Ec2` - Added support for Cross VPC Security Group References with VPC
