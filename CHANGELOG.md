@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Ec2` - Adds support for Cross VPC Security Group References with VPC peering and ClassicLink traffic over VPC peering.
+
 ## 3.15.6 - 2016-03-01
 
 * `Aws\ApiGateway` - Added support for flushing all authorizer cache entries on
