@@ -2,7 +2,9 @@
 
 ## next release
 
-* `Aws\Ec2` - Adds support for Cross VPC Security Group References with VPC peering and ClassicLink traffic over VPC peering.
+* `Aws\DirectoryService` - Added support for SNS notifications.
+* `Aws\Ec2` - Added support for Cross VPC Security Group References with VPC
+  peering and ClassicLink traffic over VPC peering.
 
 ## 3.15.6 - 2016-03-01
 
