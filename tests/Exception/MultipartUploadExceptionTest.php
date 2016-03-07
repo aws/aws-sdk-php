@@ -16,12 +16,13 @@ class MultipartUploadExceptionTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanCreateMultipartException($commandName, $status)
     {
+        $msg = 'Error encountered while reticulating splines.';
         $state = new UploadState([]);
-        $prev = new AwsException('WHATEVER', new Command($commandName));
+        $prev = new AwsException($msg, new Command($commandName));
         $exception = new MultipartUploadException($state, $prev);
 
         $this->assertEquals(
-            "An exception occurred while {$status} a multipart upload.",
+            "An exception occurred while {$status} a multipart upload: $msg",
             $exception->getMessage()
         );
         $this->assertSame($state, $exception->getState());
