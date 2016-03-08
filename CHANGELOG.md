@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeCommit` - Added support for repository triggers.
+
 ## 3.15.7 - 2016-03-03
 
 * `Aws\DirectoryService` - Added support for SNS notifications.
