@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.15.8 - 2016-03-08
 
 * `Aws\CodeCommit` - Added support for repository triggers.
 
