@@ -73,40 +73,35 @@ class WrappedHttpHandler
     ) {
         $fn = $this->httpHandler;
         $options = $command['@http'] ?: [];
-        $statsPromise = $this->getStatsPromise($options);
+        $stats = [];
+        if ($this->collectStats) {
+            $options['http_stats_receiver'] = static function (
+                array $transferStats
+            ) use (&$stats) {
+                $stats = $transferStats;
+            };
+        } elseif (isset($options['http_stats_receiver'])) {
+            throw new \InvalidArgumentException('Providing a custom HTTP stats'
+                . ' receiver to Aws\WrappedHttpHandler is not supported.');
+        }
 
         return Promise\promise_for($fn($request, $options))
             ->then(
-                function (ResponseInterface $response) use (
-                    $command,
-                    $request,
-                    $statsPromise
-                ) {
-                    return $statsPromise->then(function (array $stats) use (
-                        $command,
-                        $request,
-                        $response
-                    ) {
-                        return $this->parseResponse(
-                            $command,
+                function (
+                    ResponseInterface $res
+                ) use ($command, $request, &$stats) {
+                    return $this->parseResponse($command, $request, $res, $stats);
+                },
+                function ($err) use ($request, $command, &$stats) {
+                    if (is_array($err)) {
+                        $err = $this->parseError(
+                            $err,
                             $request,
-                            $response,
+                            $command,
                             $stats
                         );
-                    });
-                },
-                function ($err) use ($command, $request, $statsPromise) {
-                    return $statsPromise->then(function (array $stats) use (
-                        $command,
-                        $request,
-                        $err
-                    ) {
-                        if (is_array($err)) {
-                            $err = $this
-                                ->parseError($err, $request, $command, $stats);
-                        }
-                        return new Promise\RejectedPromise($err);
-                    });
+                    }
+                    return new Promise\RejectedPromise($err);
                 }
             );
     }
@@ -136,7 +131,7 @@ class WrappedHttpHandler
             'effectiveUri'  => (string) $request->getUri(),
             'headers'       => [],
             'transferStats' => [],
-         ];
+        ];
         if (!empty($stats)) {
             $metadata['transferStats']['http'] = [$stats];
         }
@@ -157,6 +152,7 @@ class WrappedHttpHandler
      * @param array            $err     Rejection error array.
      * @param RequestInterface $request Request that was sent.
      * @param CommandInterface $command Command being sent.
+     * @param array            $stats   Transfer statistics
      *
      * @return \Exception
      */
@@ -164,7 +160,7 @@ class WrappedHttpHandler
         array $err,
         RequestInterface $request,
         CommandInterface $command,
-        array $stats = []
+        array $stats
     ) {
         if (!isset($err['exception'])) {
             throw new \RuntimeException('The HTTP handler was rejected without an "exception" key value pair.');
@@ -191,8 +187,7 @@ class WrappedHttpHandler
         $parts['exception'] = $err['exception'];
         $parts['request'] = $request;
         $parts['connection_error'] = !empty($err['connection_error']);
-        $parts['transfer_stats']
-            = isset($err['transfer_stats']) ? $err['transfer_stats'] : [];
+        $parts['transfer_stats'] = $stats;
 
         return new $this->exceptionClass(
             sprintf(
@@ -205,23 +200,5 @@ class WrappedHttpHandler
             $parts,
             $err['exception']
         );
-    }
-
-    private function getStatsPromise(array &$httpOptions)
-    {
-        if (!$this->collectStats) {
-            return new FulfilledPromise([]);
-        }
-
-        $statsPromise = new Promise\Promise(function () use (&$statsPromise) {
-            $statsPromise->resolve([]);
-        });
-        $httpOptions['__on_transfer_stats'] = function (
-            array $stats = []
-        ) use ($statsPromise) {
-            $statsPromise->resolve($stats);
-        };
-
-        return $statsPromise;
     }
 }

@@ -218,10 +218,7 @@ stats
 
 :Type: ``bool|array``
 
-Outputs debug information about each transfer. Debug information contains
-information about each state change of a transaction as it is prepared and sent
-over the wire. Also included in the debug output is information of the specific
-HTTP handler used by a client (e.g., debug cURL output).
+Binds transfer statistics to errors and results returned by SDK operations.
 
 Set to ``true`` to gather transfer statistics on requests sent.
 
@@ -241,7 +238,7 @@ Set to ``true`` to gather transfer statistics on requests sent.
 Alternatively, you can provide an associative array with the following keys:
 
 retries (bool)
-    Set to ``false`` to disable reporting on retries attempted. Retry statistics
+    Set to ``true`` to enable reporting on retries attempted. Retry statistics
     are collected by default and returned
 
 http (bool)

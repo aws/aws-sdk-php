@@ -81,7 +81,7 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
         $request = new Request('PUT', 'http://example.com');
         $wasCalled = false;
         $options = [
-            '__on_transfer_stats' => function (array $stats) use (&$wasCalled) {
+            'http_stats_receiver' => function (array $stats) use (&$wasCalled) {
                 $this->assertArrayHasKey('total_time', $stats);
                 $wasCalled = true;
             },
@@ -100,7 +100,7 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
         $request = new Request('PUT', 'http://example.com');
         $wasCalled = false;
         $options = [
-            '__on_transfer_stats' => function () {},
+            'http_stats_receiver' => function () {},
             'on_stats' => function (TransferStats $stats) use (&$wasCalled) {
                 $wasCalled = true;
             },

@@ -61,18 +61,20 @@ class GuzzleHandler
 
     private function parseOptions(array $options)
     {
-        if (isset($options['__on_transfer_stats'])) {
-            $fn = $options['__on_transfer_stats'];
-            unset($options['__on_transfer_stats']);
+        if (isset($options['http_stats_receiver'])) {
+            $fn = $options['http_stats_receiver'];
+            unset($options['http_stats_receiver']);
 
             $prev = isset($options['on_stats'])
                 ? $options['on_stats']
-                : function () {};
+                : null;
 
             $options['on_stats'] = static function (
                 TransferStats $stats
             ) use ($fn, $prev) {
-                $prev($stats);
+                if (is_callable($prev)) {
+                    $prev($stats);
+                }
                 $transferStats = ['total_time' => $stats->getTransferTime()];
                 $transferStats += $stats->getHandlerStats();
                 $fn($transferStats);

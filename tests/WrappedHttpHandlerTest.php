@@ -196,7 +196,7 @@ class WrappedHttpHandlerTest extends \PHPUnit_Framework_TestCase
     public function testDoesNotPassOnTransferStatsCallbackToHandlerByDefault()
     {
         $handler = function ($request, array $options) {
-            $this->assertArrayNotHasKey('__on_transfer_stats', $options);
+            $this->assertArrayNotHasKey('http_stats_receiver', $options);
             return new Response;
         };
         $parser = function () { return new Result; };
@@ -209,8 +209,8 @@ class WrappedHttpHandlerTest extends \PHPUnit_Framework_TestCase
     public function testPassesOnTransferStatsCallbackToHandlerWhenRequested()
     {
         $handler = function ($request, array $options) {
-            $this->assertArrayHasKey('__on_transfer_stats', $options);
-            $this->assertTrue(is_callable($options['__on_transfer_stats']));
+            $this->assertArrayHasKey('http_stats_receiver', $options);
+            $this->assertTrue(is_callable($options['http_stats_receiver']));
             return new Response;
         };
 

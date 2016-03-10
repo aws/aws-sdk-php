@@ -89,9 +89,10 @@ class GuzzleHandler
     private function createGuzzleRequest(Psr7Request $psrRequest, array $options)
     {
         $ringConfig = [];
-        $statsCallback = isset($options['__on_transfer_stats'])
-            ? $options['__on_transfer_stats']
+        $statsCallback = isset($options['http_stats_receiver'])
+            ? $options['http_stats_receiver']
             : null;
+        unset($options['http_stats_receiver']);
 
         // Remove unsupported options.
         foreach (array_keys($options) as $key) {

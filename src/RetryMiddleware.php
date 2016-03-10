@@ -178,34 +178,16 @@ class RetryMiddleware
 
     private function bindStatsToReturn($return, array $stats)
     {
-        if (isset($stats['http']) && empty(array_filter($stats['http']))) {
-            unset($stats['http']);
-        }
-
         if ($return instanceof ResultInterface) {
             if (!isset($return['@metadata'])) {
                 $return['@metadata'] = [];
             }
 
             $return['@metadata']['transferStats'] = $stats;
-            return $return;
         } elseif ($return instanceof AwsException) {
-            $klass = get_class($return);
-            return new $klass(
-                $return->getMessage(),
-                $return->getCommand(),
-                [
-                    'response' => $return->getResponse(),
-                    'request' => $return->getRequest(),
-                    'request_id' => $return->getAwsRequestId(),
-                    'type' => $return->getAwsErrorType(),
-                    'code' => $return->getAwsErrorCode(),
-                    'connection_error' => $return->isConnectionError(),
-                    'result' => $return->getResult(),
-                    'transfer_stats' => $stats,
-                ],
-                $return->getPrevious()
-            );
+            $return->setTransferInfo($stats);
         }
+
+        return $return;
     }
 }

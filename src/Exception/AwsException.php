@@ -181,4 +181,14 @@ class AwsException extends \RuntimeException
             ? $this->transferInfo[$name]
             : null;
     }
+
+    /**
+     * Replace the transfer information associated with an exception.
+     *
+     * @param array $info
+     */
+    public function setTransferInfo(array $info)
+    {
+        $this->transferInfo = $info;
+    }
 }

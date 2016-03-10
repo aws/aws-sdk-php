@@ -338,27 +338,11 @@ final class Middleware
                         },
                         function ($err) use ($start) {
                             if ($err instanceof AwsException) {
-                                $klass = get_class($err);
-                                $stats = [
-                                    'total_time' => microtime(true) - $start
-                                ] + $err->getTransferInfo();
-                                return new $klass(
-                                    $err->getMessage(),
-                                    $err->getCommand(),
-                                    [
-                                        'response' => $err->getResponse(),
-                                        'request' => $err->getRequest(),
-                                        'request_id' => $err->getAwsRequestId(),
-                                        'type' => $err->getAwsErrorType(),
-                                        'code' => $err->getAwsErrorCode(),
-                                        'connection_error' => $err
-                                            ->isConnectionError(),
-                                        'result' => $err->getResult(),
-                                        'transfer_stats' => $stats,
-                                    ],
-                                    $err->getPrevious()
-                                );
+                                $err->setTransferInfo([
+                                    'total_time' => microtime(true) - $start,
+                                ] + $err->getTransferInfo());
                             }
+                            return $err;
                         }
                     );
             };

@@ -96,7 +96,7 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
         $request = new PsrRequest('PUT', 'http://example.com', [], '{}');
         $wasCalled = false;
         $options = [
-            '__on_transfer_stats' => function (array $stats) use (&$wasCalled) {
+            'http_stats_receiver' => function (array $stats) use (&$wasCalled) {
                 $wasCalled = true;
             },
         ];

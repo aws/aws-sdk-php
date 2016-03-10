@@ -385,32 +385,4 @@ class RetryMiddlewareTest extends \PHPUnit_Framework_TestCase
             ['fizz' => 'buzz'],
         ], $httpStats);
     }
-
-    public function testDoesNotReportHttpStatsIfNoneProvidedUpstream()
-    {
-        $handler = new MockHandler([
-            new Result(['@metadata' => [
-                'statusCode' => '503',
-                'transferStats' => []
-            ]]),
-            new Result(['@metadata' => [
-                'statusCode' => '503',
-                'transferStats' => []
-            ]]),
-            new Result(['@metadata' => [
-                'statusCode' => '200',
-                'transferStats' => []
-            ]]),
-        ]);
-        $retryMW = new RetryMiddleware(
-            RetryMiddleware::createDefaultDecider($retries = 3),
-            [RetryMiddleware::class, 'exponentialDelay'],
-            $handler,
-            false
-        );
-
-        $result = $retryMW(new Command('SomeCommand'), new Request('GET', ''))
-            ->wait();
-        $this->assertArrayNotHasKey('http', $result['@metadata']['transferStats']);
-    }
 }
