@@ -213,6 +213,77 @@ auth_strings (array)
     when opening issues on the SDK.
 
 
+stats
+~~~~~
+
+:Type: ``bool|array``
+
+Outputs debug information about each transfer. Debug information contains
+information about each state change of a transaction as it is prepared and sent
+over the wire. Also included in the debug output is information of the specific
+HTTP handler used by a client (e.g., debug cURL output).
+
+Set to ``true`` to gather transfer statistics on requests sent.
+
+.. code-block:: php
+
+    $s3 = new Aws\S3\S3Client([
+        'version' => 'latest',
+        'region'  => 'us-west-2',
+        'stats'   => true
+    ]);
+
+    // Perform an operation.
+    $result = $s3->listBuckets();
+    // Inspect the stats.
+    $stats = $result['@metadata']['transferStats'];
+
+Alternatively, you can provide an associative array with the following keys:
+
+retries (bool)
+    Set to ``false`` to disable reporting on retries attempted. Retry statistics
+    are collected by default and returned
+
+http (bool)
+    Set to ``true`` to enable collecting statistics from lower level HTTP
+    adapters (e.g., values returned in GuzzleHttp\TransferStats). HTTP handlers
+    must support an __on_transfer_stats option for this to have an effect. HTTP
+    stats are returned as an indexed array of associative arrays; each
+    associative array contains the transfer stats returned for a request by the
+    client's HTTP handler. Disabled by default.
+
+    If a request was retried, each request's transfer
+    stats will be returned, with
+    ``$result['@metadata']['transferStats']['http'][0]`` containing the stats
+    for the first request, ``$result['@metadata']['transferStats']['http'][1]``
+    containing the statistics for the second request, etc.
+
+timer (bool)
+    Set to ``true`` to enable a command timer that reports the total wall clock
+    time spent on an operation in seconds. Disabled by default.
+
+.. code-block:: php
+
+    $s3 = new Aws\S3\S3Client([
+        'version' => 'latest',
+        'region'  => 'us-west-2',
+        'stats'   => [
+            'retries'      => true,
+            'timer'        => false,
+            'http'         => true,
+        ]
+    ]);
+
+    // Perform an operation.
+    $result = $s3->listBuckets();
+    // Inspect the HTTP transfer stats.
+    $stats = $result['@metadata']['transferStats']['http'];
+    // Inspect the number of retries attempted.
+    $stats = $result['@metadata']['transferStats']['retries_attempted'];
+    // Inspect the total backoff delay inserted between retries.
+    $stats = $result['@metadata']['transferStats']['total_retry_delay'];
+
+
 endpoint
 ~~~~~~~~
 

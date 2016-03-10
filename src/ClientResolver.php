@@ -113,7 +113,7 @@ class ClientResolver
         'stats' => [
             'type'  => 'value',
             'valid' => ['bool', 'array'],
-            'default' => ['retries' => true, 'http' => false, 'timer' => false],
+            'default' => false,
             'doc'   => 'Set to true to gather transfer statistics on requests sent. Alternatively, you can provide an associative array with the following keys: retries: (bool) Set to false to disable reporting on retries attempted; http: (bool) Set to true to enable collecting statistics from lower level HTTP adapters (e.g., values returned in GuzzleHttp\TransferStats). HTTP handlers must support an __on_transfer_stats option for this to have an effect; timer: (bool) Set to true to enable a command timer that reports the total wall clock time spent on an operation in seconds.',
             'fn'    => [__CLASS__, '_apply_stats'],
         ],
