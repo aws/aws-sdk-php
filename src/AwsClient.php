@@ -77,7 +77,7 @@ class AwsClient implements AwsClientInterface
      *   on retries attempted; http: (bool) Set to true to enable collecting
      *   statistics from lower level HTTP adapters (e.g., values returned in
      *   GuzzleHttp\TransferStats). HTTP handlers must support an
-     *   `__on_transfer_stats` option for this to have an effect; timer: (bool)
+     *   `http_stats_receiver` option for this to have an effect; timer: (bool)
      *   Set to true to enable a command timer that reports the total wall clock
      *   time spent on an operation in seconds.
      * - endpoint: (string) The full URI of the webservice. This is only

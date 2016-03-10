@@ -213,6 +213,8 @@ auth_strings (array)
     when opening issues on the SDK.
 
 
+.. _config_stats:
+
 stats
 ~~~~~
 
