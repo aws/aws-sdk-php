@@ -73,7 +73,7 @@ class GuzzleHandler
                 TransferStats $stats
             ) use ($fn, $prev) {
                 $prev($stats);
-                $transferStats = ['transfer_time' => $stats->getTransferTime()];
+                $transferStats = ['total_time' => $stats->getTransferTime()];
                 $transferStats += $stats->getHandlerStats();
                 $fn($transferStats);
             };

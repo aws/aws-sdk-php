@@ -4,10 +4,12 @@ namespace Aws;
 use Aws\Api\Service;
 use Aws\Api\Validator;
 use Aws\Credentials\CredentialsInterface;
+use Aws\Exception\AwsException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\LazyOpenStream;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 final class Middleware
 {
@@ -307,6 +309,58 @@ final class Middleware
                 RequestInterface $request = null
             ) use ($handler, $f) {
                 return $handler($command, $request)->then($f);
+            };
+        };
+    }
+
+    public static function timer()
+    {
+        return function (callable $handler) {
+            return function (
+                CommandInterface $command,
+                RequestInterface $request = null
+            ) use ($handler) {
+                $start = microtime(true);
+                return $handler($command, $request)
+                    ->then(
+                        function (ResultInterface $res) use ($start) {
+                            if (!isset($res['@metadata'])) {
+                                $res['@metadata'] = [];
+                            }
+                            if (!isset($res['@metadata']['transferStats'])) {
+                                $res['@metadata']['transferStats'] = [];
+                            }
+
+                            $res['@metadata']['transferStats']['total_time']
+                                = microtime(true) - $start;
+
+                            return $res;
+                        },
+                        function ($err) use ($start) {
+                            if ($err instanceof AwsException) {
+                                $klass = get_class($err);
+                                $stats = [
+                                    'total_time' => microtime(true) - $start
+                                ] + $err->getTransferInfo();
+                                return new $klass(
+                                    $err->getMessage(),
+                                    $err->getCommand(),
+                                    [
+                                        'response' => $err->getResponse(),
+                                        'request' => $err->getRequest(),
+                                        'request_id' => $err->getAwsRequestId(),
+                                        'type' => $err->getAwsErrorType(),
+                                        'code' => $err->getAwsErrorCode(),
+                                        'connection_error' => $err
+                                            ->isConnectionError(),
+                                        'result' => $err->getResult(),
+                                        'transfer_stats' => $stats,
+                                    ],
+                                    $err->getPrevious()
+                                );
+                            }
+                        }
+                    );
             };
         };
     }

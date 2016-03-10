@@ -82,7 +82,7 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
         $wasCalled = false;
         $options = [
             '__on_transfer_stats' => function (array $stats) use (&$wasCalled) {
-                $this->assertArrayHasKey('transfer_time', $stats);
+                $this->assertArrayHasKey('total_time', $stats);
                 $wasCalled = true;
             },
         ];
