@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.15.9 - 2016-03-10
 
 * `Aws\GameLift` - Added support for new AutoScaling features.
 * `Aws\Iam` - Added support for stable, unique identifying string identifiers on
