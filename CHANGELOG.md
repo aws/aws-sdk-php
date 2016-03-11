@@ -2,6 +2,7 @@
 
 ## next release
 
+* `Aws\GameLift` - Added support for new AutoScaling features.
 * `Aws\Iam` - Added support for stable, unique identifying string identifiers on
   each entity returned from IAM:ListEntitiesForPolicy.
 
