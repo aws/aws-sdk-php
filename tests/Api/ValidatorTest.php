@@ -143,7 +143,63 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'members' => ['foo' => ['type' => 'structure']]
                 ],
                 ['foo' => [1, 3]],
-                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be an associative array. Found array(2)"
+                true
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => ['foo' => ['type' => 'structure']]
+                ],
+                ['foo' => ['0' => 1, '1'=> 3]],
+                true
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => ['foo' => ['type' => 'structure']]
+                ],
+                ['foo' => ['0' => 1, 'bar'=> 3]],
+                true
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => ['foo' => ['type' => 'structure']]
+                ],
+                ['foo' => [0 => 1, 'bar'=> 3]],
+                true
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => ['foo' => ['type' => 'structure']]
+                ],
+                ['foo' => [0, 1]],
+                true
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => ['foo' => ['type' => 'structure']]
+                ],
+                ['foo' => NULL],
+                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be an associative array. Found NULL"
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => ['foo' => ['type' => 'structure']]
+                ],
+                ['foo' => [null => 'a']],
+                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be an associative array. Found array(1)"
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => ['foo' => ['type' => 'structure']]
+                ],
+                ['foo' => ['' => 'a']],
+                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be an associative array. Found array(1)"
             ],
             [
                 [
@@ -210,7 +266,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     ]
                 ],
                 ['foo' => ['abc']],
-                "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be an associative array. Found array(1)"
+                true,
             ],
             [
                 [
