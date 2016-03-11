@@ -424,6 +424,9 @@ class ClientResolver
 
     public static function _apply_stats($value, array &$args, HandlerList $list)
     {
+        // Create an array of stat collectors that are disabled (set to false)
+        // by default. If the user has passed in true, enable all stat
+        // collectors.
         $defaults = array_fill_keys(
             ['http', 'retries', 'timer'],
             $value === true
