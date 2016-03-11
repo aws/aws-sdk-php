@@ -5,6 +5,8 @@
 * `Aws\GameLift` - Added support for new AutoScaling features.
 * `Aws\Iam` - Added support for stable, unique identifying string identifiers on
   each entity returned from IAM:ListEntitiesForPolicy.
+* `Aws\Redshift` - Added support for restoring a single table from an Amazon
+  Redshift snapshot instead of restoring the entire cluster.
 
 ## 3.15.8 - 2016-03-08
 
