@@ -476,6 +476,9 @@ to use the following options:
 - :ref:`http_stream` (optional)
 - :ref:`http_timeout`
 - :ref:`http_verify`
+- http_stats_receiver (optional)
+  - A function to invoke with an associative array of HTTP transfer statistics
+  if requested using the :ref:`config_stats` configuration parameter.
 
 Unless the option is specified as optional, a handler MUST be able to handle
 the option or it MUST return a rejected promise.

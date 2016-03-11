@@ -110,6 +110,13 @@ class ClientResolver
             'fn'      => [__CLASS__, '_apply_credentials'],
             'default' => [CredentialProvider::class, 'defaultProvider'],
         ],
+        'stats' => [
+            'type'  => 'value',
+            'valid' => ['bool', 'array'],
+            'default' => false,
+            'doc'   => 'Set to true to gather transfer statistics on requests sent. Alternatively, you can provide an associative array with the following keys: retries: (bool) Set to false to disable reporting on retries attempted; http: (bool) Set to true to enable collecting statistics from lower level HTTP adapters (e.g., values returned in GuzzleHttp\TransferStats). HTTP handlers must support an http_stats_receiver option for this to have an effect; timer: (bool) Set to true to enable a command timer that reports the total wall clock time spent on an operation in seconds.',
+            'fn'    => [__CLASS__, '_apply_stats'],
+        ],
         'retries' => [
             'type'    => 'value',
             'valid'   => ['int'],
@@ -332,7 +339,10 @@ class ClientResolver
     {
         if ($value) {
             $decider = RetryMiddleware::createDefaultDecider($value);
-            $list->appendSign(Middleware::retry($decider), 'retry');
+            $list->appendSign(
+                Middleware::retry($decider, null, $args['stats']['retries']),
+                'retry'
+            );
         }
     }
 
@@ -412,6 +422,24 @@ class ClientResolver
         }
     }
 
+    public static function _apply_stats($value, array &$args, HandlerList $list)
+    {
+        // Create an array of stat collectors that are disabled (set to false)
+        // by default. If the user has passed in true, enable all stat
+        // collectors.
+        $defaults = array_fill_keys(
+            ['http', 'retries', 'timer'],
+            $value === true
+        );
+        $args['stats'] = is_array($value)
+            ? array_replace($defaults, $value)
+            : $defaults;
+
+        if ($args['stats']['timer']) {
+            $list->prependInit(Middleware::timer(), 'timer');
+        }
+    }
+
     public static function _apply_profile($_, array &$args)
     {
         $args['credentials'] = CredentialProvider::ini($args['profile']);
@@ -443,7 +471,8 @@ class ClientResolver
             default_http_handler(),
             $args['parser'],
             $args['error_parser'],
-            $args['exception_class']
+            $args['exception_class'],
+            $args['stats']['http']
         );
     }
 
@@ -453,7 +482,8 @@ class ClientResolver
             $value,
             $args['parser'],
             $args['error_parser'],
-            $args['exception_class']
+            $args['exception_class'],
+            $args['stats']['http']
         );
     }
 

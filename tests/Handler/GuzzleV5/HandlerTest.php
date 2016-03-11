@@ -2,15 +2,19 @@
 namespace Aws\Test\Handler\GuzzleV5;
 
 use Aws\Handler\GuzzleV5\GuzzleHandler;
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Message\FutureResponse;
 use GuzzleHttp\Message\Request as GuzzleRequest;
 use GuzzleHttp\Message\Response as GuzzleResponse;
+use GuzzleHttp\Message\Response;
 use GuzzleHttp\Promise\RejectionException;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request as PsrRequest;
 use GuzzleHttp\Psr7\Response as PsrResponse;
+use GuzzleHttp\Ring\Client\MockHandler;
 use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\Tests\Ring\Client\MockHandlerTest;
 use React\Promise\Deferred;
 
 /**
@@ -82,6 +86,23 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
         $promise = $handler(new PsrRequest('HEAD', 'http://example.com'));
         $deferred->resolve(new GuzzleResponse(200));
         $this->assertInstanceOf(PsrResponse::class, $promise->wait());
+    }
+
+    public function testHandlerWillInvokeOnTransferStatsCallback()
+    {
+        $client = new Client(['handler' => new MockHandler(['status' => 200])]);
+        $handler = new GuzzleHandler($client);
+
+        $request = new PsrRequest('PUT', 'http://example.com', [], '{}');
+        $wasCalled = false;
+        $options = [
+            'http_stats_receiver' => function (array $stats) use (&$wasCalled) {
+                $wasCalled = true;
+            },
+        ];
+        $promise = $handler($request, $options);
+        $promise->wait();
+        $this->assertTrue($wasCalled);
     }
 
     private function getHandler(Deferred $deferred)

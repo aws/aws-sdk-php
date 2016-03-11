@@ -71,6 +71,15 @@ class AwsClient implements AwsClientInterface
      *   disable the scrubbing of auth data from the logged messages; http:
      *   (bool) Set to false to disable the "debug" feature of lower level HTTP
      *   adapters (e.g., verbose curl output).
+     * - stats: (bool|array) Set to true to gather transfer statistics on
+     *   requests sent. Alternatively, you can provide an associative array with
+     *   the following keys: retries: (bool) Set to false to disable reporting
+     *   on retries attempted; http: (bool) Set to true to enable collecting
+     *   statistics from lower level HTTP adapters (e.g., values returned in
+     *   GuzzleHttp\TransferStats). HTTP handlers must support an
+     *   `http_stats_receiver` option for this to have an effect; timer: (bool)
+     *   Set to true to enable a command timer that reports the total wall clock
+     *   time spent on an operation in seconds.
      * - endpoint: (string) The full URI of the webservice. This is only
      *   required when connecting to a custom endpoint (e.g., a local version
      *   of S3).

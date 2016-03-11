@@ -47,9 +47,10 @@ class WrappedHttpHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('GuzzleHttp\Promise\PromiseInterface', $promise);
         $this->assertSame($result, $promise->wait());
         $this->assertEquals([
-            'statusCode'   => 200,
-            'effectiveUri' => (string) $req->getUri(),
-            'headers'      => ['foo' => 'Bar']
+            'statusCode'    => 200,
+            'effectiveUri'  => (string) $req->getUri(),
+            'headers'       => ['foo' => 'Bar'],
+            'transferStats' => [],
         ], $result['@metadata']);
     }
 
@@ -190,5 +191,39 @@ class WrappedHttpHandlerTest extends \PHPUnit_Framework_TestCase
         } catch (\Exception $e2) {
             $this->assertSame($e, $e2);
         }
+    }
+
+    public function testDoesNotPassOnTransferStatsCallbackToHandlerByDefault()
+    {
+        $handler = function ($request, array $options) {
+            $this->assertArrayNotHasKey('http_stats_receiver', $options);
+            return new Response;
+        };
+        $parser = function () { return new Result; };
+        $wrapped = new WrappedHttpHandler($handler, $parser, [$this, 'fail']);
+
+        $wrapped(new Command('a'), new Request('GET', 'http://foo.com'))
+            ->wait();
+    }
+
+    public function testPassesOnTransferStatsCallbackToHandlerWhenRequested()
+    {
+        $handler = function ($request, array $options) {
+            $this->assertArrayHasKey('http_stats_receiver', $options);
+            $this->assertTrue(is_callable($options['http_stats_receiver']));
+            return new Response;
+        };
+
+        $parser = function () { return new Result; };
+        $wrapped = new WrappedHttpHandler(
+            $handler,
+            $parser,
+            [$this, 'fail'],
+            AwsException::class,
+            $collectStats = true
+        );
+
+        $wrapped(new Command('a'), new Request('GET', 'http://foo.com'))
+            ->wait();
     }
 }

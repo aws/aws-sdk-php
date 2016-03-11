@@ -494,4 +494,46 @@ EOT;
         $args = [];
         ClientResolver::_apply_endpoint($endpoint, $args, $list);
     }
+
+    /**
+     * @dataProvider statValueProvider
+     * @param bool|array $userValue
+     * @param array $resolvedValue
+     */
+    public function testAcceptsBooleansAndArraysForSelectiveStatCollection($userValue, array $resolvedValue)
+    {
+        $list = new HandlerList;
+        $args = [];
+        ClientResolver::_apply_stats($userValue, $args, $list);
+        foreach ($resolvedValue as $collector => $enabled) {
+            $this->assertArrayHasKey($collector, $args['stats']);
+            $this->assertSame($enabled, $args['stats'][$collector]);
+        }
+    }
+
+    public function statValueProvider()
+    {
+        return [
+            [
+                // Value provided for all stat collectors
+                ['http' => false, 'retries' => true, 'timer' => false],
+                ['http' => false, 'retries' => true, 'timer' => false],
+            ],
+            [
+                // Value provided for a subset of stat collectors
+                ['retries' => true],
+                ['http' => false, 'retries' => true, 'timer' => false],
+            ],
+            [
+                // Boolean false
+                false,
+                ['http' => false, 'retries' => false, 'timer' => false],
+            ],
+            [
+                // Boolean true
+                true,
+                ['http' => true, 'retries' => true, 'timer' => true],
+            ],
+        ];
+    }
 }

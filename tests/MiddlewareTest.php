@@ -247,4 +247,22 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         $result = $handler(new Command('Foo'), $request)->wait();
         $this->assertEquals('hi', $result['Test']);
     }
+
+    public function testCanTimeSuccessfulHandlers()
+    {
+        $list = new HandlerList();
+        $list->setHandler(function () {
+            usleep(1000); // wait for a millisecond
+            return Promise\promise_for(new Result);
+        });
+        $list->prependInit(Middleware::timer());
+        $handler = $list->resolve();
+        $request = new Request('GET', 'http://exmaple.com');
+        $result = $handler(new Command('Foo'), $request)->wait();
+        $this->assertTrue(isset($result['@metadata']['transferStats']['total_time']));
+        $this->assertGreaterThanOrEqual(
+            0.001,
+            $result['@metadata']['transferStats']['total_time']
+        );
+    }
 }

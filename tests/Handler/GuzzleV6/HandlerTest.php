@@ -10,6 +10,7 @@ use GuzzleHttp\Promise\RejectionException;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\TransferStats;
 
 /**
  * @covers Aws\Handler\GuzzleV6\GuzzleHandler
@@ -69,5 +70,43 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->assertTrue($wasRejected, 'Reject callback was not triggered.');
+    }
+
+    public function testHandlerWillInvokeOnTransferStatsCallback()
+    {
+        $mock = new MockHandler([new Response(200, [], Psr7\stream_for('foo'))]);
+        $client = new Client(['handler' => $mock]);
+        $handler = new GuzzleHandler($client);
+
+        $request = new Request('PUT', 'http://example.com');
+        $wasCalled = false;
+        $options = [
+            'http_stats_receiver' => function (array $stats) use (&$wasCalled) {
+                $this->assertArrayHasKey('total_time', $stats);
+                $wasCalled = true;
+            },
+        ];
+        $handler($request, $options)->wait();
+
+        $this->assertTrue($wasCalled);
+    }
+
+    public function testHandlerWillStillInvokeOnStatsCallback()
+    {
+        $mock = new MockHandler([new Response(200, [], Psr7\stream_for('foo'))]);
+        $client = new Client(['handler' => $mock]);
+        $handler = new GuzzleHandler($client);
+
+        $request = new Request('PUT', 'http://example.com');
+        $wasCalled = false;
+        $options = [
+            'http_stats_receiver' => function () {},
+            'on_stats' => function (TransferStats $stats) use (&$wasCalled) {
+                $wasCalled = true;
+            },
+        ];
+        $handler($request, $options)->wait();
+
+        $this->assertTrue($wasCalled);
     }
 }
