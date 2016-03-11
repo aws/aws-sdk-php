@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Iam` - Added support for stable, unique identifying string identifiers on
+  each entity returned from IAM:ListEntitiesForPolicy.
+
 ## 3.15.8 - 2016-03-08
 
 * `Aws\CodeCommit` - Added support for repository triggers.
