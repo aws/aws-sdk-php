@@ -49,6 +49,7 @@ SDK Guides
 * :doc:`guide/commands`
 * :doc:`guide/promises`
 * :doc:`guide/handlers-and-middleware`
+* :doc:`guide/streams`
 * :doc:`guide/paginators`
 * :doc:`guide/waiters`
 * :doc:`guide/jmespath`
