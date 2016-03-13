@@ -139,13 +139,19 @@ class S3MultiRegionClient extends BaseClient implements S3ClientInterface
         $args['region']['default'] = 'us-east-1';
 
         return $args + [
-            's3.bucket_region_cache' => [
-                'type' => 'value',
+            'bucket_region_cache' => [
+                'type' => 'config',
                 'valid' => [CacheInterface::class],
                 'doc' => 'Cache of regions in which given buckets are located.',
                 'default' => function () { return new LruArrayCache; },
             ],
         ];
+    }
+
+    public function __construct(array $args)
+    {
+        parent::__construct($args);
+        $this->cache = $this->getConfig('bucket_region_cache');
     }
 
     public function executeAsync(CommandInterface $c)
@@ -209,14 +215,6 @@ class S3MultiRegionClient extends BaseClient implements S3ClientInterface
 
                 return $region;
             });
-    }
-
-    protected function handleResolvedArgs(array $args)
-    {
-        $this->cache = $args['s3.bucket_region_cache'];
-        unset($args['s3.bucket_region_cache']);
-
-        parent::handleResolvedArgs($args);
     }
 
     private function getRegionalizedCommand(CommandInterface $command, $region)

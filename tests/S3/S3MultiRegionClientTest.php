@@ -112,7 +112,7 @@ class S3MultiRegionClientTest extends \PHPUnit_Framework_TestCase
             'region' => 'us-east-1',
             'version' => 'latest',
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
-            's3.bucket_region_cache' => $cache,
+            'bucket_region_cache' => $cache,
             'http_handler' => function (RequestInterface $request) {
                 if ($request->getUri()->getHost() === 's3.amazonaws.com') {
                     $this->fail('The us-east-1 endpoint should never have been called.');
@@ -135,7 +135,7 @@ class S3MultiRegionClientTest extends \PHPUnit_Framework_TestCase
             'region' => 'eu-east-1',
             'version' => 'latest',
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
-            's3.bucket_region_cache' => $cache,
+            'bucket_region_cache' => $cache,
             'http_handler' => function (RequestInterface $request) {
                 if ($request->getMethod() === 'HEAD' && $request->getUri()->getPath() === '/foo') {
                     return Promise\promise_for(new Response(301, [

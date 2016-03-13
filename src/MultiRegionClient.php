@@ -11,6 +11,8 @@ class MultiRegionClient implements AwsClientInterface
     private $factory;
     /** @var array */
     private $args;
+    /** @var array */
+    private $config;
 
     public static function getArguments()
     {
@@ -22,7 +24,7 @@ class MultiRegionClient implements AwsClientInterface
 
         return $args + [
             'client_factory' => [
-                'type' => 'value',
+                'type' => 'config',
                 'valid' => ['callable'],
                 'doc' => 'A callable that takes an array of client'
                     . ' configuration arguments and returns a regionalized'
@@ -60,7 +62,9 @@ class MultiRegionClient implements AwsClientInterface
         $argDefinitions = static::getArguments();
         $resolver = new ClientResolver($argDefinitions);
         $args = $resolver->resolve($args, new HandlerList);
-        $this->handleResolvedArgs($args);
+        $this->config = $args['config'];
+        $this->factory = $args['client_factory'];
+        $this->args = array_diff_key($args, $args['config']);
     }
 
     public function getRegion()
@@ -77,6 +81,14 @@ class MultiRegionClient implements AwsClientInterface
 
     public function getConfig($option = null)
     {
+        if (null === $option) {
+            return $this->config;
+        }
+
+        if (isset($this->config[$option])) {
+            return $this->config[$option];
+        }
+
         return $this->getClientFromPool()->getConfig($option);
     }
 
@@ -98,14 +110,6 @@ class MultiRegionClient implements AwsClientInterface
     public function getEndpoint()
     {
         return $this->getClientFromPool()->getEndpoint();
-    }
-
-    protected function handleResolvedArgs(array $args)
-    {
-        $this->factory = $args['client_factory'];
-        unset($args['client_factory']);
-
-        $this->args = $args;
     }
 
     /**
