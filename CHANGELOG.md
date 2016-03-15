@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DatabaseMigrationService` - Added support for the **AWS Database
+Migration Service**.
+* Added support for collecting transfer statistics.
+
 ## 3.15.9 - 2016-03-10
 
 * `Aws\GameLift` - Added support for new AutoScaling features.

@@ -23,6 +23,7 @@ namespace Aws;
  * @method \Aws\CognitoSync\CognitoSyncClient createCognitoSync(array $args = [])
  * @method \Aws\ConfigService\ConfigServiceClient createConfigService(array $args = [])
  * @method \Aws\DataPipeline\DataPipelineClient createDataPipeline(array $args = [])
+ * @method \Aws\DatabaseMigrationService\DatabaseMigrationServiceClient createDatabaseMigrationService(array $args = [])
  * @method \Aws\DeviceFarm\DeviceFarmClient createDeviceFarm(array $args = [])
  * @method \Aws\DirectConnect\DirectConnectClient createDirectConnect(array $args = [])
  * @method \Aws\DirectoryService\DirectoryServiceClient createDirectoryService(array $args = [])
