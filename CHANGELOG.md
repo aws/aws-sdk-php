@@ -4,6 +4,7 @@
 
 * `Aws\DatabaseMigrationService` - Added support for the **AWS Database
 Migration Service**.
+* `Aws\Ses` - Added support for custom MAIL FROM domains.
 * Added support for collecting transfer statistics.
 
 ## 3.15.9 - 2016-03-10
