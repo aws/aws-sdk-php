@@ -12,6 +12,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise batchGetApplicationRevisionsAsync(array $args = [])
  * @method \Aws\Result batchGetApplications(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGetApplicationsAsync(array $args = [])
+ * @method \Aws\Result batchGetDeploymentGroups(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchGetDeploymentGroupsAsync(array $args = [])
  * @method \Aws\Result batchGetDeploymentInstances(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGetDeploymentInstancesAsync(array $args = [])
  * @method \Aws\Result batchGetDeployments(array $args = [])

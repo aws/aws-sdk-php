@@ -2,6 +2,7 @@
 
 ## next release
 
+* `Aws\CodeDeploy` - Added support for getting deployment groups in batches.
 * `Aws\DatabaseMigrationService` - Added support for the **AWS Database
 Migration Service**.
 * `Aws\Ses` - Added support for custom MAIL FROM domains.
