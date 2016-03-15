@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.16.0 - 2016-03-15
 
 * `Aws\CodeDeploy` - Added support for getting deployment groups in batches.
 * `Aws\DatabaseMigrationService` - Added support for the **AWS Database
