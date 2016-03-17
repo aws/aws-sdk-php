@@ -2,9 +2,13 @@
 
 ## next release
 
+* `Aws\Iot` - Added support for new Amazon Elasticsearch Service and Amazon
+  Cloudwatch rule actions when creating topic rules.
 * `Aws\S3` - Added support for lifecycle expiration policy for incomplete
   multipart upload and lifecycle expiration policy for expired object delete
   marker.
+* `Aws\S3` - Added support for automatically removing delete markers which have
+  no non-current versions underneath them.
 
 ## 3.16.0 - 2016-03-15
 
