@@ -61,13 +61,13 @@ class Transfer implements PromisorInterface
      *   transfers. Set to an fopen() resource to write to a specific stream
      *   rather than writing to STDOUT.
      *
-     * @param S3Client         $client  Client used for transfers.
-     * @param string|Iterator  $source  Where the files are transferred from.
-     * @param string           $dest    Where the files are transferred to.
-     * @param array            $options Hash of options.
+     * @param S3ClientInterface $client  Client used for transfers.
+     * @param string|Iterator   $source  Where the files are transferred from.
+     * @param string            $dest    Where the files are transferred to.
+     * @param array             $options Hash of options.
      */
     public function __construct(
-        S3Client $client,
+        S3ClientInterface $client,
         $source,
         $dest,
         array $options = []

@@ -12,6 +12,8 @@ use GuzzleHttp\Psr7\Uri;
  */
 class AwsClient implements AwsClientInterface
 {
+    use AwsClientTrait;
+
     /** @var array */
     private $config;
 
@@ -166,19 +168,6 @@ class AwsClient implements AwsClientInterface
         return $this->handlerList;
     }
 
-    public function __call($name, array $args)
-    {
-        $params = isset($args[0]) ? $args[0] : [];
-
-        if (substr($name, -5) === 'Async') {
-            return $this->executeAsync(
-                $this->getCommand(substr($name, 0, -5), $params)
-            );
-        }
-
-        return $this->execute($this->getCommand($name, $params));
-    }
-
     public function getConfig($option = null)
     {
         return $option === null
@@ -209,23 +198,12 @@ class AwsClient implements AwsClientInterface
         return $this->api;
     }
 
-    public function execute(CommandInterface $command)
-    {
-        return $this->executeAsync($command)->wait();
-    }
-
-    public function executeAsync(CommandInterface $command)
-    {
-        $handler = $command->getHandlerList()->resolve();
-        return $handler($command);
-    }
-
     public function getCommand($name, array $args = [])
     {
         // Fail fast if the command cannot be found in the description.
-        if (!isset($this->api['operations'][$name])) {
+        if (!isset($this->getApi()['operations'][$name])) {
             $name = ucfirst($name);
-            if (!isset($this->api['operations'][$name])) {
+            if (!isset($this->getApi()['operations'][$name])) {
                 throw new \InvalidArgumentException("Operation not found: $name");
             }
         }
@@ -237,49 +215,6 @@ class AwsClient implements AwsClientInterface
         }
 
         return new Command($name, $args, clone $this->getHandlerList());
-    }
-
-    public function getIterator($name, array $args = [])
-    {
-        $config = $this->api->getPaginatorConfig($name);
-        if (!$config['result_key']) {
-            throw new \UnexpectedValueException(sprintf(
-                'There are no resources to iterate for the %s operation of %s',
-                $name, $this->api['serviceFullName']
-            ));
-        }
-
-        $key = is_array($config['result_key'])
-            ? $config['result_key'][0]
-            : $config['result_key'];
-
-        if ($config['output_token'] && $config['input_token']) {
-            return $this->getPaginator($name, $args)->search($key);
-        }
-
-        $result = $this->execute($this->getCommand($name, $args))->search($key);
-
-        return new \ArrayIterator((array) $result);
-    }
-
-    public function getPaginator($name, array $args = [])
-    {
-        $config = $this->api->getPaginatorConfig($name);
-
-        return new ResultPaginator($this, $name, $args, $config);
-    }
-
-    public function waitUntil($name, array $args = [])
-    {
-        return $this->getWaiter($name, $args)->promise()->wait();
-    }
-
-    public function getWaiter($name, array $args = [])
-    {
-        $config = isset($args['@waiter']) ? $args['@waiter'] : [];
-        $config += $this->api->getWaiterConfig($name);
-
-        return new Waiter($this, $name, $args, $config);
     }
 
     public function __sleep()

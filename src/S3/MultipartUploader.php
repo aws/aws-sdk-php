@@ -47,12 +47,15 @@ class MultipartUploader extends AbstractUploader
      *   When this option is provided, the `bucket`, `key`, and `part_size`
      *   options are ignored.
      *
-     * @param S3Client $client Client used for the upload.
-     * @param mixed    $source Source of the data to upload.
-     * @param array    $config Configuration used to perform the upload.
+     * @param S3ClientInterface $client Client used for the upload.
+     * @param mixed             $source Source of the data to upload.
+     * @param array             $config Configuration used to perform the upload.
      */
-    public function __construct(S3Client $client, $source, array $config = [])
-    {
+    public function __construct(
+        S3ClientInterface $client,
+        $source,
+        array $config = []
+    ) {
         parent::__construct($client, $source, array_change_key_case($config) + [
             'bucket' => null,
             'key'    => null,

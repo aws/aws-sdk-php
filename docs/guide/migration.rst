@@ -108,11 +108,10 @@ changes until you are ready to explicitly update your configuration.
 
 .. important::
 
-    When using Amazon S3, and unlike in previous versions of the SDK, you must
-    provide a region when instantiating an ``S3Client``. This client will only
-    be able to operate on buckets that were created in the region you've
-    specified. If you are not sure what region your S3 bucket is in, you can
-    use the ``getBucketLocation`` operation to find out.
+    The SDK also includes multi-region clients, which can dispatch requests to
+    different regions based on a parameter (``@region``) supplied as a command
+    parameter. The region used by default by these clients is specified with the
+    ``region`` option supplied to the client constructor.
 
 
 Client instantiation uses the constructor

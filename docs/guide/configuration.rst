@@ -116,12 +116,12 @@ default provider chain across multiple processes.
 
     use Aws\DoctrineCacheAdapter;
     use Aws\S3\S3Client;
-    use Doctrine\Common\Cache\ApcCache;
+    use Doctrine\Common\Cache\ApcuCache;
 
     $s3 = new S3Client([
         'version'     => 'latest',
         'region'      => 'us-west-2',
-        'credentials' => new DoctrineCacheAdapter(new ApcCache),
+        'credentials' => new DoctrineCacheAdapter(new ApcuCache),
     ]);
 
 You can find more information about providing credentials to a client in the

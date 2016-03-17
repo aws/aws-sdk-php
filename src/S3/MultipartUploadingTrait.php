@@ -11,15 +11,15 @@ trait MultipartUploadingTrait
      * Creates an UploadState object for a multipart upload by querying the
      * service for the specified upload's information.
      *
-     * @param S3Client $client   S3Client used for the upload.
-     * @param string   $bucket   Bucket for the multipart upload.
-     * @param string   $key      Object key for the multipart upload.
-     * @param string   $uploadId Upload ID for the multipart upload.
+     * @param S3ClientInterface $client   S3Client used for the upload.
+     * @param string            $bucket   Bucket for the multipart upload.
+     * @param string            $key      Object key for the multipart upload.
+     * @param string            $uploadId Upload ID for the multipart upload.
      *
      * @return UploadState
      */
     public static function getStateFromService(
-        S3Client $client,
+        S3ClientInterface $client,
         $bucket,
         $key,
         $uploadId

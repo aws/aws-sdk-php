@@ -21,11 +21,20 @@ array_walk($options, function (&$value) {
     }
 });
 
+function get_client_classes($namespace) {
+    $clients = ["Aws\\{$namespace}\\{$namespace}Client"];
+    if (class_exists("Aws\\{$namespace}\\{$namespace}MultiRegionClient")) {
+        $clients []= "Aws\\{$namespace}\\{$namespace}MultiRegionClient";
+    }
+
+    return $clients;
+};
+
 if (isset($options['all'])) {
     // Get all client classes and mark them for update
-    $options['class'] = array_values(array_map(function (array $manifest) {
-        return "Aws\\{$manifest['namespace']}\\{$manifest['namespace']}Client";
-    }, Aws\manifest()));
+    $options['class'] = Aws\flatmap(Aws\manifest(), function (array $manifest) {
+        return get_client_classes($manifest['namespace']);
+    });
 }
 
 foreach ($options['tag'] as $tag) {
@@ -43,17 +52,18 @@ foreach ($options['tag'] as $tag) {
 
     // Find the client classes for each changed API service definition and mark
     // them for update.
-    $clientsWithChangedApis = array_values(array_map(function ($apiFile) {
-        $apiFile = str_replace('src/data/', '', $apiFile);
-        $endpoint = substr($apiFile, 0, strpos($apiFile, '/'));
-        $namespace = Aws\manifest($endpoint)['namespace'];
-
-        return "Aws\\{$namespace}\\{$namespace}Client";
-    }, $alteredApiFiles));
-    $options['class'] = array_merge($options['class'], $clientsWithChangedApis);
+    $clientsWithChangedApis = Aws\flatmap($alteredApiFiles, function ($file) {
+        $file = str_replace('src/data/', '', $file);
+        $endpoint = substr($file, 0, strpos($file, '/'));
+        return get_client_classes(Aws\manifest($endpoint)['namespace']);
+    });
+    $options['class'] = \Aws\flatmap(
+        [$options['class'], $clientsWithChangedApis],
+        function ($class) { return $class; }
+    );
 }
 
-foreach (array_unique($options['class']) as $classToUpdate) {
+foreach ($options['class'] as $classToUpdate) {
     // Update the @method annotations on a client.
     $annotator = new ClientAnnotator($classToUpdate);
 

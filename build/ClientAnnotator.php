@@ -115,7 +115,7 @@ class ClientAnnotator
     {
         if (empty($this->endpoint)) {
             $service = strtolower(
-                preg_replace('/Client$/', '', $this->reflection->getShortName())
+                preg_replace('/(MultiRegion)?Client$/', '', $this->reflection->getShortName())
             );
 
             $this->endpoint = Aws\manifest($service)['endpoint'];
@@ -126,10 +126,22 @@ class ClientAnnotator
 
     private function getDefaultDocComment()
     {
-        return <<<EODC
+        $serviceName = $this->getApiDefinition()['metadata']['serviceFullName'];
+        switch ($this->reflection->getParentClass()->getShortName()) {
+            case 'MultiRegionClient':
+                return <<<EODC
 /**
- * **{$this->getApiDefinition()['metadata']['serviceFullName']}** client.
+ * **{$serviceName}** multi-region client.
+ *
  */
 EODC;
+            default:
+                return <<<EODC
+/**
+ * **{$serviceName}** client.
+ *
+ */
+EODC;
+        }
     }
 }

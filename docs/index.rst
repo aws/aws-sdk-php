@@ -63,6 +63,7 @@ Service-Specific Features
 * :doc:`service/dynamodb-session-handler`
 * :doc:`service/es-data-plane`
 * :doc:`service/s3-multipart-upload`
+* :doc:`service/s3-multiregion-client`
 * :doc:`service/s3-presigned-url`
 * :doc:`service/s3-stream-wrapper`
 * :doc:`service/s3-transfer`

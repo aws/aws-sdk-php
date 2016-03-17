@@ -44,13 +44,16 @@ class MultipartCopy extends AbstractUploadManager
      * - source_metadata: (Aws\ResultInterface) An object that represents the
      *   result of executing a HeadObject command on the copy source.
      *
-     * @param S3Client $client Client used for the upload.
-     * @param string   $source Location of the data to be copied
-     *                          (in the form /<bucket>/<key>).
-     * @param array    $config Configuration used to perform the upload.
+     * @param S3ClientInterface $client Client used for the upload.
+     * @param string            $source Location of the data to be copied
+     *                                  (in the form /<bucket>/<key>).
+     * @param array             $config Configuration used to perform the upload.
      */
-    public function __construct(S3Client $client, $source, array $config = [])
-    {
+    public function __construct(
+        S3ClientInterface $client,
+        $source,
+        array $config = []
+    ) {
         $this->source = '/' . ltrim($source, '/');
         parent::__construct($client, array_change_key_case($config) + [
             'source_metadata' => null
