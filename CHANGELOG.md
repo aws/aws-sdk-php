@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Added support for lifecycle expiration policy for incomplete
+  multipart upload and lifecycle expiration policy for expired object delete
+  marker.
+
 ## 3.16.0 - 2016-03-15
 
 * `Aws\CodeDeploy` - Added support for getting deployment groups in batches.

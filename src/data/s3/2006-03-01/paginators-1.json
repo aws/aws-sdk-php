@@ -1,55 +1,57 @@
 {
-  "pagination":{
-    "ListBuckets":{"result_key":"Buckets"},
-    "ListMultipartUploads":{
-      "input_token":[
-        "KeyMarker",
-        "UploadIdMarker"
-      ],
-      "limit_key":"MaxUploads",
-      "more_results":"IsTruncated",
-      "output_token":[
+  "pagination": {
+    "ListBuckets": {
+      "result_key": "Buckets"
+    },
+    "ListMultipartUploads": {
+      "limit_key": "MaxUploads",
+      "more_results": "IsTruncated",
+      "output_token": [
         "NextKeyMarker",
         "NextUploadIdMarker"
       ],
-      "result_key":[
+      "input_token": [
+        "KeyMarker",
+        "UploadIdMarker"
+      ],
+      "result_key": [
         "Uploads",
         "CommonPrefixes"
       ]
     },
-    "ListObjectVersions":{
-      "input_token":[
-        "KeyMarker",
-        "VersionIdMarker"
-      ],
-      "limit_key":"MaxKeys",
-      "more_results":"IsTruncated",
-      "output_token":[
+    "ListObjectVersions": {
+      "more_results": "IsTruncated",
+      "limit_key": "MaxKeys",
+      "output_token": [
         "NextKeyMarker",
         "NextVersionIdMarker"
       ],
-      "result_key":[
+      "input_token": [
+        "KeyMarker",
+        "VersionIdMarker"
+      ],
+      "result_key": [
         "Versions",
         "DeleteMarkers",
         "CommonPrefixes"
       ]
     },
-    "ListObjects":{
-      "input_token":"Marker",
-      "limit_key":"MaxKeys",
-      "more_results":"IsTruncated",
-      "output_token":"NextMarker || Contents[-1].Key",
-      "result_key":[
+    "ListObjects": {
+      "more_results": "IsTruncated",
+      "limit_key": "MaxKeys",
+      "output_token": "NextMarker || Contents[-1].Key",
+      "input_token": "Marker",
+      "result_key": [
         "Contents",
         "CommonPrefixes"
       ]
     },
-    "ListParts":{
-      "input_token":"PartNumberMarker",
-      "limit_key":"MaxParts",
-      "more_results":"IsTruncated",
-      "output_token":"NextPartNumberMarker",
-      "result_key":"Parts"
+    "ListParts": {
+      "more_results": "IsTruncated",
+      "limit_key": "MaxParts",
+      "output_token": "NextPartNumberMarker",
+      "input_token": "PartNumberMarker",
+      "result_key": "Parts"
     }
   }
 }
