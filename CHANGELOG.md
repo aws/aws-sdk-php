@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.17.0 - 2016-03-17
 
 * `Aws\CloudHsm` - Added support for adding tags to, removing tags from, and
   listing the tags for a given resource.
@@ -13,6 +13,9 @@
   marker.
 * `Aws\S3` - Added support for automatically removing delete markers which have
   no non-current versions underneath them.
+* Fixed error handling in the timer middleware. Previously, exceptions were
+  passed to the success handler instead of any registered error handler.
+* Added support for multi-region clients.
 
 ## 3.16.0 - 2016-03-15
 
