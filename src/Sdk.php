@@ -98,6 +98,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMachineLearning(array $args = [])
  * @method \Aws\MarketplaceCommerceAnalytics\MarketplaceCommerceAnalyticsClient createMarketplaceCommerceAnalytics(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMarketplaceCommerceAnalytics(array $args = [])
+ * @method \Aws\MarketplaceMetering\MarketplaceMeteringClient createMarketplaceMetering(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionMarketplaceMetering(array $args = [])
  * @method \Aws\OpsWorks\OpsWorksClient createOpsWorks(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionOpsWorks(array $args = [])
  * @method \Aws\Rds\RdsClient createRds(array $args = [])

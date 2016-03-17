@@ -6,6 +6,8 @@
   listing the tags for a given resource.
 * `Aws\Iot` - Added support for new Amazon Elasticsearch Service and Amazon
   Cloudwatch rule actions when creating topic rules.
+* `Aws\MarketplaceMetering` - Added support for the **AWSMarketplace Metering**
+  service.
 * `Aws\S3` - Added support for lifecycle expiration policy for incomplete
   multipart upload and lifecycle expiration policy for expired object delete
   marker.
