@@ -2,6 +2,8 @@
 
 ## next release
 
+* `Aws\CloudHsm` - Added support for adding tags to, removing tags from, and
+  listing the tags for a given resource.
 * `Aws\Iot` - Added support for new Amazon Elasticsearch Service and Amazon
   Cloudwatch rule actions when creating topic rules.
 * `Aws\S3` - Added support for lifecycle expiration policy for incomplete
