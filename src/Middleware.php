@@ -342,7 +342,7 @@ final class Middleware
                                     'total_time' => microtime(true) - $start,
                                 ] + $err->getTransferInfo());
                             }
-                            return $err;
+                            return Promise\rejection_for($err);
                         }
                     );
             };

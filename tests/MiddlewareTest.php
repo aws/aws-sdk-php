@@ -8,6 +8,7 @@ use Aws\Command;
 use Aws\CommandInterface;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialProvider;
+use Aws\Exception\AwsException;
 use Aws\HandlerList;
 use Aws\Middleware;
 use Aws\MockHandler;
@@ -264,5 +265,31 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
             0.001,
             $result['@metadata']['transferStats']['total_time']
         );
+    }
+
+    public function testCanTimeUnsuccessfulHandlers()
+    {
+        $command = new Command('Foo');
+        $list = new HandlerList();
+        $list->setHandler(function () use ($command) {
+            usleep(1000); // wait for a millisecond
+            return Promise\rejection_for(new AwsException('foo', $command));
+        });
+        $list->prependInit(Middleware::timer());
+        $handler = $list->resolve();
+        $request = new Request('GET', 'http://exmaple.com');
+        $promise = $handler($command, $request)->then(
+            function () {
+                $this->fail('Success handler should not have been invoked');
+            },
+            function (AwsException $e) {
+                $this->assertNotNull($e->getTransferInfo('total_time'));
+                $this->assertGreaterThanOrEqual(0.001, $e->getTransferInfo('total_time'));
+
+                return true;
+            }
+        );
+
+        $promise->wait();
     }
 }
