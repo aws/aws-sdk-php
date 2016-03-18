@@ -15,6 +15,7 @@ higher level features per service.
     es-data-plane
     s3-multipart-upload
     s3-multiregion-client
+    s3-presigned-post
     s3-presigned-url
     s3-stream-wrapper
     s3-transfer

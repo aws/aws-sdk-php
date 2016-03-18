@@ -70,8 +70,7 @@ Because PHP's integer type is signed and many platforms use 32-bit integers, the
 AWS SDK for PHP does not correctly handle files larger than 2GB on a 32-bit
 stack (where "stack" includes CPU, OS, web server, and PHP binary). This is a
 `well-known PHP issue <http://www.google.com/search?q=php+2gb+32-bit>`_. In the
-case of Microsoft® Windows®, there are no official builds of PHP that support
-64-bit integers.
+case of Microsoft® Windows®, only builds of PHP 7 support 64-bit integers.
 
 The recommended solution is to use a `64-bit Linux stack <http://aws.amazon.com/amazon-linux-ami/>`_,
 such as the 64-bit Amazon Linux AMI with the latest version of PHP installed.
@@ -108,6 +107,17 @@ middleware to the ``Aws\HandlerList`` of an ``Aws\CommandInterface`` or
 
 See :ref:`map-request` for more information.
 
+
+How can I sign an arbitrary request?
+------------------------------------
+
+You can sign an arbitrary `PSR-7 request
+<https://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Psr.Http.Message.RequestInterface.html>`_
+using the SDK's `SignatureV4 class
+<https://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.Signature.SignatureV4.html>`_.
+
+See :doc:`service/cloudsearch-custom-requests` for a full example of how to do
+so.
 
 How can I modify a command before sending it?
 ---------------------------------------------

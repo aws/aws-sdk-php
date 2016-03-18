@@ -87,7 +87,7 @@ class ExampleBuilder
             case 'boolean':
                 return 'true || false';
             case 'stream':
-                return '<Psr\\Http\\Message\\StreamableInterface>';
+                return '<string || resource || Psr\\Http\\Message\\StreamInterface>';
             case 'timestamp':
                 return $this->isInput
                     ? '<integer || string || DateTime>'

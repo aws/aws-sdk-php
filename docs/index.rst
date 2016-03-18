@@ -49,6 +49,7 @@ SDK Guides
 * :doc:`guide/commands`
 * :doc:`guide/promises`
 * :doc:`guide/handlers-and-middleware`
+* :doc:`guide/streams`
 * :doc:`guide/paginators`
 * :doc:`guide/waiters`
 * :doc:`guide/jmespath`
@@ -64,6 +65,7 @@ Service-Specific Features
 * :doc:`service/es-data-plane`
 * :doc:`service/s3-multipart-upload`
 * :doc:`service/s3-multiregion-client`
+* :doc:`service/s3-presigned-post`
 * :doc:`service/s3-presigned-url`
 * :doc:`service/s3-stream-wrapper`
 * :doc:`service/s3-transfer`
