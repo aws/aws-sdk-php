@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DeviceFarm` - Added support for managing and purchasing offerings.
+
 ## 3.17.0 - 2016-03-17
 
 * `Aws\CloudHsm` - Added support for adding tags to, removing tags from, and
