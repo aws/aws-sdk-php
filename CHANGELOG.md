@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.17.1 - 2016-03-22
 
 * `Aws\DeviceFarm` - Added support for managing and purchasing offerings.
 * `Aws\Rds` - Added support for customizing failover order in Amazon Aurora
