@@ -5,6 +5,7 @@
 * `Aws\ElastiCache` - Added support for vertical scaling.
 * `Aws\Rds` - Added support for joining SQL Server DB instances to Active
   Directory domains.
+* `Aws\StorageGateway` - Added support for setting the local console password.
 
 ## 3.17.1 - 2016-03-22
 

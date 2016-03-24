@@ -96,6 +96,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise retrieveTapeArchiveAsync(array $args = [])
  * @method \Aws\Result retrieveTapeRecoveryPoint(array $args = [])
  * @method \GuzzleHttp\Promise\Promise retrieveTapeRecoveryPointAsync(array $args = [])
+ * @method \Aws\Result setLocalConsolePassword(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise setLocalConsolePasswordAsync(array $args = [])
  * @method \Aws\Result shutdownGateway(array $args = [])
  * @method \GuzzleHttp\Promise\Promise shutdownGatewayAsync(array $args = [])
  * @method \Aws\Result startGateway(array $args = [])
