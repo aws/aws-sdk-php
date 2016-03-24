@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.17.2 - 2016-03-24
 
 * `Aws\ElastiCache` - Added support for vertical scaling.
 * `Aws\Rds` - Added support for joining SQL Server DB instances to Active
