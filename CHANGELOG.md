@@ -2,6 +2,7 @@
 
 ## next release
 
+* `Aws\ElastiCache` - Added support for vertical scaling.
 * `Aws\Rds` - Added support for joining SQL Server DB instances to Active
   Directory domains.
 

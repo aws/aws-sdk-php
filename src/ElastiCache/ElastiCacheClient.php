@@ -60,6 +60,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeReservedCacheNodesOfferingsAsync(array $args = [])
  * @method \Aws\Result describeSnapshots(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeSnapshotsAsync(array $args = [])
+ * @method \Aws\Result listAllowedNodeTypeModifications(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAllowedNodeTypeModificationsAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result modifyCacheCluster(array $args = [])
