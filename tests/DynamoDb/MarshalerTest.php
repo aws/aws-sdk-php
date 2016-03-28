@@ -174,6 +174,7 @@ class MarshalerTest extends \PHPUnit_Framework_TestCase
                 $m->set([$m->binary('a'), $m->binary('b'), $m->binary('c')]),
                 ['BS' => ['a', 'b', 'c']]
             ],
+            [$m->set(['a', 'b', 'b', 'c']), ['SS' => ['a', 'b', 'c']]],
             [$m->set([]), self::ERROR],
 
                 // Errors
