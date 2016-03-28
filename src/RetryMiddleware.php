@@ -19,11 +19,13 @@ class RetryMiddleware
     ];
 
     private static $retryCodes = [
+        // Throttling error
         'RequestLimitExceeded'                   => true,
         'Throttling'                             => true,
         'ThrottlingException'                    => true,
         'ProvisionedThroughputExceededException' => true,
         'RequestThrottled'                       => true,
+        'BandwidthLimitExceeded'                 => true,
     ];
 
     private $decider;
@@ -85,13 +87,15 @@ class RetryMiddleware
     /**
      * Delay function that calculates an exponential delay.
      *
+     * Exponential backoff with jitter, 100ms base, 20 sec ceiling
+     *
      * @param $retries
      *
      * @return int
      */
     public static function exponentialDelay($retries)
     {
-        return mt_rand(0, (int) pow(2, $retries - 1) * 100);
+        return mt_rand(0, min(20000, (int) pow(2, $retries - 1) * 100));
     }
 
     /**
@@ -109,6 +113,8 @@ class RetryMiddleware
         $handler = $this->nextHandler;
         $decider = $this->decider;
         $delay = $this->delay;
+
+        $request = $this->addRetryHeader($request, 0, 0);
 
         $g = function ($value) use (
             $handler,
@@ -141,10 +147,18 @@ class RetryMiddleware
                 $this->updateStats($retries, $delayBy, $requestStats);
             }
 
+            // Update retry header with retry count and delayBy
+            $request = $this->addRetryHeader($request, $retries, $delayBy);
+
             return $handler($command, $request)->then($g, $g);
         };
 
         return $handler($command, $request)->then($g, $g);
+    }
+
+    private function addRetryHeader($request, $retries, $delayBy)
+    {
+        return $request->withHeader('aws-sdk-retry', "{$retries}/{$delayBy}");
     }
 
     private function updateStats($retries, $delay, array &$stats)

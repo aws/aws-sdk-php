@@ -73,6 +73,21 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(0, $mock);
     }
 
+    public function testAddInvocationId()
+    {
+        $list = new HandlerList();
+        $mock = function ($command, $request) {
+            $this->assertTrue($request->hasHeader('aws-sdk-invocation-id'));
+            return \GuzzleHttp\Promise\promise_for(
+                new Result(['@metadata' => ['statusCode' => 200]])
+            );
+        };
+        $list->setHandler($mock);
+        $list->prependSign(Middleware::invocationId());
+        $handler = $list->resolve();
+        $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
+    }
+
     public function testAddsSigner()
     {
         $list = new HandlerList();
