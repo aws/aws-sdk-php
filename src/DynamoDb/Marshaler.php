@@ -179,7 +179,7 @@ class Marshaler
                 $data[] = current($marshaled);
             }
 
-            return [$previousType . 'S' => array_unique($data)];
+            return [$previousType . 'S' => array_values(array_unique($data))];
         }
 
         // Handle list and map values.
