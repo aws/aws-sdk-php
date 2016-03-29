@@ -186,7 +186,29 @@ final class Middleware
             return new RetryMiddleware($decider, $delay, $handler, $stats);
         };
     }
-
+    /**
+     * Middleware wrapper function that adds an invocation id header to
+     * requests, which is only applied after the build step.
+     *
+     * This is a uniquely generated UUID to identify initial and subsequent
+     * retries as part of a complete request lifecycle.
+     *
+     * @return callable
+     */
+    public static function invocationId()
+    {
+        return function (callable $handler) {
+            return function (
+                CommandInterface $command,
+                RequestInterface $request
+            ) use ($handler){
+                return $handler($command, $request->withHeader(
+                    'aws-sdk-invocation-id',
+                    md5(uniqid(gethostname(), true))
+                ));
+            };
+        };
+    }
     /**
      * Middleware wrapper function that adds a Content-Type header to requests.
      * This is only done when the Content-Type has not already been set, and the

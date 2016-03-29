@@ -45,7 +45,7 @@ class DynamoDbClient extends AwsClient
     public static function getArguments()
     {
         $args = parent::getArguments();
-        $args['retries']['default'] = 11;
+        $args['retries']['default'] = 10;
         $args['retries']['fn'] = [__CLASS__, '_applyRetryConfig'];
         $args['api_provider']['fn'] = [__CLASS__, '_applyApiProvider'];
 

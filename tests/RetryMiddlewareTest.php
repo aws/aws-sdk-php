@@ -18,6 +18,27 @@ use Psr\Http\Message\RequestInterface;
  */
 class RetryMiddlewareTest extends \PHPUnit_Framework_TestCase
 {
+    public function testAddRetryHeader()
+    {
+        $nextHandler = function (CommandInterface $command, RequestInterface $request) {
+            $this->assertTrue($request->hasHeader('aws-sdk-retry'));
+            return new RejectedPromise(
+                new AwsException('e', $command, ['connection_error' => true])
+            );
+        };
+        $retryMW = new RetryMiddleware(
+            RetryMiddleware::createDefaultDecider($retries = 3),
+            [RetryMiddleware::class, 'exponentialDelay'],
+            $nextHandler,
+            true
+        );
+
+        try {
+            $retryMW(new Command('SomeCommand'), new Request('GET', ''))->wait();
+            $this->fail();
+        } catch (AwsException $e) { }
+    }
+
     public function testDeciderRetriesWhenStatusCodeMatches()
     {
         $decider = RetryMiddleware::createDefaultDecider();
@@ -49,15 +70,30 @@ class RetryMiddlewareTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($decider(0, $command, $request, null, $err));
     }
 
-    public function testDeciderRetriesWhenAwsErrorCodeMatches()
+    public function awsErrorCodeProvider()
+    {
+        $command = new Command('foo');
+        return [
+            [new AwsException('e', $command, ['code' => 'RequestLimitExceeded'])],
+            [new AwsException('e', $command, ['code' => 'Throttling'])],
+            [new AwsException('e', $command, ['code' => 'ThrottlingException'])],
+            [new AwsException('e', $command, ['code' => 'ProvisionedThroughputExceededException'])],
+            [new AwsException('e', $command, ['code' => 'RequestThrottled'])],
+            [new AwsException('e', $command, ['code' => 'BandwidthLimitExceeded'])]
+        ];
+    }
+    /**
+    * @param $err
+    *
+    * @dataProvider awsErrorCodeProvider
+    */
+    public function testDeciderRetriesWhenAwsErrorCodeMatches($err)
     {
         $decider = RetryMiddleware::createDefaultDecider();
         $command = new Command('foo');
         $request = new Request('GET', 'http://www.example.com');
-        $err = new AwsException('e', $command, ['code' => 'RequestLimitExceeded']);
+
         $this->assertTrue($decider(0, $command, $request, null, $err));
-        $err = new AwsException('e', $command, ['code' => 'Foo']);
-        $this->assertFalse($decider(0, $command, $request, null, $err));
     }
 
     public function testDeciderRetriesWhenExceptionStatusCodeMatches()
@@ -90,6 +126,7 @@ class RetryMiddlewareTest extends \PHPUnit_Framework_TestCase
         $this->assertLessThanOrEqual(200, RetryMiddleware::exponentialDelay(2));
         $this->assertLessThanOrEqual(400, RetryMiddleware::exponentialDelay(3));
         $this->assertLessThanOrEqual(800, RetryMiddleware::exponentialDelay(4));
+        $this->assertLessThanOrEqual(20000, RetryMiddleware::exponentialDelay(9));
     }
 
     public function testDelaysWithSomeRandomness()

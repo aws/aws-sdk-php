@@ -157,6 +157,7 @@ class AwsClient implements AwsClientInterface
         $this->config = $config['config'];
         $this->defaultRequestOptions = $config['http'];
         $this->addSignatureMiddleware();
+        $this->addInvocationId();
 
         if (isset($args['with_resolved'])) {
             $args['with_resolved']($config);
@@ -271,6 +272,12 @@ class AwsClient implements AwsClientInterface
             ),
             'signer'
         );
+    }
+
+    private function addInvocationId()
+    {
+        // Add invocation id to each request
+        $this->handlerList->prependSign(Middleware::invocationId(), 'invocation-id');
     }
 
     /**
